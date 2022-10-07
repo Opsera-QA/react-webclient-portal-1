@@ -39,7 +39,7 @@ function DashboardTableView(
         <OwnerFilter
           filterModel={dashboardFilterModel}
           setFilterModel={setDashboardFilterModel}
-          className={"mt-2"}
+          className={"mb-2"}
         />
       );
     }
