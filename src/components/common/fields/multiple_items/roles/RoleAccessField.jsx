@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
-import AccessRoleDisplayer from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayer";
+import AccessRoleDisplayerField from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayerField";
 import VanityInlineError from "temp-library-components/fields/info/VanityInlineError";
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
 import VanityInlineWarning from "temp-library-components/fields/info/VanityInlineWarning";
@@ -35,7 +35,7 @@ function RoleAccessField({model, fieldName, noDataMessage, className}) {
     }
 
     return (
-      <AccessRoleDisplayer
+      <AccessRoleDisplayerField
         roles={model?.getArrayData(fieldName)}
         noDataMessage={noDataMessage}
       />
