@@ -52,7 +52,7 @@ function GithubActionsUniqueRunRunsSummary(
       let dashboardTags = dashboardMetricFilter?.tags;
       let dashboardOrgs = dashboardMetricFilter?.organizations;
       //let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
-      const response = await githubActionsWorkflowActions.githubActionsActionableTwoTable(
+      const response = await githubActionsWorkflowActions.getGithubActionsActionableOneTableWorkflowRunDetails(
         kpiConfiguration,
         getAccessToken,
         cancelTokenSource,

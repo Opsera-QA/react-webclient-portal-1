@@ -315,6 +315,61 @@ githubActionsWorkflowActions.githubActionsActionableTwoTable = async (
   );
 };
 
+githubActionsWorkflowActions.getGithubActionsActionableOneTableWorkflowRunDetails = async (
+  kpiConfiguration,
+  getAccessToken,
+  cancelTokenSource,
+  tableFilterDto,
+  dashboardTags,
+  dashboardOrgs,
+  dashboardFilters,
+  workflowName,
+  repoName,
+  appName,
+  branchName,
+) => {
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const apiUrl = "/analytics/githubActions/v1/githubActionsActionableOneTableWorkflowRunDetails";
+  let hierarchyFilters =
+    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags =
+    getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
+  const postBody = {
+    startDate: date.start,
+    endDate: date.end,
+    page: tableFilterDto?.getData("currentPage"),
+    size: tableFilterDto?.getData("pageSize"),
+    tags:
+      tags && dashboardTags
+        ? tags.concat(dashboardTags)
+        : dashboardTags?.length > 0
+          ? dashboardTags
+          : tags,
+    dashboardOrgs: dashboardOrgs,
+    dashboardFilters: dashboardFilters,
+    workflowName: workflowName,
+    repoName: repoName,
+    appName: appName,
+    branchName: branchName,
+    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
+  };
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 githubActionsWorkflowActions.githubActionsActionableThreeDataBlocks = async (
   kpiConfiguration,
   getAccessToken,
