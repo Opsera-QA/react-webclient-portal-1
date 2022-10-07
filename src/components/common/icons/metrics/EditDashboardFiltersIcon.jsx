@@ -1,18 +1,21 @@
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { AuthContext } from "contexts/AuthContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import { faFilter } from "@fortawesome/pro-light-svg-icons";
 import FiltersMultiSelectOverlay from "components/common/inputs/tags/inline/modal/FiltersMultiSelectOverlay";
 import modelHelpers from "components/common/model/modelHelpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function EditDashboardFiltersIcon({ dashboardModel, setDashboardModel, loadData, className, user }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+function EditDashboardFiltersIcon({ dashboardModel, setDashboardModel, loadData, className }) {
+  const {
+    getAccessToken,
+    cancelTokenSource,
+    toastContext,
+  } = useComponentStateReference();
 
   const updateDashboardFilters = async (newDataModel) => {
     let newModel = modelHelpers.setDashboardFilterModelField(dashboardModel, "hierarchyFilters", newDataModel?.getData("hierarchyFilters"));
@@ -30,8 +33,7 @@ function EditDashboardFiltersIcon({ dashboardModel, setDashboardModel, loadData,
         fieldName={"hierarchyFilters"}
         saveDataFunction={updateDashboardFilters}
         showModal={true}
-        user={user}
-      />
+      />,
     );
   };
 
@@ -42,11 +44,13 @@ function EditDashboardFiltersIcon({ dashboardModel, setDashboardModel, loadData,
   return (
     <div className={className}>
       <TooltipWrapper innerText={"Edit Dashboard Filters"}>
-        <IconBase
-          onClickFunction={() => {showEditor();}}
-          icon={faFilter}
-          className={"pointer"}
-        />
+        <div>
+          <IconBase
+            onClickFunction={() => {showEditor();}}
+            icon={faFilter}
+            className={"pointer"}
+          />
+        </div>
       </TooltipWrapper>
     </div>
   );
@@ -57,7 +61,6 @@ EditDashboardFiltersIcon.propTypes = {
   setDashboardModel: PropTypes.func,
   loadData: PropTypes.func,
   className: PropTypes.string,
-  user: PropTypes.object
 };
 
 export default EditDashboardFiltersIcon;
