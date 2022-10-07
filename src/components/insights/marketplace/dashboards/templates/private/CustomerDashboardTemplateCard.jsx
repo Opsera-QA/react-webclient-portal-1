@@ -16,6 +16,18 @@ export default function CustomerDashboardTemplateCard(
     dashboardTemplate,
     loadData,
   }) {
+  const getOwnerNameField = () => {
+    if (dashboardTemplate?.owner_name) {
+      return (
+        <Card.Text>
+          <span className="text-muted">
+            {dashboardTemplate.owner_name}
+          </span>
+        </Card.Text>
+      );
+    }
+  };
+
   const getDescriptionField = () => {
     if (dashboardTemplate?.description) {
       return (
