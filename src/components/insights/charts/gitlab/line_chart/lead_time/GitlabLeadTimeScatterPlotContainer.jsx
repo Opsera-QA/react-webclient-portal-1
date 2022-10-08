@@ -1,11 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
+
 import PropTypes from "prop-types";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import { ResponsiveScatterPlot } from "@nivo/scatterplot";
 import IconBase from "../../../../../common/icons/IconBase";
 import { faSquare } from "@fortawesome/pro-solid-svg-icons";
 import config from "./GitlabLeadTimeChartConfig";
+import GitlabLeadTimeInsightsModal from "./GitlabLeadTimeInsightsModal";
 function GitlabLeadTimeScatterPlotContainer({ chartData }) {
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState([]);
+
   const getScatterPlotsFromTimeStamp = (commit) => {
     const timestamp = commit["commitTimeStamp"];
     const hoursFraction = (timestamp.substr(11, 5).split(":")[1] / 60) * 100;
@@ -46,6 +52,7 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
       deployAverageLeadTime: deployment?.deployAverageLeadTime,
       deployCommitCount: deployment?.deployCommitCount,
       stepId: deployment?.stepId,
+      commits: deployment?.commits
     };
   };
   const commitsData = [
@@ -64,6 +71,19 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
   const markers = chartData.deployments.map((item) =>
     getDeploymentMarkers(item),
   );
+
+  const onNodeSelect = (node) => {
+      console.log(node);
+      if(node?.data?.type === "deploy"){
+          setShowModal(true);
+          setModalData(node?.data?.commits || []);
+      }
+  };
+
+  const onCloseModal = () => {
+    setShowModal(false);
+  };
+
   const getTrendChart = () => {
     return (
       <>
@@ -92,6 +112,7 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
           data={commitsData}
           {...config()}
           yScale={{ type: "linear", min: 0, max: 24 }}
+          onClick={(node) => onNodeSelect(node)}
           tooltip={({ node }) => {
             if (node?.data?.type === "deploy") {
               return (
@@ -135,6 +156,11 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
             );
           }}
           markers={markers}
+        />
+        <GitlabLeadTimeInsightsModal
+          visible={showModal}
+          data={modalData}
+          onHide={onCloseModal}
         />
       </>
     );
