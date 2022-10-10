@@ -68,7 +68,7 @@ const breadcrumbs = {
   },
   helpDocumentation: {
     parent: undefined,
-    name: "frequentlyAskedQuestions",
+    name: "helpDocumentation",
     path: paths.helpDocumentation,
     linkText: "Help Documentation",
     title: "Help Documentation",
@@ -791,7 +791,6 @@ const breadcrumbs = {
     title: "Git Custodian",
     linkText: "Git Custodian",
     icon: faShieldKeyhole,
-    isBeta: true,
   },
   reports: {
     parent: undefined,
