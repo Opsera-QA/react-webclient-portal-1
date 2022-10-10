@@ -34,7 +34,7 @@ export const githubActionsUniqueRunRunsSummaryMetadata = {
       id: "conclusion",
     },
     {
-      label: "Number of Runs",
+      label: "Run Attempt",
       id: "numberOfRuns",
     },
     {
