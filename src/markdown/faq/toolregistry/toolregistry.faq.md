@@ -44,5 +44,5 @@
 
 
 [**Bring Your Own Vault**](https://opsera.atlassian.net/l/c/5kKfazK1)  
-[**Custom Parameters Help Documentation**](https://opsera.atlassian.net/l/c/J1gniTM0)   
-[**Scripts Library Help Documentation**](https://opsera.atlassian.net/l/c/AAPJxWqm)
+[**Custom Parameters Help Documentation**](https://docs.opsera.io/tool-registry/parameters-creation)   
+[**Scripts Library Help Documentation**](https://docs.opsera.io/tool-registry/scripts-creation)
