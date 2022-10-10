@@ -15,7 +15,7 @@ function PipelinesHelpDocumentation({pipelineRoleDefinitions}) {
   const getHelpDocumentation = () => {
     return (
       <div>
-        <div>Opsera pipelines follow a declarative model. Use the following instructions to manage an existing pipeline or create a new pipeline. To view in depth documentation on pipeline, step configuration and webhook trigger setup view the <a href="https://docs.opsera.io/archive/opsera-pipelines" target="_blank" rel="noreferrer"><b>Opsera Pipelines Help Documentation</b>.</a></div>
+        <div>Opsera pipelines follow a declarative model. Use the following instructions to manage an existing pipeline or create a new pipeline. To view in depth documentation on pipeline, step configuration and webhook trigger setup view the <a href="https://opsera.atlassian.net/l/c/1H07BWCE" target="_blank" rel="noreferrer"><b>Opsera Pipelines Help Documentation</b>.</a></div>
         <div className={"ml-2"}>
           <div className={"mt-2"}><h5>Manage an existing pipeline:</h5></div>
           <ol>
