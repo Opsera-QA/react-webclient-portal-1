@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import FreeTrialWorkspaceFilterModel from "components/workspace/trial/views/freeTrialWorkspace.filter.model";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { workspaceActions } from "components/workspace/workspace.actions";
 import FreeTrialUserActivityReportSubNavigationBar
@@ -12,6 +11,7 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import FreeTrialUserActivityReportFilterModel
   from "components/settings/trial/activity_report/freeTrialUserActivityReport.filter.model";
+import accountsActions from "components/admin/accounts/accounts-actions";
 
 export default function FreeTrialUserActivityReport() {
   const [activityReportFilterModel, setActivityReportFilterModel] = useState(new FreeTrialUserActivityReportFilterModel());
@@ -68,6 +68,9 @@ export default function FreeTrialUserActivityReport() {
     );
     const tasks = DataParsingHelper.parseArray(taskResponse?.data?.data, []);
     workflows.push(...tasks);
+
+    const userResponse = await accountsActions.getFreeTrialActivityReportUsers(getAccessToken, cancelTokenSource);
+    console.log("userResponse: " + JSON.stringify(userResponse));
 
     if (isMounted?.current === true) {
       setActivityReportWorkflows([...workflows]);
