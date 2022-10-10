@@ -1165,7 +1165,7 @@ const breadcrumbs = {
     title: "Free Trial Activity Report",
     linkText: "Free Trial Activity Report",
     icon: faClipboardUser,
-    pageDescription: "Extend or Revoke a User's Free Trial access."
+    pageDescription: "View Free Trial User metrics and gain visibility on their Opsera activity."
   },
 
   pageNotFound: {

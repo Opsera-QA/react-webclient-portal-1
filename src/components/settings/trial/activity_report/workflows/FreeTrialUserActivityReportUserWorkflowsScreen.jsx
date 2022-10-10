@@ -11,9 +11,8 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import FreeTrialUserActivityReportFilterModel
   from "components/settings/trial/activity_report/freeTrialUserActivityReport.filter.model";
-import accountsActions from "components/admin/accounts/accounts-actions";
 
-export default function FreeTrialUserActivityReport() {
+export default function FreeTrialUserActivityReportUserWorkflowsScreen() {
   const [activityReportFilterModel, setActivityReportFilterModel] = useState(new FreeTrialUserActivityReportFilterModel());
   const [activityReportWorkflows, setActivityReportWorkflows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

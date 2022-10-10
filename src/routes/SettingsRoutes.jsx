@@ -36,6 +36,8 @@ import FreeTrialUserExpirationUserReinstatementScreen
 import FreeTrialUserExpirationUserRevocationScreen
   from "components/settings/trial/user_expiration/revocation/FreeTrialUserExpirationUserRevocationScreen";
 import FreeTrialUserActivityReport from "components/settings/trial/activity_report/FreeTrialUserActivityReport";
+import FreeTrialUserActivityReportUserSelectionScreen
+  from "components/settings/trial/activity_report/users/FreeTrialUserActivityReportUserSelectionScreen";
 
 export default function SettingsRoutes() {
   const {
@@ -115,6 +117,11 @@ export default function SettingsRoutes() {
         path={"/settings/trial/user/activity-report"}
         exact
         component={FreeTrialUserActivityReport}
+      />
+      <SecureRoute
+        path={"/settings/trial/user/activity-report/users"}
+        exact
+        component={FreeTrialUserActivityReportUserSelectionScreen}
       />
     </>
   );
