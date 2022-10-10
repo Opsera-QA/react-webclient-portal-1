@@ -65,7 +65,7 @@ const breadcrumbs = {
   },
   helpDocumentation: {
     parent: undefined,
-    name: "frequentlyAskedQuestions",
+    name: "helpDocumentation",
     path: paths.helpDocumentation,
     linkText: "Help Documentation",
     title: "Help Documentation",
@@ -125,8 +125,8 @@ const breadcrumbs = {
 
   // Administration
   admin: {
-    parent: undefined, 
-    name: "admin", 
+    parent: undefined,
+    name: "admin",
     path: paths.admin,
     linkText: "Administration Tools",
     title: "Administration Tools",
@@ -142,43 +142,43 @@ const breadcrumbs = {
     icon: faFileCode,
     pageDescription: "View React and Node Custom Environment Variables",
   },
-  
+
   systemStatus: {
-    parent: "admin", 
-    name: "systemStatus", 
+    parent: "admin",
+    name: "systemStatus",
     path: paths.systemStatus,
     linkText: "System Status",
     title: "System Status",
     icon: faHeartbeat
   },
   systemHealthCheck: {
-    parent: "admin", 
-    name: "systemHealthCheck", 
+    parent: "admin",
+    name: "systemHealthCheck",
     path: paths.systemHealthCheck,
     linkText: "System Health Check",
     title: "System Health Check",
     icon: faHeartbeat
   },
   deprecatedReports: {
-    parent: "admin", 
-    name: "deprecatedReports", 
+    parent: "admin",
+    name: "deprecatedReports",
     path: paths.deprecatedReports,
     linkText: "Reports",
     title: "Reports",
     icon: faLink
   },
   reportsRegistration: {
-    parent: "admin", 
-    name: "reportsRegistration", 
+    parent: "admin",
+    name: "reportsRegistration",
     path: paths.reportsRegistration,
     linkText: "Reports Registration",
     title: "Reports Registration",
     icon: faChartBar
   },
   systemManagement: {
-    parent: "admin", 
-    name: "systemManagement", 
-    path: paths.systemManagement, 
+    parent: "admin",
+    name: "systemManagement",
+    path: paths.systemManagement,
     title: "System Management",
     linkText: "System Management",
     icon: faEdit
@@ -576,7 +576,7 @@ const breadcrumbs = {
     icon: faTags
   },
 
-  // Audit Logging 
+  // Audit Logging
   logsExportManagement: {
     parent: "accountSettings",
     name: "logsExportManagement",
@@ -766,7 +766,6 @@ const breadcrumbs = {
     title: "Git Custodian",
     linkText: "Git Custodian",
     icon: faShieldKeyhole,
-    isBeta: true,
   },
   reports: {
     parent: undefined,
