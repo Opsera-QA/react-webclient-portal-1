@@ -73,9 +73,9 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
       return (
         <>
           <div className="row"/>
-          Total Selected Resolution Types<b> ({jiraResolutionNames?.length || 0})</b>
+          Total Selected Resolution Names<b> ({jiraResolutionNames?.length || 0})</b>
           <div className="row"/>
-          Please select a resolution type to get started
+          Please select a resolution name to get started
         </>
       );
     }

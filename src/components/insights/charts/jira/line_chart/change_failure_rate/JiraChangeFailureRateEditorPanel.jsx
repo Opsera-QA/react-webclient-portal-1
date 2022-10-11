@@ -8,8 +8,10 @@ import MetricJiraProjectsFilterInput
     from "../../../../../common/inputs/metric/filters/jira/MetricJiraProjectsFilterInput";
 import MetricJiraChangeTypesFilterInput
     from "../../../../../common/inputs/metric/filters/jira/MetricJiraChangeTypesFilterInput";
-import MetricJiraServiceComponentsFilterInput from 'components/common/inputs/metric/filters/jira/MetricJiraServiceComponentsFilterInput';
-import MetricJiraResolutionNamesFilterInput from 'components/common/inputs/metric/filters/jira/MetricJiraResolutionNamesFilterInput';
+import MetricJiraServiceComponentsFilterInput
+    from "../../../../../common/inputs/metric/filters/jira/MetricJiraServiceComponentsInput";
+import MetricJiraResolutionNamesFilterInput
+    from "../../../../../common/inputs/metric/filters/jira/MetricJiraResolutionNamesFilterInput";
 
 function JiraChangeFailureRateEditorPanel(
   {
