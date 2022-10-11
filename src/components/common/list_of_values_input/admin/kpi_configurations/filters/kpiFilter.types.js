@@ -32,7 +32,7 @@ export const KPI_FILTER_TYPES = {
   JIRA_PRIORITIES:"jira-priorities",
   JIRA_PROJECTS:"jira-projects",
   JIRA_CHANGE_TYPES: "jira-change-types",
-  JIRA_SERVICE_COMPONENTS: "jira-service-components"
+  JIRA_SERVICE_COMPONENTS: "jira-service-components",
 };
 
 export const KPI_FILTER_TYPE_LABELS = {
@@ -68,7 +68,8 @@ export const KPI_FILTER_TYPE_LABELS = {
   GITLAB_PROJECT: "Gitlab Repository",
   JIRA_PRIORITIES:"Jira Priorities",
   JIRA_PROJECTS:"Jira Projects",
-  JIRA_CHANGE_TYPES:"Jira Change Types"
+  JIRA_CHANGE_TYPES:"Jira Change Types",
+  JIRA_SERVICE_COMPONENTS: "Jira Service Components",
 };
 
 export const getKpiFilterTypeLabel = (kpiFilterType) => {
@@ -310,6 +311,11 @@ export const KPI_FILTER_SELECT_OPTIONS = [
   {
     type: KPI_FILTER_TYPES.JIRA_CHANGE_TYPES,
     text: KPI_FILTER_TYPE_LABELS.JIRA_CHANGE_TYPES,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.JIRA_SERVICE_COMPONENTS,
+    text: KPI_FILTER_TYPE_LABELS.JIRA_SERVICE_COMPONENTS,
     value: [],
   },
 ];
