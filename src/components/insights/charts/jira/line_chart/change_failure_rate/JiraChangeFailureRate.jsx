@@ -56,7 +56,7 @@ function JiraChangeFailureRate({
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(dashboardData)]);
+  }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -79,16 +79,16 @@ function JiraChangeFailureRate({
       } else {
         setGoalsData(DEFAULT_GOALS);
       }
-      const jiraChangeTypes = getResultFromKpiConfiguration(kpiConfiguration, 'jira-change-types');
+      const jiraResolutionNames = getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names');
       let response;
-      if(jiraChangeTypes?.length){
+      if(jiraResolutionNames?.length){
         response = await jiraAction.getJiraChangeFailureRate(
           getAccessToken,
           cancelSource,
           kpiConfiguration,
           dashboardTags,
           dashboardOrgs,
-          jiraChangeTypes
+          jiraResolutionNames
         );
         const metrics = response?.data?.data?.jiraChangeFailureRate?.data;
         if (isMounted?.current === true && Array.isArray(metrics?.chartData)) {
