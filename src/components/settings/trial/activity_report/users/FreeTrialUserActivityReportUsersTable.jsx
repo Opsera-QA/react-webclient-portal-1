@@ -4,48 +4,39 @@ import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import {
   getCustomTablePipelineStateColumnDefinition,
-  getFormattedLabelWithFunctionColumnDefinition,
+  getFormattedLabelWithFunctionColumnDefinition, getSsoUserNameField, getTableBooleanIconColumn,
   getTableDateTimeColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer, {
 } from "components/common/table/FilterContainer";
-import { faClipboardUser, faUsers } from "@fortawesome/pro-light-svg-icons";
+import { faUsers } from "@fortawesome/pro-light-svg-icons";
 import { workspaceHelper } from "components/workspace/workspace.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import {
-  freeTrialUserActivityReportMetadata
-} from "components/settings/trial/activity_report/freeTrialUserActivityReport.metadata";
-import { workspaceConstants } from "components/workspace/workspace.constants";
-import InlinePlatformSsoUserFilterSelectInput
-  from "components/common/list_of_values_input/users/sso/platform/InlinePlatformSsoUserFilterSelectInput";
+  freeTrialUserActivityReportUserMetadata
+} from "components/settings/trial/activity_report/users/freeTrialUserActivityReportUser.metadata";
 
 export default function FreeTrialUserActivityReportUsersTable(
   {
     freeTrialUsers,
-    activityReportFilterModel,
-    setActivityReportFilterModel,
     loadData,
     isLoading,
   }) {
-  const fields = freeTrialUserActivityReportMetadata.fields;
+  const fields = freeTrialUserActivityReportUserMetadata.fields;
   const history = useHistory();
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "owner_email")),
+      getSsoUserNameField(),
+      getTableTextColumn(getField(fields, "email")),
       getTableTextColumn(getField(fields, "_id")),
-      getFormattedLabelWithFunctionColumnDefinition(
-        getField(fields, "workspaceType"),
-        workspaceConstants.getLabelForWorkspaceType,
-      ),
-      getTableTextColumn(getField(fields, "run_count")),
-      getTableDateTimeColumn(getField(fields, "firstRunDate")),
-      getTableDateTimeColumn(getField(fields, "lastRunDate")),
-      getCustomTablePipelineStateColumnDefinition(getField(fields, "lastRunStatus")),
+      getTableTextColumn(getField(fields, "toolCount")),
+      getTableTextColumn(getField(fields, "workflowCount")),
       getTableDateTimeColumn(getField(fields, "createdAt")),
+      getTableDateTimeColumn(getField(fields, "updatedAt")),
+      getTableBooleanIconColumn(getField(fields, "expired")),
     ],
     [fields]
   );
@@ -56,20 +47,6 @@ export default function FreeTrialUserActivityReportUsersTable(
     if (hasStringValue(detailViewLink) === true) {
       history.push(detailViewLink);
     }
-  };
-
-  const getInlineFilters = () => {
-    return (
-      <div className={"d-flex"}>
-        <InlinePlatformSsoUserFilterSelectInput
-          filterModel={activityReportFilterModel}
-          fieldName={"userId"}
-          loadDataFunction={loadData}
-          className={"mr-2"}
-          disabled={isLoading}
-        />
-      </div>
-    );
   };
 
   const getTable = () => {
@@ -88,11 +65,8 @@ export default function FreeTrialUserActivityReportUsersTable(
     <FilterContainer
       loadData={loadData}
       isLoading={isLoading}
-      inlineFilters={getInlineFilters()}
-      filterDto={activityReportFilterModel}
-      setFilterDto={setActivityReportFilterModel}
       body={getTable()}
-      titleIcon={faClipboardUser}
+      titleIcon={faUsers}
       title={"Free Trial Users"}
       className={"px-2 pb-2"}
     />
@@ -101,8 +75,6 @@ export default function FreeTrialUserActivityReportUsersTable(
 
 FreeTrialUserActivityReportUsersTable.propTypes = {
   freeTrialUsers: PropTypes.array,
-  activityReportFilterModel: PropTypes.object,
-  setActivityReportFilterModel: PropTypes.func,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
 };

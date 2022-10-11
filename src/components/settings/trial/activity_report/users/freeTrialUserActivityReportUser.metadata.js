@@ -9,6 +9,10 @@ export const freeTrialUserActivityReportUserMetadata = {
       id: "name",
     },
     {
+      label: "Email",
+      id: "email",
+    },
+    {
       label: "Workflow Count",
       id: "workflowCount",
     },
