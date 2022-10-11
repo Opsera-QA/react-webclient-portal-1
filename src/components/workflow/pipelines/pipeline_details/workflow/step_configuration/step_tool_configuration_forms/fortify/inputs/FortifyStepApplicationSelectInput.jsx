@@ -93,6 +93,7 @@ function FortifyStepApplicationSelectInput({ model, setModel, disabled, toolId }
       valueField={"applicationId"}
       busy={isLoading}
       disabled={disabled}
+      error={errorMessage}
     />
   );
 }

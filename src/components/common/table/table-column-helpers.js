@@ -3,9 +3,8 @@ import {
   faCheckCircle,
   faCircle, faOctagon,
   faPauseCircle, faPlayCircle, faSearchPlus,
-  faSpinner,
   faStopCircle,
-  faTimesCircle, faTrash, faPlay, faExclamationCircle,
+  faTimesCircle, faTrash, faPlay, faExclamationCircle, faUnlock, faLock,
 } from "@fortawesome/pro-light-svg-icons";
 import {
   faGithub,
@@ -35,6 +34,9 @@ import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by
 import PipelineTypeIconBase from "components/common/fields/pipelines/types/PipelineTypeIconBase";
 import OrchestrationStateFieldBase
   from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import AccessRoleDisplayer from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayer";
 
 export const getCustomTableHeader = (field) => {
   return field ? field.label : "";
@@ -96,6 +98,21 @@ export const getOwnerNameField = (headerText = "Owner Name") => {
   return {
     Header: headerText,
     accessor: "owner_name",
+  };
+};
+
+export const getSsoUserNameField = (
+  headerText = "Name",
+  className = "no-wrap-inline",
+) => {
+  return {
+    Header: headerText,
+    accessor: "name",
+    Cell: function getRoleAccessLevel(row) {
+      const dataObject = DataParsingHelper.parseObject(row?.data[row?.row?.index], {});
+      return `${dataObject?.firstName} ${dataObject?.lastName}`;
+    },
+    class: className,
   };
 };
 
@@ -593,6 +610,7 @@ export const getCountColumnWithoutField = (header, accessor, className) => {
   };
 };
 
+// TODO: Combine with the below
 export const getRoleAccessLevelColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
@@ -618,6 +636,58 @@ export const getRoleAccessLevelColumn = (field, className) => {
       return "ROLE ACCESS LEVEL UNKNOWN";
     },
     class: className ? className :  "no-wrap-inline"
+  };
+};
+
+export const getRoleAccessColumn = (
+  type,
+  headerText = "Access",
+  rolesField = "roles",
+  className = "no-wrap-inline",
+) => {
+  return {
+    Header: headerText,
+    accessor: rolesField,
+    Cell: function getRoleAccessLevel(row) {
+      const roles = DataParsingHelper.parseArray(row?.value, []);
+      const owner = row?.data[row?.row?.index]?.owner;
+
+      if (!Array.isArray(roles) || roles.length === 0 || isMongoDbId(owner) === false) {
+        return (
+          <div>
+            <TooltipWrapper
+              innerText={`This ${type} is public and accessible to everyone.`}
+              wrapInDiv={true}
+            >
+              <IconBase icon={faUnlock} className={"danger-red ml-2"} />
+            </TooltipWrapper>
+          </div>
+        );
+      }
+
+      const rolesPopover = (
+        <div>
+          <div className={"mb-3"}>{`This ${type} is secured and only visible to Site Administrators, its owner, and those given access`}</div>
+          <AccessRoleDisplayer
+            roles={roles}
+          />
+        </div>
+      );
+
+      return (
+        <div>
+          <TooltipWrapper
+            title={`Secured ${type} Details`}
+            innerText={rolesPopover}
+            wrapInDiv={true}
+            placement={"bottom"}
+          >
+              <IconBase icon={faLock} className={"ml-2"} />
+          </TooltipWrapper>
+        </div>
+      );
+    },
+    class: className,
   };
 };
 

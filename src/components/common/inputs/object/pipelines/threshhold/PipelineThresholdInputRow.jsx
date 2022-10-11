@@ -27,11 +27,11 @@ function PipelineThresholdInputRow(
   const getThresholdLevelInput = () => {
     return (
       <StandaloneSelectInput
-        selectOptions={THRESHOLD_LEVELS}
+        selectOptions={THRESHOLD_LEVELS.filter(level => !disabledThresholdLevels.includes(level.value))}
         valueField={"value"}
         textField={"text"}
         value={level}
-        disabled={disabled || disabledThresholdLevels}
+        disabled={disabled}
         placeholder={"Select A Threshold Level"}
         setDataFunction={(newValue) => updateThresholdLevel(newValue?.value)}
       />

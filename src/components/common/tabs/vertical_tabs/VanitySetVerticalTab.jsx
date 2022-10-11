@@ -59,7 +59,7 @@ function VanitySetVerticalTab(
       >
         <div>
           <div className={"h-100 d-flex"}>
-            <IconBase icon={icon} className={"mr-2"} iconSize={"2x"} />
+            <IconBase icon={icon} className={"mr-2"} iconSize={"lg"} />
             <div className="my-auto">{tabText}</div>
           </div>
         </div>

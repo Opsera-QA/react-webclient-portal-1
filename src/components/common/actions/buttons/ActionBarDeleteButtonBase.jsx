@@ -3,15 +3,16 @@ import PropTypes from "prop-types";
 import ActionBarButton from "./ActionBarButton";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
 
-function ActionBarDeleteButtonBase(
+export default function ActionBarDeleteButtonBase(
   {
     handleDeleteFunction,
     type,
     isDeleting,
     className,
+    visible,
   }) {
 
-  if (handleDeleteFunction == null) {
+  if (handleDeleteFunction == null || visible === false) {
     return null;
   }
 
@@ -32,6 +33,5 @@ ActionBarDeleteButtonBase.propTypes = {
   isDeleting: PropTypes.bool,
   type: PropTypes.string,
   className: PropTypes.string,
+  visible: PropTypes.func,
 };
-
-export default ActionBarDeleteButtonBase;

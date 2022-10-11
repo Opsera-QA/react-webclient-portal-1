@@ -15,8 +15,8 @@ import {hierarchyFiltersMetadata} from "components/insights/dashboards/hierarchy
 import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata.js";
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
 import OrganizationMultiSelectInput from "components/common/list_of_values_input/settings/organizations/OrganizationMultiSelectInput";
-import modelHelpers from "components/common/model/modelHelpers";
-function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFunction, type, user}) {
+
+function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFunction, type}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [temporaryDataObject, setTemporaryDataObject] = useState(undefined);

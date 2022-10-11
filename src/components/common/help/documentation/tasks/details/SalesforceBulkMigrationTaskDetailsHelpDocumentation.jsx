@@ -14,7 +14,7 @@ function SalesforceBulkMigrationTaskDetailsHelpDocumentation() {
   const getHelpDocumentation = () => {
     return (
       <div>
-        The {getTaskTypeLabel(TASK_TYPES.SALESFORCE_BULK_MIGRATION)} Task allows you to migrate the entire SFDC org metadata components to a GIT repository branch. Once the task has been created, run the task to choose the metadata component types and the destination branch to pull in the changes. While performing complete sync-up, Opsera will push the code to the repository branch and override the components if present in the configured branch. This workflow requires task creation, followed by a task run. For more detailed information on the Salesforce Bulk Migration Task, view the <a href="https://opsera.atlassian.net/l/c/x4aRq14a" target="_blank" rel="noreferrer"><b>Salesforce Bulk Migration Task Help Documentation</b>.</a>
+        The {getTaskTypeLabel(TASK_TYPES.SALESFORCE_BULK_MIGRATION)} Task allows you to migrate the entire SFDC org metadata components to a GIT repository branch. Once the task has been created, run the task to choose the metadata component types and the destination branch to pull in the changes. While performing complete sync-up, Opsera will push the code to the repository branch and override the components if present in the configured branch. This workflow requires task creation, followed by a task run. For more detailed information on the Salesforce Bulk Migration Task, view the <a href="https://docs.opsera.io/salesforce/salesforce-bulk-migration-task-help-documentation" target="_blank" rel="noreferrer"><b>Salesforce Bulk Migration Task Help Documentation</b>.</a>
       </div>
     );
   };

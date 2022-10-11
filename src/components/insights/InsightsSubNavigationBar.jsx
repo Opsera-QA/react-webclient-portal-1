@@ -14,21 +14,15 @@ import {
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-helpers";
-import axios from "axios";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function InsightsSubNavigationBar({currentTab}) {
-  const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const { featureFlagHideItemInProd } = useContext(AuthContext);
   const history = useHistory();
-
-  useEffect(async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-    }
-  }, []);
+  const {
+    isSiteAdministrator,
+    accessRoleData,
+  } = useComponentStateReference();
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
@@ -106,6 +100,29 @@ function InsightsSubNavigationBar({currentTab}) {
     }
   };
 
+  const getSiteAdministratorOnlyTabs = () => {
+    if (isSiteAdministrator === true) {
+      return (
+        <>
+          <NavigationTab
+            icon={faLink}
+            tabName={"connectedAssets"}
+            handleTabClick={handleTabClick}
+            activeTab={currentTab}
+            tabText={"Connected Assets"}
+            isBeta={true}
+          />
+          <NavigationTab
+            icon={faShieldKeyhole}
+            tabName={"gitCustodian"}
+            handleTabClick={handleTabClick}
+            activeTab={currentTab}
+            tabText={"Git Custodian"}
+          />
+        </>
+      );
+    }
+  };
 
   return (
     <NavigationTabContainer>
@@ -140,22 +157,7 @@ function InsightsSubNavigationBar({currentTab}) {
         tabText={"Synopsis"}
       />
       {getRelease360Tab()} */}
-      {meetsRequirements(ROLE_LEVELS.ADMINISTRATORS, accessRoleData) && <NavigationTab
-        icon={faLink}
-        tabName={"connectedAssets"}
-        handleTabClick={handleTabClick}
-        activeTab={currentTab}
-        tabText={"Connected Assets"}
-        isBeta={true}
-      /> }
-      {meetsRequirements(ROLE_LEVELS.ADMINISTRATORS, accessRoleData) && <NavigationTab
-        icon={faShieldKeyhole}
-        tabName={"gitCustodian"}
-        handleTabClick={handleTabClick}
-        activeTab={currentTab}
-        tabText={"Git Custodian"}
-        isBeta={true}
-      /> }
+      {getSiteAdministratorOnlyTabs()}
       {getActiveViewerTab()}
     </NavigationTabContainer>
   );

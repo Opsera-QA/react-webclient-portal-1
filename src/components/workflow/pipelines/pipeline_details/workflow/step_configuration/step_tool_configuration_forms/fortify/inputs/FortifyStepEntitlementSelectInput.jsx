@@ -82,6 +82,7 @@ function FortifyStepEntitlementSelectInput({ model, setModel, disabled }) {
       valueField={"name"}
       busy={isLoading}
       disabled={disabled}
+      error={errorMessage}
     />
   );
 }
