@@ -20,14 +20,14 @@ import {getResultFromKpiConfiguration} from "../../../charts-helpers";
 function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration, dataPoint, trend }) {
   
   const [maxGoalsValue, setMaxGoalsValue] = useState(goalsData);
-  const [jiraChangeTypes, setJiraChangeTypes] = useState([]);
+  const [jiraResolutionNames, setJiraResolutionNames] = useState([]);
 
   useEffect(() => {
     let dataHigh = {x: "", y: 0};
     dataHigh = _.maxBy(chartData, 'y');
     const high = dataHigh?.y > goalsData ? dataHigh?.y : goalsData;
     setMaxGoalsValue(Math.ceil(high));
-    setJiraChangeTypes(getResultFromKpiConfiguration(kpiConfiguration, 'jira-change-types'));
+    setJiraResolutionNames(getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names'));
   }, [goalsData, chartData]);
 
   let cfrChartData = [
@@ -69,13 +69,13 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
     );
   };
   const getLegends = () => {
-    if(!jiraChangeTypes || (Array.isArray(jiraChangeTypes) && jiraChangeTypes.length == 0)) {
+    if(!jiraResolutionNames || (Array.isArray(jiraResolutionNames) && jiraResolutionNames.length == 0)) {
       return (
         <>
           <div className="row"/>
-          Total Selected Changes<b> ({jiraChangeTypes?.length || 0})</b>
+          Total Selected Resolution Types<b> ({jiraResolutionNames?.length || 0})</b>
           <div className="row"/>
-          Please select a change type to get started
+          Please select a resolution type to get started
         </>
       );
     }
