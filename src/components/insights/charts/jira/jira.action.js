@@ -98,7 +98,32 @@ jiraActions.getJiraServiceComponents = async (
 ) => {
   const apiUrl = jiraBaseURL + "jiraServiceComponents";
   let postBody = {};
-  // For change failure rate, project will be given as string
+  // project will be given as string
+  // Api is written in such a way that it accepts multiple projects.
+  if(Array.isArray(project)) {
+    if(project.length > 0){
+      postBody = {jiraProjects:project};
+    }
+  } else if(project){
+    postBody = {jiraProjects:[project]};
+  }
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
+jiraActions.getJiraResolutionNames = async (
+  getAccessToken,
+  cancelTokenSource,
+  project
+) => {
+  const apiUrl = jiraBaseURL + "jiraResolutionNames";
+  let postBody = {};
+  // project will be given as string
   // Api is written in such a way that it accepts multiple projects.
   if(Array.isArray(project)) {
     if(project.length > 0){
@@ -140,7 +165,8 @@ jiraActions.getJiraChangeFailureRate = async (
     dashboardOrgs: dashboardOrgs,
     jiraProjects: [getJiraProjectsFromKpiConfiguration(kpiConfiguration)],
     jiraChangeTypes: jiraChangeTypes,
-    jiraServiceComponents: getResultFromKpiConfiguration(kpiConfiguration, 'jira-service-components')
+    jiraServiceComponents: getResultFromKpiConfiguration(kpiConfiguration, 'jira-service-components'),
+    jiraResolutionNames: getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names')
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(

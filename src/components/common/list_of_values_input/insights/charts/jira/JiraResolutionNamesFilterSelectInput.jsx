@@ -5,7 +5,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import jiraAction from "../../../../../insights/charts/jira/jira.action";
 
-function JiraServiceComponentsFilterSelectInput({
+function JiraResolutionNamesFilterSelectInput({
   placeholderText,
   valueField,
   textField,
@@ -15,14 +15,14 @@ function JiraServiceComponentsFilterSelectInput({
   project
 }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [serviceComponents, setServiceComponents] = useState([]);
+  const [resolutionNames, setResolutionNames] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    setServiceComponents([]);
+    setResolutionNames([]);
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
@@ -46,7 +46,7 @@ function JiraServiceComponentsFilterSelectInput({
     try {
       setError(undefined);
       setIsLoading(true);
-      await loadServiceComponents(cancelSource);
+      await loadResolutionNames(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
@@ -58,14 +58,14 @@ function JiraServiceComponentsFilterSelectInput({
     }
   };
 
-  const loadServiceComponents = async (cancelSource = cancelTokenSource) => {
-    const response = await jiraAction.getJiraServiceComponents(
+  const loadResolutionNames = async (cancelSource = cancelTokenSource) => {
+    const response = await jiraAction.getJiraResolutionNames(
       getAccessToken,
       cancelSource,
       project
     );
     if (response.data != null) {
-      setServiceComponents(response?.data?.data?.jiraServiceComponentsList?.data);
+      setResolutionNames(response?.data?.data?.jiraResolutionNamesList?.data);
     }
   };
   const disabled = model.getData('jira-projects').length === 0;
@@ -74,7 +74,7 @@ function JiraServiceComponentsFilterSelectInput({
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={serviceComponents}
+      selectOptions={resolutionNames}
       busy={isLoading}
       valueField={valueField}
       error={error}
@@ -86,7 +86,7 @@ function JiraServiceComponentsFilterSelectInput({
   );
 }
 
-JiraServiceComponentsFilterSelectInput.propTypes = {
+JiraResolutionNamesFilterSelectInput.propTypes = {
   placeholderText: PropTypes.string,
   fieldName: PropTypes.string,
   textField: PropTypes.string,
@@ -98,9 +98,9 @@ JiraServiceComponentsFilterSelectInput.propTypes = {
   project: PropTypes.array
 };
 
-JiraServiceComponentsFilterSelectInput.defaultProps = {
+JiraResolutionNamesFilterSelectInput.defaultProps = {
   textField: "text",
   valueField: "value",
 };
 
-export default JiraServiceComponentsFilterSelectInput;
+export default JiraResolutionNamesFilterSelectInput;
