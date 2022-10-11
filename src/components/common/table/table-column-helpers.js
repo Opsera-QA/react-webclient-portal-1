@@ -101,6 +101,21 @@ export const getOwnerNameField = (headerText = "Owner Name") => {
   };
 };
 
+export const getSsoUserNameField = (
+  headerText = "Name",
+  className = "no-wrap-inline",
+) => {
+  return {
+    Header: headerText,
+    accessor: "name",
+    Cell: function getRoleAccessLevel(row) {
+      const dataObject = DataParsingHelper.parseObject(row?.data[row?.row?.index], {});
+      return `${dataObject?.firstName} ${dataObject?.lastName}`;
+    },
+    class: className,
+  };
+};
+
 export const getLimitedTableTextColumn = (field, maxLength, className) => {
   return {
     Header: getCustomTableHeader(field),
