@@ -8,7 +8,7 @@ function GitlabLeadTimeTrendDataBlock({
   value,
   prevValue,
   trend,
-  getReverseIcon,
+  getTrendIcon,
   topText,
   bottomText,
 }) {
@@ -20,7 +20,7 @@ function GitlabLeadTimeTrendDataBlock({
       <ThreeLineDataBlockBase
         className={`${trend} p-2 h-100`}
         topText={topText}
-        icon={getReverseIcon(trend)}
+        icon={getTrendIcon(trend)}
         bottomText={`${bottomText}${prevValue}`}
         middleText={<MetricScoreText score={value} />}
       />
@@ -32,7 +32,7 @@ GitlabLeadTimeTrendDataBlock.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   prevValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   trend: PropTypes.string,
-  getReverseIcon: PropTypes.func,
+  getTrendIcon: PropTypes.func,
   topText: PropTypes.string,
   bottomText: PropTypes.string,
 };
