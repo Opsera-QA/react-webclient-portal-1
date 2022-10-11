@@ -9,7 +9,7 @@ import { JIRA_CHANGE_FAILURE_RATE_CONSTANTS as constants } from "./JiraChangeFai
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import jiraAction from "../../jira.action";
 import JiraChangeFailureRateDataBlockContainer from "./JiraChangeFailureRateDataBlockContainer";
-import {getResultFromKpiConfiguration,getTrend} from "../../../charts-helpers";
+import {getResultFromKpiConfiguration,getReverseTrend} from "../../../charts-helpers";
 import JiraChangeFailureRateHelpDocumentation
   from "../../../../../common/help/documentation/insights/charts/JiraChangeFailureRateHelpDocumentation";
 
@@ -137,7 +137,7 @@ function JiraChangeFailureRate({
               goalsData={goalsData?.change_failure_rate}
               kpiConfiguration={kpiConfiguration}
               dataPoint={changeFailureRateDataPoint}
-              trend={getTrend(metricData.changeFailureRate,metricData.prevChangeFailureRate)}
+              trend={getReverseTrend(metricData.changeFailureRate,metricData.prevChangeFailureRate)}
             />
           </Col>
         )}

@@ -10,7 +10,7 @@ import { GITLAB_DEPLOYMENT_FREQUENCY_CONSTANTS as constants } from "./GitlabDepl
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import GitlabDeployFrequencyChartHelpDocumentation from "../../../../common/help/documentation/insights/charts/GitlabDeployFrequencyChartHelpDocumentation";
 import GitlabDeploymentFrequencyDataBlock from "./GitlabDeploymentFrequencyDataBlock";
-import {getDeploymentStageFromKpiConfiguration, getTrend, getReverseIcon} from "../../charts-helpers";
+import {getDeploymentStageFromKpiConfiguration, getTrend, getTrendIcon} from "../../charts-helpers";
 import GitlabDeploymentFrequencyLineChartContainer from "./GitlabDeploymentFrequencyLineChartContainer";
 import GitlabDeploymentFrequencyTrendDataBlock from "./GitlabDeploymentFrequencyTrendDataBlock";
 
@@ -52,7 +52,7 @@ function GitlabDeploymentFrequency({
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(dashboardData)]);
+  },[]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -155,7 +155,7 @@ function GitlabDeploymentFrequency({
                 dataPoint={deploymentFrequencyDataPoint}
                 trend={getTrend(metricData?.step?.averageStepRuns,
                   metricData?.step?.previousAverageStepRuns)}
-                getReverseIcon={getReverseIcon}
+                getTrendIcon={getTrendIcon}
                 topText={"Average Deployment Frequency"}
                 bottomText={"Prev Average: "}
               />
