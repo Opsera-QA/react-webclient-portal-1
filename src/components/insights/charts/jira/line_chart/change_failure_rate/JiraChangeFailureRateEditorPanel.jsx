@@ -8,6 +8,9 @@ import MetricJiraProjectsFilterInput
     from "../../../../../common/inputs/metric/filters/jira/MetricJiraProjectsFilterInput";
 import MetricJiraChangeTypesFilterInput
     from "../../../../../common/inputs/metric/filters/jira/MetricJiraChangeTypesFilterInput";
+import MetricJiraServiceComponentsFilterInput from 'components/common/inputs/metric/filters/jira/MetricJiraServiceComponentsFilterInput';
+import MetricJiraResolutionNamesFilterInput from 'components/common/inputs/metric/filters/jira/MetricJiraResolutionNamesFilterInput';
+
 function JiraChangeFailureRateEditorPanel(
   {
     metricModel,
@@ -42,6 +45,16 @@ function JiraChangeFailureRateEditorPanel(
         type="single"
       />
       <MetricJiraChangeTypesFilterInput
+        metricFilterModel={metricFilterModel}
+        setMetricFilterModel={setMetricFilterModel}
+        metricModel={metricModel}
+      />
+      <MetricJiraServiceComponentsFilterInput
+        metricFilterModel={metricFilterModel}
+        setMetricFilterModel={setMetricFilterModel}
+        metricModel={metricModel}
+      />
+      <MetricJiraResolutionNamesFilterInput
         metricFilterModel={metricFilterModel}
         setMetricFilterModel={setMetricFilterModel}
         metricModel={metricModel}
