@@ -1,19 +1,20 @@
 import { format } from "date-fns";
 import {
   faCheckCircle,
-  faCircle, faOctagon,
-  faPauseCircle, faPlayCircle, faSearchPlus,
-  faSpinner,
+  faCircle,
+  faExclamationCircle,
+  faLock,
+  faOctagon,
+  faPauseCircle,
+  faPlay,
+  faPlayCircle,
+  faSearchPlus,
   faStopCircle,
-  faTimesCircle, faTrash, faPlay, faExclamationCircle, faUnlock, faLock,
+  faTimesCircle,
+  faTrash,
+  faUnlock,
 } from "@fortawesome/pro-light-svg-icons";
-import {
-  faGithub,
-  faGitlab,
-  faBitbucket,
-  faJira,
-  faSlack
-} from "@fortawesome/free-brands-svg-icons";
+import { faBitbucket, faGithub, faGitlab, faJira, faSlack } from "@fortawesome/free-brands-svg-icons";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import WarningIcon from "../../common/icons/table/WarningIcon";
 import FailIcon from "../../common/icons/table/FailIcon";
@@ -22,11 +23,11 @@ import DangerMetricIcon from "components/common/icons/metric/danger/DangerMetric
 import React from "react";
 import DashboardFavoritesIcon from "components/common/icons/dashboards/DashboardFavoritesIcon";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
-import {Button} from "react-bootstrap";
-import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date/date.helpers";
-import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
+import { Button } from "react-bootstrap";
+import { convertFutureDateToDhmsFromNowString } from "components/common/helpers/date/date.helpers";
+import { capitalizeFirstLetter, truncateString } from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
+import { ACCESS_ROLES_FORMATTED_LABELS } from "components/common/helpers/role-helpers";
 import AppliedTagBadge from "components/common/badges/tag/AppliedTagBadge";
 import NoTrendMetricIcon from "components/common/icons/metric/trend/NoTrendMetricIcon";
 import IconBase from "components/common/icons/IconBase";
@@ -99,6 +100,21 @@ export const getOwnerNameField = (headerText = "Owner Name") => {
   return {
     Header: headerText,
     accessor: "owner_name",
+  };
+};
+
+export const getSsoUserNameField = (
+  headerText = "Name",
+  className = "no-wrap-inline",
+) => {
+  return {
+    Header: headerText,
+    accessor: "name",
+    Cell: function getRoleAccessLevel(row) {
+      const dataObject = DataParsingHelper.parseObject(row?.data[row?.row?.index], {});
+      return `${dataObject?.firstName} ${dataObject?.lastName}`;
+    },
+    class: className,
   };
 };
 
