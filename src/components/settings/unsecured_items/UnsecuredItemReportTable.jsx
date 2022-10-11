@@ -15,28 +15,29 @@ function UnsecuredItemReportTable({
   paginationModel,
   setPaginationModel,
   loadDataFunction,
+  tableHeight,
 }) {
   const fields = unsecureItemsReportMetadata.fields;
   const history = useHistory();
 
   const onRowSelect = (grid, row) => {
-    if (row?.type === "pipeline" && row?.id) {
+    if (row?.object_type === "pipeline" && row?.id) {
       history.push(`/workflow/details/${row.id}/summary`);
     }
 
-    if (row?.type === "task" && row?.id) {
+    if (row?.object_type === "task" && row?.id) {
       history.push(`/task/details/${row.id}`);
     }
 
-    if (row?.type === "tool" && row?.id) {
+    if (row?.object_type === "tool" && row?.id) {
       history.push(`/inventory/tools/details/${row.id}`);
     }
 
-    if (row?.type === "script" && row?.id) {
+    if (row?.object_type === "script" && row?.id) {
       history.push(`/inventory/scripts`);
     }
 
-    if (row?.type === "parameter" && row?.id) {
+    if (row?.object_type === "parameter" && row?.id) {
       history.push(`/inventory/parameters`);
     }
   };
@@ -95,6 +96,7 @@ function UnsecuredItemReportTable({
       isLoading={isLoading}
       setPaginationModel={setPaginationModel}
       paginationModel={paginationModel}
+      tableHeight={tableHeight}
     />
   );
 }
@@ -105,6 +107,7 @@ UnsecuredItemReportTable.propTypes = {
   setPaginationModel: PropTypes.func,
   paginationModel: PropTypes.object,
   loadDataFunction: PropTypes.func,
+  tableHeight: PropTypes.any,
 };
 
 export default UnsecuredItemReportTable;
