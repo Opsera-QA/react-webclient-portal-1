@@ -6,6 +6,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
 import UnsecuredItemReportVerticalTabContainer from "components/settings/unsecured_items/UnsecuredItemReportVerticalTabContainer";
 import UnsecuredItemReportTable from "components/settings/unsecured_items/UnsecuredItemReportTable";
+import { FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION } from "components/common/table/FilterContainer.jsx";
 
 function UnsecuredItemReportViews({
   items,
@@ -32,6 +33,9 @@ function UnsecuredItemReportViews({
         isLoading={isLoading}
         itemFilterModel={itemFilterModel}
         setItemFilterModel={setItemFilterModel}
+        tableHeight={
+          FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
+        }
       />
     );
   };
@@ -56,6 +60,9 @@ function UnsecuredItemReportViews({
       filterDto={itemFilterModel}
       setFilterDto={setItemFilterModel}
       className={"px-2 pb-2"}
+      minimumHeight={
+        FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
+      }
     />
   );
 }
