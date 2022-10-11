@@ -31,7 +31,8 @@ export const KPI_FILTER_TYPES = {
   GITLAB_PROJECT: "gitlab-project",
   JIRA_PRIORITIES:"jira-priorities",
   JIRA_PROJECTS:"jira-projects",
-  JIRA_CHANGE_TYPES: "jira-change-types"
+  JIRA_CHANGE_TYPES: "jira-change-types",
+  JIRA_SERVICE_COMPONENTS: "jira-service-components"
 };
 
 export const KPI_FILTER_TYPE_LABELS = {
