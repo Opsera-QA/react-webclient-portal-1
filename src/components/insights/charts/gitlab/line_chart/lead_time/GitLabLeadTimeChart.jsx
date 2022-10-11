@@ -10,9 +10,7 @@ import GitlabLeadTimeHelpDocumentation from "../../../../../common/help/document
 import GitlabLeadTimeScatterPlotContainer from "./GitlabLeadTimeScatterPlotContainer";
 import GitlabLeadTimeDataBlock from "./GitlabLeadTimeDataBlock";
 import {
-  getDeploymentStageFromKpiConfiguration,
-  getReverseIcon,
-  getTrend,
+  getDeploymentStageFromKpiConfiguration, getReverseTrend, getReverseTrendIcon,
 } from "../../../charts-helpers";
 import GitlabLeadTimeTrendDataBlock from "./GitlabLeadTimeTrendDataBlock";
 
@@ -51,7 +49,7 @@ function GitLabLeadTimeChart({
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(dashboardData)]);
+  }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -169,24 +167,24 @@ function GitLabLeadTimeChart({
               <GitlabLeadTimeTrendDataBlock
                 value={metricData?.totalAverageLeadTime}
                 prevValue={`${metricData?.previousTotalAverageLeadTime} Day(s)`}
-                trend={getTrend(
+                trend={getReverseTrend(
                   metricData?.totalAverageLeadTime,
                   metricData?.previousTotalAverageLeadTime,
                 )}
-                getReverseIcon={getReverseIcon}
+                getTrendIcon={getReverseTrendIcon}
                 topText={"Average Lead Time for Changes"}
                 bottomText={"Prev LTFC: "}
               />
             </Col>
             <Col md={12}>
               <GitlabLeadTimeTrendDataBlock
-                value={meanCommitData?.currentAvgCommitToMergeTime}
-                prevValue={`${meanCommitData?.previousAvgCommitToMergeTime} Day(s)`}
-                trend={getTrend(
+                value={meanCommitData?.currentAvgCommitToMergeTime || "0"}
+                prevValue={`${meanCommitData?.previousAvgCommitToMergeTime || "0"} Day(s)`}
+                trend={getReverseTrend(
                   meanCommitData?.currentAvgCommitToMergeTime,
                   meanCommitData?.previousAvgCommitToMergeTime,
                 )}
-                getReverseIcon={getReverseIcon}
+                getTrendIcon={getReverseTrendIcon}
                 topText={`Average Merge Time`}
                 bottomText={`Prev Merge Time: `}
               />
