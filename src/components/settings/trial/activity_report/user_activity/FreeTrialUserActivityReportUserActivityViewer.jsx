@@ -4,18 +4,14 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import { workspaceActions } from "components/workspace/workspace.actions";
 import FreeTrialUserActivityReportSubNavigationBar
   from "components/settings/trial/activity_report/FreeTrialUserActivityReportSubNavigationBar";
-import FreeTrialUserActivityReportWorkflowsTable
-  from "components/settings/trial/activity_report/user_activity/workflows/FreeTrialUserActivityReportWorkflowsTable";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import FreeTrialUserActivityReportFilterModel
   from "components/settings/trial/activity_report/freeTrialUserActivityReport.filter.model";
 import { useParams } from "react-router-dom";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { ssoUserActions } from "components/settings/users/ssoUser.actions";
-import FreeTrialWorkspaceViewContainer from "components/workspace/trial/views/FreeTrialWorkspaceViewContainer";
-import FreeTrialWorkspaceRegistryViews from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistryViews";
+import FreeTrialUserActivityViewerDetailPanel
+  from "components/settings/trial/activity_report/user_activity/FreeTrialUserActivityViewerDetailPanel";
 
 export default function FreeTrialUserActivityReportUserActivityViewer() {
   const { userId } = useParams();
@@ -116,14 +112,14 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
       breadcrumbDestination={"freeTrialUserActivityReport"}
       navigationTabContainer={<FreeTrialUserActivityReportSubNavigationBar activeTab={"userActivityViewer"} />}
     >
-      <FreeTrialUserActivityReportWorkflowsTable
+      <FreeTrialUserActivityViewerDetailPanel
         activityReportFilterModel={activityReportFilterModel}
         setActivityReportFilterModel={setActivityReportFilterModel}
         activityReportWorkflows={activityReportWorkflows}
         loadData={loadData}
         isLoading={isLoading}
-        workspaceItems={activityReportWorkflows}
         userData={userData}
+        tools={tools}
       />
     </ScreenContainer>
   );

@@ -109,7 +109,7 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
       body={getTable()}
       titleIcon={faClipboardUser}
       title={getTableTitle()}
-      className={"px-2 pb-2"}
+      className={"mt-2"}
     />
   );
 }
