@@ -5,9 +5,9 @@ import HelpDocumentationContainer from "components/common/help/HelpDocumentation
 function SfdcWizardUnitTestSelectionViewHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer
-      helpTopic={"Salesforce Pipeline Run: Unit Test Selection View"}
+      helpTopic={"SalesForce Pipeline Run: Unit Test Selection View"}
       closeHelpPanel={closeHelpPanel}
-      confluenceLink={`https://docs.opsera.io/archive/opsera-pipelines/salesforce-pipeline-user-guides/salesforce-based-pipelines/salesforce-pipeline-wizard-help`}
+      confluenceLink={`https://docs.opsera.io/salesforce/salesforce-wizard-run`}
     >
       <div>During the unit testing process, the testing classes must be specified per step. Please select each step
         below and then apply the required testing classes before proceeding. Please note, without this step, the
