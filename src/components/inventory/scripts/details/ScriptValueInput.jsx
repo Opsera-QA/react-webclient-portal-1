@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import CodeInput from "components/common/inputs/code/CodeInput";
 import {getScriptLanguageDisplayMode} from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
 import PullScriptValueIcon from "components/inventory/scripts/details/PullScriptValueIcon";
+import MonacoCodeInput from "components/common/inputs/code/MonacoCodeInput";
 
 function ScriptValueInput({model, setModel, fieldName, className, disabled}) {
   const [errorMessage, setErrorMessage] = useState("");
@@ -19,7 +20,7 @@ function ScriptValueInput({model, setModel, fieldName, className, disabled}) {
   };
 
   return (
-    <CodeInput
+    <MonacoCodeInput
       disabled={model?.canUpdate() !== true || disabled}
       isLoading={isLoading}
       mode={getScriptLanguageDisplayMode(model?.getData("type"))}
