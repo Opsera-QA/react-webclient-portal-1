@@ -26,7 +26,7 @@ function ScriptsHelpDocumentation() {
             <li>Select <b>Create</b> button to save the new script in the Opsera Scripts Library. The script can now be referenced in a pipeline.</li>
           </ol>
           <div className={"mb-1"}>For more detailed information on Script creation and how to configure a script in Opsera pipelines,
-            view the  <a href="https://opsera.atlassian.net/l/c/S2c72ieq" target="_blank" rel="noreferrer"><b>Script Library Help Documentation</b>.</a>
+            view the  <a href="https://docs.opsera.io/tool-registry/scripts-creation" target="_blank" rel="noreferrer"><b>Scripts Creation Documentation</b>.</a>
           </div>
         </div>
       </div>
