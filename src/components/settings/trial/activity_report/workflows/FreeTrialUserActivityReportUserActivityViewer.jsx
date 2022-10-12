@@ -21,6 +21,7 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
   const [activityReportWorkflows, setActivityReportWorkflows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState(undefined);
+  const [tools, setTools] = useState([]);
   const {
     isMounted,
     getAccessToken,
@@ -97,6 +98,15 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
       // newFilterModel.updateActiveFilters();
       setActivityReportFilterModel({...newFilterModel});
     }
+
+    const toolResponse = await workspaceActions.getFreeTrialCustomerWorkspaceItems(
+      getAccessToken,
+      cancelTokenSource,
+      userId,
+    );
+    const workspaceItems = DataParsingHelper.parseArray(toolResponse?.data?.data, []);
+    const tools = workspaceItems.filter((item) => item.workspaceType === "tool");
+    setTools([...tools]);
   };
 
   return (
@@ -104,12 +114,6 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
       breadcrumbDestination={"freeTrialUserActivityReport"}
       navigationTabContainer={<FreeTrialUserActivityReportSubNavigationBar activeTab={"userActivityViewer"} />}
     >
-      <CenteredContentWrapper>
-        <H5FieldSubHeader
-          subheaderText={"Please note, this report does not include opsera.io users unless specifically searching for them with the filter."}
-          className={"mb-3"}
-        />
-      </CenteredContentWrapper>
       <FreeTrialUserActivityReportWorkflowsTable
         activityReportFilterModel={activityReportFilterModel}
         setActivityReportFilterModel={setActivityReportFilterModel}
