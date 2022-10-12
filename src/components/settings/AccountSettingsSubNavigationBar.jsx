@@ -2,7 +2,7 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faCogs} from "@fortawesome/pro-light-svg-icons";
+import { faChartNetwork, faCogs } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 
 function AccountSettingsSubNavigationBar({activeTab}) {
@@ -15,6 +15,9 @@ function AccountSettingsSubNavigationBar({activeTab}) {
       case "accountSettings":
         history.push(`/settings`);
         return;
+      case "insightsSettings":
+        history.push(`/settings/insights`);
+        return;
     }
   };
 
@@ -26,6 +29,13 @@ function AccountSettingsSubNavigationBar({activeTab}) {
         handleTabClick={handleTabClick}
         activeTab={activeTab}
         tabText={"Account Settings"}
+      />
+      <NavigationTab
+        icon={faChartNetwork}
+        tabName={"insightsSettings"}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+        tabText={"Insights Settings"}
       />
     </NavigationTabContainer>
   );
