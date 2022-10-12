@@ -11,7 +11,7 @@ import {
 import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer, {
 } from "components/common/table/FilterContainer";
-import { faClipboardUser, faUsers } from "@fortawesome/pro-light-svg-icons";
+import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import { workspaceHelper } from "components/workspace/workspace.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import {
@@ -107,7 +107,7 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
       filterDto={activityReportFilterModel}
       setFilterDto={setActivityReportFilterModel}
       body={getTable()}
-      titleIcon={faClipboardUser}
+      titleIcon={faDraftingCompass}
       title={getTableTitle()}
       className={"mt-2"}
     />

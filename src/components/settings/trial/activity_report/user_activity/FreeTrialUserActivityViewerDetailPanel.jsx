@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
-import {faDraftingCompass, faWrench} from "@fortawesome/pro-light-svg-icons";
+import { faDraftingCompass, faTools } from "@fortawesome/pro-light-svg-icons";
 import FreeTrialUserActivityReportWorkflowsTable
   from "components/settings/trial/activity_report/user_activity/workflows/FreeTrialUserActivityReportWorkflowsTable";
 import FreeTrialUserActivityReportToolsTable
@@ -39,7 +39,7 @@ export default function FreeTrialUserActivityViewerDetailPanel(
         <CustomTab
           tabText={`${tools.length} Tools`}
           handleTabClick={handleTabClick}
-          icon={faWrench}
+          icon={faTools}
           activeTab={activeTab}
           tabName={"tools"}
         />
