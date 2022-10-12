@@ -5,9 +5,9 @@ import PropTypes from "prop-types";
 function SfdcWizardComponentTypeSelectionHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer
-      helpTopic={"SalesForce Pipeline Run: Component Type Selection"}
+      helpTopic={"Salesforce Pipeline Run: Component Type Selection"}
       closeHelpPanel={closeHelpPanel}
-      confluenceLink={`https://opsera.atlassian.net/l/c/XbSETC14`}
+      confluenceLink={`https://docs.opsera.io/archive/opsera-pipelines/salesforce-pipeline-user-guides/salesforce-based-pipelines/salesforce-pipeline-wizard-help`}
     >
       <div>Set the following parameters and select <b>Proceed with Selected Components</b>. This will generate a list of
         files matching the parameters.
@@ -24,7 +24,7 @@ function SfdcWizardComponentTypeSelectionHelpDocumentation({closeHelpPanel}) {
           managed package has the namespace prefixed to the component API name. Provide the NamespacePrefix to retrieve
           components that are part of managed package.
         </li>
-        <li><b>Included Component Types</b> -
+        <li><b>Included Component Types</b>:
           <ul>
             <li><b>All</b> - Includes both Managed and Custom Component Types.</li>
             <li><b>Managed</b> - Managed Components include a Namespace Prefix. They include a collection of components
