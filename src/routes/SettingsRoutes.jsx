@@ -38,9 +38,9 @@ import FreeTrialUserExpirationUserReinstatementScreen
   from "components/settings/trial/user_expiration/reinstatement/FreeTrialUserExpirationUserReinstatementScreen";
 import FreeTrialUserExpirationExtendUserAccessScreen
   from "components/settings/trial/user_expiration/extension/FreeTrialUserExpirationExtendUserAccessScreen";
-import FreeTrialUserActivityReport from "components/settings/trial/activity_report/FreeTrialUserActivityReport";
-import FreeTrialUserActivityReportUserSelectionScreen
-  from "components/settings/trial/activity_report/users/FreeTrialUserActivityReportUserSelectionScreen";
+import FreeTrialUserActivityReportUserActivityViewer from "components/settings/trial/activity_report/workflows/FreeTrialUserActivityReportUserActivityViewer";
+import FreeTrialUserActivityReport
+  from "components/settings/trial/activity_report/users/FreeTrialUserActivityReport";
 
 export default function SettingsRoutes() {
   const {
@@ -243,15 +243,15 @@ export default function SettingsRoutes() {
       />
 
       <RoleRestrictedRoute
-        path={"/settings/trial/user/activity-report"}
+        path={"/settings/trial/user/activity-report/users/:userId?"}
         exact={true}
-        component={FreeTrialUserActivityReport}
+        component={FreeTrialUserActivityReportUserActivityViewer}
         roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       />
       <RoleRestrictedRoute
-        path={"/settings/trial/user/activity-report/users"}
+        path={"/settings/trial/user/activity-report/"}
         exact={true}
-        component={FreeTrialUserActivityReportUserSelectionScreen}
+        component={FreeTrialUserActivityReport}
         roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       />
     </>

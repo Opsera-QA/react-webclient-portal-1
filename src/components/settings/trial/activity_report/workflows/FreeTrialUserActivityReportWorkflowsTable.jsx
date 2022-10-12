@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import {
   getCustomTablePipelineStateColumnDefinition,
   getFormattedLabelWithFunctionColumnDefinition,
@@ -18,8 +18,9 @@ import {
   freeTrialUserActivityReportMetadata
 } from "components/settings/trial/activity_report/freeTrialUserActivityReport.metadata";
 import { workspaceConstants } from "components/workspace/workspace.constants";
-import InlinePlatformSsoUserFilterSelectInput
-  from "components/common/list_of_values_input/users/sso/platform/InlinePlatformSsoUserFilterSelectInput";
+import FreeTrialUserActivityReportInlinePlatformSsoUserFilterSelectInput
+  from "components/settings/trial/activity_report/workflows/FreeTrialUserActivityReportInlinePlatformSsoUserFilterSelectInput";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 export default function FreeTrialUserActivityReportWorkflowsTable(
   {
@@ -29,6 +30,7 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
     loadData,
     isLoading,
   }) {
+  const { userId } = useParams();
   const fields = freeTrialUserActivityReportMetadata.fields;
   const history = useHistory();
 
@@ -59,17 +61,19 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
   };
 
   const getInlineFilters = () => {
-    return (
-      <div className={"d-flex"}>
-        <InlinePlatformSsoUserFilterSelectInput
-          filterModel={activityReportFilterModel}
-          fieldName={"userId"}
-          loadDataFunction={loadData}
-          className={"mr-2"}
-          disabled={isLoading}
-        />
-      </div>
-    );
+    if (isMongoDbId(userId) !== true) {
+      return (
+        <div className={"d-flex"}>
+          <FreeTrialUserActivityReportInlinePlatformSsoUserFilterSelectInput
+            filterModel={activityReportFilterModel}
+            fieldName={"userId"}
+            loadDataFunction={loadData}
+            className={"mr-2"}
+            disabled={isLoading}
+          />
+        </div>
+      );
+    }
   };
 
   const getTable = () => {

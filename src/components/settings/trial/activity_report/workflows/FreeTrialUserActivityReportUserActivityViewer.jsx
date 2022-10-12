@@ -5,14 +5,17 @@ import { workspaceActions } from "components/workspace/workspace.actions";
 import FreeTrialUserActivityReportSubNavigationBar
   from "components/settings/trial/activity_report/FreeTrialUserActivityReportSubNavigationBar";
 import FreeTrialUserActivityReportWorkflowsTable
-  from "components/settings/trial/activity_report/FreeTrialUserActivityReportWorkflowsTable";
+  from "components/settings/trial/activity_report/workflows/FreeTrialUserActivityReportWorkflowsTable";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import FreeTrialUserActivityReportFilterModel
   from "components/settings/trial/activity_report/freeTrialUserActivityReport.filter.model";
+import { useParams } from "react-router-dom";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
-export default function FreeTrialUserActivityReportUserWorkflowsScreen() {
+export default function FreeTrialUserActivityReportUserActivityViewer() {
+  const { userId } = useParams();
   const [activityReportFilterModel, setActivityReportFilterModel] = useState(new FreeTrialUserActivityReportFilterModel());
   const [activityReportWorkflows, setActivityReportWorkflows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -25,12 +28,15 @@ export default function FreeTrialUserActivityReportUserWorkflowsScreen() {
 
   useEffect(() => {
     setActivityReportWorkflows([]);
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-  }, []);
+
+    if (isMongoDbId(userId) === true) {
+      loadData().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
+  }, [userId]);
 
   const loadData = async (newFilterModel = activityReportFilterModel) => {
     try {
@@ -52,7 +58,7 @@ export default function FreeTrialUserActivityReportUserWorkflowsScreen() {
     const pipelineResponse = await workspaceActions.getFreeTrialUserActivityReportPipelines(
       getAccessToken,
       cancelTokenSource,
-      newFilterModel?.getFilterValue("userId"),
+      userId,
       newFilterModel?.getFilterValue("search"),
     );
     const workflows = [];
@@ -70,7 +76,7 @@ export default function FreeTrialUserActivityReportUserWorkflowsScreen() {
 
     if (isMounted?.current === true) {
       setActivityReportWorkflows([...workflows]);
-      newFilterModel.updateActiveFilters();
+      // newFilterModel.updateActiveFilters();
       setActivityReportFilterModel({...newFilterModel});
     }
   };
@@ -78,7 +84,7 @@ export default function FreeTrialUserActivityReportUserWorkflowsScreen() {
   return (
     <ScreenContainer
       breadcrumbDestination={"freeTrialUserActivityReport"}
-      navigationTabContainer={<FreeTrialUserActivityReportSubNavigationBar activeTab={"freeTrialUserActivityReport"} />}
+      navigationTabContainer={<FreeTrialUserActivityReportSubNavigationBar activeTab={"userActivityViewer"} />}
     >
       <CenteredContentWrapper>
         <H5FieldSubHeader

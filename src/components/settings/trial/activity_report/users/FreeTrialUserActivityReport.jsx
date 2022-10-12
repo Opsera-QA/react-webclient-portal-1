@@ -8,7 +8,7 @@ import FreeTrialUserActivityReportUsersTable
 import FreeTrialUserActivityReportSubNavigationBar
   from "components/settings/trial/activity_report/FreeTrialUserActivityReportSubNavigationBar";
 
-export default function FreeTrialUserActivityReportUserSelectionScreen() {
+export default function FreeTrialUserActivityReport() {
   const [freeTrialActivityReportUsers, setFreeTrialActivityReportUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const {

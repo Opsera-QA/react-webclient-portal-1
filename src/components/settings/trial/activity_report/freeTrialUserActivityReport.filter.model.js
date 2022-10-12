@@ -52,8 +52,8 @@ const freeTrialUserActivityReportMetadata = {
 export default class FreeTrialUserActivityReportFilterModel extends FilterModelBase {
   constructor() {
     super(freeTrialUserActivityReportMetadata);
-    this.enableUrlUpdatesWithQueryParameters();
-    this.unpackUrlParameters();
+    // this.enableUrlUpdatesWithQueryParameters();
+    // this.unpackUrlParameters();
   }
 
   canToggleView = () => {
@@ -63,11 +63,11 @@ export default class FreeTrialUserActivityReportFilterModel extends FilterModelB
   unpackUrlParameters = () => {
     this.unpackCommonUrlParameters();
 
-    const userId = sessionHelper.getStoredUrlParameter("userId");
-
-    if (hasStringValue(userId) === true) {
-      this.setData("userId", userId);
-    }
+    // const userId = sessionHelper.getStoredUrlParameter("userId");
+    //
+    // if (hasStringValue(userId) === true) {
+    //   this.setData("userId", userId);
+    // }
   };
 
   getActiveFilters = () => {
