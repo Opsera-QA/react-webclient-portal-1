@@ -12,7 +12,7 @@ function UserManagementHelpDocumentation() {
 
   const getHelpDocumentation = () => {
     return (
-      <div>The User Management space allows Site Administrators to view existing users and register new users in an Opsera Account.  Inviting a new user to the platform allows Site Administrators to pre-register the user and define any optional Group Membership in order to define what access they have in the Opsera Platform.  Group Membership can be changed at any time through the Group Management space by Site Administrator. For detailed information on User Management, view the <b><a href="https://opsera.atlassian.net/l/c/BqSawR85" target="_blank" rel="noreferrer">User Management Help Documentation</a></b>.
+      <div>The User Management space allows Site Administrators to view existing users and register new users in an Opsera Account.  Inviting a new user to the platform allows Site Administrators to pre-register the user and define any optional Group Membership in order to define what access they have in the Opsera Platform.  Group Membership can be changed at any time through the Group Management space by Site Administrator. For detailed information on User Management, view the <b><a href="https://docs.opsera.io/role-based-access-pipelines-and-tool-registry/manage-users" target="_blank" rel="noreferrer">User Management Help Documentation</a></b>.
         <div className={"mt-2 ml-2"}>
           <h5>Create New User:</h5>
           <ol>
