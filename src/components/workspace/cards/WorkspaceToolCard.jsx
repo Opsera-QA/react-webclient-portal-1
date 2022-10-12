@@ -3,11 +3,11 @@ import React from "react";
 import modelHelpers from "components/common/model/modelHelpers";
 import { useHistory } from "react-router-dom";
 import ToolCardBase from "temp-library-components/cards/tools/ToolCardBase";
+import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
 
 export default function WorkspaceToolCard(
   {
     tool,
-    toolMetadata,
   }) {
   const history = useHistory();
 
@@ -17,7 +17,7 @@ export default function WorkspaceToolCard(
 
   return (
     <ToolCardBase
-      toolModel={modelHelpers.parseObjectIntoModel(tool, toolMetadata)}
+      toolModel={modelHelpers.parseObjectIntoModel(tool, registryToolMetadata)}
       onClickFunction={() => viewToolFunction(tool?._id)}
       tooltip={"Click to view Tool"}
     />

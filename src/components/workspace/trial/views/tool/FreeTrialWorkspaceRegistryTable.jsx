@@ -1,49 +1,32 @@
-import React, {useEffect, useState} from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getLimitedTableTextColumn,
-  getTableBooleanIconColumn,
   getTableDateColumn,
-  getTableTextColumn
+  getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import {useHistory} from "react-router-dom";
 import {getField} from "components/common/metadata/metadata-helpers";
-import useComponentStateReference from "hooks/useComponentStateReference";
+import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
 
 export default function FreeTrialWorkspaceRegistryTable(
   {
     tools,
-    toolMetadata,
     loadData,
     isLoading,
     rowClickFunction,
   }) {
-  const {
-    isMounted,
-  } = useComponentStateReference();
+  const fields = registryToolMetadata.fields;
   const history = useHistory();
-  const [columns, setColumns] = useState([]);
-
-  useEffect(() => {
-    setColumns([]);
-    loadColumnMetadata(toolMetadata);
-  }, [JSON.stringify(toolMetadata)]);
-
-  const loadColumnMetadata = (newToolMetadata) => {
-    if (isMounted?.current === true && Array.isArray(newToolMetadata?.fields)) {
-      const fields = newToolMetadata.fields;
-
-      setColumns(
-        [
-          getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
-          getTableTextColumn(getField(fields, "tool_identifier"), "no-wrap-inline"),
-          getTableTextColumn(getField(fields, "_id")),
-          getTableDateColumn(getField(fields, "createdAt")),
-        ]
-      );
-    }
-  };
+  const columns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
+      getTableTextColumn(getField(fields, "tool_identifier"), "no-wrap-inline"),
+      getTableTextColumn(getField(fields, "_id")),
+      getTableDateColumn(getField(fields, "createdAt")),
+    ],
+    [fields]
+  );
 
   // TODO: This is temporary until I finish the tool info overlay
   const onRowSelect = (rowData) => {
@@ -54,10 +37,6 @@ export default function FreeTrialWorkspaceRegistryTable(
       history.push(`/inventory/tools/details/${rowData.original._id}`);
     }
   };
-
-  if (toolMetadata == null) {
-    return null;
-  }
 
   return (
     <CustomTable

@@ -7,7 +7,6 @@ import WorkspaceToolCard from "components/workspace/cards/WorkspaceToolCard";
 export default function FreeTrialWorkspaceRegistryCardView(
   {
     tools,
-    toolMetadata,
     loadData,
     isLoading,
   }) {
@@ -15,14 +14,9 @@ export default function FreeTrialWorkspaceRegistryCardView(
     return (
       <WorkspaceToolCard
         tool={tool}
-        toolMetadata={toolMetadata}
       />
     );
   };
-
-  if (toolMetadata == null) {
-    return null;
-  }
 
   return (
     <CardView
@@ -43,5 +37,4 @@ FreeTrialWorkspaceRegistryCardView.propTypes = {
   tools: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  toolMetadata: PropTypes.object,
 };

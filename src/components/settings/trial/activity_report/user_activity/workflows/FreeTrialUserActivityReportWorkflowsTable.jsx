@@ -19,7 +19,7 @@ import {
 } from "components/settings/trial/activity_report/freeTrialUserActivityReport.metadata";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import FreeTrialUserActivityReportInlinePlatformSsoUserFilterSelectInput
-  from "components/settings/trial/activity_report/workflows/FreeTrialUserActivityReportInlinePlatformSsoUserFilterSelectInput";
+  from "components/settings/trial/activity_report/user_activity/FreeTrialUserActivityReportInlinePlatformSsoUserFilterSelectInput";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 

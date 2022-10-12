@@ -38,7 +38,7 @@ import FreeTrialUserExpirationUserReinstatementScreen
   from "components/settings/trial/user_expiration/reinstatement/FreeTrialUserExpirationUserReinstatementScreen";
 import FreeTrialUserExpirationExtendUserAccessScreen
   from "components/settings/trial/user_expiration/extension/FreeTrialUserExpirationExtendUserAccessScreen";
-import FreeTrialUserActivityReportUserActivityViewer from "components/settings/trial/activity_report/workflows/FreeTrialUserActivityReportUserActivityViewer";
+import FreeTrialUserActivityReportUserActivityViewer from "components/settings/trial/activity_report/user_activity/FreeTrialUserActivityReportUserActivityViewer";
 import FreeTrialUserActivityReport
   from "components/settings/trial/activity_report/users/FreeTrialUserActivityReport";
 

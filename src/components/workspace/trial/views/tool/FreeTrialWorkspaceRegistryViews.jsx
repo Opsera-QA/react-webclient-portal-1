@@ -11,7 +11,6 @@ export default function FreeTrialWorkspaceRegistryViews(
   {
     workspaceFilterModel,
     setWorkspaceFilterModel,
-    toolMetadata,
     isLoading,
     loadData,
     tools,
@@ -22,7 +21,6 @@ export default function FreeTrialWorkspaceRegistryViews(
         isLoading={isLoading}
         loadData={loadData}
         tools={tools}
-        toolMetadata={toolMetadata}
       />
     );
   };
@@ -33,7 +31,6 @@ export default function FreeTrialWorkspaceRegistryViews(
         isLoading={isLoading}
         loadData={loadData}
         tools={tools}
-        toolMetadata={toolMetadata}
       />
     );
   };
@@ -54,7 +51,6 @@ FreeTrialWorkspaceRegistryViews.propTypes = {
   tools: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
-  toolMetadata: PropTypes.object,
   workspaceFilterModel: PropTypes.object,
   setWorkspaceFilterModel: PropTypes.func,
 };
