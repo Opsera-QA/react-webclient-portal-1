@@ -5,9 +5,17 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 const STEP_TYPES = [
   { name: "View Pending Migrations", value: "view" },
   { name: "Deploy Pending Migrations", value: "deploy" },
+  { name: "Rollback", value: "rollback" },
 ];
 
 function LiquibaseStepTypeSelectInput({ fieldName, model, setModel, disabled, textField, valueField }) {
+
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newModel = {...model};    
+    newModel.setData(fieldName, selectedOption.value);    
+    newModel.setDefaultValue("tag");
+    setModel({...newModel});
+  };
 
   return (
     <SelectInputBase
@@ -18,6 +26,7 @@ function LiquibaseStepTypeSelectInput({ fieldName, model, setModel, disabled, te
       valueField={valueField}
       textField={textField}
       disabled={disabled}
+      setDataFunction={setDataFunction}
     />
   );
 }
