@@ -12,7 +12,7 @@ function OctopusDeployStepConfigurationHelpDocumentation() {
   const getHelpDocumentation = () => {
     return (
       <div>
-        <div className={"ml-2 mb-2"}>Octopus has a wide range of functionality which can be utilized using the Octopus Deploy pipeline step. To view in depth documentation on Octopus Deployment, including Tool Registry and Pipeline setup, view the <b><a href="https://opsera.atlassian.net/l/c/b1VftgBW" target="_blank" rel="noreferrer">Octopus Deployment Help Documentation</a></b> .
+        <div className={"ml-2 mb-2"}>Octopus has a wide range of functionality which can be utilized using the Octopus Deploy pipeline step. To view in depth documentation on Octopus Deployment, including Tool Registry and Pipeline setup, view the <b><a href="https://docs.opsera.io/octopus-deployment" target="_blank" rel="noreferrer">Octopus Deployment Help Documentation</a></b> .
         </div>
         <div className={"ml-4"}>
           <ol>
