@@ -5,11 +5,11 @@ import PropTypes from "prop-types";
 function SfdcWizardFileSelectionHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer
-      helpTopic={"Salesforce Pipeline Run: File Selection"}
+      helpTopic={"SalesForce Pipeline Run: File Selection"}
       closeHelpPanel={closeHelpPanel}
-      confluenceLink={`https://docs.opsera.io/archive/opsera-pipelines/salesforce-pipeline-user-guides/salesforce-based-pipelines/salesforce-pipeline-wizard-help`}
+      confluenceLink={`https://docs.opsera.io/salesforce/salesforce-wizard-run`}
     >
-    <div><b>Note: </b> Salesforce limits retrieval or deployment of upto <b>10,000</b> files at once.</div>
+      <div><b>Note: </b> Salesforce limits retrieval or deployment of up to <b>10,000</b> files at once.</div>
       <div><b>Rule Filters</b> allow you to select which components will be included or excluded in this pipeline
         run. The rule order is not important. Once Include and Exclude Rules have been set, select <b>Proceed with
           Selected Files</b> to view the final list.
@@ -55,7 +55,7 @@ function SfdcWizardFileSelectionHelpDocumentation({closeHelpPanel}) {
           <div className={"ml-2"}>
             <div>The initial results are generated based on the specified <b>Include Rules</b>.</div>
             <div>This list is then filtered by any preceding <b>Exclude Rules</b> (if specified). <b>Exclude
-              Rules</b> take precedence over any <b>Include Rule</b>.
+              Rules</b> take precedence over any <b>Include Rule.</b>.
             </div>
           </div>
           <div>If <b>Exclude Rules</b> are not selected:</div>

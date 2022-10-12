@@ -5,9 +5,9 @@ import PropTypes from "prop-types";
 function SfdcWizardComponentTypeSelectionHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer
-      helpTopic={"Salesforce Pipeline Run: Component Type Selection"}
+      helpTopic={"SalesForce Pipeline Run: Component Type Selection"}
       closeHelpPanel={closeHelpPanel}
-      confluenceLink={`https://docs.opsera.io/archive/opsera-pipelines/salesforce-pipeline-user-guides/salesforce-based-pipelines/salesforce-pipeline-wizard-help`}
+      confluenceLink={`https://docs.opsera.io/salesforce/salesforce-wizard-run`}
     >
       <div>Set the following parameters and select <b>Proceed with Selected Components</b>. This will generate a list of
         files matching the parameters.
