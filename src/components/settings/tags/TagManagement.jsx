@@ -66,7 +66,6 @@ function TagManagement() {
       filterDto.setData("activeFilters", filterDto?.getActiveFilters());
       setTagFilterDto({...filterDto});
       setTagListModel({...newTagListModel});
-      newTagListModel.subscribe();
     }
   };
 
