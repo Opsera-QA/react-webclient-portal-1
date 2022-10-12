@@ -35,6 +35,8 @@ function FilterContainer(
     maximumHeight,
     showRefreshButton,
     disableNewRecordButton,
+    bodyStyling,
+    hideXOverflow,
     // TODO: Remove after filters are used everywhere
     type
   }) {
@@ -71,11 +73,15 @@ function FilterContainer(
   };
 
   const getBodyStylingObject = () => {
+    if (bodyStyling) {
+      return bodyStyling;
+    }
+
     return ({
       minHeight: minimumHeight,
       maxHeight: maximumHeight,
       overflowY: "auto",
-      overflowX: "hidden",
+      overflowX: hideXOverflow !== false ? "hidden" : undefined,
     });
   };
 
@@ -137,7 +143,9 @@ FilterContainer.propTypes = {
   maximumHeight: PropTypes.string,
   loadingMessage: PropTypes.string,
   showRefreshButton: PropTypes.bool,
-  disableNewRecordButton: PropTypes.bool
+  disableNewRecordButton: PropTypes.bool,
+  bodyStyling: PropTypes.object,
+  hideXOverflow: PropTypes.bool,
 };
 
 FilterContainer.defaultProps = {

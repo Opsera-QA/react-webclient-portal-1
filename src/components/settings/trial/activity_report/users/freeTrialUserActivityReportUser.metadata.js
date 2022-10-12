@@ -13,11 +13,11 @@ export const freeTrialUserActivityReportUserMetadata = {
       id: "email",
     },
     {
-      label: "Workflow Count",
+      label: "Workflows`",
       id: "workflowCount",
     },
     {
-      label: "Tool Count",
+      label: "Tools",
       id: "toolCount",
     },
     {
@@ -41,7 +41,7 @@ export const freeTrialUserActivityReportUserMetadata = {
       id: "lastRunStatus",
     },
     {
-      label: "Expiration Status",
+      label: "Status",
       id: "expired",
     },
   ],
