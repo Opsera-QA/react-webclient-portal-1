@@ -79,7 +79,7 @@ export default function FreeTrialUserActivityReport() {
   return (
     <ScreenContainer
       breadcrumbDestination={"freeTrialUserActivityReport"}
-      navigationTabContainer={<FreeTrialUserActivityReportSubNavigationBar activeTab={"freeTrialUserActivityReport"} />}
+      navigationTabContainer={<FreeTrialUserActivityReportSubNavigationBar activeTab={"userActivityViewer"} />}
     >
       <CenteredContentWrapper>
         <H5FieldSubHeader

@@ -3,7 +3,9 @@ import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {
-  faArrowLeft, faClipboardUser,
+  faChartNetwork,
+  faClipboardUser,
+  faCogs,
 } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 
@@ -13,7 +15,7 @@ export default function FreeTrialUserActivityReportSubNavigationBar({activeTab})
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
 
-    if (activeTab === tabSelection) {
+    if (tabSelection === activeTab) {
       return;
     }
 
@@ -27,14 +29,38 @@ export default function FreeTrialUserActivityReportSubNavigationBar({activeTab})
     }
   };
 
+  const getActiveViewerTab = () => {
+    switch (activeTab) {
+      case "userActivityViewer":
+        return (
+          <NavigationTab
+            icon={faClipboardUser}
+            tabName={"userActivityViewer"}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+            tabText={"User Activity Viewer"}
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <NavigationTabContainer>
       <NavigationTab
-        icon={faArrowLeft}
+        icon={faCogs}
         tabName={"accountSettings"}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
-        tabText={"Back to Account Settings"}
+        tabText={"Account Settings"}
+      />
+      <NavigationTab
+        icon={faChartNetwork}
+        tabName={"insightsSettings"}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+        tabText={"Insights Settings"}
       />
       <NavigationTab
         icon={faClipboardUser}
@@ -43,6 +69,7 @@ export default function FreeTrialUserActivityReportSubNavigationBar({activeTab})
         activeTab={activeTab}
         tabText={"Free Trial Activity Report"}
       />
+      {getActiveViewerTab()}
     </NavigationTabContainer>
   );
 }

@@ -5,6 +5,8 @@ import accountsActions from "components/admin/accounts/accounts-actions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import FreeTrialUserActivityReportUsersTable
   from "components/settings/trial/activity_report/users/FreeTrialUserActivityReportUsersTable";
+import FreeTrialUserActivityReportSubNavigationBar
+  from "components/settings/trial/activity_report/FreeTrialUserActivityReportSubNavigationBar";
 
 export default function FreeTrialUserActivityReportUserSelectionScreen() {
   const [freeTrialActivityReportUsers, setFreeTrialActivityReportUsers] = useState([]);
@@ -56,8 +58,8 @@ export default function FreeTrialUserActivityReportUserSelectionScreen() {
 
   return (
     <ScreenContainer
-      className={"mt-3"}
       breadcrumbDestination={"freeTrialUserActivityReport"}
+      navigationTabContainer={<FreeTrialUserActivityReportSubNavigationBar activeTab={"freeTrialUserActivityReport"} />}
     >
       <FreeTrialUserActivityReportUsersTable
         loadData={loadData}
