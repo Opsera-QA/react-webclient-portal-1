@@ -21,12 +21,14 @@ import { workspaceConstants } from "components/workspace/workspace.constants";
 import FreeTrialUserActivityReportInlinePlatformSsoUserFilterSelectInput
   from "components/settings/trial/activity_report/workflows/FreeTrialUserActivityReportInlinePlatformSsoUserFilterSelectInput";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function FreeTrialUserActivityReportWorkflowsTable(
   {
     activityReportWorkflows,
     activityReportFilterModel,
     setActivityReportFilterModel,
+    userData,
     loadData,
     isLoading,
   }) {
@@ -37,7 +39,6 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "owner_email")),
       getTableTextColumn(getField(fields, "_id")),
       getFormattedLabelWithFunctionColumnDefinition(
         getField(fields, "workspaceType"),
@@ -88,6 +89,16 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
     );
   };
 
+  const getTableTitle = () => {
+    const user = DataParsingHelper.parseObject(userData);
+
+    if (user) {
+      return `${userData?.firstName} ${userData?.lastName} (${userData?.email}) Free Trial User Workflows`;
+    }
+
+    return "Free Trial User Workflows";
+  };
+
   return (
     <FilterContainer
       loadData={loadData}
@@ -97,7 +108,7 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
       setFilterDto={setActivityReportFilterModel}
       body={getTable()}
       titleIcon={faClipboardUser}
-      title={"Free Trial User Workflows"}
+      title={getTableTitle()}
       className={"px-2 pb-2"}
     />
   );
@@ -109,4 +120,5 @@ FreeTrialUserActivityReportWorkflowsTable.propTypes = {
   setActivityReportFilterModel: PropTypes.func,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
+  userData: PropTypes.object,
 };

@@ -13,12 +13,14 @@ import FreeTrialUserActivityReportFilterModel
   from "components/settings/trial/activity_report/freeTrialUserActivityReport.filter.model";
 import { useParams } from "react-router-dom";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { ssoUserActions } from "components/settings/users/ssoUser.actions";
 
 export default function FreeTrialUserActivityReportUserActivityViewer() {
   const { userId } = useParams();
   const [activityReportFilterModel, setActivityReportFilterModel] = useState(new FreeTrialUserActivityReportFilterModel());
   const [activityReportWorkflows, setActivityReportWorkflows] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [userData, setUserData] = useState(undefined);
   const {
     isMounted,
     getAccessToken,
@@ -28,21 +30,22 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
 
   useEffect(() => {
     setActivityReportWorkflows([]);
-
-    if (isMongoDbId(userId) === true) {
-      loadData().catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
   }, [userId]);
 
   const loadData = async (newFilterModel = activityReportFilterModel) => {
     try {
       setActivityReportWorkflows([]);
-      setIsLoading(true);
-      await getFreeTrialActivityReportWorkflows(newFilterModel);
+
+      if (isMongoDbId(userId) === true) {
+        setIsLoading(true);
+        await getUserById();
+        await getFreeTrialActivityReportWorkflows(newFilterModel);
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -51,6 +54,21 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
+    }
+  };
+
+  const getUserById = async () => {
+    setUserData(undefined);
+    const response = await ssoUserActions.getUserById(
+      getAccessToken,
+      cancelTokenSource,
+      userId,
+    );
+
+    const user = DataParsingHelper.parseObject(response?.data);
+
+    if (user) {
+      setUserData({...user});
     }
   };
 
@@ -68,7 +86,7 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
     const taskResponse = await workspaceActions.getFreeTrialUserActivityReportTasks(
       getAccessToken,
       cancelTokenSource,
-      newFilterModel?.getFilterValue("userId"),
+      userId,
       newFilterModel?.getFilterValue("search"),
     );
     const tasks = DataParsingHelper.parseArray(taskResponse?.data?.data, []);
@@ -99,6 +117,7 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
         loadData={loadData}
         isLoading={isLoading}
         workspaceItems={activityReportWorkflows}
+        userData={userData}
       />
     </ScreenContainer>
   );
