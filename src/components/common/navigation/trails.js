@@ -403,7 +403,17 @@ const breadcrumbs = {
     path: paths.accountSettings,
     title: "Account Settings",
     linkText: "Account Settings",
-    icon: faCogs
+    icon: faCogs,
+    pageDescription: "Manage account settings from this dashboard.",
+  },
+  insightsSettings: {
+    parent: undefined,
+    name: "insightsSettings",
+    path: paths.insightsSettings,
+    title: "Insights Settings",
+    linkText: "Insights Settings",
+    icon: faChartNetwork,
+    pageDescription: "Manage analytics settings from this dashboard.",
   },
   freeTrialSettings: {
     parent: undefined,
@@ -505,17 +515,17 @@ const breadcrumbs = {
     parent: "accountSettings",
     name: "ldapGroupManagement",
     path: paths.ldapGroupManagement,
-    title: "Group Management",
-    linkText: "Groups",
+    title: "Access Group Management",
+    linkText: "Access Groups",
     icon: faUserFriends,
-    pageDescription: "Manage Groups and their Membership"
+    pageDescription: "Manage Access Groups and their Membership"
   },
   ldapGroupDetailView: {
     parent: "ldapGroupManagement",
     name: "ldapGroupDetailView",
     path: paths.ldapGroupDetailView,
-    title: "Group Details",
-    linkText: "Group Details",
+    title: "Access Group Details",
+    linkText: "Access Group Details",
     icon: faUserFriends
   },
 
@@ -524,23 +534,23 @@ const breadcrumbs = {
     parent: "accountSettings",
     name: "ldapSiteRolesManagement",
     path: paths.ldapSiteRoleManagement,
-    title: "Site Roles Management",
-    linkText: "Site Roles",
+    title: "Access Site Roles Management",
+    linkText: "Access Site Roles",
     icon: faServer,
-    pageDescription: "Manage Site Roles in the follow levels: Administrators, Power Users, and Users."
+    pageDescription: "Manage Access Site Roles in the follow levels: Administrators, Power Users, and Users."
   },
   ldapSiteRoleDetailView: {
     parent: "ldapSiteRolesManagement",
     name: "ldapSiteRoleDetailView",
     path: paths.ldapSiteRoleDetailView,
-    title: "Site Role Details",
-    linkText: "Site Role Details",
+    title: "Access Site Role Details",
+    linkText: "Access Site Role Details",
     icon: faServer
   },
 
   // LDAP Departments Administration
   ldapDepartmentManagement: {
-    parent: "settings",
+    parent: "accountSettings",
     name: "ldapDepartmentManagement",
     path: paths.ldapDepartmentManagement,
     title: "Departments",
@@ -581,8 +591,8 @@ const breadcrumbs = {
     parent: "accountSettings",
     name: "logsExportManagement",
     path: paths.logsExportManagement,
-    title: "Logs Export Management",
-    linkText: "Logs Export Management",
+    title: "Logs Export Options",
+    linkText: "Logs Export Options",
     icon: faTags,
     pageDescription: "Manage export of pipeline activity audit logs."
   },
@@ -592,17 +602,17 @@ const breadcrumbs = {
     parent: "accountSettings",
     name: "organizationManagement",
     path: paths.organizationManagement,
-    title: "Organization Management",
-    linkText: "Organizations",
+    title: "Analytics Data Mapping: Organization Management",
+    linkText: "Analytics Data Mapping: Organizations",
     icon: faSitemap,
-    pageDescription: "Manage Organizations"
+    pageDescription: "Manage Organization Analytics Data Mappings"
   },
   organizationDetailView: {
     parent: "organizationManagement",
     name: "organizationDetailView",
     path: paths.organizationDetailView,
-    title: "Organization Details",
-    linkText: "Organization Details",
+    title: "Analytics Data Mapping: Organization Details",
+    linkText: "Analytics Data Mapping: Organization Details",
     icon: faSitemap
   },
 
@@ -654,11 +664,11 @@ const breadcrumbs = {
   },
 
   deleteTools: {
-    parent: "admin",
+    parent: "accountSettings",
     name: "deleteTools",
     path: paths.deleteTools,
-    title: "Delete Tools",
-    linkText: "Delete Tools",
+    title: "Delete Tool Chains",
+    linkText: "Delete Tool Chains",
     icon: faTimes,
     pageDescription: `
       Choose a registered application, view the active tools, and then delete them from the application.
@@ -940,8 +950,8 @@ const breadcrumbs = {
     parent: "accountSettings",
     name: "dataMappingManagement",
     path: paths.dataMappingManagement,
-    title: "Data Mappings",
-    linkText: "Data Mappings",
+    title: "Analytics Data Mappings",
+    linkText: "Analytics Data Mappings",
     icon: faProjectDiagram,
     pageDescription: "Apply and connect Tags to incoming external data with Opsera.",
   },
@@ -949,24 +959,24 @@ const breadcrumbs = {
     parent : "dataMappingManagement",
     name: "projectTaggingDetailView",
     path: paths.projectTaggingDetailView,
-    title: "Project Mapping Details",
-    linkText: "Project Mapping Details",
+    title: "Analytics Project Mapping Details",
+    linkText: "Analytics Project Mapping Details",
     icon: faProjectDiagram
   },
   pipelineDataMappingDetailView: {
     parent : "dataMappingManagement",
     name: "pipelineDataMappingDetailView",
     path: paths.pipelineDataMappingDetailView,
-    title: "Pipeline Data Mapping Details",
-    linkText: "Pipeline Data Mapping Details",
+    title: "Analytics Pipeline Data Mapping Details",
+    linkText: "Analytics Pipeline Data Mapping Details",
     icon: faDraftingCompass
   },
   userTaggingDetailView: {
     parent : "dataMappingManagement",
     name: "userTaggingDetailView",
     path: paths.userTaggingDetailView,
-    title: "User Mapping Details",
-    linkText: "User Mapping Details",
+    title: "Analytics User Mapping Details",
+    linkText: "Analytics User Mapping Details",
     icon: faUserTag
   },
 
