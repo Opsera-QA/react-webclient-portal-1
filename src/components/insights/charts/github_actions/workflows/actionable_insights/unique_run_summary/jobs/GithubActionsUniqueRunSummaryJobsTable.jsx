@@ -5,8 +5,6 @@ import {getStaticIconColumn, getTableTextColumn} from "components/common/table/t
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icons";
-import ExportGithubActionsWorkflowReportActionableInsights1Panel
-  from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
 import ExportGithubActionsWorkflowReportButton from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
 import {githubActionsUniqueRunJobsSummaryMetadata} from "components/insights/charts/github_actions/workflows/actionable_insights/unique_run_summary/jobs/githubActionsUniqueRunJobsSummary.metadata";
 import {
@@ -14,6 +12,8 @@ import {
 } from "components/insights/charts/github_actions/workflows/actionable_insights/GithubActionsWorkflowActionableInsightOverlay";
 import GithubActionsWorkflowWarningMessage
   from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowWarningMessage";
+import ExportGithubActionWorkflowReportActionalbeInsights2Panel
+    from "../../../export/ExportGithubActionsWorkflowReportActionableInsights2Panel";
 
 function GithubActionsUniqueRunSummaryJobsTable(
   {
@@ -47,7 +47,6 @@ function GithubActionsUniqueRunSummaryJobsTable(
       getTableTextColumn(getField(fields, "canceledPercentage")),
       getTableTextColumn(getField(fields, "successTime")),
       getTableTextColumn(getField(fields, "failedTime")),
-      getStaticIconColumn(faExternalLink),
     ],
     []
   );
@@ -60,7 +59,7 @@ function GithubActionsUniqueRunSummaryJobsTable(
   const getTable = () => {
     if (showExportPanel === true) {
       return (
-        <ExportGithubActionsWorkflowReportActionableInsights1Panel
+        <ExportGithubActionWorkflowReportActionalbeInsights2Panel
           showExportPanel={showExportPanel}
           setShowExportPanel={setShowExportPanel}
           githubActionData={data}

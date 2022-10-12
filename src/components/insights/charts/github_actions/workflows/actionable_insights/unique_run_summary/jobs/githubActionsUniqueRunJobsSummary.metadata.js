@@ -98,7 +98,7 @@ export const githubActionsUniqueRunJobsSummaryMetadata = {
       id: "skipped",
     },
     {
-      label: "Runs Skipped",
+      label: "Jobs Skipped",
       id: "runsSkipped",
     },
     {

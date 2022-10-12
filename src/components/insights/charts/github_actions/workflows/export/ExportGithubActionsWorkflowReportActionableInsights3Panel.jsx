@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import jsPDF from "jspdf";
 import ExportDataPanel from "components/common/modal/export_data/ExportDataPanel";
 import ExportGithubActionWorkflowReportActionalbeInsights1Panel from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
+import {getTableTextColumn} from "../../../../../common/table/table-column-helpers";
+import {getField} from "../../../../../common/metadata/metadata-helpers";
 
-export default function ExportGithubActionWorkflowReportActionalbeInsights3Panel({
+export default function ExportGithubActionWorkflowReportActionableInsights3Panel({
   showExportPanel,
   setShowExportPanel,
   githubActionData,
@@ -32,25 +34,31 @@ export default function ExportGithubActionWorkflowReportActionalbeInsights3Panel
       margin: { left: 2, right: 2 },
       head: [
         [
-          "Job Name",
-          "Runs",
-          "Jobs",
-          "Jobs Success",
-          "Jobs Failures",
-          "Skipped",
-          "Canceled",
-          "Success Time",
-          "Failed Time",
+          "Step Name",
+          "Total Steps Run",
+          "Successful Steps",
+          "Failed Steps",
+          "Steps Skipped",
+          "Canceled Steps",
+          "% Success",
+          "% Failures",
+          "% Skipped",
+          "% Canceled",
+          "Avg Time for Success",
+          "Avg Time for Failures",
         ],
       ],
       body: githubActionData.map((item) => [
         item.jobName,
-        item.runs,
         item.jobs,
         item.jobsSuccess,
         item.jobsFailures,
         item.skipped,
         item.canceled,
+        item.successPercentage,
+        item.failedPercentage,
+        item.skippedPercentage,
+        item.canceledPercentage,
         item.successTime,
         item.failedTime,
       ]),
@@ -62,24 +70,30 @@ export default function ExportGithubActionWorkflowReportActionalbeInsights3Panel
   const getCsvData = () => {
     return [
       [
-        "Job Name",
-        "Runs",
-        "Jobs",
-        "Jobs Success",
-        "Jobs Failures",
-        "Skipped",
-        "Canceled",
-        "Success Time",
-        "Failed Time",
+        "Step Name",
+        "Total Steps Run",
+        "Successful Steps",
+        "Failed Steps",
+        "Steps Skipped",
+        "Canceled Steps",
+        "% Success",
+        "% Failures",
+        "% Skipped",
+        "% Canceled",
+        "Avg Time for Success",
+        "Avg Time for Failures",
       ],
       ...githubActionData.map((item) => [
         item.jobName,
-        item.runs,
         item.jobs,
         item.jobsSuccess,
         item.jobsFailures,
         item.skipped,
         item.canceled,
+        item.successPercentage,
+        item.failedPercentage,
+        item.skippedPercentage,
+        item.canceledPercentage,
         item.successTime,
         item.failedTime,
       ]),
@@ -102,7 +116,7 @@ export default function ExportGithubActionWorkflowReportActionalbeInsights3Panel
   );
 }
 
-ExportGithubActionWorkflowReportActionalbeInsights3Panel.propTypes = {
+ExportGithubActionWorkflowReportActionableInsights3Panel.propTypes = {
   showExportPanel: PropTypes.bool,
   setShowExportPanel: PropTypes.func,
   githubActionData: PropTypes.any,

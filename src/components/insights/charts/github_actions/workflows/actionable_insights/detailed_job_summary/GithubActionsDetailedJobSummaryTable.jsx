@@ -10,8 +10,8 @@ import FilterContainer from "components/common/table/FilterContainer";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import ExportGithubActionsWorkflowReportButton
   from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
-import ExportGithubActionsWorkflowReportActionableInsights1Panel
-  from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
+import ExportGithubActionWorkflowReportActionableInsights3Panel
+  from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportActionableInsights3Panel";
 import GithubActionsWorkflowWarningMessage
   from "components/insights/charts/github_actions/workflows/GithubActionsWorkflowWarningMessage";
 
@@ -52,7 +52,7 @@ function GithubActionsDetailedJobSummaryTable(
   const getTable = () => {
     if (showExportPanel === true) {
       return (
-        <ExportGithubActionsWorkflowReportActionableInsights1Panel
+        <ExportGithubActionWorkflowReportActionableInsights3Panel
           showExportPanel={showExportPanel}
           setShowExportPanel={setShowExportPanel}
           githubActionData={data}

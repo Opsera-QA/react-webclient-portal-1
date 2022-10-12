@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import jsPDF from "jspdf";
 import ExportDataPanel from "components/common/modal/export_data/ExportDataPanel";
+import {getTableTextColumn} from "../../../../../common/table/table-column-helpers";
+import {getField} from "../../../../../common/metadata/metadata-helpers";
 
 export default function ExportGithubActionWorkflowReportPanel({
   showExportPanel,
@@ -31,13 +33,19 @@ export default function ExportGithubActionWorkflowReportPanel({
       margin: { left: 2, right: 2 },
       head: [
         [
-          "ID",
-          "Runs",
-          "Repos",
-          "Success",
-          "Failures",
-          "Success Time",
-          "Failed Time",
+          "Unique Workflow Name",
+          "Total Runs",
+          "Total Repositories",
+          "Total Success Runs",
+          "Total Failure Runs",
+          "Runs Skipped",
+          "Runs Canceled",
+          "% Success",
+          "% Failures",
+          "% Skipped",
+          "% Canceled",
+          "Avg Time for Success",
+          "Avg Time for Failures",
         ],
       ],
       body: githubActionData.map((item) => [
@@ -46,6 +54,12 @@ export default function ExportGithubActionWorkflowReportPanel({
         item.repos,
         item.success,
         item.failures,
+        item.runsSkipped,
+        item.runsCanceled,
+        item.successPercentage,
+        item.failedPercentage,
+        item.skippedPercentage,
+        item.canceledPercentage,
         item.successTime,
         item.failedTime,
       ]),
@@ -57,13 +71,19 @@ export default function ExportGithubActionWorkflowReportPanel({
   const getCsvData = () => {
     return [
       [
-        "ID",
-        "Runs",
-        "Repos",
-        "Success",
-        "Failures",
-        "Success Time",
-        "Failed Time",
+        "Unique Workflow Name",
+        "Total Runs",
+        "Total Repositories",
+        "Total Success Runs",
+        "Total Failure Runs",
+        "Runs Skipped",
+        "Runs Canceled",
+        "% Success",
+        "% Failures",
+        "% Skipped",
+        "% Canceled",
+        "Avg Time for Success",
+        "Avg Time for Failures",
       ],
       ...githubActionData.map((item) => [
         item._id,
@@ -71,6 +91,12 @@ export default function ExportGithubActionWorkflowReportPanel({
         item.repos,
         item.success,
         item.failures,
+        item.runsSkipped,
+        item.runsCanceled,
+        item.successPercentage,
+        item.failedPercentage,
+        item.skippedPercentage,
+        item.canceledPercentage,
         item.successTime,
         item.failedTime,
       ]),

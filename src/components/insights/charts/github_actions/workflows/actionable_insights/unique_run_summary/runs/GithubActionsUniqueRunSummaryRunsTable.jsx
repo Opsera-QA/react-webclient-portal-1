@@ -2,15 +2,16 @@ import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getStaticIconColumn,
-  getTableDateTimeColumn,
-  getTableTextColumn,
+    getExternalLinkIconColumnDefinition,
+    getStaticIconColumn,
+    getTableDateTimeColumn,
+    getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icons";
-import ExportGithubActionsWorkflowReportActionableInsights1Panel
-  from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportActionableInsights1Panel";
+import ExportGithubActionWorkflowReportActionableInsights4Panel
+  from "components/insights/charts/github_actions/workflows/export/ExportGithubActionsWorkflowReportActionableInsights4Panel";
 import ExportGithubActionsWorkflowReportButton from "components/insights/charts/github_actions/workflows/export/ExportGithubActionWorkflowReportButton";
 import {
   GITHUB_ACTIONS_WORKFLOW_ACTIONABLE_INSIGHT_SCREENS
@@ -47,7 +48,7 @@ function GithubActionsUniqueRunSummaryRunsTable(
       getTableTextColumn(getField(fields, "totalDuration")),
       getTableTextColumn(getField(fields, "conclusion")),
       getTableTextColumn(getField(fields, "numberOfRuns")),
-      getTableTextColumn(getField(fields, "workflowURL")), // TODO: Make external link column
+      getExternalLinkIconColumnDefinition(getField(fields, "workflowURL")), // TODO: Make external link column
     ],
     []
   );
@@ -60,7 +61,7 @@ function GithubActionsUniqueRunSummaryRunsTable(
   const getTable = () => {
     if (showExportPanel === true) {
       return (
-        <ExportGithubActionsWorkflowReportActionableInsights1Panel
+        <ExportGithubActionWorkflowReportActionableInsights4Panel
           showExportPanel={showExportPanel}
           setShowExportPanel={setShowExportPanel}
           githubActionData={data}
