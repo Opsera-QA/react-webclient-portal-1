@@ -82,6 +82,7 @@ paths.gitCustodian = "insights/insightsGitCustodian";
 // Settings Paths
 paths.freeTrialSettings = "/trial/settings";
 paths.accountSettings = "settings";
+paths.insightsSettings = "/settings/insights";
 paths.ldapUserManagement = paths.accountSettings + "/users";
 paths.ldapUserDetailView = paths.ldapUserManagement;
 paths.userManagement = paths.accountSettings + "/user-management";
