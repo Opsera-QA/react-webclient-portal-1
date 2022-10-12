@@ -14,6 +14,7 @@ import LiquibaseScmToolSelectInput from "./inputs/LiquibaseScmToolSelectInput";
 import LiquibaseBitbucketWorkspaceInput from "./inputs/LiquibaseBitbucketWorkspaceInput";
 import LiquibaseGitRepositoryInput from "./inputs/LiquibaseGitRepositoryInput";
 import LiquibaseGitBranchInput from "./inputs/LiquibaseGitBranchInput";
+import LiquibaseTagSelectInput from "./inputs/LiquibaseTagSelectInput";
 
 function LiquibaseStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -108,6 +109,20 @@ function LiquibaseStepConfiguration({ pipelineId, stepTool, plan, stepId, closeE
     );
   };
 
+  const getTagField = () => {
+    if (liquibaseStepConfigurationDto?.getData("jobType") === "rollback") {
+      return (
+        <LiquibaseTagSelectInput 
+          model={liquibaseStepConfigurationDto}
+          setModel={setLiquibaseConfigurationDataDto}
+          toolConfigId={liquibaseStepConfigurationDto?.getData("toolConfigId")}
+          database={liquibaseStepConfigurationDto?.getData("database")}
+          schema={liquibaseStepConfigurationDto?.getData("baseSchema")}
+        />
+      );
+    }
+  };
+
   return (
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
@@ -139,6 +154,7 @@ function LiquibaseStepConfiguration({ pipelineId, stepTool, plan, stepId, closeE
         setDataObject={setLiquibaseConfigurationDataDto}
         fieldName={"baseSchema"}
       />
+      {getTagField()}
     </PipelineStepEditorPanelContainer>
   );
 }
