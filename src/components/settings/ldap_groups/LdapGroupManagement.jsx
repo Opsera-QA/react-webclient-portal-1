@@ -1,59 +1,63 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
-import {AuthContext} from "contexts/AuthContext";
+import React, {useState, useEffect} from "react";
 import {useHistory, useParams} from "react-router-dom";
 import LdapGroupsTable from "./LdapGroupsTable";
 import accountsActions from "components/admin/accounts/accounts-actions";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import axios from "axios";
 import GroupManagementSubNavigationBar from "components/settings/ldap_groups/GroupManagementSubNavigationBar";
 import GroupsHelpDocumentation from "../../common/help/documentation/settings/GroupsHelpDocumentation";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function LdapGroupManagement() {
-  const toastContext = useContext(DialogToastContext);
-  const {getUserRecord, setAccessRoles, getAccessToken} = useContext(AuthContext);
   const history = useHistory();
   const {orgDomain} = useParams();
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [groupList, setGroupList] = useState([]);
-  const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
   const [existingGroupNames, setExistingGroupNames] = useState([]);
   const [ldapGroupMetadata, setLdapGroupMetadata] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+    accessRoleData,
+    toastContext,
+    getAccessToken,
+    userData,
+    isOpseraAdministrator,
+    isPowerUser,
+    isSiteAdministrator,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+    const ldap = DataParsingHelper.parseObject(userData?.ldap, {});
+
+    if (orgDomain == null || (ldap?.domain !== orgDomain && isOpseraAdministrator !== true)) {
+      history.push(`/settings/${ldap.domain}/groups`);
+    } else {
+      loadData().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
     }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [orgDomain]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setIsLoading(true);
-      await getRoles(cancelSource);
+      if (
+        accessRoleData?.OpseraAdministrator
+        || accessRoleData?.Administrator
+        || accessRoleData?.PowerUser
+        || accessRoleData?.OrganizationOwner
+        || accessRoleData?.OrganizationAccountOwner
+      ) {
+        await getGroupsByDomain();
+      }
     }
     catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
-        console.error(error);
       }
     }
     finally {
@@ -63,54 +67,34 @@ function LdapGroupManagement() {
     }
   };
 
-  const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    const {ldap} = user;
-
-    if (isMounted?.current === true && userRoleAccess) {
-      setCurrentUserEmail(user?.email);
-      if (orgDomain == null || (ldap?.domain !== orgDomain && !userRoleAccess?.OpseraAdministrator)) {
-        history.push(`/settings/${ldap.domain}/groups`);
-      }
-
-      setAccessRoleData(userRoleAccess);
-
-      if (
-           userRoleAccess?.OpseraAdministrator
-        || userRoleAccess?.Administrator
-        || userRoleAccess?.PowerUser
-        || userRoleAccess?.OrganizationOwner
-        || userRoleAccess?.OrganizationAccountOwner
-      ) {
-        await getGroupsByDomain(cancelSource);
-      }
-    }
-  };
-
-  const getGroupsByDomain = async (cancelSource = cancelTokenSource) => {
+  const getGroupsByDomain = async () => {
     if (orgDomain != null) {
-      try {
-        const response = await accountsActions.getLdapUserGroupsWithDomainV2(getAccessToken, cancelSource, orgDomain);
-        const groups = response?.data?.data;
+      const response = await accountsActions.getLdapUserGroupsWithDomainV2(
+        getAccessToken,
+        cancelTokenSource,
+        orgDomain,
+      );
+      const groups = DataParsingHelper.parseArray(response?.data?.data, []);
 
-        if (Array.isArray(groups)) {
-          const metadata = response?.data?.metadata;
-          setLdapGroupMetadata({...metadata});
-          const existingGroupNames = groups.map((group) => {return group.name.toLowerCase();});
-          setExistingGroupNames(existingGroupNames);
-          setGroupList(groups);
-        }
-      } catch (error) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
+      if (isMounted?.current === true) {
+        const metadata = response?.data?.metadata;
+        setLdapGroupMetadata({ ...metadata });
+        const existingGroupNames = groups.map((group) => {
+          return group.name.toLowerCase();
+        });
+        setExistingGroupNames(existingGroupNames);
+        setGroupList([...groups]);
       }
     }
   };
 
-  const getHelpComponent = () => {
-      return (<GroupsHelpDocumentation/>);
-  };
+  if (
+    isOpseraAdministrator !== true
+    && isPowerUser !== true
+    && isSiteAdministrator !== true
+  ) {
+    return null;
+  }
 
   return (
     <ScreenContainer
@@ -118,7 +102,7 @@ function LdapGroupManagement() {
       navigationTabContainer={<GroupManagementSubNavigationBar activeTab={"groups"} />}
       breadcrumbDestination={"ldapGroupManagement"}
       pageDescription={"Group Management allows users to manage membership for existing groups and create new groups. These groups are the custom groups that users can create, manage and apply to individual items, like Pipelines and Tools."}
-      helpComponent={getHelpComponent()}
+      helpComponent={<GroupsHelpDocumentation/>}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.POWER_USERS}
     >
@@ -131,7 +115,7 @@ function LdapGroupManagement() {
         loadData={loadData}
         orgDomain={orgDomain}
         existingGroupNames={existingGroupNames}
-        currentUserEmail={currentUserEmail}
+        currentUserEmail={userData?.email}
       />
     </ScreenContainer>
   );
