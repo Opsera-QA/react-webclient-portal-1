@@ -9,6 +9,10 @@ export const GitCustodianFilterMetadata = {
       id: "commitDate",
     },
     {
+      label: "Scanned On",
+      id: "lastScannedOn",
+    },
+    {
       label: "Author",
       id: "author",
     },
