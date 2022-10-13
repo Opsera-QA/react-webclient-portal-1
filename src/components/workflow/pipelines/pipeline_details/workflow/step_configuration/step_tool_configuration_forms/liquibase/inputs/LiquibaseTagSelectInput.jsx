@@ -25,7 +25,6 @@ function LiquibaseTagSelectInput({ model, setModel, disabled, toolConfigId, data
 
     setErrorMessage("");
     let newModel = {...model};
-    newModel.setDefaultValue("tag");
     setModel({...newModel});
 
     loadData(source).catch((error) => {
