@@ -12,7 +12,7 @@ function PipelineStepSlackNotificationSummaryPanel({ slackNotificationModel }) {
   }
 
   return (
-    <SummaryPanelContainer>
+    <SummaryPanelContainer className={"m-3"}>
       <Row>
         <Col lg={6}>
           <BooleanField dataObject={slackNotificationModel} fieldName={"enabled"} />

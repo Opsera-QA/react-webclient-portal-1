@@ -12,7 +12,7 @@ function PipelineStepGChatNotificationSummaryPanel({ gChatNotificationModel }) {
   }
 
   return (
-    <SummaryPanelContainer>
+    <SummaryPanelContainer className={"m-3"}>
       <Row>
         <Col lg={6}>
           <BooleanField dataObject={gChatNotificationModel} fieldName={"enabled"} />
