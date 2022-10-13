@@ -103,9 +103,9 @@ regexDefinitions.gitBranchName = {
 };
 
 regexDefinitions.pathField = {
-  regex: /^[A-Za-z0-9\-_:./\\]*$/,
-  formText: "Letters, numbers, dashes, slashes, colons, underscores, and periods are allowed",
-  errorFormText: "Only letters, numbers, dashes, slashes, colons, underscores, and periods are allowed"
+  regex: /^[A-Za-z0-9\-_:./\\"]*$/,
+  formText: "Letters, numbers, dashes, slashes, colons, underscores, quotes, and periods are allowed",
+  errorFormText: "Only letters, numbers, dashes, slashes, colons, underscores, quotes, and periods are allowed"
 };
 
 regexDefinitions.domainNameField = {
