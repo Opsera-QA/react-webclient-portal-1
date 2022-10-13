@@ -13,6 +13,7 @@ import {
   getDeploymentStageFromKpiConfiguration, getReverseTrend, getReverseTrendIcon,
 } from "../../../charts-helpers";
 import GitlabLeadTimeTrendDataBlock from "./GitlabLeadTimeTrendDataBlock";
+import gitlabAction from "../../gitlab.action";
 
 function GitLabLeadTimeChart({
   kpiConfiguration,
@@ -65,29 +66,22 @@ function GitLabLeadTimeChart({
           )
         ]?.value;
 
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      const response = await gitlabAction.gitlabLeadTimeForChange(
         getAccessToken,
         cancelSource,
-        "gitlabLeadTimeForChange",
         kpiConfiguration,
         dashboardTags,
-        null,
-        null,
         dashboardOrgs,
       );
-      const response2 =
-        await chartsActions.parseConfigurationAndGetChartMetrics(
-          getAccessToken,
-          cancelSource,
-          "gitlabAverageCommitTimeToMerge",
-          kpiConfiguration,
-          dashboardTags,
-          null,
-          null,
-          dashboardOrgs,
-        );
+      const response2 = await gitlabAction.gitlabAverageCommitTimeToMerge(
+        getAccessToken,
+        cancelSource,
+        kpiConfiguration,
+        dashboardTags,
+        dashboardOrgs,
+      );
 
-      const metrics = response?.data?.data[0]?.gitlabLeadTimeForChange?.data;
+      const metrics = response?.data?.data?.gitlabLeadTimeForChange?.data;
       const meanCommitTimeDataObject =
         response2?.data?.data[0]?.gitlabAverageCommitTimeToMerge?.data || {};
 
