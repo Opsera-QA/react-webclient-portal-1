@@ -88,6 +88,7 @@ function GitCustodianVulnerableCommitsTable(
         getField(fields, "jiraTicket"),
       ),
       getTableDateTimeColumn(getField(fields, "commitDate")),
+      getTableDateTimeColumn(getField(fields, "lastScannedOn")),
       getTableTextColumn(getField(fields, "repository")),
       getTableTextColumn(getField(fields, "author")),
       getPathDefinition(getField(fields, "path"), "force-text-wrap"),
