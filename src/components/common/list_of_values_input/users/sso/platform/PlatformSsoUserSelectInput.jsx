@@ -13,6 +13,7 @@ export default function PlatformSsoUserSelectInput(
     showClearValueButton,
     setDataFunction,
     className,
+    disabled,
   }) {
   const {
     platformSsoUsers,
@@ -35,6 +36,7 @@ export default function PlatformSsoUserSelectInput(
       selectOptions={platformSsoUsers}
       pluralTopic={"Users"}
       singularTopic={"User"}
+      disabled={disabled}
     />
   );
 }
@@ -51,6 +53,7 @@ PlatformSsoUserSelectInput.propTypes = {
   ]),
   setDataFunction: PropTypes.func,
   className: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 PlatformSsoUserSelectInput.defaultProps = {

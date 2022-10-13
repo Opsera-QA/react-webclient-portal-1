@@ -12,6 +12,10 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { ssoUserActions } from "components/settings/users/ssoUser.actions";
 import FreeTrialUserActivityViewerDetailPanel
   from "components/settings/trial/activity_report/user_activity/FreeTrialUserActivityViewerDetailPanel";
+import FreeTrialUserActivityReportPlatformSsoUserSelectInput
+  from "components/settings/trial/activity_report/user_activity/FreeTrialUserActivityReportPlatformSsoUserSelectInput";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 export default function FreeTrialUserActivityReportUserActivityViewer() {
   const { userId } = useParams();
@@ -39,9 +43,9 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
   const loadData = async (newFilterModel = activityReportFilterModel) => {
     try {
       setActivityReportWorkflows([]);
+      setIsLoading(true);
 
       if (isMongoDbId(userId) === true) {
-        setIsLoading(true);
         await getUserById();
         await getFreeTrialActivityReportWorkflows(newFilterModel);
       }
@@ -93,7 +97,7 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
 
     if (isMounted?.current === true) {
       setActivityReportWorkflows([...workflows]);
-      // newFilterModel.updateActiveFilters();
+      newFilterModel.setData("userId", userId);
       setActivityReportFilterModel({...newFilterModel});
     }
 
@@ -107,20 +111,38 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
     setTools([...tools]);
   };
 
+  const getUserActivityViewer = () => {
+    if (isMongoDbId(userId) === true) {
+      return (
+        <FreeTrialUserActivityViewerDetailPanel
+          activityReportFilterModel={activityReportFilterModel}
+          setActivityReportFilterModel={setActivityReportFilterModel}
+          activityReportWorkflows={activityReportWorkflows}
+          loadData={loadData}
+          isLoading={isLoading}
+          userData={userData}
+          tools={tools}
+        />
+      );
+    }
+  };
+
   return (
     <ScreenContainer
       breadcrumbDestination={"freeTrialUserActivityReport"}
       navigationTabContainer={<FreeTrialUserActivityReportSubNavigationBar activeTab={"userActivityViewer"} />}
     >
-      <FreeTrialUserActivityViewerDetailPanel
-        activityReportFilterModel={activityReportFilterModel}
-        setActivityReportFilterModel={setActivityReportFilterModel}
-        activityReportWorkflows={activityReportWorkflows}
-        loadData={loadData}
-        isLoading={isLoading}
-        userData={userData}
-        tools={tools}
-      />
+      <Row>
+        <Col xs={12}>
+          <FreeTrialUserActivityReportPlatformSsoUserSelectInput
+            model={activityReportFilterModel}
+            loadDataFunction={loadData}
+            disabled={isLoading === true}
+            className={"mx-3"}
+          />
+        </Col>
+      </Row>
+      {getUserActivityViewer()}
     </ScreenContainer>
   );
 }

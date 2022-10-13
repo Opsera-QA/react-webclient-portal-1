@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   getCustomTablePipelineStateColumnDefinition,
   getFormattedLabelWithFunctionColumnDefinition,
@@ -18,9 +18,6 @@ import {
   freeTrialUserActivityReportMetadata
 } from "components/settings/trial/activity_report/freeTrialUserActivityReport.metadata";
 import { workspaceConstants } from "components/workspace/workspace.constants";
-import FreeTrialUserActivityReportInlinePlatformSsoUserFilterSelectInput
-  from "components/settings/trial/activity_report/user_activity/FreeTrialUserActivityReportInlinePlatformSsoUserFilterSelectInput";
-import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function FreeTrialUserActivityReportWorkflowsTable(
@@ -32,7 +29,6 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
     loadData,
     isLoading,
   }) {
-  const { userId } = useParams();
   const fields = freeTrialUserActivityReportMetadata.fields;
   const history = useHistory();
 
@@ -58,22 +54,6 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
 
     if (hasStringValue(detailViewLink) === true) {
       history.push(detailViewLink);
-    }
-  };
-
-  const getInlineFilters = () => {
-    if (isMongoDbId(userId) !== true) {
-      return (
-        <div className={"d-flex"}>
-          <FreeTrialUserActivityReportInlinePlatformSsoUserFilterSelectInput
-            filterModel={activityReportFilterModel}
-            fieldName={"userId"}
-            loadDataFunction={loadData}
-            className={"mr-2"}
-            disabled={isLoading}
-          />
-        </div>
-      );
     }
   };
 
@@ -103,7 +83,6 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
     <FilterContainer
       loadData={loadData}
       isLoading={isLoading}
-      inlineFilters={getInlineFilters()}
       filterDto={activityReportFilterModel}
       setFilterDto={setActivityReportFilterModel}
       body={getTable()}
