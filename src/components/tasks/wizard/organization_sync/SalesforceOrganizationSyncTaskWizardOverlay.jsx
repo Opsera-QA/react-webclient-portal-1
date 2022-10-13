@@ -42,7 +42,7 @@ export default function SalesforceOrganizationSyncTaskWizardOverlay({ taskModel 
 
     return (
       <SfdcPipelineWizard
-        task={internalTaskModel?.getPersistData()}
+        gitTaskData={internalTaskModel}
         handleClose={closePanel}
         closePanel={closePanel}
       />
