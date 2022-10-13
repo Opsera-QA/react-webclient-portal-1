@@ -13,6 +13,10 @@ export const freeTrialUserActivityReportUserMetadata = {
       id: "email",
     },
     {
+      label: "Company`",
+      id: "attributes.company",
+    },
+    {
       label: "Workflows`",
       id: "workflowCount",
     },

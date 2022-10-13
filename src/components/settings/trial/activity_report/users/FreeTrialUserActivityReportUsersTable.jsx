@@ -58,11 +58,12 @@ export default function FreeTrialUserActivityReportUsersTable(
       getUserExpirationColumnDefinition(),
       getSsoUserNameField(),
       getTableTextColumn(getField(fields, "email")),
-      getTableTextColumn(getField(fields, "_id")),
+      getTableTextColumn(getField(fields, "attributes.company")),
       getTableTextColumn(getField(fields, "toolCount")),
       getTableTextColumn(getField(fields, "workflowCount")),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableDateTimeColumn(getField(fields, "updatedAt")),
+      getTableTextColumn(getField(fields, "_id")),
     ],
     [fields]
   );
