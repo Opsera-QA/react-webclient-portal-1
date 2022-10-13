@@ -21,23 +21,23 @@ function UnsecuredItemReportTable({
   const history = useHistory();
 
   const onRowSelect = (grid, row) => {
-    if (row?.object_type === "pipeline" && row?.id) {
-      history.push(`/workflow/details/${row.id}/summary`);
+    if (row?.object_type === "pipeline" && row?._id) {
+      history.push(`/workflow/details/${row._id}/summary`);
     }
 
-    if (row?.object_type === "task" && row?.id) {
-      history.push(`/task/details/${row.id}`);
+    if (row?.object_type === "task" && row?._id) {
+      history.push(`/task/details/${row._id}`);
     }
 
-    if (row?.object_type === "tool" && row?.id) {
-      history.push(`/inventory/tools/details/${row.id}`);
+    if (row?.object_type === "tool" && row?._id) {
+      history.push(`/inventory/tools/details/${row._id}`);
     }
 
-    if (row?.object_type === "script" && row?.id) {
+    if (row?.object_type === "script" && row?._id) {
       history.push(`/inventory/scripts`);
     }
 
-    if (row?.object_type === "parameter" && row?.id) {
+    if (row?.object_type === "parameter" && row?._id) {
       history.push(`/inventory/parameters`);
     }
   };
