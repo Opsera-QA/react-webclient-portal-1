@@ -42,7 +42,7 @@ function TeamsToolConfiguration({ toolData }) {
       setModel={setTeamsConfigurationDto}
       persistRecord={saveTeamsToolConfiguration}
       toolData={toolData}
-      // toolConnectionCheckName={"Teams"}
+      toolConnectionCheckName={"Teams"}
     >
       <Row>
         <Col sm={12}>

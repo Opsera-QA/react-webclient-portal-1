@@ -12,7 +12,7 @@ function PipelineStepMicrosoftTeamsNotificationSummaryPanel({ teamsNotificationM
   }
 
   return (
-    <SummaryPanelContainer>
+    <SummaryPanelContainer className={"m-3"}>
       <Row>
         <Col lg={6}>
           <BooleanField dataObject={teamsNotificationModel} fieldName={"enabled"} />
