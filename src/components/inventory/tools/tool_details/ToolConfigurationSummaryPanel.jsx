@@ -110,6 +110,10 @@ import gchatConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/gchat/gchat-connection-metadata";
 import GChatToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/gchat/GChatToolConfigurationSummaryPanel";
+import FortifyToolConfigurationSummaryPanel
+  from "components/inventory/tools/tool_details/tool_jobs/fortify/FortifyToolConfigurationSummaryPanel";
+import FortifyMetadata 
+  from "components/inventory/tools/tool_details/tool_jobs/fortify/fortify-tool-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -308,6 +312,12 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
         return (
           <GChatToolConfigurationSummaryPanel
             gChatToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, gchatConnectionMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
+        return (
+          <FortifyToolConfigurationSummaryPanel
+            fortifyToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, FortifyMetadata)}
           />
         );
       default:
