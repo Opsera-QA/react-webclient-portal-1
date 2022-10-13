@@ -33,7 +33,8 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
 
   useEffect(() => {
     setActivityReportWorkflows([]);
-    loadData().catch((error) => {
+    activityReportFilterModel.setData("userId", userId);
+    loadData(activityReportFilterModel).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -45,8 +46,8 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
       setActivityReportWorkflows([]);
       setIsLoading(true);
 
-      if (isMongoDbId(userId) === true) {
-        await getUserById();
+      if (isMongoDbId(newFilterModel?.getData("userId")) === true) {
+        await getUserById(newFilterModel?.getData("userId"));
         await getFreeTrialActivityReportWorkflows(newFilterModel);
       }
     } catch (error) {
@@ -60,12 +61,12 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
     }
   };
 
-  const getUserById = async () => {
+  const getUserById = async (selectedUserId = userId) => {
     setUserData(undefined);
     const response = await ssoUserActions.getUserById(
       getAccessToken,
       cancelTokenSource,
-      userId,
+      selectedUserId,
     );
 
     const user = DataParsingHelper.parseObject(response?.data);
@@ -79,7 +80,7 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
     const pipelineResponse = await workspaceActions.getFreeTrialUserActivityReportPipelines(
       getAccessToken,
       cancelTokenSource,
-      userId,
+      newFilterModel?.getFilterValue("userId"),
       newFilterModel?.getFilterValue("search"),
     );
     const workflows = [];
@@ -89,7 +90,7 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
     const taskResponse = await workspaceActions.getFreeTrialUserActivityReportTasks(
       getAccessToken,
       cancelTokenSource,
-      userId,
+      newFilterModel?.getFilterValue("userId"),
       newFilterModel?.getFilterValue("search"),
     );
     const tasks = DataParsingHelper.parseArray(taskResponse?.data?.data, []);
@@ -97,7 +98,6 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
 
     if (isMounted?.current === true) {
       setActivityReportWorkflows([...workflows]);
-      newFilterModel.setData("userId", userId);
       setActivityReportFilterModel({...newFilterModel});
     }
 
@@ -112,7 +112,7 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
   };
 
   const getUserActivityViewer = () => {
-    if (isMongoDbId(userId) === true) {
+    if (isMongoDbId(activityReportFilterModel?.getData("userId")) === true) {
       return (
         <FreeTrialUserActivityViewerDetailPanel
           activityReportFilterModel={activityReportFilterModel}
@@ -127,21 +127,29 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
     }
   };
 
+  const getUserSelectInput = () => {
+    if (isMongoDbId(userId) !== true) {
+      return (
+        <Row>
+          <Col xs={12}>
+            <FreeTrialUserActivityReportPlatformSsoUserSelectInput
+              model={activityReportFilterModel}
+              loadDataFunction={loadData}
+              disabled={isLoading === true}
+              className={"mx-3"}
+            />
+          </Col>
+        </Row>
+      );
+    }
+  };
+
   return (
     <ScreenContainer
       breadcrumbDestination={"freeTrialUserActivityReport"}
       navigationTabContainer={<FreeTrialUserActivityReportSubNavigationBar activeTab={"userActivityViewer"} />}
     >
-      <Row>
-        <Col xs={12}>
-          <FreeTrialUserActivityReportPlatformSsoUserSelectInput
-            model={activityReportFilterModel}
-            loadDataFunction={loadData}
-            disabled={isLoading === true}
-            className={"mx-3"}
-          />
-        </Col>
-      </Row>
+      {getUserSelectInput()}
       {getUserActivityViewer()}
     </ScreenContainer>
   );
