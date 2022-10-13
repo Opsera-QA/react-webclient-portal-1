@@ -75,7 +75,14 @@ const LiquibaseStepFormMetadata = {
     },
     {
       id: "dbType",
-    }
+    },
+    {
+      label: "Rollback Tag",
+      id: "tag",
+      isRequiredFunction: (model) => {
+        return model?.getData("jobType") === "rollback";
+      },
+    },
   ],
   newObjectFields: {
     jobType: "",
@@ -93,7 +100,8 @@ const LiquibaseStepFormMetadata = {
     gitUrl: "",
     scriptFilePath: "",
     baseSchema : "",
-    dbType: "snowflake"
+    dbType: "snowflake",
+    tag: "",
   }
 };
 

@@ -67,7 +67,6 @@ function UnsecuredItemReport() {
   };
 
   if (isSiteAdministrator !== true) {
-    console.log("isSiteAdministor is false");
     return null;
   }
 

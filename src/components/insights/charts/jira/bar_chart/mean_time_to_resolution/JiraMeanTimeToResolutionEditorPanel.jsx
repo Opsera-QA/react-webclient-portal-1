@@ -4,11 +4,12 @@ import MetricTagFilterInput from "components/common/inputs/metric/filters/tags/M
 import MetricDateRangeFilterInput from "components/common/inputs/metric/filters/date/MetricDateRangeFilterInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import {jiraMeanTimeToResolutionMetadata} from "./jiraMeanTimeToResolution.metadata";
-import MetricJiraPrioritiesFilterInput
-  from "components/common/inputs/metric/filters/jira/MetricJiraPrioritiesFilterInput";
 import MetricJiraProjectsFilterInput
   from "../../../../../common/inputs/metric/filters/jira/MetricJiraProjectsFilterInput";
-import MetricJiraServiceComponentsFilterInput from 'components/common/inputs/metric/filters/jira/MetricJiraServiceComponentsFilterInput';
+import MetricJiraServiceComponentsFilterInput
+    from "../../../../../common/inputs/metric/filters/jira/MetricJiraServiceComponentsFilterInput";
+import MetricJiraPrioritiesFilterInput
+    from "../../../../../common/inputs/metric/filters/jira/MetricJiraPrioritiesFilterInput";
 
 function JiraMeanTimeToResolutionEditorPanel(
   {

@@ -12,7 +12,7 @@ function SiteRolesHelpDocumentation() {
 
   const getHelpDocumentation = () => {
     return (
-      <div>Site Administrators can manage Site Roles from this dashboard. Site Roles determine a user’s level of accessibility. There are 3 different levels: Site Administrators, Power Users and Users. Users with Site Administrator access have full portal access, users with Power User Access have less access, and users with User Access have the least amount of access. For detailed information on Site Roles, view the <b><a href="https://opsera.atlassian.net/l/c/D08fY5Vp" target="_blank" rel="noreferrer">Site Roles Help Documentation</a></b>
+      <div>Site Administrators can manage Site Roles from this dashboard. Site Roles determine a user’s level of accessibility. There are 3 different levels: Site Administrators, Power Users and Users. Users with Site Administrator access have full portal access, users with Power User Access have less access, and users with User Access have the least amount of access. For detailed information on Site Roles, view the <b><a href="https://docs.opsera.io/role-based-access-pipelines-and-tool-registry" target="_blank" rel="noreferrer">Site Roles Help Documentation</a></b>
         <div className={"mt-2 ml-2"}>
           <h5>Site Roles Management</h5>
           <ol>
