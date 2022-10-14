@@ -69,7 +69,11 @@ const azureWebappsStepFormMetadata = {
     {
       label: "Clean Target",
       id: "webappCleanTargetPath",      
-    },         
+    },
+    {
+      label: "Use Run count as version",
+      id: "customVersion",
+    },
   ],
   newObjectFields: {
     deploymentType: "",
@@ -85,6 +89,7 @@ const azureWebappsStepFormMetadata = {
     webappPackageType: "zip",
     webappTargetPath: "",
     webappCleanTargetPath: false,
+    customVersion: false,
   }
 };
 

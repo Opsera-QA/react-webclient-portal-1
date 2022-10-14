@@ -7,7 +7,6 @@ import azureWebappsStepFormMetadata from "./azureWebapps-stepForm-metadata";
 import AzureWebappsDeploymentTypeSelectInput from "./inputs/AzureWebappsDeploymentTypeSelectInput";
 import AzureWebappsStepAzureToolSelectInput from "./inputs/AzureWebappsStepAzureToolSelectInput";
 import AzureWebappsStepApplicationSelectInput from "./inputs/AzureWebappsStepApplicationSelectInput";
-import AzureResourceGroupSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/inputs/AzureResourceGroupSelect";
 import AzureWebappSelectInput from "./inputs/AzureWebappSelectInput";
 import AzureAppSettingsInput from "./inputs/AzureAppSettingsInput";
 import AzureConnectionStringsInput from "./inputs/AzureConnectionStringsInput";
@@ -15,6 +14,7 @@ import AzureWebappsArtifactStepSelectInput from "./inputs/AzureWebappsArtifactSt
 import AzureWebappPackageTypeSelectInput from "./inputs/AzureWebappPackageTypeSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import AzureWebappResourceGroupSelectInput from "./inputs/AzureWebappResourceGroupSelectInput";
 
 function AzureWebappsStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan, stepId, pipelineId }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -103,7 +103,7 @@ function AzureWebappsStepConfiguration({ stepTool, closeEditorPanel, parentCallb
         setModel={setAzureWebappsModel}
         azureToolId={azureWebappsModel?.getData("azureToolConfigId")}
       />
-      <AzureResourceGroupSelectInput
+      <AzureWebappResourceGroupSelectInput
         model={azureWebappsModel}
         setModel={setAzureWebappsModel}
         azureToolConfigId={azureWebappsModel?.getData("azureToolConfigId")}
@@ -117,6 +117,11 @@ function AzureWebappsStepConfiguration({ stepTool, closeEditorPanel, parentCallb
         resourceGroup={azureWebappsModel?.getData("resourceGroupName")}
       />
       {getDynamicFields()}
+      <BooleanToggleInput 
+        dataObject={azureWebappsModel} 
+        setDataObject={setAzureWebappsModel} 
+        fieldName={"customVersion"} 
+      />
       <AzureAppSettingsInput 
         model={azureWebappsModel}
         setModel={setAzureWebappsModel}

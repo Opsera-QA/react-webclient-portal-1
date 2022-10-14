@@ -45,6 +45,7 @@ function AzureWebappPackageTypeSelectInput({ model, setModel, disabled, fieldNam
       textField={"name"}
       placeholderText={"Select a Package Type"}
       disabled={disabled}
+      showClearValueButton={false}
     />
   );
 }
