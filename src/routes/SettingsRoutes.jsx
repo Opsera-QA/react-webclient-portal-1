@@ -17,6 +17,7 @@ import UserManagement from "components/settings/users/UserManagement";
 import UserDetailView from "components/settings/users/details/UserDetailView";
 import SsoUserDetailView from "components/settings/users/sso_user_details/SsoUserDetailView";
 import LogsExportManagement from "components/settings/logs_management/LogsExportManagement";
+import UnsecuredItemReport from "components/settings/unsecured_items/UnsecuredItemReport";
 import TagEditor from "components/settings/tags/TagManagement";
 import TagDetailView from "components/settings/tags/tags_detail_view/TagDetailView";
 import AnalyticsProfileSettings from "components/settings/analytics/analyticsProfileSettings";
@@ -158,6 +159,14 @@ export default function SettingsRoutes() {
         path="/settings/logs-export-management"
         exact={true}
         component={LogsExportManagement}
+        roleRequirement={ROLE_LEVELS.POWER_USERS}
+      />
+
+
+      <RoleRestrictedRoute
+        path="/settings/unsecured-items"
+        exact
+        component={UnsecuredItemReport}
         roleRequirement={ROLE_LEVELS.POWER_USERS}
       />
 

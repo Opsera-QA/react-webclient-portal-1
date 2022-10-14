@@ -4,6 +4,7 @@ import LdapGroupManagementPageLinkCard from "components/settings/ldap_groups/Lda
 import LdapSiteRoleManagementPageLinkCard from "components/settings/ldap_site_roles/LdapSiteRoleManagementPageLinkCard";
 import UserManagementPageLinkCard from "components/settings/users/UserManagementPageLinkCard";
 import LogsExportManagementPageLinkCard from "components/settings/logs_management/LogsExportManagementPageLinkCard";
+import UnsecuredItemReportPageLinkCard from "components/settings/unsecured_items/UnsecuredItemReportPageLinkCard";
 
 export default function AccountSettingsPageLinkCards() {
   return (
@@ -11,6 +12,7 @@ export default function AccountSettingsPageLinkCards() {
       <DeleteToolsManagementPageLinkCard />
       <LdapGroupManagementPageLinkCard />
       <LogsExportManagementPageLinkCard />
+      <UnsecuredItemReportPageLinkCard />
       <LdapSiteRoleManagementPageLinkCard />
       <UserManagementPageLinkCard />
     </div>

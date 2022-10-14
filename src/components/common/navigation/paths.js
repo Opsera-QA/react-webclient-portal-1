@@ -27,21 +27,27 @@ paths.templateDetailView = paths.templateManagement + "/details/";
 paths.taskTemplateManagement = paths.admin + "/templates/tasks";
 paths.taskTemplateDetailView = paths.taskTemplateManagement + "/details/";
 
-paths.platformSystemParameterManagement = paths.admin + "/platform/system-parameters";
-paths.platformSystemParameterDetailView = paths.platformSystemParameterManagement + "/details";
+paths.platformSystemParameterManagement =
+  paths.admin + "/platform/system-parameters";
+paths.platformSystemParameterDetailView =
+  paths.platformSystemParameterManagement + "/details";
 
 paths.platformSettingsManagement = paths.admin + "/platform/settings";
-paths.platformSettingsDetailView = paths.platformSettingsManagement + "/details";
+paths.platformSettingsDetailView =
+  paths.platformSettingsManagement + "/details";
 
-paths.freeTrialCustomerWorkspaceManagement = paths.admin + "/customer/workspaces";
-paths.freeTrialCustomerWorkspaceDetailView = paths.freeTrialCustomerWorkspaceManagement + "/user/";
+paths.freeTrialCustomerWorkspaceManagement =
+  paths.admin + "/customer/workspaces";
+paths.freeTrialCustomerWorkspaceDetailView =
+  paths.freeTrialCustomerWorkspaceManagement + "/user/";
 
 paths.pipelineStorageManagement = paths.admin + "/pipeline-storage";
 paths.pipelineStorageDetailView = paths.pipelineStorageManagement + "/details/";
 
 paths.siteNotificationManagement = paths.admin + "/site-notifications/table";
 paths.siteNotificationManager = paths.admin + "/site-notifications";
-paths.siteNotificationDetailView = paths.siteNotificationManagement + "/details/";
+paths.siteNotificationDetailView =
+  paths.siteNotificationManagement + "/details/";
 
 paths.toolManagement = paths.admin + "/tools/categories";
 paths.toolCategoryDetailView = paths.toolManagement + "/types/details/";
@@ -50,12 +56,14 @@ paths.toolIdentifierDetailView = paths.toolManagement + "/identifiers/details/";
 paths.ldapOrganizationManagement = paths.admin + "/organizations";
 paths.ldapOrganizationDetailView = paths.admin + "/organizations";
 
-paths.ldapOrganizationAccountManagement = paths.admin + "/organization-accounts";
+paths.ldapOrganizationAccountManagement =
+  paths.admin + "/organization-accounts";
 paths.ldapOrganizationDetailView = paths.admin + "/organization-accounts";
 
 paths.customerOnboarding = "admin/accounts/create";
 
-paths.customEnviromentVariableManagement = paths.admin + "/custom-environment-variables";
+paths.customEnviromentVariableManagement =
+  paths.admin + "/custom-environment-variables";
 paths.registeredUsersManagement = paths.admin + "/registered-users";
 
 paths.apiConnectionTest = paths.admin + "/demo/api";
@@ -87,6 +95,7 @@ paths.ldapUserManagement = paths.accountSettings + "/users";
 paths.ldapUserDetailView = paths.ldapUserManagement;
 paths.userManagement = paths.accountSettings + "/user-management";
 paths.logsExportManagement = paths.accountSettings + "/logs-export-management";
+paths.unsecuredItemReport = paths.accountSettings + "/unsecured-items";
 paths.activeUserDetailView = paths.userManagement;
 paths.pendingUserDetailView = paths.userManagement;
 paths.ldapGroupManagement = paths.accountSettings + "/groups";
@@ -102,14 +111,19 @@ paths.organizationManagement = paths.accountSettings + "/organizations";
 paths.organizationDetailView = paths.organizationManagement + "/details/";
 paths.customerSystemStatus = paths.accountSettings + "/customer-system-status";
 paths.analyticsProfile = paths.accountSettings + "/analytics-profile";
-paths.analyticsDataEntryManagement = paths.accountSettings + "/analytics-data-entries";
-paths.analyticsDataEntryDetailView = paths.analyticsDataEntryManagement + "/analytics-data-entries/details/";
+paths.analyticsDataEntryManagement =
+  paths.accountSettings + "/analytics-data-entries";
+paths.analyticsDataEntryDetailView =
+  paths.analyticsDataEntryManagement + "/analytics-data-entries/details/";
 paths.dataMappingManagement = paths.accountSettings + "/data_mapping";
-paths.projectTaggingDetailView = paths.dataMappingManagement + "/projects/details/";
-paths.pipelineDataMappingDetailView = paths.dataMappingManagement + "/pipeline/details/";
+paths.projectTaggingDetailView =
+  paths.dataMappingManagement + "/projects/details/";
+paths.pipelineDataMappingDetailView =
+  paths.dataMappingManagement + "/pipeline/details/";
 paths.userTaggingDetailView = paths.dataMappingManagement + "/users/details/";
 
-paths.freeTrialUserExpirationManagement = paths.accountSettings + "/trial/user-expiration-management";
+paths.freeTrialUserExpirationManagement =
+  paths.accountSettings + "/trial/user-expiration-management";
 
 //Reports
 paths.reports = "reports";
@@ -120,7 +134,8 @@ paths.detailedToolReport = paths.toolReports + "/detailed-tool-report";
 paths.tagReports = paths.reports + "/tags";
 paths.tagsUsedInPipelineReport = paths.tagReports + "/tags-used-in-pipeline";
 paths.tagsUsedInToolsReport = paths.tagReports + "/tags-used-in-tools";
-paths.tagsUsedInDashboardsReport = paths.tagReports + "/tags-used-in-dashboards";
+paths.tagsUsedInDashboardsReport =
+  paths.tagReports + "/tags-used-in-dashboards";
 paths.userReports = paths.reports + "/users";
 paths.groupMembershipReport = paths.userReports + "/group-membership";
 paths.pipelineOwnershipReport = paths.userReports + "/pipeline-ownership";
