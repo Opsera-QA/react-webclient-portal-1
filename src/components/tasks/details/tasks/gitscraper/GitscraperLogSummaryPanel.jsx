@@ -49,8 +49,7 @@ function GitscraperLogSummaryReportPanel({ pipelineTaskData }) {
             }
           }
         }
-      }
-      else if (reportObject[scan] && !Array.isArray(reportObject[scan])) {
+      } else if (reportObject[scan] && !Array.isArray(reportObject[scan])) {
         setIsNewReport(true);
         report.push({...reportObject[scan], repository: reportObject[scan]?.repository, issueCount: reportObject[scan]?.issueCount});
       }
