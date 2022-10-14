@@ -11,11 +11,10 @@ import config from "./JiraChageFailureRateChartConfig";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import IconBase from "components/common/icons/IconBase";
-import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import { goalSuccessColor } from "../../../charts-views";
 import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
-import {getResultFromKpiConfiguration} from "../../../charts-helpers";
+import {getResultFromKpiConfiguration, getReverseTrendIcon} from "../../../charts-helpers";
 
 function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration, dataPoint, trend }) {
   
@@ -36,18 +35,6 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
       "data": chartData
     }  
   ];
-  const getReverseIcon = (severity) => {
-    switch (severity) {
-      case "red":
-        return faArrowCircleDown;
-      case "green":
-        return faArrowCircleUp;
-      case "light-gray-text-secondary":
-        return faMinusCircle;
-      default:
-        break;
-    }
-  };
 
   const getLeftDataBlock = () => {
     return (
@@ -55,7 +42,7 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
         <ThreeLineDataBlockBase
             className={`green p-2`}
             topText={"Change Failure Rate"}
-            icon={getReverseIcon(trend)}
+            icon={getReverseTrendIcon(trend)}
             bottomText={`Prev Failure Rate: ${metricData?.prevChangeFailureRate !== 'NaN'? metricData?.prevChangeFailureRate +` %` :'NA'}`}
             middleText={
               <MetricScoreText

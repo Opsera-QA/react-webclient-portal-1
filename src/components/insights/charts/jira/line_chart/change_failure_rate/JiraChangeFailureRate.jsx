@@ -145,7 +145,7 @@ function JiraChangeFailureRate({
     );
   };
   const getChartBody = () => {
-    if (!metricData || !Array.isArray(chartData) || isNaN(metricData.changeFailureRate)) {
+    if (!metricData || !Array.isArray(chartData) || !metricData.changeFailureRate) {
       return null;
     }
     return (
