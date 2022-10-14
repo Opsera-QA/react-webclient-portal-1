@@ -16,42 +16,74 @@ function DockerCliPipelineStepConfigurationSummary({ dockerCliPipelineDataObject
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"toolName"}/>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"service"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"toolJobName"}/>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"gitToolId"}/>
         </Col>
-        <Col lg={6} className={"upper-case-first"}>
-          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"type"}/>
-        </Col>
-
-
-        <Col lg={6} className={"upper-case-first"}>
-          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"gitCredential"}/>
-        </Col>
-        <Col lg={6} className={"upper-case-first"}>
-          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"repository"}/>
-        </Col>
-        <Col lg={6} className={"upper-case-first"}>
-          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"workspace"}/>
-        </Col>
-        <Col lg={6} className={"upper-case-first"}>
+        <Col lg={6}>
           <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"workspaceName"}/>
         </Col>
-        <Col lg={6} className={"upper-case-first"}>
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"gitRepository"}/>
+        </Col>
+        <Col lg={6}>
           <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"gitBranch"}/>
         </Col>
-
-
-        {/* <Col lg={6}>
-          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"gitToolId"}/>
-        </Col> */}
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"gitFilePath"}/>
+        </Col>
         <Col lg={12}>
           <JsonField dataObject={dockerCliPipelineDataObject} fieldName={"dependencyType"} />
         </Col>
-        {/* <Col lg={6}>
-          <JsonField dataObject={dockerCliPipelineDataObject} fieldName={"dependencies"} />
-        </Col> */}
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"inputFileName"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"dockerName"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"dockerTagName"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"dockerTagType"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"dockerDynamicTagName"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"registryType"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"repositoryName"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"awsToolConfigId"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"azureToolConfigId"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"azureCredentialId"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"azureRegistryName"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"jfrogToolConfigId"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"type"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"port"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"nexusToolConfigId"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={dockerCliPipelineDataObject} fieldName={"dockerPort"}/>
+        </Col>        
       </Row>
     </PipelineStepSummaryPanelContainer>
   );

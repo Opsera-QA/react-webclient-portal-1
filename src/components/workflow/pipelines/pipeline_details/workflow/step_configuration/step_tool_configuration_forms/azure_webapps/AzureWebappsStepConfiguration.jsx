@@ -116,12 +116,7 @@ function AzureWebappsStepConfiguration({ stepTool, closeEditorPanel, parentCallb
         applicationId={azureWebappsModel?.getData("azureCredentialId")}
         resourceGroup={azureWebappsModel?.getData("resourceGroupName")}
       />
-      {getDynamicFields()}
-      <BooleanToggleInput 
-        dataObject={azureWebappsModel} 
-        setDataObject={setAzureWebappsModel} 
-        fieldName={"customVersion"} 
-      />
+      {getDynamicFields()}      
       <AzureAppSettingsInput 
         model={azureWebappsModel}
         setModel={setAzureWebappsModel}
