@@ -4,7 +4,7 @@ import { AuthContext } from "contexts/AuthContext";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
-import chartsActions from "components/insights/charts/charts-actions";
+import { GITLAB_LEADTIME_CONSTANTS as constants } from "./GitlabLeadTime_kpi_datapoint_identifier";
 import axios from "axios";
 import GitlabLeadTimeHelpDocumentation from "../../../../../common/help/documentation/insights/charts/GitlabLeadTimeHelpDocumentation";
 import GitlabLeadTimeScatterPlotContainer from "./GitlabLeadTimeScatterPlotContainer";
@@ -14,6 +14,7 @@ import {
 } from "../../../charts-helpers";
 import GitlabLeadTimeTrendDataBlock from "./GitlabLeadTimeTrendDataBlock";
 import gitlabAction from "../../gitlab.action";
+import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 
 function GitLabLeadTimeChart({
   kpiConfiguration,
@@ -29,6 +30,8 @@ function GitLabLeadTimeChart({
   const [meanCommitData, setMeanCommitData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
+  const [leadtimeDataPoint, setLeadTimeDataPoint] =
+      useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -55,6 +58,7 @@ function GitLabLeadTimeChart({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      // await loadDataPoints(cancelSource);
       let dashboardTags =
         dashboardData?.data?.filters[
           dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
@@ -109,13 +113,13 @@ function GitLabLeadTimeChart({
   };
 
   // const loadDataPoints = async () => {
-  //     const dataPoints = kpiConfiguration?.dataPoints;
-  //     const dataPoint = dataPointHelpers.getDataPoint(
-  //         dataPoints,
-  //         constants.SUPPORTED_DATA_POINT_IDENTIFIERS
-  //             .DEPLOYMENT_FREQUENCY_DATA_POINT,
-  //     );
-  //     setBuildFrequencyDataPoint(dataPoint);
+  //   const dataPoints = kpiConfiguration?.dataPoints;
+  //   const dataPoint = dataPointHelpers.getDataPoint(
+  //     dataPoints,
+  //     constants.SUPPORTED_DATA_POINT_IDENTIFIERS
+  //       .LEADTIME_DATA_POINT,
+  //   );
+  //   setLeadTimeDataPoint(dataPoint);
   // };
 
   const getChartBody = () => {
