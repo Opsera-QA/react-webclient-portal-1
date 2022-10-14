@@ -101,6 +101,7 @@ import LiquibaseStepConfiguration
   from "./step_tool_configuration_forms/liquibase/LiquibaseStepConfiguration";
 import BlackDuckStepConfiguration from "./step_tool_configuration_forms/black_duck/BlackDuckStepConfiguration";
 import FortifyStepConfiguration from "./step_tool_configuration_forms/fortify/FortifyStepConfiguration";
+import DockerCliStepConfiguration from "./step_tool_configuration_forms/docker_cli/DockerCliStepConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -1413,6 +1414,17 @@ function StepToolConfiguration({
       case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
         return (
             <FortifyStepConfiguration
+              pipelineId={pipeline._id}
+              plan={pipeline.workflow.plan}
+              stepId={stepId}
+              stepTool={stepTool}
+              parentCallback={callbackFunction}
+              closeEditorPanel={closeEditorPanel}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.DOCKER_CLI:
+        return (
+            <DockerCliStepConfiguration
               pipelineId={pipeline._id}
               plan={pipeline.workflow.plan}
               stepId={stepId}

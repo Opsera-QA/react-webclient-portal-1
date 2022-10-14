@@ -29,6 +29,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   CYPRESS: "cypress",
   DATABRICKS_NOTEBOOK: "databricks-notebook",
   DOCKER_PUSH: "docker-push",
+  DOCKER_CLI: "docker-cli",
   DOT_NET: "dotnet",
   DOT_NET_CLI: "dotnet-cli",
   ELASTIC_BEANSTALK: "elastic-beanstalk",
