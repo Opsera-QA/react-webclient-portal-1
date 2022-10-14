@@ -11,6 +11,7 @@ function AzureWebappsStepAzureToolSelectInput({ fieldName, model, setModel, disa
     newDataObject.setData("azureRegion", "");
     newDataObject.setData("machine_type", "");
     newDataObject.setData("resourceGroupName", "");
+    newDataObject.setData("webappName", "");
     newDataObject.setData(fieldName, selectedOption?._id);
     setModel({...newDataObject});
   };
@@ -23,6 +24,7 @@ function AzureWebappsStepAzureToolSelectInput({ fieldName, model, setModel, disa
     newDataObject.setData("applicationType", "");
     newDataObject.setData("artifactStepId", "");
     newDataObject.setData("resourceGroupName", "");
+    newDataObject.setData("webappName", "");
     setModel({...newDataObject});
   };
 
