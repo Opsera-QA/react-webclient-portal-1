@@ -40,13 +40,13 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
     return (
       <DataBlockBoxContainer showBorder={true}>
         <ThreeLineDataBlockBase
-            className={`green p-2`}
+            className={`${trend} p-2`}
             topText={"Change Failure Rate"}
             icon={getReverseTrendIcon(trend)}
-            bottomText={`Prev Failure Rate: ${metricData?.prevChangeFailureRate !== 'NaN'? metricData?.prevChangeFailureRate +` %` :'NA'}`}
+            bottomText={`Prev Failure Rate: ${ !isNaN(metricData?.prevChangeFailureRate) ? metricData?.prevChangeFailureRate +` %` :'NA'}`}
             middleText={
               <MetricScoreText
-                  score={`${metricData?.changeFailureRate} %`}
+                  score={`${ !isNaN(metricData?.changeFailureRate) ? metricData?.changeFailureRate +` %` :'NA'}`}
                   dataPoint={dataPoint}
                   className={"metric-block-content-text"}
               />}
