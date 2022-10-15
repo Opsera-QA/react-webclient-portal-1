@@ -16,7 +16,7 @@ import IconBase from "components/common/icons/IconBase";
 import { pluralize } from "components/common/helpers/string-helpers";
 import CustomTable from "components/common/table/CustomTable";
 
-function GitscraperTaskLogSummaryTable({ gitScraperObj }) {
+  function GitscraperTaskLogSummaryTable({ isNewReport, gitScraperObj }) {
   const fields = gitScraperReportMetaData?.fields;
 
   const columns = useMemo(
@@ -36,11 +36,19 @@ function GitscraperTaskLogSummaryTable({ gitScraperObj }) {
     [],
   );
 
+  const newColumns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "repository")),
+      getTableTextColumn(getField(fields, "issueCount")),
+    ],
+    [],
+  );
+
   const getComponentResultsTable = () => {
     return (
       <CustomTable
         data={gitScraperObj}
-        columns={columns}
+        columns={isNewReport ? newColumns : columns}
         // onRowSelect={onRowSelect}
         // tableHeight={"28.2vh"}
       />
@@ -72,6 +80,11 @@ function GitscraperTaskLogSummaryTable({ gitScraperObj }) {
 
 GitscraperTaskLogSummaryTable.propTypes = {
   gitScraperObj: PropTypes.array,
+  isNewReport: PropTypes.bool,
+};
+
+GitscraperTaskLogSummaryTable.defaultProps = {
+  isNewReport: false
 };
 
 export default GitscraperTaskLogSummaryTable;

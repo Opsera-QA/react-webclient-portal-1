@@ -19,6 +19,7 @@ function GitscraperLogSummaryReportPanel({ pipelineTaskData }) {
   const [gitscraperReportModel, setGitscraperReportModel] = useState(undefined);
   const [summaryData, setSummaryData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
+  const [isNewReport, setIsNewReport] = useState(false);  // Added this to support older report structure
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -40,6 +41,7 @@ function GitscraperLogSummaryReportPanel({ pipelineTaskData }) {
       let reportObject = pipelineTaskData?.api_response?.summaryReportList;
       let report = [];
       if (Array.isArray(reportObject) && reportObject?.length > 0) {
+        setIsNewReport(false);
         for (let scan in reportObject) {
           if (reportObject[scan]?.report && Array.isArray(reportObject[scan]?.report) && reportObject[scan]?.report?.length > 0) {
             for (let alert in reportObject[scan]?.report) {
@@ -47,6 +49,9 @@ function GitscraperLogSummaryReportPanel({ pipelineTaskData }) {
             }
           }
         }
+      } else if (reportObject[scan] && !Array.isArray(reportObject[scan])) {
+        setIsNewReport(true);
+        report.push({...reportObject[scan], repository: reportObject[scan]?.repository, issueCount: reportObject[scan]?.issueCount});
       }
       setSummaryData(new Model(pipelineTaskData?.transaction, gitscraperTaskConfigurationMetadata, false));
       setGitscraperReportModel(report);
@@ -71,6 +76,7 @@ function GitscraperLogSummaryReportPanel({ pipelineTaskData }) {
               gitScraperResultsModel={summaryData}
             />
             <GitscraperTaskLogSummaryTable
+              isNewReport={isNewReport}
               gitScraperObj={gitscraperReportModel}
             />
           </SummaryPanelContainer>
