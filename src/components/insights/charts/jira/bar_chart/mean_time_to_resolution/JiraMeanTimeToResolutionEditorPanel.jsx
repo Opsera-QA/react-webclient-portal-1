@@ -7,7 +7,7 @@ import {jiraMeanTimeToResolutionMetadata} from "./jiraMeanTimeToResolution.metad
 import MetricJiraProjectsFilterInput
   from "../../../../../common/inputs/metric/filters/jira/MetricJiraProjectsFilterInput";
 import MetricJiraServiceComponentsFilterInput
-    from "../../../../../common/inputs/metric/filters/jira/MetricJiraServiceComponentsInput";
+    from "../../../../../common/inputs/metric/filters/jira/MetricJiraServiceComponentsFilterInput";
 import MetricJiraPrioritiesFilterInput
     from "../../../../../common/inputs/metric/filters/jira/MetricJiraPrioritiesFilterInput";
 
