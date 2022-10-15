@@ -232,13 +232,45 @@ export const getTrend = (currentValue, previousValue) => {
   return trend;
 };
 
+export const getReverseTrend = (currentValue, previousValue) => {
+  currentValue = !isNaN(currentValue)? parseFloat(currentValue) : 0;
+  previousValue = !isNaN(previousValue)? parseFloat(previousValue) : 0;
+
+  let trend = "";
+  if(currentValue > previousValue){
+    trend = "red";
+  }
+  else if(currentValue === previousValue){
+    trend = "light-gray-text-secondary";
+  }
+  else if(currentValue < previousValue){
+    trend = "green";
+  }
+  else{ trend = "black";}
+  return trend;
+};
+
+
 /*
 * This method is to get the icon according to the severity.
 * @param severity Value of trend
 * Returns the icon
 */
 
-export const getReverseIcon = (severity) => {
+export const getReverseTrendIcon = (severity) => {
+  switch (severity) {
+    case "red":
+      return faArrowCircleUp;
+    case "green":
+      return faArrowCircleDown;
+    case "light-gray-text-secondary":
+      return faMinusCircle;
+    default:
+      break;
+  }
+};
+
+export const getTrendIcon = (severity) => {
   switch (severity) {
     case "red":
       return faArrowCircleDown;
