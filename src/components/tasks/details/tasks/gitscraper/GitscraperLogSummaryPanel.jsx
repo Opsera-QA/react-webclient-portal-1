@@ -47,11 +47,11 @@ function GitscraperLogSummaryReportPanel({ pipelineTaskData }) {
             for (let alert in reportObject[scan]?.report) {
               report.push({...reportObject[scan]?.report[alert], repository: reportObject[scan]?.repository, scannedOn: reportObject[scan]?.scannedOn, branch: reportObject[scan]?.branch});
             }
+          } else if (reportObject[scan] && !Array.isArray(reportObject[scan])) {
+            setIsNewReport(true);
+            report.push({...reportObject[scan], repository: reportObject[scan]?.repository, issueCount: reportObject[scan]?.issueCount});
           }
         }
-      } else if (reportObject[scan] && !Array.isArray(reportObject[scan])) {
-        setIsNewReport(true);
-        report.push({...reportObject[scan], repository: reportObject[scan]?.repository, issueCount: reportObject[scan]?.issueCount});
       }
       setSummaryData(new Model(pipelineTaskData?.transaction, gitscraperTaskConfigurationMetadata, false));
       setGitscraperReportModel(report);
