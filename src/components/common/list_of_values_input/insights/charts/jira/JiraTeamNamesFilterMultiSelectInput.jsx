@@ -5,7 +5,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import jiraAction from "../../../../../insights/charts/jira/jira.action";
 
-function JiraServiceComponentsFilterSelectInput({
+function JiraTeamNamesFilterMultiSelectInput({
   placeholderText,
   valueField,
   textField,
@@ -15,14 +15,14 @@ function JiraServiceComponentsFilterSelectInput({
   project
 }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [serviceComponents, setServiceComponents] = useState([]);
+  const [teamNames, setTeamNames] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    setServiceComponents([]);
+    setTeamNames([]);
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
@@ -46,7 +46,7 @@ function JiraServiceComponentsFilterSelectInput({
     try {
       setError(undefined);
       setIsLoading(true);
-      await loadServiceComponents(cancelSource);
+      await loadTeamNames(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
@@ -58,14 +58,14 @@ function JiraServiceComponentsFilterSelectInput({
     }
   };
 
-  const loadServiceComponents = async (cancelSource = cancelTokenSource) => {
-    const response = await jiraAction.getJiraServiceComponents(
+  const loadTeamNames = async (cancelSource = cancelTokenSource) => {
+    const response = await jiraAction.getJiraTeamNames(
       getAccessToken,
       cancelSource,
       project
     );
     if (response.data != null) {
-      setServiceComponents(response?.data?.data);
+      setTeamNames(response?.data?.data);
     }
   };
   const disabled = model.getData('jira-projects').length === 0;
@@ -74,7 +74,7 @@ function JiraServiceComponentsFilterSelectInput({
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={serviceComponents}
+      selectOptions={teamNames}
       busy={isLoading}
       valueField={valueField}
       error={error}
@@ -86,7 +86,7 @@ function JiraServiceComponentsFilterSelectInput({
   );
 }
 
-JiraServiceComponentsFilterSelectInput.propTypes = {
+JiraTeamNamesFilterMultiSelectInput.propTypes = {
   placeholderText: PropTypes.string,
   fieldName: PropTypes.string,
   textField: PropTypes.string,
@@ -98,9 +98,9 @@ JiraServiceComponentsFilterSelectInput.propTypes = {
   project: PropTypes.array
 };
 
-JiraServiceComponentsFilterSelectInput.defaultProps = {
+JiraTeamNamesFilterMultiSelectInput.defaultProps = {
   textField: "text",
   valueField: "value",
 };
 
-export default JiraServiceComponentsFilterSelectInput;
+export default JiraTeamNamesFilterMultiSelectInput;
