@@ -6,7 +6,20 @@ import CloseButton from "components/common/buttons/CloseButton";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 
-function FullScreenCenterOverlayContainer({ children, actionBar, titleText, titleIcon, closePanel, isLoading, showToasts, showCloseButton, buttonContainer, pageLink, linkTooltipText }) {
+function FullScreenCenterOverlayContainer(
+  {
+    children,
+    actionBar,
+    titleText,
+    titleIcon,
+    closePanel,
+    isLoading,
+    showToasts,
+    showCloseButton,
+    buttonContainer,
+    pageLink,
+    linkTooltipText,
+  }) {
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {

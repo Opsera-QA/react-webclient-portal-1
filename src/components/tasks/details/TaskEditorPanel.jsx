@@ -135,7 +135,10 @@ function TaskEditorPanel({ taskData, handleClose }) {
     if (taskModel?.isNew() && isSaasUser === false) {
       return (
           <Col lg={12} className="mb-4">
-            <RoleAccessInput dataObject={taskModel} setDataObject={setTaskModel} fieldName={"roles"}/>
+            <RoleAccessInput
+              model={taskModel}
+              setModel={setTaskModel}
+            />
           </Col>
       );
     }

@@ -39,6 +39,7 @@ import OrchestrationStateFieldBase
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import AccessRoleDisplayer from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayer";
+import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
 
 export const getCustomTableHeader = (field) => {
   return field ? field.label : "";
@@ -640,39 +641,12 @@ export const getRoleAccessColumn = (
       const roles = DataParsingHelper.parseArray(row?.value, []);
       const owner = row?.data[row?.row?.index]?.owner;
 
-      if (!Array.isArray(roles) || roles.length === 0 || isMongoDbId(owner) === false) {
-        return (
-          <div>
-            <TooltipWrapper
-              innerText={`This ${type} is public and accessible to everyone.`}
-              wrapInDiv={true}
-            >
-              <IconBase icon={faUnlock} className={"danger-red ml-2"} />
-            </TooltipWrapper>
-          </div>
-        );
-      }
-
-      const rolesPopover = (
-        <div>
-          <div className={"mb-3"}>{`This ${type} is secured and only visible to Site Administrators, its owner, and those given access`}</div>
-          <AccessRoleDisplayer
-            roles={roles}
-          />
-        </div>
-      );
-
       return (
-        <div>
-          <TooltipWrapper
-            title={`Secured ${type} Details`}
-            innerText={rolesPopover}
-            wrapInDiv={true}
-            placement={"bottom"}
-          >
-              <IconBase icon={faLock} className={"ml-2"} />
-          </TooltipWrapper>
-        </div>
+        <AccessRoleIconBase
+          roles={roles}
+          owner={owner}
+          type={type}
+        />
       );
     },
     class: className,

@@ -62,9 +62,8 @@ export default function ParametersEditorPanel({ parameterModel, setParameterMode
         <Col md={12} lg={parameterModel?.isNew() ? 8 : 7} className={"my-2"}>
           <RoleAccessInput
             disabled={parameterModel.isNew() === false && parameterModel?.canEditAccessRoles() !== true}
-            dataObject={parameterModel}
-            setDataObject={setParameterModel}
-            fieldName={"roles"}
+            model={parameterModel}
+            setModel={setParameterModel}
           />
         </Col>
       </Row>

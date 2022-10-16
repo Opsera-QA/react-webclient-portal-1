@@ -30,12 +30,20 @@ customerDashboardTemplateCatalogActions.publishTemplateV2 = async (
   getAccessToken,
   cancelTokenSource,
   dashboardId,
+  roles,
 ) => {
   const apiUrl = `/analytics/customer/dashboard/templates/publish/${dashboardId}`;
+  const postBody = {};
+
+  if (Array.isArray(roles)) {
+    postBody.roles = roles;
+  }
+
   return await baseActions.apiPutCallV2(
     getAccessToken,
     cancelTokenSource,
     apiUrl,
+    postBody,
   );
 };
 
