@@ -82,7 +82,7 @@ export default function CustomerDashboardTemplateCard(
               owner={dashboardTemplate?.creator}
               type={"Dashboard Template"}
               roles={dashboardTemplate?.roles}
-              className={"mr-3 mt-auto"}
+              className={"mt-auto"}
               tooltipPlacement={"top"}
               iconSize={"lg"}
             />
@@ -90,7 +90,7 @@ export default function CustomerDashboardTemplateCard(
               loadData={loadData}
               dashboardId={dashboardTemplate?._id}
               ownerId={dashboardTemplate?.creator}
-              className={"mt-auto"}
+              className={"mt-auto ml-3"}
             />
           </div>
         </div>
