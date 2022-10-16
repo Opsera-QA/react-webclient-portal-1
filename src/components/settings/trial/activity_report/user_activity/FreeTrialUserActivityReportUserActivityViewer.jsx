@@ -104,7 +104,7 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
     const toolResponse = await workspaceActions.getFreeTrialCustomerWorkspaceItems(
       getAccessToken,
       cancelTokenSource,
-      userId,
+      newFilterModel?.getFilterValue("userId"),
     );
     const workspaceItems = DataParsingHelper.parseArray(toolResponse?.data?.data, []);
     const tools = workspaceItems.filter((item) => item.workspaceType === "tool");
