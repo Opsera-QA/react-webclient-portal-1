@@ -125,7 +125,7 @@ function UserSettings() {
         <NavigationTab icon={faIdCard} tabName={"profile"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My Profile"} />
         <NavigationTab icon={faUser} tabName={"myUserRecord"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My Record"} visible={isLdapUser} />
         <NavigationTab icon={faKey} tabName={"accessTokens"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Access Tokens"} />
-        <NavigationTab icon={faKey} tabName={"currentToken"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Current Access Token"} />
+        {/*<NavigationTab icon={faKey} tabName={"currentToken"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Current Access Token"} />*/}
         <NavigationTab icon={faRss} tabName={"subscriptions"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Subscriptions"} />
       </NavigationTabContainer>
     );
