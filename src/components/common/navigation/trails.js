@@ -49,7 +49,14 @@ import {
   faShieldKeyhole,
   faRectangleList,
   faHouseUser,
-  faDiamondExclamation, faFolderCog, faUserShield, faHourglassClock, faUserAltSlash, faUserCheck, faClipboardUser,
+  faDiamondExclamation,
+  faFolderCog,
+  faUserShield,
+  faHourglassClock,
+  faUserAltSlash,
+  faUserCheck,
+  faClipboardUser,
+  faShield,
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -595,6 +602,17 @@ const breadcrumbs = {
     linkText: "Logs Export Options",
     icon: faTags,
     pageDescription: "Manage export of pipeline activity audit logs."
+  },
+
+  // Unassigned Rules Items Report
+  unsecuredItemReport: {
+    parent: "accountSettings",
+    name: "unsecuredItemReport",
+    path: paths.unsecuredItemReport,
+    title: "Unsecured Items",
+    linkText: "Unsecured Items",
+    icon: faShield,
+    pageDescription: "View items that haven't been assigned access rules",
   },
 
   // Organization Management

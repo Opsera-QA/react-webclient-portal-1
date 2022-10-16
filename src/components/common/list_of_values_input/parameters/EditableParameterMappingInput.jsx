@@ -15,7 +15,7 @@ import StandaloneSelectInput from "components/common/inputs/select/StandaloneSel
 import IconBase from "components/common/icons/IconBase";
 import parametersActions from "components/inventory/parameters/parameters-actions";
 
-function EditableParameterMappingInput({ fieldName, model, setModel, helpComponent, disabled, nameMaxLength }) {
+function EditableParameterMappingInput({ fieldName, model, setModel, helpComponent, disabled, nameMaxLength, titleText, type }) {
   const {getAccessToken} = useContext(AuthContext);
   const [field] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -271,9 +271,9 @@ function EditableParameterMappingInput({ fieldName, model, setModel, helpCompone
         titleIcon={faIdCard}
         field={field}
         addProperty={addParameter}
-        titleText={"Input Parameters Mapping"}
+        titleText={titleText}
         errorMessage={errorMessage}
-        type={"Parameter"}
+        type={type}
         addAllowed={lastMappingComplete() && disabled !== true}
         helpComponent={getHelpComponent()}
         incompleteRowMessage={getIncompleteRoleMessage()}
@@ -298,6 +298,13 @@ EditableParameterMappingInput.propTypes = {
   helpComponent: PropTypes.object,
   disabled: PropTypes.bool,
   nameMaxLength: PropTypes.number,
+  titleText: PropTypes.string,
+  type: PropTypes.string,
+};
+
+EditableParameterMappingInput.defaultProps = {
+  titleText: "Input Parameters Mapping",
+  type: "Parameter"
 };
 
 export default EditableParameterMappingInput;

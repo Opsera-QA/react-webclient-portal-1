@@ -8,6 +8,7 @@ import FreeTrialUserExpirationManagementPageLinkCard
   from "components/settings/trial/user_expiration/FreeTrialUserExpirationManagementPageLinkCard";
 import FreeTrialUserActivityReportPageLinkCard
   from "components/settings/trial/activity_report/FreeTrialUserActivityReportPageLinkCard";
+import UnsecuredItemReportPageLinkCard from "components/settings/unsecured_items/UnsecuredItemReportPageLinkCard";
 
 export default function AccountSettingsPageLinkCards() {
   return (
@@ -15,6 +16,7 @@ export default function AccountSettingsPageLinkCards() {
       <DeleteToolsManagementPageLinkCard />
       <LdapGroupManagementPageLinkCard />
       <LogsExportManagementPageLinkCard />
+      <UnsecuredItemReportPageLinkCard />
       <LdapSiteRoleManagementPageLinkCard />
       <UserManagementPageLinkCard />
       <FreeTrialUserExpirationManagementPageLinkCard />

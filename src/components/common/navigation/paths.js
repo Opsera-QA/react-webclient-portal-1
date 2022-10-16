@@ -87,6 +87,7 @@ paths.ldapUserManagement = paths.accountSettings + "/users";
 paths.ldapUserDetailView = paths.ldapUserManagement;
 paths.userManagement = paths.accountSettings + "/user-management";
 paths.logsExportManagement = paths.accountSettings + "/logs-export-management";
+paths.unsecuredItemReport = paths.accountSettings + "/unsecured-items";
 paths.activeUserDetailView = paths.userManagement;
 paths.pendingUserDetailView = paths.userManagement;
 paths.ldapGroupManagement = paths.accountSettings + "/groups";
@@ -115,6 +116,7 @@ paths.freeTrialUserRevocationScreen = `${paths.freeTrialUserExpirationManagement
 paths.freeTrialUserReinstatementScreen = `${paths.freeTrialUserExpirationManagement}/reinstatement`;
 
 paths.freeTrialUserActivityReport = `${paths.accountSettings}/trial/user/activity-report`;
+paths.freeTrialUserExpirationManagement = paths.accountSettings + "/trial/user-expiration-management";
 
 //Reports
 paths.reports = "reports";
