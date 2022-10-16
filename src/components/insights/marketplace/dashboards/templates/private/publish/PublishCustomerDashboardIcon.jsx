@@ -7,6 +7,8 @@ import IconBase from "components/common/icons/IconBase";
 import {
   customerDashboardTemplateCatalogActions
 } from "components/insights/marketplace/dashboards/templates/private/customerDashboardTemplateCatalog.actions";
+import PublishCustomerDashboardOverlay
+  from "components/insights/marketplace/dashboards/templates/private/publish/PublishCustomerDashboardOverlay";
 
 export default function PublishCustomerDashboardIcon(
   {
@@ -46,6 +48,14 @@ export default function PublishCustomerDashboardIcon(
     }
   };
 
+  const launchPublishDashboardToCustomerCatalogOverlay = () => {
+    toastContext.showOverlayPanel(
+      <PublishCustomerDashboardOverlay
+        dashboardModel={dashboardModel}
+      />
+    );
+  };
+
   if (dashboardModel?.canPublishDashboardToPrivateCatalog() !== true) {
     return null;
   }
@@ -56,9 +66,9 @@ export default function PublishCustomerDashboardIcon(
         <div>
           <IconBase
             onClickFunction={addDashboardToCustomerCatalog}
+            // onClickFunction={launchPublishDashboardToCustomerCatalogOverlay}
             icon={faShareSquare}
             isLoading={isPublishing}
-            className={"pointer"}
           />
         </div>
       </TooltipWrapper>

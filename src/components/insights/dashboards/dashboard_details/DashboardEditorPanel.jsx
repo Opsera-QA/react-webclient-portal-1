@@ -70,9 +70,8 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
           <div className={"bg-white"} style={{borderRadius: "6px"}}>
             <div>
               <RoleAccessInput
-                fieldName={"roles"}
-                setDataObject={setDashboardDataDto}
-                dataObject={dashboardDataDto}
+                setModel={setDashboardDataDto}
+                model={dashboardDataDto}
                 disabled={dashboardDataDto?.canEditAccessRoles() !== true}
               />
             </div>

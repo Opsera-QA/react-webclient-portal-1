@@ -7,7 +7,7 @@ import ScreenContainerBodyLoadingDialog
   from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 import TitleActionBarContainer from "components/common/actions/TitleActionBarContainer";
 import PublishCustomerDashboardIcon
-  from "components/insights/marketplace/dashboards/templates/private/PublishCustomerDashboardIcon";
+  from "components/insights/marketplace/dashboards/templates/private/publish/PublishCustomerDashboardIcon";
 import PublishPlatformDashboardIcon
   from "components/insights/marketplace/dashboards/templates/platform/PublishPlatformDashboardIcon";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon";

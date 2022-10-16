@@ -37,7 +37,11 @@ export default function ScriptsEditorPanel(
           <ScriptValueInput setModel={setScriptModel} model={scriptModel} />
         </Col>
         <Col md={8} className={"my-2"}>
-          <RoleAccessInput disabled={scriptModel?.canEditAccessRoles() !== true} dataObject={scriptModel} setDataObject={setScriptModel} fieldName={"roles"} />
+          <RoleAccessInput
+            disabled={scriptModel?.canEditAccessRoles() !== true}
+            model={scriptModel}
+            setModel={setScriptModel}
+          />
         </Col>
       </Row>
     </VanityEditorPanelContainer>
