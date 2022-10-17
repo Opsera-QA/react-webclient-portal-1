@@ -216,8 +216,8 @@
 
 
 [**Approval Gate Setup Help Documentation**](https://docs.opsera.io/approval-gate)  
-[**Configure Single Pipeline for Multiple Webhook Documentation**](https://opsera.atlassian.net/l/c/Lp1CiJzc)   
-[**Building a Declarative Pipeline**](https://opsera.atlassian.net/l/c/EfKd0ZW8)  
+[**Configure Single Pipeline for Multiple Webhook Documentation**](https://docs.opsera.io/webhook-integration/how-to-configure-a-pipeline-for-multiple-webhook-events)   
+[**Building a Declarative Pipeline**](https://docs.opsera.io/create-and-manage-pipelines)  
 
 
 
