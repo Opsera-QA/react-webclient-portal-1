@@ -14,6 +14,9 @@ import {
   GITHUB_ACTIONS_WORKFLOW_METRIC_CONSTANTS
 } from "components/insights/charts/github_actions/workflows/GithubActionsWorkflow_kpi_datapoint_identifiers";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import ThreeLineScoreDataBlock from "../../../../common/metrics/score/ThreeLineScoreDataBlock";
+import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
+import ThreeLinePercentageBlockBase from "../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
 
 function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setError }) {
   const [metrics, setMetrics] = useState([]);
@@ -68,6 +71,62 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
+    }
+  };
+
+  const getIcon = (severity) => {
+    switch (severity) {
+      case "up":
+        return faArrowCircleUp;
+      case "down":
+        return faArrowCircleDown;
+      case "neutral":
+        return faMinusCircle;
+      default:
+        break;
+    }
+  };
+
+  const getIconColor = (severity) => {
+    switch (severity) {
+      case "up":
+        return "red";
+      case "down":
+        return "green";
+      case "neutral":
+        return "light-gray-text-secondary";
+      case "black":
+        return "black";
+      default:
+        break;
+    }
+  };
+
+  const getIconColorUpsideDown = (severity) => {
+    switch (severity) {
+      case "down":
+        return "red";
+      case "up":
+        return "green";
+      case "neutral":
+        return "light-gray-text-secondary";
+      case "black":
+        return "black";
+      default:
+        break;
+    }
+  };
+
+  const getDescription = (severity) => {
+    switch (severity) {
+      case "up":
+        return "This parameter is trending upward";
+      case "down":
+        return "This parameter is trending downward";
+      case "neutral":
+        return "Neutral: This parameter experienced no change";
+      case "black":
+        return "No Trend";
     }
   };
 
@@ -145,7 +204,11 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
         <Col md={4} className="mb-3">
           <DataBlockBoxContainer showBorder={true}>
             <div className={"p-2"}>
-              <TwoLinePercentageDataBlock
+              <ThreeLinePercentageBlockBase
+                className={getIconColorUpsideDown(metrics?.successPercentageTrend?.trend)}
+                bottomText={"Last Scan: " + metrics?.prevSuccessPercentage}
+                icon={getIcon(metrics?.successPercentageTrend?.trend)}
+                iconOverlayBody={getDescription(metrics?.successPercentageTrend?.trend)}
                 percentage={metrics?.successPercentage}
                 subtitle={"% Success"}
                 dataPoint={successPercentDataPoint}
@@ -157,9 +220,13 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
         <Col md={4} className="mb-3">
           <DataBlockBoxContainer showBorder={true}>
             <div className={"p-2"}>
-              <TwoLineScoreDataBlock
+              <ThreeLineScoreDataBlock
+                className={getIconColor(metrics?.avgSuccessTimeTrend?.trend)}
                 score={metrics?.avgSuccessTime}
+                bottomText={"Last Scan: " + metrics?.prevSuccessTime}
                 subtitle={"Average Time For Success Runs (mins)"}
+                icon={getIcon(metrics?.avgSuccessTimeTrend?.trend)}
+                iconOverlayBody={getDescription(metrics?.avgSuccessTimeTrend?.trend)}
                 dataPoint={averageSuccessDataPoint}
               />
             </div>
@@ -182,7 +249,11 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
         <Col md={4} className="mb-3">
           <DataBlockBoxContainer showBorder={true}>
             <div className={"p-2"}>
-              <TwoLinePercentageDataBlock
+              <ThreeLinePercentageBlockBase
+                className={getIconColor(metrics?.failedPercentageTrend?.trend)}
+                bottomText={"Last Scan: " + metrics?.prevFailedPercentage}
+                icon={getIcon(metrics?.failedPercentageTrend?.trend)}
+                iconOverlayBody={getDescription(metrics?.failedPercentageTrend?.trend)}
                 percentage={metrics?.failedPercentage}
                 subtitle={"% Failures"}
                 dataPoint={failurePercentDataPoint}
@@ -194,7 +265,11 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
         <Col md={4} className="mb-3">
           <DataBlockBoxContainer showBorder={true}>
             <div className={"p-2"}>
-              <TwoLineScoreDataBlock
+              <ThreeLineScoreDataBlock
+                className={getIconColor(metrics?.avgFailedTimeTrend?.trend)}
+                bottomText={"Last Scan: " + metrics?.prevFailedTime}
+                icon={getIcon(metrics?.avgFailedTimeTrend?.trend)}
+                iconOverlayBody={getDescription(metrics?.avgFailedTimeTrend?.trend)}
                 score={metrics?.avgFailedTime}
                 subtitle={"Average Time For Failed Runs (mins)"}
                 dataPoint={averageFailureDataPoint}
