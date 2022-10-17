@@ -20,7 +20,7 @@ export default function PublishCustomerDashboardOverlay(
 
   useEffect(() => {
     if (dashboardModel) {
-      setDashboardModelCopy({...dashboardModel});
+      setDashboardModelCopy({...dashboardModel.clone()});
     }
   }, [dashboardModel]);
 
