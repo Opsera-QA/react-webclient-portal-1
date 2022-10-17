@@ -91,7 +91,7 @@
 <details>
 <summary>Where can I go to for guidance, when I have trouble setting up a Step/Pipeline?</summary>
 
->[**Opsera Help Documentation**](https://opsera.atlassian.net/wiki/spaces/OE/overview)
+>[**Opsera Help Documentation**](https://docs.opsera.io/)
 </details>
 
 <details>
@@ -196,7 +196,7 @@
 <details>
   <summary>I want my own approval gate for Sonar. Can I set it up in Opsera?  </summary>
 
->Yes, Approval gate can be added between any stage within pipeline. For more information on setting up Approval Gate step, visit the [**Approval Gate Setup Help Documentation**](https://opsera.atlassian.net/l/c/1Xde12e1).
+>Yes, Approval gate can be added between any stage within pipeline. For more information on setting up Approval Gate step, visit the [**Approval Gate Setup Help Documentation**](https://docs.opsera.io/approval-gate).
 </details>
 
 
@@ -215,7 +215,7 @@
 ##### Related Articles
 
 
-[**Approval Gate Setup Help Documentation**](https://opsera.atlassian.net/l/c/1Xde12e1)  
+[**Approval Gate Setup Help Documentation**](https://docs.opsera.io/approval-gate)  
 [**Configure Single Pipeline for Multiple Webhook Documentation**](https://opsera.atlassian.net/l/c/Lp1CiJzc)   
 [**Building a Declarative Pipeline**](https://opsera.atlassian.net/l/c/EfKd0ZW8)  
 
