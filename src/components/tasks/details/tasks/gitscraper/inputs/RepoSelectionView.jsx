@@ -347,6 +347,7 @@ const RepoSelectionView = ({
           setDataObject={setDataObject}
           setDataFunction={setDataFunction}
           showSelectAllButton={true}
+          showClearValueButton={true}
           valueField={valueField}
           textField={textField}
           isLoading={isLoading}
