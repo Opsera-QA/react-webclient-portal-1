@@ -6,7 +6,7 @@ import { getTaskTypeLabel, TASK_TYPES } from "../../../../tasks/task.types";
 function SfdxQuickDeployTaskHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer helpTopic={getTaskTypeLabel(TASK_TYPES.SALESFORCE_QUICK_DEPLOY)} closeHelpPanel={closeHelpPanel}>
-      <div className={"mb-1"}>This workflow requires first running a SFDX/ANT pipeline with a unit test in order to retrieve the unique <b>Deploy ID</b> used in task configuration. For more detailed information on this workflow including troubleshooting, view the <a href="https://opsera.atlassian.net/l/c/SN87X68R" target="_blank" rel="noreferrer"><b>Salesforce Quick Deployment Documentation</b>.</a> </div>
+      <div className={"mb-1"}>This workflow requires first running a SFDX/ANT pipeline with a unit test in order to retrieve the unique <b>Deploy ID</b> used in task configuration. For more detailed information on this workflow including troubleshooting, view the <a href="https://docs.opsera.io/salesforce/salesforce-quick-deployment-documentation" target="_blank" rel="noreferrer"><b>Salesforce Quick Deployment Documentation</b>.</a> </div>
       <div className={"mt-2"}><h5>Task Setup Instructions:</h5></div>
       <ol>
         <li>Select <b>{getTaskTypeLabel(TASK_TYPES.SALESFORCE_QUICK_DEPLOY)}</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
