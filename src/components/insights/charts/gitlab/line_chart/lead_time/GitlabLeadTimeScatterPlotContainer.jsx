@@ -52,7 +52,8 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
       deployAverageLeadTime: deployment?.deployAverageLeadTime,
       deployCommitCount: deployment?.deployCommitCount,
       stepId: deployment?.stepId,
-      commits: deployment?.commits
+      commits: deployment?.commits,
+      branch: deployment?.branch
     };
   };
   const commitsData = [
@@ -131,6 +132,9 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
                   </div>
                   <div className={"py-1"}>
                     Commits: <strong>{node?.data?.deployCommitCount || "0"}</strong>
+                  </div>
+                  <div className={"py-1"}>
+                    Branch: <strong>{node?.data?.branch || ""}</strong>
                   </div>
                 </div>
               );
