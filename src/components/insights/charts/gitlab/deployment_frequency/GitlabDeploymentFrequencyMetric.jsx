@@ -4,7 +4,6 @@ import { AuthContext } from "contexts/AuthContext";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
-import chartsActions from "components/insights/charts/charts-actions";
 import axios from "axios";
 import { GITLAB_DEPLOYMENT_FREQUENCY_CONSTANTS as constants } from "./GitlabDeploymentFrequency_kpi_datapoint_identifiers";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
@@ -13,6 +12,7 @@ import GitlabDeploymentFrequencyDataBlock from "./GitlabDeploymentFrequencyDataB
 import {getDeploymentStageFromKpiConfiguration, getTrend, getTrendIcon} from "../../charts-helpers";
 import GitlabDeploymentFrequencyLineChartContainer from "./GitlabDeploymentFrequencyLineChartContainer";
 import GitlabDeploymentFrequencyTrendDataBlock from "./GitlabDeploymentFrequencyTrendDataBlock";
+import gitlabAction from "../gitlab.action";
 
 function GitlabDeploymentFrequency({
   kpiConfiguration,
@@ -69,17 +69,14 @@ function GitlabDeploymentFrequency({
           )
         ]?.value;
 
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      const response = await gitlabAction.gitlabDeploymentStatistics(
         getAccessToken,
         cancelSource,
-        "gitlabDeploymentStatistics",
         kpiConfiguration,
         dashboardTags,
-        null,
-        null,
         dashboardOrgs,
       );
-      const metrics = response?.data?.data[0]?.gitlabDeploymentStatistics?.data;
+      const metrics = response?.data?.data?.gitlabDeploymentStatistics?.data;
       if (isMounted?.current === true && metrics?.statisticsData?.step?.total) {
         setMetricData(metrics?.statisticsData);
         setChartData(metrics?.chartData);
