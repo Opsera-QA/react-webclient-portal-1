@@ -231,62 +231,63 @@ function JiraMeanTimeToResolutionBarChart({
   //     </Row>
   //   );
   // };
-  const getMetricTopRow = () => {
-    return (
-      <Row>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`Aging of unresolved tickets:`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={4}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`Last Five Days: ${lastFiveDays}`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`5-15 days: ${fiveToFifteenDays}`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`15-30 days: ${fifteenToThirtyDays}`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`> 30 Days: ${beforeThirtyDays}`}
-          />
-        </Col>
-      </Row>
-    );
-  };
+  // Todo Aruna wanted to revisit this formula and this can be delivered during insights.
+  // const getMetricTopRow = () => {
+  //   return (
+  //     <Row>
+  //       <Col
+  //         xl={2}
+  //         lg={2}
+  //         md={2}
+  //       >
+  //         <MetricBadgeBase
+  //           className={"mr-3"}
+  //           badgeText={`Aging of unresolved tickets:`}
+  //         />
+  //       </Col>
+  //       <Col
+  //         xl={2}
+  //         lg={4}
+  //         md={2}
+  //       >
+  //         <MetricBadgeBase
+  //           className={"mr-3"}
+  //           badgeText={`Last Five Days: ${lastFiveDays}`}
+  //         />
+  //       </Col>
+  //       <Col
+  //         xl={2}
+  //         lg={2}
+  //         md={2}
+  //       >
+  //         <MetricBadgeBase
+  //           className={"mr-3"}
+  //           badgeText={`5-15 days: ${fiveToFifteenDays}`}
+  //         />
+  //       </Col>
+  //       <Col
+  //         xl={2}
+  //         lg={2}
+  //         md={2}
+  //       >
+  //         <MetricBadgeBase
+  //           className={"mr-3"}
+  //           badgeText={`15-30 days: ${fifteenToThirtyDays}`}
+  //         />
+  //       </Col>
+  //       <Col
+  //         xl={2}
+  //         lg={2}
+  //         md={2}
+  //       >
+  //         <MetricBadgeBase
+  //           className={"mr-3"}
+  //           badgeText={`> 30 Days: ${beforeThirtyDays}`}
+  //         />
+  //       </Col>
+  //     </Row>
+  //   );
+  // };
 
   const getChartBody = () => {
     if (
@@ -477,7 +478,7 @@ function JiraMeanTimeToResolutionBarChart({
             )}
           </Row>
         </div>
-        <div className="ml-2 p-0">{getMetricTopRow()}</div>
+        {/*<div className="ml-2 p-0">{getMetricTopRow()}</div>*/}
       </>
     );
   };
