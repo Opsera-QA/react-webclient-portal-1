@@ -65,7 +65,7 @@ function JiraServiceComponentsFilterSelectInput({
       project
     );
     if (response.data != null) {
-      setServiceComponents(response?.data?.data);
+      setServiceComponents(response?.data?.data.jiraServiceComponentsList?.data);
     }
   };
   const disabled = model.getData('jira-projects').length === 0;
