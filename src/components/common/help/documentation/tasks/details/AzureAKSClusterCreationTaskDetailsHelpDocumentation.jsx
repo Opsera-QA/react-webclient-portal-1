@@ -14,7 +14,7 @@ function AzureAKSClusterCreationTaskDetailsHelpDocumentation() {
   const getHelpDocumentation = () => {
     return (
       <div>
-      The {getTaskTypeLabel(TASK_TYPES.AZURE_CLUSTER_CREATION)} Functionality allows you to deploy images to the Azure cluster through Opsera pipelines. This workflow requires setup in both Tasks and Opsera Pipelines. Template creation is a prerequisite to creating the cluster. Once the template has been created in Opsera Tasks, you must select <b>Run Task</b> for the first cluster to be created in Azure. It can then be accessed in the Azure AKS Deploy pipeline step to deploy images to the Azure cluster. For more detailed information on the Azure AKS Functionality including pipeline setup, view the <a href="https://opsera.atlassian.net/l/c/sFZ1m56B" target="_blank" rel="noreferrer"><b>Azure AKS Functionality Help Documentation</b>.</a>
+      The {getTaskTypeLabel(TASK_TYPES.AZURE_CLUSTER_CREATION)} Functionality allows you to deploy images to the Azure cluster through Opsera pipelines. This workflow requires setup in both Tasks and Opsera Pipelines. Template creation is a prerequisite to creating the cluster. Once the template has been created in Opsera Tasks, you must select <b>Run Task</b> for the first cluster to be created in Azure. It can then be accessed in the Azure AKS Deploy pipeline step to deploy images to the Azure cluster. For more detailed information on the Azure AKS Functionality including pipeline setup, view the <a href="https://docs.opsera.io/azure-native-support/azure-aks-cluster-creation-tasks-documentation" target="_blank" rel="noreferrer"><b>Azure AKS Functionality Help Documentation</b>.</a>
       </div>
     );
   };

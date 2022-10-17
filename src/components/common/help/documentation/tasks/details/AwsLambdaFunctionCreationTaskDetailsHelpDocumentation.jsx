@@ -14,7 +14,7 @@ function AwsLambdaFunctionCreationTaskDetailsHelpDocumentation() {
   const getHelpDocumentation = () => {
     return (
       <div className={"ml-2"}>
-        <div>Create templates of AWS Lambda Functions and deploy them live in Opsera pipelines. This workflow requires setup in both Tasks and Pipeline. For more detailed information on the {getTaskTypeLabel(TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION)} workflow including pipeline setup, view the <a href="https://opsera.atlassian.net/l/c/uCNgVd1E" target="_blank" rel="noreferrer"><b>AWS Lambda Function Creation Task Documentation</b>.</a></div>
+        <div>Create templates of AWS Lambda Functions and deploy them live in Opsera pipelines. This workflow requires setup in both Tasks and Pipeline. For more detailed information on the {getTaskTypeLabel(TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION)} workflow including pipeline setup, view the <a href="https://docs.opsera.io/aws-native-support/aws-lambda-functions#setup-aws-lambda-function-task" target="_blank" rel="noreferrer"><b>AWS Lambda Function Creation Task Documentation</b>.</a></div>
       </div>
     );
   };
