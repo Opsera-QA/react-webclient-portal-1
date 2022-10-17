@@ -50,7 +50,7 @@ export default function PublishCustomerDashboardOverlay(
     );
   };
 
-  if (dashboardModelCopy?.canPublishDashboardToPrivateCatalog() !== true) {
+  if (dashboardModel?.canPublishDashboardToPrivateCatalog() !== true) {
     return null;
   }
 

@@ -36,6 +36,8 @@ export default function PublishDashboardToPrivateCatalogButton(
       toastContext.showFormSuccessToast(
         `Published Dashboard to your organization's Private Catalog`,
       );
+      toastContext.removeInlineMessage();
+      toastContext.clearOverlayPanel();
     } catch (error) {
       if (isMounted?.current === true) {
         setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);
