@@ -3,7 +3,7 @@ import dashboardsActions from "components/insights/dashboards/dashboards-actions
 import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import DashboardRoleHelper from "@opsera/know-your-role/roles/analytics/dashboards/dashboardRole.helper";
-import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default class DashboardModel extends ModelBase {
   constructor(
@@ -116,7 +116,7 @@ export default class DashboardModel extends ModelBase {
   };
 
   clone = () => {
-    return new DashboardModel(dataParsingHelper.cloneDeep(
+    return new DashboardModel(DataParsingHelper.cloneDeep(
         { ...this.data }),
       this.isNew(),
     );

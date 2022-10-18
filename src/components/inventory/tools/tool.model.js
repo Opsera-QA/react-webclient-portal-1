@@ -203,6 +203,13 @@ export default class ToolModel extends ModelBase {
       this.data,
     );
   };
+
+  clone = () => {
+    return new ToolModel(DataParsingHelper.cloneDeep(
+        { ...this.data }),
+      this.isNew(),
+    );
+  };
 }
 
 
