@@ -57,7 +57,6 @@ function GithubActionsBottomTable(
       getTableTextColumn(getField(fields, "canceledPercentage")),
       getTableTextColumn(getField(fields, "successTime")),
       getTableTextColumn(getField(fields, "failedTime")),
-      getStaticIconColumn(faExternalLink),
     ],
     [],
   );
