@@ -207,10 +207,13 @@ function PipelineDetailView() {
   const getBody = () => {
     if (isLoading) {
       return (
-        <LoadingDialog
-          size="md"
-          message={"Loading pipeline..."}
-        />
+        <>
+          <WorkflowSubNavigationBar currentTab={"pipelineViewer"} />
+          <LoadingDialog
+            size="md"
+            message={"Loading pipeline..."}
+          />
+        </>
       );
     }
 
@@ -225,6 +228,7 @@ function PipelineDetailView() {
 
     return (
       <div>
+        <WorkflowSubNavigationBar currentTab={"pipelineViewer"} />
         <div className="h4 mt-3 mb-2">
           {pipeline?.name}
         </div>
@@ -240,7 +244,6 @@ function PipelineDetailView() {
 
   return (
     <div>
-      <WorkflowSubNavigationBar currentTab={"pipelineViewer"} />
       {getBody()}
     </div>
   );
