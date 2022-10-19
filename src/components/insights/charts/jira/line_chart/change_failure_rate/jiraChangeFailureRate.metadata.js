@@ -22,6 +22,10 @@ export const jiraChangeFailureRateMetadata = {
       id: "jira-resolution-names"
     },
     {
+      label: "Jira Team Names",
+      id: "jira-team-names"
+    },
+    {
       label: "Date Range",
       id: "date",
     },

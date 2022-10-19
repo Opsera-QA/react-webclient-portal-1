@@ -22,6 +22,10 @@ export const jiraMeanTimeToResolutionMetadata = {
       label: "Jira Service Components",
       id: "jira-service-components",
     },
+    {
+      label: "Jira Team Names",
+      id: "jira-team-names",
+    },
   ],
   newObjectFields: {
     tags: [],
@@ -29,5 +33,6 @@ export const jiraMeanTimeToResolutionMetadata = {
     "jira-priorities": [],
     "jira-projects": [],
     "jira-service-components": [],
+    "jira-team-names": []
   }
 };
