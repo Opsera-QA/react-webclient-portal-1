@@ -22,10 +22,16 @@ jiraActions.getJiraMTTR = async (
   const apiUrl = jiraBaseURL + "jiraMTTR";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  // TODO Revert this code when timezone is fixed everywhere
+  const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+  const startDate =  new Date(dateRange?.start);
+  const endDate =  new Date(dateRange?.end);
+  startDate.setTime(startDate.getTime() - timeOffsetInMins);
+  endDate.setTime(endDate.getTime() - timeOffsetInMins);
 
   const postBody = {
-    startDate: dateRange?.start,
-    endDate: dateRange?.end,
+    startDate: startDate.toISOString(),
+    endDate: endDate.toISOString(),
     tags:
       tags && dashboardTags
         ? tags.concat(dashboardTags)
@@ -36,6 +42,7 @@ jiraActions.getJiraMTTR = async (
     jiraProjects: getJiraProjectsFromKpiConfiguration(kpiConfiguration),
     jiraPriorities: getJiraPrioritiesFromKpiConfiguration(kpiConfiguration),
     jiraServiceComponents: getResultFromKpiConfiguration(kpiConfiguration, 'jira-service-components'),
+    jiraTeamNames: getResultFromKpiConfiguration(kpiConfiguration, 'jira-team-names'),
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -141,6 +148,31 @@ jiraActions.getJiraResolutionNames = async (
   );
 };
 
+jiraActions.getJiraTeamNames = async (
+  getAccessToken,
+  cancelTokenSource,
+  project
+) => {
+  const apiUrl = jiraBaseURL + "jiraTeamNames";
+  let postBody = {};
+  // project will be given as string
+  // Api is written in such a way that it accepts multiple projects.
+  if(Array.isArray(project)) {
+    if(project.length > 0){
+      postBody = {jiraProjects:project};
+    }
+  } else if(project){
+    postBody = {jiraProjects:[project]};
+  }
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 jiraActions.getJiraChangeFailureRate = async (
   getAccessToken,
   cancelTokenSource,
@@ -152,10 +184,16 @@ jiraActions.getJiraChangeFailureRate = async (
   const apiUrl = jiraBaseURL + "jiraChangeFailureRate";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  // TODO Revert this code when timezone is fixed everywhere
+  const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+  const startDate =  new Date(dateRange?.start);
+  const endDate =  new Date(dateRange?.end);
+  startDate.setTime(startDate.getTime() - timeOffsetInMins);
+  endDate.setTime(endDate.getTime() - timeOffsetInMins);
 
   const postBody = {
-    startDate: dateRange?.start,
-    endDate: dateRange?.end,
+    startDate: startDate.toISOString(),
+    endDate: endDate.toISOString(),
     tags:
       tags && dashboardTags
         ? tags.concat(dashboardTags)
@@ -166,7 +204,8 @@ jiraActions.getJiraChangeFailureRate = async (
     jiraProjects: [getResultFromKpiConfiguration(kpiConfiguration,'jira-projects')],
     jiraChangeTypes: getResultFromKpiConfiguration(kpiConfiguration, 'jira-change-types'),
     jiraServiceComponents: getResultFromKpiConfiguration(kpiConfiguration, 'jira-service-components'),
-    jiraResolutionNames: jiraResolutionNames
+    jiraResolutionNames: jiraResolutionNames,
+    jiraTeamNames: getResultFromKpiConfiguration(kpiConfiguration, 'jira-team-names'),
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(

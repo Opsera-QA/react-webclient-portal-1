@@ -3,6 +3,7 @@ import dashboardsActions from "components/insights/dashboards/dashboards-actions
 import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import DashboardRoleHelper from "@opsera/know-your-role/roles/analytics/dashboards/dashboardRole.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default class DashboardModel extends ModelBase {
   constructor(
@@ -111,6 +112,13 @@ export default class DashboardModel extends ModelBase {
     return DashboardRoleHelper.canEditAccessRoles(
       this.userData,
       this.data,
+    );
+  };
+
+  clone = () => {
+    return new DashboardModel(DataParsingHelper.cloneDeep(
+        { ...this.data }),
+      this.isNew(),
     );
   };
 }

@@ -6,7 +6,15 @@ import VanitySaveButtonBase from "components/common/buttons/saving/VanitySaveBut
 import DeleteModelButtonWithConfirmationOverlay from "components/common/buttons/delete/DeleteModelButtonWithConfirmationModal";
 import Row from "react-bootstrap/Row";
 
-function VanityEditorPanelButtonContainer({ model, setModel, handleClose, disable, extraButtons }) {
+function VanityEditorPanelButtonContainer(
+  {
+    model,
+    setModel,
+    handleClose,
+    disable,
+    extraButtons,
+    lenient,
+  }) {
   const getDeleteButton = () => {
     return (
       <DeleteModelButtonWithConfirmationOverlay
@@ -25,6 +33,7 @@ function VanityEditorPanelButtonContainer({ model, setModel, handleClose, disabl
           model={model}
           setModel={setModel}
           disable={disable}
+          lenient={lenient}
         />
       );
     }
@@ -68,7 +77,8 @@ VanityEditorPanelButtonContainer.propTypes = {
   setModel: PropTypes.func,
   handleClose: PropTypes.func,
   disable: PropTypes.bool,
-  extraButtons: PropTypes.any
+  extraButtons: PropTypes.any,
+  lenient: PropTypes.bool,
 };
 
 export default VanityEditorPanelButtonContainer;

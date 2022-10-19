@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import TitleBar from "components/common/fields/TitleBar";
@@ -7,7 +7,7 @@ import ScreenContainerBodyLoadingDialog
   from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 import TitleActionBarContainer from "components/common/actions/TitleActionBarContainer";
 import PublishCustomerDashboardIcon
-  from "components/insights/marketplace/dashboards/templates/private/PublishCustomerDashboardIcon";
+  from "components/insights/marketplace/dashboards/templates/private/publish/PublishCustomerDashboardIcon";
 import PublishPlatformDashboardIcon
   from "components/insights/marketplace/dashboards/templates/platform/PublishPlatformDashboardIcon";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon";
@@ -16,8 +16,6 @@ import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarD
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import DashboardEditorPanel from "components/insights/dashboards/dashboard_details/DashboardEditorPanel";
 import DashboardViewer from "components/insights/dashboards/dashboard_details/DashboardViewer";
-import axios from "axios";
-import {AuthContext} from "contexts/AuthContext";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import AddKpiIcon from "components/common/icons/metrics/AddKpiIcon";
 import EditDashboardFiltersIcon from "components/common/icons/metrics/EditDashboardFiltersIcon";

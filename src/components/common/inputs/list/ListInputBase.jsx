@@ -207,7 +207,7 @@ function ListInputBase(
 
   // TODO: Make clearDataButton Component
   const getClearDataIcon = () => {
-    if (!disabled && dataObject?.getArrayData(field?.id)?.length > 0 && showClearValueButton !== false && (setDataFunction == null || clearDataFunction)) {
+    if (!disabled && dataObject?.getArrayData(field?.id)?.length > 0 && showClearValueButton !== false) {
       return (
         <ClearSelectionInputButton
           className={"ml-2 my-auto"}
