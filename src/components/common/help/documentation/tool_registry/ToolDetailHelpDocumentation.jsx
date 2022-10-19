@@ -7,7 +7,6 @@ import {
   TOOL_DETAIL_PANEL_TABS
 } from "components/inventory/tools/details/panel/tab_container/ToolDetailPanelTabContainer";
 import {toolIdentifierConstants} from "../../../../admin/tools/identifiers/toolIdentifier.constants";
-import ToolConfigurationSummaryPanel from "../../../../inventory/tools/tool_details/ToolConfigurationSummaryPanel";
 
 
 function ToolDetailHelpDocumentation({toolIdentifier}) {
@@ -153,19 +152,54 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
         return (
           <div>
-            Register, track and configure your API Integrator tool. Each tool contains tabs unique to its configuration
-            needs.
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>External API Integrator</b> tool, view the <a href="https://docs.opsera.io/tool-registry/external-api-integrator-tool-registration" target="_blank" rel="noreferrer"><b>External API Integrator Tool Registration Help Documentation</b>.</a></div>
+          </div>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ANSIBLE:
+        return (
+          <div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>Ansible</b> tool, view the <a href="https://docs.opsera.io/tool-registry/ansible-tool-registration" target="_blank" rel="noreferrer"><b>Ansible Tool Registration Help Documentation</b>.</a></div>
+          </div>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE:
+        return (
+          <div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>Apigee</b> tool, view the <a href="https://docs.opsera.io/tool-registry/apigee-tool-registration" target="_blank" rel="noreferrer"><b>Apigee Tool Registration Help Documentation</b>.</a></div>
+          </div>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
+        return (
+          <div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>Argo</b> tool, view the <a href="https://docs.opsera.io/tool-registry/argo-cd-tool-registration" target="_blank" rel="noreferrer"><b>Argo CD Tool Registration Help Documentation</b>.</a></div>
+          </div>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AWS_ACCOUNT:
+        return (
+          <div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>AWS</b> tool, view the <a href="https://docs.opsera.io/tool-registry/aws-tool-registration" target="_blank" rel="noreferrer"><b>AWS Tool Registration Help Documentation</b>.</a></div>
+          </div>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE:
+        return (
+          <div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>Azure</b> tool, view the <a href="https://docs.opsera.io/tool-registry/azure-tool-registration" target="_blank" rel="noreferrer"><b>Azure Tool Registration Help Documentation</b>.</a></div>
           </div>
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS:
         return (
           <div>
-            Register, track and configure your Jenkins tool. Each tool contains tabs unique to its configuration needs.
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>Jenkins</b> tool, view the <a href="https://docs.opsera.io/tool-registry/jenkins-tool-registration" target="_blank" rel="noreferrer"><b>Jenkins Tool Registration Help Documentation</b>.</a></div>
           </div>
         );
       default:
-        return <div>Register, track and configure your tool. Each tool contains tabs unique to its configuration
-          needs.</div>;
+        return <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>;
     }
   };
 
