@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function MakeupTableRow(
   {
@@ -8,8 +9,15 @@ function MakeupTableRow(
     onRowSelect,
     rowStyling,
     index,
-    row
+    row,
+    selectedModel,
   }) {
+  const [rowClassNames, setRowClassNames] = useState("table-row");
+
+  useEffect(() => {
+    setRowClassNames(getRowClassNames());
+  }, [selectedModel]);
+
   const setColumnClass = (id, columnDefinitions) => {
     let response = "";
     if (columnDefinitions && id){
@@ -22,17 +30,22 @@ function MakeupTableRow(
     return response;
   };
 
-  const getRowClassNames = (index, row) => {
+  const getRowClassNames = () => {
     let rowClassNames = "table-row";
     rowClassNames += onRowSelect ? " pointer" : "";
-    rowClassNames += rowStyling ? rowStyling(row) : "";  
+    const rowStylingString = rowStyling ? rowStyling(row) : "";
+
+    if (hasStringValue(rowStylingString) === true) {
+      rowClassNames += hasStringValue(rowClassNames) ? ` ${rowStylingString}` : rowStylingString;
+    }
+
     return rowClassNames;
   };
 
   prepareRow(row);
   return (
     <tr
-      className={getRowClassNames(index, row)}
+      className={rowClassNames}
       {...row.getRowProps({onClick: () => onRowSelect ? onRowSelect(row) : null})}
     >
       {row.cells.map((cell, j) => {
@@ -57,6 +70,7 @@ MakeupTableRow.propTypes = {
   rowStyling: PropTypes.func,
   index: PropTypes.number,
   row: PropTypes.object,
+  selectedModel: PropTypes.object,
 };
 
 export default MakeupTableRow;

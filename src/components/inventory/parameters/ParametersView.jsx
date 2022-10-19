@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import ParameterTable from "components/inventory/parameters/ParameterTable";
 import ParametersEditorPanel from "components/inventory/parameters/details/ParametersEditorPanel";

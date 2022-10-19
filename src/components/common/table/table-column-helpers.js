@@ -539,6 +539,46 @@ export const getDeletePlatformToolTableButtonColumn = (accessor = "row", headerT
   };
 };
 
+export const getPipelineActivityStatusColumn = (field, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: (text) => {
+      console.log("text: " + JSON.stringify(text));
+      const parsedText = DataParsingHelper.parseString(text);
+      if (!parsedText) {
+        return (
+          <span>
+          <i className={"fal fa-question-circle cell-icon vertical-align-item"} />
+          <span className={"ml-1"}>Unknown</span>
+        </span>
+        );
+      }
+
+      return (
+        <span>
+          <i className="fal ${getPipelineStatusIconCss(text)} cell-icon vertical-align-item" />
+          <span className={"ml-1"}>${capitalizeFirstLetter(text)}</span>
+        </span>
+      );
+    },
+    class: className ? className : undefined
+  };
+};
+
+export const getUppercaseTableTextColumn = (field, className, maxWidth = undefined ) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: (value) => {
+      return capitalizeFirstLetter(value);
+    },
+    class: className,
+    maxWidth: maxWidth
+  };
+};
+
+
 // TODO: Should we show nothing if not === false?
 export const getTableBooleanIconColumn = (field, className) => {
   return {
