@@ -44,7 +44,7 @@ export default function RoleAccessInput({ fieldName, model, setModel, helpCompon
         }
       });
     }
-  }, [userData]);
+  }, [userData, field]);
 
   const loadData = async () => {
     unpackData();
