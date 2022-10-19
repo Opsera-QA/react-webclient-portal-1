@@ -6,6 +6,9 @@ import {
   doesToolSupportTab,
   TOOL_DETAIL_PANEL_TABS
 } from "components/inventory/tools/details/panel/tab_container/ToolDetailPanelTabContainer";
+import {toolIdentifierConstants} from "../../../../admin/tools/identifiers/toolIdentifier.constants";
+import ToolConfigurationSummaryPanel from "../../../../inventory/tools/tool_details/ToolConfigurationSummaryPanel";
+
 
 function ToolDetailHelpDocumentation({toolIdentifier}) {
   const toastContext = useContext(DialogToastContext);
@@ -141,6 +144,32 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
     }
   };
 
+  function ToolSummary({ toolIdentifier }) {
+    const getToolSummary = () => {
+      if (toolIdentifier == null || toolIdentifier === "" || toolIdentifier == null) {
+        return <></>;
+      }
+
+      switch (toolIdentifier) {
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
+          return (
+            <div>
+              Register, track and configure your API Integrator tool. Each tool contains tabs unique to its configuration needs.
+            </div>
+          );
+        case "jenkins":
+          return (
+            <div>
+              Register, track and configure your Jenkins tool. Each tool contains tabs unique to its configuration needs.
+            </div>
+          );
+        default:
+          return <div>Register, track and configure your tool. Each tool contains tabs unique to its configuration needs.</div>;
+      }
+    };
+
+    return (getToolSummary());
+  }
 
   const getHelpDocumentation = () => {
     return (
