@@ -15,6 +15,8 @@ import SapCpqLogSummaryReportPanel from "./sap_cpq/SapCpqLogSummaryReportPanel";
 import ProvarLogSummaryReportPanel
   from "../../workflow/step_configuration/step_tool_configuration_forms/provar/report/ProvarLogSummaryReportPanel";
 import BoomiLogSummaryReportPanel from "./boomi/BoomiLogSummaryReportPanel";
+import FortifyLogSummaryReportPanel 
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/FortifyLogSummaryReportPanel";
 
 function PipelineSummaryReportPanel({ pipelineTaskData }) {
   const wrapObject = (metaData) => {
@@ -70,6 +72,10 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI:
         return (
           <BoomiLogSummaryReportPanel pipelineTaskData={pipelineTaskData} />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
+        return (
+          <FortifyLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
         );
       default:
         return (

@@ -24,7 +24,10 @@ function ToolEditorPanel({ toolData, handleClose }) {
     if (toolDataDto?.isNew() && isSaasUser === false) {
       return (
         <Col xs={12} className={"mb-4"}>
-          <RoleAccessInput dataObject={toolDataDto} setDataObject={setToolDataDto} fieldName={"roles"}/>
+          <RoleAccessInput
+            model={toolDataDto}
+            setModel={setToolDataDto}
+          />
         </Col>
       );
     }

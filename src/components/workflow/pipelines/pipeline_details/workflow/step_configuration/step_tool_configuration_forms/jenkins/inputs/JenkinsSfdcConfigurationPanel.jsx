@@ -9,6 +9,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import toolsActions from "components/inventory/tools/tools-actions";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 // TODO: Is this supposed to still be in here
 const testArr = ["SFDC UNIT TESTING", "SFDC VALIDATE PACKAGE XML", "SFDC DEPLOY"];
@@ -134,6 +135,18 @@ function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
     }
   };
 
+  const getQuickDeployToggle = () => {
+    if (dataObject?.getData("jobType") === "SFDC DEPLOY") {
+      return (
+        <BooleanToggleInput
+          fieldName={"enableQuickDeploy"}
+          dataObject={dataObject}
+          setDataObject={setDataObject}
+        />
+      );
+    }
+  };
+
   if (dataObject == null) {
     return null;
   }
@@ -144,6 +157,7 @@ function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
       {getComparisonCheckbox()}
       {getSfdcCredentialsInput()}
       {getUnitTestTypeInput()}
+      {getQuickDeployToggle()}
     </>
   );
 }

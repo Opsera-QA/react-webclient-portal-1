@@ -2,14 +2,15 @@ import React, {useState, useEffect, useRef} from 'react';
 import {useParams} from "react-router-dom";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import axios from "axios";
-import {faChartArea, faUserChart} from "@fortawesome/pro-light-svg-icons";
+import { faChartArea, faChartSimple, faUserChart } from "@fortawesome/pro-light-svg-icons";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import "./marketplace.css";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import MarketplaceCharts from "components/insights/marketplace/charts/MarketplaceCharts";
-import MarketplaceDashboardCatalog from "components/insights/marketplace/dashboards/MarketplaceDashboardCatalog";
+import CustomerDashboardCatalog from "components/insights/marketplace/dashboards/templates/private/CustomerDashboardCatalog";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
+import OpseraDashboardMarketplace from "components/insights/marketplace/dashboards/templates/platform/OpseraDashboardMarketplace";
 
 function Marketplace () {
   const { dashboardId } = useParams();
@@ -43,8 +44,27 @@ function Marketplace () {
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <CustomTab activeTab={activeTab} tabText={"Charts"} icon={faChartArea} handleTabClick={handleTabClick} tabName={"charts"} />
-        <CustomTab activeTab={activeTab} tabText={"Dashboards"} icon={faUserChart} handleTabClick={handleTabClick} tabName={"dashboards"} />
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Charts"}
+          icon={faChartArea}
+          handleTabClick={handleTabClick}
+          tabName={"charts"}
+        />
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Opsera Marketplace"}
+          icon={faChartSimple}
+          handleTabClick={handleTabClick}
+          tabName={"marketplace"}
+        />
+        <CustomTab
+          activeTab={activeTab}
+          tabText={"Customer Catalog"}
+          icon={faUserChart}
+          handleTabClick={handleTabClick}
+          tabName={"catalog"}
+        />
       </CustomTabContainer>
     );
   };
@@ -53,8 +73,10 @@ function Marketplace () {
     switch (activeTab) {
       case "charts":
         return (<MarketplaceCharts dashboardId={dashboardId} />);
-      case "dashboards":
-        return (<MarketplaceDashboardCatalog />);
+      case "marketplace":
+        return (<OpseraDashboardMarketplace />);
+      case "catalog":
+        return (<CustomerDashboardCatalog />);
       default:
         return null;
     }
@@ -67,11 +89,13 @@ function Marketplace () {
           Opsera provides users with access to a vast repository of KPI. Access all available
           KPIs and configure them on your Opsera Analytics Dashboards.
         `);
-      case "dashboards":
+      case "marketplace":
         return (`
           Opsera offers predefined dashboards focused on topics and personas.
-          There is a public catalog of Opsera provided dashboards by topic as well as a private catalog for sharing within your organization.
+          This is a public catalog of Opsera provided dashboards by topic.
         `);
+      case "catalog":
+        return (`View and select templates created by your Organization in its private catalog.`);
       default:
         return null;
     }

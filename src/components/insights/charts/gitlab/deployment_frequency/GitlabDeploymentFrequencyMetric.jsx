@@ -4,15 +4,15 @@ import { AuthContext } from "contexts/AuthContext";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
-import chartsActions from "components/insights/charts/charts-actions";
 import axios from "axios";
 import { GITLAB_DEPLOYMENT_FREQUENCY_CONSTANTS as constants } from "./GitlabDeploymentFrequency_kpi_datapoint_identifiers";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import GitlabDeployFrequencyChartHelpDocumentation from "../../../../common/help/documentation/insights/charts/GitlabDeployFrequencyChartHelpDocumentation";
 import GitlabDeploymentFrequencyDataBlock from "./GitlabDeploymentFrequencyDataBlock";
-import {getDeploymentStageFromKpiConfiguration, getTrend, getReverseIcon} from "../../charts-helpers";
+import {getDeploymentStageFromKpiConfiguration, getTrend, getTrendIcon} from "../../charts-helpers";
 import GitlabDeploymentFrequencyLineChartContainer from "./GitlabDeploymentFrequencyLineChartContainer";
 import GitlabDeploymentFrequencyTrendDataBlock from "./GitlabDeploymentFrequencyTrendDataBlock";
+import gitlabAction from "../gitlab.action";
 
 function GitlabDeploymentFrequency({
   kpiConfiguration,
@@ -52,7 +52,7 @@ function GitlabDeploymentFrequency({
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(dashboardData)]);
+  },[]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -69,17 +69,14 @@ function GitlabDeploymentFrequency({
           )
         ]?.value;
 
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      const response = await gitlabAction.gitlabDeploymentStatistics(
         getAccessToken,
         cancelSource,
-        "gitlabDeploymentStatistics",
         kpiConfiguration,
         dashboardTags,
-        null,
-        null,
         dashboardOrgs,
       );
-      const metrics = response?.data?.data[0]?.gitlabDeploymentStatistics?.data;
+      const metrics = response?.data?.data?.gitlabDeploymentStatistics?.data;
       if (isMounted?.current === true && metrics?.statisticsData?.step?.total) {
         setMetricData(metrics?.statisticsData);
         setChartData(metrics?.chartData);
@@ -155,7 +152,7 @@ function GitlabDeploymentFrequency({
                 dataPoint={deploymentFrequencyDataPoint}
                 trend={getTrend(metricData?.step?.averageStepRuns,
                   metricData?.step?.previousAverageStepRuns)}
-                getReverseIcon={getReverseIcon}
+                getTrendIcon={getTrendIcon}
                 topText={"Average Deployment Frequency"}
                 bottomText={"Prev Average: "}
               />

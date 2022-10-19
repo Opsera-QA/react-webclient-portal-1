@@ -3,6 +3,7 @@ import React from "react";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import {faMicrosoft, faSlack, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
+import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
 
 function DashboardNotificationVerticalTabContainer(
   {
@@ -10,7 +11,14 @@ function DashboardNotificationVerticalTabContainer(
     activeTab,
   }) {
   return (
-    <VanitySetVerticalTabContainer>      
+    <VanitySetVerticalTabContainer>
+      <VanitySetVerticalTab
+        icon={faEnvelope}
+        tabText={"Email"}
+        tabName={"email"}
+        handleTabClick={handleTabClickFunction}
+        activeTab={activeTab}
+      />      
       <VanitySetVerticalTab
         icon={faMicrosoft}
         tabText={"Microsoft Teams"}

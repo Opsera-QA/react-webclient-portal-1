@@ -1,7 +1,7 @@
 import baseActions from "utils/actionsBase";
 
 import {
-    getDateObjectFromKpiConfiguration,
+    getDateObjectFromKpiConfiguration, getDeploymentStageFromKpiConfiguration, getGitlabProjectFromKpiConfiguration,
     getTagsFromKpiConfiguration
 } from "components/insights/charts/charts-helpers";
 
@@ -91,5 +91,94 @@ gitlabActions.gitlabProjects= async (
     return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+gitlabActions.gitlabDeploymentStatistics = async (
+    getAccessToken,
+    cancelTokenSource,
+    kpiConfiguration,
+    dashboardTags,
+    dashboardOrgs
+) => {
+    const apiUrl = gitlabBaseURL + "gitlabDeploymentStatistics";
+    const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+    let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+    // TODO Revert this code when timezone is fixed everywhere
+    const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    const startDate =  new Date(dateRange?.start);
+    const endDate =  new Date(dateRange?.end);
+    startDate.setTime(startDate.getTime() - timeOffsetInMins);
+    endDate.setTime(endDate.getTime() - timeOffsetInMins);
 
+    const postBody = {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+        dashboardOrgs: dashboardOrgs,
+        deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
+        gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration)
+    };
+
+    return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+gitlabActions.gitlabLeadTimeForChange = async (
+    getAccessToken,
+    cancelTokenSource,
+    kpiConfiguration,
+    dashboardTags,
+    tableFilterDto,
+    projectName,
+    dashboardOrgs
+) => {
+    const apiUrl = gitlabBaseURL + "gitlabLeadTimeForChange";
+    const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+    let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+    // TODO Revert this code when timezone is fixed everywhere
+    const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    const startDate =  new Date(dateRange?.start);
+    const endDate =  new Date(dateRange?.end);
+    startDate.setTime(startDate.getTime() - timeOffsetInMins);
+    endDate.setTime(endDate.getTime() - timeOffsetInMins);
+
+    const postBody = {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+        dashboardOrgs: dashboardOrgs,
+        deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
+        gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration)
+    };
+
+    return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+gitlabActions.gitlabAverageCommitTimeToMerge = async (
+    getAccessToken,
+    cancelTokenSource,
+    kpiConfiguration,
+    dashboardTags,
+    tableFilterDto,
+    projectName,
+    dashboardOrgs
+) => {
+    const apiUrl = gitlabBaseURL + "gitlabAverageCommitTimeToMerge";
+    const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+    let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+    // TODO Revert this code when timezone is fixed everywhere
+    const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    const startDate =  new Date(dateRange?.start);
+    const endDate =  new Date(dateRange?.end);
+    startDate.setTime(startDate.getTime() - timeOffsetInMins);
+    endDate.setTime(endDate.getTime() - timeOffsetInMins);
+
+    const postBody = {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+        dashboardOrgs: dashboardOrgs,
+        deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
+        gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration)
+    };
+
+    return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
 export default gitlabActions;

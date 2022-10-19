@@ -4,6 +4,7 @@ import {
   getDateObjectFromKpiConfiguration,
   getJiraPrioritiesFromKpiConfiguration,
   getJiraProjectsFromKpiConfiguration,
+  getResultFromKpiConfiguration,
   getTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 
@@ -21,10 +22,16 @@ jiraActions.getJiraMTTR = async (
   const apiUrl = jiraBaseURL + "jiraMTTR";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  // TODO Revert this code when timezone is fixed everywhere
+  const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+  const startDate =  new Date(dateRange?.start);
+  const endDate =  new Date(dateRange?.end);
+  startDate.setTime(startDate.getTime() - timeOffsetInMins);
+  endDate.setTime(endDate.getTime() - timeOffsetInMins);
 
   const postBody = {
-    startDate: dateRange?.start,
-    endDate: dateRange?.end,
+    startDate: startDate.toISOString(),
+    endDate: endDate.toISOString(),
     tags:
       tags && dashboardTags
         ? tags.concat(dashboardTags)
@@ -34,6 +41,7 @@ jiraActions.getJiraMTTR = async (
     dashboardOrgs: dashboardOrgs,
     jiraProjects: getJiraProjectsFromKpiConfiguration(kpiConfiguration),
     jiraPriorities: getJiraPrioritiesFromKpiConfiguration(kpiConfiguration),
+    jiraServiceComponents: getResultFromKpiConfiguration(kpiConfiguration, 'jira-service-components'),
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -89,21 +97,77 @@ jiraActions.getJiraChangeTypes = async (
   );
 };
 
+jiraActions.getJiraServiceComponents = async (
+  getAccessToken,
+  cancelTokenSource,
+  project
+) => {
+  const apiUrl = jiraBaseURL + "jiraServiceComponents";
+  let postBody = {};
+  // project will be given as string
+  // Api is written in such a way that it accepts multiple projects.
+  if(Array.isArray(project)) {
+    if(project.length > 0){
+      postBody = {jiraProjects:project};
+    }
+  } else if(project){
+    postBody = {jiraProjects:[project]};
+  }
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
+jiraActions.getJiraResolutionNames = async (
+  getAccessToken,
+  cancelTokenSource,
+  project
+) => {
+  const apiUrl = jiraBaseURL + "jiraResolutionNames";
+  let postBody = {};
+  // project will be given as string
+  // Api is written in such a way that it accepts multiple projects.
+  if(Array.isArray(project)) {
+    if(project.length > 0){
+      postBody = {jiraProjects:project};
+    }
+  } else if(project){
+    postBody = {jiraProjects:[project]};
+  }
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 jiraActions.getJiraChangeFailureRate = async (
   getAccessToken,
   cancelTokenSource,
   kpiConfiguration,
   dashboardTags,
   dashboardOrgs,
-  jiraChangeTypes,
+  jiraResolutionNames,
 ) => {
   const apiUrl = jiraBaseURL + "jiraChangeFailureRate";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  // TODO Revert this code when timezone is fixed everywhere
+  const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+  const startDate =  new Date(dateRange?.start);
+  const endDate =  new Date(dateRange?.end);
+  startDate.setTime(startDate.getTime() - timeOffsetInMins);
+  endDate.setTime(endDate.getTime() - timeOffsetInMins);
 
   const postBody = {
-    startDate: dateRange?.start,
-    endDate: dateRange?.end,
+    startDate: startDate.toISOString(),
+    endDate: endDate.toISOString(),
     tags:
       tags && dashboardTags
         ? tags.concat(dashboardTags)
@@ -111,8 +175,10 @@ jiraActions.getJiraChangeFailureRate = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
-    jiraProjects: [getJiraProjectsFromKpiConfiguration(kpiConfiguration)],
-    jiraChangeTypes: jiraChangeTypes,
+    jiraProjects: [getResultFromKpiConfiguration(kpiConfiguration,'jira-projects')],
+    jiraChangeTypes: getResultFromKpiConfiguration(kpiConfiguration, 'jira-change-types'),
+    jiraServiceComponents: getResultFromKpiConfiguration(kpiConfiguration, 'jira-service-components'),
+    jiraResolutionNames: jiraResolutionNames
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(

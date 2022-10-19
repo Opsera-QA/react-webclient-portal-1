@@ -9,6 +9,7 @@ import MicrosoftTeamsNotificationEditorPanel from "./inputs/teams/MicrosoftTeams
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import GChatNotificationEditorPanel from "./inputs/gchat/GChatNotificationEditorPanel";
 import DashboardNotificationVerticalTabContainer from "./DashboardNotificationVerticalTabContainer";
+import EmailNotificationEditorPanel from "./inputs/email/EmailNotificationEditorPanel";
 
 function DashboardNotificationTabView(
   {
@@ -18,11 +19,20 @@ function DashboardNotificationTabView(
     setTeamsNotificationModel,
     gChatNotificationModel,
     setGChatNotificationModel,
+    emailNotificationModel,
+    setEmailNotificationModel,
   }) {
-  const [activeTab, setTabSelection] = useState("teams");
+  const [activeTab, setTabSelection] = useState("email");
 
   const getCurrentView = () => {
-    switch (activeTab) {      
+    switch (activeTab) {
+      case "email":
+        return (
+          <EmailNotificationEditorPanel
+            emailNotificationModel={emailNotificationModel}
+            setEmailNotificationModel={setEmailNotificationModel}
+          />
+        );      
       case "slack":
         return (
           <SlackNotificationEditorPanel
@@ -82,6 +92,8 @@ DashboardNotificationTabView.propTypes = {
   setTeamsNotificationModel: PropTypes.func,
   gChatNotificationModel: PropTypes.object,
   setGChatNotificationModel: PropTypes.func,
+  emailNotificationModel: PropTypes.object,
+  setEmailNotificationModel: PropTypes.func,
 };
 
 export default DashboardNotificationTabView;

@@ -246,6 +246,10 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "environmentVariables",
       maxItems: 15
     },
+    {
+      label: "Enable Quick Deploy",
+      id: "enableQuickDeploy",
+    }
   ],
   newObjectFields: {
     jobType: "",
@@ -304,6 +308,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     buildStepId: "",
     commands: "",
     environmentVariables: [],
+    enableQuickDeploy: false
   }
 };
 

@@ -25,6 +25,7 @@ function VanityCreateButton(
     className,
     showTypeOnLabel,
     customLabel,
+    lenient,
   }) {
   const [isSaving, setIsSaving] = useState(false);
   const [addAnother, setAddAnother] = useState(false);
@@ -86,7 +87,11 @@ function VanityCreateButton(
     <div className={className}>
       <div className={"d-flex"}>
         {getAddAnotherCheckbox()}
-        <Button size={size} variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
+        <Button
+          size={size}
+          disabled={isSaving || disable || (model?.checkCurrentValidity() !== true && lenient !== true)}
+          onClick={() => persistRecord()}
+        >
           <span><IconBase isLoading={isSaving} icon={icon} fixedWidth className="mr-2"/>{getLabel()}</span>
         </Button>
       </div>
@@ -104,13 +109,14 @@ VanityCreateButton.propTypes = {
   icon: PropTypes.object,
   className: PropTypes.string,
   customLabel: PropTypes.string,
-  showTypeOnLabel: PropTypes.bool
+  showTypeOnLabel: PropTypes.bool,
+  lenient: PropTypes.bool,
 };
 
 VanityCreateButton.defaultProps = {
   showSuccessToasts: true,
   size: "md",
-  icon: faSave
+  icon: faSave,
 };
 
 export default VanityCreateButton;

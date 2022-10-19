@@ -23,10 +23,10 @@ import { dataPointHelpers } from "../../../../../common/helpers/metrics/data_poi
 import { JIRA_MEAN_TIME_TO_RESOLUTION_CONSTANTS as dataPointConstants } from "./JiraMeanTimeToResolution_datapoint_identifiers";
 import DataPointVisibilityWrapper from "../../../../../common/metrics/data_points/DataPointVisibilityWrapper";
 import jiraAction from "../../jira.action";
-import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 import JiraMTTRDataBlock from "../../data_blocks/JiraMTTRDataBlock";
 import JiraMTTRChartHelpDocumentation
   from "../../../../../common/help/documentation/insights/charts/JiraMTTRChartHelpDocumentation";
+import {getReverseTrend, getReverseTrendIcon, getTrend, getTrendIcon} from "../../../charts-helpers";
 
 function JiraMeanTimeToResolutionBarChart({
   kpiConfiguration,
@@ -76,7 +76,7 @@ function JiraMeanTimeToResolutionBarChart({
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(dashboardData)]);
+  }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -231,62 +231,63 @@ function JiraMeanTimeToResolutionBarChart({
   //     </Row>
   //   );
   // };
-  const getMetricTopRow = () => {
-    return (
-      <Row>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`Aging of unresolved tickets:`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={4}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`Last Five Days: ${lastFiveDays}`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`5-15 days: ${fiveToFifteenDays}`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`15-30 days: ${fifteenToThirtyDays}`}
-          />
-        </Col>
-        <Col
-          xl={2}
-          lg={2}
-          md={2}
-        >
-          <MetricBadgeBase
-            className={"mr-3"}
-            badgeText={`> 30 Days: ${beforeThirtyDays}`}
-          />
-        </Col>
-      </Row>
-    );
-  };
+  // Todo Aruna wanted to revisit this formula and this can be delivered during insights.
+  // const getMetricTopRow = () => {
+  //   return (
+  //     <Row>
+  //       <Col
+  //         xl={2}
+  //         lg={2}
+  //         md={2}
+  //       >
+  //         <MetricBadgeBase
+  //           className={"mr-3"}
+  //           badgeText={`Aging of unresolved tickets:`}
+  //         />
+  //       </Col>
+  //       <Col
+  //         xl={2}
+  //         lg={4}
+  //         md={2}
+  //       >
+  //         <MetricBadgeBase
+  //           className={"mr-3"}
+  //           badgeText={`Last Five Days: ${lastFiveDays}`}
+  //         />
+  //       </Col>
+  //       <Col
+  //         xl={2}
+  //         lg={2}
+  //         md={2}
+  //       >
+  //         <MetricBadgeBase
+  //           className={"mr-3"}
+  //           badgeText={`5-15 days: ${fiveToFifteenDays}`}
+  //         />
+  //       </Col>
+  //       <Col
+  //         xl={2}
+  //         lg={2}
+  //         md={2}
+  //       >
+  //         <MetricBadgeBase
+  //           className={"mr-3"}
+  //           badgeText={`15-30 days: ${fifteenToThirtyDays}`}
+  //         />
+  //       </Col>
+  //       <Col
+  //         xl={2}
+  //         lg={2}
+  //         md={2}
+  //       >
+  //         <MetricBadgeBase
+  //           className={"mr-3"}
+  //           badgeText={`> 30 Days: ${beforeThirtyDays}`}
+  //         />
+  //       </Col>
+  //     </Row>
+  //   );
+  // };
 
   const getChartBody = () => {
     if (
@@ -298,33 +299,6 @@ function JiraMeanTimeToResolutionBarChart({
     ) {
       return null;
     }
-    const getReverseIcon = (severity) => {
-      switch (severity) {
-        case "red":
-          return faArrowCircleDown;
-        case "green":
-          return faArrowCircleUp;
-        case "light-gray-text-secondary":
-          return faMinusCircle;
-        default:
-          break;
-      }
-    };
-
-    const getTrend = (curr, previous) => {
-      let trend = "";
-      if(curr > previous){
-        trend = "green";
-      }
-      else if(curr === previous){
-        trend = "light-gray-text-secondary";
-      }
-      else if(curr < previous){
-        trend = "red";
-      }
-      else{ trend = "black";}
-      return trend;
-    };
 
     const dataPoints = kpiConfiguration?.dataPoints;
     const mttrChartDataPoint = dataPointHelpers.getDataPoint(
@@ -375,8 +349,8 @@ function JiraMeanTimeToResolutionBarChart({
                   incidents={dataBlock.totalIncidents}
                   prevIncidents={dataBlock.previousTotalIncidents}
                   dataPoint={numberOfIncidentsDataPoint}
-                  trend={getTrend(dataBlock.totalIncidents,dataBlock.previousTotalIncidents)}
-                  getReverseIcon = {getReverseIcon}
+                  trend={getReverseTrend(dataBlock.totalIncidents,dataBlock.previousTotalIncidents)}
+                  getIcon = {getReverseTrendIcon}
                   topText={"Total Incidents"}
                   bottomText={"Prev Total Incidents"}
                 />
@@ -387,7 +361,7 @@ function JiraMeanTimeToResolutionBarChart({
                   prevIncidents={dataBlock.previousTotalResolvedIncidents}
                   dataPoint={numberOfIncidentsDataPoint}
                   trend={getTrend(dataBlock.totalResolvedIncidents,dataBlock.previousTotalResolvedIncidents)}
-                  getReverseIcon = {getReverseIcon}
+                  getIcon = {getTrendIcon}
                   topText={"Resolved Incidents"}
                   bottomText={"Prev Resolved Incidents"}
                 />
@@ -400,8 +374,8 @@ function JiraMeanTimeToResolutionBarChart({
                     incidents={dataBlock.overallMttrHours}
                     prevIncidents={dataBlock.previousOverallMttrHours}
                     dataPoint={numberOfIncidentsDataPoint}
-                    trend={getTrend(dataBlock.overallMttrHours,dataBlock.previousOverallMttrHours)}
-                    getReverseIcon = {getReverseIcon}
+                    trend={getReverseTrend(dataBlock.overallMttrHours,dataBlock.previousOverallMttrHours)}
+                    getIcon = {getReverseTrendIcon}
                     topText={"Average MTTR (Hours)"}
                     bottomText={"Prev Average MTTR"}
                   />
@@ -412,8 +386,8 @@ function JiraMeanTimeToResolutionBarChart({
                   incidents={dataBlock.minMTTR}
                   prevIncidents={dataBlock.previousMinMTTR}
                   dataPoint={numberOfIncidentsDataPoint}
-                  trend={getTrend(dataBlock.minMTTR,dataBlock.previousMinMTTR)}
-                  getReverseIcon = {getReverseIcon}
+                  trend={getReverseTrend(dataBlock.minMTTR,dataBlock.previousMinMTTR)}
+                  getIcon = {getReverseTrendIcon}
                   topText={"Min MTTR (Hours)"}
                   bottomText={"Prev Min MTTR"}
                 />
@@ -423,8 +397,8 @@ function JiraMeanTimeToResolutionBarChart({
                   incidents={dataBlock.maxMTTR}
                   prevIncidents={dataBlock.previousMaxMTTR}
                   dataPoint={numberOfIncidentsDataPoint}
-                  trend={getTrend(dataBlock.maxMTTR,dataBlock.previousMaxMTTR)}
-                  getReverseIcon = {getReverseIcon}
+                  trend={getReverseTrend(dataBlock.maxMTTR,dataBlock.previousMaxMTTR)}
+                  getIcon = {getReverseTrendIcon}
                   topText={"Max MTTR (Hours)"}
                   bottomText={"Prev Max MTTR"}
                 />
@@ -504,7 +478,7 @@ function JiraMeanTimeToResolutionBarChart({
             )}
           </Row>
         </div>
-        <div className="ml-2 p-0">{getMetricTopRow()}</div>
+        {/*<div className="ml-2 p-0">{getMetricTopRow()}</div>*/}
       </>
     );
   };

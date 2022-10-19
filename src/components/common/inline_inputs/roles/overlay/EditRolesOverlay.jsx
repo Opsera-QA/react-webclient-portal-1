@@ -72,8 +72,8 @@ function EditRolesOverlay(
         </div>
         <div>
           <RoleAccessInput
-            dataObject={temporaryDataObject}
-            setDataObject={setTemporaryDataObject}
+            model={temporaryDataObject}
+            setModel={setTemporaryDataObject}
             fieldName={fieldName}
           />
         </div>
