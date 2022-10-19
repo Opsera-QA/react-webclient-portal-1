@@ -144,37 +144,35 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
     }
   };
 
-  function ToolSummary({ toolIdentifier }) {
-    const getToolSummary = () => {
-      if (toolIdentifier == null || toolIdentifier === "" || toolIdentifier == null) {
-        return <></>;
-      }
+  const getToolSummary = () => {
+    if (toolIdentifier == null || toolIdentifier === "" || toolIdentifier == null) {
+      return <></>;
+    }
 
-      switch (toolIdentifier) {
-        case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
-          return (
-            <div>
-              Register, track and configure your API Integrator tool. Each tool contains tabs unique to its configuration needs.
-            </div>
-          );
-        case "jenkins":
-          return (
-            <div>
-              Register, track and configure your Jenkins tool. Each tool contains tabs unique to its configuration needs.
-            </div>
-          );
-        default:
-          return <div>Register, track and configure your tool. Each tool contains tabs unique to its configuration needs.</div>;
-      }
-    };
-
-    return (getToolSummary());
-  }
+    switch (toolIdentifier) {
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
+        return (
+          <div>
+            Register, track and configure your API Integrator tool. Each tool contains tabs unique to its configuration
+            needs.
+          </div>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS:
+        return (
+          <div>
+            Register, track and configure your Jenkins tool. Each tool contains tabs unique to its configuration needs.
+          </div>
+        );
+      default:
+        return <div>Register, track and configure your tool. Each tool contains tabs unique to its configuration
+          needs.</div>;
+    }
+  };
 
   const getHelpDocumentation = () => {
     return (
       <div>
-        <div>Register, track and configure your tool. Each tool contains tabs unique to its configuration needs.</div>
+        <div>{getToolSummary()}</div>
           <div className={"mt-2"}>
             <ul style={{listStyleType: "none"}}>
               <li><b>Summary</b> - Includes information added upon tool creation such as Tool Name, Tool Identifier, Cost Center, Tags, Classification, Description and user Access Roles.</li>
