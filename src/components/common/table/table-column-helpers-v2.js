@@ -175,10 +175,10 @@ export const getLimitedTableTextColumn = (field, maxLength, className) => {
         const truncatedString = truncateString(text, maxLength);
 
         if (truncatedString !== text) {
-          return (encodeURIComponent(truncatedString));
+          return (truncatedString);
         }
 
-        return encodeURIComponent(text);
+        return text;
       }
 
       return "";

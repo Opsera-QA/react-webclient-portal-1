@@ -35,8 +35,6 @@ import PipelineTypeIconBase from "components/common/fields/pipelines/types/Pipel
 import OrchestrationStateFieldBase
   from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import AccessRoleDisplayer from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayer";
 import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
 
 export const getCustomTableHeader = (field) => {
