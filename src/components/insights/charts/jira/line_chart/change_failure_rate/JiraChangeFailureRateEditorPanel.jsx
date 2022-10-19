@@ -12,7 +12,8 @@ import MetricJiraServiceComponentsFilterInput
     from "../../../../../common/inputs/metric/filters/jira/MetricJiraServiceComponentsFilterInput";
 import MetricJiraResolutionNamesFilterInput
     from "../../../../../common/inputs/metric/filters/jira/MetricJiraResolutionNamesFilterInput";
-import MetricJiraTeamNamesFilterInput from "components/common/inputs/metric/filters/jira/MetricJiraTeamNameFilterInput";
+import MetricJiraTeamNamesFilterInput
+  from "components/common/inputs/metric/filters/jira/MetricJiraTeamNamesFilterInput";
 
 function JiraChangeFailureRateEditorPanel(
   {
