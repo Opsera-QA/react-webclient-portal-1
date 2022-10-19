@@ -4,6 +4,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {
   getTableTextColumn,
   getStaticIconColumn,
+  getTableDurationTextColumn
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
@@ -52,8 +53,8 @@ export default function GithubActionsDetailedWorkflowSummaryTable(
       getTableTextColumn(getField(fields, "failedPercentage")),
       getTableTextColumn(getField(fields, "skippedPercentage")),
       getTableTextColumn(getField(fields, "canceledPercentage")),
-      getTableTextColumn(getField(fields, "successTime")),
-      getTableTextColumn(getField(fields, "failedTime")),
+      getTableDurationTextColumn(getField(fields, "successTime")),
+      getTableDurationTextColumn(getField(fields, "failedTime")),
       getStaticIconColumn(faExternalLink),
     ],
     [],

@@ -6,6 +6,7 @@ import {
     getStaticIconColumn,
     getTableDateTimeColumn,
     getTableTextColumn,
+    getTableDurationTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -45,7 +46,7 @@ function GithubActionsUniqueRunSummaryRunsTable(
       getTableDateTimeColumn(getField(fields, "workflowEndTime")),
       getTableTextColumn(getField(fields, "triggeredBy")),
       getTableTextColumn(getField(fields, "triggerEvent")),
-      getTableTextColumn(getField(fields, "totalDuration")),
+      getTableDurationTextColumn(getField(fields, "totalDuration")),
       getTableTextColumn(getField(fields, "conclusion")),
       getTableTextColumn(getField(fields, "numberOfRuns")),
       getExternalLinkIconColumnDefinition(getField(fields, "workflowURL")), // TODO: Make external link column

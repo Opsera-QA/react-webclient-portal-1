@@ -17,7 +17,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import ThreeLineScoreDataBlock from "../../../../common/metrics/score/ThreeLineScoreDataBlock";
 import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 import ThreeLinePercentageBlockBase from "../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
-
+import { getTimeDisplay } from "components/insights/charts/github_actions/github_actions-utility";
 function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setError }) {
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -222,8 +222,8 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
             <div className={"p-2"}>
               <ThreeLineScoreDataBlock
                 className={getIconColor(metrics?.avgSuccessTimeTrend?.trend)}
-                score={metrics?.avgSuccessTime}
-                bottomText={"Last Scan: " + metrics?.prevSuccessTime}
+                score={getTimeDisplay(metrics?.avgSuccessTime)}
+                bottomText={"Last Scan: " + getTimeDisplay(metrics?.prevSuccessTime)}
                 subtitle={"Average Time For Success Runs (mins)"}
                 icon={getIcon(metrics?.avgSuccessTimeTrend?.trend)}
                 iconOverlayBody={getDescription(metrics?.avgSuccessTimeTrend?.trend)}
@@ -267,10 +267,10 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
             <div className={"p-2"}>
               <ThreeLineScoreDataBlock
                 className={getIconColor(metrics?.avgFailedTimeTrend?.trend)}
-                bottomText={"Last Scan: " + metrics?.prevFailedTime}
+                bottomText={"Last Scan: " + getTimeDisplay(metrics?.prevFailedTime)}
                 icon={getIcon(metrics?.avgFailedTimeTrend?.trend)}
                 iconOverlayBody={getDescription(metrics?.avgFailedTimeTrend?.trend)}
-                score={metrics?.avgFailedTime}
+                score={getTimeDisplay(metrics?.avgFailedTime)}
                 subtitle={"Average Time For Failed Runs (mins)"}
                 dataPoint={averageFailureDataPoint}
               />

@@ -1,7 +1,7 @@
 import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import {getStaticIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
+import {getStaticIconColumn, getTableTextColumn, getTableDurationTextColumn} from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass, faExternalLink} from "@fortawesome/pro-light-svg-icons";
@@ -45,8 +45,8 @@ function GithubActionsUniqueRunSummaryJobsTable(
       getTableTextColumn(getField(fields, "failedPercentage")),
       getTableTextColumn(getField(fields, "skippedPercentage")),
       getTableTextColumn(getField(fields, "canceledPercentage")),
-      getTableTextColumn(getField(fields, "successTime")),
-      getTableTextColumn(getField(fields, "failedTime")),
+      getTableDurationTextColumn(getField(fields, "successTime")),
+      getTableDurationTextColumn(getField(fields, "failedTime")),
     ],
     []
   );

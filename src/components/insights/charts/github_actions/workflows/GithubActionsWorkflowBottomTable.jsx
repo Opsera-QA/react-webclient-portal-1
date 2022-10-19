@@ -1,7 +1,7 @@
 import React, { useContext, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
-import { getTableTextColumn, getStaticIconColumn } from "components/common/table/table-column-helpers";
+import { getTableTextColumn, getStaticIconColumn, getTableDurationTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import {
@@ -55,8 +55,8 @@ function GithubActionsBottomTable(
       getTableTextColumn(getField(fields, "failedPercentage")),
       getTableTextColumn(getField(fields, "skippedPercentage")),
       getTableTextColumn(getField(fields, "canceledPercentage")),
-      getTableTextColumn(getField(fields, "successTime")),
-      getTableTextColumn(getField(fields, "failedTime")),
+      getTableDurationTextColumn(getField(fields, "successTime")),
+      getTableDurationTextColumn(getField(fields, "failedTime")),
     ],
     [],
   );
