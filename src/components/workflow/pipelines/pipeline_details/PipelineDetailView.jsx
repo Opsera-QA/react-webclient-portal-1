@@ -207,20 +207,16 @@ function PipelineDetailView() {
   const getBody = () => {
     if (isLoading) {
       return (
-        <>
-          <WorkflowSubNavigationBar currentTab={"pipelineViewer"} />
-          <LoadingDialog
-            size="md"
-            message={"Loading pipeline..."}
-          />
-        </>
+        <LoadingDialog
+          size="md"
+          message={"Loading pipeline..."}
+        />
       );
     }
 
     if (!pipeline) {
       return (
         <AccessDeniedContainer
-          navigationTabContainer={<WorkflowSubNavigationBar currentTab={"pipelineViewer"} />}
           customMessage={"No Pipeline details found.  Please ensure you have access to view the requested pipeline."}
         />
       );
@@ -228,7 +224,6 @@ function PipelineDetailView() {
 
     return (
       <div>
-        <WorkflowSubNavigationBar currentTab={"pipelineViewer"} />
         <div className="h4 mt-3 mb-2">
           {pipeline?.name}
         </div>
@@ -244,6 +239,7 @@ function PipelineDetailView() {
 
   return (
     <div>
+      <WorkflowSubNavigationBar currentTab={"pipelineViewer"} />
       {getBody()}
     </div>
   );
