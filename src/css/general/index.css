@@ -152,6 +152,16 @@ primary analytics font*/
     color: #46415C;
 }
 
+.selected-row {
+    color: #46415C !important;
+    font-weight: bold;
+    background: #e4e4e4 !important;
+}
+
+.selected-row > td:first-child::before {
+    border-left: 5px solid #46415C;
+}
+
 .opsera-banner-text-on-purple-background {
     color: #fef7fd;
 }
