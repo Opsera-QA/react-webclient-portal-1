@@ -17,6 +17,8 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import ThreeLineScoreDataBlock from "../../../../common/metrics/score/ThreeLineScoreDataBlock";
 import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 import ThreeLinePercentageBlockBase from "../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
+import {AuthContext} from "../../../../../contexts/AuthContext";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setError }) {
   const [metrics, setMetrics] = useState([]);
@@ -25,22 +27,38 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
   const [averageSuccessDataPoint, setAverageSuccessDataPoint] = useState(undefined);
   const [failurePercentDataPoint, setFailurePercentDataPoint] = useState(undefined);
   const [averageFailureDataPoint, setAverageFailureDataPoint] = useState(undefined);
-  const {
-    cancelTokenSource,
-    isMounted,
-    getAccessToken,
-  } = useComponentStateReference();
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const isMounted = useRef(false);
+  const { getAccessToken } = useContext(AuthContext);
+  // const {
+  //   cancelTokenSource,
+  //   isMounted,
+  //   getAccessToken,
+  // } = useComponentStateReference();
 
   useEffect(() => {
-    loadData().catch((error) => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, [JSON.stringify(dashboardData)]);
 
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       await loadDataPoints();
@@ -51,13 +69,13 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
       const response = await githubActionsWorkflowActions.githubActionsBaseKPIDataBlocks(
           kpiConfiguration,
           getAccessToken,
-          cancelTokenSource,
+          cancelSource,
           dashboardTags,
           dashboardOrgs,
           dashboardFilters
       );
       let dataObject = response?.data?.data[0];
-      if (isMounted?.current === true && dataObject) {
+      if (isMounted?.current === true) {
         setMetrics(dataObject);
       }
     }
