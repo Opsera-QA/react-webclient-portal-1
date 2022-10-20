@@ -25,12 +25,17 @@ const emailStepNotificationMetadata = {
       label: "Email Notifications",
       id: "enabled",
     },
+    {
+      label: "Include last 10 lines of log (limited to 1000 characters)",
+      id: "logEnabled",
+    },
   ],
   newObjectFields: {
     type: "email",
     addresses: [],
     event: "error",
     enabled: false,
+    logEnabled: false,
   }
 };
 

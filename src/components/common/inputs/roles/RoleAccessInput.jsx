@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {
@@ -7,11 +7,9 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
-import axios from "axios";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import StandaloneRoleAccessTypeInput from "components/common/inputs/roles/StandaloneRoleAccessTypeInput";
@@ -20,7 +18,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 // TODO: Create RoleAccessInputRow that holds the actual inputs to clean this up.
-function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, disabled }) {
+export default function RoleAccessInput({ fieldName, model, setModel, helpComponent, disabled }) {
   const [userList, setUserList] = useState([]);
   const [groupList, setGroupList] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -36,7 +34,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
     userData,
     getAccessToken,
   } = useComponentStateReference();
-  const field = dataObject?.getFieldById(fieldName);
+  const field = model?.getFieldById(fieldName);
 
   useEffect(() => {
     if (isSaasUser === false) {
@@ -99,8 +97,8 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
   };
 
   const unpackData = () => {
-    let currentData = dataObject.getData(fieldName);
-    let unpackedRoles = [];
+    const currentData = model?.getData(fieldName);
+    const unpackedRoles = [];
 
     if (Array.isArray(currentData) && currentData.length > 0)
     {
@@ -127,7 +125,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
 
   const validateAndSetData = (newRoleList) => {
     setRoles([...newRoleList]);
-    let newDataObject = {...dataObject};
+    const newDataObject = {...model};
 
     if (newRoleList.length > field.maxItems) {
       setErrorMessage("You have reached the maximum allowed number of role access items. Please remove one to add another.");
@@ -156,7 +154,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
     }
 
     newDataObject.setData(fieldName, [...newArray]);
-    setDataObject({...newDataObject});
+    setModel({...newDataObject});
   };
 
   const isRoleComplete = (role) => {
@@ -438,7 +436,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
 
   return (
     <div className={"bg-white"} style={{minWidth: "575px"}}>
-      <div className={"mx-2 mb-1"}>
+      <div className={"mx-2 mb-2"}>
         <InfoText customMessage={getRolesMessage()} />
       </div>
       <PropertyInputContainer
@@ -469,11 +467,13 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent, 
 }
 
 RoleAccessInput.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   fieldName: PropTypes.string,
   helpComponent: PropTypes.object,
   disabled: PropTypes.bool,
 };
 
-export default RoleAccessInput;
+RoleAccessInput.defaultProps = {
+  fieldName: "roles",
+};

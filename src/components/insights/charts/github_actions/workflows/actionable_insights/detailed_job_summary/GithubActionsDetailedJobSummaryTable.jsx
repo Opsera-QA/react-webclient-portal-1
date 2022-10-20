@@ -4,7 +4,7 @@ import {
   githubActionsDetailedJobSummaryMetadata,
 } from "components/insights/charts/github_actions/workflows/actionable_insights/detailed_job_summary/githubActionsDetailedJobSummary.metadata";
 import CustomTable from "components/common/table/CustomTable";
-import { getTableTextColumn } from "components/common/table/table-column-helpers";
+import { getTableTextColumn, getTableDurationTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
@@ -43,8 +43,8 @@ function GithubActionsDetailedJobSummaryTable(
       getTableTextColumn(getField(fields, "failedPercentage")),
       getTableTextColumn(getField(fields, "skippedPercentage")),
       getTableTextColumn(getField(fields, "canceledPercentage")),
-      getTableTextColumn(getField(fields, "successTime")),
-      getTableTextColumn(getField(fields, "failedTime")),
+      getTableDurationTextColumn(getField(fields, "successTime")),
+      getTableDurationTextColumn(getField(fields, "failedTime")),
     ],
     [],
   );

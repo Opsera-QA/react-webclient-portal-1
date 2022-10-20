@@ -9,6 +9,8 @@ import ActionBarDeleteCustomerDashboardTemplateButton
   from "components/insights/marketplace/dashboards/templates/private/ActionBarDeleteCustomerDashboardTemplateButton";
 import AddCustomerDashboardButton
   from "components/insights/marketplace/dashboards/templates/private/AddCustomerDashboardButton";
+import AccessRoleDisplayerField from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayerField";
+import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
 
 // TODO: This needs to be rewritten, I only separated out the two types of dashboards but did not work on this
 export default function CustomerDashboardTemplateCard(
@@ -75,12 +77,22 @@ export default function CustomerDashboardTemplateCard(
           <AddCustomerDashboardButton
             dashboardTemplateId={dashboardTemplate?._id}
           />
-          <ActionBarDeleteCustomerDashboardTemplateButton
-            loadData={loadData}
-            dashboardId={dashboardTemplate?._id}
-            ownerId={dashboardTemplate?.creator}
-            className={"mt-auto"}
-          />
+          <div className={"d-flex"}>
+            {/*<AccessRoleIconBase*/}
+            {/*  owner={dashboardTemplate?.creator}*/}
+            {/*  type={"Dashboard Template"}*/}
+            {/*  roles={dashboardTemplate?.roles}*/}
+            {/*  className={"mr-3 mt-auto"}*/}
+            {/*  tooltipPlacement={"top"}*/}
+            {/*  iconSize={"lg"}*/}
+            {/*/>*/}
+            <ActionBarDeleteCustomerDashboardTemplateButton
+              loadData={loadData}
+              dashboardId={dashboardTemplate?._id}
+              ownerId={dashboardTemplate?.creator}
+              className={"mt-auto"}
+            />
+          </div>
         </div>
       </Card.Body>
     </Card>

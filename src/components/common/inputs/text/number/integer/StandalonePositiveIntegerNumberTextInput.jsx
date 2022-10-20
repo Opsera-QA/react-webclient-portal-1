@@ -50,6 +50,12 @@ function StandalonePositiveIntegerNumberTextInput({ value, disabled, setDataFunc
     return classes;
   };
 
+  const blockInvalidCharacters = (event) => {
+    if (['e', 'E', '+', '-'].includes(event.key)) {
+      event.preventDefault();
+    }
+  };
+
   return (
     <input
       disabled={disabled}
@@ -58,6 +64,7 @@ function StandalonePositiveIntegerNumberTextInput({ value, disabled, setDataFunc
       className={getInputClasses()}
       onChange={(event) => validateAndSetData(event)}
       autoComplete="off"
+      onKeyDown={blockInvalidCharacters}
     />
   );
 }

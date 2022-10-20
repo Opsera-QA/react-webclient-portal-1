@@ -182,6 +182,17 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
     }
   };
 
+  const handleNextClick = async() => {
+    const unitTestSteps = pipelineWizardModel?.getArrayData("unitTestSteps");
+    const unitTestStepsIds = unitTestSteps.map(({_id})=>({_id}));
+    const isUnitTestSelectedResponse = await sfdcPipelineActions.checkTestClassesCount(getAccessToken, cancelTokenSource, pipelineWizardModel, unitTestStepsIds);
+    if(!isUnitTestSelectedResponse?.data) {
+      toastContext.showSystemErrorToast("No Test Classes were selected, Please select test classes for above steps to proceed further.");
+      return;
+    }
+    setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.XML_VIEWER);
+  };
+
   return (
     <div className="ml-5 mr-5">
       <div className="flex-container">
@@ -216,7 +227,7 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
               variant="success"
               size="sm"
               onClick={() => {
-                setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.XML_VIEWER);
+                handleNextClick();
               }}
             >
               <IconBase icon={faStepForward} className={"mr-1"}/>

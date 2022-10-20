@@ -9,7 +9,7 @@ import { JIRA_CHANGE_FAILURE_RATE_CONSTANTS as constants } from "./JiraChangeFai
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import jiraAction from "../../jira.action";
 import JiraChangeFailureRateDataBlockContainer from "./JiraChangeFailureRateDataBlockContainer";
-import {getResultFromKpiConfiguration,getTrend} from "../../../charts-helpers";
+import {getResultFromKpiConfiguration,getReverseTrend} from "../../../charts-helpers";
 import JiraChangeFailureRateHelpDocumentation
   from "../../../../../common/help/documentation/insights/charts/JiraChangeFailureRateHelpDocumentation";
 
@@ -56,7 +56,7 @@ function JiraChangeFailureRate({
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(dashboardData)]);
+  }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -79,16 +79,16 @@ function JiraChangeFailureRate({
       } else {
         setGoalsData(DEFAULT_GOALS);
       }
-      const jiraChangeTypes = getResultFromKpiConfiguration(kpiConfiguration, 'jira-change-types');
+      const jiraResolutionNames = getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names');
       let response;
-      if(jiraChangeTypes?.length){
+      if(jiraResolutionNames?.length){
         response = await jiraAction.getJiraChangeFailureRate(
           getAccessToken,
           cancelSource,
           kpiConfiguration,
           dashboardTags,
           dashboardOrgs,
-          jiraChangeTypes
+          jiraResolutionNames
         );
         const metrics = response?.data?.data?.jiraChangeFailureRate?.data;
         if (isMounted?.current === true && Array.isArray(metrics?.chartData)) {
@@ -137,7 +137,7 @@ function JiraChangeFailureRate({
               goalsData={goalsData?.change_failure_rate}
               kpiConfiguration={kpiConfiguration}
               dataPoint={changeFailureRateDataPoint}
-              trend={getTrend(metricData.changeFailureRate,metricData.prevChangeFailureRate)}
+              trend={getReverseTrend(metricData.changeFailureRate,metricData.prevChangeFailureRate)}
             />
           </Col>
         )}
@@ -145,7 +145,7 @@ function JiraChangeFailureRate({
     );
   };
   const getChartBody = () => {
-    if (!metricData || !Array.isArray(chartData) || isNaN(metricData.changeFailureRate)) {
+    if (!metricData || !Array.isArray(chartData) || !metricData.changeFailureRate) {
       return null;
     }
     return (

@@ -1,13 +1,20 @@
 import React from "react";
-import PropTypes from "prop-types";
 import BreadcrumbPageLinkCard from "components/common/card/link/BreadcrumbPageLinkCard";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function AnalyticsProfilePageLinkCard({accessRoleData}) {
+export default function AnalyticsProfilePageLinkCard() {
+  const {
+    isSiteAdministrator,
+    isOpseraAdministrator,
+    isPowerUser,
+    isSaasUser,
+  } = useComponentStateReference();
+
   if (
-       accessRoleData.Administrator !== true
-    && accessRoleData.OpseraAdministrator !== true
-    && accessRoleData.PowerUser !== true
-    && accessRoleData.SassPowerUser !== true
+    isSiteAdministrator !== true
+    && isOpseraAdministrator !== true
+    && isPowerUser !== true
+    && isSaasUser !== true
   ) {
     return null;
   }
@@ -18,9 +25,3 @@ function AnalyticsProfilePageLinkCard({accessRoleData}) {
     />
   );
 }
-
-AnalyticsProfilePageLinkCard.propTypes = {
-  accessRoleData: PropTypes.object,
-};
-
-export default AnalyticsProfilePageLinkCard;

@@ -12,7 +12,7 @@ function PipelineSourceRepositoryHelpDocumentation() {
   const getHelpDocumentation = () => {
       return (
         <div>
-          <div className={"ml-2 mb-2"}>Opsera Pipelines support webhook based start events for projects in GitLab, GitHub, Bitbucket and Azure Devops. Select a primary branch the trigger will occur off of, with the option to select an additional secondary branch. Use the following instructions to configure a webhook trigger event for this pipeline. For more detailed information on webhook trigger configurations, view the <b><a href="https://opsera.atlassian.net/l/c/uGkMZ0ZF" target="_blank" rel="noreferrer">Configure Single Pipeline for Multiple Webhook Events Help Documentation</a>.</b>
+          <div className={"ml-2 mb-2"}>Opsera Pipelines support webhook based start events for projects in GitLab, GitHub, Bitbucket and Azure Devops. Select a primary branch the trigger will occur off of, with the option to select an additional secondary branch. Use the following instructions to configure a webhook trigger event for this pipeline. For more detailed information on webhook trigger configurations, view the <b><a href="https://docs.opsera.io/webhook-integration/how-to-configure-a-pipeline-for-multiple-webhook-events" target="_blank" rel="noreferrer">Configure Single Pipeline for Multiple Webhook Events Help Documentation</a>.</b>
           </div>
           <div className={"ml-4 mb-2"}>
             <h6>Source Repository Configuration and Webhook Registration</h6>

@@ -91,7 +91,7 @@ export default function GithubActionsDetailedWorkflowSummary(
     }
   };
 
-  console.log(" aftre mostFailed", mostFailed);
+
 
   return (
     <GithubActionsDetailedWorkflowSummaryTable

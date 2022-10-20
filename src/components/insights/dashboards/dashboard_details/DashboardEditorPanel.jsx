@@ -27,19 +27,11 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
   } = useComponentStateReference();
 
   useEffect(() => {
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-  }, []);
-
-  const loadData = async () => {
     setIsLoading(true);
-    setDashboardDataDto(dashboardData);
+    setDashboardDataDto(dashboardData?.clone());
     setDashboardAttributesDataDto(new Model(dashboardData.getData("attributes"), dashboardAttributesMetadata, false));
     setIsLoading(false);
-  };
+  }, []);
 
   const createDashboard = async () => {
     const attributes = dashboardAttributesDataDto ? dashboardAttributesDataDto.getPersistData() : {};
@@ -70,10 +62,9 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
           <div className={"bg-white"} style={{borderRadius: "6px"}}>
             <div>
               <RoleAccessInput
-                fieldName={"roles"}
-                setDataObject={setDashboardDataDto}
-                dataObject={dashboardDataDto}
-                disabled={dashboardDataDto?.canEditAccessRoles() !== true}
+                setModel={setDashboardDataDto}
+                model={dashboardDataDto}
+                disabled={dashboardData?.canEditAccessRoles() !== true}
               />
             </div>
           </div>

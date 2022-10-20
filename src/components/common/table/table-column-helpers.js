@@ -2,23 +2,22 @@ import { format } from "date-fns";
 import {
   faCheckCircle,
   faCircle,
+  faExclamationCircle,
+  faLock,
   faOctagon,
   faPauseCircle,
+  faPlay,
   faPlayCircle,
   faSearchPlus,
-  faSpinner,
   faStopCircle,
   faTimesCircle,
   faTrash,
-  faPlay,
-  faExclamationCircle,
   faUnlock,
-  faLock,
 } from "@fortawesome/pro-light-svg-icons";
 import {
+  faBitbucket,
   faGithub,
   faGitlab,
-  faBitbucket,
   faJira,
   faSlack,
 } from "@fortawesome/free-brands-svg-icons";
@@ -44,11 +43,11 @@ import IconBase from "components/common/icons/IconBase";
 import PageLinkIcon from "components/common/icons/general/PageLinkIcon";
 import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
 import PipelineTypeIconBase from "components/common/fields/pipelines/types/PipelineTypeIconBase";
-import OrchestrationStateFieldBase
-  from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
+import OrchestrationStateFieldBase from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import AccessRoleDisplayer from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayer";
+import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
 
 export const getCustomTableHeader = (field) => {
   return field ? field.label : "";
@@ -110,6 +109,24 @@ export const getOwnerNameField = (headerText = "Owner Name") => {
   return {
     Header: headerText,
     accessor: "owner_name",
+  };
+};
+
+export const getSsoUserNameField = (
+  headerText = "Name",
+  className = "no-wrap-inline",
+) => {
+  return {
+    Header: headerText,
+    accessor: "name",
+    Cell: function getRoleAccessLevel(row) {
+      const dataObject = DataParsingHelper.parseObject(
+        row?.data[row?.row?.index],
+        {},
+      );
+      return `${dataObject?.firstName} ${dataObject?.lastName}`;
+    },
+    class: className,
   };
 };
 
@@ -837,39 +854,12 @@ export const getRoleAccessColumn = (
       const roles = DataParsingHelper.parseArray(row?.value, []);
       const owner = row?.data[row?.row?.index]?.owner;
 
-      if (!Array.isArray(roles) || roles.length === 0 || isMongoDbId(owner) === false) {
-        return (
-          <div>
-            <TooltipWrapper
-              innerText={`This ${type} is public and accessible to everyone.`}
-              wrapInDiv={true}
-            >
-              <IconBase icon={faUnlock} className={"danger-red ml-2"} />
-            </TooltipWrapper>
-          </div>
-        );
-      }
-
-      const rolesPopover = (
-        <div>
-          <div className={"mb-3"}>{`This ${type} is secured and only visible to Site Administrators, its owner, and those given access`}</div>
-          <AccessRoleDisplayer
-            roles={roles}
-          />
-        </div>
-      );
-
       return (
-        <div>
-          <TooltipWrapper
-            title={`Secured ${type} Details`}
-            innerText={rolesPopover}
-            wrapInDiv={true}
-            placement={"bottom"}
-          >
-              <IconBase icon={faLock} className={"ml-2"} />
-          </TooltipWrapper>
-        </div>
+        <AccessRoleIconBase
+          roles={roles}
+          owner={owner}
+          type={type}
+        />
       );
     },
     class: className,

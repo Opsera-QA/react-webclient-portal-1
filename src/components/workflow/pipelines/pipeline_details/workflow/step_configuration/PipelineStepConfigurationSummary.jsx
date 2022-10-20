@@ -225,6 +225,14 @@ import BlackDuckPipelineStepConfigurationSummary
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/black_duck/BlackDuckPipelineStepConfigurationSummary";
 import BlackDuckStepFormMetadata 
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/black_duck/blackduck-stepForm-metadata";
+import FortifyPipelineStepConfigurationSummary
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/fortify/FortifyPipelineStepConfigurationSummary";
+import FortifyStepFormMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/fortify/fortify-stepForm-metadata";
+import DockerCliPipelineStepConfigurationSummary
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_cli/DockerCliPipelineStepConfigurationSummary";
+import dockerCliStepFormMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_cli/dockercli-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -711,6 +719,20 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             blackDuckPipelineDataObject={getModelWrappedObject(BlackDuckStepFormMetadata)}
           />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
+        return (
+            <FortifyPipelineStepConfigurationSummary
+                pipelineData={pipelineData}
+                fortifyPipelineDataObject={getModelWrappedObject(FortifyStepFormMetadata)}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.DOCKER_CLI:
+        return (
+            <DockerCliPipelineStepConfigurationSummary
+                pipelineData={pipelineData}
+                dockerCliPipelineDataObject={getModelWrappedObject(dockerCliStepFormMetadata)}
+            />
         );
       default:
         return (

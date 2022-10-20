@@ -12,6 +12,7 @@ import githubActionsWorkflowActions
   from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
 import { faInfoCircle } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import { getTimeDisplay } from "components/insights/charts/github_actions/github_actions-utility";
 
 function GithubActionsDetailedWorkflowSummaryDataBlocks(
   {
@@ -145,7 +146,7 @@ function GithubActionsDetailedWorkflowSummaryDataBlocks(
           <DataBlockBoxContainer showBorder={true}>
             <div className={"p-2"}>
               <TwoLineScoreDataBlock
-                score={metrics?.avgSuccessTime}
+                score={getTimeDisplay(metrics?.avgSuccessTime)}
                 subtitle={"Average Time For Success Runs (mins)"}
                 icon={faInfoCircle}
                 iconOverlayTitle={""}
@@ -184,7 +185,7 @@ function GithubActionsDetailedWorkflowSummaryDataBlocks(
           <DataBlockBoxContainer showBorder={true}>
             <div className={"p-2"}>
               <TwoLineScoreDataBlock
-                score={metrics?.avgFailedTime}
+                score={getTimeDisplay(metrics?.avgFailedTime)}
                 subtitle={"Average Time For Failed Runs"}
                 icon={faInfoCircle}
                 iconOverlayTitle={""}

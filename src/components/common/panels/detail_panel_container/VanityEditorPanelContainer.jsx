@@ -22,6 +22,7 @@ function VanityEditorPanelContainer(
     enabledText,
     disabledText,
     className,
+    lenient,
   }) {
   const [helpIsShown, setHelpIsShown] = useState(false);
 
@@ -66,6 +67,7 @@ function VanityEditorPanelContainer(
         disable={disable}
         model={model}
         setModel={setModel}
+        lenient={lenient}
       />
     );
   };

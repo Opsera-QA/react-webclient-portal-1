@@ -31,6 +31,10 @@ const gitscraperTaskConfigurationMetadata = {
       id: "secretsException",
     },
     {
+      label: "Scan all Repositories",
+      id: "scanAll",
+    },
+    {
       label: "Source Code Management Tool Type",
       id: "service",
       isRequired: true,
@@ -64,6 +68,7 @@ const gitscraperTaskConfigurationMetadata = {
       threshold: 0,
       excludeSecrets: [],
       secretsException: false,
+      scanAll: false,
       service: "",
       gitToolId: "",
       workspace: "",

@@ -52,6 +52,23 @@ const azureWebappsStepFormMetadata = {
       label: "Artifact Step",
       id: "artifactStepId",
       isRequired: true
+    },
+    {
+      label: "Package Type",
+      id: "webappPackageType",
+      isRequiredFunction: (model) => {
+        return model?.getData("deploymentType") === "package";
+      },
+    },
+    {
+      label: "Target Path",
+      id: "webappTargetPath",
+      regexDefinitionName: "pathField",
+      maxLength: 1000      
+    },
+    {
+      label: "Clean Target",
+      id: "webappCleanTargetPath",      
     },            
   ],
   newObjectFields: {
@@ -65,6 +82,9 @@ const azureWebappsStepFormMetadata = {
     connectionStringEnabled: false,
     connectionStrings: [],
     artifactStepId: "",
+    webappPackageType: "zip",
+    webappTargetPath: "",
+    webappCleanTargetPath: false,
   }
 };
 

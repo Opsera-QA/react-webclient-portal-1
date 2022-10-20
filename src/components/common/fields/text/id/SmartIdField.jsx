@@ -5,7 +5,15 @@ import FieldLabel from "components/common/fields/FieldLabel";
 import DetailLinkClipboardIcon from "components/common/icons/link/DetailLinkClipboardIcon";
 import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboardIconBase";
 
-function SmartIdField({model, fieldName, className, showClipboardButton, showDetailLinkClipboardIcon }) {
+function SmartIdField(
+  {
+    model,
+    fieldName,
+    className,
+    showClipboardButton,
+    showDetailLinkClipboardIcon,
+    showLabel,
+  }) {
   const [field] = useState(model?.getFieldById(fieldName));
 
   const getClipboardButton = () => {
@@ -27,7 +35,7 @@ function SmartIdField({model, fieldName, className, showClipboardButton, showDet
   return (
     <FieldContainer className={className}>
       <div className="w-100 d-flex">
-        <FieldLabel field={field}/>
+        <FieldLabel field={field} showLabel={showLabel}/>
         <span>{model.getData(fieldName)}</span>
         {getClipboardButton()}
         {getDetailLinkClipboardButton()}
@@ -41,7 +49,8 @@ SmartIdField.propTypes = {
   model: PropTypes.object,
   className: PropTypes.string,
   showClipboardButton: PropTypes.bool,
-  showDetailLinkClipboardIcon: PropTypes.bool
+  showDetailLinkClipboardIcon: PropTypes.bool,
+  showLabel: PropTypes.bool,
 };
 
 SmartIdField.defaultProps = {

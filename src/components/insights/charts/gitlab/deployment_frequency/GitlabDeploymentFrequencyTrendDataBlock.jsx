@@ -9,7 +9,7 @@ function GitlabDeploymentFrequencyTrendDataBlock({
   prevValue,
   trend,
   dataPoint,
-  getReverseIcon,
+  getTrendIcon,
   topText,
   bottomText,
 }) {
@@ -21,7 +21,7 @@ function GitlabDeploymentFrequencyTrendDataBlock({
       <ThreeLineDataBlockBase
         className={`${trend} p-2 h-100`}
         topText={topText}
-        icon={getReverseIcon(trend)}
+        icon={getTrendIcon(trend)}
         bottomText={`${bottomText}${prevValue}`}
         middleText={
           <MetricScoreText
@@ -40,7 +40,7 @@ GitlabDeploymentFrequencyTrendDataBlock.propTypes = {
   prevValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   trend: PropTypes.string,
   dataPoint: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-  getReverseIcon: PropTypes.func,
+  getTrendIcon: PropTypes.func,
   topText: PropTypes.string,
   bottomText: PropTypes.string,
 };
