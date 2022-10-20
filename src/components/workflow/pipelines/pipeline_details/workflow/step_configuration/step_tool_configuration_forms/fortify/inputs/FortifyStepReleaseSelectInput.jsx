@@ -74,11 +74,19 @@ function FortifyStepReleaseSelectInput({ model, setModel, disabled, toolId, appl
     }
   };
 
+  const setDataFunction = (fieldName, selectedOption) => {    
+    let newModel = {...model};
+    newModel.setData(fieldName, selectedOption.releaseId);
+    newModel.setData("releaseName", selectedOption.releaseName);    
+    setModel({...newModel});
+  };
+
   return (
     <SelectInputBase
       fieldName={"releaseId"}
       dataObject={model}
       setDataObject={setModel}
+      setDataFunction={setDataFunction}
       placeholderText={placeholderText}
       selectOptions={releaseList}
       textField={"releaseName"}

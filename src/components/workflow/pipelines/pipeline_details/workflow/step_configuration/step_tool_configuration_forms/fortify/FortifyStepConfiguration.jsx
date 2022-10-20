@@ -106,6 +106,38 @@ function FortifyStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdi
     }
   };
 
+  const getFortifyOnDemandFields = () => {
+    if (fortifyStepConfigurationDto?.getData("scanToolType") === "Fortify On-Prem ScanCentral") {
+      return null;
+    }
+    return (
+      <>
+        <FortifyStepAssessmentSelectInput 
+          model={fortifyStepConfigurationDto}
+          setModel={setFortifyConfigurationDataDto}
+        />
+        <FortifyStepEntitlementSelectInput 
+          model={fortifyStepConfigurationDto}
+          setModel={setFortifyConfigurationDataDto}
+        />
+        <FortifyStepTechnologyStackSelectInput 
+          model={fortifyStepConfigurationDto}
+          setModel={setFortifyConfigurationDataDto}
+        />
+        <FortifyStepLanguageLevelSelectInput 
+          model={fortifyStepConfigurationDto}
+          setModel={setFortifyConfigurationDataDto}
+          disabled={hasStringValue(fortifyStepConfigurationDto?.getData("technologyStackId")) !== true}
+          technology={fortifyStepConfigurationDto?.getData("technologyStackId")}
+        />
+        <FortifyStepAuditPreferenceSelectInput
+          model={fortifyStepConfigurationDto}
+          setModel={setFortifyConfigurationDataDto}
+        />
+      </>
+    );
+  };
+
   return (
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
@@ -129,28 +161,7 @@ function FortifyStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdi
         toolId={fortifyStepConfigurationDto?.getData("toolConfigId")}
         applicationId={fortifyStepConfigurationDto?.getData("applicationId")}
       />
-      <FortifyStepAssessmentSelectInput 
-        model={fortifyStepConfigurationDto}
-        setModel={setFortifyConfigurationDataDto}
-      />
-      <FortifyStepEntitlementSelectInput 
-        model={fortifyStepConfigurationDto}
-        setModel={setFortifyConfigurationDataDto}
-      />
-      <FortifyStepTechnologyStackSelectInput 
-        model={fortifyStepConfigurationDto}
-        setModel={setFortifyConfigurationDataDto}
-      />
-      <FortifyStepLanguageLevelSelectInput 
-        model={fortifyStepConfigurationDto}
-        setModel={setFortifyConfigurationDataDto}
-        disabled={hasStringValue(fortifyStepConfigurationDto?.getData("technologyStackId")) !== true}
-        technology={fortifyStepConfigurationDto?.getData("technologyStackId")}
-      />
-      <FortifyStepAuditPreferenceSelectInput
-        model={fortifyStepConfigurationDto}
-        setModel={setFortifyConfigurationDataDto}
-      />
+      {getFortifyOnDemandFields()}
       <FortifyStepClientThresholdToggleInput 
         model={fortifyStepConfigurationDto}
         setModel={setFortifyConfigurationDataDto}
