@@ -225,7 +225,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
             <div className={"p-2"}>
               <ThreeLinePercentageBlockBase
                 className={getIconColorUpsideDown(metrics?.successPercentageTrend?.trend)}
-                bottomText={"Last Scan: " + metrics?.prevSuccessPercentage}
+                bottomText={"Previous: " + metrics?.prevSuccessPercentage}
                 icon={getIcon(metrics?.successPercentageTrend?.trend)}
                 iconOverlayBody={getDescription(metrics?.successPercentageTrend?.trend)}
                 percentage={metrics?.successPercentage}
@@ -242,7 +242,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
               <ThreeLineScoreDataBlock
                 className={getIconColor(metrics?.avgSuccessTimeTrend?.trend)}
                 score={getTimeDisplay(metrics?.avgSuccessTime)}
-                bottomText={"Last Scan: " + getTimeDisplay(metrics?.prevSuccessTime)}
+                bottomText={"Previous: " + getTimeDisplay(metrics?.prevSuccessTime)}
                 subtitle={"Average Time For Success Runs (mins)"}
                 icon={getIcon(metrics?.avgSuccessTimeTrend?.trend)}
                 iconOverlayBody={getDescription(metrics?.avgSuccessTimeTrend?.trend)}
@@ -270,7 +270,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
             <div className={"p-2"}>
               <ThreeLinePercentageBlockBase
                 className={getIconColor(metrics?.failedPercentageTrend?.trend)}
-                bottomText={"Last Scan: " + metrics?.prevFailedPercentage}
+                bottomText={"Previous: " + metrics?.prevFailedPercentage}
                 icon={getIcon(metrics?.failedPercentageTrend?.trend)}
                 iconOverlayBody={getDescription(metrics?.failedPercentageTrend?.trend)}
                 percentage={metrics?.failedPercentage}
@@ -286,7 +286,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
             <div className={"p-2"}>
               <ThreeLineScoreDataBlock
                 className={getIconColor(metrics?.avgFailedTimeTrend?.trend)}
-                bottomText={"Last Scan: " + getTimeDisplay(metrics?.prevFailedTime)}
+                bottomText={"Previous: " + getTimeDisplay(metrics?.prevFailedTime)}
                 icon={getIcon(metrics?.avgFailedTimeTrend?.trend)}
                 iconOverlayBody={getDescription(metrics?.avgFailedTimeTrend?.trend)}
                 score={getTimeDisplay(metrics?.avgFailedTime)}
