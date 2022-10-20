@@ -47,35 +47,121 @@ const FortifyToolConfiguration = ({ toolData }) => {
 
   const saveFortifyToolConfiguration = async () => {
     const newConfiguration = fortifyConfigurationModel.getPersistData();
-    newConfiguration.accessKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
-      getAccessToken,
-      cancelTokenSource,
-      toolData?.getMongoDbId(),
-      toolData.getData("tool_identifier"),
-      "accessKey",
-      newConfiguration?.accessKey
-    );
-    newConfiguration.secretKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
-      getAccessToken,
-      cancelTokenSource,
-      toolData?.getMongoDbId(),
-      toolData.getData("tool_identifier"),
-      "secretKey",
-      newConfiguration?.secretKey
-    );
+    switch (fortifyConfigurationModel?.getData("scanToolType")) {
+      case "Fortify On Demand":
+        newConfiguration.accessKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
+          getAccessToken,
+          cancelTokenSource,
+          toolData?.getMongoDbId(),
+          toolData.getData("tool_identifier"),
+          "accessKey",
+          newConfiguration?.accessKey
+        );
+        newConfiguration.secretKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
+          getAccessToken,
+          cancelTokenSource,
+          toolData?.getMongoDbId(),
+          toolData.getData("tool_identifier"),
+          "secretKey",
+          newConfiguration?.secretKey
+        );
+        break;
+      case "Fortify On-Prem ScanCentral":
+        newConfiguration.token = await toolsActions.saveThreePartToolPasswordToVaultV3(
+          getAccessToken,
+          cancelTokenSource,
+          toolData?.getMongoDbId(),
+          toolData.getData("tool_identifier"),
+          "token",
+          newConfiguration?.token
+        );
+        newConfiguration.password = await toolsActions.saveThreePartToolPasswordToVaultV3(
+          getAccessToken,
+          cancelTokenSource,
+          toolData?.getMongoDbId(),
+          toolData.getData("tool_identifier"),
+          "password",
+          newConfiguration?.password
+        );
+        break;
+      default:
+        break;
+    }    
     return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
   };
 
-  const getDynamicFields = () => {
-    if (fortifyConfigurationModel?.getData("buildType") === "oracle") {
-      return (
+  const getFortifyOnDemandFields = () => {
+    return (
+      <>
+        <FortifyPortalSelectInput 
+          model={fortifyConfigurationModel}
+          setModel={setFortifyConfigurationModel}
+        />
         <TextInputBase
           dataObject={fortifyConfigurationModel}
           setDataObject={setFortifyConfigurationModel}
-          fieldName={"service"}
+          fieldName={"tenantCode"}
         />
-      );
+        <VaultTextInput
+          dataObject={fortifyConfigurationModel}
+          setDataObject={setFortifyConfigurationModel}
+          fieldName={"accessKey"}
+        />
+        <VaultTextInput
+          dataObject={fortifyConfigurationModel}
+          setDataObject={setFortifyConfigurationModel}
+          fieldName={"secretKey"}
+        />
+      </>
+    );
+  };
+
+  const getFortifyOnPremFields = () => {
+    return (
+      <>
+        <TextInputBase
+          dataObject={fortifyConfigurationModel}
+          setDataObject={setFortifyConfigurationModel}
+          fieldName={"fortifyScanCenterControllerUrl"}
+        />
+        <VaultTextInput
+          dataObject={fortifyConfigurationModel}
+          setDataObject={setFortifyConfigurationModel}
+          fieldName={"token"}
+        />
+        <TextInputBase
+          dataObject={fortifyConfigurationModel}
+          setDataObject={setFortifyConfigurationModel}
+          fieldName={"fortifySscUrl"}
+        />
+        <TextInputBase
+          dataObject={fortifyConfigurationModel}
+          setDataObject={setFortifyConfigurationModel}
+          fieldName={"userName"}
+        />
+        <VaultTextInput
+          dataObject={fortifyConfigurationModel}
+          setDataObject={setFortifyConfigurationModel}
+          fieldName={"password"}
+        />
+      </>
+    );
+  };
+
+  const getDynamicFields = () => {
+    if (fortifyConfigurationModel?.getData("scanToolType") == null || fortifyConfigurationModel?.getData("scanToolType") === "") {
+      return null;
     }
+
+    switch (fortifyConfigurationModel?.getData("scanToolType")) {
+      case "Fortify On Demand":
+        return (<>{getFortifyOnDemandFields()}</>);
+      case "Fortify On-Prem ScanCentral":
+        return (<>{getFortifyOnPremFields()}</>);
+      default:
+        return null;
+    }
+
   };
 
   if (fortifyConfigurationModel == null) {
@@ -96,26 +182,7 @@ const FortifyToolConfiguration = ({ toolData }) => {
             model={fortifyConfigurationModel}
             setModel={setFortifyConfigurationModel}
           />
-          <FortifyPortalSelectInput 
-            model={fortifyConfigurationModel}
-            setModel={setFortifyConfigurationModel}
-          />
-          <TextInputBase
-            dataObject={fortifyConfigurationModel}
-            setDataObject={setFortifyConfigurationModel}
-            fieldName={"tenantCode"}
-          />
-          <VaultTextInput
-            dataObject={fortifyConfigurationModel}
-            setDataObject={setFortifyConfigurationModel}
-            fieldName={"accessKey"}
-          />
-          <VaultTextInput
-            dataObject={fortifyConfigurationModel}
-            setDataObject={setFortifyConfigurationModel}
-            fieldName={"secretKey"}
-          />
-          {getDynamicFields()}
+          {getDynamicFields()}          
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
