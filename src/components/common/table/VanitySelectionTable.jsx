@@ -1,10 +1,11 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
-import VanitySelectionTableBase from "components/common/table/VanitySelectionTableBase";
 import {persistUpdatedRecord} from "components/common/buttons/saving/saving-helpers-v2";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import VanityPaginationContainer from "components/common/pagination/v2/VanityPaginationContainer";
+import MakeupTableBase from "components/common/table/makeup/MakeupTableBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function VanitySelectionTable(
   {
@@ -14,7 +15,7 @@ function VanitySelectionTable(
     loadData,
     data,
     noDataMessage,
-    rowStyling,
+    rowStylingFunction,
     isLoading,
     sort,
     paginationModel,
@@ -24,9 +25,10 @@ function VanitySelectionTable(
   }) {
   const toastContext = useContext(DialogToastContext);
 
-  const onRowSelect = async (model, grid, row) => {
+  const onRowSelect = async (row) => {
+
     // Don't change rows if invalid, save before changing rows if valid
-    if (model != null) {
+    if (parentModel != null) {
       // TODO: Show save confirmation. If true, run save and on success change rows. On failure return false;
       // toastContext.showModal(
       //   <UnsavedChangesModal
@@ -37,11 +39,11 @@ function VanitySelectionTable(
       //   />
       // );
 
-      if (model?.isChanged()) {
-        const response = await persistUpdatedRecord(model, toastContext);
+      if (parentModel?.isChanged()) {
+        const response = await persistUpdatedRecord(parentModel, toastContext);
 
         if (response === false) {
-          return false;
+          return;
         }
 
         if (loadData) {
@@ -50,8 +52,7 @@ function VanitySelectionTable(
       }
     }
 
-    handleRowSelectFunction(row);
-    return true;
+    handleRowSelectFunction(row?.original);
   };
 
   const handleContinueEditing = () => {
@@ -64,11 +65,30 @@ function VanitySelectionTable(
     setParentModel({...selectedModel});
   };
 
+  const getRowStyling = (row) => {
+    const data = DataParsingHelper.parseObject(row?.original);
+
+    if (rowStylingFunction) {
+      return rowStylingFunction(data);
+    }
+
+    if (parentModel) {
+      const newMongoDbId = DataParsingHelper.parseMongoDbId(data?._id);
+
+      if (newMongoDbId && newMongoDbId === parentModel?.getMongoDbId()) {
+        return "selected-row";
+      } else {
+        return "unselected-row";
+      }
+    }
+
+    return "unselected-row";
+  };
+
   const getTableBody = () => {
     return (
       <VanityPaginationContainer loadData={loadData} isLoading={isLoading} paginationModel={paginationModel}>
-        <VanitySelectionTableBase
-          selectedId={parentModel?.getMongoDbId()}
+        <MakeupTableBase
           selectedModel={parentModel}
           rowSelection={rowSelection}
           noDataMessage={noDataMessage}
@@ -76,8 +96,8 @@ function VanitySelectionTable(
           isLoading={isLoading}
           columns={columns}
           onRowSelect={onRowSelect}
-          rowStyling={rowStyling}
-          height={tableHeight}
+          rowStyling={getRowStyling}
+          tableHeight={tableHeight}
           sort={sort}
         />
       </VanityPaginationContainer>
@@ -109,6 +129,7 @@ VanitySelectionTable.propTypes = {
   parentModel: PropTypes.object,
   rowSelection: PropTypes.string,
   handleRowSelectFunction: PropTypes.func,
+  rowStylingFunction: PropTypes.func,
 };
 
 VanitySelectionTable.defaultProps = {
