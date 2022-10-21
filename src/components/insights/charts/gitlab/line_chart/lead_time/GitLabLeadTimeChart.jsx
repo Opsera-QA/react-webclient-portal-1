@@ -10,7 +10,7 @@ import GitlabLeadTimeHelpDocumentation from "../../../../../common/help/document
 import GitlabLeadTimeScatterPlotContainer from "./GitlabLeadTimeScatterPlotContainer";
 import GitlabLeadTimeDataBlock from "./GitlabLeadTimeDataBlock";
 import {
-  getDeploymentStageFromKpiConfiguration, getReverseTrend, getReverseTrendIcon,
+  getDeploymentStageFromKpiConfiguration, getReverseTrend, getReverseTrendIcon, getTimeDisplay,
 } from "../../../charts-helpers";
 import GitlabLeadTimeTrendDataBlock from "./GitlabLeadTimeTrendDataBlock";
 import gitlabAction from "../../gitlab.action";
@@ -77,17 +77,18 @@ function GitLabLeadTimeChart({
         dashboardTags,
         dashboardOrgs,
       );
-      const response2 = await gitlabAction.gitlabAverageCommitTimeToMerge(
-        getAccessToken,
-        cancelSource,
-        kpiConfiguration,
-        dashboardTags,
-        dashboardOrgs,
-      );
+      // TODO This will be enabled after fixing the formula
+      // const response2 = await gitlabAction.gitlabAverageCommitTimeToMerge(
+      //   getAccessToken,
+      //   cancelSource,
+      //   kpiConfiguration,
+      //   dashboardTags,
+      //   dashboardOrgs,
+      // );
 
       const metrics = response?.data?.data?.gitlabLeadTimeForChange?.data;
-      const meanCommitTimeDataObject =
-        response2?.data?.data[0]?.gitlabAverageCommitTimeToMerge?.data || {};
+      // const meanCommitTimeDataObject =
+      //   response2?.data?.data[0]?.gitlabAverageCommitTimeToMerge?.data || {};
 
       if (
         isMounted?.current === true &&
@@ -95,7 +96,7 @@ function GitLabLeadTimeChart({
       ) {
         setMetricData(metrics?.statisticsData);
         setChartData(metrics?.chartData);
-        setMeanCommitData(meanCommitTimeDataObject);
+        // setMeanCommitData(meanCommitTimeDataObject);
       } else {
         setMetricData({});
         setChartData([]);
@@ -145,48 +146,54 @@ function GitLabLeadTimeChart({
       >
         <Row className={"w-100"}>
           <Row
-            xl={5}
-            lg={5}
-            md={5}
-            className={"mb-2 d-flex justify-content-center"}
+            xl={4}
+            lg={4}
+            md={4}
+            className={"mb-2 ml-2 d-flex justify-content-center"}
           >
-            <Col
-              md={12}
-              className={"mx-2"}
-            >
-              <GitlabLeadTimeDataBlock
-                value={`${selectedDeploymentStages}`}
-                prevValue={""}
-                topText={"Selected Stage(s)"}
-                bottomText={""}
-              />
-            </Col>
             <Col md={12}>
               <GitlabLeadTimeTrendDataBlock
-                value={metricData?.totalAverageLeadTime}
-                prevValue={`${metricData?.previousTotalAverageLeadTime} Day(s)`}
+                value={getTimeDisplay(metricData?.totalAverageLeadTime)[0]}
+                prevValue={`${getTimeDisplay(metricData?.previousTotalAverageLeadTime)[0]}`}
                 trend={getReverseTrend(
                   metricData?.totalAverageLeadTime,
                   metricData?.previousTotalAverageLeadTime,
                 )}
                 getTrendIcon={getReverseTrendIcon}
-                topText={"Average Lead Time for Changes"}
+                topText={"Average LTFC"}
                 bottomText={"Prev LTFC: "}
+                toolTipText={getTimeDisplay(metricData?.totalAverageLeadTime)[1]}
               />
             </Col>
             <Col md={12}>
               <GitlabLeadTimeTrendDataBlock
-                value={meanCommitData?.currentAvgCommitToMergeTime || "0"}
-                prevValue={`${meanCommitData?.previousAvgCommitToMergeTime || "0"} Day(s)`}
-                trend={getReverseTrend(
-                  meanCommitData?.currentAvgCommitToMergeTime,
-                  meanCommitData?.previousAvgCommitToMergeTime,
-                )}
-                getTrendIcon={getReverseTrendIcon}
-                topText={`Average Merge Time`}
-                bottomText={`Prev Merge Time: `}
+                  value={getTimeDisplay(metricData?.totalMedianTime)[0]}
+                  prevValue={`${getTimeDisplay(metricData?.previousTotalMedianTime)[0]}`}
+                  trend={getReverseTrend(
+                      metricData?.totalMedianTime,
+                      metricData?.previousTotalMedianTime,
+                  )}
+                  getTrendIcon={getReverseTrendIcon}
+                  topText={"Median LTFC"}
+                  bottomText={"Prev Median: "}
+                  toolTipText={getTimeDisplay(metricData?.totalMedianTime)[1]}
               />
             </Col>
+            {/*TODO This will be enabled after fixing the formula*/}
+            {/*<Col md={12}>*/}
+            {/*  <GitlabLeadTimeTrendDataBlock*/}
+            {/*    value={getTimeDisplay(meanCommitData?.currentAvgCommitToMergeTime || 0)[0]}*/}
+            {/*    prevValue={`${getTimeDisplay(meanCommitData?.previousAvgCommitToMergeTime || 0)[0]}`}*/}
+            {/*    trend={getReverseTrend(*/}
+            {/*      meanCommitData?.currentAvgCommitToMergeTime,*/}
+            {/*      meanCommitData?.previousAvgCommitToMergeTime,*/}
+            {/*    )}*/}
+            {/*    getTrendIcon={getReverseTrendIcon}*/}
+            {/*    topText={`Average Merge Time`}*/}
+            {/*    bottomText={`Prev Merge Time: `}*/}
+            {/*    toolTipText={getTimeDisplay(meanCommitData?.currentAvgCommitToMergeTime || 0)[1]}*/}
+            {/*  />*/}
+            {/*</Col>*/}
             <Col md={12}>
               <GitlabLeadTimeDataBlock
                 value={metricData?.totalDeployments}
@@ -199,6 +206,8 @@ function GitLabLeadTimeChart({
           <Col md={12}>
             <div className={"d-flex md-2"}>
               <div className={"mr-4"}>
+                <b>Selected Stages:</b> {selectedDeploymentStages}
+                <div className="row" />
                 <b>Recent Stage:</b> {metricData?.lastDeploymentStage || "NA"}
                 <div className="row" />
                 <b>Date: </b>
