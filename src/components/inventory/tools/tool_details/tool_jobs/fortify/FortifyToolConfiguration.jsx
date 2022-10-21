@@ -65,6 +65,8 @@ const FortifyToolConfiguration = ({ toolData }) => {
           "secretKey",
           newConfiguration?.secretKey
         );
+        newConfiguration.token = {};
+        newConfiguration.password = {};
         break;
       case "Fortify On-Prem ScanCentral":
         newConfiguration.token = await toolsActions.saveThreePartToolPasswordToVaultV3(
@@ -83,6 +85,8 @@ const FortifyToolConfiguration = ({ toolData }) => {
           "password",
           newConfiguration?.password
         );
+        newConfiguration.accessKey = {};
+        newConfiguration.secretKey = {};
         break;
       default:
         break;
