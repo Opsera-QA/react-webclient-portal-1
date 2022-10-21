@@ -159,7 +159,9 @@ function FortifyStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdi
         model={fortifyStepConfigurationDto}
         setModel={setFortifyConfigurationDataDto}
         toolId={fortifyStepConfigurationDto?.getData("toolConfigId")}
+        disabled={!fortifyStepConfigurationDto?.getData("applicationId")}
         applicationId={fortifyStepConfigurationDto?.getData("applicationId")}
+        applicationName={fortifyStepConfigurationDto?.getData("applicationName")}
       />
       {getFortifyOnDemandFields()}
       <FortifyStepClientThresholdToggleInput 
