@@ -293,6 +293,10 @@ export class Model {
     return field?.lowercase === true;
   };
 
+  isLenient = () => {
+    return false;
+  };
+
   isUppercase = (fieldName) => {
     const field = this.getFieldById(fieldName);
     return field?.uppercase === true;
