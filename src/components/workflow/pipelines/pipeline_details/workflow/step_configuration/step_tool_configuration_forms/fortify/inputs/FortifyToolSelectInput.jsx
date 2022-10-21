@@ -8,16 +8,32 @@ function FortifyToolSelectInput({ model, setModel, className, disabled }) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData(fieldName, selectedOption._id);
+    newModel.setData("scanToolType", selectedOption?.configuration?.scanToolType);
     newModel.setDefaultValue("applicationId");
-    newModel.setDefaultValue("releaseId");
+    newModel.setDefaultValue("applicationName");
+    newModel.setDefaultValue("releaseId");    
+    newModel.setDefaultValue("releaseName");
+    newModel.setDefaultValue("assessmentType");
+    newModel.setDefaultValue("entitlementPreferenceType");
+    newModel.setDefaultValue("technologyStackId");
+    newModel.setDefaultValue("languageLevelId");    
+    newModel.setDefaultValue("auditPreferenceId");
     setModel({...newModel});
   };
 
   const clearDataFunction = (fieldName) => {
     let newModel = {...model};
     newModel.setDefaultValue("toolConfigId");
+    newModel.setDefaultValue("scanToolType");
     newModel.setDefaultValue("applicationId");
-    newModel.setDefaultValue("releaseId");
+    newModel.setDefaultValue("applicationName");
+    newModel.setDefaultValue("releaseId");    
+    newModel.setDefaultValue("releaseName");
+    newModel.setDefaultValue("assessmentType");
+    newModel.setDefaultValue("entitlementPreferenceType");
+    newModel.setDefaultValue("technologyStackId");
+    newModel.setDefaultValue("languageLevelId");    
+    newModel.setDefaultValue("auditPreferenceId");
     setModel({...newModel});
   };
 
