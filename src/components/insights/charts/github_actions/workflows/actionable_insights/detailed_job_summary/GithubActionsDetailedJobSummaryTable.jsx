@@ -78,10 +78,10 @@ function GithubActionsDetailedJobSummaryTable(
       <div className={"p-2"}>
         <div className={"d-flex details-title-text"}>
             <div className={'mr-4'}>
-                <b>Most Failed Step:</b> {mostFailed}
+                <b>Most Failed Step (by counts):</b> {mostFailed}
             </div>
             <div className={'mr-4'}>
-                <b>Most Skipped Step:</b> {mostSkipped}
+                <b>Most Skipped Step (by counts):</b> {mostSkipped}
             </div>
             <div className={'mr-4'}>
                 <b>Step With Most Time Consuming Successful Runs:</b> {mostSuccessTime}

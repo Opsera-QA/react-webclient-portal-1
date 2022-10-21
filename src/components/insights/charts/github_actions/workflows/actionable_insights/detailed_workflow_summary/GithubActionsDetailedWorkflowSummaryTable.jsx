@@ -95,10 +95,10 @@ export default function GithubActionsDetailedWorkflowSummaryTable(
       <div className={"p-2"}>
         <div className={"d-flex details-title-text"}>
             <div className={'mr-4'}>
-                <b>Repository With Most Failed Runs:</b> {mostFailed}
+                <b>Repository With Most Failed Runs (by counts):</b> {mostFailed}
             </div>
             <div className={'mr-4'}>
-                <b>Repository With Most Skipped Runs:</b> {mostSkipped}
+                <b>Repository With Most Skipped Runs (by counts):</b> {mostSkipped}
             </div>
             <div className={'mr-4'}>
                 <b>Successful Repository With Most Time Consuming Runs:</b> {mostSuccessTime}

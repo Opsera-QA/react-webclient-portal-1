@@ -86,10 +86,10 @@ function GithubActionsUniqueRunSummaryJobsTable(
       <div>
         <div className={"d-flex details-title-text"}>
             <div className={'mr-4'}>
-                <b>Most Failed Job:</b> {mostFailed}
+                <b>Most Failed Job (by counts):</b> {mostFailed}
             </div>
             <div className={'mr-4'}>
-                <b>Most Skipped Job:</b> {mostSkipped}
+                <b>Most Skipped Job (by counts):</b> {mostSkipped}
             </div>
             <div className={'mr-4'}>
                 <b>Job With Most Time Consuming Successful Runs:</b> {mostSuccessTime}

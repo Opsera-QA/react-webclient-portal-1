@@ -128,7 +128,7 @@ function GithubActionsBottomTable(
     <div className={"mx-3"}>
       <div className={"d-flex details-title-text"}>
           <div className={"mr-4"}>
-              <b>Most Failed Workflow:</b> {mostFailed}
+              <b>Most Failed Workflow (by counts):</b> {mostFailed}
           </div>
           <div className={"mr-4"}>
               <b>Most Time Consuming for Successful Workflow:</b> {mostSuccessTime}
