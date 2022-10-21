@@ -15,6 +15,7 @@ import {
 import GitlabLeadTimeTrendDataBlock from "./GitlabLeadTimeTrendDataBlock";
 import gitlabAction from "../../gitlab.action";
 import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
+import InfoDialog from "../../../../../common/status_notifications/info";
 
 function GitLabLeadTimeChart({
   kpiConfiguration,
@@ -69,37 +70,41 @@ function GitLabLeadTimeChart({
             (obj) => obj.type === "organizations",
           )
         ]?.value;
+      const selectedDeploymentStages =
+        getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
+      if(selectedDeploymentStages) {
+        const response = await gitlabAction.gitlabLeadTimeForChange(
+          getAccessToken,
+          cancelSource,
+          kpiConfiguration,
+          dashboardTags,
+          dashboardOrgs,
+        );
 
-      const response = await gitlabAction.gitlabLeadTimeForChange(
-        getAccessToken,
-        cancelSource,
-        kpiConfiguration,
-        dashboardTags,
-        dashboardOrgs,
-      );
-      // TODO This will be enabled after fixing the formula
-      // const response2 = await gitlabAction.gitlabAverageCommitTimeToMerge(
-      //   getAccessToken,
-      //   cancelSource,
-      //   kpiConfiguration,
-      //   dashboardTags,
-      //   dashboardOrgs,
-      // );
+        // TODO This will be enabled after fixing the formula
+        // const response2 = await gitlabAction.gitlabAverageCommitTimeToMerge(
+        //   getAccessToken,
+        //   cancelSource,
+        //   kpiConfiguration,
+        //   dashboardTags,
+        //   dashboardOrgs,
+        // );
 
-      const metrics = response?.data?.data?.gitlabLeadTimeForChange?.data;
-      // const meanCommitTimeDataObject =
-      //   response2?.data?.data[0]?.gitlabAverageCommitTimeToMerge?.data || {};
+        const metrics = response?.data?.data?.gitlabLeadTimeForChange?.data;
+        // const meanCommitTimeDataObject =
+        //   response2?.data?.data[0]?.gitlabAverageCommitTimeToMerge?.data || {};
 
-      if (
-        isMounted?.current === true &&
-        metrics?.statisticsData?.totalDeployments
-      ) {
-        setMetricData(metrics?.statisticsData);
-        setChartData(metrics?.chartData);
-        // setMeanCommitData(meanCommitTimeDataObject);
-      } else {
-        setMetricData({});
-        setChartData([]);
+        if (
+          isMounted?.current === true &&
+          metrics?.statisticsData?.totalDeployments
+        ) {
+          setMetricData(metrics?.statisticsData);
+          setChartData(metrics?.chartData);
+          // setMeanCommitData(meanCommitTimeDataObject);
+        } else {
+          setMetricData({});
+          setChartData([]);
+        }
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -124,6 +129,20 @@ function GitLabLeadTimeChart({
   // };
 
   const getChartBody = () => {
+    const selectedDeploymentStages =
+      getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
+
+    if (!selectedDeploymentStages) {
+      return (
+          <div className="new-chart mb-3" style={{ height: "300px" }}>
+            <div className="max-content-width p-5 mt-5"
+                 style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <InfoDialog message="No Stages selected. Please select a deployment stage on filters to proceed further." />
+            </div>
+          </div>
+      );
+    }
+
     if (!metricData?.totalDeployments || !chartData?.commits?.length) {
       return null;
     }
@@ -131,14 +150,19 @@ function GitLabLeadTimeChart({
     const recentStageDate = new Date(
       metricData?.lastDeploymentTime,
     ).toLocaleDateString();
-    const selectedDeploymentStages =
-      getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
+
     const dataBlockTextForDeployment = {
       current: selectedDeploymentStages
         ? "Total Deployments"
         : "Total Stages Run",
       previous: selectedDeploymentStages ? "Prev Deployments: " : "Prev Runs: ",
     };
+    // Convert time in Days Hours Minutes Seconds
+    const totalAverageLeadTimeDisplay = getTimeDisplay(metricData?.totalAverageLeadTime);
+    const previousTotalAverageLeadTimeDisplay = getTimeDisplay(metricData?.previousTotalAverageLeadTime);
+    const totalMedianTimeDisplay = getTimeDisplay(metricData?.totalMedianTime);
+    const previousTotalMedianTimeDisplay = getTimeDisplay(metricData?.previousTotalMedianTime);
+
     return (
       <div
         className="new-chart m-3 p-0"
@@ -153,8 +177,8 @@ function GitLabLeadTimeChart({
           >
             <Col md={12}>
               <GitlabLeadTimeTrendDataBlock
-                value={getTimeDisplay(metricData?.totalAverageLeadTime)[0]}
-                prevValue={`${getTimeDisplay(metricData?.previousTotalAverageLeadTime)[0]}`}
+                value={totalAverageLeadTimeDisplay[0]}
+                prevValue={`${previousTotalAverageLeadTimeDisplay[0]}`}
                 trend={getReverseTrend(
                   metricData?.totalAverageLeadTime,
                   metricData?.previousTotalAverageLeadTime,
@@ -162,21 +186,21 @@ function GitLabLeadTimeChart({
                 getTrendIcon={getReverseTrendIcon}
                 topText={"Average LTFC"}
                 bottomText={"Prev LTFC: "}
-                toolTipText={getTimeDisplay(metricData?.totalAverageLeadTime)[1]}
+                toolTipText={totalAverageLeadTimeDisplay[1]}
               />
             </Col>
             <Col md={12}>
               <GitlabLeadTimeTrendDataBlock
-                  value={getTimeDisplay(metricData?.totalMedianTime)[0]}
-                  prevValue={`${getTimeDisplay(metricData?.previousTotalMedianTime)[0]}`}
-                  trend={getReverseTrend(
-                      metricData?.totalMedianTime,
-                      metricData?.previousTotalMedianTime,
-                  )}
-                  getTrendIcon={getReverseTrendIcon}
-                  topText={"Median LTFC"}
-                  bottomText={"Prev Median: "}
-                  toolTipText={getTimeDisplay(metricData?.totalMedianTime)[1]}
+                value={totalMedianTimeDisplay[0]}
+                prevValue={`${previousTotalMedianTimeDisplay[0]}`}
+                trend={getReverseTrend(
+                    metricData?.totalMedianTime,
+                    metricData?.previousTotalMedianTime,
+                )}
+                getTrendIcon={getReverseTrendIcon}
+                topText={"Median LTFC"}
+                bottomText={"Prev Median: "}
+                toolTipText={totalMedianTimeDisplay[1]}
               />
             </Col>
             {/*TODO This will be enabled after fixing the formula*/}
