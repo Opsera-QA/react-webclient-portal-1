@@ -21,7 +21,16 @@ function FortifyToolConfigurationSummaryPanel({ fortifyToolConfigurationModel })
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={fortifyToolConfigurationModel} fieldName={"tenantCode"} />
-        </Col>        
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={fortifyToolConfigurationModel} fieldName={"fortifyScanCenterControllerUrl"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={fortifyToolConfigurationModel} fieldName={"fortifySscUrl"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={fortifyToolConfigurationModel} fieldName={"userName"} />
+        </Col>
       </Row>
     </SummaryPanelContainer>
   );
