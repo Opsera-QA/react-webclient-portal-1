@@ -307,6 +307,10 @@ export default class ModelBase {
     this.clearChangeMap();
   };
 
+  replaceData = (newData) => {
+    this.data = DataParsingHelper.parseObject(newData, {});
+  };
+
   updateState = () => {
     if (this.setStateFunction) {
       this.setStateFunction({...this});
