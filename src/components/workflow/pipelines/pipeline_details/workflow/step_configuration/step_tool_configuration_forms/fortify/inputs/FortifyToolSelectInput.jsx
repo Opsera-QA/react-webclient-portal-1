@@ -7,8 +7,6 @@ function FortifyToolSelectInput({ model, setModel, className, disabled }) {
 
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
-
-    console.log({selectedOption});
     newModel.setData(fieldName, selectedOption._id);
     newModel.setData("scanToolType", selectedOption?.configuration?.scanToolType);
     newModel.setDefaultValue("applicationId");
