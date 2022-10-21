@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { Modal } from "react-bootstrap";
-import { getTableTextColumn } from "../../../../../common/table/table-column-helpers";
+import {getTableDurationTextColumn, getTableTextColumn} from "../../../../../common/table/table-column-helpers";
 import { getField } from "../../../../../common/metadata/metadata-helpers";
 import { gitlabLeadTimeMetadata } from "./gitlabLeadTime.metadata";
 import CustomTable from "../../../../../common/table/CustomTable";
@@ -15,7 +15,7 @@ function GitlabLeadTimeInsightsModal({ visible, onHide, data }) {
       getTableTextColumn(getField(fields, "branch")),
       getTableTextColumn(getField(fields, "commitTimeStamp")),
       getTableTextColumn(getField(fields, "commitTitle")),
-      getTableTextColumn(getField(fields, "leadTime")),
+      getTableDurationTextColumn(getField(fields, "leadTime")),
       getTableTextColumn(getField(fields, "repositoryUrl")),
       getTableTextColumn(getField(fields, "stepId")),
     ],
