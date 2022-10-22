@@ -174,8 +174,7 @@ function GitScraperActionButton(
         onClick={() => {
           handleCancelRunTask(false);
         }}
-        className="btn-default"
-        size="sm"
+        size={"sm"}
       >
         {getCancelLabel()}
       </Button>
@@ -190,8 +189,8 @@ function GitScraperActionButton(
         onClick={() => {
           handleRunTask(true);
         }}
-        className="btn-default"
-        size="sm"
+        className={"mr-2"}
+        size={"sm"}
       >
         {getRunningLabel()}
       </Button>
