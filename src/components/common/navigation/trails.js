@@ -51,6 +51,7 @@ import {
   faHouseUser,
   faDiamondExclamation, faFolderCog, faUserShield, faShield,
 } from "@fortawesome/pro-light-svg-icons";
+import { taskTypeConstants } from "components/tasks/task.types";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
 const breadcrumbs = {
@@ -1041,7 +1042,11 @@ const breadcrumbs = {
     path: paths.taskManagementDetailView,
     title: "Opsera Task Details",
     linkText: "Opsera Task Details",
-    icon: faTasks
+    icon: faTasks,
+    // dynamicIconFunction: (model) => {
+    //   console.log("model: " + JSON.stringify(model?.getPersistData()));
+    //   return taskTypeConstants.getIconForTaskType(model?.getData("type"));
+    // },
   },
 
   //General

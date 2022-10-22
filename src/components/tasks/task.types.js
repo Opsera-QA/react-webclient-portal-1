@@ -1,5 +1,6 @@
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { faAws, faGit, faGitAlt, faMicrosoft, faSalesforce } from "@fortawesome/free-brands-svg-icons";
+import { faTasks } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Rewrite to follow current standards
 export const taskTypeConstants = {};
@@ -22,6 +23,8 @@ taskTypeConstants.getIconForTaskType = (taskType) => {
       return faGitAlt;
     case TASK_TYPE_CATEGORIES.AZURE:
       return faMicrosoft;
+    default:
+      return faTasks;
   }
 };
 
