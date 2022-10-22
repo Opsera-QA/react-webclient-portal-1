@@ -1,4 +1,4 @@
-export const jiraConnectionMetadata = {
+export const jiraToolConnectionMetadata = {
   type: "Jira API Configuration",
   idProperty: "_id",
   fields: [

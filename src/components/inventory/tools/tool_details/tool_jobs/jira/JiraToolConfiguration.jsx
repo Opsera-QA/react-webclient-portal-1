@@ -10,14 +10,14 @@ import ToolConfigurationEditorPanelContainer
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import modelHelpers from "components/common/model/modelHelpers";
-import { jiraConnectionMetadata } from "components/inventory/tools/tool_details/tool_jobs/jira/jira-connection-metadata";
+import { jiraToolConnectionMetadata } from "components/inventory/tools/tool_details/tool_jobs/jira/jiraToolConnection.metadata";
 
 function JiraToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [jiraConfigurationDto, setJiraConfigurationDto] = useState(undefined);
 
   useEffect(() => {
-    setJiraConfigurationDto(modelHelpers.getToolConfigurationModel(toolData?.getData("configuration"), jiraConnectionMetadata));
+    setJiraConfigurationDto(modelHelpers.getToolConfigurationModel(toolData?.getData("configuration"), jiraToolConnectionMetadata));
   }, [toolData]);
 
   const saveJiraToolConfiguration = async () => {
