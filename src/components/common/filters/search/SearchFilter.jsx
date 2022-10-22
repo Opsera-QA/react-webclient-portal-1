@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {Button, InputGroup} from "react-bootstrap";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";
@@ -7,11 +7,26 @@ import {useHistory} from "react-router-dom";
 import IconBase from "components/common/icons/IconBase";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function SearchFilter({ paginationModel, loadData, disabled, fieldName, className, isLoading, metadata}) {
-  let history = useHistory();
+function SearchFilter(
+  {
+    paginationModel,
+    loadData,
+    disabled,
+    fieldName,
+    className,
+    isLoading,
+    metadata,
+    searchText,
+  }) {
+  const history = useHistory();
   const [currentSearchTerm, setCurrentSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+
+  useEffect(() => {
+    setCurrentSearchTerm(DataParsingHelper.parseString(searchText, ""));
+  }, [searchText]);
 
   const handleSearch = async () => {
     try {
@@ -84,7 +99,8 @@ SearchFilter.propTypes = {
   disabled: PropTypes.bool,
   isLoading: PropTypes.bool,
   className: PropTypes.string,
-  metadata: PropTypes.object
+  metadata: PropTypes.object,
+  searchText: PropTypes.string,
 };
 
 SearchFilter.defaultProps = {
