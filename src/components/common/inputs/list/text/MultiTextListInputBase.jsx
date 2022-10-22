@@ -49,7 +49,7 @@ function MultiTextListInputBase(
     setField(model?.getFieldById(fieldName));
     setErrorMessage("");
     setPotentialValue("");
-  }, [fieldName]);
+  }, [fieldName, disabled]);
 
   const validateAndSetData = (fieldName, value) => {
     const newModel = {...model};
