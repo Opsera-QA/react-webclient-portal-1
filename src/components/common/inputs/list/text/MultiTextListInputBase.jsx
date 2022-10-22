@@ -49,7 +49,7 @@ function MultiTextListInputBase(
     setField(model?.getFieldById(fieldName));
     setErrorMessage("");
     setPotentialValue("");
-  }, [fieldName]);
+  }, [fieldName, disabled]);
 
   const validateAndSetData = (fieldName, value) => {
     const newModel = {...model};
@@ -81,7 +81,7 @@ function MultiTextListInputBase(
   };
 
   const deleteValueFunction = (index) => {
-    const newFields = [...model.getArrayData(fieldName)];
+    const newFields = [...model?.getArrayData(fieldName)];
     newFields.splice(index, 1);
     updateValue(newFields);
   };
