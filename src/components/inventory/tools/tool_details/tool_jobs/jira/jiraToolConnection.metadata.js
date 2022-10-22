@@ -1,12 +1,11 @@
-// TODO: This will be used for both the regular and free trial registration screens, but putting it here so I can check in this half first
-const jiraConnectionMetadata = {
+export const jiraToolConnectionMetadata = {
   type: "Jira API Configuration",
   idProperty: "_id",
   fields: [
     {
       label: "Jira URL",
       id: "toolURL",
-      isRequired: true
+      isRequired: true,
     },
     {
       label: "Jira Port",
@@ -31,5 +30,3 @@ const jiraConnectionMetadata = {
       vaultSecretKey: ""
     }
 };
-
-export default jiraConnectionMetadata;
