@@ -242,8 +242,7 @@ function TasksEcsActionButtons(
         onClick={() => {
           handleCheckStatus(true);
         }}
-        className="btn-default"
-        size="sm"
+        size={"sm"}
       >
         {getStatusLabel()}
       </Button>
@@ -258,8 +257,8 @@ function TasksEcsActionButtons(
         onClick={() => {
           handleCancelRunTask(false);
         }}
-        className="btn-default"
-        size="sm"
+        className={"mr-2"}
+        size={"sm"}
       >
         {getCancelLabel()}
       </Button>
@@ -274,8 +273,8 @@ function TasksEcsActionButtons(
         onClick={() => {
           handleRunTask(true);
         }}
-        className="btn-default"
-        size="sm"
+        className={"mr-2"}
+        size={"sm"}
       >
         {getRunningLabel()}
       </Button>
@@ -287,7 +286,7 @@ function TasksEcsActionButtons(
   }
 
   return (
-    <div className="text-right btn-group btn-group-sized">
+    <div>
       {getRunningButton()}
       {getCancelButton()}
       {getStatusButton()}

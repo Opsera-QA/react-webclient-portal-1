@@ -178,8 +178,7 @@ function TaskAksActionButtons(
         onClick={() => {
           handleCancelRunTask(false);
         }}
-        className="btn-default"
-        size="sm"
+        size={"sm"}
       >
         {getCancelLabel()}
       </Button>
@@ -194,8 +193,8 @@ function TaskAksActionButtons(
         onClick={() => {
           handleRunTask(true);
         }}
-        className="btn-default"
-        size="sm"
+        className={"mr-2"}
+        size={"sm"}
       >
         {getRunningLabel()}
       </Button>
@@ -207,7 +206,7 @@ function TaskAksActionButtons(
   }
 
   return (
-    <div className="text-right btn-group btn-group-sized">
+    <div>
       {getRunButton()}
       {getCancelButton()}
     </div>
