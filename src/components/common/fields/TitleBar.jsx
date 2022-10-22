@@ -37,12 +37,12 @@ function TitleBar(
   };
 
   if (isLoading) {
-    return (<span><IconBase isLoading={isLoading} className={"mr-1"}/>Loading Data</span>);
+    return (<span><IconBase isLoading={isLoading} className={"mr-2"}/>Loading Data</span>);
   }
 
   return (
     <div className="d-flex">
-      <div><span><IconBase icon={titleIcon} className={"mr-1"}/>{title}</span></div>
+      <div><span><IconBase icon={titleIcon} className={"mr-2"}/>{title}</span></div>
       {getRightSideItems()}
     </div>
   );
