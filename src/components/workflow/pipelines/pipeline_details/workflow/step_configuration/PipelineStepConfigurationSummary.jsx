@@ -615,6 +615,14 @@ function PipelineStepConfigurationSummary({
             sentenialStepFormMetadata={getModelWrappedObject(SentenialStepFormMetadata)}
           />
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.PACKER:
+        return (
+          <PackerPipelineStepConfigurationSummaryPanel
+            packerPipelineDataObject={pipelineData}
+            pipelineData={pipelineData}
+            sentenialStepFormMetadata={getModelWrappedObject(PackerStepFormMetadata)}
+            />
+        );
       case "buildkite":
         return (
           <BuildkiteStepSummary
