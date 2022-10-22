@@ -3,13 +3,14 @@ import sessionHelper from "utils/session.helper";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { numberHelpers } from "components/common/helpers/number/number.helpers";
 import { validateField } from "core/data_model/modelValidation";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export class FilterModelBase {
   constructor(metaData) {
     this.sessionDataKey = "";
     this.updateUrlWithQueryParameters = false;
-    this.metaData = { ...metaData };
-    this.data = { ...this.getNewObjectFields() };
+    this.metaData = {...DataParsingHelper.cloneDeep(metaData)};
+    this.data = { ...DataParsingHelper.cloneDeep(this.getNewObjectFields()) };
   }
 
   getData = (fieldName) => {
@@ -414,7 +415,8 @@ export class FilterModelBase {
   };
 
   getNewObjectFields = () => {
-    return this.metaData?.newObjectFields != null ? this.metaData.newObjectFields : {};
+    const newObjectFields = DataParsingHelper.parseObject(this.metaData?.newObjectFields, {});
+    return {...DataParsingHelper.cloneDeep(newObjectFields)};
   };
 
   getNewInstance = () => {
