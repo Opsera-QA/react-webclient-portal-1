@@ -626,7 +626,7 @@ function PipelineStepConfigurationSummary({
       case toolIdentifierConstants.TOOL_IDENTIFIERS.PACKER:
         return (
           <PackerPipelineStepConfigurationSummaryPanel
-            packerPipelineDataObject={pipelineData}
+            packerStepModel={pipelineData}
             pipelineData={pipelineData}
             sentenialStepFormMetadata={getModelWrappedObject(PackerStepFormMetadata)}
             />
