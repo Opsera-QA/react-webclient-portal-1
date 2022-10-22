@@ -78,9 +78,17 @@ export class FilterModelBase {
     sessionHelper.setStoredSessionValue(this.sessionDataKey, currentData);
   };
 
+  clearBrowserStorage = () => {
+    if (hasStringValue(this.sessionDataKey) === true) {
+      sessionHelper.deleteStoredSessionValue(this.sessionDataKey);
+    }
+  };
+
   resetDataToDefault = () => {
-    this.data = this.getNewObjectFields();
-    this.resetBrowserStorage();
+    const parsedData = DataParsingHelper.parseObject(this.getNewObjectFields());
+    const newInstance = this;
+    newInstance.data = { ...parsedData };
+    this.clearBrowserStorage();
   };
 
   resetBrowserStorage = () => {

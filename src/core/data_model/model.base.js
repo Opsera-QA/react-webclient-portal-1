@@ -456,7 +456,8 @@ export default class ModelBase {
 
   // TODO: Should we make view definitions?
   getNewObjectFields = () => {
-    return this?.metaData?.newObjectFields != null ? this.metaData.newObjectFields : {};
+    const newObjectFields = DataParsingHelper.parseObject(this.metaData?.newObjectFields, {});
+    return {...DataParsingHelper.cloneDeep(newObjectFields)};
   };
 
   clone = () => {
