@@ -7,7 +7,7 @@ import jenkinsConnectionMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jenkins-connection-metadata";
 import JiraToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/jira/JiraToolConfigurationSummaryPanel";
-import jiraConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/jira-connection-metadata";
+import { jiraConnectionMetadata } from "components/inventory/tools/tool_details/tool_jobs/jira/jira-connection-metadata";
 import GithubToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/github/GithubToolConfigurationSummaryPanel";
 import githubConnectionMetadata

@@ -10,19 +10,15 @@ import ToolConfigurationEditorPanelContainer
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import modelHelpers from "components/common/model/modelHelpers";
-import jiraConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/jira-connection-metadata";
+import { jiraConnectionMetadata } from "components/inventory/tools/tool_details/tool_jobs/jira/jira-connection-metadata";
 
 function JiraToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [jiraConfigurationDto, setJiraConfigurationDto] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    setJiraConfigurationDto(modelHelpers.getToolConfigurationModel(toolData?.getData("configuration"), jiraConnectionMetadata));
   }, [toolData]);
-
-  const loadData = async () => {
-    setJiraConfigurationDto(modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), jiraConnectionMetadata));
-  };
 
   const saveJiraToolConfiguration = async () => {
     let newConfiguration = jiraConfigurationDto.getPersistData();
@@ -39,6 +35,12 @@ function JiraToolConfiguration({ toolData }) {
       persistRecord={saveJiraToolConfiguration}
       toolData={toolData}
       // toolConnectionCheckName={"Jira"}
+      leftSideButtons={
+        <InstallJiraAppButton
+          toolId={toolData?.getMongoDbId()}
+          disable={jiraConfigurationDto == null || jiraConfigurationDto.isNew()}
+        />
+      }
     >
       <Row>
         <Col sm={12}>
@@ -46,9 +48,6 @@ function JiraToolConfiguration({ toolData }) {
           <TextInputBase dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"jiraPort"} />
           <TextInputBase dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"userName"} />
           <VaultTextInput dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"vaultSecretKey"} />
-        </Col>
-        <Col sm={12} className="mt-2">
-          <InstallJiraAppButton toolData={toolData} disable={jiraConfigurationDto == null || jiraConfigurationDto.isNew()} />
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>

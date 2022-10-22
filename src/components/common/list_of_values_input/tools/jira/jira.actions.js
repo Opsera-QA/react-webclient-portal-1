@@ -85,3 +85,8 @@ jiraActions.getJiraTicketDetailsV2 = async (getAccessToken, cancelTokenSource, t
 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
 };
+
+jiraActions.installJiraApp = async (getAccessToken, cancelTokenSource, toolId) => {
+  const apiUrl = `/connectors/jira/${toolId}/app/install`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};

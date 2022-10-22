@@ -1,84 +1,66 @@
-import React, {useContext, useState} from 'react';
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
-import {faExclamationTriangle, faPlug, faSpinner} from "@fortawesome/pro-light-svg-icons";
-import {AuthContext} from "contexts/AuthContext";
-import toolsActions from "components/inventory/tools/tools-actions";
-import LoadingIcon from "components/common/icons/LoadingIcon";
-import IconBase from "components/common/icons/IconBase";
+import { faPlug } from "@fortawesome/pro-light-svg-icons";
+import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
+import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import { jiraActions } from "components/common/list_of_values_input/tools/jira/jira.actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function InstallJiraAppButton({ toolData, disable }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const [isTesting, setIsTesting] = useState(false);
-  const [successfulConnection, setSuccessfulConnection] = useState(false);
-  const [failedConnection, setFailedConnection] = useState(false);
+export default function InstallJiraAppButton(
+  {
+    toolId,
+    disabled,
+  }) {
+  const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
+  const {
+    getAccessToken,
+    cancelTokenSource,
+    toastContext,
+  } = useComponentStateReference();
 
   const testConnection = async () => {
     try {
-      setIsTesting(true);
-      setSuccessfulConnection(false);
-      setFailedConnection(false);
-      let response = await toolsActions.installJiraApp(toolData.getData("_id"), getAccessToken);
+      setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
+      const response = await jiraActions.installJiraApp(
+        getAccessToken,
+        cancelTokenSource,
+        toolId,
+      );
 
       if (response?.data?.status === 200) {
-        setSuccessfulConnection(true);
+        setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
+      } else {
+        setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);
       }
-      else {
-        setFailedConnection(true);
-      }
-    }
-    catch (error) {
-      setFailedConnection(true);
-    }
-    finally {
-      setIsTesting(false);
+    } catch (error) {
+      toastContext.showFormErrorToast(
+        error,
+        "There was an issue installing the Jira App:"
+      );
+      setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);
     }
   };
 
-  const getVariant = () => {
-    if (successfulConnection) {
-      return "success";
-    }
-
-    if (failedConnection) {
-      return "danger";
-    }
-
-    return ("secondary");
-  };
-
-  const getLabel = () => {
-    if (isTesting) {
-      return (<span><LoadingIcon className={"mr-2"}/>Installing</span>);
-    }
-
-    if (failedConnection) {
-      return (<span><IconBase icon={faExclamationTriangle} className={"mr-2"}/>Installation Failed!</span>);
-    }
-
-    if (successfulConnection) {
-      return (<span><IconBase icon={faPlug} className={"mr-2"}/>Installation Succeeded!</span>);
-    }
-
-    return (<span><IconBase icon={faPlug} className={"mr-2"}/>Install Jira App</span>);
-  };
+  if (DataParsingHelper.isValidMongoDbId(toolId) !== true) {
+    return null;
+  }
 
   return (
-    <div className="px-2">
-      <Button size="sm" variant={getVariant()} disabled={isTesting || disable} onClick={() => testConnection()}>
-        {getLabel()}
-      </Button>
-    </div>
+    <VanityButtonBase
+      buttonState={buttonState}
+      normalText={"Install Jira App"}
+      busyText={"Installing Jira App"}
+      successText={"Installation Succeeded!"}
+      errorText={"Installation Failed!"}
+      icon={faPlug}
+      disabled={disabled}
+      onClickFunction={testConnection}
+    />
   );
 }
 
 InstallJiraAppButton.propTypes = {
-  toolData: PropTypes.object,
-  disable: PropTypes.bool,
+  toolId: PropTypes.string,
+  disabled: PropTypes.bool,
 };
-
-InstallJiraAppButton.defaultProps = {
-  disable: false,
-};
-
-export default InstallJiraAppButton;
