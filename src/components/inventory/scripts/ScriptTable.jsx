@@ -10,10 +10,13 @@ import scriptsLibraryMetadata from "@opsera/definitions/constants/registry/scrip
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetScriptModel from "components/inventory/scripts/hooks/useGetScriptModel";
 import {
+  getFormattedLabelWithFunctionColumnDefinition,
   getOwnerNameField,
-  getScriptLanguageColumn,
   getTableTextColumn,
-} from "components/common/table/table-column-helpers-v2";
+} from "components/common/table/table-column-helpers";
+import {
+  getScriptLanguageDisplayText
+} from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
 
 function ScriptTable(
   {
@@ -28,7 +31,7 @@ function ScriptTable(
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
-      getScriptLanguageColumn(getField(fields, "type"), "no-wrap-inline"),
+      getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), getScriptLanguageDisplayText, "no-wrap-inline"),
       getOwnerNameField(),
     ],
     []

@@ -64,6 +64,7 @@ function FilterBar(
         <SearchFilter
           isLoading={isLoading}
           paginationModel={filterModel}
+          searchText={filterModel?.getData("search")}
           loadData={loadData}
           className={dropdownFilters != null || loadData != null || supportViewToggle ? "ml-2 d-none d-md-block" : null}
           metadata={metadata}
@@ -121,7 +122,7 @@ function FilterBar(
               loadDataFunction={loadData}
               className={"ml-2"}
             />
-          }          
+          }
           <FilterButtons
             isLoading={isLoading}
             loadData={loadData}

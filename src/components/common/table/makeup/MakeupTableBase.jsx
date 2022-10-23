@@ -3,6 +3,7 @@ import { useTable, usePagination, useSortBy } from "react-table";
 import PropTypes from "prop-types";
 import MakeupTableBody from "components/common/table/makeup/MakeupTableBody";
 import MakeupTableHeader from "components/common/table/makeup/MakeupTableHeader";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export const defaultInitialState = {
   pageIndex: 0
@@ -18,23 +19,41 @@ function MakeupTableBase(
     rowStyling,
     initialState,
     isLoading,
+    selectedModel,
+    tableHeight,
   }) {
+
   const table = useTable(
     {
       columns,
       data,
-      initialState
+      initialState,
     },
     useSortBy,
     usePagination
   );
 
+  const getBodyStyling = () => {
+    if (hasStringValue(tableHeight) === true) {
+      return ({
+        minHeight: tableHeight,
+        height: tableHeight,
+        maxHeight: tableHeight,
+        overflowY: "scroll",
+      });
+    }
+  };
+
+  const bodyStyling = getBodyStyling();
   if (table == null) {
     return null;
   }
 
   return (
-    <div className={className}>
+    <div
+      className={className}
+      style={bodyStyling}
+    >
       <table className={"custom-table"} {...table?.getTableProps()}>
         <MakeupTableHeader
           isLoading={isLoading}
@@ -50,6 +69,9 @@ function MakeupTableBase(
           getTableBodyProps={table?.getTableBodyProps}
           prepareRow={table?.prepareRow}
           rows={table?.rows}
+          totalColumnsWidth={table?.totalColumnsWidth}
+          selectedModel={selectedModel}
+          tableHeight={tableHeight}
         />
       </table>
     </div>
@@ -65,6 +87,8 @@ MakeupTableBase.propTypes = {
   initialState: PropTypes.object,
   isLoading: PropTypes.bool,
   className: PropTypes.string,
+  selectedModel: PropTypes.object,
+  tableHeight: PropTypes.string,
 };
 
 MakeupTableBase.defaultProps = {

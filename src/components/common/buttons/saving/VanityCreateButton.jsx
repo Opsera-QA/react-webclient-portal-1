@@ -25,7 +25,6 @@ function VanityCreateButton(
     className,
     showTypeOnLabel,
     customLabel,
-    lenient,
   }) {
   const [isSaving, setIsSaving] = useState(false);
   const [addAnother, setAddAnother] = useState(false);
@@ -89,7 +88,7 @@ function VanityCreateButton(
         {getAddAnotherCheckbox()}
         <Button
           size={size}
-          disabled={isSaving || disable || (model?.checkCurrentValidity() !== true && lenient !== true)}
+          disabled={isSaving || disable || (model?.checkCurrentValidity() !== true && model?.isLenient() !== true)}
           onClick={() => persistRecord()}
         >
           <span><IconBase isLoading={isSaving} icon={icon} fixedWidth className="mr-2"/>{getLabel()}</span>
@@ -110,7 +109,6 @@ VanityCreateButton.propTypes = {
   className: PropTypes.string,
   customLabel: PropTypes.string,
   showTypeOnLabel: PropTypes.bool,
-  lenient: PropTypes.bool,
 };
 
 VanityCreateButton.defaultProps = {

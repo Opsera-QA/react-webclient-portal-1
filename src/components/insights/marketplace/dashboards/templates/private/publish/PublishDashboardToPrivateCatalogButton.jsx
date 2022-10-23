@@ -49,10 +49,6 @@ export default function PublishDashboardToPrivateCatalogButton(
     }
   };
 
-  if (dashboardModel?.canPublishDashboardToPrivateCatalog() !== true) {
-    return null;
-  }
-
   return (
     <VanityButtonBase
       className={className}

@@ -207,12 +207,6 @@ toolsActions.updateToolConfiguration = async (toolData, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
-// TODO: This should be moved to a Jira helper function
-toolsActions.installJiraApp = async (toolId, getAccessToken) => {
-  const apiUrl = `/connectors/jira/${toolId}/app/install`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
 // TODO: Should this be in a different area considering it's used in more places than just tools? Rename to three part vault key
 // Note: This is used for three part vault keys (tool ID, identifier, and key)
 toolsActions.savePasswordToVault = async (toolData, toolConfigurationData, fieldName, value, getAccessToken) => {

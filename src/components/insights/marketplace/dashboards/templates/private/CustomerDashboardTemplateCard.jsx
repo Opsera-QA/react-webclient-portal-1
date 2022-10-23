@@ -78,19 +78,19 @@ export default function CustomerDashboardTemplateCard(
             dashboardTemplateId={dashboardTemplate?._id}
           />
           <div className={"d-flex"}>
-            {/*<AccessRoleIconBase*/}
-            {/*  owner={dashboardTemplate?.creator}*/}
-            {/*  type={"Dashboard Template"}*/}
-            {/*  roles={dashboardTemplate?.roles}*/}
-            {/*  className={"mr-3 mt-auto"}*/}
-            {/*  tooltipPlacement={"top"}*/}
-            {/*  iconSize={"lg"}*/}
-            {/*/>*/}
+            <AccessRoleIconBase
+              owner={dashboardTemplate?.creator}
+              type={"Dashboard Template"}
+              roles={dashboardTemplate?.roles}
+              className={"mt-auto"}
+              tooltipPlacement={"top"}
+              iconSize={"lg"}
+            />
             <ActionBarDeleteCustomerDashboardTemplateButton
               loadData={loadData}
               dashboardId={dashboardTemplate?._id}
               ownerId={dashboardTemplate?.creator}
-              className={"mt-auto"}
+              className={"mt-auto ml-3"}
             />
           </div>
         </div>

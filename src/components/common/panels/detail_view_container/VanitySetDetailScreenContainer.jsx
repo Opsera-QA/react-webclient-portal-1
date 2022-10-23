@@ -47,7 +47,7 @@ function VanitySetDetailScreenContainer(
     return (
       <TitleBar
         isLoading={isLoading}
-        titleIcon={breadcrumb?.icon}
+        titleIcon={breadcrumb?.dynamicIconFunction ? breadcrumb?.dynamicIconFunction(model) : breadcrumb?.icon}
         title={model?.getDetailViewTitle()}
         inactive={model?.isInactive()}
         titleActionBar={titleActionBar}

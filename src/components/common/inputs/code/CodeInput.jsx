@@ -80,22 +80,22 @@ function CodeInput(
 
   const getBody = () => {
     if (isLoading === true) {
-      return (<CenterLoadingIndicator />);
+      return (<CenterLoadingIndicator minHeight={height} />);
     }
 
     if (dataPullError != null && dataPullError !== "") {
       return (
-        <CenteredContentWrapper>
-            <IconBase icon={faExclamationTriangle} className={"mr-2"} />{dataPullError}
+        <CenteredContentWrapper minHeight={height}>
+          <IconBase icon={faExclamationTriangle} className={"mr-2"} />{dataPullError}
         </CenteredContentWrapper>
       );
     }
 
     if (isDataPulled === false) {
       return (
-        <CenteredContentWrapper>
-            <IconBase icon={faFileDownload} className={"mr-2"} />
-           <span>{model?.getLabel(fieldName)} must be pulled from the database before it can be seen</span>
+        <CenteredContentWrapper minHeight={height}>
+          <IconBase icon={faFileDownload} className={"mr-2"} />
+          <span>{model?.getLabel(fieldName)} must be pulled from the database before it can be seen</span>
         </CenteredContentWrapper>
       );
     }

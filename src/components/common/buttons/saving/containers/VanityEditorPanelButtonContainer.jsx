@@ -13,7 +13,6 @@ function VanityEditorPanelButtonContainer(
     handleClose,
     disable,
     extraButtons,
-    lenient,
   }) {
   const getDeleteButton = () => {
     return (
@@ -33,7 +32,6 @@ function VanityEditorPanelButtonContainer(
           model={model}
           setModel={setModel}
           disable={disable}
-          lenient={lenient}
         />
       );
     }
@@ -78,7 +76,6 @@ VanityEditorPanelButtonContainer.propTypes = {
   handleClose: PropTypes.func,
   disable: PropTypes.bool,
   extraButtons: PropTypes.any,
-  lenient: PropTypes.bool,
 };
 
 export default VanityEditorPanelButtonContainer;

@@ -108,7 +108,11 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
 
   const getFrequentlyAskedQuestionsLink = () => {
     return (
-      <Link to={"/faq"} id={"faq-button"} className={"dropdown-item nav-drop-down-item"}>
+      <Link
+        to={"/faq"}
+        id={"faq-button"}
+        className={"dropdown-item nav-drop-down-item"}
+      >
         Frequently Asked Questions
       </Link>
     );
@@ -186,18 +190,45 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
 
               <NavDropdown.Divider/>
 
-              <NavDropdown.Item href={EXTERNAL_LINKS.KNOWLEDGE_BASE} target="_blank"
-                                className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
-              {/*<NavDropdown.Item href={EXTERNAL_LINKS.REQUEST_HELP} target="_blank"*/}
-              {/*                  className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>*/}
+              <NavDropdown.Item
+                active={false}
+                href={EXTERNAL_LINKS.KNOWLEDGE_BASE}
+                target={"_blank"}
+                className={"nav-drop-down-item"}
+                id={"kb-button"}
+              >
+                KnowledgeBase
+              </NavDropdown.Item>
+              {/*<NavDropdown.Item*/}
+              {/*  active={false}*/}
+              {/*  href={EXTERNAL_LINKS.REQUEST_HELP}*/}
+              {/*  target={"_blank"}*/}
+              {/*  className={"nav-drop-down-item"}*/}
+              {/*  id={"request-help-button"}*/}
+              {/*>*/}
+              {/*  Request Help*/}
+              {/*</NavDropdown.Item>*/}
               {/*{getFrequentlyAskedQuestionsLink()}*/}
               {getHelpDocumentationLink()}
               <NavDropdown.Divider/>
 
-              <NavDropdown.Item href="https://opsera.io/" target="_blank" className="nav-drop-down-item"
-                                id="about-opsera">Opsera.io</NavDropdown.Item>
-              <NavDropdown.Item href="" onClick={logout} className="nav-drop-down-item"
-                                id="logout-button">Logout</NavDropdown.Item>
+              <NavDropdown.Item
+                href={"https://opsera.io/"}
+                target={"_blank"}
+                className={"nav-drop-down-item"}
+                id={"about-opsera"}
+                active={false}
+              >
+                Opsera.io
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                href={""}
+                onClick={logout}
+                className={"nav-drop-down-item"}
+                id={"logout-button"}
+              >
+                Logout
+              </NavDropdown.Item>
             </NavDropdown>
 
           </>}

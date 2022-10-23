@@ -77,7 +77,9 @@ function FortifyStepApplicationSelectInput({ model, setModel, disabled, toolId }
   const setDataFunction = (fieldName, selectedOption) => {    
     let newModel = {...model};
     newModel.setData(fieldName, selectedOption.applicationId);
+    newModel.setData("applicationName", selectedOption.applicationName);
     newModel.setDefaultValue("releaseId");
+    newModel.setDefaultValue("releaseName");
     setModel({...newModel});
   };
 

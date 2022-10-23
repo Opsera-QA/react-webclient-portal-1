@@ -42,9 +42,14 @@ fortifyStepActions.getApplications = async (getAccessToken, cancelTokenSource, t
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-fortifyStepActions.getReleases = async (getAccessToken, cancelTokenSource, toolId, applicationId) => {
+fortifyStepActions.getReleases = async (getAccessToken, cancelTokenSource, toolId, applicationId, applicationName) => {
+  const urlParams = {
+    params: {
+      applicationName: applicationName,
+    },
+  };
   const apiUrl = `tools/${toolId}/fortify/releases/${applicationId}`;
-  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 export default fortifyStepActions;
