@@ -1,23 +1,22 @@
 import React from "react";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import { faChartNetwork, faCogs, faUserChart } from "@fortawesome/pro-light-svg-icons";
+import { faUserChart } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import AccountSettingsSubNavigationBarBase from "components/settings/AccountSettingsSubNavigationBarBase";
 
-function AnalyticsDataEntryManagementSubNavigationBar({activeTab}) {
+function AnalyticsDataEntryManagementSubNavigationBar({ activeTab }) {
   const history = useHistory();
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
 
+    if (activeTab === tabSelection) {
+      return;
+    }
+
     switch (tabSelection) {
-      case "accountSettings":
-        history.push(`/settings`);
-        return;
-      case "insightsSettings":
-        history.push(`/settings/insights`);
-        return;
       case "analyticsDataEntries":
         history.push(`/settings/analytics-data-entries`);
         return;
@@ -43,19 +42,8 @@ function AnalyticsDataEntryManagementSubNavigationBar({activeTab}) {
 
   return (
     <NavigationTabContainer>
-       <NavigationTab
-        icon={faCogs}
-        tabName={"accountSettings"}
-        handleTabClick={handleTabClick}
+      <AccountSettingsSubNavigationBarBase
         activeTab={activeTab}
-        tabText={"Account Settings"}
-      />
-      <NavigationTab
-        icon={faChartNetwork}
-        tabName={"insightsSettings"}
-        handleTabClick={handleTabClick}
-        activeTab={activeTab}
-        tabText={"Insights Settings"}
       />
       <NavigationTab
         icon={faUserChart}
