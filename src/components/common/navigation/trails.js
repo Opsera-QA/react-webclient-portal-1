@@ -52,6 +52,7 @@ import {
   faDiamondExclamation, faFolderCog, faUserShield, faShield,
 } from "@fortawesome/pro-light-svg-icons";
 import { taskTypeConstants } from "components/tasks/task.types";
+import { pipelineSettingsTrails } from "components/settings/pipelines/pipelineSettings.trails";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
 const breadcrumbs = {
@@ -1164,6 +1165,8 @@ const breadcrumbs = {
     linkText: undefined,
     icon: faDiamondExclamation,
   },
+
+  ...pipelineSettingsTrails,
 };
 
 export const getTrail = (breadcrumb) => {

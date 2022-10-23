@@ -4,6 +4,7 @@ import NavigationTabContainer from "components/common/tabs/navigation/Navigation
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import { faChartNetwork, faCogs, faSitemap } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import AccountSettingsSubNavigationBarBase from "components/settings/AccountSettingsSubNavigationBarBase";
 
 function OrganizationsSubNavigationBar({activeTab}) {
   const history = useHistory();
@@ -11,13 +12,11 @@ function OrganizationsSubNavigationBar({activeTab}) {
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
 
+    if (tabSelection === activeTab) {
+      return;
+    }
+
     switch (tabSelection) {
-      case "accountSettings":
-        history.push(`/settings`);
-        return;
-      case "insightsSettings":
-        history.push(`/settings/insights`);
-        return;
       case "organizations":
         history.push(`/settings/organizations`);
         return;
@@ -43,19 +42,8 @@ function OrganizationsSubNavigationBar({activeTab}) {
 
   return (
     <NavigationTabContainer>
-       <NavigationTab
-        icon={faCogs}
-        tabName={"accountSettings"}
-        handleTabClick={handleTabClick}
+      <AccountSettingsSubNavigationBarBase
         activeTab={activeTab}
-        tabText={"Account Settings"}
-      />
-      <NavigationTab
-        icon={faChartNetwork}
-        tabName={"insightsSettings"}
-        handleTabClick={handleTabClick}
-        activeTab={activeTab}
-        tabText={"Insights Settings"}
       />
       <NavigationTab
         icon={faSitemap}
