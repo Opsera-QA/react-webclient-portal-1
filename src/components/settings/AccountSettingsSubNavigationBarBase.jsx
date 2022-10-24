@@ -1,7 +1,7 @@
 import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import { faBallotCheck, faChartNetwork, faCogs } from "@fortawesome/pro-light-svg-icons";
+import { faChartNetwork, faCogs, faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 
 export default function AccountSettingsSubNavigationBarBase({ activeTab }) {

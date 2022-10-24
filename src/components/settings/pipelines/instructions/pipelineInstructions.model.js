@@ -1,9 +1,10 @@
 import ModelBase, { DataState } from "core/data_model/model.base";
-import ScriptLibraryRoleHelper from "@opsera/know-your-role/roles/registry/script_library/scriptLibraryRole.helper";
-import scriptsLibraryMetadata from "@opsera/definitions/constants/registry/script_library/scriptsLibrary.metadata";
-import scriptsActions from "components/inventory/scripts/scripts-actions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import pipelineInstructionsActions from "components/settings/pipelines/instructions/pipelineInstructions.actions";
+import { pipelineInstructionsActions } from "components/settings/pipelines/instructions/pipelineInstructions.actions";
+import pipelineInstructionsMetadata
+  from "@opsera/definitions/constants/settings/pipelines/instructions/pipelineInstructions.metadata";
+import PipelineInstructionsRoleHelper
+  from "@opsera/know-your-role/roles/settings/pipelines/instructions/pipelineInstructionsRole.helper";
 
 export default class PipelineInstructionsModel extends ModelBase {
   constructor(
@@ -14,16 +15,15 @@ export default class PipelineInstructionsModel extends ModelBase {
   ) {
     super(
       data,
-      scriptsLibraryMetadata,
+      pipelineInstructionsMetadata,
       newModel,
       setStateFunction,
       loadDataFunction,
     );
-    this.scriptPulled = false;
   }
 
   canCreate = () => {
-    return ScriptLibraryRoleHelper.canCreateScript(
+    return PipelineInstructionsRoleHelper.canCreatePipelineInstructions(
       this.userData,
     );
   };
@@ -35,7 +35,7 @@ export default class PipelineInstructionsModel extends ModelBase {
       throw "Access Denied";
     }
 
-    const response = await pipelineInstructionsActions.createScriptV2(
+    const response = await pipelineInstructionsActions.createPipelineInstructions(
       this.getAccessToken,
       this.cancelTokenSource,
       this,
@@ -52,7 +52,7 @@ export default class PipelineInstructionsModel extends ModelBase {
   };
 
   canUpdate = () => {
-    return ScriptLibraryRoleHelper.canUpdateScript(
+    return PipelineInstructionsRoleHelper.canUpdatePipelineInstructions(
       this.userData,
       this.data,
     );
@@ -65,7 +65,7 @@ export default class PipelineInstructionsModel extends ModelBase {
       throw "Access Denied";
     }
 
-    const response = await pipelineInstructionsActions.updateScriptV2(
+    const response = await pipelineInstructionsActions.updatePipelineInstructions(
       this.getAccessToken,
       this.cancelTokenSource,
       this,
@@ -76,14 +76,14 @@ export default class PipelineInstructionsModel extends ModelBase {
   };
 
   canDelete = () => {
-    return ScriptLibraryRoleHelper.canDeleteScript(
+    return PipelineInstructionsRoleHelper.canDeletePipelineInstructions(
       this.userData,
       this.data,
     );
   };
 
   canEditAccessRoles = () => {
-    return ScriptLibraryRoleHelper.canEditAccessRoles(
+    return PipelineInstructionsRoleHelper.canEditAccessRoles(
       this.userData,
       this.data,
     );
@@ -96,10 +96,10 @@ export default class PipelineInstructionsModel extends ModelBase {
       throw "Access Denied";
     }
 
-    const response = await pipelineInstructionsActions.deleteScriptV2(
+    const response = await pipelineInstructionsActions.deletePipelineInstructionsById(
       this.getAccessToken,
       this.cancelTokenSource,
-      this,
+      this.getMongoDbId(),
     );
     this.dataState = DataState.DELETED;
 
@@ -107,39 +107,7 @@ export default class PipelineInstructionsModel extends ModelBase {
       await this.loadDataFunction();
     }
 
-    this.unselectModel();
-
     return response;
-  };
-
-  pullScriptFromDb = async () => {
-    const canPullScriptFromDb = ScriptLibraryRoleHelper.canGetEncryptedScriptValue(
-      this.userData,
-      this.data,
-    );
-
-    // if (canPullScriptFromDb !== true) {
-    //   throw "Access Denied";
-    // }
-
-    const response = await scriptsActions.getScriptValue(
-      this.getAccessToken,
-      this.cancelTokenSource,
-      this.getMongoDbId(),
-    );
-    const value = response?.data?.data;
-    this.scriptPulled = true;
-
-    if (value) {
-      this.setData("value", value, false);
-      this.updateState();
-    }
-
-    return value;
-  };
-
-  hasScriptBeenPulled = () => {
-    return this.scriptPulled === true;
   };
 
   clone = () => {

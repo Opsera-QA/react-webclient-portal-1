@@ -19,6 +19,7 @@ pipelineSettingsTrails.pipelineInstructionsManagement = {
   title: "Pipeline Instructions",
   linkText: "Pipeline Instructions",
   icon: faBallotCheck,
+  pageDescription: "Create and Manage Instructions to be followed during a Pipeline's execution",
 };
 
 pipelineSettingsTrails.pipelineDetailView = {

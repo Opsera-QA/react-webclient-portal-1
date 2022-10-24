@@ -5,11 +5,10 @@ import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
-import ScriptLanguageSelectInput
-  from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
-import ScriptValueInput from "components/inventory/scripts/details/ScriptValueInput";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
+import PipelineInstructionsTypeSelectInput
+  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsTypeSelectInput";
 
 export default function PipelineInstructionsEditorPanel(
   {
@@ -55,16 +54,25 @@ export default function PipelineInstructionsEditorPanel(
           />
         </Col>
         <Col xs={12} md={6}>
-          <ScriptLanguageSelectInput setModel={setPipelineInstructionsModel} model={pipelineInstructionsModel} />
+          <PipelineInstructionsTypeSelectInput
+            model={pipelineInstructionsModel}
+            setModel={setPipelineInstructionsModel}
+          />
         </Col>
         <Col xs={12}>
-          <ScriptValueInput setModel={setPipelineInstructionsModel} model={pipelineInstructionsModel} />
+          <TextInputBase
+            fieldName={"description"}
+            dataObject={pipelineInstructionsModel}
+            setDataObject={setPipelineInstructionsModel}
+          />
         </Col>
         {getDynamicFields()}
-        <TagMultiSelectInput
-          dataObject={pipelineInstructionsModel}
-          setDataObject={setPipelineInstructionsModel}
-        />
+        <Col xs={12}>
+          <TagMultiSelectInput
+            dataObject={pipelineInstructionsModel}
+            setDataObject={setPipelineInstructionsModel}
+          />
+        </Col>
       </Row>
     </VanityEditorPanelContainer>
   );

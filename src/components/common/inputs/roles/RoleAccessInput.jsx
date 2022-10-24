@@ -433,7 +433,7 @@ export default function RoleAccessInput(
 
   const getRolesSubMessage = () => {
     return (`
-      Please note, if a user selected above is already a member of the Site Administrators or Site Power Users groups, 
+      Please note, if a user selected above is already a member of the Site Administrators or Site Power Users roles, 
       that privilege will supersede these settings where applicable.
     `);
   };
