@@ -1,6 +1,5 @@
 import React from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetPipelineInstructions from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructions";
 import PipelineInstructionTable from "components/settings/pipelines/instructions/PipelineInstructionTable";

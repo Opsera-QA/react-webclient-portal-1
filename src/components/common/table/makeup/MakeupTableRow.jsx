@@ -46,7 +46,7 @@ function MakeupTableRow(
   return (
     <tr
       className={rowClassNames}
-      {...row.getRowProps({onClick: () => onRowSelect ? onRowSelect(row) : null})}
+      {...row.getRowProps({onClick: () => onRowSelect ? onRowSelect(row, row?.original) : null})}
     >
       {row.cells.map((cell, j) => {
         return (

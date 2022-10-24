@@ -1,6 +1,6 @@
 import baseActions from "utils/actionsBase";
 
-const pipelineInstructionsActions = {};
+export const pipelineInstructionsActions = {};
 
 pipelineInstructionsActions.getPipelineInstructions = async (
   getAccessToken,
@@ -8,7 +8,7 @@ pipelineInstructionsActions.getPipelineInstructions = async (
   searchKeyword,
   type,
   ) => {
-  const apiUrl = "/registry/scripts";
+  const apiUrl = "/settings/pipelines/instructions";
   const urlParams = {
     params: {
       search: searchKeyword,
@@ -29,36 +29,59 @@ pipelineInstructionsActions.getPipelineInstructionsById = async (
   cancelTokenSource,
   id,
 ) => {
-  const apiUrl = `/registry/scripts/${id}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  const apiUrl = `/settings/pipelines/instructions/${id}`;
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
 };
 
-pipelineInstructionsActions.createScriptV2 = async (getAccessToken, cancelTokenSource, scriptModel) => {
+pipelineInstructionsActions.createPipelineInstructions = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineInstructionsModel,
+) => {
   const postBody = {
-    ...scriptModel.getPersistData()
+    ...pipelineInstructionsModel.getPersistData()
   };
-  const apiUrl = "/registry/script/create";
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  const apiUrl = "/settings/pipelines/instructions/create";
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
 };
 
-pipelineInstructionsActions.updateScriptV2 = async (getAccessToken, cancelTokenSource, scriptModel) => {
-  const id = scriptModel.getData("_id");
-  const apiUrl = `/registry/script/${id}/update`;
+pipelineInstructionsActions.updatePipelineInstructions = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineInstructionsModel,
+) => {
+  const id = pipelineInstructionsModel.getMongoDbId();
+  const apiUrl = `/settings/pipelines/instructions/${id}/update`;
   const postBody = {
-    ...scriptModel.getPersistData()
+    ...pipelineInstructionsModel.getPersistData()
   };
 
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  return await baseActions.apiPutCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
 };
 
-pipelineInstructionsActions.deleteScriptV2 = async (getAccessToken, cancelTokenSource, scriptModel) => {
-  const apiUrl = `/registry/script/${scriptModel.getData("_id")}`;
-  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
+pipelineInstructionsActions.deletePipelineInstructionsById = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineInstructionsId,
+) => {
+  const apiUrl = `/settings/pipelines/instructions/${pipelineInstructionsId}`;
+  return await baseActions.apiDeleteCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
 };
-
-pipelineInstructionsActions.getScriptValue = async (getAccessToken, cancelTokenSource, id) => {
-  const apiUrl = `/registry/script/${id}/value`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-export default pipelineInstructionsActions;
