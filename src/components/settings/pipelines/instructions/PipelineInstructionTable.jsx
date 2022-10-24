@@ -25,7 +25,7 @@ import {
 
 export default function PipelineInstructionTable(
   {
-    data,
+    pipelineInstructions,
     loadData,
     isLoading,
     pipelineInstructionsFilterModel,
@@ -67,7 +67,7 @@ export default function PipelineInstructionTable(
       <CustomTable
         nextGeneration={true}
         columns={columns}
-        data={data}
+        data={pipelineInstructions}
         isLoading={isLoading}
         onRowSelect={handleRowSelectFunction}
         paginationDto={pipelineInstructionsFilterModel}
@@ -104,7 +104,7 @@ export default function PipelineInstructionTable(
 }
 
 PipelineInstructionTable.propTypes = {
-  data: PropTypes.array,
+  pipelineInstructions: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   pipelineInstructionsFilterModel: PropTypes.object,

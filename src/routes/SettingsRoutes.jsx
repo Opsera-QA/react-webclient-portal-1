@@ -31,10 +31,6 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import InsightsSettings from "components/settings/insights/InsightsSettings";
 import RoleRestrictedRoute from "temp-library-components/routes/RoleRestrictedRoute";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
-import PipelineInstructionsManagement from "components/settings/pipelines/instructions/PipelineInstructionsManagement";
-import PipelineSettings from "components/settings/pipelines/PipelineSettings";
-import PipelineInstructionsDetailView
-  from "components/settings/pipelines/instructions/details/PipelineInstructionsDetailView";
 import PipelineSettingsRoutes from "components/settings/pipelines/PipelineSettingsRoutes";
 
 export default function SettingsRoutes() {

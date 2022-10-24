@@ -22,9 +22,9 @@ pipelineSettingsTrails.pipelineInstructionsManagement = {
   pageDescription: "Create and Manage Instructions to be followed during a Pipeline's execution",
 };
 
-pipelineSettingsTrails.pipelineDetailView = {
+pipelineSettingsTrails.pipelineInstructionsDetailView = {
   parent: "pipelineInstructionsManagement",
-  name: "pipelineInstructionsManagement",
+  name: "pipelineInstructionsDetailView",
   path: pipelineSettingsPaths.pipelineInstructionsManagement,
   title: "Pipeline Instructions Details",
   linkText: "Pipeline Instructions Details",
