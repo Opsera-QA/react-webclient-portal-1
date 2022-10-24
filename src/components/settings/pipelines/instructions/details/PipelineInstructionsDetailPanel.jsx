@@ -49,6 +49,7 @@ export default function PipelineInstructionsDetailPanel(
         return (
           <PipelineInstructionsSummaryPanel
             pipelineInstructionsModel={pipelineInstructionsModel}
+            setPipelineInstructionsModel={setPipelineInstructionsModel}
             setActiveTab={setActiveTab}
           />
         );

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import scriptsActions from "components/inventory/scripts/scripts-actions";
 import useGetPipelineInstructionsModel
   from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionsModel";
+import { pipelineInstructionsActions } from "components/settings/pipelines/instructions/pipelineInstructions.actions";
 
 export default function useGetPipelineInstructionModelById(
   id,
@@ -40,7 +40,7 @@ export default function useGetPipelineInstructionModelById(
   };
 
   const getPipelineInstructions = async () => {
-    const response = await scriptsActions.getScriptById(
+    const response = await pipelineInstructionsActions.getPipelineInstructionsById(
       getAccessToken,
       cancelTokenSource,
       id,

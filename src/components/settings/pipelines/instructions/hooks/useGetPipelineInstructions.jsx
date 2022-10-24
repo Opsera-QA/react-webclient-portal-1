@@ -7,7 +7,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 
 export default function useGetPipelineInstructions() {
   const [isLoading, setIsLoading] = useState(false);
-  const [pipelineInstructions, setPipelineInstructions] = useState(undefined);
+  const [pipelineInstructions, setPipelineInstructions] = useState([]);
   const [pipelineInstructionsFilterModel, setPipelineInstructionsFilterModel] = useState(new PipelineInstructionsFilterModel());
   const {
     getAccessToken,
@@ -43,7 +43,7 @@ export default function useGetPipelineInstructions() {
 
     const pipelineInstructionList = DataParsingHelper.parseArray(response?.data?.data, []);
 
-    if (pipelineInstructions) {
+    if (pipelineInstructionList) {
       setPipelineInstructions([...pipelineInstructionList]);
       newFilterModel.setData("totalCount", response.data.count);
       newFilterModel.setData("activeFilters", newFilterModel.getActiveFilters());

@@ -85,9 +85,9 @@ export class FilterModelBase {
   };
 
   resetDataToDefault = () => {
-    const parsedData = DataParsingHelper.parseObject(this.getNewObjectFields());
+    const parsedData = DataParsingHelper.parseObject(this.getNewObjectFields(), {});
     const newInstance = this;
-    newInstance.data = { ...parsedData };
+    newInstance.data = parsedData;
     this.clearBrowserStorage();
   };
 

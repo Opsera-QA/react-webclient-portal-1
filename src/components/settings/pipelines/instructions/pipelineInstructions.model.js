@@ -110,6 +110,10 @@ export default class PipelineInstructionsModel extends ModelBase {
     return response;
   };
 
+  getDetailViewTitle = () => {
+    return this.getData("name");
+  };
+
   clone = () => {
     const newScript = new PipelineInstructionsModel(
       DataParsingHelper.cloneDeep(this.data),

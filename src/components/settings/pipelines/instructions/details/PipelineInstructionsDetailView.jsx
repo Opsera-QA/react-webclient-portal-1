@@ -1,6 +1,5 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { ldapUserMetadata } from "components/settings/ldap_users/ldapUser.metadata";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
@@ -12,6 +11,8 @@ import PipelineInstructionsDetailPanel
   from "components/settings/pipelines/instructions/details/PipelineInstructionsDetailPanel";
 import PipelineInstructionsSubNavigationBar
   from "components/settings/pipelines/instructions/PipelineInstructionsSubNavigationBar";
+import pipelineInstructionsMetadata
+  from "@opsera/definitions/constants/settings/pipelines/instructions/pipelineInstructions.metadata";
 
 function PipelineInstructionsDetailView() {
   const { pipelineInstructionsId } = useParams();
@@ -40,7 +41,7 @@ function PipelineInstructionsDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"pipelineInstructionsDetailView"}
-      metadata={ldapUserMetadata}
+      metadata={pipelineInstructionsMetadata}
       dataObject={pipelineInstructionsModel}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}

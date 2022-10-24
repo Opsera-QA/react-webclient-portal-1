@@ -36,20 +36,31 @@ function FilterButtons(
     }
 
     let newFilterModel;
+    const sortOption = filterDto?.getData("sortOption");
+    const pageSize = filterDto?.getData("pageSize");
 
     if (filterDto?.getNewInstance) {
       newFilterModel = filterDto.getNewInstance();
-    }
-    else {
+    } else {
       newFilterModel = new Model({...filterDto.getNewObjectFields()}, filterDto.getMetaData(), false);
     }
 
-    let pageSize = filterDto.getData("pageSize");
-    newFilterModel.setData("pageSize", pageSize);
-    let sortOption = filterDto.getData("sortOption");
-    newFilterModel.setData("sortOption", sortOption);
+    if (sortOption) {
+      newFilterModel.setData("pageSize", pageSize);
+    }
+
+    if (pageSize) {
+      newFilterModel.setData("sortOption", sortOption);
+    }
+
+    if (loadData) {
+      await loadData(newFilterModel);
+    }
+  };
+
+  const resetFiltersAndCloseItem = async () => {
+    resetFilters();
     document.body.click();
-    await loadData(newFilterModel);
   };
 
   const getInnerFilters = () => {
@@ -95,7 +106,7 @@ function FilterButtons(
               </Button>
             </div>
             <div className="w-50 ml-1">
-              <Button variant="secondary" size="sm" onClick={() => resetFilters()} className="w-100"
+              <Button variant="outline-secondary" size="sm" onClick={() => resetFiltersAndCloseItem()} className="w-100"
                       disabled={isLoading || filterDto == null || filterDto?.getData("activeFilters").length === 0}>
                 <span><span className="mr-2"><StackedFilterRemovalIcon/></span>Remove</span>
               </Button>
