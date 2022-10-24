@@ -202,7 +202,7 @@ function GitScraperActionButton(
   }
 
   return (
-    <div className="text-right btn-group btn-group-sized">
+    <div>
       {getRunButton()}
       {getCancelButton()}
     </div>
