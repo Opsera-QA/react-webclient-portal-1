@@ -1,20 +1,33 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ActionBarEditorToggleButton from "components/common/actions/buttons/ActionBarEditorToggleButton";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
-function SummaryPanelContainer({ setActiveTab, editingAllowed, children, settingsTab, className }) {
+export default function SummaryPanelContainer(
+  {
+    setActiveTab,
+    editingAllowed,
+    children,
+    settingsTab,
+    className,
+  }) {
   const getSettingsToggle = () => {
-    if (editingAllowed && setActiveTab) {
+    if (editingAllowed !== false && setActiveTab) {
       return (
-        <div className="float-right mt-2">
-          <ActionBarEditorToggleButton setActiveTab={setActiveTab} settingsTab={settingsTab} />
-        </div>
+        <Row>
+          <Col xs={12} className={"w-100 d-flex mt-2"}>
+            <div className={"ml-auto"}>
+              <ActionBarEditorToggleButton setActiveTab={setActiveTab} settingsTab={settingsTab} />
+            </div>
+          </Col>
+        </Row>
       );
     }
   };
 
   return (
-    <div className="scroll-y hide-x-overflow h-100">
+    <div className={"scroll-y hide-x-overflow h-100"}>
       {getSettingsToggle()}
       <div className={className}>
         {children}
@@ -30,10 +43,3 @@ SummaryPanelContainer.propTypes = {
   settingsTab: PropTypes.string,
   className: PropTypes.string
 };
-
-SummaryPanelContainer.defaultProps = {
-  editingAllowed: true,
-  className: "py-3"
-};
-
-export default SummaryPanelContainer;

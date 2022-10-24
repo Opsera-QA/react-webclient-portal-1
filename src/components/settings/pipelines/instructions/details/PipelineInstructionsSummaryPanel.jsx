@@ -3,9 +3,21 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import OwnerNameField from "components/common/fields/text/general/OwnerNameField";
+import DescriptionField from "components/common/fields/text/DescriptionField";
+import TagField from "components/common/fields/multiple_items/tags/TagField";
+import PipelineInstructionsTypeField
+  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsTypeField";
+import PipelineInstructionsRoleAccessInlineInput
+  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsRoleAccessInlineInput";
 
-function PipelineInstructionsSummaryPanel({ ldapUserData, setActiveTab } ) {
-  if (ldapUserData == null) {
+export default function PipelineInstructionsSummaryPanel(
+  {
+    pipelineInstructionsModel,
+    setPipelineInstructionsModel,
+    setActiveTab,
+  } ) {
+  if (pipelineInstructionsModel == null) {
     return <></>;
   }
 
@@ -13,28 +25,36 @@ function PipelineInstructionsSummaryPanel({ ldapUserData, setActiveTab } ) {
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={ldapUserData} fieldName={"firstName"}/>
+          <TextFieldBase
+            dataObject={pipelineInstructionsModel}
+            fieldName={"name"}
+          />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ldapUserData} fieldName={"lastName"}/>
+          <OwnerNameField
+            model={pipelineInstructionsModel}
+          />
+        </Col>
+        <Col lg={12}>
+          <PipelineInstructionsRoleAccessInlineInput
+            pipelineInstructionsModel={pipelineInstructionsModel}
+            setPipelineInstructionsModel={setPipelineInstructionsModel}
+          />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ldapUserData} fieldName={"name"}/>
+          <PipelineInstructionsTypeField
+            model={pipelineInstructionsModel}
+          />
         </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={ldapUserData} fieldName={"preferredName"}/>
+        <Col lg={12}>
+          <DescriptionField
+            dataObject={pipelineInstructionsModel}
+          />
         </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={ldapUserData} fieldName={"emailAddress"}/>
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={ldapUserData} fieldName={"site"}/>
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={ldapUserData} fieldName={"departmentName"}/>
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={ldapUserData} fieldName={"title"}/>
+        <Col lg={12}>
+          <TagField
+            dataObject={pipelineInstructionsModel}
+          />
         </Col>
       </Row>
     </SummaryPanelContainer>
@@ -42,9 +62,7 @@ function PipelineInstructionsSummaryPanel({ ldapUserData, setActiveTab } ) {
 }
 
 PipelineInstructionsSummaryPanel.propTypes = {
-  ldapUserData: PropTypes.object,
+  pipelineInstructionsModel: PropTypes.object,
+  setPipelineInstructionsModel: PropTypes.func,
   setActiveTab: PropTypes.func
 };
-
-
-export default PipelineInstructionsSummaryPanel;
