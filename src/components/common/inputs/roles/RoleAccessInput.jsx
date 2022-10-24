@@ -18,7 +18,15 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 // TODO: Create RoleAccessInputRow that holds the actual inputs to clean this up.
-export default function RoleAccessInput({ fieldName, model, setModel, helpComponent, disabled }) {
+export default function RoleAccessInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    helpComponent,
+    disabled,
+    visible,
+  }) {
   const [userList, setUserList] = useState([]);
   const [groupList, setGroupList] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -37,7 +45,7 @@ export default function RoleAccessInput({ fieldName, model, setModel, helpCompon
   const field = model?.getFieldById(fieldName);
 
   useEffect(() => {
-    if (isSaasUser === false) {
+    if (isSaasUser === false && visible !== true) {
       loadData().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -425,12 +433,12 @@ export default function RoleAccessInput({ fieldName, model, setModel, helpCompon
 
   const getRolesSubMessage = () => {
     return (`
-      Please note, if a user selected above is already a member of the Site Administrators or Site Power Users groups, 
+      Please note, if a user selected above is already a member of the Site Administrators or Site Power Users roles, 
       that privilege will supersede these settings where applicable.
     `);
   };
 
-  if (field == null || isSaasUser === true) {
+  if (field == null || isSaasUser === true || visible === false) {
     return <></>;
   }
 
@@ -472,6 +480,7 @@ RoleAccessInput.propTypes = {
   fieldName: PropTypes.string,
   helpComponent: PropTypes.object,
   disabled: PropTypes.bool,
+  visible: PropTypes.bool,
 };
 
 RoleAccessInput.defaultProps = {

@@ -42,6 +42,7 @@ import FreeTrialUserExpirationExtendUserAccessScreen
 import FreeTrialUserActivityReportUserActivityViewer from "components/settings/trial/activity_report/user_activity/FreeTrialUserActivityReportUserActivityViewer";
 import FreeTrialUserActivityReport
   from "components/settings/trial/activity_report/users/FreeTrialUserActivityReport";
+import PipelineSettingsRoutes from "components/settings/pipelines/PipelineSettingsRoutes";
 
 export default function SettingsRoutes() {
   const {
@@ -263,6 +264,7 @@ export default function SettingsRoutes() {
         component={FreeTrialUserActivityReport}
         roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       />
+      {/*<PipelineSettingsRoutes />*/}
     </>
   );
 }

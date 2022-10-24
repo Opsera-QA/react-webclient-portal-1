@@ -2,11 +2,11 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import { faBuilding } from "@fortawesome/pro-light-svg-icons";
+import { faBallotCheck } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import AccountSettingsSubNavigationBarBase from "components/settings/AccountSettingsSubNavigationBarBase";
 
-function LdapDepartmentManagementSubNavigationBar({activeTab}) {
+function PipelineInstructionsSubNavigationBar({activeTab}) {
   const history = useHistory();
 
   const handleTabClick = (tabSelection) => e => {
@@ -17,22 +17,22 @@ function LdapDepartmentManagementSubNavigationBar({activeTab}) {
     }
 
     switch (tabSelection) {
-      case "departments":
-        history.push(`/settings/departments`);
+      case "pipelineInstructionsManagement":
+        history.push(`/settings/pipelines/instructions`);
         return;
     }
   };
 
   const getActiveViewerTab = () => {
     switch (activeTab) {
-      case "departmentViewer":
+      case "pipelineInstructionsViewer":
         return (
           <NavigationTab
-            icon={faBuilding}
-            tabName={"departmentViewer"}
+            icon={faBallotCheck}
+            tabName={"pipelineInstructionsViewer"}
             handleTabClick={handleTabClick}
             activeTab={activeTab}
-            tabText={"Department Viewer"}
+            tabText={"Pipeline Instructions Viewer"}
           />
         );
       default:
@@ -46,19 +46,19 @@ function LdapDepartmentManagementSubNavigationBar({activeTab}) {
         activeTab={activeTab}
       />
       <NavigationTab
-        icon={faBuilding}
-        tabName={"departments"}
+        icon={faBallotCheck}
+        tabName={"pipelineInstructionsManagement"}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
-        tabText={"Departments"}
+        tabText={"Pipeline Instructions"}
       />
       {getActiveViewerTab()}
     </NavigationTabContainer>
   );
 }
 
-LdapDepartmentManagementSubNavigationBar.propTypes = {
+PipelineInstructionsSubNavigationBar.propTypes = {
   activeTab: PropTypes.string,
 };
 
-export default LdapDepartmentManagementSubNavigationBar;
+export default PipelineInstructionsSubNavigationBar;

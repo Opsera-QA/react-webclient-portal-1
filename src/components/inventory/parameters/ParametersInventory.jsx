@@ -81,12 +81,6 @@ export default function ParametersInventory() {
     }
   };
 
-  const getHelpComponent = () => {
-    if (!isLoading) {
-      return (<ParametersHelpDocumentation />);
-    }
-  };
-
   return (
     <ScreenContainer
       navigationTabContainer={<InventorySubNavigationBar currentTab={"parameters"} />}
@@ -94,7 +88,7 @@ export default function ParametersInventory() {
       pageDescription={`
         Parameters allow the user to store sensitive information in the vault in order to reference it later in the pipeline step.
       `}
-      helpComponent={getHelpComponent()}
+      helpComponent={<ParametersHelpDocumentation />}
     >
       <ParametersView
         isLoading={isLoading}

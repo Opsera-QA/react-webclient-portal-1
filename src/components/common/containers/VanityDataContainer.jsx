@@ -21,7 +21,9 @@ function VanityDataContainer(
     className,
     metadata,
     exportButton,
-    type
+    minimumHeight,
+    maximumHeight,
+    type,
   }) {
 
   const getFilterBar = () => {
@@ -42,6 +44,15 @@ function VanityDataContainer(
     );
   };
 
+  const getBodyStylingObject = () => {
+    return ({
+      minHeight: minimumHeight,
+      maxHeight: maximumHeight,
+      overflowY: "auto",
+      overflowX: "hidden",
+    });
+  };
+
   return (
     <div className={className}>
       <div className="filter-container container-border">
@@ -59,7 +70,7 @@ function VanityDataContainer(
           </div>
           <ActiveFilterDisplayer filterModel={paginationModel} loadData={loadData} />
         </div>
-        <div>
+        <div style={getBodyStylingObject()}>
           {body}
         </div>
       </div>
@@ -86,7 +97,9 @@ VanityDataContainer.propTypes = {
   stackFilters: PropTypes.bool,
   metadata: PropTypes.object,
   exportButton: PropTypes.object,
-  showBorder: PropTypes.bool
+  showBorder: PropTypes.bool,
+  minimumHeight: PropTypes.string,
+  maximumHeight: PropTypes.string,
 };
 
 export default VanityDataContainer;
