@@ -2,8 +2,9 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import { faArrowLeft, faShield } from "@fortawesome/pro-light-svg-icons";
+import { faShield } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import AccountSettingsSubNavigationBarBase from "components/settings/AccountSettingsSubNavigationBarBase";
 
 export default function UnsecuredItemReportSubNavigationBar({activeTab}) {
   const history = useHistory();
@@ -11,10 +12,11 @@ export default function UnsecuredItemReportSubNavigationBar({activeTab}) {
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
 
+    if (tabSelection === activeTab) {
+      return;
+    }
+
     switch (tabSelection) {
-      case "accountSettings":
-        history.push(`/settings`);
-        return;
       case "unsecuredItemReport":
         history.push(`/settings/unsecured-items`);
         return;
@@ -23,12 +25,8 @@ export default function UnsecuredItemReportSubNavigationBar({activeTab}) {
 
   return (
     <NavigationTabContainer>
-      <NavigationTab
-        icon={faArrowLeft}
-        tabName={"accountSettings"}
-        handleTabClick={handleTabClick}
+      <AccountSettingsSubNavigationBarBase
         activeTab={activeTab}
-        tabText={"Back to Account Settings"}
       />
       <NavigationTab
         icon={faShield}

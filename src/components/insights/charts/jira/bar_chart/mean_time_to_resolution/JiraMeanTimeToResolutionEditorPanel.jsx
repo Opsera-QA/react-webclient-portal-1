@@ -10,6 +10,8 @@ import MetricJiraServiceComponentsFilterInput
     from "../../../../../common/inputs/metric/filters/jira/MetricJiraServiceComponentsFilterInput";
 import MetricJiraPrioritiesFilterInput
     from "../../../../../common/inputs/metric/filters/jira/MetricJiraPrioritiesFilterInput";
+import MetricJiraTeamNamesFilterInput
+  from "components/common/inputs/metric/filters/jira/MetricJiraTeamNamesFilterInput";
 
 function JiraMeanTimeToResolutionEditorPanel(
   {
@@ -49,6 +51,11 @@ function JiraMeanTimeToResolutionEditorPanel(
         metricModel={metricModel}
       />
       <MetricJiraServiceComponentsFilterInput
+        metricFilterModel={metricFilterModel}
+        setMetricFilterModel={setMetricFilterModel}
+        metricModel={metricModel}
+      />
+      <MetricJiraTeamNamesFilterInput
         metricFilterModel={metricFilterModel}
         setMetricFilterModel={setMetricFilterModel}
         metricModel={metricModel}

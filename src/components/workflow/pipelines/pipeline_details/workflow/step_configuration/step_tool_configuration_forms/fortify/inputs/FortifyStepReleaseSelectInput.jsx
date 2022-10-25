@@ -5,7 +5,7 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import fortifyStepActions from "../fortify-step-actions";
 
-function FortifyStepReleaseSelectInput({ model, setModel, disabled, toolId, applicationId }) {
+function FortifyStepReleaseSelectInput({ model, setModel, disabled, toolId, applicationId, applicationName }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -23,6 +23,7 @@ function FortifyStepReleaseSelectInput({ model, setModel, disabled, toolId, appl
     setCancelTokenSource(source);
     isMounted.current = true;
     setErrorMessage("");
+    setPlaceholderText("Select Release");
     if (applicationId) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
@@ -59,7 +60,8 @@ function FortifyStepReleaseSelectInput({ model, setModel, disabled, toolId, appl
       getAccessToken,
       cancelSource,
       toolId, 
-      applicationId
+      applicationId,
+      applicationName
     );
 
     const result = response?.data?.data;
@@ -74,11 +76,19 @@ function FortifyStepReleaseSelectInput({ model, setModel, disabled, toolId, appl
     }
   };
 
+  const setDataFunction = (fieldName, selectedOption) => {    
+    let newModel = {...model};
+    newModel.setData(fieldName, selectedOption.releaseId);
+    newModel.setData("releaseName", selectedOption.releaseName);    
+    setModel({...newModel});
+  };
+
   return (
     <SelectInputBase
       fieldName={"releaseId"}
       dataObject={model}
       setDataObject={setModel}
+      setDataFunction={setDataFunction}
       placeholderText={placeholderText}
       selectOptions={releaseList}
       textField={"releaseName"}
@@ -96,6 +106,7 @@ FortifyStepReleaseSelectInput.propTypes = {
   disabled: PropTypes.bool,
   toolId: PropTypes.string,
   applicationId: PropTypes.string,
+  applicationName: PropTypes.string,
 };
 
 export default FortifyStepReleaseSelectInput;

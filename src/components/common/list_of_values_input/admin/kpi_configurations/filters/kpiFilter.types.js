@@ -34,6 +34,7 @@ export const KPI_FILTER_TYPES = {
   JIRA_CHANGE_TYPES: "jira-change-types",
   JIRA_SERVICE_COMPONENTS: "jira-service-components",
   JIRA_RESOLUTION_NAMES: "jira-resolution-names",
+  JIRA_TEAM_NAMES: "jira-team-names",
 };
 
 export const KPI_FILTER_TYPE_LABELS = {
@@ -72,6 +73,7 @@ export const KPI_FILTER_TYPE_LABELS = {
   JIRA_CHANGE_TYPES: "Jira Change Types",
   JIRA_SERVICE_COMPONENTS: "Jira Service Components",
   JIRA_RESOLUTION_NAMES: "Jira Resolution Names",
+  JIRA_TEAM_NAMES: "Jira Team Names",
 };
 
 export const getKpiFilterTypeLabel = (kpiFilterType) => {
@@ -146,6 +148,8 @@ export const getKpiFilterTypeLabel = (kpiFilterType) => {
       return KPI_FILTER_TYPE_LABELS.JIRA_SERVICE_COMPONENTS;
     case KPI_FILTER_TYPES.JIRA_RESOLUTION_NAMES:
       return KPI_FILTER_TYPE_LABELS.JIRA_RESOLUTION_NAMES;
+    case KPI_FILTER_TYPES.JIRA_TEAM_NAMES:
+      return KPI_FILTER_TYPE_LABELS.JIRA_TEAM_NAMES;
     default:
       return kpiFilterType;
   }
@@ -329,6 +333,11 @@ export const KPI_FILTER_SELECT_OPTIONS = [
   {
     type: KPI_FILTER_TYPES.JIRA_RESOLUTION_NAMES,
     text: KPI_FILTER_TYPE_LABELS.JIRA_RESOLUTION_NAMES,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.JIRA_TEAM_NAMES,
+    text: KPI_FILTER_TYPE_LABELS.JIRA_TEAM_NAMES,
     value: [],
   },
 ];

@@ -5,6 +5,7 @@ import RoleAccessField from "components/common/fields/multiple_items/roles/RoleA
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 import EditIcon from "components/common/icons/field/EditIcon";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import FieldContainer from "components/common/fields/FieldContainer";
 
 function RoleAccessInlineInputBase(
   {
@@ -14,6 +15,7 @@ function RoleAccessInlineInputBase(
     saveData,
     visible,
     helpComponent,
+    className,
   }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -34,29 +36,33 @@ function RoleAccessInlineInputBase(
   }
 
   return (
-    <div className="role-access">
-      <div className="d-flex">
-        <div>
-          <RoleAccessField
-            model={model}
-            fieldName={fieldName}
-          />
-        </div>
-        <div className="edit-button d-flex">
-          <EditIcon
-            className={"ml-2 mt-2 text-muted"}
-            handleEditFunction={showEditor}
-            disabled={disabled}
-            tooltipBody={"Edit Access Rules"}
-          />
-          <LaunchHelpIcon
-            visible={disabled !== true}
-            helpComponent={helpComponent}
-            className={"mt-2 ml-2 text-muted"}
-          />
+    <FieldContainer
+      className={className}
+    >
+      <div className="role-access">
+        <div className="d-flex">
+          <div>
+            <RoleAccessField
+              model={model}
+              fieldName={fieldName}
+            />
+          </div>
+          <div className="edit-button d-flex">
+            <EditIcon
+              className={"ml-2 mt-2 text-muted"}
+              handleEditFunction={showEditor}
+              disabled={disabled}
+              tooltipBody={"Edit Access Rules"}
+            />
+            <LaunchHelpIcon
+              visible={disabled !== true}
+              helpComponent={helpComponent}
+              className={"mt-2 ml-2 text-muted"}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </FieldContainer>
   );
 }
 
@@ -67,6 +73,11 @@ RoleAccessInlineInputBase.propTypes = {
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   saveData: PropTypes.func,
+  className: PropTypes.string,
+};
+
+RoleAccessInlineInputBase.defaultProps = {
+  fieldName: "roles",
 };
 
 export default RoleAccessInlineInputBase;

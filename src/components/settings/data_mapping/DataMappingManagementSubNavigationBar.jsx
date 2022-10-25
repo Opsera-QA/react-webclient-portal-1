@@ -3,12 +3,12 @@ import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {
-  faChartNetwork, faCogs,
   faDraftingCompass,
   faProjectDiagram,
   faUserTag,
 } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import AccountSettingsSubNavigationBarBase from "components/settings/AccountSettingsSubNavigationBarBase";
 
 function DataMappingManagementSubNavigationBar({activeTab}) {
   const history = useHistory();
@@ -16,13 +16,11 @@ function DataMappingManagementSubNavigationBar({activeTab}) {
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
 
+    if (activeTab === tabSelection) {
+      return;
+    }
+
     switch (tabSelection) {
-      case "accountSettings":
-        history.push(`/settings`);
-        return;
-      case "insightsSettings":
-        history.push(`/settings/insights`);
-        return;
       case "dataMappingManagement":
         history.push(`/settings/data_mapping`);
         return;
@@ -68,19 +66,8 @@ function DataMappingManagementSubNavigationBar({activeTab}) {
 
   return (
     <NavigationTabContainer>
-       <NavigationTab
-        icon={faCogs}
-        tabName={"accountSettings"}
-        handleTabClick={handleTabClick}
+      <AccountSettingsSubNavigationBarBase
         activeTab={activeTab}
-        tabText={"Account Settings"}
-      />
-      <NavigationTab
-        icon={faChartNetwork}
-        tabName={"insightsSettings"}
-        handleTabClick={handleTabClick}
-        activeTab={activeTab}
-        tabText={"Insights Settings"}
       />
       <NavigationTab
         icon={faProjectDiagram}

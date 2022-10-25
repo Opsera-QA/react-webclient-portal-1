@@ -71,11 +71,27 @@ function FortifyScanToolSelectInput({ model, setModel, disabled }) {
     }
   };
 
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newModel = {...model};
+    newModel.setData(fieldName, selectedOption);
+    newModel.setDefaultValue("url");
+    newModel.setDefaultValue("tenantCode");
+    newModel.setDefaultValue("accessKey");
+    newModel.setDefaultValue("secretKey");
+    newModel.setDefaultValue("fortifyScanCenterControllerUrl");
+    newModel.setDefaultValue("token");
+    newModel.setDefaultValue("fortifySscUrl");
+    newModel.setDefaultValue("userName");
+    newModel.setDefaultValue("password");
+    setModel({...newModel});
+  };
+
   return (
     <SelectInputBase
       fieldName={"scanToolType"}
       dataObject={model}
       setDataObject={setModel}
+      setDataFunction={setDataFunction}
       placeholderText={placeholderText}
       selectOptions={scanToolsList}
       textField={"name"}

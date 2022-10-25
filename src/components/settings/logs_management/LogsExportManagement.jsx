@@ -3,11 +3,11 @@ import { AuthContext } from "contexts/AuthContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import { logsExportScheduledTaskMetadata } from "components/settings/logs_management/LogsExportScheduledTask.metadata";
-import OrganizationsSubNavigationBar from "components/settings/organizations/OrganizationsSubNavigationBar";
 import LogsExportManagementTableLoader from "./LogExportManagementTableLoader";
 import LogsExportManagementAwsAccountToolSelectInput
   from "components/settings/logs_management/inputs/LogsExportManagementAwsAccountToolSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
+import LogsExportOptionsSubNavigationBar from "components/settings/logs_management/LogsExportOptionsSubNavigationBar";
 
 function LogsExportManagement() {
   const { userAccessRoles } = useContext(AuthContext);
@@ -18,7 +18,7 @@ function LogsExportManagement() {
       breadcrumbDestination={"logsExportManagement"}
       accessRoleData={userAccessRoles}
       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
-      navigationTabContainer={<OrganizationsSubNavigationBar activeTab={"organizations"} />}
+      navigationTabContainer={<LogsExportOptionsSubNavigationBar activeTab={"logsExportOptions"} />}
     >
       <div className={"mx-3 mb-2"}>
         <LogsExportManagementAwsAccountToolSelectInput

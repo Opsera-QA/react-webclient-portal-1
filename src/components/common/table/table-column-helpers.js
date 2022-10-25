@@ -45,8 +45,6 @@ import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by
 import PipelineTypeIconBase from "components/common/fields/pipelines/types/PipelineTypeIconBase";
 import OrchestrationStateFieldBase from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import AccessRoleDisplayer from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayer";
 import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
 
 export const getCustomTableHeader = (field) => {
@@ -731,6 +729,46 @@ export const getDeletePlatformToolTableButtonColumn = (
     class: className ? className : "no-wrap-inline py-1",
   };
 };
+
+export const getPipelineActivityStatusColumn = (field, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: (text) => {
+      console.log("text: " + JSON.stringify(text));
+      const parsedText = DataParsingHelper.parseString(text);
+      if (!parsedText) {
+        return (
+          <span>
+          <i className={"fal fa-question-circle cell-icon vertical-align-item"} />
+          <span className={"ml-1"}>Unknown</span>
+        </span>
+        );
+      }
+
+      return (
+        <span>
+          <i className="fal ${getPipelineStatusIconCss(text)} cell-icon vertical-align-item" />
+          <span className={"ml-1"}>${capitalizeFirstLetter(text)}</span>
+        </span>
+      );
+    },
+    class: className ? className : undefined
+  };
+};
+
+export const getUppercaseTableTextColumn = (field, className, maxWidth = undefined ) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: (value) => {
+      return capitalizeFirstLetter(value);
+    },
+    class: className,
+    maxWidth: maxWidth
+  };
+};
+
 
 // TODO: Should we show nothing if not === false?
 export const getTableBooleanIconColumn = (field, className) => {
