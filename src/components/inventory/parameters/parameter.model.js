@@ -107,10 +107,6 @@ export default class ParameterModel extends ModelBase {
     );
   };
 
-  isLenient = () => {
-    return true;
-  };
-
   getValueFromVault = async (fieldName = "value") => {
     const response = await parametersActions.getParameterValueFromVaultV2(this.getAccessToken, this.cancelTokenSource, this.getData("_id"));
     const value = response?.data?.data;
