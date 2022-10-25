@@ -44,7 +44,7 @@ export default function AccountSettingsSubNavigationBarBase({ activeTab }) {
         tabText={"Insights Settings"}
       />
       <NavigationTab
-        icon={faBallotCheck}
+        icon={faDraftingCompass}
         tabName={"pipelineSettings"}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
