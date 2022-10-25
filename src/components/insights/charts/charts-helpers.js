@@ -230,6 +230,39 @@ export const getTrendIcon = (severity) => {
   }
 };
 
+/*
+* Converts minutes in to Days Hours Minutes
+* @param mins Minutes
+* Returns the string in D Days H hours M minutes format
+*/
+
+export const getTimeDisplay = (mins) => {
+  const seconds = Number(mins * 60);
+  const days = Math.floor(seconds / (3600 * 24));
+  const hours = Math.floor((seconds % (3600 * 24)) / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = Math.floor(seconds % 60);
+
+  const arrayToDisplay = [];
+  if (days > 0) {
+    arrayToDisplay.push(days + (days === 1 ? " day" : " days"));
+  }
+  if (hours > 0) {
+    arrayToDisplay.push(hours + (hours === 1 ? " hr" : " hrs"));
+  }
+  if (minutes > 0) {
+    arrayToDisplay.push(minutes + (minutes === 1 ? " min" : " min"));
+  }
+  if (remainingSeconds > 0) {
+    arrayToDisplay.push(remainingSeconds + (remainingSeconds === 1 ? " sec" : " sec"));
+  }
+  if (arrayToDisplay.length === 0) {
+    return "0 sec";
+  }
+  return [arrayToDisplay.slice(0, 2).join(", "),arrayToDisplay.join(", ")];
+};
+
+
 export function getChartIconFromKpiConfiguration(kpiConfiguration) {
   return faChartBar;
 }

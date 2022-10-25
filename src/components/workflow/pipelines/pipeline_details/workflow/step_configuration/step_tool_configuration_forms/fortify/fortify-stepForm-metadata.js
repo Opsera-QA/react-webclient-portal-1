@@ -7,14 +7,23 @@ const FortifyStepFormMetadata = {
       isRequired: true,
     },
     {
+      id: "scanToolType"
+    },
+    {
       label: "Application",
       id: "applicationId",
       isRequired: true,
     },
     {
-      label: "Release",
+      id: "applicationName",
+    },
+    {
+      label: "Release/Version",
       id: "releaseId",
       isRequired: true,
+    },
+    {
+      id: "releaseName",
     },
     {
       label: "Assessment Type",
@@ -90,8 +99,11 @@ const FortifyStepFormMetadata = {
   ],
   newObjectFields: {
     toolConfigId: "",
+    scanToolType: "",
     applicationId: "",
+    applicationName: "",    
     releaseId: "",
+    releaseName: "",
     assessmentType: "",
     entitlementPreferenceType: "",
     technologyStackId: "",

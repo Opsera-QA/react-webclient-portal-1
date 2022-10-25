@@ -39,7 +39,7 @@ export default function useGetActiveSsoUsers(handleErrorFunction) {
 
     const activeUsers = DataParsingHelper.parseArray(response?.data?.data, []);
 
-    if (activeSsoUsers) {
+    if (activeUsers) {
       setActiveSsoUsers([...activeUsers]);
     }
   };

@@ -8,7 +8,19 @@ import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import JSONInput from "react-json-editor-ajrm";
 import {objectHelpers} from "components/common/helpers/object/object.helpers";
 
-function JsonInput({fieldName, model, setModel, disabled, className, isLoading, customTitle, helpComponent}) {
+// TODO: Rewrite and use json input base as base
+function JsonInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    disabled,
+    className,
+    isLoading,
+    customTitle,
+    helpComponent,
+    setDataFunction,
+  }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(model.getFieldById(fieldName));
 
@@ -27,6 +39,15 @@ function JsonInput({fieldName, model, setModel, disabled, className, isLoading, 
     }
   };
 
+  const updateValue = (newValue) => {
+    if (setDataFunction) {
+      setDataFunction(fieldName, newValue);
+    }
+    else {
+      validateAndSetData(fieldName,newValue);
+    }
+  };
+
   // TODO: Verify we can't just use ReactJson when not disabled
   const getBody = () => {
     if (disabled === true) {
@@ -38,7 +59,6 @@ function JsonInput({fieldName, model, setModel, disabled, className, isLoading, 
           height="300px"
           width="100%"
           src={model.getData(fieldName)}
-          onChange={e => validateAndSetData(fieldName, e)}
         />
       );
     }
@@ -46,7 +66,7 @@ function JsonInput({fieldName, model, setModel, disabled, className, isLoading, 
     return (
       <JSONInput
         placeholder={model?.getData(fieldName)}
-        onChange={e => validateAndSetData(fieldName, e)}
+        onChange={e => updateValue(e)}
         theme="light_mitsuketa_tribute"
         locale={locale}
         height="300px"
@@ -91,6 +111,7 @@ JsonInput.propTypes = {
   isLoading: PropTypes.bool,
   customTitle: PropTypes.string,
   helpComponent: PropTypes.object,
+  setDataFunction: PropTypes.func,
 };
 
 export default JsonInput;

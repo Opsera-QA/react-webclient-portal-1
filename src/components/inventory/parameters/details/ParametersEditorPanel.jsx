@@ -8,6 +8,7 @@ import VanityEditorPanelContainer from "components/common/panels/detail_panel_co
 import ParameterVaultEnabledToggle from "components/inventory/parameters/details/ParameterVaultEnabledToggle";
 import TogglePasswordTextAreaInput from "components/common/inputs/textarea/password/TogglePasswordTextAreaInput";
 import ParameterValueTextAreaInput from "components/inventory/parameters/details/ParameterValueTextAreaInput";
+import DataValidatorInput from "components/common/inputs/object/data_validator/DataValidatorInput";
 
 export default function ParametersEditorPanel(
   {
@@ -72,6 +73,12 @@ export default function ParametersEditorPanel(
         <Col md={12}>
           <RoleAccessInput
             disabled={parameterModel.isNew() === false && parameterModel?.canEditAccessRoles() !== true}
+            model={parameterModel}
+            setModel={setParameterModel}
+          />
+        </Col>
+        <Col md={12}>
+          <DataValidatorInput
             model={parameterModel}
             setModel={setParameterModel}
           />

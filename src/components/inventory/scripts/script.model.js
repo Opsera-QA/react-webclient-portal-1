@@ -2,6 +2,7 @@ import ModelBase, { DataState } from "core/data_model/model.base";
 import ScriptLibraryRoleHelper from "@opsera/know-your-role/roles/registry/script_library/scriptLibraryRole.helper";
 import scriptsLibraryMetadata from "@opsera/definitions/constants/registry/script_library/scriptsLibrary.metadata";
 import scriptsActions from "components/inventory/scripts/scripts-actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default class ScriptModel extends ModelBase {
   constructor(
@@ -138,6 +139,25 @@ export default class ScriptModel extends ModelBase {
 
   hasScriptBeenPulled = () => {
     return this.scriptPulled === true;
+  };
+
+  isLenient = () => {
+    return true;
+  };
+
+  clone = () => {
+    const newScript = new ScriptModel(
+      DataParsingHelper.cloneDeep(this.data),
+      this.isNew(),
+      this.setStateFunction,
+      this.loadDataFunction,
+    );
+
+    newScript.getAccessToken = this.getAccessToken;
+    newScript.cancelTokenSource = this.cancelTokenSource;
+    newScript.userData = this.userData;
+
+    return newScript;
   };
 }
 

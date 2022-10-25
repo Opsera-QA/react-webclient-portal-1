@@ -3,6 +3,7 @@ import parametersActions from "components/inventory/parameters/parameters-action
 import customParametersMetadata
   from "@opsera/definitions/constants/registry/custom_parameters/customParameters.metadata";
 import CustomParameterRoleHelper from "@opsera/know-your-role/roles/registry/parameters/customParameterRole.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default class ParameterModel extends ModelBase {
   constructor(
@@ -106,6 +107,10 @@ export default class ParameterModel extends ModelBase {
     );
   };
 
+  isLenient = () => {
+    return true;
+  };
+
   getValueFromVault = async (fieldName = "value") => {
     const response = await parametersActions.getParameterValueFromVaultV2(this.getAccessToken, this.cancelTokenSource, this.getData("_id"));
     const value = response?.data?.data;
@@ -115,6 +120,21 @@ export default class ParameterModel extends ModelBase {
     }
 
     return value;
+  };
+
+  clone = () => {
+    const newParameter = new ParameterModel(
+      DataParsingHelper.cloneDeep(this.data),
+      this.isNew(),
+      this.setStateFunction,
+      this.loadDataFunction,
+    );
+
+    newParameter.getAccessToken = this.getAccessToken;
+    newParameter.cancelTokenSource = this.cancelTokenSource;
+    newParameter.userData = this.userData;
+
+    return newParameter;
   };
 }
 

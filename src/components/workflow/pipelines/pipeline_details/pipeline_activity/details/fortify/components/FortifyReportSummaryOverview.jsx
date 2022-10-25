@@ -20,10 +20,10 @@ function FortifyReportSummaryOverview({ fortifyResultsModel }) {
     <Row className={"my-3"}>
       <Col lg={12}><H4FieldSubHeader subheaderText={"Execution Overview"}/></Col>
       <Col lg={6}>
-        <TextFieldBase dataObject={fortifyResultsModel} fieldName={"fortifyApplicationId"} />
+        <TextFieldBase dataObject={fortifyResultsModel} fieldName={"fortifyApplicationName"} />
       </Col>
       <Col lg={6}>
-        <TextFieldBase dataObject={fortifyResultsModel} fieldName={"fortifyReleaseId"} />
+        <TextFieldBase dataObject={fortifyResultsModel} fieldName={"fortifyReleaseName"} />
       </Col>      
     </Row>
   );

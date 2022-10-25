@@ -7,7 +7,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 
 function VanitySaveButtonBase({model, disable, size, showSuccessToasts, className, customLabel, showTypeOnLabel}) {
-  let toastContext = useContext(DialogToastContext);
+  const toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
   const isMounted = useRef(false);
 
@@ -18,7 +18,6 @@ function VanitySaveButtonBase({model, disable, size, showSuccessToasts, classNam
       isMounted.current = false;
     };
   }, []);
-
 
   const persistRecord = async () => {
     setIsSaving(true);
@@ -51,7 +50,17 @@ function VanitySaveButtonBase({model, disable, size, showSuccessToasts, classNam
 
   return (
     <div className={className}>
-      <Button size={size} variant="primary" disabled={isSaving || disable || model?.canUpdate() !== true || (!model.isLenient() && !model.isChanged())} onClick={() => persistRecord()}>
+      <Button
+        size={size}
+        variant={"primary"}
+        disabled={
+          isSaving === true
+            || disable === true
+            || model?.canUpdate() !== true
+            || (model.isLenient() !== true && (model.isChanged() === false || model.checkCurrentValidity() === false))
+        }
+        onClick={() => persistRecord()}
+      >
         <span><IconBase isLoading={isSaving} icon={faSave} fixedWidth className="mr-2"/>{getLabel()}</span>
       </Button>
     </div>
