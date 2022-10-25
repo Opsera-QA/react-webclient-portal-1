@@ -215,7 +215,7 @@ export default function SettingsRoutes() {
         roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       />
 
-      {/*<PipelineSettingsRoutes />*/}
+      <PipelineSettingsRoutes />
     </>
   );
 }
