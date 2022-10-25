@@ -26,12 +26,14 @@ export default function PipelineInstructionsSummaryPanel(
       <Row>
         <Col lg={6}>
           <TextFieldBase
+            className={"mb-2"}
             dataObject={pipelineInstructionsModel}
             fieldName={"name"}
           />
         </Col>
         <Col lg={6}>
           <OwnerNameField
+            className={"mb-2"}
             model={pipelineInstructionsModel}
           />
         </Col>
