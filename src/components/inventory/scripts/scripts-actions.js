@@ -2,7 +2,7 @@ import baseActions from "utils/actionsBase";
 
 const scriptsActions = {};
 
-scriptsActions.getScripts = async (getAccessToken, cancelTokenSource, searchKeyword, type, fields = ["name", "type", "owner", "roles"]) => {
+scriptsActions.getScripts = async (getAccessToken, cancelTokenSource, searchKeyword, type, fields) => {
   const apiUrl = "/registry/scripts";
   const urlParams = {
     params: {
