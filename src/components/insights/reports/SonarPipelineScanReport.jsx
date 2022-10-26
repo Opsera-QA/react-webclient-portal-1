@@ -7,8 +7,8 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import modelHelpers from "components/common/model/modelHelpers";
-import { sonarPipelineScanReportActions } from "components/insights/reports/sonarPipelineScanReport.actions";
 import filterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/filter-metadata";
+import { sonarPipelineScanReportActions } from "components/insights/reports/sonar/sonarPipelineScanReport.actions";
 
 function SonarPipelineScanReport() {
   const { pipelineId, stepId, runCount, issueType } = useParams();

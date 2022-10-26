@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ExportDataOverlay from "./ExportDataOverlay";
 import jsPDF from "jspdf";
+import ExportDataOverlay from "components/common/modal/export_data/ExportDataOverlay";
 
 function ExportCoverityScanDataOverlay({ formattedData, rawData, isLoading}) {
   const getRawData = () => {
