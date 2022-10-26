@@ -168,7 +168,7 @@ function GitLabLeadTimeChart({
         className="new-chart m-3 p-0"
         style={{ minHeight: "450px", display: "flex" }}
       >
-        <Row className={"w-100"}>
+        <Row className={"w-100 justify-content-center"}>
           <Row
             xl={4}
             lg={4}
