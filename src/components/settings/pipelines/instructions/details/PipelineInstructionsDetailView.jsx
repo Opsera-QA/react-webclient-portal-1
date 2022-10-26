@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
@@ -40,6 +40,7 @@ function PipelineInstructionsDetailView() {
           <ActionBarTransferOwnershipButtonBase
             model={pipelineInstructionsModel}
             setModel={setPipelineInstructionsModel}
+            ownerId={pipelineInstructionsModel?.getOwnerId()}
             className={"ml-3"}
           />
           <ActionBarDeletePipelineInstructionsButton

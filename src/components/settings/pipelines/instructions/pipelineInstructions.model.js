@@ -110,18 +110,24 @@ export default class PipelineInstructionsModel extends ModelBase {
     return response;
   };
 
-  // TODO: Wire up when done
   canTransferOwnership = () => {
-    return this.canEditAccessRoles();
+    return PipelineInstructionsRoleHelper.canTransferPipelineInstructionsOwnership(
+      this.userData,
+      this.data,
+    );
   };
 
   transferOwnership = async (newOwnerId) => {
-    return await pipelineInstructionsActions.transferPipelineInstructionsOwnership(
+    const response = await pipelineInstructionsActions.transferPipelineInstructionsOwnership(
       this.getAccessToken,
       this.cancelTokenSource,
       this.getMongoDbId(),
       newOwnerId,
     );
+
+    this.setData("owner", newOwnerId, false);
+
+    return response;
   };
 
   getDetailViewTitle = () => {
@@ -129,19 +135,23 @@ export default class PipelineInstructionsModel extends ModelBase {
   };
 
   clone = () => {
-    const newScript = new PipelineInstructionsModel(
+    const newPipelineInstructions = new PipelineInstructionsModel(
       DataParsingHelper.cloneDeep(this.data),
       this.isNew(),
       this.setStateFunction,
       this.loadDataFunction,
     );
 
-    newScript.getAccessToken = this.getAccessToken;
-    newScript.cancelTokenSource = this.cancelTokenSource;
-    newScript.userData = this.userData;
+    newPipelineInstructions.getAccessToken = this.getAccessToken;
+    newPipelineInstructions.cancelTokenSource = this.cancelTokenSource;
+    newPipelineInstructions.userData = this.userData;
 
-    return newScript;
+    return newPipelineInstructions;
   };
+
+  getType = () => {
+    return "Pipeline Instructions";
+  }
 }
 
 
