@@ -4,7 +4,6 @@ import CustomTable from "components/common/table/CustomTable";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTally} from "@fortawesome/pro-light-svg-icons";
-import ExportSonarQubeScanDetailsButton from "components/common/buttons/export/scans/ExportSonarQubeScanDetailsButton";
 import coverityScanReportMetadata from "./coverityScanReportTable.metadata";
 import ExportCoverityScanDetailsButton from "../../common/buttons/export/scans/ExportCoverityScanDetailsButton";
 
