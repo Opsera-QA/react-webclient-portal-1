@@ -37,7 +37,7 @@ export default function SyncProfileButton() {
       successText={"Successfully Synced User Profile!"}
       errorText={"Error Syncing User Profile!"}
       onClickFunction={syncUserData}
-      buttonSize={"sm"}
+      className={"mt-auto"}
     />
   );
 }

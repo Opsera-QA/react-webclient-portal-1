@@ -6,9 +6,10 @@ import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import GroupField from "components/common/fields/multiple_items/GroupField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
-import FieldContainer from "components/common/fields/FieldContainer";
+import SiteRoleField from "components/common/fields/access/SiteRoleField";
 
-function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString, userAccess }) {
+function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString }) {
+
   const getConnectionString = () => {
     if (showDbConnectionString) {
       return (
@@ -60,10 +61,7 @@ function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString,
           <DateFieldBase fieldName={"updatedAt"} dataObject={userData}/>
         </Col>
         <Col lg={6}>
-          <FieldContainer>
-            <label className="mb-0 mr-2 text-muted">Access Role:</label>
-            {userAccess?.Role}
-          </FieldContainer>
+          <SiteRoleField />
         </Col>
         {getConnectionString()}
       </Row>

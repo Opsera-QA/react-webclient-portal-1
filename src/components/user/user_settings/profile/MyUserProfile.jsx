@@ -6,7 +6,7 @@ import LdapSettingsPanel
 import Model from "core/data_model/model";
 import registeredUsersMetadata from "components/admin/registered_users/registeredUsers.metadata";
 import RegisteredUserSummary from "components/admin/registered_users/details/RegisteredUserSummary";
-import AccessRoleField from "components/common/fields/access/AccessRoleField";
+import SiteRoleField from "components/common/fields/access/SiteRoleField";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SyncProfileButton from "components/user/user_settings/profile/SyncProfileButton";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
@@ -77,8 +77,8 @@ export default function MyUserProfile() {
 
   const getSyncButton = () => {
     return (
-      <div className="justify-content-between d-flex">
-        <AccessRoleField className={"mt-auto"} accessRole={accessRoleData} />
+      <div className={"justify-content-between d-flex"}>
+        <SiteRoleField className={"mt-auto"} showDescription={true} />
         <SyncProfileButton />
       </div>
     );
