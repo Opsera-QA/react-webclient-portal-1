@@ -110,6 +110,20 @@ export default class PipelineInstructionsModel extends ModelBase {
     return response;
   };
 
+  // TODO: Wire up when done
+  canTransferOwnership = () => {
+    return this.canEditAccessRoles();
+  };
+
+  transferOwnership = async (newOwnerId) => {
+    return await pipelineInstructionsActions.transferPipelineInstructionsOwnership(
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this.getMongoDbId(),
+      newOwnerId,
+    );
+  };
+
   getDetailViewTitle = () => {
     return this.getData("name");
   };
