@@ -1,17 +1,29 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {getAccessRolePermissionMessage} from "components/common/helpers/role-helpers";
+import { getAccessRolePermissionMessage } from "components/common/helpers/role-helpers";
+import FieldContainer from "components/common/fields/FieldContainer";
+import FieldLabelBase from "components/common/fields/FieldLabelBase";
 
-function AccessRoleField({accessRole}) {
+export default function AccessRoleField(
+  {
+    accessRole,
+    className,
+  }) {
   if (accessRole == null) {
     return <></>;
   }
 
-  return (<span><label className="mr-2 text-muted">Platform Access Role:</label>{getAccessRolePermissionMessage(accessRole)}</span>);
+  return (
+    <FieldContainer className={className}>
+      <div className="w-100 d-flex">
+        <FieldLabelBase label={"Site Role"} />
+        <span>{getAccessRolePermissionMessage(accessRole)}</span>
+      </div>
+    </FieldContainer>
+  );
 }
 
 AccessRoleField.propTypes = {
   accessRole: PropTypes.object,
+  className: PropTypes.string,
 };
-
-export default AccessRoleField;

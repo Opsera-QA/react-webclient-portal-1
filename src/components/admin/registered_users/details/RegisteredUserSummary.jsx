@@ -6,6 +6,7 @@ import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import GroupField from "components/common/fields/multiple_items/GroupField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
+import FieldContainer from "components/common/fields/FieldContainer";
 
 function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString, userAccess }) {
   const getConnectionString = () => {
@@ -20,7 +21,7 @@ function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString,
 
   // TODO: When User Settings panel is set up, pass setActiveTab to Summary Panel Container
   return (
-    <SummaryPanelContainer>
+    <SummaryPanelContainer className={"m-3"}>
       <Row>
         <Col lg={6}>
           <TextFieldBase fieldName={"firstName"} dataObject={userData}/>
@@ -59,8 +60,10 @@ function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString,
           <DateFieldBase fieldName={"updatedAt"} dataObject={userData}/>
         </Col>
         <Col lg={6}>
-          <label className="mb-0 mr-2 text-muted">Access Role:</label>
-          {userAccess?.Role}
+          <FieldContainer>
+            <label className="mb-0 mr-2 text-muted">Access Role:</label>
+            {userAccess?.Role}
+          </FieldContainer>
         </Col>
         {getConnectionString()}
       </Row>
