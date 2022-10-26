@@ -6,7 +6,7 @@ import { cannotBeUndone } from "components/common/tooltip/popover-text";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import DeleteOverlay from "components/common/overlays/center/delete/DeleteOverlay";
+import DeleteConfirmationOverlay from "components/common/overlays/center/delete/DeleteConfirmationOverlay";
 
 export default function DeleteModelButtonWithConfirmationOverlay(
   {
@@ -30,7 +30,7 @@ export default function DeleteModelButtonWithConfirmationOverlay(
 
   const launchDeleteConfirmationModal = () => {
     toastContext.showOverlayPanel(
-      <DeleteOverlay
+      <DeleteConfirmationOverlay
         type={model?.getType()}
         handleDeleteFunction={handleDelete}
         afterDeleteFunction={afterDeleteFunction}

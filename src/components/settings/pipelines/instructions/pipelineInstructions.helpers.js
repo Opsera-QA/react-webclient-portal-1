@@ -11,3 +11,7 @@ pipelineInstructionsHelpers.getDetailViewLink = (
 
   return `/settings/pipelines/instructions/${pipelineInstructionsId}`;
 };
+
+pipelineInstructionsHelpers.getManagementScreenLink = () => {
+  return `/settings/pipelines/instructions/`;
+};

@@ -13,6 +13,10 @@ import PipelineInstructionsSubNavigationBar
   from "components/settings/pipelines/instructions/PipelineInstructionsSubNavigationBar";
 import pipelineInstructionsMetadata
   from "@opsera/definitions/constants/settings/pipelines/instructions/pipelineInstructions.metadata";
+import ActionBarDeletePipelineInstructionsButton
+  from "components/settings/pipelines/instructions/action_bar/ActionBarDeletePipelineInstructionsButton";
+import ActionBarTransferOwnershipButtonBase
+  from "components/common/actions/buttons/ActionBarTransferOwnershipButtonBase";
 
 function PipelineInstructionsDetailView() {
   const { pipelineInstructionsId } = useParams();
@@ -32,7 +36,16 @@ function PipelineInstructionsDetailView() {
         <div>
           <ActionBarBackButton path={"/settings/pipelines/"} />
         </div>
-        <div>
+        <div className={"d-flex"}>
+          <ActionBarTransferOwnershipButtonBase
+            model={pipelineInstructionsModel}
+            setModel={setPipelineInstructionsModel}
+            className={"ml-3"}
+          />
+          <ActionBarDeletePipelineInstructionsButton
+            pipelineInstructionsModel={pipelineInstructionsModel}
+            className={"ml-3"}
+          />
         </div>
       </ActionBarContainer>
     );
