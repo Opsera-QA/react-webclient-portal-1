@@ -79,6 +79,14 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
     }
   };
 
+  const getProvidersTabInformation = () => {
+    if (doesToolSupportTab(toolIdentifier, TOOL_DETAIL_PANEL_TABS.PROVIDERS) === true) {
+      return (
+        <li><b>Providers</b> - Manage Terraform VCS providers. </li>
+      );
+    }
+  };
+
   const getApplicationsTabInformation = () => {
     if (doesToolSupportTab(toolIdentifier, TOOL_DETAIL_PANEL_TABS.APPLICATIONS) === true) {
       return (
@@ -102,6 +110,16 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
       );
     }
   };
+
+
+  const getDataTransformerRulesTabInformation = () => {
+    if (doesToolSupportTab(toolIdentifier, TOOL_DETAIL_PANEL_TABS.DATA_TRANSFORMER) === true) {
+      return (
+        <li><b>MetaData Transformer Rules</b> - Manage MetaData Transformer Rules.</li>
+      );
+    }
+  };
+
 
   const getStorageTabInformation = () => {
     if (doesToolSupportTab(toolIdentifier, TOOL_DETAIL_PANEL_TABS.STORAGE) === true) {
@@ -354,6 +372,7 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
               <li><b>Attributes</b> - Includes Organizations, Contacts, Licensing, Locations, Applications and Compliance.</li>
               {getVaultTabInformation()}
               {getConnectionsTabInformation()}
+              {getDataTransformerRulesTabInformation()}
               {getEndpointsTabInformation()}
               {getValidationRulesTabInformation()}
               {getApplicationsTabInformation()}
@@ -366,6 +385,7 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
               {getLogsTabInformation()}
               {getPathsTabInformation()}
               {getOrganizationsTabInformation()}
+              {getProvidersTabInformation()}
               {getWorkspacesTabInformation()}
               <li><b>Usage</b> - View and navigate to all pipelines in which this tool is being used.</li>
               {getLicenseTabInformation()}
