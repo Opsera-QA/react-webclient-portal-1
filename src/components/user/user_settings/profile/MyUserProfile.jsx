@@ -77,6 +77,7 @@ function MyUserProfile() {
     try {
       setIsSyncing(true);
       await userActions.syncUser(getAccessToken, cancelSource);
+      window.location.reload();
     } catch (error) {
       if (isMounted.current === true) {
         toastContext.showErrorDialog(error);
