@@ -1,132 +1,115 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
-import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import { faBracketsCurly, faCheckCircle, faTrash } from "@fortawesome/pro-light-svg-icons";
-import axios from "axios";
 import {
   MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
-import SideBySideDeltaDiffField from "components/common/fields/file/diff/delta/SideBySideDeltaDiffField";
-import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import MergeSyncTaskWizardSelectDeltaVersionButton
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/diff_viewer/MergeSyncTaskWizardSelectDeltaVersionButton";
-import useComponentStateReference from "hooks/useComponentStateReference";
-import { xmlHelpers } from "utils/xml.helper";
+import MonacoCodeDiffInput, {
+  MONACO_CODE_THEME_TYPES
+} from "components/common/inputs/code/monaco/MonacoCodeDiffInput";
+import MonacoEditorCodeDiffInputBase
+  from "components/common/inputs/code/monaco/MonacoEditorCodeDiffInputBase";
+import ToggleThemeIcon from "components/common/buttons/toggle/ToggleThemeIcon";
+import ToggleDiffViewIcon from "components/common/buttons/toggle/ToggleDiffViewIcon";
+import MergeSyncTaskWizardSubmitEditedFileButton from "../file_editor/MergeSyncTaskWizardSubmitEditedFileButton";
 
-// TODO:  Not sure if this is being used, if so please update this to use Monaco Diff Editor 
-const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = (
-  {
-    deltaList,
-    isLoading,
-    loadDataFunction,
-    selectDeltaFunction,
-    sourceContent,
-    destinationContent,
-  }) => {
-  const [activeTab, setActiveTab] = useState(undefined);
+const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
+  deltaList,
+  isLoading,
+  loadDataFunction,
+  selectDeltaFunction,
+  comparisonFileModel,
+  setComparisonFileModel,
+  wizardModel,
+  setWizardModel,
+  sourceContent,
+  destinationContent,
+}) => {
 
-  useEffect(() => {
-    // TODO: Should we determine if the activeTab still exists?
-    if (activeTab == null && Array.isArray(deltaList) && deltaList?.length > 0) {
-      setActiveTab('0');
-    }
-  }, [activeTab, deltaList]);
+  const [internalTheme, setInternalTheme] = useState(
+    MONACO_CODE_THEME_TYPES.LIGHT,
+  );
+  const [inlineDiff, setInlineDiff] = useState(false);
 
-  const handleTabClick = (newTab) => {
-    if (newTab !== activeTab) {
-      setActiveTab(newTab);
-    }
+  const toggleTheme = () => {
+    const newTheme =
+      internalTheme === MONACO_CODE_THEME_TYPES.DARK
+        ? MONACO_CODE_THEME_TYPES.LIGHT
+        : MONACO_CODE_THEME_TYPES.DARK;
+    setInternalTheme(newTheme);
   };
 
-  const getDeltaTab = (index) => {
+  const toggleDiffView = () => {
+    const oldInlineDiff = inlineDiff;
+    setInlineDiff(!oldInlineDiff);
+  };
+
+  const getTitleBarActionButtons = () => {
     return (
-      <VanitySetVerticalTab
-        key={index}
-        tabText={`${index + 1}`}
-        tabName={`${index}`}
-        handleTabClick={handleTabClick}
-        activeTab={activeTab}
-      />
+      <div className={"d-flex"}>
+        <ToggleThemeIcon
+          theme={internalTheme}
+          toggleTheme={toggleTheme}
+        />
+        <ToggleDiffViewIcon
+          toggleDiffView={toggleDiffView}
+          className={"mr-2 ml-2"}
+        />
+        <MergeSyncTaskWizardSubmitEditedFileButton
+            fileName={comparisonFileModel?.getData("file")}
+            fileContent={comparisonFileModel?.getData("manualContent")}
+            comparisonFileModel={comparisonFileModel}
+            wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
+        />
+      </div>
     );
   };
 
-  const getVerticalTabContainer = () => {
-    if (Array.isArray(deltaList) && deltaList.length > 0) {
-      return (
-        <VanitySetVerticalTabContainer>
-          {deltaList?.map((delta, index) => {
-            return getDeltaTab(index);
-          })}
-        </VanitySetVerticalTabContainer>
-      );
-    }
+  const onChangeHandler = (editedContent) => {
+    const newComparisonFileModel = { ...comparisonFileModel };
+    newComparisonFileModel?.setData("manualContent", editedContent);
+    setComparisonFileModel({ ...newComparisonFileModel });
   };
 
   const getCurrentView = () => {
-    if (activeTab && Array.isArray(deltaList) && deltaList.length > 0) {
-      const delta = deltaList[Number(activeTab)];
-
-      if (delta) {
-        return (
-          <div className={"m-2"}>
-            <SideBySideDeltaDiffField
-              delta={delta}
-              loadDataFunction={loadDataFunction}
-              isLoading={isLoading}
-              maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_DIFF_HEIGHT}
-              minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_DIFF_HEIGHT}
-              leftSideTitleIcon={delta?.ignoreIncoming === true ? faCheckCircle : faTrash}
-              rightSideTitleIcon={delta?.ignoreIncoming === false ? faCheckCircle : faTrash}
-              sourceCode={sourceContent}
-              destinationCode={destinationContent}
-            />
-            <SaveButtonContainer
-              extraButtons={
-                <MergeSyncTaskWizardSelectDeltaVersionButton
-                  selectDeltaFunction={() => selectDeltaFunction(Number(activeTab), true)}
-                  isLoading={isLoading}
-                  fieldName={"destinationContent"}
-                  fileContent={destinationContent}
-                  type={"Destination Branch"}
-                  selected={delta?.ignoreIncoming === true}
-                  buttonText={"Keep Existing Changes on Destination Branch"}
-                  savingButtonText={"Saving Commit Selection"}
-                  savedButtonText={"Keeping Original Changes on Destination Branch"}
-                />
-              }
-            >
-              <MergeSyncTaskWizardSelectDeltaVersionButton
-                selectDeltaFunction={() => selectDeltaFunction(Number(activeTab), false)}
-                isLoading={isLoading}
-                fieldName={"sourceContent"}
-                fileContent={sourceContent}
-                type={"Source Branch"}
-                selected={delta?.ignoreIncoming === false}
-                buttonText={"Merge In Changes from Source Branch"}
-                savingButtonText={"Saving Commit Selection"}
-                savedButtonText={"Merging in Changes from Source Branch"}
-              />
-            </SaveButtonContainer>
-          </div>
-        );
-      }
+    if (destinationContent.length < 1 && sourceContent.length < 1) {
+      return <div className={"m-2"}>No changes returned from the service</div>;
     }
+
+    return (
+      <div className={"m-2"}>
+        <MonacoEditorCodeDiffInputBase
+          originalContent={destinationContent}
+          modifiedContent={sourceContent}
+          isLoading={isLoading}
+          disabled={isLoading}
+          height={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT}
+          theme={internalTheme}
+          inlineDiff={inlineDiff}
+          onChangeHandler={onChangeHandler}
+        />
+      </div>
+    );
   };
 
   return (
     <VanitySetTabAndViewContainer
       icon={faBracketsCurly}
-      title={`Diff Selection`}
-      tabColumnSize={1}
-      verticalTabContainer={getVerticalTabContainer()}
+      title={`Diff Editor`}
+      tabColumnSize={0}
+      titleRightSideButton={getTitleBarActionButtons()}
       bodyClassName={"mx-0"}
       currentView={getCurrentView()}
       isLoading={isLoading}
       loadDataFunction={loadDataFunction}
-      minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_CONTAINER_HEIGHT}
-      maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_CONTAINER_HEIGHT}
+      minimumHeight={
+        MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_CONTAINER_HEIGHT
+      }
+      maximumHeight={
+        MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_CONTAINER_HEIGHT
+      }
     />
   );
 };
@@ -138,6 +121,10 @@ MergeSyncTaskWizardDiffSelectorVerticalTabContainer.propTypes = {
   loadDataFunction: PropTypes.func,
   sourceContent: PropTypes.string,
   destinationContent: PropTypes.string,
+  comparisonFileModel: PropTypes.object,
+  setComparisonFileModel: PropTypes.func,
+  wizardModel: PropTypes.object,
+  setWizardModel: PropTypes.func,
 };
 
 export default MergeSyncTaskWizardDiffSelectorVerticalTabContainer;
