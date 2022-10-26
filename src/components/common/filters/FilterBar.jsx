@@ -64,6 +64,7 @@ function FilterBar(
         <SearchFilter
           isLoading={isLoading}
           paginationModel={filterModel}
+          searchText={filterModel?.getData("search")}
           loadData={loadData}
           className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
           metadata={metadata}

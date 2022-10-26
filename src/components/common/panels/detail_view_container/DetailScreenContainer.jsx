@@ -58,7 +58,7 @@ function DetailScreenContainer(
       <TitleBar
         isLoading={isLoading}
         parentBreadcrumb={parentBreadcrumb}
-        titleIcon={breadcrumb?.icon}
+        titleIcon={breadcrumb?.dynamicIconFunction ? breadcrumb?.dynamicIconFunction(dataObject) : breadcrumb?.icon}
         title={dataObject?.getDetailViewTitle()}
         inactive={activeField ? dataObject?.getData(activeField) === false : false}
         titleActionBar={titleActionBar}

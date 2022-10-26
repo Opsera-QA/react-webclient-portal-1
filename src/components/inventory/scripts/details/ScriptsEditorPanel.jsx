@@ -8,6 +8,7 @@ import VanityEditorPanelContainer from "components/common/panels/detail_panel_co
 import ScriptLanguageSelectInput
   from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
 import ScriptValueInput from "components/inventory/scripts/details/ScriptValueInput";
+import DataValidatorInput from "components/common/inputs/object/data_validator/DataValidatorInput";
 
 export default function ScriptsEditorPanel(
   {
@@ -27,16 +28,16 @@ export default function ScriptsEditorPanel(
       className={"mx-2 mb-2"}
     >
       <Row>
-        <Col md={6}>
+        <Col xs={12} md={6}>
           <TextInputBase disabled={!scriptModel?.isNew()} setDataObject={setScriptModel} dataObject={scriptModel} fieldName={"name"}/>
         </Col>
-        <Col md={6}>
+        <Col xs={12} md={6}>
           <ScriptLanguageSelectInput setModel={setScriptModel} model={scriptModel} />
         </Col>
-        <Col md={8}>
+        <Col xs={12}>
           <ScriptValueInput setModel={setScriptModel} model={scriptModel} />
         </Col>
-        <Col md={8} className={"my-2"}>
+        <Col xs={12}>
           <RoleAccessInput
             disabled={scriptModel?.canEditAccessRoles() !== true}
             model={scriptModel}

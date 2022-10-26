@@ -11,27 +11,9 @@ import customParametersMetadata
 import CustomParameterRoleHelper from "@opsera/know-your-role/roles/registry/parameters/customParameterRole.helper";
 import useGetParameterModel from "components/inventory/parameters/hooks/useGetParameterModel";
 import {
-  getColumnHeader,
-  getColumnId,
   getTableBooleanIconColumn,
   getTableTextColumn,
-} from "components/common/table/table-column-helpers-v2";
-
-export const getParameterValueColumn = (field, className, width) => {
-  return {
-    header: getColumnHeader(field),
-    id: getColumnId(field),
-    width: width,
-    template: function (text, row) {
-      if (row?.vaultEnabled === true) {
-        return "[Encrypted Value]";
-      }
-
-      return (row?.value);
-    },
-    class: className,
-  };
-};
+} from "components/common/table/table-column-helpers";
 
 export default function ParameterTable(
   {
@@ -51,8 +33,7 @@ export default function ParameterTable(
   const { getNewParameterModel } = useGetParameterModel();
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "name"), "no-wrap-inline", 350),
-      getParameterValueColumn(getField(fields, "value")),
+      getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
       getTableBooleanIconColumn(getField(fields, "vaultEnabled"), undefined, 150),
     ],
     [fields]
@@ -66,26 +47,26 @@ export default function ParameterTable(
     );
   };
 
-  const handleRowSelectFunction = (row) => {
-    if (row == null) {
+  const handleRowSelectFunction = (selectedData) => {
+    if (selectedData == null) {
       setParameterModel(undefined);
       return;
     }
 
     const newModel = getNewParameterModel(
-      row,
+      selectedData,
       false,
       setParameterModel,
       loadData,
     );
 
+    setParameterModel(undefined);
     setParameterModel({...newModel});
   };
 
   const getParameterTable = () => {
     return (
       <VanitySelectionTable
-        className={"table-no-border"}
         noDataMessage={"No Parameters have been created yet"}
         data={data}
         columns={columns}

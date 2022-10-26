@@ -3,7 +3,7 @@ import taskActions from "components/tasks/task.actions";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import { taskHelper } from "components/tasks/task.helper";
-import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export class TaskModel extends ModelBase {
   constructor(
@@ -99,6 +99,17 @@ export class TaskModel extends ModelBase {
 
   getDetailViewLink = () => {
     return taskHelper.getModelDetailViewLink(this);
+  };
+
+  clone = () => {
+    return new TaskModel(DataParsingHelper.cloneDeep(
+        { ...this.data }),
+      this.isNew(),
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this.loadData,
+      this.setStateFunction,
+    );
   };
 }
 

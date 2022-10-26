@@ -42,6 +42,12 @@ regexDefinitions.imagePathField = {
   errorFormText: "Only links with valid image file extensions allowed",
 };
 
+regexDefinitions.uniqueIdentifier = {
+  regex: /^[a-z0-9-_]*$/,
+  formText: "Letters, numbers, dashes, and underscores are allowed",
+  errorFormText: "Only letters, numbers, dashes, and underscores are allowed"
+};
+
 regexDefinitions.generalTextWithSpacesSlash = {
   regex: /^[A-Za-z0-9'\\/\-_.: ]*$/,
   formText: "Letters, numbers, spaces, slashes, dashes, apostrophes, colons, underscores, and periods are allowed",

@@ -1,23 +1,22 @@
 import React from "react";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import { faChartNetwork, faCogs, faServer } from "@fortawesome/pro-light-svg-icons";
+import { faServer } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import AccountSettingsSubNavigationBarBase from "components/settings/AccountSettingsSubNavigationBarBase";
 
-function SiteRoleManagementSubNavigationBar({activeTab}) {
+function SiteRoleManagementSubNavigationBar({ activeTab }) {
   const history = useHistory();
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
 
+    if (tabSelection === activeTab) {
+      return;
+    }
+
     switch (tabSelection) {
-      case "accountSettings":
-        history.push(`/settings`);
-        return;
-      case "insightsSettings":
-        history.push(`/settings/insights`);
-        return;
       case "siteRoles":
         history.push(`/settings/site-roles`);
         return;
@@ -43,19 +42,8 @@ function SiteRoleManagementSubNavigationBar({activeTab}) {
 
   return (
     <NavigationTabContainer>
-       <NavigationTab
-        icon={faCogs}
-        tabName={"accountSettings"}
-        handleTabClick={handleTabClick}
+      <AccountSettingsSubNavigationBarBase
         activeTab={activeTab}
-        tabText={"Account Settings"}
-      />
-      <NavigationTab
-        icon={faChartNetwork}
-        tabName={"insightsSettings"}
-        handleTabClick={handleTabClick}
-        activeTab={activeTab}
-        tabText={"Insights Settings"}
       />
       <NavigationTab
         icon={faServer}

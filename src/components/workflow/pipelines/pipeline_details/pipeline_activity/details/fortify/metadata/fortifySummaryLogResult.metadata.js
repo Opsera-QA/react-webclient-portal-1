@@ -9,10 +9,20 @@ const fortifySummaryLogResultMetaData = {
       label: "Release Id",
       id: "fortifyReleaseId",
     },
+    {
+      label: "Application Name",
+      id: "fortifyApplicationName",
+    },
+    {
+      label: "Release Name",
+      id: "fortifyReleaseName",
+    },
   ],
   newObjectFields: {
     fortifyApplicationId: "",
     fortifyReleaseId: "",
+    fortifyApplicationName: "",
+    fortifyReleaseName: "",
   }
 };
 

@@ -7,11 +7,11 @@ import {
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
 import { capitalizeFirstLetter, hasStringValue, truncateString } from "components/common/helpers/string-helpers";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
-import {getTaskTypeLabel} from "components/tasks/task.types";
 import {THRESHOLD_LEVELS} from "components/common/list_of_values_input/pipelines/thresholds/PipelineThresholdLevelSelectInputBase";
 import {getCustomTableAccessor, getCustomTableHeader} from "components/common/table/table-column-helpers";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { getDurationInDaysAndHours } from "components/insights/charts/gitscrapper/git-scraper-utility";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export const FILTER_TYPES = {
   SEARCH_FILTER: "inputFilter",
@@ -37,7 +37,7 @@ export const getOwnerNameField = (maxWidth, headerText = "Owner Name") => {
 export const getTableTextColumnWithoutField = (header, id) => {
   return {
     header: header,
-    id: id
+    id: id,
   };
 };
 
@@ -73,6 +73,40 @@ export const getTableTextColumn = (field, className, maxWidth = undefined, filte
   };
 };
 
+export const getEncodedTableTextColumn = (field, className, maxWidth = undefined, filterType, tooltipTemplateFunction ) => {
+  let header = getColumnHeader(field);
+
+  if (filterType) {
+    header.push({ content: filterType });
+  }
+
+  return {
+    header: header,
+    id: getColumnId(field),
+    tooltipTemplate: tooltipTemplateFunction,
+    class: className,
+    maxWidth: maxWidth,
+    template: function (value, row, col) {
+      const property = col?.id;
+      if (hasStringValue(property) === true) {
+        const parsedValue = dataParsingHelper.safeObjectPropertyParser(
+          row,
+          property,
+          "",
+        );
+
+        if (hasStringValue(parsedValue) === true || typeof parsedValue === "number") {
+          return (
+            encodeURIComponent(parsedValue)
+          );
+        }
+      }
+
+      return "";
+    },
+  };
+};
+
 export const getUppercaseTableTextColumn = (field, className, maxWidth = undefined, filterType, tooltipTemplateFunction ) => {
   let header = getColumnHeader(field);
 
@@ -86,6 +120,25 @@ export const getUppercaseTableTextColumn = (field, className, maxWidth = undefin
     tooltipTemplate: tooltipTemplateFunction,
     template: (value) => {
       return capitalizeFirstLetter(value);
+    },
+    class: className,
+    maxWidth: maxWidth
+  };
+};
+
+export const getEncodedUppercaseTableTextColumn = (field, className, maxWidth = undefined, filterType, tooltipTemplateFunction ) => {
+  let header = getColumnHeader(field);
+
+  if (filterType) {
+    header.push({ content: filterType });
+  }
+
+  return {
+    header: header,
+    id: getColumnId(field),
+    tooltipTemplate: tooltipTemplateFunction,
+    template: (value) => {
+      return capitalizeFirstLetter(encodeURIComponent(value));
     },
     class: className,
     maxWidth: maxWidth
@@ -138,16 +191,16 @@ export const getTableIdColumn = (headerText = "ID", className) => {
     header:  [{ text: headerText }],
     id: "_id",
     class: className,
-    maxWidth: 200
-  };
-};
+    maxWidth: 200,
+    template: function (id) {
+      if (id == null) {
+        return "";
+      }
 
-export const getEditableTextColumn = (field, maxLength, className, editable = true) => {
-  return {
-    header: getColumnHeader(field),
-    id: getColumnId(field),
-    class: className ? className : undefined,
-    editable: editable,
+      const parsedId = DataParsingHelper.parseMongoDbId(id);
+
+      return parsedId ? parsedId : "INVALID ID";
+    },
   };
 };
 

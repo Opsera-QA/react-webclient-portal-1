@@ -8,8 +8,13 @@ import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
-function PackerPipelineStepConfigurationSummaryPanel({ packerPipelineDataObject, pipelineData, setActiveTab }) {
-  if (packerPipelineDataObject == null) {
+export default function PackerPipelineStepConfigurationSummaryPanel(
+  {
+    packerStepModel,
+    pipelineData,
+    setActiveTab,
+  }) {
+  if (packerStepModel == null) {
     return <LoadingDialog size="sm" />;
   }
 
@@ -17,25 +22,25 @@ function PackerPipelineStepConfigurationSummaryPanel({ packerPipelineDataObject,
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={packerPipelineDataObject} fieldName={"type"}/>
+          <TextFieldBase dataObject={packerStepModel} fieldName={"type"}/>
         </Col>
         <Col lg={6}>
-          <ToolNameField model={packerPipelineDataObject} fieldName={"gitToolId"}/>
+          <ToolNameField model={packerStepModel} fieldName={"gitToolId"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={packerPipelineDataObject} fieldName={"gitRepository"}/>
+          <TextFieldBase dataObject={packerStepModel} fieldName={"gitRepository"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={packerPipelineDataObject} fieldName={"defaultBranch"}/>
+          <TextFieldBase dataObject={packerStepModel} fieldName={"defaultBranch"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={packerPipelineDataObject} fieldName={"gitFilePath"}/>
+          <TextFieldBase dataObject={packerStepModel} fieldName={"gitFilePath"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={packerPipelineDataObject} fieldName={"gitRepositoryID"}/>
+          <TextFieldBase dataObject={packerStepModel} fieldName={"gitRepositoryID"}/>
         </Col>
         <Col lg={6}>
-          <JsonField dataObject={packerPipelineDataObject} fieldName={"keyValueMap"}/>
+          <JsonField dataObject={packerStepModel} fieldName={"keyValueMap"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
@@ -43,10 +48,7 @@ function PackerPipelineStepConfigurationSummaryPanel({ packerPipelineDataObject,
 }
 
 PackerPipelineStepConfigurationSummaryPanel.propTypes = {
-  packerPipelineDataObject: PropTypes.object,
+  packerStepModel: PropTypes.object,
   pipelineData: PropTypes.object,
   setActiveTab: PropTypes.func
 };
-
-
-export default PackerPipelineStepConfigurationSummaryPanel;

@@ -8,6 +8,12 @@ insightsLookupActions.getComponentNames = async (getAccessToken, cancelTokenSour
   return await baseActions.handleNodeAnalyticsApiGetRequest(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+insightsLookupActions.getComponentByName = async (getAccessToken, cancelTokenSource, componentName) => {
+  const apiUrl = `/analytics/sfdc/v1/component/get-component-by-name`;
+  const postBody = { componentName: componentName };
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 insightsLookupActions.searchComponents = async (getAccessToken, cancelTokenSource, startDate, endDate, componentNames) => {
   const apiUrl = `/analytics/sfdc/v1/component`;
   const urlParams = {

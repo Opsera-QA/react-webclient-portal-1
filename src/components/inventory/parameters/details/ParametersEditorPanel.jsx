@@ -8,8 +8,15 @@ import VanityEditorPanelContainer from "components/common/panels/detail_panel_co
 import ParameterVaultEnabledToggle from "components/inventory/parameters/details/ParameterVaultEnabledToggle";
 import TogglePasswordTextAreaInput from "components/common/inputs/textarea/password/TogglePasswordTextAreaInput";
 import ParameterValueTextAreaInput from "components/inventory/parameters/details/ParameterValueTextAreaInput";
+import DataValidatorInput from "components/common/inputs/object/data_validator/DataValidatorInput";
 
-export default function ParametersEditorPanel({ parameterModel, setParameterModel, handleClose }) {
+export default function ParametersEditorPanel(
+  {
+    parameterModel,
+    setParameterModel,
+    handleClose,
+  }) {
+
   const getValueInput = () => {
     if (parameterModel?.getData("vaultEnabled") === true && parameterModel?.isNew() !== true) {
       return (
@@ -44,22 +51,26 @@ export default function ParametersEditorPanel({ parameterModel, setParameterMode
       className={"mx-2 mb-2"}
     >
       <Row>
-        <Col md={12} lg={parameterModel?.isNew() ? 4 : 5}>
+        <Col xs={12} sm={6}>
           <TextInputBase
             disabled={!parameterModel?.isNew()}
             setDataObject={setParameterModel}
             dataObject={parameterModel}
             fieldName={"name"}
           />
+        </Col>
+        <Col xs={12} sm={6}>
           <ParameterVaultEnabledToggle
             fieldName={"vaultEnabled"}
             setModel={setParameterModel}
             model={parameterModel}
             disabled={!parameterModel?.isNew()}
           />
+        </Col>
+        <Col md={12}>
           {getValueInput()}
         </Col>
-        <Col md={12} lg={parameterModel?.isNew() ? 8 : 7} className={"my-2"}>
+        <Col md={12}>
           <RoleAccessInput
             disabled={parameterModel.isNew() === false && parameterModel?.canEditAccessRoles() !== true}
             model={parameterModel}

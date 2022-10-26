@@ -44,15 +44,15 @@ function ScreenContainer(
 
     if (navigationTabContainer) {
       return (
-        <div className="mb-3">
+        <div className={"mb-2"}>
           {navigationTabContainer}
         </div>
       );
     }
 
     return (
-      <div className="mb-3">
-        <div className="sub-navigation-block" />
+      <div className={"mb-2"}>
+        <div className={"sub-navigation-block"} />
       </div>
     );
   };
@@ -62,7 +62,7 @@ function ScreenContainer(
 
     if (hasStringValue(pageDescription) === true) {
       return (
-        <div className={"page-description px-3 py-2"}>
+        <div className={"page-description px-3 pt-2"}>
           {pageDescription}
         </div>
       );
@@ -70,7 +70,7 @@ function ScreenContainer(
 
     if (hasStringValue(breadcrumbPageDescription) === true) {
       return (
-        <div className={"page-description px-3 py-2"}>
+        <div className={"page-description px-3 pt-2"}>
           {breadcrumbPageDescription}
         </div>
       );
