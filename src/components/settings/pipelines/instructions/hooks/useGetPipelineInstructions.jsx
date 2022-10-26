@@ -16,7 +16,7 @@ export default function useGetPipelineInstructions() {
   } = useComponentStateReference();
 
   useEffect(() => {
-    setPipelineInstructions(undefined);
+    setPipelineInstructions([]);
     loadData().catch(() => {});
   }, []);
 

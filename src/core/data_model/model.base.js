@@ -505,6 +505,10 @@ export default class ModelBase {
     return this.canUpdate() === true;
   };
 
+  canTransferOwnership = () => {
+    return false;
+  };
+
   handleLiveMessage = (liveMessage) => {
     throw "This action is not supported yet";
   };

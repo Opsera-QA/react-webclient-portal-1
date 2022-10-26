@@ -10,6 +10,7 @@ import PipelineInstructionsTypeField
   from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsTypeField";
 import PipelineInstructionsRoleAccessInlineInput
   from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsRoleAccessInlineInput";
+import RichTextField from "components/common/fields/rich_text/RichTextField";
 
 export default function PipelineInstructionsSummaryPanel(
   {
@@ -26,12 +27,14 @@ export default function PipelineInstructionsSummaryPanel(
       <Row>
         <Col lg={6}>
           <TextFieldBase
+            className={"mb-2"}
             dataObject={pipelineInstructionsModel}
             fieldName={"name"}
           />
         </Col>
         <Col lg={6}>
           <OwnerNameField
+            className={"mb-2"}
             model={pipelineInstructionsModel}
           />
         </Col>
@@ -43,6 +46,12 @@ export default function PipelineInstructionsSummaryPanel(
         </Col>
         <Col lg={6}>
           <PipelineInstructionsTypeField
+            model={pipelineInstructionsModel}
+          />
+        </Col>
+        <Col xs={12}>
+          <RichTextField
+            fieldName={"instructions"}
             model={pipelineInstructionsModel}
           />
         </Col>

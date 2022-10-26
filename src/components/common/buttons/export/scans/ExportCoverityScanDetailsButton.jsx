@@ -1,17 +1,25 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
 import Button from "react-bootstrap/Button";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
-import ExportCoverityScanDataModal from "../../../modal/export_data/ExportCoverityScanDataModal";
+import ExportCoverityScanDataOverlay from "../../../modal/export_data/ExportCoverityScanDataOverlay";
+import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
+import ExportDataButtonBase from "../../../modal/export_data/ExportDataButtonBase";
 
 function ExportSonarQubeScanDetailsButton({isLoading, scanData, className, allCoverityIssues}) {
-  const [showExportModal, setShowExportModal] = useState(false);
+  const toastContext = useContext(DialogToastContext);
 
-  const closeModal = () => {
-    setShowExportModal(false);
+  const launchOverlayFunction = () => {
+    toastContext.showOverlayPanel(
+      <ExportCoverityScanDataOverlay
+        isLoading={isLoading}
+        formattedData={formattedData()}
+        rawData={rawDataResults()}
+      />
+    );
   };
 
   const rawDataResults = () =>{
@@ -28,27 +36,12 @@ function ExportSonarQubeScanDetailsButton({isLoading, scanData, className, allCo
 
   // TODO: Refine when more is complete
   return (
-    <>
-      <TooltipWrapper innerText={"Export"}>
-        <div className={className}>
-          <Button
-            variant={"outline-primary"}
-            size={"sm"}
-            disabled={isLoading}
-            onClick={() => setShowExportModal(true)}>
-            <span><IconBase icon={faFileDownload}/></span>
-          </Button>
-        </div>
-      </TooltipWrapper>
-      <ExportCoverityScanDataModal
-        showModal={showExportModal}
-        closeModal={closeModal}
-        setParentVisibility={setShowExportModal}
-        isLoading={isLoading}
-        formattedData={formattedData()}
-        rawData={rawDataResults()}
-      />
-    </>
+    <ExportDataButtonBase
+      clasName={className}
+      isLoading={isLoading}
+      allCoverityIssues={allCoverityIssues}
+      launchOverlayFunction={launchOverlayFunction}
+    />
   );
 }
 

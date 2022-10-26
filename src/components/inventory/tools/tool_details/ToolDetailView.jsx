@@ -3,9 +3,7 @@ import { useParams } from "react-router-dom";
 import ToolDetailPanel from "components/inventory/tools/details/panel/ToolDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
-import ActionBarDeleteToolButton from "components/common/actions/buttons/tool/ActionBarDeleteToolButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import ActionBarTransferToolButton from "components/common/actions/buttons/tool/ActionBarTransferToolButton";
 import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 import ToolDetailHelpDocumentation from "../../../common/help/documentation/tool_registry/ToolDetailHelpDocumentation";
 import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
@@ -14,6 +12,8 @@ import registryToolMetadata from "@opsera/definitions/constants/registry/tools/r
 import useGetRegistryToolModelById from "components/inventory/tools/hooks/useGetRegistryToolModelById";
 import RegistryToolViewJsonActionBarButton
   from "components/inventory/tools/details/json/RegistryToolViewJsonActionBarButton";
+import ActionBarDeleteToolButton from "components/inventory/tools/action_bar/ActionBarDeleteToolButton";
+import ActionBarTransferToolButton from "components/inventory/tools/action_bar/ActionBarTransferToolButton";
 
 function ToolDetailView() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"workspace"} />);

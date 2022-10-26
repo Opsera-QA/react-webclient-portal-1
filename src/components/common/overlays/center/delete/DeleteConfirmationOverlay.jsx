@@ -4,7 +4,7 @@ import { buttonLabelHelper } from "temp-library-components/helpers/label/button/
 import { DialogToastContext } from "contexts/DialogToastContext";
 import DeleteOverlayBase from "components/common/overlays/center/delete/DeleteOverlayBase";
 
-export default function DeleteOverlay(
+export default function DeleteConfirmationOverlay(
   {
     type,
     titleIcon,
@@ -50,7 +50,7 @@ export default function DeleteOverlay(
   );
 }
 
-DeleteOverlay.propTypes = {
+DeleteConfirmationOverlay.propTypes = {
   titleIcon: PropTypes.object,
   type: PropTypes.string,
   closePanelFunction: PropTypes.func,
