@@ -43,7 +43,7 @@ function SelectInputBase(
     inputHelpOverlay,
     helpTooltipText,
 }) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
   const [internalErrorMessage, setInternalErrorMessage] = useState("");
 
