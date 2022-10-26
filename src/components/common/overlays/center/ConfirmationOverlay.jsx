@@ -83,7 +83,7 @@ function ConfirmationOverlay(
             }}
           >
             {showToasts && toastContext?.getInlineBanner()}
-            <div className={"d-flex p-3 confirmation-overlay-panel-body-text"}>
+            <div className={"d-flex bg-white confirmation-overlay-panel-body-text"}>
               {getBody()}
             </div>
           </div>

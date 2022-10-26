@@ -23,10 +23,12 @@ function PipelineExportToGitOverlay({ pipeline }) {
           handleClose={closePanel}
         />}
     >
-      <PipelineExportToGitPanel
-        pipeline={pipeline}
-        handleClose={closePanel}
-      />
+      <div className={"m-3"}>
+        <PipelineExportToGitPanel
+          pipeline={pipeline}
+          handleClose={closePanel}
+        />
+      </div>
     </ConfirmationOverlay>
   );
 }

@@ -1,17 +1,16 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import ExportDataPanel from "components/common/modal/export_data/ExportDataPanel";
 import { faFileDownload } from "@fortawesome/pro-light-svg-icons";
+import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 
-export default function ExportDataOverlay(
-  {
-    isLoading,
-    getRawData,
-    getPdfExporter,
-    getCsvData,
-  }) {
+export default function ExportDataOverlay({
+  isLoading,
+  getRawData,
+  getPdfExporter,
+  getCsvData,
+}) {
   const toastContext = useContext(DialogToastContext);
 
   const closePanelFunction = () => {
@@ -20,20 +19,22 @@ export default function ExportDataOverlay(
   };
 
   return (
-    <CenterOverlayContainer
+    <ConfirmationOverlay
       closePanel={closePanelFunction}
       titleText={"Export Data"}
       showCloseButton={false}
       titleIcon={faFileDownload}
     >
-      <ExportDataPanel
-        isLoading={isLoading}
-        getRawData={getRawData}
-        getPdfExporter={getPdfExporter}
-        getCsvData={getCsvData}
-        closePanelFunction={closePanelFunction}
-      />
-    </CenterOverlayContainer>
+      <div className={"m-3 w-100"}>
+        <ExportDataPanel
+          isLoading={isLoading}
+          getRawData={getRawData}
+          getPdfExporter={getPdfExporter}
+          getCsvData={getCsvData}
+          closePanelFunction={closePanelFunction}
+        />
+      </div>
+    </ConfirmationOverlay>
   );
 }
 
@@ -43,5 +44,3 @@ ExportDataOverlay.propTypes = {
   getCsvData: PropTypes.func,
   getPdfExporter: PropTypes.func,
 };
-
-
