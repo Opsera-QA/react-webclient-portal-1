@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import jsPDF from "jspdf";
-import ExportDataOverlay from "./ExportDataOverlay";
+import ExportDataOverlay from "components/common/modal/export_data/ExportDataOverlay";
 
 function ExportSonarQubeScanDataOverlay({ formattedData, rawData, isLoading}) {
   const getRawData = () => {
