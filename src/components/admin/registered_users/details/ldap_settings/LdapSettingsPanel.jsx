@@ -10,6 +10,7 @@ import SyncLdapButton from "components/common/buttons/ldap/SyncLdapButton";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import axios from "axios";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 
 function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
   const [userLdapModel, setUserLdapModel] = useState(undefined);
@@ -59,16 +60,31 @@ function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
     <SummaryPanelContainer className={"m-3"}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={userLdapModel} fieldName={"organization"}/>
+          <TextFieldBase
+            fieldName={"organization"}
+            dataObject={userLdapModel}
+            showClipboardButton={true}
+          />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={userLdapModel} fieldName={"orgAccountOwnerEmail"}/>
+          <EmailAddressField
+            fieldName={"orgAccountOwnerEmail"}
+            model={userLdapModel}
+          />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={userLdapModel} fieldName={"account"}/>
+          <TextFieldBase
+            fieldName={"account"}
+            dataObject={userLdapModel}
+            showClipboardButton={true}
+          />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={userLdapModel} fieldName={"domain"}/>
+          <TextFieldBase
+            fieldName={"domain"}
+            dataObject={userLdapModel}
+            showClipboardButton={true}
+          />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={userLdapModel} fieldName={"division"}/>

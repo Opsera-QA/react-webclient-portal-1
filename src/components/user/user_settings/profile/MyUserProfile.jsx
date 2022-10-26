@@ -66,7 +66,7 @@ export default function MyUserProfile() {
     }
 
     return (
-      <div className="pt-2">
+      <div>
         {getOpseraUserInfo()}
         <hr />
         {getLdapUserInfo()}

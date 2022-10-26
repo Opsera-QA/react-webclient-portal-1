@@ -7,6 +7,7 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import GroupField from "components/common/fields/multiple_items/GroupField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import SiteRoleField from "components/common/fields/access/SiteRoleField";
+import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 
 function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString }) {
 
@@ -31,7 +32,7 @@ function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString 
           <TextFieldBase fieldName={"lastName"} dataObject={userData}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase fieldName={"email"} dataObject={userData}/>
+          <EmailAddressField fieldName={"email"} model={userData}/>
         </Col>
         <Col lg={6}>
           <SmartIdField fieldName={"_id"} model={userData}/>
@@ -42,17 +43,14 @@ function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString 
         <Col lg={6}>
           <TextFieldBase fieldName={"title"} dataObject={userData}/>
         </Col>
-        <Col lg={6}>
+        <Col lg={12}>
           <TextFieldBase fieldName={"domain"} dataObject={userData}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase fieldName={"ssoSystem"} dataObject={userData}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase fieldName={"ssoClientId"} dataObject={userData}/>
-        </Col>
-        <Col lg={12}>
-          <GroupField fieldName={"groups"} dataObject={userData}/>
+          <TextFieldBase showClipboardButton={true} fieldName={"ssoClientId"} dataObject={userData}/>
         </Col>
         <Col lg={6}>
           <DateFieldBase fieldName={"createdAt"} dataObject={userData}/>
@@ -60,8 +58,11 @@ function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString 
         <Col lg={6}>
           <DateFieldBase fieldName={"updatedAt"} dataObject={userData}/>
         </Col>
-        <Col lg={6}>
+        <Col lg={12}>
           <SiteRoleField />
+        </Col>
+        <Col lg={12}>
+          <GroupField fieldName={"groups"} dataObject={userData}/>
         </Col>
         {getConnectionString()}
       </Row>
