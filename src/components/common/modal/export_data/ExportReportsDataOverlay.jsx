@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ExportDataOverlay from "./ExportDataOverlay";
-import ExportDataModalBase from "components/common/modal/export_data/ExportDataModalBase";
 import jsPDF from "jspdf";
 import { format } from "date-fns";
 
