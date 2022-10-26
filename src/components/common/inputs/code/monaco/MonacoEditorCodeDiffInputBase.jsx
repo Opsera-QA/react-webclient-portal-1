@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { loader, DiffEditor } from "@monaco-editor/react";
 import MonacoEditorCodeInputBase from "./MonacoEditorCodeInputBase";
 
-// loader.config({ paths: { vs: "dependencies/vs" } });
+loader.config({ paths: { vs: "dependencies/vs" } });
 
 export default function MonacoEditorCodeDiffInputBase({
   mode,
