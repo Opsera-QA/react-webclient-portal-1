@@ -74,7 +74,7 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
   };
 
   const getCurrentView = () => {
-    if (destinationContent.length < 1 && sourceContent.length < 1) {
+    if (destinationContent?.length < 1 && sourceContent?.length < 1) {
       return <div className={"m-2"}>No changes returned from the service</div>;
     }
 
