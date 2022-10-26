@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ExportDataModalBase from "components/common/modal/export_data/ExportDataModalBase";
+import ExportDataOverlay from "./ExportDataOverlay";
 import jsPDF from "jspdf";
 
-function ExportCoverityScanDataModal({ showModal, closeModal, formattedData, rawData, isLoading}) {
+function ExportCoverityScanDataOverlay({ formattedData, rawData, isLoading}) {
   const getRawData = () => {
     return new Blob([rawData], {type : 'text/plain'});
   };
@@ -36,9 +36,7 @@ function ExportCoverityScanDataModal({ showModal, closeModal, formattedData, raw
   // };
 
   return (
-    <ExportDataModalBase
-      showModal={showModal}
-      handleCancelModal={closeModal}
+    <ExportDataOverlay
       isLoading={isLoading}
       getRawData={getRawData}
       getPdfExporter={getPdfExporter}
@@ -47,9 +45,7 @@ function ExportCoverityScanDataModal({ showModal, closeModal, formattedData, raw
   );
 }
 
-ExportCoverityScanDataModal.propTypes = {
-  showModal: PropTypes.bool,
-  closeModal: PropTypes.func.isRequired,
+ExportCoverityScanDataOverlay.propTypes = {
   dataToExport: PropTypes.any,
   rawData: PropTypes.any,
   formattedData: PropTypes.any,
@@ -57,4 +53,6 @@ ExportCoverityScanDataModal.propTypes = {
   exportFrom: PropTypes.any,
 };
 
-export default ExportCoverityScanDataModal;
+export default ExportCoverityScanDataOverlay;
+
+
