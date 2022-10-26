@@ -8,8 +8,8 @@ import Col from "react-bootstrap/Col";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SyncLdapButton from "components/common/buttons/ldap/SyncLdapButton";
 import DateTimeField from "components/common/fields/date/DateTimeField";
-import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import axios from "axios";
+import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 
 function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
   const [userLdapModel, setUserLdapModel] = useState(undefined);
@@ -56,7 +56,7 @@ function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
   }
 
   return (
-    <EditorPanelContainer showRequiredFieldsMessage={false}>
+    <SummaryPanelContainer className={"m-3"}>
       <Row>
         <Col lg={6}>
           <TextFieldBase dataObject={userLdapModel} fieldName={"organization"}/>
@@ -78,7 +78,7 @@ function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
         </Col>
       </Row>
       {getSyncButton()}
-    </EditorPanelContainer>
+    </SummaryPanelContainer>
   );
 }
 
