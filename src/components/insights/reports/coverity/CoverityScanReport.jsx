@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { AuthContext } from "../../../contexts/AuthContext";
-import Model from "../../../core/data_model/model";
-import actionableInsightsGenericChartFilterMetadata
-  from "../charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import axios from "axios";
-import chartsActions from "../charts/charts-actions";
-import PropTypes from "prop-types";
-import ScreenContainer from "../../common/panels/general/ScreenContainer";
-import InsightsSubNavigationBar from "../InsightsSubNavigationBar";
 import CoverityScanReportTable from "./CoverityScanReportTable";
+import { AuthContext } from "contexts/AuthContext";
+import actionableInsightsGenericChartFilterMetadata
+  from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
+import Model from "core/data_model/model";
+import chartsActions from "components/insights/charts/charts-actions";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
+import PropTypes from "prop-types";
 
 
 function CoverityScanReport({ kpiConfiguration, dashboardData }) {
@@ -50,6 +50,7 @@ useEffect(() => {
     isMounted.current = false;
   };
 }, [JSON.stringify(dashboardData)]);
+
   const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     try {
       setIsLoading(true);

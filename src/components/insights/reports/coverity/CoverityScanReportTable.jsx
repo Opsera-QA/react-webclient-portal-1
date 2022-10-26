@@ -1,38 +1,40 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import sonarPipelineScanReportMetadata from "components/insights/reports/sonarPipelineScanReport.metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTally} from "@fortawesome/pro-light-svg-icons";
-import ExportSonarQubeScanDetailsButton from "components/common/buttons/export/scans/ExportCoverityScanDetailsButton";
+import coverityScanReportMetadata from "./coverityScanReportTable.metadata";
+import ExportCoverityScanDetailsButton
+  from "components/insights/reports/coverity/export/ExportCoverityScanDetailsButton";
 
-function SonarScanReportTable(
+function CoverityScanReportTable(
   {
     data,
-    allSonarIssues,
+    allCoverityIssues,
     isLoading,
     loadData,
     filterModel,
     setFilterModel,
   }) {
-  const fields = sonarPipelineScanReportMetadata.fields;
+  const fields = coverityScanReportMetadata.fields;
 
   const columns = useMemo(
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "project";})),
       getTableTextColumn(fields.find(field => { return field.id === "severity";})),
-      getTableTextColumn(fields.find(field => { return field.id === "type";})),
-      getTableTextColumn(fields.find(field => { return field.id === "line";})),
+      getTableTextColumn(fields.find(field => { return field.id === "owner";})),
+      getTableTextColumn(fields.find(field => { return field.id === "issue_category";})),
+      getTableTextColumn(fields.find(field => { return field.id === "issue_type";})),
+      getTableTextColumn(fields.find(field => { return field.id === "action";})),
       getTableTextColumn(fields.find(field => { return field.id === "status";})),
-      getTableTextColumn(fields.find(field => { return field.id === "author";})),
-      getTableTextColumn(fields.find(field => { return field.id === "message";})),
-      getTableTextColumn(fields.find(field => { return field.id === "component";})),
+      getTableTextColumn(fields.find(field => { return field.id === "date";})),
+      getTableTextColumn(fields.find(field => { return field.id === "file";})),
     ],
     []
   );
 
-  const getSonarQubeScanReportTable = () => {
+  const getCoverityScanReportTable = () => {
     return (
       <CustomTable
         columns={columns}
@@ -40,6 +42,7 @@ function SonarScanReportTable(
         isLoading={isLoading}
         paginationDto={filterModel}
         setPaginationDto={setFilterModel}
+        loadData={loadData}
       />
     );
   };
@@ -48,22 +51,22 @@ function SonarScanReportTable(
     <FilterContainer
       loadData={loadData}
       isLoading={isLoading}
-      body={getSonarQubeScanReportTable()}
+      body={getCoverityScanReportTable()}
       titleIcon={faTally}
-      title={"SonarQube Scan"}
+      title={"Coverity Scan"}
       className={"px-2 pb-2"}
-      exportButton={<ExportSonarQubeScanDetailsButton className={"ml-2"} isLoading={isLoading} scanData={data} allSonarIssues={allSonarIssues} />}
+      exportButton={<ExportCoverityScanDetailsButton className={"ml-2"} isLoading={isLoading} scanData={data} allCoverityIssues={allCoverityIssues} />}
     />
   );
 }
 
-SonarScanReportTable.propTypes = {
+CoverityScanReportTable.propTypes = {
   data: PropTypes.array,
-  allSonarIssues: PropTypes.array,
+  allCoverityIssues: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
 };
 
-export default SonarScanReportTable;
+export default CoverityScanReportTable;
