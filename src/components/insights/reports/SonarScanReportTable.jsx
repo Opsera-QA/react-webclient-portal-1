@@ -5,7 +5,7 @@ import sonarPipelineScanReportMetadata from "components/insights/reports/sonarPi
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTally} from "@fortawesome/pro-light-svg-icons";
-import ExportSonarQubeScanDetailsButton from "components/common/buttons/export/scans/ExportSonarQubeScanDetailsButton";
+import ExportSonarQubeScanDetailsButton from "components/insights/reports/export/ExportSonarQubeScanDetailsButton";
 
 function SonarScanReportTable(
   {
@@ -52,7 +52,14 @@ function SonarScanReportTable(
       titleIcon={faTally}
       title={"SonarQube Scan"}
       className={"px-2 pb-2"}
-      exportButton={<ExportSonarQubeScanDetailsButton className={"ml-2"} isLoading={isLoading} scanData={data} allSonarIssues={allSonarIssues} />}
+      exportButton={
+        <ExportSonarQubeScanDetailsButton
+          className={"ml-2"}
+          isLoading={isLoading}
+          scanData={data}
+          allSonarIssues={allSonarIssues}
+        />
+      }
     />
   );
 }
