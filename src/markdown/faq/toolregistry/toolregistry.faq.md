@@ -43,6 +43,6 @@
 ##### Related Articles
 
 
-[**Bring Your Own Vault**](https://opsera.atlassian.net/l/c/5kKfazK1)  
+[**Bring Your Own Vault**](https://docs.opsera.io/bring-your-own-vault)  
 [**Custom Parameters Help Documentation**](https://docs.opsera.io/tool-registry/parameters-creation)   
 [**Scripts Library Help Documentation**](https://docs.opsera.io/tool-registry/scripts-creation)
