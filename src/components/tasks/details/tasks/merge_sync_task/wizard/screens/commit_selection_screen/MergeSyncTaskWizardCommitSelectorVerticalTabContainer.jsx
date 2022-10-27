@@ -13,6 +13,8 @@ import {
   MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import {faPlus, faMinus, faEdit} from "@fortawesome/free-solid-svg-icons";
+import IconBase from "../../../../../../../common/icons/IconBase";
 
 const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
   {
@@ -57,10 +59,23 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
 
   const getShortenedName = (diffFile) => {
     const fileName = diffFile?.committedFile;
-
+    const fileAction = diffFile?.commitAction;
     if (hasStringValue(fileName)) {
       const lastIndexOf = fileName.lastIndexOf('/');
-      return fileName.substring(lastIndexOf + 1);
+      return <>{getActionIcon(fileAction)} {fileName.substring(lastIndexOf + 1)}</>;
+    }
+  };
+
+  const getActionIcon = (action) => {
+    switch(action?.toLowerCase()) {
+      case "added":
+        return (<IconBase icon={faPlus} className={"mr-1 green"}/>);
+      case "modified":
+        return (<IconBase icon={faEdit} className={"mr-1 yellow"}/>);
+      case "removed":
+        return (<IconBase icon={faMinus} className={"mr-1 red"}/>);
+      default:
+        return (<></>);
     }
   };
 
