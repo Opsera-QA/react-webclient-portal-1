@@ -13,7 +13,6 @@ export default function RichTextFieldBase (
     <InfoContainer
       titleIcon={faFileInvoice}
       titleText={title}
-      bodyClassName={"rich-text-input"}
     >
       <RichTextInputBase
         disabled={true}

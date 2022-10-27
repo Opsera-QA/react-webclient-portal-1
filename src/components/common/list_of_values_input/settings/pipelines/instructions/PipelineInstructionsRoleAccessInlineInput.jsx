@@ -11,7 +11,7 @@ export default function PipelineInstructionsRoleAccessInlineInput(
   {
     fieldName, 
     pipelineInstructionsModel, 
-    setPipelineInstructionsModel, 
+    setPipelineInstructionsModel,
     visible,
   }) {
   const {
@@ -50,4 +50,8 @@ PipelineInstructionsRoleAccessInlineInput.propTypes = {
   setPipelineInstructionsModel: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
+};
+
+PipelineInstructionsRoleAccessInlineInput.defaultProps = {
+  fieldName: "roles"
 };

@@ -34,7 +34,7 @@ function PipelineInstructionsDetailView() {
     return (
       <ActionBarContainer>
         <div>
-          <ActionBarBackButton path={"/settings/pipelines/"} />
+          <ActionBarBackButton path={"/settings/pipelines/instructions"} />
         </div>
         <div className={"d-flex"}>
           <ActionBarTransferOwnershipButtonBase
@@ -67,7 +67,7 @@ function PipelineInstructionsDetailView() {
       detailPanel={
         <PipelineInstructionsDetailPanel
           // isLoading={isLoading}
-          // loadData={loadData}
+          loadData={loadData}
           pipelineInstructionsModel={pipelineInstructionsModel}
           setPipelineInstructionsModel={setPipelineInstructionsModel}
         />
