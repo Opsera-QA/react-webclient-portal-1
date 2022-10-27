@@ -17,6 +17,7 @@ export default function PipelineInstructionsSummaryPanel(
     pipelineInstructionsModel,
     setPipelineInstructionsModel,
     setActiveTab,
+    loadDataFunction,
   } ) {
   if (pipelineInstructionsModel == null) {
     return <></>;
@@ -73,5 +74,6 @@ export default function PipelineInstructionsSummaryPanel(
 PipelineInstructionsSummaryPanel.propTypes = {
   pipelineInstructionsModel: PropTypes.object,
   setPipelineInstructionsModel: PropTypes.func,
-  setActiveTab: PropTypes.func
+  setActiveTab: PropTypes.func,
+  loadDataFunction: PropTypes.func,
 };

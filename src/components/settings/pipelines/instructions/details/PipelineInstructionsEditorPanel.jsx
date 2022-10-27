@@ -66,6 +66,7 @@ export default function PipelineInstructionsEditorPanel(
             fieldName={"instructions"}
             model={pipelineInstructionsModel}
             setModel={setPipelineInstructionsModel}
+            inputHeight={1000}
           />
         </Col>
         <Col xs={12}>

@@ -1,34 +1,10 @@
-import React, { useState } from "react";
-import {EditorState, convertToRaw, convertFromRaw} from 'draft-js';
-import Editor from '@draft-js-plugins/editor';
-import '@draft-js-plugins/static-toolbar/lib/plugin.css';
+import React, { useRef, useCallback } from "react";
+import { createReactEditorJS } from 'react-editor-js';
+import { EDITOR_JS_TOOLS } from './tools';
 import PropTypes from "prop-types";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-import createToolbarPlugin from '@draft-js-plugins/static-toolbar';
-const staticToolbarPlugin = createToolbarPlugin();
-const { Toolbar } = staticToolbarPlugin;
-const plugins = [staticToolbarPlugin];
-
-const getEditorState = (value) => {
-  try {
-    const parsedValue = DataParsingHelper.parseString(value);
-
-    if (!parsedValue) {
-      return EditorState.createWithText("");
-    }
-
-    const json = DataParsingHelper.parseJson(parsedValue);
-
-    if (json) {
-      return EditorState.createWithContent(convertFromRaw(DataParsingHelper.parseJson(value, {})));
-    }
-
-    return EditorState.createWithText("Invalid value could not be parsed.");
-  } catch (error) {
-    return EditorState.createWithText("Invalid value could not be parsed.");
-  }
-};
+const ReactEditorJS = createReactEditorJS();
 
 export default function RichTextInputBase (
   {
@@ -36,13 +12,16 @@ export default function RichTextInputBase (
     setDataFunction,
     disabled,
   }) {
-  const [editorState, setEditorState] = useState(getEditorState(value));
+  const editorCore = useRef(null);
 
-  const updateValue = (newValue) => {
-    setEditorState(newValue);
-    // \u0001 preserves proper spaces/newlines
-    setDataFunction(JSON.stringify(convertToRaw(editorState.getCurrentContent())));
-  };
+  const handleInitialize = useCallback((instance) => {
+    editorCore.current = instance;
+  }, []);
+
+  const handleSave = useCallback(async () => {
+    const savedData = JSON.stringify(await editorCore.current.save());
+    setDataFunction(savedData);
+  }, []);
 
   if (setDataFunction == null && disabled !== true) {
     return null;
@@ -50,24 +29,25 @@ export default function RichTextInputBase (
 
   if (disabled === true) {
     return (
-      <Editor
-        editorState={editorState}
-        onChange={() => {}}
-        customStyleMap={undefined}
+      <ReactEditorJS
+        minHeight={100}
+        readOnly={true}
+        defaultValue={DataParsingHelper.parseJson(value)}
+        logLevel={"ERROR"}
       />
     );
   }
 
   return (
-    <>
-      <Toolbar />
-      <Editor
-        editorState={editorState}
-        onChange={updateValue}
-        customStyleMap={undefined}
-        plugins={plugins}
-      />
-    </>
+    <ReactEditorJS
+      minHeight={100}
+      placeholder={"enter text"}
+      onChange={handleSave}
+      onInitialize={handleInitialize}
+      logLevel={"ERROR"}
+      defaultValue={DataParsingHelper.parseJson(value)}
+      tools={EDITOR_JS_TOOLS}
+    />
   );
 }
 
