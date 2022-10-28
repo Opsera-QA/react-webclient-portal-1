@@ -59,7 +59,8 @@ export default function PipelineInstructionsSummaryPanel(
           />
         </Col>
         <Col lg={12}>
-          <DescriptionField
+          <TextFieldBase
+            fieldName={"description"}
             dataObject={pipelineInstructionsModel}
           />
         </Col>

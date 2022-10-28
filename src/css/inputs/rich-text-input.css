@@ -6,7 +6,19 @@
     max-width: 100% !important;
 }
 
+/*.ce-block {*/
+/*    background: #F7F7F7;*/
+/*}*/
+
+/*.ce-block__content {*/
+/*    padding: 5px;*/
+/*    background: #FFFFFF;*/
+/*}*/
 
 .cdx-block {
     max-width: 100% !important;
+}
+
+.ce-toolbar--opened, .ce-settings--opened, .ce-toolbar__content, .ce-settings__plugin-zone {
+    z-index: 5000;
 }
