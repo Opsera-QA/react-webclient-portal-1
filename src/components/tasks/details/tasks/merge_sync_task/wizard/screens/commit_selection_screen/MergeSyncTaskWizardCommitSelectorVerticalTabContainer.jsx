@@ -6,12 +6,15 @@ import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/V
 import { faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
 import MergeSyncTaskWizardCommitViewer
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/MergeSyncTaskWizardCommitViewer";
+import axios from "axios";
 import InfoContainer from "components/common/containers/InfoContainer";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import {
   MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import {faPlus, faMinus, faEdit} from "@fortawesome/free-solid-svg-icons";
+import IconBase from "../../../../../../../common/icons/IconBase";
 
 const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
   {
@@ -23,15 +26,29 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
     setWizardModel,
   }) => {
   const [activeTab, setActiveTab] = useState(undefined);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const noDataFilesPulledMessage = "The Comparison Files pull has been completed. There is no data for the selected criteria.";
   const noDataFilesNotPulledMessage = "The Comparison Files list has not been received. Please click the table's refresh button to resume polling for the files.";
 
   useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
     setActiveTab(undefined);
 
     if (Array.isArray(diffFileList) && diffFileList?.length > 0) {
       setActiveTab('0');
     }
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, [diffFileList]);
 
   const handleTabClick = (newTab) => {
@@ -42,10 +59,23 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
 
   const getShortenedName = (diffFile) => {
     const fileName = diffFile?.committedFile;
-
+    const fileAction = diffFile?.commitAction;
     if (hasStringValue(fileName)) {
       const lastIndexOf = fileName.lastIndexOf('/');
-      return fileName.substring(lastIndexOf + 1);
+      return <>{getActionIcon(fileAction)} {fileName.substring(lastIndexOf + 1)}</>;
+    }
+  };
+
+  const getActionIcon = (action) => {
+    switch(action?.toLowerCase()) {
+      case "added":
+        return (<IconBase icon={faPlus} className={"mr-1 green"}/>);
+      case "modified":
+        return (<IconBase icon={faEdit} className={"mr-1 yellow"}/>);
+      case "removed":
+        return (<IconBase icon={faMinus} className={"mr-1 red"}/>);
+      default:
+        return (<></>);
     }
   };
 
