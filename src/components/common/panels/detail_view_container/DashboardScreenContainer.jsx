@@ -23,6 +23,7 @@ import TransferDashboardOwnershipButton
   from "components/common/buttons/insights/ownership/TransferDashboardOwnershipButton";
 import DashboardSubscriptionIcon from "components/common/icons/subscription/DashboardSubscriptionIcon";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import EditDashboardDateIcon from "../../icons/metrics/EditDashboardDateIcon";
 
 function DashboardScreenContainer(
   {
@@ -79,6 +80,12 @@ function DashboardScreenContainer(
           />
           <PublishCustomerDashboardIcon
             dashboardModel={dashboardModel}
+            className={"ml-3"}
+          />
+          <EditDashboardDateIcon
+            dashboardModel={dashboardModel}
+            setDashboardModel={setDashboardModel}
+            loadData={loadData}
             className={"ml-3"}
           />
           <PublishPlatformDashboardIcon
