@@ -28,7 +28,7 @@ export default function useGetScriptModel() {
     if (isNew === true) {
       newScriptModel.setData("roles", RoleHelper.getInitialRolesArray(userData));
     } else {
-      newScriptModel.setData("value", undefined);
+      newScriptModel.setData("value", undefined, false);
     }
 
     return newScriptModel;

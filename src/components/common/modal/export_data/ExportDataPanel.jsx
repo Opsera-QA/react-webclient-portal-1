@@ -10,6 +10,8 @@ import RadioButtonInputContainer from "components/common/inputs/radio/RadioButto
 import RadioButtonOption from "components/common/inputs/radio/RadioButtonOption";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import { Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
 
 export default function ExportDataPanel(
   {
@@ -95,19 +97,26 @@ export default function ExportDataPanel(
 
   return (
     <div
-      className={"text-color"}
+      className={"text-color w-100"}
     >
       {toastContext.getInlineBanner()}
-      <div className="p-3">
-        {children}
-        <TextInputBase
-          fieldName={"fileName"}
-          dataObject={exportDataModel}
-          setDataObject={setExportDataModel}
-        />
-        <div className={"mt-2"}>{getExportOptions()}</div>
-      </div>
-      <ButtonContainerBase className={"p-3"}>
+      <Row>
+        <Col xs={12}>
+          {children}
+        </Col>
+        <Col xs={12}>
+          <TextInputBase
+            className={"mb-2"}
+            fieldName={"fileName"}
+            dataObject={exportDataModel}
+            setDataObject={setExportDataModel}
+          />
+        </Col>
+        <Col xs={12}>
+          {getExportOptions()}
+        </Col>
+      </Row>
+      <ButtonContainerBase className={"mt-3"}>
         <ExportButton
           getRawData={getRawData}
           getPdfExporter={getPdfExporter}

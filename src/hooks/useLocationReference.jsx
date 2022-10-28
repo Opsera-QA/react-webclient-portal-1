@@ -43,6 +43,7 @@ export default function useLocationReference() {
 
   return ({
     isPublicPathState: isPublicPath,
+    location: location,
     currentPath: location.pathname,
     locationKey: location.key,
   });

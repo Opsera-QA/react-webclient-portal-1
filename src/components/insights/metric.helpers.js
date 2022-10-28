@@ -61,3 +61,17 @@ metricHelpers.packFilterData = (filterObject) => {
 
   return packedFilterData;
 };
+
+metricHelpers.setDashboardDateToKPIs = (dashboardModel, dashboardDate) => {
+  const newModel = {...dashboardModel};
+  let kpiConfigurations = newModel?.getData("configuration");
+  kpiConfigurations.map(kpiConfig => {
+    const kpiDateFilterIndex = kpiConfig?.filters?.findIndex(item => item.type === "date");
+    if(kpiDateFilterIndex > -1){
+      kpiConfig.filters[kpiDateFilterIndex].value = dashboardDate;
+    }
+  });
+
+  newModel.setData('configuration',kpiConfigurations);
+  return newModel;
+};

@@ -1,9 +1,9 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
-import ExportSonarQubeScanDataOverlay from "components/common/modal/export_data/ExportSonarQubeScanDataOverlay";
-import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import ExportDataButtonBase from "../../../modal/export_data/ExportDataButtonBase";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import ExportSonarQubeScanDataOverlay from "components/insights/reports/sonar/export/ExportSonarQubeScanDataOverlay";
+import ExportDataButtonBase from "components/common/modal/export_data/ExportDataButtonBase";
 
 function ExportSonarQubeScanDetailsButton({isLoading, scanData, className, allSonarIssues}) {
   const toastContext = useContext(DialogToastContext);

@@ -85,3 +85,17 @@ pipelineInstructionsActions.deletePipelineInstructionsById = async (
     apiUrl,
   );
 };
+
+pipelineInstructionsActions.transferPipelineInstructionsOwnership = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineInstructionsId,
+  newOwnerId,
+) => {
+  const apiUrl = `/settings/pipelines/instructions/${pipelineInstructionsId}/transfer/user/${newOwnerId}`;
+  return await baseActions.apiPutCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};

@@ -58,6 +58,8 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
     newWizardModel.setDefaultValue("selectedFileList");
     newWizardModel.setDefaultValue("diffFileList");
     newWizardModel.setDefaultValue("errorMessage");
+    newWizardModel.setData("fromDate", new Date(new Date().setHours(0,0,0,0)));
+    newWizardModel.setData("toDate", new Date());
     newWizardModel.setData("taskType", TASK_TYPES.GIT_TO_GIT_MERGE_SYNC);
     newWizardModel.setData("taskId", taskModel?.getMongoDbId());
 

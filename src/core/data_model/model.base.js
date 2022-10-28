@@ -373,6 +373,10 @@ export default class ModelBase {
     return field?.uppercase === true;
   };
 
+  getOwnerId = () => {
+    return this.getData("owner");
+  };
+
   isWebsite = (fieldName) => {
     const field = this.getFieldById(fieldName);
     return field != null ? field.isWebsite === true : false;
@@ -481,6 +485,10 @@ export default class ModelBase {
 
   canEditAccessRoles = () => {
     return this.canUpdate() === true && this.editAccessRolesAllowed === true;
+  };
+
+  canTransferOwnership = () => {
+    return false;
   };
 
   handleLiveMessage = (liveMessage) => {

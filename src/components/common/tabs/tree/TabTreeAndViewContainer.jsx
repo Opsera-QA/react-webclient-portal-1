@@ -18,7 +18,7 @@ function TabAndViewContainer(
     overflowYContainerStyle,
   }) {
   const getTabColumnSize = () => {
-    if (typeof tabColumnSize === "number" && tabColumnSize >= 1 && tabColumnSize <= 11) {
+    if (typeof tabColumnSize === "number" && tabColumnSize >= 0 && tabColumnSize <= 11) {
       return tabColumnSize;
     }
 
@@ -26,7 +26,7 @@ function TabAndViewContainer(
   };
 
   const getViewColumnSize = () => {
-    if (typeof tabColumnSize === "number" && tabColumnSize >= 1 && tabColumnSize <= 11) {
+    if (typeof tabColumnSize === "number" && tabColumnSize >= 0 && tabColumnSize <= 11) {
       return 12 - tabColumnSize;
     }
 
@@ -53,14 +53,16 @@ function TabAndViewContainer(
   return (
     <Tab.Container defaultActiveKey={defaultActiveKey}>
       <Row className={bodyClassName} style={getContainerStylingObject()}>
-        <Col
-          xs={getTabColumnSize()}
-          className={"px-0 makeup-tree-container"}
-        >
-          <div style={getBodyStylingObject()} className={"h-100"}>
-            {verticalTabContainer}
-          </div>
-        </Col>
+        {verticalTabContainer &&
+            <Col
+                xs={getTabColumnSize()}
+                className={"px-0 makeup-tree-container"}
+            >
+              <div style={getBodyStylingObject()} className={"h-100"}>
+                {verticalTabContainer}
+              </div>
+            </Col>
+        }
         <Col
           xs={getViewColumnSize()}
           className={"px-0"}

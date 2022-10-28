@@ -44,12 +44,6 @@ export default function ScriptsEditorPanel(
             setModel={setScriptModel}
           />
         </Col>
-        <Col md={12}>
-          <DataValidatorInput
-            model={scriptModel}
-            setModel={setScriptModel}
-          />
-        </Col>
       </Row>
     </VanityEditorPanelContainer>
   );

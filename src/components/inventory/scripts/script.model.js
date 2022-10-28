@@ -141,10 +141,6 @@ export default class ScriptModel extends ModelBase {
     return this.scriptPulled === true;
   };
 
-  isLenient = () => {
-    return true;
-  };
-
   clone = () => {
     const newScript = new ScriptModel(
       DataParsingHelper.cloneDeep(this.data),

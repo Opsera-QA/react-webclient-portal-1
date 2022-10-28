@@ -5,9 +5,11 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 
 function EmailAddressField({model, fieldName, className }) {
   return (
-    <FieldContainer className={className}>
-      <TextFieldBase showClipboardButton={true} dataObject={model} fieldName={fieldName} />
-    </FieldContainer>
+    <TextFieldBase
+      showClipboardButton={true}
+      dataObject={model}
+      fieldName={fieldName}
+    />
   );
 }
 

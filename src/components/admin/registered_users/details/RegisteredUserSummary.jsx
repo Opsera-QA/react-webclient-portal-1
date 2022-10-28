@@ -6,8 +6,11 @@ import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import GroupField from "components/common/fields/multiple_items/GroupField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
+import SiteRoleField from "components/common/fields/access/SiteRoleField";
+import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 
-function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString, userAccess }) {
+function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString }) {
+
   const getConnectionString = () => {
     if (showDbConnectionString) {
       return (
@@ -20,7 +23,7 @@ function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString,
 
   // TODO: When User Settings panel is set up, pass setActiveTab to Summary Panel Container
   return (
-    <SummaryPanelContainer>
+    <SummaryPanelContainer className={"m-3"}>
       <Row>
         <Col lg={6}>
           <TextFieldBase fieldName={"firstName"} dataObject={userData}/>
@@ -29,7 +32,7 @@ function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString,
           <TextFieldBase fieldName={"lastName"} dataObject={userData}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase fieldName={"email"} dataObject={userData}/>
+          <EmailAddressField fieldName={"email"} model={userData}/>
         </Col>
         <Col lg={6}>
           <SmartIdField fieldName={"_id"} model={userData}/>
@@ -40,17 +43,14 @@ function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString,
         <Col lg={6}>
           <TextFieldBase fieldName={"title"} dataObject={userData}/>
         </Col>
-        <Col lg={6}>
+        <Col lg={12}>
           <TextFieldBase fieldName={"domain"} dataObject={userData}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase fieldName={"ssoSystem"} dataObject={userData}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase fieldName={"ssoClientId"} dataObject={userData}/>
-        </Col>
-        <Col lg={12}>
-          <GroupField fieldName={"groups"} dataObject={userData}/>
+          <TextFieldBase showClipboardButton={true} fieldName={"ssoClientId"} dataObject={userData}/>
         </Col>
         <Col lg={6}>
           <DateFieldBase fieldName={"createdAt"} dataObject={userData}/>
@@ -58,9 +58,11 @@ function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString,
         <Col lg={6}>
           <DateFieldBase fieldName={"updatedAt"} dataObject={userData}/>
         </Col>
-        <Col lg={6}>
-          <label className="mb-0 mr-2 text-muted">Access Role:</label>
-          {userAccess?.Role}
+        <Col lg={12}>
+          <SiteRoleField />
+        </Col>
+        <Col lg={12}>
+          <GroupField fieldName={"groups"} dataObject={userData}/>
         </Col>
         {getConnectionString()}
       </Row>
