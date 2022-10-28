@@ -29,12 +29,14 @@ export default function RichTextInputBase (
 
   if (disabled === true) {
     return (
-      <ReactEditorJS
-        minHeight={100}
-        readOnly={true}
-        defaultValue={DataParsingHelper.parseJson(value)}
-        logLevel={"ERROR"}
-      />
+      <div className={"read-only-rich-text px-3 py-2"}>
+        <ReactEditorJS
+          minHeight={0}
+          readOnly={true}
+          defaultValue={DataParsingHelper.parseJson(value)}
+          logLevel={"ERROR"}
+        />
+      </div>
     );
   }
 

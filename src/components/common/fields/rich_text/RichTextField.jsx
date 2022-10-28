@@ -9,6 +9,8 @@ export default function RichTextField(
     fieldName,
     className,
     visible,
+    minimumHeight,
+    maximumHeight,
   }) {
   const field = model?.getFieldById(fieldName);
 
@@ -21,6 +23,8 @@ export default function RichTextField(
       <RichTextFieldBase
         value={model?.getData(fieldName)}
         title={model?.getLabel(fieldName)}
+        minimumHeight={minimumHeight}
+        maximumHeight={maximumHeight}
       />
     </FieldContainer>
   );
@@ -31,4 +35,6 @@ RichTextField.propTypes = {
   model: PropTypes.object,
   className: PropTypes.string,
   visible: PropTypes.bool,
+  minimumHeight: PropTypes.string,
+  maximumHeight: PropTypes.string,
 };

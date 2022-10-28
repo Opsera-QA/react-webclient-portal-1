@@ -54,6 +54,8 @@ export default function PipelineInstructionsSummaryPanel(
           <RichTextField
             fieldName={"instructions"}
             model={pipelineInstructionsModel}
+            minimumHeight={"150px"}
+            maximumHeight={"1000px"}
           />
         </Col>
         <Col lg={12}>
