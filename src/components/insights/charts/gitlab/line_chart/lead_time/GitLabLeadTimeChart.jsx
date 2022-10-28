@@ -4,7 +4,6 @@ import { AuthContext } from "contexts/AuthContext";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
-import { GITLAB_LEADTIME_CONSTANTS as constants } from "./GitlabLeadTime_kpi_datapoint_identifier";
 import axios from "axios";
 import GitlabLeadTimeHelpDocumentation from "../../../../../common/help/documentation/insights/charts/GitlabLeadTimeHelpDocumentation";
 import GitlabLeadTimeScatterPlotContainer from "./GitlabLeadTimeScatterPlotContainer";
@@ -14,7 +13,6 @@ import {
 } from "../../../charts-helpers";
 import GitlabLeadTimeTrendDataBlock from "./GitlabLeadTimeTrendDataBlock";
 import gitlabAction from "../../gitlab.action";
-import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import InfoDialog from "../../../../../common/status_notifications/info";
 
 function GitLabLeadTimeChart({
