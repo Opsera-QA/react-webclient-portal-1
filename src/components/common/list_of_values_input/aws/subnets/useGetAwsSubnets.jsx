@@ -1,35 +1,33 @@
 import { useEffect, useState } from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import { awsActions } from "components/common/list_of_values_input/tools/aws/aws.actions";
-import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { awsActions } from "components/common/list_of_values_input/tools/aws/aws.actions";
 
-export default function useGetAwsLogGroups(
-  awsToolId,
-  awsRegion,
-  handleErrorFunction,
-) {
+export default function useGetAwsSubnets(awsToolId, vpcId, handleErrorFunction) {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(undefined);
-  const [awsLogGroups, setAwsLogGroups] = useState([]);
+  const [error  , setError] = useState(undefined);
+  const [subnets, setSubnets] = useState([]);
   const {
     getAccessToken,
     cancelTokenSource,
   } = useComponentStateReference();
 
   useEffect(() => {
-    if (isMongoDbId(awsToolId) === true && hasStringValue(awsRegion) === true) {
+    setSubnets([]);
+
+    if (isMongoDbId(awsToolId) && hasStringValue(vpcId) === true) {
       loadData().catch(() => {
       });
     }
-  }, [awsToolId, awsRegion]);
+  }, [awsToolId, vpcId]);
 
   const loadData = async () => {
     try {
       setError(undefined);
       setIsLoading(true);
-      await getAwsLogGroups();
+      await getSubnets();
     } catch (error) {
       setError(error);
       if (handleErrorFunction) {
@@ -40,21 +38,20 @@ export default function useGetAwsLogGroups(
     }
   };
 
-  const getAwsLogGroups = async () => {
-    const response = await awsActions.getLogGroups(
+  const getSubnets = async () => {
+    const response = await awsActions.getSubnets(
       getAccessToken,
       cancelTokenSource,
       awsToolId,
-      awsRegion,
+      vpcId,
     );
-
-    const logGroups = DataParsingHelper.parseArray(response?.data?.data, []);
-    setAwsLogGroups([...logGroups]);
+    const subnetList = DataParsingHelper.parseArray(response?.data?.data, []);
+    setSubnets([...subnetList]);
   };
 
   return ({
-    awsLogGroups: awsLogGroups,
-    setAwsLogGroups: setAwsLogGroups,
+    subnets: subnets,
+    setSubnets: setSubnets,
     loadData: loadData,
     isLoading: isLoading,
     error: error,

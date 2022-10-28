@@ -1,35 +1,33 @@
 import { useEffect, useState } from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import { awsActions } from "components/common/list_of_values_input/tools/aws/aws.actions";
-import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { awsActions } from "components/common/list_of_values_input/tools/aws/aws.actions";
 
-export default function useGetAwsLogGroups(
-  awsToolId,
-  awsRegion,
-  handleErrorFunction,
-) {
+export default function useGetAwsSecurityGroups(awsToolId, region, handleErrorFunction) {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(undefined);
-  const [awsLogGroups, setAwsLogGroups] = useState([]);
+  const [error  , setError] = useState(undefined);
+  const [securityGroups, setSecurityGroups] = useState([]);
   const {
     getAccessToken,
     cancelTokenSource,
   } = useComponentStateReference();
 
   useEffect(() => {
-    if (isMongoDbId(awsToolId) === true && hasStringValue(awsRegion) === true) {
+    setSecurityGroups([]);
+
+    if (isMongoDbId(awsToolId) && hasStringValue(region) === true) {
       loadData().catch(() => {
       });
     }
-  }, [awsToolId, awsRegion]);
+  }, [awsToolId, region]);
 
   const loadData = async () => {
     try {
       setError(undefined);
       setIsLoading(true);
-      await getAwsLogGroups();
+      await getSecurityGroups();
     } catch (error) {
       setError(error);
       if (handleErrorFunction) {
@@ -40,21 +38,20 @@ export default function useGetAwsLogGroups(
     }
   };
 
-  const getAwsLogGroups = async () => {
-    const response = await awsActions.getLogGroups(
+  const getSecurityGroups = async () => {
+    const response = await awsActions.getSecurityGroups(
       getAccessToken,
       cancelTokenSource,
       awsToolId,
-      awsRegion,
+      region,
     );
-
-    const logGroups = DataParsingHelper.parseArray(response?.data?.data, []);
-    setAwsLogGroups([...logGroups]);
+    const awsSecurityGroups = DataParsingHelper.parseArray(response?.data?.data, []);
+    setSecurityGroups([...awsSecurityGroups]);
   };
 
   return ({
-    awsLogGroups: awsLogGroups,
-    setAwsLogGroups: setAwsLogGroups,
+    securityGroups: securityGroups,
+    setSecurityGroups: setSecurityGroups,
     loadData: loadData,
     isLoading: isLoading,
     error: error,

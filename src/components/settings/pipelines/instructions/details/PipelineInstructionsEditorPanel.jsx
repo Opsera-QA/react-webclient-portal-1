@@ -65,8 +65,8 @@ export default function PipelineInstructionsEditorPanel(
             fieldName={"instructions"}
             model={pipelineInstructionsModel}
             setModel={setPipelineInstructionsModel}
-            minimumHeight={"150px"}
-            maximumHeight={"1000px"}
+            // minimumHeight={"150px"}
+            // maximumHeight={"1000px"}
           />
         </Col>
         <Col xs={12}>

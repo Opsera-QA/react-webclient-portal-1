@@ -7,16 +7,17 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import TextInputBase from "../../../../common/inputs/text/TextInputBase";
 import ClusterTemplateSelectInput from "./inputs/ClusterTemplateSelectInput";
-import VpcSelectInput from "./inputs/VpcSelectInput";
-import ClusterSelectInput from "./inputs/ClusterSelectInput";
-import LoadBalancerSelectInput from "./inputs/LoadBalancerSelectInput";
-import IAMRoleSelectInput from "./inputs/IAMRoleSelectInput";
-import SubnetSelectInput from "./inputs/SubnetSelectInput";
-import LogGroupSelectInput from "./inputs/LogGroupSelectInput";
+import AwsLogGroupSelectInput from "components/common/list_of_values_input/tools/aws/log_groups/AwsLogGroupSelectInput";
 import RoleRestrictedAwsAccountToolSelectInput
   from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 import AwsCloudProviderRegionSelectInput
-  from "components/common/list_of_values_input/aws/AwsCloudProviderRegionSelectInput";
+  from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
+import AwsVpcSelectInput from "components/common/list_of_values_input/aws/vpcs/AwsVpcSelectInput";
+import AwsSubnetMultiSelectInput from "components/common/list_of_values_input/aws/subnets/AwsSubnetMultiSelectInput";
+import AwsClusterSelectInput from "components/common/list_of_values_input/aws/cluster/AwsClusterSelectInput";
+import AwsLoadBalancerSelectInput
+  from "components/common/list_of_values_input/aws/load_balancers/AwsLoadBalancerSelectInput";
+import AwsIamRoleSelectInput from "components/common/list_of_values_input/aws/iam_roles/AwsIamRoleSelectInput";
 
 function ECSServiceCreationTaskConfigurationPanel({
   gitTasksDataDto,
@@ -36,25 +37,27 @@ function ECSServiceCreationTaskConfigurationPanel({
   };
 
   const getDynamicFields = () => {
-    if(gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities") && gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities") === "FARGATE"){
+    if (gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities") && gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities") === "FARGATE") {
       return (
         <>
-        <Col lg={12}>
-          <IAMRoleSelectInput
-            dataObject={gitTasksConfigurationData}
-            setDataObject={setGitTasksConfigurationData}
-            disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0 || gitTasksConfigurationData?.getData("regions").length === 0}
-            toolConfigId={gitTasksConfigurationData?.getData("toolConfigId")}
-          />
-        </Col>
-      <Col lg={12}>
-        <SubnetSelectInput
-          dataObject={gitTasksConfigurationData}
-          setDataObject={setGitTasksConfigurationData}
-          disabled={gitTasksConfigurationData?.getData("ecsServiceVpcId").length === 0}
-          vpc={gitTasksConfigurationData?.getData("ecsServiceVpcId")}
-        />
-      </Col>
+          <Col lg={12}>
+            <AwsIamRoleSelectInput
+              fieldName={"ecsServiceExecutionRoleArn"}
+              model={gitTasksConfigurationData}
+              setModel={setGitTasksConfigurationData}
+              awsToolId={gitTasksConfigurationData?.getData("toolConfigId")}
+              region={gitTasksConfigurationData?.getData("regions")}
+            />
+          </Col>
+          <Col lg={12}>
+            <AwsSubnetMultiSelectInput
+              fieldName={"ecsServiceSubnets"}
+              model={gitTasksConfigurationData}
+              setModel={setGitTasksConfigurationData}
+              vpcId={gitTasksConfigurationData?.getData("ecsServiceVpcId")}
+              awsToolId={gitTasksConfigurationData?.getData("toolConfigId")}
+            />
+          </Col>
         </>
       );
     }
@@ -89,25 +92,22 @@ function ECSServiceCreationTaskConfigurationPanel({
         />
       </Col>
       <Col lg={12}>
-        <ClusterSelectInput
-          dataObject={gitTasksConfigurationData}
-          setDataObject={setGitTasksConfigurationData}
-          disabled={
-            gitTasksConfigurationData?.getData("toolConfigId")?.length === 0 ||
-            gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities")?.length === 0 ||
-            gitTasksConfigurationData?.getData("regions")?.length === 0
-          }
-          requiresCompatibilities={gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities")}
-          regions={gitTasksConfigurationData?.getData("regions")}
+        <AwsClusterSelectInput
+          fieldName={"ecsClusterName"}
+          model={gitTasksConfigurationData}
+          setModel={setGitTasksConfigurationData}
+          awsToolId={gitTasksConfigurationData?.getData("toolConfigId")}
+          type={gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities")}
+          region={gitTasksConfigurationData?.getData("regions")}
         />
       </Col>
       <Col lg={12}>
-        <VpcSelectInput
-          dataObject={gitTasksConfigurationData}
-          setDataObject={setGitTasksConfigurationData}
-          disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0 || gitTasksConfigurationData?.getData("regions").length === 0}
-          toolConfigId={gitTasksConfigurationData?.getData("toolConfigId")}
-          regions={gitTasksConfigurationData?.getData("regions")}
+        <AwsVpcSelectInput
+          fieldName={"ecsServiceVpcId"}
+          model={gitTasksConfigurationData}
+          setModel={setGitTasksConfigurationData}
+          awsToolId={gitTasksConfigurationData?.getData("toolConfigId")}
+          region={gitTasksConfigurationData?.getData("regions")}
         />
       </Col>
       <Col lg={12}>
@@ -118,21 +118,22 @@ function ECSServiceCreationTaskConfigurationPanel({
         />
       </Col>
       <Col lg={12}>
-        <LogGroupSelectInput
-          dataObject={gitTasksConfigurationData}
-          setDataObject={setGitTasksConfigurationData}
-          disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0 || gitTasksConfigurationData?.getData("regions").length === 0}
-          toolConfigId={gitTasksConfigurationData?.getData("toolConfigId")}
-          regions={gitTasksConfigurationData?.getData("regions")}
+        <AwsLogGroupSelectInput
+          fieldName={"ecsServiceLogGroup"}
+          model={gitTasksConfigurationData}
+          setModel={setGitTasksConfigurationData}
+          awsToolId={gitTasksConfigurationData?.getData("toolConfigId")}
+          region={gitTasksConfigurationData?.getData("regions")}
         />
       </Col>
       <Col lg={12}>
-        <LoadBalancerSelectInput
-          dataObject={gitTasksConfigurationData}
-          setDataObject={setGitTasksConfigurationData}
-          disabled={gitTasksConfigurationData?.getData("ecsServiceVpcId").length === 0 || gitTasksConfigurationData?.getData("regions").length === 0}
+        <AwsLoadBalancerSelectInput
+          fieldName={"ecsServiceLoadBalancerArn"}
+          model={gitTasksConfigurationData}
+          setModel={setGitTasksConfigurationData}
+          awsToolId={gitTasksConfigurationData?.getData("toolConfigId")}
           vpcId={gitTasksConfigurationData?.getData("ecsServiceVpcId")}
-          regions={gitTasksConfigurationData?.getData("regions")}
+          region={gitTasksConfigurationData?.getData("regions")}
         />
       </Col>
       {getDynamicFields()}

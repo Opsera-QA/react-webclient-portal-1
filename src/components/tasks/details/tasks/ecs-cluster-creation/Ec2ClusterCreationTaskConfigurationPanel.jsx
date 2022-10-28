@@ -8,13 +8,15 @@ import Col from "react-bootstrap/Col";
 import TextInputBase from "../../../../common/inputs/text/TextInputBase";
 import ClusterTemplateSelectInput from "./inputs/ClusterTemplateSelectInput";
 import NetworkingOnlySubForm from "./sub_forms/NetworkingOnlySubForm";
-import EC2SubForm from "./sub_forms/EC2SubForm";
+import EcsClusterCreationTaskConfigurationEc2EditorPanel from "components/tasks/details/tasks/ecs-cluster-creation/sub_forms/EcsClusterCreationTaskConfigurationEc2EditorPanel";
 import RoleRestrictedAwsAccountToolSelectInput
   from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 import AwsCloudProviderRegionSelectInput
-  from "components/common/list_of_values_input/aws/AwsCloudProviderRegionSelectInput";
+  from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
-function EC2ClusterCreationTaskConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
+function Ec2ClusterCreationTaskConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {loadData();}, []);
 
   const loadData = async () => {    
@@ -27,19 +29,25 @@ function EC2ClusterCreationTaskConfigurationPanel({ gitTasksDataDto, gitTasksCon
   }
 
   const getDynamicFields = () => {
-    if(gitTasksConfigurationData?.getData("clusterTemplate") && gitTasksConfigurationData?.getData("clusterTemplate") === "fargate"){
-      return (
-        <Col lg={12}>
-          <NetworkingOnlySubForm dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData}/>
-        </Col>
-      );
-    }
-    if(gitTasksConfigurationData?.getData("clusterTemplate") && gitTasksConfigurationData?.getData("clusterTemplate") === "ec2"){
-      return (
-        <Col lg={12}>
-          <EC2SubForm dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData}/>
-        </Col>
-      );
+    switch (gitTasksConfigurationData?.getData("clusterTemplate")) {
+      case "fargate":
+        return (
+          <Col lg={12}>
+            <NetworkingOnlySubForm
+              dataObject={gitTasksConfigurationData}
+              setDataObject={setGitTasksConfigurationData}
+            />
+          </Col>
+        );
+      case "ec2":
+        return (
+          <Col lg={12}>
+            <EcsClusterCreationTaskConfigurationEc2EditorPanel
+              dataObject={gitTasksConfigurationData}
+              setDataObject={setGitTasksConfigurationData}
+            />
+          </Col>
+        );
     }
   };
 
@@ -57,26 +65,35 @@ function EC2ClusterCreationTaskConfigurationPanel({ gitTasksDataDto, gitTasksCon
           model={gitTasksConfigurationData}
           setModel={setGitTasksConfigurationData}
           fieldName={"region"}
-          disabled={gitTasksConfigurationData?.getData("awsToolId")?.length === 0}
+          disabled={isMongoDbId(gitTasksConfigurationData?.getData("awsToolId")) !== true} // TODO: is this necessary? Region is separate from tool
         />
       </Col>
       <Col lg={12}>
-        <ClusterTemplateSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"clusterTemplate"} disabled={gitTasksDataDto.getData("configuration")?.stackId && gitTasksDataDto.getData("configuration")?.stackId.length > 0}/>
+        <ClusterTemplateSelectInput
+          dataObject={gitTasksConfigurationData}
+          setDataObject={setGitTasksConfigurationData}
+          fieldName={"clusterTemplate"}
+          disabled={hasStringValue(gitTasksDataDto.getData("configuration.stackId") === true)}
+        />
       </Col>
       <Col lg={12}>
-        <TextInputBase dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"clusterName"} />
+        <TextInputBase
+          dataObject={gitTasksConfigurationData}
+          setDataObject={setGitTasksConfigurationData}
+          fieldName={"clusterName"}
+        />
       </Col>
       {getDynamicFields()}
     </Row>
   );
 }
 
-EC2ClusterCreationTaskConfigurationPanel.propTypes = {
+Ec2ClusterCreationTaskConfigurationPanel.propTypes = {
   gitTasksDataDto: PropTypes.object,
   gitTasksConfigurationData: PropTypes.object,
   setGitTasksConfigurationData: PropTypes.func,
 };
 
-export default EC2ClusterCreationTaskConfigurationPanel;
+export default Ec2ClusterCreationTaskConfigurationPanel;
 
 
