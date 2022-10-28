@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ExportDataOverlay from "./ExportDataOverlay";
+import ExportDataOverlay from "../../common/modal/export_data/ExportDataOverlay";
 import jsPDF from "jspdf";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 

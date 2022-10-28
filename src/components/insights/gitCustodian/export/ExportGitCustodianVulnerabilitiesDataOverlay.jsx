@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import ExportDataOverlay from "./ExportDataOverlay";
+import ExportDataOverlay from "../../../common/modal/export_data/ExportDataOverlay";
 import jsPDF from "jspdf";
 import chartsActions from "components/insights/charts/charts-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";

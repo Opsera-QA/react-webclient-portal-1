@@ -1,7 +1,7 @@
 import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
-import ExportLogDataOverlay from "components/common/modal/export_data/ExportLogDataOverlay";
+import ExportLogDataOverlay from "components/logs/export/ExportLogDataOverlay";
 import { DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import ExportDataButtonBase from "../../../modal/export_data/ExportDataButtonBase";
 
