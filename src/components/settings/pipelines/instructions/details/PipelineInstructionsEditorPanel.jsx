@@ -9,7 +9,6 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
 import PipelineInstructionsTypeSelectInput
   from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsTypeSelectInput";
-import RichTextInputBase from "components/common/inputs/rich_text/RichTextInputBase";
 import RichTextInput from "components/common/inputs/rich_text/RichTextInput";
 
 export default function PipelineInstructionsEditorPanel(
@@ -23,7 +22,7 @@ export default function PipelineInstructionsEditorPanel(
   } = useComponentStateReference();
 
   const getDynamicFields = () => {
-    if (isSaasUser !== true && pipelineInstructionsModel?.canEditAccessRoles() === true) {
+    if (pipelineInstructionsModel?.isNew() && isSaasUser !== true && pipelineInstructionsModel?.canEditAccessRoles() === true) {
       return (
         <Col xs={12}>
           <RoleAccessInput
@@ -66,7 +65,8 @@ export default function PipelineInstructionsEditorPanel(
             fieldName={"instructions"}
             model={pipelineInstructionsModel}
             setModel={setPipelineInstructionsModel}
-            inputHeight={1000}
+            minimumHeight={"150px"}
+            maximumHeight={"1000px"}
           />
         </Col>
         <Col xs={12}>
