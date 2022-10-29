@@ -315,7 +315,3 @@ export const getTimeDisplay = (mins) => {
   return [arrayToDisplay.slice(0, 2).join(", "),arrayToDisplay.join(", ")];
 };
 
-
-export function getChartIconFromKpiConfiguration(kpiConfiguration) {
-  return faChartBar;
-}
