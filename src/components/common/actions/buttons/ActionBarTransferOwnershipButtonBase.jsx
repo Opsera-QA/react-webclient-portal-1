@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { faShareAlt, faTrash } from "@fortawesome/pro-light-svg-icons";
+import { faShareAlt } from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import LdapUserSelectInput from "components/common/list_of_values_input/users/LdapUserSelectInput";
@@ -11,37 +11,43 @@ import CancelButton from "components/common/buttons/CancelButton";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import ActionBarPopoverButton from "components/common/actions/buttons/ActionBarPopoverButton";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
+import TransferOwnershipModel from "components/common/model/transfer_ownership/transferOwnership.model";
 
 export default function ActionBarTransferOwnershipButtonBase(
   {
     model,
     setModel,
-    type,
+    ownerId,
     className,
     visible,
   }) {
   const toastContext  = useContext(DialogToastContext);
-  const [modelCopy, setModelCopy] = useState(undefined);
+  const [transferOwnershipModel, setTransferOwnershipModel] = useState(undefined);
   const [transferState, setTransferState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
   const {
     isSassUser,
   } = useComponentStateReference();
 
-
   useEffect(() => {
-    setModelCopy(modelCopy?.clone());
-  }, [model]);
+    if (ownerId) {
+      const data = {
+        owner: ownerId,
+      };
+      setTransferOwnershipModel({...new TransferOwnershipModel(data)});
+    }
+  }, [ownerId]);
 
   // TODO: Move inside transfer ownership button
   const handleOwnershipTransfer = async () => {
     try {
       setTransferState(buttonLabelHelper.BUTTON_STATES.BUSY);
-      await model?.transferOwnership(modelCopy?.getData("owner"));
-      model.setData("owner", modelCopy?.getData("owner"));
+      await model?.transferOwnership(transferOwnershipModel?.getData("owner"));
+      toastContext.showFormSuccessToast(`Successfully transferred ${model?.getType()} to new Owner`);
       setTransferState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
       setModel({...model});
+      document.body.click();
     } catch (error) {
-      toastContext.showFormErrorToast(error, `Error transferring ${type} to new Owner`);
+      toastContext.showFormErrorToast(error, `Error transferring ${model?.getType()} to new Owner`);
       setTransferState(buttonLabelHelper.BUTTON_STATES.ERROR);
     }
   };
@@ -52,15 +58,15 @@ export default function ActionBarTransferOwnershipButtonBase(
         <div className="pb-2">
           <LdapUserSelectInput
             fieldName={"owner"}
-            model={modelCopy}
-            setModel={setModelCopy}
+            model={transferOwnershipModel}
+            setModel={setTransferOwnershipModel}
             showClearValueButton={false}
           />
         </div>
         <Row className="justify-content-between">
           <Col xs={6} className={"pr-1"}>
             <TransferOwnershipButton
-              disabled={modelCopy?.isChanged("owner") !== true}
+              disabled={model?.getOriginalValue("owner") === transferOwnershipModel?.getData("owner")}
               isTransferringOwnership={transferState === buttonLabelHelper.BUTTON_STATES.BUSY}
               transferOwnershipFunction={handleOwnershipTransfer}
             />
@@ -78,22 +84,27 @@ export default function ActionBarTransferOwnershipButtonBase(
     );
   };
 
-  if (isSassUser !== false || model == null || model?.canTransferOwnership() !== true || visible === false) {
+  if (
+    isSassUser !== false
+    || model == null
+    || model?.canTransferOwnership() !== true
+    || visible === false
+  ) {
     return null;
   }
 
   return (
     <TooltipWrapper
       className={"owner-popover"}
-      title={"Transfer Tool"}
+      title={`Transfer ${model?.getType()} to new Owner`}
       innerText={getPopoverContent()}
-      placement={"top"}
+      placement={"left"}
       trigger={"click"}
     >
       <div className={className}>
         <ActionBarPopoverButton
           icon={faShareAlt}
-          popoverText={`Transfer ${type} to new Owner`}
+          popoverText={`Transfer ${model?.getType()} to new Owner`}
         />
       </div>
     </TooltipWrapper>
@@ -103,7 +114,7 @@ export default function ActionBarTransferOwnershipButtonBase(
 ActionBarTransferOwnershipButtonBase.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
-  type: PropTypes.string,
+  ownerId: PropTypes.string,
   className: PropTypes.string,
   visible: PropTypes.func,
 };

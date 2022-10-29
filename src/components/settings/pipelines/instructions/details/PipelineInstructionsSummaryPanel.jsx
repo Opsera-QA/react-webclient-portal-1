@@ -17,6 +17,7 @@ export default function PipelineInstructionsSummaryPanel(
     pipelineInstructionsModel,
     setPipelineInstructionsModel,
     setActiveTab,
+    loadDataFunction,
   } ) {
   if (pipelineInstructionsModel == null) {
     return <></>;
@@ -53,10 +54,13 @@ export default function PipelineInstructionsSummaryPanel(
           <RichTextField
             fieldName={"instructions"}
             model={pipelineInstructionsModel}
+            minimumHeight={"150px"}
+            maximumHeight={"1000px"}
           />
         </Col>
         <Col lg={12}>
-          <DescriptionField
+          <TextFieldBase
+            fieldName={"description"}
             dataObject={pipelineInstructionsModel}
           />
         </Col>
@@ -73,5 +77,6 @@ export default function PipelineInstructionsSummaryPanel(
 PipelineInstructionsSummaryPanel.propTypes = {
   pipelineInstructionsModel: PropTypes.object,
   setPipelineInstructionsModel: PropTypes.func,
-  setActiveTab: PropTypes.func
+  setActiveTab: PropTypes.func,
+  loadDataFunction: PropTypes.func,
 };

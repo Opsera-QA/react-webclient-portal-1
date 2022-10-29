@@ -8,12 +8,15 @@ export default function RichTextFieldBase (
   {
     title,
     value,
+    minimumHeight,
+    maximumHeight,
   }) {
   return (
     <InfoContainer
       titleIcon={faFileInvoice}
       titleText={title}
-      bodyClassName={"rich-text-input"}
+      minimumHeight={minimumHeight}
+      maximumHeight={maximumHeight}
     >
       <RichTextInputBase
         disabled={true}
@@ -26,4 +29,6 @@ export default function RichTextFieldBase (
 RichTextFieldBase.propTypes = {
   value: PropTypes.any,
   title: PropTypes.string,
+  minimumHeight: PropTypes.string,
+  maximumHeight: PropTypes.string,
 };

@@ -21,6 +21,20 @@ baseActions.apiGetCallV2 = async (getAccessToken, sourceToken, apiUrl, urlParams
   return await apiServiceV2.axiosApiGetCall(getAccessToken, sourceToken, apiUrl, urlParams);
 };
 
+baseActions.apiGetCallV3 = async (
+  getAccessToken,
+  sourceToken,
+  apiUrl,
+  urlParams,
+) => {
+  return await apiServiceV2.axiosApiGetCallV2(
+    getAccessToken,
+    sourceToken,
+    apiUrl,
+    urlParams,
+  );
+};
+
 baseActions.apiTokenlessGetCallV2 = async (sourceToken, apiUrl, urlParams) => {
   return await apiServiceV2.axiosTokenlessApiGetCall(sourceToken, apiUrl, urlParams);
 };

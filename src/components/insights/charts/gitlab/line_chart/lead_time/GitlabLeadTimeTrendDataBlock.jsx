@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
-import MetricScoreText from "../../../../../common/metrics/score/MetricScoreText";
+import TooltipWrapper from "../../../../../common/tooltip/TooltipWrapper";
 
 function GitlabLeadTimeTrendDataBlock({
   value,
@@ -11,6 +11,7 @@ function GitlabLeadTimeTrendDataBlock({
   getTrendIcon,
   topText,
   bottomText,
+  toolTipText,
 }) {
   return (
     <DataBlockBoxContainer
@@ -22,7 +23,11 @@ function GitlabLeadTimeTrendDataBlock({
         topText={topText}
         icon={getTrendIcon(trend)}
         bottomText={`${bottomText}${prevValue}`}
-        middleText={<MetricScoreText score={value} />}
+        middleText={
+        <TooltipWrapper innerText={toolTipText}>
+          <span className={"metric-block-header-text"}>{value}</span>
+        </TooltipWrapper>
+      }
       />
     </DataBlockBoxContainer>
   );
@@ -35,6 +40,7 @@ GitlabLeadTimeTrendDataBlock.propTypes = {
   getTrendIcon: PropTypes.func,
   topText: PropTypes.string,
   bottomText: PropTypes.string,
+  toolTipText: PropTypes.string
 };
 
 export default GitlabLeadTimeTrendDataBlock;

@@ -48,11 +48,8 @@ export default function useGetAwsLogGroups(
       awsRegion,
     );
 
-    const activeUsers = DataParsingHelper.parseArray(response?.data?.data, []);
-
-    if (awsLogGroups) {
-      setAwsLogGroups([...activeUsers]);
-    }
+    const logGroups = DataParsingHelper.parseArray(response?.data?.data, []);
+    setAwsLogGroups([...logGroups]);
   };
 
   return ({

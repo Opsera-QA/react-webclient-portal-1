@@ -1,15 +1,11 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
-import Button from "react-bootstrap/Button";
-import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import IconBase from "components/common/icons/IconBase";
-import ExportCoverityScanDataOverlay from "../../../modal/export_data/ExportCoverityScanDataOverlay";
-import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import ExportDataButtonBase from "../../../modal/export_data/ExportDataButtonBase";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import ExportDataButtonBase from "components/common/modal/export_data/ExportDataButtonBase";
+import ExportCoverityScanDataOverlay from "components/insights/reports/coverity/export/ExportCoverityScanDataOverlay";
 
-function ExportSonarQubeScanDetailsButton({isLoading, scanData, className, allCoverityIssues}) {
+function ExportCoverityScanDetailsButton({isLoading, scanData, className, allCoverityIssues}) {
   const toastContext = useContext(DialogToastContext);
 
   const launchOverlayFunction = () => {
@@ -45,11 +41,11 @@ function ExportSonarQubeScanDetailsButton({isLoading, scanData, className, allCo
   );
 }
 
-ExportSonarQubeScanDetailsButton.propTypes = {
+ExportCoverityScanDetailsButton.propTypes = {
   scanData: PropTypes.array,
   allCoverityIssues: PropTypes.array,
   isLoading: PropTypes.bool,
   className: PropTypes.string
 };
 
-export default ExportSonarQubeScanDetailsButton;
+export default ExportCoverityScanDetailsButton;

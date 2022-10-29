@@ -88,7 +88,7 @@ function CancelPipelineQueueConfirmationOverlay({ pipeline, setHasQueuedRequest 
       <OverlayPanelBodyContainer
         hideCloseButton={true}
       >
-        <div className={"mb-3 mx-3"}>
+        <div className={"m-3"}>
           <div>Opsera Pipelines support queuing of runs when the pipeline is currently in progress.  A queued request to
             start this pipeline is currently pending. Upon successful completion of the current run, this pipeline will restart.</div>
           <div className={"mt-3 small"}>Canceling this queue request will clear the pending run request and end the pipeline after this run.</div>

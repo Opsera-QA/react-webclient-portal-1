@@ -45,8 +45,8 @@ export default function useGetPipelineInstructions() {
 
     if (pipelineInstructionList) {
       setPipelineInstructions([...pipelineInstructionList]);
-      newFilterModel.setData("totalCount", response.data.count);
-      newFilterModel.setData("activeFilters", newFilterModel.getActiveFilters());
+      newFilterModel.setData("totalCount", DataParsingHelper.parseInteger(response?.data?.count, 0));
+      newFilterModel.setData("activeFilters", newFilterModel?.getActiveFilters());
       setPipelineInstructionsFilterModel({...newFilterModel});
     }
   };

@@ -9,8 +9,8 @@ import Release360 from "components/insights/release_360/Release360";
 import InsightsSynopsis from "components/insights/summary/InsightsSynopsis";
 import ConnectedAssets from "components/insights/connectedAssets/ConnectedAssets";
 import GitCustodian from "components/insights/gitCustodian/GitCustodian";
-import SonarPipelineScanReport from "components/insights/reports/SonarPipelineScanReport";
-import CoverityScanReport from "components/insights/reports/CoverityScanReport";
+import SonarPipelineScanReport from "components/insights/reports/sonar/SonarPipelineScanReport";
+import CoverityScanReport from "components/insights/reports/coverity/CoverityScanReport";
 
 export default function InsightsRoutes() {
   return (

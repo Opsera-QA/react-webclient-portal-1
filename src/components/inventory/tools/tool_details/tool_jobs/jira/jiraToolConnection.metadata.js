@@ -6,20 +6,26 @@ export const jiraToolConnectionMetadata = {
       label: "Jira URL",
       id: "toolURL",
       isRequired: true,
+      isWebsite: true,
+      maxLength: 2048,
     },
     {
       label: "Jira Port",
       id: "jiraPort",
+      regexDefinitionName: "portField",
+      maxLength: 5,
     },
     {
       label: "Jira Username",
       id: "userName",
-      isRequired: true
+      isRequired: true,
+      maxLength: 256,
     },
     {
       label: "Jira API Token",
       id: "vaultSecretKey",
-      isRequired: true
+      isRequired: true,
+      maxLength: 50,
     }
   ],
   newObjectFields:
