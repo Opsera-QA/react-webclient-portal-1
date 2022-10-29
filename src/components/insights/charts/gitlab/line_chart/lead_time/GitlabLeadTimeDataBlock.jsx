@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
-import MetricScoreText from "../../../../../common/metrics/score/MetricScoreText";
 
 function GitlabDeploymentFrequencyDataBlock({
   value,
@@ -21,10 +20,7 @@ function GitlabDeploymentFrequencyDataBlock({
         icon={null}
         bottomText={`${bottomText}${prevValue}`}
         middleText={
-          <MetricScoreText
-            score={value}
-            dataPoint={null}
-          />
+          <span className={"metric-block-header-text"}>{value}</span>
         }
         dataPoint={null}
       />
