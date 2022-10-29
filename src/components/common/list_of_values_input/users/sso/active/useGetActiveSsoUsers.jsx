@@ -19,6 +19,7 @@ export default function useGetActiveSsoUsers(handleErrorFunction) {
   const loadData = async () => {
     try {
       setError(undefined);
+      setActiveSsoUsers([]);
       setIsLoading(true);
       await getActiveSsoUsers();
     } catch (error) {
