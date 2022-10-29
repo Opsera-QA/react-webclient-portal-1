@@ -10,12 +10,12 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
 import awsActions from "../../aws-actions";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import AwsCloudProviderRegionSelectInput
-  from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
 import AwsS3BucketVersionSelectInput from "./inputs/AwsS3BucketVersionSelectInput";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import modelHelpers from "components/common/model/modelHelpers";
 import awsS3BucketMetadata from "../aws-s3-bucket-metadata";
+import AwsCloudProviderRegionSelectInput
+  from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
 
 function AwsS3BucketEditorPanel({ awsS3BucketsData, toolData, handleClose, editMode, editRowData }) {
   const { getAccessToken } = useContext(AuthContext);

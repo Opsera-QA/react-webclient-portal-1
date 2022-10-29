@@ -11,10 +11,10 @@ import RegisterButton from "components/common/buttons/saving/RegisterButton";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import SignupCloudProviderSelectInput
   from "components/common/list_of_values_input/general/SignupCloudProviderSelectInput";
-import AwsCloudProviderRegionSelectInput
-  from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
 import UsStateSelectInput from "components/common/list_of_values_input/general/UsStateSelectInput";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import AwsCloudProviderRegionSelectInput
+  from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
 
 function Signup() {
   const history = useHistory();

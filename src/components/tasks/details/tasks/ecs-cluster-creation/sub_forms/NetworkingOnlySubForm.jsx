@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import EcsCreationTaskVpcBooleanToggleInput from "components/tasks/details/tasks/ecs-cluster-creation/inputs/EcsCreationTaskVpcBooleanToggleInput";
 import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
+import EcsCreationTaskVpcBooleanToggleInput
+  from "components/tasks/details/tasks/ecs-cluster-creation/inputs/EcsCreationTaskVpcBooleanToggleInput";
 
 // TODO: Pick better name
 function NetworkingOnlySubForm({ dataObject, setDataObject, disabled }) {

@@ -40,9 +40,8 @@ function LdapGroupsTable(
       setColumns(
         [
           getTableTextColumn(getField(fields, "name")),
-          getTableTextColumn(getField(fields, "externalSyncGroup")),
+          getTableTextColumn(getField(fields, "ownerEmail")),
           getTableTextColumn(getField(fields, "memberCount")),
-          getTableBooleanIconColumn(getField(fields, "isSync")),
         ]
       );
     }
