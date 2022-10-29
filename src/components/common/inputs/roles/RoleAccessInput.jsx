@@ -16,6 +16,7 @@ import StandaloneRoleAccessTypeInput from "components/common/inputs/roles/Standa
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 // TODO: Create RoleAccessInputRow that holds the actual inputs to clean this up.
 export default function RoleAccessInput(
@@ -119,7 +120,7 @@ export default function RoleAccessInput(
             group: item["group"],
             createdAt: item["createdAt"],
             updatedAt: item["updatedAt"],
-            roleAccessType: item["user"] !== null ?  "user" : "group"
+            roleAccessType: hasStringValue(item["user"]) === true ?  "user" : "group"
           }
         );
       });
@@ -241,7 +242,7 @@ export default function RoleAccessInput(
 
   const getTypeInput = (role, index) => {
     return (
-      <div className="mt-2 d-inline-flex role-access-input">
+      <div className="mt-2 d-inline-flex">
         <div className="m-auto mr-2">
           <input
             className="mr-2"
@@ -311,8 +312,7 @@ export default function RoleAccessInput(
     }
 
     return (
-      <StandaloneSelectInput 
-        className="input-for-group"
+      <StandaloneSelectInput
         selectOptions={groupList}
         valueField={"name"}
         textField={"name"}
