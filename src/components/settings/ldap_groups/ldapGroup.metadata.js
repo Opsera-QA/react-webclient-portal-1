@@ -6,6 +6,12 @@ export const ldapGroupMetaData = {
   //   return `/admin/organizations/details/${record.getData("name")}`;
   // },
   detailViewTitle: function (record) {
+    const name = record?.getOriginalValue("name");
+
+    if (name === "PowerUsers") {
+      return "Power Users";
+    }
+
     return `${record?.getOriginalValue("name")}`;
   },
   fields: [
