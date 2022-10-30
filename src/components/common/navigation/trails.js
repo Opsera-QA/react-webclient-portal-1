@@ -524,17 +524,17 @@ const breadcrumbs = {
     parent: "accountSettings",
     name: "ldapGroupManagement",
     path: paths.ldapGroupManagement,
-    title: "Access Group Management",
-    linkText: "Access Groups",
+    title: "Group Management",
+    linkText: "Groups",
     icon: faUserFriends,
-    pageDescription: "Manage Access Groups and their Membership"
+    pageDescription: "Manage Groups and their Membership"
   },
   ldapGroupDetailView: {
     parent: "ldapGroupManagement",
     name: "ldapGroupDetailView",
     path: paths.ldapGroupDetailView,
-    title: "Access Group Details",
-    linkText: "Access Group Details",
+    title: "Group Details",
+    linkText: "Group Details",
     icon: faUserFriends
   },
 
@@ -543,17 +543,17 @@ const breadcrumbs = {
     parent: "accountSettings",
     name: "ldapSiteRolesManagement",
     path: paths.ldapSiteRoleManagement,
-    title: "Access Site Roles Management",
-    linkText: "Access Site Roles",
+    title: "Site Roles Management",
+    linkText: "Site Roles",
     icon: faServer,
-    pageDescription: "Manage Access Site Roles in the follow levels: Administrators, Power Users, and Users."
+    pageDescription: "Manage Site Roles in the follow levels: Administrators, Power Users, and Users."
   },
   ldapSiteRoleDetailView: {
     parent: "ldapSiteRolesManagement",
     name: "ldapSiteRoleDetailView",
     path: paths.ldapSiteRoleDetailView,
-    title: "Access Site Role Details",
-    linkText: "Access Site Role Details",
+    title: "Site Role Details",
+    linkText: "Site Role Details",
     icon: faServer
   },
 
