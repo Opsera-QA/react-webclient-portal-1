@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
-import {Row, Col} from "react-bootstrap";
+import { Row, Col, InputGroup, Button } from "react-bootstrap";
 import {AuthContext} from "contexts/AuthContext";
 import accountsActions from "components/admin/accounts/accounts-actions.js";
 import PropTypes from "prop-types";
@@ -155,10 +155,23 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
 
   const getSaveAndCancelButtonContainer = () => {
     return (
-      <div className="w-100 d-flex justify-content-between py-2 mx-3">
-        <div><CancelButton isLoading={isLoading} cancelFunction={goToSummaryPanel} /></div>
+      <div className="w-100 d-flex justify-content-between mt-2 mx-3">
         <div>{getWarningMessage()}</div>
-        <div><StandaloneSaveButton saveFunction={updateMembers} type={"Members"} /></div>
+        <div className={"d-flex"}>
+          <div>
+            <CancelButton
+              isLoading={isLoading}
+              cancelFunction={goToSummaryPanel}
+              className={"mr-2"}
+            />
+          </div>
+          <div>
+            <StandaloneSaveButton
+              saveFunction={updateMembers}
+              type={"Members"}
+            />
+          </div>
+        </div>
       </div>
     );
   };
@@ -171,15 +184,28 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
 
   const getSearchBar = () => {
     return (
-      <div className="membership-search d-flex mx-auto">
-        <IconBase icon={faSearch} className={"mr-2 opsera-primary h-100"} />
-        <input
-          placeholder="Search"
-          value={searchText}
-          className="form-control"
-          onChange={event => updateSearchText(event.target.value)}
-        />
-      </div>
+      <Row>
+        <Col xs={12}>
+          <InputGroup className={"flex-nowrap my-2"}>
+            <InputGroup.Prepend>
+              <Button
+                disabled={isLoading}
+              >
+                <IconBase
+                  isLoading={isLoading}
+                  icon={faSearch}
+                />
+              </Button>
+            </InputGroup.Prepend>
+            <input
+              placeholder={"Search by Name or Email"}
+              value={searchText}
+              className={"form-control"}
+              onChange={event => updateSearchText(event.target.value)}
+            />
+          </InputGroup>
+        </Col>
+      </Row>
     );
   };
 
@@ -223,13 +249,11 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
           `} />
       </Row>
       <Row>
-        {getSearchBar()}
-      </Row>
-      <Row>
         {getSaveAndCancelButtonContainer()}
       </Row>
-      <Row>
-        <Col xs={6}>
+      {getSearchBar()}
+      <Row className={"mx-0"}>
+        <Col xs={12} sm={6} className={"px-0 mt-2"}>
           <NonMembersPanel
             members={members}
             setMembers={setMembers}
@@ -242,7 +266,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
             setSearchText={setSearchText}
           />
         </Col>
-        <Col xs={6}>
+        <Col xs={12} sm={6} className={"px-0 mt-2"}>
           <MembersPanel
             members={members}
             setMembers={setMembers}

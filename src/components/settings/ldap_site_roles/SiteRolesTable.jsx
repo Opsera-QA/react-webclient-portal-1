@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import {
+  getFormattedLabelWithFunctionColumnDefinition,
   getTableBooleanIconColumn,
-  getTableTextColumn
+  getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -19,16 +20,22 @@ function SiteRolesTable({ siteRoles, isMounted, siteRoleMetadata, orgDomain, isL
     loadColumnMetadata(siteRoleMetadata);
   }, [JSON.stringify(siteRoleMetadata)]);
 
+  const handleNameFormatting = (name) => {
+    if (name === "PowerUsers") {
+      return "Power Users";
+    }
+
+    return name;
+  };
+
   const loadColumnMetadata = (metadata) => {
     if (isMounted?.current === true && metadata?.fields) {
       const fields = metadata.fields;
 
       setColumns(
         [
-          getTableTextColumn(getField(fields, "name")),
-          getTableTextColumn(getField(fields, "externalSyncGroup")),
+          getFormattedLabelWithFunctionColumnDefinition(getField(fields, "name"), handleNameFormatting),
           getTableTextColumn(getField(fields, "memberCount")),
-          getTableBooleanIconColumn(getField(fields, "isSync")),
         ]
       );
     }
