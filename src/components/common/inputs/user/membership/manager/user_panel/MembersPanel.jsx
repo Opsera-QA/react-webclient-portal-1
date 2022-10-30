@@ -91,7 +91,7 @@ function MembersPanel(
             onClick={removeAllMembers}
           >
             <div className={"d-flex justify-content-between no-wrap-inline"}>
-              <div className={"d-xs-none d-md-none d-lg-inline"}>
+              <div>
                 <IconBase icon={faMinusCircle} className={"mr-2"} />
               </div>
               <div className={"mx-1"}>Remove All</div>
@@ -110,7 +110,7 @@ function MembersPanel(
             onClick={() => addSelectedToNonMembers()}
           >
             <div className={"d-flex justify-content-between no-wrap-inline"}>
-              <div className={"d-xs-none d-md-none d-lg-inline"}>
+              <div>
                 <IconBase icon={faArrowLeft} />
               </div>
               <div className={"mx-1"}>
@@ -132,7 +132,7 @@ function MembersPanel(
             onClick={removeAllShownMembers}
           >
             <div className={"d-flex justify-content-between no-wrap-inline"}>
-              <div className={"d-xs-none d-md-none d-lg-inline"}>
+              <div>
                 <IconBase icon={faMinusCircle} className={"mr-2"} />
               </div>
               <div>
