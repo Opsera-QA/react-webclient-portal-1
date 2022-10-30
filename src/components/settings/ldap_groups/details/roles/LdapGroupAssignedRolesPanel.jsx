@@ -8,9 +8,10 @@ import VanitySetTabAndViewContainer, {
 } from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import LdapGroupAssignedRolesTabContainer
   from "components/settings/ldap_groups/details/roles/LdapGroupAssignedRolesTabContainer";
-import LdapGroupAssignedRolesTableBase from "components/settings/ldap_groups/details/roles/LdapGroupAssignedRolesTableBase";
 import useGetResourcesByAssignedGroup
   from "components/settings/ldap_groups/details/roles/hooks/useGetResourcesByAssignedGroup";
+import LdapGroupAssignedRolesTableBase
+  from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesTableBase";
 
 const height = `calc(${DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT} - 110px)`;
 
@@ -44,6 +45,7 @@ export default function LdapGroupAssignedRolesPanel(
       isLoading={isLoading}
       currentView={
         <LdapGroupAssignedRolesTableBase
+          assignedGroupResourcesFilterModel={assignedGroupResourcesFilterModel}
           items={assignedResources}
           isLoading={isLoading}
           loadData={loadData}

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 import PropTypes from "prop-types";
 import LdapGroupEditorPanel from "./LdapGroupEditorPanel";
-import {faIdCard} from "@fortawesome/pro-light-svg-icons";
+import { faIdCard, faIdCardAlt } from "@fortawesome/pro-light-svg-icons";
 import LdapGroupSummaryPanel from "./LdapGroupSummaryPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
@@ -10,6 +10,7 @@ import DetailTabPanelContainer from "components/common/panels/detail_view/Detail
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import LdapGroupMembershipManagementPanel
   from "components/common/inputs/user/membership/manager/LdapGroupMembershipManagementPanel";
+import LdapGroupAssignedRolesPanel from "components/settings/ldap_groups/details/roles/LdapGroupAssignedRolesPanel";
 
 function LdapGroupDetailPanel(
   {
@@ -41,12 +42,19 @@ function LdapGroupDetailPanel(
           activeTab={activeTab}
         />
         <CustomTab
-          icon={faIdCard}
+          icon={faIdCardAlt}
           tabName={"manage"}
           handleTabClick={handleTabClick}
           activeTab={activeTab}
           tabText={"Manage Members"}
         />
+        {/*<CustomTab*/}
+        {/*  icon={faIdCard}*/}
+        {/*  tabName={"assigned-roles"}*/}
+        {/*  handleTabClick={handleTabClick}*/}
+        {/*  activeTab={activeTab}*/}
+        {/*  tabText={"Assigned Role Access"}*/}
+        {/*/>*/}
       </CustomTabContainer>
     );
   };
@@ -82,6 +90,12 @@ function LdapGroupDetailPanel(
             orgDomain={orgDomain}
           />
         );
+      // case "assigned-roles":
+      //   return (
+      //     <LdapGroupAssignedRolesPanel
+      //       groupModel={ldapGroupData}
+      //     />
+      //   );
       default:
         return null;
     }

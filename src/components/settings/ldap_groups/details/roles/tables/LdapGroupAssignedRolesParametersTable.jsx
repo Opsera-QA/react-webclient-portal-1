@@ -5,15 +5,15 @@ import {
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
-import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
+import customParametersMetadata
+  from "@opsera/definitions/constants/registry/custom_parameters/customParameters.metadata";
 
-export default function LdapGroupAssignedRolesTableBase(
+export default function LdapGroupAssignedRolesParametersTable(
   {
-    items,
+    parameters,
     isLoading,
-    onRowSelectFunction,
   }) {
-  const fields = registryToolMetadata.fields;
+  const fields = customParametersMetadata.fields;
 
   const columns = useMemo(
     () => [
@@ -26,15 +26,13 @@ export default function LdapGroupAssignedRolesTableBase(
   return (
     <CustomTable
       isLoading={isLoading}
-      onRowSelect={onRowSelectFunction}
-      data={items}
+      data={parameters}
       columns={columns}
     />
   );
 }
 
-LdapGroupAssignedRolesTableBase.propTypes = {
-  items: PropTypes.array,
+LdapGroupAssignedRolesParametersTable.propTypes = {
+  parameters: PropTypes.array,
   isLoading: PropTypes.bool,
-  onRowSelectFunction: PropTypes.func,
 };

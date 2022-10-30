@@ -356,4 +356,22 @@ toolsActions.getSfdxScanRules = async (getAccessToken, cancelTokenSource) => {
   return await baseActions.apiGetCallV2(getAccessToken, null, apiUrl);
 };
 
+toolsActions.getToolsWithGroupAssigned = async (
+  getAccessToken,
+  cancelTokenSource,
+  group,
+) => {
+  const apiUrl = `/registry/configs/tool/roles/group/`;
+  const queryParameters = {
+    group: group,
+  };
+
+  return await baseActions.apiGetCallV3(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    queryParameters,
+  );
+};
+
 export default toolsActions;
