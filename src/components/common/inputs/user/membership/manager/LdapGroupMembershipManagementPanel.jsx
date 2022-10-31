@@ -239,7 +239,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
   return (
     <DetailPanelContainer>
       <Row className="mx-2">
-        <div><h5>Add or remove people from the {ldapGroupData.getData("name")} {type}</h5></div>
+        <div><h5>Add or remove Members from the {ldapGroupData.getData("name")} {type}</h5></div>
       </Row>
       <Row>
         <MessageField
