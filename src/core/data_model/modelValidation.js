@@ -5,7 +5,7 @@ import {
   isWebsite,
   matchesRegex,
   validateEmail,
-  hasSpaces,
+  hasSpaces, isHttpsUrl,
 } from "utils/helpers";
 import regexDefinitions from "utils/regexDefinitions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
@@ -109,6 +109,14 @@ export const fieldValidation = (value, model, field) => {
 
   if (field.isAlphaNumeric === true && !isAlphaNumeric(value)) {
     errorMessages.push("No special characters are allowed.");
+  }
+
+  if (hasStringValue(value) === true && field.isSecureUrl === true && !isHttpsUrl(value)) {
+    if (value.startsWith("https") !== true) {
+      errorMessages.push("Unsupported HTTP request detected.  Please ensure you are using a secure HTTPS connection before saving.");
+    } else {
+      errorMessages.push("This must be a full, valid, and secured HTTPS website path.");
+    }
   }
 
   if (field.isDomain === true && !isDomain(value)) {
