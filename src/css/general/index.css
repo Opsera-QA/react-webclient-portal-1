@@ -54,11 +54,6 @@ primary analytics font*/
     letter-spacing: 1px;
 }
 
-.metric-block-content-text-md {
-    font-size: 1.5rem;
-    letter-spacing: 1px;
-}
-
 .metric-block-footer-text {
     font-size: .85rem;
     letter-spacing: 1px;
@@ -394,9 +389,6 @@ a:hover, .active, .link-text:hover {
     border-bottom-style: solid;
 }
 
-.medium-data-block-height {
-    min-height: 11rem;
-}
 
 .max-content-width {
     max-width: 1685px; /* 1250px*/
@@ -754,6 +746,16 @@ a:hover, .active, .link-text:hover {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     color: #dc3545;
     padding: 5px;
+}
+
+.error-text-alt {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    color: #dc3545;
+}
+
+.error-text-alt .form-control:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0.3rem 0 0 rgb(220 53 69 / 25%);
 }
 
 .info-text {
