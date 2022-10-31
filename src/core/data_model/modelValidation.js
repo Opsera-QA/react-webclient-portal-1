@@ -10,6 +10,8 @@ import {
 import regexDefinitions from "utils/regexDefinitions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
+export const modelValidation = {};
+
 // TODO: We need to rework this
 export const validateData = (data) => {
   const errors = [];
@@ -249,6 +251,15 @@ const maxLengthValidator = (value, maxLength) => {
     return true;
   }
 
+};
+
+modelValidation.getFieldWarning = (fieldName, model) => {
+  const field = model?.getFieldById(fieldName);
+  const value = model?.getData(fieldName);
+
+  if (hasStringValue(value) === true && field.isWebsite === true && value.startsWith("https") !== true) {
+    return "Warning, an unsecure HTTP URL detected. Please ensure the external resource supports HTTP or switch to HTTPS before saving.";
+  }
 };
 
 // TODO: THis probably doesn't work with boolean values,

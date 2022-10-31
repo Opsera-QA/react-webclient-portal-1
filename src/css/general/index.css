@@ -748,8 +748,7 @@ a:hover, .active, .link-text:hover {
     padding: 5px;
 }
 
-.error-text-alt {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+.error-text-alt, .error-text-alt .form-control:focus {
     color: #dc3545;
 }
 
@@ -788,6 +787,10 @@ a:hover, .active, .link-text:hover {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     color: #CF940C;
     padding: 5px;
+}
+
+.warning-text-alt, .warning-text-alt .form-control:focus {
+    color: #CF940C;
 }
 
 .success-block {

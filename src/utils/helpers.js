@@ -1,5 +1,6 @@
 import { Tooltip } from "react-bootstrap";
 import React from "react";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export function isLocalHost(hostname) {
   return !!(
@@ -33,6 +34,17 @@ export function isDomain(domain) {
 export function isWebsite(website) {
   var re =  /^((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
   return re.test(String(website).toLowerCase());
+}
+
+export function isHttpsUrl(url) {
+  const parsedUrl = DataParsingHelper.parseString(url);
+
+  if (!parsedUrl) {
+    return false;
+  }
+
+  const re =  /^((https):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
+  return re.test(String(parsedUrl).toLowerCase());
 }
 
 export function isOpseraPassword(password) {

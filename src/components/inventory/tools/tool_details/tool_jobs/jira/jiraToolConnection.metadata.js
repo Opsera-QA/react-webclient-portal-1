@@ -6,7 +6,7 @@ export const jiraToolConnectionMetadata = {
       label: "Jira URL",
       id: "toolURL",
       isRequired: true,
-      isWebsite: true,
+      isSecureUrl: true,
       maxLength: 2048,
     },
     {
@@ -26,13 +26,12 @@ export const jiraToolConnectionMetadata = {
       id: "vaultSecretKey",
       isRequired: true,
       maxLength: 50,
-    }
+    },
   ],
-  newObjectFields:
-    {
-      toolURL: "",
-      jiraPort: "",
-      userName: "",
-      vaultSecretKey: ""
-    }
+  newObjectFields: {
+    toolURL: "",
+    jiraPort: "",
+    userName: "",
+    vaultSecretKey: "",
+  },
 };
