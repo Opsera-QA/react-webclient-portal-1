@@ -5,7 +5,8 @@ const octopusConnectionMetadata = {
     {
       label: "Octopus URL",
       id: "toolURL",
-      isRequired: true
+      isRequired: true,
+      isSecureUrl: true,
     },
     {
       label: "Octopus Username",

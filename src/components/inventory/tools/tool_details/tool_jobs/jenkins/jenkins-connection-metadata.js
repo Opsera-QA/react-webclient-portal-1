@@ -4,7 +4,8 @@ const jenkinsConnectionMetadata = {
   {
     label: "Jenkins Container URL",
     id: "jenkinsUrl",
-    isRequired: true
+    isRequired: true,
+    isSecureUrl: true,
   },
   {
     label: "Jenkins Port",
@@ -45,7 +46,8 @@ const jenkinsConnectionMetadata = {
     {
       label: "Jenkins Container URL",
       id: "jenkinsUrl",
-      isRequired: true
+      isRequired: true,
+      isSecureUrl: true,
     },
     {
       label: "Jenkins Port",

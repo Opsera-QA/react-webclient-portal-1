@@ -1,11 +1,12 @@
 const BlackduckMetadata = {
   type: "BlackDuck Tool Configuration",
   idProperty: "_id",
-  fields: [    
+  fields: [
     {
       label: "BlackDuck URL",
       id: "url",
-      isRequired: true
+      isRequired: true,
+      isSecureUrl: true,
     },
     {
       label: "BlackDuck Token",
@@ -16,7 +17,7 @@ const BlackduckMetadata = {
   newObjectFields:
   {
     url: "",
-    token: "",    
+    token: "",
   }
 };
 

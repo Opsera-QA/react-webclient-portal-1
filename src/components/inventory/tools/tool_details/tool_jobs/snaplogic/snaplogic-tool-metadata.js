@@ -20,7 +20,8 @@ const SnaplogicMetadata = {
     {
       label: "MetaSnap URL",
       id: "metaSnapURL",
-      isRequired: true
+      isRequired: true,
+      isSecureUrl: true,
     },
     {
       label: "MetaSnap Bearer Token",

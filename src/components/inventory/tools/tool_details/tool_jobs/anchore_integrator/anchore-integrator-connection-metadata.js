@@ -5,7 +5,8 @@ const anchoreIntegratorConnectionMetadata = {
     {
       label: "Anchore Integrator URL",
       id: "toolURL",
-      isRequired: true
+      isRequired: true,
+      isSecureUrl: true,
     },
     {
       label: "Username",

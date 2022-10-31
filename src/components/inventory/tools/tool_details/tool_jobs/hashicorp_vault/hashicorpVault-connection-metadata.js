@@ -5,7 +5,8 @@ const HashicorpVaultConnectionMetadata = {
     {
       label: "Vault URI",
       id: "vaultUri",
-      isRequired: true
+      isRequired: true,
+      isSecureUrl: true,
     },
     {
       label: "Vault Token",

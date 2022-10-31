@@ -6,7 +6,7 @@ const cypressConnectionMetadata = {
       label: "Jenkins Container URL",
       id: "jenkinsUrl",
       isRequired: true,
-      maxLength: 100
+      isSecureUrl: true,
     },
     {
       label: "Jenkins Port",

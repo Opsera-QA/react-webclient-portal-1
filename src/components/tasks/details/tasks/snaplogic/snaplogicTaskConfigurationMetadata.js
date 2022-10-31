@@ -25,7 +25,7 @@ const snaplogicTaskConfigurationMetadata = {
           label: "Repository",
           id: "gitRepository",
           isRequired: true
-        },    
+        },
         {
           label: "Project ID",
           id: "projectId",
@@ -60,8 +60,7 @@ const snaplogicTaskConfigurationMetadata = {
             isRequiredFunction: (model) => {
                 return model?.getData("iValidatorScan") === true;
             },
-            maxLength: 2048,
-            regexDefinitionName: "urlField",
+          isSecureUrl: true,
         },
         {
             label: "Validation Token",
@@ -78,7 +77,7 @@ const snaplogicTaskConfigurationMetadata = {
         toolConfigId: "",
         gitToolId: "",
         service: "",
-        gitRepository: "",    
+        gitRepository: "",
         projectId: "",
         gitBranch: "",
         targetBranch: "",
@@ -89,5 +88,5 @@ const snaplogicTaskConfigurationMetadata = {
         validationToken: "",
       }
     };
-  
+
   export default snaplogicTaskConfigurationMetadata;
