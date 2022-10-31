@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import Col from "react-bootstrap/Col";
-import CreateVPCToggle from "../inputs/CreateVPCToggle";
 import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
+import EcsCreationTaskVpcBooleanToggleInput
+  from "components/tasks/details/tasks/ecs-cluster-creation/inputs/EcsCreationTaskVpcBooleanToggleInput";
 
 function NetworkingOnlySubForm({ dataObject, setDataObject, disabled }) {
   const getDynamicFields = () => {
@@ -21,7 +21,11 @@ function NetworkingOnlySubForm({ dataObject, setDataObject, disabled }) {
 
   return (
     <>
-      <CreateVPCToggle dataObject={dataObject} setDataObject={setDataObject} fieldName={"createVpc"} />
+      <EcsCreationTaskVpcBooleanToggleInput
+        model={dataObject}
+        setModel={setDataObject}
+        fieldName={"createVpc"}
+      />
       {getDynamicFields()}
     </>
   );

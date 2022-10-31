@@ -2,21 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
+const ACTION_LIST = [
+  {
+    name: "Networking/Fargate",
+    value: "fargate",
+  },
+  {
+    name: "EC2",
+    value: "ec2",
+  },
+];
+
 function ClusterTemplateSelectInput({dataObject, setDataObject, isLoading, disabled}) {
-
-  const ACTION_LIST = [
-    {
-      name: "Networking/Fargate",
-      value: "fargate",
-    },
-    {
-      name: "EC2",
-      value: "ec2",
-    },
-  ];
-
   return (
-
     <SelectInputBase
       fieldName={"clusterTemplate"}
       dataObject={dataObject}
