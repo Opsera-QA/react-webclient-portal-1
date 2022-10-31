@@ -1,4 +1,4 @@
-import {validateData, validateField, validatePotentialValue} from "core/data_model/modelValidation";
+import { modelValidation, validateData, validateField, validatePotentialValue } from "core/data_model/modelValidation";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
@@ -192,6 +192,10 @@ export class Model {
   getFieldError = (fieldName) => {
     let errors = validateField(this, this.getFieldById(fieldName));
     return errors != null ? errors[0] : "";
+  };
+
+  getFieldWarning = (fieldName) => {
+    return modelValidation.getFieldWarning(fieldName, this);
   };
 
   propertyChange = (id, newValue, oldValue) => {
