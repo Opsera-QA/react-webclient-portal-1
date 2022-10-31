@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import ActionBarDeleteModelButton from "components/common/actions/buttons/ActionBarDeleteModelButton";
 import { useHistory } from "react-router-dom";
-import { pipelineInstructionsHelpers } from "components/settings/pipelines/instructions/pipelineInstructions.helpers";
+import { pipelineInstructionsHelper } from "components/settings/pipelines/instructions/pipelineInstructions.helper";
 
 export default function ActionBarDeletePipelineInstructionsButton({ pipelineInstructionsModel, className }) {
   const history = useHistory();
 
   const afterDeleteFunction = () => {
-    history.push(pipelineInstructionsHelpers.getManagementScreenLink());
+    history.push(pipelineInstructionsHelper.getManagementScreenLink());
   };
 
   if (pipelineInstructionsModel?.canDelete() !== true) {

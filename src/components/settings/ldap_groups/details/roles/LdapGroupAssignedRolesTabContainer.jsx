@@ -5,7 +5,7 @@ import {
   faTasks,
   faTools,
   faChartNetwork,
-  faDraftingCompass, faFileCode, faHandshake,
+  faDraftingCompass, faFileCode, faHandshake, faBallotCheck,
 } from "@fortawesome/pro-light-svg-icons";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 
@@ -36,6 +36,14 @@ export default function LdapGroupAssignedRolesTabContainer(
         icon={faDraftingCompass}
         tabText={"Pipelines"}
         tabName={"pipelines"}
+        disabled={isLoading}
+        handleTabClick={handleTabClick}
+        activeTab={assignedRoleFilterModel?.getData("type")}
+      />
+      <VanitySetVerticalTab
+        icon={faBallotCheck}
+        tabText={"Pipeline Instructions"}
+        tabName={"pipeline_instructions"}
         disabled={isLoading}
         handleTabClick={handleTabClick}
         activeTab={assignedRoleFilterModel?.getData("type")}
