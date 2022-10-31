@@ -5,7 +5,8 @@ const CoverityConnectionMetadata = {
       {
         label: "Coverity Connect URL",
         id: "toolURL",
-        isRequired: true
+        isRequired: true,
+        isSecureUrl: true,
       },
       {
         label: "Username",

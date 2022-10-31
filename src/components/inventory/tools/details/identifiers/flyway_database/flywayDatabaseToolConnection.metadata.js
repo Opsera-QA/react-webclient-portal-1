@@ -18,8 +18,7 @@ export const flywayDatabaseToolConnectionMetadata = {
       label: "Database URL",
       id: "url",
       isRequired: true,
-      maxLength: 2048,
-      regexDefinitionName: "urlField",
+      isSecureUrl: true,
     },
     {
       label: "Port",

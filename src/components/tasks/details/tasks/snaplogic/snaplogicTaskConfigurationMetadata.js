@@ -60,8 +60,7 @@ const snaplogicTaskConfigurationMetadata = {
             isRequiredFunction: (model) => {
                 return model?.getData("iValidatorScan") === true;
             },
-            maxLength: 2048,
-            regexDefinitionName: "urlField",
+          isSecureUrl: true,
         },
         {
             label: "Validation Token",

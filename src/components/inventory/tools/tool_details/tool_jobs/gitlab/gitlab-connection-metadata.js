@@ -6,7 +6,7 @@ const gitlabConnectionMetadata = {
       label: "Url",
       id: "url",
       isRequired: true,
-      maxLength: 100
+      isSecureUrl: true,
     },
     {
       label: "Username",
