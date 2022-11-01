@@ -105,7 +105,7 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
 
   //TODO: we will allow impartial settings to be saved, BUT we want to show a warning to users.
   const validateRequiredFields = () => {
-    let { service, accountId, username, password, repository, branch, trigger_active } = sourceRepositoryModel.getPersistData();
+    let { service, accountId, username, password, repository, branch, trigger_active } = sourceRepositoryModel?.getPersistData();
 
     if (service.length === 0) {
       return false;
@@ -201,7 +201,7 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
         branches for pipeline runs.</div>
 
       <div className={"p-3"} >COMING SOON</div>
-      
+
         <hr />*/}
       <div className="text-muted h5 mt-3">Pipeline Git Revisions</div>
         <PipelineSourceRepositoryGitExportEnabledInput
@@ -210,7 +210,6 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
           setModel={setSourceRepositoryModel}
           disabled={sourceRepositoryModel.getData("service") === "gitlab" || sourceRepositoryModel.getData("service") === "github" ? false : true}
         />
-{console.log(sourceRepositoryModel)}
       {/* <div className={"p-3"} >COMING SOON</div> */}
 
 
