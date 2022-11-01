@@ -7,9 +7,9 @@ import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
-import PipelineInstructionsTypeSelectInput
-  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsTypeSelectInput";
 import RichTextInput from "components/common/inputs/rich_text/RichTextInput";
+import PipelineInstructionsTypeSelectInput
+  from "components/common/list_of_values_input/settings/pipelines/instructions/type/PipelineInstructionsTypeSelectInput";
 
 export default function PipelineInstructionsEditorPanel(
   {
