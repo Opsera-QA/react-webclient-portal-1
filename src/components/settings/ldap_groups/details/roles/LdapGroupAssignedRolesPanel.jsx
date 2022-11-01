@@ -35,6 +35,7 @@ export default function LdapGroupAssignedRolesPanel(
       minimumHeight={height}
       loadDataFunction={loadData}
       maximumHeight={height}
+      tabColumnSize={3}
       verticalTabContainer={
         <LdapGroupAssignedRolesTabContainer
           isLoading={isLoading}

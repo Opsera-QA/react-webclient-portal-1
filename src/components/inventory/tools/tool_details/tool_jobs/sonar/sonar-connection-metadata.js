@@ -12,7 +12,7 @@ const sonarConnectionMetadata = {
       label: "Sonar URL",
       id: "sonarUrl",
       isRequired: true,
-      maxLength: 100
+      isSecureUrl: true,
     },
     {
       label: "Sonar Port",

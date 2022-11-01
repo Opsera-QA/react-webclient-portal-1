@@ -94,7 +94,9 @@ function MembersPanel(
               <div>
                 <IconBase icon={faMinusCircle} className={"mr-2"} />
               </div>
-              <div className={"mx-1"}>Remove All</div>
+              <div className={"mx-2"}>
+                Remove All
+              </div>
               <div>
                 <span className={"badge badge-secondary"}>{filteredMembers.length}</span>
               </div>
@@ -113,7 +115,7 @@ function MembersPanel(
               <div>
                 <IconBase icon={faArrowLeft} />
               </div>
-              <div className={"mx-1"}>
+              <div className={"mx-2"}>
                 Remove Selected
               </div>
               <div>
@@ -135,7 +137,7 @@ function MembersPanel(
               <div>
                 <IconBase icon={faMinusCircle} className={"mr-2"} />
               </div>
-              <div>
+              <div className={"mx-2"}>
                 Remove Shown
               </div>
               <div>

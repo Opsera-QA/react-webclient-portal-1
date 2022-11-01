@@ -378,6 +378,11 @@ input[disabled] {
     padding-bottom: 10px;
 }
 
+.form-control:focus {
+    box-shadow: 0 0.3rem 0 0 rgb(53 47 84 / 25%);
+    border-color: rgb(53 47 84);
+}
+
 /* End Error State CSS */
 
 /* Vanity Set V3 Component CSS */

@@ -264,7 +264,8 @@ export default function SettingsRoutes() {
         component={FreeTrialUserActivityReport}
         roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       />
-      {/*<PipelineSettingsRoutes />*/}
+
+      <PipelineSettingsRoutes />
     </>
   );
 }

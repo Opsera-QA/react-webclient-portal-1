@@ -716,6 +716,15 @@ a:hover, .active, .link-text:hover {
     padding: 5px;
 }
 
+.error-text-alt, .error-text-alt .form-control:focus {
+    color: #dc3545;
+}
+
+.error-text-alt .form-control:focus {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0.3rem 0 0 rgb(220 53 69 / 25%) !important;
+}
+
 .info-text {
     color: #3D3B36;
     padding: 5px;
@@ -742,6 +751,10 @@ a:hover, .active, .link-text:hover {
 .warning-text {
     color: #CF940C;
     padding: 5px;
+}
+
+.warning-text-alt, .warning-text-alt .form-control:focus {
+    color: #CF940C;
 }
 
 .success-block {

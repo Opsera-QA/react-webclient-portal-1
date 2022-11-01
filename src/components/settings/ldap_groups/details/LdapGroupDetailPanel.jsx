@@ -48,13 +48,13 @@ function LdapGroupDetailPanel(
           activeTab={activeTab}
           tabText={"Manage Members"}
         />
-        {/*<CustomTab*/}
-        {/*  icon={faIdCard}*/}
-        {/*  tabName={"assigned-roles"}*/}
-        {/*  handleTabClick={handleTabClick}*/}
-        {/*  activeTab={activeTab}*/}
-        {/*  tabText={"Assigned Role Access"}*/}
-        {/*/>*/}
+        <CustomTab
+          icon={faIdCard}
+          tabName={"assigned-roles"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Assigned Role Access"}
+        />
       </CustomTabContainer>
     );
   };
@@ -90,12 +90,12 @@ function LdapGroupDetailPanel(
             orgDomain={orgDomain}
           />
         );
-      // case "assigned-roles":
-      //   return (
-      //     <LdapGroupAssignedRolesPanel
-      //       groupModel={ldapGroupData}
-      //     />
-      //   );
+      case "assigned-roles":
+        return (
+          <LdapGroupAssignedRolesPanel
+            groupModel={ldapGroupData}
+          />
+        );
       default:
         return null;
     }

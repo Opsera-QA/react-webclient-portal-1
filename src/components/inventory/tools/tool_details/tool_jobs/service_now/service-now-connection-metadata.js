@@ -4,7 +4,8 @@ const serviceNowConnectionMetadata = {
     {
       label: "Service Now URL",
       id: "toolURL",
-      isRequired: true
+      isRequired: true,
+      isSecureUrl: true,
     },
     {
       label: "Username",

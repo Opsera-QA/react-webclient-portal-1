@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import SFDXCertGenTaskTypeConfigurationPanel from "./sfdx-cert-gen/SFDXCertGenTaskTypeConfigurationPanel";
 import SFDCBranchStructuringTaskTypeConfigurationPanel from "./sfdc-branch-structure/SFDCBranchStructuringTaskTypeConfigurationPanel";
 import GitToGitSyncTaskConfigurationEditorPanel from "components/tasks/details/tasks/branch-to-branch/GitToGitSyncTaskConfigurationEditorPanel";
-import ECSCreationTaskConfigurationPanel from "./ecs-cluster-creation/ECSCreationTaskConfigurationPanel";
+import Ec2ClusterCreationTaskConfigurationPanel from "components/tasks/details/tasks/ecs-cluster-creation/Ec2ClusterCreationTaskConfigurationPanel";
 import ECSServiceCreationTaskConfigurationPanel from "./ecs-service-creation/ECSServiceCreationTaskConfigurationPanel";
 import AwsLambdaConfigurationPanel from "./aws-lambda-creation/AwsLambdaConfigurationPanel";
 import AzureClusterConfigurationPanel from "./azure-cluster-creation/AzureClusterConfigurationPanel";
@@ -90,7 +90,7 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
         );
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
         return (
-          <ECSCreationTaskConfigurationPanel
+          <Ec2ClusterCreationTaskConfigurationPanel
             gitTasksDataDto={taskModel}
             setGitTasksConfigurationData={setTaskConfigurationModel}
             gitTasksConfigurationData={taskConfigurationModel}

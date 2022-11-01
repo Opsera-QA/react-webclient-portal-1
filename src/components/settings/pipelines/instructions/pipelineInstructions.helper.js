@@ -1,8 +1,8 @@
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
-export const pipelineInstructionsHelpers = {};
+export const pipelineInstructionsHelper = {};
 
-pipelineInstructionsHelpers.getDetailViewLink = (
+pipelineInstructionsHelper.getDetailViewLink = (
   pipelineInstructionsId,
   ) => {
   if (isMongoDbId(pipelineInstructionsId) !== true) {
@@ -12,6 +12,6 @@ pipelineInstructionsHelpers.getDetailViewLink = (
   return `/settings/pipelines/instructions/${pipelineInstructionsId}`;
 };
 
-pipelineInstructionsHelpers.getManagementScreenLink = () => {
+pipelineInstructionsHelper.getManagementScreenLink = () => {
   return `/settings/pipelines/instructions/`;
 };

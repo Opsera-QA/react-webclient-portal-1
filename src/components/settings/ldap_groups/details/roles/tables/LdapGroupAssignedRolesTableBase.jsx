@@ -13,6 +13,8 @@ import LdapGroupAssignedRolesDashboardsTable
   from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesDashboardsTable";
 import LdapGroupAssignedRolesScriptsTable
   from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesScriptsTable";
+import LdapGroupAssignedRolesPipelineInstructionsTable
+  from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesPipelineInstructionsTable";
 
 export default function LdapGroupAssignedRolesTableBase(
   {
@@ -42,6 +44,13 @@ export default function LdapGroupAssignedRolesTableBase(
         return (
           <LdapGroupAssignedRolesPipelinesTable
             pipelines={items}
+            isLoading={isLoading}
+          />
+        );
+      case "pipeline_instructions":
+        return (
+          <LdapGroupAssignedRolesPipelineInstructionsTable
+            pipelineInstructions={items}
             isLoading={isLoading}
           />
         );

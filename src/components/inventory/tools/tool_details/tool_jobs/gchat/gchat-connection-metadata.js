@@ -4,7 +4,8 @@ const gchatConnectionMetadata = {
     {
       label: "GChat Webhook URL",
       id: "webhookUrl",
-      isRequired: true
+      isRequired: true,
+      isSecureUrl: true,
     },
   ],
   newObjectFields:

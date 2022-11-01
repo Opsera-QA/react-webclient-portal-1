@@ -15,7 +15,8 @@ const BuildkiteMetadata = {
     {
       label: "URL",
       id: "url",
-      isRequired: true
+      isRequired: true,
+      isSecureUrl: true,
     },
     {
       label: "Slug",
