@@ -169,7 +169,14 @@ function StepToolConfiguration({
     plan[stepArrayIndex].tool.job_type = tool.job_type;
     // console.log("configuration: " + JSON.stringify(tool.configuration));
     // console.log("plan: " + JSON.stringify(plan));
-    return await parentCallback(plan);
+    const response = await parentCallback(plan);
+
+    // TODO: I don't think this is necessary but added for safety
+    if (response?.status === 200) {
+      closeEditorPanel();
+    }
+
+    return response;
     // setStepTool({});
   };
 

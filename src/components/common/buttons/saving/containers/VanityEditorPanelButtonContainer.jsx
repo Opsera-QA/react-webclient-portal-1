@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CloseEditorButton from "components/common/buttons/cancel/CloseEditorButton";
 import VanityCreateButton from "components/common/buttons/saving/VanityCreateButton";
 import VanitySaveButtonBase from "components/common/buttons/saving/VanitySaveButtonBase";
-import DeleteModelButtonWithConfirmationOverlay from "components/common/buttons/delete/DeleteModelButtonWithConfirmationModal";
+import DeleteModelButtonWithConfirmationOverlay from "components/common/buttons/delete/DeleteModelButtonWithConfirmationOverlay";
 import Row from "react-bootstrap/Row";
 
 function VanityEditorPanelButtonContainer(

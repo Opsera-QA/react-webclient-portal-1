@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import Col from "react-bootstrap/Col";
-import CreateVPCToggle from "../inputs/CreateVPCToggle";
 import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
+import EcsCreationTaskVpcBooleanToggleInput
+  from "components/tasks/details/tasks/ecs-cluster-creation/inputs/EcsCreationTaskVpcBooleanToggleInput";
 
+// TODO: Pick better name
 function NetworkingOnlySubForm({ dataObject, setDataObject, disabled }) {
   const getDynamicFields = () => {
-    if (dataObject?.getData("createVpc")) {
+    if (dataObject?.getData("createVpc") === true) {
       return (
         <>
           <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"vpcCidrBlock"} />
@@ -21,7 +22,11 @@ function NetworkingOnlySubForm({ dataObject, setDataObject, disabled }) {
 
   return (
     <>
-      <CreateVPCToggle dataObject={dataObject} setDataObject={setDataObject} fieldName={"createVpc"} />
+      <EcsCreationTaskVpcBooleanToggleInput
+        model={dataObject}
+        setModel={setDataObject}
+        fieldName={"createVpc"}
+      />
       {getDynamicFields()}
     </>
   );

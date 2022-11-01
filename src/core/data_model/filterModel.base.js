@@ -2,7 +2,7 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import sessionHelper from "utils/session.helper";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { numberHelpers } from "components/common/helpers/number/number.helpers";
-import { validateField } from "core/data_model/modelValidation";
+import { modelValidation, validateField } from "core/data_model/modelValidation";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export class FilterModelBase {
@@ -242,6 +242,15 @@ export class FilterModelBase {
 
   isFieldValid = (fieldName) => {
     return validateField(this, this.getFieldById(fieldName));
+  };
+
+  getFieldError = (fieldName) => {
+    let errors = validateField(this, this.getFieldById(fieldName));
+    return errors != null ? errors[0] : "";
+  };
+
+  getFieldWarning = (fieldName) => {
+    return modelValidation.getFieldWarning(fieldName, this);
   };
 
   getTotalCount = () => {

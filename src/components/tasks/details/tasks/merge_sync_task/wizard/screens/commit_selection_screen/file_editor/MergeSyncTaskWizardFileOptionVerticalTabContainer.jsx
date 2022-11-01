@@ -12,6 +12,7 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import MergeSyncTaskWizardSelectDeltaVersionButton
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/diff_viewer/MergeSyncTaskWizardSelectDeltaVersionButton";
 
+  // TODO : Not sure if this is being used, if so pls update to use new editor here
 const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = (
   {
     deltaList,

@@ -10,12 +10,14 @@ import PipelineInstructionsTypeField
   from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsTypeField";
 import PipelineInstructionsRoleAccessInlineInput
   from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsRoleAccessInlineInput";
+import RichTextField from "components/common/fields/rich_text/RichTextField";
 
 export default function PipelineInstructionsSummaryPanel(
   {
     pipelineInstructionsModel,
     setPipelineInstructionsModel,
     setActiveTab,
+    loadDataFunction,
   } ) {
   if (pipelineInstructionsModel == null) {
     return <></>;
@@ -48,8 +50,17 @@ export default function PipelineInstructionsSummaryPanel(
             model={pipelineInstructionsModel}
           />
         </Col>
+        <Col xs={12}>
+          <RichTextField
+            fieldName={"instructions"}
+            model={pipelineInstructionsModel}
+            minimumHeight={"150px"}
+            maximumHeight={"1000px"}
+          />
+        </Col>
         <Col lg={12}>
-          <DescriptionField
+          <TextFieldBase
+            fieldName={"description"}
             dataObject={pipelineInstructionsModel}
           />
         </Col>
@@ -66,5 +77,6 @@ export default function PipelineInstructionsSummaryPanel(
 PipelineInstructionsSummaryPanel.propTypes = {
   pipelineInstructionsModel: PropTypes.object,
   setPipelineInstructionsModel: PropTypes.func,
-  setActiveTab: PropTypes.func
+  setActiveTab: PropTypes.func,
+  loadDataFunction: PropTypes.func,
 };

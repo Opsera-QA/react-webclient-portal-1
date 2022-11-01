@@ -9,6 +9,8 @@ import axios from "axios";
 import SiteRoleManagementSubNavigationBar from "components/settings/ldap_site_roles/SiteRoleManagementSubNavigationBar";
 import SiteRolesTable from "components/settings/ldap_site_roles/SiteRolesTable";
 import SiteRolesHelpDocumentation from "../../common/help/documentation/settings/SiteRolesHelpDocumentation";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
 function SiteRoleManagement() {
   const history = useHistory();
@@ -116,6 +118,14 @@ function SiteRoleManagement() {
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
     >
+      <CenteredContentWrapper>
+        <H5FieldSubHeader
+          subheaderText={`
+          If a user is not a member of one of these Site Roles, 
+          they will have limited access to items that don't have RBAC applied.
+        `}
+        />
+      </CenteredContentWrapper>
       <SiteRolesTable
         className={"mx-2"}
         isMounted={isMounted}

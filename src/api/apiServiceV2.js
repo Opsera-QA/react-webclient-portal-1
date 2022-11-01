@@ -1,4 +1,5 @@
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const axios = require("axios");
 const config = require("../config");
@@ -10,6 +11,26 @@ apiServiceV2.axiosApiGetCall = async (getAccessToken, cancelTokenSource, apiUrl,
 
   try {
     return await getAxiosInstance(accessToken, cancelTokenSource?.token).get(apiUrl, urlParams);
+  }
+  catch (error) {
+    const parsedError = parseAxiosError(error);
+
+    if (parsedError) {
+      throw parsedError;
+    }
+  }
+};
+
+apiServiceV2.axiosApiGetCallV2 = async (getAccessToken, cancelTokenSource, apiUrl, urlParams) => {
+  const accessToken = await getAccessToken();
+  const parsedUrlParams = DataParsingHelper.parseObject(urlParams, {});
+
+  try {
+    return await getAxiosInstance(accessToken, cancelTokenSource?.token)
+      .get(
+        apiUrl,
+        { params: parsedUrlParams, }
+    );
   }
   catch (error) {
     const parsedError = parseAxiosError(error);

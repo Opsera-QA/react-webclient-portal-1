@@ -1,4 +1,4 @@
-import {validateData, validateField, validatePotentialValue} from "core/data_model/modelValidation";
+import { modelValidation, validateData, validateField, validatePotentialValue } from "core/data_model/modelValidation";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
@@ -207,6 +207,10 @@ export default class ModelBase {
     return errors != null ? errors[0] : "";
   };
 
+  getFieldWarning = (fieldName) => {
+    return modelValidation.getFieldWarning(fieldName, this);
+  };
+
   propertyChange = (id, newValue, oldValue) => {
     let newChangeMap = new Map(this.changeMap);
     if (!newChangeMap.has(id)) {
@@ -373,6 +377,10 @@ export default class ModelBase {
     return field?.uppercase === true;
   };
 
+  getOwnerId = () => {
+    return this.getData("owner");
+  };
+
   isWebsite = (fieldName) => {
     const field = this.getFieldById(fieldName);
     return field != null ? field.isWebsite === true : false;
@@ -481,6 +489,10 @@ export default class ModelBase {
 
   canEditAccessRoles = () => {
     return this.canUpdate() === true && this.editAccessRolesAllowed === true;
+  };
+
+  canTransferOwnership = () => {
+    return false;
   };
 
   handleLiveMessage = (liveMessage) => {

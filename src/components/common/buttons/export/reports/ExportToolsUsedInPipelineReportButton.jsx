@@ -6,7 +6,7 @@ import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
 import { DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import ExportReportsDataOverlay from "../../../modal/export_data/ExportReportsDataOverlay";
+import ExportReportsDataOverlay from "../../../../reports/export/ExportReportsDataOverlay";
 import ExportDataButtonBase from "../../../modal/export_data/ExportDataButtonBase";
 
 function ExportToolsUsedInPipelineReportButton(

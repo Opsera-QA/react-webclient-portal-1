@@ -5,10 +5,12 @@ import {
   isWebsite,
   matchesRegex,
   validateEmail,
-  hasSpaces,
+  hasSpaces, isHttpsUrl,
 } from "utils/helpers";
 import regexDefinitions from "utils/regexDefinitions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+
+export const modelValidation = {};
 
 // TODO: We need to rework this
 export const validateData = (data) => {
@@ -111,15 +113,31 @@ export const fieldValidation = (value, model, field) => {
     errorMessages.push("No special characters are allowed.");
   }
 
+  if (hasStringValue(value) === true && field.isSecureUrl === true) {
+    if (isHttpsUrl(value) !== true) {
+      if (value.startsWith("https") !== true) {
+        errorMessages.push("Unsupported HTTP request detected.  Please ensure you are using a secure HTTPS connection before saving.");
+      } else {
+        errorMessages.push("This must be a full, valid, and secured HTTPS website path.");
+      }
+    } else if (maxLengthValidator(value, 2048) !== true) {
+      errorMessages.push(`${field.label}'s value has to be 2048 characters or fewer.`);
+    }
+  }
+
   if (field.isDomain === true && !isDomain(value)) {
     errorMessages.push("Domains must begin and end with an alphanumeric character.");
   }
 
-  if (field.isWebsite === true && !isWebsite(value)) {
+  if (field.isWebsite === true) {
     // TODO: Wire up all errors this way to prevent empty, non-required fields from throwing errors on commit
     // Only show error if it's filled out. If it's required the is required check will throw that error, so this is unnecessary for now.
-    if (value !== "") {
-      errorMessages.push("This must be a full website path.");
+    if (hasStringValue(value) === true) {
+      if (isWebsite(value) !== true) {
+        errorMessages.push("This must be a valid website path.");
+      } else if (maxLengthValidator(value, 2048) !== true) {
+        errorMessages.push(`${field.label}'s value has to be 2048 characters or fewer.`);
+      }
     }
   }
 
@@ -249,6 +267,15 @@ const maxLengthValidator = (value, maxLength) => {
     return true;
   }
 
+};
+
+modelValidation.getFieldWarning = (fieldName, model) => {
+  const field = model?.getFieldById(fieldName);
+  const value = model?.getData(fieldName);
+
+  if (hasStringValue(value) === true && field.isWebsite === true && value.startsWith("https") !== true) {
+    return "Warning, an unsecure HTTP URL detected. Please ensure the external resource supports HTTP or switch to HTTPS before saving.";
+  }
 };
 
 // TODO: THis probably doesn't work with boolean values,

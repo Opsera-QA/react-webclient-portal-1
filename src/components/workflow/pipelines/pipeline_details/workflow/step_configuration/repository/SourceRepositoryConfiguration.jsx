@@ -30,44 +30,17 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [sourceRepositoryModel, setSourceRepositoryModel] = useState(undefined);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const isMounted = useRef(false);
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
+    setSourceRepositoryModel(undefined);
 
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, [JSON.stringify(pipeline)]);
-
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
+    if (pipeline) {
       const parsedModel = modelHelpers.parseObjectIntoModel(pipeline?.workflow?.source, sourceRepositoryConfigurationMetadata);
       setSourceRepositoryModel(parsedModel);
     }
-    catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    }
-    finally {
-      setIsLoading(false);
-    }
-  };
+  }, [JSON.stringify(pipeline)]);
 
+  // TODO: Make Node route that just accepts the source object and updates it
   const callbackFunction = async () => {
     if (sourceRepositoryModel && validateRequiredFields()) {
       const persistData = dataParsingHelper.parseObject(sourceRepositoryModel?.getPersistData());
@@ -100,12 +73,13 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
       //console.log("saving config: " + JSON.stringify(item));
       //console.log("saving getPersistData: " + JSON.stringify(sourceRepositoryModel?.getPersistData()));
       await parentCallback(item);
+      handleCloseClick();
     }
   };
 
   //TODO: we will allow impartial settings to be saved, BUT we want to show a warning to users.
   const validateRequiredFields = () => {
-    let { service, accountId, username, password, repository, branch, trigger_active } = sourceRepositoryModel.getPersistData();
+    let { service, accountId, username, password, repository, branch, trigger_active } = sourceRepositoryModel?.getPersistData();
 
     if (service.length === 0) {
       return false;
@@ -201,7 +175,7 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
         branches for pipeline runs.</div>
 
       <div className={"p-3"} >COMING SOON</div>
-      
+
         <hr />*/}
       <div className="text-muted h5 mt-3">Pipeline Git Revisions</div>
         <PipelineSourceRepositoryGitExportEnabledInput
@@ -210,7 +184,6 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
           setModel={setSourceRepositoryModel}
           disabled={sourceRepositoryModel.getData("service") === "gitlab" || sourceRepositoryModel.getData("service") === "github" ? false : true}
         />
-{console.log(sourceRepositoryModel)}
       {/* <div className={"p-3"} >COMING SOON</div> */}
 
 

@@ -79,6 +79,14 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
     }
   };
 
+  const getProvidersTabInformation = () => {
+    if (doesToolSupportTab(toolIdentifier, TOOL_DETAIL_PANEL_TABS.PROVIDERS) === true) {
+      return (
+        <li><b>Providers</b> - Manage Terraform VCS providers. </li>
+      );
+    }
+  };
+
   const getApplicationsTabInformation = () => {
     if (doesToolSupportTab(toolIdentifier, TOOL_DETAIL_PANEL_TABS.APPLICATIONS) === true) {
       return (
@@ -102,6 +110,16 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
       );
     }
   };
+
+
+  const getDataTransformerRulesTabInformation = () => {
+    if (doesToolSupportTab(toolIdentifier, TOOL_DETAIL_PANEL_TABS.DATA_TRANSFORMER) === true) {
+      return (
+        <li><b>MetaData Transformer Rules</b> - Manage MetaData Transformer Rules.</li>
+      );
+    }
+  };
+
 
   const getStorageTabInformation = () => {
     if (doesToolSupportTab(toolIdentifier, TOOL_DETAIL_PANEL_TABS.STORAGE) === true) {
@@ -198,6 +216,13 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
             <div>For more information on how to register the <b>Bitbucket</b> tool, view the <a href="https://docs.opsera.io/tool-registry/bitbucket-tool-registration" target="_blank" rel="noreferrer"><b>Bitbucket Tool Registration Help Documentation</b>.</a></div>
           </div>
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BUILDKITE:
+        return (
+          <div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>Buildkite</b> tool, view the <a href="https://docs.opsera.io/tool-registry/buildkite-tool-registration" target="_blank" rel="noreferrer"><b>Buildkite Tool Registration Help Documentation</b>.</a></div>
+          </div>
+        );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI:
         return (
           <div>
@@ -275,6 +300,13 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
             <div>For more information on how to register the <b>Salesforce Code Analyzer</b> tool, view the <a href="https://docs.opsera.io/tool-registry/salesforce-code-analyzer-tool-registration" target="_blank" rel="noreferrer"><b>Salesforce Code Analyzer Tool Registration Help Documentation</b>.</a></div>
           </div>
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SERVICE_NOW:
+        return (
+          <div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>ServiceNow</b> tool, view the <a href="https://docs.opsera.io/tool-registry/servicenow-tool-registration" target="_blank" rel="noreferrer"><b>ServiceNow Tool Registration Help Documentation</b>.</a></div>
+          </div>
+        );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR:
         return (
           <div>
@@ -340,6 +372,7 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
               <li><b>Attributes</b> - Includes Organizations, Contacts, Licensing, Locations, Applications and Compliance.</li>
               {getVaultTabInformation()}
               {getConnectionsTabInformation()}
+              {getDataTransformerRulesTabInformation()}
               {getEndpointsTabInformation()}
               {getValidationRulesTabInformation()}
               {getApplicationsTabInformation()}
@@ -352,6 +385,7 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
               {getLogsTabInformation()}
               {getPathsTabInformation()}
               {getOrganizationsTabInformation()}
+              {getProvidersTabInformation()}
               {getWorkspacesTabInformation()}
               <li><b>Usage</b> - View and navigate to all pipelines in which this tool is being used.</li>
               {getLicenseTabInformation()}

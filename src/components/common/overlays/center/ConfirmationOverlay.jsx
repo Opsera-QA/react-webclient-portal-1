@@ -21,6 +21,7 @@ function ConfirmationOverlay(
     pageLink,
     linkTooltipText,
     height,
+    isOverlayAlready
   }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -62,7 +63,7 @@ function ConfirmationOverlay(
   }
 
   return (
-    <div className={`overlay-panel center-overlay-shadow-background`}>
+    <div className={ !isOverlayAlready ? `overlay-panel center-overlay-shadow-background`: ''}>
       <div className={"confirmation-overlay-panel"}>
         <div className={"confirmation-overlay content-card-1 bg-white"}>
           <OverlayTitleBar
@@ -82,7 +83,7 @@ function ConfirmationOverlay(
             }}
           >
             {showToasts && toastContext?.getInlineBanner()}
-            <div className={"d-flex p-3 confirmation-overlay-panel-body-text"}>
+            <div className={"d-flex bg-white confirmation-overlay-panel-body-text"}>
               {getBody()}
             </div>
           </div>
@@ -109,11 +110,13 @@ ConfirmationOverlay.propTypes = {
   pageLink: PropTypes.string,
   linkTooltipText: PropTypes.string,
   height: PropTypes.string,
+  isOverlayAlready: PropTypes.bool
 };
 
 ConfirmationOverlay.defaultProps = {
   showCloseButton: true,
   height: "250px",
+  isOverlayAlready: false
 };
 
 export default ConfirmationOverlay;

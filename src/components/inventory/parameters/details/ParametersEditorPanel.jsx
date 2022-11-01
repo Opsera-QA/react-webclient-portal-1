@@ -77,12 +77,6 @@ export default function ParametersEditorPanel(
             setModel={setParameterModel}
           />
         </Col>
-        <Col md={12}>
-          <DataValidatorInput
-            model={parameterModel}
-            setModel={setParameterModel}
-          />
-        </Col>
       </Row>
     </VanityEditorPanelContainer>
   );

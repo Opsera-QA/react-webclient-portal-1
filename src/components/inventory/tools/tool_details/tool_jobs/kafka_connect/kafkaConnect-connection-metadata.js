@@ -13,7 +13,8 @@ const KafkaConnectConnectionMetadata = {
     {
       label: "Tool URL",
       id: "toolURL",
-      isRequired: true
+      isRequired: true,
+      isSecureUrl: true,
     }
   ],
   newObjectFields:

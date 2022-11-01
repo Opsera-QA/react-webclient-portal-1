@@ -68,7 +68,7 @@ export default function DeleteOverlayBase(
       titleIcon={titleIcon}
       height={"100px"}
     >
-      <div className={"m-2"}>
+      <div className={"m-4"}>
         <div className={"d-flex"}>
           <div className={"d-flex"}>
             <div className={"my-auto"}>

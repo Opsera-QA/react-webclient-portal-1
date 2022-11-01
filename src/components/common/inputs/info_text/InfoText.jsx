@@ -15,7 +15,7 @@ function InfoText(
   }) {
   if (hasStringValue(errorMessage) === true) {
     return (
-      <small className={"danger-red form-text"}>
+      <small className={"danger-red form-text ml-1"}>
         <div>{errorMessage}</div>
       </small>
     );
@@ -23,7 +23,7 @@ function InfoText(
 
   if(hasStringValue(successMessage) === true) {
     return (
-      <small className={"green form-text"}>
+      <small className={"green form-text ml-1"}>
         <div>{successMessage}</div>
       </small>
     );
@@ -31,7 +31,7 @@ function InfoText(
 
   if (hasStringValue(field?.formText) === true) {
     return (
-      <small className={"text-muted form-text"}>
+      <small className={"text-muted form-text ml-1"}>
         <div>{field?.formText}</div>
       </small>
     );
@@ -44,11 +44,23 @@ function InfoText(
 
     if (hideRegexDefinitionText !== true && regexDefinition != null && (isRequiredFunction == null || isRequiredFunction(model) === true)) {
       return (
-        <small className={"text-muted form-text"}>
+        <small className={"text-muted form-text ml-1"}>
           <div>{regexDefinition?.formText}</div>
         </small>
       );
     }
+  }
+
+  if (model && field) {
+    const warning = model?.getFieldWarning(field?.id);
+
+      if (hasStringValue(warning) === true) {
+        return (
+          <small className={"warning-text-alt form-text ml-1"}>
+            <div>{warning}</div>
+          </small>
+        );
+      }
   }
 
   if (customMessage == null) {
@@ -56,7 +68,7 @@ function InfoText(
   }
 
   return (
-    <small className={"text-muted form-text"}>
+    <small className={"text-muted form-text ml-1"}>
       <div>{customMessage}</div>
     </small>
   );

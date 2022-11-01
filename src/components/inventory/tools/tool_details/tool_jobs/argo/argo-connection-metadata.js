@@ -4,7 +4,8 @@ const argoConnectionMetadata = {
     {
       label: "Argo Container URL",
       id: "toolURL",
-      isRequired: true
+      isRequired: true,
+      isSecureUrl: true,
     },
     {
       label: "Argo User ID",

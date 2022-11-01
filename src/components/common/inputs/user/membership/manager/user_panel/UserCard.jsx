@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
+import { Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
 
 function UserCard({user, selectedUsers, setSelectedUsers}) {
   const [userSelected, setUserSelected] = useState(false);
@@ -23,11 +25,13 @@ function UserCard({user, selectedUsers, setSelectedUsers}) {
   };
 
   return (
-    <li key={user.emailAddress} className={selectedUsers.includes(user) ? "p-2 member-list selected" : "p-2 member-list"} onClick={selectUser}>
-      <div className="px-2 justify-content-between d-flex w-100">
-        <div>{user.name}</div>
-        <div className={selectedUsers.includes(user) ? "" : "text-muted"}>{user.emailAddress}</div>
-      </div>
+    <li key={user.emailAddress} className={selectedUsers.includes(user) ? "p-1 member-list selected" : "p-1 member-list"} onClick={selectUser}>
+      <Row className={"mx-0"}>
+        <Col lg={12} xl={6} className={"no-wrap-inline"}>{user.name}</Col>
+        <Col lg={12} xl={6} className={selectedUsers.includes(user) ? "d-flex w-100" : "d-flex w-100 text-muted"}>
+          <div>{user.emailAddress}</div>
+        </Col>
+      </Row>
     </li>
   );
 }

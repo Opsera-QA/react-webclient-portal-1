@@ -6,7 +6,7 @@ const sfdcConnectionMetadata = {
       label: "Domain URL",
       id: "toolURL",
       isRequired: true,
-      maxLength: 100
+      isSecureUrl: true,
     },
     {
       label: "Salesforce Login Username",

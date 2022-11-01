@@ -22,7 +22,8 @@ const githubDeployKeyMetadata = {
     {
       label: "SSH URL",
       id: "sshUrl",
-      isRequired: true
+      isRequired: true,
+      isSecureUrl: true,
     },
     {
       label: "Deploy Key (Private Key)",
