@@ -210,7 +210,6 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
           setModel={setSourceRepositoryModel}
           disabled={sourceRepositoryModel.getData("service") === "gitlab" || sourceRepositoryModel.getData("service") === "github" ? false : true}
         />
-{console.log(sourceRepositoryModel)}
       {/* <div className={"p-3"} >COMING SOON</div> */}
 
 
