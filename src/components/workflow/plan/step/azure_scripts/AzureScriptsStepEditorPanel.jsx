@@ -78,13 +78,20 @@ function AzureScriptsStepEditorPanel(
     newPipelineStep.tool.configuration = {...azureScriptsStepModel.getPersistData()};
     newPipelineStep.threshold = {...thresholdModel.getPersistData()};
 
-    return await pipelineActions.updatePipelineStepByIdV2(
+    const response = await pipelineActions.updatePipelineStepByIdV2(
       getAccessToken,
       cancelTokenSource,
       pipelineId,
       pipelineStep?._id,
       newPipelineStep,
     );
+
+    // TODO: This check is probably not necessary but leaving it in for safety for now.
+    if (response?.status === 200) {
+      closeEditorPanel();
+    }
+
+    return response;
   };
 
   const getFieldsByScriptType = () => {
