@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
   getTableTextColumn,
@@ -10,7 +9,7 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import { insightsLookupDetailsMetadata } from "./insightsLookupDetails.metadata";
 import FilterContainer from "../../common/table/FilterContainer";
 import { faCalendarAlt } from "@fortawesome/pro-light-svg-icons";
-import { scheduledTaskMetadata } from "../../settings/logs_backup/LogsBackupScheduledTask.metadata";
+import { screenContainerHeights } from "../../common/panels/general/screenContainer.heights";
 
 function InsightsLookupDetailsTable({
   lookupDetails,
@@ -73,7 +72,7 @@ function InsightsLookupDetailsTable({
         isLoading={isLoading}
         setPaginationModel={setPaginationModel}
         paginationModel={paginationModel}
-        tableHeight={tableHeight}
+        tableHeight={screenContainerHeights.SCREEN_CONTAINER_HEIGHT}
       />
     );
   };
