@@ -159,16 +159,16 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
         <div>{getWarningMessage()}</div>
         <div className={"d-flex"}>
           <div>
-            <CancelButton
-              isLoading={isLoading}
-              cancelFunction={goToSummaryPanel}
-              className={"mr-2"}
-            />
-          </div>
-          <div>
             <StandaloneSaveButton
               saveFunction={updateMembers}
               type={"Members"}
+            />
+          </div>
+          <div>
+            <CancelButton
+              isLoading={isLoading}
+              cancelFunction={goToSummaryPanel}
+              className={"ml-2"}
             />
           </div>
         </div>
@@ -210,7 +210,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
   };
 
   const getFilteredMembers = () => {
-    if (searchText !== "") {
+    if (hasStringValue(searchText)) {
       const lowercaseSearchText = searchText.toLowerCase();
       return members.filter((member) => {
         return member.emailAddress.toLowerCase().includes(lowercaseSearchText) || member.name.toLowerCase().includes(lowercaseSearchText);
@@ -221,7 +221,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
   };
 
   const getFilteredNonMembers = () => {
-    if (searchText !== "") {
+    if (hasStringValue(searchText)) {
       const lowercaseSearchText = searchText.toLowerCase();
       return nonMembers.filter((nonMember) => {
         return nonMember.emailAddress.toLowerCase().includes(lowercaseSearchText) || nonMember.name.toLowerCase().includes(lowercaseSearchText);
