@@ -60,7 +60,7 @@ function AccountSettingsHelpDocumentation() {
     if (
       (isSiteAdministrator === true
         || isOpseraAdministrator === true
-        || isPowerUser === true)
+        || isPowerUser !== true)
       && isSaasUser !== true
     ) {
       return (
@@ -71,8 +71,9 @@ function AccountSettingsHelpDocumentation() {
 
   const getUnsecuredItemsHelpInformation = () => {
     if (
-      (isSaasUser !== true
-        || isSiteAdministrator !== false)
+      (isSiteAdministrator === true
+        || isOpseraAdministrator === true
+        || isPowerUser !== true)
       && isSaasUser !== true
     ) {
       return (
