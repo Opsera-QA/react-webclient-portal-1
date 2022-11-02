@@ -121,7 +121,7 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
     if (isLoading === true) {
       return (
         <CenterLoadingIndicator
-          customMessage={"Pulling Files and calculating selection options to handle Diff Comparison. Please Note: this may take some time."}
+          customMessage={"Please wait while we pull the files and calculate selection options in order to handle the comparison of changes.  This may take some time.”"}
         />
       );
     }
