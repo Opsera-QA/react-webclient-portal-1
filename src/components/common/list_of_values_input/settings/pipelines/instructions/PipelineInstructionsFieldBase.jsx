@@ -28,11 +28,26 @@ export default function PipelineInstructionsFieldBase(
     false,
   );
 
+  const getAccessRoleDisplayerField = () => {
+    if (isLoading !== true) {
+      return (
+        <Col xs={12} md={4}>
+          <AccessRoleDisplayer
+            className={"mt-3"}
+            roles={pipelineInstructionsModel?.getArrayData("roles")}
+            noDataMessage={"This set of Pipeline Instructions does not have Access Roles applied, so anyone can see and use it."}
+          />
+        </Col>
+      );
+    }
+  };
+
   const getPipelineInstructionsField = () => {
     if (
       pipelineInstructionsModel !== null
       && showInstructions === true
       && error == null
+      && isLoading !== true
     ) {
       return (
         <Row>
@@ -45,12 +60,7 @@ export default function PipelineInstructionsFieldBase(
               isLoading={isLoading}
             />
           </Col>
-          <Col xs={12} md={4}>
-            <AccessRoleDisplayer
-              roles={pipelineInstructionsModel?.getArrayData("roles")}
-              noDataMessage={"This set of Pipeline Instructions does not have Access Roles applied, so anyone can see and use it."}
-            />
-          </Col>
+          {getAccessRoleDisplayerField()}
         </Row>
       );
     }
