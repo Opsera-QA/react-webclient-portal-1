@@ -6,6 +6,8 @@ import PipelineStepSummaryPanelContainer
 import LoadingDialog from "components/common/status_notifications/loading";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import UserNameField from "components/common/fields/user/UserNameField";
+import PipelineInstructionsField
+  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsField";
 
 export default function UserActionsPipelineStepSummaryPanel(
   {
@@ -34,9 +36,10 @@ export default function UserActionsPipelineStepSummaryPanel(
           />
         </Col>
         <Col xs={12}>
-          <TextFieldBase
+          <PipelineInstructionsField
             fieldName={"pipelineInstructionsId"}
-            dataObject={userActionsPipelineStepModel}
+            model={userActionsPipelineStepModel}
+            showInstructions={true}
           />
         </Col>
       </Row>
