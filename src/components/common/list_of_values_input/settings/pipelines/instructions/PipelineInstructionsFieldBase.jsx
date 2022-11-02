@@ -47,7 +47,6 @@ export default function PipelineInstructionsFieldBase(
       pipelineInstructionsModel !== null
       && showInstructions === true
       && error == null
-      && isLoading !== true
     ) {
       return (
         <Row>
