@@ -31,22 +31,6 @@ export function isDomain(domain) {
  return re.test(String(domain).toLowerCase());
 }
 
-export function isWebsite(website) {
-  var re =  /^((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
-  return re.test(String(website).toLowerCase());
-}
-
-export function isHttpsUrl(url) {
-  const parsedUrl = DataParsingHelper.parseString(url);
-
-  if (!parsedUrl) {
-    return false;
-  }
-
-  const re =  /^((https):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
-  return re.test(String(parsedUrl).toLowerCase());
-}
-
 export function isOpseraPassword(password) {
   var re =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/;
   return re.test(String(password));
