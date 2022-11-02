@@ -6,6 +6,9 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabelBase from "components/common/fields/FieldLabelBase";
 import RichTextField from "components/common/fields/rich_text/RichTextField";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import AccessRoleDisplayer from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayer";
 
 export default function PipelineInstructionsFieldBase(
   {
@@ -27,20 +30,28 @@ export default function PipelineInstructionsFieldBase(
 
   const getPipelineInstructionsField = () => {
     if (
-      showInstructions === true
-      && isMongoDbId(pipelineInstructionsId) === true
+      pipelineInstructionsModel !== null
+      && showInstructions === true
       && error == null
     ) {
       return (
-        <div className={"my-2"}>
-          <RichTextField
-            fieldName={"instructions"}
-            model={pipelineInstructionsModel}
-            minimumHeight={instructionsDisplayerMinimumHeight}
-            maximumHeight={instructionsDisplayerMaximumHeight}
-            isLoading={isLoading}
-          />
-        </div>
+        <Row>
+          <Col xs={12} lg={8}>
+            <RichTextField
+              fieldName={"instructions"}
+              model={pipelineInstructionsModel}
+              minimumHeight={instructionsDisplayerMinimumHeight}
+              maximumHeight={instructionsDisplayerMaximumHeight}
+              isLoading={isLoading}
+            />
+          </Col>
+          <Col xs={12} md={4}>
+            <AccessRoleDisplayer
+              roles={pipelineInstructionsModel?.getArrayData("roles")}
+              noDataMessage={"This set of Pipeline Instructions does not have Access Roles applied, so anyone can see and use it."}
+            />
+          </Col>
+        </Row>
       );
     }
   };
@@ -48,6 +59,10 @@ export default function PipelineInstructionsFieldBase(
   const getName = () => {
     if (isMongoDbId(pipelineInstructionsId) !== true) {
       return "";
+    }
+
+    if (isLoading === true) {
+      return pipelineInstructionsId;
     }
 
     if (error) {
@@ -89,6 +104,6 @@ PipelineInstructionsFieldBase.propTypes = {
 
 PipelineInstructionsFieldBase.defaultProps = {
   label: "Pipeline Instructions",
-  minimumHeight: "150px",
-  maximumHeight: "1000px",
+  instructionsDisplayerMinimumHeight: "250px",
+  instructionsDisplayerMaximumHeight: "1000px",
 };

@@ -68,4 +68,8 @@ RoleAccessField.propTypes = {
   className: PropTypes.string
 };
 
+RoleAccessField.defaultProps = {
+  fieldName: "roles",
+};
+
 export default RoleAccessField;

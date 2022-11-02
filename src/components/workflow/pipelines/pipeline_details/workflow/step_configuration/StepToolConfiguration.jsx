@@ -1465,6 +1465,7 @@ function StepToolConfiguration({
     const newOverlayToolIdentifiers = [
       toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION,
       toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS,
+      toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION,
     ];
 
     if (newOverlayToolIdentifiers.includes(stepTool?.tool_identifier) === false) {

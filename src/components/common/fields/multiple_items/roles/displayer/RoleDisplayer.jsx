@@ -4,7 +4,7 @@ import UserBadge from "components/common/badges/user/UserBadge";
 import GroupBadge from "components/common/badges/group/GroupBadge";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
-function RoleDisplayer({accessRoles, type, className}) {
+function RoleDisplayer({ accessRoles, type, className }) {
   const getRoleBadges = () => {
     if (!Array.isArray(accessRoles) || accessRoles.length === 0) {
       return (
@@ -40,10 +40,12 @@ function RoleDisplayer({accessRoles, type, className}) {
 
   return (
     <div className={className}>
-      <H5FieldSubHeader subheaderText={`${type}s`}/>
+      <div className={"text-muted mb-1"}>
+        {`${type}s`}
+      </div>
       <span className="item-field role-access">
-        {getRoleBadges()}
-      </span>
+          {getRoleBadges()}
+        </span>
     </div>
   );
 }
