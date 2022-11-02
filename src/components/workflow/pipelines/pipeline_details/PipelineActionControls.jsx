@@ -28,6 +28,9 @@ import IconBase from "components/common/icons/IconBase";
 import SapCpqPipelineRunAssistantOverlay from "../../run_assistants/sap_cpq/SapCpqPipelineRunAssistantOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
+import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import PipelineInstructionsAcknowledgementOverlay
+  from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
 
 const delayCheckInterval = 15000;
 let internalRefreshCount = 1;
@@ -178,7 +181,18 @@ function PipelineActionControls(
   };
 
   const handleApprovalClick = () => {
-    setShowApprovalModal(true);
+    const approvalStep = PipelineHelpers.getPendingApprovalStep(pipeline);
+    const approvalStepToolIdentifier = pipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
+
+    if (approvalStepToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION) {
+      toastContext.showOverlayPanel(
+        <PipelineInstructionsAcknowledgementOverlay
+          pipeline={pipeline}
+        />,
+      );
+    } else {
+      setShowApprovalModal(true);
+    }
   };
 
   const handleApprovalActivity = async (blnDelayRefresh, blnDelayedResume) => {
