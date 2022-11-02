@@ -234,6 +234,11 @@ import DockerCliPipelineStepConfigurationSummary
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_cli/DockerCliPipelineStepConfigurationSummary";
 import dockerCliStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_cli/dockercli-stepForm-metadata";
+import UserActionsPipelineStepSummaryPanel
+  from "components/workflow/plan/step/user_actions/UserActionsPipelineStepSummaryPanel";
+import {
+  userActionsPipelineStepMetadata
+} from "components/workflow/plan/step/user_actions/userActionsPipelineStep.metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -257,6 +262,13 @@ function PipelineStepConfigurationSummary({
           <AzureScriptsStepSummaryPanel
             pipelineData={pipelineData}
             azureScriptsStepModel={getModelWrappedObject(azureScriptsStepMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
+        return (
+          <UserActionsPipelineStepSummaryPanel
+            pipelineModel={pipelineData}
+            userActionsPipelineStepModel={getModelWrappedObject(userActionsPipelineStepMetadata)}
           />
         );
       case "anchore-integrator":

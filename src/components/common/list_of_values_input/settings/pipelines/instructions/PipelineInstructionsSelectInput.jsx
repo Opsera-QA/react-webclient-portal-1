@@ -11,6 +11,8 @@ export default function PipelineInstructionsSelectInput(
     setDataFunction,
     className,
     disabled,
+    valueField,
+    textField,
   }) {
   const {
     pipelineInstructions,
@@ -25,10 +27,14 @@ export default function PipelineInstructionsSelectInput(
       setDataObject={setModel}
       setDataFunction={setDataFunction}
       selectOptions={pipelineInstructions}
-      valueField={"value"}
-      textField={"text"}
+      busy={isLoading}
+      error={error}
+      valueField={valueField}
+      textField={textField}
       disabled={disabled}
       className={className}
+      singularTopic={"Pipeline Instruction"}
+      pluralTopic={"Pipeline Instructions"}
     />
   );
 }
@@ -38,6 +44,13 @@ PipelineInstructionsSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
+  valueField: PropTypes.string,
+  textField: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,
+};
+
+PipelineInstructionsSelectInput.defaultProps = {
+  valueField: "_id",
+  textField: "name",
 };

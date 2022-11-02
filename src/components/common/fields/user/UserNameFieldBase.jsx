@@ -10,42 +10,34 @@ import FieldLabelBase from "components/common/fields/FieldLabelBase";
 import userActions from "components/user/user-actions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboardIconBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function UserNameFieldBase({ userId, label, className, showLabel }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [userData, setUserData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const {
+    cancelTokenSource,
+    isMounted,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
+    setUserData(undefined);
 
     if (isMongoDbId(userId) === true) {
-      loadData(source).catch((error) => {
+      loadData().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
       });
     }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [userId]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setIsLoading(true);
-      await loadUserName(cancelSource);
+      await loadUserName();
     } catch (error) {
       if (error?.response?.status !== 404) {
         toastContext.showLoadingErrorDialog(error);
@@ -55,10 +47,10 @@ function UserNameFieldBase({ userId, label, className, showLabel }) {
     }
   };
 
-  const loadUserName = async (cancelSource = cancelTokenSource) => {
+  const loadUserName = async () => {
     const response = await userActions.getUserNameAndEmailForIdV2(
       getAccessToken,
-      cancelSource,
+      cancelTokenSource,
       userId,
     );
     const userData = response?.data?.data;

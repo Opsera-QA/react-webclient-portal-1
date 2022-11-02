@@ -91,7 +91,6 @@ import SnaplogicStepConfiguration from "./step_tool_configuration_forms/snaplogi
 import GitOperationStepConfiguration from "./step_tool_configuration_forms/git_operation/GitOperationStepConfiguration";
 import SalesforceScanStepConfiguration
   from "./step_tool_configuration_forms/salesforce_scan/SalesforceScanStepConfiguration";
-import BlackDuckStepConfiguration from "./step_tool_configuration_forms/black_duck/BlackDuckStepConfiguration";
 import ProvarStepToolConfiguration from "./step_tool_configuration_forms/provar/ProvarStepToolConfiguration";
 import SapCpqStepConfiguration from "./step_tool_configuration_forms/sap_cpq/SapCpqStepConfiguration";
 import AzureWebappsStepConfiguration from "./step_tool_configuration_forms/azure_webapps/AzureWebappsStepConfiguration";
@@ -101,10 +100,11 @@ import InformaticaIdqStepConfiguration
   from "./step_tool_configuration_forms/informatica_idq/InformaticaIdqStepConfiguration";
 import LiquibaseStepConfiguration
   from "./step_tool_configuration_forms/liquibase/LiquibaseStepConfiguration";
-import FortifyStepConfiguration
-  from "./step_tool_configuration_forms/fortify/FortifyStepConfiguration";
-import DockerCliStepConfiguration
-  from "./step_tool_configuration_forms/docker_cli/DockerCliStepConfiguration";
+import BlackDuckStepConfiguration from "./step_tool_configuration_forms/black_duck/BlackDuckStepConfiguration";
+import FortifyStepConfiguration from "./step_tool_configuration_forms/fortify/FortifyStepConfiguration";
+import DockerCliStepConfiguration from "./step_tool_configuration_forms/docker_cli/DockerCliStepConfiguration";
+import UserActionsPipelineStepEditorPanel
+  from "components/workflow/plan/step/user_actions/UserActionsPipelineStepEditorPanel";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -518,6 +518,14 @@ function StepToolConfiguration({
       case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS:
         return (
           <AzureScriptsStepEditorPanel
+            pipelineId={pipeline._id}
+            pipelineStep={pipelineStep}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
+        return (
+          <UserActionsPipelineStepEditorPanel
             pipelineId={pipeline._id}
             pipelineStep={pipelineStep}
             closeEditorPanel={closeEditorPanel}

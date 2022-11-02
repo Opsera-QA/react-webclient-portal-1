@@ -7,7 +7,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import UserNameField from "components/common/fields/user/UserNameField";
 
-export default function UserActionsPipelineStepConfigurationSummaryPanel(
+export default function UserActionsPipelineStepSummaryPanel(
   {
     userActionsPipelineStepModel,
     pipelineModel,
@@ -21,15 +21,21 @@ export default function UserActionsPipelineStepConfigurationSummaryPanel(
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineModel}>
       <Row>
-        <Col lg={6}>
+        <Col xs={12}>
           <UserNameField
             fieldName={"contact"}
             model={userActionsPipelineStepModel}
           />
         </Col>
-        <Col lg={12}>
+        <Col xs={12}>
           <TextFieldBase
             fieldName={"message"}
+            dataObject={userActionsPipelineStepModel}
+          />
+        </Col>
+        <Col xs={12}>
+          <TextFieldBase
+            fieldName={"pipelineInstructionsId"}
             dataObject={userActionsPipelineStepModel}
           />
         </Col>
@@ -38,7 +44,7 @@ export default function UserActionsPipelineStepConfigurationSummaryPanel(
   );
 }
 
-UserActionsPipelineStepConfigurationSummaryPanel.propTypes = {
+UserActionsPipelineStepSummaryPanel.propTypes = {
   userActionsPipelineStepModel: PropTypes.object,
   pipelineModel: PropTypes.object,
   setActiveTab: PropTypes.func,

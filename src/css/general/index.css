@@ -754,7 +754,7 @@ a:hover, .active, .link-text:hover {
 
 .error-text-alt .form-control:focus {
     border-color: #dc3545 !important;
-    box-shadow: 0 0.3rem 0 0 rgb(220 53 69 / 25%) !important;
+    box-shadow: 0 0.3rem 0 0 rgba(220, 53, 69, .5) !important;
 }
 
 .info-text {
@@ -792,6 +792,12 @@ a:hover, .active, .link-text:hover {
 .warning-text-alt, .warning-text-alt .form-control:focus {
     color: #CF940C;
 }
+
+.warning-text-alt .form-control:focus {
+    border-color: #CF940C !important;
+    box-shadow: 0 0.3rem 0 0 rgba(207, 148, 12, .5) !important;
+}
+
 
 .success-block {
     background-color: green;
@@ -1035,4 +1041,9 @@ a:hover, .active, .link-text:hover {
     background-color: #FFF;
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     z-index: 3000;
+}
+
+/*Tooltip z-index fix for overlays*/
+.bs-tooltip-top {
+    z-index: 10000;
 }
