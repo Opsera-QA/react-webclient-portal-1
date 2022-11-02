@@ -44,10 +44,9 @@ export default function PipelineInstructionsFieldBase(
 
   const getPipelineInstructionsField = () => {
     if (
-      pipelineInstructionsModel !== null
+      (isLoading === true || pipelineInstructionsModel !== null)
       && showInstructions === true
       && error == null
-      && isLoading !== true
     ) {
       return (
         <Row>
