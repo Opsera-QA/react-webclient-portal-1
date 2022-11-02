@@ -102,14 +102,9 @@ function AzureAcrPushStepRegistryNameSelectInput({
     );
 
     const result = azureResponse?.data?.data;
-    const listObject = result.map((el) => ({
-      name: el.name,
-      id: el.id,
-      url: el.properties?.loginServer,
-    }));
     if (Array.isArray(result) && result.length > 0) {
       setErrorMessage("");
-      setAzureRegistryList(listObject);
+      setAzureRegistryList(result);
     }
 
     if (result?.length === 0) {
@@ -122,6 +117,7 @@ function AzureAcrPushStepRegistryNameSelectInput({
     let newDataObject = { ...dataObject };
     newDataObject.setData(fieldName, selectedOption.name);
     newDataObject.setData("acrLoginUrl", selectedOption.url);
+    newDataObject.setDefaultValue("azureRepoName");
     setDataObject({ ...newDataObject });
   };
 
