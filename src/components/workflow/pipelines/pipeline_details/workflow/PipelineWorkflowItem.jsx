@@ -35,6 +35,8 @@ import PipelineStepDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/step/PipelineStepDetailsOverviewOverlay";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import PipelineWorkflowItemActionField
+  from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemActionField";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
@@ -456,6 +458,8 @@ const PipelineWorkflowItem = (
         </div>
 
         {getToolField()}
+
+        <PipelineWorkflowItemActionField pipelineStep={item} />
 
         {getRepositoryField()}
 
