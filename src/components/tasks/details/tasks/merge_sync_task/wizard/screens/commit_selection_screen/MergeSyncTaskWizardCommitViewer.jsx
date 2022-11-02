@@ -96,6 +96,7 @@ const MergeSyncTaskWizardCommitViewer = ({
     return (
       <div>
         <MergeSyncTaskWizardDiffSelectorVerticalTabContainer
+          extension={diffFile?.fileExtension}
           deltaList={deltas}
           isLoading={isLoading}
           loadDataFunction={loadData}

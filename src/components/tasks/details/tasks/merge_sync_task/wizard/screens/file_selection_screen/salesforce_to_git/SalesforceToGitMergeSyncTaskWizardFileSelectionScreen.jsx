@@ -49,8 +49,6 @@ const SalesforceToGitMergeSyncTaskWizardFileSelectionScreen = ({
       setIsLoading(true);
       await triggerSalesforceToGitSourceFilePull(cancelSource);
     } catch (error) {
-      console.error(error);
-      console.log("error: " + JSON.stringify(error));
       if (isMounted?.current === true) {
         const prependMessage =
           "Service Error Triggering File List Pulls:";
@@ -106,9 +104,6 @@ const SalesforceToGitMergeSyncTaskWizardFileSelectionScreen = ({
     <div>
       <div className="h5">
         Salesforce To Git Merge Sync: File Comparison and Selection
-      </div>
-      <div className="text-muted mb-2">
-        Select which version of files will be merged in.
       </div>
       {getBody()}
     </div>

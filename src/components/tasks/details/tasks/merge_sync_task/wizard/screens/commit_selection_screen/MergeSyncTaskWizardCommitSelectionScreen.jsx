@@ -98,9 +98,6 @@ const MergeSyncTaskWizardCommitSelectionScreen = ({
       <div className="h5">
         Merge Sync: Commit Comparison and Selection
       </div>
-      <div className="text-muted mb-2">
-        Select which version of files will be merged in.
-      </div>
       {getBody()}
     </div>
   );

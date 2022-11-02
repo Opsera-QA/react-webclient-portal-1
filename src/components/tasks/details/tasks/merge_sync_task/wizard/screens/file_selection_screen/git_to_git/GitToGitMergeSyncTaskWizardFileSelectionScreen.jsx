@@ -101,9 +101,6 @@ const GitToGitMergeSyncTaskWizardFileSelectionScreen = ({
       <div className="h5">
         Git To Git Merge Sync: File Comparison and Selection
       </div>
-      <div className="text-muted mb-2">
-        Select which version of files will be merged in.
-      </div>
       {getBody()}
     </div>
   );

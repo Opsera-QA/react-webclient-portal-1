@@ -15,6 +15,7 @@ import ToggleDiffViewIcon from "components/common/buttons/toggle/ToggleDiffViewI
 import MergeSyncTaskWizardSubmitEditedFileButton from "../file_editor/MergeSyncTaskWizardSubmitEditedFileButton";
 
 const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
+  extension,
   deltaList,
   isLoading,
   loadDataFunction,
@@ -26,7 +27,6 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
   sourceContent,
   destinationContent,
 }) => {
-
   const [internalTheme, setInternalTheme] = useState(
     MONACO_CODE_THEME_TYPES.LIGHT,
   );
@@ -57,11 +57,11 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
           className={"mr-2 ml-2"}
         />
         <MergeSyncTaskWizardSubmitEditedFileButton
-            fileName={comparisonFileModel?.getData("file")}
-            fileContent={comparisonFileModel?.getData("manualContent")}
-            comparisonFileModel={comparisonFileModel}
-            wizardModel={wizardModel}
-            setWizardModel={setWizardModel}
+          fileName={comparisonFileModel?.getData("file")}
+          fileContent={comparisonFileModel?.getData("manualContent")}
+          comparisonFileModel={comparisonFileModel}
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
         />
       </div>
     );
@@ -81,11 +81,14 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
     return (
       <div className={"m-2"}>
         <MonacoEditorCodeDiffInputBase
+          mode={extension.split('.').join("")}
           originalContent={destinationContent}
           modifiedContent={sourceContent}
           isLoading={isLoading}
           disabled={isLoading}
-          height={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT}
+          height={
+            MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT
+          }
           theme={internalTheme}
           inlineDiff={inlineDiff}
           onChangeHandler={onChangeHandler}
@@ -125,6 +128,7 @@ MergeSyncTaskWizardDiffSelectorVerticalTabContainer.propTypes = {
   setComparisonFileModel: PropTypes.func,
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
+  extension: PropTypes.string,
 };
 
 export default MergeSyncTaskWizardDiffSelectorVerticalTabContainer;
