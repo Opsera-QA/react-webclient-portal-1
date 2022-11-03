@@ -31,7 +31,7 @@ function ActionBarTransferToolButton({ toolModel, loadTool, className }) {
   const transferToolOwnership = async () => {
     try {
       setIsTransferringOwnership(true);
-      await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, toolCopy);
+      await toolsActions.transferToolOwnership(getAccessToken, cancelTokenSource, toolCopy);
       toastContext.showUpdateSuccessResultDialog("Tool Owner");
       document.body.click();
       await loadTool();
