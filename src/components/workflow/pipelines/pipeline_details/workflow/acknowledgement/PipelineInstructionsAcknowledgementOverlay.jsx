@@ -16,8 +16,15 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import AcknowledgePipelineInstructionsButton
   from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/AcknowledgePipelineInstructionsButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import RefusePipelineInstructionsAcknowledgementButton
+  from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/RefusePipelineInstructionsAcknowledgementButton";
+import CloseButton from "components/common/buttons/CloseButton";
 
-export default function PipelineInstructionsAcknowledgementOverlay({ pipeline }) {
+export default function PipelineInstructionsAcknowledgementOverlay(
+  {
+    pipeline,
+    loadDataFunction,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const approvalStep = PipelineHelpers.getPendingApprovalStep(pipeline);
   const toolIdentifier = PipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
@@ -25,7 +32,8 @@ export default function PipelineInstructionsAcknowledgementOverlay({ pipeline })
   const userActionsStepModel = modelHelpers.parseObjectIntoModel(configuration, userActionsPipelineStepMetadata);
   const [message, setMessage] = useState("");
 
-  const closePanel = () => {
+  const closePanelFunction = () => {
+    loadDataFunction();
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
   };
@@ -33,10 +41,22 @@ export default function PipelineInstructionsAcknowledgementOverlay({ pipeline })
   const getButtonContainer = () => {
     return (
       <ButtonContainerBase>
+        <CloseButton
+          closeEditorCallback={closePanelFunction}
+          className={"mr-2"}
+        />
+        <RefusePipelineInstructionsAcknowledgementButton
+          pipelineId={pipeline?._id}
+          pipelineStepId={approvalStep?._id}
+          message={message}
+          closePanelFunction={closePanelFunction}
+          className={"mr-2"}
+        />
         <AcknowledgePipelineInstructionsButton
           pipelineId={pipeline?._id}
           pipelineStepId={approvalStep?._id}
           message={message}
+          closePanelFunction={closePanelFunction}
         />
       </ButtonContainerBase>
     );
@@ -48,7 +68,7 @@ export default function PipelineInstructionsAcknowledgementOverlay({ pipeline })
 
   return (
     <FullScreenCenterOverlayContainer
-      closePanel={closePanel}
+      closePanel={closePanelFunction}
       titleText={"Acknowledge Instructions"}
       titleIcon={faFileCheck}
       buttonContainer={getButtonContainer()}
@@ -65,8 +85,7 @@ export default function PipelineInstructionsAcknowledgementOverlay({ pipeline })
 }
 
 PipelineInstructionsAcknowledgementOverlay.propTypes = {
-  isMounted: PropTypes.object,
-  loadData: PropTypes.func,
+  loadDataFunction: PropTypes.func,
   pipeline: PropTypes.object
 };
 

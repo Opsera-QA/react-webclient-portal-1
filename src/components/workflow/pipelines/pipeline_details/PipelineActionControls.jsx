@@ -188,6 +188,7 @@ function PipelineActionControls(
       toastContext.showOverlayPanel(
         <PipelineInstructionsAcknowledgementOverlay
           pipeline={pipeline}
+          loadDataFunction={handleRefreshClick}
         />,
       );
     } else {
