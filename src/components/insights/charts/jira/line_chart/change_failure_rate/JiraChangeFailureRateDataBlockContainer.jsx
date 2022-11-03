@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import PropTypes from "prop-types";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import { Container, Col, Row } from "react-bootstrap";
@@ -15,11 +15,15 @@ import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/T
 import { goalSuccessColor } from "../../../charts-views";
 import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 import {getResultFromKpiConfiguration, getReverseTrendIcon} from "../../../charts-helpers";
+import JiraChangeFailureRateInsightsModal from "./JiraChangeFailureRateInsightsModal";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration, dataPoint, trend }) {
   
   const [maxGoalsValue, setMaxGoalsValue] = useState(goalsData);
   const [jiraResolutionNames, setJiraResolutionNames] = useState([]);
+
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     let dataHigh = {x: "", y: 0};
@@ -35,6 +39,20 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
       "data": chartData
     }  
   ];
+
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
+
+  const onNodeSelect = (node) => {    
+    toastContext.showOverlayPanel(
+      <JiraChangeFailureRateInsightsModal
+        data={node?.data?.report || []}
+        closePanel={closePanel}
+      />
+    );
+  };
 
   const getLeftDataBlock = () => {
     return (
@@ -100,6 +118,7 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
             legendOffset: -38,
             legendPosition: 'middle'
           }}
+          onClick={(node) => onNodeSelect(node)}
           tooltip={(node) => (            
             <ChartTooltip
               titles={["Date Range", "Total Changes", "Failures"]}
@@ -114,7 +133,7 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
                 legend: '',
             }            
           ]}
-        />
+        />        
       </div>
     );
   };
