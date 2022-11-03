@@ -5,6 +5,8 @@ import PipelineWorkflowItemFieldBase
 import { faBallotCheck, faFileCheck } from "@fortawesome/pro-light-svg-icons";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import PipelineWorkflowItemPipelineInstructionsField
+  from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineWorkflowItemPipelineInstructionsField";
 
 const PIPELINE_ACTIONS_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION,
@@ -13,6 +15,7 @@ const PIPELINE_ACTIONS_SUPPORTED_TOOL_IDENTIFIERS = [
 export default function PipelineWorkflowItemActionField(
   {
     pipelineStep,
+    pipelineId,
   }) {
   const toolIdentifier = DataParsingHelper.parseNestedString(pipelineStep, "tool.tool_identifier", "");
 
@@ -20,7 +23,10 @@ export default function PipelineWorkflowItemActionField(
     switch (toolIdentifier) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
         return (
-          <div>{pipelineStep?.tool?.configuration?.pipelineInstructionsId}</div>
+          <PipelineWorkflowItemPipelineInstructionsField
+            pipelineStep={pipelineStep}
+            pipelineId={pipelineId}
+          />
         );
       default:
         return null;
@@ -43,4 +49,5 @@ export default function PipelineWorkflowItemActionField(
 
 PipelineWorkflowItemActionField.propTypes = {
   pipelineStep: PropTypes.object,
+  pipelineId: PropTypes.string,
 };
