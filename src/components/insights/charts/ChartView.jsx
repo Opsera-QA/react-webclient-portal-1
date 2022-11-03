@@ -76,6 +76,7 @@ import GitlabTotalCommitsByProjectChart from "./gitlab/pie_chart/total_commits_b
 import GitlabRecentMergeRequests from "./gitlab/table/recent_merge_requests/GitlabRecentMergeRequests";
 import GitlabPendingMergeRequests from "./gitlab/table/pending_merge_requests/GitlabPendingMergeRequests.jsx";
 import GitLabLeadTimeChart from "./gitlab/line_chart/lead_time/GitLabLeadTimeChart";
+import GitlabPipelineStatistics from "./gitlab/line_chart/pipeline-statistics/GitlabPipelineStatistics";
 
 //new
 import ProjectWiseUnitTestResults from './unit_tests/project_wise_results/ProjectWiseUnitTestResults';
@@ -906,6 +907,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_PIPELINE_STATISTICS:
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <GitlabPipelineStatistics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+      );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
         return (
         <Col md={12} className="p-2">
