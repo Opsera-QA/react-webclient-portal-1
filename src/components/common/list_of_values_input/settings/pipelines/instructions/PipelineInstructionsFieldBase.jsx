@@ -54,6 +54,7 @@ export default function PipelineInstructionsFieldBase(
             <RichTextField
               fieldName={"instructions"}
               model={pipelineInstructionsModel}
+              customTitle={pipelineInstructionsModel?.getData("name")}
               minimumHeight={instructionsDisplayerMinimumHeight}
               maximumHeight={instructionsDisplayerMaximumHeight}
               isLoading={isLoading}
