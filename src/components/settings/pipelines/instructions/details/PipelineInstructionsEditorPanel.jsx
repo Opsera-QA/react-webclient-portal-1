@@ -44,6 +44,7 @@ export default function PipelineInstructionsEditorPanel(
       model={pipelineInstructionsModel}
       setModel={setPipelineInstructionsModel}
       handleClose={handleClose}
+      showDeleteButton={false}
       className={"mx-2 mb-2"}
     >
       <Row>
