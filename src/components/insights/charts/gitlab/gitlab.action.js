@@ -1,7 +1,10 @@
 import baseActions from "utils/actionsBase";
 
 import {
-    getDateObjectFromKpiConfiguration, getDeploymentStageFromKpiConfiguration, getGitlabProjectFromKpiConfiguration,
+    getDateObjectFromKpiConfiguration,
+    getDeploymentStageFromKpiConfiguration,
+    getGitlabProjectFromKpiConfiguration,
+    getResultFromKpiConfiguration,
     getTagsFromKpiConfiguration
 } from "components/insights/charts/charts-helpers";
 
@@ -181,4 +184,44 @@ gitlabActions.gitlabAverageCommitTimeToMerge = async (
 
     return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
+
+gitlabActions.gitlabBranchList= async (
+    getAccessToken,
+    cancelTokenSource,
+) => {
+    // TODO FILTER WITH TAGS
+    const apiUrl = gitlabBaseURL + "gitlabBranchList";
+    return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, {});
+};
+
+gitlabActions.gitlabPipelineData = async (
+    getAccessToken,
+    cancelTokenSource,
+    kpiConfiguration,
+    dashboardTags,
+    dashboardOrgs
+) => {
+    const apiUrl = gitlabBaseURL + "gitlabPipelineData";
+    const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+    let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+    // TODO Revert this code when timezone is fixed everywhere
+    const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    const startDate =  new Date(dateRange?.start);
+    const endDate =  new Date(dateRange?.end);
+    startDate.setTime(startDate.getTime() - timeOffsetInMins);
+    endDate.setTime(endDate.getTime() - timeOffsetInMins);
+
+    const postBody = {
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+      tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+      dashboardOrgs: dashboardOrgs,
+      deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
+      gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
+      gitlabBranches: getResultFromKpiConfiguration( kpiConfiguration, "gitlab-branch")
+    };
+
+    return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default gitlabActions;

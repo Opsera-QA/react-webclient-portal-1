@@ -44,6 +44,8 @@ import GithubActionsWorkflowEditorPanel
 import JiraMeanTimeToResolutionEditorPanel
   from "../../charts/jira/bar_chart/mean_time_to_resolution/JiraMeanTimeToResolutionEditorPanel";
 import JiraChangeFailureRateEditorPanel from "components/insights/charts/jira/line_chart/change_failure_rate/JiraChangeFailureRateEditorPanel";
+import GitlabPipelineStatisticsEditorPanel
+  from "../../charts/gitlab/line_chart/pipeline-statistics/GitlabPipelineStatisticsEditorPanel";
   // from "../../charts/jira/line_chart/change_failure_rate/JiraChangeFailureRateEditorPanel";
 
 // TODO: combine with chart settings overlay?
@@ -205,21 +207,33 @@ function DashboardMetricOverlayContainer(
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY:
         return (
           <GitlabDeploymentFrequencyEditorPanel
-          metricModel={metricModel}
-          metricFilterModel={metricFilterModel}
-          setMetricFilterModel={setMetricFilterModel}
-          unpackedFilterData={unpackedFilterData}
-          kpiConfiguration={kpiConfiguration}
-        />);
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
         return (
-            <GitlabLeadTimeEditorPanel
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-                unpackedFilterData={unpackedFilterData}
-                kpiConfiguration={kpiConfiguration}
-            />);
+          <GitlabLeadTimeEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_PIPELINE_STATISTICS:
+        return (
+          <GitlabPipelineStatisticsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.QUICK_DEPLOY_STATISTICS:
         return (
             <QuickDeployStatisticsEditorPanel
