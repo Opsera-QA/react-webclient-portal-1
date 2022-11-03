@@ -18,6 +18,7 @@ function VanityEditorPanelContainer(
     extraButtons,
     getHelpComponent,
     booleanToggleDisabled,
+    showDeleteButton,
     showBooleanToggle,
     enabledText,
     disabledText,
@@ -66,6 +67,7 @@ function VanityEditorPanelContainer(
         disable={disable}
         model={model}
         setModel={setModel}
+        showDeleteButton={showDeleteButton}
       />
     );
   };
@@ -131,6 +133,7 @@ VanityEditorPanelContainer.propTypes = {
   getHelpComponent: PropTypes.func,
   booleanToggleDisabled: PropTypes.bool,
   className: PropTypes.string,
+  showDeleteButton: PropTypes.bool,
 };
 
 export default VanityEditorPanelContainer;
