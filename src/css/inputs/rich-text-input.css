@@ -20,7 +20,7 @@
 }
 
 .ce-toolbar__actions {
-    right: 95%;
+    left:.25rem;
 }
 
 .ce-toolbar--opened,
