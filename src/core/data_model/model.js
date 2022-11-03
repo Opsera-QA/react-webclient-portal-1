@@ -307,9 +307,9 @@ export class Model {
     return field?.uppercase === true;
   };
 
-  isWebsite = (fieldName) => {
+  isUrlField = (fieldName) => {
     const field = this.getFieldById(fieldName);
-    return field != null ? field.isWebsite === true : false;
+    return field != null ? field.isUrl === true : false;
   };
 
   getInputMaskRegex = (fieldName) => {

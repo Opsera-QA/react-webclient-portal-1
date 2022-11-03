@@ -110,24 +110,24 @@ export const fieldValidation = (value, model, field) => {
     errorMessages.push("No special characters are allowed.");
   }
 
-  // if (hasStringValue(value) === true && field.isSecureUrl === true) {
-  //   if (maxLengthValidator(value, 2048) !== true) {
-  //     errorMessages.push(`${field.label}'s value has to be 2048 characters or fewer.`);
-  //   }
-  //
-  //   if (value.startsWith("https") !== true) {
-  //     errorMessages.push(`Unsupported HTTP request detected in ${field.label}'s value. Please ensure you are using a secure HTTPS connection before saving.`);
-  //   }
-  //   else if (DataParsingHelper.isUrlValid(value) !== true) {
-  //     errorMessages.push(`${field.label}'s value must be a full, valid, and secured HTTPS website path.`);
-  //   }
-  // }
+  if (hasStringValue(value) === true && field.isSecureUrl === true) {
+    if (maxLengthValidator(value, 2048) !== true) {
+      errorMessages.push(`${field.label}'s value has to be 2048 characters or fewer.`);
+    }
+
+    if (value.startsWith("https") !== true) {
+      errorMessages.push(`Unsupported HTTP request detected in ${field.label}'s value. Please ensure you are using a secure HTTPS connection before saving.`);
+    }
+    else if (DataParsingHelper.isUrlValid(value) !== true) {
+      errorMessages.push(`${field.label}'s value must be a full, valid, and secured HTTPS website path.`);
+    }
+  }
 
   if (field.isDomain === true && !isDomain(value)) {
     errorMessages.push("Domains must begin and end with an alphanumeric character.");
   }
 
-  if (field.isWebsite === true && hasStringValue(value) === true) {
+  if (field.isUrl === true && hasStringValue(value) === true) {
     if (maxLengthValidator(value, 2048) !== true) {
       errorMessages.push(`${field.label}'s value has to be 2048 characters or fewer.`);
     }
@@ -271,7 +271,7 @@ modelValidation.getFieldWarning = (fieldName, model) => {
   const field = model?.getFieldById(fieldName);
   const value = model?.getData(fieldName);
 
-  if (hasStringValue(value) === true && field.isWebsite === true && value.startsWith("https") !== true) {
+  if (hasStringValue(value) === true && field.isUrl === true && value.startsWith("https") !== true) {
     return "Warning, an unsecure HTTP URL detected. Please ensure the external resource supports HTTP or switch to HTTPS before saving.";
   }
 };
