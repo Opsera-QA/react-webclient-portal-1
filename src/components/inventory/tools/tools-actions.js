@@ -22,10 +22,12 @@ toolsActions.deleteToolByIdV2 = async (getAccessToken, cancelToken, toolId) => {
 
 toolsActions.updateToolV2 = async (getAccessToken, cancelTokenSource, toolModel) => {
   const id = toolModel?.getData("_id");
-  const apiUrl = `/registry/${id}/update`;
-  const postBody = {
-    ...toolModel.getPersistData()
-  };
+  const newOwnerId = toolModel?.getData("owner");
+  // const apiUrl = `/registry/${id}/update`;
+  const apiUrl = `/registry/tool/${toolId}/transfer/user/${newOwnerId}`;
+  // const postBody = {
+  //   ...toolModel.getPersistData()
+  // };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
