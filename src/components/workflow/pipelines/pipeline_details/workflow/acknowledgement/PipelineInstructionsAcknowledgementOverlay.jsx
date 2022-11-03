@@ -40,7 +40,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
 
   const getButtonContainer = () => {
     return (
-      <ButtonContainerBase>
+      <ButtonContainerBase className={"mx-3"}>
         <CloseButton
           closeEditorCallback={closePanelFunction}
           className={"mr-2"}
@@ -74,6 +74,11 @@ export default function PipelineInstructionsAcknowledgementOverlay(
       buttonContainer={getButtonContainer()}
     >
       <div className={"m-3"}>
+        <div>
+          This pipeline requires the following actions be taken at this time.
+          Acknowledgement of these actions is required before the pipeline can proceed.
+          Clicking acknowledge will log your action and resume the pipeline.
+        </div>
         <PipelineInstructionsField
           model={userActionsStepModel}
           fieldName={"pipelineInstructionsId"}

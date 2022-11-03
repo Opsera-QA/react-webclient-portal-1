@@ -6,7 +6,7 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import {
   pipelineAcknowledgementActions
 } from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/pipelineAcknowledgement.actions";
-import { faCircleStop } from "@fortawesome/pro-light-svg-icons";
+import { faXmarkCircle } from "@fortawesome/pro-light-svg-icons";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 
 export default function RefusePipelineInstructionsAcknowledgementButton(
@@ -49,10 +49,10 @@ export default function RefusePipelineInstructionsAcknowledgementButton(
   return (
     <VanityButtonBase
       className={className}
-      variant={"success"}
+      variant={"danger"}
       buttonState={buttonState}
       onClickFunction={refusePipelineInstructionsAcknowledgement}
-      icon={faCircleStop}
+      icon={faXmarkCircle}
       normalText={"Refuse Pipeline Instructions"}
       successText={"Successfully Refused Pipeline Instructions!"}
       errorText={"Failed to Refuse Pipeline Instructions!"}
