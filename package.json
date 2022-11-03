@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@editorjs/editorjs": "^2.25.0",
+    "@editorjs/list": "^1.7.0",
     "@editorjs/paragraph": "^2.8.0",
     "@fortawesome/fontawesome-pro": "^6.1.1",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
