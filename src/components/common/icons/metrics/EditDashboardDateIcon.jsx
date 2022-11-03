@@ -8,6 +8,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import FiltersDateSelectOverlay from "../../inputs/tags/inline/modal/FiltersDateSelectOverlay";
 import {metricHelpers} from "../../../insights/metric.helpers";
+import {addDays} from "date-fns";
 
 function EditDashboardDateIcon({ dashboardModel, setDashboardModel, loadData, className }) {
   const {
@@ -17,12 +18,15 @@ function EditDashboardDateIcon({ dashboardModel, setDashboardModel, loadData, cl
   } = useComponentStateReference();
 
   const updateDashboardFilters = async (newDataModel) => {
-    let newModel = modelHelpers.setDashboardFilterModelField(dashboardModel, "date", newDataModel?.getData("date"));
     // update date in all kpis
-    const dashboardDate = newDataModel?.getData("date");
-    if(dashboardDate) {
-      newModel = metricHelpers.setDashboardDateToKPIs(dashboardModel, newDataModel?.getData("date"));
+    let dashboardDate = newDataModel?.getData("date");
+    if(!dashboardDate) {
+      dashboardDate = {
+        startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
+        endDate: addDays(new Date(new Date().setHours(0, 0, 0, 0)), 1),
+      };
     }
+    let newModel = metricHelpers.setDashboardDateToKPIs(dashboardModel, dashboardDate);
     const response = await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, newModel);
     loadData();
     return response;
