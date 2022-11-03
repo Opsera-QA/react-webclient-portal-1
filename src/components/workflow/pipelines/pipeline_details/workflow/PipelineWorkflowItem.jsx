@@ -459,7 +459,10 @@ const PipelineWorkflowItem = (
 
         {getToolField()}
 
-        <PipelineWorkflowItemActionField pipelineStep={item} />
+        <PipelineWorkflowItemActionField
+          pipelineStep={item}
+          pipelineId={pipelineId}
+        />
 
         {getRepositoryField()}
 
