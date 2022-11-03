@@ -14,6 +14,7 @@ export default function PipelineRoleAccessInput(
     setPipelineModel,
     loadData,
     visible,
+    disabled,
   }) {
   const {
     userData,
@@ -42,7 +43,7 @@ export default function PipelineRoleAccessInput(
     return null;
   }
 
-  const canEdit = PipelineRoleHelper.canEditAccessRoles(userData, pipelineModel?.getCurrentData());
+  const canEdit = PipelineRoleHelper.canEditAccessRoles(userData, pipelineModel?.getCurrentData()) && disabled !== true;
 
   return (
     <RoleAccessInlineInputBase
@@ -61,6 +62,7 @@ PipelineRoleAccessInput.propTypes = {
   setPipelineModel: PropTypes.func,
   visible: PropTypes.bool,
   loadData: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 PipelineRoleAccessInput.defaultProps = {

@@ -266,34 +266,6 @@ function PipelineSummaryPanel(
     );
   };
 
-  // TODO: This can be removed once dto components are wired up
-  const getRoleBadges = (roles) => {
-    if (roles == null || roles.length === 0) {
-      return <span>No Access Rules Applied</span>;
-    }
-
-    return (
-      roles.map((item, i) => {
-        const user = item["user"];
-        const group = item["group"];
-
-        if (user) {
-          return (
-            <span key={i} className="mx-1 mb-1 badge badge-light user-badge">
-              <IconBase icon={faUser} className={"mr-1"} />{`${user}: ${item.role}`}
-            </span>
-          );
-        }
-
-        return (
-          <span key={i} className="mx-1 mb-1 badge badge-light group-badge">
-            <IconBase icon={faUserFriends} className={"mr-1"} />{`${group}: ${item.role}`}
-          </span>
-        );
-      })
-    );
-  };
-
   const getSchedulerField = () => {
     const pipelineTypes = pipeline?.type;
     // TODO: Move canEditPipelineSchedule inside field. Left it out for now.
@@ -503,6 +475,7 @@ function PipelineSummaryPanel(
               loadData={fetchPlan}
               pipelineModel={pipelineModel}
               setPipelineModel={setPipelineModel}
+              disabled={parentWorkflowStatus === "running"}
             />
           </Col>
           <Col sm={12} md={6} className="py-2">
