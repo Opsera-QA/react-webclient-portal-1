@@ -313,11 +313,11 @@ function PipelineStepConfigurationSummary({
             awsDeployPipelineDataObject={getModelWrappedObject(awsDeployPipelineStepConfigurationMetadata)}
           />
         );
-      case "child-pipeline":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.CHILD_PIPELINE:
         return (
           <ChildPipelineStepConfigurationSummaryPanel
-            pipelineData={pipelineData}
-            childPipelineDataObject={getModelWrappedObject(childPipelineStepMetadata)}
+            pipelineModel={pipelineData}
+            childPipelineModel={getModelWrappedObject(childPipelineStepMetadata)}
           />
         );
       case "conditional-operator":
