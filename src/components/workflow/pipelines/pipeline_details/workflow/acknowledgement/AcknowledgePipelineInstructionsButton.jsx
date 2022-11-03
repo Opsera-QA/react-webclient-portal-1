@@ -15,6 +15,7 @@ export default function AcknowledgePipelineInstructionsButton(
     pipelineId,
     message,
     closePanelFunction,
+    disabled,
   }) {
   const {
     toastContext,
@@ -50,11 +51,12 @@ export default function AcknowledgePipelineInstructionsButton(
       variant={"success"}
       buttonState={buttonState}
       onClickFunction={acknowledgePipelineInstructions}
+      disabled={disabled}
       icon={faCheckCircle}
       normalText={"Acknowledge Pipeline Instructions"}
       successText={"Successfully Acknowledged Pipeline Instructions!"}
       errorText={"Failed to Acknowledge Pipeline Instructions!"}
-      busyText={"Acknowledging Pipeline Instructions"}
+      busyText={"Logging Acknowledgement and Resuming Pipeline"}
     />
   );
 }
@@ -64,4 +66,5 @@ AcknowledgePipelineInstructionsButton.propTypes = {
   pipelineStepId: PropTypes.string,
   message: PropTypes.string,
   closePanelFunction: PropTypes.func,
+  disabled: PropTypes.bool,
 };

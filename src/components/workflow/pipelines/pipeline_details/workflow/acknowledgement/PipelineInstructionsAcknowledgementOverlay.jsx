@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import PipelineHelpers from "components/workflow/pipelineHelpers";
 import { faFileCheck } from "@fortawesome/pro-light-svg-icons";
@@ -19,18 +18,31 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import RefusePipelineInstructionsAcknowledgementButton
   from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/RefusePipelineInstructionsAcknowledgementButton";
 import CloseButton from "components/common/buttons/CloseButton";
+import useGetPipelineInstructionModelById
+  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelById";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function PipelineInstructionsAcknowledgementOverlay(
   {
     pipeline,
     loadDataFunction,
   }) {
-  const toastContext = useContext(DialogToastContext);
   const approvalStep = PipelineHelpers.getPendingApprovalStep(pipeline);
   const toolIdentifier = PipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
   const configuration = DataParsingHelper.parseNestedObject(approvalStep, "tool.configuration");
   const userActionsStepModel = modelHelpers.parseObjectIntoModel(configuration, userActionsPipelineStepMetadata);
   const [message, setMessage] = useState("");
+  const {
+    toastContext,
+  } = useComponentStateReference();
+  const {
+    pipelineInstructionsModel,
+    isLoading,
+    error,
+  } = useGetPipelineInstructionModelById(
+    userActionsStepModel?.getData("pipelineInstructionsId"),
+    false,
+  );
 
   const closePanelFunction = () => {
     loadDataFunction();
@@ -51,14 +63,34 @@ export default function PipelineInstructionsAcknowledgementOverlay(
           message={message}
           closePanelFunction={closePanelFunction}
           className={"mr-2"}
+          disabled={pipelineInstructionsModel == null}
         />
         <AcknowledgePipelineInstructionsButton
           pipelineId={pipeline?._id}
           pipelineStepId={approvalStep?._id}
           message={message}
           closePanelFunction={closePanelFunction}
+          disabled={pipelineInstructionsModel == null}
         />
       </ButtonContainerBase>
+    );
+  };
+
+  const getBody = () => {
+    if (isLoading !== true && pipelineInstructionsModel == null) {
+      return (
+        <div>
+          There was no Pipeline Instructions associated with the User Actions step, the instructions have been deleted, or you do not have access to them.
+        </div>
+      );
+    }
+
+    return (
+      <PipelineInstructionsField
+        model={userActionsStepModel}
+        fieldName={"pipelineInstructionsId"}
+        showInstructions={true}
+      />
     );
   };
 
@@ -69,7 +101,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanelFunction}
-      titleText={"Acknowledge Instructions"}
+      titleText={"Action Required"}
       titleIcon={faFileCheck}
       buttonContainer={getButtonContainer()}
     >
@@ -79,11 +111,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
           Acknowledgement of these actions is required before the pipeline can proceed.
           Clicking acknowledge will log your action and resume the pipeline.
         </div>
-        <PipelineInstructionsField
-          model={userActionsStepModel}
-          fieldName={"pipelineInstructionsId"}
-          showInstructions={true}
-        />
+        {getBody()}
       </div>
     </FullScreenCenterOverlayContainer>
   );

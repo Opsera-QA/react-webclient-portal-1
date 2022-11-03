@@ -4,8 +4,6 @@ import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import Modal from "components/common/modal/modal";
 import ApprovalModal from "../../approvalModal";
 import PipelineStartWizard from "./PipelineStartWizard";
-import PipelineHelpers from "../../pipelineHelpers";
-import PipelineActions from "../../pipeline-actions";
 import {
   faPlay,
   faSync,
@@ -181,7 +179,7 @@ function PipelineActionControls(
   };
 
   const handleApprovalClick = () => {
-    const approvalStep = PipelineHelpers.getPendingApprovalStep(pipeline);
+    const approvalStep = pipelineHelpers.getPendingApprovalStep(pipeline);
     const approvalStepToolIdentifier = pipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
 
     if (approvalStepToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION) {
@@ -225,7 +223,7 @@ function PipelineActionControls(
   const stopPipelineRun = async (pipelineId) => {
     try {
       setStopPipeline(true);
-      await PipelineActions.stopPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      await pipelineActions.stopPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
     }
     catch (error) {
       if (isMounted.current === true) {
@@ -243,7 +241,7 @@ function PipelineActionControls(
   const resetPipelineState = async (pipelineId) => {
     try {
       setStopPipeline(true);
-      await PipelineActions.resetPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      await pipelineActions.resetPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
     }
     catch (error) {
       if (isMounted.current === true) {
@@ -262,7 +260,7 @@ function PipelineActionControls(
     try {
       setStartPipeline(true);
       toastContext.showInformationToast("A request to start this pipeline has been submitted.", 20);
-      const response = await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      const response = await pipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
       const message = response?.data?.message;
 
       if (hasStringValue(message) === true) {
@@ -288,7 +286,7 @@ function PipelineActionControls(
   const runPipelineLight = async (pipelineId) => {
     try {
       toastContext.showInformationToast("A request to re-start this pipeline has been added to the queue.  Upon successful completion of this pipeline run, the pipeline will start again.", 20);
-      await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      await pipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
       setHasQueuedRequest(true);
     }
     catch (error) {
@@ -302,7 +300,7 @@ function PipelineActionControls(
     try {
       setStartPipeline(true);
       toastContext.showInformationToast("A request to start this pipeline from the start has been submitted.  Resetting pipeline status and then the pipeline will begin momentarily.", 20);
-      await PipelineActions.triggerPipelineNewStartV2(getAccessToken, cancelTokenSource, pipelineId);
+      await pipelineActions.triggerPipelineNewStartV2(getAccessToken, cancelTokenSource, pipelineId);
       setHasQueuedRequest(true);
     }
     catch (error) {
@@ -320,7 +318,7 @@ function PipelineActionControls(
       setStartPipeline(true);
       setWorkflowStatus("running");
       toastContext.showInformationToast("A request to resume this pipeline has been submitted.  It will begin shortly.", 20);
-      await PipelineActions.resumePipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      await pipelineActions.resumePipelineV2(getAccessToken, cancelTokenSource, pipelineId);
     }
     catch (error) {
       if (isMounted.current === true) {
@@ -473,7 +471,7 @@ function PipelineActionControls(
     let pipelineOrientation = "start";
     //what step are we currently on in the pipeline: first, last or middle?
     if (pipeline.workflow.last_step && pipeline.workflow.last_step.step_id) {
-      const stepIndex = PipelineHelpers.getStepIndex(pipeline, pipeline.workflow.last_step.step_id);
+      const stepIndex = pipelineHelpers.getStepIndex(pipeline, pipeline.workflow.last_step.step_id);
       console.log("current resting step index: ", stepIndex);
       if (stepIndex + 1 === Object.keys(pipeline.workflow.plan).length) {
         pipelineOrientation = "end";

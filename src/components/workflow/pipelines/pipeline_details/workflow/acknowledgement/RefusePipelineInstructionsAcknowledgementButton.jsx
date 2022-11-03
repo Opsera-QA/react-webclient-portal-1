@@ -16,6 +16,7 @@ export default function RefusePipelineInstructionsAcknowledgementButton(
     message,
     className,
     closePanelFunction,
+    disabled,
   }) {
   const {
     toastContext,
@@ -57,6 +58,7 @@ export default function RefusePipelineInstructionsAcknowledgementButton(
       successText={"Successfully Refused Pipeline Instructions!"}
       errorText={"Failed to Refuse Pipeline Instructions!"}
       busyText={"Sending Pipeline Instructions Refusal"}
+      disabled={disabled}
     />
   );
 }
@@ -67,4 +69,5 @@ RefusePipelineInstructionsAcknowledgementButton.propTypes = {
   message: PropTypes.string,
   className: PropTypes.string,
   closePanelFunction: PropTypes.func,
+  disabled: PropTypes.bool,
 };
