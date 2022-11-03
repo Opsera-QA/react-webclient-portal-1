@@ -6,14 +6,15 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import {
   pipelineAcknowledgementActions
 } from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/pipelineAcknowledgement.actions";
-import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
+import { faCircleStop } from "@fortawesome/pro-light-svg-icons";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 
-export default function AcknowledgePipelineInstructionsButton(
+export default function RefusePipelineInstructionsAcknowledgementButton(
   {
     pipelineStepId,
     pipelineId,
     message,
+    className,
     closePanelFunction,
   }) {
   const {
@@ -23,10 +24,10 @@ export default function AcknowledgePipelineInstructionsButton(
   } = useComponentStateReference();
   const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
 
-  const acknowledgePipelineInstructions = async () => {
+  const refusePipelineInstructionsAcknowledgement = async () => {
     try {
       setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
-      const response = await pipelineAcknowledgementActions.acknowledgePipelineInstructions(
+      const response = await pipelineAcknowledgementActions.refusePipelineInstructionsAcknowledgement(
         getAccessToken,
         cancelTokenSource,
         pipelineId,
@@ -47,21 +48,23 @@ export default function AcknowledgePipelineInstructionsButton(
 
   return (
     <VanityButtonBase
+      className={className}
       variant={"success"}
       buttonState={buttonState}
-      onClickFunction={acknowledgePipelineInstructions}
-      icon={faCheckCircle}
-      normalText={"Acknowledge Pipeline Instructions"}
-      successText={"Successfully Acknowledged Pipeline Instructions!"}
-      errorText={"Failed to Acknowledge Pipeline Instructions!"}
-      busyText={"Acknowledging Pipeline Instructions"}
+      onClickFunction={refusePipelineInstructionsAcknowledgement}
+      icon={faCircleStop}
+      normalText={"Refuse Pipeline Instructions"}
+      successText={"Successfully Refused Pipeline Instructions!"}
+      errorText={"Failed to Refuse Pipeline Instructions!"}
+      busyText={"Sending Pipeline Instructions Refusal"}
     />
   );
 }
 
-AcknowledgePipelineInstructionsButton.propTypes = {
+RefusePipelineInstructionsAcknowledgementButton.propTypes = {
   pipelineId: PropTypes.string,
   pipelineStepId: PropTypes.string,
   message: PropTypes.string,
+  className: PropTypes.string,
   closePanelFunction: PropTypes.func,
 };
