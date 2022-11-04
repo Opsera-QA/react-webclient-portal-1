@@ -82,10 +82,10 @@ const MergeSyncTaskWizardCommitSelector = ({
 
     if (
       !Array.isArray(newFileList) &&
-      count <= 5 &&
+      count <= 15 &&
       filePullCompleted === false
     ) {
-      await new Promise((resolve) => timerIds.push(setTimeout(resolve, 15000)));
+      await new Promise((resolve) => timerIds.push(setTimeout(resolve, 5000)));
       return await handleFilePolling(cancelSource, count + 1);
     }
   };
