@@ -18,15 +18,13 @@ function EditDashboardDateIcon({ dashboardModel, setDashboardModel, loadData, cl
   } = useComponentStateReference();
 
   const updateDashboardFilters = async (newDataModel) => {
+    let newModel = modelHelpers.setDashboardFilterModelField(dashboardModel, "date", newDataModel?.getData("date"));
     // update date in all kpis
     let dashboardDate = newDataModel?.getData("date");
     if(!dashboardDate) {
-      dashboardDate = {
-        startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
-        endDate: addDays(new Date(new Date().setHours(0, 0, 0, 0)), 1),
-      };
+      dashboardDate = null;
     }
-    let newModel = metricHelpers.setDashboardDateToKPIs(dashboardModel, dashboardDate);
+    newModel = metricHelpers.setDashboardDateToKPIs(dashboardModel, dashboardDate);
     const response = await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, newModel);
     loadData();
     return response;
