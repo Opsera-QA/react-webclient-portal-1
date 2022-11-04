@@ -4,6 +4,8 @@ import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import Modal from "components/common/modal/modal";
 import ApprovalModal from "../../approvalModal";
 import PipelineStartWizard from "./PipelineStartWizard";
+import PipelineHelpers from "../../pipelineHelpers";
+import PipelineActions from "../../pipeline-actions";
 import {
   faPlay,
   faSync,
@@ -13,8 +15,6 @@ import {
   faFlag, faInfoCircle, faRepeat1, faClock,
 } from "@fortawesome/pro-light-svg-icons";
 import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
-import pipelineHelpers from "../../pipelineHelpers";
-import pipelineActions from "../../pipeline-actions";
 import CancelPipelineQueueConfirmationOverlay
   from "components/workflow/pipelines/pipeline_details/queuing/cancellation/CancelPipelineQueueConfirmationOverlay";
 import commonActions from "../../../common/common.actions";
@@ -82,8 +82,8 @@ function PipelineActionControls(
     });
 
     if (workflowStatus === "paused") {
-      setStatusMessage("This pipeline is currently paused.");
-      setStatusMessageBody("A paused pipeline requires either approval or review of the logs in order to proceed.");
+      setStatusMessage("This pipeline is currently paused awaiting user response");
+      setStatusMessageBody("A paused pipeline requires a user to review and either approve or acknowledge completed actions in order to proceed.");
       setApproval(false);
     } else {
       setStatusMessage(false);
@@ -133,8 +133,9 @@ function PipelineActionControls(
 
       //if step set currently running is an approval step, flag that
       if (pipeline?.workflow?.last_step?.running?.step_id) {
-        const runningStep = pipelineHelpers.getStepIndexFromPlan(pipeline.workflow.plan, pipeline.workflow?.last_step?.running?.step_id);
-        setIsApprovalGate(pipeline.workflow.plan[runningStep].tool?.tool_identifier === "approval");
+        const runningStep = PipelineHelpers.getStepIndexFromPlan(pipeline.workflow.plan, pipeline.workflow?.last_step?.running?.step_id);
+        setIsApprovalGate(pipeline.workflow.plan[runningStep].tool?.tool_identifier === "approval" ||
+          pipeline.workflow.plan[runningStep].tool?.tool_identifier === "user-action");
       }
 
       return;
@@ -150,7 +151,7 @@ function PipelineActionControls(
     setQueueingEnabled(orchestration?.enableQueuing);
 
     if (orchestration?.enableQueuing) {
-      const queuedRequest = await pipelineActions.getQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
+      const queuedRequest = await PipelineActions.getQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
       const isQueued = typeof queuedRequest?.data === "object" && Object.keys(queuedRequest?.data)?.length > 0;
       setHasQueuedRequest(isQueued);
     }
@@ -174,19 +175,18 @@ function PipelineActionControls(
     await fetchData();
     setResetPipeline(false);
     setStartPipeline(false);
-    await pipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipelineId);
+    await PipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipelineId);
     await checkPipelineQueueStatus();
   };
 
   const handleApprovalClick = () => {
-    const approvalStep = pipelineHelpers.getPendingApprovalStep(pipeline);
-    const approvalStepToolIdentifier = pipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
+    const approvalStep = PipelineHelpers.getPendingApprovalStep(pipeline);
+    const approvalStepToolIdentifier = PipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
 
     if (approvalStepToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION) {
       toastContext.showOverlayPanel(
         <PipelineInstructionsAcknowledgementOverlay
           pipeline={pipeline}
-          loadDataFunction={handleRefreshClick}
         />,
       );
     } else {
@@ -223,7 +223,7 @@ function PipelineActionControls(
   const stopPipelineRun = async (pipelineId) => {
     try {
       setStopPipeline(true);
-      await pipelineActions.stopPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      await PipelineActions.stopPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
     }
     catch (error) {
       if (isMounted.current === true) {
@@ -241,7 +241,7 @@ function PipelineActionControls(
   const resetPipelineState = async (pipelineId) => {
     try {
       setStopPipeline(true);
-      await pipelineActions.resetPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      await PipelineActions.resetPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
     }
     catch (error) {
       if (isMounted.current === true) {
@@ -260,7 +260,7 @@ function PipelineActionControls(
     try {
       setStartPipeline(true);
       toastContext.showInformationToast("A request to start this pipeline has been submitted.", 20);
-      const response = await pipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      const response = await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
       const message = response?.data?.message;
 
       if (hasStringValue(message) === true) {
@@ -286,7 +286,7 @@ function PipelineActionControls(
   const runPipelineLight = async (pipelineId) => {
     try {
       toastContext.showInformationToast("A request to re-start this pipeline has been added to the queue.  Upon successful completion of this pipeline run, the pipeline will start again.", 20);
-      await pipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
       setHasQueuedRequest(true);
     }
     catch (error) {
@@ -300,7 +300,7 @@ function PipelineActionControls(
     try {
       setStartPipeline(true);
       toastContext.showInformationToast("A request to start this pipeline from the start has been submitted.  Resetting pipeline status and then the pipeline will begin momentarily.", 20);
-      await pipelineActions.triggerPipelineNewStartV2(getAccessToken, cancelTokenSource, pipelineId);
+      await PipelineActions.triggerPipelineNewStartV2(getAccessToken, cancelTokenSource, pipelineId);
       setHasQueuedRequest(true);
     }
     catch (error) {
@@ -318,7 +318,7 @@ function PipelineActionControls(
       setStartPipeline(true);
       setWorkflowStatus("running");
       toastContext.showInformationToast("A request to resume this pipeline has been submitted.  It will begin shortly.", 20);
-      await pipelineActions.resumePipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      await PipelineActions.resumePipelineV2(getAccessToken, cancelTokenSource, pipelineId);
     }
     catch (error) {
       if (isMounted.current === true) {
@@ -471,7 +471,7 @@ function PipelineActionControls(
     let pipelineOrientation = "start";
     //what step are we currently on in the pipeline: first, last or middle?
     if (pipeline.workflow.last_step && pipeline.workflow.last_step.step_id) {
-      const stepIndex = pipelineHelpers.getStepIndex(pipeline, pipeline.workflow.last_step.step_id);
+      const stepIndex = PipelineHelpers.getStepIndex(pipeline, pipeline.workflow.last_step.step_id);
       console.log("current resting step index: ", stepIndex);
       if (stepIndex + 1 === Object.keys(pipeline.workflow.plan).length) {
         pipelineOrientation = "end";
@@ -506,6 +506,21 @@ function PipelineActionControls(
       }
     }
   };
+
+
+  const getUserInteractionLabels = (pipeline, type) => {
+    const approvalStep = PipelineHelpers.getPendingApprovalStep(pipeline);
+    const approvalStepToolIdentifier = PipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
+
+    if (approvalStepToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION) {
+      if (type === "button") return "Acknowledge Action";
+      if (type === "tooltip") return "A user action is required before this pipeline can proceed.  Click here to see the instructions and complete the task.";
+    }
+
+    if (type === "button") return "Approve Run";
+    if (type === "tooltip") return "Approve the current pipeline run in order for it to proceed. Only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action.";
+  };
+
 
   // TODO: Make base button components for these in the future
   //  and wire up the functions inside those components to clean up PipelineActionControls
@@ -550,7 +565,7 @@ function PipelineActionControls(
             <OverlayTrigger
               placement="top"
               delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "Approve the current state of the pipeline in order for it to proceed. Only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action." })}>
+              overlay={renderTooltip({ message: getUserInteractionLabels(pipeline,"tooltip") })}>
               <Button variant="warning"
                       className="btn-default"
                       size="sm"
@@ -558,7 +573,7 @@ function PipelineActionControls(
                         handleApprovalClick();
                       }}
                       disabled={PipelineRoleHelper.canAuthorizeApprovalGate(userData, pipeline) !== true}>
-                  <IconBase isLoading={approval} icon={faFlag} className={"mr-1"} />Approve</Button>
+                  <IconBase isLoading={approval} icon={faFlag} className={"mr-1"} />{getUserInteractionLabels(pipeline,"button")}</Button>
             </OverlayTrigger>
           </>}
 
