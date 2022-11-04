@@ -15,7 +15,7 @@ import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/T
 import { goalSuccessColor } from "../../../charts-views";
 import DataBlockBoxContainer from "../../../../../common/metrics/data_blocks/DataBlockBoxContainer";
 import {getResultFromKpiConfiguration, getReverseTrendIcon} from "../../../charts-helpers";
-import JiraChangeFailureRateInsightsModal from "./JiraChangeFailureRateInsightsModal";
+import JiraChangeFailureRateInsightsOverlay from "./JiraChangeFailureRateInsightsOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
 function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsData, kpiConfiguration, dataPoint, trend }) {
@@ -47,7 +47,7 @@ function JiraChangeFailureRateDataBlockContainer({ metricData, chartData, goalsD
 
   const onNodeSelect = (node) => {    
     toastContext.showOverlayPanel(
-      <JiraChangeFailureRateInsightsModal
+      <JiraChangeFailureRateInsightsOverlay
         data={node?.data?.report || []}
         closePanel={closePanel}
       />

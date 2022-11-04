@@ -7,7 +7,7 @@ import { jiraChangeFailureRateMetadata } from "./jiraChangeFailureRate.metadata"
 import CustomTable from "../../../../../common/table/CustomTable";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 
-function JiraChangeFailureRateInsightsModal({ data, closePanel }) {
+function JiraChangeFailureRateInsightsOverlay({ data, closePanel }) {
   const fields = jiraChangeFailureRateMetadata.commitFields;
 
   const columns = useMemo(
@@ -36,9 +36,9 @@ function JiraChangeFailureRateInsightsModal({ data, closePanel }) {
   );
 }
 
-JiraChangeFailureRateInsightsModal.propTypes = {
+JiraChangeFailureRateInsightsOverlay.propTypes = {
   data: PropTypes.array,
   closePanel: PropTypes.func,
 };
 
-export default JiraChangeFailureRateInsightsModal;
+export default JiraChangeFailureRateInsightsOverlay;
