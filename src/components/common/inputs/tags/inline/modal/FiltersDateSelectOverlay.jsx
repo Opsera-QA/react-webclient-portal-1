@@ -54,14 +54,16 @@ function FiltersDateSelectOverlay({showModal, dataModel, saveDataFunction, type}
     return (
         <div className={"p-3 bg-white"}>
           <SaveButtonContainer>
-            <CancelButton
-                cancelFunction={()=> { setShowEditDateConfirmModal(false); } }
-                size={"md"}
-                className={"mr-2"}
-            />
             <LenientSaveButton
-                recordDto={temporaryDataObject}
-                updateRecord={handleSave}
+              recordDto={temporaryDataObject}
+              updateRecord={handleSave}
+              customLabel={"Yes"}
+              className={"mr-2"}
+            />
+            <CancelButton
+              cancelFunction={()=> { setShowEditDateConfirmModal(false); } }
+              size={"md"}
+              buttonText={"No"}
             />
           </SaveButtonContainer>
         </div>
@@ -72,14 +74,17 @@ function FiltersDateSelectOverlay({showModal, dataModel, saveDataFunction, type}
     return (
       <div className={"p-3 bg-white"}>
         <SaveButtonContainer>
+          <Button
+            className={"mr-2"}
+            variant ="primary"
+            onClick={()=> { setShowEditDateConfirmModal(true); } }
+          >
+            <span><IconBase icon={faSave} fixedWidth className="mr-2"/>Save</span>
+          </Button>
           <CancelButton
             cancelFunction={closePanel}
             size={"md"}
-            className={"mr-2"}
           />
-          <Button variant ="primary" onClick={()=> { setShowEditDateConfirmModal(true); } }>
-            <span><IconBase icon={faSave} fixedWidth className="mr-2"/>Save</span>
-          </Button>
         </SaveButtonContainer>
       </div>
     );
