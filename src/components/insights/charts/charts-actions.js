@@ -580,8 +580,8 @@ chartsActions.getGithubCommitFrequency = async ({ getAccessToken, cancelTokenSou
   const finalTags = !useKpiTags || !tags ? [] : tags;
 
   const postBody = {
-    ...(date?.startDate && { startDate: date.startDate}),
-    ...(date?.endDate && { endDate: date.endDate}),
+    ...(date?.start && { startDate: date.start}),
+    ...(date?.end && { endDate: date.end}),
     tags: finalTags
   };
 
