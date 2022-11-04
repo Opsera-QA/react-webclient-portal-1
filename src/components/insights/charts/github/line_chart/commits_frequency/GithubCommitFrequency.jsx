@@ -8,6 +8,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import { AuthContext } from "contexts/AuthContext";
 import GithubCommitFrequencyDataBlock from "./GithubCommitFrequencyDataBlock";
+import useComponentStateReference from "hooks/useComponentStateReference";
 // import GithubCommitFrequencyLineChartContainer from './GithubCommitFrequencyLineChartContainer';
 
 // const getMonthDifference = (startDate, endDate) => {
@@ -25,10 +26,10 @@ function GithubCommitFrequency({
   index,
   setKpis,
 }) {
+  const { isMounted } = useComponentStateReference();
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   const [totalCount, setTotalCount] = useState(null);
@@ -47,7 +48,6 @@ function GithubCommitFrequency({
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
 
-    isMounted.current = true;
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -56,7 +56,6 @@ function GithubCommitFrequency({
 
     return () => {
       source.cancel();
-      isMounted.current = false;
     };
   },[]);
 
