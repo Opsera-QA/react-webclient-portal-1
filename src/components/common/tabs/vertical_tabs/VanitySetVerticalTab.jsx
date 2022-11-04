@@ -70,7 +70,7 @@ function VanitySetVerticalTab(
 
 VanitySetVerticalTab.propTypes = {
   tabName: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  tabText: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  tabText: PropTypes.any.isRequired,
   icon: PropTypes.object,
   visible: PropTypes.bool,
   tooltipText: PropTypes.string,

@@ -3,30 +3,34 @@ import PropTypes from "prop-types";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import { faBracketsCurly, faQuestionCircle } from "@fortawesome/pro-light-svg-icons";
 import {
-  MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
-} from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
+  faBracketsCurly,
+  faQuestionCircle,
+} from "@fortawesome/pro-light-svg-icons";
+import { MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
 import SideBySideDeltaDiffField from "components/common/fields/file/diff/delta/SideBySideDeltaDiffField";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import MergeSyncTaskWizardSelectDeltaVersionButton
-  from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/diff_viewer/MergeSyncTaskWizardSelectDeltaVersionButton";
+import MergeSyncTaskWizardSelectDeltaVersionButton from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/diff_viewer/MergeSyncTaskWizardSelectDeltaVersionButton";
 
-const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = (
-  {
-    deltaList,
-    isLoading,
-    loadDataFunction,
-    selectDeltaFunction,
-    sourceContent,
-    destinationContent,
-  }) => {
+// TODO:  Not sure if this is being used, if so please update this to use Monaco Diff Editor (MergeSyncTaskWizardDiffSelectorVerticalTabContainer)
+const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
+  deltaList,
+  isLoading,
+  loadDataFunction,
+  selectDeltaFunction,
+  sourceContent,
+  destinationContent,
+}) => {
   const [activeTab, setActiveTab] = useState(undefined);
 
   useEffect(() => {
     // TODO: Should we determine if the activeTab still exists?
-    if (activeTab == null && Array.isArray(deltaList) && deltaList?.length > 0) {
-      setActiveTab('0');
+    if (
+      activeTab == null &&
+      Array.isArray(deltaList) &&
+      deltaList?.length > 0
+    ) {
+      setActiveTab("0");
     }
   }, [activeTab, deltaList]);
 
@@ -71,8 +75,12 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = (
               delta={delta}
               loadDataFunction={loadDataFunction}
               isLoading={isLoading}
-              maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_DIFF_HEIGHT}
-              minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_DIFF_HEIGHT}
+              maximumHeight={
+                MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_DIFF_HEIGHT
+              }
+              minimumHeight={
+                MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_DIFF_HEIGHT
+              }
               leftSideTitleIcon={faQuestionCircle}
               rightSideTitleIcon={faQuestionCircle}
               sourceCode={sourceContent}
@@ -81,7 +89,9 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = (
             <SaveButtonContainer
               extraButtons={
                 <MergeSyncTaskWizardSelectDeltaVersionButton
-                  selectDeltaFunction={() => selectDeltaFunction(Number(activeTab), true)}
+                  selectDeltaFunction={() =>
+                    selectDeltaFunction(Number(activeTab), true)
+                  }
                   isLoading={isLoading}
                   fieldName={"destinationContent"}
                   fileContent={destinationContent}
@@ -89,12 +99,16 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = (
                   selected={delta?.ignoreIncoming === true}
                   buttonText={"Keep Existing Changes on Destination Branch"}
                   savingButtonText={"Saving Commit Selection"}
-                  savedButtonText={"Keeping Original Changes on Destination Branch"}
+                  savedButtonText={
+                    "Keeping Original Changes on Destination Branch"
+                  }
                 />
               }
             >
               <MergeSyncTaskWizardSelectDeltaVersionButton
-                selectDeltaFunction={() => selectDeltaFunction(Number(activeTab), false)}
+                selectDeltaFunction={() =>
+                  selectDeltaFunction(Number(activeTab), false)
+                }
                 isLoading={isLoading}
                 fieldName={"sourceContent"}
                 fileContent={sourceContent}
@@ -121,8 +135,12 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = (
       tabColumnSize={1}
       isLoading={isLoading}
       loadDataFunction={loadDataFunction}
-      minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_CONTAINER_HEIGHT}
-      maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_CONTAINER_HEIGHT}
+      minimumHeight={
+        MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_CONTAINER_HEIGHT
+      }
+      maximumHeight={
+        MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_SELECTION_CONTAINER_HEIGHT
+      }
     />
   );
 };
