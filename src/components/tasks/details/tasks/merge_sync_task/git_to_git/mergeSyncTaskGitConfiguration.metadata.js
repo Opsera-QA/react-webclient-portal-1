@@ -10,7 +10,7 @@ export const mergeSyncTaskGitConfigurationMetadata = {
       lowercase: true,
     },
     {
-      label: "Account",
+      label: "Git Account",
       id: "toolId",
       isRequired: true,
       maxLength: 24,
