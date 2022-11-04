@@ -8,7 +8,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import { AuthContext } from "contexts/AuthContext";
 import GithubCommitFrequencyDataBlock from "./GithubCommitFrequencyDataBlock";
-import useComponentStateReference from "hooks/useComponentStateReference";
+import useIsMountedStateReference from "hooks/useIsMountedStateReference";
 // import GithubCommitFrequencyLineChartContainer from './GithubCommitFrequencyLineChartContainer';
 
 // const getMonthDifference = (startDate, endDate) => {
@@ -26,7 +26,7 @@ function GithubCommitFrequency({
   index,
   setKpis,
 }) {
-  const { isMounted } = useComponentStateReference();
+  const isMounted = useIsMountedStateReference();
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
