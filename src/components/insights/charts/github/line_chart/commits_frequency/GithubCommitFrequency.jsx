@@ -73,8 +73,6 @@ function GithubCommitFrequency({
         throw new Error('Invalid API response');
       }
 
-      console.log('GHCommitFreq', { data });
-
       // setChartData(data.byDate);
 
       setTotalCount(data.total[0].totalCount);
@@ -122,14 +120,6 @@ function GithubCommitFrequency({
       }
     }
   };
-
-  console.log('GHCommitFreq', {
-    // chartData,
-    totalCount,
-    authorWithMostCommits,
-    minCommitRepository,
-    maxCommitRepository
-  });
 
   const getChartBody = () => {
     // if (!chartData) {
