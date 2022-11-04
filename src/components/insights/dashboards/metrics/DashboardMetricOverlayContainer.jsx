@@ -41,6 +41,7 @@ import BoomiBarChartEditorPanel from "components/insights/charts/boomi/bar_chart
 import GitlabLeadTimeEditorPanel from "../../charts/gitlab/line_chart/lead_time/GitlabLeadTimeEditorPanel";
 import GithubActionsWorkflowEditorPanel
   from "../../charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowEditorPanel";
+import GithubCommitFrequencyEditorPanel from '../../charts/github/line_chart/commits_frequency/GithubCommitFrequencyEditorPanel';
 import JiraMeanTimeToResolutionEditorPanel
   from "../../charts/jira/bar_chart/mean_time_to_resolution/JiraMeanTimeToResolutionEditorPanel";
 import JiraChangeFailureRateEditorPanel from "components/insights/charts/jira/line_chart/change_failure_rate/JiraChangeFailureRateEditorPanel";
@@ -307,6 +308,16 @@ function DashboardMetricOverlayContainer(
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_ACTIONS_WORKFLOW:
         return(
           <GithubActionsWorkflowEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_COMMIT_FREQUENCY:
+        return(
+          <GithubCommitFrequencyEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}
