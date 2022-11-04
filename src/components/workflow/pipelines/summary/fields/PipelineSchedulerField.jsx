@@ -101,7 +101,6 @@ function PipelineSchedulerField(
       model={pipelineModel}
       canEdit={canEditPipelineSchedule}
       isLoading={isLoading}
-      iconSize={"xs"}
     />
   );
 }

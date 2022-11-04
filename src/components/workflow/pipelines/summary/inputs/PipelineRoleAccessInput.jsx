@@ -13,6 +13,7 @@ export default function PipelineRoleAccessInput(
     loadData,
     visible,
     disabled,
+    className,
   }) {
   const {
     userData,
@@ -45,6 +46,7 @@ export default function PipelineRoleAccessInput(
 
   return (
     <RoleAccessInlineInputBase
+      className={className}
       fieldName={fieldName}
       model={pipelineModel}
       disabled={canEdit !== true}
@@ -61,6 +63,7 @@ PipelineRoleAccessInput.propTypes = {
   visible: PropTypes.bool,
   loadData: PropTypes.func,
   disabled: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 PipelineRoleAccessInput.defaultProps = {

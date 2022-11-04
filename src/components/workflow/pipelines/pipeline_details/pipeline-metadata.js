@@ -114,7 +114,7 @@ const pipelineMetadata = {
       id: "tags",
     },
     {
-      label: "Created",
+      label: "Created On",
       id: "createdAt",
     },
     {
@@ -132,8 +132,11 @@ const pipelineMetadata = {
     {
       label: "Schedule",
       id: "schedule"
-    }
+    },
   ],
+  // newObjectFields: {
+  //   "workflow.run_count": 0,
+  // }
 };
 
 export default pipelineMetadata;
