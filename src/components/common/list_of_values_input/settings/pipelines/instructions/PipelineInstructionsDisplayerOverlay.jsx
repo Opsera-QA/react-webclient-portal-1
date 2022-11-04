@@ -6,6 +6,8 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { faFileCheck } from "@fortawesome/pro-light-svg-icons";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import useGetPipelineInstructionModelById
+  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelById";
 
 export default function PipelineInstructionsDisplayerOverlay(
   {
@@ -14,6 +16,14 @@ export default function PipelineInstructionsDisplayerOverlay(
   const {
     toastContext,
   } = useComponentStateReference();
+  const {
+    pipelineInstructionsModel,
+    isLoading,
+    error,
+  } = useGetPipelineInstructionModelById(
+    pipelineInstructionsId,
+    false,
+  );
 
   const closePanelFunction = () => {
     toastContext.removeInlineMessage();
@@ -35,6 +45,9 @@ export default function PipelineInstructionsDisplayerOverlay(
           showInstructions={true}
           showLabel={false}
           pipelineInstructionsId={pipelineInstructionsId}
+          isLoading={isLoading}
+          pipelineInstructionsModel={pipelineInstructionsModel}
+          error={error}
           // instructionsDisplayerMaximumHeight={instructionsDisplayerMaximumHeight}
           // instructionsDisplayerMinimumHeight={instructionsDisplayerMinimumHeight}
         />

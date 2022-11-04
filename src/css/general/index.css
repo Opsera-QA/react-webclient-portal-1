@@ -91,11 +91,6 @@ primary analytics font*/
     font-weight: 400;
 }
 
-.failure-text {
-    color: red;
-    font-weight: bold;
-}
-
 .red {
     color: #E57373;
 }
@@ -1028,6 +1023,7 @@ a:hover, .active, .link-text:hover {
     transform-origin: top;
 }
 
+.underline-text,
 .dropdown-data-fetch:hover {
     text-decoration: underline;
 }

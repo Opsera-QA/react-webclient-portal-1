@@ -1,7 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import useGetPipelineInstructionModelById
-  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelById";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabelBase from "components/common/fields/FieldLabelBase";
 import RichTextField from "components/common/fields/rich_text/RichTextField";
@@ -19,16 +17,10 @@ export default function PipelineInstructionsFieldBase(
     instructionsDisplayerMinimumHeight,
     instructionsDisplayerMaximumHeight,
     showLabel,
-  }) {
-  const {
     pipelineInstructionsModel,
     isLoading,
     error,
-  } = useGetPipelineInstructionModelById(
-    pipelineInstructionsId,
-    false,
-  );
-
+  }) {
   const getAccessRoleDisplayerField = () => {
     if (isLoading !== true) {
       return (
@@ -117,6 +109,9 @@ PipelineInstructionsFieldBase.propTypes = {
   instructionsDisplayerMinimumHeight: PropTypes.string,
   instructionsDisplayerMaximumHeight: PropTypes.string,
   showLabel: PropTypes.bool,
+  pipelineInstructionsModel: PropTypes.object,
+  isLoading: PropTypes.bool,
+  error: PropTypes.any,
 };
 
 PipelineInstructionsFieldBase.defaultProps = {
