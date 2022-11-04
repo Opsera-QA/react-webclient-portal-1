@@ -18,15 +18,30 @@ export default function MonacoEditorCodeDiffInputBase({
   inlineDiff,
   minMap,
   wordWrap,
+  originalEditable,
 }) {
 
   const handleEditorMount = (editor) => {
     const modifiedEditor = editor.getModifiedEditor();
+    const originalEditor = editor.getOriginalEditor();
+
+    setDisabledEditorMessage(modifiedEditor, "File marked for deletion cannot be modified");
+    setDisabledEditorMessage(originalEditor, "Content from target branch cannot be modified");
+
     modifiedEditor.onDidChangeModelContent((_) => {
       // console.log(modifiedEditor.getValue());
       if (onChangeHandler) {
         onChangeHandler(modifiedEditor.getValue());
       }
+    });
+  };
+
+  const setDisabledEditorMessage = (editorInstance, message) => {
+    const messageContribution = editorInstance.getContribution(
+      "editor.contrib.messageController",
+    );
+    editorInstance.onDidAttemptReadOnlyEdit(() => {
+      messageContribution.showMessage(message, editorInstance.getPosition());
     });
   };
 
@@ -40,6 +55,7 @@ export default function MonacoEditorCodeDiffInputBase({
       width={width}
       options={{
         renderSideBySide: !inlineDiff,
+        originalEditable: originalEditable,
         smoothScrolling: true,
         minimap: {
           enabled: minMap,
@@ -73,10 +89,12 @@ MonacoEditorCodeDiffInputBase.propTypes = {
   inlineDiff: PropTypes.bool,
   minMap: PropTypes.bool,
   wordWrap: PropTypes.bool,
+  originalEditable: PropTypes.bool
 };
 
 MonacoEditorCodeInputBase.defaultProps = {
   minMap: false,
   wordWrap: true,
+  originalEditable: false,
   height: "800px",
 };

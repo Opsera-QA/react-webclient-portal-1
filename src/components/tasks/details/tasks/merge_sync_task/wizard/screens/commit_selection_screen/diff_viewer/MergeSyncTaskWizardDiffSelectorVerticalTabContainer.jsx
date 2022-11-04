@@ -15,7 +15,7 @@ import ToggleDiffViewIcon from "components/common/buttons/toggle/ToggleDiffViewI
 import MergeSyncTaskWizardSubmitEditedFileButton from "../file_editor/MergeSyncTaskWizardSubmitEditedFileButton";
 
 const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
-  extension,
+  file,
   deltaList,
   isLoading,
   loadDataFunction,
@@ -81,11 +81,11 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
     return (
       <div className={"m-2"}>
         <MonacoEditorCodeDiffInputBase
-          mode={extension.split('.').join("")}
+          mode={file?.fileExtension?.split('.').join("")}
           originalContent={destinationContent}
           modifiedContent={sourceContent}
           isLoading={isLoading}
-          disabled={isLoading}
+          disabled={isLoading || !file || file.commitAction === "removed"}
           height={
             MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT
           }
@@ -128,7 +128,7 @@ MergeSyncTaskWizardDiffSelectorVerticalTabContainer.propTypes = {
   setComparisonFileModel: PropTypes.func,
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
-  extension: PropTypes.string,
+  file: PropTypes.object,
 };
 
 export default MergeSyncTaskWizardDiffSelectorVerticalTabContainer;
