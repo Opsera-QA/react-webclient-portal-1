@@ -3,12 +3,40 @@ import { dataParsingHelper } from "components/common/helpers/data/dataParsing.he
 
 export const insightsLookupActions = {};
 
-insightsLookupActions.getComponentNames = async (getAccessToken, cancelTokenSource) => {
+insightsLookupActions.getComponentNames = async (
+  getAccessToken,
+  cancelTokenSource,
+) => {
   const apiUrl = `/analytics/sfdc/v1/component/names`;
-  return await baseActions.handleNodeAnalyticsApiGetRequest(getAccessToken, cancelTokenSource, apiUrl);
+  return await baseActions.handleNodeAnalyticsApiGetRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
 };
 
-insightsLookupActions.searchComponents = async (getAccessToken, cancelTokenSource, startDate, endDate, componentNames) => {
+insightsLookupActions.getComponentByName = async (
+  getAccessToken,
+  cancelTokenSource,
+  componentName,
+) => {
+  const apiUrl = `/analytics/sfdc/v1/component/get-component-by-name`;
+  const postBody = { componentName: componentName };
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
+insightsLookupActions.searchComponents = async (
+  getAccessToken,
+  cancelTokenSource,
+  startDate,
+  endDate,
+  componentNames,
+) => {
   const apiUrl = `/analytics/sfdc/v1/component`;
   const urlParams = {
     params: {
@@ -17,13 +45,21 @@ insightsLookupActions.searchComponents = async (getAccessToken, cancelTokenSourc
       fullNameArr: componentNames,
     },
   };
-  return await baseActions.handleNodeAnalyticsApiGetRequest(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+  return await baseActions.handleNodeAnalyticsApiGetRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    urlParams,
+  );
 };
 
 // TODO: Move to Node and delete from here
 insightsLookupActions.generateTransformedResults = (searchResults) => {
   const results = [];
-  const parsedSearchResults = dataParsingHelper.parseObject(searchResults, false);
+  const parsedSearchResults = dataParsingHelper.parseObject(
+    searchResults,
+    false,
+  );
 
   if (!parsedSearchResults) {
     return results;
@@ -49,14 +85,16 @@ insightsLookupActions.generateTransformedResults = (searchResults) => {
 
   Object.entries(cleanedResults).forEach(([name, data]) => {
     const pipelineNames = Object.keys(data.pipelineData);
-    const totals = [{
-      deploy_count: data.totalTimesComponentDeployed,
-      validations_passed: data.totalValidationsPassed,
-      validations_failed: data.totalValidationsFailed,
-      unit_tests_passed: data.totalUnitTestsPassed,
-      unit_tests_failed: data.totalUnitTestsFailed,
-      pipelines: pipelineNames.length,
-    }];
+    const totals = [
+      {
+        deploy_count: data.totalTimesComponentDeployed,
+        validations_passed: data.totalValidationsPassed,
+        validations_failed: data.totalValidationsFailed,
+        unit_tests_passed: data.totalUnitTestsPassed,
+        unit_tests_failed: data.totalUnitTestsFailed,
+        pipelines: pipelineNames.length,
+      },
+    ];
 
     const pipelines = [];
     for (let j = 0, k = pipelineNames.length; j < k; j++) {
