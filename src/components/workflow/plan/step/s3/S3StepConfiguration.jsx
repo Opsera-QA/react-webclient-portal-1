@@ -11,6 +11,8 @@ import PipelineStepSelectInput from "components/common/list_of_values_input/work
 import AwsBucketAccessLevelSelectInput
   from "components/common/list_of_values_input/tools/aws/access/AwsBucketAccessLevelSelectInput";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
+import EBSBucketInput
+  from "../../../pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSBucketInput";
 
 function S3StepConfiguration(
   {
@@ -77,10 +79,9 @@ function S3StepConfiguration(
         model={s3Model}
         setModel={setS3Model}
       />
-      <TextInputBase
-        fieldName={"bucketName"}
-        dataObject={s3Model}
-        setDataObject={setS3Model}
+      <EBSBucketInput
+          dataObject={s3Model}
+          setDataObject={setS3Model}
       />
       <AwsBucketAccessLevelSelectInput
         fieldName={"bucketAccess"}
