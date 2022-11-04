@@ -17,6 +17,14 @@ export const userAcknowledgementMetadata = {
       label: "Acknowledgement Date",
       id: "approved_on"
     },
+    {
+      label: "Denied",
+      id: "denied"
+    },
+    {
+      label: "Rejection Date",
+      id: "denied_on"
+    },
   ],
   newObjectFields: {
   }

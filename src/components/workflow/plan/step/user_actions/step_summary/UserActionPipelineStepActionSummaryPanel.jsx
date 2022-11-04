@@ -18,8 +18,46 @@ export default function UserActionPipelineStepActionSummaryPanel(
   {
     pipelineTaskModel,
   }) {
-  const acknowledgementData = DataParsingHelper.parseNestedObject("api_response.threshold.value", {});
+  const acknowledgementData = DataParsingHelper.parseNestedObject(pipelineTaskModel?.getPersistData(), "api_response.threshold.value", {});
   const acknowledgementModel = modelHelpers.parseObjectIntoModel(acknowledgementData, userAcknowledgementMetadata);
+
+  const getDynamicFields = () => {
+    if (acknowledgementModel?.getData("denied") === true) {
+      return (
+        <>
+          <Col xs={6}>
+            <BooleanField
+              fieldName={"denied"}
+              dataObject={acknowledgementModel}
+            />
+          </Col>
+          <Col xs={6}>
+            <DateTimeField
+              fieldName={"denied_on"}
+              dataObject={acknowledgementModel}
+            />
+          </Col>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <Col xs={6}>
+          <BooleanField
+            fieldName={"approved"}
+            dataObject={acknowledgementModel}
+          />
+        </Col>
+        <Col xs={6}>
+          <DateTimeField
+            fieldName={"approved_on"}
+            dataObject={acknowledgementModel}
+          />
+        </Col>
+      </>
+    );
+  };
 
   if (pipelineTaskModel == null) {
     return null;
@@ -39,18 +77,7 @@ export default function UserActionPipelineStepActionSummaryPanel(
           model={acknowledgementModel}
         />
       </Col>
-      <Col xs={6}>
-        <BooleanField
-          fieldName={"approved"}
-          dataObject={acknowledgementModel}
-        />
-      </Col>
-      <Col xs={6}>
-        <DateTimeField
-          fieldName={"approved_on"}
-          dataObject={acknowledgementModel}
-        />
-      </Col>
+      {getDynamicFields()}
       <Col xs={12}>
         <RichTextField
           fieldName={"api_response.instructions"}
