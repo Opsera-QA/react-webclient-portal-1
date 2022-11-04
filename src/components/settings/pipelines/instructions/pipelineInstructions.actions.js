@@ -112,3 +112,17 @@ pipelineInstructionsActions.getPipelinesByPipelineInstructionsUsage = async (
     apiUrl,
   );
 };
+
+pipelineInstructionsActions.getPipelineInstructionsByPipelineStep = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineId,
+  pipelineStepId,
+) => {
+  const apiUrl = `/settings/pipelines/instructions/pipelines/${pipelineId}/step/${pipelineStepId}`;
+  return await baseActions.apiGetCallV3(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};

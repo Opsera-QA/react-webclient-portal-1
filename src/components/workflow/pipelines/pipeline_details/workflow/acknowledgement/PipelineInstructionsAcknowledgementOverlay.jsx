@@ -21,6 +21,10 @@ import CloseButton from "components/common/buttons/CloseButton";
 import useGetPipelineInstructionModelById
   from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelById";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import PipelineInstructionsFieldBase
+  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsFieldBase";
+import useGetPipelineInstructionModelByPipelineStep
+  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
 
 export default function PipelineInstructionsAcknowledgementOverlay(
   {
@@ -39,8 +43,9 @@ export default function PipelineInstructionsAcknowledgementOverlay(
     pipelineInstructionsModel,
     isLoading,
     error,
-  } = useGetPipelineInstructionModelById(
-    userActionsStepModel?.getData("pipelineInstructionsId"),
+  } = useGetPipelineInstructionModelByPipelineStep(
+    pipeline?._id,
+    approvalStep?._id,
     false,
   );
 
@@ -86,10 +91,13 @@ export default function PipelineInstructionsAcknowledgementOverlay(
     }
 
     return (
-      <PipelineInstructionsField
-        model={userActionsStepModel}
-        fieldName={"pipelineInstructionsId"}
+      <PipelineInstructionsFieldBase
         showInstructions={true}
+        pipelineInstructionsModel={pipelineInstructionsModel}
+        pipelineInstructionsId={userActionsStepModel?.getData("pipelineInstructionsId")}
+        label={pipelineInstructionsModel?.getData("name")}
+        error={error}
+        isLoading={isLoading}
       />
     );
   };

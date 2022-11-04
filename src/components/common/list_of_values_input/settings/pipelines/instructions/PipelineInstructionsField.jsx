@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import PipelineInstructionsFieldBase
   from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsFieldBase";
+import useGetPipelineInstructionModelById
+  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelById";
 
 export default function PipelineInstructionsField(
   {
@@ -12,6 +14,14 @@ export default function PipelineInstructionsField(
     instructionsDisplayerMaximumHeight,
     instructionsDisplayerMinimumHeight,
   }) {
+  const {
+    pipelineInstructionsModel,
+    isLoading,
+    error,
+  } = useGetPipelineInstructionModelById(
+    model?.getData(fieldName),
+    false,
+  );
   const field = model?.getFieldById(fieldName);
 
   if (field == null) {
@@ -26,6 +36,9 @@ export default function PipelineInstructionsField(
       pipelineInstructionsId={model?.getData(fieldName)}
       instructionsDisplayerMaximumHeight={instructionsDisplayerMaximumHeight}
       instructionsDisplayerMinimumHeight={instructionsDisplayerMinimumHeight}
+      pipelineInstructionsModel={pipelineInstructionsModel}
+      isLoading={isLoading}
+      error={error}
     />
   );
 }

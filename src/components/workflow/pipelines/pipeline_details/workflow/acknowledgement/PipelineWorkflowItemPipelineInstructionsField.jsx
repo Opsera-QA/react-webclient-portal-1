@@ -7,14 +7,14 @@ import {
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineInstructionsDisplayerOverlay
   from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsDisplayerOverlay";
-import useGetPipelineInstructionModelById
-  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelById";
 import IconBase from "components/common/icons/IconBase";
 import { faSearch } from "@fortawesome/pro-solid-svg-icons";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import PipelineInstructionsAcknowledgementOverlay
   from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
+import useGetPipelineInstructionModelByPipelineStep
+  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
 
 export default function PipelineWorkflowItemPipelineInstructionsField(
   {
@@ -27,7 +27,7 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
   const {
     pipelineInstructionsModel,
     isLoading,
-  } = useGetPipelineInstructionModelById(pipelineInstructionsId);
+  } = useGetPipelineInstructionModelByPipelineStep(pipeline?._id, pipelineStep?._id);
   const {
     toastContext,
   } = useComponentStateReference();
