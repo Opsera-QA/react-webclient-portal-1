@@ -30,6 +30,32 @@ export const jiraChangeFailureRateMetadata = {
       id: "date",
     },
   ],
+  commitFields:[
+    {
+      label: "Ticket Number",
+      id: "ticket",
+    },
+    {
+      label: "Status",
+      id: "status"
+    },
+    {
+      label: "Resolution Name",
+      id: "resolution"
+    },
+    {
+      label: "Date Created",
+      id: "createdAt"
+    },
+    {
+      label: "Service Component Name",
+      id: "serviceComponent",
+    },
+    {
+      label: "Team Name",
+      id: "teamName",
+    },
+  ],
   newObjectFields: {
     tags: [],
     date: undefined,
