@@ -461,7 +461,8 @@ const PipelineWorkflowItem = (
 
         <PipelineWorkflowItemActionField
           pipelineStep={item}
-          pipelineId={pipelineId}
+          pipeline={pipeline}
+          loadPipelineFunction={loadPipeline}
         />
 
         {getRepositoryField()}

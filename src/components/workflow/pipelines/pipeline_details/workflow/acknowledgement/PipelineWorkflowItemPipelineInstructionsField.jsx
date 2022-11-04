@@ -10,12 +10,17 @@ import PipelineInstructionsDisplayerOverlay
 import useGetPipelineInstructionModelById
   from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelById";
 import IconBase from "components/common/icons/IconBase";
-import { faSearch } from "@fortawesome/pro-light-svg-icons";
+import { faSearch } from "@fortawesome/pro-solid-svg-icons";
+import pipelineHelpers from "components/workflow/pipelineHelpers";
+import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import PipelineInstructionsAcknowledgementOverlay
+  from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
 
 export default function PipelineWorkflowItemPipelineInstructionsField(
   {
     pipeline,
     pipelineStep,
+    loadPipelineFunction,
   }) {
   const [userActionsStepModel, setUserActionsStepModel] = useState(modelHelpers.parseObjectIntoModel(pipelineStep?.tool?.configuration, userActionsPipelineStepMetadata));
   const pipelineInstructionsId = userActionsStepModel?.getData("pipelineInstructionsId");
@@ -26,21 +31,32 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
   const {
     toastContext,
   } = useComponentStateReference();
+  const approvalStep = pipelineHelpers.getPendingApprovalStep(pipeline);
+  const approvalStepToolIdentifier = pipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
 
   const getValueField = () => {
     return (
-      <div className={""}>
+      <div className={"font-weight-bold"}>
         {pipelineInstructionsModel?.getData("name") || pipelineInstructionsId}
       </div>
     );
   };
 
   const showPipelineInstructionsOverlay = () => {
-    toastContext.showOverlayPanel(
-      <PipelineInstructionsDisplayerOverlay
-        pipelineInstructionsId={pipelineInstructionsId}
-      />
-    );
+    if (approvalStepToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION) {
+      toastContext.showOverlayPanel(
+        <PipelineInstructionsAcknowledgementOverlay
+          pipeline={pipeline}
+          loadDataFunction={loadPipelineFunction}
+        />,
+      );
+    } else {
+      toastContext.showOverlayPanel(
+        <PipelineInstructionsDisplayerOverlay
+          pipelineInstructionsId={pipelineInstructionsId}
+        />
+      );
+    }
   };
 
   if (pipelineStep == null) {
@@ -56,7 +72,7 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
         <IconBase
           isLoading={isLoading}
           iconSize={"sm"}
-          className={"ml-2"}
+          className={"ml-1"}
           icon={faSearch}
         />
       </div>
@@ -67,4 +83,5 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
 PipelineWorkflowItemPipelineInstructionsField.propTypes = {
   pipelineStep: PropTypes.object,
   pipeline: PropTypes.object,
+  loadPipelineFunction: PropTypes.func,
 };

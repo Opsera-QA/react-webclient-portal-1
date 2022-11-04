@@ -15,7 +15,8 @@ const PIPELINE_ACTIONS_SUPPORTED_TOOL_IDENTIFIERS = [
 export default function PipelineWorkflowItemActionField(
   {
     pipelineStep,
-    pipelineId,
+    pipeline,
+    loadPipelineFunction,
   }) {
   const toolIdentifier = DataParsingHelper.parseNestedString(pipelineStep, "tool.tool_identifier", "");
 
@@ -25,7 +26,8 @@ export default function PipelineWorkflowItemActionField(
         return (
           <PipelineWorkflowItemPipelineInstructionsField
             pipelineStep={pipelineStep}
-            pipelineId={pipelineId}
+            pipeline={pipeline}
+            loadPipelineFunction={loadPipelineFunction}
           />
         );
       default:
@@ -48,6 +50,7 @@ export default function PipelineWorkflowItemActionField(
 }
 
 PipelineWorkflowItemActionField.propTypes = {
+  pipeline: PropTypes.object,
   pipelineStep: PropTypes.object,
-  pipelineId: PropTypes.string,
+  loadPipelineFunction: PropTypes.func,
 };
