@@ -18,6 +18,7 @@ export default function PipelineInstructionsFieldBase(
     showInstructions,
     instructionsDisplayerMinimumHeight,
     instructionsDisplayerMaximumHeight,
+    showLabel,
   }) {
   const {
     pipelineInstructionsModel,
@@ -67,6 +68,10 @@ export default function PipelineInstructionsFieldBase(
   };
 
   const getName = () => {
+    if (showLabel === false) {
+      return null;
+    }
+
     if (isMongoDbId(pipelineInstructionsId) !== true) {
       return "";
     }
@@ -95,6 +100,7 @@ export default function PipelineInstructionsFieldBase(
         <FieldLabelBase
           label={label}
           isLoading={isLoading}
+          showLabel={showLabel}
         />
         {getName()}
       </div>
@@ -110,6 +116,7 @@ PipelineInstructionsFieldBase.propTypes = {
   pipelineInstructionsId: PropTypes.string,
   instructionsDisplayerMinimumHeight: PropTypes.string,
   instructionsDisplayerMaximumHeight: PropTypes.string,
+  showLabel: PropTypes.bool,
 };
 
 PipelineInstructionsFieldBase.defaultProps = {
