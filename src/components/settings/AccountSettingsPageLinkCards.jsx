@@ -12,8 +12,8 @@ export default function AccountSettingsPageLinkCards() {
       <DeleteToolsManagementPageLinkCard />
       <LdapGroupManagementPageLinkCard />
       <LogsBackupManagementPageLinkCard />
-      <LdapSiteRoleManagementPageLinkCard />
       <UnsecuredItemReportPageLinkCard />
+      <LdapSiteRoleManagementPageLinkCard />
       <UserManagementPageLinkCard />
     </div>
   );
