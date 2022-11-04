@@ -11,6 +11,7 @@ function EditIcon(
     tooltipBody,
     disabled,
     iconClassName,
+    iconTransformProperties,
   }) {
 
   if (disabled === true || handleEditFunction == null) {
@@ -24,6 +25,7 @@ function EditIcon(
           onClickFunction={() => {handleEditFunction();}}
           icon={faPencilAlt}
           className={"pointer"}
+          iconTransformProperties={iconTransformProperties}
           iconClassName={iconClassName}
         />
       </ButtonTooltip>
@@ -37,6 +39,7 @@ EditIcon.propTypes = {
   tooltipBody: PropTypes.any,
   disabled: PropTypes.bool,
   iconClassName: PropTypes.string,
+  iconTransformProperties: PropTypes.any,
 };
 
 export default EditIcon;

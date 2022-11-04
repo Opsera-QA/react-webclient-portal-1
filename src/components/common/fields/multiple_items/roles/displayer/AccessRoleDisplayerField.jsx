@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import SpyglassBadge from "components/common/badges/spyglass/SpyglassBadge";
 import AccessRoleDisplayer from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayer";
+import IconBase from "components/common/icons/IconBase";
+import { faSearch } from "@fortawesome/pro-light-svg-icons";
 
 function AccessRoleDisplayerField({roles, className, noDataMessage}) {
   if (!Array.isArray(roles) || roles?.length === 0) {
@@ -17,10 +18,9 @@ function AccessRoleDisplayerField({roles, className, noDataMessage}) {
       className={"popover-filter"}
     >
       <span className={className}>
-        <span className="item-field">
-          <SpyglassBadge
-            badgeText={`${roles.length} Access Role${roles.length !== 1 ? "s" : ""} Applied`}
-          />
+        <span>
+          <IconBase className={"mr-1"} icon={faSearch} />
+          {`${roles.length} Access Role${roles.length !== 1 ? "s" : ""} Applied`}
         </span>
       </span>
     </TooltipWrapper>
