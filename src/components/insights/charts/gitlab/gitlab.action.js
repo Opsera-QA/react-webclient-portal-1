@@ -2,7 +2,7 @@ import baseActions from "utils/actionsBase";
 
 import {
     getDateObjectFromKpiConfiguration, getDeploymentStageFromKpiConfiguration, getGitlabProjectFromKpiConfiguration,
-    getTagsFromKpiConfiguration
+    getTagsFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration, getUseKpiTagsFromKpiConfiguration
 } from "components/insights/charts/charts-helpers";
 
 const gitlabBaseURL = "analytics/gitlab/v1/";
@@ -22,6 +22,17 @@ gitlabActions.gitlabPendingMergeRequests = async (
     const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
     let tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
+    // Checking the use kpi tags toggle
+    const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+    const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+    if (!useKpiTags) {
+        tags = null;
+    }
+    if (!useDashboardTags) {
+        dashboardTags = null;
+        dashboardOrgs = null;
+    }
     const postBody = {
         startDate: dateRange?.start,
         endDate: dateRange?.end,
@@ -50,6 +61,18 @@ gitlabActions.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime = async (
     const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
     let tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
+    // Checking the use kpi tags toggle
+    const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+    const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+    if (!useKpiTags) {
+        tags = null;
+    }
+    if (!useDashboardTags) {
+        dashboardTags = null;
+        dashboardOrgs = null;
+    }
+
     const postBody = {
         startDate: dateRange?.start,
         endDate: dateRange?.end,
@@ -77,6 +100,17 @@ gitlabActions.gitlabProjects= async (
     const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
     let tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
+    // Checking the use kpi tags toggle
+    const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+    const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+    if (!useKpiTags) {
+        tags = null;
+    }
+    if (!useDashboardTags) {
+        dashboardTags = null;
+        dashboardOrgs = null;
+    }
     const postBody = {
         startDate: dateRange?.start,
         endDate: dateRange?.end,
@@ -108,6 +142,17 @@ gitlabActions.gitlabDeploymentStatistics = async (
     startDate.setTime(startDate.getTime() - timeOffsetInMins);
     endDate.setTime(endDate.getTime() - timeOffsetInMins);
 
+    // Checking the use kpi tags toggle
+    const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+    const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+    if (!useKpiTags) {
+        tags = null;
+    }
+    if (!useDashboardTags) {
+        dashboardTags = null;
+        dashboardOrgs = null;
+    }
     const postBody = {
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
@@ -139,6 +184,17 @@ gitlabActions.gitlabLeadTimeForChange = async (
     startDate.setTime(startDate.getTime() - timeOffsetInMins);
     endDate.setTime(endDate.getTime() - timeOffsetInMins);
 
+    // Checking the use kpi tags toggle
+    const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+    const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+    if (!useKpiTags) {
+        tags = null;
+    }
+    if (!useDashboardTags) {
+        dashboardTags = null;
+        dashboardOrgs = null;
+    }
     const postBody = {
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
@@ -170,6 +226,17 @@ gitlabActions.gitlabAverageCommitTimeToMerge = async (
     startDate.setTime(startDate.getTime() - timeOffsetInMins);
     endDate.setTime(endDate.getTime() - timeOffsetInMins);
 
+    // Checking the use kpi tags toggle
+    const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+    const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+    if (!useKpiTags) {
+        tags = null;
+    }
+    if (!useDashboardTags) {
+        dashboardTags = null;
+        dashboardOrgs = null;
+    }
     const postBody = {
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),

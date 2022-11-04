@@ -176,14 +176,14 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
     return (
       <div className={"p-3 bg-white"}>
         <SaveButtonContainer>
-          <CancelButton
-            cancelFunction={closePanel}
-            size={"md"}
-            className={"mr-2"}
-          />
           <LenientSaveButton
             recordDto={temporaryDataObject}
             updateRecord={handleSave}
+            className={"mr-2"}
+          />
+          <CancelButton
+            cancelFunction={closePanel}
+            size={"md"}
           />
         </SaveButtonContainer>
       </div>

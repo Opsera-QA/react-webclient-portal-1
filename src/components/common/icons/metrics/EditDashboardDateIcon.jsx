@@ -19,10 +19,11 @@ function EditDashboardDateIcon({ dashboardModel, setDashboardModel, loadData, cl
   const updateDashboardFilters = async (newDataModel) => {
     let newModel = modelHelpers.setDashboardFilterModelField(dashboardModel, "date", newDataModel?.getData("date"));
     // update date in all kpis
-    const dashboardDate = newDataModel?.getData("date");
-    if(dashboardDate) {
-      newModel = metricHelpers.setDashboardDateToKPIs(dashboardModel, newDataModel?.getData("date"));
+    let dashboardDate = newDataModel?.getData("date");
+    if(!dashboardDate) {
+      dashboardDate = null;
     }
+    newModel = metricHelpers.setDashboardDateToKPIs(dashboardModel, dashboardDate);
     const response = await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, newModel);
     loadData();
     return response;
