@@ -144,7 +144,7 @@ function GitlabPipelineStatisticsActionableInsightsTable({ kpiConfiguration, ins
         </Col>
         <Col lg={4} md={6} className="mt-3">
           <GitlabPipelineInsightsDataBlock
-            displayValue={stepData[activeTab]?.maxStepCancelled}
+            displayValue={stepData[activeTab]?.maxStepFailed}
             displayText="Most Failed Stage"
             icon={faLightbulbOn}
           />

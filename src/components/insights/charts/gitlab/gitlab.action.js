@@ -7,7 +7,7 @@ import {
     getDeploymentStageFromKpiConfiguration,
     getGitlabProjectFromKpiConfiguration,
     getResultFromKpiConfiguration,
-    getTagsFromKpiConfiguration,
+    getTagsFromKpiConfiguration
 } from "components/insights/charts/charts-helpers";
 
 const gitlabBaseURL = "analytics/gitlab/v1/";
