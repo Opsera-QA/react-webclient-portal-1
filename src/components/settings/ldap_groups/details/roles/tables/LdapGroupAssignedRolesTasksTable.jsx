@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
+  getGroupRoleLevelColumnDefinition,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -11,6 +12,7 @@ import { useHistory } from "react-router-dom";
 
 export default function LdapGroupAssignedRolesTasksTable(
   {
+    group,
     tasks,
     isLoading,
   }) {
@@ -21,6 +23,7 @@ export default function LdapGroupAssignedRolesTasksTable(
     () => [
       getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "_id")),
+      getGroupRoleLevelColumnDefinition(group),
     ],
     [fields],
   );
@@ -42,4 +45,5 @@ export default function LdapGroupAssignedRolesTasksTable(
 LdapGroupAssignedRolesTasksTable.propTypes = {
   tasks: PropTypes.array,
   isLoading: PropTypes.bool,
+  group: PropTypes.string,
 };

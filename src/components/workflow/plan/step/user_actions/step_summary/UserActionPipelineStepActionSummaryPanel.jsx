@@ -13,6 +13,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import DateTimeField from "components/common/fields/date/DateTimeField";
+import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
 
 export default function UserActionPipelineStepActionSummaryPanel(
   {
@@ -66,9 +67,9 @@ export default function UserActionPipelineStepActionSummaryPanel(
   return (
     <PipelineTaskSummaryPanelBase pipelineTaskData={pipelineTaskModel}>
       <Col xs={6}>
-        <TextFieldBase
+        <SsoUserField
           fieldName={"user"}
-          dataObject={acknowledgementModel}
+          model={acknowledgementModel}
         />
       </Col>
       <Col xs={6}>
