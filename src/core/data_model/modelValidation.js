@@ -93,8 +93,8 @@ export const fieldValidation = (value, model, field) => {
   if (field.isEmailArray === true) {
     if (Array.isArray(value) && value?.length > 0) {
       value?.forEach((potentialEmail, index) => {
-        if (DataParsingHelper.isEmailValid(value) !== true) {
-          errorMessages.push(`Email address ${index} is not valid.`);
+        if (DataParsingHelper.isEmailValid(potentialEmail) !== true) {
+          errorMessages.push(`Email address ${index + 1} is not valid.`);
         }
       });
     }
