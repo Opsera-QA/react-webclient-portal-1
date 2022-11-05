@@ -1044,9 +1044,9 @@ const breadcrumbs = {
     title: "Opsera Task Details",
     linkText: "Opsera Task Details",
     icon: faTasks,
-    // dynamicIconFunction: (model) => {
-    //   return taskTypeConstants.getIconForTaskType(model?.getData("type"));
-    // },
+    dynamicIconFunction: (model) => {
+      return taskTypeConstants.getIconForTaskType(model?.getData("type"));
+    },
   },
 
   //General
