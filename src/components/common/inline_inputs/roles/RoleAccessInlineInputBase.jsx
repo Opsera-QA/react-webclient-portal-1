@@ -58,7 +58,7 @@ function RoleAccessInlineInputBase(
             <LaunchHelpIcon
               visible={disabled !== true}
               helpComponent={helpComponent}
-              className={"mt-2 text-muted"}
+              className={"ml-2 text-muted"}
             />
           </div>
         </div>
