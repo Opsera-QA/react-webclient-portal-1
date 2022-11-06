@@ -29,6 +29,8 @@ import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineR
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import PipelineInstructionsAcknowledgementOverlay
   from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import pipelineHelpers from "../../pipelineHelpers";
 
 const delayCheckInterval = 15000;
 let internalRefreshCount = 1;
@@ -116,8 +118,7 @@ function PipelineActionControls(
       return;
     }
 
-    // TODO: This should probably be able to be replaced with pipeline?.workflow?.last_step?.status || false
-    let status = pipeline?.workflow?.last_step?.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
+    const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status");
 
     //check for queued requests
     if (status === "running") {
@@ -128,14 +129,16 @@ function PipelineActionControls(
       delayRefresh();
     }
 
-    if (status === "stopped" && pipeline?.workflow?.last_step?.running && pipeline?.workflow?.last_step?.running?.paused) {
+    const isPaused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
+
+    if (status === "stopped" && isPaused === true) {
       setWorkflowStatus("paused");
 
+      const parsedPipelineStepToolIdentifier = pipelineHelpers.getPendingApprovalStepToolIdentifier(pipeline);
       //if step set currently running is an approval step, flag that
-      if (pipeline?.workflow?.last_step?.running?.step_id) {
-        const runningStep = PipelineHelpers.getStepIndexFromPlan(pipeline.workflow.plan, pipeline.workflow?.last_step?.running?.step_id);
-        setIsApprovalGate(pipeline.workflow.plan[runningStep].tool?.tool_identifier === "approval" ||
-          pipeline.workflow.plan[runningStep].tool?.tool_identifier === "user-action");
+      if (parsedPipelineStepToolIdentifier) {
+          const approvalGateIdentifiers = [toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL, toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION];
+          setIsApprovalGate(approvalGateIdentifiers.includes(parsedPipelineStepToolIdentifier));
       }
 
       return;

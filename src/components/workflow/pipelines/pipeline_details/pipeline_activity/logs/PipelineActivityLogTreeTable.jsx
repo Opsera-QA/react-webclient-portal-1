@@ -26,6 +26,7 @@ function PipelineActivityLogTreeTable(
     pipeline,
     pipelineId,
     pipelineRunCount,
+    loadPipelineFunction,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -213,6 +214,7 @@ function PipelineActivityLogTreeTable(
         pipelineActivityFilterDto={pipelineActivityFilterModel}
         currentRunNumber={currentRunNumber}
         currentStepId={currentStepId}
+        loadPipelineFunction={loadPipelineFunction}
       />
     );
   };
@@ -301,6 +303,7 @@ PipelineActivityLogTreeTable.propTypes = {
   pipeline: PropTypes.object,
   pipelineId: PropTypes.string,
   pipelineRunCount: PropTypes.number,
+  loadPipelineFunction: PropTypes.func,
 };
 
 export default PipelineActivityLogTreeTable;

@@ -211,6 +211,7 @@ function PipelineDetailView() {
             pipelineId={id}
             getPipeline={getPipeline}
             pipelineRunCount={pipeline?.workflow?.run_count}
+            loadPipelineFunction={fetchPlan}
           />
         </div>
       </div>
