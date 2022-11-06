@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
+  getGroupRoleLevelColumnDefinition,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -9,6 +10,7 @@ import scriptsLibraryMetadata from "@opsera/definitions/constants/registry/scrip
 
 export default function LdapGroupAssignedRolesScriptsTable(
   {
+    group,
     scripts,
     isLoading,
   }) {
@@ -18,6 +20,7 @@ export default function LdapGroupAssignedRolesScriptsTable(
     () => [
       getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "_id")),
+      getGroupRoleLevelColumnDefinition(group),
     ],
     [fields],
   );
@@ -34,4 +37,5 @@ export default function LdapGroupAssignedRolesScriptsTable(
 LdapGroupAssignedRolesScriptsTable.propTypes = {
   scripts: PropTypes.array,
   isLoading: PropTypes.bool,
+  group: PropTypes.string,
 };

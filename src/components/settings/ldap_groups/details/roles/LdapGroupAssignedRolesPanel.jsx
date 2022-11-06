@@ -50,6 +50,7 @@ export default function LdapGroupAssignedRolesPanel(
           items={assignedResources}
           isLoading={isLoading}
           loadData={loadData}
+          group={groupModel?.getData("name")}
         />
       }
     />
