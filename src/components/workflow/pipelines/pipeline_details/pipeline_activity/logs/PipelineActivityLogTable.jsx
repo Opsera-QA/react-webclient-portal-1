@@ -51,14 +51,14 @@ function PipelineActivityLogTable(
     if (isPendingRow === true && pipelineRunCount === selectedRowRunCount) {
       const parsedPipelineStepToolIdentifier = PipelineHelpers.getPendingApprovalStepToolIdentifier(pipeline);
       switch (parsedPipelineStepToolIdentifier) {
-        case toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL:
-          toastContext.showOverlayPanel(
-            <StepApprovalOverlay
-              pipeline={pipeline}
-              loadDataFunction={loadPipelineFunction}
-            />,
-          );
-          return;
+        // case toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL:
+        //   toastContext.showOverlayPanel(
+        //     <StepApprovalOverlay
+        //       pipeline={pipeline}
+        //       loadDataFunction={loadPipelineFunction}
+        //     />,
+        //   );
+        //   return;
         case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
           toastContext.showOverlayPanel(
             <PipelineInstructionsAcknowledgementOverlay
@@ -121,7 +121,7 @@ function PipelineActivityLogTable(
       data={getFilteredData()}
       noDataMessage={getNoDataMessage()}
       onRowSelect={onRowSelect}
-      rowStyling={rowStyling}
+      // rowStyling={rowStyling}
     />
   );
 }
