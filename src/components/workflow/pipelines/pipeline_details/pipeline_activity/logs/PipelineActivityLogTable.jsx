@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useMemo } from "react";
 import PropTypes from "prop-types";
 import {
   getPipelineActivityStatusColumn,
@@ -14,11 +14,13 @@ import PipelineHelpers from "components/workflow/pipelineHelpers";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import PipelineInstructionsAcknowledgementOverlay
   from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
+import pipelineActivityMetadata from "@opsera/definitions/constants/pipelines/logs/pipelineActivity.metadata";
+import { getField } from "components/common/metadata/metadata-helpers";
+import StepApprovalOverlay from "components/workflow/StepApprovalOverlay";
 
 function PipelineActivityLogTable(
   {
     pipelineLogData,
-    pipelineActivityMetadata,
     pipeline,
     pipelineActivityFilterDto,
     currentRunNumber,
@@ -26,31 +28,37 @@ function PipelineActivityLogTable(
     loadPipelineFunction,
   }) {
   const toastContext = useContext(DialogToastContext);
-  const isMounted = useRef(false);
-  const [columns, setColumns] = useState([]);
+  const fields = pipelineActivityMetadata?.fields;
   const latestId = PaginationHelper.getLatestCreatedItemInDataArray(pipelineLogData)?._id;
-
-  useEffect(() => {
-    isMounted.current = true;
-
-    setColumns([]);
-    loadColumnMetadata(pipelineActivityMetadata);
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, [JSON.stringify(pipelineActivityMetadata)]);
+  const columns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "run_count"), "cell-center no-wrap-inline", 100,),
+      getUppercaseTableTextColumn(getField(fields, "step_name")),
+      getUppercaseTableTextColumn(getField(fields, "action")),
+      getTableTextColumn(getField(fields, "message")),
+      getPipelineActivityStatusColumn(getField(fields, "status")),
+      getTableDateTimeColumn(getField(fields, "createdAt")),
+    ],
+    [fields]
+  );
 
   const onRowSelect = (treeGrid, row) => {
     const selectedRowRunCount = DataParsingHelper.parseInteger(row?.run_count);
     const pipelineRunCount = DataParsingHelper.parseNestedInteger(pipeline, "workflow.run_count", 0);
     const isPendingRow = DataParsingHelper.parseNestedString(row, "status") === "pending";
+    const pipelineIsPending = DataParsingHelper.parseNestedString(row, "status") === "pending";
 
     if (isPendingRow === true && pipelineRunCount === selectedRowRunCount) {
       const parsedPipelineStepToolIdentifier = PipelineHelpers.getPendingApprovalStepToolIdentifier(pipeline);
       switch (parsedPipelineStepToolIdentifier) {
         case toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL:
-          break;
+          toastContext.showOverlayPanel(
+            <StepApprovalOverlay
+              pipeline={pipeline}
+              loadDataFunction={loadPipelineFunction}
+            />,
+          );
+          return;
         case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
           toastContext.showOverlayPanel(
             <PipelineInstructionsAcknowledgementOverlay
@@ -68,23 +76,6 @@ function PipelineActivityLogTable(
         pipelineActivityLogId={row._id}
       />,
     );
-  };
-
-  const loadColumnMetadata = (newActivityMetadata) => {
-    if (newActivityMetadata?.fields) {
-      const fields = newActivityMetadata.fields;
-
-      setColumns(
-        [
-          {...getTableTextColumn(fields.find(field => { return field.id === "run_count";}), "cell-center no-wrap-inline", 100,)},
-          getUppercaseTableTextColumn(fields.find(field => { return field.id === "step_name";})),
-          getUppercaseTableTextColumn(fields.find(field => { return field.id === "action";})),
-          getTableTextColumn(fields.find(field => { return field.id === "message";})),
-          getPipelineActivityStatusColumn(fields.find(field => { return field.id === "status";})),
-          getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt";}))
-        ]
-      );
-    }
   };
 
   const rowStyling = (row) => {
@@ -107,11 +98,11 @@ function PipelineActivityLogTable(
   };
 
   const getFilteredData = () => {
-    if (currentRunNumber == null || currentRunNumber === "latest" || currentRunNumber === "secondary" || currentStepId == null) {
+    if (currentRunNumber == null || currentRunNumber === "latest" || currentRunNumber === "secondary" || DataParsingHelper.isValidMongoDbId(currentStepId) !== true) {
       return pipelineLogData;
     }
 
-    return pipelineLogData.filter((item) => {
+    return pipelineLogData?.filter((item) => {
       return item.step_id === currentStepId;
     });
   };
@@ -130,7 +121,7 @@ function PipelineActivityLogTable(
       data={getFilteredData()}
       noDataMessage={getNoDataMessage()}
       onRowSelect={onRowSelect}
-      // rowStyling={rowStyling}
+      rowStyling={rowStyling}
     />
   );
 }

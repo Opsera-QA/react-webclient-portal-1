@@ -31,7 +31,6 @@ function PipelineActivityLogTreeTable(
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [pipelineActivityFilterModel, setPipelineActivityFilterModel] = useState(new PipelineActivityFilterModel());
-  const [pipelineActivityMetadata, setPipelineActivityMetadata] = useState(undefined);
   const [activityData, setActivityData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const pipelineTree = useRef([]);
@@ -150,7 +149,6 @@ function PipelineActivityLogTreeTable(
 
     if (isMounted?.current === true && Array.isArray(pipelineActivityData)) {
       setActivityData([...pipelineActivityData]);
-      setPipelineActivityMetadata(response?.data?.metadata);
       newFilterModel.setData("totalCount", activityLogCount);
       newFilterModel.setData("activeFilters", newFilterModel?.getActiveFilters());
       setPipelineActivityFilterModel({...newFilterModel});
@@ -209,7 +207,6 @@ function PipelineActivityLogTreeTable(
       <PipelineActivityLogTable
         isLoading={isLoading}
         pipeline={pipeline}
-        pipelineActivityMetadata={pipelineActivityMetadata}
         pipelineLogData={activityData}
         pipelineActivityFilterDto={pipelineActivityFilterModel}
         currentRunNumber={currentRunNumber}
