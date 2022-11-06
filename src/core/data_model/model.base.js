@@ -29,6 +29,7 @@ export default class ModelBase {
   ) {
     this.metaData = dataParsingHelper.cloneDeep({...metaData});
     this.data = {...this.getNewObjectFields(), ...data};
+    this.originalData = dataParsingHelper.cloneDeep(this.data);
     this.newModel = newModel;
     this.id = data?._id;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
@@ -266,6 +267,10 @@ export default class ModelBase {
   getPersistData = () => {
     this.removeTemporaryObjectProperties();
     return this.trimStrings();
+  };
+
+  getOriginalData = () => {
+    return this.originalData;
   };
 
   getCurrentData = () => {

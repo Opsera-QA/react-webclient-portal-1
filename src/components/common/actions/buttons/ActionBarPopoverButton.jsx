@@ -10,6 +10,7 @@ export default function ActionBarPopoverButton(
     text,
     icon,
     className,
+    onClickFunction,
   }) {
   return (
     <TooltipWrapper innerText={popoverText}>
@@ -19,6 +20,7 @@ export default function ActionBarPopoverButton(
               iconSize={"lg"}
               icon={icon}
               iconClassName={iconClasses}
+              onClickFunction={onClickFunction}
             />
             <span>{text}</span>
           </span>
@@ -33,4 +35,5 @@ ActionBarPopoverButton.propTypes = {
   iconClasses: PropTypes.string,
   text: PropTypes.string,
   className: PropTypes.string,
+  onClickFunction: PropTypes.func,
 };
