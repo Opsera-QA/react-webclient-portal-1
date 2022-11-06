@@ -54,8 +54,8 @@ function PipelineActivityLogTable(
         case toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL:
           toastContext.showOverlayPanel(
             <StepApprovalOverlay
-              pipeline={pipeline}
-              loadDataFunction={loadPipelineFunction}
+              pipelineId={pipeline?._id}
+              loadPipelineFunction={loadPipelineFunction}
             />,
           );
           return;
@@ -121,7 +121,7 @@ function PipelineActivityLogTable(
       data={getFilteredData()}
       noDataMessage={getNoDataMessage()}
       onRowSelect={onRowSelect}
-      rowStyling={rowStyling}
+      // rowStyling={rowStyling}
     />
   );
 }
