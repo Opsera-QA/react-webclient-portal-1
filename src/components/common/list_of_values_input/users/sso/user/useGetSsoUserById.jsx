@@ -3,50 +3,46 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { ssoUserActions } from "components/settings/users/ssoUser.actions";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import useLoadData from "temp-library-components/useLoadData/useLoadData";
 
-export default function useGetSsoUserById(userId, handleErrorFunction) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error  , setError] = useState(undefined);
+export default function useGetSsoUserById(
+  userId,
+  handleErrorFunction,
+) {
   const [ssoUser, setSsoUser] = useState(undefined);
   const {
     getAccessToken,
     cancelTokenSource,
   } = useComponentStateReference();
+  const {
+    isLoading,
+    error,
+    setError,
+    loadData,
+  } = useLoadData(
+    handleErrorFunction,
+  );
 
   useEffect(() => {
     setSsoUser(undefined);
 
-    if (isMongoDbId(userId) === true) {
-      loadData().catch(() => {
-      });
+    if (isMongoDbId(userId) === true && loadData) {
+      loadData(getSsoUser).catch(() => {});
     }
-  }, []);
+  }, [userId]);
 
-  const loadData = async () => {
-    try {
-      setError(undefined);
-      setSsoUser(undefined);
-      setIsLoading(true);
-      await getRevokedSsoUsers();
-    } catch (error) {
-      setError(error);
-
-      if (handleErrorFunction) {
-        handleErrorFunction(error);
-      }
-    } finally {
-      setIsLoading(false);
+  const getSsoUser = async () => {
+    if (isMongoDbId(userId) !== true) {
+      return;
     }
-  };
 
-  const getRevokedSsoUsers = async () => {
     const response = await ssoUserActions.getUserById(
       getAccessToken,
       cancelTokenSource,
       userId,
     );
 
-    const user = DataParsingHelper.parseArray(response?.data?.data, []);
+    const user = DataParsingHelper.parseObject(response?.data);
 
     if (user) {
       setSsoUser(user);

@@ -7,6 +7,8 @@ import IconBase from "components/common/icons/IconBase";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import PipelineInstructionsAcknowledgementOverlay
+  from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
 
 const pipelineHelpers = {};
 
@@ -96,19 +98,42 @@ pipelineHelpers.getNextStepFrom = (pipeline, step) => {
 };
 
 pipelineHelpers.getStepIndex = (pipeline, stepId) => {
-  if (stepId) {
-    let stepArrayIndex = pipeline.workflow.plan.findIndex(x => x._id === stepId);
-    return stepArrayIndex;
-  }
+  return pipelineHelpers.getStepIndexFromPlan(
+    DataParsingHelper.parseNestedArray(pipeline, "workflow.plan"),
+    stepId,
+  );
 };
 
 pipelineHelpers.getStepIndexFromPlan = (plan, stepId) => {
-  if (stepId && plan) {
-    return plan.findIndex(step => step._id === stepId);
+  const parsedStepId = DataParsingHelper.parseMongoDbId(stepId);
+  const parsedPlan = DataParsingHelper.parseArray(plan);
+
+  if (!parsedStepId || !parsedPlan) {
+    return -1;
   }
 
-  return -1;
+  return parsedPlan.findIndex((pipelineStep) => pipelineStep?._id === stepId);
 };
+
+pipelineHelpers.getPendingApprovalStepToolIdentifier = (pipeline) => {
+  const pipelineStatus = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status");
+  const isPipelinePaused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
+
+  if (pipelineStatus === "stopped" && isPipelinePaused === true) {
+    const pendingPipelineStepId = DataParsingHelper.safeObjectPropertyParser(pipeline, "workflow.last_step.running.step_id");
+
+    if (DataParsingHelper.isValidMongoDbId(pendingPipelineStepId) === true) {
+      const pendingStepIndex = pipelineHelpers.getStepIndex(pipeline, pendingPipelineStepId);
+
+      if (pendingStepIndex > -1) {
+        const pipelinePlan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
+        const parsedPipelineStep = DataParsingHelper.parseObject(pipelinePlan[pendingStepIndex], {});
+        return DataParsingHelper.parseNestedString(parsedPipelineStep, "tool.tool_identifier");
+      }
+    }
+  }
+};
+
 
 pipelineHelpers.getPipelineStatus = (pipeline) => {
   if (pipeline) {
