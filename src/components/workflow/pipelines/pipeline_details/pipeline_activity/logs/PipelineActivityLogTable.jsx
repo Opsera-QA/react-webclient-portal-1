@@ -8,6 +8,12 @@ import {
 import PipelineTaskDetailViewer from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineTaskDetailViewer";
 import TableBase from "components/common/table/TableBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import PaginationHelper from "@opsera/persephone/helpers/array/pagination.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import PipelineHelpers from "components/workflow/pipelineHelpers";
+import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import PipelineInstructionsAcknowledgementOverlay
+  from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
 
 function PipelineActivityLogTable(
   {
@@ -17,10 +23,12 @@ function PipelineActivityLogTable(
     pipelineActivityFilterDto,
     currentRunNumber,
     currentStepId,
+    loadPipelineFunction,
   }) {
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
   const [columns, setColumns] = useState([]);
+  const latestId = PaginationHelper.getLatestCreatedItemInDataArray(pipelineLogData)?._id;
 
   useEffect(() => {
     isMounted.current = true;
@@ -34,11 +42,31 @@ function PipelineActivityLogTable(
   }, [JSON.stringify(pipelineActivityMetadata)]);
 
   const onRowSelect = (treeGrid, row) => {
+    const selectedRowRunCount = DataParsingHelper.parseInteger(row?.run_count);
+    const pipelineRunCount = DataParsingHelper.parseNestedInteger(pipeline, "workflow.run_count", 0);
+    const isPendingRow = DataParsingHelper.parseNestedString(row, "status") === "pending";
+
+    if (isPendingRow === true && pipelineRunCount === selectedRowRunCount) {
+      const parsedPipelineStepToolIdentifier = PipelineHelpers.getPendingApprovalStepToolIdentifier(pipeline);
+      switch (parsedPipelineStepToolIdentifier) {
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL:
+          break;
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
+          toastContext.showOverlayPanel(
+            <PipelineInstructionsAcknowledgementOverlay
+              pipeline={pipeline}
+              loadDataFunction={loadPipelineFunction}
+            />,
+          );
+          return;
+      }
+    }
+
     toastContext.showOverlayPanel(
       <PipelineTaskDetailViewer
         pipelineName={pipeline?.name}
         pipelineActivityLogId={row._id}
-      />
+      />,
     );
   };
 
@@ -56,6 +84,25 @@ function PipelineActivityLogTable(
           getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt";}))
         ]
       );
+    }
+  };
+
+  const rowStyling = (row) => {
+    const isFinalRow = row?._id === latestId;
+
+    if (isFinalRow) {
+      const status = row?.status;
+
+      switch (status) {
+        case "failed":
+        case "stopped":
+        case "halted":
+          return "failed-activity-row";
+        case "success":
+          return "success-activity-row";
+        case "pending":
+          return "pending-activity-row";
+      }
     }
   };
 
@@ -83,6 +130,7 @@ function PipelineActivityLogTable(
       data={getFilteredData()}
       noDataMessage={getNoDataMessage()}
       onRowSelect={onRowSelect}
+      // rowStyling={rowStyling}
     />
   );
 }
@@ -97,6 +145,7 @@ PipelineActivityLogTable.propTypes = {
     PropTypes.number,
   ]),
   currentStepId: PropTypes.string,
+  loadPipelineFunction: PropTypes.func,
 };
 
 export default PipelineActivityLogTable;

@@ -298,7 +298,7 @@ export const getAssociatedPipelineStatusIcon = (pipelineStatus) => {
       return (<IconBase icon={faPlayCircle} className={"green"}/>);
     case "queued":
     case "pending":
-      return (<IconBase icon={faPauseCircle} className={"green"}/>);
+      return (<IconBase icon={faPauseCircle} className={"yellow"}/>);
     case "stopped":
     case "halted":
       return (<IconBase icon={faOctagon} className={"red"}/>);

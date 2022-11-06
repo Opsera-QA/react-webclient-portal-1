@@ -329,15 +329,12 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
           </div>
         </Modal.Body>
         <Modal.Footer>
-
           <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Approve this pipeline using the switch above in order for it to proceed." })}>
-            <Button variant="success" onClick={() => handleConfirm("approve")}
-                    disabled={isLoading || !formData.approved || isSaving || !approvalStep}>
-                <IconBase isLoading={isSaving} icon={faCheck} className={"mr-1"} fixedWidth/>
-              Approve
+            overlay={renderTooltip({ message: "Close this window leaving the pipeline in a paused state" })}>
+            <Button variant="secondary" onClick={() => handleClose()}>
+              Close
             </Button>
           </OverlayTrigger>
 
@@ -355,12 +352,13 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
           <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Close this window leaving the pipeline in a paused state" })}>
-            <Button variant="secondary" onClick={() => handleClose()}>
-              Close
+            overlay={renderTooltip({ message: "Approve this pipeline using the switch above in order for it to proceed." })}>
+            <Button variant="success" onClick={() => handleConfirm("approve")}
+                    disabled={isLoading || !formData.approved || isSaving || !approvalStep}>
+              <IconBase isLoading={isSaving} icon={faCheck} className={"mr-1"} fixedWidth/>
+              Approve
             </Button>
           </OverlayTrigger>
-
         </Modal.Footer>
       </Modal>
     </>

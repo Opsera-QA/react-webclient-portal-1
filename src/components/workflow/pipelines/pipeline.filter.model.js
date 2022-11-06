@@ -49,7 +49,7 @@ const pipelineFilterMetadata = {
   newObjectFields: {
     pageSize: 25,
     currentPage: 1,
-    sortOption: "name",
+    sortOption: "last-updated",
     search: "",
     activeFilters: [],
     viewType: "list",

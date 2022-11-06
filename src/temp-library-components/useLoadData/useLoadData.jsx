@@ -1,14 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 
-export default function useLoadData(
-  handleErrorFunction,
-) {
+export default function useLoadData() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
 
   useEffect(() => {}, []);
 
-  const loadData = useCallback(async (loadDataFunction) => {
+  const loadData = useCallback(async (loadDataFunction, handleErrorFunction) => {
     try {
       setIsLoading(true);
 
@@ -24,7 +22,7 @@ export default function useLoadData(
     } finally {
       setIsLoading(false);
     }
-  }, [handleErrorFunction]);
+  }, []);
 
   return ({
     isLoading: isLoading,
