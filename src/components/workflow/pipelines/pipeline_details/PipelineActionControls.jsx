@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import Modal from "components/common/modal/modal";
-import ApprovalModal from "../../approvalModal";
+import StepApprovalOverlay from "components/workflow/StepApprovalOverlay";
 import PipelineStartWizard from "./PipelineStartWizard";
 import PipelineHelpers from "../../pipelineHelpers";
 import PipelineActions from "../../pipeline-actions";
@@ -30,7 +30,6 @@ import { toolIdentifierConstants } from "components/admin/tools/identifiers/tool
 import PipelineInstructionsAcknowledgementOverlay
   from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import pipelineHelpers from "../../pipelineHelpers";
 
 const delayCheckInterval = 15000;
 let internalRefreshCount = 1;
@@ -38,6 +37,7 @@ let internalRefreshCount = 1;
 function PipelineActionControls(
   {
     pipeline,
+    isLoading,
     disabledActionState,
     fetchData,
   }) {
@@ -45,18 +45,15 @@ function PipelineActionControls(
   const [resetPipeline, setResetPipeline] = useState(false);
   const [startPipeline, setStartPipeline] = useState(false);
   const [stopPipeline, setStopPipeline] = useState(false);
-  const [approval, setApproval] = useState(false);
   const [isApprovalGate, setIsApprovalGate] = useState(false);
   const [statusMessage, setStatusMessage] = useState(false);
   const [statusMessageBody, setStatusMessageBody] = useState("");
-  const [showApprovalModal, setShowApprovalModal] = useState(false);
   const [freetrialWizardModal, setFreetrialWizardModal] = useState({
     show: false,
     pipelineId: "",
     templateId: "",
     pipelineOrientation: "",
   });
-  const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [hasQueuedRequest, setHasQueuedRequest] = useState(false);
   const [queueingEnabled, setQueueingEnabled] = useState(false);
   const {
@@ -86,7 +83,6 @@ function PipelineActionControls(
     if (workflowStatus === "paused") {
       setStatusMessage("This pipeline is currently paused awaiting user response");
       setStatusMessageBody("A paused pipeline requires a user to review and either approve or acknowledge completed actions in order to proceed.");
-      setApproval(false);
     } else {
       setStatusMessage(false);
       setStatusMessageBody("");
@@ -134,7 +130,7 @@ function PipelineActionControls(
     if (status === "stopped" && isPaused === true) {
       setWorkflowStatus("paused");
 
-      const parsedPipelineStepToolIdentifier = pipelineHelpers.getPendingApprovalStepToolIdentifier(pipeline);
+      const parsedPipelineStepToolIdentifier = PipelineHelpers.getPendingApprovalStepToolIdentifier(pipeline);
       //if step set currently running is an approval step, flag that
       if (parsedPipelineStepToolIdentifier) {
           const approvalGateIdentifiers = [toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL, toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION];
@@ -194,29 +190,13 @@ function PipelineActionControls(
         />,
       );
     } else {
-      setShowApprovalModal(true);
+      toastContext.showOverlayPanel(
+        <StepApprovalOverlay
+          pipelineId={pipeline?._id}
+          loadPipelineFunction={fetchData}
+        />,
+      );
     }
-  };
-
-  const handleApprovalActivity = async (blnDelayRefresh, blnDelayedResume) => {
-    setApproval(true);
-    setInfoModal({
-      show: true,
-      header: "Approval Status",
-      message: "Your response has been recorded in the Pipeline Activity Logs for the given step.  Pipeline operations will resume shortly.",
-      button: "OK",
-    });
-    setWorkflowStatus("running");
-
-    if (!blnDelayRefresh) {
-      await fetchData();
-    }
-
-    if (blnDelayedResume) {
-      delayResume(pipeline._id);
-      return;
-    }
-    delayRefresh();
   };
 
   const handleRefreshClick = async () => {
@@ -577,7 +557,7 @@ function PipelineActionControls(
                         handleApprovalClick();
                       }}
                       disabled={PipelineRoleHelper.canAuthorizeApprovalGate(userData, pipeline) !== true}>
-                  <IconBase isLoading={approval} icon={faFlag} className={"mr-1"} />{getUserInteractionLabels(pipeline,"button")}</Button>
+                  <IconBase isLoading={isLoading} icon={faFlag} className={"mr-1"} />{getUserInteractionLabels(pipeline,"button")}</Button>
             </OverlayTrigger>
           </>}
 
@@ -685,18 +665,6 @@ function PipelineActionControls(
         </div>
       </div>
 
-      {showApprovalModal &&
-      <ApprovalModal pipelineId={pipeline._id}
-                     visible={showApprovalModal}
-                     setVisible={setShowApprovalModal}
-                     handleApprovalActivity={handleApprovalActivity} />}
-
-      {infoModal.show &&
-      <Modal header={infoModal.header}
-             message={infoModal.message}
-             button={infoModal.button}
-             handleCancelModal={() => setInfoModal({ ...infoModal, show: false })} />}
-
       {freetrialWizardModal.show &&
       <FreeTrialPipelineWizard pipelineId={freetrialWizardModal.pipelineId}
                                templateId={freetrialWizardModal.templateId}
@@ -720,5 +688,6 @@ PipelineActionControls.propTypes = {
   pipeline: PropTypes.object,
   disabledActionState: PropTypes.bool,
   fetchData: PropTypes.func,
+  isLoading: PropTypes.bool,
 };
 export default PipelineActionControls;
