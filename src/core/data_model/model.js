@@ -15,6 +15,7 @@ export class Model {
   constructor(data, metaData, newModel) {
     this.metaData = dataParsingHelper.cloneDeep(metaData);
     this.data = {...this.getNewObjectFields(), ...data};
+    this.originalData = dataParsingHelper.cloneDeep(this.data);
     this.newModel = newModel;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
     this.changeMap = new Map();
@@ -202,6 +203,10 @@ export class Model {
   // TODO: Only send changemap for updates after getting everything else working
   getPersistData = () => {
     return this.trimStrings();
+  };
+
+  getOriginalData = () => {
+    return this.originalData;
   };
 
   getCurrentData = () => {
