@@ -33,7 +33,7 @@ function GithubCommitFrequencyDataBlock({
 }
 
 GithubCommitFrequencyDataBlock.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   prevValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   topText: PropTypes.string,
   bottomText: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
