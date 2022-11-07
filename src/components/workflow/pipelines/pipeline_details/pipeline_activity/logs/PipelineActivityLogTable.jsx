@@ -121,7 +121,7 @@ function PipelineActivityLogTable(
       data={getFilteredData()}
       noDataMessage={getNoDataMessage()}
       onRowSelect={onRowSelect}
-      // rowStyling={rowStyling}
+      rowStyling={rowStyling}
     />
   );
 }
