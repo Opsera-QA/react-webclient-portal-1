@@ -5,11 +5,13 @@ import Col from "react-bootstrap/Col";
 import axios from "axios";
 import GitlabDeployFrequencyChartHelpDocumentation from "components/common/help/documentation/insights/charts/GitlabDeployFrequencyChartHelpDocumentation";
 import chartsActions from "components/insights/charts/charts-actions";
+import { getDateObjectFromKpiConfiguration } from "components/insights/charts/charts-helpers";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import { AuthContext } from "contexts/AuthContext";
 import useIsMountedStateReference from "hooks/useIsMountedStateReference";
 import GithubCommitFrequencyDataBlock from "./GithubCommitFrequencyDataBlock";
 import GithubCommitFrequencyLineChartContainer from './GithubCommitFrequencyLineChartContainer';
+import moment from "moment";
 
 // const getMonthDifference = (startDate, endDate) => {
 //   return (
@@ -75,7 +77,15 @@ function GithubCommitFrequency({
       // determine totals commits per day
       const commits = {};
 
-      // TODO: setup commits with every time period between start/end dates THEN add byDate date
+      const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+
+      if (dateRange && dateRange.start && dateRange.end) {
+        const startDate = moment(dateRange.start);
+        const endDate = moment(dateRange.end);
+        for (let date = startDate; date < endDate; date.add(1, "days")) {
+          commits[date.format("YYYY-MM-DD")] = 0;
+        }
+      }
       
       data.byDate.forEach(({ _id: { year, month, day }, count }) => {
         const date = `${year}-${month}-${day}`;
