@@ -15,6 +15,7 @@ import FullScreenCenterOverlayContainer from "../../../../../common/overlays/cen
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import GitlabPipelineStatisticsActionableInsightsTable from "./GitlabPipelineStatisticsActionableInsightsTable";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import BadgeBase from "../../../../../common/badges/BadgeBase";
 
 function GitlabPipelineStatistics({
   kpiConfiguration,
@@ -221,10 +222,13 @@ function GitlabPipelineStatistics({
               </div>
             </div>
           </Col>
-          <Col className={"my-2 p-0 d-flex flex-column align-items-end"}>
+          <Col md={12} className={"my-2 p-0 d-flex flex-column align-items-end"}>
             <GitlabPipelineStatisticsLineChartContainer
               chartData={chartData}
             />
+          </Col>
+          <Col md={12} className={"my-2 p-0"}>
+            <BadgeBase className={"mx-2"} badgeText={"Note: Results fetched are based on UTC timezone of selected dates"} />
           </Col>
         </Row>
       </div>
