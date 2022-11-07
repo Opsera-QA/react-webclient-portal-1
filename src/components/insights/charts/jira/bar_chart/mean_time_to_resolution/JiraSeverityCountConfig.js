@@ -1,4 +1,4 @@
-export default (getColor,i) => ({
+export default (getColor, i) => ({
   keys: ["Number of Incidents"],
   indexBy: "priority",
   colorBy: "id",
@@ -7,14 +7,14 @@ export default (getColor,i) => ({
   enableLabel: true,
   labelTextColor: "white",
   axisLeft: {
-    legend:"Number of Incidents",
-    format: v => {
+    legend: "Number of Incidents",
+    format: (tickValues) => {
       i++;
-      if(i%2===0){
-        return '';
-      }
-      else {
-        return v;
+      // Show alternate tick values 
+      if (i % 2 === 0) {
+        return "";
+      } else {
+        return tickValues;
       }
     },
     orient: "left",
@@ -23,5 +23,5 @@ export default (getColor,i) => ({
     tickRotation: 0,
     legendOffset: -40,
     legendPosition: "middle",
-  }
+  },
 });
