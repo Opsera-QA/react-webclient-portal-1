@@ -330,11 +330,11 @@ export class Model {
     return this.metaData?.detailViewTitle != null ? this.metaData.detailViewTitle(this) : null;
   };
 
-  getLabel = (fieldName) => {
+  getLabel = (fieldName, defaultLabel = "No label found in metadata") => {
     const fields = this.metaData.fields;
     // TODO: Replace with metadata helper call once finished
     const field = fields.find(field => field.id === fieldName);
-    return field ? field.label : "No label found in metadata";
+    return field ? field.label : defaultLabel;
   };
 
   getMetaData = () => {

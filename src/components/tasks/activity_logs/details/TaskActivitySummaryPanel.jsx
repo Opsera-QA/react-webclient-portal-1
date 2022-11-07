@@ -54,7 +54,10 @@ function TaskActivitySummaryPanel({ taskActivityLogModel }) {
               <PipelineTaskStateField dataObject={taskActivityLogModel} fieldName={"status"}/>
             </Col>
             <Col md={12}>
-              <PipelineTaskSummaryMessageField fieldName={"message"} dataObject={taskActivityLogModel} />
+              <PipelineTaskSummaryMessageField
+                fieldName={"message"}
+                model={taskActivityLogModel}
+              />
             </Col>
           </Row>
         </SummaryPanelContainer>
