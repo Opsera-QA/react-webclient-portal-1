@@ -38,7 +38,7 @@ function GithubCommitFrequency({
   const [minCommitRepositoryValue, setMinCommitRepositoryValue] = useState(null);
   const [maxCommitRepository, setMaxCommitRepository] = useState(null);
   const [maxCommitRepositoryValue, setMaxCommitRepositoryValue] = useState(null);
-  // const [chartData, setChartData] = useState(undefined);
+  const [chartData, setChartData] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -71,6 +71,23 @@ function GithubCommitFrequency({
       if (status !== 200 || !data) {
         throw new Error('Invalid API response');
       }
+
+      // determine totals commits per day
+      const commits = {};
+
+      // TODO: setup commits with every time period between start/end dates THEN add byDate date
+      
+      data.byDate.forEach(({ _id: { year, month, day }, count }) => {
+        const date = `${year}-${month}-${day}`;
+        if (commits[date]) {
+          commits[date] += count;
+        } else {
+          commits[date] = count;
+        }
+      });
+      console.log({ commits });
+
+      setChartData(Object.keys(commits).map(date => ({ x: date, y: commits[date] })));
 
       // setChartData(data.byDate);
 
@@ -156,13 +173,9 @@ function GithubCommitFrequency({
               />
             </Col>
           </Row>
-          {/* <Row>
-            <Col className={"my-2 p-0 d-flex flex-column align-items-end"}>
-              <GithubCommitFrequencyLineChartContainer
-                chartData={chartData}
-              />
-            </Col>
-          </Row> */}
+          <Col xs={12} className={"my-2 p-0 d-flex flex-column align-items-end"}>
+            <GithubCommitFrequencyLineChartContainer data={chartData} />
+          </Col>
         </Row>
       </div>
     );
