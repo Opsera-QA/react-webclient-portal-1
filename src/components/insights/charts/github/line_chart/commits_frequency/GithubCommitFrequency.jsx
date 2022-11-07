@@ -83,23 +83,20 @@ function GithubCommitFrequency({
         const startDate = moment(dateRange.start);
         const endDate = moment(dateRange.end);
         for (let date = startDate; date < endDate; date.add(1, "days")) {
-          commits[date.format("YYYY-MM-DD")] = 0;
+          commits[date.format("YYYY-MM-DD")] = {
+            total: 0,
+            byRepo: {}
+          };
         }
       }
       
-      data.byDate.forEach(({ _id: { year, month, day }, count }) => {
+      data.byDate.forEach(({ _id: { year, month, day, repositoryName }, count }) => {
         const date = `${year}-${month}-${day}`;
-        if (commits[date]) {
-          commits[date] += count;
-        } else {
-          commits[date] = count;
-        }
+        commits[date].total += count;
+        commits[date].byRepo[repositoryName] = count;
       });
-      console.log({ commits });
 
-      setChartData(Object.keys(commits).map(date => ({ x: date, y: commits[date] })));
-
-      // setChartData(data.byDate);
+      setChartData(Object.keys(commits).map(date => ({ x: date, y: commits[date].total, byRepo: commits[date].byRepo })));
 
       setTotalCount(data.total[0].totalCount);
 

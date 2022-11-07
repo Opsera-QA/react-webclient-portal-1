@@ -22,8 +22,6 @@ function GithubCommitFrequencyLineChartContainer({ data }) {
     ]);
   }, [data]);
 
-  console.log('LineChart', { maxCharVal, chartData });
-
   const getTrendChart = () => {
     return (
       <div id="seeme" style={{ minWidth: '100%', maxHeight: '300px' }}>
@@ -56,6 +54,20 @@ function GithubCommitFrequencyLineChartContainer({ data }) {
             legendOffset: -38,
             legendPosition: "middle",
           }}
+          sliceTooltip={({ slice }) => (
+            <div style={{ background: 'white', borderStyle: 'solid', borderWidth: 'thin', borderRadius: '0.25rem', padding: '0.5rem' }}>
+              {slice.points.map(({ data: { x, y, byRepo }, serieColor }) => (
+                <>
+                  <div>{y} total commits on {x}</div>
+                  {Object.keys(byRepo).map((key) => (
+                    <div key={key} style={{ color: serieColor }}>
+                      <strong>{key}</strong> [{byRepo[key]}]
+                    </div>
+                  ))}
+                </>
+              ))}
+            </div>
+          )}
         />
       </div>
     );
