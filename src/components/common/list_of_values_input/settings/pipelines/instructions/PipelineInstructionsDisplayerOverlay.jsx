@@ -37,7 +37,7 @@ export default function PipelineInstructionsDisplayerOverlay(
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanelFunction}
-      titleText={"Action Required"}
+      titleText={"Pipeline Instructions"}
       titleIcon={faFileCheck}
     >
       <div className={"m-3"}>
