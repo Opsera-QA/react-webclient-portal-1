@@ -7,7 +7,10 @@ import axios from "axios";
 import { Col, Row } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
+import {
+    METRIC_THEME_CHART_PALETTE_COLORS,
+    METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY
+} from "components/common/helpers/metrics/metricTheme.helpers";
 import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import ChartTooltip from "../../ChartTooltip.jsx";
 import {
@@ -20,6 +23,9 @@ import { ResponsiveLine } from "@nivo/line";
 import {metricHelpers} from "../../../metric.helpers";
 import githubActionsWorkflowActions from "../workflows/github-actions-workflow-actions";
 import GithubTotalMergedPullRequestsDataBlock from "./GithubMergedPullRequestDataBlock";
+import IconBase from "../../../../common/icons/IconBase";
+import {faSquare} from "@fortawesome/pro-solid-svg-icons";
+import _ from "lodash";
 
 function GithubMergedPullRequestStatistics({
                                         kpiConfiguration,
@@ -74,11 +80,8 @@ function GithubMergedPullRequestStatistics({
                 dashboardOrgs,
                 dashboardFilters
             );
-            console.log("response to this", response);
             let dataObject = response?.data?.data[0]?.chartData;
             let  datablock = response?.data?.data[0]?.statisticsData;
-
-            console.log("datablock1", datablock);
 
             assignStandardColors(dataObject, true);
             spaceOutServiceNowCountBySeverityLegend(dataObject);
@@ -99,8 +102,17 @@ function GithubMergedPullRequestStatistics({
         }
     };
 
-    console.log("metrics", metrics);
-    console.log("datablocks", dataBlockValues);
+    const getMaxVal= (metrics) =>{
+        if (!Array.isArray(metrics) || metrics.length === 0) {
+            return null;
+        }
+        let dataHigh = {x: "", y: 0};
+        dataHigh = _.maxBy(metrics[0].data, 'y');
+        const high = dataHigh?.y > 0 ? dataHigh?.y : 0;
+        return Math.ceil(high);
+    };
+
+    let maxVal = getMaxVal(metrics);
 
 
     const getChartBody = () => {
@@ -149,29 +161,33 @@ function GithubMergedPullRequestStatistics({
             </Row></>);
         };
         const getChart = () =>{
-            return(<Row>
-                <Col md={12} sm={12} lg={12} >
-                    <div className="chart" style={{ height: "276px" }} >
-                        <ResponsiveLine
-                            data={metrics}
-                            {...defaultConfig(
-                                "Count",
-                                "Date",
-                                false,
-                                false,
-                                "wholeNumbers",
-                                "monthDate2",
-                            )}
-                            {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
-                            {...adjustBarWidth(metrics)}
-                            tooltip={({point, color}) => <ChartTooltip
-                                titles = {["Date", "Number of Deployments"]}
-                                values = {[String(point.data.xFormatted), point.data.y]}
-                                color = {color} />}
-                        />
+            return(
+                <div className="new-chart p-0" style={{height: "150px"}}>
+                    <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
+                        Merged Pull Requests{" "}
+                        <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
                     </div>
-                </Col>
-            </Row>);
+                    <ResponsiveLine
+                        data={metrics}
+                        {...defaultConfig("", "Date",
+                            false, true, "numbers", "monthDate2")}
+                        {...config()}
+                        yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}
+                        axisLeft={{
+                            tickValues: [0, maxVal],
+                            legend: 'Merged Pull Requests',
+                            legendOffset: -38,
+                            legendPosition: 'middle'
+                        }}
+                        tooltip={(node) => (
+                            <ChartTooltip
+                                titles={["Date", "Merged Pull Requests"]}
+                                values={[node.point.data.x, node.point.data.y]}
+                            />
+                        )}
+                    />
+                </div>
+            );
         };
 
 
