@@ -26,7 +26,7 @@ function GithubCommitFrequencyLineChartContainer({ data }) {
 
   const getTrendChart = () => {
     return (
-      <div id="seeme" style={{ minWidth: '100%', maxHeight: '450px' }}>
+      <div id="seeme" style={{ minWidth: '100%', maxHeight: '300px' }}>
         <div
           className={"mr-2"}
           style={{ float: "right", fontSize: "10px" }}
