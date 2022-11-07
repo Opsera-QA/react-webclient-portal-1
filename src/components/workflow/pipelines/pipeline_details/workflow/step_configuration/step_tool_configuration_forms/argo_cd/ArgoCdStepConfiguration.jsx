@@ -143,19 +143,6 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
     }
   };
 
-  const getDynamicFields = () => {
-    if (argoCdModel?.getData("type") === "bitbucket") {
-      return (
-        <TextInputBase
-          setDataObject={setArgoCdModel}
-          dataObject={argoCdModel}
-          fieldName={"gitWorkspace"}
-          disabled={argoCdModel && argoCdModel.getData("gitFilePath").length === 0}
-        />
-      );
-    }
-  };
-
   const getCommandLineSpecificInput = () => {
     if(argoCdModel?.getData("dockerStepType") === "command-line") {
       return (
@@ -244,7 +231,6 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
       {getSCMInputs()}
       {getAppVariablesInputFields()}
       {getRollbackInputs()}
-      {getDynamicFields()}
       <BooleanToggleInput
         fieldName={"isBlueGreenDeployment"}
         dataObject={argoCdModel}
