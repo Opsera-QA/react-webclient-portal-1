@@ -67,14 +67,14 @@ export default function PipelineInstructionsAcknowledgementOverlay(
           message={acknowledgementModel?.getData("message")}
           closePanelFunction={closePanelFunction}
           className={"mr-2"}
-          disabled={pipelineInstructionsModel == null}
+          disabled={pipelineInstructionsModel == null || acknowledgementModel?.checkCurrentValidity() !== true}
         />
         <AcknowledgePipelineInstructionsButton
           pipelineId={pipeline?._id}
           pipelineStepId={approvalStep?._id}
           message={acknowledgementModel?.getData("message")}
           closePanelFunction={closePanelFunction}
-          disabled={pipelineInstructionsModel == null}
+          disabled={pipelineInstructionsModel == null || acknowledgementModel?.checkCurrentValidity() !== true}
         />
       </ButtonContainerBase>
     );
