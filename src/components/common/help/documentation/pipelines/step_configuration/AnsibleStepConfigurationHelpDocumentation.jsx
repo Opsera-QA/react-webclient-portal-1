@@ -24,8 +24,7 @@ function AnsibleStepConfigurationHelpDocumentation() {
                 <li><b>Repository</b> - Select the repository where the playbook file is stored.</li>
                 <li><b>Branch</b> - Select the branch in the repository where the playbook file is stored.</li>
                 <li><b>Playbook File Path</b> - Enter the file path where the playbook file is stored. </li>
-                <li><b>Playbook File Name</b> - Click below on ‘Click here to fetch file list’ to fetch playbook files from the selected file path.</li>
-                <li><b>Playbook Command Arguments</b> - Add custom parameters passed as a runtime value. To view a formatting reference, view the documentation link above.</li></ul>
+                <li><b>Playbook File Name</b> - Click below on <b>Click here to fetch file list</b> to fetch playbook files from the selected file path.</li></ul>
             </li>
             <li>Select <b>Save</b> and start pipeline.</li>
           </ol>
