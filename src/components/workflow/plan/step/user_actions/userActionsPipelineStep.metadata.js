@@ -23,6 +23,7 @@ export const userActionsPipelineStepMetadata = {
       label: "Pipeline Instructions",
       id: "pipelineInstructionsId",
       isRequired: true,
+      formText: "Please note: The Instructions set selected will be visible to everyone with access to this Pipeline.",
     },
   ],
   newObjectFields: {
