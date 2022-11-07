@@ -29,6 +29,7 @@ const INITIAL_FORM = {
 };
 const delayCheckInterval = 15000;
 
+// TODO: This needs to be completely rewritten
 function StepApprovalOverlay(
   {
     pipelineId,

@@ -46,16 +46,23 @@ function PipelineActivityLogTable(
     const selectedRowRunCount = DataParsingHelper.parseInteger(row?.run_count);
     const pipelineRunCount = DataParsingHelper.parseNestedInteger(pipeline, "workflow.run_count", 0);
     const isPendingRow = DataParsingHelper.parseNestedString(row, "status") === "pending";
-    const pipelineIsPending = DataParsingHelper.parseNestedString(row, "status") === "pending";
+    const isPaused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
+    const rowStepId = DataParsingHelper.parseNestedMongoDbId(row, "step_id");
+    const currentStepId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.step_id");
 
-    if (isPendingRow === true && pipelineRunCount === selectedRowRunCount) {
+    if (
+      isPaused === true
+      && isPendingRow === true
+      && pipelineRunCount === selectedRowRunCount
+      && rowStepId === currentStepId
+    ) {
       const parsedPipelineStepToolIdentifier = PipelineHelpers.getPendingApprovalStepToolIdentifier(pipeline);
       switch (parsedPipelineStepToolIdentifier) {
         // case toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL:
         //   toastContext.showOverlayPanel(
         //     <StepApprovalOverlay
-        //       pipeline={pipeline}
-        //       loadDataFunction={loadPipelineFunction}
+        //       pipelineId={pipeline?._id}
+        //       loadPipelineFunction={loadPipelineFunction}
         //     />,
         //   );
         //   return;
