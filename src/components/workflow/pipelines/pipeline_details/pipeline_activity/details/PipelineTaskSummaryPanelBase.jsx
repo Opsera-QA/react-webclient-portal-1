@@ -10,7 +10,12 @@ import PipelineTaskSummaryMessageField
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import UserNameField from "components/common/fields/user/UserNameField";
 
-function PipelineTaskSummaryPanelBase({ pipelineTaskData, children, }) {
+function PipelineTaskSummaryPanelBase(
+  {
+    pipelineTaskData,
+    messageFieldName,
+    children,
+  }) {
   return (
     <SummaryPanelContainer className={"mx-2"}>
       <Row>
@@ -36,7 +41,10 @@ function PipelineTaskSummaryPanelBase({ pipelineTaskData, children, }) {
           <PipelineTaskStateField dataObject={pipelineTaskData} fieldName={"status"}/>
         </Col>
         <Col md={12}>
-          <PipelineTaskSummaryMessageField fieldName={"message"} dataObject={pipelineTaskData} />
+          <PipelineTaskSummaryMessageField
+            fieldName={messageFieldName}
+            model={pipelineTaskData}
+          />
         </Col>
         {children}
       </Row>
@@ -47,7 +55,11 @@ function PipelineTaskSummaryPanelBase({ pipelineTaskData, children, }) {
 PipelineTaskSummaryPanelBase.propTypes = {
   pipelineTaskData: PropTypes.object,
   children: PropTypes.any,
+  messageFieldName: PropTypes.string,
 };
 
+PipelineTaskSummaryPanelBase.defaultProps = {
+  messageFieldName: "message",
+};
 
 export default PipelineTaskSummaryPanelBase;

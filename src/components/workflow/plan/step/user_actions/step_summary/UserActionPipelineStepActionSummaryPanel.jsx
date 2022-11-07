@@ -14,6 +14,8 @@ import EmailAddressField from "components/common/fields/text/email/EmailAddressF
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
+import PipelineTaskSummaryMessageField
+  from "components/common/fields/pipelines/activity/PipelineTaskSummaryMessageField";
 
 export default function UserActionPipelineStepActionSummaryPanel(
   {
@@ -65,7 +67,10 @@ export default function UserActionPipelineStepActionSummaryPanel(
   }
 
   return (
-    <PipelineTaskSummaryPanelBase pipelineTaskData={pipelineTaskModel}>
+    <PipelineTaskSummaryPanelBase
+      pipelineTaskData={pipelineTaskModel}
+      messageFieldName={"api_response.message"}
+    >
       <Col xs={6}>
         <SsoUserField
           fieldName={"user"}
