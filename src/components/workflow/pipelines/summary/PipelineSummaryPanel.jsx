@@ -72,6 +72,7 @@ function PipelineSummaryPanel(
     setWorkflowStatus,
     setPipeline,
     showActionControls,
+    isLoading,
   }) {
   const contextType = useContext(AuthContext);
   const [editTitle, setEditTitle] = useState(false);
@@ -297,6 +298,7 @@ function PipelineSummaryPanel(
             fetchData={fetchPlan}
             setPipeline={setPipeline}
             setParentWorkflowStatus={setWorkflowStatus}
+            isLoading={isLoading}
           />
         </div>
       );
@@ -508,6 +510,7 @@ PipelineSummaryPanel.propTypes = {
   setWorkflowStatus: PropTypes.func,
   setPipeline: PropTypes.func,
   showActionControls: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 export default PipelineSummaryPanel;
