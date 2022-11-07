@@ -175,8 +175,6 @@ gitlabActions.gitlabLeadTimeForChange = async (
     cancelTokenSource,
     kpiConfiguration,
     dashboardTags,
-    tableFilterDto,
-    projectName,
     dashboardOrgs
 ) => {
     const apiUrl = gitlabBaseURL + "gitlabLeadTimeForChange";
