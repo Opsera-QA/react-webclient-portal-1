@@ -10,7 +10,7 @@ export const jiraChangeFailureRateMetadata = {
       id: "jira-projects",
     },
     {
-      label: "Jira Change Types",
+      label: "Exclude Jira Change Types (Values will be excluded from results)",
       id: "jira-change-types",
     },
     {
