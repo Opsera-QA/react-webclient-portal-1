@@ -14,6 +14,7 @@ import {
 import GitlabLeadTimeTrendDataBlock from "./GitlabLeadTimeTrendDataBlock";
 import gitlabAction from "../../gitlab.action";
 import InfoDialog from "../../../../../common/status_notifications/info";
+import BadgeBase from "../../../../../common/badges/BadgeBase";
 
 function GitLabLeadTimeChart({
   kpiConfiguration,
@@ -237,8 +238,11 @@ function GitLabLeadTimeChart({
               </div>
             </div>
           </Col>
-          <Col className={"my-2 p-0 d-flex flex-column align-items-end"}>
+          <Col md={12} className={"my-2 p-0 d-flex flex-column align-items-end"}>
             <GitlabLeadTimeScatterPlotContainer chartData={chartData} />
+          </Col>
+          <Col md={12} className={"my-2 p-0"}>
+            <BadgeBase className={"mx-2"} badgeText={"Note: Results fetched are based on UTC timezone of selected dates"} />
           </Col>
         </Row>
       </div>

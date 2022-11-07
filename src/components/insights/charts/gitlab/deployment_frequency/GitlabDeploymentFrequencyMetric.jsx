@@ -13,6 +13,7 @@ import {getDeploymentStageFromKpiConfiguration, getTrend, getTrendIcon} from "..
 import GitlabDeploymentFrequencyLineChartContainer from "./GitlabDeploymentFrequencyLineChartContainer";
 import GitlabDeploymentFrequencyTrendDataBlock from "./GitlabDeploymentFrequencyTrendDataBlock";
 import gitlabAction from "../gitlab.action";
+import BadgeBase from "../../../../common/badges/BadgeBase";
 
 function GitlabDeploymentFrequency({
   kpiConfiguration,
@@ -187,10 +188,13 @@ function GitlabDeploymentFrequency({
               </div>
             </div>
           </Col>
-          <Col className={"my-2 p-0 d-flex flex-column align-items-end"}>
+          <Col md={12} className={"my-2 p-0 d-flex flex-column align-items-end"}>
             <GitlabDeploymentFrequencyLineChartContainer
               chartData={chartData}
             />
+          </Col>
+          <Col md={12} className={"my-2 p-0"}>
+            <BadgeBase className={"mx-2"} badgeText={"Note: Results fetched are based on UTC timezone of selected dates"} />
           </Col>
         </Row>
       </div>
