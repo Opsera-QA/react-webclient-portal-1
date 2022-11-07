@@ -148,9 +148,9 @@ function GithubCommitFrequency({
   };
 
   const getChartBody = () => {
-    // if (!chartData) {
-    //   return null;
-    // }
+    if (!chartData) {
+      return null;
+    }
     return (
       <div className="new-chart m-3 p-0">
         <Row className={"w-100"}>
