@@ -12,6 +12,7 @@ import JiraChangeFailureRateDataBlockContainer from "./JiraChangeFailureRateData
 import {getResultFromKpiConfiguration,getReverseTrend} from "../../../charts-helpers";
 import JiraChangeFailureRateHelpDocumentation
   from "../../../../../common/help/documentation/insights/charts/JiraChangeFailureRateHelpDocumentation";
+import BadgeBase from "../../../../../common/badges/BadgeBase";
 
 const DEFAULT_GOALS = {
   change_failure_rate: 10,
@@ -130,16 +131,19 @@ function JiraChangeFailureRate({
     return (
       <Row className={"mx-0 p-2 justify-content-between"}>
         {dataPointHelpers.isDataPointVisible(changeFailureRateDataPoint) && (
-          <Col className={"px-0"} xl={12} md={12}>
-            <JiraChangeFailureRateDataBlockContainer
-              metricData={metricData}
-              chartData={chartData}
-              goalsData={goalsData?.change_failure_rate}
-              kpiConfiguration={kpiConfiguration}
-              dataPoint={changeFailureRateDataPoint}
-              trend={getReverseTrend(metricData.changeFailureRate,metricData.prevChangeFailureRate)}
-            />
-          </Col>
+          <>
+            <Col className={"px-0"} xl={12} md={12}>
+              <JiraChangeFailureRateDataBlockContainer
+                metricData={metricData}
+                chartData={chartData}
+                goalsData={goalsData?.change_failure_rate}
+                kpiConfiguration={kpiConfiguration}
+                dataPoint={changeFailureRateDataPoint}
+                trend={getReverseTrend(metricData.changeFailureRate,metricData.prevChangeFailureRate)}
+              />
+            </Col>
+            <BadgeBase className={"mx-2"} badgeText={"Note: Results fetched are based on UTC timezone of selected dates"} />
+          </>
         )}
       </Row>
     );
