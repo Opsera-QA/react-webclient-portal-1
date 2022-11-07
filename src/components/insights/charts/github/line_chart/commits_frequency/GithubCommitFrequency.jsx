@@ -7,9 +7,9 @@ import GitlabDeployFrequencyChartHelpDocumentation from "components/common/help/
 import chartsActions from "components/insights/charts/charts-actions";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import { AuthContext } from "contexts/AuthContext";
-import GithubCommitFrequencyDataBlock from "./GithubCommitFrequencyDataBlock";
 import useIsMountedStateReference from "hooks/useIsMountedStateReference";
-// import GithubCommitFrequencyLineChartContainer from './GithubCommitFrequencyLineChartContainer';
+import GithubCommitFrequencyDataBlock from "./GithubCommitFrequencyDataBlock";
+import GithubCommitFrequencyLineChartContainer from './GithubCommitFrequencyLineChartContainer';
 
 // const getMonthDifference = (startDate, endDate) => {
 //   return (
