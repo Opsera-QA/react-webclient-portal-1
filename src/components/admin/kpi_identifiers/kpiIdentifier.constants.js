@@ -50,6 +50,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   GITHUB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW:
     "github-time-taken-to-complete-merge-request-review",
   GITHUB_TOTAL_COMMITS_BY_PROJECT: "github-total-commits-by-project",
+  GITHUB_PULL_REQUEST_AVERAGE_TIME: "github-pull-request-average-time",
 
   // Gitlab
   GITLAB_COMMITS_BY_AUTHOR: "gitlab-commits-by-author",
@@ -84,8 +85,8 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   JIRA_SPRINT_BURNDOWN: "jira-sprint-burndown",
   JIRA_TICKETS_ASSIGNED_BY_USER: "jira-tickets-assigned-by-user",
   JIRA_VELOCITY_REPORT: "jira-velocity-report",
-  JIRA_MEAN_TIME_TO_RESOLUTION:"jira-mean-time-to-resolution",
-  JIRA_CHANGE_FAILURE_RATE:"jira-change-failure-rate",
+  JIRA_MEAN_TIME_TO_RESOLUTION: "jira-mean-time-to-resolution",
+  JIRA_CHANGE_FAILURE_RATE: "jira-change-failure-rate",
 
   // JMeter
   JMETER_CONNECT_TIME: "jmeter-connect-time",

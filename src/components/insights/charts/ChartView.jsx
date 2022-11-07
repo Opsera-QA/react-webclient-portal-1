@@ -1321,6 +1321,19 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               />
           </Col>
           );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_PULL_REQUEST_AVERAGE_TIME:
+        return (
+          <Col md={12} className="p-2">
+            <LeadTimeAndReleaseTraceabilityDataBlock
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+              showViewDetailsToggle={true}
+            />
+          </Col>
+          );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_ACTIONS_WORKFLOW:
         return (
           <Col md={12} className="p-2">
