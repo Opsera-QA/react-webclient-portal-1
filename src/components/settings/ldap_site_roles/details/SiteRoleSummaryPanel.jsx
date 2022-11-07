@@ -28,7 +28,7 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData }) {
           <TextFieldBase dataObject={ldapGroupData} fieldName={"ownerEmail"}/>
         </Col>
         <Col lg={12}>
-          <SiteRolePermissionsField dataObject={ldapGroupData} />
+          <SiteRolePermissionsField model={ldapGroupData} />
         </Col>
       </Row>
       <LdapUsersTable

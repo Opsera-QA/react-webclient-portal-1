@@ -49,7 +49,7 @@ export default function ToolOwnershipTransferOverlay(
 
     toastContext.showOverlayPanel(
       <OwnershipTransferConfirmationOverlay
-        ownershipTransferFunction={() => transferToolOwnership(true)}
+        ownershipTransferFunction={() => transferToolOwnership(willLoseAccess)}
         type={"Tool"}
         willLoseAccess={willLoseAccess}
         closePanelFunction={handleClosePanelFunction}
