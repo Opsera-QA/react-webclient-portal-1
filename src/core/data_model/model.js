@@ -1,4 +1,4 @@
-import {validateData, validateField, validatePotentialValue} from "core/data_model/modelValidation";
+import { modelValidation, validateData, validateField, validatePotentialValue } from "core/data_model/modelValidation";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
@@ -15,6 +15,7 @@ export class Model {
   constructor(data, metaData, newModel) {
     this.metaData = dataParsingHelper.cloneDeep(metaData);
     this.data = {...this.getNewObjectFields(), ...data};
+    this.originalData = dataParsingHelper.cloneDeep(this.data);
     this.newModel = newModel;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
     this.changeMap = new Map();
@@ -194,6 +195,10 @@ export class Model {
     return errors != null ? errors[0] : "";
   };
 
+  getFieldWarning = (fieldName) => {
+    return modelValidation.getFieldWarning(fieldName, this);
+  };
+
   propertyChange = (id, newValue, oldValue) => {
     if (!this.changeMap.has(id)) {
       // console.log("Field added to change map: " + id);
@@ -224,6 +229,10 @@ export class Model {
   // TODO: Only send changemap for updates after getting everything else working
   getPersistData = () => {
     return this.trimStrings();
+  };
+
+  getOriginalData = () => {
+    return this.originalData;
   };
 
   getCurrentData = () => {
@@ -303,9 +312,9 @@ export class Model {
     return field?.uppercase === true;
   };
 
-  isWebsite = (fieldName) => {
+  isUrlField = (fieldName) => {
     const field = this.getFieldById(fieldName);
-    return field != null ? field.isWebsite === true : false;
+    return field != null ? field.isUrl === true : false;
   };
 
   getInputMaskRegex = (fieldName) => {
@@ -321,11 +330,11 @@ export class Model {
     return this.metaData?.detailViewTitle != null ? this.metaData.detailViewTitle(this) : null;
   };
 
-  getLabel = (fieldName) => {
+  getLabel = (fieldName, defaultLabel = "No label found in metadata") => {
     const fields = this.metaData.fields;
     // TODO: Replace with metadata helper call once finished
     const field = fields.find(field => field.id === fieldName);
-    return field ? field.label : "No label found in metadata";
+    return field ? field.label : defaultLabel;
   };
 
   getMetaData = () => {

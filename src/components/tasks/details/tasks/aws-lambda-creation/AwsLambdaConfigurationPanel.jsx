@@ -12,7 +12,7 @@ import FunctionNameWithButton from "./inputs/FunctionNameWithButton";
 import RoleRestrictedAwsAccountToolSelectInput
   from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 import AwsCloudProviderRegionSelectInput
-  from "components/common/list_of_values_input/aws/AwsCloudProviderRegionSelectInput";
+  from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
 
 function AwsLambdaConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {

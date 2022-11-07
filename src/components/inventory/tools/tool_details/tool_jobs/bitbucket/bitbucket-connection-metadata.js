@@ -6,7 +6,7 @@ const bitbucketConnectionMetadata = {
       label: "URL",
       id: "url",
       isRequired: true,
-      maxLength: 100
+      isSecureUrl: true,
     },
     {
       label: "Username",

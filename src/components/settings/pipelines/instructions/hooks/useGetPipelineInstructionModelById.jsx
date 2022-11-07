@@ -7,8 +7,10 @@ import { pipelineInstructionsActions } from "components/settings/pipelines/instr
 
 export default function useGetPipelineInstructionModelById(
   id,
+  throwErrorToast = true,
 ) {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
   const [pipelineInstructionsModel, setPipelineInstructionsModel] = useState(undefined);
   const { getNewPipelineInstructionsModel } = useGetPipelineInstructionsModel();
   const {
@@ -29,9 +31,11 @@ export default function useGetPipelineInstructionModelById(
   const loadData = async () => {
     try {
       setIsLoading(true);
+      setPipelineInstructionsModel(undefined);
       await getPipelineInstructions();
     } catch (error) {
-      if (!error?.error?.message?.includes(404)) {
+      setError(error);
+      if (throwErrorToast === true && !error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
       }
     } finally {
@@ -62,6 +66,8 @@ export default function useGetPipelineInstructionModelById(
   return ({
     pipelineInstructionsModel: pipelineInstructionsModel,
     setPipelineInstructionsModel: setPipelineInstructionsModel,
+    error: error,
+    setError: setError,
     loadData: loadData,
     isLoading: isLoading,
   });

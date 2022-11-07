@@ -13,6 +13,7 @@ const FortifyMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("scanToolType") === "Fortify On Demand";
       },
+      isSecureUrl: true,
     },
     {
       label: "Tenant Code",
@@ -45,8 +46,7 @@ const FortifyMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("scanToolType") === "Fortify On-Prem ScanCentral";
       },
-      regexDefinitionName: "urlField",
-      maxLength: 1024
+      isSecureUrl: true,
     },    
     {
       label: "Scan Center Controller Client Token",
@@ -62,8 +62,7 @@ const FortifyMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("scanToolType") === "Fortify On-Prem ScanCentral";
       },
-      regexDefinitionName: "urlField",
-      maxLength: 1024
+      isSecureUrl: true,
     },
     {
       label: "Software Security Center Username",

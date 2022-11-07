@@ -6,6 +6,7 @@ const TerraformCloudMetadata = {
       label: "Terraform URL",
       id: "url",
       isRequired: true,
+      isSecureUrl: true,
     },
     {
       label: "Terraform Token",

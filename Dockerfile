@@ -1,4 +1,4 @@
-FROM node:lts-alpine3.15 as build
+FROM node:16-alpine3.15 as build
 ARG build_env=kube-generic
 RUN echo ${build_env}
 RUN apk add curl

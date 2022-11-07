@@ -1,4 +1,4 @@
-import {validateData, validateField, validatePotentialValue} from "core/data_model/modelValidation";
+import { modelValidation, validateData, validateField, validatePotentialValue } from "core/data_model/modelValidation";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
@@ -29,6 +29,7 @@ export default class ModelBase {
   ) {
     this.metaData = dataParsingHelper.cloneDeep({...metaData});
     this.data = {...this.getNewObjectFields(), ...data};
+    this.originalData = dataParsingHelper.cloneDeep(this.data);
     this.newModel = newModel;
     this.id = data?._id;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
@@ -229,6 +230,10 @@ export default class ModelBase {
     return errors != null ? errors[0] : "";
   };
 
+  getFieldWarning = (fieldName) => {
+    return modelValidation.getFieldWarning(fieldName, this);
+  };
+
   propertyChange = (id, newValue, oldValue) => {
     let newChangeMap = new Map(this.changeMap);
     if (!newChangeMap.has(id)) {
@@ -262,6 +267,10 @@ export default class ModelBase {
   getPersistData = () => {
     this.removeTemporaryObjectProperties();
     return this.trimStrings();
+  };
+
+  getOriginalData = () => {
+    return this.originalData;
   };
 
   getCurrentData = () => {
@@ -395,9 +404,13 @@ export default class ModelBase {
     return field?.uppercase === true;
   };
 
-  isWebsite = (fieldName) => {
+  getOwnerId = () => {
+    return this.getData("owner");
+  };
+
+  isUrlField = (fieldName) => {
     const field = this.getFieldById(fieldName);
-    return field != null ? field.isWebsite === true : false;
+    return field != null ? field.isUrl === true : false;
   };
 
   getInputMaskRegex = (fieldName) => {
@@ -503,6 +516,10 @@ export default class ModelBase {
 
   canEditAccessRoles = () => {
     return this.canUpdate() === true;
+  };
+
+  canTransferOwnership = () => {
+    return false;
   };
 
   handleLiveMessage = (liveMessage) => {

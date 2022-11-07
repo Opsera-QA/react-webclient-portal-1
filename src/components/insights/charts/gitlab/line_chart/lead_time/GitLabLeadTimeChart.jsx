@@ -4,17 +4,16 @@ import { AuthContext } from "contexts/AuthContext";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
-import { GITLAB_LEADTIME_CONSTANTS as constants } from "./GitlabLeadTime_kpi_datapoint_identifier";
 import axios from "axios";
 import GitlabLeadTimeHelpDocumentation from "../../../../../common/help/documentation/insights/charts/GitlabLeadTimeHelpDocumentation";
 import GitlabLeadTimeScatterPlotContainer from "./GitlabLeadTimeScatterPlotContainer";
 import GitlabLeadTimeDataBlock from "./GitlabLeadTimeDataBlock";
 import {
-  getDeploymentStageFromKpiConfiguration, getReverseTrend, getReverseTrendIcon,
+  getDeploymentStageFromKpiConfiguration, getReverseTrend, getReverseTrendIcon, getTimeDisplay,
 } from "../../../charts-helpers";
 import GitlabLeadTimeTrendDataBlock from "./GitlabLeadTimeTrendDataBlock";
 import gitlabAction from "../../gitlab.action";
-import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
+import InfoDialog from "../../../../../common/status_notifications/info";
 
 function GitLabLeadTimeChart({
   kpiConfiguration,
@@ -69,36 +68,41 @@ function GitLabLeadTimeChart({
             (obj) => obj.type === "organizations",
           )
         ]?.value;
+      const selectedDeploymentStages =
+        getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
+      if(selectedDeploymentStages) {
+        const response = await gitlabAction.gitlabLeadTimeForChange(
+          getAccessToken,
+          cancelSource,
+          kpiConfiguration,
+          dashboardTags,
+          dashboardOrgs,
+        );
 
-      const response = await gitlabAction.gitlabLeadTimeForChange(
-        getAccessToken,
-        cancelSource,
-        kpiConfiguration,
-        dashboardTags,
-        dashboardOrgs,
-      );
-      const response2 = await gitlabAction.gitlabAverageCommitTimeToMerge(
-        getAccessToken,
-        cancelSource,
-        kpiConfiguration,
-        dashboardTags,
-        dashboardOrgs,
-      );
+        // TODO This will be enabled after fixing the formula
+        // const response2 = await gitlabAction.gitlabAverageCommitTimeToMerge(
+        //   getAccessToken,
+        //   cancelSource,
+        //   kpiConfiguration,
+        //   dashboardTags,
+        //   dashboardOrgs,
+        // );
 
-      const metrics = response?.data?.data?.gitlabLeadTimeForChange?.data;
-      const meanCommitTimeDataObject =
-        response2?.data?.data[0]?.gitlabAverageCommitTimeToMerge?.data || {};
+        const metrics = response?.data?.data?.gitlabLeadTimeForChange?.data;
+        // const meanCommitTimeDataObject =
+        //   response2?.data?.data[0]?.gitlabAverageCommitTimeToMerge?.data || {};
 
-      if (
-        isMounted?.current === true &&
-        metrics?.statisticsData?.totalDeployments
-      ) {
-        setMetricData(metrics?.statisticsData);
-        setChartData(metrics?.chartData);
-        setMeanCommitData(meanCommitTimeDataObject);
-      } else {
-        setMetricData({});
-        setChartData([]);
+        if (
+          isMounted?.current === true &&
+          metrics?.statisticsData?.totalDeployments
+        ) {
+          setMetricData(metrics?.statisticsData);
+          setChartData(metrics?.chartData);
+          // setMeanCommitData(meanCommitTimeDataObject);
+        } else {
+          setMetricData({});
+          setChartData([]);
+        }
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -123,6 +127,20 @@ function GitLabLeadTimeChart({
   // };
 
   const getChartBody = () => {
+    const selectedDeploymentStages =
+      getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
+
+    if (!selectedDeploymentStages) {
+      return (
+          <div className="new-chart mb-3" style={{ height: "300px" }}>
+            <div className="max-content-width p-5 mt-5"
+                 style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <InfoDialog message="No Stages selected. Please select a deployment stage on filters to proceed further." />
+            </div>
+          </div>
+      );
+    }
+
     if (!metricData?.totalDeployments || !chartData?.commits?.length) {
       return null;
     }
@@ -130,63 +148,74 @@ function GitLabLeadTimeChart({
     const recentStageDate = new Date(
       metricData?.lastDeploymentTime,
     ).toLocaleDateString();
-    const selectedDeploymentStages =
-      getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
+
     const dataBlockTextForDeployment = {
       current: selectedDeploymentStages
         ? "Total Deployments"
         : "Total Stages Run",
       previous: selectedDeploymentStages ? "Prev Deployments: " : "Prev Runs: ",
     };
+    // Convert time in Days Hours Minutes Seconds
+    const totalAverageLeadTimeDisplay = getTimeDisplay(metricData?.totalAverageLeadTime);
+    const previousTotalAverageLeadTimeDisplay = getTimeDisplay(metricData?.previousTotalAverageLeadTime);
+    const totalMedianTimeDisplay = getTimeDisplay(metricData?.totalMedianTime);
+    const previousTotalMedianTimeDisplay = getTimeDisplay(metricData?.previousTotalMedianTime);
+
     return (
       <div
         className="new-chart m-3 p-0"
         style={{ minHeight: "450px", display: "flex" }}
       >
-        <Row className={"w-100"}>
+        <Row className={"w-100 justify-content-center"}>
           <Row
-            xl={5}
-            lg={5}
-            md={5}
-            className={"mb-2 d-flex justify-content-center"}
+            xl={4}
+            lg={4}
+            md={4}
+            className={"mb-2 ml-2 d-flex justify-content-center"}
           >
-            <Col
-              md={12}
-              className={"mx-2"}
-            >
-              <GitlabLeadTimeDataBlock
-                value={`${selectedDeploymentStages}`}
-                prevValue={""}
-                topText={"Selected Stage(s)"}
-                bottomText={""}
-              />
-            </Col>
             <Col md={12}>
               <GitlabLeadTimeTrendDataBlock
-                value={metricData?.totalAverageLeadTime}
-                prevValue={`${metricData?.previousTotalAverageLeadTime} Day(s)`}
+                value={totalAverageLeadTimeDisplay[0]}
+                prevValue={`${previousTotalAverageLeadTimeDisplay[0]}`}
                 trend={getReverseTrend(
                   metricData?.totalAverageLeadTime,
                   metricData?.previousTotalAverageLeadTime,
                 )}
                 getTrendIcon={getReverseTrendIcon}
-                topText={"Average Lead Time for Changes"}
+                topText={"Average LTFC"}
                 bottomText={"Prev LTFC: "}
+                toolTipText={totalAverageLeadTimeDisplay[1]}
               />
             </Col>
             <Col md={12}>
               <GitlabLeadTimeTrendDataBlock
-                value={meanCommitData?.currentAvgCommitToMergeTime || "0"}
-                prevValue={`${meanCommitData?.previousAvgCommitToMergeTime || "0"} Day(s)`}
+                value={totalMedianTimeDisplay[0]}
+                prevValue={`${previousTotalMedianTimeDisplay[0]}`}
                 trend={getReverseTrend(
-                  meanCommitData?.currentAvgCommitToMergeTime,
-                  meanCommitData?.previousAvgCommitToMergeTime,
+                    metricData?.totalMedianTime,
+                    metricData?.previousTotalMedianTime,
                 )}
                 getTrendIcon={getReverseTrendIcon}
-                topText={`Average Merge Time`}
-                bottomText={`Prev Merge Time: `}
+                topText={"Median LTFC"}
+                bottomText={"Prev Median: "}
+                toolTipText={totalMedianTimeDisplay[1]}
               />
             </Col>
+            {/*TODO This will be enabled after fixing the formula*/}
+            {/*<Col md={12}>*/}
+            {/*  <GitlabLeadTimeTrendDataBlock*/}
+            {/*    value={getTimeDisplay(meanCommitData?.currentAvgCommitToMergeTime || 0)[0]}*/}
+            {/*    prevValue={`${getTimeDisplay(meanCommitData?.previousAvgCommitToMergeTime || 0)[0]}`}*/}
+            {/*    trend={getReverseTrend(*/}
+            {/*      meanCommitData?.currentAvgCommitToMergeTime,*/}
+            {/*      meanCommitData?.previousAvgCommitToMergeTime,*/}
+            {/*    )}*/}
+            {/*    getTrendIcon={getReverseTrendIcon}*/}
+            {/*    topText={`Average Merge Time`}*/}
+            {/*    bottomText={`Prev Merge Time: `}*/}
+            {/*    toolTipText={getTimeDisplay(meanCommitData?.currentAvgCommitToMergeTime || 0)[1]}*/}
+            {/*  />*/}
+            {/*</Col>*/}
             <Col md={12}>
               <GitlabLeadTimeDataBlock
                 value={metricData?.totalDeployments}
@@ -199,6 +228,8 @@ function GitLabLeadTimeChart({
           <Col md={12}>
             <div className={"d-flex md-2"}>
               <div className={"mr-4"}>
+                <b>Selected Stages:</b> {selectedDeploymentStages}
+                <div className="row" />
                 <b>Recent Stage:</b> {metricData?.lastDeploymentStage || "NA"}
                 <div className="row" />
                 <b>Date: </b>

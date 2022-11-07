@@ -35,6 +35,8 @@ import PipelineRoleAccessInput from "components/workflow/pipelines/summary/input
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import DateTimeField from "components/common/fields/date/DateTimeField";
+import OwnerNameField from "components/common/fields/text/general/OwnerNameField";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -214,8 +216,7 @@ function PipelineSummaryPanel(
       <IconBase
         icon={faPencilAlt}
         className={"ml-2 text-muted pointer"}
-        iconSize={"xs"}
-        iconTransformProperties={"shrink-6"}
+        iconTransformProperties={"shrink-5"}
         onClickFunction={() => {
           handleEditPropertyClick(field);
         }} />
@@ -236,7 +237,10 @@ function PipelineSummaryPanel(
 
   const getTagField = () => {
     return (
-      <Col xs={12} className="py-2 mr-2 d-flex"><span className="text-muted mr-1">Tags:</span>
+      <Col xs={12} className={"d-flex"}>
+        <div className={"text-muted my-2 mr-1"}>Tags:</div>
+        <div className={"my-auto d-flex"}>
+
 
         {!editTags && pipeline.tags &&
         <CustomBadgeContainer>
@@ -251,7 +255,7 @@ function PipelineSummaryPanel(
           })}
         </CustomBadgeContainer>
         }
-        <div>
+        <div className={"mt-1"}>
           {PipelineRoleHelper.canEditPipelineTags(userData, pipeline) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
         </div>
 
@@ -262,35 +266,8 @@ function PipelineSummaryPanel(
           handleSavePropertyClick(pipeline._id, tags, "tags");
         }} />}
 
+        </div>
       </Col>
-    );
-  };
-
-  // TODO: This can be removed once dto components are wired up
-  const getRoleBadges = (roles) => {
-    if (roles == null || roles.length === 0) {
-      return <span>No Access Rules Applied</span>;
-    }
-
-    return (
-      roles.map((item, i) => {
-        const user = item["user"];
-        const group = item["group"];
-
-        if (user) {
-          return (
-            <span key={i} className="mx-1 mb-1 badge badge-light user-badge">
-              <IconBase icon={faUser} className={"mr-1"} />{`${user}: ${item.role}`}
-            </span>
-          );
-        }
-
-        return (
-          <span key={i} className="mx-1 mb-1 badge badge-light group-badge">
-            <IconBase icon={faUserFriends} className={"mr-1"} />{`${group}: ${item.role}`}
-          </span>
-        );
-      })
     );
   };
 
@@ -351,45 +328,9 @@ function PipelineSummaryPanel(
     );
   };
 
-  const getPipelineRunCountField = () => {
-    return (
-      <span>
-        <span className="text-muted mr-1">Pipeline Run Count:</span>
-        {pipeline.workflow.run_count || "0"}
-      </span>
-    );
-  };
-
-  const getCreatedAtField = () => {
-    return (
-      <span>
-        <span className="text-muted mr-1">Created On:</span>
-        {pipeline.createdAt && format(new Date(pipeline.createdAt), "yyyy-MM-dd', 'hh:mm a")}
-      </span>
-    );
-  };
-
-  const getOrganizationField = () => {
-    return (
-      <span>
-        <span className="text-muted mr-1">Organization:</span>
-        <span className="upper-case-first">{pipeline.organizationName}</span>
-      </span>
-    );
-  };
-
-  const getOrganizationAccountField = () => {
-    return (
-      <span>
-        <span className="text-muted mr-1">Org Account:</span>
-        {pipeline.account}
-      </span>
-    );
-  };
-
   const getPipelineTypeField = () => {
     return (
-      <span>
+      <div className={"my-2"}>
         <span className="text-muted mr-2">Type:</span>
         {pipeline?.type && !editType && getPipelineTypeLabel(pipeline?.type[0])}
         {PipelineRoleHelper.canEditPipelineAttributes(userData, pipeline)
@@ -417,7 +358,7 @@ function PipelineSummaryPanel(
             </div>
           </div>
         }
-      </span>
+      </div>
     );
   };
 
@@ -485,17 +426,19 @@ function PipelineSummaryPanel(
               pipeline={pipeline}
               pipelineModel={pipelineModel}
               loadPipeline={fetchPlan}
+              // className={"my-3"}
             />
           </Col>
-          <Col xs={12} sm={6} className="py-2">
-            <TextFieldBase
-              dataObject={pipelineModel}
-              fieldName={"owner_name"}
+          <Col xs={12} sm={6}>
+            <OwnerNameField
+              model={pipelineModel}
+              // className={"my-3"}
             />
           </Col>
-          <Col sm={12} md={6} className="py-2">
+          <Col sm={12} md={6}>
             <SmartIdField
               model={pipelineModel}
+              // className={"my-3"}
             />
           </Col>
           <Col xs={12}>
@@ -503,21 +446,39 @@ function PipelineSummaryPanel(
               loadData={fetchPlan}
               pipelineModel={pipelineModel}
               setPipelineModel={setPipelineModel}
+              disabled={parentWorkflowStatus === "running"}
+              // className={"my-3"}
             />
           </Col>
-          <Col sm={12} md={6} className="py-2">
-            {getPipelineRunCountField()}
+          <Col sm={12} md={6}>
+            <TextFieldBase
+              dataObject={pipelineModel}
+              fieldName={"workflow.run_count"}
+              // className={"my-3"}
+            />
           </Col>
-          <Col xs={12} sm={6} className="py-2">
-            {getCreatedAtField()}
+          <Col xs={12} sm={6}>
+            <DateTimeField
+              fieldName={"createdAt"}
+              dataObject={pipelineModel}
+              // className={"my-3"}
+            />
           </Col>
-          <Col xs={12} sm={6} className="py-2">
-            {getOrganizationField()}
+          <Col xs={12} sm={6}>
+            <TextFieldBase
+              dataObject={pipelineModel}
+              fieldName={"organizationName"}
+              className={"my-2 upper-case-first"}
+            />
           </Col>
-          <Col lg className="py-2">
-            {getOrganizationAccountField()}
+          <Col sm={6}>
+            <TextFieldBase
+              dataObject={pipelineModel}
+              fieldName={"account"}
+              // className={"my-3"}
+            />
           </Col>
-          <Col xs={12} sm={6} className="py-2">
+          <Col xs={12} sm={6}>
             {getPipelineTypeField()}
           </Col>
           {getSchedulerField()}

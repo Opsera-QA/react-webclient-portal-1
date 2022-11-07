@@ -30,6 +30,15 @@ toolsActions.updateToolV2 = async (getAccessToken, cancelTokenSource, toolModel)
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+toolsActions.transferToolOwnership = async (getAccessToken, cancelTokenSource, toolModel) => {
+  const id = toolModel?.getData("_id");
+  const newOwnerId = toolModel?.getData("owner");
+  const apiUrl = `/registry/tool/${id}/transfer/user/${newOwnerId}`;
+  const postBody = {};
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 toolsActions.createToolV2 = async (getAccessToken, cancelTokenSource, toolModel) => {
   const postBody = {
     ...toolModel?.getPersistData()
@@ -354,6 +363,24 @@ toolsActions.getPipelinesUsingNotificationTool = async (getAccessToken, cancelTo
 toolsActions.getSfdxScanRules = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = `/tools/sfdc-scan/getrules`;
   return await baseActions.apiGetCallV2(getAccessToken, null, apiUrl);
+};
+
+toolsActions.getToolsWithGroupAssigned = async (
+  getAccessToken,
+  cancelTokenSource,
+  group,
+) => {
+  const apiUrl = `/registry/configs/tool/roles/group/`;
+  const queryParameters = {
+    group: group,
+  };
+
+  return await baseActions.apiGetCallV3(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    queryParameters,
+  );
 };
 
 export default toolsActions;

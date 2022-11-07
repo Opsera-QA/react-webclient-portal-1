@@ -31,7 +31,7 @@ const MergeSyncTaskWizardSelectedCommitTable = ({
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "fileName")),
-      getTableTextColumnBase(getField(fields, "fieldName"), undefined, 260, undefined, undefined,getFormattedTextLabel),
+      // getTableTextColumnBase(getField(fields, "fieldName"), undefined, 260, undefined, undefined,getFormattedTextLabel),
     ],
     [],
   );
@@ -50,7 +50,7 @@ const MergeSyncTaskWizardSelectedCommitTable = ({
   return (
     <FilterContainer
       icon={faFileCode}
-      title={`Selected Commits`}
+      title={`Manual Edited Files`}
       // minimumHeight={getHeight()}
       // maximumHeight={getHeight()}
       body={getFilesTable()}

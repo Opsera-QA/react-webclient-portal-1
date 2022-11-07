@@ -1,46 +1,60 @@
-import React, { useState } from "react";
-import {EditorState} from 'draft-js';
-import Editor from '@draft-js-plugins/editor';
-import '@draft-js-plugins/static-toolbar/lib/plugin.css';
+import React, { useRef, useCallback } from "react";
+import { createReactEditorJS } from 'react-editor-js';
+import { EDITOR_JS_TOOLS } from './tools';
 import PropTypes from "prop-types";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-import createToolbarPlugin from '@draft-js-plugins/static-toolbar';
-const staticToolbarPlugin = createToolbarPlugin();
-const { Toolbar } = staticToolbarPlugin;
-const plugins = [staticToolbarPlugin];
+const ReactEditorJS = createReactEditorJS();
 
 export default function RichTextInputBase (
   {
     value,
     setDataFunction,
+    disabled,
   }) {
-  const [editorState, setEditorState] = useState(() => EditorState.createWithText(DataParsingHelper.parseString(value, "")),);
+  const editorCore = useRef(null);
 
-  const updateValue = (newValue) => {
-    setEditorState(newValue);
-    // \u0001 preserves proper spaces/newlines
-    setDataFunction(newValue.getCurrentContent().getPlainText('\u0001'));
-  };
+  const handleInitialize = useCallback((instance) => {
+    editorCore.current = instance;
+  }, []);
 
-  if (setDataFunction == null) {
+  const handleSave = useCallback(async () => {
+    const savedData = JSON.stringify(await editorCore.current.save());
+    setDataFunction(savedData);
+  }, []);
+
+  if (setDataFunction == null && disabled !== true) {
     return null;
   }
 
+  if (disabled === true) {
+    return (
+      <div className={"read-only-rich-text px-3 py-2"}>
+        <ReactEditorJS
+          minHeight={0}
+          readOnly={true}
+          defaultValue={DataParsingHelper.parseJson(value)}
+          logLevel={"ERROR"}
+        />
+      </div>
+    );
+  }
+
   return (
-    <>
-      <Toolbar />
-      <Editor
-        editorState={editorState}
-        onChange={updateValue}
-        customStyleMap={undefined}
-        plugins={plugins}
-      />
-    </>
+    <ReactEditorJS
+      minHeight={100}
+      placeholder={"enter text"}
+      onChange={handleSave}
+      onInitialize={handleInitialize}
+      logLevel={"ERROR"}
+      defaultValue={DataParsingHelper.parseJson(value)}
+      tools={EDITOR_JS_TOOLS}
+    />
   );
 }
 
 RichTextInputBase.propTypes = {
   value: PropTypes.any,
   setDataFunction: PropTypes.func,
+  disabled: PropTypes.bool,
 };

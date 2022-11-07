@@ -12,6 +12,8 @@ import "css/general/container.css";
 import "css/general/index.css";
 import "css/analytics/analytics.css";
 import "css/pipelines/workflows.css";
+import "css/table/table.css";
+import "css/inputs/rich-text-input.css";
 import * as serviceWorker from "./serviceWorker";
 
 if (typeof window["TextEncoder"] !== "function") {

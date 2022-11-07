@@ -21,6 +21,13 @@ import ExternalRestApiIntegrationTaskSummaryPanel
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/ExternalRestApiIntegrationTaskSummaryPanel";
 import axios from "axios";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
+import PipelineUserActionSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/user_action/PipelineUserActionSummaryPanel";
+
+const PIPELINE_TASK_ACTIONS = {
+  REPORT: "report",
+  USER_ACTION: "user action",
+};
 
 function PipelineTaskSummaryPanel({ pipelineTaskData }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -77,12 +84,19 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
   };
 
   const getSummaryPanel = () => {
-    if (pipelineTaskData?.action === "report") {
-      return (
-        <PipelineSummaryReportPanel
-          pipelineTaskData={pipelineTaskData}
-        />
-      );
+    switch (pipelineTaskData?.action) {
+      case PIPELINE_TASK_ACTIONS.REPORT:
+        return (
+          <PipelineSummaryReportPanel
+            pipelineTaskData={pipelineTaskData}
+          />
+        );
+      case PIPELINE_TASK_ACTIONS.USER_ACTION:
+        return (
+          <PipelineUserActionSummaryPanel
+            pipelineTaskData={pipelineTaskData}
+          />
+        );
     }
 
     const apiResponseStepIdentifier = pipelineTaskData?.api_response?.stepIdentifier;

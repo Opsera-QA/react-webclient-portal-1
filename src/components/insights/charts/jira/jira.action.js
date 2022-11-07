@@ -5,7 +5,7 @@ import {
   getJiraPrioritiesFromKpiConfiguration,
   getJiraProjectsFromKpiConfiguration,
   getResultFromKpiConfiguration,
-  getTagsFromKpiConfiguration,
+  getTagsFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration, getUseKpiTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 
 const jiraBaseURL = "analytics/jira/v1/";
@@ -28,6 +28,18 @@ jiraActions.getJiraMTTR = async (
   const endDate =  new Date(dateRange?.end);
   startDate.setTime(startDate.getTime() - timeOffsetInMins);
   endDate.setTime(endDate.getTime() - timeOffsetInMins);
+
+  // Checking the use kpi tags toggle
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
 
   const postBody = {
     startDate: startDate.toISOString(),
@@ -190,6 +202,18 @@ jiraActions.getJiraChangeFailureRate = async (
   const endDate =  new Date(dateRange?.end);
   startDate.setTime(startDate.getTime() - timeOffsetInMins);
   endDate.setTime(endDate.getTime() - timeOffsetInMins);
+
+  // Checking the use kpi tags toggle
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
 
   const postBody = {
     startDate: startDate.toISOString(),

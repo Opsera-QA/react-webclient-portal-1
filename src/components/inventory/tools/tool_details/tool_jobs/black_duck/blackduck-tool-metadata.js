@@ -5,7 +5,8 @@ const BlackduckMetadata = {
     {
       label: "BlackDuck URL",
       id: "url",
-      isRequired: true
+      isRequired: true,
+      isSecureUrl: true,
     },
     {
       label: "BlackDuck Token",

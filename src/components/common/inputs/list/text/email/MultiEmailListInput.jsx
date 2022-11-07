@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
-import {validateEmail} from "utils/helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function MultiEmailListInput(
   {
@@ -23,7 +23,7 @@ function MultiEmailListInput(
       setDataFunction={setDataFunction}
       fieldName={fieldName}
       customTitle={customTitle}
-      isPotentialValueValidFunction={validateEmail}
+      isPotentialValueValidFunction={DataParsingHelper.isEmailValid}
       error={error}
       singularTopic={singularTopic}
       pluralTopic={pluralTopic}

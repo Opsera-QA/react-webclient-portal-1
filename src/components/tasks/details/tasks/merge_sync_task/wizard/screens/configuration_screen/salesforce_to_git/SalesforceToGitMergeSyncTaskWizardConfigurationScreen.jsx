@@ -30,11 +30,21 @@ const SalesforceToGitMergeSyncTaskWizardConfigurationScreen = ({
         Salesforce to Git Merge Sync Task Wizard: Commit Configuration Selection
       </div>
       <Row className="my-3">
+        <Col xs={12}>
+          <SfdcComponentListInput
+            pipelineWizardModel={wizardModel}
+            setPipelineWizardModel={setWizardModel}
+            selectedComponents={[
+              ...wizardModel.getArrayData("selectedComponentTypes"),
+            ]}
+          />
+        </Col>
         <Col xs={6}>
           <DateTimeInputBase
             dataObject={wizardModel}
             setDataObject={setWizardModel}
             fieldName={"fromDate"}
+            dropUp={true}
           />
         </Col>
         <Col xs={6}>
@@ -42,13 +52,7 @@ const SalesforceToGitMergeSyncTaskWizardConfigurationScreen = ({
             dataObject={wizardModel}
             setDataObject={setWizardModel}
             fieldName={"toDate"}
-          />
-        </Col>
-        <Col xs={12}>
-          <SfdcComponentListInput
-            pipelineWizardModel={wizardModel}
-            setPipelineWizardModel={setWizardModel}
-            selectedComponents={[...wizardModel.getArrayData("selectedComponentTypes")]}
+            dropUp={true}
           />
         </Col>
       </Row>
@@ -56,9 +60,7 @@ const SalesforceToGitMergeSyncTaskWizardConfigurationScreen = ({
         <BackButton
           className={"mr-2"}
           backButtonFunction={() => {
-            setCurrentScreen(
-              MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN,
-            );
+            setCurrentScreen(MERGE_SYNC_WIZARD_SCREENS.INITIALIZATION_SCREEN);
           }}
         />
         <MergeSyncTaskWizardUpdateConfigurationButton

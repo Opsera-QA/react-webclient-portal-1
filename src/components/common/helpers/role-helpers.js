@@ -112,6 +112,13 @@ export const ACCESS_ROLE_PERMISSION_MESSAGES = {
   GUEST: "Guest User Role: Your account does not have any privileges associated with the Opsera platform and can only view and edit some data.",
 };
 
+export const ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE = {
+  ADMINISTRATOR: "Your account has full access to the Opsera platform and its settings.",
+  POWER_USER: "Your account has elevated privileges to the Opsera platform.",
+  USER: "Your account has standard user access to the Opsera platform and inherits access based on individual item access roles.",
+  GUEST: "Your account does not have any privileges associated with the Opsera platform and can only view and edit some data.",
+};
+
 export const getAccessRolePermissionMessage = (accessRole) => {
   switch (accessRole?.Role) {
     case "administrator":
@@ -123,6 +130,20 @@ export const getAccessRolePermissionMessage = (accessRole) => {
     case "guest":
     default:
       return ACCESS_ROLE_PERMISSION_MESSAGES.GUEST;
+  }
+};
+
+export const getAccessRolePermissionMessageWithoutRole = (accessRole) => {
+  switch (accessRole?.Role) {
+    case "administrator":
+      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.ADMINISTRATOR;
+    case "power_user":
+      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.POWER_USER;
+    case "user":
+      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.USER;
+    case "guest":
+    default:
+      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.GUEST;
   }
 };
 

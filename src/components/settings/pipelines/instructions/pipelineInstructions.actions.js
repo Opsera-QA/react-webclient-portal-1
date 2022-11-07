@@ -85,3 +85,44 @@ pipelineInstructionsActions.deletePipelineInstructionsById = async (
     apiUrl,
   );
 };
+
+pipelineInstructionsActions.transferPipelineInstructionsOwnership = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineInstructionsId,
+  newOwnerId,
+) => {
+  const apiUrl = `/settings/pipelines/instructions/${pipelineInstructionsId}/transfer/user/${newOwnerId}`;
+  return await baseActions.apiPutCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+pipelineInstructionsActions.getPipelinesByPipelineInstructionsUsage = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineInstructionsId,
+) => {
+  const apiUrl = `/settings/pipelines/instructions/${pipelineInstructionsId}/pipelines/usage`;
+  return await baseActions.apiGetCallV3(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+pipelineInstructionsActions.getPipelineInstructionsByPipelineStep = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineId,
+  pipelineStepId,
+) => {
+  const apiUrl = `/settings/pipelines/instructions/pipelines/${pipelineId}/step/${pipelineStepId}`;
+  return await baseActions.apiGetCallV3(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};

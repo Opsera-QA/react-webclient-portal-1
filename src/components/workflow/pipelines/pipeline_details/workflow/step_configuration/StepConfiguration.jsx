@@ -97,6 +97,7 @@ function StepConfiguration({ plan, stepId, parentCallback, closeEditorPanel }) {
       plan[stepArrayIndex].active = stepConfigurationData.active;
       plan[stepArrayIndex].tags = stepConfigurationData.tags;
       await parentCallback(plan);
+      closeEditorPanel();
     }
   };
 

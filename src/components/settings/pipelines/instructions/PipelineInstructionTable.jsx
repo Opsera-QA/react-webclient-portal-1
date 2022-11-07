@@ -13,7 +13,7 @@ import pipelineInstructionsTypeConstants
   from "@opsera/definitions/constants/settings/pipelines/instructions/pipelineInstructionsType.constants";
 import NewPipelineInstructionsOverlay from "components/settings/pipelines/instructions/NewPipelineInstructionsOverlay";
 import CustomTable from "components/common/table/CustomTable";
-import { pipelineInstructionsHelpers } from "components/settings/pipelines/instructions/pipelineInstructions.helpers";
+import { pipelineInstructionsHelper } from "components/settings/pipelines/instructions/pipelineInstructions.helper";
 import { useHistory } from "react-router-dom";
 import pipelineInstructionsMetadata
   from "@opsera/definitions/constants/settings/pipelines/instructions/pipelineInstructions.metadata";
@@ -59,7 +59,7 @@ export default function PipelineInstructionTable(
   };
 
   const handleRowSelectFunction = (row, data) => {
-    history.push(pipelineInstructionsHelpers.getDetailViewLink(data?._id));
+    history.push(pipelineInstructionsHelper.getDetailViewLink(data?._id));
   };
 
   const getTable = () => {

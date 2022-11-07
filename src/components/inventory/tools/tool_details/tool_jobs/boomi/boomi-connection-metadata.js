@@ -8,6 +8,7 @@ const BoomiConnectionMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("apiType") === "custom";
       },
+      isSecureUrl: true,
     },
     {
       label: "Account ID",

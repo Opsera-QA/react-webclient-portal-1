@@ -4,7 +4,8 @@ const teamsConnectionMetadata = {
     {
       label: "Teams Webhook URL",
       id: "webhookUrl",
-      isRequired: true
+      isRequired: true,
+      isSecureUrl: true,
     },
   ],
   newObjectFields:

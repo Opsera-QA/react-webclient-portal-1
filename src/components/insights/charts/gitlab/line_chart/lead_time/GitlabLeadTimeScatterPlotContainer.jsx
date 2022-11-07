@@ -7,6 +7,7 @@ import IconBase from "../../../../../common/icons/IconBase";
 import { faSquare } from "@fortawesome/pro-solid-svg-icons";
 import config from "./GitlabLeadTimeChartConfig";
 import GitlabLeadTimeInsightsModal from "./GitlabLeadTimeInsightsModal";
+import {getTimeDisplay} from "../../../charts-helpers";
 function GitlabLeadTimeScatterPlotContainer({ chartData }) {
 
   const [showModal, setShowModal] = useState(false);
@@ -22,7 +23,7 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
       commitTimeStamp: new Date(timestamp).toLocaleString(),
       repositoryName: commit["repositoryName"],
       authorName: commit["authorName"],
-      leadTime: commit["leadTime"],
+      leadTime: getTimeDisplay(commit["leadTime"])[0],
       commitTitle: commit["commitTitle"],
     };
   };
@@ -49,8 +50,9 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
       y: 24,
       stepFinishedAt: new Date(timestamp).toLocaleString(),
       stepName: deployment?.stepName,
-      deployAverageLeadTime: deployment?.deployAverageLeadTime,
+      deployAverageLeadTime: getTimeDisplay(deployment?.deployAverageLeadTime)[0],
       deployCommitCount: deployment?.deployCommitCount,
+      deployMedianTime:getTimeDisplay(deployment?.deployMedianTime)[0],
       stepId: deployment?.stepId,
       commits: deployment?.commits,
       branch: deployment?.branch
@@ -128,7 +130,10 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
                     Deployment Stage: <strong>{node?.data?.stepName}</strong>
                   </div>
                   <div className={"py-1"}>
-                    Average Lead Time: <strong>{node?.data?.deployAverageLeadTime || "NA"}</strong> Day(s)
+                    Average Lead Time: <strong>{node?.data?.deployAverageLeadTime || "NA"}</strong>
+                  </div>
+                  <div className={"py-1"}>
+                    Median Lead Time: <strong>{node?.data?.deployMedianTime || "NA"}</strong>
                   </div>
                   <div className={"py-1"}>
                     Commits: <strong>{node?.data?.deployCommitCount || "0"}</strong>
@@ -151,7 +156,7 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
                   Author: <strong>{node?.data?.authorName}</strong>
                 </div>
                 <div className={"py-1"}>
-                  LeadTime: <strong>{node?.data?.leadTime}</strong> Day(s)
+                  LeadTime: <strong>{node?.data?.leadTime}</strong>
                 </div>
                 <div className={"py-1"}>
                   CommitTime: <strong>{node?.data?.commitTimeStamp}</strong>

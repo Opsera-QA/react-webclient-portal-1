@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import EditRolesOverlay from "components/common/inline_inputs/roles/overlay/EditRolesOverlay";
-import RoleAccessField from "components/common/fields/multiple_items/roles/RoleAccessField";
+import RoleAccessFieldBase from "components/common/fields/multiple_items/roles/RoleAccessFieldBase";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 import EditIcon from "components/common/icons/field/EditIcon";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -42,22 +42,23 @@ function RoleAccessInlineInputBase(
       <div className="role-access">
         <div className="d-flex">
           <div>
-            <RoleAccessField
+            <RoleAccessFieldBase
               model={model}
               fieldName={fieldName}
             />
           </div>
-          <div className="edit-button d-flex">
+          <div className={"edit-button d-flex"}>
             <EditIcon
-              className={"ml-2 mt-2 text-muted"}
+              className={"ml-2 text-muted"}
               handleEditFunction={showEditor}
               disabled={disabled}
               tooltipBody={"Edit Access Rules"}
+              iconTransformProperties={"shrink-5"}
             />
             <LaunchHelpIcon
               visible={disabled !== true}
               helpComponent={helpComponent}
-              className={"mt-2 ml-2 text-muted"}
+              className={"ml-2 text-muted"}
             />
           </div>
         </div>

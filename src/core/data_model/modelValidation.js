@@ -2,13 +2,14 @@ import {
   isAlphaNumeric,
   isDomain,
   isOpseraPassword,
-  isWebsite,
   matchesRegex,
-  validateEmail,
   hasSpaces,
 } from "utils/helpers";
 import regexDefinitions from "utils/regexDefinitions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+
+export const modelValidation = {};
 
 // TODO: We need to rework this
 export const validateData = (data) => {
@@ -85,17 +86,15 @@ export const fieldValidation = (value, model, field) => {
     }
   }
 
-  if (field.isEmail === true) {
-    if (!validateEmail(value)) {
-      errorMessages.push(`The email address is not valid.`);
-    }
+  if (field.isEmail === true && hasStringValue(value) && DataParsingHelper.isEmailValid(value) !== true) {
+    errorMessages.push(`The email address is not valid.`);
   }
 
   if (field.isEmailArray === true) {
     if (Array.isArray(value) && value?.length > 0) {
       value?.forEach((potentialEmail, index) => {
-        if (validateEmail(potentialEmail) !== true) {
-          errorMessages.push(`Email address ${index} is not valid.`);
+        if (DataParsingHelper.isEmailValid(potentialEmail) !== true) {
+          errorMessages.push(`Email address ${index + 1} is not valid.`);
         }
       });
     }
@@ -111,15 +110,32 @@ export const fieldValidation = (value, model, field) => {
     errorMessages.push("No special characters are allowed.");
   }
 
+  // if (hasStringValue(value) === true && field.isSecureUrl === true) {
+  //   if (maxLengthValidator(value, 2048) !== true) {
+  //     errorMessages.push(`${field.label}'s value has to be 2048 characters or fewer.`);
+  //   }
+  //
+  //   if (value.startsWith("https") !== true) {
+  //     errorMessages.push(`Unsupported HTTP request detected in ${field.label}'s value. Please ensure you are using a secure HTTPS connection before saving.`);
+  //   }
+  //   else if (DataParsingHelper.isUrlValid(value) !== true) {
+  //     errorMessages.push(`${field.label}'s value must be a full, valid, and secured HTTPS website path.`);
+  //   }
+  // }
+
   if (field.isDomain === true && !isDomain(value)) {
     errorMessages.push("Domains must begin and end with an alphanumeric character.");
   }
 
-  if (field.isWebsite === true && !isWebsite(value)) {
+  if (field.isUrl === true && hasStringValue(value) === true) {
+    if (maxLengthValidator(value, 2048) !== true) {
+      errorMessages.push(`${field.label}'s value has to be 2048 characters or fewer.`);
+    }
+
     // TODO: Wire up all errors this way to prevent empty, non-required fields from throwing errors on commit
     // Only show error if it's filled out. If it's required the is required check will throw that error, so this is unnecessary for now.
-    if (value !== "") {
-      errorMessages.push("This must be a full website path.");
+    if (DataParsingHelper.isUrlValid(value) !== true) {
+      errorMessages.push(`${field.label}'s value must be a valid website path.`);
     }
   }
 
@@ -249,6 +265,15 @@ const maxLengthValidator = (value, maxLength) => {
     return true;
   }
 
+};
+
+modelValidation.getFieldWarning = (fieldName, model) => {
+  const field = model?.getFieldById(fieldName);
+  const value = model?.getData(fieldName);
+
+  if (hasStringValue(value) === true && field.isUrl === true && value.startsWith("https") !== true) {
+    return "Warning, an unsecure HTTP URL detected. Please ensure the external resource supports HTTP or switch to HTTPS before saving.";
+  }
 };
 
 // TODO: THis probably doesn't work with boolean values,

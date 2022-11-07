@@ -1,5 +1,6 @@
 import { Tooltip } from "react-bootstrap";
 import React from "react";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export function isLocalHost(hostname) {
   return !!(
@@ -28,11 +29,6 @@ export function validateEmail(email) {
 export function isDomain(domain) {
  var re =  /^[A-Za-z0-9]?[A-Za-z0-9-]*[A-Za-z0-9]$/;
  return re.test(String(domain).toLowerCase());
-}
-
-export function isWebsite(website) {
-  var re =  /^((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
-  return re.test(String(website).toLowerCase());
 }
 
 export function isOpseraPassword(password) {

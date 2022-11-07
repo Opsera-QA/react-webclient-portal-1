@@ -91,11 +91,6 @@ primary analytics font*/
     font-weight: 400;
 }
 
-.failure-text {
-    color: red;
-    font-weight: bold;
-}
-
 .red {
     color: #E57373;
 }
@@ -748,6 +743,15 @@ a:hover, .active, .link-text:hover {
     padding: 5px;
 }
 
+.error-text-alt, .error-text-alt .form-control:focus {
+    color: #dc3545;
+}
+
+.error-text-alt .form-control:focus {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0.3rem 0 0 rgba(220, 53, 69, .5) !important;
+}
+
 .info-text {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     color: #3D3B36;
@@ -779,6 +783,16 @@ a:hover, .active, .link-text:hover {
     color: #CF940C;
     padding: 5px;
 }
+
+.warning-text-alt, .warning-text-alt .form-control:focus {
+    color: #CF940C;
+}
+
+.warning-text-alt .form-control:focus {
+    border-color: #CF940C !important;
+    box-shadow: 0 0.3rem 0 0 rgba(207, 148, 12, .5) !important;
+}
+
 
 .success-block {
     background-color: green;
@@ -1009,6 +1023,7 @@ a:hover, .active, .link-text:hover {
     transform-origin: top;
 }
 
+.underline-text,
 .dropdown-data-fetch:hover {
     text-decoration: underline;
 }
@@ -1022,4 +1037,9 @@ a:hover, .active, .link-text:hover {
     background-color: #FFF;
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     z-index: 3000;
+}
+
+/*Tooltip z-index fix for overlays*/
+.bs-tooltip-top {
+    z-index: 10000;
 }

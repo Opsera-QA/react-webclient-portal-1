@@ -4,18 +4,19 @@ import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import OwnerNameField from "components/common/fields/text/general/OwnerNameField";
-import DescriptionField from "components/common/fields/text/DescriptionField";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
-import PipelineInstructionsTypeField
-  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsTypeField";
+import RichTextField from "components/common/fields/rich_text/RichTextField";
 import PipelineInstructionsRoleAccessInlineInput
-  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsRoleAccessInlineInput";
+  from "components/settings/pipelines/instructions/details/inputs/PipelineInstructionsRoleAccessInlineInput";
+import PipelineInstructionsTypeField
+  from "components/common/list_of_values_input/settings/pipelines/instructions/type/PipelineInstructionsTypeField";
 
 export default function PipelineInstructionsSummaryPanel(
   {
     pipelineInstructionsModel,
     setPipelineInstructionsModel,
     setActiveTab,
+    loadDataFunction,
   } ) {
   if (pipelineInstructionsModel == null) {
     return <></>;
@@ -48,8 +49,17 @@ export default function PipelineInstructionsSummaryPanel(
             model={pipelineInstructionsModel}
           />
         </Col>
+        <Col xs={12}>
+          <RichTextField
+            fieldName={"instructions"}
+            model={pipelineInstructionsModel}
+            minimumHeight={"150px"}
+            maximumHeight={"1000px"}
+          />
+        </Col>
         <Col lg={12}>
-          <DescriptionField
+          <TextFieldBase
+            fieldName={"description"}
             dataObject={pipelineInstructionsModel}
           />
         </Col>
@@ -66,5 +76,6 @@ export default function PipelineInstructionsSummaryPanel(
 PipelineInstructionsSummaryPanel.propTypes = {
   pipelineInstructionsModel: PropTypes.object,
   setPipelineInstructionsModel: PropTypes.func,
-  setActiveTab: PropTypes.func
+  setActiveTab: PropTypes.func,
+  loadDataFunction: PropTypes.func,
 };

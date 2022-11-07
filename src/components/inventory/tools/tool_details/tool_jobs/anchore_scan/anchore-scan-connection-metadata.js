@@ -5,7 +5,8 @@ const anchoreScanConnectionMetadata = {
     {
       label: "Anchore Scan URL",
       id: "toolURL",
-      isRequired: true
+      isRequired: true,
+      isSecureUrl: true,
     },
     {
       label: "Username",

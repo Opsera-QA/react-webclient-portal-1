@@ -221,6 +221,7 @@ userActions.syncUser = async (getAccessToken, cancelTokenSource) => {
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+// TODO: Remove once all instances are updated to awsActions.getAwsRegionsV2
 userActions.getAwsRegionsV2 = async (cancelTokenSource) => {
   const apiUrl = `/users/aws/regions`;
   return await baseActions.apiTokenlessGetCallV2(cancelTokenSource, apiUrl);

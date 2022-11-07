@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
-import ToolRegistryRoleAccessHelpDocumentation
-  from "components/common/help/documentation/tool_registry/ToolRegistryRoleAccessHelpDocumentation";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import pipelineActions from "components/workflow/pipeline-actions";
@@ -14,6 +12,8 @@ export default function PipelineRoleAccessInput(
     setPipelineModel,
     loadData,
     visible,
+    disabled,
+    className,
   }) {
   const {
     userData,
@@ -42,10 +42,11 @@ export default function PipelineRoleAccessInput(
     return null;
   }
 
-  const canEdit = PipelineRoleHelper.canEditAccessRoles(userData, pipelineModel?.getCurrentData());
+  const canEdit = PipelineRoleHelper.canEditAccessRoles(userData, pipelineModel?.getCurrentData()) && disabled !== true;
 
   return (
     <RoleAccessInlineInputBase
+      className={className}
       fieldName={fieldName}
       model={pipelineModel}
       disabled={canEdit !== true}
@@ -61,6 +62,8 @@ PipelineRoleAccessInput.propTypes = {
   setPipelineModel: PropTypes.func,
   visible: PropTypes.bool,
   loadData: PropTypes.func,
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 PipelineRoleAccessInput.defaultProps = {

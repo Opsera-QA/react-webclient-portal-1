@@ -305,7 +305,6 @@ input[disabled] {
     line-height: 26px;
     padding: 0 10px 0 5px;
     position: relative;
-    margin: 0 5px 5px 0;
 }
 
 .custom-badge::after {
@@ -377,38 +376,9 @@ input[disabled] {
     padding-bottom: 10px;
 }
 
+.form-control:focus {
+    box-shadow: 0 0.3rem 0 0 rgba(53, 47, 84, .25);
+    border-color: rgb(53 47 84);
+}
+
 /* End Error State CSS */
-
-/* Rich Text Input Styling */
-div.DraftEditor-root {
-    border-top: none;
-    border-left: 1px solid #DDD;
-    border-right: 1px solid #DDD;
-    border-bottom: 1px solid #DDD;
-    min-height: 100px;
-}
-
-div.DraftEditor-editorContainer,
-div.public-DraftEditor-content {
-    height: 100%;
-    padding: .25rem;
-}
-
-.t16lpgj {
-    box-shadow: none;
-    border-top: none;
-    border-left: 1px solid #DDD;
-    border-right: 1px solid #DDD;
-    border-bottom: none;
-    background: #f7f7f7;
-    padding-top: .25rem;
-    padding-bottom: .25rem;
-    /*border-bottom: 1px solid #DDD;*/
-}
-
-.bc4rxid {
-    padding-top: 0;
-    background: #f7f7f7;
-}
-
-/* End Rich Text Input Styling */

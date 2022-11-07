@@ -48,12 +48,15 @@ function PipelineWorkflowView({
 
         <div className="py-1 text-right" style={{minHeight:"42px"}}>
           {!editItem && <div className="float-right pt-1 mr-2">
-            <PipelineActionControls pipeline={pipeline}
-                                    disabledActionState={false}
-                                    customerAccessRules={customerAccessRules}
-                                    fetchData={fetchPlan}
-                                    setPipeline={setPipeline}
-                                    setParentWorkflowStatus={setWorkflowStatus}/>
+            <PipelineActionControls
+              pipeline={pipeline}
+              disabledActionState={false}
+              customerAccessRules={customerAccessRules}
+              fetchData={fetchPlan}
+              setPipeline={setPipeline}
+              setParentWorkflowStatus={setWorkflowStatus}
+              isLoading={softLoading}
+            />
           </div>}
         </div>
         <div style={{ minWidth: "740px" }}>
