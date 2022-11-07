@@ -1,4 +1,4 @@
-export default (getColor,i) => ({
+export default (getColor, i) => ({
   keys: ["MTTR"],
   indexBy: "_id",
   colorBy: "id",
@@ -8,14 +8,14 @@ export default (getColor,i) => ({
   labelTextColor: "white",
   label: (d) => `${d.data.Count}`,
   axisLeft: {
-    legend:"Mean Time to Resolution (in hours)",
-    format: v => {
+    legend: "Mean Time to Resolution (in hours)",
+    format: (tickValue) => {
       i++;
-      if(i%2===0){
-        return '';
-      }
-      else {
-        return v;
+      // Show alternate tick values 
+      if (i % 2 === 0) {
+        return "";
+      } else {
+        return tickValue;
       }
     },
     orient: "left",
@@ -24,5 +24,5 @@ export default (getColor,i) => ({
     tickRotation: 0,
     legendOffset: -40,
     legendPosition: "middle",
-  }
+  },
 });
