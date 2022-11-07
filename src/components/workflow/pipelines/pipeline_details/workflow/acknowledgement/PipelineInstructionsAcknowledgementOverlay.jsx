@@ -9,8 +9,6 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {
   userActionsPipelineStepMetadata
 } from "components/workflow/plan/step/user_actions/userActionsPipelineStep.metadata";
-import PipelineInstructionsField
-  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsField";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import AcknowledgePipelineInstructionsButton
   from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/AcknowledgePipelineInstructionsButton";
@@ -18,13 +16,14 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import RefusePipelineInstructionsAcknowledgementButton
   from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/RefusePipelineInstructionsAcknowledgementButton";
 import CloseButton from "components/common/buttons/CloseButton";
-import useGetPipelineInstructionModelById
-  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelById";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineInstructionsFieldBase
   from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsFieldBase";
 import useGetPipelineInstructionModelByPipelineStep
   from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
+import pipelineUserActionAcknowledgementMetadata
+  from "@opsera/definitions/constants/pipelines/workflow/acknowledgement/pipelineUserActionAcknowledgement.metadata";
 
 export default function PipelineInstructionsAcknowledgementOverlay(
   {
@@ -35,7 +34,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
   const toolIdentifier = PipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
   const configuration = DataParsingHelper.parseNestedObject(approvalStep, "tool.configuration");
   const userActionsStepModel = modelHelpers.parseObjectIntoModel(configuration, userActionsPipelineStepMetadata);
-  const [message, setMessage] = useState("");
+  const [acknowledgementModel, setAcknowledgementModel] = useState(modelHelpers.parseObjectIntoModel(configuration, pipelineUserActionAcknowledgementMetadata));
   const {
     toastContext,
   } = useComponentStateReference();
@@ -65,7 +64,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
         <RefusePipelineInstructionsAcknowledgementButton
           pipelineId={pipeline?._id}
           pipelineStepId={approvalStep?._id}
-          message={message}
+          message={acknowledgementModel?.getData("message")}
           closePanelFunction={closePanelFunction}
           className={"mr-2"}
           disabled={pipelineInstructionsModel == null}
@@ -73,7 +72,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
         <AcknowledgePipelineInstructionsButton
           pipelineId={pipeline?._id}
           pipelineStepId={approvalStep?._id}
-          message={message}
+          message={acknowledgementModel?.getData("message")}
           closePanelFunction={closePanelFunction}
           disabled={pipelineInstructionsModel == null}
         />
@@ -91,14 +90,21 @@ export default function PipelineInstructionsAcknowledgementOverlay(
     }
 
     return (
-      <PipelineInstructionsFieldBase
-        showInstructions={true}
-        pipelineInstructionsModel={pipelineInstructionsModel}
-        pipelineInstructionsId={userActionsStepModel?.getData("pipelineInstructionsId")}
-        label={pipelineInstructionsModel?.getData("name")}
-        error={error}
-        isLoading={isLoading}
-      />
+      <>
+        <PipelineInstructionsFieldBase
+          showInstructions={true}
+          pipelineInstructionsModel={pipelineInstructionsModel}
+          pipelineInstructionsId={userActionsStepModel?.getData("pipelineInstructionsId")}
+          label={pipelineInstructionsModel?.getData("name")}
+          error={error}
+          isLoading={isLoading}
+        />
+        <TextAreaInput
+          dataObject={acknowledgementModel}
+          setDataObject={setAcknowledgementModel}
+          fieldName={"message"}
+        />
+      </>
     );
   };
 
