@@ -43,6 +43,9 @@ import JiraChangeFailureRateEditorPanel from "components/insights/charts/jira/li
 import GitlabPipelineStatisticsEditorPanel
   from "../../charts/gitlab/line_chart/pipeline-statistics/GitlabPipelineStatisticsEditorPanel";
 import GithubCommitFrequencyEditorPanel from '../../charts/github/line_chart/commits_frequency/GithubCommitFrequencyEditorPanel';
+import GithubRepoEditorPanel from "../../charts/github_actions/repo_kpi/GithubRepoEditorPanel";
+import GithubMergedPullRequestEditorPanel
+  from "../../charts/github_actions/merged_pull_request_kpi/GithubMergedPullRequestEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
@@ -321,6 +324,26 @@ function DashboardMetricOverlayContainer(
             unpackedFilterData={unpackedFilterData}
             kpiConfiguration={kpiConfiguration}
           />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_REPO_STATISTICS:
+        return(
+            <GithubRepoEditorPanel
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+                unpackedFilterData={unpackedFilterData}
+                kpiConfiguration={kpiConfiguration}
+            />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_MERGED_PULL_REQUEST:
+        return(
+            <GithubMergedPullRequestEditorPanel
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+                unpackedFilterData={unpackedFilterData}
+                kpiConfiguration={kpiConfiguration}
+            />
         );
     }
   };

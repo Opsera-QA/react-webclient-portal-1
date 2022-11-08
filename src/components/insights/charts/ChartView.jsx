@@ -187,6 +187,9 @@ import ApigeeSummaryChart from "./apigee/summary/ApigeeSummaryChart";
 
 // Approval Gates KPI
 import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
+import GithubRepositoryStatistics from "./github_actions/repo_kpi/GithubRepositoryStatistics";
+import GithubMergedPullRequestStatistics
+    from "./github_actions/merged_pull_request_kpi/GithubMergedPullRequestStatistics";
 
 
 
@@ -1373,6 +1376,30 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_REPO_STATISTICS:
+            return (
+                <Col md={12} className="p-2">
+                    <GithubRepositoryStatistics
+                        kpiConfiguration={kpiConfig}
+                        setKpiConfiguration={setKpiConfig}
+                        dashboardData={dashboardData}
+                        setKpis={setKpis}
+                        index={index}
+                    />
+                </Col>
+            );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_MERGED_PULL_REQUEST:
+            return (
+                <Col md={12} className="p-2">
+                    <GithubMergedPullRequestStatistics
+                        kpiConfiguration={kpiConfig}
+                        setKpiConfiguration={setKpiConfig}
+                        dashboardData={dashboardData}
+                        setKpis={setKpis}
+                        index={index}
+                    />
+                </Col>
+            );
       case "github-connected-assets":
         return (
           <Col md={12} className="p-2">

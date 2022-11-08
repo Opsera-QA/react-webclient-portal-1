@@ -9,6 +9,8 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   LEAD_TIME_AND_RELEASE_TRACEABILITY:
     "lead-time-and-release-traceability-data-block",
   GITHUB_ACTIONS_WORKFLOW: "github-actions-workflow",
+  GITHUB_REPO_STATISTICS: "github-repo-statistics",
+  GITHUB_MERGED_PULL_REQUEST: "github-merged-pull-requests",
 
   ANCHORE_VULNERABILITIES_BY_DATE: "anchore-vulnerabilities-by-date",
   AUTOMATED_TEST_RESULTS: "automated-test-results",
