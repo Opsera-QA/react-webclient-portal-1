@@ -28,7 +28,7 @@ import pipelineUserActionAcknowledgementMetadata
 export default function PipelineInstructionsAcknowledgementOverlay(
   {
     pipeline,
-    loadDataFunction,
+    loadPipelineFunction,
   }) {
   const approvalStep = PipelineHelpers.getPendingApprovalStep(pipeline);
   const toolIdentifier = PipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
@@ -50,7 +50,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
   );
 
   const closePanelFunction = () => {
-    loadDataFunction();
+    loadPipelineFunction();
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
   };
@@ -121,7 +121,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
       titleIcon={faFileCheck}
       buttonContainer={getButtonContainer()}
     >
-      <div className={"m-3"}>
+      <div className={"mx-3 mb-3 mt-2"}>
         <div>
           This pipeline requires the following actions be taken at this time.
           Acknowledgement of these actions is required before the pipeline can proceed.
@@ -134,7 +134,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
 }
 
 PipelineInstructionsAcknowledgementOverlay.propTypes = {
-  loadDataFunction: PropTypes.func,
+  loadPipelineFunction: PropTypes.func,
   pipeline: PropTypes.object
 };
 

@@ -7,13 +7,11 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { Row } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import AccessRoleDisplayer from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayer";
-import RichTextInput from "components/common/inputs/rich_text/RichTextInput";
-import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import StandaloneSaveButton from "components/common/buttons/saving/StandaloneSaveButton";
-import CancelButton from "components/common/buttons/CancelButton";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import { faPencilAlt } from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
+import PipelineInstructionsInlineInput
+  from "components/common/list_of_values_input/settings/pipelines/instructions/inline/PipelineInstructionsInlineInput";
 
 export default function PipelineInstructionsFieldBase(
   {
@@ -46,33 +44,6 @@ export default function PipelineInstructionsFieldBase(
     }
   };
 
-  const handleSave = async () => {
-    const response = await pipelineInstructionsModel?.saveModel();
-    setInEditMode(false);
-    return response;
-  };
-
-  const handleCancel = () => {
-    pipelineInstructionsModel?.resetData();
-    setPipelineInstructionsModel(pipelineInstructionsModel);
-    setInEditMode(false);
-  };
-
-  const getSaveButtonContainer = () => {
-    return (
-      <ButtonContainerBase>
-        <CancelButton
-          className={"mr-2"}
-          cancelFunction={handleCancel}
-        />
-        <StandaloneSaveButton
-          saveFunction={handleSave}
-          type={"Pipeline Instructions"}
-        />
-      </ButtonContainerBase>
-    );
-  };
-
   const getEditButton = () => {
     if (allowEditing === true && pipelineInstructionsModel?.canUpdate() === true) {
       return (
@@ -90,15 +61,14 @@ export default function PipelineInstructionsFieldBase(
   const getPipelineInstructionsComponent = () => {
     if (setPipelineInstructionsModel && allowEditing === true && inEditMode === true && pipelineInstructionsModel?.canUpdate() === true) {
       return (
-        <RichTextInput
+        <PipelineInstructionsInlineInput
           fieldName={"instructions"}
-          model={pipelineInstructionsModel}
-          setModel={setPipelineInstructionsModel}
-          customTitle={pipelineInstructionsModel?.getData("name")}
-          minimumHeight={instructionsDisplayerMinimumHeight}
-          maximumHeight={instructionsDisplayerMaximumHeight}
+          pipelineInstructionsModel={pipelineInstructionsModel}
+          setPipelineInstructionsModel={setPipelineInstructionsModel}
+          instructionsDisplayerMinimumHeight={instructionsDisplayerMinimumHeight}
+          instructionsDisplayerMaximumHeight={instructionsDisplayerMaximumHeight}
           isLoading={isLoading}
-          titleRightSideButton={getSaveButtonContainer()}
+          setInEditMode={setInEditMode}
         />
       );
     }

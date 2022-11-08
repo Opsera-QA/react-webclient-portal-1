@@ -1,4 +1,5 @@
 import { faCheckCircle, faExclamationCircle } from "@fortawesome/pro-light-svg-icons";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export const buttonLabelHelper = {};
 
@@ -20,7 +21,9 @@ buttonLabelHelper.getLabelForStatus = (
   successText,
   errorText,
 ) => {
-  switch (buttonState) {
+  const parsedButtonState = DataParsingHelper.parseString(buttonState, buttonLabelHelper.BUTTON_STATES.READY);
+
+  switch (parsedButtonState) {
     case buttonLabelHelper.BUTTON_STATES.READY:
       return normalText;
     case buttonLabelHelper.BUTTON_STATES.BUSY:
@@ -38,7 +41,9 @@ buttonLabelHelper.getVariantForState = (
   normalVariant = "primary",
   buttonState,
 ) => {
-  switch (buttonState) {
+  const parsedButtonState = DataParsingHelper.parseString(buttonState, buttonLabelHelper.BUTTON_STATES.READY);
+
+  switch (parsedButtonState) {
     case buttonLabelHelper.BUTTON_STATES.READY:
     case buttonLabelHelper.BUTTON_STATES.BUSY:
       return normalVariant;
@@ -55,7 +60,9 @@ buttonLabelHelper.getIconForState = (
   icon,
   buttonState,
 ) => {
-  switch (buttonState) {
+  const parsedButtonState = DataParsingHelper.parseString(buttonState, buttonLabelHelper.BUTTON_STATES.READY);
+
+  switch (parsedButtonState) {
     case buttonLabelHelper.BUTTON_STATES.READY:
     case buttonLabelHelper.BUTTON_STATES.BUSY:
       return icon;

@@ -20,6 +20,7 @@ import pipelineLogHelpers
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import CustomTable from "components/common/table/CustomTable";
+import PaginationHelper from "@opsera/persephone/helpers/array/pagination.helper";
 
 function PipelineActivityLogTreeTable(
   {
@@ -208,6 +209,7 @@ function PipelineActivityLogTreeTable(
         isLoading={isLoading}
         pipeline={pipeline}
         pipelineLogData={activityData}
+        latestPipelineLogId={PaginationHelper.getLatestCreatedItemInDataArray(activityData)?._id}
         pipelineActivityFilterDto={pipelineActivityFilterModel}
         currentRunNumber={currentRunNumber}
         currentStepId={currentStepId}
