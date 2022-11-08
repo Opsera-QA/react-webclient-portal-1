@@ -13,6 +13,7 @@ export default function PipelineInstructionsField(
     showInstructions,
     instructionsDisplayerMaximumHeight,
     instructionsDisplayerMinimumHeight,
+    allowEditing,
   }) {
   const {
     pipelineInstructionsModel,
@@ -41,6 +42,7 @@ export default function PipelineInstructionsField(
       setPipelineInstructionsModel={setPipelineInstructionsModel}
       isLoading={isLoading}
       error={error}
+      allowEditing={allowEditing}
     />
   );
 }
@@ -52,4 +54,5 @@ PipelineInstructionsField.propTypes = {
   className: PropTypes.string,
   instructionsDisplayerMaximumHeight: PropTypes.string,
   instructionsDisplayerMinimumHeight: PropTypes.string,
+  allowEditing: PropTypes.bool,
 };

@@ -6,8 +6,6 @@ import {
   faPencilAlt,
   faSave, faTag,
   faTimes,
-  faUser,
-  faUserFriends,
 } from "@fortawesome/pro-light-svg-icons";
 import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
@@ -32,7 +30,6 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleAccessInput from "components/workflow/pipelines/summary/inputs/PipelineRoleAccessInput";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateTimeField from "components/common/fields/date/DateTimeField";
@@ -65,7 +62,6 @@ const getWorkflowStatus = (pipeline) => {
 function PipelineSummaryPanel(
   {
     pipeline,
-    ownerName,
     customerAccessRules,
     parentWorkflowStatus,
     fetchPlan,
@@ -120,15 +116,6 @@ function PipelineSummaryPanel(
           };
           setEditTitle(false);
           break;
-        case "project":
-          pipeline.project.name = value.project.name;
-          postBody = {
-            "project": {
-              "name": value.project.name,
-              "project_id": "",
-            },
-          };
-          break;
         case "description":
           pipeline.description = value.description;
           postBody = {
@@ -177,12 +164,6 @@ function PipelineSummaryPanel(
       case "name":
         setEditTitle(true);
         setFormData({ ...formData, name: pipeline.name });
-        break;
-      case "project":
-        setFormData({
-          ...formData,
-          project: { name: pipeline.project !== undefined && pipeline.project.hasOwnProperty("name") ? pipeline.project.name : "" },
-        });
         break;
       case "description":
         setEditDescription(true);
@@ -289,7 +270,7 @@ function PipelineSummaryPanel(
   const getPipelineActionControls = () => {
     if (showActionControls !== false) {
       return (
-        <div className="text-right py-2">
+        <div className={"text-right py-2 pr-2"}>
           <PipelineActionControls
             pipeline={pipeline}
             disabledActionState={false}
