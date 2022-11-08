@@ -11,7 +11,7 @@ function GithubOpenPullRequestAverageTimeDataBlock({ data, dataPoint, lastScore,
                 icon={icon}
                 score={data}
                 bottomText={"Previous: " + lastScore}
-                topText={"Total Unique Repositories"}
+                topText={"Average Time Open Requests are Pending"}
                 dataPoint={dataPoint}
             />
         </DataBlockBoxContainer>

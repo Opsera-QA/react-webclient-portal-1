@@ -11,7 +11,7 @@ function GithubMergedPullRequestAverageTimeDataBlock({ data, dataPoint, lastScor
                 icon={icon}
                 score={data}
                 bottomText={"Previous: " + lastScore}
-                topText={"Total Unique Repositories"}
+                topText={"Average Time to Merge"}
                 dataPoint={dataPoint}
             />
         </DataBlockBoxContainer>

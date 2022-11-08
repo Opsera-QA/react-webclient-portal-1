@@ -1390,6 +1390,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
                     />
                 </Col>
             );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_MERGED_PULL_REQUEST:
+          return (
+              <Col md={12} className="p-2">
+                  <GithubMergedPullRequestStatistics
+                      kpiConfiguration={kpiConfig}
+                      setKpiConfiguration={setKpiConfig}
+                      dashboardData={dashboardData}
+                      setKpis={setKpis}
+                      index={index}
+                  />
+              </Col>
+          );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_OPEN_PULL_REQUEST_AVERAGE_TIME:
           return (
               <Col md={12} className="p-2">

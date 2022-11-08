@@ -19,12 +19,12 @@ import {
 } from "components/insights/charts/charts-views.js";
 import { ResponsiveLine } from "@nivo/line";
 import {metricHelpers} from "components/insights/metric.helpers";
-import githubActionsWorkflowActions from "components/insights/charts/github_actions/workflows/github-actions-workflow-actions";
+import chartsActions from "components/insights/charts/charts-actions";
 import GithubMergedPullRequestAverageTimeDataBlock from "./GithubMergedPullRequestAverageTimeDataBlock";
 import IconBase from "components/common/icons/IconBase";
 import {faSquare} from "@fortawesome/pro-solid-svg-icons";
 import _ from "lodash";
-
+import {smartTimeFormatter} from "components/common/helpers/date/date.helpers";
 function GithubMergedPullRequestAverageTime({
                            kpiConfiguration,
                            setKpiConfiguration,
@@ -70,7 +70,7 @@ function GithubMergedPullRequestAverageTime({
             let dashboardOrgs = dashboardMetricFilter?.organizations;
             let dashboardFilters = dashboardMetricFilter?.hierarchyFilters;
 
-            const response = await githubActionsWorkflowActions.githubRepoStatistics(
+            const response = await chartsActions.githubMergedPullRequestAverageTime(
                 kpiConfiguration,
                 getAccessToken,
                 cancelSource,
@@ -78,9 +78,8 @@ function GithubMergedPullRequestAverageTime({
                 dashboardOrgs,
                 dashboardFilters
             );
-            let dataObject = response?.data?.data[0]?.chartData;
-            let  datablock = response?.data?.data[0]?.statisticsData;
-
+            let dataObject = response?.data?.githubPullRequestAverageMergeTime?.data[0]?.chartData;
+            let datablock = response?.data?.githubPullRequestAverageMergeTime?.data[0]?.statisticsData;
 
             assignStandardColors(dataObject, true);
             spaceOutServiceNowCountBySeverityLegend(dataObject);
@@ -151,10 +150,10 @@ function GithubMergedPullRequestAverageTime({
             return (<><Row className={'pb-2'}>
                 <Col>
                         <GithubMergedPullRequestAverageTimeDataBlock
-                            data={dataBlockValues?.totalRepos}
-                            lastScore={ dataBlockValues?.prevData}
-                            icon={getIcon(dataBlockValues?.repoTrend?.trend)}
-                            className={getIconColor(dataBlockValues?.repoTrend?.trend)}
+                            data={smartTimeFormatter(dataBlockValues[0]?.meanPullRequestTime, "minutes")?.formattedString}
+                            lastScore={smartTimeFormatter(dataBlockValues[0]?.prevData, "minutes")?.formattedString}
+                            icon={getIcon(dataBlockValues[0]?.repoTrend?.trend)}
+                            className={getIconColor(dataBlockValues[0]?.repoTrend?.trend)}
                         />
                 </Col>
             </Row></>);
@@ -163,7 +162,7 @@ function GithubMergedPullRequestAverageTime({
             return(
                 <div className="new-chart p-0" style={{height: "150px"}}>
                     <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
-                        Number of Repositories{" "}
+                        Average Time to Merge{" "}
                         <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
                     </div>
                     <ResponsiveLine
@@ -174,13 +173,13 @@ function GithubMergedPullRequestAverageTime({
                         yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}
                         axisLeft={{
                             tickValues: [0, maxVal],
-                            legend: 'Number of Repositories',
+                            legend: 'Average Time to Merge',
                             legendOffset: -38,
                             legendPosition: 'middle'
                         }}
                         tooltip={(node) => (
                             <ChartTooltip
-                                titles={["Date", "Number of Repositories"]}
+                                titles={["Date", "Average Time to Merge"]}
                                 values={[node.point.data.x, node.point.data.y]}
                             />
                         )}
