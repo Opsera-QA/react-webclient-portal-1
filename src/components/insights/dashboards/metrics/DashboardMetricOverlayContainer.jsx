@@ -42,7 +42,7 @@ import JiraMeanTimeToResolutionEditorPanel
 import JiraChangeFailureRateEditorPanel from "components/insights/charts/jira/line_chart/change_failure_rate/JiraChangeFailureRateEditorPanel";
 import GitlabPipelineStatisticsEditorPanel
   from "../../charts/gitlab/line_chart/pipeline-statistics/GitlabPipelineStatisticsEditorPanel";
-  // from "../../charts/jira/line_chart/change_failure_rate/JiraChangeFailureRateEditorPanel";
+import GithubCommitFrequencyEditorPanel from '../../charts/github/line_chart/commits_frequency/GithubCommitFrequencyEditorPanel';
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
@@ -305,6 +305,16 @@ function DashboardMetricOverlayContainer(
       case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
         return(
           <JiraChangeFailureRateEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_COMMIT_FREQUENCY:
+        return(
+          <GithubCommitFrequencyEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}

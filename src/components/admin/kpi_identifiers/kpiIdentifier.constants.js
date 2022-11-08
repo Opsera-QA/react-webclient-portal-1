@@ -40,6 +40,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   FIRST_PASS_YIELD: "first-pass-yield",
 
   // Github
+  GITHUB_COMMIT_FREQUENCY: "github-commit-frequency",
   GITHUB_COMMITS_BY_AUTHOR: "github-commits-by-author",
   GITHUB_MERGE_REQUESTS_BY_USER: "github-merge-requests-by-user",
   GITHUB_MERGE_REQUESTS_PUSHES_AND_COMMENTS:

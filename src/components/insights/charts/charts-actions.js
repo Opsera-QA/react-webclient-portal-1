@@ -260,6 +260,35 @@ chartsActions.getGithubTotalCommitsMetrics = async (
   );
 };
 
+chartsActions.getGithubCommitFrequency = async ({
+  getAccessToken,
+  cancelTokenSource,
+  kpiConfiguration,
+}) => {
+  const apiUrl = "/analytics/github/v1/githubCommitFrequency";
+
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+
+  const tags = getTagsFromKpiConfiguration(kpiConfiguration);
+
+  const finalTags = !useKpiTags || !tags ? [] : tags;
+
+  const postBody = {
+    ...(date?.start && { startDate: date.start }),
+    ...(date?.end && { endDate: date.end }),
+    tags: finalTags,
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 chartsActions.getGitCustodianFilters = async (
   getAccessToken,
   cancelTokenSource,

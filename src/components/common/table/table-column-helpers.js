@@ -51,7 +51,7 @@ import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/o
 export const getDataObjectFromTableRow = (row) => {
   try {
     return DataParsingHelper.parseObject(row?.data[row?.row?.index], {});
-  }catch (error) {
+  } catch (error) {
     return {};
   }
 };
@@ -396,7 +396,12 @@ export const getAssociatedPipelineStatusIcon = (pipelineStatus) => {
       );
     case "queued":
     case "pending":
-      return (<IconBase icon={faPauseCircle} className={"yellow"}/>);
+      return (
+        <IconBase
+          icon={faPauseCircle}
+          className={"yellow"}
+        />
+      );
     case "stopped":
     case "halted":
       return (
@@ -743,9 +748,11 @@ export const getPipelineActivityStatusColumn = (field, className) => {
       if (!parsedText) {
         return (
           <span>
-          <i className={"fal fa-question-circle cell-icon vertical-align-item"} />
-          <span className={"ml-1"}>Unknown</span>
-        </span>
+            <i
+              className={"fal fa-question-circle cell-icon vertical-align-item"}
+            />
+            <span className={"ml-1"}>Unknown</span>
+          </span>
         );
       }
 
@@ -756,11 +763,15 @@ export const getPipelineActivityStatusColumn = (field, className) => {
         </span>
       );
     },
-    class: className ? className : undefined
+    class: className ? className : undefined,
   };
 };
 
-export const getUppercaseTableTextColumn = (field, className, maxWidth = undefined ) => {
+export const getUppercaseTableTextColumn = (
+  field,
+  className,
+  maxWidth = undefined,
+) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
@@ -768,10 +779,9 @@ export const getUppercaseTableTextColumn = (field, className, maxWidth = undefin
       return capitalizeFirstLetter(value);
     },
     class: className,
-    maxWidth: maxWidth
+    maxWidth: maxWidth,
   };
 };
-
 
 // TODO: Should we show nothing if not === false?
 export const getTableBooleanIconColumn = (field, className) => {
@@ -946,14 +956,8 @@ export const getGitCustodianExternalLinkIconColumnDefinition = (
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
-<<<<<<< HEAD
     Cell: function getPageLink(row) {
       return row?.value?.url ? (
-=======
-    Cell: function getPageLink(row){
-      return row?.value?.url ?
-      (
->>>>>>> 2134665b5e5a9d73e7c9ba88d40693b3f1fcf5a3
         <PageLinkIcon
           pageLink={row?.value?.url}
           externalLink={true}
@@ -967,35 +971,39 @@ export const getGitCustodianExternalLinkIconColumnDefinition = (
   };
 };
 
-<<<<<<< HEAD
-export const getGitCustodianScmLinkIconColumnDefinition = (
-  field,
+export const getUserObjectRoleLevelColumnDefinition = (
+  userObject,
   className,
 ) => {
-=======
-export const getUserObjectRoleLevelColumnDefinition = (userObject, className) => {
   return {
     Header: "Assigned Role",
     accessor: "row",
-    Cell: function getPageLink(row){
+    Cell: function getPageLink(row) {
       const parsedUserObject = DataParsingHelper.parseObject(userObject);
 
       if (!parsedUserObject) {
         return "";
       }
 
-      const parsedEmail = DataParsingHelper.parseEmailAddress(parsedUserObject.email);
-      const parsedUserGroups = DataParsingHelper.parseArray(parsedUserObject.groups);
+      const parsedEmail = DataParsingHelper.parseEmailAddress(
+        parsedUserObject.email,
+      );
+      const parsedUserGroups = DataParsingHelper.parseArray(
+        parsedUserObject.groups,
+      );
 
       const object = getDataObjectFromTableRow(row);
       const objectRoles = DataParsingHelper.parseArray(object?.roles, []);
       const parsedRole = ObjectAccessRoleHelper.calculateUserObjectRole(
         parsedEmail,
         parsedUserGroups,
-        objectRoles
+        objectRoles,
       );
 
-      return (DataParsingHelper.parseString(ObjectAccessRoleHelper.getLabelForAccessRole(parsedRole), ""));
+      return DataParsingHelper.parseString(
+        ObjectAccessRoleHelper.getLabelForAccessRole(parsedRole),
+        "",
+      );
     },
     class: className,
   };
@@ -1005,7 +1013,7 @@ export const getGroupRoleLevelColumnDefinition = (group, className) => {
   return {
     Header: "Assigned Role",
     accessor: "row",
-    Cell: function getPageLink(row){
+    Cell: function getPageLink(row) {
       const parsedGroup = DataParsingHelper.parseString(group);
 
       if (!parsedGroup) {
@@ -1018,14 +1026,19 @@ export const getGroupRoleLevelColumnDefinition = (group, className) => {
         object,
       );
 
-      return (DataParsingHelper.parseString(ObjectAccessRoleHelper.getLabelForAccessRole(parsedRole), ""));
+      return DataParsingHelper.parseString(
+        ObjectAccessRoleHelper.getLabelForAccessRole(parsedRole),
+        "",
+      );
     },
     class: className,
   };
 };
 
-export const getGitCustodianScmLinkIconColumnDefinition = (field, className) => {
->>>>>>> 2134665b5e5a9d73e7c9ba88d40693b3f1fcf5a3
+export const getGitCustodianScmLinkIconColumnDefinition = (
+  field,
+  className,
+) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),

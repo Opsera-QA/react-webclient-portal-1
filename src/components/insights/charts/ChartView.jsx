@@ -83,6 +83,7 @@ import GitlabPipelineStatistics from "./gitlab/line_chart/pipeline-statistics/Gi
 import ProjectWiseUnitTestResults from './unit_tests/project_wise_results/ProjectWiseUnitTestResults';
 
 // Github KPIs
+import GithubCommitFrequency from "./github/line_chart/commits_frequency/GithubCommitFrequency";
 import GithubMergeRequestsByUser from "./github/bar_chart/merge_requests_by_user/GithubMergeRequestsByUserChart";
 import GithubMergeRequestsPushesAndComments from "./github/calendar_chart/merge_requests_pushes_and_comments/GithubMergeRequestsPushesAndComments";
 import GithubTotalCommitsByProjectChart from "./github/pie_chart/total_commits_by_project/GithubTotalCommitsByProjectChart";
@@ -1165,6 +1166,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return <MetricbeatOutNetworkTrafficByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)} />;
 
       // Github KPIs
+      case "github-commit-frequency":
+        return (
+          <Col md={12} className="p-2">
+            <GithubCommitFrequency
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       case "github-merge-requests-by-user":
         return (
           <Col xl={6} md={12} className="p-2">
