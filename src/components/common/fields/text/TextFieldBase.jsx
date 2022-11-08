@@ -5,7 +5,7 @@ import FieldLabel from "components/common/fields/FieldLabel";
 import CopyToClipboardIcon from "components/common/icons/CopyToClipboardIcon";
 
 function TextFieldBase({dataObject, fieldName, className, showClipboardButton, visible }) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
 
   const getClipboardButton = () => {
     if (showClipboardButton === true) {
