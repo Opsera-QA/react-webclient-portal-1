@@ -97,6 +97,8 @@ import LeadTimeAndReleaseTraceabilityDataBlock
     from "./github_actions/data_blocks/LeadTimeAndReleaseTraceabilityDataBlock";
 import GithubActionsWorkflowChart from "./github_actions/workflows/GithubActionsWorkflowChart";
 import GithubPendingMergeRequests from "./github/table/pending_merge_requests/GithubPendingMergeRequests";
+import GithubMergedPullRequestAverageTime from "./github/line_chart/merged_pull_request_average_time/GithubMergedPullRequestAverageTime";
+import GithubOpenPullRequestAverageTime from "./github/line_chart/open_pull_request_average_time/GithubOpenPullRequestAverageTime";
 
 // Bitbucket KPIs
 import BitbucketMostActiveContributors from "./bitbucket/table/bitbucket_most_active_contributors/BitbucketMostActiveContributors";
@@ -1351,10 +1353,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               />
           </Col>
           );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_PULL_REQUEST_AVERAGE_TIME:
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_MERGED_PULL_REQUEST_AVERAGE_TIME:
         return (
           <Col md={12} className="p-2">
-            <LeadTimeAndReleaseTraceabilityDataBlock
+            <GithubMergedPullRequestAverageTime
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1388,18 +1390,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
                     />
                 </Col>
             );
-        case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_MERGED_PULL_REQUEST:
-            return (
-                <Col md={12} className="p-2">
-                    <GithubMergedPullRequestStatistics
-                        kpiConfiguration={kpiConfig}
-                        setKpiConfiguration={setKpiConfig}
-                        dashboardData={dashboardData}
-                        setKpis={setKpis}
-                        index={index}
-                    />
-                </Col>
-            );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_OPEN_PULL_REQUEST_AVERAGE_TIME:
+          return (
+              <Col md={12} className="p-2">
+                  <GithubOpenPullRequestAverageTime
+                      kpiConfiguration={kpiConfig}
+                      setKpiConfiguration={setKpiConfig}
+                      dashboardData={dashboardData}
+                      setKpis={setKpis}
+                      index={index}
+                  />
+              </Col>
+      );
       case "github-connected-assets":
         return (
           <Col md={12} className="p-2">

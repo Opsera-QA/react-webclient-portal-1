@@ -53,7 +53,10 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   GITHUB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW:
     "github-time-taken-to-complete-merge-request-review",
   GITHUB_TOTAL_COMMITS_BY_PROJECT: "github-total-commits-by-project",
-  GITHUB_PULL_REQUEST_AVERAGE_TIME: "github-pull-request-average-time",
+  GITHUB_MERGED_PULL_REQUEST_AVERAGE_TIME:
+    "github-merged-pull-requests-average-time",
+  GITHUB_OPEN_PULL_REQUEST_AVERAGE_TIME:
+    "github-open-pull-requests-average-time",
 
   // Gitlab
   GITLAB_COMMITS_BY_AUTHOR: "gitlab-commits-by-author",
