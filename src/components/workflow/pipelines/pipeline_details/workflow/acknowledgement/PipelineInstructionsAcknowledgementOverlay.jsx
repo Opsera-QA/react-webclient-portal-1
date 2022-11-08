@@ -94,6 +94,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
       <>
         <PipelineInstructionsFieldBase
           showInstructions={true}
+          allowEditing={true}
           pipelineInstructionsModel={pipelineInstructionsModel}
           pipelineInstructionsId={userActionsStepModel?.getData("pipelineInstructionsId")}
           setPipelineInstructionsModel={setPipelineInstructionsModel}
