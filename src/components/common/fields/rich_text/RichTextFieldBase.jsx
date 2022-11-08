@@ -11,6 +11,7 @@ export default function RichTextFieldBase (
     minimumHeight,
     maximumHeight,
     isLoading,
+    titleRightSideButtons,
   }) {
   return (
     <InfoContainer
@@ -19,6 +20,7 @@ export default function RichTextFieldBase (
       minimumHeight={minimumHeight}
       maximumHeight={maximumHeight}
       isLoading={isLoading}
+      titleRightSideButton={titleRightSideButtons}
     >
       <RichTextInputBase
         disabled={true}
@@ -34,4 +36,5 @@ RichTextFieldBase.propTypes = {
   minimumHeight: PropTypes.string,
   maximumHeight: PropTypes.string,
   isLoading: PropTypes.bool,
+  titleRightSideButtons: PropTypes.any,
 };

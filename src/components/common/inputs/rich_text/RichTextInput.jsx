@@ -16,6 +16,7 @@ export default function RichTextInput(
     minimumHeight,
     maximumHeight,
     disabled,
+    titleRightSideButton,
   }) {
   const field = model?.getFieldById(fieldName);
   const [error, setError] = useState(undefined);
@@ -45,6 +46,7 @@ export default function RichTextInput(
         titleText={model?.getLabel(fieldName)}
         maximumHeight={maximumHeight}
         minimumHeight={minimumHeight}
+        titleRightSideButton={titleRightSideButton}
       >
         <RichTextInputBase
           value={model?.getData(fieldName)}
@@ -71,4 +73,5 @@ RichTextInput.propTypes = {
   minimumHeight: PropTypes.string,
   maximumHeight: PropTypes.string,
   disabled: PropTypes.bool,
+  titleRightSideButton: PropTypes.any,
 };
