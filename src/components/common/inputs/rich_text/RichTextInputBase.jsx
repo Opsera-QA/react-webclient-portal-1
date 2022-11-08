@@ -35,6 +35,7 @@ export default function RichTextInputBase (
           readOnly={true}
           defaultValue={DataParsingHelper.parseJson(value)}
           logLevel={"ERROR"}
+          tools={EDITOR_JS_TOOLS}
         />
       </div>
     );
