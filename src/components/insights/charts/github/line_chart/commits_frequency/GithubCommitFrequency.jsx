@@ -74,31 +74,90 @@ function GithubCommitFrequency({
         throw new Error('Invalid API response');
       }
 
-      // determine totals commits per day
+      // determine totals commits per time unit
       const commits = {};
 
       const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
 
-      if (dateRange && dateRange.start && dateRange.end) {
-        const startDate = moment(dateRange.start);
-        const endDate = moment(dateRange.end);
-        for (let date = startDate; date < endDate; date.add(1, "days")) {
-          commits[date.format("YYYY-MM-DD")] = {
-            total: 0,
-            byRepo: {}
-          };
-        }
+      const startDate = moment(dateRange.start);
+      const endDate = moment(dateRange.end);
+
+      // TODO: create buckets of dates based on length of date range
+      // <= 8 days, days
+      // <= 91 days, weeks
+      // <= 366 days, months
+
+      let dateUnit = "days";
+      const dateDifference = endDate.diff(startDate, "days");
+
+      if (dateDifference <= 8) {
+        dateUnit = "days";
+      } else if (dateDifference <= 91) {
+        dateUnit = "week";
+      } else {
+        dateUnit = "month";
+      }
+
+      // const firstBucket = dateUnit === 'days' ? startDate : moment(startDate).add(1, dateUnit);
+
+
+      for (let date = startDate; date.isBefore(endDate); date.add(1, dateUnit)) {
+        commits[date.format("YYYY-MM-DD")] = {
+          total: 0,
+          title: '0 commits',
+          byRepo: {}
+        };
+      }
+
+      if (!commits[endDate.format("YYYY-MM-DD")]) {
+        commits[endDate.format("YYYY-MM-DD")] = {
+          total: 0,
+          title: '0 commits',
+          byRepo: {}
+        };
       }
       
-      data.byDate.forEach(({ _id: { year, month, day, repositoryName }, count }) => {
+      data.byDate.forEach(({ _id: { year, month, day, repositoryId, repositoryName }, count }) => {
         const date = `${year}-${month}-${day}`;
-        commits[date].total += count;
-        commits[date].byRepo[repositoryName] = count;
+
+        let previousDate = startDate.format("YYYY-MM-DD");
+        let dateBucket = null;
+
+        for (let bucket of Object.keys(commits)) {
+          const bucketDate = moment(bucket);
+
+          if (moment(date).isSameOrBefore(bucketDate)) {
+            dateBucket = bucket;
+            break;
+          }
+
+          previousDate = bucket;
+        }
+
+        commits[dateBucket].total += count;
+
+        commits[dateBucket].title = `${commits[dateBucket].total} total commits ${dateUnit !== "days" ? `between ${previousDate} and` : 'on'} ${dateBucket}`;
+
+        if (commits[dateBucket].byRepo[repositoryId]) {
+          commits[dateBucket].byRepo[repositoryId].count += count;
+        } else {
+          commits[dateBucket].byRepo[repositoryId] = {
+            name: repositoryName,
+            count
+          };
+        }
       });
 
-      setChartData(Object.keys(commits).map(date => ({ x: date, y: commits[date].total, byRepo: commits[date].byRepo })));
+      const formattedChartDate = Object.keys(commits).map(date => ({
+        x: date,
+        y: commits[date].total,
+        byRepo: commits[date].byRepo,
+        title: commits[date].title
+      }));
 
-      setTotalCount(data.total[0].totalCount);
+      setChartData(formattedChartDate);
+
+      setTotalCount(data && data.total.length > 0 ? data.total[0].totalCount : 0);
 
       // determine author with most commits
       let maxAuthorCommits = Number.MIN_SAFE_INTEGER;
@@ -126,6 +185,8 @@ function GithubCommitFrequency({
           repositoryWithMaxCommits = repository.repositoryName;
         }
       }
+      minRepositoryCommits = minRepositoryCommits === Number.MAX_SAFE_INTEGER ? 0 : minRepositoryCommits;
+      maxRepositoryCommits = maxRepositoryCommits === Number.MIN_SAFE_INTEGER ? 0 : maxRepositoryCommits;
       setMinCommitRepository(repositoryWithMinCommits);
       setMinCommitRepositoryValue(minRepositoryCommits);
       setMaxCommitRepository(repositoryWithMaxCommits);

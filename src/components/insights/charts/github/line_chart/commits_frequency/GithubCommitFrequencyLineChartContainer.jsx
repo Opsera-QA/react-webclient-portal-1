@@ -56,15 +56,15 @@ function GithubCommitFrequencyLineChartContainer({ data }) {
           }}
           sliceTooltip={({ slice }) => (
             <div style={{ background: 'white', borderStyle: 'solid', borderWidth: 'thin', borderRadius: '0.25rem', padding: '0.5rem' }}>
-              {slice.points.map(({ data: { x, y, byRepo }, serieColor }) => (
-                <>
-                  <div>{y} total commits on {x}</div>
+              {slice.points.map(({ id, data: { title, x, byRepo }, serieColor }) => (
+                <div key={id}>
+                  <div>{title}</div>
                   {Object.keys(byRepo).map((key) => (
                     <div key={key} style={{ color: serieColor }}>
-                      <strong>{key}</strong> [{byRepo[key]}]
+                      <strong>{byRepo[key].name}</strong> [{byRepo[key].count}]
                     </div>
                   ))}
-                </>
+                </div>
               ))}
             </div>
           )}
