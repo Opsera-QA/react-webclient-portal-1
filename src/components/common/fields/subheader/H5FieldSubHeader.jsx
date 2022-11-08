@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function H5FieldSubHeader(
   {
@@ -8,6 +9,10 @@ function H5FieldSubHeader(
     tooltipText,
     className,
   }) {
+  if (hasStringValue(subheaderText) !== true) {
+    return null;
+  }
+
   return (
     <TooltipWrapper innerText={tooltipText}>
       <div>

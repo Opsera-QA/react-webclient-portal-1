@@ -8,7 +8,7 @@ import CancelButton from "components/common/buttons/CancelButton";
 import StandaloneSaveButton from "components/common/buttons/saving/StandaloneSaveButton";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
-import MessageField from "components/common/fields/text/MessageField";
+import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 import MembersPanel from "components/common/inputs/user/membership/manager/user_panel/MembersPanel";
 import NonMembersPanel
@@ -242,7 +242,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
         <div><h5>Add or remove Members from the {ldapGroupData.getData("name")} {type}</h5></div>
       </Row>
       <Row>
-        <MessageField
+        <MessageFieldBase
           message={` 
             Manage ${type} membership below by adding items from the left column into the right or removing members from the right column.  
             Changes must be saved before being complete. ${type} membership changes take effect after the User logs back in.
