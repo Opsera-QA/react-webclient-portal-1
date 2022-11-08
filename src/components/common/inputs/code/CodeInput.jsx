@@ -139,7 +139,6 @@ function CodeInput(
         <div style={{height: height}}>
           {getBody()}
         </div>
-        <div className={"object-properties-footer"}/>
       </InfoContainer>
       <InfoText
         field={field}

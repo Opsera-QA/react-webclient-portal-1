@@ -47,7 +47,6 @@ function VanitySetTabAndViewContainer(
         overflowYContainerStyle={overflowYContainerStyle}
         overflowYBodyStyle={overflowYBodyStyle}
       />
-      <div className={"object-properties-footer"}/>
     </InfoContainer>
   );
 }

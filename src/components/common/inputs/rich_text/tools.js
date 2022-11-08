@@ -1,5 +1,5 @@
 // import Embed from '@editorjs/embed'
-// import Table from '@editorjs/table'
+import Table from '@editorjs/table';
 import List from '@editorjs/list';
 // import Warning from '@editorjs/warning'
 // import Code from '@editorjs/code'
@@ -17,7 +17,7 @@ import List from '@editorjs/list';
 // TODO: Install and implement some of these when ready
 export const EDITOR_JS_TOOLS = {
   // embed: Embed,
-  // table: Table,
+  table: Table,
   list: List,
   // warning: Warning,
   // code: Code,
