@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import PropTypes from "prop-types";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import PipelineHelpers from "components/workflow/pipelineHelpers";
@@ -7,7 +7,7 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import modelHelpers from "components/common/model/modelHelpers";
 import {
-  userActionsPipelineStepMetadata
+  userActionsPipelineStepMetadata,
 } from "components/workflow/plan/step/user_actions/userActionsPipelineStep.metadata";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import AcknowledgePipelineInstructionsButton
@@ -34,7 +34,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
   const toolIdentifier = PipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
   const configuration = DataParsingHelper.parseNestedObject(approvalStep, "tool.configuration");
   const userActionsStepModel = modelHelpers.parseObjectIntoModel(configuration, userActionsPipelineStepMetadata);
-  const [acknowledgementModel, setAcknowledgementModel] = useState(modelHelpers.parseObjectIntoModel(configuration, pipelineUserActionAcknowledgementMetadata));
+  const [acknowledgementModel, setAcknowledgementModel] = useState(modelHelpers.getNewModelForMetadata(pipelineUserActionAcknowledgementMetadata, false));
   const {
     toastContext,
   } = useComponentStateReference();
@@ -85,7 +85,8 @@ export default function PipelineInstructionsAcknowledgementOverlay(
     if (isLoading !== true && pipelineInstructionsModel == null) {
       return (
         <div>
-          There was no Pipeline Instructions associated with the User Actions step, the instructions have been deleted, or you do not have access to them.
+          There was no Pipeline Instructions associated with the User Actions step, the instructions have been deleted,
+          or you do not have access to them.
         </div>
       );
     }
@@ -135,7 +136,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
 
 PipelineInstructionsAcknowledgementOverlay.propTypes = {
   loadPipelineFunction: PropTypes.func,
-  pipeline: PropTypes.object
+  pipeline: PropTypes.object,
 };
 
 
