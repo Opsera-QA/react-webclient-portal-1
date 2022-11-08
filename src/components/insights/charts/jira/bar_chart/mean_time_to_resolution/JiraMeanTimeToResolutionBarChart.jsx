@@ -27,6 +27,7 @@ import JiraMTTRDataBlock from "../../data_blocks/JiraMTTRDataBlock";
 import JiraMTTRChartHelpDocumentation
   from "../../../../../common/help/documentation/insights/charts/JiraMTTRChartHelpDocumentation";
 import {getReverseTrend, getReverseTrendIcon, getTrend, getTrendIcon} from "../../../charts-helpers";
+import BadgeBase from "../../../../../common/badges/BadgeBase";
 
 function JiraMeanTimeToResolutionBarChart({
   kpiConfiguration,
@@ -46,6 +47,9 @@ function JiraMeanTimeToResolutionBarChart({
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [dataBlock, setDataBlock] = useState({});
+  const [tickValues, setTickValues] = useState([]);
+  const [tickValues2, setTickValues2] = useState([]);
+
   const [goalsData, setGoalsData] = useState(undefined);
   const [lastFiveDays, setLastFiveDays] = useState(0);
   const [fiveToFifteenDays, setFiveToFifteenDays] = useState(0);
@@ -421,9 +425,10 @@ function JiraMeanTimeToResolutionBarChart({
                     "wholeNumbers",
                     "monthDate2",
                   )}
-                  {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
+                  {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY,0)}
                   {...adjustBarWidth(metrics)}
                   // onClick={(data) => onRowSelect(data)}
+                  valueScale={{ type:'symlog'}}
                   tooltip={({ indexValue, value, data, color }) => (
                     <ChartTooltip
                       titles={[
@@ -440,7 +445,6 @@ function JiraMeanTimeToResolutionBarChart({
                       // color={color}
                     />
                   )}
-                  markers={[]}
                 />
               </Col>
             )}
@@ -462,7 +466,8 @@ function JiraMeanTimeToResolutionBarChart({
                     false,
                     "wholeNumbers",
                   )}
-                  {...config2(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
+                  {...config2(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY,0)}
+                  valueScale={{ type:'symlog'}}
                   {...adjustBarWidth(sevMetrics)}
                   // onClick={(data) => onRowSelect(data)}
                   tooltip={({ indexValue, value }) => (
@@ -479,6 +484,7 @@ function JiraMeanTimeToResolutionBarChart({
           </Row>
         </div>
         {/*<div className="ml-2 p-0">{getMetricTopRow()}</div>*/}
+        <BadgeBase className={"mx-2"} badgeText={"Note: Results fetched are based on UTC timezone of selected dates"} />
       </>
     );
   };

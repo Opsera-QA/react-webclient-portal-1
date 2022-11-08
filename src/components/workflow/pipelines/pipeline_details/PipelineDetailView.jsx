@@ -202,6 +202,7 @@ function PipelineDetailView() {
             ownerName={pipeline?.owner_name}
             setWorkflowStatus={setWorkflowStatus}
             fetchPlan={fetchPlan}
+            isLoading={softLoading || isLoading}
           />
         </div>
         <div className="max-content-width-1875">
