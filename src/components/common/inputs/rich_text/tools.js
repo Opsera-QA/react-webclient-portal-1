@@ -1,8 +1,6 @@
-// tools.js
 // import Embed from '@editorjs/embed'
 // import Table from '@editorjs/table'
-import Paragraph from '@editorjs/paragraph';
-// import List from '@editorjs/list'
+import List from '@editorjs/list';
 // import Warning from '@editorjs/warning'
 // import Code from '@editorjs/code'
 // import LinkTool from '@editorjs/link'
@@ -18,11 +16,9 @@ import Paragraph from '@editorjs/paragraph';
 
 // TODO: Install and implement some of these when ready
 export const EDITOR_JS_TOOLS = {
-  // NOTE: Paragraph is default tool. Declare only when you want to change paragraph option.
-  // paragraph: Paragraph,
   // embed: Embed,
   // table: Table,
-  // list: List,
+  list: List,
   // warning: Warning,
   // code: Code,
   // linkTool: LinkTool,
