@@ -541,7 +541,7 @@ a.text-primary:hover, a.text-primary:focus {
 /* End Table Styling */
 /* End custom table styling */
 
-.message-field {
+.message-field, .pipeline-task-message {
     background-color: #f2f4f8;
 }
 
@@ -1574,10 +1574,6 @@ div.data-blocks-ellipses {
 /* Pipeline Summary Card styling */
 .pipeline-summary-card .card-footer {
     padding: 5px;
-}
-
-.pipeline-task-message {
-    background-color: #f2f4f8;
 }
 
 /* End Pipeline Summary Card styling */

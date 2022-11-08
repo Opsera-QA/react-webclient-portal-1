@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import FieldContainer from "components/common/fields/FieldContainer";
+import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
 
 export default function PipelineTaskSummaryMessageField(
   {
@@ -21,12 +20,11 @@ export default function PipelineTaskSummaryMessageField(
   }
 
   return (
-    <FieldContainer className={className}>
-      <H5FieldSubHeader subheaderText={label} />
-      <div className={"p-3 text-muted italic pipeline-task-message"}>
-        {getMessage()}
-      </div>
-    </FieldContainer>
+    <MessageFieldBase
+      className={className}
+      label={label}
+      message={getMessage()}
+    />
   );
 }
 

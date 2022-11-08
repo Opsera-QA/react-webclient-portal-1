@@ -6,7 +6,7 @@ export const userActionsPipelineStepMetadata = {
       id: "sendCustomMessage",
     },
     {
-      label: "Custom Step Message",
+      label: "Custom Notification Message",
       id: "message",
       maxLength: 500,
       formText: "Provide the step specific message to include in the acknowledgement notification.",
