@@ -89,7 +89,6 @@ function JsonInput(
           <div>
             {getBody()}
           </div>
-          <div className={"object-properties-footer"}/>
         </div>
         <InfoText
           fieldName={fieldName}
