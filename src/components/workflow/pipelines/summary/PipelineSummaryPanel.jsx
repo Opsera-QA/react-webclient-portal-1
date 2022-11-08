@@ -13,7 +13,7 @@ import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import { AuthContext } from "contexts/AuthContext";
 import InformationDialog from "components/common/status_notifications/info";
-import PipelineActionControls from "components/workflow/pipelines/pipeline_details/PipelineActionControls";
+import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
 import PipelineSummaryActionBar from "components/workflow/pipelines/summary/action_bar/PipelineSummaryActionBar";
 import EditTagModal from "components/workflow/EditTagModal";
 import pipelineActions from "components/workflow/pipeline-actions";

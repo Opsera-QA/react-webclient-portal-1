@@ -1,27 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
+import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 import { Button } from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
-import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 
-export default function VanityButtonBase(
+// TODO: When all action buttons are converted to this, use VanityButtonBase instead
+export default function PipelineActionControlButtonBase(
   {
-    buttonState,
-    onClickFunction,
-    icon,
+    tooltipText,
     variant,
+    icon,
+    onClickFunction,
     disabled,
-    className,
     normalText,
     busyText,
-    successText,
     errorText,
-    tooltip,
-    buttonSize,
-    buttonClassName,
+    successText,
+    buttonState,
   }) {
-
   const getLabel = () => {
     return buttonLabelHelper.getLabelForStatus(
       buttonState,
@@ -51,17 +48,16 @@ export default function VanityButtonBase(
   }
 
   return (
-    <div className={className}>
-      <ButtonTooltip
-        innerText={tooltip}
+    <ButtonTooltip
+      innerText={tooltipText}
+    >
+      <Button
+        disabled={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY || disabled === true}
+        onClick={onClickFunction}
+        variant={getButtonVariant()}
+        size={"sm"}
+        className={"btn-default"}
       >
-        <Button
-          disabled={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY || disabled === true}
-          onClick={onClickFunction}
-          variant={getButtonVariant()}
-          size={buttonSize}
-          className={buttonClassName}
-        >
           <span>
             <IconBase
               isLoading={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY}
@@ -70,28 +66,20 @@ export default function VanityButtonBase(
             />
             {getLabel()}
           </span>
-        </Button>
-      </ButtonTooltip>
-    </div>
+      </Button>
+    </ButtonTooltip>
   );
 }
 
-VanityButtonBase.propTypes = {
-  buttonState: PropTypes.string,
-  icon: PropTypes.object,
-  onClickFunction: PropTypes.func,
+PipelineActionControlButtonBase.propTypes = {
+  tooltipText: PropTypes.string,
   variant: PropTypes.string,
+  onClickFunction: PropTypes.func,
   disabled: PropTypes.bool,
-  className: PropTypes.string,
+  icon: PropTypes.object,
   normalText: PropTypes.string,
   busyText: PropTypes.string,
-  successText: PropTypes.string,
   errorText: PropTypes.string,
-  tooltip: PropTypes.any,
-  buttonSize: PropTypes.any,
-  buttonClassName: PropTypes.string,
-};
-
-VanityButtonBase.defaultProps = {
-  buttonState: buttonLabelHelper.BUTTON_STATES.READY,
+  successText: PropTypes.string,
+  buttonState: PropTypes.string,
 };

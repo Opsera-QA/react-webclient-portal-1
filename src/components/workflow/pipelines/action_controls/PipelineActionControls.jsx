@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
-import StepApprovalOverlay from "components/workflow/StepApprovalOverlay";
-import PipelineStartWizard from "./PipelineStartWizard";
 import PipelineHelpers from "../../pipelineHelpers";
 import PipelineActions from "../../pipeline-actions";
 import {
@@ -11,7 +9,7 @@ import {
   faSpinner,
   faStopCircle,
   faRedo,
-  faFlag, faInfoCircle, faRepeat1, faClock,
+  faInfoCircle, faRepeat1, faClock,
 } from "@fortawesome/pro-light-svg-icons";
 import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
 import CancelPipelineQueueConfirmationOverlay
@@ -26,9 +24,9 @@ import SapCpqPipelineRunAssistantOverlay from "../../run_assistants/sap_cpq/SapC
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
-import PipelineInstructionsAcknowledgementOverlay
-  from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import PipelineStartWizard from "components/workflow/pipelines/pipeline_details/PipelineStartWizard";
+import PipelineUserApprovalButton from "components/workflow/pipelines/action_controls/PipelineUserApprovalButton";
 
 const delayCheckInterval = 15000;
 let internalRefreshCount = 1;
@@ -177,27 +175,6 @@ function PipelineActionControls(
     await checkPipelineQueueStatus();
   };
 
-  const handleApprovalClick = () => {
-    const approvalStep = PipelineHelpers.getPendingApprovalStep(pipeline);
-    const approvalStepToolIdentifier = PipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
-
-    if (approvalStepToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION) {
-      toastContext.showOverlayPanel(
-        <PipelineInstructionsAcknowledgementOverlay
-          pipeline={pipeline}
-          loadDataFunction={fetchData}
-        />,
-      );
-    } else {
-      toastContext.showOverlayPanel(
-        <StepApprovalOverlay
-          pipelineId={pipeline?._id}
-          loadPipelineFunction={fetchData}
-        />,
-      );
-    }
-  };
-
   const handleRefreshClick = async () => {
     await fetchData();
     await checkPipelineQueueStatus();
@@ -334,12 +311,6 @@ function PipelineActionControls(
     }, delayCheckInterval);
   };
 
-  const delayResume = (pipelineId) => {
-    setTimeout(async function() {
-      await handleResumeWorkflowClick(pipelineId);
-    }, 5000);
-  };
-
   const launchPipelineStartWizard = (pipelineOrientation, pipelineType, pipelineId) => {
     //console.log("launching wizard");
     //console.log("pipelineOrientation ", pipelineOrientation);
@@ -452,9 +423,10 @@ function PipelineActionControls(
     const pipelineTags = typeof pipeline.tags !== "undefined" && pipeline.tags !== undefined ? pipeline.tags : "";
 
     let pipelineOrientation = "start";
+    const stoppedStepId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.step_id");
     //what step are we currently on in the pipeline: first, last or middle?
-    if (pipeline.workflow.last_step && pipeline.workflow.last_step.step_id) {
-      const stepIndex = PipelineHelpers.getStepIndex(pipeline, pipeline.workflow.last_step.step_id);
+    if (DataParsingHelper.isValidMongoDbId(stoppedStepId) === true) {
+      const stepIndex = PipelineHelpers.getStepIndex(pipeline, stoppedStepId);
       console.log("current resting step index: ", stepIndex);
       if (stepIndex + 1 === Object.keys(pipeline.workflow.plan).length) {
         pipelineOrientation = "end";
@@ -489,21 +461,6 @@ function PipelineActionControls(
       }
     }
   };
-
-
-  const getUserInteractionLabels = (pipeline, type) => {
-    const approvalStep = PipelineHelpers.getPendingApprovalStep(pipeline);
-    const approvalStepToolIdentifier = PipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
-
-    if (approvalStepToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION) {
-      if (type === "button") return "Acknowledge Action";
-      if (type === "tooltip") return "A user action is required before this pipeline can proceed.  Click here to see the instructions and complete the task.";
-    }
-
-    if (type === "button") return "Approve Run";
-    if (type === "tooltip") return "Approve the current pipeline run in order for it to proceed. Only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action.";
-  };
-
 
   // TODO: Make base button components for these in the future
   //  and wire up the functions inside those components to clean up PipelineActionControls
@@ -543,22 +500,10 @@ function PipelineActionControls(
             </Button>
           </>}
 
-          {workflowStatus === "paused" &&
-          <>
-            <OverlayTrigger
-              placement="top"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: getUserInteractionLabels(pipeline,"tooltip") })}>
-              <Button variant="warning"
-                      className="btn-default"
-                      size="sm"
-                      onClick={() => {
-                        handleApprovalClick();
-                      }}
-                      disabled={PipelineRoleHelper.canAuthorizeApprovalGate(userData, pipeline) !== true}>
-                  <IconBase isLoading={isLoading} icon={faFlag} className={"mr-1"} />{getUserInteractionLabels(pipeline,"button")}</Button>
-            </OverlayTrigger>
-          </>}
+          <PipelineUserApprovalButton
+            loadPipelineFunction={fetchData}
+            pipeline={pipeline}
+          />
 
           {
             (workflowStatus === "stopped" || !workflowStatus) &&
