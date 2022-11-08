@@ -40,6 +40,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
   } = useComponentStateReference();
   const {
     pipelineInstructionsModel,
+    setPipelineInstructionsModel,
     isLoading,
     error,
   } = useGetPipelineInstructionModelByPipelineStep(
@@ -95,7 +96,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
           showInstructions={true}
           pipelineInstructionsModel={pipelineInstructionsModel}
           pipelineInstructionsId={userActionsStepModel?.getData("pipelineInstructionsId")}
-          label={pipelineInstructionsModel?.getData("name")}
+          setPipelineInstructionsModel={setPipelineInstructionsModel}
           error={error}
           isLoading={isLoading}
         />

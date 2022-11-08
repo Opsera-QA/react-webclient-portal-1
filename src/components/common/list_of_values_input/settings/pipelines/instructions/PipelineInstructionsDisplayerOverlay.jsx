@@ -18,6 +18,7 @@ export default function PipelineInstructionsDisplayerOverlay(
   } = useComponentStateReference();
   const {
     pipelineInstructionsModel,
+    setPipelineInstructionsModel,
     isLoading,
     error,
   } = useGetPipelineInstructionModelById(
@@ -47,6 +48,7 @@ export default function PipelineInstructionsDisplayerOverlay(
           pipelineInstructionsId={pipelineInstructionsId}
           isLoading={isLoading}
           pipelineInstructionsModel={pipelineInstructionsModel}
+          setPipelineInstructionsModel={setPipelineInstructionsModel}
           error={error}
           // instructionsDisplayerMaximumHeight={instructionsDisplayerMaximumHeight}
           // instructionsDisplayerMinimumHeight={instructionsDisplayerMinimumHeight}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
-import Modal from "components/common/modal/modal";
 import StepApprovalOverlay from "components/workflow/StepApprovalOverlay";
 import PipelineStartWizard from "./PipelineStartWizard";
 import PipelineHelpers from "../../pipelineHelpers";
@@ -659,7 +658,7 @@ function PipelineActionControls(
                     onClick={() => {
                       handleRefreshClick();
                     }}>
-              <IconBase icon={faSync} /></Button>
+              <IconBase isLoading={isLoading} icon={faSync} /></Button>
           </OverlayTrigger>
 
         </div>
