@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabelBase from "components/common/fields/FieldLabelBase";
@@ -7,6 +7,13 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { Row } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import AccessRoleDisplayer from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayer";
+import RichTextInput from "components/common/inputs/rich_text/RichTextInput";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import StandaloneSaveButton from "components/common/buttons/saving/StandaloneSaveButton";
+import CancelButton from "components/common/buttons/CancelButton";
+import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
+import { faPencilAlt } from "@fortawesome/pro-light-svg-icons";
+import InfoContainer from "components/common/containers/InfoContainer";
 
 export default function PipelineInstructionsFieldBase(
   {
@@ -18,11 +25,15 @@ export default function PipelineInstructionsFieldBase(
     instructionsDisplayerMaximumHeight,
     showLabel,
     pipelineInstructionsModel,
+    setPipelineInstructionsModel,
     isLoading,
     error,
+    allowEditing,
   }) {
+  const [inEditMode, setInEditMode] = useState(false);
+
   const getAccessRoleDisplayerField = () => {
-    if (isLoading !== true) {
+    if (isLoading !== true && pipelineInstructionsModel != null) {
       return (
         <Col xs={12} md={4}>
           <AccessRoleDisplayer
@@ -35,23 +46,103 @@ export default function PipelineInstructionsFieldBase(
     }
   };
 
+  const handleSave = async () => {
+    const response = await pipelineInstructionsModel?.saveModel();
+    setInEditMode(false);
+    return response;
+  };
+
+  const handleCancel = () => {
+    pipelineInstructionsModel?.resetData();
+    setPipelineInstructionsModel(pipelineInstructionsModel);
+    setInEditMode(false);
+  };
+
+  const getSaveButtonContainer = () => {
+    return (
+      <ButtonContainerBase>
+        <CancelButton
+          className={"mr-2"}
+          cancelFunction={handleCancel}
+        />
+        <StandaloneSaveButton
+          saveFunction={handleSave}
+          type={"Pipeline Instructions"}
+        />
+      </ButtonContainerBase>
+    );
+  };
+
+  const getEditButton = () => {
+    if (allowEditing === true && pipelineInstructionsModel?.canUpdate() === true) {
+      return (
+        <VanityButtonBase
+          onClickFunction={() => setInEditMode(true)}
+          buttonSize={"sm"}
+          normalText={"Edit Pipeline Instructions"}
+          icon={faPencilAlt}
+          variant={"outline-primary"}
+        />
+      );
+    }
+  };
+
+  const getPipelineInstructionsComponent = () => {
+    if (setPipelineInstructionsModel && allowEditing === true && inEditMode === true && pipelineInstructionsModel?.canUpdate() === true) {
+      return (
+        <RichTextInput
+          fieldName={"instructions"}
+          model={pipelineInstructionsModel}
+          setModel={setPipelineInstructionsModel}
+          customTitle={pipelineInstructionsModel?.getData("name")}
+          minimumHeight={instructionsDisplayerMinimumHeight}
+          maximumHeight={instructionsDisplayerMaximumHeight}
+          isLoading={isLoading}
+          titleRightSideButton={getSaveButtonContainer()}
+        />
+      );
+    }
+
+    return (
+      <RichTextField
+        titleRightSideButtons={getEditButton()}
+        fieldName={"instructions"}
+        model={pipelineInstructionsModel}
+        customTitle={pipelineInstructionsModel?.getData("name")}
+        minimumHeight={instructionsDisplayerMinimumHeight}
+        maximumHeight={instructionsDisplayerMaximumHeight}
+        isLoading={isLoading}
+      />
+    );
+  };
+
   const getPipelineInstructionsField = () => {
-    if (
-      (isLoading === true || pipelineInstructionsModel !== null)
-      && showInstructions === true
-      && error == null
-    ) {
+    if (isLoading === true && pipelineInstructionsModel == null && showInstructions !== false) {
       return (
         <Row>
           <Col xs={12} lg={8}>
-            <RichTextField
-              fieldName={"instructions"}
-              model={pipelineInstructionsModel}
-              customTitle={pipelineInstructionsModel?.getData("name")}
-              minimumHeight={instructionsDisplayerMinimumHeight}
-              maximumHeight={instructionsDisplayerMaximumHeight}
-              isLoading={isLoading}
-            />
+            <FieldContainer>
+              <InfoContainer
+                isLoading={true}
+                minimumHeight={instructionsDisplayerMinimumHeight}
+                maximumHeight={instructionsDisplayerMaximumHeight}
+                titleText={"Loading Pipeline Instructions"}
+              />
+            </FieldContainer>
+          </Col>
+        </Row>
+      );
+    }
+
+    if (
+      (isLoading === true || pipelineInstructionsModel != null)
+      && showInstructions !== false
+    ) {
+
+      return (
+        <Row>
+          <Col xs={12} lg={8}>
+            {getPipelineInstructionsComponent()}
           </Col>
           {getAccessRoleDisplayerField()}
         </Row>
@@ -112,6 +203,8 @@ PipelineInstructionsFieldBase.propTypes = {
   pipelineInstructionsModel: PropTypes.object,
   isLoading: PropTypes.bool,
   error: PropTypes.any,
+  allowEditing: PropTypes.bool,
+  setPipelineInstructionsModel: PropTypes.func,
 };
 
 PipelineInstructionsFieldBase.defaultProps = {

@@ -16,6 +16,7 @@ export default function PipelineInstructionsField(
   }) {
   const {
     pipelineInstructionsModel,
+    setPipelineInstructionsModel,
     isLoading,
     error,
   } = useGetPipelineInstructionModelById(
@@ -37,6 +38,7 @@ export default function PipelineInstructionsField(
       instructionsDisplayerMaximumHeight={instructionsDisplayerMaximumHeight}
       instructionsDisplayerMinimumHeight={instructionsDisplayerMinimumHeight}
       pipelineInstructionsModel={pipelineInstructionsModel}
+      setPipelineInstructionsModel={setPipelineInstructionsModel}
       isLoading={isLoading}
       error={error}
     />
