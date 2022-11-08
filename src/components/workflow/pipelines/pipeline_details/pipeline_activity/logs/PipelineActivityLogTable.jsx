@@ -8,7 +8,6 @@ import {
 import PipelineTaskDetailViewer from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineTaskDetailViewer";
 import TableBase from "components/common/table/TableBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import PaginationHelper from "@opsera/persephone/helpers/array/pagination.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PipelineHelpers from "components/workflow/pipelineHelpers";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
@@ -26,10 +25,10 @@ function PipelineActivityLogTable(
     currentRunNumber,
     currentStepId,
     loadPipelineFunction,
+    latestPipelineLogId,
   }) {
   const toastContext = useContext(DialogToastContext);
   const fields = pipelineActivityMetadata?.fields;
-  const latestId = PaginationHelper.getLatestCreatedItemInDataArray(pipelineLogData)?._id;
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "run_count"), "cell-center no-wrap-inline", 100,),
@@ -70,7 +69,7 @@ function PipelineActivityLogTable(
           toastContext.showOverlayPanel(
             <PipelineInstructionsAcknowledgementOverlay
               pipeline={pipeline}
-              loadDataFunction={loadPipelineFunction}
+              loadPipelineFunction={loadPipelineFunction}
             />,
           );
           return;
@@ -86,7 +85,7 @@ function PipelineActivityLogTable(
   };
 
   const rowStyling = (row) => {
-    const isFinalRow = row?._id === latestId;
+    const isFinalRow = row?._id === latestPipelineLogId;
 
     if (isFinalRow) {
       const status = row?.status;
@@ -128,7 +127,7 @@ function PipelineActivityLogTable(
       data={getFilteredData()}
       noDataMessage={getNoDataMessage()}
       onRowSelect={onRowSelect}
-      // rowStyling={rowStyling}
+      rowStyling={rowStyling}
     />
   );
 }
@@ -144,6 +143,7 @@ PipelineActivityLogTable.propTypes = {
   ]),
   currentStepId: PropTypes.string,
   loadPipelineFunction: PropTypes.func,
+  latestPipelineLogId: PropTypes.string,
 };
 
 export default PipelineActivityLogTable;
