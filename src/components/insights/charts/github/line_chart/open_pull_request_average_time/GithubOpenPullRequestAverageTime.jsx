@@ -150,8 +150,8 @@ function GithubOpenPullRequestAverageTime({
             return (<><Row className={'pb-2'}>
                 <Col>
                         <GithubOpenPullRequestAverageTimeDataBlock
-                            data={smartTimeFormatter(dataBlockValues[0]?.meanPullRequestTime, "minutes")?.formattedString}
-                            lastScore={smartTimeFormatter(dataBlockValues[0]?.prevData, "minutes")?.formattedString}
+                            data={smartTimeFormatter(dataBlockValues[0]?.meanPullRequestTime, "days")?.formattedString}
+                            lastScore={smartTimeFormatter(dataBlockValues[0]?.prevData, "days")?.formattedString}
                             icon={getIcon(dataBlockValues[0]?.repoTrend?.trend)}
                             className={getIconColor(dataBlockValues[0]?.repoTrend?.trend)}
                         />
@@ -173,13 +173,13 @@ function GithubOpenPullRequestAverageTime({
                         yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}
                         axisLeft={{
                             tickValues: [0, maxVal],
-                            legend: 'Average Time Open Requests are Pending',
+                            legend: 'Duration (days)',
                             legendOffset: -38,
                             legendPosition: 'middle'
                         }}
                         tooltip={(node) => (
                             <ChartTooltip
-                                titles={["Date", "Average Time Open Requests are Pending"]}
+                                titles={["Date", "Duration (days)"]}
                                 values={[node.point.data.x, node.point.data.y]}
                             />
                         )}

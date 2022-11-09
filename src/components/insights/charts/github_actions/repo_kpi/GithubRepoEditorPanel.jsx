@@ -121,7 +121,7 @@ function GithubRepoEditorPanel(
                 metricFilterModel={metricFilterModel}
                 setMetricFilterModel={setMetricFilterModel}
             />
-            <MultiSelectInputBase
+            {/* <MultiSelectInputBase
                 dataObject={hierarchyFiltersDto}
                 setDataObject={setHierarchyFiltersDto}
                 fieldName={"filter1"}
@@ -150,14 +150,14 @@ function GithubRepoEditorPanel(
                 setDataObject={setHierarchyFiltersDto}
                 fieldName={"filter5"}
                 selectOptions={filter5Options}
-            />
+            /> */}
             {/* <MultiSelectInputBase
         dataObject={hierarchyFiltersDto}
         setDataObject={setHierarchyFiltersDto}
         fieldName={"filter6"}
         selectOptions={filter6Options}
       /> */}
-            <MultiSelectInputBase
+            {/* <MultiSelectInputBase
                 dataObject={hierarchyFiltersDto}
                 setDataObject={setHierarchyFiltersDto}
                 fieldName={"filter7"}
@@ -168,7 +168,7 @@ function GithubRepoEditorPanel(
                 setDataObject={setHierarchyFiltersDto}
                 fieldName={"filter8"}
                 selectOptions={filter8Options}
-            />
+            /> */}
         </div>
     );
 }

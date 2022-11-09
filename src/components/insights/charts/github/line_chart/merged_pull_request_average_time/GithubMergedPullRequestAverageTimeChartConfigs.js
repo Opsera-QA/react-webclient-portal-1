@@ -18,6 +18,7 @@ export default () => ({
     legendOffset: -40,
     legendPosition: "middle",
   },
+  enableArea: true,
   axisBottom: {
     format: (d) => {
       var date = new Date(d).toUTCString();

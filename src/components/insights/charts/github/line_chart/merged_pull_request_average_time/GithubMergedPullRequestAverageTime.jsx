@@ -173,13 +173,13 @@ function GithubMergedPullRequestAverageTime({
                         yScale={{ type: 'linear', min: '0', max: maxVal, stacked: false, reverse: false }}
                         axisLeft={{
                             tickValues: [0, maxVal],
-                            legend: 'Average Time to Merge',
+                            legend: 'Duration (days)',
                             legendOffset: -38,
                             legendPosition: 'middle'
                         }}
                         tooltip={(node) => (
                             <ChartTooltip
-                                titles={["Date", "Average Time to Merge"]}
+                                titles={["Date", "Duration (days)"]}
                                 values={[node.point.data.x, node.point.data.y]}
                             />
                         )}
