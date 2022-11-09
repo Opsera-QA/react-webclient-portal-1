@@ -144,6 +144,8 @@ function GitOperationStepConfiguration({
               <GitOperationReviewerSelectInput
                 setDataObject={setGitOperationModel}
                 dataObject={gitOperationModel}
+                source={gitOperationModel?.getData("source")}
+                repository={gitOperationModel?.getData("repository")}
               />
             )}
           </>
