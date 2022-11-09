@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import {
   getPipelineActivityStatusColumn,
@@ -23,12 +23,17 @@ function PipelineActivityLogTable(
     pipeline,
     pipelineActivityFilterDto,
     currentRunNumber,
+    pipelineStatus,
     currentStepId,
     loadPipelineFunction,
     latestPipelineLogId,
   }) {
   const toastContext = useContext(DialogToastContext);
   const fields = pipelineActivityMetadata?.fields;
+
+  useEffect(() => {
+  }, [pipelineLogData, pipelineStatus]);
+
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "run_count"), "cell-center no-wrap-inline", 100,),
@@ -57,14 +62,14 @@ function PipelineActivityLogTable(
     ) {
       const parsedPipelineStepToolIdentifier = PipelineHelpers.getPendingApprovalStepToolIdentifier(pipeline);
       switch (parsedPipelineStepToolIdentifier) {
-        // case toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL:
-        //   toastContext.showOverlayPanel(
-        //     <StepApprovalOverlay
-        //       pipelineId={pipeline?._id}
-        //       loadPipelineFunction={loadPipelineFunction}
-        //     />,
-        //   );
-        //   return;
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL:
+          toastContext.showOverlayPanel(
+            <StepApprovalOverlay
+              pipelineId={pipeline?._id}
+              loadPipelineFunction={loadPipelineFunction}
+            />,
+          );
+          return;
         case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
           toastContext.showOverlayPanel(
             <PipelineInstructionsAcknowledgementOverlay
@@ -134,7 +139,6 @@ function PipelineActivityLogTable(
 
 PipelineActivityLogTable.propTypes = {
   pipelineLogData: PropTypes.array,
-  pipelineActivityMetadata: PropTypes.object,
   pipeline: PropTypes.object,
   pipelineActivityFilterDto: PropTypes.object,
   currentRunNumber: PropTypes.oneOfType([
@@ -144,6 +148,7 @@ PipelineActivityLogTable.propTypes = {
   currentStepId: PropTypes.string,
   loadPipelineFunction: PropTypes.func,
   latestPipelineLogId: PropTypes.string,
+  pipelineStatus: PropTypes.any,
 };
 
 export default PipelineActivityLogTable;
