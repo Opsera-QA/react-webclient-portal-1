@@ -9,6 +9,9 @@ import PipelineUsageFieldBase from "components/common/list_of_values_input/pipel
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { pipelineInstructionsHelper } from "components/settings/pipelines/instructions/pipelineInstructions.helper";
 import { useHistory } from "react-router-dom";
+import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
+
+const usagePanelHeight = `calc(${screenContainerHeights.DETAIL_PANEL_CONTENT_INFO_CONTAINER_HEIGHT} - 100px)`;
 
 export default function DeletePipelineInstructionsOverlay(
   {
@@ -44,7 +47,7 @@ export default function DeletePipelineInstructionsOverlay(
 
   const getDeleteDetails = () => {
     return (
-      <div className="mt-2">
+      <div>
         <div>
           <span>If you proceed with deleting this set of Pipeline Instructions, the data will be permanently lost and these Pipelines using this set of Pipeline Instructions will break:</span>
         </div>
@@ -56,6 +59,8 @@ export default function DeletePipelineInstructionsOverlay(
             error={error}
             loadPipelinesFunction={loadData}
             closePanel={closePanel}
+            maximumHeight={usagePanelHeight}
+            minimumHeight={usagePanelHeight}
           />
         </div>
       </div>
