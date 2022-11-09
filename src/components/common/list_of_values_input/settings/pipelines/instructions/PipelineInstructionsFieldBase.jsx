@@ -12,6 +12,8 @@ import { faPencilAlt } from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
 import PipelineInstructionsInlineInput
   from "components/common/list_of_values_input/settings/pipelines/instructions/inline/PipelineInstructionsInlineInput";
+import PipelineInstructionsTypeField
+  from "components/common/list_of_values_input/settings/pipelines/instructions/type/PipelineInstructionsTypeField";
 
 export default function PipelineInstructionsFieldBase(
   {
@@ -33,13 +35,11 @@ export default function PipelineInstructionsFieldBase(
   const getAccessRoleDisplayerField = () => {
     if (isLoading !== true && pipelineInstructionsModel != null) {
       return (
-        <Col xs={12} md={4}>
-          <AccessRoleDisplayer
-            className={"mt-3"}
-            roles={pipelineInstructionsModel?.getArrayData("roles")}
-            noDataMessage={"This set of Pipeline Instructions does not have Access Roles applied, so anyone can see and use it."}
-          />
-        </Col>
+        <AccessRoleDisplayer
+          className={"mt-3"}
+          roles={pipelineInstructionsModel?.getArrayData("roles")}
+          noDataMessage={"This set of Pipeline Instructions does not have Access Roles applied, so anyone can see and use it."}
+        />
       );
     }
   };
@@ -114,7 +114,12 @@ export default function PipelineInstructionsFieldBase(
           <Col xs={12} lg={8}>
             {getPipelineInstructionsComponent()}
           </Col>
-          {getAccessRoleDisplayerField()}
+          <Col xs={12} md={4}>
+            {getAccessRoleDisplayerField()}
+            <PipelineInstructionsTypeField
+              model={pipelineInstructionsModel}
+            />
+          </Col>
         </Row>
       );
     }

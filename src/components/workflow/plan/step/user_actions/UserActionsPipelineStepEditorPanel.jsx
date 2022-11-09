@@ -17,8 +17,6 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import LdapUserSelectInput from "components/common/list_of_values_input/users/LdapUserSelectInput";
 import { Col, Row } from "react-bootstrap";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import PipelineInstructionsFieldBase
-  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsFieldBase";
 import PipelineInstructionsField
   from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsField";
 
