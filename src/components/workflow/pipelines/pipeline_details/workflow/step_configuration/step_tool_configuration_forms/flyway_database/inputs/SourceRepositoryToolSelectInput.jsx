@@ -7,6 +7,8 @@ function SourceRepositoryToolSelectInput({className, fieldName, model, setModel,
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("gitToolId", selectedOption?._id);
+    newModel.setData("repoId", "");
+    newModel.setData("projectId", "");
     newModel.setData("workspace", "");
     newModel.setData("repository", "");
     newModel.setData("gitBranch", "");

@@ -53,3 +53,14 @@ bitbucketActions.getBranchesFromBitbucketInstanceV3 = async (getAccessToken, can
   };
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
 };
+ 
+bitbucketActions.getReviewers = async (getAccessToken, cancelTokenSource, toolId, workspace, repository) => {
+  const apiUrl = `/tools/${toolId}/bitbucket/reviewers`;
+  const queryParams = {
+    params: {
+      workspace: workspace,
+      repository: repository,
+    },
+  };
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
+};

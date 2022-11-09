@@ -23,6 +23,7 @@ function ArgoGitRepositoryInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("repositoryName", "");
     newDataObject.setData("projectId", "");
     newDataObject.setData("repoId", "");
+    newDataObject.setData("projectId", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("httpsUrl", "");
     setDataObject({...newDataObject});
