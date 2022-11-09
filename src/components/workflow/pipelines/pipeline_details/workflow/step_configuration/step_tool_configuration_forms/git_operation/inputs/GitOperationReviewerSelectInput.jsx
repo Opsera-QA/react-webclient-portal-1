@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import ReviewersMultiSelectInputBase from "../../../../../../../../common/list_of_values_input/tools/git/ReviewersMultiSelectInputBase";
+import {hasStringValue} from "../../../../../../../../common/helpers/string-helpers";
 
 function GitOperationReviewerSelectInput({
   dataObject,
@@ -26,11 +27,8 @@ function GitOperationReviewerSelectInput({
     dataObject.setData("prReviewers", []);
     setDataObject({ ...newDataObject });
 
-    if (
-      !repository ||
-      repository === ""
-    ) {
-      return;
+    if (!repository || (hasStringValue(repository) && repository === "")) {
+        return;
     }
     return () => {
       source.cancel();

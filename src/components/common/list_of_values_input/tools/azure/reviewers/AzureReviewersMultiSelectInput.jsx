@@ -6,6 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
 import MultiSelectInputBase from "../../../../inputs/multi_select/MultiSelectInputBase";
+import {hasStringValue} from "../../../../helpers/string-helpers";
 
 function AzureReviewersMultiSelectInput(
     {
@@ -38,7 +39,7 @@ function AzureReviewersMultiSelectInput(
         setAzureReviewers([]);
         setError(undefined);
 
-        if (isMongoDbId(toolId) === true && projectId.length > 0) {
+        if (isMongoDbId(toolId) === true && hasStringValue(projectId) && projectId.length > 0) {
             loadData(source).catch((error) => {
                 throw error;
             });
