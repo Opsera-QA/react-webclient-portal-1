@@ -1,6 +1,6 @@
 import React, { useRef, useCallback } from "react";
 import { createReactEditorJS } from 'react-editor-js';
-import { EDITOR_JS_TOOLS } from './tools';
+import { EDITOR_JS_TOOLS } from 'components/common/inputs/rich_text/editorJs.tools';
 import PropTypes from "prop-types";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
