@@ -44,7 +44,7 @@ export default function RichTextInputBase (
   return (
     <ReactEditorJS
       minHeight={100}
-      placeholder={"enter text"}
+      placeholder={"Enter Text"}
       onChange={handleSave}
       onInitialize={handleInitialize}
       logLevel={"ERROR"}

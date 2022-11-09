@@ -52,9 +52,8 @@ export default function PipelineUserApprovalButton(
       <PipelineActionControlButtonBase
         icon={faFlag}
         normalText={"Acknowledge Action"}
-        tooltipText={"A user action is required before this pipeline can proceed.  Click here to see the instructions and complete the task."}
+        tooltipText={"A user action is required before this pipeline can proceed. Click here to see the instructions and complete the task."}
         onClickFunction={handleAcknowledgementClick}
-        disabled={PipelineRoleHelper.canAuthorizeApprovalGate(userData, pipeline) !== true}
         variant={"warning"}
       />
     );
