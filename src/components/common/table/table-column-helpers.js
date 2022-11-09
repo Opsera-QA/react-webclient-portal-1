@@ -1,18 +1,18 @@
 import { format } from "date-fns";
 import {
   faCheckCircle,
-  faCircle, faOctagon,
-  faPauseCircle, faPlayCircle, faSearchPlus,
+  faCircle,
+  faExclamationCircle,
+  faOctagon,
+  faPauseCircle,
+  faPlay,
+  faPlayCircle,
+  faSearchPlus,
   faStopCircle,
-  faTimesCircle, faTrash, faPlay, faExclamationCircle, faUnlock, faLock,
+  faTimesCircle,
+  faTrash,
 } from "@fortawesome/pro-light-svg-icons";
-import {
-  faGithub,
-  faGitlab,
-  faBitbucket,
-  faJira,
-  faSlack
-} from "@fortawesome/free-brands-svg-icons";
+import { faBitbucket, faGithub, faGitlab, faJira, faSlack } from "@fortawesome/free-brands-svg-icons";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import WarningIcon from "../../common/icons/table/WarningIcon";
 import FailIcon from "../../common/icons/table/FailIcon";
@@ -21,11 +21,11 @@ import DangerMetricIcon from "components/common/icons/metric/danger/DangerMetric
 import React from "react";
 import DashboardFavoritesIcon from "components/common/icons/dashboards/DashboardFavoritesIcon";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
-import {Button} from "react-bootstrap";
-import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date/date.helpers";
-import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
+import { Button } from "react-bootstrap";
+import { convertFutureDateToDhmsFromNowString } from "components/common/helpers/date/date.helpers";
+import { capitalizeFirstLetter, truncateString } from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
+import { ACCESS_ROLES_FORMATTED_LABELS } from "components/common/helpers/role-helpers";
 import AppliedTagBadge from "components/common/badges/tag/AppliedTagBadge";
 import NoTrendMetricIcon from "components/common/icons/metric/trend/NoTrendMetricIcon";
 import IconBase from "components/common/icons/IconBase";
@@ -380,7 +380,7 @@ export const getChartTrendStatusColumn = (field, className) => {
         case "neutral":
           return null;
         case "green":
-        return (<SuccessMetricIcon />);
+          return (<SuccessMetricIcon />);
         case "-":
           return (<NoTrendMetricIcon />);
         default:
@@ -413,66 +413,66 @@ export const getGitCustodianOriginColumn = (field, className) => {
     Cell: function parseStatus(row) {
       let status = typeof row?.value === "string" ? row.value.toLowerCase() : "";
 
-        switch (status) {
-          case "gitlab":
-            return (
-              <TooltipWrapper innerText={"Gitlab"}>
-                <div style={{ marginLeft: '15%' }}>
-                  <IconBase
-                    icon={faGitlab}
-                    iconClassName={"opsera-yellow cell-icon vertical-align-item"}
-                  />
-                </div>
-              </TooltipWrapper>
-            );
-          case "github":
-             return (
-               <TooltipWrapper innerText={"GitHub"}>
-                 <div style={{ marginLeft: '15%' }}>
-                   <IconBase
-                     icon={faGithub}
-                     iconClassName={"black cell-icon vertical-align-item"}
-                   />
-                 </div>
-               </TooltipWrapper>
-             );
-          case "bitbucket":
-            return (
-               <TooltipWrapper innerText={"Bitbucket"}>
-                 <div style={{ marginLeft: '15%' }}>
-                   <IconBase
-                     icon={faBitbucket}
-                     iconClassName={"bitbucket-color cell-icon vertical-align-item"}
-                   />
-                 </div>
-               </TooltipWrapper>
-             );
-          case "jira":
-            return (
-               <TooltipWrapper innerText={"Jira"}>
-                 <div style={{ marginLeft: '15%' }}>
-                   <IconBase
-                     icon={faJira}
-                     iconClassName={"bitbucket-color cell-icon vertical-align-item"}
-                   />
-                 </div>
-               </TooltipWrapper>
-            );
-            case "slack":
-                return (
-                   <TooltipWrapper innerText={"Slack"}>
-                     <div style={{ marginLeft: '15%' }}>
-                       <IconBase
-                         icon={faSlack}
-                         iconClassName={"opsera-yellow cell-icon vertical-align-item"}
-                       />
-                     </div>
-                   </TooltipWrapper>
-                );
-          default:
-            return status;
-          }
-        },
+      switch (status) {
+        case "gitlab":
+          return (
+            <TooltipWrapper innerText={"Gitlab"}>
+              <div style={{ marginLeft: '15%' }}>
+                <IconBase
+                  icon={faGitlab}
+                  iconClassName={"opsera-yellow cell-icon vertical-align-item"}
+                />
+              </div>
+            </TooltipWrapper>
+          );
+        case "github":
+          return (
+            <TooltipWrapper innerText={"GitHub"}>
+              <div style={{ marginLeft: '15%' }}>
+                <IconBase
+                  icon={faGithub}
+                  iconClassName={"black cell-icon vertical-align-item"}
+                />
+              </div>
+            </TooltipWrapper>
+          );
+        case "bitbucket":
+          return (
+            <TooltipWrapper innerText={"Bitbucket"}>
+              <div style={{ marginLeft: '15%' }}>
+                <IconBase
+                  icon={faBitbucket}
+                  iconClassName={"bitbucket-color cell-icon vertical-align-item"}
+                />
+              </div>
+            </TooltipWrapper>
+          );
+        case "jira":
+          return (
+            <TooltipWrapper innerText={"Jira"}>
+              <div style={{ marginLeft: '15%' }}>
+                <IconBase
+                  icon={faJira}
+                  iconClassName={"bitbucket-color cell-icon vertical-align-item"}
+                />
+              </div>
+            </TooltipWrapper>
+          );
+        case "slack":
+          return (
+            <TooltipWrapper innerText={"Slack"}>
+              <div style={{ marginLeft: '15%' }}>
+                <IconBase
+                  icon={faSlack}
+                  iconClassName={"opsera-yellow cell-icon vertical-align-item"}
+                />
+              </div>
+            </TooltipWrapper>
+          );
+        default:
+          return status;
+      }
+    },
     class: className ? className :  undefined
   };
 };
@@ -522,10 +522,10 @@ export const getGitTaskTableRunButtonColumn = (accessor = "row", headerText, var
     Cell: function getRunButton(row) {
       return (
         <Button size={"sm"} variant={variant} disabled={row?.data[row?.row?.index].status === "running"} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}} >
-        {row?.data[row?.row?.index].status === "running"
-          ? (<span><IconBase isLoading={true} className={"mr-1"} />Running</span>)
-          : (<span><IconBase icon={faPlay} className={"mr-1"}/>{buttonText}</span>)
-        }
+          {row?.data[row?.row?.index].status === "running"
+            ? (<span><IconBase isLoading={true} className={"mr-1"} />Running</span>)
+            : (<span><IconBase icon={faPlay} className={"mr-1"}/>{buttonText}</span>)
+          }
         </Button>
       );
     },
@@ -539,8 +539,8 @@ export const getDeletePlatformToolTableButtonColumn = (accessor = "row", headerT
     accessor: accessor,
     Cell: function getDeleteButton(row) {
       return <Button size={"sm"} variant={variant} disabled={row?.data[row?.row?.index].toolStatus !== "ACTIVE"} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}} >
-                {buttonText}
-            </Button>;
+        {buttonText}
+      </Button>;
     },
     class: className ? className :  "no-wrap-inline py-1"
   };
@@ -745,13 +745,13 @@ export const getGitCustodianExternalLinkIconColumnDefinition = (field, className
     accessor: getCustomTableAccessor(field),
     Cell: function getPageLink(row){
       return row?.value?.url ?
-      (
-        <PageLinkIcon
-          pageLink={row?.value?.url}
-          externalLink={true}
-          pageLinkText={row?.value?.key}
-        />
-      ) : (row?.value?.key || "");
+        (
+          <PageLinkIcon
+            pageLink={row?.value?.url}
+            externalLink={true}
+            pageLinkText={row?.value?.key}
+          />
+        ) : (row?.value?.key || "");
     },
     class: className ? className : undefined
   };
@@ -815,11 +815,11 @@ export const getGitCustodianScmLinkIconColumnDefinition = (field, className) => 
     Cell: function getPageLink(row){
 
       return (
-          <PageLinkIcon
-              pageLink={row?.value}
-              externalLink={true}
-              pageLinkText={""}
-          />
+        <PageLinkIcon
+          pageLink={row?.value}
+          externalLink={true}
+          pageLinkText={""}
+        />
       );
     },
     class: className ? className : undefined
