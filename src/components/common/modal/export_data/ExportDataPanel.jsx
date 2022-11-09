@@ -97,7 +97,7 @@ export default function ExportDataPanel(
 
   return (
     <div
-      className={"text-color w-100"}
+      className={"text-color w-100 p-3"}
     >
       {toastContext.getInlineBanner()}
       <Row>
