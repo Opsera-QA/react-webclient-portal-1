@@ -25,6 +25,11 @@ import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import pipelineUserActionAcknowledgementMetadata
   from "@opsera/definitions/constants/pipelines/workflow/acknowledgement/pipelineUserActionAcknowledgement.metadata";
 import MessageField from "components/common/fields/text/message/MessageField";
+import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
+const INSTRUCTIONS_HEIGHT = `calc(${screenContainerHeights.TABLE_MINIMUM_HEIGHT_WITH_DESCRIPTION} - 250px)`;
 
 export default function PipelineInstructionsAcknowledgementOverlay(
   {
@@ -82,15 +87,38 @@ export default function PipelineInstructionsAcknowledgementOverlay(
     );
   };
 
-  const getMessageField = () => {
+  const getMessageFields = () => {
     if (hasStringValue(userActionsStepModel?.getData("message")) === true) {
       return (
-        <MessageField
-          model={userActionsStepModel}
-          fieldName={"message"}
-        />
+        <Row>
+          <Col xs={12} lg={6}>
+            <MessageField
+              model={userActionsStepModel}
+              fieldName={"message"}
+            />
+          </Col>
+          <Col xs={12} lg={6}>
+            <TextAreaInput
+              dataObject={acknowledgementModel}
+              setDataObject={setAcknowledgementModel}
+              fieldName={"message"}
+            />
+          </Col>
+        </Row>
       );
     }
+
+    return (
+      <Row>
+        <Col xs={12}>
+          <TextAreaInput
+            dataObject={acknowledgementModel}
+            setDataObject={setAcknowledgementModel}
+            fieldName={"message"}
+          />
+        </Col>
+      </Row>
+    );
   };
 
   const getBody = () => {
@@ -111,15 +139,12 @@ export default function PipelineInstructionsAcknowledgementOverlay(
           pipelineInstructionsModel={pipelineInstructionsModel}
           pipelineInstructionsId={userActionsStepModel?.getData("pipelineInstructionsId")}
           setPipelineInstructionsModel={setPipelineInstructionsModel}
+          instructionsDisplayerMinimumHeight={INSTRUCTIONS_HEIGHT}
+          instructionsDisplayerMaximumHeight={INSTRUCTIONS_HEIGHT}
           error={error}
           isLoading={isLoading}
         />
-        {getMessageField()}
-        <TextAreaInput
-          dataObject={acknowledgementModel}
-          setDataObject={setAcknowledgementModel}
-          fieldName={"message"}
-        />
+        {getMessageFields()}
       </>
     );
   };
