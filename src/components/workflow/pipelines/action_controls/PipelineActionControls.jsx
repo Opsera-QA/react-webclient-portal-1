@@ -500,10 +500,12 @@ function PipelineActionControls(
             </Button>
           </>}
 
-          <PipelineUserApprovalButton
-            loadPipelineFunction={fetchData}
-            pipeline={pipeline}
-          />
+          {workflowStatus === "paused" &&
+            <PipelineUserApprovalButton
+              loadPipelineFunction={fetchData}
+              pipeline={pipeline}
+            />
+          }
 
           {
             (workflowStatus === "stopped" || !workflowStatus) &&
