@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import {
   getPipelineActivityStatusColumn,
@@ -7,7 +7,6 @@ import {
 } from "components/common/table/table-column-helpers-v2";
 import PipelineTaskDetailViewer from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineTaskDetailViewer";
 import TableBase from "components/common/table/TableBase";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PipelineHelpers from "components/workflow/pipelineHelpers";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
@@ -16,6 +15,8 @@ import PipelineInstructionsAcknowledgementOverlay
 import pipelineActivityMetadata from "@opsera/definitions/constants/pipelines/logs/pipelineActivity.metadata";
 import { getField } from "components/common/metadata/metadata-helpers";
 import StepApprovalOverlay from "components/workflow/StepApprovalOverlay";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function PipelineActivityLogTable(
   {
@@ -28,7 +29,10 @@ function PipelineActivityLogTable(
     loadPipelineFunction,
     latestPipelineLogId,
   }) {
-  const toastContext = useContext(DialogToastContext);
+  const {
+    userData,
+    toastContext,
+  } = useComponentStateReference();
   const fields = pipelineActivityMetadata?.fields;
 
   useEffect(() => {
@@ -52,7 +56,6 @@ function PipelineActivityLogTable(
     const isPendingRow = DataParsingHelper.parseNestedString(row, "status") === "pending";
     const isPaused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
     const rowStepId = DataParsingHelper.parseNestedMongoDbId(row, "step_id");
-    const currentStepId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.step_id");
 
     if (
       isPaused === true
@@ -61,23 +64,29 @@ function PipelineActivityLogTable(
       && rowStepId === currentStepId
     ) {
       const parsedPipelineStepToolIdentifier = PipelineHelpers.getPendingApprovalStepToolIdentifier(pipeline);
-      switch (parsedPipelineStepToolIdentifier) {
-        case toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL:
-          toastContext.showOverlayPanel(
-            <StepApprovalOverlay
-              pipelineId={pipeline?._id}
-              loadPipelineFunction={loadPipelineFunction}
-            />,
-          );
-          return;
-        case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
-          toastContext.showOverlayPanel(
-            <PipelineInstructionsAcknowledgementOverlay
-              pipeline={pipeline}
-              loadPipelineFunction={loadPipelineFunction}
-            />,
-          );
-          return;
+
+      if (
+        parsedPipelineStepToolIdentifier !== toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL
+        || PipelineRoleHelper.canAuthorizeApprovalGate(userData, pipeline) === true
+      ) {
+        switch (parsedPipelineStepToolIdentifier) {
+          case toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL:
+            toastContext.showOverlayPanel(
+              <StepApprovalOverlay
+                pipelineId={pipeline?._id}
+                loadPipelineFunction={loadPipelineFunction}
+              />,
+            );
+            return;
+          case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
+            toastContext.showOverlayPanel(
+              <PipelineInstructionsAcknowledgementOverlay
+                pipeline={pipeline}
+                loadPipelineFunction={loadPipelineFunction}
+              />,
+            );
+            return;
+        }
       }
     }
 
