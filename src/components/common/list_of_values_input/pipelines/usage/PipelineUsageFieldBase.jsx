@@ -13,6 +13,7 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import InfoContainer from "components/common/containers/InfoContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
 export default function PipelineUsageFieldBase(
   {
@@ -70,12 +71,12 @@ export default function PipelineUsageFieldBase(
     }
 
     return (
-      <>
-        <div className={"text-muted mb-2"}>
-          <span>This {type} is in use by {pipelines.length} pipeline{pipelines?.length !== 1 ? "s" : ""}</span>
-        </div>
+      <div className={"m-3"}>
+        <H5FieldSubHeader
+          subheaderText={`This ${type} is in use by ${pipelines.length} pipeline${pipelines?.length !== 1 ? "s" : ""}`}
+        />
         {getPipelineCards()}
-      </>
+      </div>
     );
   };
 
