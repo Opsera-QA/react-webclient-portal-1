@@ -147,16 +147,24 @@ export default function PipelineInstructionsFieldBase(
     return pipelineInstructionsModel?.getData("name");
   };
 
+  const getTextField = () => {
+    if (showInstructions !== true) {
+      return (
+        <div className={"d-flex"}>
+          <FieldLabelBase
+            label={label}
+            isLoading={isLoading}
+            showLabel={showLabel}
+          />
+          {getName()}
+        </div>
+      );
+    }
+  };
+
   return (
     <FieldContainer className={className}>
-      <div className={"d-flex"}>
-        <FieldLabelBase
-          label={label}
-          isLoading={isLoading}
-          showLabel={showLabel}
-        />
-        {getName()}
-      </div>
+      {getTextField()}
       {getPipelineInstructionsField()}
     </FieldContainer>
   );
