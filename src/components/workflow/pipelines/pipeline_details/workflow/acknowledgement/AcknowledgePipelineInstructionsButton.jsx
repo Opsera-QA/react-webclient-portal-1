@@ -16,6 +16,7 @@ export default function AcknowledgePipelineInstructionsButton(
     message,
     closePanelFunction,
     disabled,
+    className,
   }) {
   const {
     toastContext,
@@ -50,6 +51,7 @@ export default function AcknowledgePipelineInstructionsButton(
     <VanityButtonBase
       variant={"success"}
       buttonState={buttonState}
+      className={className}
       onClickFunction={acknowledgePipelineInstructions}
       disabled={disabled}
       icon={faCheckCircle}
@@ -67,4 +69,5 @@ AcknowledgePipelineInstructionsButton.propTypes = {
   message: PropTypes.string,
   closePanelFunction: PropTypes.func,
   disabled: PropTypes.bool,
+  className: PropTypes.string,
 };

@@ -134,6 +134,13 @@ export default class PipelineInstructionsModel extends ModelBase {
     return this.getData("name");
   };
 
+  canAcknowledgePipelineInstructions = () => {
+    return PipelineInstructionsRoleHelper.canAcknowledgePipelineInstructions(
+      this.userData,
+      this.data,
+    );
+  };
+
   clone = () => {
     const newPipelineInstructions = new PipelineInstructionsModel(
       DataParsingHelper.cloneDeep(this.data),
