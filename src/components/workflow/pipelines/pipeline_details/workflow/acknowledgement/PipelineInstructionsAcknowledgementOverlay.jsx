@@ -24,6 +24,7 @@ import useGetPipelineInstructionModelByPipelineStep
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import pipelineUserActionAcknowledgementMetadata
   from "@opsera/definitions/constants/pipelines/workflow/acknowledgement/pipelineUserActionAcknowledgement.metadata";
+import MessageField from "components/common/fields/text/message/MessageField";
 
 export default function PipelineInstructionsAcknowledgementOverlay(
   {
@@ -81,6 +82,17 @@ export default function PipelineInstructionsAcknowledgementOverlay(
     );
   };
 
+  const getMessageField = () => {
+    if (hasStringValue(userActionsStepModel?.getData("message")) === true) {
+      return (
+        <MessageField
+          model={userActionsStepModel}
+          fieldName={"message"}
+        />
+      );
+    }
+  };
+
   const getBody = () => {
     if (isLoading !== true && pipelineInstructionsModel == null) {
       return (
@@ -102,6 +114,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
           error={error}
           isLoading={isLoading}
         />
+        {getMessageField()}
         <TextAreaInput
           dataObject={acknowledgementModel}
           setDataObject={setAcknowledgementModel}

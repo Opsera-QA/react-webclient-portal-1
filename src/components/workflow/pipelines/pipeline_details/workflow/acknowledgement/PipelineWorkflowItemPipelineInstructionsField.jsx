@@ -54,6 +54,7 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
       toastContext.showOverlayPanel(
         <PipelineInstructionsDisplayerOverlay
           pipelineInstructionsId={pipelineInstructionsId}
+          allowEditing={true}
         />
       );
     }

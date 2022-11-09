@@ -12,6 +12,7 @@ import useGetPipelineInstructionModelById
 export default function PipelineInstructionsDisplayerOverlay(
   {
     pipelineInstructionsId,
+    allowEditing,
   }) {
   const {
     toastContext,
@@ -49,6 +50,7 @@ export default function PipelineInstructionsDisplayerOverlay(
           isLoading={isLoading}
           pipelineInstructionsModel={pipelineInstructionsModel}
           setPipelineInstructionsModel={setPipelineInstructionsModel}
+          allowEditing={allowEditing}
           error={error}
           // instructionsDisplayerMaximumHeight={instructionsDisplayerMaximumHeight}
           // instructionsDisplayerMinimumHeight={instructionsDisplayerMinimumHeight}
@@ -60,4 +62,5 @@ export default function PipelineInstructionsDisplayerOverlay(
 
 PipelineInstructionsDisplayerOverlay.propTypes = {
   pipelineInstructionsId: PropTypes.string,
+  allowEditing: PropTypes.bool,
 };
