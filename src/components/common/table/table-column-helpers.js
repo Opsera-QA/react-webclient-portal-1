@@ -576,8 +576,8 @@ export const getUppercaseTableTextColumn = (field, className, maxWidth = undefin
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
-    Cell: (value) => {
-      return capitalizeFirstLetter(value);
+    Cell: (row) => {
+      return capitalizeFirstLetter(row?.value);
     },
     class: className,
     maxWidth: maxWidth
