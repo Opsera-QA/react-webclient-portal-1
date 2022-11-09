@@ -64,8 +64,12 @@ export default function PipelineInstructionsAcknowledgementOverlay(
   const getButtonContainer = () => {
     return (
       <ButtonContainerBase className={"mx-3"}>
-        <CloseButton
-          closeEditorCallback={closePanelFunction}
+        <AcknowledgePipelineInstructionsButton
+          pipelineId={pipeline?._id}
+          pipelineStepId={approvalStep?._id}
+          message={acknowledgementModel?.getData("message")}
+          closePanelFunction={closePanelFunction}
+          disabled={pipelineInstructionsModel == null || acknowledgementModel?.checkCurrentValidity() !== true}
           className={"mr-2"}
         />
         <RefusePipelineInstructionsAcknowledgementButton
@@ -76,12 +80,8 @@ export default function PipelineInstructionsAcknowledgementOverlay(
           className={"mr-2"}
           disabled={pipelineInstructionsModel == null || acknowledgementModel?.checkCurrentValidity() !== true}
         />
-        <AcknowledgePipelineInstructionsButton
-          pipelineId={pipeline?._id}
-          pipelineStepId={approvalStep?._id}
-          message={acknowledgementModel?.getData("message")}
-          closePanelFunction={closePanelFunction}
-          disabled={pipelineInstructionsModel == null || acknowledgementModel?.checkCurrentValidity() !== true}
+        <CloseButton
+          closeEditorCallback={closePanelFunction}
         />
       </ButtonContainerBase>
     );
