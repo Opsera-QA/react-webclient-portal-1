@@ -67,7 +67,6 @@ export default function PipelineInstructionsDetailPanel(
       case "usage":
         return (
           <PipelineInstructionsPipelineUsageField
-            className={"m-3"}
             pipelineInstructionsId={pipelineInstructionsModel?.getMongoDbId()}
           />
         );
