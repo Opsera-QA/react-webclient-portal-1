@@ -3,7 +3,6 @@ import {
   faCheckCircle,
   faCircle,
   faExclamationCircle,
-  faLock,
   faOctagon,
   faPauseCircle,
   faPlay,
@@ -12,7 +11,6 @@ import {
   faStopCircle,
   faTimesCircle,
   faTrash,
-  faUnlock,
 } from "@fortawesome/pro-light-svg-icons";
 import { faBitbucket, faGithub, faGitlab, faJira, faSlack } from "@fortawesome/free-brands-svg-icons";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
@@ -393,6 +391,21 @@ export const getChartTrendStatusColumn = (field, className) => {
   };
 };
 
+export const getStaticIconColumn = (icon, accessor = "row", className) => {
+  return {
+    Header: "",
+    accessor: accessor,
+    Cell: function StaticIcon(){
+      if (icon) {
+        return <IconBase icon={icon} />;
+      }
+
+      return "";
+    },
+    class: className ? className : undefined
+  };
+};
+
 export const getGitCustodianOriginColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
@@ -463,7 +476,6 @@ export const getGitCustodianOriginColumn = (field, className) => {
     class: className ? className :  undefined
   };
 };
-
 
 export const getTableFavoriteColumn = (field, className) => {
   return {
@@ -564,8 +576,8 @@ export const getUppercaseTableTextColumn = (field, className, maxWidth = undefin
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
-    Cell: (value) => {
-      return capitalizeFirstLetter(value);
+    Cell: (row) => {
+      return capitalizeFirstLetter(row?.value);
     },
     class: className,
     maxWidth: maxWidth
