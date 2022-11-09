@@ -56,13 +56,15 @@ export default function PipelineUsageFieldBase(
 
     if (!Array.isArray(pipelines) || pipelines.length === 0) {
       return (
-        <CenteredContentWrapper>
-          <div className={"text-muted"}>
+        <CenteredContentWrapper
+          minHeight={`calc(${minimumHeight} - 3px)`}
+        >
+          <h5 className={"text-muted"}>
             <span>
               <IconBase icon={faExclamationCircle} className={"mr-1"} />
               This {type} is not currently in use by any Pipeline
             </span>
-          </div>
+          </h5>
         </CenteredContentWrapper>
       );
     }
