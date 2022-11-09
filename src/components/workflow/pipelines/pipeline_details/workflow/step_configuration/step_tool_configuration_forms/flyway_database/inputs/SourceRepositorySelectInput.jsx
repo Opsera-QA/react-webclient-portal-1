@@ -6,9 +6,11 @@ function SourceRepositorySelectInput({className, fieldName, model, setModel, dis
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
+    const projectId = selectedOption?.projectId || selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     newModel.setData("repository", selectedOption?.name);
     newModel.setData("repoId", repoId);
+    newModel.setData("projectId", projectId);
     newModel.setData("gitUrl", gitUrl);
     newModel.setData("sshUrl", selectedOption?.sshUrl);
     newModel.setData("gitBranch", "");

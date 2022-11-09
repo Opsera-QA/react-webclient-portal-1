@@ -85,6 +85,9 @@ const gitOperationStepFormMetadata = {
       label: "Select Reviewers",
       id: "prReviewers",
       maxLength: 10,
+      isRequiredFunction: (model) => { 
+        return model?.getData("action") === "pr-creation" && model?.getData("addReviewers") === true;
+      },
     },
   ],
   newObjectFields: {

@@ -46,3 +46,14 @@ githubActions.getBranchesFromGithubInstanceV3 = async (getAccessToken, cancelTok
   };
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
 };
+
+githubActions.getReviewers = async (getAccessToken, cancelTokenSource, toolId, repositoryId) => {
+  const apiUrl = `/tools/${toolId}/github/reviewers`;
+  const queryParams = {
+    params: {
+      projectId: repositoryId
+    },
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
+};
