@@ -16,8 +16,10 @@ function AnalyticsProfileSettings() {
   return (
     <>
       <div className="content-container content-card-analytics">
-        <div className="pl-2 content-block-header title-text-header-2">
-          <TitleBar titleIcon={faChartNetwork} title={"Activate Opsera Analytics"} />
+        <div className={"pl-2 content-block-header title-text-header-2 d-flex"}>
+          <div className={"my-auto w-100"}>
+            <TitleBar titleIcon={faChartNetwork} title={"Activate Opsera Analytics"} />
+          </div>
         </div>
         {toastContext.getInlineBanner()}
         <div className="p-3 shaded-container">
