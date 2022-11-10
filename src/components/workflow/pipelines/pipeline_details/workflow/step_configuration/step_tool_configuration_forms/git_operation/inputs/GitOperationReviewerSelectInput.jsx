@@ -23,11 +23,10 @@ function GitOperationReviewerSelectInput({
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    let newDataObject = { ...dataObject };
-    dataObject.setData("prReviewers", []);
-    setDataObject({ ...newDataObject });
-
     if (!repository || (hasStringValue(repository) && repository === "")) {
+        let newDataObject = { ...dataObject };
+        dataObject.setData("prReviewers", []);
+        setDataObject({ ...newDataObject });
         return;
     }
     return () => {

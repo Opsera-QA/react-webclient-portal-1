@@ -73,7 +73,7 @@ function AzureDevOpsRepositorySelectInput(
       const existingRepository = model?.getData(fieldName);
 
       if (hasStringValue(existingRepository) === true) {
-        const existingRepositoryExists = repositories.find((repository) => repository["name"] === existingRepository);
+        const existingRepositoryExists = repositories.find((repository) => repository["nameSpacedPath"] === existingRepository);
 
         if (existingRepositoryExists == null) {
           setError(
@@ -117,7 +117,7 @@ AzureDevOpsRepositorySelectInput.propTypes = {
 
 AzureDevOpsRepositorySelectInput.defaultProps = {
   valueField: "repositoryId",
-  textField: "name",
+  textField: "nameSpacedPath",
 };
 
 export default AzureDevOpsRepositorySelectInput;
