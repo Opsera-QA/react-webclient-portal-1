@@ -42,6 +42,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
   const configuration = DataParsingHelper.parseNestedObject(approvalStep, "tool.configuration");
   const userActionsStepModel = modelHelpers.parseObjectIntoModel(configuration, userActionsPipelineStepMetadata);
   const [acknowledgementModel, setAcknowledgementModel] = useState(modelHelpers.getNewModelForMetadata(pipelineUserActionAcknowledgementMetadata, false));
+  const [inEditMode, setInEditMode] = useState(false);
   const {
     toastContext,
   } = useComponentStateReference();
@@ -71,7 +72,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
             pipelineStepId={approvalStep?._id}
             message={acknowledgementModel?.getData("message")}
             closePanelFunction={closePanelFunction}
-            disabled={pipelineInstructionsModel == null || acknowledgementModel?.checkCurrentValidity() !== true}
+            disabled={pipelineInstructionsModel == null || acknowledgementModel?.checkCurrentValidity() !== true || inEditMode === true}
             className={"mr-2"}
           />
           <RefusePipelineInstructionsAcknowledgementButton
@@ -80,7 +81,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
             message={acknowledgementModel?.getData("message")}
             closePanelFunction={closePanelFunction}
             className={"mr-2"}
-            disabled={pipelineInstructionsModel == null || acknowledgementModel?.checkCurrentValidity() !== true}
+            disabled={pipelineInstructionsModel == null || acknowledgementModel?.checkCurrentValidity() !== true || inEditMode === true}
           />
         </>
       );
@@ -109,7 +110,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
       );
     }
 
-    if (isLoading !== true) {
+    if (isLoading !== true && pipelineInstructionsModel != null) {
       return (
         <H5FieldSubHeader
           subheaderText={"You do not have permission to Acknowledge these actions."}
@@ -148,7 +149,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
   };
 
   const getBody = () => {
-    if (isLoading !== true && pipelineInstructionsModel == null) {
+    if (isLoading !== true && error) {
       return (
         <H5FieldSubHeader
           subheaderText={`
@@ -173,6 +174,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
           instructionsDisplayerMaximumHeight={INSTRUCTIONS_HEIGHT}
           error={error}
           isLoading={isLoading}
+          setInEditModeVisibility={setInEditMode}
         />
         {getMessageFields()}
       </>
