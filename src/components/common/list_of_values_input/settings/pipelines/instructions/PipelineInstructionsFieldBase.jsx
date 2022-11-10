@@ -14,6 +14,7 @@ import PipelineInstructionsInlineInput
   from "components/common/list_of_values_input/settings/pipelines/instructions/inline/PipelineInstructionsInlineInput";
 import PipelineInstructionsTypeField
   from "components/common/list_of_values_input/settings/pipelines/instructions/type/PipelineInstructionsTypeField";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 export default function PipelineInstructionsFieldBase(
   {
@@ -29,6 +30,7 @@ export default function PipelineInstructionsFieldBase(
     isLoading,
     error,
     allowEditing,
+    setInEditModeVisibility,
   }) {
   const [inEditMode, setInEditMode] = useState(false);
 
@@ -44,11 +46,19 @@ export default function PipelineInstructionsFieldBase(
     }
   };
 
+  const toggleEditMode = (editMode) => {
+    if (setInEditModeVisibility) {
+      setInEditModeVisibility(editMode);
+    }
+
+    setInEditMode(editMode);
+  };
+
   const getEditButton = () => {
     if (allowEditing === true && pipelineInstructionsModel?.canUpdate() === true) {
       return (
         <VanityButtonBase
-          onClickFunction={() => setInEditMode(true)}
+          onClickFunction={() => toggleEditMode(true)}
           buttonSize={"sm"}
           normalText={"Edit Pipeline Instructions"}
           icon={faPencilAlt}
@@ -61,15 +71,21 @@ export default function PipelineInstructionsFieldBase(
   const getPipelineInstructionsComponent = () => {
     if (setPipelineInstructionsModel && allowEditing === true && inEditMode === true && pipelineInstructionsModel?.canUpdate() === true) {
       return (
-        <PipelineInstructionsInlineInput
-          fieldName={"instructions"}
-          pipelineInstructionsModel={pipelineInstructionsModel}
-          setPipelineInstructionsModel={setPipelineInstructionsModel}
-          instructionsDisplayerMinimumHeight={instructionsDisplayerMinimumHeight}
-          instructionsDisplayerMaximumHeight={instructionsDisplayerMaximumHeight}
-          isLoading={isLoading}
-          setInEditMode={setInEditMode}
-        />
+        <>
+          <PipelineInstructionsInlineInput
+            fieldName={"instructions"}
+            pipelineInstructionsModel={pipelineInstructionsModel}
+            setPipelineInstructionsModel={setPipelineInstructionsModel}
+            instructionsDisplayerMinimumHeight={instructionsDisplayerMinimumHeight}
+            instructionsDisplayerMaximumHeight={instructionsDisplayerMaximumHeight}
+            isLoading={isLoading}
+            setInEditMode={toggleEditMode}
+            className={"mt-2"}
+          />
+          <InfoText
+            warningMessage={"Pipeline Instructions must be saved before the changes will take effect"}
+          />
+        </>
       );
     }
 
@@ -188,6 +204,7 @@ PipelineInstructionsFieldBase.propTypes = {
   error: PropTypes.any,
   allowEditing: PropTypes.bool,
   setPipelineInstructionsModel: PropTypes.func,
+  setInEditModeVisibility: PropTypes.func,
 };
 
 PipelineInstructionsFieldBase.defaultProps = {
