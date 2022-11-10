@@ -478,7 +478,6 @@ a.text-primary:hover, a.text-primary:focus {
     background-color: #f7f7f7; /*#2588ec;*/
     border-bottom: 1px solid #E6E5E3; /*#3598fc;*/
     color: #3D3B36;
-    min-height: 49px;
     vertical-align: middle;
     white-space: nowrap;
 }
