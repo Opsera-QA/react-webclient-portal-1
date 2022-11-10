@@ -142,6 +142,7 @@ export default function VanitySetTextInputBase(
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(errorMessage) === true}
         helpTooltipText={helpTooltipText}
+        disabled={disabled}
       />
       {getInput()}
       <InfoText

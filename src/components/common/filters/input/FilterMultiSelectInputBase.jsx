@@ -24,6 +24,8 @@ function FilterMultiSelectInputBase({ fieldName, dataObject, setDataObject, grou
         field={field}
         className={"mt-1 mr-2"}
         showLabel={inline !== true}
+        disabled={disabled}
+        isLoading={busy}
       />
       <StandaloneMultiSelectInput
         selectOptions={selectOptions}

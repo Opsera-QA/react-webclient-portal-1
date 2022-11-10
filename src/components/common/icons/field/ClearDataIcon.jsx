@@ -5,7 +5,14 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import ClearDataConfirmationModal from "components/common/modal/ClearDataConfirmationModal";
 import IconBase from "components/common/icons/IconBase";
 
-function ClearDataIcon({ clearValueFunction, furtherDetails, requireConfirmation, className }) {
+function ClearDataIcon(
+  {
+    clearValueFunction,
+    furtherDetails,
+    requireConfirmation,
+    className,
+    disabled,
+  }) {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   const handleClearData = () => {
@@ -17,7 +24,7 @@ function ClearDataIcon({ clearValueFunction, furtherDetails, requireConfirmation
     clearValueFunction();
   };
 
-  if (clearValueFunction == null) {
+  if (clearValueFunction == null || disabled === true) {
     return null;
   }
 
@@ -25,7 +32,7 @@ function ClearDataIcon({ clearValueFunction, furtherDetails, requireConfirmation
     <>
       <TooltipWrapper innerText={"Clear this Value"}>
         <span className={className}>
-          <span onClick={() => handleClearData()} className="my-auto badge badge-danger clear-value-badge pointer">
+          <span onClick={() => handleClearData()} className={"my-auto badge badge-danger clear-value-badge pointer"}>
             <span className={"my-auto"}><IconBase icon={faTimes} className={"mr-1"}/>Clear Value</span>
           </span>
         </span>
@@ -44,7 +51,8 @@ ClearDataIcon.propTypes = {
   clearValueFunction: PropTypes.func,
   furtherDetails: PropTypes.any,
   requireConfirmation: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 export default ClearDataIcon;

@@ -84,6 +84,7 @@ function TextInputWithButtonAWSLambda({
         extraActionButtons={extraActionButtons}
         model={dataObject}
         hasError={hasStringValue(errorMessage) === true}
+        disabled={disabled}
       />
       <Row>
         <div className="input-group mb-3 ml-3 mr-3">
