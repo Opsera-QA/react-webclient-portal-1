@@ -478,7 +478,7 @@ a.text-primary:hover, a.text-primary:focus {
     background-color: #f7f7f7; /*#2588ec;*/
     border-bottom: 1px solid #E6E5E3; /*#3598fc;*/
     color: #3D3B36;
-    line-height: 2.4em;
+    min-height: 49px;
     vertical-align: middle;
     white-space: nowrap;
 }
@@ -978,13 +978,13 @@ a.nav-link {
 .content-card-analytics .content-block-header {
     background-color: #3D3B36;
     color: #fef7fd;
-    line-height: 2.4em;
+    min-height: 49px;
 }
 
 .content-card-1 > .content-block-header {
     background-color: #3D3B36;
     color: #fef7fd;
-    line-height: 2.4em;
+    min-height: 49px;
 }
 
 .dashboard-container-header {
@@ -993,13 +993,13 @@ a.nav-link {
     /*background-color: #a24600;*/
     /*background-color: #e76500;*/
     color: #fef7fd;
-    line-height: 2.4em;
+    min-height: 49px;
 }
 
 .content-card-1 > .content-block-header-inverse {
     background-color: #E6E5E3;
     color: #3D3B36;
-    line-height: 2.4em;
+    min-height: 49px;
 }
 
 .content-card-1 .content-block-body {
@@ -1070,63 +1070,6 @@ a.nav-link {
     padding-top: 1em;
     height: 2em;
 }
-
-/* Content Card 2 Styling */
-
-.content-card-2 {
-}
-
-.content-card-2 .content-block-header {
-    background-color: #28a745;
-    color: #fff;
-    line-height: 2.4em;
-    border-bottom: 5px solid #0f3e84;
-}
-
-.content-card-2 .content-block-body {
-    background-color: #E6E5E3;
-    min-height: 150px;
-}
-
-.content-card-2 .content-block-footer {
-    border-top: 5px solid #E6E5E3;
-    background-color: #3D3B36;
-    padding-top: 1em;
-    height: 1.5em;
-}
-
-.content-card-2 .content-block-body .content-image {
-    height: 125px;
-}
-
-/* Content Card 3 Styling */
-
-.content-card-3 {
-}
-
-.content-card-3 .content-block-header {
-    background-color: #3D3B36;
-    color: #fff;
-    line-height: 2.4em;
-    border-bottom: 5px solid #3D3B36;
-}
-
-.content-card-3 .content-block-body {
-    background-color: #E6E5E3;
-    min-height: 150px;
-}
-
-.content-card-3 .content-block-footer {
-    border-top: 5px solid #E6E5E3;
-    background-color: #3D3B36;
-    padding-top: 1em;
-    height: 1.5em;
-}
-
-.content-card-3 .content-block-body .content-image {
-    height: 125px;
-}
-
 /* End Content Block Styling */
 
 /* Data Blocks Card Styling */
