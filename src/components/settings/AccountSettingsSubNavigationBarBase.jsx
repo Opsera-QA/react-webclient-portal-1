@@ -34,7 +34,7 @@ export default function AccountSettingsSubNavigationBarBase({ activeTab }) {
         tabName={"accountSettings"}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
-        tabText={"Account Settings"}
+        tabText={"Settings"}
       />
       <NavigationTab
         icon={faChartNetwork}
