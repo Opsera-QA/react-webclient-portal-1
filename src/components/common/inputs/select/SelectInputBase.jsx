@@ -153,19 +153,21 @@ function SelectInputBase(
         disabled={disabled}
         isLoading={busy}
       />
-      <StandaloneSelectInput
-        hasErrorState={hasStringValue(getErrorMessage()) === true}
-        selectOptions={selectOptions}
-        valueField={valueField}
-        textField={textField}
-        groupBy={groupBy}
-        value={findCurrentValue()}
-        busy={busy}
-        placeholderText={getPlaceholderText()}
-        setDataFunction={(newValue) => updateValue(newValue)}
-        disabled={disabled}
-        onSearchFunction={onSearchFunction}
-      />
+      <div className={"d-flex"}>
+        <StandaloneSelectInput
+          hasErrorState={hasStringValue(getErrorMessage()) === true}
+          selectOptions={selectOptions}
+          valueField={valueField}
+          textField={textField}
+          groupBy={groupBy}
+          value={findCurrentValue()}
+          busy={busy}
+          placeholderText={getPlaceholderText()}
+          setDataFunction={(newValue) => updateValue(newValue)}
+          disabled={disabled}
+          onSearchFunction={onSearchFunction}
+        />
+      </div>
       <InfoText
         model={dataObject}
         fieldName={fieldName}
