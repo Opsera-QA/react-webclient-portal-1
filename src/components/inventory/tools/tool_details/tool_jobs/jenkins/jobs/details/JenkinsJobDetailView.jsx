@@ -11,7 +11,7 @@ function JenkinsJobDetailView() {
   }
 
   return (
-    <div className="content-container content-card-1 max-content-width ml-2">
+    <div className={"content-container content-card-1 max-content-width"}>
       <div className="pl-2 content-block-header title-text-header-1">Jenkins Job Details
         [{jenkinsJobData?.getData("name")}]
       </div>
