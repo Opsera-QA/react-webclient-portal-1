@@ -8,7 +8,8 @@ function SourceRepositorySelectInput({className, fieldName, model, setModel, dis
     const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
     const projectId = selectedOption?.projectId || selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
-    newModel.setData("repository", selectedOption?.name);
+    const repoName = selectedOption?.nameSpacedPath || selectedOption?.name || "";
+    newModel.setData("repository", repoName);
     newModel.setData("repoId", repoId);
     newModel.setData("projectId", projectId);
     newModel.setData("gitUrl", gitUrl);
