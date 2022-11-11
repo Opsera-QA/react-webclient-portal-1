@@ -26,7 +26,6 @@ import PipelineDurationMetricsStandaloneField
   from "components/common/fields/pipelines/metrics/PipelineDurationMetricsStandaloneField";
 import IconBase from "components/common/icons/IconBase";
 import PipelineSchedulerField from "components/workflow/pipelines/summary/fields/PipelineSchedulerField";
-import { hasStringValue } from "components/common/helpers/string-helpers";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleAccessInput from "components/workflow/pipelines/summary/inputs/PipelineRoleAccessInput";
@@ -34,6 +33,7 @@ import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import OwnerNameField from "components/common/fields/text/general/OwnerNameField";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -42,27 +42,10 @@ const INITIAL_FORM_DATA = {
   type: [],
 };
 
-const getWorkflowStatus = (pipeline) => {
-  const lastStep = pipeline?.workflow?.last_step;
-
-  if (lastStep != null) {
-    const status = lastStep?.status;
-
-    if (status === "stopped" && lastStep?.running?.paused) {
-      return "paused";
-    } else if (hasStringValue(status)) {
-      return status;
-    }
-  }
-
-  return false;
-};
-
 // TODO: This class needs to be reworked with new components and also to cleanup
 function PipelineSummaryPanel(
   {
     pipeline,
-    customerAccessRules,
     parentWorkflowStatus,
     fetchPlan,
     setWorkflowStatus,
@@ -79,29 +62,10 @@ function PipelineSummaryPanel(
   const {
     userData,
     cancelTokenSource,
-    isMounted,
     toastContext,
   } = useComponentStateReference();
 
-  useEffect(() => {
-    loadData().catch((error) => {
-      if (isMounted.current === true) {
-        // toastContext.showLoadingError(error);
-      }
-    });
-  }, []);
-
-  const loadData = async () => {
-    try {
-      if (setWorkflowStatus) {
-        setWorkflowStatus(getWorkflowStatus(pipeline));
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    }
-  };
+  useEffect(() => {}, [pipeline]);
 
   const handleSavePropertyClick = async (pipelineId, value, type) => {
     if (Object.keys(value).length > 0 && type.length > 0) {
@@ -274,7 +238,6 @@ function PipelineSummaryPanel(
           <PipelineActionControls
             pipeline={pipeline}
             disabledActionState={false}
-            customerAccessRules={customerAccessRules}
             fetchData={fetchPlan}
             setPipeline={setPipeline}
             setParentWorkflowStatus={setWorkflowStatus}
@@ -373,13 +336,17 @@ function PipelineSummaryPanel(
   };
 
   const getPipelineSummaryField = () => {
-    if (pipeline.workflow?.last_run?.completed) {
+    const completed = DataParsingHelper.parseNestedDate(pipeline, "workflow.last_run.completed");
+
+    if (completed) {
+      const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_run.status");
+
       return (
         <Col sm={12} className="py-2">
           <span className="text-muted mr-1">Summary:</span>
           Last complete run of pipeline finished on {
-          format(new Date(pipeline.workflow.last_run.completed), "yyyy-MM-dd', 'hh:mm a")} with a status
-          of {pipeline.workflow.last_run.status}.
+          format(new Date(completed), "yyyy-MM-dd', 'hh:mm a")} with a status
+          of {status}.
         </Col>
       );
     }
@@ -482,7 +449,6 @@ function PipelineSummaryPanel(
 
 PipelineSummaryPanel.propTypes = {
   pipeline: PropTypes.object,
-  customerAccessRules: PropTypes.object,
   ownerName: PropTypes.string,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   fetchPlan: PropTypes.func,

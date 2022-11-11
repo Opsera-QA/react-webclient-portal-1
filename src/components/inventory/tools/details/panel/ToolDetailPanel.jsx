@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ToolJobsPanel from "components/inventory/tools/tool_details/ToolJobsPanel";
 import ToolLogsPanel from "components/inventory/tools/tool_details/logs/ToolLogsPanel";
@@ -11,7 +11,6 @@ import DetailTabPanelContainer from "components/common/panels/detail_view/Detail
 import ToolSummaryPanel from "components/inventory/tools/tool_details/ToolSummaryPanel";
 import ToolUsagePanel from "components/inventory/tools/tool_details/ToolUsagePanel";
 import ToolProjectsPanel from "components/inventory/tools/tool_details/projects/ToolProjectsPanel";
-import { AuthContext } from "contexts/AuthContext";
 import ToolAttributeEditorPanel from "components/inventory/tools/tool_details/ToolAttributeEditorPanel";
 import ToolVaultPanel from "components/inventory/tools/tool_details/vault/ToolVaultPanel";
 import ToolRepositoriesPanel from "components/inventory/tools/tool_details/ToolRepositoriesPanel";
@@ -38,20 +37,6 @@ function ToolDetailPanel(
     tab,
   }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
-  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
-  const [customerAccessRules, setCustomerAccessRules] = useState({});
-
-  useEffect(() => {
-    initRoleAccess().catch(error => {
-      throw { error };
-    });
-  }, [isLoading]);
-
-  const initRoleAccess = async () => {
-    const userRecord = await getUserRecord(); //RBAC Logic
-    const rules = await setAccessRoles(userRecord);
-    setCustomerAccessRules(rules);
-  };
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
@@ -99,7 +84,6 @@ function ToolDetailPanel(
           <ToolAttributesPanel
             toolData={toolModel}
             setActiveTab={setActiveTab}
-            customerAccessRules={customerAccessRules}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.ATTRIBUTE_SETTINGS:
@@ -260,7 +244,6 @@ function ToolDetailPanel(
     <DetailTabPanelContainer
       detailView={getCurrentView()}
       tabContainer={getTabContainer()}
-      customerAccessRules={customerAccessRules}
     />
   );
 }
