@@ -17,7 +17,11 @@ import BoomiLogSummaryReportPanel from "./boomi/BoomiLogSummaryReportPanel";
 import InformaticaIdqLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/informatica_idq/InformaticaIdqLogSummaryReportPanel";
 import FortifyLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/FortifyLogSummaryReportPanel";
 
-function PipelineSummaryReportPanel({ pipelineTaskData }) {
+function PipelineSummaryReportPanel(
+  {
+    pipelineTaskData,
+    setActiveTab,
+  }) {
   const wrapObject = (metaData) => {
     return new Model(pipelineTaskData, metaData, false);
   };
@@ -73,7 +77,11 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
           <FortifyLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
         );        
       default:
-        return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);
+          <PipelineTaskSummaryPanelBase
+            pipelineTaskData={wrapObject(pipelineTaskMetadata)}
+            setActiveTab={setActiveTab}
+          />
+        );
     }
   };
 
@@ -83,6 +91,7 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
 
 PipelineSummaryReportPanel.propTypes = {
   pipelineTaskData: PropTypes.object,
+  setActiveTab: PropTypes.func,
 };
 
 export default PipelineSummaryReportPanel;

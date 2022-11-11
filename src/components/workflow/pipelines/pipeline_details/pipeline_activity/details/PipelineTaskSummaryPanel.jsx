@@ -29,7 +29,11 @@ const PIPELINE_TASK_ACTIONS = {
   USER_ACTION: "user action",
 };
 
-function PipelineTaskSummaryPanel({ pipelineTaskData }) {
+function PipelineTaskSummaryPanel(
+  {
+    pipelineTaskData,
+    setActiveTab,
+  }) {
   const {getAccessToken} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
@@ -89,12 +93,14 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
         return (
           <PipelineSummaryReportPanel
             pipelineTaskData={pipelineTaskData}
+            setActiveTab={setActiveTab}
           />
         );
       case PIPELINE_TASK_ACTIONS.USER_ACTION:
         return (
           <PipelineUserActionSummaryPanel
             pipelineTaskData={pipelineTaskData}
+            setActiveTab={setActiveTab}
           />
         );
     }
@@ -125,7 +131,12 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
           />
         );
       default:
-        return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);
+        return (
+          <PipelineTaskSummaryPanelBase
+            pipelineTaskData={wrapObject(pipelineTaskMetadata)}
+            setActiveTab={setActiveTab}
+          />
+        );
     }
   };
 
@@ -139,6 +150,7 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
 
 PipelineTaskSummaryPanel.propTypes = {
   pipelineTaskData: PropTypes.object,
+  setActiveTab: PropTypes.func,
 };
 
 export default PipelineTaskSummaryPanel;

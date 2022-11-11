@@ -70,6 +70,7 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
         return (
           <PipelineTaskSummaryPanel
             pipelineTaskData={pipelineTaskData}
+            setActiveTab={setActiveTab}
           />
         );
       case "configuration":
