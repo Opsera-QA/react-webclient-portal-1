@@ -8,7 +8,7 @@ import {
 import PipelineTaskDetailViewer from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineTaskDetailViewer";
 import TableBase from "components/common/table/TableBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import PipelineHelpers from "components/workflow/pipelineHelpers";
+import pipelineHelpers from "components/workflow/pipelineHelpers";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import PipelineInstructionsAcknowledgementOverlay
   from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
@@ -56,14 +56,16 @@ function PipelineActivityLogTable(
     const isPendingRow = DataParsingHelper.parseNestedString(row, "status") === "pending";
     const isPaused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
     const rowStepId = DataParsingHelper.parseNestedMongoDbId(row, "step_id");
+    const pendingApprovalStep = DataParsingHelper.parseObject(pipelineHelpers.getPendingApprovalStep(pipeline), {});
+    const approvalStepId = pendingApprovalStep?._id;
 
     if (
       isPaused === true
       && isPendingRow === true
       && pipelineRunCount === selectedRowRunCount
-      && rowStepId === currentStepId
+      && rowStepId === approvalStepId
     ) {
-      const parsedPipelineStepToolIdentifier = PipelineHelpers.getPendingApprovalStepToolIdentifier(pipeline);
+      const parsedPipelineStepToolIdentifier = DataParsingHelper.parseNestedString(pendingApprovalStep, "tool.tool_identifier");
 
       if (
         parsedPipelineStepToolIdentifier !== toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL
