@@ -47,6 +47,7 @@ function PipelineSummaryReportPanel(
     return (
       <PipelineTaskSummaryPanelBase
         pipelineTaskData={wrapObject(pipelineTaskMetadata)}
+        setActiveTab={setActiveTab}
       />
     );
   };
