@@ -20,7 +20,7 @@ import PipelineSourceConfigurationDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/source/PipelineSourceConfigurationDetailsOverviewOverlay";
 import modelHelpers from "components/common/model/modelHelpers";
 import sourceRepositoryConfigurationMetadata from "./step_configuration/repository/source-repository-configuration-metadata";
-import PipelineActionControls from "components/workflow/pipelines/pipeline_details/PipelineActionControls";
+import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import PipelineWorkflowWorkflowEditingToggleButton

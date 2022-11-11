@@ -13,6 +13,7 @@ import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReferen
 import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 let internalRefreshCount = 1;
 const refreshInterval = 15000;
@@ -174,6 +175,9 @@ function PipelineDetailView() {
       );
     }
 
+    console.log("DataParsingHelper.parseNestedString(pipeline, \"workflow.last_step.status\"): " + JSON.stringify(DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status")));
+    console.log("workflow.run_count: " + JSON.stringify(DataParsingHelper.safeObjectPropertyParser(pipeline, "workflow.run_count")));
+
     return (
       <div>
         <div
@@ -195,10 +199,10 @@ function PipelineDetailView() {
         <div className="max-content-width-1875 mr-2">
           <PipelineActivityLogTreeTable
             pipeline={pipeline}
-            pipelineStatus={pipeline?.workflow?.last_step?.status}
+            pipelineStatus={DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status")}
             pipelineId={id}
             getPipeline={getPipeline}
-            pipelineRunCount={pipeline?.workflow?.run_count}
+            pipelineRunCount={DataParsingHelper.safeObjectPropertyParser(pipeline, "workflow.run_count")}
             loadPipelineFunction={fetchPlan}
           />
         </div>

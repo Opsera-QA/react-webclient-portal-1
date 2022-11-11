@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import PipelineActionControls from "components/workflow/pipelines/pipeline_details/PipelineActionControls";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import pipelineActions from "components/workflow/pipeline-actions";
 import HeaderNavigationBarItem from "components/header/navigation_bar/HeaderNavigationBarItem";
 import {
   FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS
 } from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidgetHeaderTabBarBase";
+import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
 
 export default function FreeTrialLandingPipelineWidgetHeaderTitleBar(
   {
