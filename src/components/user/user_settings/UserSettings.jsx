@@ -10,6 +10,7 @@ import MyAccessTokens from "components/user/user_settings/access_tokens/MyAccess
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import MySubscriptions from "components/user/user_settings/subscriptions/MySubscriptions";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import MyCurrentToken from "components/user/user_settings/current_token/MyCurrentToken";
 
 function UserSettings() {
   const { tab } = useParams();
@@ -69,8 +70,8 @@ function UserSettings() {
         return <MyUserRecord />;
       case "accessTokens":
         return <MyAccessTokens />;
-      case "currentToken":
-        return <MyCurrentToken />;
+      // case "currentToken":
+      //   return <MyCurrentToken />;
       case "subscriptions":
         return <MySubscriptions />;
       default:
