@@ -105,9 +105,6 @@ const SalesforceToGitMergeSyncTaskWizardFileSelectionScreen = ({
       <div className="h5">
         Salesforce To Git Merge Sync: File Comparison and Selection
       </div>
-      <div className="text-muted mb-2">
-        Select which version of files will be merged in.
-      </div>
       {getBody()}
     </div>
   );

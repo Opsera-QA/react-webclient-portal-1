@@ -8,6 +8,10 @@ import PipelineInstructionsSummaryPanel
   from "components/settings/pipelines/instructions/details/PipelineInstructionsSummaryPanel";
 import PipelineInstructionsEditorPanel
   from "components/settings/pipelines/instructions/details/PipelineInstructionsEditorPanel";
+import PipelineInstructionsPipelineUsageField
+  from "components/common/list_of_values_input/settings/pipelines/instructions/usage/PipelineInstructionsPipelineUsageField";
+import CustomTab from "components/common/tabs/CustomTab";
+import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 
 export default function PipelineInstructionsDetailPanel(
   {
@@ -35,6 +39,13 @@ export default function PipelineInstructionsDetailPanel(
           handleTabClick={handleTabClick}
           activeTab={activeTab}
         />
+        <CustomTab
+          tabText={"Usage"}
+          tabName={"usage"}
+          icon={faDraftingCompass}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+        />
         <SettingsTab
           handleTabClick={handleTabClick}
           activeTab={activeTab}
@@ -51,6 +62,12 @@ export default function PipelineInstructionsDetailPanel(
             pipelineInstructionsModel={pipelineInstructionsModel}
             setPipelineInstructionsModel={setPipelineInstructionsModel}
             setActiveTab={setActiveTab}
+          />
+        );
+      case "usage":
+        return (
+          <PipelineInstructionsPipelineUsageField
+            pipelineInstructionsId={pipelineInstructionsModel?.getMongoDbId()}
           />
         );
       case "settings":

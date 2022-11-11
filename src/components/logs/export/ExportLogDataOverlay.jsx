@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import jsPDF from "jspdf";
-import ExportDataOverlay from "./ExportDataOverlay";
+import ExportDataOverlay from "../../common/modal/export_data/ExportDataOverlay";
 
 // TODO: Should we be just sending in data and formatting in here?
 function ExportLogDataOverlay({ formattedData, rawData, isLoading}) {

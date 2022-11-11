@@ -102,6 +102,8 @@ import LiquibaseStepConfiguration
 import BlackDuckStepConfiguration from "./step_tool_configuration_forms/black_duck/BlackDuckStepConfiguration";
 import FortifyStepConfiguration from "./step_tool_configuration_forms/fortify/FortifyStepConfiguration";
 import DockerCliStepConfiguration from "./step_tool_configuration_forms/docker_cli/DockerCliStepConfiguration";
+import UserActionsPipelineStepEditorPanel
+  from "components/workflow/plan/step/user_actions/UserActionsPipelineStepEditorPanel";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -516,6 +518,14 @@ function StepToolConfiguration({
       case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS:
         return (
           <AzureScriptsStepEditorPanel
+            pipelineId={pipeline._id}
+            pipelineStep={pipelineStep}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
+        return (
+          <UserActionsPipelineStepEditorPanel
             pipelineId={pipeline._id}
             pipelineStep={pipelineStep}
             closeEditorPanel={closeEditorPanel}
@@ -1455,6 +1465,7 @@ function StepToolConfiguration({
     const newOverlayToolIdentifiers = [
       toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION,
       toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS,
+      toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION,
     ];
 
     if (newOverlayToolIdentifiers.includes(stepTool?.tool_identifier) === false) {

@@ -11,7 +11,7 @@ const LiquibaseMetadata = {
       label: "Database URL",
       id: "url",
       isRequired: true,
-      isSecureUrl: true,
+      maxLength: 2048,
     },
     {
       label: "Port",

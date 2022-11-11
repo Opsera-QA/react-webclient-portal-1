@@ -11,8 +11,9 @@ export default function RegistryToolRoleAccessInput(
   {
     fieldName, 
     toolModel, 
-    setToolModel, 
+    setToolModel,
     visible,
+    loadToolFunction,
   }) {
   const {
     userData,
@@ -23,9 +24,10 @@ export default function RegistryToolRoleAccessInput(
 
   // TODO: Make update tool roles route
   const saveData = async (newRoles) => {
-    toolModel.setData(fieldName, newRoles);
+    toolModel.setData(fieldName, newRoles, false);
     const response = await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, toolModel);
     setToolModel({...toolModel});
+    await loadToolFunction();
     return response;
   };
 
@@ -53,6 +55,7 @@ RegistryToolRoleAccessInput.propTypes = {
   setToolModel: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
+  loadToolFunction: PropTypes.func,
 };
 
 RegistryToolRoleAccessInput.defaultProps = {

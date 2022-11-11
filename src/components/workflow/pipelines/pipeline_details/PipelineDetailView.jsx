@@ -189,6 +189,7 @@ function PipelineDetailView() {
             ownerName={pipeline?.owner_name}
             setWorkflowStatus={setWorkflowStatus}
             fetchPlan={fetchPlan}
+            isLoading={softLoading || isLoading}
           />
         </div>
         <div className="max-content-width-1875 mr-2">
@@ -198,6 +199,7 @@ function PipelineDetailView() {
             pipelineId={id}
             getPipeline={getPipeline}
             pipelineRunCount={pipeline?.workflow?.run_count}
+            loadPipelineFunction={fetchPlan}
           />
         </div>
       </div>

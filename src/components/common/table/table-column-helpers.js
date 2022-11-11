@@ -3,7 +3,6 @@ import {
   faCheckCircle,
   faCircle,
   faExclamationCircle,
-  faLock,
   faOctagon,
   faPauseCircle,
   faPlay,
@@ -12,7 +11,6 @@ import {
   faStopCircle,
   faTimesCircle,
   faTrash,
-  faUnlock,
 } from "@fortawesome/pro-light-svg-icons";
 import { faBitbucket, faGithub, faGitlab, faJira, faSlack } from "@fortawesome/free-brands-svg-icons";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
@@ -38,6 +36,15 @@ import OrchestrationStateFieldBase
   from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
+import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
+
+export const getDataObjectFromTableRow = (row) => {
+  try {
+    return DataParsingHelper.parseObject(row?.data[row?.row?.index], {});
+  }catch (error) {
+    return {};
+  }
+};
 
 export const getCustomTableHeader = (field) => {
   return field ? field.label : "";
@@ -291,7 +298,7 @@ export const getAssociatedPipelineStatusIcon = (pipelineStatus) => {
       return (<IconBase icon={faPlayCircle} className={"green"}/>);
     case "queued":
     case "pending":
-      return (<IconBase icon={faPauseCircle} className={"green"}/>);
+      return (<IconBase icon={faPauseCircle} className={"yellow"}/>);
     case "stopped":
     case "halted":
       return (<IconBase icon={faOctagon} className={"red"}/>);
@@ -311,7 +318,7 @@ export const getPipelineTypeColumn = (field, className) => {
       if (Array.isArray(types) && types.length > 0) {
         type = types[0];
       }
-      
+
       return <PipelineTypeIconBase type={type} />;
     },
     class: className ? className : "cell-center"
@@ -381,6 +388,21 @@ export const getChartTrendStatusColumn = (field, className) => {
       }
     },
     class: className ? className :  undefined
+  };
+};
+
+export const getStaticIconColumn = (icon, accessor = "row", className) => {
+  return {
+    Header: "",
+    accessor: accessor,
+    Cell: function StaticIcon(){
+      if (icon) {
+        return <IconBase icon={icon} />;
+      }
+
+      return "";
+    },
+    class: className ? className : undefined
   };
 };
 
@@ -454,7 +476,6 @@ export const getGitCustodianOriginColumn = (field, className) => {
     class: className ? className :  undefined
   };
 };
-
 
 export const getTableFavoriteColumn = (field, className) => {
   return {
@@ -530,7 +551,6 @@ export const getPipelineActivityStatusColumn = (field, className) => {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: (text) => {
-      console.log("text: " + JSON.stringify(text));
       const parsedText = DataParsingHelper.parseString(text);
       if (!parsedText) {
         return (
@@ -556,8 +576,8 @@ export const getUppercaseTableTextColumn = (field, className, maxWidth = undefin
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
-    Cell: (value) => {
-      return capitalizeFirstLetter(value);
+    Cell: (row) => {
+      return capitalizeFirstLetter(row?.value);
     },
     class: className,
     maxWidth: maxWidth
@@ -724,7 +744,7 @@ export const getGitCustodianExternalLinkIconColumnDefinition = (field, className
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function getPageLink(row){
-      return row?.value?.url ? 
+      return row?.value?.url ?
       (
         <PageLinkIcon
           pageLink={row?.value?.url}
@@ -734,6 +754,57 @@ export const getGitCustodianExternalLinkIconColumnDefinition = (field, className
       ) : (row?.value?.key || "");
     },
     class: className ? className : undefined
+  };
+};
+
+export const getUserObjectRoleLevelColumnDefinition = (userObject, className) => {
+  return {
+    Header: "Assigned Role",
+    accessor: "row",
+    Cell: function getPageLink(row){
+      const parsedUserObject = DataParsingHelper.parseObject(userObject);
+
+      if (!parsedUserObject) {
+        return "";
+      }
+
+      const parsedEmail = DataParsingHelper.parseEmailAddress(parsedUserObject.email);
+      const parsedUserGroups = DataParsingHelper.parseArray(parsedUserObject.groups);
+
+      const object = getDataObjectFromTableRow(row);
+      const objectRoles = DataParsingHelper.parseArray(object?.roles, []);
+      const parsedRole = ObjectAccessRoleHelper.calculateUserObjectRole(
+        parsedEmail,
+        parsedUserGroups,
+        objectRoles
+      );
+
+      return (DataParsingHelper.parseString(ObjectAccessRoleHelper.getLabelForAccessRole(parsedRole), ""));
+    },
+    class: className,
+  };
+};
+
+export const getGroupRoleLevelColumnDefinition = (group, className) => {
+  return {
+    Header: "Assigned Role",
+    accessor: "row",
+    Cell: function getPageLink(row){
+      const parsedGroup = DataParsingHelper.parseString(group);
+
+      if (!parsedGroup) {
+        return "";
+      }
+
+      const object = getDataObjectFromTableRow(row);
+      const parsedRole = ObjectAccessRoleHelper.getGroupRoleLevel(
+        parsedGroup,
+        object,
+      );
+
+      return (DataParsingHelper.parseString(ObjectAccessRoleHelper.getLabelForAccessRole(parsedRole), ""));
+    },
+    class: className,
   };
 };
 

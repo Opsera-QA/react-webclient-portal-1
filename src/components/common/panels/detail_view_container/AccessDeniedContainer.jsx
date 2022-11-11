@@ -47,11 +47,13 @@ export default function AccessDeniedContainer(
           minHeight: HEIGHT,
         }}
       >
-        <div className={"px-3 content-block-header title-text-header-1 py-2"}>
-          <TitleBar
-            titleIcon={faExclamationTriangle}
-            title={"Access Denied!"}
-          />
+        <div className={"px-3 content-block-header title-text-header-1 py-2 d-flex"}>
+          <div className={"my-auto w-100"}>
+            <TitleBar
+              titleIcon={faExclamationTriangle}
+              title={"Access Denied!"}
+            />
+          </div>
         </div>
         <CenteredContentWrapper
           minHeight={BODY_HEIGHT}

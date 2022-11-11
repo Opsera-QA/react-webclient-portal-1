@@ -1,14 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ActionBarDeleteModelButton from "components/common/actions/buttons/ActionBarDeleteModelButton";
-import { useHistory } from "react-router-dom";
-import { pipelineInstructionsHelper } from "components/settings/pipelines/instructions/pipelineInstructions.helper";
+import ActionBarDeleteButtonBase from "components/common/actions/buttons/ActionBarDeleteButtonBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import DeletePipelineInstructionsOverlay
+  from "components/settings/pipelines/instructions/delete_overlay/DeletePipelineInstructionsOverlay";
 
-export default function ActionBarDeletePipelineInstructionsButton({ pipelineInstructionsModel, className }) {
-  const history = useHistory();
+export default function ActionBarDeletePipelineInstructionsButton(
+  {
+    pipelineInstructionsModel,
+    className,
+  }) {
+  const {
+    toastContext,
+  } = useComponentStateReference();
 
-  const afterDeleteFunction = () => {
-    history.push(pipelineInstructionsHelper.getManagementScreenLink());
+  const launchDeleteConfirmationOverlay = () => {
+    toastContext.showOverlayPanel(
+      <DeletePipelineInstructionsOverlay
+        pipelineInstructionsModel={pipelineInstructionsModel}
+      />
+    );
   };
 
   if (pipelineInstructionsModel?.canDelete() !== true) {
@@ -16,11 +27,11 @@ export default function ActionBarDeletePipelineInstructionsButton({ pipelineInst
   }
 
   return (
-    <ActionBarDeleteModelButton
+    <ActionBarDeleteButtonBase
+      handleDeleteFunction={launchDeleteConfirmationOverlay}
       model={pipelineInstructionsModel}
       type={"Pipeline Instructions"}
       className={className}
-      afterDeleteFunction={afterDeleteFunction}
     />
   );
 }

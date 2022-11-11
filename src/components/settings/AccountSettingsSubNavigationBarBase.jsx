@@ -34,7 +34,7 @@ export default function AccountSettingsSubNavigationBarBase({ activeTab }) {
         tabName={"accountSettings"}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
-        tabText={"Account Settings"}
+        tabText={"Settings"}
       />
       <NavigationTab
         icon={faChartNetwork}
@@ -43,13 +43,13 @@ export default function AccountSettingsSubNavigationBarBase({ activeTab }) {
         activeTab={activeTab}
         tabText={"Insights Settings"}
       />
-      <NavigationTab
-        icon={faDraftingCompass}
-        tabName={"pipelineSettings"}
-        handleTabClick={handleTabClick}
-        activeTab={activeTab}
-        tabText={"Pipeline Settings"}
-      />
+      {/*<NavigationTab*/}
+      {/*  icon={faDraftingCompass}*/}
+      {/*  tabName={"pipelineSettings"}*/}
+      {/*  handleTabClick={handleTabClick}*/}
+      {/*  activeTab={activeTab}*/}
+      {/*  tabText={"Pipeline Settings"}*/}
+      {/*/>*/}
     </>
   );
 }

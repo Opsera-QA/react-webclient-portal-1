@@ -4,13 +4,12 @@ import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import OwnerNameField from "components/common/fields/text/general/OwnerNameField";
-import DescriptionField from "components/common/fields/text/DescriptionField";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
-import PipelineInstructionsTypeField
-  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsTypeField";
-import PipelineInstructionsRoleAccessInlineInput
-  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsRoleAccessInlineInput";
 import RichTextField from "components/common/fields/rich_text/RichTextField";
+import PipelineInstructionsRoleAccessInlineInput
+  from "components/settings/pipelines/instructions/details/inputs/PipelineInstructionsRoleAccessInlineInput";
+import PipelineInstructionsTypeField
+  from "components/common/list_of_values_input/settings/pipelines/instructions/type/PipelineInstructionsTypeField";
 
 export default function PipelineInstructionsSummaryPanel(
   {

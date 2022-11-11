@@ -410,8 +410,8 @@ const breadcrumbs = {
     parent: undefined,
     name: "accountSettings",
     path: paths.accountSettings,
-    title: "Account Settings",
-    linkText: "Account Settings",
+    title: "Settings",
+    linkText: "Settings",
     icon: faCogs,
     pageDescription: "Manage account settings from this dashboard.",
   },
@@ -1051,9 +1051,9 @@ const breadcrumbs = {
     title: "Opsera Task Details",
     linkText: "Opsera Task Details",
     icon: faTasks,
-    // dynamicIconFunction: (model) => {
-    //   return taskTypeConstants.getIconForTaskType(model?.getData("type"));
-    // },
+    dynamicIconFunction: (model) => {
+      return taskTypeConstants.getIconForTaskType(model?.getData("type"));
+    },
   },
 
   //General

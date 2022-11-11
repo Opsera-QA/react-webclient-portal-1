@@ -127,6 +127,8 @@ function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObj
         clearDataFunction={getClearDataFunction()}
         model={dataObject}
         hasError={hasStringValue(errorMessage) === true}
+        disabled={disabled}
+        isLoading={busy || isLoading}
       />
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput

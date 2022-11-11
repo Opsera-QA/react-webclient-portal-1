@@ -1,18 +1,35 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
 
-function PipelineTaskSummaryMessageField({ fieldName, dataObject }) {
+export default function PipelineTaskSummaryMessageField(
+  {
+    fieldName,
+    model,
+    className,
+  }) {
+  const label = DataParsingHelper.parseString(model?.getLabel(fieldName, "Message"), "Message");
+
+  const getMessage = () => {
+    return DataParsingHelper.parseString(model?.getData(fieldName), "");
+  };
+
+  if (model == null) {
+    return null;
+  }
+
   return (
-    <div className="m-3 p-3 text-muted italic pipeline-task-message">
-      <TextFieldBase dataObject={dataObject} fieldName={fieldName}/>
-    </div>
+    <MessageFieldBase
+      className={className}
+      label={label}
+      message={getMessage()}
+    />
   );
 }
 
 PipelineTaskSummaryMessageField.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
+  model: PropTypes.object,
+  className: PropTypes.string,
 };
-
-export default PipelineTaskSummaryMessageField;

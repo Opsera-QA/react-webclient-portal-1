@@ -51,6 +51,8 @@ function FilterSelectInputBase(
         showLabel={!inline}
         field={field}
         className={inline ? "mt-1 mr-2" : undefined}
+        disabled={disabled}
+        isLoading={busy}
       />
       <StandaloneSelectInput
         selectOptions={selectOptions}

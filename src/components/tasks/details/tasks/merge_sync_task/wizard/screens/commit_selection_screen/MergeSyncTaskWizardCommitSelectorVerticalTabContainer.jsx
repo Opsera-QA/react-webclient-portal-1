@@ -13,16 +13,18 @@ import {
   MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import {faPlus, faMinus, faEdit} from "@fortawesome/free-solid-svg-icons";
+import IconBase from "../../../../../../../common/icons/IconBase";
 
 const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
-  {
-    diffFileList,
-    isLoading,
-    filePullCompleted,
-    loadDataFunction,
-    wizardModel,
-    setWizardModel,
-  }) => {
+    {
+      diffFileList,
+      isLoading,
+      filePullCompleted,
+      loadDataFunction,
+      wizardModel,
+      setWizardModel,
+    }) => {
   const [activeTab, setActiveTab] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -57,35 +59,48 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
 
   const getShortenedName = (diffFile) => {
     const fileName = diffFile?.committedFile;
-
+    const fileAction = diffFile?.commitAction;
     if (hasStringValue(fileName)) {
       const lastIndexOf = fileName.lastIndexOf('/');
-      return fileName.substring(lastIndexOf + 1);
+      return <>{getActionIcon(fileAction)} {fileName.substring(lastIndexOf + 1)}</>;
+    }
+  };
+
+  const getActionIcon = (action) => {
+    switch(action?.toLowerCase()) {
+      case "added":
+        return (<IconBase icon={faPlus} className={"mr-1 green"}/>);
+      case "modified":
+        return (<IconBase icon={faEdit} className={"mr-1 yellow"}/>);
+      case "removed":
+        return (<IconBase icon={faMinus} className={"mr-1 red"}/>);
+      default:
+        return (<></>);
     }
   };
 
   const getCommitFileTab = (diffFile, index) => {
     return (
-      <VanitySetVerticalTab
-        key={index}
-        tabText={getShortenedName(diffFile)}
-        tabName={`${index}`}
-        handleTabClick={handleTabClick}
-        tooltipText={diffFile?.committedFile}
-        activeTab={activeTab}
-        className={"small-label-text"}
-      />
+        <VanitySetVerticalTab
+            key={index}
+            tabText={getShortenedName(diffFile)}
+            tabName={`${index}`}
+            handleTabClick={handleTabClick}
+            tooltipText={diffFile?.committedFile}
+            activeTab={activeTab}
+            className={"small-label-text"}
+        />
     );
   };
 
   const getVerticalTabContainer = () => {
     if (Array.isArray(diffFileList) && diffFileList.length > 0) {
       return (
-        <VanitySetVerticalTabContainer>
-          {diffFileList?.map((fieldData, index) => {
-            return getCommitFileTab(fieldData, index);
-          })}
-        </VanitySetVerticalTabContainer>
+          <VanitySetVerticalTabContainer>
+            {diffFileList?.map((fieldData, index) => {
+              return getCommitFileTab(fieldData, index);
+            })}
+          </VanitySetVerticalTabContainer>
       );
     }
   };
@@ -93,11 +108,11 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
   const getCurrentView = () => {
     if (activeTab && Array.isArray(diffFileList) && diffFileList.length > 0) {
       return (
-        <MergeSyncTaskWizardCommitViewer
-          wizardModel={wizardModel}
-          setWizardModel={setWizardModel}
-          diffFile={diffFileList[activeTab]}
-        />
+          <MergeSyncTaskWizardCommitViewer
+              wizardModel={wizardModel}
+              setWizardModel={setWizardModel}
+              diffFile={diffFileList[activeTab]}
+          />
       );
     }
   };
@@ -105,9 +120,9 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
   const getLoadingBody = () => {
     if (isLoading === true) {
       return (
-        <CenterLoadingIndicator
-          customMessage={"Pulling Files and calculating selection options to handle Diff Comparison. Please Note: this may take some time."}
-        />
+          <CenterLoadingIndicator
+              customMessage={"Please wait while we pull the files and calculate selection options in order to handle the comparison of changes.  This may take some time."}
+          />
       );
     }
 
@@ -120,33 +135,33 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
 
   if (!Array.isArray(diffFileList) || diffFileList.length === 0) {
     return (
-      <InfoContainer
-        titleText={`Merge Change Selection`}
-        titleIcon={faBracketsCurly}
-        loadDataFunction={loadDataFunction}
-        isLoading={isLoading}
-        minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
-        maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
-      >
-        <div className={"m-3"}>
-          {getLoadingBody()}
-        </div>
-      </InfoContainer>
+        <InfoContainer
+            titleText={`Merge Change Selection`}
+            titleIcon={faBracketsCurly}
+            loadDataFunction={loadDataFunction}
+            isLoading={isLoading}
+            minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
+            maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
+        >
+          <div className={"m-3"}>
+            {getLoadingBody()}
+          </div>
+        </InfoContainer>
     );
   }
 
   return (
-    <VanitySetTabAndViewContainer
-      icon={faBracketsCurly}
-      title={`Merge Change Selection`}
-      verticalTabContainer={getVerticalTabContainer()}
-      bodyClassName={"mx-0"}
-      currentView={getCurrentView()}
-      isLoading={isLoading}
-      loadDataFunction={loadDataFunction}
-      minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
-      maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
-    />
+      <VanitySetTabAndViewContainer
+          icon={faBracketsCurly}
+          title={`Merge Change Selection`}
+          verticalTabContainer={getVerticalTabContainer()}
+          bodyClassName={"mx-0"}
+          currentView={getCurrentView()}
+          isLoading={isLoading}
+          loadDataFunction={loadDataFunction}
+          minimumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
+          maximumHeight={MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.MAIN_CONTAINER}
+      />
   );
 };
 

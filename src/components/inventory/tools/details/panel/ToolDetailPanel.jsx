@@ -207,7 +207,7 @@ function ToolDetailPanel(
             toolData={toolModel}
             setToolData={setToolModel}
             setActiveTab={setActiveTab}
-            customerAccessRules={customerAccessRules}
+            loadToolFunction={loadData}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.USAGE:

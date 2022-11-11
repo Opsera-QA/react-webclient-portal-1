@@ -35,6 +35,8 @@ import PipelineStepDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/step/PipelineStepDetailsOverviewOverlay";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import PipelineWorkflowItemActionField
+  from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemActionField";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
@@ -171,6 +173,7 @@ const PipelineWorkflowItem = (
       const newOverlayToolIdentifiers = [
         toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION,
         toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS,
+        toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION,
       ];
       if (newOverlayToolIdentifiers.includes(toolIdentifier) === true && type === "tool") {
         toastContext.showOverlayPanel(
@@ -457,6 +460,12 @@ const PipelineWorkflowItem = (
         </div>
 
         {getToolField()}
+
+        <PipelineWorkflowItemActionField
+          pipelineStep={item}
+          pipeline={pipeline}
+          loadPipelineFunction={loadPipeline}
+        />
 
         {getRepositoryField()}
 

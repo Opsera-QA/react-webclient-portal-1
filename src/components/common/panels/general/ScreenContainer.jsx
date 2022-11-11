@@ -70,16 +70,20 @@ function ScreenContainer(
 
     if (hasStringValue(pageDescription) === true) {
       return (
-        <div className={"page-description px-3 pt-2"}>
-          {pageDescription}
+        <div className={"page-description px-3 d-flex"}>
+          <div className={"mt-auto"}>
+            {pageDescription}
+          </div>
         </div>
       );
     }
 
     if (hasStringValue(breadcrumbPageDescription) === true) {
       return (
-        <div className={"page-description px-3 pt-2"}>
-          {breadcrumbPageDescription}
+        <div className={"page-description px-3 d-flex"}>
+          <div className={"mt-auto"}>
+            {breadcrumbPageDescription}
+          </div>
         </div>
       );
     }

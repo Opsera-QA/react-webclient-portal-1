@@ -22,7 +22,6 @@ function PipelineThresholdFieldCard({ model, fieldName, isLoading, className }) 
             <PipelineThresholdTable thresholdRows={model?.getData(fieldName)} />
         </div>
       </div>
-      <div className={"object-properties-footer"} />
     </FieldContainer>
   );
 }

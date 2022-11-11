@@ -18,6 +18,7 @@ import LdapGroupAssignedRolesPipelineInstructionsTable
 
 export default function LdapGroupAssignedRolesTableBase(
   {
+    group,
     items,
     isLoading,
     loadData,
@@ -31,6 +32,7 @@ export default function LdapGroupAssignedRolesTableBase(
           <LdapGroupAssignedRolesDashboardsTable
             dashboards={items}
             isLoading={isLoading}
+            group={group}
           />
         );
       case "parameters":
@@ -38,6 +40,7 @@ export default function LdapGroupAssignedRolesTableBase(
           <LdapGroupAssignedRolesParametersTable
             parameters={items}
             isLoading={isLoading}
+            group={group}
           />
         );
       case "pipelines":
@@ -45,6 +48,7 @@ export default function LdapGroupAssignedRolesTableBase(
           <LdapGroupAssignedRolesPipelinesTable
             pipelines={items}
             isLoading={isLoading}
+            group={group}
           />
         );
       case "pipeline_instructions":
@@ -52,6 +56,7 @@ export default function LdapGroupAssignedRolesTableBase(
           <LdapGroupAssignedRolesPipelineInstructionsTable
             pipelineInstructions={items}
             isLoading={isLoading}
+            group={group}
           />
         );
       case "scripts":
@@ -59,6 +64,7 @@ export default function LdapGroupAssignedRolesTableBase(
           <LdapGroupAssignedRolesScriptsTable
             scripts={items}
             isLoading={isLoading}
+            group={group}
           />
         );
       case "tools":
@@ -66,6 +72,7 @@ export default function LdapGroupAssignedRolesTableBase(
           <LdapGroupAssignedRolesToolsTable
             tools={items}
             isLoading={isLoading}
+            group={group}
           />
         );
       case "tasks":
@@ -73,6 +80,7 @@ export default function LdapGroupAssignedRolesTableBase(
           <LdapGroupAssignedRolesTasksTable
             tasks={items}
             isLoading={isLoading}
+            group={group}
           />
         );
     }
@@ -92,6 +100,7 @@ export default function LdapGroupAssignedRolesTableBase(
 }
 
 LdapGroupAssignedRolesTableBase.propTypes = {
+  group: PropTypes.string,
   items: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,

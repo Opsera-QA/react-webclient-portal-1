@@ -544,7 +544,7 @@ a.text-primary:hover, a.text-primary:focus {
 /* End Table Styling */
 /* End custom table styling */
 
-.message-field {
+.message-field, .pipeline-task-message {
     background-color: #f2f4f8;
 }
 
@@ -1007,7 +1007,7 @@ a.nav-link {
     /*background-color: #a24600;*/
     /*background-color: #e76500;*/
     color: #fef7fd;
-    line-height: 2.4em;
+    min-height: 49px;
 }
 
 .content-card-1 .content-block-body {
@@ -1078,7 +1078,6 @@ a.nav-link {
     padding-top: 1em;
     height: 2em;
 }
-
 /* End Content Block Styling */
 
 /* Data Blocks Card Styling */

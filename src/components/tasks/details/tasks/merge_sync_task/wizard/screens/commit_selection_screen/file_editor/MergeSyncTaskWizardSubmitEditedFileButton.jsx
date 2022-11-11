@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import { faCheckSquare, faQuestionCircle } from "@fortawesome/pro-light-svg-icons";
+import { faCheckSquare, faSave } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import mergeSyncTaskWizardActions
   from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { xmlHelpers } from "utils/xml.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { getUniqueListBy } from "components/common/helpers/array-helpers";
 
 function MergeSyncTaskWizardSubmitEditedFileButton(
   {
@@ -20,6 +21,7 @@ function MergeSyncTaskWizardSubmitEditedFileButton(
     className,
     icon,
     isLoading,
+    setWizardModel,
   }) {
   const [isSaving, setIsSaving] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -59,6 +61,11 @@ function MergeSyncTaskWizardSubmitEditedFileButton(
         fileContent,
       );
       if (isMounted?.current === true && response) {
+        const newWizardModel = { ...wizardModel };
+        let newFileList = newWizardModel.getData("updatedFileList");
+        newFileList.push({"fileName" : comparisonFileModel.getData("file")});
+        newWizardModel?.setData("updatedFileList", getUniqueListBy(newFileList, "fileName"));
+        setWizardModel({ ...newWizardModel });
         setIsSubmitted(true);
       }
     } catch (error) {
@@ -86,7 +93,7 @@ function MergeSyncTaskWizardSubmitEditedFileButton(
       return ("Saving Edited File");
     }
 
-    return ("Validate and Submit Edited File");
+    return ("Save Edited File");
   };
 
   if (hasStringValue(fileName) !== true) {
@@ -99,7 +106,13 @@ function MergeSyncTaskWizardSubmitEditedFileButton(
         <Button
           size={size}
           variant={isSubmitted === true ? "success" : "primary"}
-          disabled={isSubmitted === true || disabled === true || isSaving === true || isLoading === true}
+          disabled={
+            fileContent.length < 1 ||
+            isSubmitted === true ||
+            disabled === true ||
+            isSaving === true ||
+            isLoading === true
+          }
           onClick={submitSelectedFile}
         >
           <span>
@@ -126,11 +139,12 @@ MergeSyncTaskWizardSubmitEditedFileButton.propTypes = {
   className: PropTypes.string,
   isLoading: PropTypes.bool,
   disabled: PropTypes.bool,
+  setWizardModel: PropTypes.func,
 };
 
 MergeSyncTaskWizardSubmitEditedFileButton.defaultProps = {
   size: "sm",
-  icon: faQuestionCircle,
+  icon: faSave,
 };
 
 export default MergeSyncTaskWizardSubmitEditedFileButton;

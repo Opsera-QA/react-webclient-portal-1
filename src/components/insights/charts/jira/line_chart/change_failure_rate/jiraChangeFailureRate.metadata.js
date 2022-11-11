@@ -10,7 +10,7 @@ export const jiraChangeFailureRateMetadata = {
       id: "jira-projects",
     },
     {
-      label: "Jira Change Types",
+      label: "Exclude Jira Change Types (Values will be excluded from results)",
       id: "jira-change-types",
     },
     {
@@ -28,6 +28,32 @@ export const jiraChangeFailureRateMetadata = {
     {
       label: "Date Range",
       id: "date",
+    },
+  ],
+  commitFields:[
+    {
+      label: "Ticket Number",
+      id: "ticket",
+    },
+    {
+      label: "Status",
+      id: "status"
+    },
+    {
+      label: "Resolution Name",
+      id: "resolution"
+    },
+    {
+      label: "Date Created",
+      id: "createdAt"
+    },
+    {
+      label: "Service Component Name",
+      id: "serviceComponent",
+    },
+    {
+      label: "Team Name",
+      id: "teamName",
     },
   ],
   newObjectFields: {

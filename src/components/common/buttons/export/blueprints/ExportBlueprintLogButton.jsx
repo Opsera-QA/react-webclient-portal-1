@@ -4,7 +4,7 @@ import "jspdf-autotable";
 import Button from "react-bootstrap/Button";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import ExportBlueprintDataOverlay from "components/common/modal/export_data/ExportBlueprintDataOverlay";
+import ExportBlueprintDataOverlay from "components/blueprint/export/ExportBlueprintDataOverlay";
 import IconBase from "components/common/icons/IconBase";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 

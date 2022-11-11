@@ -41,7 +41,10 @@ function ChildPipelineTaskSummaryPanel({ pipelineTaskData }) {
           <PipelineTaskStateField dataObject={pipelineTaskData} fieldName={"status"}/>
         </Col>
         <Col md={12}>
-          <PipelineTaskSummaryMessageField fieldName={"api_response.apiResponse.message.message"} dataObject={pipelineTaskData} />
+          <PipelineTaskSummaryMessageField
+            fieldName={"api_response.apiResponse.message.message"}
+            model={pipelineTaskData}
+          />
         </Col>
         <Col md={12} className={"py-2"}>
           <H5FieldSubHeader subheaderText={"Child Pipeline Orchestrated by this Step:"} />

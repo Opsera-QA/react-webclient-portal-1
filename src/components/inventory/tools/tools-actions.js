@@ -30,6 +30,15 @@ toolsActions.updateToolV2 = async (getAccessToken, cancelTokenSource, toolModel)
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+toolsActions.transferToolOwnership = async (getAccessToken, cancelTokenSource, toolModel) => {
+  const id = toolModel?.getData("_id");
+  const newOwnerId = toolModel?.getData("owner");
+  const apiUrl = `/registry/tool/${id}/transfer/user/${newOwnerId}`;
+  const postBody = {};
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 toolsActions.createToolV2 = async (getAccessToken, cancelTokenSource, toolModel) => {
   const postBody = {
     ...toolModel?.getPersistData()

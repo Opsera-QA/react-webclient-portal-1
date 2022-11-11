@@ -20,7 +20,7 @@
 }
 
 .ce-toolbar__actions {
-    right: 95%;
+    left:.25rem;
 }
 
 .ce-toolbar--opened,
@@ -30,4 +30,8 @@
 .cdx-settings-button
 {
     z-index: 5000;
+}
+
+.tc-wrap {
+    border-left: 1px solid #E6E5E3;
 }

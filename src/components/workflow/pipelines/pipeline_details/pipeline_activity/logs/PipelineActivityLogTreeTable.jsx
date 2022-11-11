@@ -20,6 +20,7 @@ import pipelineLogHelpers
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import CustomTable from "components/common/table/CustomTable";
+import PaginationHelper from "@opsera/persephone/helpers/array/pagination.helper";
 
 function PipelineActivityLogTreeTable(
   {
@@ -28,11 +29,11 @@ function PipelineActivityLogTreeTable(
     pipelineRunCount,
     className,
     showFilterContainerIcon,
+    loadPipelineFunction,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [pipelineActivityFilterModel, setPipelineActivityFilterModel] = useState(new PipelineActivityFilterModel());
-  const [pipelineActivityMetadata, setPipelineActivityMetadata] = useState(undefined);
   const [activityData, setActivityData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const pipelineTree = useRef([]);
@@ -62,7 +63,7 @@ function PipelineActivityLogTreeTable(
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [pipelineRunCount]);
 
   const loadData = async (newFilterModel = pipelineActivityFilterModel, cancelSource = cancelTokenSource) => {
     if (isLoading || typeof pipelineRunCount !== "number" || pipelineRunCount <= 0) {
@@ -151,7 +152,6 @@ function PipelineActivityLogTreeTable(
 
     if (isMounted?.current === true && Array.isArray(pipelineActivityData)) {
       setActivityData([...pipelineActivityData]);
-      setPipelineActivityMetadata(response?.data?.metadata);
       newFilterModel.setData("totalCount", activityLogCount);
       newFilterModel.setData("activeFilters", newFilterModel?.getActiveFilters());
       setPipelineActivityFilterModel({...newFilterModel});
@@ -210,11 +210,12 @@ function PipelineActivityLogTreeTable(
       <PipelineActivityLogTable
         isLoading={isLoading}
         pipeline={pipeline}
-        pipelineActivityMetadata={pipelineActivityMetadata}
         pipelineLogData={activityData}
+        latestPipelineLogId={PaginationHelper.getLatestCreatedItemInDataArray(activityData)?._id}
         pipelineActivityFilterDto={pipelineActivityFilterModel}
         currentRunNumber={currentRunNumber}
         currentStepId={currentStepId}
+        loadPipelineFunction={loadPipelineFunction}
       />
     );
   };
@@ -305,6 +306,7 @@ PipelineActivityLogTreeTable.propTypes = {
   pipelineRunCount: PropTypes.number,
   className: PropTypes.string,
   showFilterContainerIcon: PropTypes.bool,
+  loadPipelineFunction: PropTypes.func,
 };
 
 export default PipelineActivityLogTreeTable;

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import JFrogToolRepositoriesPanel from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/JFrogToolRepositoriesPanel";
-import MessageField from "components/common/fields/text/MessageField";
+import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
 import ArgoToolRepositoriesPanel from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/ArgoToolRepositoriesPanel";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import argoRepositoryMetadata from "./tool_jobs/argo/argo-repository-metadata";
@@ -35,7 +35,7 @@ function ToolRepositoriesPanel({ toolData, loadData, isLoading }) {
   return (
     <DetailPanelContainer>
       <div className="h6">Managed Repositories Creation</div>
-      <MessageField message={`Add, Modify or Delete Repositories. These repositories can be entered once and reused across the Opsera platform.`}/>
+      <MessageFieldBase message={`Add, Modify or Delete Repositories. These repositories can be entered once and reused across the Opsera platform.`}/>
       {getToolRepositoriesPanel()}
     </DetailPanelContainer>
 

@@ -4,12 +4,24 @@ import PropTypes from "prop-types";
 import PipelineStepSummaryPanelContainer from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import PipelineSummaryField from "components/common/fields/pipelines/PipelineSummaryField";
 
-function ChildPipelineStepConfigurationSummaryPanel({ childPipelineDataObject, pipelineData, setActiveTab }) {
+export default function ChildPipelineStepConfigurationSummaryPanel(
+  {
+    childPipelineModel,
+    pipelineModel,
+    setActiveTab,
+  }) {
   return (
-    <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
+    <PipelineStepSummaryPanelContainer
+      setActiveTab={setActiveTab}
+      pipelineData={pipelineModel}
+    >
       <Row>
         <Col lg={12}>
-          <PipelineSummaryField model={childPipelineDataObject} fieldName={"pipelineId"}/>
+          <PipelineSummaryField
+            model={childPipelineModel}
+            pipelineId={childPipelineModel?.getData("pipelineId")}
+            fieldName={"pipelineId"}
+          />
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
@@ -17,10 +29,7 @@ function ChildPipelineStepConfigurationSummaryPanel({ childPipelineDataObject, p
 }
 
 ChildPipelineStepConfigurationSummaryPanel.propTypes = {
-  childPipelineDataObject: PropTypes.object,
-  pipelineData: PropTypes.object,
+  childPipelineModel: PropTypes.object,
+  pipelineModel: PropTypes.object,
   setActiveTab: PropTypes.func
 };
-
-
-export default ChildPipelineStepConfigurationSummaryPanel;

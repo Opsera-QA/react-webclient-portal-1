@@ -8,7 +8,7 @@ import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/o
 import VanityInlineWarning from "temp-library-components/fields/info/VanityInlineWarning";
 import useGetUserById from "components/user/hooks/useGetUserById";
 
-function RoleAccessField({model, fieldName, noDataMessage, className}) {
+function RoleAccessFieldBase({model, fieldName, noDataMessage, className}) {
   const field = model?.getFieldById(fieldName);
   const currentData = model?.getCurrentData();
   const {
@@ -47,25 +47,27 @@ function RoleAccessField({model, fieldName, noDataMessage, className}) {
   }
 
   return (
-    <FieldContainer className={className}>
-      <div className={"d-flex"}>
-        <div>
-          <FieldLabel
-            fieldName={fieldName}
-            field={field}
-          />
-        </div>
-        {getDisplayer()}
+    <div className={"d-flex"}>
+      <div>
+        <FieldLabel
+          fieldName={fieldName}
+          field={field}
+        />
       </div>
-    </FieldContainer>
+      {getDisplayer()}
+    </div>
   );
 }
 
-RoleAccessField.propTypes = {
+RoleAccessFieldBase.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   noDataMessage: PropTypes.any,
   className: PropTypes.string
 };
 
-export default RoleAccessField;
+RoleAccessFieldBase.defaultProps = {
+  fieldName: "roles",
+};
+
+export default RoleAccessFieldBase;

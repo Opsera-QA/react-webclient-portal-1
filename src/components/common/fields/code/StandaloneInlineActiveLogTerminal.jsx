@@ -90,7 +90,6 @@ function StandaloneInlineActiveLogTerminal({logs, title, errorMessage, className
           </div>
         </div>
       </div>
-      <div className={"object-properties-footer"} />
     </InputContainer>
   );
 }

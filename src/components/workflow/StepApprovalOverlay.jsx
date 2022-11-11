@@ -2,7 +2,15 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Button, Modal, Form, OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
-import { faArrowRight, faCheck, faIdBadge, faSpinner, faTimes, faToolbox, faCheckCircle } from "@fortawesome/pro-light-svg-icons";
+import {
+  faArrowRight,
+  faCheck,
+  faIdBadge,
+  faTimes,
+  faToolbox,
+  faCheckCircle,
+  faFileCheck,
+} from "@fortawesome/pro-light-svg-icons";
 import PipelineHelpers from "./pipelineHelpers";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import PipelineActions from "./pipeline-actions";
@@ -11,14 +19,22 @@ import LoadingDialog from "../common/status_notifications/loading";
 import IconBase from "components/common/icons/IconBase";
 import axios from "axios";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 
 const INITIAL_FORM = {
   message: "",
   approved: false,
   denied: false,
 };
+const delayCheckInterval = 15000;
 
-function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActivity }) {
+// TODO: This needs to be completely rewritten
+function StepApprovalOverlay(
+  {
+    pipelineId,
+    loadPipelineFunction,
+  }) {
   const contextType = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = contextType;
@@ -35,6 +51,39 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
   const [isChildProcess, setIsChildProcess] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  const handleResumeWorkflowClick = async (pipelineId) => {
+    try {
+      toastContext.showInformationToast("A request to resume this pipeline has been submitted.  It will begin shortly.", 20);
+      await PipelineActions.resumePipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+    }
+    catch (error) {
+      if (isMounted.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    } finally {
+      handleDelayCheckRefresh(pipelineId);
+    }
+  };
+
+  const handleDelayCheckRefresh = (pipelineId) => {
+    setTimeout(async function() {
+      console.log(`Scheduling startup status check followup for Pipeline: ${pipelineId}, interval: ${delayCheckInterval} `);
+      await loadPipelineFunction();
+    }, delayCheckInterval);
+  };
+
+  const delayRefresh = () => {
+    setTimeout(async function() {
+      await loadPipelineFunction();
+    }, delayCheckInterval);
+  };
+
+  const delayResume = (pipelineId) => {
+    setTimeout(async function() {
+      await handleResumeWorkflowClick(pipelineId);
+    }, 5000);
+  };
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -179,7 +228,6 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
     setMessage(customStepMessage);
   };
 
-
   const submitApproval = async (pipelineId, stepId, formData) => {
     setIsSaving(true);
     const postBody = {
@@ -193,9 +241,16 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
         return;
       });
 
-    handleApprovalActivity(isChildProcess, isChildProcess);
+    if (!isChildProcess) {
+      await loadPipelineFunction();
+    } else {
+        delayResume(pipelineId);
+    }
+
+    delayRefresh();
+    toastContext.showInformationToast("Your approval has been recorded in the Pipeline Activity Logs for the given step.  Pipeline operations will resume shortly.", 20);
     setIsSaving(false);
-    setVisible(false);
+    handleClose();
   };
 
   const submitDenial = async (pipelineId, stepId, formData) => {
@@ -210,15 +265,22 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
         toastContext.showLoadingErrorDialog(err);
       });
 
-    handleApprovalActivity(isChildProcess, isChildProcess);
+    if (!isChildProcess) {
+      await loadPipelineFunction();
+    } else {
+      delayResume(pipelineId);
+    }
+
+    delayRefresh();
+    toastContext.showInformationToast("Your denial has been recorded in the Pipeline Activity Logs for the given step.  Pipeline operations will resume shortly.", 20);
     setIsSavingDeny(false);
-    setVisible(false);
+    handleClose();
   };
 
   const handleClose = () => {
-    setVisible(false);
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
   };
-
 
   const handleConfirm = async (type) => {
     if (approvalStep && approvalPipeline) {
@@ -234,6 +296,41 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
     toastContext.showLoadingErrorDialog("An error has occurred attempting to process confirmation request.");
   };
 
+  const getButtonContainer = () => {
+    return (
+      <ButtonContainerBase className={"mx-3"}>
+        <OverlayTrigger
+          placement="top"
+          delay={{ show: 250, hide: 400 }}
+          overlay={renderTooltip({ message: "Approve this pipeline using the switch above in order for it to proceed." })}>
+          <Button className={"mr-2"} variant="success" onClick={() => handleConfirm("approve")}
+                  disabled={isLoading || !formData.approved || isSaving || !approvalStep}>
+            <IconBase isLoading={isSaving} icon={faCheck} className={"mr-1"} fixedWidth/>
+            Approve
+          </Button>
+        </OverlayTrigger>
+        <OverlayTrigger
+          placement="top"
+          delay={{ show: 250, hide: 400 }}
+          overlay={renderTooltip({ message: "Stop this pipeline from proceeding further" })}>
+          <Button className={"mr-2"} variant="danger" onClick={() => handleConfirm("deny")}
+                  disabled={isLoading || formData.approved || isSavingDeny || !approvalStep}>
+            <IconBase isLoading={isSavingDeny} icon={faTimes} className={"mr-1"} fixedWidth/>
+            Deny
+          </Button>
+        </OverlayTrigger>
+        <OverlayTrigger
+          placement="top"
+          delay={{ show: 250, hide: 400 }}
+          overlay={renderTooltip({ message: "Close this window leaving the pipeline in a paused state" })}>
+          <Button variant="secondary" onClick={() => handleClose()}>
+            Close
+          </Button>
+        </OverlayTrigger>
+      </ButtonContainerBase>
+    );
+  };
+
 
   if (!approvalStep) {
     return (<CommonModal header="Approval Step Not Found"
@@ -244,12 +341,12 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
 
 
   return (
-    <>
-      <Modal size="lg" show={visible} onHide={() => handleClose()}>
-        <Modal.Header closeButton>
-          <Modal.Title>Pipeline Approval Gate</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+    <FullScreenCenterOverlayContainer
+      closePanel={handleClose}
+      titleText={"Action Required"}
+      titleIcon={faFileCheck}
+      buttonContainer={getButtonContainer()}
+    >
           <div className="m-3">
 
             <div>
@@ -318,7 +415,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
                   type="switch"
                   id="approval-switch"
                   label="Approved"
-                  checked={formData.approved ? true : false}
+                  checked={formData?.approved === true}
                   onChange={() => setFormData({ ...formData, approved: !formData.approved })}
                 />
                 <small className="form-text text-muted">Flip the switch to approve this step</small>
@@ -327,43 +424,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
 
 
           </div>
-        </Modal.Body>
-        <Modal.Footer>
-
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Approve this pipeline using the switch above in order for it to proceed." })}>
-            <Button variant="success" onClick={() => handleConfirm("approve")}
-                    disabled={isLoading || !formData.approved || isSaving || !approvalStep}>
-                <IconBase isLoading={isSaving} icon={faCheck} className={"mr-1"} fixedWidth/>
-              Approve
-            </Button>
-          </OverlayTrigger>
-
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Stop this pipeline from proceeding further" })}>
-            <Button variant="danger" onClick={() => handleConfirm("deny")}
-                    disabled={isLoading || formData.approved || isSavingDeny || !approvalStep}>
-              <IconBase isLoading={isSavingDeny} icon={faTimes} className={"mr-1"} fixedWidth/>
-              Deny
-            </Button>
-          </OverlayTrigger>
-
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Close this window leaving the pipeline in a paused state" })}>
-            <Button variant="secondary" onClick={() => handleClose()}>
-              Close
-            </Button>
-          </OverlayTrigger>
-
-        </Modal.Footer>
-      </Modal>
-    </>
+        </FullScreenCenterOverlayContainer>
   );
 }
 
@@ -424,13 +485,11 @@ RenderWorkflowItem.propTypes = {
   isSelected: PropTypes.bool,
 };
 
-StepApprovalModal.propTypes = {
+StepApprovalOverlay.propTypes = {
   pipelineId: PropTypes.string,
-  visible: PropTypes.bool,
-  setVisible: PropTypes.func,
-  handleApprovalActivity: PropTypes.func,
+  loadPipelineFunction: PropTypes.func,
 };
 
-export default StepApprovalModal;
+export default StepApprovalOverlay;
 
 

@@ -11,17 +11,20 @@ function VanityEditorPanelButtonContainer(
     model,
     setModel,
     handleClose,
+    showDeleteButton,
     disable,
     extraButtons,
   }) {
   const getDeleteButton = () => {
-    return (
-      <DeleteModelButtonWithConfirmationOverlay
-        model={model}
-        setModel={setModel}
-        afterDeleteFunction={handleClose}
-      />
-    );
+    if (showDeleteButton !== false) {
+      return (
+        <DeleteModelButtonWithConfirmationOverlay
+          model={model}
+          setModel={setModel}
+          afterDeleteFunction={handleClose}
+        />
+      );
+    }
   };
 
   const getSaveButton = () => {
@@ -76,6 +79,7 @@ VanityEditorPanelButtonContainer.propTypes = {
   handleClose: PropTypes.func,
   disable: PropTypes.bool,
   extraButtons: PropTypes.any,
+  showDeleteButton: PropTypes.bool,
 };
 
 export default VanityEditorPanelButtonContainer;

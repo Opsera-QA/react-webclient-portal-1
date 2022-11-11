@@ -15,6 +15,7 @@ export class Model {
   constructor(data, metaData, newModel) {
     this.metaData = dataParsingHelper.cloneDeep(metaData);
     this.data = {...this.getNewObjectFields(), ...data};
+    this.originalData = dataParsingHelper.cloneDeep(this.data);
     this.newModel = newModel;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
     this.changeMap = new Map();
@@ -230,6 +231,10 @@ export class Model {
     return this.trimStrings();
   };
 
+  getOriginalData = () => {
+    return this.originalData;
+  };
+
   getCurrentData = () => {
     return this.data;
   };
@@ -307,9 +312,9 @@ export class Model {
     return field?.uppercase === true;
   };
 
-  isWebsite = (fieldName) => {
+  isUrlField = (fieldName) => {
     const field = this.getFieldById(fieldName);
-    return field != null ? field.isWebsite === true : false;
+    return field != null ? field.isUrl === true : false;
   };
 
   getInputMaskRegex = (fieldName) => {
@@ -325,11 +330,11 @@ export class Model {
     return this.metaData?.detailViewTitle != null ? this.metaData.detailViewTitle(this) : null;
   };
 
-  getLabel = (fieldName) => {
+  getLabel = (fieldName, defaultLabel = "No label found in metadata") => {
     const fields = this.metaData.fields;
     // TODO: Replace with metadata helper call once finished
     const field = fields.find(field => field.id === fieldName);
-    return field ? field.label : "No label found in metadata";
+    return field ? field.label : defaultLabel;
   };
 
   getMetaData = () => {

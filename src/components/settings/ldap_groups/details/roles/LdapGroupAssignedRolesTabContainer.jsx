@@ -40,14 +40,14 @@ export default function LdapGroupAssignedRolesTabContainer(
         handleTabClick={handleTabClick}
         activeTab={assignedRoleFilterModel?.getData("type")}
       />
-      <VanitySetVerticalTab
-        icon={faBallotCheck}
-        tabText={"Pipeline Instructions"}
-        tabName={"pipeline_instructions"}
-        disabled={isLoading}
-        handleTabClick={handleTabClick}
-        activeTab={assignedRoleFilterModel?.getData("type")}
-      />
+      {/*<VanitySetVerticalTab*/}
+      {/*  icon={faBallotCheck}*/}
+      {/*  tabText={"Pipeline Instructions"}*/}
+      {/*  tabName={"pipeline_instructions"}*/}
+      {/*  disabled={isLoading}*/}
+      {/*  handleTabClick={handleTabClick}*/}
+      {/*  activeTab={assignedRoleFilterModel?.getData("type")}*/}
+      {/*/>*/}
       <VanitySetVerticalTab
         icon={faTasks}
         tabText={"Tasks"}

@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
-import Modal from "components/common/modal/modal";
-import ApprovalModal from "../../approvalModal";
-import PipelineStartWizard from "./PipelineStartWizard";
 import PipelineHelpers from "../../pipelineHelpers";
 import PipelineActions from "../../pipeline-actions";
 import {
@@ -12,11 +9,9 @@ import {
   faSpinner,
   faStopCircle,
   faRedo,
-  faFlag, faInfoCircle, faRepeat1, faClock,
+  faInfoCircle, faRepeat1, faClock,
 } from "@fortawesome/pro-light-svg-icons";
 import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
-import pipelineHelpers from "../../pipelineHelpers";
-import pipelineActions from "../../pipeline-actions";
 import CancelPipelineQueueConfirmationOverlay
   from "components/workflow/pipelines/pipeline_details/queuing/cancellation/CancelPipelineQueueConfirmationOverlay";
 import commonActions from "../../../common/common.actions";
@@ -28,6 +23,10 @@ import IconBase from "components/common/icons/IconBase";
 import SapCpqPipelineRunAssistantOverlay from "../../run_assistants/sap_cpq/SapCpqPipelineRunAssistantOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
+import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import PipelineStartWizard from "components/workflow/pipelines/pipeline_details/PipelineStartWizard";
+import PipelineUserApprovalButton from "components/workflow/pipelines/action_controls/PipelineUserApprovalButton";
 
 const delayCheckInterval = 15000;
 let internalRefreshCount = 1;
@@ -35,6 +34,7 @@ let internalRefreshCount = 1;
 function PipelineActionControls(
   {
     pipeline,
+    isLoading,
     disabledActionState,
     fetchData,
     className,
@@ -43,18 +43,15 @@ function PipelineActionControls(
   const [resetPipeline, setResetPipeline] = useState(false);
   const [startPipeline, setStartPipeline] = useState(false);
   const [stopPipeline, setStopPipeline] = useState(false);
-  const [approval, setApproval] = useState(false);
   const [isApprovalGate, setIsApprovalGate] = useState(false);
   const [statusMessage, setStatusMessage] = useState(false);
   const [statusMessageBody, setStatusMessageBody] = useState("");
-  const [showApprovalModal, setShowApprovalModal] = useState(false);
   const [freetrialWizardModal, setFreetrialWizardModal] = useState({
     show: false,
     pipelineId: "",
     templateId: "",
     pipelineOrientation: "",
   });
-  const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [hasQueuedRequest, setHasQueuedRequest] = useState(false);
   const [queueingEnabled, setQueueingEnabled] = useState(false);
   const {
@@ -82,9 +79,8 @@ function PipelineActionControls(
     });
 
     if (workflowStatus === "paused") {
-      setStatusMessage("This pipeline is currently paused.");
-      setStatusMessageBody("A paused pipeline requires either approval or review of the logs in order to proceed.");
-      setApproval(false);
+      setStatusMessage("This pipeline is currently paused awaiting user response");
+      setStatusMessageBody("A paused pipeline requires a user to review and either approve or acknowledge completed actions in order to proceed.");
     } else {
       setStatusMessage(false);
       setStatusMessageBody("");
@@ -116,8 +112,7 @@ function PipelineActionControls(
       return;
     }
 
-    // TODO: This should probably be able to be replaced with pipeline?.workflow?.last_step?.status || false
-    let status = pipeline?.workflow?.last_step?.hasOwnProperty("status") ? pipeline.workflow.last_step.status : false;
+    const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status");
 
     //check for queued requests
     if (status === "running") {
@@ -128,13 +123,16 @@ function PipelineActionControls(
       delayRefresh();
     }
 
-    if (status === "stopped" && pipeline?.workflow?.last_step?.running && pipeline?.workflow?.last_step?.running?.paused) {
+    const isPaused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
+
+    if (status === "stopped" && isPaused === true) {
       setWorkflowStatus("paused");
 
+      const parsedPipelineStepToolIdentifier = PipelineHelpers.getPendingApprovalStepToolIdentifier(pipeline);
       //if step set currently running is an approval step, flag that
-      if (pipeline?.workflow?.last_step?.running?.step_id) {
-        const runningStep = pipelineHelpers.getStepIndexFromPlan(pipeline.workflow.plan, pipeline.workflow?.last_step?.running?.step_id);
-        setIsApprovalGate(pipeline.workflow.plan[runningStep].tool?.tool_identifier === "approval");
+      if (parsedPipelineStepToolIdentifier) {
+          const approvalGateIdentifiers = [toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL, toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION];
+          setIsApprovalGate(approvalGateIdentifiers.includes(parsedPipelineStepToolIdentifier));
       }
 
       return;
@@ -150,7 +148,7 @@ function PipelineActionControls(
     setQueueingEnabled(orchestration?.enableQueuing);
 
     if (orchestration?.enableQueuing) {
-      const queuedRequest = await pipelineActions.getQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
+      const queuedRequest = await PipelineActions.getQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
       const isQueued = typeof queuedRequest?.data === "object" && Object.keys(queuedRequest?.data)?.length > 0;
       setHasQueuedRequest(isQueued);
     }
@@ -174,33 +172,8 @@ function PipelineActionControls(
     await fetchData();
     setResetPipeline(false);
     setStartPipeline(false);
-    await pipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipelineId);
+    await PipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipelineId);
     await checkPipelineQueueStatus();
-  };
-
-  const handleApprovalClick = () => {
-    setShowApprovalModal(true);
-  };
-
-  const handleApprovalActivity = async (blnDelayRefresh, blnDelayedResume) => {
-    setApproval(true);
-    setInfoModal({
-      show: true,
-      header: "Approval Status",
-      message: "Your response has been recorded in the Pipeline Activity Logs for the given step.  Pipeline operations will resume shortly.",
-      button: "OK",
-    });
-    setWorkflowStatus("running");
-
-    if (!blnDelayRefresh) {
-      await fetchData();
-    }
-
-    if (blnDelayedResume) {
-      delayResume(pipeline._id);
-      return;
-    }
-    delayRefresh();
   };
 
   const handleRefreshClick = async () => {
@@ -339,12 +312,6 @@ function PipelineActionControls(
     }, delayCheckInterval);
   };
 
-  const delayResume = (pipelineId) => {
-    setTimeout(async function() {
-      await handleResumeWorkflowClick(pipelineId);
-    }, 5000);
-  };
-
   const launchPipelineStartWizard = (pipelineOrientation, pipelineType, pipelineId) => {
     //console.log("launching wizard");
     //console.log("pipelineOrientation ", pipelineOrientation);
@@ -457,9 +424,10 @@ function PipelineActionControls(
     const pipelineTags = typeof pipeline.tags !== "undefined" && pipeline.tags !== undefined ? pipeline.tags : "";
 
     let pipelineOrientation = "start";
+    const stoppedStepId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.step_id");
     //what step are we currently on in the pipeline: first, last or middle?
-    if (pipeline.workflow.last_step && pipeline.workflow.last_step.step_id) {
-      const stepIndex = PipelineHelpers.getStepIndex(pipeline, pipeline.workflow.last_step.step_id);
+    if (DataParsingHelper.isValidMongoDbId(stoppedStepId) === true) {
+      const stepIndex = PipelineHelpers.getStepIndex(pipeline, stoppedStepId);
       console.log("current resting step index: ", stepIndex);
       if (stepIndex + 1 === Object.keys(pipeline.workflow.plan).length) {
         pipelineOrientation = "end";
@@ -533,21 +501,11 @@ function PipelineActionControls(
           </>}
 
           {workflowStatus === "paused" &&
-          <>
-            <OverlayTrigger
-              placement="top"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "Approve the current state of the pipeline in order for it to proceed. Only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action." })}>
-              <Button variant="warning"
-                      className="btn-default"
-                      size="sm"
-                      onClick={() => {
-                        handleApprovalClick();
-                      }}
-                      disabled={PipelineRoleHelper.canAuthorizeApprovalGate(userData, pipeline) !== true}>
-                  <IconBase isLoading={approval} icon={faFlag} className={"mr-1"} />Approve</Button>
-            </OverlayTrigger>
-          </>}
+            <PipelineUserApprovalButton
+              loadPipelineFunction={fetchData}
+              pipeline={pipeline}
+            />
+          }
 
           {
             (workflowStatus === "stopped" || !workflowStatus) &&
@@ -647,23 +605,11 @@ function PipelineActionControls(
                     onClick={() => {
                       handleRefreshClick();
                     }}>
-              <IconBase icon={faSync} /></Button>
+              <IconBase isLoading={isLoading} icon={faSync} /></Button>
           </OverlayTrigger>
 
         </div>
       </div>
-
-      {showApprovalModal &&
-      <ApprovalModal pipelineId={pipeline._id}
-                     visible={showApprovalModal}
-                     setVisible={setShowApprovalModal}
-                     handleApprovalActivity={handleApprovalActivity} />}
-
-      {infoModal.show &&
-      <Modal header={infoModal.header}
-             message={infoModal.message}
-             button={infoModal.button}
-             handleCancelModal={() => setInfoModal({ ...infoModal, show: false })} />}
 
       {freetrialWizardModal.show &&
       <FreeTrialPipelineWizard pipelineId={freetrialWizardModal.pipelineId}
@@ -689,5 +635,6 @@ PipelineActionControls.propTypes = {
   disabledActionState: PropTypes.bool,
   fetchData: PropTypes.func,
   className: PropTypes.string,
+  isLoading: PropTypes.bool,
 };
 export default PipelineActionControls;
