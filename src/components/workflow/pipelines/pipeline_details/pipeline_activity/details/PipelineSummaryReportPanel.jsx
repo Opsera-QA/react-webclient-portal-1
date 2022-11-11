@@ -15,7 +15,7 @@ import SapCpqLogSummaryReportPanel from "./sap_cpq/SapCpqLogSummaryReportPanel";
 import ProvarLogSummaryReportPanel
   from "../../workflow/step_configuration/step_tool_configuration_forms/provar/report/ProvarLogSummaryReportPanel";
 import BoomiLogSummaryReportPanel from "./boomi/BoomiLogSummaryReportPanel";
-import FortifyLogSummaryReportPanel 
+import FortifyLogSummaryReportPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/FortifyLogSummaryReportPanel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
@@ -52,8 +52,9 @@ function PipelineSummaryReportPanel(
   };
 
   const getSummaryReportPanel = () => {
-    // console.log(pipelineTaskData);
-    switch (pipelineTaskData?.api_response?.stepIdentifier) {
+    const stepIdentifier = DataParsingHelper.parseNestedString(pipelineTaskData, "api_response.stepIdentifier", "");
+
+    switch (stepIdentifier) {
       case "informatica":
         return (
           <InformaticaLogSummaryReportPanel
