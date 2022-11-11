@@ -9,7 +9,7 @@ import GitScraperLogSummaryReportPanel from "components/workflow/pipelines/pipel
 import ApigeeLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/apigee/ApigeeLogSummaryReportPanel";
 import pipelineTaskMetadata from "./pipeline-task-metadata";
 import PipelineTaskSummaryPanelBase from "./PipelineTaskSummaryPanelBase";
-import {toolIdentifierConstants} from "../../../../../admin/tools/identifiers/toolIdentifier.constants";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import SfdxScanLogSummaryReportPanel from "./sfdx_scan/SfdxScanLogSummaryReportPanel";
 import SapCpqLogSummaryReportPanel from "./sap_cpq/SapCpqLogSummaryReportPanel";
 import ProvarLogSummaryReportPanel
@@ -17,17 +17,38 @@ import ProvarLogSummaryReportPanel
 import BoomiLogSummaryReportPanel from "./boomi/BoomiLogSummaryReportPanel";
 import FortifyLogSummaryReportPanel 
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/FortifyLogSummaryReportPanel";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function PipelineSummaryReportPanel({ pipelineTaskData }) {
+function PipelineSummaryReportPanel(
+  {
+    pipelineTaskData,
+    setActiveTab,
+  }) {
   const wrapObject = (metaData) => {
     return new Model(pipelineTaskData, metaData, false);
   };
 
   const getJenkinsReport = () => {
-    if(pipelineTaskData?.api_response?.sfdcJobDetails[0]?.deployResult) {
-      return (<SalesforceLogSummaryReportPanel pipelineTaskData={pipelineTaskData?.api_response?.sfdcJobDetails[0]?.deployResult}/>); // TODO make this as generic as possible
+    const sfdcJobDetails = DataParsingHelper.parseNestedArray(pipelineTaskData, "api_response.sfdcJobDetails");
+
+    if (sfdcJobDetails && sfdcJobDetails?.length > 0) {
+      const jobDetails = DataParsingHelper.parseObject(sfdcJobDetails[0], {});
+
+      // TODO make this as generic as possible
+      if (jobDetails?.deployResult) {
+        return (
+          <SalesforceLogSummaryReportPanel
+            pipelineTaskData={jobDetails?.deployResult}
+          />
+        );
+      }
     }
-    return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);
+
+    return (
+      <PipelineTaskSummaryPanelBase
+        pipelineTaskData={wrapObject(pipelineTaskMetadata)}
+      />
+    );
   };
 
   const getSummaryReportPanel = () => {
@@ -81,6 +102,7 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
         return (
           <PipelineTaskSummaryPanelBase
             pipelineTaskData={wrapObject(pipelineTaskMetadata)}
+            setActiveTab={setActiveTab}
           />
         );
     }
@@ -92,6 +114,7 @@ function PipelineSummaryReportPanel({ pipelineTaskData }) {
 
 PipelineSummaryReportPanel.propTypes = {
   pipelineTaskData: PropTypes.object,
+  setActiveTab: PropTypes.func,
 };
 
 export default PipelineSummaryReportPanel;
