@@ -43,7 +43,7 @@ export default function AccessDeniedContainer(
         }}
       >
         <div className={"px-3 content-block-header title-text-header-1 d-flex"}>
-          <div className={"my-auto"}>
+          <div className={"my-auto w-100"}>
             <TitleBar
               titleIcon={faExclamationTriangle}
               title={"Access Denied!"}
