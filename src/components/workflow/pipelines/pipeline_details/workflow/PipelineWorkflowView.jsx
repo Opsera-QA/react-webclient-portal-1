@@ -1,13 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import InfoDialog from "../../../../common/status_notifications/info";
 import PipelineWorkflow from "./PipelineWorkflow";
 import PipelineWorkflowEditor from "./PipelineWorkflowItemEditor";
-import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
+import InformationDialog from "components/common/status_notifications/info";
 
 function PipelineWorkflowView({
   pipeline,
-  customerAccessRules,
   editItem,
   setEditItem,
   fetchPlan,
@@ -37,35 +35,34 @@ function PipelineWorkflowView({
   };
 
   if (!pipeline || Object.keys(pipeline).length <= 0) {
-    return (<InfoDialog
-      message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
+    return (
+      <InformationDialog
+        message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."
+      />
+    );
   }
 
   return (
-    <>
-      <div className="workflow-view h-100">
-        {getPipelineWorkflowEditor(editItem)}
+    <div className="workflow-view h-100">
+      {getPipelineWorkflowEditor(editItem)}
 
-        <div style={{ minWidth: "740px" }}>
-          <PipelineWorkflow
-            pipeline={pipeline}
-            setPipeline={setPipeline}
-            editItemId={editItem.step_id}
-            fetchPlan={fetchPlan}
-            customerAccessRules={customerAccessRules}
-            refreshCount={refreshCount}
-            softLoading={softLoading}
-          />
-        </div>
+      <div style={{minWidth: "740px"}}>
+        <PipelineWorkflow
+          pipeline={pipeline}
+          setPipeline={setPipeline}
+          editItemId={editItem.step_id}
+          fetchPlan={fetchPlan}
+          refreshCount={refreshCount}
+          softLoading={softLoading}
+        />
       </div>
-    </>
+    </div>
   );
 }
 
 
 PipelineWorkflowView.propTypes = {
   pipeline: PropTypes.object,
-  customerAccessRules: PropTypes.object,
   editItem: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   setEditItem: PropTypes.func,
   setActiveTab: PropTypes.func,

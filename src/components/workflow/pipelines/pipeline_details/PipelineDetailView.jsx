@@ -1,19 +1,18 @@
-import React, {useContext, useEffect, useState} from "react";
-import PipelineActivityLogTreeTable
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTreeTable";
+import React, {useEffect, useState} from "react";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {useParams} from "react-router-dom";
 import PipelineWorkflowView from "./workflow/PipelineWorkflowView";
 import PipelineSummaryPanel from "components/workflow/pipelines/summary/PipelineSummaryPanel";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
+import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
+import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 import pipelineActions from "components/workflow/pipeline-actions";
 import PipelineWorkflowTabBar from "components/workflow/pipelines/pipeline_details/PipelineWorkflowTabBar";
-import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
-import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
-import useComponentStateReference from "hooks/useComponentStateReference";
-import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import PipelineActivityLogTreeTable
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTreeTable";
 
 let internalRefreshCount = 1;
 const refreshInterval = 15000;
@@ -21,7 +20,6 @@ const refreshInterval = 15000;
 function PipelineDetailView() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"workspace"} />);
   const { tab, id } = useParams();
-  const toastContext = useContext(DialogToastContext);
   const [pipeline, setPipeline] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [softLoading, setSoftLoading] = useState(false);
@@ -37,6 +35,7 @@ function PipelineDetailView() {
     isMounted,
     isOpseraAdministrator,
     userData,
+    toastContext,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -121,19 +120,22 @@ function PipelineDetailView() {
       return;
     }
 
-    const pipelineStatus = pipeline?.workflow?.last_step?.status;
+    const pipelineStatus = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status");
 
     if (!pipelineStatus || pipelineStatus === "stopped") {
-      const isPaused = pipeline?.workflow?.last_step?.running?.paused;
+      const isPaused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
 
-      if (isPipelineRunning === true) {
-        const stoppedMessage = "The Pipeline has completed running. Please check the activity logs for details.";
+      if (isPaused === true) {
+        setWorkflowStatus("paused");
         const pausedMessage = "The Pipeline has been paused. Please check the activity logs for details.";
-
-        toastContext.showInformationToast(isPaused === true ? pausedMessage : stoppedMessage, 20);
-        setIsPipelineRunning(false);
+        toastContext.showInformationToast(pausedMessage, 20);
+      } else if (isPipelineRunning === true) {
+        setWorkflowStatus(pipelineStatus);
+        const stoppedMessage = "The Pipeline has completed running. Please check the activity logs for details.";
+        toastContext.showInformationToast(stoppedMessage, 20);
       }
 
+      setIsPipelineRunning(false);
       console.log("Pipeline stopped, no need to schedule refresh. Status: ", isPaused === true ? "Paused" : pipelineStatus);
       return;
     }
@@ -161,7 +163,6 @@ function PipelineDetailView() {
     if (tab === "model") {
       return (
         <PipelineWorkflowView
-          customerAccessRules={accessRoleData}
           parentWorkflowStatus={workflowStatus}
           pipeline={pipeline}
           setPipeline={setPipeline}
@@ -175,9 +176,6 @@ function PipelineDetailView() {
       );
     }
 
-    console.log("DataParsingHelper.parseNestedString(pipeline, \"workflow.last_step.status\"): " + JSON.stringify(DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status")));
-    console.log("workflow.run_count: " + JSON.stringify(DataParsingHelper.safeObjectPropertyParser(pipeline, "workflow.run_count")));
-
     return (
       <div>
         <div
@@ -187,10 +185,7 @@ function PipelineDetailView() {
           <PipelineSummaryPanel
             pipeline={pipeline}
             setPipeline={setPipeline}
-            refreshCount={refreshCount}
-            customerAccessRules={accessRoleData}
             parentWorkflowStatus={workflowStatus}
-            ownerName={pipeline?.owner_name}
             setWorkflowStatus={setWorkflowStatus}
             fetchPlan={fetchPlan}
             isLoading={softLoading || isLoading}
@@ -199,10 +194,10 @@ function PipelineDetailView() {
         <div className="max-content-width-1875 mr-2">
           <PipelineActivityLogTreeTable
             pipeline={pipeline}
-            pipelineStatus={DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status")}
+            pipelineStatus={workflowStatus}
             pipelineId={id}
             getPipeline={getPipeline}
-            pipelineRunCount={DataParsingHelper.safeObjectPropertyParser(pipeline, "workflow.run_count")}
+            pipelineRunCount={DataParsingHelper.parseNestedInteger(pipeline, "workflow.run_count")}
             loadPipelineFunction={fetchPlan}
           />
         </div>

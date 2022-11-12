@@ -1,12 +1,10 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import LineTo from "react-lineto";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { faPlusSquare, faCaretSquareDown, faCaretSquareUp, faCopy } from "@fortawesome/pro-light-svg-icons";
 import PipelineWorkflowItem from "./PipelineWorkflowItem";
 import StepValidationHelper from "./step_configuration/helpers/step-validation-helper";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
@@ -23,19 +21,18 @@ function PipelineWorkflowItemList(
     parentHandleViewSourceActivityLog,
     quietSavePlan,
     fetchPlan,
-    customerAccessRules,
     parentWorkflowStatus,
     refreshCount,
   }) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
   const [isSaving, setIsSaving] = useState(false);
   const [pipelineSteps, setPipelineSteps] = useState(pipeline.workflow.plan);
   const [isLoading, setIsLoading] = useState(false);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
   const {
-    isMounted,
     cancelTokenSource,
+    isMounted,
+    getAccessToken,
+    toastContext,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -75,7 +72,7 @@ function PipelineWorkflowItemList(
 
   useEffect(() => {
     if (pipeline) {
-      setPipelineSteps(pipeline.workflow.plan);
+      setPipelineSteps(pipeline?.workflow?.plan);
     }
   }, [refreshCount, JSON.stringify(lastStep), JSON.stringify(pipeline.workflow)]);
 
@@ -226,7 +223,6 @@ function PipelineWorkflowItemList(
               lastStep={lastStep}
               editWorkflow={editWorkflow}
               pipelineId={pipelineId}
-              customerAccessRules={customerAccessRules}
               parentCallbackEditItem={parentCallbackEditItem}
               deleteStep={deleteStep}
               refreshCount={refreshCount}
@@ -319,7 +315,6 @@ PipelineWorkflowItemList.propTypes = {
   setStateItems: PropTypes.func,
   quietSavePlan: PropTypes.func,
   fetchPlan: PropTypes.func,
-  customerAccessRules: PropTypes.object,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   refreshCount: PropTypes.number,
 };

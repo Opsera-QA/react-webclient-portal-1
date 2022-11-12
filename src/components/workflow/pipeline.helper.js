@@ -1,6 +1,7 @@
 import React from "react";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import PipelineHelpers from "components/workflow/pipelineHelpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export const pipelineHelper = {};
 
@@ -26,4 +27,15 @@ pipelineHelper.getPipelineOrientation = (pipeline) => {
   }
 
   return "start";
+};
+
+pipelineHelper.getPipelineStatus = (pipeline) => {
+  const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status");
+  const paused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
+
+  if (paused === true) {
+    return "paused";
+  }
+
+  return status;
 };

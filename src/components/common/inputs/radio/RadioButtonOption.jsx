@@ -1,7 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function RadioButtonOption({ fieldName, dataObject, setDataObject, value, setDataFunction, className, label, disabled, visible}) {
+function RadioButtonOption(
+  {
+    fieldName,
+    dataObject,
+    setDataObject,
+    value,
+    setDataFunction,
+    className,
+    label,
+    disabled,
+    visible,
+  }) {
   const validateAndSetData = (fieldName, value) => {
     if (setDataFunction) {
       setDataFunction(fieldName, value);
