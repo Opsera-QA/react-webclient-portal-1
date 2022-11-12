@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Router, Switch, useHistory } from "react-router-dom";
 import { SecureRoute } from "@okta/okta-react";
 import Sidebar from "components/sidebar/Sidebar";
 import Dashboard from "components/dashboard/DashboardHome";
@@ -23,18 +22,17 @@ import BlueprintsRoutes from "routes/BlueprintsRoutes";
 import FreeTrialSettingsRoutes from "routes/FreeTrialSettingsRoutes";
 import FreeTrialAdminToolsRoutes from "routes/FreeTrialAdminToolsRoutes";
 
-const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, userData, hideSideBar }) => {
-  useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
+const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, }) => {
+  useEffect(() => {
+  }, [authenticatedState, isPublicPathState]);
 
   // Authenticated routes
   return (
     <div className={"w-100 px-3"}>
       <div className={"d-flex flex-row"}>
-        <Sidebar userData={userData} hideSideBar={isPublicPathState === true} />
+        <Sidebar />
 
         <div className={"w-100 hide-x-overflow"}>
-          {/*<Router history={history}>*/}
-          {/*  <Switch>*/}
           <PublicRoutes
             authClient={authClient}
           />
@@ -57,13 +55,6 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, userData
           <SecureRoute path="/dashboard" component={Dashboard} />
           <SecureRoute path="/tools/:id?" component={ApiConnector} />
           <SecureRoute path="/update" component={Update} />
-
-          {/*<Route*/}
-          {/*  path={"*"}*/}
-          {/*  component={PageNotFound}*/}
-          {/*/>*/}
-          {/*  </Switch>*/}
-          {/*</Router>*/}
         </div>
       </div>
       <OpseraFooter />
