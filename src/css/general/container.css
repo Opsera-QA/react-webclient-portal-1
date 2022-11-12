@@ -154,6 +154,15 @@
     background-color: #00a8e8;
     color: #fff;
     font-size: 1.4em;
+    /*border-top-left-radius: .5rem;*/
+    /*border-top-right-radius: .5rem;*/
+}
+
+.metric-input-container-header {
+    /*border-top-left-radius: .5rem;*/
+    /*border-top-right-radius: .5rem;*/
+    /*height: 28px;*/
+    /*max-height: 28px;*/
 }
 
 .metric-tab-tree .nav-link.active,

@@ -20,7 +20,6 @@ import LoadingDialog from "components/common/status_notifications/loading";
 const isFreeTrial = true;
 
 const AppWithRouterAccess = () => {
-  const [hideSideBar, setHideSideBar] = useState(false);
   const [loading, setLoading] = useState(false);
   const authStateLoadingUser = useRef(false);
   const [error, setError] = useState(null);
@@ -78,7 +77,6 @@ const AppWithRouterAccess = () => {
     setAuthenticatedState(authState.isAuthenticated);
 
     if (!authState.isAuthenticated) {
-      setHideSideBar(true);
       setUserData(null);
       return;
     }
@@ -190,7 +188,6 @@ const AppWithRouterAccess = () => {
         authClient={authClient}
         isPublicPathState={isPublicPathState}
         userData={userData}
-        hideSideBar={hideSideBar}
       />
     );
   };

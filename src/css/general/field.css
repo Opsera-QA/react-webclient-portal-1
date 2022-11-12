@@ -152,6 +152,10 @@ pre {
     /*min-width: 200px;*/
     /*width: 240px;*/
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+    /*min-width: 200px;*/
+    /*width: 240px;*/
+    /*box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);*/
+    /*border-radius: 1rem;*/
 }
 
 .vertical-selection-card:hover {
@@ -254,6 +258,13 @@ pre {
 .vertical-selection-card .date-and-button {
     min-height: 69px;
 }
+
+/*.tool-title-text {*/
+/*    font-family: 'Inter', sans-serif;*/
+/*    font-size: 35px;*/
+/*    font-weight: 300;*/
+/*    white-space: nowrap;*/
+/*}*/
 
 /* End Summary Card Styling */
 

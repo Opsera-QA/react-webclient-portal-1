@@ -25,9 +25,9 @@ import BlueprintsRoutes from "routes/BlueprintsRoutes";
 import FreeTrialSettingsRoutes from "routes/FreeTrialSettingsRoutes";
 import FreeTrialAdminToolsRoutes from "routes/FreeTrialAdminToolsRoutes";
 
-const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, userData, hideSideBar }) => {
+const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, }) => {
   useEffect(() => {
-  }, [userData, authenticatedState, isPublicPathState, hideSideBar]);
+  }, [authenticatedState, isPublicPathState]);
 
   // Authenticated routes
   return (
@@ -38,7 +38,6 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, userData
           {/*<Router history={history}>*/}
           {/*  <Switch>*/}
           <SecureRoute path="/trial/settings" exact component={OpseraFreeTrialSettingsManagement} />
-
           <SecureRoute path="/workspace" component={FreeTrialWorkspace} />
           <SecureRoute path="/unified-insights" component={FreeTrialInsightsLanding} />
 

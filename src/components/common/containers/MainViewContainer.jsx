@@ -13,7 +13,7 @@ export default function MainViewContainer(
     backgroundColor,
     children,
   }) {
-  const { locationKey } = useLocationReference();
+  const {locationKey} = useLocationReference();
   const {
     isFreeTrial,
   } = useComponentStateReference();
@@ -31,24 +31,25 @@ export default function MainViewContainer(
     return (
       <HeaderNavBar
         userData={userData}
+        hideAuthComponents={!isAuthenticated}
       />
     );
   };
 
   return (
-    <div
-      className={"w-100"}
-      key={locationKey}
-      style={{
-        minHeight: "100vh",
-        backgroundColor: backgroundColor,
-        paddingBottom: "30px",
-      }}
-    >
-      <ToastContextProvider navBar={getNavBar()}>
+    <ToastContextProvider navBar={getNavBar()}>
+      <div
+        className={"w-100"}
+        key={locationKey}
+        style={{
+          minHeight: "100vh",
+          backgroundColor: backgroundColor,
+          paddingBottom: "30px",
+        }}
+      >
         {children}
-      </ToastContextProvider>
-    </div>
+      </div>
+    </ToastContextProvider>
   );
 }
 
