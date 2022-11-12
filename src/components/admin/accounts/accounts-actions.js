@@ -167,6 +167,11 @@ accountsActions.getFreeTrialAccountWorkflowMetrics = async (getAccessToken, canc
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+accountsActions.getFreeTrialActivityReportUsers = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/trial/users/account/activity-report/users`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 // TODO: Remove when V2 is wired up everywhere
 accountsActions.getUserByEmail = async (email, getAccessToken) => {
   const postBody = {

@@ -48,8 +48,8 @@ function PipelineRunSelectInput({ model, setModel, fieldName, setDataFunction, c
       setDataObject={setModel}
       setDataFunction={setDataFunction}
       selectOptions={runOptions}
-      valueField="value"
-      textField="text"
+      valueField={"value"}
+      textField={"text"}
       placeholderText={"Select a Run Number"}
       showLabel={showLabel}
       clearDataFunction={clearDataFunction}
