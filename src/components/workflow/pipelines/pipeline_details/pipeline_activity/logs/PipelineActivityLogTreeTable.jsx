@@ -50,11 +50,6 @@ function PipelineActivityLogTreeTable(
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [pipelineRunCount]);
 
   const loadData = async (newFilterModel = pipelineActivityFilterModel) => {
