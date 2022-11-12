@@ -67,7 +67,7 @@ function VanitySetDetailScreenContainer(
         {getActionBar()}
         <div>
           {detailPanel}
-         </div>
+        </div>
       </div>
     );
   };
@@ -133,8 +133,8 @@ function VanitySetDetailScreenContainer(
   return (
     <div className={"max-content-width max-content-height scroll-y hide-x-overflow"}>
       {getTopNavigation()}
-      <div className="content-container content-card-1">
-        <div className="px-2 content-block-header title-text-header-1 d-flex">
+      <div className={"screen-container content-container content-card-1"}>
+        <div className={"px-2 content-block-header title-text-header-1 d-flex"}>
           <div className={"my-auto w-100"}>
             {getTitleBar()}
           </div>

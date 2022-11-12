@@ -19,13 +19,14 @@ import pipelineLogHelpers
 import CustomTable from "components/common/table/CustomTable";
 import PaginationHelper from "@opsera/persephone/helpers/array/pagination.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {pipelineHelper} from "components/workflow/pipeline.helper";
 
 function PipelineActivityLogTreeTable(
   {
     pipeline,
     pipelineId,
     pipelineRunCount,
+    className,
+    showFilterContainerIcon,
     loadPipelineFunction,
   }) {
   const [pipelineActivityFilterModel, setPipelineActivityFilterModel] = useState(new PipelineActivityFilterModel());
@@ -48,7 +49,7 @@ function PipelineActivityLogTreeTable(
         throw error;
       }
     });
-  }, []);
+  }, [pipelineRunCount]);
 
   const loadData = async (newFilterModel = pipelineActivityFilterModel) => {
     if (isLoading || typeof pipelineRunCount !== "number" || pipelineRunCount <= 0) {
@@ -260,10 +261,7 @@ function PipelineActivityLogTreeTable(
   };
 
   return (
-    <div
-      className={"mr-2"}
-      // key={pipelineHelper.getPipelineStatus(pipeline)}
-    >
+    <div className={className}>
       <FilterContainer
         loadData={loadData}
         filterDto={pipelineActivityFilterModel}
@@ -272,7 +270,7 @@ function PipelineActivityLogTreeTable(
         title={"Pipeline Logs"}
         inlineFilters={getInlineFilters()}
         dropdownFilters={getDropdownFilters()}
-        titleIcon={faClipboardList}
+        titleIcon={showFilterContainerIcon !== false ? faClipboardList : undefined}
         body={getPipelineActivityTable()}
         supportSearch={true}
         exportButton={
@@ -291,6 +289,8 @@ PipelineActivityLogTreeTable.propTypes = {
   pipeline: PropTypes.object,
   pipelineId: PropTypes.string,
   pipelineRunCount: PropTypes.number,
+  className: PropTypes.string,
+  showFilterContainerIcon: PropTypes.bool,
   loadPipelineFunction: PropTypes.func,
 };
 

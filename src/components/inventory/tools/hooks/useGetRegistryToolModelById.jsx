@@ -3,6 +3,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import toolsActions from "components/inventory/tools/tools-actions";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useGetRegistryToolModel from "components/inventory/tools/hooks/useGetRegistryToolModel";
+import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
 
 export default function useGetRegistryToolModelById(
   id,
@@ -14,6 +15,9 @@ export default function useGetRegistryToolModelById(
     getAccessToken,
     cancelTokenSource,
     toastContext,
+    isFreeTrial,
+    isOpseraAdministrator,
+    userData,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -45,6 +49,14 @@ export default function useGetRegistryToolModelById(
     );
 
     const tool = response?.data?.data;
+
+    if (
+      isOpseraAdministrator !== true
+      && isFreeTrial === true
+      && ObjectAccessRoleHelper.isUserObjectOwner(userData, tool) !== true
+    ) {
+      return;
+    }
 
     if (tool) {
       const newModel = getRegistryToolModel(tool, false);

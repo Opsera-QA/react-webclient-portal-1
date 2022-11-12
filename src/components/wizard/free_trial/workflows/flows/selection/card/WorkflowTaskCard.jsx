@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import modelHelpers from "components/common/model/modelHelpers";
 import TaskCardBase from "temp-library-components/cards/tasks/TaskCardBase";
-import taskMetadata from "components/tasks/details/tasks/task-metadata";
+import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 
 export default function WorkflowTaskCard(
   {
@@ -12,7 +12,7 @@ export default function WorkflowTaskCard(
   }) {
   return (
     <TaskCardBase
-      taskModel={modelHelpers.parseObjectIntoModel(task, taskMetadata)}
+      taskModel={modelHelpers.parseObjectIntoModel(task, tasksMetadata)}
       onClickFunction={() => { setSelectedFlow(task);}}
       selectedOption={selectedFlow?._id}
       option={task?._id}

@@ -1,5 +1,4 @@
 import React from "react";
-import { SecureRoute } from "@okta/okta-react";
 import AccountSettingsView from "components/settings/AccountSettings";
 import DeleteTools from "components/settings/delete_tools/DeleteTools";
 import LdapGroupManagement from "components/settings/ldap_groups/LdapGroupManagement";

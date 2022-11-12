@@ -1,22 +1,24 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Route, useHistory } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/status_notifications/loading";
-import Navbar from "./Navbar";
-import ToastContextProvider from "./contexts/DialogToastContext";
-import { axiosApiService } from "api/apiService";
-
+import AppRoutes from "routes/AppRoutes";
+import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
+import { generateUUID } from "components/common/helpers/string-helpers";
+import FreeTrialAppRoutes from "FreeTrialAppRoutes";
+import LoginForm from "components/login/LoginForm";
+import Logout from "components/login/Logout";
+import OpseraFooter from "components/footer/OpseraFooter";
+import useLocationReference from "hooks/useLocationReference";
+import useCancelTokenStateReference from "hooks/useCancelTokenStateReference";
+import userActions from "components/user/user-actions";
+import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
 //Okta Libraries
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { LoginCallback, Security } from "@okta/okta-react";
-import AppRoutes from "routes/AppRoutes";
-import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
-import {generateUUID} from "components/common/helpers/string-helpers";
-import OpseraFooter from "components/footer/OpseraFooter";
-import LoginForm from "components/login/LoginForm";
-import Logout from "components/login/Logout";
-import useLocationReference from "hooks/useLocationReference";
+
+const isFreeTrial = false;
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -24,10 +26,10 @@ const AppWithRouterAccess = () => {
   const authStateLoadingUser = useRef(false);
   const [error, setError] = useState(null);
   const [authenticatedState, setAuthenticatedState] = useState(false);
-  const [data, setData] = useState(null);
-  const { isPublicPathState } = useLocationReference();
-
+  const [userData, setUserData] = useState(null);
   const history = useHistory();
+  const { isPublicPathState } = useLocationReference();
+  const { cancelTokenSource } = useCancelTokenStateReference();
 
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
     history.replace(toRelativeUrl(originalUri ? originalUri : "/", window.location.origin));
@@ -72,41 +74,36 @@ const AppWithRouterAccess = () => {
   });
 
 
-  authClient.authStateManager.subscribe(async authState => {
+  authClient?.authStateManager?.subscribe(async authState => {
     //console.info("Auth State manager subscription event: ", authState);
     setAuthenticatedState(authState.isAuthenticated);
 
     if (!authState.isAuthenticated) {
       setHideSideBar(true);
-      setData(null);
+      setUserData(null);
       return;
     }
 
-    if (authState.isAuthenticated && !data && !error && authStateLoadingUser.current !== true) {
+    if (authState.isAuthenticated && !userData && !error && authStateLoadingUser.current !== true) {
       authStateLoadingUser.current = true;
       await loadUsersData(authState.accessToken["accessToken"]);
       authStateLoadingUser.current = false;
     }
-
   });
 
-  if (!authClient.isLoginRedirect()) {
+  if (!authClient?.isLoginRedirect()) {
     // Trigger an initial authState change event when the app startup
     authClient.authStateManager.updateAuthState();
   }
 
-  useEffect(() => {
-    enableSideBar(history.location.pathname);
-
-  }, [authenticatedState, history.location.pathname]);
-
-  // TODO: We need to put this in an actions file and wire up cancel token
   const loadUsersData = async (token) => {
     try {
       setLoading(true);
-      let apiUrl = "/users";
-      const response = await axiosApiService(token).get(apiUrl, {});
-      setData(response.data);
+      const response = await userActions.getLoggedInUser(
+        token,
+        cancelTokenSource,
+      );
+      setUserData(response?.data);
     } catch (error) {
       //console.log(error.response.data); //Forbidden
       //console.log(error.response.status); //403
@@ -125,32 +122,9 @@ const AppWithRouterAccess = () => {
     }
   };
 
-  const isPublicPath = (path) => {
-    return (
-      path === "/login" ||
-      path === "/signup" ||
-      path === "/registration" ||
-      path === "/trial/registration" ||
-      path.includes("/account/registration") ||
-      path.includes("/signup/awsmarketplace")
-    );
-  };
-
-  const enableSideBar = (path) => {
-    if (isPublicPath(path)) {
-      setHideSideBar(true);
-    } else {
-      setHideSideBar(false);
-    }
-  };
-
   const refreshToken = async () => {
     const tokens = await authClient.tokenManager.getTokens();
-    await loadUsersData(tokens.accessToken.value);
-  };
-
-  const getNavBar = () => {
-    return (<Navbar hideAuthComponents={hideSideBar} userData={data} />);
+    await loadUsersData(tokens?.accessToken?.value);
   };
 
   const getError = () => {
@@ -174,11 +148,10 @@ const AppWithRouterAccess = () => {
     history.push('/');
   };
 
-  // TODO: Utilize PublicRoutes
-  const getAccessibleRoutes = () => {
+  const getRoutes = () => {
     if (!authenticatedState && isPublicPathState !== true) {
       return (
-        <div className={"container-fluid m-0"}>
+        <div className={"w-100 px-3"}>
           <div className={"d-flex flex-row"}>
             <div className={"w-100"}>
               <LoginForm authClient={authClient} />
@@ -191,29 +164,42 @@ const AppWithRouterAccess = () => {
       );
     }
 
+    const isOpseraAdministrator = SiteRoleHelper.isOpseraAdministrator(userData);
+
+    if (isFreeTrial === true && isOpseraAdministrator !== true) {
+      return (
+        <FreeTrialAppRoutes
+          authClient={authClient}
+        />
+      );
+    }
+
     return (
       <AppRoutes
         authenticatedState={authenticatedState}
         authClient={authClient}
         isPublicPathState={isPublicPathState}
-        userData={data}
+        userData={userData}
         hideSideBar={hideSideBar}
       />
     );
   };
 
-  if (!data && loading && !error) {
+  if (!userData && loading && !error) {
     return (<LoadingDialog />);
   }
 
   return (
     <Security oktaAuth={authClient} restoreOriginalUri={restoreOriginalUri}>
       {getError()}
-      <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
-        <ToastContextProvider navBar={getNavBar()}>
-          {getAccessibleRoutes()}
-        </ToastContextProvider>
-      </AuthContextProvider>
+        <AuthContextProvider
+          userData={userData}
+          refreshToken={refreshToken}
+          authClient={authClient}
+          isAuthenticated={authenticatedState}
+        >
+          {getRoutes()}
+        </AuthContextProvider>
     </Security>
   );
 
