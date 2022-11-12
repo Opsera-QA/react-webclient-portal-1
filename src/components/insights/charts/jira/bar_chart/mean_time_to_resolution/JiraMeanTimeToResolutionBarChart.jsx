@@ -20,14 +20,22 @@ import ChartTooltip from "../../../ChartTooltip";
 import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
 import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
 import { dataPointHelpers } from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
-import { JIRA_MEAN_TIME_TO_RESOLUTION_CONSTANTS as dataPointConstants } from "./JiraMeanTimeToResolution_datapoint_identifiers";
+import { JIRA_MEAN_TIME_TO_RESOLUTION_CONSTANTS as constants } from "./JiraMeanTimeToResolutionConstants";
 import DataPointVisibilityWrapper from "../../../../../common/metrics/data_points/DataPointVisibilityWrapper";
 import jiraAction from "../../jira.action";
 import JiraMTTRDataBlock from "../../data_blocks/JiraMTTRDataBlock";
 import JiraMTTRChartHelpDocumentation
   from "../../../../../common/help/documentation/insights/charts/JiraMTTRChartHelpDocumentation";
-import {getReverseTrend, getReverseTrendIcon, getTrend, getTrendIcon} from "../../../charts-helpers";
+import {
+  getMaturityColorClass,
+  getMaturityScoreText,
+  getReverseTrend,
+  getReverseTrendIcon,
+  getTrend,
+  getTrendIcon
+} from "../../../charts-helpers";
 import BadgeBase from "../../../../../common/badges/BadgeBase";
+import JiraMeanTimeToResolutionMaturityBlock from "./JiraMeanTimeToResolutionMaturityBlock";
 
 function JiraMeanTimeToResolutionBarChart({
   kpiConfiguration,
@@ -307,21 +315,24 @@ function JiraMeanTimeToResolutionBarChart({
     const dataPoints = kpiConfiguration?.dataPoints;
     const mttrChartDataPoint = dataPointHelpers.getDataPoint(
       dataPoints,
-      dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.MTTR_DATA_POINT,
+      constants.SUPPORTED_DATA_POINT_IDENTIFIERS.MTTR_DATA_POINT,
     );
     const numberOfIncidentsDataPoint = dataPointHelpers.getDataPoint(
       dataPoints,
-      dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS
+      constants.SUPPORTED_DATA_POINT_IDENTIFIERS
         .NUMBER_OF_INCIDENTS_DATA_POINT,
     );
     const averageMTTRDataBlockDataPoint = dataPointHelpers.getDataPoint(
       dataPoints,
-      dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS
+      constants.SUPPORTED_DATA_POINT_IDENTIFIERS
         .AVERAGE_MTTR_DATA_BLOCK_DATA_POINT,
     );
     const isOneChartVisible =
       dataPointHelpers.isDataPointVisible(mttrChartDataPoint) ||
       dataPointHelpers.isDataPointVisible(numberOfIncidentsDataPoint);
+
+    const maturityScore = dataBlock?.maturityScore;
+    const maturityColor = getMaturityColorClass(maturityScore);
     return (
       <>
         <div
@@ -337,16 +348,21 @@ function JiraMeanTimeToResolutionBarChart({
           className="new-chart m-3 p-0"
           style={
             isOneChartVisible
-              ? { minHeight: "450px", display: "flex" }
+              ? { minHeight: "500px", display: "flex" }
               : { display: "flex" }
           }
         >
-          <Row>
+          <Row className={"w-100"}>
+            <JiraMeanTimeToResolutionMaturityBlock
+                maturityScore={getMaturityScoreText(maturityScore)}
+                maturityColor={maturityColor}
+                iconOverlayBody={constants.MATURITY_TOOL_TIP[maturityScore]}
+            />
             <Row
-              xl={6}
-              lg={6}
-              md={7}
-              className={"mb-3 d-flex justify-content-center"}
+              xl={4}
+              lg={4}
+              md={4}
+              className={`mb-2 ml-2 py-2 d-flex justify-content-center maturity-border ${maturityColor}`}
             >
               <Col md={12}>
                 <JiraMTTRDataBlock
@@ -396,17 +412,17 @@ function JiraMeanTimeToResolutionBarChart({
                   bottomText={"Prev Min MTTR"}
                 />
               </Col>
-              <Col md={12}>
-                <JiraMTTRDataBlock
-                  incidents={dataBlock.maxMTTR}
-                  prevIncidents={dataBlock.previousMaxMTTR}
-                  dataPoint={numberOfIncidentsDataPoint}
-                  trend={getReverseTrend(dataBlock.maxMTTR,dataBlock.previousMaxMTTR)}
-                  getIcon = {getReverseTrendIcon}
-                  topText={"Max MTTR (Hours)"}
-                  bottomText={"Prev Max MTTR"}
-                />
-              </Col>
+              {/*<Col md={12}>*/}
+              {/*  <JiraMTTRDataBlock*/}
+              {/*    incidents={dataBlock.maxMTTR}*/}
+              {/*    prevIncidents={dataBlock.previousMaxMTTR}*/}
+              {/*    dataPoint={numberOfIncidentsDataPoint}*/}
+              {/*    trend={getReverseTrend(dataBlock.maxMTTR,dataBlock.previousMaxMTTR)}*/}
+              {/*    getIcon = {getReverseTrendIcon}*/}
+              {/*    topText={"Max MTTR (Hours)"}*/}
+              {/*    bottomText={"Prev Max MTTR"}*/}
+              {/*  />*/}
+              {/*</Col>*/}
             </Row>
             {dataPointHelpers.isDataPointVisible(mttrChartDataPoint) && (
               <Col

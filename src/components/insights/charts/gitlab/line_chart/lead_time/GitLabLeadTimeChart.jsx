@@ -4,19 +4,25 @@ import { AuthContext } from "contexts/AuthContext";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
-import { GITLAB_LEADTIME_CONSTANTS as constants } from "./GitlabLeadTime_kpi_datapoint_identifier";
+import { GITLAB_LEADTIME_CONSTANTS as constants } from "./GitlabLeadTimeConstants";
 import axios from "axios";
 import GitlabLeadTimeHelpDocumentation from "../../../../../common/help/documentation/insights/charts/GitlabLeadTimeHelpDocumentation";
 import GitlabLeadTimeScatterPlotContainer from "./GitlabLeadTimeScatterPlotContainer";
 import GitlabLeadTimeDataBlock from "./GitlabLeadTimeDataBlock";
 import {
-  getDeploymentStageFromKpiConfiguration, getReverseTrend, getReverseTrendIcon, getTimeDisplay,
+  getDeploymentStageFromKpiConfiguration,
+  getMaturityColorClass,
+  getMaturityScoreText,
+  getReverseTrend,
+  getReverseTrendIcon,
+  getTimeDisplay,
 } from "../../../charts-helpers";
 import GitlabLeadTimeTrendDataBlock from "./GitlabLeadTimeTrendDataBlock";
 import gitlabAction from "../../gitlab.action";
 import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import InfoDialog from "../../../../../common/status_notifications/info";
 import BadgeBase from "../../../../../common/badges/BadgeBase";
+import GitlabLeadTimeMaturityBlock from "./GitlabLeadTimeMaturityBlock";
 
 function GitLabLeadTimeChart({
   kpiConfiguration,
@@ -163,19 +169,34 @@ function GitLabLeadTimeChart({
     const previousTotalAverageLeadTimeDisplay = getTimeDisplay(metricData?.previousTotalAverageLeadTime);
     const totalMedianTimeDisplay = getTimeDisplay(metricData?.totalMedianTime);
     const previousTotalMedianTimeDisplay = getTimeDisplay(metricData?.previousTotalMedianTime);
-
+    const maturityScore = metricData?.maturityScore;
+    const maturityColor = getMaturityColorClass(maturityScore);
     return (
       <div
         className="new-chart m-3 p-0"
-        style={{ minHeight: "450px", display: "flex" }}
+        style={{ minHeight: "500px", display: "flex" }}
       >
-        <Row className={"w-100 justify-content-center"}>
+        <Row className={"w-100"}>
+          <GitlabLeadTimeMaturityBlock
+            maturityScore={getMaturityScoreText(maturityScore)}
+            maturityColor={maturityColor}
+            iconOverlayBody={constants.MATURITY_TOOL_TIP[maturityScore]}
+          />
           <Row
             xl={4}
             lg={4}
             md={4}
-            className={"mb-2 ml-2 d-flex justify-content-center"}
+            className={`mb-2 ml-2 py-2 d-flex justify-content-center maturity-border ${maturityColor}`}
           >
+            {/*This would get removed when average merge time is fixed*/}
+            <Col md={12}>
+              <GitlabLeadTimeDataBlock
+                value={selectedDeploymentStages}
+                prevValue={""}
+                topText={"Selected Stage(s)"}
+                bottomText={""}
+              />
+            </Col>
             <Col md={12}>
               <GitlabLeadTimeTrendDataBlock
                 value={totalAverageLeadTimeDisplay[0]}
@@ -231,8 +252,8 @@ function GitLabLeadTimeChart({
           <Col md={12}>
             <div className={"d-flex md-2"}>
               <div className={"mr-4"}>
-                <b>Selected Stages:</b> {selectedDeploymentStages}
-                <div className="row" />
+                {/*<b>Selected Stages:</b> {selectedDeploymentStages}*/}
+                {/*<div className="row" />*/}
                 <b>Recent Stage:</b> {metricData?.lastDeploymentStage || "NA"}
                 <div className="row" />
                 <b>Date: </b>

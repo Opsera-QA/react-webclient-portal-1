@@ -5,15 +5,23 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import axios from "axios";
-import { GITLAB_DEPLOYMENT_FREQUENCY_CONSTANTS as constants } from "./GitlabDeploymentFrequency_kpi_datapoint_identifiers";
+import {
+  GITLAB_DEPLOYMENT_FREQUENCY_CONSTANTS as constants
+} from "./GitlabDeploymentFrequencyConstants";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import GitlabDeployFrequencyChartHelpDocumentation from "../../../../common/help/documentation/insights/charts/GitlabDeployFrequencyChartHelpDocumentation";
 import GitlabDeploymentFrequencyDataBlock from "./GitlabDeploymentFrequencyDataBlock";
-import {getDeploymentStageFromKpiConfiguration, getTrend, getTrendIcon} from "../../charts-helpers";
+import {
+  getDeploymentStageFromKpiConfiguration,
+  getMaturityColorClass, getMaturityScoreText,
+  getTrend,
+  getTrendIcon
+} from "../../charts-helpers";
 import GitlabDeploymentFrequencyLineChartContainer from "./GitlabDeploymentFrequencyLineChartContainer";
 import GitlabDeploymentFrequencyTrendDataBlock from "./GitlabDeploymentFrequencyTrendDataBlock";
 import gitlabAction from "../gitlab.action";
 import BadgeBase from "../../../../common/badges/BadgeBase";
+import GitlabDeploymentFrequencyMaturityBlock from "./GitlabDeploymentFrequencyMaturityBlock";
 
 function GitlabDeploymentFrequency({
   kpiConfiguration,
@@ -121,22 +129,26 @@ function GitlabDeploymentFrequency({
       current: selectedDeploymentStages ? "Total Deployments" : "Total Stages Run",
       previous: selectedDeploymentStages ? "Prev Deployments" : "Prev Runs",
     };
+    const maturityScore = metricData?.step?.maturityScore;
+    const maturityColor = getMaturityColorClass(maturityScore);
     return (
       <div
         className="new-chart m-3 p-0"
-        style={{ minHeight: "450px", display: "flex" }}
+        style={{ minHeight: "500px", display: "flex" }}
       >
         <Row className={"w-100"}>
+          <GitlabDeploymentFrequencyMaturityBlock
+            maturityScore={getMaturityScoreText(maturityScore)}
+            maturityColor={maturityColor}
+            iconOverlayBody={constants.MATURITY_TOOL_TIP[maturityScore]}
+          />
           <Row
-            xl={5}
-            lg={5}
-            md={5}
-            className={"mb-2 d-flex justify-content-center"}
+            xl={4}
+            lg={4}
+            md={4}
+            className={`mb-2 ml-2 py-2 d-flex justify-content-center maturity-border ${maturityColor}`}
           >
-            <Col
-              md={12}
-              className={"mx-2"}
-            >
+            <Col md={12}>
               <GitlabDeploymentFrequencyDataBlock
                 value={selectedDeploymentStages}
                 prevValue={""}
