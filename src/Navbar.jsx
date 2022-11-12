@@ -12,6 +12,7 @@ import IconBase from "components/common/icons/IconBase";
 import sessionHelper from "utils/session.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useLocationReference from "hooks/useLocationReference";
 
 export const EXTERNAL_LINKS = {
   KNOWLEDGE_BASE: `https://docs.opsera.io/`,
@@ -26,7 +27,8 @@ export const EXTERNAL_LINKS = {
   HOW_TO_VIDEO: 'https://www.youtube.com/embed/8oeBwmapAHU'
 };
 
-function HeaderNavBar({ hideAuthComponents, userData }) {
+function HeaderNavBar({ hideAuthComponents }) {
+  const { isPublicPathState } = useLocationReference();
   const { setAccessRoles, getAccessToken, featureFlagHideItemInProd, featureFlagHideItemInTest, loginUserContext, logoutUserContext } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
@@ -34,6 +36,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
   const {
     accessRoleData,
     isSaasUser,
+    userData,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -134,7 +137,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav"/>
       <Navbar.Collapse id="basic-navbar-nav">
-        {!hideAuthComponents && <Nav className="ml-auto">
+        {!hideAuthComponents && isPublicPathState !== true && <Nav className="ml-auto">
           {!accessRoleData && <Button variant="warning" className="mr-2" onClick={gotoSignUp}>Sign Up</Button>}
           {!accessRoleData && <Button variant="outline-success" onClick={login}>Login</Button>}
           {accessRoleData && <>

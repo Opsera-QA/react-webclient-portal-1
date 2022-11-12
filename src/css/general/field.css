@@ -151,6 +151,12 @@ pre {
 .vertical-selection-card {
     min-width: 200px;
     width: 240px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+}
+
+.vertical-selection-card:hover {
+    box-shadow: 0 0 40px rgba(46, 25, 86, .25);
 }
 
 .vertical-selection-card .title-icon {
@@ -247,10 +253,9 @@ pre {
 }
 
 .tool-title-text {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 35px;
     font-weight: 300;
-    line-height: 37.5px;
     white-space: nowrap;
 }
 
@@ -389,3 +394,18 @@ input[disabled] {
 }
 
 /* End Error State CSS */
+
+/* Vanity Set V3 Component CSS */
+.navigation-dropdown-select-input .nav-link {
+    padding: 0;
+}
+
+.tooltip-wrapper {
+    display: inline-block;
+}
+
+.tooltip-wrapper .btn[disabled] {
+    /* don't let button block mouse events from reaching wrapper */
+    pointer-events: none;
+}
+/* End Vanity Set V3 Component CSS */
