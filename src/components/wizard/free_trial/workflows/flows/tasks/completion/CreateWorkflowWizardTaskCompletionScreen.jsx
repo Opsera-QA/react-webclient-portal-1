@@ -5,7 +5,6 @@ import { apiRequestHelper } from "temp-library-components/helpers/api/apiRequest
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import taskActions from "components/tasks/task.actions";
 import modelHelpers from "components/common/model/modelHelpers";
-import tasksMetadata from "components/tasks/details/tasks/task-metadata";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import FreeTrialLaunchWorkflowButton
@@ -15,6 +14,7 @@ import OpseraInfinityLogoLarge from "components/logo/OpseraInfinityLogoLarge";
 import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";
 import DoneOverlayButton from "components/common/buttons/done/overlay/DoneOverlayButton";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 
 const HEIGHT = "400px";
 

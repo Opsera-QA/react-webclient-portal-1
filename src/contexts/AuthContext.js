@@ -31,7 +31,6 @@ const AuthContextProvider = (
   const [viewMode, setViewMode] = useState(SITE_VIEW_MODES.BUSINESS);
   const [theme, setTheme] = useState(THEMES.LIGHT);
   const [backgroundColor, setBackgroundColor] = useState(lightThemeConstants.COLOR_PALETTE.WHITE);
-  // const [websocketClient, setWebsocketClient] = useState(new ClientWebsocket());
   const isMounted = useIsMountedStateReference();
   const cancelTokenSource = useCancelTokenStateReference();
   const [headerNavigationBar, setHeaderNavigationBar] = useState(undefined);

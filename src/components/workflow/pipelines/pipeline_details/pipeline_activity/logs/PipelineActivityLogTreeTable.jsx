@@ -19,7 +19,6 @@ import pipelineLogHelpers
 import CustomTable from "components/common/table/CustomTable";
 import PaginationHelper from "@opsera/persephone/helpers/array/pagination.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {pipelineHelper} from "components/workflow/pipeline.helper";
 
 function PipelineActivityLogTreeTable(
   {

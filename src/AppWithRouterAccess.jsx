@@ -1,8 +1,6 @@
 import React, { useState, useRef } from "react";
-import { Route, Router, Switch, useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext";
-import LoadingDialog from "./components/common/status_notifications/loading";
-import AppRoutes from "routes/AppRoutes";
 import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
 import { generateUUID } from "components/common/helpers/string-helpers";
 import FreeTrialAppRoutes from "FreeTrialAppRoutes";
@@ -10,13 +8,16 @@ import LoginForm from "components/login/LoginForm";
 import Logout from "components/login/Logout";
 import OpseraFooter from "components/footer/OpseraFooter";
 import useLocationReference from "hooks/useLocationReference";
-import PageNotFound from "components/not_found/PageNotFound";
 import useCancelTokenStateReference from "hooks/useCancelTokenStateReference";
 import userActions from "components/user/user-actions";
+import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
 //Okta Libraries
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { LoginCallback, Security } from "@okta/okta-react";
+import LoadingDialog from "components/common/status_notifications/loading";
+
+const isFreeTrial = true;
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -24,7 +25,7 @@ const AppWithRouterAccess = () => {
   const authStateLoadingUser = useRef(false);
   const [error, setError] = useState(null);
   const [authenticatedState, setAuthenticatedState] = useState(false);
-  const [data, setData] = useState(null);
+  const [userData, setUserData] = useState(null);
   const history = useHistory();
   const { isPublicPathState } = useLocationReference();
   const { cancelTokenSource } = useCancelTokenStateReference();
@@ -78,11 +79,11 @@ const AppWithRouterAccess = () => {
 
     if (!authState.isAuthenticated) {
       setHideSideBar(true);
-      setData(null);
+      setUserData(null);
       return;
     }
 
-    if (authState.isAuthenticated && !data && !error && authStateLoadingUser.current !== true) {
+    if (authState.isAuthenticated && !userData && !error && authStateLoadingUser.current !== true) {
       authStateLoadingUser.current = true;
       await loadUsersData(authState.accessToken["accessToken"]);
       authStateLoadingUser.current = false;
@@ -96,17 +97,12 @@ const AppWithRouterAccess = () => {
 
   const loadUsersData = async (token) => {
     try {
-      if (token == null) {
-        setData(undefined);
-        return;
-      }
-
       setLoading(true);
       const response = await userActions.getLoggedInUser(
         token,
         cancelTokenSource,
       );
-      setData(response.data);
+      setUserData(response?.data);
     } catch (error) {
       //console.log(error.response.data); //Forbidden
       //console.log(error.response.status); //403
@@ -122,14 +118,6 @@ const AppWithRouterAccess = () => {
       }
     } finally {
       setLoading(false);
-    }
-  };
-
-  const enableSideBar = () => {
-    if (isPublicPathState) {
-      setHideSideBar(true);
-    } else {
-      setHideSideBar(false);
     }
   };
 
@@ -166,7 +154,7 @@ const AppWithRouterAccess = () => {
 
     if (!authenticatedState && isPublicPathState !== true) {
       return (
-        <div className={"container-fluid m-0"}>
+        <div className={"w-100 px-3"}>
           <div className={"d-flex flex-row"}>
             <div className={"w-100"}>
               {/*<Router history={history}>*/}
@@ -187,18 +175,12 @@ const AppWithRouterAccess = () => {
       );
     }
 
-    const ldap = data?.ldap;
-    const groups = data?.groups;
+    const isOpseraAdministrator = SiteRoleHelper.isOpseraAdministrator(userData);
 
-    // Opsera Administrators should still have full access to everything
-    if (ldap?.domain === "opsera.io" && Array.isArray(groups) && groups.includes("Administrators")) {
+    if (isFreeTrial === true && isOpseraAdministrator !== true) {
       return (
-        <AppRoutes
-          authenticatedState={authenticatedState}
+        <FreeTrialAppRoutes
           authClient={authClient}
-          isPublicPathState={isPublicPathState}
-          userData={data}
-          hideSideBar={hideSideBar}
         />
       );
     }
@@ -206,11 +188,14 @@ const AppWithRouterAccess = () => {
     return (
       <FreeTrialAppRoutes
         authClient={authClient}
+        isPublicPathState={isPublicPathState}
+        userData={userData}
+        hideSideBar={hideSideBar}
       />
     );
   };
 
-  if (!data && loading && !error) {
+  if (!userData && loading && !error) {
     return (<LoadingDialog />);
   }
 
@@ -218,7 +203,7 @@ const AppWithRouterAccess = () => {
     <Security oktaAuth={authClient} restoreOriginalUri={restoreOriginalUri}>
       {getError()}
         <AuthContextProvider
-          userData={data}
+          userData={userData}
           refreshToken={refreshToken}
           authClient={authClient}
           isAuthenticated={authenticatedState}

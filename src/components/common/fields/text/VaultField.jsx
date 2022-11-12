@@ -8,6 +8,7 @@ function VaultField({dataObject, fieldName, className}) {
   const field = dataObject?.getFieldById(fieldName);
   const {
     isOpseraAdministrator,
+    isFreeTrial,
   } = useComponentStateReference();
 
   const isStoredInVault = () => {
@@ -21,7 +22,7 @@ function VaultField({dataObject, fieldName, className}) {
     }
   };
 
-  if (field == null || isOpseraAdministrator !== true) {
+  if (field == null || (isFreeTrial === true && isOpseraAdministrator !== true)) {
     return null;
   }
 
