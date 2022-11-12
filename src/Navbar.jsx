@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Navbar, Nav, NavDropdown, Button, OverlayTrigger } from "react-bootstrap";
-import "css/general/navbar.css";
 import userActions from "./components/user/user-actions";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -11,10 +10,20 @@ import { renderTooltip } from "utils/helpers";
 import {ACCESS_ROLE_PERMISSION_MESSAGES} from "components/common/helpers/role-helpers";
 import IconBase from "components/common/icons/IconBase";
 import sessionHelper from "utils/session.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-const EXTERNAL_LINKS = {
+export const EXTERNAL_LINKS = {
   KNOWLEDGE_BASE: `https://docs.opsera.io/`,
   REQUEST_HELP_LINK: `https://opsera.atlassian.net/wiki/x/AQBYAw`,
+  SUPPORT_EMAIL: "mailto:support@opsera.io",
+  OPSERA_SALESFORCE_PIPELINES: "https://www.opsera.io/platform/salesforce-pipelines",
+  REGISTER_GIT_REPOSITORY: "https://youtu.be/-kDG-550j-U",
+  SALESFORCE_PIPELINE_WORKFLOW_CREATION: "https://youtu.be/9otE3Z4LuTM",
+  SALESFORCE_TASK_CREATION: "https://youtu.be/_nYnj8JVs7g",
+  SALESFORCE_RELEASE_MANAGEMENT: "https://www.opsera.io/salesforce-devops-platform",
+  SALESFORCE_USER_GUIDE: "https://docs.opsera.io/getting-started-with-free-trial",
+  HOW_TO_VIDEO: 'https://www.youtube.com/embed/8oeBwmapAHU'
 };
 
 function HeaderNavBar({ hideAuthComponents, userData }) {
@@ -22,26 +31,18 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   const [fullName, setFullName] = useState("User Profile");
-  const [accessRoleData, setAccessRoleData] = useState(null);
-  const [isLdapUser, setIsLdapUser] = useState(undefined);
+  const {
+    accessRoleData,
+    isSaasUser,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    getRoles(userData);
-  }, [userData]);
+    const user = DataParsingHelper.parseObject(userData);
 
-  const getRoles = async (user) => {
     if (user) {
-      const userRoleAccess = await setAccessRoles(user);
-      if (userRoleAccess) {
-        setAccessRoleData(userRoleAccess);
-        const isLdapUser = userRoleAccess?.Type !== "sass-user" && user?.ldap?.domain != null;
-        setIsLdapUser(isLdapUser);
-      }
       setFullName(user.firstName + " " + user.lastName);
-    } else {
-      setFullName("User Profile");
     }
-  };
+  }, [userData]);
 
   const login = function() {
     loginUserContext();
@@ -121,41 +122,6 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
     }
   };
 
-  if (process.env.REACT_APP_STACK === "free-trial") {
-    return (
-      <Navbar className="nav-bar">
-        <Navbar.Brand href="/">
-          <img alt="Opsera Inc."
-               src="/img/logos/opsera_logo_white_horizontal_240_42.png"
-               width="240"
-               height="42"
-               className="d-inline-block align-top ml-3"
-          />
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-        <Navbar.Collapse id="basic-navbar-nav">
-          {!hideAuthComponents && <Nav className="ml-auto">
-            {!accessRoleData && <Button variant="warning" className="mr-2" onClick={gotoSignUp}>Sign Up</Button>}
-            {!accessRoleData && <Button variant="outline-success" onClick={login}>Login</Button>}
-            {accessRoleData &&
-            <NavDropdown title={fullName} id="basic-nav-dropdown" alignRight>
-              <NavDropdown.Item href={EXTERNAL_LINKS.KNOWLEDGE_BASE} target="_blank"
-                                className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
-              <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/AQBYAw" target="_blank"
-                                className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>
-              <NavDropdown.Divider/>
-              <NavDropdown.Item href="https://opsera.io/" target="_blank" className="nav-drop-down-item"
-                                id="about-opsera">Opsera.io</NavDropdown.Item>
-              <NavDropdown.Item href="" onClick={logout} className="nav-drop-down-item"
-                                id="logout-button">Logout</NavDropdown.Item>
-            </NavDropdown>}
-          </Nav>}
-
-        </Navbar.Collapse>
-      </Navbar>
-    );
-  }
-
   return (
     <Navbar className="nav-bar">
       <Navbar.Brand href="/">
@@ -177,7 +143,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
 
             <NavDropdown title={fullName} id="basic-nav-dropdown" className="top-nav-dropdown" alignRight>
               <Link to="/user/profile" id="profile-button" className="dropdown-item nav-drop-down-item">Profile</Link>
-              {/*{isLdapUser && <Link to="/user/myUserRecord" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>}*/}
+              {/*{isSaasUser === false && <Link to="/user/myUserRecord" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>}*/}
 
               <NavDropdown.Divider/>
 

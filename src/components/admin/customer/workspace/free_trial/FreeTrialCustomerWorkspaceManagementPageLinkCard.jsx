@@ -4,10 +4,11 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function FreeTrialCustomerWorkspaceManagementPageLinkCard() {
   const {
-    accessRoleData,
+    isOpseraAdministrator,
+    isFreeTrial,
   } = useComponentStateReference();
 
-  if (accessRoleData?.OpseraAdministrator !== true) {
+  if (isOpseraAdministrator !== true || isFreeTrial !== true) {
     return null;
   }
 

@@ -20,19 +20,19 @@ import NotificationsRoutes from "routes/NotificationsRoutes";
 import LogsRoutes from "routes/LogsRoutes";
 import UserProfileRoutes from "routes/UserProfileRoutes";
 import BlueprintsRoutes from "routes/BlueprintsRoutes";
+import FreeTrialSettingsRoutes from "routes/FreeTrialSettingsRoutes";
+import FreeTrialAdminToolsRoutes from "routes/FreeTrialAdminToolsRoutes";
 
 const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, userData, hideSideBar }) => {
-  const history = useHistory();
-
   useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
 
   // Authenticated routes
   return (
-    <div className={"container-fluid m-0"}>
+    <div className={"w-100 px-3"}>
       <div className={"d-flex flex-row"}>
-        <Sidebar userData={userData} hideSideBar={hideSideBar} />
+        <Sidebar userData={userData} hideSideBar={isPublicPathState === true} />
 
-        <div className={"w-100 hide-x-overflow"} style={{ marginBottom: "26px" }}>
+        <div className={"w-100 hide-x-overflow"}>
           {/*<Router history={history}>*/}
           {/*  <Switch>*/}
           <PublicRoutes
@@ -49,7 +49,10 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, userData
           <ReportsRoutes />
           <NotificationsRoutes />
           <SettingsRoutes />
+          <FreeTrialSettingsRoutes />
           <AdminToolsRoutes />
+          <FreeTrialAdminToolsRoutes />
+
           {/*TODO: These are legacy routes that should probably be removed*/}
           <SecureRoute path="/dashboard" component={Dashboard} />
           <SecureRoute path="/tools/:id?" component={ApiConnector} />

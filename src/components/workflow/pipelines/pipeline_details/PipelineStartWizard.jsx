@@ -6,6 +6,11 @@ import ConfirmResumePipeline from "components/workflow/wizards/ConfirmResumePipe
 import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 
+export const PIPELINE_START_WIZARD_FLOWS = {
+  PRE_RUN_TASK_SCREEN: "pre_run_task_screen",
+  SALESFORCE_PIPELINE_WIZARD: "salesforce_pipeline_wizard",
+};
+
 function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, pipeline, handleClose, handlePipelineWizardRequest }) {
   const toastContext = useContext(DialogToastContext);
 

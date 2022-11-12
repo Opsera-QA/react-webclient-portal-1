@@ -12,7 +12,7 @@ import SiteViewModeNavigationSelectInput from "components/header/view_modes/Site
 import OpseraHeaderSettingsLink from "components/header/OpseraHeaderSettingsLink";
 
 const EXTERNAL_LINKS = {
-  KNOWLEDGE_BASE: `https://opsera.atlassian.net/l/c/pXJjJAej`
+  KNOWLEDGE_BASE: `https://docs.opsera.io/getting-started-with-free-trial`
 };
 
 export default function OpseraHeaderAccountAuthenticationComponent(
@@ -118,9 +118,9 @@ export default function OpseraHeaderAccountAuthenticationComponent(
 
         <NavDropdown.Item href={EXTERNAL_LINKS.KNOWLEDGE_BASE} target="_blank"
                           className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
-        <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/AQBYAw" target="_blank"
-                          className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>
-        {getFrequentlyAskedQuestionsLink()}
+        {/*<NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/AQBYAw" target="_blank"*/}
+        {/*                  className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>*/}
+        {/*{getFrequentlyAskedQuestionsLink()}*/}
         {getHelpDocumentationLink()}
         <NavDropdown.Divider/>
 

@@ -4,6 +4,7 @@ import AccountSettingsSubNavigationBar from "components/settings/AccountSettings
 import AccountSettingsPageLinkCards from "components/settings/AccountSettingsPageLinkCards";
 import AccountSettingsHelpDocumentation from "../common/help/documentation/settings/AccountSettingsHelpDocumentation";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import FreeTrialAccountSettingsPageLinkCards from "components/settings/FreeTrialAccountSettingsPageLinkCards";
 
 export default function AccountSettings() {
   const {
@@ -29,6 +30,7 @@ export default function AccountSettings() {
       navigationTabContainer={<AccountSettingsSubNavigationBar activeTab={"accountSettings"} />}
     >
       <AccountSettingsPageLinkCards />
+      <FreeTrialAccountSettingsPageLinkCards />
     </ScreenContainer>
   );
 }

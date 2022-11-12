@@ -14,26 +14,50 @@ import AwsAccountRegistration from "components/user/aws_registration/AwsAccountR
 import Faq from "components/about/faq/Faq";
 import HelpDocumentationScreen from "components/about/help_documentation/HelpDocumentationScreen";
 import PropTypes from "prop-types";
+import FreeTrialRegistration from "components/trial/registration/FreeTrialRegistration";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function PublicRoutes(
   {
     authClient,
   }) {
+  const {
+    isFreeTrial,
+  } = useComponentStateReference();
+
+  const getSignupScreen = () => {
+    if (isFreeTrial === true) {
+      return (
+        <Route
+          path="/trial/registration"
+          exact
+          component={FreeTrialRegistration}
+        />
+      );
+    }
+
+    return (
+      <>
+        <Route path="/signup" exact component={Signup} />
+        <Route path="/registration" exact component={Registration} />
+        <Route path="/account/registration/:domain" exact component={AccountRegistration} />
+        <Route path="/signup/awsmarketplace/:customerId" exact component={AwsAccountRegistration} />
+      </>
+    );
+  };
+
   return (
     <>
       <Route path="/" exact component={Home} />
       <Route path="/login" render={() => <LoginForm authClient={authClient} />} />
       <Route path="/implicit/callback" component={LoginCallback} />
       <Route path="/logout" exact component={Logout} />
-      <Route path="/signup" exact component={Signup} />
       <Route path="/faq" exact component={Faq} />
       <Route path="/help-documentation" exact component={HelpDocumentationScreen} />
       <Route path="/about" exact component={About} />
       <Route path="/about/pricing" component={Pricing} />
       <Route path="/help" component={OnlineHelp} />
-      <Route path="/registration" exact component={Registration} />
-      <Route path="/account/registration/:domain" exact component={AccountRegistration} />
-      <Route path="/signup/awsmarketplace/:customerId" exact component={AwsAccountRegistration} />
+      {getSignupScreen()}
     </>
   );
 }
