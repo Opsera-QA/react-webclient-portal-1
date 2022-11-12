@@ -29,7 +29,7 @@ pipelineHelper.getPipelineOrientation = (pipeline) => {
   return "start";
 };
 
-pipelineHelper.getWorkflowStatus = (pipeline) => {
+pipelineHelper.getPipelineStatus = (pipeline) => {
   const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status");
   const paused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
 
