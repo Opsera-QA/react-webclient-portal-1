@@ -29,7 +29,7 @@ function StandaloneSelectInput(
       return ("Error with data format!");
     }
 
-    if (noDataText != null && selectOptions.length === 0) {
+    if (noDataText != null && selectOptions.length === 0 && busy === false) {
       return (noDataText);
     }
 
