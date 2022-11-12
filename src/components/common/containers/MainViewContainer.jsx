@@ -5,6 +5,7 @@ import ToastContextProvider from "contexts/DialogToastContext";
 import OpseraHeaderBar from "components/header/OpseraHeaderBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import HeaderNavBar from "Navbar";
+import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
 
 export default function MainViewContainer(
   {
@@ -42,7 +43,7 @@ export default function MainViewContainer(
         className={"w-100"}
         key={locationKey}
         style={{
-          minHeight: "100vh",
+          minHeight: `calc(100vh - ${screenContainerHeights.NAV_BAR_HEIGHT} - 30px)`,
           backgroundColor: backgroundColor,
           paddingBottom: "30px",
         }}
