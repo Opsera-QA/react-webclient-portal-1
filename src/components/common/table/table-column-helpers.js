@@ -37,6 +37,7 @@ import OrchestrationStateFieldBase
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
+import CountdownUntilDateFieldBase from "components/common/fields/date/countdown/CountdownUntilDateFieldBase";
 
 export const getDataObjectFromTableRow = (row) => {
   try {
@@ -245,13 +246,19 @@ export const getTableDateTimeColumn = (field, className) => {
   };
 };
 
-export const getTableDateAndTimeUntilValueColumn = (header, id, fakeColumn = "fakeColumn", className) => {
+export const getTableDateAndTimeUntilValueColumn = (
+  header,
+  id,
+  fakeColumn = "fakeColumn",
+  className,
+) => {
   return {
     Header: header,
     accessor: fakeColumn,
     Cell: function parseDate(row) {
-      const originalRow = row.row.original;
-      return originalRow[id] ? convertFutureDateToDhmsFromNowString(new Date(originalRow[id])) : "";
+      const dataObject = getDataObjectFromTableRow(row);
+      const parsedDate = DataParsingHelper.parseNestedDate(dataObject, id);
+      return parsedDate ? <CountdownUntilDateFieldBase date={parsedDate} /> : "";
     },
     class: className ? className : "no-wrap-inline"
   };

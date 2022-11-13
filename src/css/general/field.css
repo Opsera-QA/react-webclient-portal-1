@@ -159,6 +159,11 @@ pre {
     /*box-shadow: 0 0 40px rgba(46, 25, 86, .25);*/
 }
 
+/*TODO: Combine with the above when fully leaning into free trial styling*/
+.vertical-selection-card-temp:hover {
+    box-shadow: 0 0 40px rgba(46, 25, 86, .25);
+}
+
 .vertical-selection-card .title-icon {
     height: 92px;
     max-width: 100%;
