@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date/date.helpers";
+import {getFormattedDate, getFormattedTimestamp} from "components/common/fields/date/DateFieldBase";
 
 export default function CountdownUntilDateFieldBase(
   {
@@ -22,14 +23,14 @@ export default function CountdownUntilDateFieldBase(
   }, [date]);
 
   if (date == null) {
-    return "";
+    return <span></span>;
   }
 
   if (formattedDate == null) {
-    return date;
+    return <span>{getFormattedTimestamp(date)}</span>;
   }
 
-  return (formattedDate);
+  return (<span>{formattedDate}</span>);
 }
 
 CountdownUntilDateFieldBase.propTypes = {
