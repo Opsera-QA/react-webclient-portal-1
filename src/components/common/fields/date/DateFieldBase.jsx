@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 import FieldLabel from "components/common/fields/FieldLabel";
@@ -26,7 +26,7 @@ export const getFormattedTimestamp = (date) => {
 };
 
 function DateFieldBase({fieldName, dataObject, dateFormat, className}) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
 
   if (dataObject == null || field == null) {
     return null;
