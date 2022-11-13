@@ -21,23 +21,15 @@ export default function CountdownUntilDateFieldBase(
     };
   }, [date]);
 
-  const getDate = () => {
-    if (date == null) {
-      return "";
-    }
+  if (date == null) {
+    return "";
+  }
 
-    return formattedDate;
-  };
+  if (formattedDate == null) {
+    return date;
+  }
 
-  return (
-    <div style={{
-      minWidth: "275px",
-      width: "275px",
-      maxWidth: "275px",
-    }}>
-      {getDate()}
-    </div>
-  );
+  return (formattedDate);
 }
 
 CountdownUntilDateFieldBase.propTypes = {

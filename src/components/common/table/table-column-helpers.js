@@ -258,7 +258,20 @@ export const getTableDateAndTimeUntilValueColumn = (
     Cell: function parseDate(row) {
       const dataObject = getDataObjectFromTableRow(row);
       const parsedDate = DataParsingHelper.parseNestedDate(dataObject, id);
-      return parsedDate ? <CountdownUntilDateFieldBase date={parsedDate} /> : "";
+
+      if (parsedDate) {
+        return (
+          <div style={{
+            minWidth: "275px",
+            width: "275px",
+            maxWidth: "275px",
+          }}>
+            <CountdownUntilDateFieldBase date={parsedDate} />
+          </div>
+        );
+      }
+
+      return "";
     },
     class: className ? className : "no-wrap-inline"
   };
