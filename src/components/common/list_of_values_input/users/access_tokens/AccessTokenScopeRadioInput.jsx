@@ -9,7 +9,7 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
   return (
     <RadioButtonInputContainer dataObject={dataObject} fieldName={fieldName}>
       <Row>
-        <Col xs={12} md={6} className={"d-flex"}>
+        <Col xs={12} md={6} className={"d-flex pr-2 py-2"}>
           <RadioButtonCard
             fieldName={fieldName}
             model={dataObject}
@@ -20,7 +20,7 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             description={"Grants complete read/write access to the API, including all Pipeline and Tool Registry routes based on individual resource access roles."}
           />
         </Col>
-        <Col xs={12} md={6} className={"d-flex"}>
+        <Col xs={12} md={6} className={"d-flex pl-2 py-2"}>
           <RadioButtonCard
             fieldName={fieldName}
             model={dataObject}
@@ -31,7 +31,7 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             description={"Grants complete read access to the API, including all Pipeline and Tool Registry routes based on individual resource access roles."}
           />
         </Col>
-        <Col xs={12} md={6} className={"d-flex"}>
+        <Col xs={12} md={6} className={"d-flex pr-2 py-2"}>
           <RadioButtonCard
             fieldName={fieldName}
             model={dataObject}
@@ -46,7 +46,7 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             `}
           />
         </Col>
-        <Col xs={12} md={6} className={"d-flex"}>
+        <Col xs={12} md={6} className={"d-flex pl-2 py-2"}>
           <RadioButtonCard
             fieldName={fieldName}
             model={dataObject}
@@ -57,7 +57,7 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             description={`Grants read access only to the Pipeline API for getting log activity and status updates.  No actions are supported.`}
           />
         </Col>
-        <Col xs={12} md={6} className={"d-flex"}>
+        <Col xs={12} md={6} className={"d-flex pr-2 py-2"}>
           <RadioButtonCard
             fieldName={fieldName}
             model={dataObject}
@@ -72,7 +72,7 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             `}
           />
         </Col>
-        <Col xs={12} md={6} className={"d-flex"}>
+        <Col xs={12} md={6} className={"d-flex pl-2 py-2"}>
           <RadioButtonCard
             fieldName={fieldName}
             model={dataObject}
@@ -83,7 +83,7 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             description={` Grants read access only to the Tool Registry API for getting tool details or relevant log activity.  No actions are supported.`}
           />
         </Col>
-        <Col xs={12} md={6} className={"d-flex"}>
+        <Col xs={12} md={6} className={"d-flex pr-2 py-2"}>
           <RadioButtonCard
             fieldName={fieldName}
             model={dataObject}
@@ -97,7 +97,7 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             `}
           />
         </Col>
-        <Col xs={12} md={6} className={"d-flex"}>
+        <Col xs={12} md={6} className={"d-flex pl-2 py-2"}>
           <RadioButtonCard
             fieldName={fieldName}
             model={dataObject}
@@ -108,7 +108,7 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             description={`Grants read access only to the Opsera Tasks API for getting log activity on tasks. No actions are supported.`}
           />
         </Col>
-        <Col xs={12} md={6} className={"d-flex"}>
+        <Col xs={12} md={6} className={"d-flex pr-2 py-2"}>
           <RadioButtonCard
             fieldName={fieldName}
             model={dataObject}

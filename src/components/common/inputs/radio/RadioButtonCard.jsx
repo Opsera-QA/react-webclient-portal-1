@@ -12,7 +12,6 @@ export default function RadioButtonCard(
     value,
     setDataFunction,
     description,
-    className,
     label,
     disabled,
     visible,
@@ -106,17 +105,13 @@ export default function RadioButtonCard(
   }
 
   return (
-    <div className={className}>
-      <div className={"h-100 w-100 d-flex py-2"}>
-        <div
-          className={"vertical-selection-card-temp"}
-          style={getStyle()}
-          onClick={onClickFunction}
-        >
-          <div className={"p-3"}>
-            {getContentBody()}
-          </div>
-        </div>
+    <div
+      className={"vertical-selection-card-temp h-100 w-100 d-flex"}
+      style={getStyle()}
+      onClick={onClickFunction}
+    >
+      <div className={"p-3"}>
+        {getContentBody()}
       </div>
     </div>
   );
@@ -130,7 +125,6 @@ RadioButtonCard.propTypes = {
   label: PropTypes.any,
   disabled: PropTypes.bool,
   value: PropTypes.string,
-  className: PropTypes.string,
   visible: PropTypes.bool,
   description: PropTypes.any,
   style: PropTypes.object,
