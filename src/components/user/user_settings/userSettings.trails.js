@@ -5,7 +5,6 @@ import {userSettingsPaths} from "components/user/user_settings/userSettings.path
 
 export const userSettingsTrails  = {};
 
-//General
 userSettingsTrails.myUserProfile = {
   parent: undefined,
     name: "myUserProfile",
