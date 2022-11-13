@@ -29,11 +29,8 @@ import {
   faUsers,
   faChartArea,
   faHome,
-  faIdCard,
-  faKey,
   faHexagon,
   faListAlt,
-  faRss,
   faFileArchive,
   faUserChart,
   faRadar,
@@ -60,6 +57,7 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import { taskTypeConstants } from "components/tasks/task.types";
 import { pipelineSettingsTrails } from "components/settings/pipelines/pipelineSettings.trails";
+import {userSettingsTrails} from "components/user/user_settings/userSettings.trails";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
 const breadcrumbs = {
@@ -1065,51 +1063,6 @@ const breadcrumbs = {
     },
   },
 
-  //General
-  userProfile: {
-    parent: undefined,
-    name: "userProfile",
-    path: paths.userProfile,
-    title: "My User Profile",
-    linkText: "My User Profile",
-    icon: faIdCard
-  },
-  myUserRecord: {
-    parent: "userProfile",
-    name: "myUserRecord",
-    path: paths.userRecord,
-    title: "My User Record",
-    linkText: "My User Record",
-    icon: faUser,
-    pageDescription: `
-      Review and manage your user profile information as well as platform settings from this page. 
-      Please note, profile details are stored in your identity provider, so some changes my not be possible from this portal at this time.
-    `
-  },
-  subscriptions: {
-    parent: "userProfile",
-    name: "subscriptions",
-    path: paths.userRecord,
-    title: "My Subscriptions",
-    linkText: "My Subscriptions",
-    icon: faRss
-  },
-  myAccessTokens: {
-    parent: "userProfile",
-    name: "myAccessTokens",
-    path: paths.accessTokens,
-    title: "Personal Access Tokens",
-    linkText: "Personal Access Tokens",
-    icon: faKey
-  },
-  accessTokenDetailView: {
-    parent: "myAccessTokens",
-    name: "accessTokenDetailView",
-    path: paths.userProfile,
-    title: "Access Token Details",
-    linkText: "Access Token Details",
-    icon: faKey
-  },
   home: {
     parent: undefined,
     name: "home",
@@ -1220,6 +1173,7 @@ const breadcrumbs = {
   },
 
   ...pipelineSettingsTrails,
+  ...userSettingsTrails,
 };
 
 export const getTrail = (breadcrumb) => {

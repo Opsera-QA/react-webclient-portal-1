@@ -5,6 +5,7 @@ import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {faIdCard, faKey, faRss, faUser} from "@fortawesome/pro-light-svg-icons";
 import {useHistory} from "react-router-dom";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import {USER_SETTINGS_PAGES} from "components/user/user_settings/userSettings.paths";
 
 export default function UserSettingsSubNavigationBar(
   {
@@ -12,13 +13,11 @@ export default function UserSettingsSubNavigationBar(
   }) {
   const history = useHistory();
   const {
-    accessRoleData,
     isSaasUser,
   } = useComponentStateReference();
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
-    // setActiveTab(tabSelection);
     history.push(`/user/${tabSelection}`);
   };
 
@@ -26,14 +25,14 @@ export default function UserSettingsSubNavigationBar(
     <NavigationTabContainer>
       <NavigationTab
         icon={faIdCard}
-        tabName={"profile"}
+        tabName={USER_SETTINGS_PAGES.MY_USER_PROFILE}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
         tabText={"My Profile"}
       />
       <NavigationTab
         icon={faUser}
-        tabName={"myUserRecord"}
+        tabName={USER_SETTINGS_PAGES.MY_USER_RECORD}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
         tabText={"My Record"}
@@ -41,21 +40,21 @@ export default function UserSettingsSubNavigationBar(
       />
       <NavigationTab
         icon={faKey}
-        tabName={"accessTokens"}
+        tabName={USER_SETTINGS_PAGES.MY_ACCESS_TOKENS}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
         tabText={"Access Tokens"}
       />
       {/*<NavigationTab
         icon={faKey}
-        tabName={"currentToken"}
+        tabName={USER_SETTINGS_PAGES.MY_CURRENT_TOKEN}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
          tabText={"Current Access Token"}
          />*/}
       <NavigationTab
         icon={faRss}
-        tabName={"subscriptions"}
+        tabName={USER_SETTINGS_PAGES.MY_SUBSCRIPTIONS}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
         tabText={"Subscriptions"}

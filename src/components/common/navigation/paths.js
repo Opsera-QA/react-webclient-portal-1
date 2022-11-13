@@ -1,9 +1,5 @@
 const paths = {};
 
-// TODO: Rewrite these to be functions
-paths.userProfile = "user/profile";
-paths.userRecord = "user/myUserRecord";
-paths.accessTokens = "user/accessTokens";
 paths.home = "";
 paths.logs = "logs";
 paths.blueprint = "blueprint";
