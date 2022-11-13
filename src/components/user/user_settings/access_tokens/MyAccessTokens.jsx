@@ -12,6 +12,10 @@ import Model from "core/data_model/model";
 import accessTokenFilterMetadata from "components/user/user_settings/access_tokens/access-token-filter-metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import UserSettingsSubNavigationBar from "components/user/user_settings/UserSettingsSubNavigationBar";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import {USER_SETTINGS_PAGES} from "components/user/user_settings/userSettings.paths";
 
 function MyAccessTokens() {
   const [accessTokenFilterModel, setAccessTokenFilterModel] = useState(new Model({...accessTokenFilterMetadata.newObjectFields}, accessTokenFilterMetadata, false));
@@ -24,6 +28,7 @@ function MyAccessTokens() {
     isMounted,
     toastContext,
     getAccessToken,
+    accessRoleData,
   } = useComponentStateReference();
 
   const handleTabClick = (tabSelection) => e => {
@@ -115,12 +120,19 @@ function MyAccessTokens() {
   };
 
   return (
-    <div className="px-3">
-      <TabPanelContainer
-        currentView={getCurrentView()}
-        tabContainer={getTabContainer()}
-      />
-    </div>
+    <ScreenContainer
+      navigationTabContainer={<UserSettingsSubNavigationBar activeTab={USER_SETTINGS_PAGES.MY_ACCESS_TOKENS} />}
+      breadcrumbDestination={USER_SETTINGS_PAGES.MY_ACCESS_TOKENS}
+      roleRequirement={ROLE_LEVELS.USERS_AND_SASS}
+      accessRoleData={accessRoleData}
+    >
+      <div className="px-3">
+        <TabPanelContainer
+          currentView={getCurrentView()}
+          tabContainer={getTabContainer()}
+        />
+      </div>
+    </ScreenContainer>
   );
 }
 
