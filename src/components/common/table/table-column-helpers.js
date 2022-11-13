@@ -22,7 +22,6 @@ import React from "react";
 import DashboardFavoritesIcon from "components/common/icons/dashboards/DashboardFavoritesIcon";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import { Button } from "react-bootstrap";
-import { convertFutureDateToDhmsFromNowString } from "components/common/helpers/date/date.helpers";
 import { capitalizeFirstLetter, truncateString } from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { ACCESS_ROLES_FORMATTED_LABELS } from "components/common/helpers/role-helpers";
@@ -250,7 +249,7 @@ export const getTableDateAndTimeUntilValueColumn = (
   header,
   id,
   fakeColumn = "fakeColumn",
-  className,
+  className = "no-wrap-inline",
 ) => {
   return {
     Header: header,
@@ -273,7 +272,7 @@ export const getTableDateAndTimeUntilValueColumn = (
 
       return "";
     },
-    class: className ? className : "no-wrap-inline"
+    class: className,
   };
 };
 

@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {faRss, faIdCard, faKey, faUser} from "@fortawesome/pro-light-svg-icons";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import MyUserRecord from "components/user/user_settings/user_record/MyUserRecord";
 import {useHistory, useParams} from "react-router-dom";
 import MyUserProfile from "components/user/user_settings/profile/MyUserProfile";
@@ -10,6 +7,7 @@ import MyAccessTokens from "components/user/user_settings/access_tokens/MyAccess
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import MySubscriptions from "components/user/user_settings/subscriptions/MySubscriptions";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import UserSettingsSubNavigationBar from "components/user/user_settings/UserSettingsSubNavigationBar";
 
 function UserSettings() {
   const { tab } = useParams();
@@ -25,12 +23,6 @@ function UserSettings() {
       setActiveTab(tab);
     }
   }, [tab]);
-
-  const handleTabClick = (tabSelection) => e => {
-    e.preventDefault();
-    setActiveTab(tabSelection);
-    history.push(`/user/${tabSelection}`);
-  };
 
   const getBreadcrumbDestination = () => {
     switch (activeTab) {
@@ -78,56 +70,14 @@ function UserSettings() {
     }
   };
 
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab
-          icon={faIdCard}
-          tabName={"profile"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"My Profile"}
-        />
-        <NavigationTab
-          icon={faUser}
-          tabName={"myUserRecord"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"My Record"}
-          visible={isSaasUser === false}
-        />
-        <NavigationTab
-          icon={faKey}
-          tabName={"accessTokens"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"Access Tokens"}
-        />
-        {/*<NavigationTab
-        icon={faKey}
-        tabName={"currentToken"}
-        handleTabClick={handleTabClick}
-        activeTab={activeTab}
-         tabText={"Current Access Token"}
-         />*/}
-        <NavigationTab
-          icon={faRss}
-          tabName={"subscriptions"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"Subscriptions"}
-        />
-      </NavigationTabContainer>
-    );
-  };
-
   return (
     <ScreenContainer
-      navigationTabContainer={getNavigationTabContainer()}
+      navigationTabContainer={<UserSettingsSubNavigationBar activeTab={activeTab} />}
       breadcrumbDestination={getBreadcrumbDestination()}
       roleRequirement={ROLE_LEVELS.USERS_AND_SASS}
       accessRoleData={accessRoleData}
-      pageDescription={getDescription()}>
+      pageDescription={getDescription()}
+    >
       {getCurrentView()}
     </ScreenContainer>
   );
