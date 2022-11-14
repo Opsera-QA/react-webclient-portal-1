@@ -4,15 +4,12 @@ import FilterContainer from "components/common/table/FilterContainer";
 import DeploymentStatisticsActionableTasksMetadata from "./deployment-statistics-actionable-tasks-metadata";
 import {
     getTableTextColumn,
-    getTableTextColumnWithoutField,
     getTableDurationTextColumn,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
-import {faDraftingCompass, faTasks} from "@fortawesome/pro-light-svg-icons";
+import {faTasks} from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
-import {faClipboardCheck} from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Convert to cards
 function DeploymentStatisticsTasksActionableTable({
