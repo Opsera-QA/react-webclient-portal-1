@@ -99,7 +99,7 @@ function ProjectDataMappingEditorPanel(
           </>
       );
     }
-    if (projectDataMappingModel?.getData("tool_identifier") === "gitlab" || projectDataMappingModel?.getData("tool_identifier") === "github") {
+    if (projectDataMappingModel?.getData("tool_identifier") === "gitlab") {
       return (
         <Col lg={12}>
           <ProjectRepositorySelectInput
@@ -109,6 +109,16 @@ function ProjectDataMappingEditorPanel(
             valueField="nameSpacedPath"
           />
         </Col>
+      );
+    }
+    if (projectDataMappingModel?.getData("tool_identifier") === "github") {
+      return (
+          <Col lg={12}>
+            <ProjectRepositorySelectInput
+              model={projectDataMappingModel}
+              setModel={setProjectDataMappingModel}
+            />
+          </Col>
       );
     }
     if (projectDataMappingModel?.getData("tool_identifier") === "jira") {
