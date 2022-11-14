@@ -2,8 +2,8 @@ import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
 import ExportLogDataOverlay from "components/logs/export/ExportLogDataOverlay";
-import { DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import ExportDataButtonBase from "../../../modal/export_data/ExportDataButtonBase";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 //if date should be parsed from ISO
 // function parseISOString(str) {
@@ -16,6 +16,7 @@ function ExportLogSearchButton(
     isLoading,
     searchResults,
     exportDisabled,
+    className,
   }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -66,6 +67,9 @@ function ExportLogSearchButton(
       isLoading={isLoading}
       searchResults={searchResults}
       launchOverlayFunction={launchOverlayFunction}
+      buttonSize={"md"}
+      className={className}
+      disabled={exportDisabled}
     />
   );
 }
@@ -74,6 +78,7 @@ ExportLogSearchButton.propTypes = {
   searchResults: PropTypes.any,
   isLoading: PropTypes.bool,
   exportDisabled: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default ExportLogSearchButton;

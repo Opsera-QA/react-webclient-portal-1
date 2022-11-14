@@ -51,7 +51,7 @@
     "react/no-unescaped-entities": "error",
     "react/display-name": "error",
     "react/jsx-no-target-blank": "error",
-    "no-prototype-builtins": "warn",
+    "no-prototype-builtins": "error",
     "no-useless-escape": "warn",
     "no-empty-pattern": "error",
     "no-fallthrough": "warn",

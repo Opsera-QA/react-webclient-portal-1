@@ -1,6 +1,6 @@
 import {ApiService} from "api/apiService";
 import React from "react";
-import { CSVLink } from "react-csv";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
   
 export const getAllResultsForExport = async (startDate, endDate, setIsLoading, getAccessToken, searchTerm, jenkinsProjectDto, filterType, getFormattedCustomFilters, currentPage, setExportData, setExportDisabled) => {
     setIsLoading(true);
@@ -30,8 +30,10 @@ export const getAllResultsForExport = async (startDate, endDate, setIsLoading, g
       .then((result) => {
         let searchResults = [];
         if (result) {
-          searchResults =
-            result.data.hasOwnProperty("hits") && result.data.hits.hasOwnProperty("hits") ? result.data.hits : [];
+          const nestedHits = DataParsingHelper.safeObjectPropertyParser(result, "data.hits.hits");
+          console.log("in results");
+
+          searchResults = nestedHits ? result.data.hits : [];
         }
         let data = searchResults;
         setExportData(data);
