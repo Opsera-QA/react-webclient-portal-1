@@ -55,7 +55,7 @@ export const _xmlFormattingHelper = (data) => {
         indentVal = indentVal.substring("  ".length);
       }
       returnVal += indentVal + "<" + line + ">\r\n";
-      if (line.match(/^<?\w[^>]*[^\/]$/)) {
+      if (line.match(/^<?\w[^>]*[^/]$/)) {
         indentVal += "  ";
       }
     });

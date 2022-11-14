@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, OverlayTrigger, Popover } from "react-bootstrap";
-import { faBracketsCurly, faInfoCircle, faTimes } from "@fortawesome/pro-light-svg-icons";
+import { faHandshake, faInfoCircle, faTimes } from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import axios from "axios";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import { faHandshake } from "@fortawesome/pro-light-svg-icons";
 import OctopusDeploymentVariables from "./OctopusDeploymentVariables";
 import StandaloneBooleanToggleInput from "components/common/inputs/boolean/StandaloneBooleanToggleInput";
 import OctopusStandaloneVariablesTypeSelectInput from "./OctopusStandaloneVariablesTypeSelectInput";

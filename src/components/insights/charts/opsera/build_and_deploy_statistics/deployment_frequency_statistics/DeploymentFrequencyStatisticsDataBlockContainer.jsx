@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
 import { Container, Col, Row } from "react-bootstrap";
 import { ResponsiveLine } from '@nivo/line';
 import { defaultConfig } from 'components/insights/charts/charts-views';
