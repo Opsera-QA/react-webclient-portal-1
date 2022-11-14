@@ -71,7 +71,7 @@ function AccessTokenEditorPanel({ cancelTokenSource, loadData }) {
           </Col>
           <Col md={12}>
             <TextAreaClipboardField
-              className={"my-2 small-label-text"}
+              className={"mb-2 small-label-text"}
               allowResize={false}
               rows={3}
               textAreaValue={generatedToken}
