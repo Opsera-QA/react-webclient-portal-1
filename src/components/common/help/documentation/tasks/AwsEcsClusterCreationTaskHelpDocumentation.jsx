@@ -1,8 +1,7 @@
 import React from "react";
 import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
 import PropTypes from "prop-types";
-import { TASK_TYPES } from "../../../../tasks/task.types";
-import { getTaskTypeLabel } from "../../../../tasks/task.types";
+import { TASK_TYPES, getTaskTypeLabel } from "components/tasks/task.types";
 
 function AwsEcsClusterCreationTaskHelpDocumentation({closeHelpPanel}) {
   return (
