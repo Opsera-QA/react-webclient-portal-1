@@ -5,26 +5,42 @@ import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewConta
 
 export const DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT = "calc(100vh - 264px)";
 
-function VanitySetTabAndViewContainer(
-  {
-    verticalTabContainer,
-    currentView,
-    className,
-    tabColumnSize,
-    icon,
-    title,
-    defaultActiveKey,
-    bodyClassName,
-    minimumHeight,
-    maximumHeight,
-    isLoading,
-    titleRightSideButton,
-    loadDataFunction,
-    overflowYBodyStyle,
-    overflowXBodyStyle,
-    overflowYContainerStyle,
-    titleClassName
-  }) {
+function VanitySetTabAndViewContainer({
+  verticalTabContainer,
+  currentView,
+  className,
+  tabColumnSize,
+  icon,
+  title,
+  defaultActiveKey,
+  bodyClassName,
+  minimumHeight,
+  maximumHeight,
+  isLoading,
+  titleRightSideButton,
+  loadDataFunction,
+  overflowYBodyStyle,
+  overflowXBodyStyle,
+  overflowYContainerStyle,
+  titleClassName,
+  titleBar,
+}) {
+  if (!titleBar) {
+    return (
+      <TabAndViewContainer
+        verticalTabContainer={verticalTabContainer}
+        currentView={currentView}
+        tabColumnSize={tabColumnSize}
+        defaultActiveKey={defaultActiveKey}
+        bodyClassName={bodyClassName}
+        minimumHeight={minimumHeight}
+        maximumHeight={maximumHeight}
+        overflowXBodyStyle={overflowXBodyStyle}
+        overflowYContainerStyle={overflowYContainerStyle}
+        overflowYBodyStyle={overflowYBodyStyle}
+      />
+    );
+  }
   return (
     <InfoContainer
       titleText={title}
@@ -69,6 +85,7 @@ VanitySetTabAndViewContainer.propTypes = {
   overflowXBodyStyle: PropTypes.string,
   overflowYContainerStyle: PropTypes.string,
   titleClassName: PropTypes.string,
+  titleBar: PropTypes.bool,
 };
 
 VanitySetTabAndViewContainer.defaultProps = {
@@ -77,6 +94,7 @@ VanitySetTabAndViewContainer.defaultProps = {
   maximumHeight: DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT,
   overflowYBodyStyle: "auto",
   overflowYContainerStyle: "hidden",
+  titleBar: true,
 };
 
 export default VanitySetTabAndViewContainer;
