@@ -5,8 +5,6 @@ import {
   userActionsPipelineStepMetadata
 } from "components/workflow/plan/step/user_actions/userActionsPipelineStep.metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PipelineInstructionsDisplayerOverlay
-  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsDisplayerOverlay";
 import IconBase from "components/common/icons/IconBase";
 import { faSearch } from "@fortawesome/pro-solid-svg-icons";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
@@ -29,7 +27,7 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
   const {
     pipelineInstructionsModel,
     isLoading,
-  } = useGetPipelineInstructionModelByPipelineStep(pipeline?._id, pipelineStep?._id);
+  } = useGetPipelineInstructionModelByPipelineStep(pipeline?._id, pipelineStep?._id, false);
   const {
     toastContext,
   } = useComponentStateReference();
@@ -63,6 +61,19 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
     }
   };
 
+  const getIcon = () => {
+    if (pipelineInstructionsId) {
+      return (
+        <IconBase
+          isLoading={isLoading}
+          iconSize={"sm"}
+          className={"ml-1"}
+          icon={faSearch}
+        />
+      );
+    }
+  };
+
   if (pipelineStep == null) {
     return null;
   }
@@ -73,12 +84,7 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
         className={"pointer d-flex"}
         onClick={showPipelineInstructionsOverlay}>
         {getValueField()}
-        <IconBase
-          isLoading={isLoading}
-          iconSize={"sm"}
-          className={"ml-1"}
-          icon={faSearch}
-        />
+        {getIcon()}
       </div>
     </div>
   );

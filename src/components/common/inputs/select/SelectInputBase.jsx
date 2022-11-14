@@ -45,10 +45,16 @@ function SelectInputBase(
     helpTooltipText,
     loadDataFunction,
     handleCreateFunction,
+    requireUserEnable,
 }) {
   const field = dataObject?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
   const [internalErrorMessage, setInternalErrorMessage] = useState("");
+  const [enabled, setEnabled] = useState(undefined);
+
+  useEffect(() => {
+    setEnabled(requireUserEnable !== true);
+  }, [requireUserEnable]);
 
   useEffect(() => {
     setInternalErrorMessage("");
@@ -166,6 +172,7 @@ function SelectInputBase(
           placeholderText={getPlaceholderText()}
           setDataFunction={(newValue) => updateValue(newValue)}
           disabled={disabled}
+          // disabled={disabled || enabled === false}
           onSearchFunction={onSearchFunction}
         />
         <NewRecordButton
@@ -233,6 +240,7 @@ SelectInputBase.propTypes = {
   helpTooltipText: PropTypes.string,
   loadDataFunction: PropTypes.func,
   handleCreateFunction: PropTypes.func,
+  requireUserEnable: PropTypes.bool,
 };
 
 SelectInputBase.defaultProps = {

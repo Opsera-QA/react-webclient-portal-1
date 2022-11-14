@@ -63,7 +63,8 @@ function AccessTokenEditorPanel({ cancelTokenSource, loadData }) {
                   disable={!accessToken.checkCurrentValidity()}
                   recordDto={accessToken}
                   handleClose={loadData}
-                  createRecord={createToken} size={"sm"}
+                  createRecord={createToken}
+                  className={"mr-2"}
                 />
               </div>
             </Row>
