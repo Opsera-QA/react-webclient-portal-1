@@ -43,7 +43,7 @@
       "always"
     ],
     "no-unused-vars": "off",
-    "no-duplicate-imports": "warn",
+    "no-duplicate-imports": "error",
     "react/prop-types": "error",
     "react/no-unescaped-entities": "error",
     "react/display-name": "error",
