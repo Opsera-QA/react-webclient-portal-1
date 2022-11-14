@@ -104,7 +104,8 @@ function InputLabel(
           />
           <ReloadDataIcon
             loadDataFunction={loadDataFunction}
-            disabled={disabled || isLoading}
+            disabled={disabled}
+            isLoading={isLoading}
             className={"ml-2"}
           />
           <ClearDataIcon
