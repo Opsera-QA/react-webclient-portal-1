@@ -25,7 +25,7 @@ function LaunchHelpIcon({ helpComponent, helpText, className, size, iconClassNam
 
   return (
     <div className={className}>
-      <ButtonTooltip innerText={"Launch Help"}>
+      <ButtonTooltip innerText={"Show Help"}>
         <span>
           <IconBase
             onClickFunction={() => {launchHelp();}}
