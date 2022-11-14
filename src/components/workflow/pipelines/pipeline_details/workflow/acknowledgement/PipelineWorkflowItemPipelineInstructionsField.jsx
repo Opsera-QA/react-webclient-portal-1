@@ -74,7 +74,7 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
     }
   };
 
-  if (pipelineStep == null) {
+  if (pipelineStep == null || pipelineInstructionsId == null) {
     return null;
   }
 
