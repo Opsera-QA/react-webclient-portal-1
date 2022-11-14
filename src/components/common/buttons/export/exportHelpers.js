@@ -31,8 +31,6 @@ export const getAllResultsForExport = async (startDate, endDate, setIsLoading, g
         let searchResults = [];
         if (result) {
           const nestedHits = DataParsingHelper.safeObjectPropertyParser(result, "data.hits.hits");
-          console.log("in results");
-
           searchResults = nestedHits ? result.data.hits : [];
         }
         let data = searchResults;
