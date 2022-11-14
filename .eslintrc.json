@@ -51,6 +51,7 @@
     "no-prototype-builtins": "warn",
     "no-useless-escape": "warn",
     "no-empty-pattern": "error",
-    "no-fallthrough": "warn"
+    "no-fallthrough": "warn",
+    "react-hooks/exhaustive-deps": "off"
   }
 }
