@@ -18,7 +18,7 @@ function HelpButton({ toggleHelp, helpText, className, size }) {
 
   return (
     <div className={className}>
-      <ButtonTooltip innerText={"Launch Help"}>
+      <ButtonTooltip innerText={"Show Help"}>
         <Button size={size} variant={"secondary"} onClick={() => toggleHelp()}>
           <IconBase icon={faQuestionCircle} />
           {getHelpText()}
