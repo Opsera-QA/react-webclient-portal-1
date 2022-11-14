@@ -8,8 +8,10 @@ import { faFileDownload } from "@fortawesome/pro-light-svg-icons";
 function ExportDataButtonBase({
   className,
   isLoading,
+  disabled,
   launchOverlayFunction,
   showExportPanel,
+  buttonSize,
 }) {
   const getVariant = () => {
     if (showExportPanel === true) {
@@ -24,8 +26,8 @@ function ExportDataButtonBase({
       <div className={className}>
         <Button
           variant={getVariant()}
-          size={"sm"}
-          disabled={isLoading}
+          size={buttonSize}
+          disabled={isLoading || disabled === true}
           onClick={launchOverlayFunction}
         >
           <span>
@@ -42,6 +44,12 @@ ExportDataButtonBase.propTypes = {
   launchOverlayFunction: PropTypes.func,
   isLoading: PropTypes.bool,
   showExportPanel: PropTypes.bool,
+  buttonSize: PropTypes.string,
+  disabled: PropTypes.bool,
+};
+
+ExportDataButtonBase.defaultProps = {
+  buttonSize: "sm",
 };
 
 export default ExportDataButtonBase;

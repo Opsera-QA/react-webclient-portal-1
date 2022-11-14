@@ -202,7 +202,7 @@ regexDefinitions.jsonFile = {
 };
 
 regexDefinitions.collectionName = {
-  regex: /^[a-zA-Z0-9_-]*(?:\.[a-zA-Z0-9_-]+)$/,
+  regex: /^[a-zA-Z0-9_-]*\.[a-zA-Z0-9_-]+$/,
   formText: "Accepts input in [DatabaseName].[CollectionName] format",
   errorFormText: "Input should be in [DatabaseName].[CollectionName] format. Only letters, numbers, dashes, underscores and periods are allowed",
 };
