@@ -135,6 +135,10 @@ function SelectInputBase(
     return "Select One";
   };
 
+  const enableEditingFunction = () => {
+    setEnabled(true);
+  };
+
   if (field == null || visible === false) {
     return null;
   }
@@ -153,6 +157,7 @@ function SelectInputBase(
         infoOverlay={infoOverlay}
         linkIcon={linkIcon}
         ellipsisTooltipText={ellipsisTooltipText}
+        enableEditingFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(internalErrorMessage) === true || hasStringValue(errorMessage) === true}
         helpTooltipText={helpTooltipText}
@@ -171,8 +176,7 @@ function SelectInputBase(
           busy={busy}
           placeholderText={getPlaceholderText()}
           setDataFunction={(newValue) => updateValue(newValue)}
-          disabled={disabled}
-          // disabled={disabled || enabled === false}
+          disabled={disabled || (requireUserEnable === true && enabled === false)}
           onSearchFunction={onSearchFunction}
         />
         <NewRecordButton

@@ -212,9 +212,16 @@ function PipelineWorkflowItemList(
   return (
     <>
       {pipelineSteps && pipelineSteps.map((item, index) => (
-        <div key={index} className={isSaving ? "fa-disabled" : ""}>
-          <div className={"mb-1 p-1 workflow-module-container workflow-module-container-width mx-auto " +
-          setStepStatusClass(lastStep, item)}>
+        <div
+          key={index}
+          className={isSaving ? "fa-disabled" : ""}
+        >
+          <div
+            className={"mb-1 p-1 workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(lastStep, item)}
+            style={{
+              boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)",
+            }}
+          >
             <PipelineWorkflowItem
               pipeline={pipeline}
               plan={pipelineSteps}
@@ -283,8 +290,17 @@ function PipelineWorkflowItemList(
               </div>
             </> :
             <>
-              <SteppedLineTo from={"step-" + item._id} to={"step-" + index} delay={100} orientation="v" zIndex={-1}
-                             borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
+              <SteppedLineTo
+                from={"step-" + item._id}
+                to={"step-" + index}
+                delay={100}
+                orientation={"v"}
+                zIndex={1000}
+                borderColor={"#0f3e84"}
+                borderWidth={2}
+                fromAnchor={"bottom"}
+                toAnchor={"bottom"}
+              />
               <div style={{ height: "40px" }} className={"step-" + index}>&nbsp;</div>
             </>
           }
