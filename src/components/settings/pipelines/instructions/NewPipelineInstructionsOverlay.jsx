@@ -9,20 +9,29 @@ import PipelineInstructionsEditorPanel
 import pipelineInstructionsMetadata
   from "@opsera/definitions/constants/settings/pipelines/instructions/pipelineInstructions.metadata";
 
-export default function NewPipelineInstructionsOverlay({ loadData }) {
+export default function NewPipelineInstructionsOverlay(
+  {
+    loadData,
+    closePanelFunction,
+    viewDetailsUponCreate,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const {
     pipelineInstructionsModel,
     setPipelineInstructionsModel,
   } = useGetNewPipelineInstructionsModel();
 
-  const closePanel = () => {
-    if (loadData) {
-      loadData();
-    }
+  const closePanel = (newPipelineInstructionsResponse) => {
+    if (closePanelFunction) {
+      closePanelFunction(newPipelineInstructionsResponse);
+    } else {
+      if (loadData) {
+        loadData();
+      }
 
-    toastContext.removeInlineMessage();
-    toastContext.clearOverlayPanel();
+      toastContext.removeInlineMessage();
+      toastContext.clearOverlayPanel();
+    }
   };
 
   return (
@@ -36,6 +45,7 @@ export default function NewPipelineInstructionsOverlay({ loadData }) {
           handleClose={closePanel}
           pipelineInstructionsModel={pipelineInstructionsModel}
           setPipelineInstructionsModel={setPipelineInstructionsModel}
+          viewDetailsUponCreate={viewDetailsUponCreate}
         />
       </div>
     </CreateCenterPanel>
@@ -44,6 +54,8 @@ export default function NewPipelineInstructionsOverlay({ loadData }) {
 
 NewPipelineInstructionsOverlay.propTypes = {
   loadData: PropTypes.func,
+  closePanelFunction: PropTypes.func,
+  viewDetailsUponCreate: PropTypes.bool,
 };
 
 

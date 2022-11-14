@@ -16,6 +16,7 @@ export default function PipelineInstructionsEditorPanel(
     pipelineInstructionsModel,
     setPipelineInstructionsModel,
     handleClose,
+    viewDetailsUponCreate,
   }) {
   const {
     isSaasUser,
@@ -45,6 +46,7 @@ export default function PipelineInstructionsEditorPanel(
       setModel={setPipelineInstructionsModel}
       handleClose={handleClose}
       showDeleteButton={false}
+      viewDetailsUponCreate={viewDetailsUponCreate}
       className={"mx-2 mb-2"}
     >
       <Row>
@@ -92,7 +94,8 @@ export default function PipelineInstructionsEditorPanel(
 PipelineInstructionsEditorPanel.propTypes = {
   pipelineInstructionsModel: PropTypes.object,
   handleClose: PropTypes.func,
-  setPipelineInstructionsModel: PropTypes.func
+  setPipelineInstructionsModel: PropTypes.func,
+  viewDetailsUponCreate: PropTypes.bool,
 };
 
 

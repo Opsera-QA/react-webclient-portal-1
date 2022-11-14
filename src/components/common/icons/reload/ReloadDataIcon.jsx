@@ -16,8 +16,8 @@ export default function ReloadDataIcon(
   return (
     <span className={className}>
       <span
-        onClick={loadDataFunction}
-        className={"my-auto badge badge-primary clear-value-badge pointer"}
+        onClick={() => loadDataFunction()}
+        className={"my-auto badge badge-secondary clear-value-badge pointer"}
       >
         <span className={"my-auto"}>
           <IconBase icon={faRefresh} className={"mr-1"}/>Reload Data</span>
