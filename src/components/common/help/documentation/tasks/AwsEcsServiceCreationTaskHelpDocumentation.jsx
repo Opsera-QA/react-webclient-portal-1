@@ -6,7 +6,7 @@ import { getTaskTypeLabel, TASK_TYPES } from "../../../../tasks/task.types";
 function AwsEcsServiceCreationTaskHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer helpTopic={getTaskTypeLabel(TASK_TYPES.AWS_CREATE_ECS_SERVICE)} closeHelpPanel={closeHelpPanel}>
-      <div>This workflow requires setup in both Tasks and Pipeline. Service Creation and deployment require the latest image URL in order to deploy. This is generated during pipeline runtime. The workflow is separated into two parts where the user enters certain static information in the Tasks page and then links the task to the respective Docker step in the pipeline. </div>
+      <div>This workflow requires setup in both Tasks and Pipeline. Service Creation and deployment require the latest image URL in order to deploy. This is generated during pipeline runtime. The workflow is separated into two parts where the user enters certain static information in the Tasks page and then links the task to the respective Docker step in the pipeline. For more detailed information on the {getTaskTypeLabel(TASK_TYPES.AWS_CREATE_ECS_SERVICE)} Task including pipeline configuration, view the <a href="https://docs.opsera.io/aws-native-support/aws-ecs#setup-aws-ecs-service-creation-task" target="_blank" rel="noreferrer"><b>AWS ECS Service Creation Task Documentation</b>.</a> </div>
       <div className={"mt-2"}><h5>Task Setup Instructions:</h5></div>
       <ol>
         <li>Select <b>{getTaskTypeLabel(TASK_TYPES.AWS_CREATE_ECS_SERVICE)}</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
