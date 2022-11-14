@@ -15,6 +15,8 @@ import useGetPipelineInstructionModelByPipelineStep
   from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
 import UserActionsPipelineInstructionsDisplayerOverlay
   from "components/workflow/plan/step/user_actions/UserActionsPipelineInstructionsDisplayerOverlay";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 export default function PipelineWorkflowItemPipelineInstructionsField(
   {
@@ -27,6 +29,7 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
   const {
     pipelineInstructionsModel,
     isLoading,
+    error,
   } = useGetPipelineInstructionModelByPipelineStep(pipeline?._id, pipelineStep?._id, false);
   const {
     toastContext,
@@ -74,18 +77,38 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
     }
   };
 
-  if (pipelineStep == null || pipelineInstructionsId == null) {
+  const getTooltip = () => {
+    if (approvalStepToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION) {
+      return "Click to view Acknowledgement Details";
+    }
+
+    return "Click to view Pipeline Instructions set";
+  };
+
+  if (pipeline == null || pipelineStep == null || isMongoDbId(pipelineInstructionsId) !== true) {
     return null;
+  }
+
+  if (isLoading !== true && error != null) {
+    return (
+      <span className={"danger-red"}>
+        Pipeline Instructions Not Found!
+      </span>
+    );
   }
 
   return (
     <div>
-      <div
-        className={"pointer d-flex"}
-        onClick={showPipelineInstructionsOverlay}>
-        {getValueField()}
-        {getIcon()}
-      </div>
+      <TooltipWrapper
+        innerText={getTooltip()}
+      >
+        <div
+          className={"pointer d-flex"}
+          onClick={showPipelineInstructionsOverlay}>
+          {getValueField()}
+          {getIcon()}
+        </div>
+      </TooltipWrapper>
     </div>
   );
 }
