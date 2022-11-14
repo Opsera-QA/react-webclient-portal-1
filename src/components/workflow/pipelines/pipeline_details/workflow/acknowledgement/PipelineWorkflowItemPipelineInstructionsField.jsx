@@ -15,6 +15,8 @@ import PipelineInstructionsAcknowledgementOverlay
   from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
 import useGetPipelineInstructionModelByPipelineStep
   from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
+import UserActionsPipelineInstructionsDisplayerOverlay
+  from "components/workflow/plan/step/user_actions/UserActionsPipelineInstructionsDisplayerOverlay";
 
 export default function PipelineWorkflowItemPipelineInstructionsField(
   {
@@ -52,9 +54,10 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
       );
     } else {
       toastContext.showOverlayPanel(
-        <PipelineInstructionsDisplayerOverlay
+        <UserActionsPipelineInstructionsDisplayerOverlay
           pipelineInstructionsId={pipelineInstructionsId}
-          allowEditing={true}
+          pipelineId={pipeline?._id}
+          pipelineStepId={pipelineStep?._id}
         />
       );
     }
