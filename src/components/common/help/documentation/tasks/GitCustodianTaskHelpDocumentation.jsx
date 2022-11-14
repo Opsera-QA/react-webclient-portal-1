@@ -6,7 +6,7 @@ import { getTaskTypeLabel, TASK_TYPES } from "../../../../tasks/task.types";
 function GitCustodianTaskHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer helpTopic={getTaskTypeLabel(TASK_TYPES.GITSCRAPER)} closeHelpPanel={closeHelpPanel}>
-      <div className={"mb-1"}>The <b>{getTaskTypeLabel(TASK_TYPES.GITSCRAPER)} Task</b> allows you to choose from custodian libraries then run a scan against the configured SCM repos. Define a maximum threshold and choose any secrets to ignore in the scan.  For more detailed information on the Git Custodian Functionality, view the <a href="https://opsera.atlassian.net/l/c/JDCeqKtA" target="_blank" rel="noreferrer"><b>Git Custodian Task Documentation</b>.</a></div>
+      <div className={"mb-1"}>The <b>{getTaskTypeLabel(TASK_TYPES.GITSCRAPER)} Task</b> allows you to choose from custodian libraries then run a scan against the configured SCM repos. Define a maximum threshold and choose any secrets to ignore in the scan.  For more detailed information on the Git Custodian Functionality, view the <a href="https://docs.opsera.io/quality-and-security-scan/git-custodian-task" target="_blank" rel="noreferrer"><b>Git Custodian Task Documentation</b>.</a></div>
       <div className={"mt-2"}><h5>Task Setup Instructions:</h5></div>
       <ol>
         <li>Select <b>{getTaskTypeLabel(TASK_TYPES.GITSCRAPER)}</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:
