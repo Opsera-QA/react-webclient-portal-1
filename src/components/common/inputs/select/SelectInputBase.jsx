@@ -6,6 +6,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {errorHelpers, parseError} from "components/common/helpers/error-helpers";
+import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 
 function SelectInputBase(
   {
@@ -43,6 +44,7 @@ function SelectInputBase(
     inputHelpOverlay,
     helpTooltipText,
     loadDataFunction,
+    handleCreateFunction,
 }) {
   const field = dataObject?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
@@ -59,9 +61,8 @@ function SelectInputBase(
   }, [error]);
 
   const validateAndSetData = (fieldName, value) => {
-    let newDataObject = dataObject;
-    newDataObject?.setData(fieldName, value);
-    setDataObject({...newDataObject});
+    dataObject?.setData(fieldName, value);
+    setDataObject({...dataObject});
   };
 
   const updateValue = (newValue) => {
@@ -167,6 +168,13 @@ function SelectInputBase(
           disabled={disabled}
           onSearchFunction={onSearchFunction}
         />
+        <NewRecordButton
+          addRecordFunction={handleCreateFunction}
+          disabled={busy || disabled}
+          size={"md"}
+          className={"ml-2"}
+          type={singularTopic}
+        />
       </div>
       <InfoText
         model={dataObject}
@@ -224,6 +232,7 @@ SelectInputBase.propTypes = {
   customInfoTextMessage: PropTypes.string,
   helpTooltipText: PropTypes.string,
   loadDataFunction: PropTypes.func,
+  handleCreateFunction: PropTypes.func,
 };
 
 SelectInputBase.defaultProps = {

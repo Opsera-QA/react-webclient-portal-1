@@ -106,6 +106,7 @@ export default function UserActionsPipelineStepEditorPanel(
             fieldName={"pipelineInstructionsId"}
             model={userActionsStepModel}
             setModel={setUserActionsStepModel}
+            allowCreate={true}
           />
         </Col>
         <Col xs={12}>

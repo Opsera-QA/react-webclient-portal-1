@@ -25,6 +25,7 @@ function VanityCreateButton(
     className,
     showTypeOnLabel,
     customLabel,
+    viewDetailsUponCreate,
   }) {
   const [isSaving, setIsSaving] = useState(false);
   const [addAnother, setAddAnother] = useState(false);
@@ -40,7 +41,7 @@ function VanityCreateButton(
     if (addAnother) {
       await persistNewRecordAndAddAnother(model, toastContext, showSuccessToasts, setModel);
     }
-    else if (model.getDetailViewLink != null && hasStringValue(model.getDetailViewLink()) === true) {
+    else if (viewDetailsUponCreate !== false && model.getDetailViewLink != null && hasStringValue(model.getDetailViewLink()) === true) {
       await persistNewRecordAndViewDetails(model, toastContext, showSuccessToasts, history);
     }
     else if (handleClose != null) {
@@ -109,6 +110,7 @@ VanityCreateButton.propTypes = {
   className: PropTypes.string,
   customLabel: PropTypes.string,
   showTypeOnLabel: PropTypes.bool,
+  viewDetailsUponCreate: PropTypes.bool,
 };
 
 VanityCreateButton.defaultProps = {
