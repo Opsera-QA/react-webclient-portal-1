@@ -47,7 +47,7 @@ userSettingsTrails.subscriptions = {
 userSettingsTrails.myAccessTokens = {
   parent: "userProfile",
     name: "myAccessTokens",
-    path: paths.accessTokens,
+    path: userSettingsPaths.myAccessTokens,
     title: "Personal Access Tokens",
     linkText: "Personal Access Tokens",
     icon: faKey,
@@ -59,7 +59,7 @@ userSettingsTrails.myAccessTokens = {
 userSettingsTrails.accessTokenDetailView = {
   parent: "myAccessTokens",
     name: "accessTokenDetailView",
-    path: paths.userProfile,
+    path: userSettingsPaths.myAccessTokens,
     title: "Access Token Details",
     linkText: "Access Token Details",
     icon: faKey

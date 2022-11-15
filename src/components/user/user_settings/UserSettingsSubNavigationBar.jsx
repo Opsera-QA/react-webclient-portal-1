@@ -17,8 +17,26 @@ export default function UserSettingsSubNavigationBar(
   } = useComponentStateReference();
 
   const handleTabClick = (tabSelection) => e => {
+    if (tabSelection === activeTab) {
+      return;
+    }
+
     e.preventDefault();
     history.push(`/user/${tabSelection}`);
+  };
+
+  const getDynamicTab = () => {
+    if (activeTab === USER_SETTINGS_PAGES.ACCESS_TOKEN_DETAIL_VIEW) {
+      return (
+        <NavigationTab
+          icon={faKey}
+          tabName={USER_SETTINGS_PAGES.ACCESS_TOKEN_DETAIL_VIEW}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Access Token Viewer"}
+        />
+      );
+    }
   };
 
   return (
@@ -59,6 +77,7 @@ export default function UserSettingsSubNavigationBar(
         activeTab={activeTab}
         tabText={"Subscriptions"}
       />
+      {getDynamicTab()}
     </NavigationTabContainer>
   );
 }
