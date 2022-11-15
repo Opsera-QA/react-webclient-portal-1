@@ -2,9 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import {faPencil} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-export default function EnableEditingIcon (
+export default function EnableEditingIcon(
   {
     enableEditingFunction,
     disabled,
@@ -25,10 +24,10 @@ export default function EnableEditingIcon (
 
   const getClassName = () => {
     if (isLoading === true || disabled === true) {
-      return "my-auto badge badge-info clear-value-badge disabled";
+      return "badge badge-info disabled";
     }
 
-    return "my-auto badge badge-info clear-value-badge pointer";
+    return "badge badge-info pointer";
   };
 
   const getStyle = () => {
@@ -45,25 +44,21 @@ export default function EnableEditingIcon (
 
   return (
     <span className={className}>
-      <TooltipWrapper
-        innerText={"This setting "}
-      >
-        <div>
-          <span
-            onClick={() => handleLoadData()}
-            className={getClassName()}
-            style={getStyle()}
-          >
-        <span className={"my-auto"}>
-          <IconBase
-            icon={faPencil}
-            className={"mr-1"}
-          />
-          {getLabel()}
-        </span>
+      <div>
+        <span
+          onClick={() => handleLoadData()}
+          className={getClassName()}
+          style={getStyle()}
+        >
+          <span className={"my-auto"}>
+            <IconBase
+              icon={faPencil}
+              className={"mr-1"}
+            />
+            {getLabel()}
+          </span>
       </span>
-        </div>
-      </TooltipWrapper>
+      </div>
     </span>
   );
 }
