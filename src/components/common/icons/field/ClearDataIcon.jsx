@@ -38,7 +38,7 @@ function ClearDataIcon(
                 icon={faTimes}
                 className={"mr-1 my-auto"}
               />
-              Clear Value
+              Clear
             </div>
           </div>
         </div>

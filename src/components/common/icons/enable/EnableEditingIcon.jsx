@@ -19,7 +19,7 @@ export default function EnableEditingIcon(
   };
 
   const getLabel = () => {
-    return "Enable Editing";
+    return "Edit";
   };
 
   const getClassName = () => {
