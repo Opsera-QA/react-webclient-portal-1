@@ -1,14 +1,13 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 import {List} from "@opsera/dhx-suite-package";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingWrapper";
-import IconBase from "components/common/icons/IconBase";
 import {parseError} from "components/common/helpers/error-helpers";
+import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
+import SelectAllIcon from "components/common/icons/field/SelectAllIcon";
 
 // TODO: Rewrite and combine with list input base
 function ListObjectInputBase(
@@ -245,19 +244,9 @@ function ListObjectInputBase(
   const getClearDataIcon = () => {
     if (!disabled && model?.getArrayData(field?.id)?.length > 0 && showClearValueButton !== false && (setDataFunction == null || clearDataFunction)) {
       return (
-        <TooltipWrapper innerText={"Empty out all stored values"}>
-          <span onClick={() => clearValue()} className="badge badge-danger clear-value-badge pointer ml-2">
-            <span className={"my-auto"}>
-              <IconBase
-                icon={faTimes}
-                fixedWidth
-                className={"mr-1"}
-                iconClassName={"clear-selection-badge-icon"}
-              />
-              Clear Selection
-            </span>
-          </span>
-        </TooltipWrapper>
+        <ClearDataIcon
+          clearValueFunction={clearValue}
+        />
       );
     }
   };
@@ -288,9 +277,9 @@ function ListObjectInputBase(
   const getSelectAllIcon = () => {
     if (!disabled && selectOptions.length > 0 && showSelectAllButton === true) {
       return (
-        <span onClick={() => selectAllOptions()} className="my-auto badge badge-success clear-value-badge pointer">
-          <IconBase icon={faPlus} fixedWidth className="mr-1"/>Select All
-        </span>
+        <SelectAllIcon
+          selectAllFunction={selectAllOptions}
+        />
       );
     }
   };

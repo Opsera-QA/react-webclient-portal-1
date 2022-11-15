@@ -108,19 +108,19 @@ function InputLabel(
             enableEditingFunction={enableEditingFunction}
             disabled={disabled}
             isLoading={isLoading}
-            className={"ml-2"}
+            className={"ml-2 my-auto"}
           />
           <ReloadDataIcon
             loadDataFunction={loadDataFunction}
             disabled={disabled}
             isLoading={isLoading}
-            className={"ml-2"}
+            className={"ml-2 my-auto"}
           />
           <ClearDataIcon
             requireConfirmation={requireClearDataConfirmation}
             clearValueFunction={clearDataFunction}
             furtherDetails={clearDataDetails}
-            className={"ml-2"}
+            className={"ml-2 my-auto"}
             disabled={disabled || isLoading}
           />
           {extraActionButtons}

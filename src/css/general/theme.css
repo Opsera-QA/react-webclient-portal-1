@@ -298,9 +298,9 @@
     background-color: #352F54;
 }
 
-.clear-value-badge, .badge {
+.badge {
     font-weight: normal;
-    height: 18px;
+    padding: 4px;
 }
 
 .clear-selection-badge-icon {
