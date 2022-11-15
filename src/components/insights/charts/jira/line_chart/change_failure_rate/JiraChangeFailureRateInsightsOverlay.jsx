@@ -16,6 +16,7 @@ function JiraChangeFailureRateInsightsOverlay({ data, closePanel }) {
       getTableTextColumn(getField(fields, "status")),
       getTableTextColumn(getField(fields, "resolution")),
       getTableDateColumn(getField(fields, "createdAt")),
+      getTableTextColumn(getField(fields, "priority")),
       getTableTextColumn(getField(fields, "serviceComponent")),      
       getTableTextColumn(getField(fields, "teamName")),
     ],
