@@ -429,7 +429,7 @@ function PipelineWorkflow({
             to={"step-items"}
             delay={100}
             orientation={"v"}
-            zIndex={1000}
+            zIndex={10}
             borderColor={"#0f3e84"}
             borderWidth={2}
             fromAnchor={"bottom"}

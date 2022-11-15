@@ -24,10 +24,10 @@ export default function EnableEditingIcon(
 
   const getClassName = () => {
     if (isLoading === true || disabled === true) {
-      return "badge badge-info disabled";
+      return "badge badge-info disabled d-flex";
     }
 
-    return "badge badge-info pointer";
+    return "badge badge-info pointer d-flex";
   };
 
   const getStyle = () => {
@@ -43,23 +43,21 @@ export default function EnableEditingIcon(
   }
 
   return (
-    <span className={className}>
-      <div>
-        <span
-          onClick={() => handleLoadData()}
-          className={getClassName()}
-          style={getStyle()}
-        >
-          <span className={"my-auto"}>
-            <IconBase
-              icon={faPencil}
-              className={"mr-1"}
-            />
-            {getLabel()}
-          </span>
-      </span>
+    <div className={className}>
+      <div
+        onClick={() => handleLoadData()}
+        className={getClassName()}
+        style={getStyle()}
+      >
+        <div className={"my-auto"}>
+          <IconBase
+            icon={faPencil}
+            className={"mr-1"}
+          />
+         {getLabel()}
+        </div>
       </div>
-    </span>
+    </div>
   );
 }
 

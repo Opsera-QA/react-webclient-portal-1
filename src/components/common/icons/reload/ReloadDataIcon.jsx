@@ -28,10 +28,10 @@ export default function ReloadDataIcon(
 
   const getClassName = () => {
     if (isLoading === true || disabled === true) {
-      return "my-auto badge badge-secondary clear-value-badge disabled";
+      return "badge badge-secondary disabled d-flex";
     }
 
-    return "my-auto badge badge-secondary clear-value-badge pointer";
+    return "badge badge-secondary pointer d-flex";
   };
 
   const getStyle = () => {
@@ -47,22 +47,22 @@ export default function ReloadDataIcon(
   }
 
   return (
-    <span className={className}>
-      <span
+    <div className={className}>
+      <div
         onClick={() => handleLoadData()}
         className={getClassName()}
         style={getStyle()}
       >
-        <span className={"my-auto"}>
+        <div className={"my-auto"}>
           <IconBase
             icon={faRefresh}
-            className={"mr-1"}
+            className={"mr-1 my-auto"}
             isLoading={isLoading}
           />
           {getLabel()}
-        </span>
-      </span>
-    </span>
+        </div>
+      </div>
+    </div>
   );
 }
 
