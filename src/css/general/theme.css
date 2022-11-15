@@ -298,7 +298,7 @@
     background-color: #352F54;
 }
 
-.clear-value-badge {
+.clear-value-badge, .badge {
     font-weight: normal;
     height: 18px;
 }
