@@ -7,12 +7,6 @@ import { faUsers } from "@fortawesome/pro-light-svg-icons";
 import ChartView from "components/insights/charts/ChartView";
 import axios from "axios";
 import BadgeBase from "components/common/badges/BadgeBase";
-import {faFilter, faTimes} from "@fortawesome/pro-light-svg-icons";
-import IconBase from "components/common/icons/IconBase";
-import ActiveFilterDisplayer from "components/common/filters/ActiveFilterDisplayer";
-import DashboardTagsInlineInput from "components/insights/dashboards/DashboardTagsInlineInput";
-import DashboardOrganizationsInlineInput from "components/insights/dashboards/DashboardOrganizationsInlineInput";
-import chartsActions from "components/insights/charts/charts-actions";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 function DashboardViewer({ dashboardModel, loadData }) {

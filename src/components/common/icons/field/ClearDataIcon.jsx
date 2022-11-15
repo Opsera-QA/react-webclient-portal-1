@@ -31,11 +31,17 @@ function ClearDataIcon(
   return (
     <>
       <TooltipWrapper innerText={"Clear this Value"}>
-        <span className={className}>
-          <span onClick={() => handleClearData()} className={"my-auto badge badge-danger clear-value-badge pointer"}>
-            <span className={"my-auto"}><IconBase icon={faTimes} className={"mr-1"}/>Clear Value</span>
-          </span>
-        </span>
+        <div className={className}>
+          <div onClick={() => handleClearData()} className={"badge badge-danger pointer d-flex"}>
+            <div className={"my-auto"}>
+              <IconBase
+                icon={faTimes}
+                className={"mr-1 my-auto"}
+              />
+              Clear Value
+            </div>
+          </div>
+        </div>
       </TooltipWrapper>
       <ClearDataConfirmationModal
         clearDataFunction={clearValueFunction}

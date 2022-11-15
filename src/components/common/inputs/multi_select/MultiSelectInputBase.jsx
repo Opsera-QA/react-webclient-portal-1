@@ -37,11 +37,18 @@ function MultiSelectInputBase(
     visible,
     inputHelpOverlay,
     helpTooltipText,
+    loadDataFunction,
+    requireUserEnable,
   }) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
   const [internalErrorMessage, setInternalErrorMessage] = useState("");
+  const [enabled, setEnabled] = useState(undefined);
+
+  useEffect(() => {
+    setEnabled(requireUserEnable !== true);
+  }, [requireUserEnable]);
 
   useEffect(() => {
     setInternalErrorMessage("");
@@ -168,6 +175,10 @@ function MultiSelectInputBase(
     return "Select One";
   };
 
+  const enableEditingFunction = () => {
+    setEnabled(true);
+  };
+
   if (field == null || visible === false) {
     return null;
   }
@@ -187,6 +198,8 @@ function MultiSelectInputBase(
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(internalErrorMessage) === true || hasStringValue(errorMessage) === true}
         helpTooltipText={helpTooltipText}
+        loadDataFunction={loadDataFunction}
+        enableEditingFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
       />
       <StandaloneMultiSelectInput
         hasErrorState={hasStringValue(getErrorMessage()) === true}
@@ -197,7 +210,7 @@ function MultiSelectInputBase(
         groupBy={groupBy}
         value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : []}
         placeholderText={getPlaceholderText()}
-        disabled={disabled}
+        disabled={disabled || (requireUserEnable === true && enabled === false)}
         setDataFunction={updateValue}
         onSearchFunction={onSearchFunction}
       />
@@ -251,6 +264,8 @@ MultiSelectInputBase.propTypes = {
   pluralTopic: PropTypes.string,
   visible: PropTypes.bool,
   helpTooltipText: PropTypes.string,
+  loadDataFunction: PropTypes.func,
+  requireUserEnable: PropTypes.bool,
 };
 
 export default MultiSelectInputBase;

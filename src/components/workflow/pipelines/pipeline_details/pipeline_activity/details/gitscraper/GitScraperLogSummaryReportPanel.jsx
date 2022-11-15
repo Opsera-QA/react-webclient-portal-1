@@ -8,10 +8,9 @@ import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/V
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
 import GitScraperSummaryLogVerticalTabContainer from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/GitScraperSummaryLogVerticalTabContainer";
-import { faClipboardListCheck } from "@fortawesome/pro-light-svg-icons";
+import { faClipboardListCheck, faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import GitScraperReportView from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/components/GitScraperReportView";
 
 function GitScraperLogSummaryReportPanel({ pipelineTaskData }) {

@@ -42,7 +42,6 @@ function ViewToggle(
     let newFilterDto = filterModel;
     const newViewType = filterModel.getData("viewType") === "list" ? "card" : "list";
     newFilterDto.setData("viewType", newViewType);
-
     setFilterModel({ ...newFilterDto });
   };
 

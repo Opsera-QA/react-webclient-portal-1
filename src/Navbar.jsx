@@ -13,6 +13,7 @@ import sessionHelper from "utils/session.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useLocationReference from "hooks/useLocationReference";
+import {USER_SETTINGS_PAGES} from "components/user/user_settings/userSettings.paths";
 
 export const EXTERNAL_LINKS = {
   KNOWLEDGE_BASE: `https://docs.opsera.io/getting-started-with-free-trial`,
@@ -147,7 +148,7 @@ function HeaderNavBar({ hideAuthComponents }) {
             {getPermissionsMessage()}
 
             <NavDropdown title={fullName} id="basic-nav-dropdown" className="top-nav-dropdown" alignRight>
-              <Link to="/user/profile" id="profile-button" className="dropdown-item nav-drop-down-item">Profile</Link>
+              <Link to={`/user/${USER_SETTINGS_PAGES.MY_USER_PROFILE}`} id="profile-button" className="dropdown-item nav-drop-down-item">Profile</Link>
               {/*{isSaasUser === false && <Link to="/user/myUserRecord" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>}*/}
 
               <NavDropdown.Divider/>

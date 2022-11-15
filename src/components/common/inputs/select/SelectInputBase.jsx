@@ -6,6 +6,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {errorHelpers, parseError} from "components/common/helpers/error-helpers";
+import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 
 function SelectInputBase(
   {
@@ -43,10 +44,17 @@ function SelectInputBase(
     inputHelpOverlay,
     helpTooltipText,
     loadDataFunction,
+    handleCreateFunction,
+    requireUserEnable,
 }) {
   const field = dataObject?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
   const [internalErrorMessage, setInternalErrorMessage] = useState("");
+  const [enabled, setEnabled] = useState(undefined);
+
+  useEffect(() => {
+    setEnabled(requireUserEnable !== true);
+  }, [requireUserEnable]);
 
   useEffect(() => {
     setInternalErrorMessage("");
@@ -59,9 +67,8 @@ function SelectInputBase(
   }, [error]);
 
   const validateAndSetData = (fieldName, value) => {
-    let newDataObject = dataObject;
-    newDataObject?.setData(fieldName, value);
-    setDataObject({...newDataObject});
+    dataObject?.setData(fieldName, value);
+    setDataObject({...dataObject});
   };
 
   const updateValue = (newValue) => {
@@ -128,6 +135,10 @@ function SelectInputBase(
     return "Select One";
   };
 
+  const enableEditingFunction = () => {
+    setEnabled(true);
+  };
+
   if (field == null || visible === false) {
     return null;
   }
@@ -146,6 +157,7 @@ function SelectInputBase(
         infoOverlay={infoOverlay}
         linkIcon={linkIcon}
         ellipsisTooltipText={ellipsisTooltipText}
+        enableEditingFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(internalErrorMessage) === true || hasStringValue(errorMessage) === true}
         helpTooltipText={helpTooltipText}
@@ -164,8 +176,15 @@ function SelectInputBase(
           busy={busy}
           placeholderText={getPlaceholderText()}
           setDataFunction={(newValue) => updateValue(newValue)}
-          disabled={disabled}
+          disabled={disabled || (requireUserEnable === true && enabled === false)}
           onSearchFunction={onSearchFunction}
+        />
+        <NewRecordButton
+          addRecordFunction={handleCreateFunction}
+          disabled={busy || disabled}
+          size={"md"}
+          className={"ml-2"}
+          type={singularTopic}
         />
       </div>
       <InfoText
@@ -224,6 +243,8 @@ SelectInputBase.propTypes = {
   customInfoTextMessage: PropTypes.string,
   helpTooltipText: PropTypes.string,
   loadDataFunction: PropTypes.func,
+  handleCreateFunction: PropTypes.func,
+  requireUserEnable: PropTypes.bool,
 };
 
 SelectInputBase.defaultProps = {

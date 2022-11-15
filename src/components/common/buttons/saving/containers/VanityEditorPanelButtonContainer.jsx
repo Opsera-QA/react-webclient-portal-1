@@ -14,6 +14,7 @@ function VanityEditorPanelButtonContainer(
     showDeleteButton,
     disable,
     extraButtons,
+    viewDetailsUponCreate,
   }) {
   const getDeleteButton = () => {
     if (showDeleteButton !== false) {
@@ -35,6 +36,7 @@ function VanityEditorPanelButtonContainer(
           model={model}
           setModel={setModel}
           disable={disable}
+          viewDetailsUponCreate={viewDetailsUponCreate}
         />
       );
     }
@@ -80,6 +82,7 @@ VanityEditorPanelButtonContainer.propTypes = {
   disable: PropTypes.bool,
   extraButtons: PropTypes.any,
   showDeleteButton: PropTypes.bool,
+  viewDetailsUponCreate: PropTypes.bool,
 };
 
 export default VanityEditorPanelButtonContainer;

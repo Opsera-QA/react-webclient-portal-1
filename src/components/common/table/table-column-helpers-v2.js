@@ -1,6 +1,5 @@
 import { format } from "date-fns";
 import React from "react";
-import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date/date.helpers";
 import {
   getScriptLanguageDisplayText,
 } from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
@@ -296,18 +295,6 @@ export const getTableDateTimeColumnWithTimeZone = (field, className, width = 175
         console.log(error?.message);
         return "";
       }
-    },
-    class: className ? className : "no-wrap-inline"
-  };
-};
-
-export const getTableDateAndTimeUntilValueColumn = (header, id, fakeColumn = "fakeColumn", className) => {
-  return {
-    header: header,
-    id: fakeColumn,
-    template: row => {
-      const originalRow = row.row.original;
-      return originalRow[id] ? convertFutureDateToDhmsFromNowString(new Date(originalRow[id])) : "";
     },
     class: className ? className : "no-wrap-inline"
   };

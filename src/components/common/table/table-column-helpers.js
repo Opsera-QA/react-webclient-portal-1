@@ -22,7 +22,6 @@ import React from "react";
 import DashboardFavoritesIcon from "components/common/icons/dashboards/DashboardFavoritesIcon";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import { Button } from "react-bootstrap";
-import { convertFutureDateToDhmsFromNowString } from "components/common/helpers/date/date.helpers";
 import { capitalizeFirstLetter, truncateString } from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { ACCESS_ROLES_FORMATTED_LABELS } from "components/common/helpers/role-helpers";
@@ -37,6 +36,7 @@ import OrchestrationStateFieldBase
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
+import CountdownUntilDateFieldBase from "components/common/fields/date/countdown/CountdownUntilDateFieldBase";
 
 export const getDataObjectFromTableRow = (row) => {
   try {
@@ -245,15 +245,34 @@ export const getTableDateTimeColumn = (field, className) => {
   };
 };
 
-export const getTableDateAndTimeUntilValueColumn = (header, id, fakeColumn = "fakeColumn", className) => {
+export const getTableDateAndTimeUntilValueColumn = (
+  header,
+  id,
+  fakeColumn = "fakeColumn",
+  className = "no-wrap-inline",
+) => {
   return {
     Header: header,
     accessor: fakeColumn,
     Cell: function parseDate(row) {
-      const originalRow = row.row.original;
-      return originalRow[id] ? convertFutureDateToDhmsFromNowString(new Date(originalRow[id])) : "";
+      const dataObject = getDataObjectFromTableRow(row);
+      const parsedDate = DataParsingHelper.parseNestedDate(dataObject, id);
+
+      if (parsedDate) {
+        return (
+          <div style={{
+            minWidth: "275px",
+            width: "275px",
+            maxWidth: "275px",
+          }}>
+            <CountdownUntilDateFieldBase date={parsedDate} />
+          </div>
+        );
+      }
+
+      return "";
     },
-    class: className ? className : "no-wrap-inline"
+    class: className,
   };
 };
 

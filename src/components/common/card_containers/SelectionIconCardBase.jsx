@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
-import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import IconCardBase from "components/common/card/selection/IconCardBase";
 
 export default function SelectionIconCardBase(
   {
@@ -51,7 +51,7 @@ export default function SelectionIconCardBase(
   };
 
   return (
-    <IconCardContainerBase
+    <IconCardBase
       cardHeader={cardHeader}
       isLoading={isLoading}
       cardFooter={cardFooter}
@@ -63,7 +63,7 @@ export default function SelectionIconCardBase(
       style={getStyle()}
     >
       {children}
-    </IconCardContainerBase>
+    </IconCardBase>
   );
 }
 

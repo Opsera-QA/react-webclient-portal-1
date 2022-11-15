@@ -152,14 +152,24 @@ pre {
     /*min-width: 200px;*/
     /*width: 240px;*/
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
-    /*min-width: 200px;*/
-    /*width: 240px;*/
     /*box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);*/
     /*border-radius: 1rem;*/
+    /*overflow: hidden;*/
+}
+
+.vertical-selection-card-temp {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
 }
 
 .vertical-selection-card:hover {
     box-shadow: 0 0 40px rgba(46, 25, 86, .25);
+}
+
+/*TODO: Combine with the above when fully leaning into free trial styling*/
+.vertical-selection-card-temp:hover {
+    box-shadow: 5px 5px 2px rgba(46, 25, 86, .15);
+    opacity: 1 !important;
 }
 
 .vertical-selection-card .title-icon {

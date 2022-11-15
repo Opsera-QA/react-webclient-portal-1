@@ -17,11 +17,11 @@
 }
 
 .workflow-module-container-width-sm {
-  max-width: 210px;
+  max-width: 225px;
 }
 
 .workflow-module-container-width {
-  max-width: 285px;
+  max-width: 300px;
 }
 
 .workflow-module-container-height {
@@ -50,6 +50,7 @@
 
 .pipeline-card-title {
   background-color: #E8E8E8;
+  font-size: 1rem;
 }
 
 .pipeline-card-text {

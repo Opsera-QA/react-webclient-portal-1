@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { axiosApiService } from "api/apiService";
-import LineTo from "react-lineto";
+import LineTo, {SteppedLineTo} from "react-lineto";
 import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ErrorDialog from "components/common/status_notifications/error";
 import {
@@ -337,7 +337,6 @@ function PipelineWorkflow({
                 <PipelineActionControls
                   pipeline={pipeline}
                   disabledActionState={false}
-                  customerAccessRules={customerAccessRules}
                   fetchData={fetchPlan}
                   setPipeline={setPipeline}
                   setParentWorkflowStatus={setWorkflowStatus}
@@ -370,8 +369,17 @@ function PipelineWorkflow({
             />
           </div>
 
-          <LineTo from="source" to="step-items" delay={100} orientation="v" zIndex={1}
-                         borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="top"/>
+          <SteppedLineTo
+            from={"source"}
+            to={"step-items"}
+            delay={100}
+            orientation={"v"}
+            zIndex={10}
+            borderColor={"#0f3e84"}
+            borderWidth={2}
+            fromAnchor={"bottom"}
+            toAnchor={"top"}
+          />
 
 
           <div

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import LineTo from "react-lineto";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { faPlusSquare, faCaretSquareDown, faCaretSquareUp, faCopy } from "@fortawesome/pro-light-svg-icons";
 import PipelineWorkflowItem from "./PipelineWorkflowItem";
@@ -9,6 +8,7 @@ import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIden
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import {SteppedLineTo} from "react-lineto";
 
 
 function PipelineWorkflowItemList(
@@ -212,9 +212,16 @@ function PipelineWorkflowItemList(
   return (
     <>
       {pipelineSteps && pipelineSteps.map((item, index) => (
-        <div key={index} className={isSaving ? "fa-disabled" : ""}>
-          <div className={"mb-1 p-1 workflow-module-container workflow-module-container-width mx-auto " +
-          setStepStatusClass(lastStep, item)}>
+        <div
+          key={index}
+          className={isSaving ? "fa-disabled" : ""}
+        >
+          <div
+            className={"mb-1 p-1 workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(lastStep, item)}
+            style={{
+              boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)",
+            }}
+          >
             <PipelineWorkflowItem
               pipeline={pipeline}
               plan={pipelineSteps}
@@ -283,9 +290,18 @@ function PipelineWorkflowItemList(
               </div>
             </> :
             <>
-              <LineTo from={"step-" + item._id} to={"step-" + index} delay={100} orientation="v" zIndex={1}
-                             borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
-              <div style={{ height: "40px", opacity: "0", zIndex: "-1" }} className={"step-" + index}>&nbsp;</div>
+              <SteppedLineTo
+                from={"step-" + item._id}
+                to={"step-" + index}
+                delay={100}
+                orientation={"v"}
+                zIndex={10}
+                borderColor={"#0f3e84"}
+                borderWidth={2}
+                fromAnchor={"bottom"}
+                toAnchor={"bottom"}
+              />
+              <div style={{ height: "40px" }} className={"step-" + index}>&nbsp;</div>
             </>
           }
 

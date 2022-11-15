@@ -27,6 +27,8 @@ import ProjectMappingToolSelectInput from "components/common/list_of_values_inpu
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import JenkinsRegistryToolJobSelectInput from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 import IconBase from "components/common/icons/IconBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 
 // TODO: This entire form needs to be completely refactored
 function LogSearch({ tools, sideBySide }) {
@@ -268,8 +270,8 @@ function LogSearch({ tools, sideBySide }) {
       .then((result) => {
         let searchResults = [];
         if (result) {
-          searchResults =
-            result.data.hasOwnProperty("hits") && result.data.hits.hasOwnProperty("hits") ? result.data.hits : [];
+          const nestedHits = DataParsingHelper.safeObjectPropertyParser(result, "data.hits.hits");
+          searchResults = nestedHits ? result.data.hits : [];
         }
 
         newLogTabData[newLogTab] = searchResults;
@@ -537,15 +539,18 @@ function LogSearch({ tools, sideBySide }) {
 
   const getSearchButtons = () => {
     return (
-      <Row className="my-2 mx-0">
-        <Col className="text-right">
-          <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
+      <ButtonContainerBase className={"mx-3"}>
+          <Button
+            variant={"outline-secondary"}
+            type={"button"}
+            onClick={toggleCalendar}
+          >
             <IconBase icon={faCalendar} iconClassName={"mr-1 d-none d-lg-inline"} />
             {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
           </Button>
           <Button
-            variant="primary"
-            className="ml-1"
+            variant={"primary"}
+            className={"ml-2"}
             onClick={() => {
               searchLogs();
             }}
@@ -555,23 +560,21 @@ function LogSearch({ tools, sideBySide }) {
               !searchTerm
             }
           >
-            {" "}
             Search
           </Button>
           {getNewTabButton()}
-          <Button variant="outline-secondary" className="ml-1" type="button" onClick={cancelSearchClicked}>
+          <Button variant={"outline-secondary"} className={"ml-2"} type="button" onClick={cancelSearchClicked}>
             Clear
           </Button>
           <ExportLogSearchButton
             exportDisabled={exportDisabled}
             isLoading={isLoading}
             variant="primary"
-            className="ml-1"
+            className={"ml-2"}
             searchResults={exportData}
           />
           {getDateRangeButton()}
-        </Col>
-      </Row>
+      </ButtonContainerBase>
     );
   };
 

@@ -24,6 +24,7 @@ export default function ExportDataOverlay({
       titleText={"Export Data"}
       showCloseButton={false}
       titleIcon={faFileDownload}
+      height={"300px"}
     >
       <div className={"m-3 w-100"}>
         <ExportDataPanel

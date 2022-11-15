@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import { Row } from "react-bootstrap";
-import LoadingDialog from "components/common/status_notifications/loading";
 import LdapSettingsPanel
   from "components/admin/registered_users/details/ldap_settings/LdapSettingsPanel";
 import Model from "core/data_model/model";
@@ -11,6 +10,10 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import SyncProfileButton from "components/user/user_settings/profile/SyncProfileButton";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import Col from "react-bootstrap/Col";
+import UserSettingsSubNavigationBar from "components/user/user_settings/UserSettingsSubNavigationBar";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import {USER_SETTINGS_PAGES} from "components/user/user_settings/userSettings.paths";
 
 export default function MyUserProfile() {
   const [userModel, setUserModel] = useState(undefined);
@@ -84,15 +87,19 @@ export default function MyUserProfile() {
     );
   };
 
-  if (userModel == null) {
-    return (<LoadingDialog size={"sm"} message="Loading User Profile" />);
-  }
-
   return (
-    <div className={"mx-3"}>
-      {getSyncButton()}
-      <hr />
-      {getUserInfo()}
-    </div>
+    <ScreenContainer
+      navigationTabContainer={<UserSettingsSubNavigationBar activeTab={USER_SETTINGS_PAGES.MY_USER_PROFILE} />}
+      breadcrumbDestination={USER_SETTINGS_PAGES.MY_USER_PROFILE}
+      roleRequirement={ROLE_LEVELS.USERS_AND_SASS}
+      accessRoleData={accessRoleData}
+      isLoading={userModel == null}
+    >
+      <div className={"mx-3"}>
+        {getSyncButton()}
+        <hr />
+        {getUserInfo()}
+      </div>
+    </ScreenContainer>
   );
 }
