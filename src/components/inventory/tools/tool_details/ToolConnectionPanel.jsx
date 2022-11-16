@@ -47,6 +47,7 @@ import InformaticaIdqToolConfiguration from "./tool_jobs/informatica_idq/Informa
 import LiquibaseToolConfiguration from "./tool_jobs/liquibase/LiquibaseToolConfiguration";
 import GChatToolConfiguration from "./tool_jobs/gchat/GChatToolConfiguration";
 import FortifyToolConfiguration from "./tool_jobs/fortify/FortifyToolConfiguration";
+import ThycoticVaultToolConfiguration from "./tool_jobs/thycotic_vault/ThycoticVaultToolConfiguration";
 
 //TODO: Use constants, alphabetize
 export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
@@ -95,6 +96,7 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.GCHAT,
   toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK,
   toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.THYCOTIC_VAULT,
 ];
 
 function ToolConnectionPanel({ toolData, setToolData }) {
@@ -199,7 +201,9 @@ function ToolConnectionPanel({ toolData, setToolData }) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GCHAT:
         return <GChatToolConfiguration toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
-        return <FortifyToolConfiguration toolData={toolData} />;        
+        return <FortifyToolConfiguration toolData={toolData} />;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.THYCOTIC_VAULT:
+        return <ThycoticVaultToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Connection configuration is not currently available for this tool.</div>;
     }
