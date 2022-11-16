@@ -114,6 +114,7 @@ export default function UserActionsPipelineStepEditorPanel(
             model={userActionsStepModel}
             fieldName={"pipelineInstructionsId"}
             showInstructions={true}
+            allowEditing={true}
           />
         </Col>
         <Col xs={12}>
