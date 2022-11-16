@@ -23,11 +23,10 @@ export default function PipelineInstructionsEditorPanel(
   } = useComponentStateReference();
 
   const getDynamicFields = () => {
-    if (pipelineInstructionsModel?.isNew() && isSaasUser !== true && pipelineInstructionsModel?.canEditAccessRoles() === true) {
+    if (isSaasUser !== true && pipelineInstructionsModel?.isNew()) {
       return (
         <Col xs={12}>
           <RoleAccessInput
-            disabled={pipelineInstructionsModel?.canEditAccessRoles() !== true}
             model={pipelineInstructionsModel}
             setModel={setPipelineInstructionsModel}
           />
