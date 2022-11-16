@@ -81,7 +81,6 @@ function ConfirmationOverlay(
             className={"confirmation-overlay-panel-body bg-white"}
             style={{
               minHeight: height,
-              height: height,
             }}
           >
             {showToasts && toastContext?.getInlineBanner()}
