@@ -28,12 +28,12 @@ function RegisterSourceRepositoryHookButton({ model, disable, pipeline, classNam
       setSuccessfulConnection(false);
       setFailedConnection(false);
 
-      await savePipelineFunction();
       const response = await SourceRepositoryActions.registerHook(getAccessToken, cancelTokenSource, pipeline?.owner, pipeline?._id, model);
 
       if (isMounted?.current === true) {
         if (response?.data?.status === 200) {
           setSuccessfulConnection(true);
+          await savePipelineFunction();
         } else {
           setFailedConnection(true);
         }

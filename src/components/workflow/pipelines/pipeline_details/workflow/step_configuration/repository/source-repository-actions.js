@@ -13,6 +13,8 @@ SourceRepositoryActions.registerHook = async (getAccessToken, cancelTokenSource,
       branch: sourceRepositoryModel?.getData("branch"),
       workspace: sourceRepositoryModel?.getData("workspace"),
       repository: sourceRepositoryModel?.getData("repository"),
+      push: sourceRepositoryModel?.getData("isPushEvent"),
+      pr: sourceRepositoryModel?.getData("isPrEvent")
     },
   };
 
