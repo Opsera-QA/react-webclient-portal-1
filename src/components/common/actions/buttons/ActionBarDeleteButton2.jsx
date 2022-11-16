@@ -7,7 +7,15 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import DeleteModal from "components/common/modal/DeleteModal";
 
 // TODO: This will supersede the other delete button
-function ActionBarDeleteButton2({handleDelete, relocationPath, visible, dataObject, className}) {
+export default function ActionBarDeleteButton2(
+  {
+    handleDelete,
+    relocationPath,
+    visible,
+    dataObject,
+    className,
+    refreshAfterDeletion,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -21,8 +29,12 @@ function ActionBarDeleteButton2({handleDelete, relocationPath, visible, dataObje
           toastContext.showDeleteSuccessResultDialog(dataObject.getType());
           setShowDeleteModal(false);
 
-          if (relocationPath) {
+          if (refreshAfterDeletion === true) {
+            history.push(history.location);
+          } else if (relocationPath) {
             history.push(relocationPath);
+          } else {
+            history.goBack();
           }
         }
         else
@@ -40,7 +52,7 @@ function ActionBarDeleteButton2({handleDelete, relocationPath, visible, dataObje
     setShowDeleteModal(true);
   };
 
-  if (!visible) {
+  if (visible === false) {
     return null;
   }
 
@@ -57,11 +69,6 @@ ActionBarDeleteButton2.propTypes = {
   relocationPath: PropTypes.string,
   dataObject: PropTypes.object,
   className: PropTypes.string,
-  visible: PropTypes.bool
+  visible: PropTypes.bool,
+  refreshAfterDeletion: PropTypes.bool,
 };
-
-ActionBarDeleteButton2.defaultProps = {
-  visible: true
-};
-
-export default ActionBarDeleteButton2;

@@ -62,16 +62,20 @@ function ScreenContainer(
 
     if (hasStringValue(pageDescription) === true) {
       return (
-        <div className={"page-description px-3 pt-2"}>
-          {pageDescription}
+        <div className={"page-description px-3 mt-1 d-flex"}>
+          <div className={"mt-auto"}>
+            {pageDescription}
+          </div>
         </div>
       );
     }
 
     if (hasStringValue(breadcrumbPageDescription) === true) {
       return (
-        <div className={"page-description px-3 pt-2"}>
-          {breadcrumbPageDescription}
+        <div className={"page-description px-3 mt-1 d-flex"}>
+          <div className={"mt-auto"}>
+            {breadcrumbPageDescription}
+          </div>
         </div>
       );
     }
@@ -143,15 +147,17 @@ function ScreenContainer(
         className={"content-container content-card-1"}
         style={{ minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT}}
       >
-        <div className={"pl-2 content-block-header title-text-header-1"}>
-          <TitleBar
-            titleIcon={breadcrumb?.icon}
-            title={breadcrumb?.title}
-            isBeta={breadcrumb?.isBeta === true}
-            isLoading={isLoading}
-            titleActionBar={titleActionBar}
-            helpComponent={helpComponent}
-          />
+        <div className={"pl-2 content-block-header title-text-header-1 d-flex"}>
+          <div className={"my-auto w-100"}>
+            <TitleBar
+              titleIcon={breadcrumb?.icon}
+              title={breadcrumb?.title}
+              isBeta={breadcrumb?.isBeta === true}
+              isLoading={isLoading}
+              titleActionBar={titleActionBar}
+              helpComponent={helpComponent}
+            />
+          </div>
         </div>
         <div
           style={{ minHeight: getBodyHeight()}}

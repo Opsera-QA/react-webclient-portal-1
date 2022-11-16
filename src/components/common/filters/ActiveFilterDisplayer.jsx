@@ -46,7 +46,7 @@ function ActiveFilterDisplayer(
     const activeFilters = filterModel?.getArrayData("activeFilters");
     if (Array.isArray(activeFilters) && activeFilters.length > 0) {
       return (
-        <div className={"active-filter-bar item-field py-3 px-1"}>
+        <div className={"active-filter-bar item-field py-2 px-1"}>
           {activeFilters.map((filter, key) => getFilterActiveButton(filter, key))}
         </div>
       );

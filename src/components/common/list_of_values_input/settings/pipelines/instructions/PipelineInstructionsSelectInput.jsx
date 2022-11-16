@@ -18,6 +18,7 @@ export default function PipelineInstructionsSelectInput(
     pipelineInstructions,
     isLoading,
     error,
+    loadData,
   } = useGetPipelineInstructions();
 
   return (
@@ -26,6 +27,8 @@ export default function PipelineInstructionsSelectInput(
       dataObject={model}
       setDataObject={setModel}
       setDataFunction={setDataFunction}
+      loadDataFunction={loadData}
+      // createDataFunction={createDataFunction}
       selectOptions={pipelineInstructions}
       busy={isLoading}
       error={error}

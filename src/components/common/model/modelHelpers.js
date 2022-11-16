@@ -21,13 +21,13 @@ modelHelpers.getToolConfigurationModel = (toolConfiguration, metaData) => {
   return new Model(toolConfiguration, clonedMetadata, false);
 };
 
-modelHelpers.getNewModelForMetadata = (metaData) => {
+modelHelpers.getNewModelForMetadata = (metaData, isNew = true) => {
   if (metaData == null) {
     return null;
   }
 
   const clonedMetadata = dataParsingHelper.cloneDeep(metaData);
-  return new Model({...clonedMetadata.newObjectFields}, clonedMetadata, true);
+  return new Model({...clonedMetadata.newObjectFields}, clonedMetadata, isNew);
 };
 
 modelHelpers.parseObjectIntoModel = (object, metaData) => {

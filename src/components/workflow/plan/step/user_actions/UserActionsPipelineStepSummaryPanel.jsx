@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
-import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import UserNameField from "components/common/fields/user/UserNameField";
 import PipelineInstructionsField
   from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsField";
+import MessageField from "components/common/fields/text/message/MessageField";
 
 export default function UserActionsPipelineStepSummaryPanel(
   {
@@ -30,9 +30,9 @@ export default function UserActionsPipelineStepSummaryPanel(
           />
         </Col>
         <Col xs={12}>
-          <TextFieldBase
+          <MessageField
             fieldName={"message"}
-            dataObject={userActionsPipelineStepModel}
+            model={userActionsPipelineStepModel}
           />
         </Col>
         <Col xs={12}>

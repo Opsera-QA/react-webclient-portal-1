@@ -1,0 +1,56 @@
+.marketingModulesText {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 100;
+    letter-spacing: .075rem;
+    color: #000;
+}
+
+.marketingModulesTextLink, .externalLink {
+    color: #0d4183;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.marketingModulesTextLink:hover, .externalLink:hover {
+    color: #2e1956;
+}
+
+.marketingModulesTextLarger {
+    font-size: 1.2rem;
+}
+
+.marketingModulesValueText {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.focusText {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 500;
+    color: #7f8d93;
+    font-size: 1.1rem;
+}
+
+/*TODO: Use styled components to handle css*/
+.wizard-selection-option:hover {
+    background-color: #352F54 !important;
+}
+
+.wizard-selection-option:hover .wizard-font {
+    color: #FFF !important;
+}
+
+.video-responsive {
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
+    height: 0;
+}
+
+.video-responsive iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}

@@ -6,7 +6,6 @@ import {getBreadcrumb} from "components/common/navigation/trails";
 import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
 import {meetsRequirements} from "components/common/helpers/role-helpers";
 import AccessRoleLevelField from "components/common/fields/access/AccessRoleLevelField";
-import InlineLoadingDialog from "components/common/status_notifications/loading/InlineLoadingDialog";
 import ScreenContainerBodyLoadingDialog
   from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 
@@ -68,7 +67,7 @@ function VanitySetDetailScreenContainer(
         {getActionBar()}
         <div>
           {detailPanel}
-         </div>
+        </div>
       </div>
     );
   };
@@ -132,11 +131,13 @@ function VanitySetDetailScreenContainer(
   }
 
   return (
-    <div className="max-content-width ml-2 max-content-height scroll-y hide-x-overflow">
+    <div className={"max-content-width max-content-height scroll-y hide-x-overflow"}>
       {getTopNavigation()}
-      <div className="content-container content-card-1">
-        <div className="px-2 content-block-header title-text-header-1">
-          {getTitleBar()}
+      <div className={"screen-container content-container content-card-1"}>
+        <div className={"px-2 content-block-header title-text-header-1 d-flex"}>
+          <div className={"my-auto w-100"}>
+            {getTitleBar()}
+          </div>
         </div>
         <div className="detail-container-body">
           {getBody()}

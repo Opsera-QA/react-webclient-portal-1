@@ -32,6 +32,7 @@ function TagMultiSelectInput(
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
         helpTooltipText={helpTooltipText}
+        disabled={disabled}
       />
       <TagMultiSelectInputBase
         fieldName={fieldName}

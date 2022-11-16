@@ -1,21 +1,24 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 import FieldLabel from "components/common/fields/FieldLabel";
 import FieldContainer from "components/common/fields/FieldContainer";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export const DATE_FORMATS = {
   DATE: "yyyy-MM-dd",
   TIMESTAMP: "yyyy-MM-dd', 'hh:mm:ss a",
 };
 
-export const getFormattedDate = (date, dateFormat) => {
+export const getFormattedDate = (date, dateFormat = DATE_FORMATS.DATE) => {
   try {
-    if (date === null || dateFormat == null) {
+    const parsedDate = DataParsingHelper.parseDate(date);
+
+    if (parsedDate === null || dateFormat == null) {
       return null;
     }
 
-    return format(new Date(date), dateFormat);
+    return format(parsedDate, dateFormat);
   } catch (error) {
     return date;
   }
@@ -26,7 +29,7 @@ export const getFormattedTimestamp = (date) => {
 };
 
 function DateFieldBase({fieldName, dataObject, dateFormat, className}) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
 
   if (dataObject == null || field == null) {
     return null;

@@ -42,6 +42,7 @@ function SelectInputBase(
     customInfoTextMessage,
     inputHelpOverlay,
     helpTooltipText,
+    loadDataFunction,
 }) {
   const field = dataObject?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
@@ -148,20 +149,25 @@ function SelectInputBase(
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(internalErrorMessage) === true || hasStringValue(errorMessage) === true}
         helpTooltipText={helpTooltipText}
-      />
-      <StandaloneSelectInput
-        hasErrorState={hasStringValue(getErrorMessage()) === true}
-        selectOptions={selectOptions}
-        valueField={valueField}
-        textField={textField}
-        groupBy={groupBy}
-        value={findCurrentValue()}
-        busy={busy}
-        placeholderText={getPlaceholderText()}
-        setDataFunction={(newValue) => updateValue(newValue)}
+        loadDataFunction={loadDataFunction}
         disabled={disabled}
-        onSearchFunction={onSearchFunction}
+        isLoading={busy}
       />
+      <div className={"d-flex"}>
+        <StandaloneSelectInput
+          hasErrorState={hasStringValue(getErrorMessage()) === true}
+          selectOptions={selectOptions}
+          valueField={valueField}
+          textField={textField}
+          groupBy={groupBy}
+          value={findCurrentValue()}
+          busy={busy}
+          placeholderText={getPlaceholderText()}
+          setDataFunction={(newValue) => updateValue(newValue)}
+          disabled={disabled}
+          onSearchFunction={onSearchFunction}
+        />
+      </div>
       <InfoText
         model={dataObject}
         fieldName={fieldName}
@@ -217,6 +223,7 @@ SelectInputBase.propTypes = {
   visible: PropTypes.bool,
   customInfoTextMessage: PropTypes.string,
   helpTooltipText: PropTypes.string,
+  loadDataFunction: PropTypes.func,
 };
 
 SelectInputBase.defaultProps = {

@@ -4,6 +4,7 @@ import { format, formatDistance, add, sub } from "date-fns";
 import {parseError} from "components/common/helpers/error-helpers";
 import {parseDate} from "utils/helpers";
 import {dataParsingHelper} from "components/common/helpers/data/dataParsing.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export const dateHelpers = {};
 
@@ -49,7 +50,13 @@ dateHelpers.getNowFormattedDateString = () => {
 
 export function convertFutureDateToDhmsFromNowString(date) {
   const currentDateInSeconds = new Date().getTime() / 1000;
-  const totalSeconds = date.getTime() / 1000;
+  const parsedDate = DataParsingHelper.parseDate(date);
+
+  if (!parsedDate) {
+    return "";
+  }
+
+  const totalSeconds = parsedDate.getTime() / 1000;
   const seconds = totalSeconds - currentDateInSeconds;
 
   if (seconds <= 0) {

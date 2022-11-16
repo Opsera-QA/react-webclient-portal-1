@@ -84,7 +84,6 @@ function MultipleConsoleLogsField({consoleLogs}) {
           </div>
         </div>
       </div>
-      <div className={"object-properties-footer"}/>
     </InputContainer>
   );
 }

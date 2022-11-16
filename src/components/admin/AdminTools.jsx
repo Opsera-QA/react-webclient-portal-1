@@ -8,6 +8,7 @@ import AdminToolsSubNavigationBar from "components/admin/AdminToolsSubNavigation
 import AdminToolsPageLinkCards from "components/admin/AdminToolsPageLinkCards";
 import AdministrationToolsHelpDocumentation
   from "../common/help/documentation/admin_tools/AdministrationToolsHelpDocumentation";
+import FreeTrialAdminToolsPageLinkCards from "components/admin/FreeTrialAdminToolsPageLinkCards";
 
 function AdminTools() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -55,6 +56,7 @@ function AdminTools() {
       <AdminToolsPageLinkCards
         accessRoleData={accessRoleData}
       />
+      <FreeTrialAdminToolsPageLinkCards />
     </ScreenContainer>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabelBase from "components/common/fields/FieldLabelBase";
@@ -7,6 +7,14 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { Row } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import AccessRoleDisplayer from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayer";
+import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
+import { faPencilAlt } from "@fortawesome/pro-light-svg-icons";
+import InfoContainer from "components/common/containers/InfoContainer";
+import PipelineInstructionsInlineInput
+  from "components/common/list_of_values_input/settings/pipelines/instructions/inline/PipelineInstructionsInlineInput";
+import PipelineInstructionsTypeField
+  from "components/common/list_of_values_input/settings/pipelines/instructions/type/PipelineInstructionsTypeField";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 export default function PipelineInstructionsFieldBase(
   {
@@ -18,42 +26,116 @@ export default function PipelineInstructionsFieldBase(
     instructionsDisplayerMaximumHeight,
     showLabel,
     pipelineInstructionsModel,
+    setPipelineInstructionsModel,
     isLoading,
     error,
+    allowEditing,
+    setInEditModeVisibility,
   }) {
+  const [inEditMode, setInEditMode] = useState(false);
+
   const getAccessRoleDisplayerField = () => {
-    if (isLoading !== true) {
+    if (isLoading !== true && pipelineInstructionsModel != null) {
       return (
-        <Col xs={12} md={4}>
-          <AccessRoleDisplayer
-            className={"mt-3"}
-            roles={pipelineInstructionsModel?.getArrayData("roles")}
-            noDataMessage={"This set of Pipeline Instructions does not have Access Roles applied, so anyone can see and use it."}
-          />
-        </Col>
+        <AccessRoleDisplayer
+          className={"mt-3"}
+          roles={pipelineInstructionsModel?.getArrayData("roles")}
+          noDataMessage={"This set of Pipeline Instructions does not have Access Roles applied, so anyone can see and use it."}
+        />
       );
     }
   };
 
+  const toggleEditMode = (editMode) => {
+    if (setInEditModeVisibility) {
+      setInEditModeVisibility(editMode);
+    }
+
+    setInEditMode(editMode);
+  };
+
+  const getEditButton = () => {
+    if (allowEditing === true && pipelineInstructionsModel?.canUpdate() === true) {
+      return (
+        <VanityButtonBase
+          onClickFunction={() => toggleEditMode(true)}
+          buttonSize={"sm"}
+          normalText={"Edit Pipeline Instructions"}
+          icon={faPencilAlt}
+          variant={"outline-primary"}
+        />
+      );
+    }
+  };
+
+  const getPipelineInstructionsComponent = () => {
+    if (setPipelineInstructionsModel && allowEditing === true && inEditMode === true && pipelineInstructionsModel?.canUpdate() === true) {
+      return (
+        <>
+          <PipelineInstructionsInlineInput
+            fieldName={"instructions"}
+            pipelineInstructionsModel={pipelineInstructionsModel}
+            setPipelineInstructionsModel={setPipelineInstructionsModel}
+            instructionsDisplayerMinimumHeight={instructionsDisplayerMinimumHeight}
+            instructionsDisplayerMaximumHeight={instructionsDisplayerMaximumHeight}
+            isLoading={isLoading}
+            setInEditMode={toggleEditMode}
+            className={"mt-2"}
+          />
+          <InfoText
+            warningMessage={"Pipeline Instructions must be saved before the changes will take effect"}
+          />
+        </>
+      );
+    }
+
+    return (
+      <RichTextField
+        titleRightSideButtons={getEditButton()}
+        fieldName={"instructions"}
+        model={pipelineInstructionsModel}
+        customTitle={pipelineInstructionsModel?.getData("name")}
+        minimumHeight={instructionsDisplayerMinimumHeight}
+        maximumHeight={instructionsDisplayerMaximumHeight}
+        isLoading={isLoading}
+      />
+    );
+  };
+
   const getPipelineInstructionsField = () => {
-    if (
-      (isLoading === true || pipelineInstructionsModel !== null)
-      && showInstructions === true
-      && error == null
-    ) {
+    if (isLoading === true && pipelineInstructionsModel == null && showInstructions !== false) {
       return (
         <Row>
           <Col xs={12} lg={8}>
-            <RichTextField
-              fieldName={"instructions"}
+            <FieldContainer>
+              <InfoContainer
+                isLoading={true}
+                minimumHeight={instructionsDisplayerMinimumHeight}
+                maximumHeight={instructionsDisplayerMaximumHeight}
+                titleText={"Loading Pipeline Instructions"}
+              />
+            </FieldContainer>
+          </Col>
+        </Row>
+      );
+    }
+
+    if (
+      (isLoading === true || pipelineInstructionsModel != null)
+      && showInstructions !== false
+    ) {
+
+      return (
+        <Row>
+          <Col xs={12} lg={8}>
+            {getPipelineInstructionsComponent()}
+          </Col>
+          <Col xs={12} md={4}>
+            {getAccessRoleDisplayerField()}
+            <PipelineInstructionsTypeField
               model={pipelineInstructionsModel}
-              customTitle={pipelineInstructionsModel?.getData("name")}
-              minimumHeight={instructionsDisplayerMinimumHeight}
-              maximumHeight={instructionsDisplayerMaximumHeight}
-              isLoading={isLoading}
             />
           </Col>
-          {getAccessRoleDisplayerField()}
         </Row>
       );
     }
@@ -86,16 +168,24 @@ export default function PipelineInstructionsFieldBase(
     return pipelineInstructionsModel?.getData("name");
   };
 
+  const getTextField = () => {
+    if (showInstructions !== true) {
+      return (
+        <div className={"d-flex"}>
+          <FieldLabelBase
+            label={label}
+            isLoading={isLoading}
+            showLabel={showLabel}
+          />
+          {getName()}
+        </div>
+      );
+    }
+  };
+
   return (
     <FieldContainer className={className}>
-      <div className={"d-flex"}>
-        <FieldLabelBase
-          label={label}
-          isLoading={isLoading}
-          showLabel={showLabel}
-        />
-        {getName()}
-      </div>
+      {getTextField()}
       {getPipelineInstructionsField()}
     </FieldContainer>
   );
@@ -112,6 +202,9 @@ PipelineInstructionsFieldBase.propTypes = {
   pipelineInstructionsModel: PropTypes.object,
   isLoading: PropTypes.bool,
   error: PropTypes.any,
+  allowEditing: PropTypes.bool,
+  setPipelineInstructionsModel: PropTypes.func,
+  setInEditModeVisibility: PropTypes.func,
 };
 
 PipelineInstructionsFieldBase.defaultProps = {

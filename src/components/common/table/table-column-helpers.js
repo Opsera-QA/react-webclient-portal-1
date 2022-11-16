@@ -3,7 +3,6 @@ import {
   faCheckCircle,
   faCircle,
   faExclamationCircle,
-  faLock,
   faOctagon,
   faPauseCircle,
   faPlay,
@@ -12,7 +11,6 @@ import {
   faStopCircle,
   faTimesCircle,
   faTrash,
-  faUnlock,
 } from "@fortawesome/pro-light-svg-icons";
 import {
   faBitbucket,
@@ -30,7 +28,6 @@ import React from "react";
 import DashboardFavoritesIcon from "components/common/icons/dashboards/DashboardFavoritesIcon";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import { Button } from "react-bootstrap";
-import { convertFutureDateToDhmsFromNowString } from "components/common/helpers/date/date.helpers";
 import {
   capitalizeFirstLetter,
   truncateString,
@@ -47,6 +44,7 @@ import OrchestrationStateFieldBase from "temp-library-components/fields/orchestr
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
+import CountdownUntilDateFieldBase from "components/common/fields/date/countdown/CountdownUntilDateFieldBase";
 
 export const getDataObjectFromTableRow = (row) => {
   try {
@@ -275,18 +273,32 @@ export const getTableDateAndTimeUntilValueColumn = (
   header,
   id,
   fakeColumn = "fakeColumn",
-  className,
+  className = "no-wrap-inline",
 ) => {
   return {
     Header: header,
     accessor: fakeColumn,
     Cell: function parseDate(row) {
-      const originalRow = row.row.original;
-      return originalRow[id]
-        ? convertFutureDateToDhmsFromNowString(new Date(originalRow[id]))
-        : "";
+      const dataObject = getDataObjectFromTableRow(row);
+      const parsedDate = DataParsingHelper.parseNestedDate(dataObject, id);
+
+      if (parsedDate) {
+        return (
+          <div
+            style={{
+              minWidth: "275px",
+              width: "275px",
+              maxWidth: "275px",
+            }}
+          >
+            <CountdownUntilDateFieldBase date={parsedDate} />
+          </div>
+        );
+      }
+
+      return "";
     },
-    class: className ? className : "no-wrap-inline",
+    class: className,
   };
 };
 
@@ -775,8 +787,8 @@ export const getUppercaseTableTextColumn = (
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
-    Cell: (value) => {
-      return capitalizeFirstLetter(value);
+    Cell: (row) => {
+      return capitalizeFirstLetter(row?.value);
     },
     class: className,
     maxWidth: maxWidth,

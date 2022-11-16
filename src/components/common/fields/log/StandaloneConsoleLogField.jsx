@@ -32,7 +32,6 @@ function StandaloneConsoleLogField(
           {consoleLog}
         </div>
       </div>
-      <div className={"object-properties-footer"} />
     </InfoContainer>
   );
 }

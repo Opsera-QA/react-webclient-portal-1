@@ -9,7 +9,13 @@ import TagField from "components/common/fields/multiple_items/tags/TagField";
 import ToolVaultField from "components/common/fields/inventory/tools/vault/ToolVaultField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 
-export default function ToolSummaryPanel({ toolData, setToolData, setActiveTab }) {
+export default function ToolSummaryPanel(
+  {
+    toolData,
+    setToolData,
+    setActiveTab,
+    loadToolFunction,
+  }) {
   if (toolData == null) {
     return null;
   }
@@ -27,13 +33,14 @@ export default function ToolSummaryPanel({ toolData, setToolData, setActiveTab }
           <RegistryToolRoleAccessInput
             toolModel={toolData}
             setToolModel={setToolData}
+            loadToolFunction={loadToolFunction}
           />
         </Col>
         <Col sm={12} lg={6}>
-          <TextFieldBase dataObject={toolData} fieldName={"costCenter"}/>
+          <TextFieldBase dataObject={toolData} fieldName={"costCenter"} />
         </Col>
         <Col sm={12} lg={6}>
-          <TagField dataObject={toolData} fieldName={"tags"}/>
+          <TagField dataObject={toolData} fieldName={"tags"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"classification"} />
@@ -67,4 +74,5 @@ ToolSummaryPanel.propTypes = {
   toolData: PropTypes.object,
   setToolData: PropTypes.func,
   setActiveTab: PropTypes.func,
+  loadToolFunction: PropTypes.func,
 };

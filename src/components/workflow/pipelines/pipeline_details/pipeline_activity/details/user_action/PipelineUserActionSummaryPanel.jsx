@@ -9,7 +9,11 @@ import modelHelpers from "components/common/model/modelHelpers";
 import UserActionPipelineStepActionSummaryPanel
   from "components/workflow/plan/step/user_actions/step_summary/UserActionPipelineStepActionSummaryPanel";
 
-export default function PipelineUserActionSummaryPanel({ pipelineTaskData }) {
+export default function PipelineUserActionSummaryPanel(
+  {
+    pipelineTaskData,
+    setActiveTab,
+  }) {
   const toolIdentifier = pipelineTaskData?.tool_identifier;
 
   const getSummaryReportPanel = () => {
@@ -18,12 +22,14 @@ export default function PipelineUserActionSummaryPanel({ pipelineTaskData }) {
         return (
           <UserActionPipelineStepActionSummaryPanel
             pipelineTaskModel={modelHelpers.parseObjectIntoModel(pipelineTaskData, pipelineTaskMetadata)}
+            setActiveTab={setActiveTab}
           />
         );
       default:
         return (
           <PipelineTaskSummaryPanelBase
             pipelineTaskData={modelHelpers.parseObjectIntoModel(pipelineTaskData, pipelineTaskMetadata)}
+            setActiveTab={setActiveTab}
           />
         );
     }
@@ -35,4 +41,5 @@ export default function PipelineUserActionSummaryPanel({ pipelineTaskData }) {
 
 PipelineUserActionSummaryPanel.propTypes = {
   pipelineTaskData: PropTypes.object,
+  setActiveTab: PropTypes.func,
 };

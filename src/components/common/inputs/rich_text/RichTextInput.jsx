@@ -5,6 +5,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import { faFileInvoice } from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 export default function RichTextInput(
   {
@@ -16,6 +17,8 @@ export default function RichTextInput(
     minimumHeight,
     maximumHeight,
     disabled,
+    titleRightSideButton,
+    customTitle,
   }) {
   const field = model?.getFieldById(fieldName);
   const [error, setError] = useState(undefined);
@@ -34,6 +37,14 @@ export default function RichTextInput(
     }
   };
 
+  const getTitle = () => {
+    if (hasStringValue(customTitle) === true) {
+      return customTitle;
+    }
+
+    return model?.getLabel(fieldName);
+  };
+
   if (field == null) {
     return null;
   }
@@ -42,9 +53,10 @@ export default function RichTextInput(
     <InputContainer className={className}>
       <InfoContainer
         titleIcon={faFileInvoice}
-        titleText={model?.getLabel(fieldName)}
+        titleText={getTitle()}
         maximumHeight={maximumHeight}
         minimumHeight={minimumHeight}
+        titleRightSideButton={titleRightSideButton}
       >
         <RichTextInputBase
           value={model?.getData(fieldName)}
@@ -71,4 +83,6 @@ RichTextInput.propTypes = {
   minimumHeight: PropTypes.string,
   maximumHeight: PropTypes.string,
   disabled: PropTypes.bool,
+  titleRightSideButton: PropTypes.any,
+  customTitle: PropTypes.string,
 };

@@ -1,6 +1,6 @@
 import React, { useRef, useCallback } from "react";
 import { createReactEditorJS } from 'react-editor-js';
-import { EDITOR_JS_TOOLS } from './tools';
+import { EDITOR_JS_TOOLS } from 'components/common/inputs/rich_text/editorJs.tools';
 import PropTypes from "prop-types";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
@@ -35,6 +35,7 @@ export default function RichTextInputBase (
           readOnly={true}
           defaultValue={DataParsingHelper.parseJson(value)}
           logLevel={"ERROR"}
+          tools={EDITOR_JS_TOOLS}
         />
       </div>
     );
@@ -43,7 +44,7 @@ export default function RichTextInputBase (
   return (
     <ReactEditorJS
       minHeight={100}
-      placeholder={"enter text"}
+      placeholder={"Enter Text"}
       onChange={handleSave}
       onInitialize={handleInitialize}
       logLevel={"ERROR"}

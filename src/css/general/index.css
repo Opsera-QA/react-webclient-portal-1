@@ -1,6 +1,6 @@
 :root {
     --height: calc(100% + 100px);
-    --font-family-sans-serif: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-family-sans-serif: 'Inter', "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
@@ -11,26 +11,18 @@
 /* Site Typography
 primary analytics font*/
 .font-inter-light-100 {
-    font-family: 'Inter', sans-serif;
     font-weight: 100;
 }
 
 .font-inter-light-300 {
-    font-family: 'Inter', sans-serif;
     font-weight: 300;
 }
 
 .font-inter-light-400 {
-    font-family: 'Inter', sans-serif;
     font-weight: 400;
 }
 
-.analytics-font {
-    font-family: 'Inter', sans-serif;
-}
-
 .font-inter-light-500 {
-    font-family: 'Inter', sans-serif;
     font-weight: 500;
 }
 
@@ -60,7 +52,6 @@ primary analytics font*/
 }
 
 .chart-header-name-text {
-    font-family: 'Inter', sans-serif;
     font-weight: 100;
     /* text-transform: capitalize; */
     /*color: #8798ad;*/
@@ -68,27 +59,15 @@ primary analytics font*/
 }
 
 .chart-footer-text, .metric-subheader-text {
-    font-family: 'Inter', sans-serif;
     font-weight: 100;
     font-size: small;
     text-transform: capitalize;
     color: #8798ad;
 }
 
-/*primary product font*/
-.font-lato-100 {
-    font-family: 'Lato', sans-serif;
-    font-weight: 100;
-}
-
-.font-lato-300 {
-    font-family: 'Lato', sans-serif;
-    font-weight: 300;
-}
-
-.font-lato-400 {
-    font-family: 'Lato', sans-serif;
-    font-weight: 400;
+.failure-text {
+    color: red;
+    font-weight: bold;
 }
 
 .red {
@@ -257,8 +236,6 @@ primary analytics font*/
 }
 
 html {
-    font-family: sans-serif;
-    line-height: 1.15;
     margin: 0;
 }
 
@@ -266,15 +243,12 @@ body {
     background-color: #fff;
     color: #334152;
     margin: 0;
-    font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-size: 0.9rem;
     font-weight: 400;
-    line-height: 1.5;
     min-height: 100vh;
 }
 
 .main-text, .vanity-table {
-    font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-size: 0.9rem;
     font-weight: 400;
     line-height: 1.5;
@@ -292,7 +266,7 @@ a:hover, .active, .link-text:hover {
 
 .title-text-header-1 {
     font-size: 1.25rem;
-    letter-spacing: .8px;
+    letter-spacing: .05rem;
 }
 
 .title-text-header-2 {
@@ -379,7 +353,6 @@ a:hover, .active, .link-text:hover {
 
 .border-bottom {
     border-width: 2px;
-    border-bottom-width: 2px;
     border-bottom-color: #343a40;
     border-bottom-style: solid;
 }
@@ -738,7 +711,6 @@ a:hover, .active, .link-text:hover {
 }
 
 .error-text {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     color: #dc3545;
     padding: 5px;
 }
@@ -753,19 +725,16 @@ a:hover, .active, .link-text:hover {
 }
 
 .info-text {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     color: #3D3B36;
     padding: 5px;
 }
 
 .details-title-text {
-    font-family: 'Inter', sans-serif;
     color: #3D3B36;
     padding: 0.5rem;
 }
 
 .success-text {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     color: green;
     padding: 5px;
 }
@@ -779,7 +748,6 @@ a:hover, .active, .link-text:hover {
 }
 
 .warning-text {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     color: #CF940C;
     padding: 5px;
 }
@@ -797,29 +765,24 @@ a:hover, .active, .link-text:hover {
 .success-block {
     background-color: green;
     color: #fff;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .error-block {
     background-color: #dc3545;
     color: #fff;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .info-block {
     background-color: #1989F9;
     color: #fff;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .warning-block {
     background-color: #CF940C;
     color: #FFF;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .text-block {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     padding: 5px;
     margin: 3px;
 }
@@ -873,7 +836,6 @@ a:hover, .active, .link-text:hover {
 
 .pipeline-summary-dialog-block {
     background-color: #FFF;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     padding: 10px;
     margin: 10px 0 5px 0;
     z-index: 3000;
@@ -1035,7 +997,6 @@ a:hover, .active, .link-text:hover {
 
 .stepForm-data-display {
     background-color: #FFF;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     z-index: 3000;
 }
 

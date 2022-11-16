@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import PipelineHelpers from "components/workflow/pipelineHelpers";
-import { faFileCheck } from "@fortawesome/pro-light-svg-icons";
+import { faFileCheck, faTriangleExclamation } from "@fortawesome/pro-light-svg-icons";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import modelHelpers from "components/common/model/modelHelpers";
 import {
-  userActionsPipelineStepMetadata
+  userActionsPipelineStepMetadata,
 } from "components/workflow/plan/step/user_actions/userActionsPipelineStep.metadata";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import AcknowledgePipelineInstructionsButton
@@ -24,22 +24,31 @@ import useGetPipelineInstructionModelByPipelineStep
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import pipelineUserActionAcknowledgementMetadata
   from "@opsera/definitions/constants/pipelines/workflow/acknowledgement/pipelineUserActionAcknowledgement.metadata";
+import MessageField from "components/common/fields/text/message/MessageField";
+import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+
+const INSTRUCTIONS_HEIGHT = `calc(${screenContainerHeights.TABLE_MINIMUM_HEIGHT_WITH_DESCRIPTION} - 250px)`;
 
 export default function PipelineInstructionsAcknowledgementOverlay(
   {
     pipeline,
-    loadDataFunction,
+    loadPipelineFunction,
   }) {
   const approvalStep = PipelineHelpers.getPendingApprovalStep(pipeline);
   const toolIdentifier = PipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
   const configuration = DataParsingHelper.parseNestedObject(approvalStep, "tool.configuration");
   const userActionsStepModel = modelHelpers.parseObjectIntoModel(configuration, userActionsPipelineStepMetadata);
-  const [acknowledgementModel, setAcknowledgementModel] = useState(modelHelpers.parseObjectIntoModel(configuration, pipelineUserActionAcknowledgementMetadata));
+  const [acknowledgementModel, setAcknowledgementModel] = useState(modelHelpers.getNewModelForMetadata(pipelineUserActionAcknowledgementMetadata, false));
+  const [inEditMode, setInEditMode] = useState(false);
   const {
     toastContext,
   } = useComponentStateReference();
   const {
     pipelineInstructionsModel,
+    setPipelineInstructionsModel,
     isLoading,
     error,
   } = useGetPipelineInstructionModelByPipelineStep(
@@ -49,43 +58,107 @@ export default function PipelineInstructionsAcknowledgementOverlay(
   );
 
   const closePanelFunction = () => {
-    loadDataFunction();
+    loadPipelineFunction();
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
+  };
+
+  const getAcknowledgementButtons = () => {
+    if (pipelineInstructionsModel?.canAcknowledgePipelineInstructions() === true) {
+      return (
+        <>
+          <AcknowledgePipelineInstructionsButton
+            pipelineId={pipeline?._id}
+            pipelineStepId={approvalStep?._id}
+            message={acknowledgementModel?.getData("message")}
+            closePanelFunction={closePanelFunction}
+            disabled={pipelineInstructionsModel == null || acknowledgementModel?.checkCurrentValidity() !== true || inEditMode === true}
+            className={"mr-2"}
+          />
+          <RefusePipelineInstructionsAcknowledgementButton
+            pipelineId={pipeline?._id}
+            pipelineStepId={approvalStep?._id}
+            message={acknowledgementModel?.getData("message")}
+            closePanelFunction={closePanelFunction}
+            className={"mr-2"}
+            disabled={pipelineInstructionsModel == null || acknowledgementModel?.checkCurrentValidity() !== true || inEditMode === true}
+          />
+        </>
+      );
+    }
   };
 
   const getButtonContainer = () => {
     return (
       <ButtonContainerBase className={"mx-3"}>
+        {getAcknowledgementButtons()}
         <CloseButton
           closeEditorCallback={closePanelFunction}
-          className={"mr-2"}
-        />
-        <RefusePipelineInstructionsAcknowledgementButton
-          pipelineId={pipeline?._id}
-          pipelineStepId={approvalStep?._id}
-          message={acknowledgementModel?.getData("message")}
-          closePanelFunction={closePanelFunction}
-          className={"mr-2"}
-          disabled={pipelineInstructionsModel == null || acknowledgementModel?.checkCurrentValidity() !== true}
-        />
-        <AcknowledgePipelineInstructionsButton
-          pipelineId={pipeline?._id}
-          pipelineStepId={approvalStep?._id}
-          message={acknowledgementModel?.getData("message")}
-          closePanelFunction={closePanelFunction}
-          disabled={pipelineInstructionsModel == null || acknowledgementModel?.checkCurrentValidity() !== true}
         />
       </ButtonContainerBase>
     );
   };
 
-  const getBody = () => {
-    if (isLoading !== true && pipelineInstructionsModel == null) {
+  const getTextInput = () => {
+    if (pipelineInstructionsModel?.canAcknowledgePipelineInstructions() === true) {
       return (
-        <div>
-          There was no Pipeline Instructions associated with the User Actions step, the instructions have been deleted, or you do not have access to them.
-        </div>
+        <TextAreaInput
+          dataObject={acknowledgementModel}
+          setDataObject={setAcknowledgementModel}
+          fieldName={"message"}
+        />
+      );
+    }
+
+    if (isLoading !== true && pipelineInstructionsModel != null) {
+      return (
+        <H5FieldSubHeader
+          subheaderText={"You do not have permission to Acknowledge these actions."}
+          className={"danger-red"}
+          icon={faTriangleExclamation}
+        />
+      );
+    }
+  };
+
+
+  const getMessageFields = () => {
+    if (hasStringValue(userActionsStepModel?.getData("message")) === true) {
+      return (
+        <Row>
+          <Col xs={12} lg={6}>
+            <MessageField
+              model={userActionsStepModel}
+              fieldName={"message"}
+            />
+          </Col>
+          <Col xs={12} lg={6}>
+            {getTextInput()}
+          </Col>
+        </Row>
+      );
+    }
+
+    return (
+      <Row>
+        <Col xs={12}>
+          {getTextInput()}
+        </Col>
+      </Row>
+    );
+  };
+
+  const getBody = () => {
+    if (isLoading !== true && error) {
+      return (
+        <H5FieldSubHeader
+          subheaderText={`
+            There was no Pipeline Instructions associated with the User Actions step, the instructions have been deleted,
+            or you do not have access to them.
+          `}
+          icon={faTriangleExclamation}
+          className={"danger-red"}
+        />
       );
     }
 
@@ -96,15 +169,14 @@ export default function PipelineInstructionsAcknowledgementOverlay(
           allowEditing={true}
           pipelineInstructionsModel={pipelineInstructionsModel}
           pipelineInstructionsId={userActionsStepModel?.getData("pipelineInstructionsId")}
-          label={pipelineInstructionsModel?.getData("name")}
+          setPipelineInstructionsModel={setPipelineInstructionsModel}
+          instructionsDisplayerMinimumHeight={INSTRUCTIONS_HEIGHT}
+          instructionsDisplayerMaximumHeight={INSTRUCTIONS_HEIGHT}
           error={error}
           isLoading={isLoading}
+          setInEditModeVisibility={setInEditMode}
         />
-        <TextAreaInput
-          dataObject={acknowledgementModel}
-          setDataObject={setAcknowledgementModel}
-          fieldName={"message"}
-        />
+        {getMessageFields()}
       </>
     );
   };
@@ -120,7 +192,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
       titleIcon={faFileCheck}
       buttonContainer={getButtonContainer()}
     >
-      <div className={"m-3"}>
+      <div className={"mx-3 mb-3 mt-2"}>
         <div>
           This pipeline requires the following actions be taken at this time.
           Acknowledgement of these actions is required before the pipeline can proceed.
@@ -133,8 +205,8 @@ export default function PipelineInstructionsAcknowledgementOverlay(
 }
 
 PipelineInstructionsAcknowledgementOverlay.propTypes = {
-  loadDataFunction: PropTypes.func,
-  pipeline: PropTypes.object
+  loadPipelineFunction: PropTypes.func,
+  pipeline: PropTypes.object,
 };
 
 

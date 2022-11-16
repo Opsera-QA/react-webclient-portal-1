@@ -57,16 +57,18 @@ function VanityDataContainer(
     <div className={className}>
       <div className="filter-container container-border">
         <div className="filter-title-bar w-100">
-          <div className="px-2 d-flex content-block-header">
-            <FilterTitleBar
-              isLoading={isLoading}
-              title={title}
-              type={type}
-              filterDto={paginationModel}
-              titleIcon={titleIcon}
-              inlineFilters={getFilterBar()}
-              addRecordFunction={addRecordFunction}
-            />
+          <div className={"px-2 content-block-header title-text-header-1 d-flex"}>
+            <div className={"my-auto w-100"}>
+              <FilterTitleBar
+                isLoading={isLoading}
+                title={title}
+                type={type}
+                filterDto={paginationModel}
+                titleIcon={titleIcon}
+                inlineFilters={getFilterBar()}
+                addRecordFunction={addRecordFunction}
+              />
+            </div>
           </div>
           <ActiveFilterDisplayer filterModel={paginationModel} loadData={loadData} />
         </div>

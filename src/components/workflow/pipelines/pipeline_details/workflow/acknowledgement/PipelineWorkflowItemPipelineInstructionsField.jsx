@@ -47,13 +47,14 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
       toastContext.showOverlayPanel(
         <PipelineInstructionsAcknowledgementOverlay
           pipeline={pipeline}
-          loadDataFunction={loadPipelineFunction}
+          loadPipelineFunction={loadPipelineFunction}
         />,
       );
     } else {
       toastContext.showOverlayPanel(
         <PipelineInstructionsDisplayerOverlay
           pipelineInstructionsId={pipelineInstructionsId}
+          allowEditing={true}
         />
       );
     }

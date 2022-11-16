@@ -41,7 +41,6 @@ function ToolAttributesPanel({ toolData, setActiveTab }) {
 ToolAttributesPanel.propTypes = {
   toolData: PropTypes.object,
   setActiveTab: PropTypes.func,
-  customerAccessRules: PropTypes.object,
 };
 
 export default ToolAttributesPanel;

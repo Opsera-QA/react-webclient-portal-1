@@ -142,7 +142,8 @@
 .metric-chart-container {
     margin: 0 auto;
     /*border: 1px solid #E6E5E3;*/
-    border-radius: 6px;
+    border-radius: .5rem;
+    /*overflow-x: hidden;*/
     /*box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);*/
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
 }
@@ -155,13 +156,13 @@
     font-size: 1.4em;
     height: 48px;
     max-height: 48px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
 }
 
 .metric-input-container-header {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
     height: 28px;
     max-height: 28px;
 }
@@ -200,7 +201,7 @@
 .object-properties-input .property-header, .input-title-bar {
     background-color: #E6E5E3;
     color: #3D3B36;
-    min-height: 42px;
+    min-height: 49px;
     font-size: 1.1rem;
 }
 

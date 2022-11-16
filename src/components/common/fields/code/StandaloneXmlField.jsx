@@ -102,7 +102,6 @@ function StandaloneXmlField({xml, title, errorMessage, className, isLoading}) {
           </div>
         </div>
       </div>
-      <div className={"object-properties-footer"} />
     </InputContainer>
   );
 }

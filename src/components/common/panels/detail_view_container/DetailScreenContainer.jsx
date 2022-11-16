@@ -39,15 +39,15 @@ function DetailScreenContainer(
 
     if (navigationTabContainer) {
       return (
-        <div className="mb-3">
+        <div className={"mb-2"}>
           {navigationTabContainer}
         </div>
       );
     }
 
     return (
-      <div className="mb-3">
-        <div className="sub-navigation-block" />
+      <div className={"mb-2"}>
+        <div className={"sub-navigation-block"} />
       </div>
     );
   };
@@ -155,14 +155,16 @@ function DetailScreenContainer(
   }
 
   return (
-    <div className="max-content-width ml-2 max-content-height scroll-y hide-x-overflow">
+    <div className={"max-content-width max-content-height scroll-y hide-x-overflow"}>
       {getTopNavigation()}
       <div
         className={"content-container content-card-1"}
         style={{ minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT}}
       >
-        <div className="px-2 content-block-header title-text-header-1">
-          {getTitleBar()}
+        <div className={"pl-2 content-block-header title-text-header-1 d-flex"}>
+          <div className={"my-auto w-100"}>
+            {getTitleBar()}
+          </div>
         </div>
         <div
           style={{ minHeight: getBodyHeight()}}

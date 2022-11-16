@@ -21,6 +21,7 @@ import "css/general/sidebar.css";
 import IconBase from "components/common/icons/IconBase";
 import ToolchainSidebarNavigationLink from "components/sidebar/links/ToolchainSidebarNavigationLink";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import useLocationReference from "hooks/useLocationReference";
 
 const hiddenNav = () => {
   return <></>;
@@ -29,24 +30,22 @@ const hiddenNav = () => {
 // TODO: This should be reworked into one sidebar
 //  with the tabs using SidebarNavigationLinkBase which can handle visibility based on roles
 function Sidebar({ hideSideBar }) {
-  const { setAccessRoles, featureFlagHideItemInProd, featureFlagHideItemInTest } = useContext(AuthContext);
+  const { featureFlagHideItemInProd, featureFlagHideItemInTest } = useContext(AuthContext);
   const { userData } = useComponentStateReference();
   const [renderOutput, setRenderOutput] = useState(hiddenNav);
+  const { isPublicPathState } = useLocationReference();
+  const {
+    accessRoleData,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    loadAccessRoles(userData);
-  }, [userData, hideSideBar]);
-
-  const loadAccessRoles = async (user) => {
-    const userAccessRoles = await setAccessRoles(user);
-
-    if (hideSideBar) {
+    if (hideSideBar === true || isPublicPathState === true) {
       setRenderOutput(hiddenNav);
-    } else if (userData && userAccessRoles) {
-      const renderFn = chooseRenderState(userAccessRoles);
+    } else if (userData && accessRoleData) {
+      const renderFn = chooseRenderState(accessRoleData);
       setRenderOutput(renderFn);
     }
-  };
+  }, [userData, hideSideBar, accessRoleData, isPublicPathState]);
 
   const chooseRenderState = (accessRole) => {
     if (accessRole.OpseraAdministrator) {

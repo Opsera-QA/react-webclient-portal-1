@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function SiteRolePermissionsField({ dataObject }) {
+function SiteRolePermissionsField({ model }) {
   const getGroupPermissionText = () => {
-    switch (dataObject?.getData("externalSyncGroup")) {
+    switch (model?.getData("externalSyncGroup")) {
       case "Admin":
         return (`
         Administrators have full system access, allowing them to perform all actions on Toolchain, Pipelines, and Tool Registry. 
@@ -26,7 +26,7 @@ function SiteRolePermissionsField({ dataObject }) {
     }
   };
 
-  if (dataObject == null || dataObject.getData("groupType") !== "Role") {
+  if (model == null) {
     return <></>;
   }
 
@@ -38,9 +38,7 @@ function SiteRolePermissionsField({ dataObject }) {
 }
 
 SiteRolePermissionsField.propTypes = {
-  dataObject: PropTypes.object,
+  model: PropTypes.object,
 };
-
-
 
 export default SiteRolePermissionsField;

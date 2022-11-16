@@ -334,6 +334,10 @@ button.bg-primary:focus {
     text-decoration: none;
 }
 
+.nav-pills .nav-link {
+    border-radius: 0.25rem;
+}
+
 .list-group-item-primary {
     color: #010913;
     background-color: #46415C;
@@ -343,7 +347,6 @@ button.bg-primary:focus {
     background-color: #46415C !important;
     color: white;
     text-decoration: none;
-    border-color: #010913;
     border: none;
 }
 
@@ -477,9 +480,9 @@ a.text-primary:hover, a.text-primary:focus {
 .custom-table th, .dhx_grid-header-cell-text_content {
     background-color: #f7f7f7; /*#2588ec;*/
     border-bottom: 1px solid #E6E5E3; /*#3598fc;*/
+    font-family: Inter, sans-serif;
+    letter-spacing: .025rem;
     color: #3D3B36;
-    line-height: 2.4em;
-    vertical-align: middle;
     white-space: nowrap;
 }
 
@@ -516,8 +519,8 @@ a.text-primary:hover, a.text-primary:focus {
 }
 
 .custom-table .table-row:hover {
-    background-color: #E6E5E3;
-    color: #3D3B36;
+    background: rgb(230, 229, 227);
+    color: black;
 }
 
 .custom-table .table-footer {
@@ -541,7 +544,7 @@ a.text-primary:hover, a.text-primary:focus {
 /* End Table Styling */
 /* End custom table styling */
 
-.message-field {
+.message-field, .pipeline-task-message {
     background-color: #f2f4f8;
 }
 
@@ -839,8 +842,6 @@ a.nav-link {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: -1.5rem;
-    margin-bottom: -1.5rem;
 }
 
 .new-user-signup-form form {
@@ -948,14 +949,9 @@ a.nav-link {
     min-height: 150px;
 }
 
-.content-container {
+.content-container, .content-container-border {
     border: 1px solid #E6E5E3;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-}
-
-.content-container-border {
-    border: 1px solid #E6E5E3;
+    border-radius: 0 0 1rem 1rem;
 }
 
 .content-container-shadow {
@@ -978,13 +974,25 @@ a.nav-link {
 .content-card-analytics .content-block-header {
     background-color: #3D3B36;
     color: #fef7fd;
-    line-height: 2.4em;
 }
 
 .content-card-1 > .content-block-header {
     background-color: #3D3B36;
     color: #fef7fd;
-    line-height: 2.4em;
+    min-height: 49px;
+}
+
+.content-block-header-inverse {
+    background-color: #3D3B36;
+    /*border-bottom: 1px solid #E6E5E3;*/
+    color: #fef7fd;
+}
+
+.filter-container-content-block-header {
+    background-color: #fff;
+    border-bottom: 1px solid #E6E5E3;
+    letter-spacing: .025rem;
+    color: #3D3B36;
 }
 
 .dashboard-container-header {
@@ -993,13 +1001,7 @@ a.nav-link {
     /*background-color: #a24600;*/
     /*background-color: #e76500;*/
     color: #fef7fd;
-    line-height: 2.4em;
-}
-
-.content-card-1 > .content-block-header-inverse {
-    background-color: #E6E5E3;
-    color: #3D3B36;
-    line-height: 2.4em;
+    min-height: 49px;
 }
 
 .content-card-1 .content-block-body {
@@ -1070,63 +1072,6 @@ a.nav-link {
     padding-top: 1em;
     height: 2em;
 }
-
-/* Content Card 2 Styling */
-
-.content-card-2 {
-}
-
-.content-card-2 .content-block-header {
-    background-color: #28a745;
-    color: #fff;
-    line-height: 2.4em;
-    border-bottom: 5px solid #0f3e84;
-}
-
-.content-card-2 .content-block-body {
-    background-color: #E6E5E3;
-    min-height: 150px;
-}
-
-.content-card-2 .content-block-footer {
-    border-top: 5px solid #E6E5E3;
-    background-color: #3D3B36;
-    padding-top: 1em;
-    height: 1.5em;
-}
-
-.content-card-2 .content-block-body .content-image {
-    height: 125px;
-}
-
-/* Content Card 3 Styling */
-
-.content-card-3 {
-}
-
-.content-card-3 .content-block-header {
-    background-color: #3D3B36;
-    color: #fff;
-    line-height: 2.4em;
-    border-bottom: 5px solid #3D3B36;
-}
-
-.content-card-3 .content-block-body {
-    background-color: #E6E5E3;
-    min-height: 150px;
-}
-
-.content-card-3 .content-block-footer {
-    border-top: 5px solid #E6E5E3;
-    background-color: #3D3B36;
-    padding-top: 1em;
-    height: 1.5em;
-}
-
-.content-card-3 .content-block-body .content-image {
-    height: 125px;
-}
-
 /* End Content Block Styling */
 
 /* Data Blocks Card Styling */
@@ -1366,6 +1311,8 @@ div.data-blocks-ellipses {
 
 .filter-title-text {
     font-size: 1.1rem;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: .05rem;
 }
 
 .filter-body {
@@ -1416,12 +1363,16 @@ div.data-blocks-ellipses {
 /* End filter bar styling */
 
 /* Filter Container Styling */
-.filter-container {
+.filter-container, .screen-container {
+    border-radius: 0.5rem;
+    overflow-x: hidden;
+    letter-spacing: .01rem;
 }
 
 .container-border {
     border: 1px solid #DFDFDF;
     border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 
 .filter-container-no-border {
@@ -1500,7 +1451,6 @@ div.data-blocks-ellipses {
 .success-toast {
     background-color: #FFF;
     color: #000000;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     border: 2px solid green;
     border-left: 8px solid green;
     padding: 2px;
@@ -1511,7 +1461,6 @@ div.data-blocks-ellipses {
 .error-toast {
     background-color: #FFF;
     color: #000000;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     border: 2px solid #dc3545;
     border-left: 8px solid #dc3545;
     font-size: 15px;
@@ -1522,7 +1471,6 @@ div.data-blocks-ellipses {
 .information-toast {
     background-color: #FFF;
     color: #000000;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     border: 2px solid #1989F9;
     border-left: 8px solid #1989F9;
     padding: 1px;
@@ -1536,7 +1484,6 @@ div.data-blocks-ellipses {
 
 .warning-toast {
     background-color: #FFF;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     border: 2px solid #f9c116;
     border-left: 8px solid #f9c116;
     padding: 1px;
@@ -1574,10 +1521,6 @@ div.data-blocks-ellipses {
 /* Pipeline Summary Card styling */
 .pipeline-summary-card .card-footer {
     padding: 5px;
-}
-
-.pipeline-task-message {
-    background-color: #f2f4f8;
 }
 
 /* End Pipeline Summary Card styling */
@@ -1670,7 +1613,7 @@ div.data-blocks-ellipses {
 
 .full-screen-center-overlay {
     /* full-height of container - button panel height */
-    height: calc(100vh - 100px);
+    height: calc(100vh - 110px);
 }
 
 .full-screen-overlay-panel-body {
@@ -1728,8 +1671,8 @@ div.data-blocks-ellipses {
     z-index: 1500;
 
     /* full-height - (10px x 2 top + bottom margins) */
-    height: calc(100% - 20px);
-    max-height: calc(100% - 20px);
+    height: calc(100vh - 20px);
+    max-height: calc(100vh - 20px);
 }
 
 .overlay-panel-body {
@@ -1815,6 +1758,10 @@ div.data-blocks-ellipses {
 
 .page-link-card-divider {
 
+}
+
+.widget-data-block-base:hover {
+    border-color: #7F74B9 !important;
 }
 
 /* End Page Link Card Styling */

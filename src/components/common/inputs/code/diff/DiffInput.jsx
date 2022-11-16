@@ -108,7 +108,6 @@ function DiffInput(
         <div style={{ height: height }}>
           {getBody()}
         </div>
-        <div className={"object-properties-footer"} />
       </InfoContainer>
     </InputContainer>
   );

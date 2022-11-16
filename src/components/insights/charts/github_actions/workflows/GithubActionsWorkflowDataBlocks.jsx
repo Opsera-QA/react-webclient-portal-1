@@ -23,6 +23,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 
 function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setError }) {
   const [metrics, setMetrics] = useState([]);
+  const [prevMetrics, setPrevMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [successPercentDataPoint, setSuccessPercentDataPoint] = useState(undefined);
   const [averageSuccessDataPoint, setAverageSuccessDataPoint] = useState(undefined);
@@ -75,9 +76,51 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
           dashboardOrgs,
           dashboardFilters
       );
+      const prevResponse = await githubActionsWorkflowActions.githubActionsBaseKPIDataBlocksPrev(
+        kpiConfiguration,
+        getAccessToken,
+        cancelSource,
+        dashboardTags,
+        dashboardOrgs,
+        dashboardFilters
+    );
+    console.log(response);
+      if (prevResponse?.data?.data?.length === 0 && response?.data?.data?.length > 0) {
+    response.data.data[0].prevSuccessPercentage = 0;
+    response.data.data[0].prevFailedPercentage = 0;
+    response.data.data[0].prevSuccessTime = 0;
+    response.data.data[0].prevFailedTime = 0;
+  } else if (prevResponse?.data?.data?.length > 0 && response?.data?.data?.length > 0) {
+    response.data.data[0].prevSuccessPercentage = prevResponse.data.data[0].successPercentage;
+    response.data.data[0].prevFailedPercentage = prevResponse.data.data[0].failedPercentage;
+    response.data.data[0].prevSuccessTime = prevResponse.data.data[0].avgSuccessTime;
+    response.data.data[0].prevFailedTime = prevResponse.data.data[0].avgFailedTime;
+  }
+
+  if (response?.data?.data?.length > 0) {
+    response.data.data[0].successPercentageTrend = getTrendForBlocks(
+      response.data.data[0].successPercentage,
+      response.data.data[0].prevSuccessPercentage
+    );
+    response.data.data[0].failedPercentageTrend = getTrendForBlocks(
+      response.data.data[0].failedPercentage,
+      response.data.data[0].prevFailedPercentage
+    );
+    response.data.data[0].avgSuccessTimeTrend = getTrendForBlocks(
+      response.data.data[0].avgSuccessTime,
+      response.data.data[0].prevSuccessTime
+    );
+    response.data.data[0].avgFailedTimeTrend = getTrendForBlocks(
+      response.data.data[0].avgFailedTime,
+      response.data.data[0].prevFailedTime
+    );
+  }
       let dataObject = response?.data?.data[0];
+      console.log(dataObject);
+      let prevDataObject = prevResponse?.data?.data[0];
       if (isMounted?.current === true) {
         setMetrics(dataObject);
+        setPrevMetrics(prevDataObject);
       }
     }
     catch (error) {
@@ -91,6 +134,27 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
         setIsLoading(false);
       }
     }
+  };
+
+  const getTrendForBlocks = (curr, previous) => {
+    let trend = "";
+    try {
+      if (curr > previous) {
+        trend = "up";
+      } else if (curr === previous) {
+        trend = "neutral";
+      } else if (curr < previous) {
+        trend = "down";
+      } else {
+        trend = "black";
+      }
+    } catch (e) {
+      console.error(e);
+      return null;
+    }
+    return {
+      trend,
+    };
   };
 
   const getIcon = (severity) => {

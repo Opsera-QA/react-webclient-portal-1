@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import useLocationReference from "hooks/useLocationReference";
 import ToastContextProvider from "contexts/DialogToastContext";
 import OpseraHeaderBar from "components/header/OpseraHeaderBar";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import HeaderNavBar from "Navbar";
+import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
 
 export default function MainViewContainer(
   {
@@ -11,31 +14,43 @@ export default function MainViewContainer(
     backgroundColor,
     children,
   }) {
-  const { locationKey } = useLocationReference();
+  const {locationKey} = useLocationReference();
+  const {
+    isFreeTrial,
+  } = useComponentStateReference();
 
   const getNavBar = () => {
+    if (isFreeTrial === true) {
+      return (
+        <OpseraHeaderBar
+          hideAuthComponents={!isAuthenticated}
+          userData={userData}
+        />
+      );
+    }
+
     return (
-      <OpseraHeaderBar
-        hideAuthComponents={!isAuthenticated}
+      <HeaderNavBar
         userData={userData}
+        hideAuthComponents={!isAuthenticated}
       />
     );
   };
 
   return (
+    <ToastContextProvider navBar={getNavBar()}>
       <div
         className={"w-100"}
         key={locationKey}
         style={{
-          minHeight: "100vh",
+          minHeight: `calc(100vh - ${screenContainerHeights.NAV_BAR_HEIGHT} - 30px)`,
           backgroundColor: backgroundColor,
           paddingBottom: "30px",
         }}
       >
-        <ToastContextProvider navBar={getNavBar()}>
-          {children}
-        </ToastContextProvider>
+        {children}
       </div>
+    </ToastContextProvider>
   );
 }
 

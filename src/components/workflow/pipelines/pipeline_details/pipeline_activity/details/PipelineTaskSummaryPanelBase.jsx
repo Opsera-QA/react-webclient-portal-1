@@ -9,21 +9,34 @@ import PipelineTaskSummaryMessageField
   from "components/common/fields/pipelines/activity/PipelineTaskSummaryMessageField";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import UserNameField from "components/common/fields/user/UserNameField";
+import ToggleJsonViewIcon from "components/common/icons/details/ToggleJsonViewIcon";
 
 function PipelineTaskSummaryPanelBase(
   {
     pipelineTaskData,
     messageFieldName,
+    setActiveTab,
     children,
   }) {
   return (
     <SummaryPanelContainer className={"mx-2"}>
       <Row>
-        <Col md={12}>
-          <UserNameField model={pipelineTaskData} fieldName={"user_id"}/>
+        <Col md={12} className={"d-flex"}>
+          <UserNameField
+            model={pipelineTaskData}
+            fieldName={"user_id"}
+          />
+          <ToggleJsonViewIcon
+            className={"ml-auto mt-1"}
+            setActiveTab={setActiveTab}
+            activeTab={"summary"}
+          />
         </Col>
         <Col md={6}>
-          <TextFieldBase dataObject={pipelineTaskData} fieldName={"step_name"}/>
+          <TextFieldBase
+            dataObject={pipelineTaskData}
+            fieldName={"step_name"}
+          />
         </Col>
         <Col md={6}>
           <TextFieldBase dataObject={pipelineTaskData} fieldName={"tool_identifier"}/>
@@ -56,6 +69,7 @@ PipelineTaskSummaryPanelBase.propTypes = {
   pipelineTaskData: PropTypes.object,
   children: PropTypes.any,
   messageFieldName: PropTypes.string,
+  setActiveTab: PropTypes.func,
 };
 
 PipelineTaskSummaryPanelBase.defaultProps = {

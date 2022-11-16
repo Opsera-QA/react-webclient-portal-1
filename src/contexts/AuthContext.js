@@ -4,23 +4,42 @@ import moment from "moment";
 import {useHistory} from "react-router-dom";
 import commonActions from "components/common/common.actions";
 import accountsActions from "components/admin/accounts/accounts-actions";
+import {SITE_VIEW_MODES} from "components/header/view_modes/siteViewMode.constants";
+import { THEMES } from "temp-library-components/theme/theme.constants";
+import { lightThemeConstants } from "temp-library-components/theme/light.theme.constants";
+import { darkThemeConstants } from "temp-library-components/theme/dark.theme.constants";
+import ClientWebsocket from "core/websocket/client.websocket";
+import { DATE_FN_TIME_SCALES, handleDateAdditionForTimeScale } from "components/common/helpers/date/date.helpers";
+import MainViewContainer from "components/common/containers/MainViewContainer";
 import useIsMountedStateReference from "hooks/useIsMountedStateReference";
 import useCancelTokenStateReference from "hooks/useCancelTokenStateReference";
 
 const jwt = require("jsonwebtoken");
 const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
+const websocketClient = new ClientWebsocket();
 
-const AuthContextProvider = ({ userData, refreshToken, authClient, children }) => {
+const AuthContextProvider = (
+  {
+    userData,
+    refreshToken,
+    authClient,
+    children,
+    isAuthenticated,
+  }) => {
   const history = useHistory();
   const [userAccessRoles, setUserAccessRoles] = useState(undefined);
-  // const [websocketClient, setWebsocketClient] = useState(new ClientWebsocket());
+  const [viewMode, setViewMode] = useState(SITE_VIEW_MODES.BUSINESS);
+  const [theme, setTheme] = useState(THEMES.LIGHT);
+  const [backgroundColor, setBackgroundColor] = useState(lightThemeConstants.COLOR_PALETTE.WHITE);
   const isMounted = useIsMountedStateReference();
   const cancelTokenSource = useCancelTokenStateReference();
+  const [headerNavigationBar, setHeaderNavigationBar] = useState(undefined);
 
   useEffect(() => {
     setUserAccessRoles(undefined);
 
     if (userData) {
+      // websocketClient?.initializeWebsocket(userData);
       setAccessRoles(userData).then((newUserAccessRoles) => {
         setUserAccessRoles(newUserAccessRoles);
       }).catch((error) => {
@@ -31,11 +50,10 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
         }
       });
     }
+    // else {
+    //   websocketClient?.closeWebsocket();
+    // }
   }, [userData]);
-
-  // const getWebsocketClient = () => {
-  //   return websocketClient;
-  // };
 
   const logoutUserContext = async () => {
     authClient.tokenManager.clear();
@@ -54,7 +72,6 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
   };
 
   const loginUserContext = () => {
-    //window.location = "/login";
     history.push("/login");
   };
 
@@ -117,6 +134,15 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
   const getFeatureFlags = async () => {
     const response = await commonActions.getFeatureFlagsV2(getAccessToken, cancelTokenSource);
     return response?.data?.featureFlags;
+  };
+
+  const getFreeTrialUserExpirationDate = () => {
+    if (!userData) {
+      return null;
+    }
+
+    const userCreatedAt = userData?.createdAt;
+    return handleDateAdditionForTimeScale(userCreatedAt, DATE_FN_TIME_SCALES.DAYS, 15);
   };
 
   const isOrganizationOwner = async () => {
@@ -198,6 +224,14 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     return userAccessRoles;
   };
 
+  const subscribeToTopic = (topic, model) => {
+    websocketClient?.subscribeToTopic(topic, model);
+  };
+
+  const unsubscribeFromTopic = (topic, model) => {
+    websocketClient?.unsubscribeFromTopic(topic, model);
+  };
+
   // TODO: Don't return as function, just return true/false when pulling from auth context
   const isSassUser = () => {
     if (userData == null) {
@@ -228,6 +262,17 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     return ldap?.domain === "opsera.io" && Array.isArray(groups) && groups?.includes("Administrators");
   };
 
+  const getThemeConstants = () => {
+    switch (theme) {
+      case THEMES.LIGHT:
+        return lightThemeConstants;
+      case THEMES.NIGHT:
+        return darkThemeConstants;
+      default:
+        return lightThemeConstants;
+    }
+  };
+
   return (
     <AuthContext.Provider value={{
       logoutUserContext: logoutUserContext,
@@ -249,10 +294,29 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
       isOrganizationOwner: isOrganizationOwner,
       getFeatureFlags: getFeatureFlags,
       isOpseraAdministrator: isOpseraAdministrator,
-      userData: userData,
+      viewMode: viewMode,
+      setViewMode: setViewMode,
+      theme: theme,
+      setTheme: setTheme,
+      themeConstants: getThemeConstants(),
       // getWebsocketClient: getWebSocketClient,
+      websocketClient: websocketClient,
+      subscribeToTopic: subscribeToTopic,
+      unsubscribeFromTopic: unsubscribeFromTopic,
+      userData: userData,
+      userExpiration: getFreeTrialUserExpirationDate(),
+      headerNavigationBar: headerNavigationBar,
+      setHeaderNavigationBar: setHeaderNavigationBar,
+      backgroundColor: backgroundColor,
+      setBackgroundColor: setBackgroundColor,
     }}>
-      {children}
+      <MainViewContainer
+        isAuthenticated={isAuthenticated}
+        backgroundColor={backgroundColor}
+        userData={userData}
+      >
+        {children}
+      </MainViewContainer>
     </AuthContext.Provider>
   );
 };
@@ -262,6 +326,7 @@ AuthContextProvider.propTypes = {
   refreshToken: PropTypes.func,
   authClient: PropTypes.object,
   children: PropTypes.any,
+  isAuthenticated: PropTypes.bool,
 };
 
 export const AuthContext = createContext();

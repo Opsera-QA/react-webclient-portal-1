@@ -15,10 +15,10 @@ import {useHistory} from "react-router-dom";
 import ExpireTokenModal from "components/user/user_settings/access_tokens/ExpireTokenModal";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faKey} from "@fortawesome/pro-light-svg-icons";
-import {convertFutureDateToDhmsFromNowString, getDaysUntilDate} from "components/common/helpers/date/date.helpers";
+import {getDaysUntilDate} from "components/common/helpers/date/date.helpers";
 
 function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, cancelTokenSource, setFilterModel, filterModel}) {
-  let fields = accessTokenMetadata.fields;
+  const fields = accessTokenMetadata.fields;
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const {getAccessToken} = useContext(AuthContext);
@@ -44,7 +44,7 @@ function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, canc
       getTableButtonColumn("row", "", "danger", "Expire", toggleDeleteModal),
       getTableButtonColumn("_id", "", "outline-primary", "View Details", viewDetails)
     ],
-    []
+    [fields]
   );
 
   const noDataMessage = "No access tokens have been generated.";

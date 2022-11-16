@@ -6,8 +6,7 @@ import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import HelpInfoOverlayIcon from "components/common/icons/general/HelpInfoOverlayIcon";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
-import AzureDevopsPipelineStepConfigurationHelpDocumentation
-  from "components/common/help/documentation/pipelines/step_configuration/AzureDevopsPipelineStepConfigurationHelpDocumentation";
+import ReloadDataIcon from "components/common/icons/reload/ReloadDataIcon";
 
 function InputLabel(
   {
@@ -27,6 +26,9 @@ function InputLabel(
     inputHelpOverlay,
     hasError,
     helpTooltipText,
+    loadDataFunction,
+    disabled,
+    isLoading,
   }) {
   const getInputHelpIcon = () => {
     if (inputHelpOverlay != null) {
@@ -100,11 +102,17 @@ function InputLabel(
             tooltipText={ellipsisTooltipText}
             className={"ml-1 view-details-icon"}
           />
+          <ReloadDataIcon
+            loadDataFunction={loadDataFunction}
+            disabled={disabled || isLoading}
+            className={"ml-2"}
+          />
           <ClearDataIcon
             requireConfirmation={requireClearDataConfirmation}
             clearValueFunction={clearDataFunction}
             furtherDetails={clearDataDetails}
             className={"ml-2"}
+            disabled={disabled || isLoading}
           />
           {extraActionButtons}
         </div>
@@ -130,6 +138,9 @@ InputLabel.propTypes = {
   inputHelpOverlay: PropTypes.any,
   hasError: PropTypes.bool,
   helpTooltipText: PropTypes.string,
+  loadDataFunction: PropTypes.bool,
+  disabled: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 export default InputLabel;
