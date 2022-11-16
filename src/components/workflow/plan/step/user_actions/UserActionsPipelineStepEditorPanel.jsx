@@ -131,13 +131,6 @@ export default function UserActionsPipelineStepEditorPanel(
             disabled={userActionsStepModel?.getData("sendCustomMessage") !== true}
           />
         </Col>
-        <Col xs={12}>
-          <LdapUserSelectInput
-            fieldName={"contact"}
-            model={userActionsStepModel}
-            setModel={setUserActionsStepModel}
-          />
-        </Col>
       </Row>
     </EditorPanelContainer>
   );
