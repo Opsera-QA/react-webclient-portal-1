@@ -23,24 +23,29 @@ function ExportCoverityScanDataOverlay({ formattedData, rawData, isLoading}) {
     return pdfExporter;
   };
 
-  // const getCsvData = () => {
-  //   return [["Project", "Severity", "Line", "Message"],
-  //     ...formattedData.map(item =>
-  //       [
-  //         item.projects,
-  //         item.severity,
-  //         item.line,
-  //         item.message
-  //       ]
-  //     )];
-  // };
+  const getCsvData = () => {
+    return [["Project", "Severity", "Owner", "Issue Category", "Issue Type","Action", "Status", "Date", "File"],
+      ...formattedData.map(item =>
+        [
+          item.project, 
+          item.severity, 
+          item.owner, 
+          item.issue_category, 
+          item.issue_type, 
+          item.action, 
+          item.status, 
+          item.date, 
+          item.file
+        ]
+      )];
+  };
 
   return (
     <ExportDataOverlay
       isLoading={isLoading}
       getRawData={getRawData}
       getPdfExporter={getPdfExporter}
-      // getCsvData={getCsvData}
+      getCsvData={getCsvData}
     />
   );
 }
