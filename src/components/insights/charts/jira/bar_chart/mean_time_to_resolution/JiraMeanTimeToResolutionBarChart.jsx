@@ -362,7 +362,7 @@ function JiraMeanTimeToResolutionBarChart({
               xl={4}
               lg={4}
               md={4}
-              className={`mb-2 ml-2 py-2 d-flex justify-content-center maturity-border ${maturityColor}`}
+              className={`mb-2 ml-3 py-2 d-flex justify-content-center maturity-border ${maturityColor}`}
             >
               <Col md={12}>
                 <JiraMTTRDataBlock

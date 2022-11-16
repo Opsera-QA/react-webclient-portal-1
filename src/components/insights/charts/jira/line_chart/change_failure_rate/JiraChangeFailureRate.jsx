@@ -163,7 +163,7 @@ function JiraChangeFailureRate({
             xl={4}
             lg={4}
             md={4}
-            className={`mb-2 ml-2 py-2 d-flex justify-content-center maturity-border ${maturityColor}`}
+            className={`mb-2 ml-3 py-2 d-flex justify-content-center maturity-border ${maturityColor}`}
         >
           {/*This would get removed when average merge time is fixed*/}
           <Col md={12}>
@@ -174,7 +174,7 @@ function JiraChangeFailureRate({
                 bottomText={""}
             />
           </Col>
-          <Col md={12}>
+          <Col md={12} className={"pl-2 pr-1"}>
             <JiraChangeFailureRateTrendDataBlock
                 value={changeFailureRate}
                 prevValue={prevChangeFailureRate}
@@ -188,7 +188,7 @@ function JiraChangeFailureRate({
                 dataPoint={changeFailureRateDataPoint}
             />
           </Col>
-          <Col md={12}>
+          <Col md={12} className={"px-2"}>
             <JiraChangeFailureRateDataBlock
                 value={metricData?.total}
                 prevValue={metricData?.prevTotal}

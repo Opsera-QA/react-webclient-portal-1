@@ -22,6 +22,10 @@ import GitlabDeploymentFrequencyTrendDataBlock from "./GitlabDeploymentFrequency
 import gitlabAction from "../gitlab.action";
 import BadgeBase from "../../../../common/badges/BadgeBase";
 import GitlabDeploymentFrequencyMaturityBlock from "./GitlabDeploymentFrequencyMaturityBlock";
+import FullScreenCenterOverlayContainer from "../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+import {faTable} from "@fortawesome/pro-light-svg-icons";
+import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
+import GitlabDeploymentFrequencyMaturityScoreInsights from "./GitlabDeploymentFrequencyMaturityScoreInsights";
 
 function GitlabDeploymentFrequency({
   kpiConfiguration,
@@ -30,6 +34,7 @@ function GitlabDeploymentFrequency({
   index,
   setKpis,
 }) {
+  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metricData, setMetricData] =
@@ -115,6 +120,30 @@ function GitlabDeploymentFrequency({
     setBuildFrequencyDataPoint(dataPoint);
   };
 
+ const closePanel = () => {
+  toastContext.removeInlineMessage();
+  toastContext.clearOverlayPanel();
+};
+
+const onRowSelect = () => {
+  toastContext.showOverlayPanel(
+    <FullScreenCenterOverlayContainer
+      closePanel={closePanel}
+      showPanel={true}
+      titleText={`Deployment Maturity Score Statistics`}
+      showToasts={true}
+      titleIcon={faTable}
+    >
+      <div className={"p-3"}>
+        <GitlabDeploymentFrequencyMaturityScoreInsights
+          dashboardData={dashboardData}
+          insightsData={metricData}
+        />
+      </div>
+    </FullScreenCenterOverlayContainer>,
+  );
+};
+
   const getChartBody = () => {
     if (
       !metricData?.step?.total ||
@@ -129,7 +158,7 @@ function GitlabDeploymentFrequency({
       current: selectedDeploymentStages ? "Total Deployments" : "Total Stages Run",
       previous: selectedDeploymentStages ? "Prev Deployments" : "Prev Runs",
     };
-    const maturityScore = metricData?.step?.maturityScore;
+    const maturityScore = metricData?.step?.overallMaturityScoreText;
     const maturityColor = getMaturityColorClass(maturityScore);
     return (
       <div
@@ -141,14 +170,15 @@ function GitlabDeploymentFrequency({
             maturityScore={getMaturityScoreText(maturityScore)}
             maturityColor={maturityColor}
             iconOverlayBody={constants.MATURITY_TOOL_TIP[maturityScore]}
+            onClick={onRowSelect}
           />
           <Row
             xl={4}
             lg={4}
             md={4}
-            className={`mb-2 ml-2 py-2 d-flex justify-content-center maturity-border ${maturityColor}`}
+            className={`mb-2 ml-3 py-2 d-flex justify-content-center maturity-border ${maturityColor}`}
           >
-            <Col md={12}>
+            <Col md={12}  className={"pl-2 pr-1"}>
               <GitlabDeploymentFrequencyDataBlock
                 value={selectedDeploymentStages}
                 prevValue={""}
@@ -156,7 +186,7 @@ function GitlabDeploymentFrequency({
                 bottomText={""}
               />
             </Col>
-            <Col md={12}>
+            <Col md={12} className={"px-1"}>
               <GitlabDeploymentFrequencyTrendDataBlock
                 value={metricData?.step?.averageStepRuns}
                 prevValue={
@@ -170,7 +200,7 @@ function GitlabDeploymentFrequency({
                 bottomText={"Prev Average: "}
               />
             </Col>
-            <Col md={12}>
+            <Col md={12} className={"px-1"}>
               <GitlabDeploymentFrequencyDataBlock
                 value={metricData?.pipeline?.totalSuccess}
                 prevValue={
@@ -180,7 +210,7 @@ function GitlabDeploymentFrequency({
                 bottomText={"Prev Runs: "}
               />
             </Col>
-            <Col md={12}>
+            <Col md={12} className={"pl-1 pr-2"}>
               <GitlabDeploymentFrequencyDataBlock
                 value={metricData?.step?.totalSuccess}
                 prevValue={

@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faInfoCircle} from "@fortawesome/pro-solid-svg-icons";
+import { faInfoCircle } from "@fortawesome/pro-solid-svg-icons";
 import MaturityScoreCardDataBlock from "../../../../../common/metrics/data_blocks/base/MaturityScoreCardDataBlock";
 
 function GitlabLeadTimeMaturityBlock({
   maturityScore,
   iconOverlayBody,
   maturityColor,
+  onClick,
 }) {
   return (
     <MaturityScoreCardDataBlock
@@ -16,6 +17,7 @@ function GitlabLeadTimeMaturityBlock({
       maturityScore={maturityScore}
       iconOverlayBody={iconOverlayBody}
       maturityColor={maturityColor}
+      onClick={onClick}
     />
   );
 }
@@ -23,7 +25,8 @@ function GitlabLeadTimeMaturityBlock({
 GitlabLeadTimeMaturityBlock.propTypes = {
   maturityScore: PropTypes.string,
   iconOverlayBody: PropTypes.string,
-  maturityColor: PropTypes.string
+  maturityColor: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default GitlabLeadTimeMaturityBlock;
