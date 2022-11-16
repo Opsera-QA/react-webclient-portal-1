@@ -29,8 +29,6 @@ function ToolVaultPanel({ toolData, isLoading }) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-  console.log({toolData});
-
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();

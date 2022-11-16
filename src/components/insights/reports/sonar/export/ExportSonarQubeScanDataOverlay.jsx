@@ -23,24 +23,28 @@ function ExportSonarQubeScanDataOverlay({ formattedData, rawData, isLoading}) {
     return pdfExporter;
   };
 
-  // const getCsvData = () => {
-  //   return [["Project", "Severity", "Line", "Message"],
-  //     ...formattedData.map(item =>
-  //       [
-  //         item.projects,
-  //         item.severity,
-  //         item.line,
-  //         item.message
-  //       ]
-  //     )];
-  // };
+  const getCsvData = () => {
+    return [["Project", "Severity", "Type", "Line", "Status","Author", "Component", "Message"],
+      ...formattedData.map(item =>
+        [
+          item.project, 
+          item.severity, 
+          item.type, 
+          item.line, 
+          item.status, 
+          item.author, 
+          item?.component.substring(item.component.lastIndexOf('/') + 1), 
+          item.message
+        ]
+      )];
+  };
 
   return (
     <ExportDataOverlay
       isLoading={isLoading}
       getRawData={getRawData}
       getPdfExporter={getPdfExporter}
-      // getCsvData={getCsvData}
+      getCsvData={getCsvData}
     />
   );
 }
