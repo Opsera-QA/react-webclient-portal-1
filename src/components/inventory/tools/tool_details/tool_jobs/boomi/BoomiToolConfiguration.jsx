@@ -38,12 +38,53 @@ function BoomiToolConfiguration({ toolData }) {
       getAccessToken,
     );
 
+    if (boomiConfigurationDto?.getData("apiType") === "custom") {
+      newConfiguration.client_id = await toolsActions.savePasswordToVault(
+        toolData,
+        boomiConfigurationDto,
+        "client_id",
+        newConfiguration.client_id,
+        getAccessToken,
+      );
+      newConfiguration.client_secret = await toolsActions.savePasswordToVault(
+        toolData,
+        boomiConfigurationDto,
+        "client_secret",
+        newConfiguration.client_secret,
+        getAccessToken,
+      );
+    }
+
     const item = { configuration: newConfiguration };
     return await toolsActions.saveToolConfiguration(
       toolData,
       item,
       getAccessToken,
     );
+  };
+
+  const getOauthFields = () => {
+    if (boomiConfigurationDto?.getData("apiType") === "custom") {
+      return (
+        <>
+          <VaultTextInput
+            dataObject={boomiConfigurationDto}
+            setDataObject={setBoomiConfigurationDto}
+            fieldName={"client_id"}
+          />
+          <VaultTextInput
+            dataObject={boomiConfigurationDto}
+            setDataObject={setBoomiConfigurationDto}
+            fieldName={"client_secret"}
+          />
+          <TextInputBase
+            dataObject={boomiConfigurationDto}
+            setDataObject={setBoomiConfigurationDto}
+            fieldName={"authServerUrl"}
+          />
+        </>
+      );
+    }
   };
 
   return (
@@ -84,6 +125,7 @@ function BoomiToolConfiguration({ toolData }) {
             setDataObject={setBoomiConfigurationDto}
             fieldName={"accountPassword"}
           />
+          { getOauthFields() }
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
