@@ -220,6 +220,7 @@ function PipelineWorkflowItemList(
             className={"mb-1 p-1 workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(lastStep, item)}
             style={{
               boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)",
+              // borderRadius: "1rem",
             }}
           >
             <PipelineWorkflowItem
