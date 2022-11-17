@@ -7,18 +7,6 @@ import PipelineInstructionsDetailView from "components/workflow/instructions/det
 export default function PipelinesRoutes() {
   return (
     <>
-      <RoleRestrictedRoute
-        path={"/workflow/instructions"}
-        exact={true}
-        component={PipelineInstructionsManagement}
-        roleRequirement={ROLE_LEVELS.USERS_AND_SASS}
-      />
-      <RoleRestrictedRoute
-        path={"/workflow/instructions/:pipelineInstructionsId"}
-        exact={true}
-        component={PipelineInstructionsDetailView}
-        roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
-      />
     </>
   );
 }

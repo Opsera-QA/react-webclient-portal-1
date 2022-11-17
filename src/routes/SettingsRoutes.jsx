@@ -214,8 +214,6 @@ export default function SettingsRoutes() {
         component={UserDataMappingDetailView}
         roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       />
-
-      <PipelinesRoutes />
     </>
   );
 }
