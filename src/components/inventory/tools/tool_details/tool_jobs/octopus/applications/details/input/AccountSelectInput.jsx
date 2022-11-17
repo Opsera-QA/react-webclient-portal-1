@@ -5,8 +5,6 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import OctopusStepActions
   from "../../../../../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
-import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
-import Select from "react-select";
 
 function AccountSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_prop}) {
   const toastContext = useContext(DialogToastContext);
