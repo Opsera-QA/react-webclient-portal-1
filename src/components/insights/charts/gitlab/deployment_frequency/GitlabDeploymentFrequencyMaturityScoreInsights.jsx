@@ -91,11 +91,10 @@ function GitlabDeploymentFrequencyMaturityScoreInsightsTable({
           (tag) => tag.name === maturityScoreByTag[0].name,
         );
       }
-      console.log(activeVerticalTab, data);
       return (
         <CustomTable
           columns={columns}
-          data={data[0].values}
+          data={data[0]?.values || []}
           noDataMessage={noDataMessage}
           paginationDto={tableFilterDto}
           setPaginationDto={setTableFilterDto}

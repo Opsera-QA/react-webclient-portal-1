@@ -95,7 +95,7 @@ function GitlabLeadTimeMaturityScoreInsights({ kpiConfiguration, insightsData })
             return (
                 <CustomTable
                     columns={columns}
-                    data={data[0].values}
+                    data={data[0]?.values || []}
                     noDataMessage={noDataMessage}
                     paginationDto={tableFilterDto}
                     setPaginationDto={setTableFilterDto}
