@@ -11,6 +11,8 @@ import {getPipelineStateFieldBase} from "components/common/fields/pipelines/stat
 import IconBase from "components/common/icons/IconBase";
 import PipelineTypeIcon from "components/common/fields/pipelines/types/PipelineTypeIcon";
 import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import {truncateString} from "components/common/helpers/string-helpers";
 
 // TODO: Rewrite
 const PipelineCard = (
@@ -61,13 +63,21 @@ const PipelineCard = (
     }
   };
 
+  const getTitle = () => {
+    const name = DataParsingHelper.parseString(pipeline?.name);
+
+    if (name) {
+      return truncateString(name, 50);
+    }
+  };
+
   return (
       <Card className={"h-100"}>
         <Card.Title className="pb-0">
           <div className={"d-flex pipeline-card-title p-2"}>
             <div className={"d-flex"}>
               <PipelineTypeIcon model={pipelineModel} className={"mr-2"} />
-              {pipeline?.name}
+              {getTitle()}
             </div>
             <div className={"d-flex ml-auto my-auto small"}>
               <PipelineSubscriptionIcon

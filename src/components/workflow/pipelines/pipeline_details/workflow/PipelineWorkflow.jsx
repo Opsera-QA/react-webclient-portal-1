@@ -34,7 +34,6 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 function PipelineWorkflow({
   pipeline,
   fetchPlan,
-  customerAccessRules,
   editItemId,
   refreshCount,
   softLoading,
@@ -52,7 +51,7 @@ function PipelineWorkflow({
   const {
     userData,
     toastContext,
-    getAccessToken
+    getAccessToken,
    } = useComponentStateReference();
 
   useEffect(() => {
@@ -418,7 +417,6 @@ function PipelineWorkflow({
               pipelineId={pipeline._id}
               fetchPlan={fetchPlan}
               refreshCount={refreshCount}
-              customerAccessRules={customerAccessRules}
               parentCallbackEditItem={callbackFunctionEditItem}
               quietSavePlan={quietSavePlan}
               parentHandleViewSourceActivityLog={handleViewSourceActivityLog}
@@ -426,8 +424,17 @@ function PipelineWorkflow({
             />
           </div>
 
-          <SteppedLineTo from="source" to="step-items" delay={100} orientation="v" zIndex={-1}
-                         borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="top"/>
+          <SteppedLineTo
+            from={"source"}
+            to={"step-items"}
+            delay={100}
+            orientation={"v"}
+            zIndex={10}
+            borderColor={"#0f3e84"}
+            borderWidth={2}
+            fromAnchor={"bottom"}
+            toAnchor={"top"}
+          />
 
 
           <div
@@ -480,7 +487,6 @@ function renderTooltip(props) {
 PipelineWorkflow.propTypes = {
   pipeline: PropTypes.object,
   fetchPlan: PropTypes.func,
-  customerAccessRules: PropTypes.object,
   editItemId: PropTypes.string,
   refreshCount: PropTypes.number,
   softLoading: PropTypes.bool,

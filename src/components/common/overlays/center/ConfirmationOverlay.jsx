@@ -6,6 +6,8 @@ import CloseButton from "components/common/buttons/CloseButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 
+export const CONFIRMATION_OVERLAY_DEFAULT_HEIGHT = "250px";
+
 function ConfirmationOverlay(
   {
     children,
@@ -21,7 +23,6 @@ function ConfirmationOverlay(
     pageLink,
     linkTooltipText,
     height,
-    isOverlayAlready
   }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -63,9 +64,9 @@ function ConfirmationOverlay(
   }
 
   return (
-    <div className={ !isOverlayAlready ? `overlay-panel center-overlay-shadow-background`: ''}>
+    <div className={ `overlay-panel center-overlay-shadow-background`}>
       <div className={"confirmation-overlay-panel"}>
-        <div className={"confirmation-overlay content-card-1 bg-white"}>
+        <div className={"screen-container confirmation-overlay content-card-1"}>
           <OverlayTitleBar
             handleClose={closePanel}
             isLoading={isLoading}
@@ -79,7 +80,6 @@ function ConfirmationOverlay(
             className={"confirmation-overlay-panel-body bg-white"}
             style={{
               minHeight: height,
-              height: height,
             }}
           >
             {showToasts && toastContext?.getInlineBanner()}
@@ -110,13 +110,11 @@ ConfirmationOverlay.propTypes = {
   pageLink: PropTypes.string,
   linkTooltipText: PropTypes.string,
   height: PropTypes.string,
-  isOverlayAlready: PropTypes.bool
 };
 
 ConfirmationOverlay.defaultProps = {
   showCloseButton: true,
-  height: "250px",
-  isOverlayAlready: false
+  height: CONFIRMATION_OVERLAY_DEFAULT_HEIGHT,
 };
 
 export default ConfirmationOverlay;

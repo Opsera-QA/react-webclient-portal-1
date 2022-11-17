@@ -19,6 +19,7 @@ export default function VanityButtonBase(
     errorText,
     tooltip,
     buttonSize,
+    buttonClassName,
   }) {
 
   const getLabel = () => {
@@ -59,6 +60,7 @@ export default function VanityButtonBase(
           onClick={onClickFunction}
           variant={getButtonVariant()}
           size={buttonSize}
+          className={buttonClassName}
         >
           <span>
             <IconBase
@@ -87,6 +89,7 @@ VanityButtonBase.propTypes = {
   errorText: PropTypes.string,
   tooltip: PropTypes.any,
   buttonSize: PropTypes.any,
+  buttonClassName: PropTypes.string,
 };
 
 VanityButtonBase.defaultProps = {

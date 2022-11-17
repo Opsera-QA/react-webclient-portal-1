@@ -158,7 +158,7 @@ function TaskNotificationEditorPanel(
     return (
       <div>
         <h6 className="upper-case-first">{titleText}</h6>
-        <div className="text-muted mt-2 mb-3">Each step in the workflow can be configured with notifications that trigger upon
+        <div className="text-muted mt-2 mb-3">Each Task can be configured with notifications that trigger upon
           completion, failure, or all scenarios.
         </div>
       </div>

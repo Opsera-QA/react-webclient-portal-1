@@ -5,6 +5,7 @@ import LdapSiteRoleManagementPageLinkCard from "components/settings/ldap_site_ro
 import UserManagementPageLinkCard from "components/settings/users/UserManagementPageLinkCard";
 import LogsBackupManagementPageLinkCard from "components/settings/logs_backup/LogsBackupManagementPageLinkCard";
 import UnsecuredItemReportPageLinkCard from "components/settings/unsecured_items/UnsecuredItemReportPageLinkCard";
+import TagManagementPageLinkCard from "components/settings/tags/TagManagementPageLinkCard";
 
 export default function AccountSettingsPageLinkCards() {
   return (
@@ -15,6 +16,7 @@ export default function AccountSettingsPageLinkCards() {
       <UnsecuredItemReportPageLinkCard />
       <LdapSiteRoleManagementPageLinkCard />
       <UserManagementPageLinkCard />
+      <TagManagementPageLinkCard />
     </div>
   );
 }

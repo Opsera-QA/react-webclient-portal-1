@@ -4,14 +4,13 @@ import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
 import { Container, Col, Row } from "react-bootstrap";
 import { ResponsiveLine } from '@nivo/line';
-import { defaultConfig } from 'components/insights/charts/charts-views';
+import { defaultConfig, goalSuccessColor } from 'components/insights/charts/charts-views';
 import _ from "lodash";
 import { faMinus, faSquare } from "@fortawesome/pro-solid-svg-icons";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import config from "../../OpseraBuildAndDeployLineChartConfig";
 import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
-import { goalSuccessColor } from "components/insights/charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import {dataPointHelpers} from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import {

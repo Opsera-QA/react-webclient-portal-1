@@ -197,8 +197,9 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
         showLabel={inline !== true}
         model={dataObject}
         field={field}
-        className={"mt-1 mr-2"}
         hasError={hasStringValue(errorMessage) === true}
+        disabled={disabled}
+        isLoading={isLoading}
       />
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput

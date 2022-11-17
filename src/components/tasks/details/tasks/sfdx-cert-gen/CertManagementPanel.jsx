@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import { useLocation } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { Button, Table } from "react-bootstrap";
 import taskActions from "components/tasks/task.actions";
 import {AuthContext} from "contexts/AuthContext";

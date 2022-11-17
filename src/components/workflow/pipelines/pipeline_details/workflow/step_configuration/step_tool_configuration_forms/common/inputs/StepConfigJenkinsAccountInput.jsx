@@ -10,6 +10,7 @@ function StepConfigJenkinsAccountInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("gitUserName", selectedOption.gitUserName);
     newDataObject.setData("service", selectedOption.service);
     newDataObject.setData("repoId", "");
+    newDataObject.setData("projectId", "");
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");    
@@ -29,6 +30,7 @@ function StepConfigJenkinsAccountInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("gitUserName", "");
     newDataObject.setData("service", "");
     newDataObject.setData("repoId", "");
+    newDataObject.setData("projectId", "");
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");    

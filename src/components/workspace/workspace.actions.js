@@ -1,6 +1,7 @@
 import baseActions from "utils/actionsBase";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 export const workspaceActions = {};
 
@@ -57,6 +58,65 @@ workspaceActions.getFreeTrialCustomerWorkspaceItems = async (
     urlParams,
   );
 };
+
+workspaceActions.getFreeTrialUserActivityReportPipelines = async (
+  getAccessToken,
+  cancelTokenSource,
+  userId,
+  searchKeyword,
+) => {
+  const apiUrl = `trial/workspace/activity-report/pipelines`;
+  const params = {};
+
+  if (hasStringValue(searchKeyword) === true) {
+    params.search = searchKeyword;
+  }
+
+  if (isMongoDbId(userId) === true) {
+    params.userId = userId;
+  }
+
+  const urlParams = {
+    params: params,
+  };
+
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    urlParams,
+  );
+};
+
+workspaceActions.getFreeTrialUserActivityReportTasks = async (
+  getAccessToken,
+  cancelTokenSource,
+  userId,
+  searchKeyword,
+) => {
+  const apiUrl = `trial/workspace/activity-report/tasks`;
+  const params = {};
+
+  if (hasStringValue(searchKeyword) === true) {
+    params.search = searchKeyword;
+  }
+
+  if (isMongoDbId(userId) === true) {
+    params.userId = userId;
+  }
+
+  const urlParams = {
+    params: params,
+  };
+
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    urlParams,
+  );
+};
+
 
 workspaceActions.getFreeTrialWorkspaceTasksByIdentifier = async (getAccessToken, cancelTokenSource, identifier) => {
   const apiUrl = `trial/workspace/tasks/${identifier}`;

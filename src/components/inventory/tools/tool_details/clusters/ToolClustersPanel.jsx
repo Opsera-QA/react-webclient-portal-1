@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
-import MessageField from "components/common/fields/text/MessageField";
+import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
 import ArgoToolClustersPanel from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/ArgoToolClustersPanel";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
@@ -32,7 +32,7 @@ function ToolClustersPanel({ toolModel }) {
   return (
     <DetailPanelContainer>
       <div className="h6">Managed K8 Cluster Creation</div>
-      <MessageField message={`Add, Modify or Delete K8 Clusters. These K8 Clusters can be entered once and reused across the Opsera platform.`} />
+      <MessageFieldBase message={`Add, Modify or Delete K8 Clusters. These K8 Clusters can be entered once and reused across the Opsera platform.`} />
       {getToolClustersPanel()}
     </DetailPanelContainer>
   );

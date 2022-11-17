@@ -5,6 +5,7 @@ import RoleAccessFieldBase from "components/common/fields/multiple_items/roles/R
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 import EditIcon from "components/common/icons/field/EditIcon";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
 import FieldContainer from "components/common/fields/FieldContainer";
 
 function RoleAccessInlineInputBase(
@@ -18,6 +19,10 @@ function RoleAccessInlineInputBase(
     className,
   }) {
   const toastContext = useContext(DialogToastContext);
+  const {
+    isFreeTrial,
+    isOpseraAdministrator,
+  } = useComponentStateReference();
 
   const showEditor = () => {
     if (!disabled) {
@@ -31,7 +36,7 @@ function RoleAccessInlineInputBase(
     }
   };
 
-  if (visible === false) {
+  if (visible === false || (isFreeTrial === true && isOpseraAdministrator !== true)) {
     return null;
   }
 

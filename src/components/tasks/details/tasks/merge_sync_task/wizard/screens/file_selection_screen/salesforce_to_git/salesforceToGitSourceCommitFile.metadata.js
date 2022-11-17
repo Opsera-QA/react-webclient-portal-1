@@ -10,11 +10,11 @@ export const salesforceToGitSourceCommitFileMetadata = {
       id: "componentName",
     },
     {
-      label: "Last Modified Date",
+      label: "Last Modified Time",
       id: "committedTime",
     },
     {
-      label: "Component",
+      label: "Component Type",
       id: "componentType",
     },
     {

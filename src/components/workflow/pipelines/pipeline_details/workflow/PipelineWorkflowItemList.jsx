@@ -4,14 +4,11 @@ import { SteppedLineTo } from "react-lineto";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { faPlusSquare, faCaretSquareDown, faCaretSquareUp, faCopy } from "@fortawesome/pro-light-svg-icons";
 import PipelineWorkflowItem from "./PipelineWorkflowItem";
-import "./step_configuration/helpers/step-validation-helper";
 import StepValidationHelper from "./step_configuration/helpers/step-validation-helper";
-import axios from "axios";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 
 function PipelineWorkflowItemList(
@@ -24,44 +21,32 @@ function PipelineWorkflowItemList(
     parentHandleViewSourceActivityLog,
     quietSavePlan,
     fetchPlan,
-    customerAccessRules,
     parentWorkflowStatus,
     refreshCount,
   }) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
   const [isSaving, setIsSaving] = useState(false);
   const [pipelineSteps, setPipelineSteps] = useState(pipeline.workflow.plan);
   const [isLoading, setIsLoading] = useState(false);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+    toastContext,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setIsLoading(true);
-      await getToolIdentifiers(cancelSource);
+      await getToolIdentifiers();
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -76,8 +61,8 @@ function PipelineWorkflowItemList(
     }
   };
 
-  const getToolIdentifiers = async (cancelSource = cancelTokenSource) => {
-    const response = await toolIdentifierActions.getToolIdentifiersV2(getAccessToken, cancelSource);
+  const getToolIdentifiers = async () => {
+    const response = await toolIdentifierActions.getToolIdentifiersV2(getAccessToken, cancelTokenSource);
     const identifiers = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(identifiers)) {
@@ -87,7 +72,7 @@ function PipelineWorkflowItemList(
 
   useEffect(() => {
     if (pipeline) {
-      setPipelineSteps(pipeline.workflow.plan);
+      setPipelineSteps(pipeline?.workflow?.plan);
     }
   }, [refreshCount, JSON.stringify(lastStep), JSON.stringify(pipeline.workflow)]);
 
@@ -227,9 +212,17 @@ function PipelineWorkflowItemList(
   return (
     <>
       {pipelineSteps && pipelineSteps.map((item, index) => (
-        <div key={index} className={isSaving ? "fa-disabled" : ""}>
-          <div className={"mb-1 p-1 workflow-module-container workflow-module-container-width mx-auto " +
-          setStepStatusClass(lastStep, item)}>
+        <div
+          key={index}
+          className={isSaving ? "fa-disabled" : ""}
+        >
+          <div
+            className={"mb-1 p-1 workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(lastStep, item)}
+            style={{
+              boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)",
+              // borderRadius: "1rem",
+            }}
+          >
             <PipelineWorkflowItem
               pipeline={pipeline}
               plan={pipelineSteps}
@@ -238,7 +231,6 @@ function PipelineWorkflowItemList(
               lastStep={lastStep}
               editWorkflow={editWorkflow}
               pipelineId={pipelineId}
-              customerAccessRules={customerAccessRules}
               parentCallbackEditItem={parentCallbackEditItem}
               deleteStep={deleteStep}
               refreshCount={refreshCount}
@@ -299,8 +291,17 @@ function PipelineWorkflowItemList(
               </div>
             </> :
             <>
-              <SteppedLineTo from={"step-" + item._id} to={"step-" + index} delay={100} orientation="v" zIndex={-1}
-                             borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
+              <SteppedLineTo
+                from={"step-" + item._id}
+                to={"step-" + index}
+                delay={100}
+                orientation={"v"}
+                zIndex={10}
+                borderColor={"#0f3e84"}
+                borderWidth={2}
+                fromAnchor={"bottom"}
+                toAnchor={"bottom"}
+              />
               <div style={{ height: "40px" }} className={"step-" + index}>&nbsp;</div>
             </>
           }
@@ -331,7 +332,6 @@ PipelineWorkflowItemList.propTypes = {
   setStateItems: PropTypes.func,
   quietSavePlan: PropTypes.func,
   fetchPlan: PropTypes.func,
-  customerAccessRules: PropTypes.object,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   refreshCount: PropTypes.number,
 };

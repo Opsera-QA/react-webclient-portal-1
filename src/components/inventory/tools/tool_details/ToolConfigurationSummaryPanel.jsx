@@ -106,12 +106,19 @@ import {
 import InformaticaIdqConnectionMetadata from "./tool_jobs/informatica_idq/informatica-idq-connection-metadata";
 import InformaticaIdqToolConfigurationSummaryPanel
   from "./tool_jobs/informatica_idq/InformaticaIdqToolConfigurationSummaryPanel";
-import gchatConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/gchat/gchat-connection-metadata";
+import ToolConnectionSummaryContainer
+  from "components/inventory/tools/details/connection/ToolConnectionSummaryContainer";
+import gchatConnectionMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/gchat/gchat-connection-metadata";
 import GChatToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/gchat/GChatToolConfigurationSummaryPanel";
 import FortifyToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/fortify/FortifyToolConfigurationSummaryPanel";
 import FortifyMetadata from "components/inventory/tools/tool_details/tool_jobs/fortify/fortify-tool-metadata";
+import ThycoticVaultToolConfigurationSummaryPanel 
+  from "components/inventory/tools/tool_details/tool_jobs/thycotic_vault/ThycoticVaultToolConfigurationSummaryPanel";
+import ThycoticVaultMetadata 
+  from "components/inventory/tools/tool_details/tool_jobs/thycotic_vault/thycoticVault-tool-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -138,13 +145,13 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
             jiraToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, jiraToolConnectionMetadata)}
           />
         );
-      case "github":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
         return (
           <GithubToolConfigurationSummaryPanel
             githubToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, githubConnectionMetadata)}
           />
         );
-      case "gitlab":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
         return (
           <GitlabToolConfigurationSummaryPanel
             gitlabToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, gitlabConnectionMetadata)}
@@ -198,7 +205,7 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
             awsToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, awsConnectionMetadata)}
           />
         );
-      case "sfdc-configurator":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR:
         return (
           <SfdcToolConfigurationSummaryPanel
             sfdcToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, sfdcConnectionMetadata)}
@@ -294,7 +301,8 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           />
         );
         //TODO: We need to rename either the old or the new metadata
-      case "azure":
+      // case "azure":
+      //   break;
       // return (
       //   <AzureV2ToolConfigurationSummaryPanel
       //     azureToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AzureV2ConnectionMetadata)}
@@ -317,13 +325,23 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
           <FortifyToolConfigurationSummaryPanel
             fortifyToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, FortifyMetadata)}
           />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.THYCOTIC_VAULT:
+        return (
+          <ThycoticVaultToolConfigurationSummaryPanel
+            thycoticVaultToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, ThycoticVaultMetadata)}
+          />
         );        
       default:
         return <div className="text-center p-5 text-muted mt-5">Summary Panel is not currently available for this tool configuration.</div>;
     }
   };
   
-  return (getConfigurationSummaryPanel());
+  return (
+    <ToolConnectionSummaryContainer>
+      {getConfigurationSummaryPanel()}
+    </ToolConnectionSummaryContainer>
+  );
 }
 
 ToolConfigurationSummaryPanel.propTypes = {

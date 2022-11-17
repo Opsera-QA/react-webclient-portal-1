@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import regexDefinitions from "utils/regexDefinitions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import IconBase from "components/common/icons/IconBase";
+import { faTriangleExclamation } from "@fortawesome/pro-light-svg-icons";
 
 function InfoText(
   {
@@ -9,6 +11,7 @@ function InfoText(
     errorMessage,
     customMessage,
     successMessage,
+    warningMessage,
     hideRegexDefinitionText,
     model,
     fieldName,
@@ -51,6 +54,20 @@ function InfoText(
     }
   }
 
+  if (hasStringValue(warningMessage) === true) {
+    return (
+      <span className={"warning-text-alt form-text ml-1"}>
+        <div>
+          <IconBase
+            icon={faTriangleExclamation}
+            className={"mr-1"}
+          />
+          {warningMessage}
+        </div>
+      </span>
+    );
+  }
+
   if (model && field) {
     const warning = model?.getFieldWarning(field?.id);
 
@@ -82,6 +99,7 @@ InfoText.propTypes = {
   hideRegexDefinitionText: PropTypes.bool,
   model: PropTypes.object,
   fieldName: PropTypes.string,
+  warningMessage: PropTypes.string,
 };
 
 export default InfoText;

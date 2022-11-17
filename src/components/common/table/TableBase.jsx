@@ -44,7 +44,6 @@ function TableBase(
       css: "vanity-table",
       headerRowHeight: 30,
       rowHeight: 30,
-      // TODO: Wire up custom row styling
       rowCss: (row) => {
         let styling = onRowSelect != null ? "main-text pointer" : "main-text hide-grid-pointer";
 

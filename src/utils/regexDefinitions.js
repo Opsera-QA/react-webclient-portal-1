@@ -157,7 +157,7 @@ regexDefinitions.decimalField = {
 };
 
 regexDefinitions.hostnameRegex = {
-  regex: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/,
+  regex: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9-]*[A-Za-z0-9])$/,
   formText: "Host names must follow the RFC 1123 standard",
   errorFormText: "Host names must follow the RFC 1123 standard",
 };
@@ -202,7 +202,7 @@ regexDefinitions.jsonFile = {
 };
 
 regexDefinitions.collectionName = {
-  regex: /^[a-zA-Z0-9_-]*(?:\.[a-zA-Z0-9_-]+)$/,
+  regex: /^[a-zA-Z0-9_-]*\.[a-zA-Z0-9_-]+$/,
   formText: "Accepts input in [DatabaseName].[CollectionName] format",
   errorFormText: "Input should be in [DatabaseName].[CollectionName] format. Only letters, numbers, dashes, underscores and periods are allowed",
 };

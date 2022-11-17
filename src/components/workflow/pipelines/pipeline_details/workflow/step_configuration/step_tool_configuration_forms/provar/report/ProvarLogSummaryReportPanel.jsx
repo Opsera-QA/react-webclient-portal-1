@@ -10,10 +10,9 @@ import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/Vani
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
 import ProvarSummaryLogVerticalTabContainer
     from "./ProvarSummaryLogVerticalTabContainer";
-import { faClipboardListCheck } from "@fortawesome/pro-light-svg-icons";
+import { faClipboardListCheck, faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import {faCheckCircle} from "@fortawesome/pro-light-svg-icons";
 import ProvarReportView
     from "./ProvarReportView";
 

@@ -29,8 +29,10 @@ function PipelineConditionsField({ dataObject, fieldName }) {
 
   return (
     <div className="content-container content-card-1">
-      <div className="px-2 content-block-header members-title">
-        <span><IconBase icon={faCogs} className={"mr-2"}/>{field.label}</span>
+      <div className={"px-2 content-block-header members-title d-flex"}>
+        <div className={"my-auto w-100"}>
+          <span><IconBase icon={faCogs} className={"mr-2"}/>{field.label}</span>
+        </div>
       </div>
       <div>
         {getConditions()}

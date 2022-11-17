@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { DateRangePicker } from "react-date-range";
-import { useEffect } from "react";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoContainer from "components/common/containers/InfoContainer";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";

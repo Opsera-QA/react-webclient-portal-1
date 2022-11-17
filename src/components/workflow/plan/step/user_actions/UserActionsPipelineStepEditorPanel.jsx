@@ -17,8 +17,6 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import LdapUserSelectInput from "components/common/list_of_values_input/users/LdapUserSelectInput";
 import { Col, Row } from "react-bootstrap";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import PipelineInstructionsFieldBase
-  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsFieldBase";
 import PipelineInstructionsField
   from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsField";
 
@@ -108,6 +106,7 @@ export default function UserActionsPipelineStepEditorPanel(
             fieldName={"pipelineInstructionsId"}
             model={userActionsStepModel}
             setModel={setUserActionsStepModel}
+            allowCreate={true}
           />
         </Col>
         <Col xs={12}>
@@ -115,6 +114,7 @@ export default function UserActionsPipelineStepEditorPanel(
             model={userActionsStepModel}
             fieldName={"pipelineInstructionsId"}
             showInstructions={true}
+            allowEditing={true}
           />
         </Col>
         <Col xs={12}>
@@ -130,13 +130,6 @@ export default function UserActionsPipelineStepEditorPanel(
             dataObject={userActionsStepModel}
             setDataObject={setUserActionsStepModel}
             disabled={userActionsStepModel?.getData("sendCustomMessage") !== true}
-          />
-        </Col>
-        <Col xs={12}>
-          <LdapUserSelectInput
-            fieldName={"contact"}
-            model={userActionsStepModel}
-            setModel={setUserActionsStepModel}
           />
         </Col>
       </Row>

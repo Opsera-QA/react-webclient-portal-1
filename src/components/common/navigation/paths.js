@@ -1,9 +1,5 @@
 const paths = {};
 
-// TODO: Rewrite these to be functions
-paths.userProfile = "user/profile";
-paths.userRecord = "user/myUserRecord";
-paths.accessTokens = "user/accessTokens";
 paths.home = "";
 paths.logs = "logs";
 paths.blueprint = "blueprint";
@@ -110,6 +106,12 @@ paths.projectTaggingDetailView = paths.dataMappingManagement + "/projects/detail
 paths.pipelineDataMappingDetailView = paths.dataMappingManagement + "/pipeline/details/";
 paths.userTaggingDetailView = paths.dataMappingManagement + "/users/details/";
 
+paths.freeTrialUserExpirationManagement = paths.accountSettings + "/trial/user-expiration-management";
+paths.freeTrialUserExtensionScreen = `${paths.freeTrialUserExpirationManagement}/extension`;
+paths.freeTrialUserRevocationScreen = `${paths.freeTrialUserExpirationManagement}/revocation`;
+paths.freeTrialUserReinstatementScreen = `${paths.freeTrialUserExpirationManagement}/reinstatement`;
+
+paths.freeTrialUserActivityReport = `${paths.accountSettings}/trial/user/activity-report`;
 paths.freeTrialUserExpirationManagement = paths.accountSettings + "/trial/user-expiration-management";
 
 //Reports

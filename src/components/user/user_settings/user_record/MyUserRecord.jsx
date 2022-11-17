@@ -5,8 +5,11 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {ldapUserMetadata} from "components/settings/ldap_users/ldapUser.metadata";
 import LdapUserDetailPanel from "components/settings/ldap_users/users_detail_view/LdapUserDetailPanel";
-import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
+import UserSettingsSubNavigationBar from "components/user/user_settings/UserSettingsSubNavigationBar";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import {USER_SETTINGS_PAGES} from "components/user/user_settings/userSettings.paths";
 
 function MyUserRecord() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -86,18 +89,22 @@ function MyUserRecord() {
     }
   };
 
-  if (isLoading) {
-    return (<LoadingDialog size={"sm"} message="Loading User Record" />);
-  }
-
   return (
-    <LdapUserDetailPanel
-      setLdapUserData={setLdapUserData}
-      orgDomain={orgDomain}
-      ldapUserData={ldapUserData}
-      authorizedActions={authorizedActions}
-      hideSettings={true}
-    />
+    <ScreenContainer
+      navigationTabContainer={<UserSettingsSubNavigationBar activeTab={USER_SETTINGS_PAGES.MY_USER_RECORD} />}
+      breadcrumbDestination={USER_SETTINGS_PAGES.MY_USER_RECORD}
+      roleRequirement={ROLE_LEVELS.USERS}
+      accessRoleData={accessRoleData}
+      isLoading={isLoading}
+    >
+      <LdapUserDetailPanel
+        setLdapUserData={setLdapUserData}
+        orgDomain={orgDomain}
+        ldapUserData={ldapUserData}
+        authorizedActions={authorizedActions}
+        hideSettings={true}
+      />
+    </ScreenContainer>
   );
 }
 

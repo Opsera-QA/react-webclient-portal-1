@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { ApiService } from "../../../api/apiService";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";

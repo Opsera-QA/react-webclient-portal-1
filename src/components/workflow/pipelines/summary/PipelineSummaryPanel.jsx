@@ -6,14 +6,12 @@ import {
   faPencilAlt,
   faSave, faTag,
   faTimes,
-  faUser,
-  faUserFriends,
 } from "@fortawesome/pro-light-svg-icons";
 import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import { AuthContext } from "contexts/AuthContext";
 import InformationDialog from "components/common/status_notifications/info";
-import PipelineActionControls from "components/workflow/pipelines/pipeline_details/PipelineActionControls";
+import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
 import PipelineSummaryActionBar from "components/workflow/pipelines/summary/action_bar/PipelineSummaryActionBar";
 import EditTagModal from "components/workflow/EditTagModal";
 import pipelineActions from "components/workflow/pipeline-actions";
@@ -28,15 +26,14 @@ import PipelineDurationMetricsStandaloneField
   from "components/common/fields/pipelines/metrics/PipelineDurationMetricsStandaloneField";
 import IconBase from "components/common/icons/IconBase";
 import PipelineSchedulerField from "components/workflow/pipelines/summary/fields/PipelineSchedulerField";
-import { hasStringValue } from "components/common/helpers/string-helpers";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleAccessInput from "components/workflow/pipelines/summary/inputs/PipelineRoleAccessInput";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import OwnerNameField from "components/common/fields/text/general/OwnerNameField";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -45,28 +42,10 @@ const INITIAL_FORM_DATA = {
   type: [],
 };
 
-const getWorkflowStatus = (pipeline) => {
-  const lastStep = pipeline?.workflow?.last_step;
-
-  if (lastStep != null) {
-    const status = lastStep?.status;
-
-    if (status === "stopped" && lastStep?.running?.paused) {
-      return "paused";
-    } else if (hasStringValue(status)) {
-      return status;
-    }
-  }
-
-  return false;
-};
-
 // TODO: This class needs to be reworked with new components and also to cleanup
 function PipelineSummaryPanel(
   {
     pipeline,
-    ownerName,
-    customerAccessRules,
     parentWorkflowStatus,
     fetchPlan,
     setWorkflowStatus,
@@ -83,29 +62,10 @@ function PipelineSummaryPanel(
   const {
     userData,
     cancelTokenSource,
-    isMounted,
     toastContext,
   } = useComponentStateReference();
 
-  useEffect(() => {
-    loadData().catch((error) => {
-      if (isMounted.current === true) {
-        // toastContext.showLoadingError(error);
-      }
-    });
-  }, []);
-
-  const loadData = async () => {
-    try {
-      if (setWorkflowStatus) {
-        setWorkflowStatus(getWorkflowStatus(pipeline));
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    }
-  };
+  useEffect(() => {}, [pipeline]);
 
   const handleSavePropertyClick = async (pipelineId, value, type) => {
     if (Object.keys(value).length > 0 && type.length > 0) {
@@ -119,15 +79,6 @@ function PipelineSummaryPanel(
             "name": value.name,
           };
           setEditTitle(false);
-          break;
-        case "project":
-          pipeline.project.name = value.project.name;
-          postBody = {
-            "project": {
-              "name": value.project.name,
-              "project_id": "",
-            },
-          };
           break;
         case "description":
           pipeline.description = value.description;
@@ -177,12 +128,6 @@ function PipelineSummaryPanel(
       case "name":
         setEditTitle(true);
         setFormData({ ...formData, name: pipeline.name });
-        break;
-      case "project":
-        setFormData({
-          ...formData,
-          project: { name: pipeline.project !== undefined && pipeline.project.hasOwnProperty("name") ? pipeline.project.name : "" },
-        });
         break;
       case "description":
         setEditDescription(true);
@@ -289,11 +234,10 @@ function PipelineSummaryPanel(
   const getPipelineActionControls = () => {
     if (showActionControls !== false) {
       return (
-        <div className="text-right py-2">
+        <div className={"text-right py-2 pr-2"}>
           <PipelineActionControls
             pipeline={pipeline}
             disabledActionState={false}
-            customerAccessRules={customerAccessRules}
             fetchData={fetchPlan}
             setPipeline={setPipeline}
             setParentWorkflowStatus={setWorkflowStatus}
@@ -392,13 +336,17 @@ function PipelineSummaryPanel(
   };
 
   const getPipelineSummaryField = () => {
-    if (pipeline.workflow?.last_run?.completed) {
+    const completed = DataParsingHelper.parseNestedDate(pipeline, "workflow.last_run.completed");
+
+    if (completed) {
+      const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_run.status");
+
       return (
         <Col sm={12} className="py-2">
           <span className="text-muted mr-1">Summary:</span>
           Last complete run of pipeline finished on {
-          format(new Date(pipeline.workflow.last_run.completed), "yyyy-MM-dd', 'hh:mm a")} with a status
-          of {pipeline.workflow.last_run.status}.
+          format(new Date(completed), "yyyy-MM-dd', 'hh:mm a")} with a status
+          of {status}.
         </Col>
       );
     }
@@ -501,7 +449,6 @@ function PipelineSummaryPanel(
 
 PipelineSummaryPanel.propTypes = {
   pipeline: PropTypes.object,
-  customerAccessRules: PropTypes.object,
   ownerName: PropTypes.string,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   fetchPlan: PropTypes.func,

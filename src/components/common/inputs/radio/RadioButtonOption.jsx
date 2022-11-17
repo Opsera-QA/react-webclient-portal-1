@@ -21,7 +21,7 @@ function RadioButtonOption({ fieldName, dataObject, setDataObject, value, setDat
     <div className={disabled ? `${className} disabled-radio-option` : className}>
       <div className="d-flex">
         <input
-          className="mr-2 mt-1"
+          className={"mr-2 mt-1"}
           type={"radio"}
           value={value}
           checked={dataObject?.getData(fieldName) === value}

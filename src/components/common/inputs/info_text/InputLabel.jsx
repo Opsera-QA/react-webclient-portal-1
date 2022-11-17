@@ -6,14 +6,15 @@ import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import HelpInfoOverlayIcon from "components/common/icons/general/HelpInfoOverlayIcon";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
-import AzureDevopsPipelineStepConfigurationHelpDocumentation
-  from "components/common/help/documentation/pipelines/step_configuration/AzureDevopsPipelineStepConfigurationHelpDocumentation";
+import ReloadDataIcon from "components/common/icons/reload/ReloadDataIcon";
+import EnableEditingIcon from "components/common/icons/enable/EnableEditingIcon";
 
 function InputLabel(
   {
     field,
     model,
     clearDataFunction,
+    enableEditingFunction,
     requireClearDataConfirmation,
     linkTooltipText,
     detailViewLink,
@@ -27,6 +28,9 @@ function InputLabel(
     inputHelpOverlay,
     hasError,
     helpTooltipText,
+    loadDataFunction,
+    disabled,
+    isLoading,
   }) {
   const getInputHelpIcon = () => {
     if (inputHelpOverlay != null) {
@@ -100,11 +104,24 @@ function InputLabel(
             tooltipText={ellipsisTooltipText}
             className={"ml-1 view-details-icon"}
           />
+          <EnableEditingIcon
+            enableEditingFunction={enableEditingFunction}
+            disabled={disabled}
+            isLoading={isLoading}
+            className={"ml-2 my-auto"}
+          />
+          <ReloadDataIcon
+            loadDataFunction={loadDataFunction}
+            disabled={disabled}
+            isLoading={isLoading}
+            className={"ml-2 my-auto"}
+          />
           <ClearDataIcon
             requireConfirmation={requireClearDataConfirmation}
             clearValueFunction={clearDataFunction}
             furtherDetails={clearDataDetails}
-            className={"ml-2"}
+            className={"ml-2 my-auto"}
+            disabled={disabled || isLoading}
           />
           {extraActionButtons}
         </div>
@@ -122,6 +139,7 @@ InputLabel.propTypes = {
   detailViewLink: PropTypes.string,
   linkTooltipText: PropTypes.string,
   clearDataFunction: PropTypes.func,
+  enableEditingFunction: PropTypes.func,
   requireClearDataConfirmation: PropTypes.bool,
   clearDataDetails: PropTypes.any,
   extraActionButtons: PropTypes.any,
@@ -130,6 +148,9 @@ InputLabel.propTypes = {
   inputHelpOverlay: PropTypes.any,
   hasError: PropTypes.bool,
   helpTooltipText: PropTypes.string,
+  loadDataFunction: PropTypes.bool,
+  disabled: PropTypes.bool,
+  isLoading: PropTypes.bool,
 };
 
 export default InputLabel;

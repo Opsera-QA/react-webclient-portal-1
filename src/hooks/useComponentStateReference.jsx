@@ -10,6 +10,7 @@ export default function useComponentStateReference() {
   const {
     getAccessToken,
     userAccessRoles,
+    themeConstants,
     isSassUser,
     isOpseraAdministrator,
     featureFlagHideItemInProd,
@@ -17,6 +18,8 @@ export default function useComponentStateReference() {
     isSiteAdministrator,
     isPowerUser,
     userData,
+    backgroundColor,
+    isAuthenticated,
   } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
 
@@ -28,6 +31,7 @@ export default function useComponentStateReference() {
     getAccessToken: getAccessToken,
     toastContext: toastContext,
     accessRoleData: userAccessRoles,
+    themeConstants: themeConstants,
     isOpseraAdministrator: isOpseraAdministrator(),
     isSiteAdministrator: isSiteAdministrator,
     isProductionEnvironment: featureFlagHideItemInProd(),
@@ -36,6 +40,8 @@ export default function useComponentStateReference() {
     isSaasUser: isSassUser(),
     userData: userData,
     isFreeTrial: false,
+    backgroundColor: backgroundColor,
+    isAuthenticated: isAuthenticated,
     isPowerUser: isPowerUser,
   });
 }

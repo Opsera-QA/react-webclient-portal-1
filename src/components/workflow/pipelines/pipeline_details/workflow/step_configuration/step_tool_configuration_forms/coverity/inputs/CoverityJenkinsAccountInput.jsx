@@ -14,6 +14,7 @@ function CoverityJenkinsAccountInput({dataObject, setDataObject, disabled, class
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");
     newDataObject.setData("repoId", "");
+    newDataObject.setData("projectId", "");
     newDataObject.setData("gitBranch", "");
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");

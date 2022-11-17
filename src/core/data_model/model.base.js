@@ -310,9 +310,7 @@ export default class ModelBase {
   };
 
   resetData = () => {
-    this.changeMap.forEach((value, key) => {
-      this.data[key] = value;
-    });
+    this.data = DataParsingHelper.cloneDeep(this.originalData);
     this.clearChangeMap();
   };
 

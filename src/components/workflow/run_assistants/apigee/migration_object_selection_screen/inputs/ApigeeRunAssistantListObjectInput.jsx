@@ -85,11 +85,11 @@ function ApigeeRunAssistantListObjectInput(
   }, [model]);
 
   const constructList = () => {
-    
+
     if (Array.isArray(selectOptions) && selectOptions.length > 0) {
       selectOptions.forEach(data => data.id = data[valueField]);
     }
-    
+
     let list = new List(containerRef.current, {
       data: selectOptions || [],
       multiselection: disabled !== true && isLoading !== true,
@@ -196,7 +196,7 @@ function ApigeeRunAssistantListObjectInput(
     if (!disabled && model?.getArrayData(field?.id)?.length > 0 && showClearValueButton !== false && (setDataFunction == null || clearDataFunction)) {
       return (
         <TooltipWrapper innerText={"Empty out all stored values"}>
-          <span onClick={() => clearValue()} className="badge badge-danger clear-value-badge pointer ml-2">
+          <span onClick={() => clearValue()} className="badge badge-danger pointer ml-2">
             <span className={"my-auto"}>
               <IconBase
                 icon={faTimes}

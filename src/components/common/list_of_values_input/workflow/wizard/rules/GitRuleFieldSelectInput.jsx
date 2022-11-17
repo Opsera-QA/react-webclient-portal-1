@@ -4,11 +4,11 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const ruleFields = [
   {value: "commitAction", text: "Commit Action"},
-  {value: "commitID", text: "Commit ID"},
+  {value: "commitID", text: "Last Modified Commit ID"},
   {value: "committedFile", text: "File Name"},
   {value: "componentName", text: "Component Name"},
-  // {value: "committedTime", text: "Commit Time"}, // TODO: For future release
-  {value: "committedBy", text: "Committed By"},
+  // {value: "committedTime", text: "Last Modified Time"}, // TODO: For future release
+  {value: "committedBy", text: "Last Modified By"},
 ];
 
 function GitRuleFieldSelectInput({fieldName, className, dataObject, setDataObject, disabled, showLabel}) {

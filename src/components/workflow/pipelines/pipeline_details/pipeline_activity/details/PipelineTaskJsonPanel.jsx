@@ -8,7 +8,7 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 function PipelineTaskJsonPanel({ pipelineTaskData }) {
   return (
     <SummaryPanelContainer>
-      <Row>
+      <Row className={"mt-2"}>
         <Col md={12}>
           <ReactJson src={pipelineTaskData} enableClipboard={false} displayDataTypes={false} collapsed={false}/>
         </Col>

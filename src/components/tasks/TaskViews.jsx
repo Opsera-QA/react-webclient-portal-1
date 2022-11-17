@@ -15,6 +15,7 @@ import Col from "react-bootstrap/Col";
 import TaskTypeFilter from "components/common/filters/tasks/type/TaskTypeFilter";
 import TaskStatusFilter from "components/common/filters/tasks/status/TaskStatusFilter";
 import TaskVerticalTabContainer from "components/tasks/TaskVerticalTabContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
 
 function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, isMounted, taskMetadata}) {
   const toastContext = useContext(DialogToastContext);
@@ -95,15 +96,15 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
 
   const getTableCardView = () => {
     return (
-      <Row className={"mx-0"}>
-        <Col sm={2} className={"px-0 makeup-tree-container"}>
+      <TabAndViewContainer
+        verticalTabContainer={
           <TaskVerticalTabContainer
             isLoading={isLoading}
             loadData={loadData}
             taskFilterModel={taskFilterModel}
           />
-        </Col>
-        <Col sm={10} className={"px-0"}>
+        }
+        currentView={
           <TableCardView
             filterModel={taskFilterModel}
             data={taskData}
@@ -111,8 +112,8 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
             cardView={getCardView()}
             tableView={getTableView()}
           />
-        </Col>
-      </Row>
+        }
+      />
     );
   };
 

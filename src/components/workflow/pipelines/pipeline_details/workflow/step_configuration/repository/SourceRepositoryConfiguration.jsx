@@ -50,7 +50,7 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
       }
 
       // TODO: Don't deconstruct like this.
-      let { name, service, accountId, username, password, repository, branch, key, trigger_active, repoId, sshUrl, gitUrl, workspace, workspaceName, secondary_branches, gitExportEnabled, gitExportPath  } = persistData;
+      let { name, service, accountId, username, password, repository, branch, key, trigger_active, repoId, sshUrl, gitUrl, workspace, workspaceName, secondary_branches, gitExportEnabled, gitExportPath, isPushEvent, isPrEvent, prCreatedEvent, prApprovedEvent  } = persistData;
       const item = {
         name: name,
         service: service,
@@ -67,6 +67,10 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
         secondary_branches: secondary_branches,
         key: key,
         trigger_active: trigger_active,
+        isPushEvent: isPushEvent,
+        isPrEvent: isPrEvent,
+        prCreatedEvent: prCreatedEvent,
+        prApprovedEvent: prApprovedEvent,
         gitExportEnabled: gitExportEnabled, 
         gitExportPath: gitExportPath
       };
@@ -175,7 +179,7 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
         branches for pipeline runs.</div>
 
       <div className={"p-3"} >COMING SOON</div>
-
+      
         <hr />*/}
       <div className="text-muted h5 mt-3">Pipeline Git Revisions</div>
         <PipelineSourceRepositoryGitExportEnabledInput

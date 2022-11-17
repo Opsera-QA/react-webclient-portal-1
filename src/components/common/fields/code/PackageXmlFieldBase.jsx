@@ -97,7 +97,6 @@ function PackageXmlFieldBase({model, fieldName, className, isLoading}) {
           </div>
         </div>
       </div>
-      <div className={"object-properties-footer"} />
     </InputContainer>
   );
 }

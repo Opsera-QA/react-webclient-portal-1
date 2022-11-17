@@ -5,6 +5,7 @@ import AccessDeniedMessage from "components/common/status_notifications/AccessDe
 import { faExclamationTriangle } from "@fortawesome/pro-light-svg-icons";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 const HEIGHT = `calc(${screenContainerHeights.SCREEN_CONTAINER_HEIGHT} - ${screenContainerHeights.CONTENT_BLOCK_FOOTER_HEIGHT} - 22px)`;
 const BODY_HEIGHT = `calc(${HEIGHT} - 48px)`;
@@ -12,9 +13,13 @@ const BODY_HEIGHT = `calc(${HEIGHT} - 48px)`;
 export default function AccessDeniedContainer(
   {
     navigationTabContainer,
-    includeSubNavigationGap,
     customMessage,
   }) {
+  const {
+    isOpseraAdministrator,
+    isFreeTrial
+  } = useComponentStateReference();
+
   const getTopNavigation = () => {
     if (navigationTabContainer) {
       return (
@@ -24,7 +29,7 @@ export default function AccessDeniedContainer(
       );
     }
 
-    if (includeSubNavigationGap === true) {
+    if (isFreeTrial !== true || isOpseraAdministrator !== true) {
       return (
         <div className={"mb-3"}>
           <div className={"sub-navigation-block"} />
@@ -42,11 +47,13 @@ export default function AccessDeniedContainer(
           minHeight: HEIGHT,
         }}
       >
-        <div className={"px-3 content-block-header title-text-header-1"}>
-          <TitleBar
-            titleIcon={faExclamationTriangle}
-            title={"Access Denied!"}
-          />
+        <div className={"px-3 content-block-header title-text-header-1 py-2 d-flex"}>
+          <div className={"my-auto w-100"}>
+            <TitleBar
+              titleIcon={faExclamationTriangle}
+              title={"Access Denied!"}
+            />
+          </div>
         </div>
         <CenteredContentWrapper
           minHeight={BODY_HEIGHT}
@@ -62,10 +69,5 @@ export default function AccessDeniedContainer(
 
 AccessDeniedContainer.propTypes = {
   navigationTabContainer: PropTypes.object,
-  includeSubNavigationGap: PropTypes.bool,
   customMessage: PropTypes.string,
-};
-
-AccessDeniedContainer.defaultProps = {
-  includeSubNavigationGap: true,
 };

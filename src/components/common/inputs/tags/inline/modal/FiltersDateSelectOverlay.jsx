@@ -110,7 +110,6 @@ function FiltersDateSelectOverlay({showModal, dataModel, saveDataFunction, type}
         titleText={`Confirm Update date in all KPIs`}
         titleIcon={faCalendarAlt}
         height={"100px"}
-        isOverlayAlready={true}
       >
         <div className={"m-2"}>
           <div className={"d-flex"}>

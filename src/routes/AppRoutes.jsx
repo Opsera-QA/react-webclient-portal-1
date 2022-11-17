@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Router, Switch, useHistory } from "react-router-dom";
 import { SecureRoute } from "@okta/okta-react";
 import Sidebar from "components/sidebar/Sidebar";
 import Dashboard from "components/dashboard/DashboardHome";
@@ -20,21 +19,20 @@ import NotificationsRoutes from "routes/NotificationsRoutes";
 import LogsRoutes from "routes/LogsRoutes";
 import UserProfileRoutes from "routes/UserProfileRoutes";
 import BlueprintsRoutes from "routes/BlueprintsRoutes";
+import FreeTrialSettingsRoutes from "routes/FreeTrialSettingsRoutes";
+import FreeTrialAdminToolsRoutes from "routes/FreeTrialAdminToolsRoutes";
 
-const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, userData, hideSideBar }) => {
-  const history = useHistory();
-
-  useEffect(() => {}, [userData, authenticatedState, isPublicPathState, hideSideBar]);
+const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, }) => {
+  useEffect(() => {
+  }, [authenticatedState, isPublicPathState]);
 
   // Authenticated routes
   return (
-    <div className={"container-fluid m-0"}>
+    <div className={"w-100 px-3"}>
       <div className={"d-flex flex-row"}>
-        <Sidebar userData={userData} hideSideBar={hideSideBar} />
+        <Sidebar />
 
-        <div className={"w-100 hide-x-overflow"} style={{ marginBottom: "26px" }}>
-          {/*<Router history={history}>*/}
-          {/*  <Switch>*/}
+        <div className={"w-100 hide-x-overflow"}>
           <PublicRoutes
             authClient={authClient}
           />
@@ -49,18 +47,14 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, userData
           <ReportsRoutes />
           <NotificationsRoutes />
           <SettingsRoutes />
+          <FreeTrialSettingsRoutes />
           <AdminToolsRoutes />
+          <FreeTrialAdminToolsRoutes />
+
           {/*TODO: These are legacy routes that should probably be removed*/}
           <SecureRoute path="/dashboard" component={Dashboard} />
           <SecureRoute path="/tools/:id?" component={ApiConnector} />
           <SecureRoute path="/update" component={Update} />
-
-          {/*<Route*/}
-          {/*  path={"*"}*/}
-          {/*  component={PageNotFound}*/}
-          {/*/>*/}
-          {/*  </Switch>*/}
-          {/*</Router>*/}
         </div>
       </div>
       <OpseraFooter />

@@ -96,30 +96,30 @@ function LdapGroupEditorPanel(
             setDataObject={setLdapGroupDataDto}
           />
         </Col>
-        <Col lg={12}>
-          <TextInputBase
-            fieldName={"groupType"}
-            dataObject={ldapGroupDataDto}
-            setDataObject={setLdapGroupDataDto}
-            disabled={true}
-          />
-        </Col>
-        <Col lg={12}>
-          <TextInputBase
-            disabled={true}
-            fieldName={"externalSyncGroup"}
-            dataObject={ldapGroupDataDto}
-            setDataObject={setLdapGroupDataDto}
-          />
-        </Col>
-        <Col lg={12}>
-          <BooleanToggleInput
-            disabled={true}
-            fieldName={"isSync"}
-            dataObject={ldapGroupDataDto}
-            setDataObject={setLdapGroupDataDto}
-          />
-        </Col>
+        {/*<Col lg={12}>*/}
+        {/*  <TextInputBase*/}
+        {/*    fieldName={"groupType"}*/}
+        {/*    dataObject={ldapGroupDataDto}*/}
+        {/*    setDataObject={setLdapGroupDataDto}*/}
+        {/*    disabled={true}*/}
+        {/*  />*/}
+        {/*</Col>*/}
+        {/*<Col lg={12}>*/}
+        {/*  <TextInputBase*/}
+        {/*    disabled={true}*/}
+        {/*    fieldName={"externalSyncGroup"}*/}
+        {/*    dataObject={ldapGroupDataDto}*/}
+        {/*    setDataObject={setLdapGroupDataDto}*/}
+        {/*  />*/}
+        {/*</Col>*/}
+        {/*<Col lg={12}>*/}
+        {/*  <BooleanToggleInput*/}
+        {/*    disabled={true}*/}
+        {/*    fieldName={"isSync"}*/}
+        {/*    dataObject={ldapGroupDataDto}*/}
+        {/*    setDataObject={setLdapGroupDataDto}*/}
+        {/*  />*/}
+        {/*</Col>*/}
       </Row>
     </EditorPanelContainer>
   );

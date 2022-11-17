@@ -5,8 +5,6 @@ import {
   userActionsPipelineStepMetadata
 } from "components/workflow/plan/step/user_actions/userActionsPipelineStep.metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PipelineInstructionsDisplayerOverlay
-  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsDisplayerOverlay";
 import IconBase from "components/common/icons/IconBase";
 import { faSearch } from "@fortawesome/pro-solid-svg-icons";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
@@ -15,6 +13,10 @@ import PipelineInstructionsAcknowledgementOverlay
   from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
 import useGetPipelineInstructionModelByPipelineStep
   from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
+import UserActionsPipelineInstructionsDisplayerOverlay
+  from "components/workflow/plan/step/user_actions/UserActionsPipelineInstructionsDisplayerOverlay";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 export default function PipelineWorkflowItemPipelineInstructionsField(
   {
@@ -27,7 +29,8 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
   const {
     pipelineInstructionsModel,
     isLoading,
-  } = useGetPipelineInstructionModelByPipelineStep(pipeline?._id, pipelineStep?._id);
+    error,
+  } = useGetPipelineInstructionModelByPipelineStep(pipeline?._id, pipelineStep?._id, false);
   const {
     toastContext,
   } = useComponentStateReference();
@@ -47,35 +50,65 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
       toastContext.showOverlayPanel(
         <PipelineInstructionsAcknowledgementOverlay
           pipeline={pipeline}
-          loadDataFunction={loadPipelineFunction}
+          loadPipelineFunction={loadPipelineFunction}
         />,
       );
     } else {
       toastContext.showOverlayPanel(
-        <PipelineInstructionsDisplayerOverlay
+        <UserActionsPipelineInstructionsDisplayerOverlay
           pipelineInstructionsId={pipelineInstructionsId}
+          pipelineId={pipeline?._id}
+          pipelineStepId={pipelineStep?._id}
         />
       );
     }
   };
 
-  if (pipelineStep == null) {
-    return null;
-  }
-
-  return (
-    <div>
-      <div
-        className={"pointer d-flex"}
-        onClick={showPipelineInstructionsOverlay}>
-        {getValueField()}
+  const getIcon = () => {
+    if (pipelineInstructionsId) {
+      return (
         <IconBase
           isLoading={isLoading}
           iconSize={"sm"}
           className={"ml-1"}
           icon={faSearch}
         />
-      </div>
+      );
+    }
+  };
+
+  const getTooltip = () => {
+    if (approvalStepToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION) {
+      return "Click to view Acknowledgement Details";
+    }
+
+    return "Click to view Pipeline Instructions set";
+  };
+
+  if (pipeline == null || pipelineStep == null || isMongoDbId(pipelineInstructionsId) !== true) {
+    return null;
+  }
+
+  if (isLoading !== true && error != null) {
+    return (
+      <span className={"danger-red"}>
+        Pipeline Instructions Not Found!
+      </span>
+    );
+  }
+
+  return (
+    <div>
+      <TooltipWrapper
+        innerText={getTooltip()}
+      >
+        <div
+          className={"pointer d-flex"}
+          onClick={showPipelineInstructionsOverlay}>
+          {getValueField()}
+          {getIcon()}
+        </div>
+      </TooltipWrapper>
     </div>
   );
 }

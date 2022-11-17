@@ -63,14 +63,15 @@ function AccessTokenEditorPanel({ cancelTokenSource, loadData }) {
                   disable={!accessToken.checkCurrentValidity()}
                   recordDto={accessToken}
                   handleClose={loadData}
-                  createRecord={createToken} size={"sm"}
+                  createRecord={createToken}
+                  className={"mr-2"}
                 />
               </div>
             </Row>
           </Col>
           <Col md={12}>
             <TextAreaClipboardField
-              className={"my-2 small-label-text"}
+              className={"mb-2 small-label-text"}
               allowResize={false}
               rows={3}
               textAreaValue={generatedToken}

@@ -9,17 +9,15 @@ import {
   userAcknowledgementMetadata
 } from "components/workflow/plan/step/user_actions/step_summary/UserActionAcknoweledgement.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
-import PipelineTaskSummaryMessageField
-  from "components/common/fields/pipelines/activity/PipelineTaskSummaryMessageField";
 
 export default function UserActionPipelineStepActionSummaryPanel(
   {
     pipelineTaskModel,
+    setActiveTab,
   }) {
   const acknowledgementData = DataParsingHelper.parseNestedObject(pipelineTaskModel?.getPersistData(), "api_response.threshold.value", {});
   const acknowledgementModel = modelHelpers.parseObjectIntoModel(acknowledgementData, userAcknowledgementMetadata);
@@ -70,6 +68,7 @@ export default function UserActionPipelineStepActionSummaryPanel(
     <PipelineTaskSummaryPanelBase
       pipelineTaskData={pipelineTaskModel}
       messageFieldName={"api_response.message"}
+      setActiveTab={setActiveTab}
     >
       <Col xs={6}>
         <SsoUserField
@@ -96,4 +95,5 @@ export default function UserActionPipelineStepActionSummaryPanel(
 
 UserActionPipelineStepActionSummaryPanel.propTypes = {
   pipelineTaskModel: PropTypes.object,
+  setActiveTab: PropTypes.func,
 };

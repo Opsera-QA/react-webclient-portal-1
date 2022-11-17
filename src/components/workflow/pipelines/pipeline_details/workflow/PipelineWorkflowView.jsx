@@ -3,11 +3,10 @@ import PropTypes from "prop-types";
 import InfoDialog from "../../../../common/status_notifications/info";
 import PipelineWorkflow from "./PipelineWorkflow";
 import PipelineWorkflowEditor from "./PipelineWorkflowItemEditor";
-import PipelineActionControls from "../PipelineActionControls";
+import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
 
 function PipelineWorkflowView({
   pipeline,
-  customerAccessRules,
   editItem,
   setEditItem,
   fetchPlan,
@@ -51,7 +50,6 @@ function PipelineWorkflowView({
             <PipelineActionControls
               pipeline={pipeline}
               disabledActionState={false}
-              customerAccessRules={customerAccessRules}
               fetchData={fetchPlan}
               setPipeline={setPipeline}
               setParentWorkflowStatus={setWorkflowStatus}
@@ -63,7 +61,6 @@ function PipelineWorkflowView({
           <PipelineWorkflow pipeline={pipeline}
                             editItemId={editItem.step_id}
                             fetchPlan={fetchPlan}
-                            customerAccessRules={customerAccessRules}
                             refreshCount={refreshCount}
                             softLoading={softLoading}/>
         </div>
@@ -75,7 +72,6 @@ function PipelineWorkflowView({
 
 PipelineWorkflowView.propTypes = {
   pipeline: PropTypes.object,
-  customerAccessRules: PropTypes.object,
   editItem: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   setEditItem: PropTypes.func,
   setActiveTab: PropTypes.func,
