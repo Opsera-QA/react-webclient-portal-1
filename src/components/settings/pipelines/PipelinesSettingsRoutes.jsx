@@ -4,7 +4,7 @@ import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import PipelineInstructionsManagement from "components/workflow/instructions/PipelineInstructionsManagement";
 import PipelineInstructionsDetailView from "components/workflow/instructions/details/PipelineInstructionsDetailView";
 
-export default function PipelinesRoutes() {
+export default function PipelinesSettingsRoutes() {
   return (
     <>
     </>

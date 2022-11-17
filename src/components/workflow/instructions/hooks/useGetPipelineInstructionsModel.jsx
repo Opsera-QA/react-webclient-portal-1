@@ -9,7 +9,7 @@ export default function useGetPipelineInstructionsModel() {
     userData,
   } = useComponentStateReference();
 
-  const getNewPipelineInstructionsModel = (
+  const getPipelineInstructionsModel = (
     pipelineInstructionsData,
     isNew,
     setStateFunction,
@@ -33,6 +33,6 @@ export default function useGetPipelineInstructionsModel() {
   };
 
   return ({
-    getNewPipelineInstructionsModel: getNewPipelineInstructionsModel,
+    getPipelineInstructionsModel: getPipelineInstructionsModel,
   });
 }

@@ -1,10 +1,10 @@
 import ModelBase, { DataState } from "core/data_model/model.base";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import pipelineInstructionsMetadata
-  from "@opsera/definitions/constants/settings/pipelines/instructions/pipelineInstructions.metadata";
 import PipelineInstructionsRoleHelper
   from "@opsera/know-your-role/roles/settings/pipelines/instructions/pipelineInstructionsRole.helper";
 import {pipelineInstructionsActions} from "components/workflow/instructions/pipelineInstructions.actions";
+import pipelineInstructionsMetadata
+  from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructions.metadata";
 
 export default class PipelineInstructionsModel extends ModelBase {
   constructor(
