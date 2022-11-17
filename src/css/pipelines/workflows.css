@@ -172,7 +172,6 @@
 
 .step-settings-container {
   min-height: calc(100% - 65px);
-  overflow: auto;
 }
 
 .step-settings-body {

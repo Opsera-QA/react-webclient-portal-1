@@ -104,6 +104,7 @@ import FortifyStepConfiguration from "./step_tool_configuration_forms/fortify/Fo
 import DockerCliStepConfiguration from "./step_tool_configuration_forms/docker_cli/DockerCliStepConfiguration";
 import UserActionsPipelineStepEditorPanel
   from "components/workflow/plan/step/user_actions/UserActionsPipelineStepEditorPanel";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -505,8 +506,14 @@ function StepToolConfiguration({
   //  just pass pipeline and pull id and plan inside instead of passing them individually,
   //  remove deprecated toasts and use toast contexts, wire up latest buttons,
   //  instead of passing in get tools list, use pipeline tool input etc..
-  const getConfigurationTool = (toolName) => {
-    switch (toolName) {
+  const getConfigurationTool = () => {
+    const parsedToolIdentifier = DataParsingHelper.parseString(stepTool?.tool_identifier);
+
+    if (!parsedToolIdentifier) {
+      return null;
+    }
+
+    switch (parsedToolIdentifier) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
         return (
           <ExternalRestApiIntegrationStepEditorPanel
@@ -1483,9 +1490,7 @@ function StepToolConfiguration({
         {getTitleText()}
       </div>
 
-      {typeof stepTool !== "undefined" ? (
-        getConfigurationTool(stepTool?.tool_identifier?.toLowerCase())
-      ) : null}
+      {getConfigurationTool()}
 
       {getToolsAndAccountText()}
     </div>
