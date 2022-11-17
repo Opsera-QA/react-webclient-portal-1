@@ -2,9 +2,18 @@ import baseActions from "utils/actionsBase";
 
 export const projectDataMappingActions = {};
 
-projectDataMappingActions.getProjectDataMappingsV2 = async (getAccessToken, cancelTokenSource) => {
+projectDataMappingActions.getProjectDataMappingsV2 = async (getAccessToken, cancelTokenSource, toolFilterModel) => {
   const apiUrl = `/mappings/project/v2`;
-  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+
+  const urlParams = {
+    params: {
+      type: toolFilterModel?.getFilterValue("type"),
+      status: toolFilterModel?.getFilterValue("status"),
+      search: toolFilterModel?.getFilterValue("search")
+    },
+  };
+
+  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 projectDataMappingActions.getProjectDataMappingByIdV2 = async (getAccessToken, cancelTokenSource, id) => {

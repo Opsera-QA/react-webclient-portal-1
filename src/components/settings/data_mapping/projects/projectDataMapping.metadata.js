@@ -1,3 +1,5 @@
+import {capitalizeFirstLetter, hasStringValue} from "../../../common/helpers/string-helpers";
+
 const projectDataMappingMetadata = {
   idProperty: "_id",
   type: "Project Mapping",
@@ -60,6 +62,29 @@ const projectDataMappingMetadata = {
       id: "createdAt",
     },
   ],
+  getActiveFilters(filterModel) {
+    const activeFilters = [];
+
+    const status = filterModel.getData("tool_identifier");
+
+    if (hasStringValue(status) === true) {
+      activeFilters.push({filterId: "tool_identifier", text: `Tool_identifier: ${capitalizeFirstLetter(status)}`});
+    }
+
+    const type = filterModel?.getData("type");
+
+    if (hasStringValue(type) === true) {
+      activeFilters.push({filterId: "type", text: `Type: ${capitalizeFirstLetter(type)}`});
+    }
+
+    const search = filterModel?.getData("search");
+
+    if (hasStringValue(search) === true) {
+      activeFilters.push({filterId: "search", text: `Keywords: ${search}`});
+    }
+
+    return activeFilters;
+  },
   newObjectFields: {
     type: "project",
     tool_identifier: "",
@@ -68,8 +93,20 @@ const projectDataMappingMetadata = {
     value: [],
     tool_prop: "",
     createdAt: "",
-    active : true
+    active : true,
+    pageSize: 50,
+    currentPage: 1,
+    sortOption: {text: "Sort: Type", value: "type"},
+    search: "",
+    activeFilters: []
   },
+  sortOptions: [
+    {text: "Oldest", option: "oldest"},
+    {text: "Newest", option: "newest"},
+    {text: "Value", option: "value"},
+    {text: "Type", option: "type"},
+    {text: "Last Updated", option: "lastupdated"}
+  ]
 };
 
 export default projectDataMappingMetadata;

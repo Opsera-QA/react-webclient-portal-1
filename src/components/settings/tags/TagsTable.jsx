@@ -45,14 +45,14 @@ function TagsTable({ tagListModel, loadData, isLoading, tagFilterDto, setTagFilt
     toastContext.showOverlayPanel(<NewTagOverlay loadData={loadData} isMounted={isMounted} />);
   };
 
-  const getDropdownFilters = () => {
-    return (
-      <>
-        <TagTypeFilter filterModel={tagFilterDto} setFilterModel={setTagFilterDto} className={"mb-2"} />
-        <ActiveFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
-      </>
-    );
-  };
+  // const getDropdownFilters = () => {
+  //   return (
+  //     <>
+  //       <TagTypeFilter filterModel={tagFilterDto} setFilterModel={setTagFilterDto} className={"mb-2"} />
+  //       <ActiveFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
+  //     </>
+  //   );
+  // };
 
   const getInlineFilters = () => {
     return (
@@ -85,7 +85,7 @@ function TagsTable({ tagListModel, loadData, isLoading, tagFilterDto, setTagFilt
       isLoading={isLoading}
       body={getTagsTable()}
       inlineFilters={getInlineFilters()}
-      dropdownFilters={getDropdownFilters()}
+      //dropdownFilters={getDropdownFilters()}
       metadata={tagMetadata}
       titleIcon={faTags}
       title={"Tags"}
