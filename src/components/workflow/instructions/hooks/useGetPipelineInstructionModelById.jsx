@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import useGetPipelineInstructionsModel
-  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionsModel";
-import { pipelineInstructionsActions } from "components/settings/pipelines/instructions/pipelineInstructions.actions";
+import {pipelineInstructionsActions} from "components/workflow/instructions/pipelineInstructions.actions";
+import useGetPipelineInstructionsModel from "components/workflow/instructions/hooks/useGetPipelineInstructionsModel";
 
 export default function useGetPipelineInstructionModelById(
   id,

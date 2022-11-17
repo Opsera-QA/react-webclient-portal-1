@@ -4,14 +4,13 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
-import PipelineInstructionsSummaryPanel
-  from "components/settings/pipelines/instructions/details/PipelineInstructionsSummaryPanel";
-import PipelineInstructionsEditorPanel
-  from "components/settings/pipelines/instructions/details/PipelineInstructionsEditorPanel";
 import PipelineInstructionsPipelineUsageField
   from "components/common/list_of_values_input/settings/pipelines/instructions/usage/PipelineInstructionsPipelineUsageField";
 import CustomTab from "components/common/tabs/CustomTab";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
+import PipelineInstructionsSummaryPanel
+  from "components/workflow/instructions/details/PipelineInstructionsSummaryPanel";
+import PipelineInstructionsEditorPanel from "components/workflow/instructions/details/PipelineInstructionsEditorPanel";
 
 export default function PipelineInstructionsDetailPanel(
   {

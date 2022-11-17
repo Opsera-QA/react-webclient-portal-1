@@ -2,12 +2,11 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
-import useGetNewPipelineInstructionsModel
-  from "components/settings/pipelines/instructions/hooks/useGetNewPipelineInstructionsModel";
-import PipelineInstructionsEditorPanel
-  from "components/settings/pipelines/instructions/details/PipelineInstructionsEditorPanel";
 import pipelineInstructionsMetadata
   from "@opsera/definitions/constants/settings/pipelines/instructions/pipelineInstructions.metadata";
+import PipelineInstructionsEditorPanel from "components/workflow/instructions/details/PipelineInstructionsEditorPanel";
+import useGetNewPipelineInstructionsModel
+  from "components/workflow/instructions/hooks/useGetNewPipelineInstructionsModel";
 
 export default function NewPipelineInstructionsOverlay(
   {

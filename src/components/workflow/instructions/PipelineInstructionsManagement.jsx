@@ -1,11 +1,11 @@
 import React from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import useGetPipelineInstructions from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructions";
-import PipelineInstructionTable from "components/settings/pipelines/instructions/PipelineInstructionTable";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import PipelineInstructionsSubNavigationBar
-  from "components/settings/pipelines/instructions/PipelineInstructionsSubNavigationBar";
+  from "components/workflow/instructions/PipelineInstructionsSubNavigationBar";
+import useGetPipelineInstructions from "components/workflow/instructions/hooks/useGetPipelineInstructions";
+import PipelineInstructionTable from "components/workflow/instructions/PipelineInstructionTable";
 
 export default function PipelineInstructionsManagement() {
   const {

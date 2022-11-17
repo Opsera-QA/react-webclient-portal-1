@@ -1,7 +1,6 @@
 import useComponentStateReference from "hooks/useComponentStateReference";
-import ScriptModel from "components/inventory/scripts/script.model";
 import RoleHelper from "@opsera/know-your-role/roles/role.helper";
-import PipelineInstructionsModel from "components/settings/pipelines/instructions/pipelineInstructions.model";
+import PipelineInstructionsModel from "components/workflow/instructions/pipelineInstructions.model";
 
 export default function useGetPipelineInstructionsModel() {
   const {

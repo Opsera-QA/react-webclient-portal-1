@@ -3,20 +3,19 @@ import { useParams } from "react-router-dom";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
-import useGetPipelineInstructionModelById
-  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelById";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PipelineInstructionsDetailPanel
-  from "components/settings/pipelines/instructions/details/PipelineInstructionsDetailPanel";
-import PipelineInstructionsSubNavigationBar
-  from "components/settings/pipelines/instructions/PipelineInstructionsSubNavigationBar";
 import pipelineInstructionsMetadata
   from "@opsera/definitions/constants/settings/pipelines/instructions/pipelineInstructions.metadata";
-import ActionBarDeletePipelineInstructionsButton
-  from "components/settings/pipelines/instructions/action_bar/ActionBarDeletePipelineInstructionsButton";
 import ActionBarTransferOwnershipButtonBase
   from "components/common/actions/buttons/ActionBarTransferOwnershipButtonBase";
+import PipelineInstructionsSubNavigationBar
+  from "components/workflow/instructions/PipelineInstructionsSubNavigationBar";
+import PipelineInstructionsDetailPanel from "components/workflow/instructions/details/PipelineInstructionsDetailPanel";
+import useGetPipelineInstructionModelById
+  from "components/workflow/instructions/hooks/useGetPipelineInstructionModelById";
+import ActionBarDeletePipelineInstructionsButton
+  from "components/workflow/instructions/action_bar/ActionBarDeletePipelineInstructionsButton";
 
 function PipelineInstructionsDetailView() {
   const { pipelineInstructionsId } = useParams();
