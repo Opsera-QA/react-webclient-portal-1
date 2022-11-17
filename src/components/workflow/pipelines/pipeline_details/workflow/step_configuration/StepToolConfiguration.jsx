@@ -1486,12 +1486,10 @@ function StepToolConfiguration({
 
   return (
     <div>
-      <div className="title-text-5 upper-case-first mb-3">
+      <div className="title-text-5 upper-case-first mb-2">
         {getTitleText()}
       </div>
-
       {getConfigurationTool()}
-
       {getToolsAndAccountText()}
     </div>
   );
