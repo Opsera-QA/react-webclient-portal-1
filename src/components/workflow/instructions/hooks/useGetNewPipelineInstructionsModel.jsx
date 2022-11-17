@@ -1,7 +1,5 @@
-import useGetScriptModel from "components/inventory/scripts/hooks/useGetScriptModel";
 import { useState } from "react";
-import useGetPipelineInstructionsModel
-  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionsModel";
+import useGetPipelineInstructionsModel from "components/workflow/instructions/hooks/useGetPipelineInstructionsModel";
 
 export default function useGetNewPipelineInstructionsModel() {
   const { getNewPipelineInstructionsModel } = useGetPipelineInstructionsModel();

@@ -11,9 +11,7 @@ import {
 } from "components/common/table/table-column-helpers";
 import pipelineInstructionsTypeConstants
   from "@opsera/definitions/constants/settings/pipelines/instructions/pipelineInstructionsType.constants";
-import NewPipelineInstructionsOverlay from "components/settings/pipelines/instructions/NewPipelineInstructionsOverlay";
 import CustomTable from "components/common/table/CustomTable";
-import { pipelineInstructionsHelper } from "components/settings/pipelines/instructions/pipelineInstructions.helper";
 import { useHistory } from "react-router-dom";
 import pipelineInstructionsMetadata
   from "@opsera/definitions/constants/settings/pipelines/instructions/pipelineInstructions.metadata";
@@ -22,6 +20,8 @@ import PipelineInstructionsRoleHelper
 import {
   FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION,
 } from "components/common/table/FilterContainer";
+import NewPipelineInstructionsOverlay from "components/workflow/instructions/NewPipelineInstructionsOverlay";
+import {pipelineInstructionsHelper} from "components/workflow/instructions/pipelineInstructions.helper";
 
 export default function PipelineInstructionTable(
   {
