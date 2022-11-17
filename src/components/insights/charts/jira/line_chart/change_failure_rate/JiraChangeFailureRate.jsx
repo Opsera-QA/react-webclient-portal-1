@@ -143,8 +143,8 @@ function JiraChangeFailureRate({
     }
     const jiraResolutionNames =
         getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names')?.length || 0;
-    const maturityScore = metricData?.maturityScore;
-    const maturityColor = getMaturityColorClass(maturityScore);
+    // const maturityScore = metricData?.maturityScore;
+    // const maturityColor = getMaturityColorClass(maturityScore);
     const changeFailureRate = !isNaN(metricData?.changeFailureRate) ? metricData?.changeFailureRate +` %` :'NA';
     const prevChangeFailureRate = !isNaN(metricData?.prevChangeFailureRate) ? metricData?.prevChangeFailureRate +` %` :'NA';
 
@@ -154,16 +154,17 @@ function JiraChangeFailureRate({
         style={{ minHeight: "500px", display: "flex" }}
     >
       <Row className={"w-100"}>
-        <JiraChangeFailureRateMaturityBlock
-          maturityScore={getMaturityScoreText(maturityScore)}
-          maturityColor={maturityColor}
-          iconOverlayBody={constants.MATURITY_TOOL_TIP[maturityScore]}
-        />
+        {/* TODO Values to be integrated from APIs with Actionable insights */}
+        {/*<JiraChangeFailureRateMaturityBlock*/}
+        {/*  maturityScore={getMaturityScoreText(maturityScore)}*/}
+        {/*  maturityColor={maturityColor}*/}
+        {/*  iconOverlayBody={constants.MATURITY_TOOL_TIP[maturityScore]}*/}
+        {/*/>*/}
         <Row
-            xl={4}
-            lg={4}
-            md={4}
-            className={`mb-2 ml-3 py-2 d-flex justify-content-center maturity-border ${maturityColor}`}
+          xl={4}
+          lg={4}
+          md={4}
+          className={`mb-2 ml-3 py-2 d-flex justify-content-center`}
         >
           {/*This would get removed when average merge time is fixed*/}
           <Col md={12}>

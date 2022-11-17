@@ -331,8 +331,8 @@ function JiraMeanTimeToResolutionBarChart({
       dataPointHelpers.isDataPointVisible(mttrChartDataPoint) ||
       dataPointHelpers.isDataPointVisible(numberOfIncidentsDataPoint);
 
-    const maturityScore = dataBlock?.maturityScore;
-    const maturityColor = getMaturityColorClass(maturityScore);
+    // const maturityScore = dataBlock?.maturityScore;
+    // const maturityColor = getMaturityColorClass(maturityScore);
     return (
       <>
         <div
@@ -353,16 +353,17 @@ function JiraMeanTimeToResolutionBarChart({
           }
         >
           <Row className={"w-100"}>
-            <JiraMeanTimeToResolutionMaturityBlock
+            {/* TODO Values to be integrated from APIs with Actionable insights  */}
+            {/* <JiraMeanTimeToResolutionMaturityBlock
                 maturityScore={getMaturityScoreText(maturityScore)}
                 maturityColor={maturityColor}
                 iconOverlayBody={constants.MATURITY_TOOL_TIP[maturityScore]}
-            />
+            /> */}
             <Row
               xl={4}
               lg={4}
               md={4}
-              className={`mb-2 ml-3 py-2 d-flex justify-content-center maturity-border ${maturityColor}`}
+              className={`mb-2 ml-3 py-2 d-flex justify-content-center`}
             >
               <Col md={12}>
                 <JiraMTTRDataBlock
