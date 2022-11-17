@@ -6,13 +6,20 @@ const config = require("../config");
 
 export const apiServiceV2 = {};
 
-apiServiceV2.axiosApiGetCall = async (getAccessToken, cancelTokenSource, apiUrl, urlParams) => {
+apiServiceV2.axiosApiGetCall = async (
+  getAccessToken,
+  cancelTokenSource,
+  apiUrl,
+  urlParams,
+) => {
   const accessToken = await getAccessToken();
 
   try {
-    return await getAxiosInstance(accessToken, cancelTokenSource?.token).get(apiUrl, urlParams);
-  }
-  catch (error) {
+    return await getAxiosInstance(accessToken, cancelTokenSource?.token).get(
+      apiUrl,
+      urlParams,
+    );
+  } catch (error) {
     const parsedError = parseAxiosError(error);
 
     if (parsedError) {
@@ -21,18 +28,21 @@ apiServiceV2.axiosApiGetCall = async (getAccessToken, cancelTokenSource, apiUrl,
   }
 };
 
-apiServiceV2.axiosApiGetCallV2 = async (getAccessToken, cancelTokenSource, apiUrl, urlParams) => {
+apiServiceV2.axiosApiGetCallV2 = async (
+  getAccessToken,
+  cancelTokenSource,
+  apiUrl,
+  urlParams,
+) => {
   const accessToken = await getAccessToken();
   const parsedUrlParams = DataParsingHelper.parseObject(urlParams, {});
 
   try {
-    return await getAxiosInstance(accessToken, cancelTokenSource?.token)
-      .get(
-        apiUrl,
-        { params: parsedUrlParams, }
+    return await getAxiosInstance(accessToken, cancelTokenSource?.token).get(
+      apiUrl,
+      { params: parsedUrlParams },
     );
-  }
-  catch (error) {
+  } catch (error) {
     const parsedError = parseAxiosError(error);
 
     if (parsedError) {
@@ -41,12 +51,14 @@ apiServiceV2.axiosApiGetCallV2 = async (getAccessToken, cancelTokenSource, apiUr
   }
 };
 
-apiServiceV2.axiosCustomTokenApiGetCall = async (customToken, cancelTokenSource, apiUrl, urlParams) => {
+apiServiceV2.axiosCustomTokenApiGetCall = async (
+  customToken,
+  cancelTokenSource,
+  apiUrl,
+  urlParams,
+) => {
   try {
-    return await getAxiosInstance(
-      customToken,
-      cancelTokenSource?.token,
-    ).get(
+    return await getAxiosInstance(customToken, cancelTokenSource?.token).get(
       apiUrl,
       {
         params: urlParams,
@@ -61,13 +73,20 @@ apiServiceV2.axiosCustomTokenApiGetCall = async (customToken, cancelTokenSource,
   }
 };
 
-apiServiceV2.axiosApiPostCall = async (getAccessToken, cancelTokenSource, apiUrl, postBody) => {
+apiServiceV2.axiosApiPostCall = async (
+  getAccessToken,
+  cancelTokenSource,
+  apiUrl,
+  postBody,
+) => {
   const accessToken = await getAccessToken();
 
   try {
-    return await getAxiosInstance(accessToken, cancelTokenSource?.token).post(apiUrl, postBody);
-  }
-  catch (error) {
+    return await getAxiosInstance(accessToken, cancelTokenSource?.token).post(
+      apiUrl,
+      postBody,
+    );
+  } catch (error) {
     const parsedError = parseAxiosError(error);
 
     if (parsedError) {
@@ -76,11 +95,18 @@ apiServiceV2.axiosApiPostCall = async (getAccessToken, cancelTokenSource, apiUrl
   }
 };
 
-apiServiceV2.axiosCustomTokenApiPostCall = async (customToken, cancelTokenSource, apiUrl, postBody) => {
+apiServiceV2.axiosCustomTokenApiPostCall = async (
+  customToken,
+  cancelTokenSource,
+  apiUrl,
+  postBody,
+) => {
   try {
-    return await getAxiosInstance(customToken, cancelTokenSource?.token).post(apiUrl, postBody);
-  }
-  catch (error) {
+    return await getAxiosInstance(customToken, cancelTokenSource?.token).post(
+      apiUrl,
+      postBody,
+    );
+  } catch (error) {
     const parsedError = parseAxiosError(error);
 
     if (parsedError) {
@@ -89,11 +115,17 @@ apiServiceV2.axiosCustomTokenApiPostCall = async (customToken, cancelTokenSource
   }
 };
 
-apiServiceV2.axiosTokenlessApiGetCall = async (cancelTokenSource, apiUrl, postBody) => {
+apiServiceV2.axiosTokenlessApiGetCall = async (
+  cancelTokenSource,
+  apiUrl,
+  postBody,
+) => {
   try {
-    return await getAxiosInstance(undefined, cancelTokenSource?.token).get(apiUrl, postBody);
-  }
-  catch (error) {
+    return await getAxiosInstance(undefined, cancelTokenSource?.token).get(
+      apiUrl,
+      postBody,
+    );
+  } catch (error) {
     const parsedError = parseAxiosError(error);
 
     if (parsedError) {
@@ -102,13 +134,20 @@ apiServiceV2.axiosTokenlessApiGetCall = async (cancelTokenSource, apiUrl, postBo
   }
 };
 
-apiServiceV2.axiosApiPutCall = async (getAccessToken, cancelTokenSource, apiUrl, postBody) => {
+apiServiceV2.axiosApiPutCall = async (
+  getAccessToken,
+  cancelTokenSource,
+  apiUrl,
+  postBody,
+) => {
   const accessToken = await getAccessToken();
 
   try {
-    return await getAxiosInstance(accessToken, cancelTokenSource?.token).put(apiUrl, postBody);
-  }
-  catch (error) {
+    return await getAxiosInstance(accessToken, cancelTokenSource?.token).put(
+      apiUrl,
+      postBody,
+    );
+  } catch (error) {
     const parsedError = parseAxiosError(error);
 
     if (parsedError) {
@@ -117,13 +156,20 @@ apiServiceV2.axiosApiPutCall = async (getAccessToken, cancelTokenSource, apiUrl,
   }
 };
 
-apiServiceV2.axiosApiPatchCall = async (getAccessToken, cancelTokenSource, apiUrl, postBody) => {
+apiServiceV2.axiosApiPatchCall = async (
+  getAccessToken,
+  cancelTokenSource,
+  apiUrl,
+  postBody,
+) => {
   const accessToken = await getAccessToken();
 
   try {
-    return await getAxiosInstance(accessToken, cancelTokenSource?.token).patch(apiUrl, postBody);
-  }
-  catch (error) {
+    return await getAxiosInstance(accessToken, cancelTokenSource?.token).patch(
+      apiUrl,
+      postBody,
+    );
+  } catch (error) {
     const parsedError = parseAxiosError(error);
 
     if (parsedError) {
@@ -132,13 +178,18 @@ apiServiceV2.axiosApiPatchCall = async (getAccessToken, cancelTokenSource, apiUr
   }
 };
 
-apiServiceV2.axiosApiDeleteCall = async (getAccessToken, cancelTokenSource, apiUrl) => {
+apiServiceV2.axiosApiDeleteCall = async (
+  getAccessToken,
+  cancelTokenSource,
+  apiUrl,
+) => {
   const accessToken = await getAccessToken();
 
   try {
-    return await getAxiosInstance(accessToken, cancelTokenSource?.token).delete(apiUrl);
-  }
-  catch (error) {
+    return await getAxiosInstance(accessToken, cancelTokenSource?.token).delete(
+      apiUrl,
+    );
+  } catch (error) {
     const parsedError = parseAxiosError(error);
 
     if (parsedError) {
@@ -157,7 +208,6 @@ export const parseAxiosError = (error) => {
       }
     }
 
-
     return error;
   }
 };
@@ -171,7 +221,7 @@ const axiosTimeoutErrorMessage = `
 const getAxiosInstance = (token, cancelToken) => {
   const configuration = {
     baseURL: config.apiServerUrl,
-    timeout: 50000,
+    timeout: 60000,
     cancelToken: cancelToken,
   };
 
@@ -180,7 +230,7 @@ const getAxiosInstance = (token, cancelToken) => {
   axiosInstance.defaults.timeoutErrorMessage = axiosTimeoutErrorMessage;
 
   if (token) {
-    axiosInstance.defaults.headers.common['authorization'] = `Bearer ${token}`;
+    axiosInstance.defaults.headers.common["authorization"] = `Bearer ${token}`;
   }
 
   return axiosInstance;
