@@ -23,7 +23,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       isRequired: true
     },
     {
-      label: "Account",
+      label: "Git Account",
       id: "gitCredential",
       isRequired: true
     },
