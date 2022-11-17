@@ -39,18 +39,18 @@ function BoomiToolConfiguration({ toolData }) {
     );
 
     if (boomiConfigurationDto?.getData("apiType") === "custom") {
-      newConfiguration.client_id = await toolsActions.savePasswordToVault(
+      newConfiguration.clientId = await toolsActions.savePasswordToVault(
         toolData,
         boomiConfigurationDto,
-        "client_id",
-        newConfiguration.client_id,
+        "clientId",
+        newConfiguration.clientId,
         getAccessToken,
       );
-      newConfiguration.client_secret = await toolsActions.savePasswordToVault(
+      newConfiguration.clientSecret = await toolsActions.savePasswordToVault(
         toolData,
         boomiConfigurationDto,
-        "client_secret",
-        newConfiguration.client_secret,
+        "clientSecret",
+        newConfiguration.clientSecret,
         getAccessToken,
       );
     }
@@ -70,12 +70,12 @@ function BoomiToolConfiguration({ toolData }) {
           <VaultTextInput
             dataObject={boomiConfigurationDto}
             setDataObject={setBoomiConfigurationDto}
-            fieldName={"client_id"}
+            fieldName={"clientId"}
           />
           <VaultTextInput
             dataObject={boomiConfigurationDto}
             setDataObject={setBoomiConfigurationDto}
-            fieldName={"client_secret"}
+            fieldName={"clientSecret"}
           />
           <TextInputBase
             dataObject={boomiConfigurationDto}

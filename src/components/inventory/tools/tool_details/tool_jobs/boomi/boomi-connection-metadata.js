@@ -34,7 +34,7 @@ const BoomiConnectionMetadata = {
     },
     {
       label: "Client ID",
-      id: "client_id",
+      id: "clientId",
       isRequiredFunction: (model) => {
         return model?.getData("apiType") === "custom";
       },
@@ -42,7 +42,7 @@ const BoomiConnectionMetadata = {
     },
     {
       label: "Client Secret",
-      id: "client_secret",
+      id: "clientSecret",
       isRequiredFunction: (model) => {
         return model?.getData("apiType") === "custom";
       },
@@ -64,8 +64,8 @@ const BoomiConnectionMetadata = {
       accountUsername: "",
       accountPassword: "",
       apiType: "",
-      client_id: "",
-      client_secret: "",
+      clientId: "",
+      clientSecret: "",
       authServerUrl: "",
     }
 };
