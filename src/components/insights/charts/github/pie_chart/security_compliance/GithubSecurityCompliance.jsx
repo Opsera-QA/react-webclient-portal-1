@@ -70,9 +70,15 @@ function GithubSecurityCompliance({ kpiConfiguration, setKpiConfiguration, dashb
                 dashboardFilters,
                 dashboardOrgs
             );
-            let dataObject = response?.data ? response?.data?.data[0]?.securityCompliance?.data.workflowPercentage : [];
-            const dataObject2 = response?.data ? response?.data?.data[0]?.securityCompliance?.data.workflowCounts : [];
-            assignStandardColors(dataObject);
+            const dataObject = response?.data ? response?.data?.data[0]?.securityCompliance?.data.workflowPercentage : [];
+            const dataWorkflowCount = response?.data ? response?.data?.data[0]?.securityCompliance?.data.workflowCounts : [];
+            const dataObject2 = [
+                {"id": "passed", "data": dataWorkflowCount?.passed},
+                {"id": "failed", "data": dataWorkflowCount?.failed},
+                {"id": "skipped", "data": dataWorkflowCount?.skipped},
+                 //{"id": "cancelled", "data": dataWorkflowCount?.cancelled}
+                // not used for pie chart currently
+            ];
             if (isMounted?.current === true && dataObject) {
                 setPieChartMetrics(dataObject);
                 setLineChartMetrics(dataObject2);
@@ -99,7 +105,7 @@ function GithubSecurityCompliance({ kpiConfiguration, setKpiConfiguration, dashb
             <div className="new-chart mb-3" style={{ height: "300px" }}>
                 <Row>
                     <Col xl={4} lg={4} md={4} sm={4} className={"mb-3"} style={{ height: "300px" }}>
-                            <ResponsivePie
+                        <ResponsivePie
                             data={pieChartMetrics}
                             {...defaultConfig()}
                             {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
@@ -111,7 +117,7 @@ function GithubSecurityCompliance({ kpiConfiguration, setKpiConfiguration, dashb
                             data={lineChartMetrics}
                             {...defaultConfig("Number of Workflows", "Date",
                                 false, true, "wholeNumbers", "monthDate2")}
-                            {...lineChartConfig(getColor)}
+                            {...lineChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
                             tooltip={(node) => <ChartTooltip
                                 titles = {["Date", node.point.serieId]}
                                 values = {[node.point.data.xFormatted, node.point.data.yFormatted]} />}
