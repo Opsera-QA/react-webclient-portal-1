@@ -23,9 +23,9 @@ export default function UserActionPipelineStepActionSummaryPanel(
   const acknowledgementData = DataParsingHelper.parseNestedObject(pipelineTaskModel?.getPersistData(), "api_response.threshold.value", {});
   const acknowledgementModel = modelHelpers.parseObjectIntoModel(acknowledgementData, userAcknowledgementMetadata);
   const {
-    getNewPipelineInstructionsModel,
+    getPipelineInstructionsModel,
   } = useGetPipelineInstructionsModel();
-  const pipelineAcknowledgementModel = getNewPipelineInstructionsModel(acknowledgementModel?.getData("api_response.instructions"));
+  const pipelineAcknowledgementModel = getPipelineInstructionsModel(pipelineTaskModel?.getData("api_response.instructions"));
 
   const getDynamicFields = () => {
     if (acknowledgementModel?.getData("denied") === true) {
@@ -68,6 +68,8 @@ export default function UserActionPipelineStepActionSummaryPanel(
   if (pipelineTaskModel == null) {
     return null;
   }
+
+  console.log("pipelineacknowledgementModel: " + JSON.stringify(pipelineAcknowledgementModel?.getPersistData()));
 
   return (
     <PipelineTaskSummaryPanelBase
