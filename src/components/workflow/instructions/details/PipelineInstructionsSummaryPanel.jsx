@@ -6,10 +6,10 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import OwnerNameField from "components/common/fields/text/general/OwnerNameField";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
 import RichTextField from "components/common/fields/rich_text/RichTextField";
-import PipelineInstructionsRoleAccessInlineInput
-  from "components/settings/pipelines/instructions/details/inputs/PipelineInstructionsRoleAccessInlineInput";
 import PipelineInstructionsTypeField
   from "components/common/list_of_values_input/settings/pipelines/instructions/type/PipelineInstructionsTypeField";
+import PipelineInstructionsRoleAccessInlineInput
+  from "components/workflow/instructions/details/inputs/PipelineInstructionsRoleAccessInlineInput";
 
 export default function PipelineInstructionsSummaryPanel(
   {

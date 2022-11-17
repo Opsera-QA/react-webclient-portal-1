@@ -50,7 +50,7 @@ const azureZipDeploymentMetadata = {
       label:"Container Path",
       id:"containerPath",        
       maxLength: 1024,
-      regexDefinitionName: "pathField",
+      regexDefinitionName: "pathFieldWithoutQuotes",
     }
   ],
   newObjectFields: {

@@ -1,6 +1,5 @@
 import React from "react";
-import PipelineInstructionsPageLinkCard
-  from "components/settings/pipelines/instructions/PipelineInstructionsPageLinkCard";
+import PipelineInstructionsPageLinkCard from "components/workflow/instructions/PipelineInstructionsPageLinkCard";
 
 export default function PipelineSettingsPageLinkCards() {
   return (
