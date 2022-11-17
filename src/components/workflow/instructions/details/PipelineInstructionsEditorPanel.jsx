@@ -10,6 +10,8 @@ import TagMultiSelectInput from "components/common/list_of_values_input/settings
 import RichTextInput from "components/common/inputs/rich_text/RichTextInput";
 import PipelineInstructionsTypeSelectInput
   from "components/common/list_of_values_input/settings/pipelines/instructions/type/PipelineInstructionsTypeSelectInput";
+import PipelineInstructionsAttributesEditorPanel
+  from "components/workflow/instructions/details/PipelineInstructionsAttributesEditorPanel";
 
 export default function PipelineInstructionsEditorPanel(
   {
@@ -33,6 +35,11 @@ export default function PipelineInstructionsEditorPanel(
         </Col>
       );
     }
+  };
+
+  const setAttributesData = (attributes) => {
+    pipelineInstructionsModel.setData("attributes", attributes);
+    setPipelineInstructionsModel({...pipelineInstructionsModel});
   };
 
   if (pipelineInstructionsModel == null) {
@@ -78,6 +85,12 @@ export default function PipelineInstructionsEditorPanel(
             setDataObject={setPipelineInstructionsModel}
           />
         </Col>
+        {/*<Col xs={12}>*/}
+        {/*  <PipelineInstructionsAttributesEditorPanel*/}
+        {/*    attributes={pipelineInstructionsModel?.getData("attributes")}*/}
+        {/*    setAttributesData={setAttributesData}*/}
+        {/*  />*/}
+        {/*</Col>*/}
         {getDynamicFields()}
         <Col xs={12}>
           <TagMultiSelectInput
