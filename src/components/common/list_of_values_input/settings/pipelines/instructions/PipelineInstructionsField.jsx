@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import PipelineInstructionsFieldBase
   from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsFieldBase";
 import useGetPipelineInstructionModelById
-  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelById";
+  from "components/workflow/instructions/hooks/useGetPipelineInstructionModelById";
 
 export default function PipelineInstructionsField(
   {

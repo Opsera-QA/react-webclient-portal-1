@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import useGetPipelineInstructions from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import NewPipelineInstructionsOverlay from "components/settings/pipelines/instructions/NewPipelineInstructionsOverlay";
+import useGetPipelineInstructions from "components/workflow/instructions/hooks/useGetPipelineInstructions";
+import NewPipelineInstructionsOverlay from "components/workflow/instructions/NewPipelineInstructionsOverlay";
 
 export default function PipelineInstructionsSelectInput(
   {
