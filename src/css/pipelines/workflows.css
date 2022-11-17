@@ -1,7 +1,15 @@
 /* Custom CSS for workflows here */
 
 .workflow-view {
-  min-height: 85vh;
+    /*
+    Full height
+    - navbar height (68px)
+    - subnav height 42.1~ px
+    - title height (28px)
+    - tabs height (48px)
+    - bottom padding
+    */
+  min-height: calc(100vh - 68px - 43px - 28px - 48px - 48px - 30px);
 }
 
 .workflow-container {
@@ -13,7 +21,7 @@
   background-image: linear-gradient(to right, #dddddd 1px, transparent 1px),
     linear-gradient(to bottom, #dddddd 1px, transparent 1px);
 
-  min-height: 70vh;
+  min-height: calc(100vh - 68px - 43px - 28px - 48px - 48px - 30px - 48px - 10px);
 }
 
 .workflow-module-container-width-sm {
