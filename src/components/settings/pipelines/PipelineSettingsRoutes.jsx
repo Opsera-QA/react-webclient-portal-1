@@ -26,12 +26,12 @@ export default function PipelineSettingsRoutes() {
 
   return (
     <>
-      <RoleRestrictedRoute
-        path={"/settings/pipelines"}
-        exact={true}
-        component={PipelineSettings}
-        roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
-      />
+      {/*<RoleRestrictedRoute*/}
+      {/*  path={"/settings/pipelines"}*/}
+      {/*  exact={true}*/}
+      {/*  component={PipelineSettings}*/}
+      {/*  roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}*/}
+      {/*/>*/}
       <RoleRestrictedRoute
         path={"/settings/pipelines/instructions"}
         exact={true}
