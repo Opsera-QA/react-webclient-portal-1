@@ -584,6 +584,55 @@ githubActionsWorkflowActions.githubRepoStatistics = async (
   );
 };
 
+githubActionsWorkflowActions.githubRepoStatisticsOverlay = async (
+  kpiConfiguration,
+  getAccessToken,
+  cancelTokenSource,
+  dashboardTags,
+  dashboardOrgs,
+  dashboardFilters,
+  bucket,
+) => {
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const apiUrl = "/analytics/githubActions/v1/githubRepoStatisticsOverlay";
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  let hierarchyFilters =
+    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags =
+    getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
+
+  const postBody = {
+    startDate: date.start,
+    endDate: date.end,
+    tags:
+      tags && dashboardTags
+        ? tags.concat(dashboardTags)
+        : dashboardTags?.length > 0
+        ? dashboardTags
+        : tags,
+    dashboardOrgs: dashboardOrgs,
+    dashboardFilters: dashboardFilters,
+    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
+    bucket: bucket,
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 githubActionsWorkflowActions.githubMergedPullRequestStatistics = async (
   kpiConfiguration,
   getAccessToken,
@@ -632,4 +681,103 @@ githubActionsWorkflowActions.githubMergedPullRequestStatistics = async (
   );
 };
 
+githubActionsWorkflowActions.githubMergedPullRequestStatisticsOverlay = async (
+  kpiConfiguration,
+  getAccessToken,
+  cancelTokenSource,
+  dashboardTags,
+  dashboardOrgs,
+  dashboardFilters,
+  bucket,
+) => {
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const apiUrl =
+    "/analytics/githubActions/v1/githubMergedPullRequestStatisticsOverlay";
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  let hierarchyFilters =
+    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags =
+    getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
+
+  const postBody = {
+    startDate: date.start,
+    endDate: date.end,
+    tags:
+      tags && dashboardTags
+        ? tags.concat(dashboardTags)
+        : dashboardTags?.length > 0
+        ? dashboardTags
+        : tags,
+    dashboardOrgs: dashboardOrgs,
+    dashboardFilters: dashboardFilters,
+    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
+    bucket: bucket,
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
+githubActionsWorkflowActions.githubOpenPullRequestStatisticsOverlay = async (
+  kpiConfiguration,
+  getAccessToken,
+  cancelTokenSource,
+  dashboardTags,
+  dashboardOrgs,
+  dashboardFilters,
+  bucket,
+) => {
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const apiUrl =
+    "/analytics/githubActions/v1/githubOpenPullRequestStatisticsOverlay";
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  let hierarchyFilters =
+    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags =
+    getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
+
+  const postBody = {
+    startDate: date.start,
+    endDate: date.end,
+    tags:
+      tags && dashboardTags
+        ? tags.concat(dashboardTags)
+        : dashboardTags?.length > 0
+        ? dashboardTags
+        : tags,
+    dashboardOrgs: dashboardOrgs,
+    dashboardFilters: dashboardFilters,
+    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
+    bucket: bucket,
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
 export default githubActionsWorkflowActions;
