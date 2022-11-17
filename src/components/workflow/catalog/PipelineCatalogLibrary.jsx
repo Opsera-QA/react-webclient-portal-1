@@ -117,13 +117,13 @@ function PipelineCatalogLibrary() {
       <CustomTabContainer>
         <PipelineCatalogCustomTab
           activeTab={activeTab}
-          tabText={"Marketplace"}
+          tabText={"Marketplace Pipelines"}
           handleTabClick={handleTabClick}
           tabName={"all"}
         />
         <PipelineCatalogCustomTab
           activeTab={activeTab}
-          tabText={"Private"}
+          tabText={"Shared Templates"}
           handleTabClick={handleTabClick}
           tabName={"customer"}
         />

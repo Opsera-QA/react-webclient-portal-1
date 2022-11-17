@@ -4,8 +4,6 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import pipelineInstructionsMetadata
-  from "@opsera/definitions/constants/settings/pipelines/instructions/pipelineInstructions.metadata";
 import ActionBarTransferOwnershipButtonBase
   from "components/common/actions/buttons/ActionBarTransferOwnershipButtonBase";
 import PipelineInstructionsDetailPanel from "components/workflow/instructions/details/PipelineInstructionsDetailPanel";
@@ -14,6 +12,8 @@ import useGetPipelineInstructionModelById
 import ActionBarDeletePipelineInstructionsButton
   from "components/workflow/instructions/action_bar/ActionBarDeletePipelineInstructionsButton";
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
+import pipelineInstructionsMetadata
+  from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructions.metadata";
 
 function PipelineInstructionsDetailView() {
   const { pipelineInstructionsId } = useParams();

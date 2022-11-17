@@ -9,12 +9,8 @@ import {
   getOwnerNameField,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
-import pipelineInstructionsTypeConstants
-  from "@opsera/definitions/constants/settings/pipelines/instructions/pipelineInstructionsType.constants";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import pipelineInstructionsMetadata
-  from "@opsera/definitions/constants/settings/pipelines/instructions/pipelineInstructions.metadata";
 import PipelineInstructionsRoleHelper
   from "@opsera/know-your-role/roles/settings/pipelines/instructions/pipelineInstructionsRole.helper";
 import {
@@ -22,6 +18,10 @@ import {
 } from "components/common/table/FilterContainer";
 import NewPipelineInstructionsOverlay from "components/workflow/instructions/NewPipelineInstructionsOverlay";
 import {pipelineInstructionsHelper} from "components/workflow/instructions/pipelineInstructions.helper";
+import pipelineInstructionsMetadata
+  from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructions.metadata";
+import pipelineInstructionsTypeConstants
+  from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructionsType.constants";
 
 export default function PipelineInstructionTable(
   {
