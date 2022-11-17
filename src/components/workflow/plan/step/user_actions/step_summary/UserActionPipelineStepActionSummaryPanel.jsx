@@ -85,7 +85,7 @@ export default function UserActionPipelineStepActionSummaryPanel(
       {getDynamicFields()}
       <Col xs={12}>
         <RichTextField
-          fieldName={"api_response.instructions"}
+          fieldName={"api_response.instructions.instructions"}
           model={pipelineTaskModel}
         />
       </Col>
