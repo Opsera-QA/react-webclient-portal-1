@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 
-function GitlabDeploymentFrequencyDataBlock({
+function GitlabLeadTimeDataBlock({
   value,
   prevValue,
   topText,
@@ -28,11 +28,11 @@ function GitlabDeploymentFrequencyDataBlock({
   );
 }
 
-GitlabDeploymentFrequencyDataBlock.propTypes = {
+GitlabLeadTimeDataBlock.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   prevValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   topText: PropTypes.string,
   bottomText: PropTypes.string,
 };
 
-export default GitlabDeploymentFrequencyDataBlock;
+export default GitlabLeadTimeDataBlock;
