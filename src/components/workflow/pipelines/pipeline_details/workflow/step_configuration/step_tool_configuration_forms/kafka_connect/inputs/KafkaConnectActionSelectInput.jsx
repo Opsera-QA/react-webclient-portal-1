@@ -39,6 +39,7 @@ function KafkaConnectActionSelectInput({dataObject, setDataObject, isLoading, di
     let newDataObject = dataObject;
     newDataObject.setData("gitToolId", "");
     newDataObject.setData("repoId", "");
+    newDataObject.setData("projectId", "");
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("service", "");
