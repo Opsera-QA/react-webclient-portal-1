@@ -14,6 +14,7 @@ import ActionBarDeletePipelineInstructionsButton
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 import pipelineInstructionsMetadata
   from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructions.metadata";
+import {pipelineInstructionsHelper} from "components/workflow/instructions/pipelineInstructions.helper";
 
 function PipelineInstructionsDetailView() {
   const { pipelineInstructionsId } = useParams();
@@ -31,7 +32,7 @@ function PipelineInstructionsDetailView() {
     return (
       <ActionBarContainer>
         <div>
-          <ActionBarBackButton path={"/settings/pipelines/instructions"} />
+          <ActionBarBackButton path={pipelineInstructionsHelper.getManagementScreenLink()} />
         </div>
         <div className={"d-flex"}>
           <ActionBarTransferOwnershipButtonBase
