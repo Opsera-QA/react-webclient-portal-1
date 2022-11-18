@@ -46,6 +46,7 @@ function SelectInputBase(
     loadDataFunction,
     handleCreateFunction,
     requireUserEnable,
+    ellipsisOnClickFunction,
 }) {
   const field = dataObject?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
@@ -95,7 +96,7 @@ function SelectInputBase(
       hasStringValue(dataObject.getData(field.id)) === true
       && ((disabled !== true && field?.isRequired !== true) || lenientClearValueButton === true)
       && showClearValueButton !== false
-      && (setDataFunction == null || clearDataFunction)
+      && (setDataFunction == null || clearDataFunction != null)
     ) {
       return clearValue;
     }
@@ -139,6 +140,12 @@ function SelectInputBase(
     setEnabled(true);
   };
 
+  const getEnableEditFunction = () => {
+    if (requireUserEnable === true && enabled === false) {
+      return enableEditingFunction;
+    }
+  };
+
   if (field == null || visible === false) {
     return null;
   }
@@ -157,7 +164,8 @@ function SelectInputBase(
         infoOverlay={infoOverlay}
         linkIcon={linkIcon}
         ellipsisTooltipText={ellipsisTooltipText}
-        enableEditingFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
+        enableEditingFunction={getEnableEditFunction()}
+        ellipsisOnClickFunction={ellipsisOnClickFunction}
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(internalErrorMessage) === true || hasStringValue(errorMessage) === true}
         helpTooltipText={helpTooltipText}
@@ -245,6 +253,7 @@ SelectInputBase.propTypes = {
   loadDataFunction: PropTypes.func,
   handleCreateFunction: PropTypes.func,
   requireUserEnable: PropTypes.bool,
+  ellipsisOnClickFunction: PropTypes.func,
 };
 
 SelectInputBase.defaultProps = {

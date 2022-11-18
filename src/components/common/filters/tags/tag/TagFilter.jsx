@@ -7,7 +7,14 @@ import FilterSelectInputBase from "components/common/filters/input/FilterSelectI
 import axios from "axios";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
-function TagFilter({ filterDto, setFilterDto, className }) {
+// TODO: Deprecate the current string value and pass actual tag object instead
+function TagFilter(
+  {
+    filterDto,
+    setFilterDto,
+    valueField,
+    className,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -61,13 +68,30 @@ function TagFilter({ filterDto, setFilterDto, className }) {
 
     if (Array.isArray(tags) && tags.length > 0) {
       tags.map((tag, index) => {
-        tagOptions.push({text: `${tag["value"]}`, value: `${tag["type"]}:${tag["value"]}`, type: `${capitalizeFirstLetter(tag["type"])}`});
+        tagOptions.push({
+          text: `${tag["value"]}`,
+          value: `${tag["type"]}:${tag["value"]}`,
+          value2: {type: tag.type, value: tag.value},
+          type: `${capitalizeFirstLetter(tag["type"])}`
+        });
       });
     }
 
     if (isMounted?.current === true) {
       setTagOptions(tagOptions);
     }
+  };
+
+  const getTextFieldString = (tag) => {
+    if (tag == null) {
+      return "Select Tag";
+    }
+
+    if (valueField === "value2") {
+      return `${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`;
+    }
+
+    return tag?.text;
   };
 
   return (
@@ -79,6 +103,8 @@ function TagFilter({ filterDto, setFilterDto, className }) {
         groupBy={"type"}
         setDataObject={setFilterDto}
         dataObject={filterDto}
+        valueField={valueField}
+        textField={getTextFieldString}
         selectOptions={tagOptions}
       />
     </div>
@@ -89,7 +115,12 @@ function TagFilter({ filterDto, setFilterDto, className }) {
 TagFilter.propTypes = {
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  valueField: PropTypes.string,
+};
+
+TagFilter.defaultProps = {
+  valueField: "value",
 };
 
 export default TagFilter;

@@ -7,12 +7,16 @@ pipelineInstructionsActions.getPipelineInstructions = async (
   cancelTokenSource,
   searchKeyword,
   type,
+  tag,
+  owner,
   ) => {
   const apiUrl = "/settings/pipelines/instructions";
   const urlParams = {
     params: {
       search: searchKeyword,
       type: type,
+      tag: tag,
+      owner: owner,
     },
   };
 

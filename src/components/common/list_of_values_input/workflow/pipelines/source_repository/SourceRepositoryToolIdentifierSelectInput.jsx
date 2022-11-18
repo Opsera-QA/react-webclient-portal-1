@@ -19,8 +19,8 @@ function SourceRepositoryToolIdentifierSelectInput({ fieldName, model, setModel,
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
       lenientClearValueButton={lenientClearValueButton}
-      valueField="value"
-      textField="text"
+      valueField={"value"}
+      textField={"text"}
       disabled={disabled}
     />
   );

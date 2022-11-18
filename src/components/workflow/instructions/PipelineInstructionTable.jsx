@@ -22,6 +22,13 @@ import pipelineInstructionsMetadata
   from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructions.metadata";
 import pipelineInstructionsTypeConstants
   from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructionsType.constants";
+import PipelineStatusFilter from "components/common/filters/pipelines/status/PipelineStatusFilter";
+import TagFilter from "components/common/filters/tags/tag/TagFilter";
+import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
+import PipelineInstructionsTypeFilter
+  from "components/common/filters/pipelines/instructions/PipelineInstructionsTypeFilter";
+import InlinePipelineInstructionsTypeFilter
+  from "components/common/filters/pipelines/instructions/InlinePipelineInstructionsTypeFilter";
 
 export default function PipelineInstructionTable(
   {
@@ -77,6 +84,39 @@ export default function PipelineInstructionTable(
     );
   };
 
+  const getDropdownFilters = () => {
+    return (
+      <>
+        <PipelineInstructionsTypeFilter
+          filterModel={pipelineInstructionsFilterModel}
+          setFilterModel={setPipelineInstructionsFilterModel}
+        />
+        <TagFilter
+          filterDto={pipelineInstructionsFilterModel}
+          setFilterDto={setPipelineInstructionsFilterModel}
+          valueField={"value2"}
+          className={"mt-2"}
+        />
+        <OwnerFilter
+          filterModel={pipelineInstructionsFilterModel}
+          setFilterModel={setPipelineInstructionsFilterModel}
+          className={"mt-2"}
+        />
+      </>
+    );
+  };
+
+  const getInlineFilters =  () => {
+    return (
+      <InlinePipelineInstructionsTypeFilter
+        filterModel={pipelineInstructionsFilterModel}
+        setFilterModel={setPipelineInstructionsFilterModel}
+        loadData={loadData}
+        className={"mr-2"}
+      />
+    );
+  };
+
   const getAddRecordFunction = () => {
     const addAllowed = PipelineInstructionsRoleHelper.canCreatePipelineInstructions(userData);
 
@@ -90,9 +130,12 @@ export default function PipelineInstructionTable(
       loadData={loadData}
       addRecordFunction={getAddRecordFunction()}
       paginationModel={pipelineInstructionsFilterModel}
+      setPaginationModel={setPipelineInstructionsFilterModel}
       isLoading={isLoading}
+      inlineFilters={getInlineFilters()}
       body={getTable()}
       metadata={pipelineInstructionsMetadata}
+      dropdownFilters={getDropdownFilters()}
       titleIcon={faBallotCheck}
       title={"Pipeline Instructions"}
       type={"Pipeline Instructions"}
