@@ -6,9 +6,17 @@ import {faTag} from "@fortawesome/pro-light-svg-icons";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function TagField({dataObject, fieldName, className, showLabel}) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+function TagField(
+  {
+    dataObject,
+    fieldName,
+    requireSavedValue,
+    className,
+    showLabel,
+  }) {
+  const field = dataObject?.getFieldById(fieldName);
 
   // TODO: After all pipelines are updated to new tags, remove this.
   // Legacy tags are just strings
@@ -38,7 +46,9 @@ function TagField({dataObject, fieldName, className, showLabel}) {
     );
   };
 
-  if (dataObject == null) {
+  const parsedTags = DataParsingHelper.parseArray(parseTags());
+
+  if (dataObject == null || (requireSavedValue === true && !parsedTags)) {
     return null;
   }
 
@@ -56,7 +66,8 @@ TagField.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   className: PropTypes.string,
-  showLabel: PropTypes.bool
+  showLabel: PropTypes.bool,
+  requireSavedValue: PropTypes.bool,
 };
 
 TagField.defaultProps = {

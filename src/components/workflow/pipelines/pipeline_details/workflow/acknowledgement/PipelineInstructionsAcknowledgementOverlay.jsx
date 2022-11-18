@@ -126,14 +126,14 @@ export default function PipelineInstructionsAcknowledgementOverlay(
     if (hasStringValue(userActionsStepModel?.getData("message")) === true) {
       return (
         <Row>
-          <Col xs={12} lg={6}>
+          <Col xs={12} lg={8}>
+            {getTextInput()}
+          </Col>
+          <Col xs={12} lg={4}>
             <MessageField
               model={userActionsStepModel}
               fieldName={"message"}
             />
-          </Col>
-          <Col xs={12} lg={6}>
-            {getTextInput()}
           </Col>
         </Row>
       );
