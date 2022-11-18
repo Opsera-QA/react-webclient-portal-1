@@ -44,7 +44,7 @@ function GitlabLeadTimeMaturityScoreInsights({ kpiConfiguration, insightsData })
     )
   );
 
-  const noDataMessage = "Maturity score report is currently unavailable";
+  const noDataMessage = "No Data available";
 
   const fields = GitlabLeadTimeMaturityScoreInsightsMetadata.fields;
   const maturityScoreByRepositories = insightsData?.maturityScoreByRepositories;
@@ -156,7 +156,7 @@ function GitlabLeadTimeMaturityScoreInsights({ kpiConfiguration, insightsData })
                             tabText={maturityScoreByTag[i]?.name}
                             tabName={maturityScoreByTag[i]?.name}
                             handleTabClick={handleVerticalTabClick}
-                            activeTab={activeVerticalTab}
+                            activeTab={activeVerticalTab || maturityScoreByTag[0]?.name}
                         />,
                     );
                 }

@@ -34,7 +34,7 @@ function GitlabDeploymentFrequencyMaturityScoreInsightsTable({
     ),
   );
 
-  const noDataMessage = "Maturity score report is currently unavailable";
+  const noDataMessage = "No Data available";
 
   const fields = GitlabPipelineStatisticsActionableInsightsMetadata.fields;
   const maturityScoreByRepositories =
@@ -167,7 +167,7 @@ function GitlabDeploymentFrequencyMaturityScoreInsightsTable({
             tabText={maturityScoreByTag[i]?.name}
             tabName={maturityScoreByTag[i]?.name}
             handleTabClick={handleVerticalTabClick}
-            activeTab={activeVerticalTab}
+            activeTab={activeVerticalTab || maturityScoreByTag[0]?.name}
           />,
         );
       }
