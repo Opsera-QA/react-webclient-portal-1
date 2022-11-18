@@ -13,7 +13,20 @@ import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/s
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 import {fieldValidation} from "core/data_model/modelValidation";
 
-function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setDataFunction, allowCreate, inline, allowedTypes, getDisabledTags, placeholderText}) {
+function TagManager(
+  {
+    fieldName,
+    type,
+    dataObject,
+    setDataObject,
+    disabled,
+    setDataFunction,
+    allowCreate,
+    inline,
+    allowedTypes,
+    getDisabledTags,
+    placeholderText,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [field] = useState(dataObject?.getFieldById(fieldName));

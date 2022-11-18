@@ -2,20 +2,18 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
-import RichTextInput from "components/common/inputs/rich_text/RichTextInput";
-import PipelineInstructionsTypeSelectInput
-  from "components/common/list_of_values_input/settings/pipelines/instructions/type/PipelineInstructionsTypeSelectInput";
 import useGetPipelineInstructionsAttributesModel
   from "components/workflow/instructions/hooks/attributes/useGetPipelineInstructionsAttributesModel";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import TagManager from "components/common/inputs/tags/TagManager";
 
 export default function PipelineInstructionsAttributesEditorPanel(
   {
     attributes,
+    attributesModel,
+    setAttributesModel,
     setAttributesData,
   }) {
-  const [attributesModel, setAttributesModel] = useState(undefined);
   const {
     getPipelineInstructionsAttributesModel,
   } = useGetPipelineInstructionsAttributesModel();
@@ -47,13 +45,14 @@ export default function PipelineInstructionsAttributesEditorPanel(
           dataObject={attributesModel}
           setDataObject={setModelFunction}
         />
-      </Col><Col xs={12} sm={6}>
-      <BooleanToggleInput
-        fieldName={"required_post_refresh"}
-        dataObject={attributesModel}
-        setDataObject={setModelFunction}
-      />
-    </Col>
+      </Col>
+      <Col xs={12} sm={6}>
+        {/*<BooleanToggleInput*/}
+        {/*  fieldName={"data_migration"}*/}
+        {/*  dataObject={attributesModel}*/}
+        {/*  setDataObject={setModelFunction}*/}
+        {/*/>*/}
+      </Col>
       <Col xs={12} sm={6}>
         <TextInputBase
           fieldName={"action_owner"}
@@ -69,15 +68,19 @@ export default function PipelineInstructionsAttributesEditorPanel(
         />
       </Col>
       <Col xs={12}>
-        <TagMultiSelectInput
+        <TagManager
+          type={"environment"}
           fieldName={"environments"}
+          allowedTypes={["environment"]}
           dataObject={attributesModel}
           setDataObject={setModelFunction}
         />
       </Col>
       <Col xs={12}>
-        <TagMultiSelectInput
+        <TagManager
+          type={"release"}
           fieldName={"release"}
+          allowedTypes={["release"]}
           dataObject={attributesModel}
           setDataObject={setModelFunction}
         />
@@ -95,6 +98,8 @@ export default function PipelineInstructionsAttributesEditorPanel(
 
 PipelineInstructionsAttributesEditorPanel.propTypes = {
   attributes: PropTypes.object,
+  attributesModel: PropTypes.object,
+  setAttributesModel: PropTypes.func,
   setAttributesData: PropTypes.func,
 };
 
