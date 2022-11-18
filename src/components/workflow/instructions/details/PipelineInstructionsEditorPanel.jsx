@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -12,6 +12,7 @@ import PipelineInstructionsTypeSelectInput
   from "components/common/list_of_values_input/settings/pipelines/instructions/type/PipelineInstructionsTypeSelectInput";
 import PipelineInstructionsAttributesEditorPanel
   from "components/workflow/instructions/details/PipelineInstructionsAttributesEditorPanel";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function PipelineInstructionsEditorPanel(
   {
@@ -20,6 +21,7 @@ export default function PipelineInstructionsEditorPanel(
     handleClose,
     viewDetailsUponCreate,
   }) {
+  const [attributesModel, setAttributesModel] = useState(undefined);
   const {
     isSaasUser,
   } = useComponentStateReference();
@@ -39,7 +41,28 @@ export default function PipelineInstructionsEditorPanel(
 
   const setAttributesData = (attributes) => {
     pipelineInstructionsModel.setData("attributes", attributes);
+    const savedTags = DataParsingHelper.parseArray(pipelineInstructionsModel?.getData("tags"), []);
+    const filteredSavedTags = savedTags.filter((tag) => tag.type !== "environment" && tag.type !== "release");
+    const environmentTags = DataParsingHelper.parseArray(attributes?.environments, []);
+    const releaseTags = DataParsingHelper.parseArray(attributes?.release, []);
+    filteredSavedTags.push(...environmentTags);
+    filteredSavedTags.push(...releaseTags);
+    pipelineInstructionsModel.setData("tags", filteredSavedTags);
     setPipelineInstructionsModel({...pipelineInstructionsModel});
+  };
+
+  const handleTagsUpdate = (newModel) => {
+    const tags = DataParsingHelper.parseArray(newModel?.getData("tags"), []);
+    const environmentTags = tags.filter(tag => tag.type === "environment");
+    const releaseTags = tags.filter(tag => tag.type === "release");
+
+    if (attributesModel) {
+      attributesModel?.setData("environments", environmentTags);
+      attributesModel?.setData("release", releaseTags);
+      setAttributesModel({...attributesModel});
+    }
+
+    setPipelineInstructionsModel({...newModel});
   };
 
   if (pipelineInstructionsModel == null) {
@@ -88,12 +111,14 @@ export default function PipelineInstructionsEditorPanel(
         <PipelineInstructionsAttributesEditorPanel
           attributes={pipelineInstructionsModel?.getData("attributes")}
           setAttributesData={setAttributesData}
+          attributesModel={attributesModel}
+          setAttributesModel={setAttributesModel}
         />
         {getDynamicFields()}
         <Col xs={12}>
           <TagMultiSelectInput
             dataObject={pipelineInstructionsModel}
-            setDataObject={setPipelineInstructionsModel}
+            setDataObject={handleTagsUpdate}
           />
         </Col>
       </Row>
