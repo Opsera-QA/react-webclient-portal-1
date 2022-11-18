@@ -136,7 +136,7 @@ const onRowSelect = () => {
     >
       <div className={"p-3"}>
         <GitlabDeploymentFrequencyMaturityScoreInsights
-          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
           insightsData={metricData}
         />
       </div>

@@ -157,7 +157,7 @@ function GitLabLeadTimeChart({
       >
         <div className={"p-3"}>
           <GitlabLeadTimeMaturityScoreInsights
-            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
             insightsData={metricData}
           />
         </div>
