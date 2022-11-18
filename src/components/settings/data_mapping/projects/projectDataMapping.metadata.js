@@ -106,7 +106,7 @@ const projectDataMappingMetadata = {
     return activeFilters;
   },
   newObjectFields: {
-    type: "",
+    type: "project",
     tool_identifier: "",
     tool_id: "",
     key: "",
