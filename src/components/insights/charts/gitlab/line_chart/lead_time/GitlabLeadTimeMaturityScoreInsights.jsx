@@ -91,7 +91,6 @@ function GitlabLeadTimeMaturityScoreInsights({ kpiConfiguration, insightsData })
                 data = maturityScoreByTag.filter(tag => tag.name === activeVerticalTab);
             } else {
                 data = maturityScoreByTag.filter(tag => tag.name === maturityScoreByTag[0].name);
-                setActiveVerticalTab(maturityScoreByTag[0].name);
             }
             return (
                 <CustomTable
