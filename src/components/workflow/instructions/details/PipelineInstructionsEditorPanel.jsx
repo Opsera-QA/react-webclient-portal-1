@@ -85,12 +85,10 @@ export default function PipelineInstructionsEditorPanel(
             setDataObject={setPipelineInstructionsModel}
           />
         </Col>
-        {/*<Col xs={12}>*/}
-        {/*  <PipelineInstructionsAttributesEditorPanel*/}
-        {/*    attributes={pipelineInstructionsModel?.getData("attributes")}*/}
-        {/*    setAttributesData={setAttributesData}*/}
-        {/*  />*/}
-        {/*</Col>*/}
+        <PipelineInstructionsAttributesEditorPanel
+          attributes={pipelineInstructionsModel?.getData("attributes")}
+          setAttributesData={setAttributesData}
+        />
         {getDynamicFields()}
         <Col xs={12}>
           <TagMultiSelectInput

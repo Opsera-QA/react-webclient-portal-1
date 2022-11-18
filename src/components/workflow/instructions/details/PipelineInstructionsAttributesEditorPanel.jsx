@@ -45,42 +45,48 @@ export default function PipelineInstructionsAttributesEditorPanel(
         <BooleanToggleInput
           fieldName={"required_post_refresh"}
           dataObject={attributesModel}
-          setDataObject={setAttributesModel}
+          setDataObject={setModelFunction}
         />
-      </Col>
+      </Col><Col xs={12} sm={6}>
+      <BooleanToggleInput
+        fieldName={"required_post_refresh"}
+        dataObject={attributesModel}
+        setDataObject={setModelFunction}
+      />
+    </Col>
       <Col xs={12} sm={6}>
         <TextInputBase
           fieldName={"action_owner"}
           dataObject={attributesModel}
-          setDataObject={setAttributesModel}
+          setDataObject={setModelFunction}
         />
       </Col>
       <Col xs={12} sm={6}>
         <TextInputBase
           fieldName={"jira"}
           dataObject={attributesModel}
-          setDataObject={setAttributesModel}
+          setDataObject={setModelFunction}
         />
       </Col>
       <Col xs={12}>
         <TagMultiSelectInput
           fieldName={"environments"}
           dataObject={attributesModel}
-          setDataObject={setAttributesModel}
+          setDataObject={setModelFunction}
         />
       </Col>
       <Col xs={12}>
         <TagMultiSelectInput
           fieldName={"release"}
           dataObject={attributesModel}
-          setDataObject={setAttributesModel}
+          setDataObject={setModelFunction}
         />
       </Col>
       <Col xs={12} sm={6}>
         <TextInputBase
           fieldName={"point_of_contact"}
           dataObject={attributesModel}
-          setDataObject={setAttributesModel}
+          setDataObject={setModelFunction}
         />
       </Col>
     </>

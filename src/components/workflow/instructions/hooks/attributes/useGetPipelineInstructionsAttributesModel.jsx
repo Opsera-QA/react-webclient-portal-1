@@ -6,7 +6,7 @@ export default function useGetPipelineInstructionsAttributesModel() {
   const getPipelineInstructionsAttributesModel = (
     pipelineInstructionsAttributesData,
   ) => {
-    return new modelHelpers.parseObjectIntoModel(
+    return modelHelpers.parseObjectIntoModel(
       pipelineInstructionsAttributesData,
       pipelineInstructionsAttributesMetadata
     );
@@ -14,6 +14,5 @@ export default function useGetPipelineInstructionsAttributesModel() {
 
   return ({
     getPipelineInstructionsAttributesModel: getPipelineInstructionsAttributesModel,
-    metadata: pipelineInstructionsAttributesMetadata,
   });
 }
