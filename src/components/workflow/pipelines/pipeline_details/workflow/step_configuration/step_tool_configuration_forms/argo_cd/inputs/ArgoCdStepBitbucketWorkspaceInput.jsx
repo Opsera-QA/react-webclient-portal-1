@@ -7,6 +7,7 @@ function ArgoCdStepBitbucketWorkspaceInput({ gitToolId, fieldName, model, setMod
     let newModel = model;
     newModel.setData("bitbucketWorkspace", selectedOption?.key);
     newModel.setData("bitbucketWorkspaceName", selectedOption?.name);
+    newModel.setData("gitWorkspace", selectedOption?.key);
     setModel({ ...newModel });
   };
 
