@@ -57,4 +57,8 @@ NewPipelineInstructionsOverlay.propTypes = {
   viewDetailsUponCreate: PropTypes.bool,
 };
 
+NewPipelineInstructionsOverlay.defaultProps = {
+  viewDetailsUponCreate: true,
+};
+
 

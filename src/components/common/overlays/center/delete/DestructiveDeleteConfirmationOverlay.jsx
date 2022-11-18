@@ -75,6 +75,7 @@ function DestructiveDeleteConfirmationOverlay(
                 size={"md"}
               />
               <VanityButtonBase
+                buttonState={buttonState}
                 normalText={"CONFIRM DELETE"}
                 busyText={`Deleting ${deleteTopic}`}
                 tooltip={cannotBeUndone}
