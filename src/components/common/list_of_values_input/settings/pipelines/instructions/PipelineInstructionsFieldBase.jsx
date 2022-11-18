@@ -15,6 +15,13 @@ import PipelineInstructionsInlineInput
 import PipelineInstructionsTypeField
   from "components/common/list_of_values_input/settings/pipelines/instructions/type/PipelineInstructionsTypeField";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useGetPipelineInstructionsAttributesModel
+  from "components/workflow/instructions/hooks/attributes/useGetPipelineInstructionsAttributesModel";
+import BooleanField from "components/common/fields/boolean/BooleanField";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import TagField from "components/common/fields/multiple_items/tags/TagField";
 
 export default function PipelineInstructionsFieldBase(
   {
@@ -33,6 +40,15 @@ export default function PipelineInstructionsFieldBase(
     setInEditModeVisibility,
   }) {
   const [inEditMode, setInEditMode] = useState(false);
+  const {
+    getPipelineInstructionsAttributesModel,
+  } = useGetPipelineInstructionsAttributesModel();
+  const pipelineInstructionsAttributesModel = {...getPipelineInstructionsAttributesModel(pipelineInstructionsModel?.getData("attributes"))};
+  const tags = DataParsingHelper.parseArray(pipelineInstructionsModel?.getData("tags"), []);
+  const environmentTags = DataParsingHelper.parseArray(tags?.filter(tag => tag.type === "environment"), []);
+  const releaseTags = DataParsingHelper.parseArray(tags?.filter(tag => tag.type === "release"), []);
+  pipelineInstructionsAttributesModel?.setData("environments", environmentTags);
+  pipelineInstructionsAttributesModel?.setData("release", releaseTags);
 
   const getAccessRoleDisplayerField = () => {
     if (isLoading !== true && pipelineInstructionsModel != null) {
@@ -132,8 +148,42 @@ export default function PipelineInstructionsFieldBase(
           </Col>
           <Col xs={12} md={4}>
             {getAccessRoleDisplayerField()}
+            <H5FieldSubHeader subheaderText={"Attributes"} />
             <PipelineInstructionsTypeField
               model={pipelineInstructionsModel}
+            />
+            <TextFieldBase
+              fieldName={"action_owner"}
+              dataObject={pipelineInstructionsAttributesModel}
+              requireSavedValue={true}
+            />
+            <TextFieldBase
+              fieldName={"point_of_contact"}
+              dataObject={pipelineInstructionsAttributesModel}
+              requireSavedValue={true}
+            />
+            <TextFieldBase
+              fieldName={"jira"}
+              dataObject={pipelineInstructionsAttributesModel}
+              requireSavedValue={true}
+            />
+            <BooleanField
+              fieldName={"required_post_refresh"}
+              dataObject={pipelineInstructionsAttributesModel}
+            />
+            <BooleanField
+              fieldName={"data_migration"}
+              dataObject={pipelineInstructionsAttributesModel}
+            />
+            <TagField
+              fieldName={"environments"}
+              dataObject={pipelineInstructionsAttributesModel}
+              requireSavedValue={true}
+            />
+            <TagField
+              fieldName={"release"}
+              dataObject={pipelineInstructionsAttributesModel}
+              requireSavedValue={true}
             />
           </Col>
         </Row>
