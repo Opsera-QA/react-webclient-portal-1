@@ -7,6 +7,7 @@ import useGetPipelineInstructions from "components/workflow/instructions/hooks/u
 import NewPipelineInstructionsOverlay from "components/workflow/instructions/NewPipelineInstructionsOverlay";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {pipelineInstructionsHelper} from "components/workflow/instructions/pipelineInstructions.helper";
+import {useHistory} from "react-router-dom";
 
 export default function PipelineInstructionsSelectInput(
   {
@@ -20,6 +21,7 @@ export default function PipelineInstructionsSelectInput(
     textField,
     allowCreate,
   }) {
+  const history = useHistory();
   const {
     toastContext,
   } = useComponentStateReference();
@@ -59,10 +61,22 @@ export default function PipelineInstructionsSelectInput(
     await loadData();
   };
 
-  const getDetailViewToolUrl = () => {
+  const handleEllipsisClick = () => {
+    toastContext.clearOverlayPanel();
     if (isMongoDbId(model?.getData(fieldName)) === true) {
-      return (pipelineInstructionsHelper.getDetailViewLink(model?.getData(fieldName)));
+      history.push(pipelineInstructionsHelper.getDetailViewLink(model?.getData(fieldName)));
+      return;
     }
+
+    history.push(pipelineInstructionsHelper.getManagementScreenLink());
+  };
+
+  const getEllipsisTooltipText = () => {
+    if (isMongoDbId(model?.getData(fieldName)) === true) {
+      return ("View selected Instructions details");
+    }
+
+    return "View Instructions Management Screen";
   };
 
   return (
@@ -77,9 +91,9 @@ export default function PipelineInstructionsSelectInput(
       error={error}
       valueField={valueField}
       textField={textField}
+      ellipsisOnClickFunction={handleEllipsisClick}
       // handleCreateFunction={allowCreate === true ? launchCreationOverlay : undefined}
-      detailViewLink={getDetailViewToolUrl()}
-      ellipsisTooltipText={"View selected Instructions details"}
+      ellipsisTooltipText={getEllipsisTooltipText()}
       disabled={disabled}
       className={className}
       singularTopic={"Pipeline Instruction"}

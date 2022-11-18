@@ -38,6 +38,8 @@ export default function useGetPipelineInstructions() {
       cancelTokenSource,
       newFilterModel?.getFilterValue("search"),
       newFilterModel?.getFilterValue("type"),
+      newFilterModel?.getData("tag"),
+      newFilterModel?.getFilterValue("owner"),
     );
 
     const pipelineInstructionList = DataParsingHelper.parseArray(response?.data?.data, []);

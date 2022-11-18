@@ -31,6 +31,7 @@ function InputLabel(
     loadDataFunction,
     disabled,
     isLoading,
+    ellipsisOnClickFunction,
   }) {
   const getInputHelpIcon = () => {
     if (inputHelpOverlay != null) {
@@ -101,6 +102,7 @@ function InputLabel(
           />
           <EllipsisIcon
             overlay={infoOverlay}
+            onClickFunction={ellipsisOnClickFunction}
             tooltipText={ellipsisTooltipText}
             className={"ml-1 view-details-icon"}
           />
@@ -151,6 +153,7 @@ InputLabel.propTypes = {
   loadDataFunction: PropTypes.bool,
   disabled: PropTypes.bool,
   isLoading: PropTypes.bool,
+  ellipsisOnClickFunction: PropTypes.func,
 };
 
 export default InputLabel;
