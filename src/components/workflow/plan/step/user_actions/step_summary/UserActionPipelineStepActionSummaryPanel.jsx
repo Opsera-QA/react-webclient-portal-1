@@ -14,6 +14,8 @@ import BooleanField from "components/common/fields/boolean/BooleanField";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
 import useGetPipelineInstructionsModel from "components/workflow/instructions/hooks/useGetPipelineInstructionsModel";
+import PipelineInstructionsFieldBase
+  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsFieldBase";
 
 export default function UserActionPipelineStepActionSummaryPanel(
   {
@@ -25,7 +27,7 @@ export default function UserActionPipelineStepActionSummaryPanel(
   const {
     getPipelineInstructionsModel,
   } = useGetPipelineInstructionsModel();
-  const pipelineAcknowledgementModel = getPipelineInstructionsModel(pipelineTaskModel?.getData("api_response.instructions"));
+  const pipelineInstructionsModel = getPipelineInstructionsModel(pipelineTaskModel?.getData("api_response.instructions"));
 
   const getDynamicFields = () => {
     if (acknowledgementModel?.getData("denied") === true) {
@@ -89,9 +91,11 @@ export default function UserActionPipelineStepActionSummaryPanel(
       </Col>
       {getDynamicFields()}
       <Col xs={12}>
-        <RichTextField
+        <PipelineInstructionsFieldBase
           fieldName={"instructions"}
-          model={pipelineAcknowledgementModel}
+          pipelineInstructionsModel={pipelineInstructionsModel}
+          showInstructions={true}
+          pipelineInstructionsId={pipelineInstructionsModel?.getData("_id")}
         />
       </Col>
     </PipelineTaskSummaryPanelBase>
