@@ -54,7 +54,6 @@ function TagsTable({ tagListModel, loadData, isLoading, tagFilterDto, setTagFilt
     );
   };
 
-
   const getInlineFilters = () => {
     return (
       <InlineTagTypeFilter filterModel={tagFilterDto} setFilterModel={setTagFilterDto} loadData={loadData} className={"mr-2"} />
