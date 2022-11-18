@@ -91,6 +91,26 @@ const sourceRepositoryConfigurationMetadata = {
       label: "Path",
       id: "gitExportPath",
       formText: "Do not include ending /"
+    },
+    {
+      label: "Push Events",
+      id: "isPushEvent",
+      formText: "Enabling this will trigger this pipeline for push events only"
+    },
+    {
+      label: "PR Events",
+      id: "isPrEvent",
+      formText: "Enabling this will trigger this pipeline for PR events"
+    },
+    {
+      label: "PR Created",
+      id: "prCreatedEvent",
+      formText: "Enable this if you want to trigger only once PR is created"
+    },
+    {
+      label: "PR Approved",
+      id: "prApprovedEvent",
+      formText: "Enable this if you want to trigger only if PR is approved"
     }
   ],
   newObjectFields: {
@@ -108,6 +128,10 @@ const sourceRepositoryConfigurationMetadata = {
     workspaceName: "",
     key: "",
     trigger_active: false,
+    isPushEvent: true,
+    isPrEvent: false,
+    prCreatedEvent: true,
+    prApprovedEvent: false,
   },
 };
 
