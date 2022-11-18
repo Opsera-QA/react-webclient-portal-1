@@ -4,6 +4,7 @@ import NavigationTabContainer from "components/common/tabs/navigation/Navigation
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {faBallotCheck, faDraftingCompass, faHexagon, faLayerGroup} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import {pipelineInstructionsHelper} from "components/workflow/instructions/pipelineInstructions.helper";
 
 function WorkflowSubNavigationBar({currentTab}) {
   const history = useHistory();
@@ -19,7 +20,7 @@ function WorkflowSubNavigationBar({currentTab}) {
         history.push(`/workflow/`);
         return;
       case "pipelineInstructionsManagement":
-        history.push(`/workflow/instructions`);
+        history.push(pipelineInstructionsHelper.getManagementScreenLink());
         return;
     }
   };
