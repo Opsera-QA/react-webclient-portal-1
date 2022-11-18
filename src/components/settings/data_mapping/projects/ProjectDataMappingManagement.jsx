@@ -4,6 +4,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import ProjectDataMappingsTable from "components/settings/data_mapping/projects/ProjectDataMappingsTable";
 import {projectDataMappingActions} from "components/settings/data_mapping/projects/projectDataMapping.actions";
+import Model from "../../../../core/data_model/model";
+import projectMappingMetadata from "./projectDataMapping.metadata.js";
+import tagFilterMetadata from "../../tags/tag-filter-metadata";
 
 function ProjectDataMappingManagement() {
   const toastContext = useContext(DialogToastContext);
@@ -13,6 +16,11 @@ function ProjectDataMappingManagement() {
   const [projectDataMappings, setProjectDataMappings] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [toolListModel, setToolListModel] = useState(undefined);
+  const authContext = useContext(AuthContext);
+  const [toolFilterDto, setToolFilterDto] = useState(new Model({...projectMappingMetadata.newObjectFields}, projectMappingMetadata, false));
+  const [projectDataMappingModel, setProjectDataMappingModel] = useState(undefined);
+
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -52,19 +60,22 @@ function ProjectDataMappingManagement() {
     }
   };
 
-  const getProjectDataMappings = async (cancelSource = cancelTokenSource) => {
+  const getProjectDataMappings = async (cancelSource = cancelTokenSource, filterDto = toolFilterDto) => {
     try {
-      const response = await projectDataMappingActions.getProjectDataMappingsV2(getAccessToken, cancelSource);
+      const response = await projectDataMappingActions.getProjectDataMappingsV2(getAccessToken, cancelSource, filterDto);
       const mappings = response?.data?.data;
 
       if (isMounted?.current === true && Array.isArray(mappings)) {
         setProjectDataMappingMetadata({...response?.data?.metadata});
         setProjectDataMappings(mappings);
+        filterDto.setData("activeFilters", filterDto?.getActiveFilters());
+        setToolFilterDto({...filterDto});
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     }
   };
+
 
   return (
     <div className={"mt-2"}>
@@ -74,6 +85,8 @@ function ProjectDataMappingManagement() {
         projectDataMappings={projectDataMappings}
         isMounted={isMounted}
         projectDataMappingMetadata={projectDataMappingMetadata}
+        toolFilterDto={toolFilterDto}
+        setToolFilterDto={setToolFilterDto}
       />
     </div>
   );

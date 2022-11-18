@@ -11,6 +11,15 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTags} from "@fortawesome/pro-light-svg-icons";
 import {getField} from "components/common/metadata/metadata-helpers";
+import TagTypeFilter from "../../../common/filters/tags/tag_type/TagTypeFilter";
+import ActiveFilter from "../../../common/filters/status/ActiveFilter";
+import InlineTagTypeFilter from "../../../common/filters/tags/tag_type/InlineTagTypeFilter";
+import ProjectMappingToolIdentifierSelectInput
+  from "../../../common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolIdentifierSelectInput";
+import tagMetadata from "../../tags/tag.metadata";
+import InLineToolTypeFilter from "../../../common/filters/data_mapping/InLineToolTypeFilter";
+import ToolTypeFilter from "../../../common/filters/data_mapping/ToolTypeFilter";
+import ProjectDataMappingActiveFilter from "../../../common/filters/status/ProjectDataMappingActiveFilter";
 
 function ProjectDataMappingsTable(
   {
@@ -19,6 +28,8 @@ function ProjectDataMappingsTable(
     isLoading,
     isMounted,
     projectDataMappingMetadata,
+      toolFilterDto,
+      setToolFilterDto
   }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
@@ -63,6 +74,21 @@ function ProjectDataMappingsTable(
     );
   };
 
+  const getDropdownFilters = () => {
+    return (
+        <>
+          <ToolTypeFilter filterModel={toolFilterDto} setFilterModel={setToolFilterDto} className={"mb-2"} />
+          <ProjectDataMappingActiveFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
+        </>
+    );
+  };
+
+  const getInlineFilters = () => {
+    return (
+        <InLineToolTypeFilter filterModel={toolFilterDto} setFilterModel={setToolFilterDto} loadData={loadData} className={"mr-2"} />
+    );
+  };
+
   const getProjectTagsTable = () => {
     return (
       <CustomTable
@@ -79,11 +105,15 @@ function ProjectDataMappingsTable(
   return (
     <FilterContainer
       loadData={loadData}
+      filterDto={toolFilterDto}
+      setFilterDto={setToolFilterDto}
       addRecordFunction={createProjectTag}
-      supportSearch={false}
+      supportSearch={true}
       isLoading={isLoading}
       showBorder={false}
       body={getProjectTagsTable()}
+      inlineFilters={getInlineFilters()}
+      dropdownFilters={getDropdownFilters()}
       metadata={projectDataMappingMetadata}
       titleIcon={faTags}
       title={"Project Data Mapping Tags"}
@@ -99,6 +129,8 @@ ProjectDataMappingsTable.propTypes = {
   isLoading: PropTypes.bool,
   isMounted: PropTypes.object,
   projectDataMappingMetadata: PropTypes.object,
+  toolFilterDto: PropTypes.object,
+  setToolFilterDto: PropTypes.func,
 };
 
 export default ProjectDataMappingsTable;
