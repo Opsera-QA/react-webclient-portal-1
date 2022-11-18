@@ -17,6 +17,9 @@ import InlineTagTypeFilter from "../../../common/filters/tags/tag_type/InlineTag
 import ProjectMappingToolIdentifierSelectInput
   from "../../../common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolIdentifierSelectInput";
 import tagMetadata from "../../tags/tag.metadata";
+import InLineToolTypeFilter from "../../../common/filters/data_mapping/InLineToolTypeFilter";
+import ToolTypeFilter from "../../../common/filters/data_mapping/ToolTypeFilter";
+import ProjectDataMappingActiveFilter from "../../../common/filters/status/ProjectDataMappingActiveFilter";
 
 function ProjectDataMappingsTable(
   {
@@ -74,14 +77,15 @@ function ProjectDataMappingsTable(
   const getDropdownFilters = () => {
     return (
         <>
-          <ActiveFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
+          <ToolTypeFilter filterModel={toolFilterDto} setFilterModel={setToolFilterDto} className={"mb-2"} />
+          <ProjectDataMappingActiveFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
         </>
     );
   };
 
   const getInlineFilters = () => {
     return (
-        <InlineTagTypeFilter filterModel={toolFilterDto} setFilterModel={setToolFilterDto} className={"mr-2"} />
+        <InLineToolTypeFilter filterModel={toolFilterDto} setFilterModel={setToolFilterDto} loadData={loadData} className={"mr-2"} />
     );
   };
 

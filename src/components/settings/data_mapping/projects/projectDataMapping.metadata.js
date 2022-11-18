@@ -61,6 +61,26 @@ const projectDataMappingMetadata = {
       label: "Created At",
       id: "createdAt",
     },
+    {
+      label: "Search",
+      id: "search",
+    },
+    {
+      label: "Active Filters",
+      id: "activeFilters",
+    },
+    {
+      label: "Page Size",
+      id: "pageSize",
+    },
+    {
+      label: "Total Count",
+      id: "totalCount",
+    },
+    {
+      label: "Sort Option",
+      id: "sortOption",
+    },
   ],
   getActiveFilters(filterModel) {
     const activeFilters = [];
@@ -74,7 +94,7 @@ const projectDataMappingMetadata = {
     const type = filterModel?.getData("type");
 
     if (hasStringValue(type) === true) {
-      activeFilters.push({filterId: "type", text: `Type: ${capitalizeFirstLetter(type)}`});
+      activeFilters.push({filterId: "active", text: `Active: ${capitalizeFirstLetter(type)}`});
     }
 
     const search = filterModel?.getData("search");
@@ -86,7 +106,7 @@ const projectDataMappingMetadata = {
     return activeFilters;
   },
   newObjectFields: {
-    type: "project",
+    type: "",
     tool_identifier: "",
     tool_id: "",
     key: "",

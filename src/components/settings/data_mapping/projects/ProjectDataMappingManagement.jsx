@@ -5,7 +5,8 @@ import axios from "axios";
 import ProjectDataMappingsTable from "components/settings/data_mapping/projects/ProjectDataMappingsTable";
 import {projectDataMappingActions} from "components/settings/data_mapping/projects/projectDataMapping.actions";
 import Model from "../../../../core/data_model/model";
-import tagFilterMetadata from "components/settings/tags/tag-filter-metadata";
+import projectMappingMetadata from "./projectDataMapping.metadata.js";
+import tagFilterMetadata from "../../tags/tag-filter-metadata";
 
 function ProjectDataMappingManagement() {
   const toastContext = useContext(DialogToastContext);
@@ -17,11 +18,9 @@ function ProjectDataMappingManagement() {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [toolListModel, setToolListModel] = useState(undefined);
   const authContext = useContext(AuthContext);
-  const [toolFilterDto, setToolFilterDto] = useState(new Model({...tagFilterMetadata.newObjectFields}, tagFilterMetadata, false));
+  const [toolFilterDto, setToolFilterDto] = useState(new Model({...projectMappingMetadata.newObjectFields}, projectMappingMetadata, false));
   const [projectDataMappingModel, setProjectDataMappingModel] = useState(undefined);
 
-  console.log("chapman tagfilter", toolFilterDto);
-  console.log("chapman setfilter", setToolFilterDto);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -63,7 +62,7 @@ function ProjectDataMappingManagement() {
 
   const getProjectDataMappings = async (cancelSource = cancelTokenSource, filterDto = toolFilterDto) => {
     try {
-      const response = await projectDataMappingActions.getProjectDataMappingsV2(getAccessToken, cancelSource);
+      const response = await projectDataMappingActions.getProjectDataMappingsV2(getAccessToken, cancelSource, filterDto);
       const mappings = response?.data?.data;
 
       if (isMounted?.current === true && Array.isArray(mappings)) {
@@ -77,8 +76,6 @@ function ProjectDataMappingManagement() {
     }
   };
 
-  console.log("vampire tagfilter", toolFilterDto);
-  console.log("vampire setfilter", setToolFilterDto);
 
   return (
     <div className={"mt-2"}>

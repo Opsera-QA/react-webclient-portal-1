@@ -21,8 +21,6 @@ function TagManagement() {
   const [tagFilterDto, setTagFilterDto] = useState(new Model({...tagFilterMetadata.newObjectFields}, tagFilterMetadata, false));
   const componentStateReference = useComponentStateReference();
   const {isMounted, cancelTokenSource} = componentStateReference;
-  console.log("before tagfilter", tagFilterDto);
-  console.log("before setfilter", setTagFilterDto);
 
   useEffect(() => {
     const newTagListModel = new TagListModel(authContext, setTagListModel);
@@ -61,7 +59,6 @@ function TagManagement() {
       filterDto,
     );
     const tagList = response?.data?.data;
-    console.log("back here");
 
     if (isMounted?.current === true && Array.isArray(tagList)) {
       newTagListModel.setDataArray(tagList);
@@ -83,9 +80,6 @@ function TagManagement() {
       }
     }
   };
-
-  console.log("after tagfilter", tagFilterDto);
-  console.log("after setfilter", setTagFilterDto);
 
   return (
     <ScreenContainer

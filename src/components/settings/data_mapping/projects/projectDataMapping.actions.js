@@ -8,8 +8,12 @@ projectDataMappingActions.getProjectDataMappingsV2 = async (getAccessToken, canc
   const urlParams = {
     params: {
       type: toolFilterModel?.getFilterValue("type"),
-      status: toolFilterModel?.getFilterValue("status"),
-      search: toolFilterModel?.getFilterValue("search")
+      tool_identifier: toolFilterModel?.getFilterValue("tool_identifier"),
+      search: toolFilterModel?.getFilterValue("search"),
+      sort: toolFilterModel?.getFilterValue("sortOption"),
+      size: toolFilterModel?.getFilterValue("pageSize"),
+      page: toolFilterModel?.getFilterValue("currentPage"),
+      active: toolFilterModel?.getFilterValue("active"),
     },
   };
 
