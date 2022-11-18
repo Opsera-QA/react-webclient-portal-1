@@ -6,10 +6,12 @@ import useGetPipelineInstructionsAttributesModel
   from "components/workflow/instructions/hooks/attributes/useGetPipelineInstructionsAttributesModel";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TagManager from "components/common/inputs/tags/TagManager";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function PipelineInstructionsAttributesEditorPanel(
   {
     attributes,
+    tags,
     attributesModel,
     setAttributesModel,
     setAttributesData,
@@ -19,7 +21,12 @@ export default function PipelineInstructionsAttributesEditorPanel(
   } = useGetPipelineInstructionsAttributesModel();
 
   useEffect(() => {
-    setAttributesModel({...getPipelineInstructionsAttributesModel(attributes)});
+    const pipelineInstructionsAttributesModel = {...getPipelineInstructionsAttributesModel(attributes)};
+    const environmentTags = DataParsingHelper.parseArray(tags?.filter(tag => tag.type === "environment"), []);
+    const releaseTags = DataParsingHelper.parseArray(tags?.filter(tag => tag.type === "release"), []);
+    pipelineInstructionsAttributesModel?.setData("environments", environmentTags);
+    pipelineInstructionsAttributesModel?.setData("release", releaseTags);
+    setAttributesModel({...pipelineInstructionsAttributesModel});
   }, []);
 
   const updateModelFunction = (fieldName, value) => {
@@ -47,11 +54,11 @@ export default function PipelineInstructionsAttributesEditorPanel(
         />
       </Col>
       <Col xs={12} sm={6}>
-        {/*<BooleanToggleInput*/}
-        {/*  fieldName={"data_migration"}*/}
-        {/*  dataObject={attributesModel}*/}
-        {/*  setDataObject={setModelFunction}*/}
-        {/*/>*/}
+        <BooleanToggleInput
+          fieldName={"data_migration"}
+          dataObject={attributesModel}
+          setDataObject={setModelFunction}
+        />
       </Col>
       <Col xs={12} sm={6}>
         <TextInputBase
@@ -63,6 +70,13 @@ export default function PipelineInstructionsAttributesEditorPanel(
       <Col xs={12} sm={6}>
         <TextInputBase
           fieldName={"jira"}
+          dataObject={attributesModel}
+          setDataObject={setModelFunction}
+        />
+      </Col>
+      <Col xs={12} sm={6}>
+        <TextInputBase
+          fieldName={"point_of_contact"}
           dataObject={attributesModel}
           setDataObject={setModelFunction}
         />
@@ -85,13 +99,6 @@ export default function PipelineInstructionsAttributesEditorPanel(
           setDataObject={setModelFunction}
         />
       </Col>
-      <Col xs={12} sm={6}>
-        <TextInputBase
-          fieldName={"point_of_contact"}
-          dataObject={attributesModel}
-          setDataObject={setModelFunction}
-        />
-      </Col>
     </>
   );
 }
@@ -101,6 +108,7 @@ PipelineInstructionsAttributesEditorPanel.propTypes = {
   attributesModel: PropTypes.object,
   setAttributesModel: PropTypes.func,
   setAttributesData: PropTypes.func,
+  tags: PropTypes.array,
 };
 
 

@@ -10,6 +10,8 @@ import PipelineInstructionsTypeField
   from "components/common/list_of_values_input/settings/pipelines/instructions/type/PipelineInstructionsTypeField";
 import PipelineInstructionsRoleAccessInlineInput
   from "components/workflow/instructions/details/inputs/PipelineInstructionsRoleAccessInlineInput";
+import PipelineInstructionsAttributesSummaryPanel
+  from "components/workflow/instructions/details/PipelineInstructionsAttributesSummaryPanel";
 
 export default function PipelineInstructionsSummaryPanel(
   {
@@ -63,6 +65,10 @@ export default function PipelineInstructionsSummaryPanel(
             dataObject={pipelineInstructionsModel}
           />
         </Col>
+        <PipelineInstructionsAttributesSummaryPanel
+          attributes={pipelineInstructionsModel?.getData("attributes")}
+          tags={pipelineInstructionsModel?.getData("tags")}
+        />
         <Col lg={12}>
           <TagField
             dataObject={pipelineInstructionsModel}

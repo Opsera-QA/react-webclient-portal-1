@@ -5,6 +5,8 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useGetPipelineInstructions from "components/workflow/instructions/hooks/useGetPipelineInstructions";
 import NewPipelineInstructionsOverlay from "components/workflow/instructions/NewPipelineInstructionsOverlay";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import {pipelineInstructionsHelper} from "components/workflow/instructions/pipelineInstructions.helper";
 
 export default function PipelineInstructionsSelectInput(
   {
@@ -57,6 +59,12 @@ export default function PipelineInstructionsSelectInput(
     await loadData();
   };
 
+  const getDetailViewToolUrl = () => {
+    if (isMongoDbId(model?.getData(fieldName)) === true) {
+      return (pipelineInstructionsHelper.getDetailViewLink(model?.getData(fieldName)));
+    }
+  };
+
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -69,7 +77,9 @@ export default function PipelineInstructionsSelectInput(
       error={error}
       valueField={valueField}
       textField={textField}
-      handleCreateFunction={allowCreate === true ? launchCreationOverlay : undefined}
+      // handleCreateFunction={allowCreate === true ? launchCreationOverlay : undefined}
+      detailViewLink={getDetailViewToolUrl()}
+      ellipsisTooltipText={"View selected Instructions details"}
       disabled={disabled}
       className={className}
       singularTopic={"Pipeline Instruction"}

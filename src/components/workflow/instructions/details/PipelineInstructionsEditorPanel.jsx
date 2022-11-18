@@ -110,6 +110,7 @@ export default function PipelineInstructionsEditorPanel(
         </Col>
         <PipelineInstructionsAttributesEditorPanel
           attributes={pipelineInstructionsModel?.getData("attributes")}
+          tags={pipelineInstructionsModel?.getData("tags")}
           setAttributesData={setAttributesData}
           attributesModel={attributesModel}
           setAttributesModel={setAttributesModel}
