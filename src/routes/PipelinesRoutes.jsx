@@ -14,17 +14,17 @@ export default function PipelinesRoutes() {
     <>
       <SecureRoute path="/pipeline" component={Pipeline} />
       <SecureRoute path="/workflow/catalog/library" exact component={PipelineCatalogLibrary} />
-      <SecureRoute path="/workflow" exact component={Pipelines} />
+      <SecureRoute path="/workflow/:tab?" exact component={Pipelines} />
       <SecureRoute path="/workflow/details/:id/:tab?" exact component={PipelineDetailView} />
 
       <RoleRestrictedRoute
-        path={"/workflow/instructions"}
+        path={"/workflow/catalog/instructions"}
         exact={true}
         component={PipelineInstructionsManagement}
         roleRequirement={ROLE_LEVELS.USERS_AND_SASS}
       />
       <RoleRestrictedRoute
-        path={"/workflow/instructions/:pipelineInstructionsId"}
+        path={"/workflow/catalog/instructions/:pipelineInstructionsId"}
         exact={true}
         component={PipelineInstructionsDetailView}
         roleRequirement={ROLE_LEVELS.USERS_AND_SASS}
