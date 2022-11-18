@@ -4,19 +4,31 @@ import { AuthContext } from "contexts/AuthContext";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
-import { GITLAB_LEADTIME_CONSTANTS as constants } from "./GitlabLeadTime_kpi_datapoint_identifier";
+import { GITLAB_LEADTIME_CONSTANTS as constants } from "./GitlabLeadTimeConstants";
 import axios from "axios";
 import GitlabLeadTimeHelpDocumentation from "../../../../../common/help/documentation/insights/charts/GitlabLeadTimeHelpDocumentation";
 import GitlabLeadTimeScatterPlotContainer from "./GitlabLeadTimeScatterPlotContainer";
 import GitlabLeadTimeDataBlock from "./GitlabLeadTimeDataBlock";
 import {
-  getDeploymentStageFromKpiConfiguration, getReverseTrend, getReverseTrendIcon, getTimeDisplay,
+  getDeploymentStageFromKpiConfiguration,
+  getMaturityColorClass,
+  getMaturityScoreText,
+  getReverseTrend,
+  getReverseTrendIcon,
+  getTimeDisplay,
 } from "../../../charts-helpers";
 import GitlabLeadTimeTrendDataBlock from "./GitlabLeadTimeTrendDataBlock";
 import gitlabAction from "../../gitlab.action";
 import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import InfoDialog from "../../../../../common/status_notifications/info";
 import BadgeBase from "../../../../../common/badges/BadgeBase";
+import GitlabLeadTimeMaturityBlock from "./GitlabLeadTimeMaturityBlock";
+import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+import {faTable} from "@fortawesome/pro-light-svg-icons";
+import GitlabDeploymentFrequencyMaturityScoreInsights
+  from "../../deployment_frequency/GitlabDeploymentFrequencyMaturityScoreInsights";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import GitlabLeadTimeMaturityScoreInsights from "./GitlabLeadTimeMaturityScoreInsights";
 
 function GitLabLeadTimeChart({
   kpiConfiguration,
@@ -25,6 +37,7 @@ function GitLabLeadTimeChart({
   index,
   setKpis,
 }) {
+  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metricData, setMetricData] = useState(undefined);
@@ -128,6 +141,30 @@ function GitLabLeadTimeChart({
   //   );
   //   setLeadTimeDataPoint(dataPoint);
   // };
+ const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
+
+  const onRowSelect = () => {
+    toastContext.showOverlayPanel(
+      <FullScreenCenterOverlayContainer
+        closePanel={closePanel}
+        showPanel={true}
+        titleText={`Lead Time Maturity Score Statistics`}
+        showToasts={true}
+        titleIcon={faTable}
+      >
+        <div className={"p-3"}>
+          <GitlabLeadTimeMaturityScoreInsights
+            dashboardData={dashboardData}
+            insightsData={metricData}
+          />
+        </div>
+      </FullScreenCenterOverlayContainer>,
+    );
+  };
+
 
   const getChartBody = () => {
     const selectedDeploymentStages =
@@ -163,20 +200,36 @@ function GitLabLeadTimeChart({
     const previousTotalAverageLeadTimeDisplay = getTimeDisplay(metricData?.previousTotalAverageLeadTime);
     const totalMedianTimeDisplay = getTimeDisplay(metricData?.totalMedianTime);
     const previousTotalMedianTimeDisplay = getTimeDisplay(metricData?.previousTotalMedianTime);
-
+    const maturityScore = metricData?.overallMaturityScoreText;
+    const maturityColor = getMaturityColorClass(maturityScore);
     return (
       <div
         className="new-chart m-3 p-0"
-        style={{ minHeight: "450px", display: "flex" }}
+        style={{ minHeight: "500px", display: "flex" }}
       >
-        <Row className={"w-100 justify-content-center"}>
+        <Row className={"w-100"}>
+          <GitlabLeadTimeMaturityBlock
+            maturityScore={getMaturityScoreText(maturityScore)}
+            maturityColor={maturityColor}
+            iconOverlayBody={constants.MATURITY_TOOL_TIP[maturityScore]}
+            onClick={onRowSelect}
+          />
           <Row
             xl={4}
             lg={4}
             md={4}
-            className={"mb-2 ml-2 d-flex justify-content-center"}
+            className={`mb-2 ml-3 py-2 d-flex justify-content-center maturity-border ${maturityColor}`}
           >
-            <Col md={12}>
+            {/*This would get removed when average merge time is fixed*/}
+            <Col md={12} className={"pl-2 pr-1"}>
+              <GitlabLeadTimeDataBlock
+                value={selectedDeploymentStages}
+                prevValue={""}
+                topText={"Selected Stage(s)"}
+                bottomText={""}
+              />
+            </Col>
+            <Col md={12} className={"px-1"}>
               <GitlabLeadTimeTrendDataBlock
                 value={totalAverageLeadTimeDisplay[0]}
                 prevValue={`${previousTotalAverageLeadTimeDisplay[0]}`}
@@ -190,7 +243,7 @@ function GitLabLeadTimeChart({
                 toolTipText={totalAverageLeadTimeDisplay[1]}
               />
             </Col>
-            <Col md={12}>
+            <Col md={12} className={"px-1"}>
               <GitlabLeadTimeTrendDataBlock
                 value={totalMedianTimeDisplay[0]}
                 prevValue={`${previousTotalMedianTimeDisplay[0]}`}
@@ -219,7 +272,7 @@ function GitLabLeadTimeChart({
             {/*    toolTipText={getTimeDisplay(meanCommitData?.currentAvgCommitToMergeTime || 0)[1]}*/}
             {/*  />*/}
             {/*</Col>*/}
-            <Col md={12}>
+            <Col md={12} className={"pl-1 pr-2"}>
               <GitlabLeadTimeDataBlock
                 value={metricData?.totalDeployments}
                 prevValue={metricData?.previousTotalDeployments}
@@ -231,8 +284,8 @@ function GitLabLeadTimeChart({
           <Col md={12}>
             <div className={"d-flex md-2"}>
               <div className={"mr-4"}>
-                <b>Selected Stages:</b> {selectedDeploymentStages}
-                <div className="row" />
+                {/*<b>Selected Stages:</b> {selectedDeploymentStages}*/}
+                {/*<div className="row" />*/}
                 <b>Recent Stage:</b> {metricData?.lastDeploymentStage || "NA"}
                 <div className="row" />
                 <b>Date: </b>

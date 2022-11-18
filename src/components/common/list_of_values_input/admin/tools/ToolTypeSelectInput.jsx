@@ -1,11 +1,9 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import axios from "axios";
-import {AuthContext} from "contexts/AuthContext";
-import {toolCategoryActions} from "components/admin/tools/categories/toolCategory.actions";
+import useGetToolTypes from "components/common/list_of_values_input/admin/tools/types/useGetToolTypes";
 
-function ToolTypeSelectInput(
+export default function ToolTypeSelectInput(
   {
     fieldName,
     model,
@@ -15,66 +13,13 @@ function ToolTypeSelectInput(
     textField,
     valueField,
     includeInactive,
+    requireUserEnable,
   }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const [toolTypes, setToolTypes] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-    setError(undefined);
-
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        setError(error);
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      await loadToolTypes(cancelSource);
-    }
-    catch (error) {
-      if (isMounted?.current === true) {
-        setError(error);
-      }
-    }
-    finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const loadToolTypes = async (cancelSource = cancelTokenSource) => {
-    const response = await toolCategoryActions.getToolTypesV2(
-      getAccessToken,
-      cancelSource,
-      includeInactive,
-      );
-
-    const toolTypes = response?.data?.data;
-
-    if (isMounted.current === true && Array.isArray(toolTypes)) {
-      setToolTypes(toolTypes);
-    }
-  };
+  const {
+    isLoading,
+    toolTypes,
+    error,
+  } = useGetToolTypes(includeInactive);
 
   return (
     <SelectInputBase
@@ -88,6 +33,7 @@ function ToolTypeSelectInput(
       textField={textField}
       disabled={disabled}
       error={error}
+      requireUserEnable={requireUserEnable}
     />
   );
 }
@@ -101,11 +47,10 @@ ToolTypeSelectInput.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   includeInactive: PropTypes.bool,
+  requireUserEnable: PropTypes.bool,
 };
 
 ToolTypeSelectInput.defaultProps = {
   valueField: "identifier",
   textField: "name",
 };
-
-export default ToolTypeSelectInput;

@@ -9,9 +9,22 @@ import WarningDialog from "components/common/status_notifications/WarningDialog"
 import toolsActions from "components/inventory/tools/tools-actions";
 import VaultSelectInput from "components/common/list_of_values_input/tools/vault/VaultToolSelectInput";
 import axios from "axios";
+import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+
+const VAULT_OPTIONS = [
+  {
+    name: "Hashicorp Vault",
+    value: "hashicorp_vault"
+  },
+  {
+    name: "Thycotic Vault",
+    value: "thycotic_vault"
+  },
+];
 
 function ToolVaultPanel({ toolData, isLoading }) {
   const { getAccessToken } = useContext(AuthContext);
+  const [vaultType, setVaultType] = useState("hashicorp_vault");
   const [temporaryDataObject, setTemporaryDataObject] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -33,14 +46,23 @@ function ToolVaultPanel({ toolData, isLoading }) {
 
   useEffect(() => {
     setTemporaryDataObject(new Model({ ...toolData?.getPersistData() }, toolData?.getMetaData(), false));
+    setVaultType(toolData?.getPersistData()?.vaultType || "hashicorp_vault");
   }, []);
 
   const saveData = async () => {
     toolData.setData("vault", temporaryDataObject.getData("vault"));
+    toolData.setData("vaultType", vaultType);
     let newDataObject = { ...toolData };
     const response = await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, newDataObject);
     setTemporaryDataObject({...newDataObject});
     return response;
+  };
+
+  const updateVaultType = (selectedOption) => {
+    let newDataObject = { ...toolData };
+    newDataObject.setDefaultValue("vault");
+    setTemporaryDataObject({...newDataObject});
+    setVaultType(selectedOption.value);
   };
 
   const getWarningDialogs = () => {
@@ -104,9 +126,20 @@ function ToolVaultPanel({ toolData, isLoading }) {
         </div>
         <Row>
           <Col lg={12}>
+            <StandaloneSelectInput
+              selectOptions={VAULT_OPTIONS}
+              valueField={"value"}
+              textField={"name"}
+              value={vaultType}
+              placeholder={"Select Vault Type"}
+              setDataFunction={updateVaultType}
+            />
+          </Col>        
+          <Col lg={12}>
             <VaultSelectInput
               model={temporaryDataObject}
               setModel={setTemporaryDataObject}
+              toolIdentifier={vaultType}
             />
           </Col>
         </Row>

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ConstantFieldBase from "components/common/fields/constant/ConstantFieldBase";
 import pipelineInstructionsTypeConstants
-  from "@opsera/definitions/constants/settings/pipelines/instructions/pipelineInstructionsType.constants";
+  from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructionsType.constants";
 
 export default function PipelineInstructionsTypeField(
   {

@@ -115,8 +115,18 @@ function PipelineCatalogLibrary() {
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <PipelineCatalogCustomTab activeTab={activeTab} tabText={"Marketplace"} handleTabClick={handleTabClick} tabName={"all"} />
-        <PipelineCatalogCustomTab activeTab={activeTab} tabText={"Private"} handleTabClick={handleTabClick} tabName={"customer"} />
+        <PipelineCatalogCustomTab
+          activeTab={activeTab}
+          tabText={"Marketplace Pipelines"}
+          handleTabClick={handleTabClick}
+          tabName={"all"}
+        />
+        <PipelineCatalogCustomTab
+          activeTab={activeTab}
+          tabText={"Shared Templates"}
+          handleTabClick={handleTabClick}
+          tabName={"customer"}
+        />
       </CustomTabContainer>
     );
   };

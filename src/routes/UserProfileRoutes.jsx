@@ -6,6 +6,7 @@ import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import MyAccessTokens from "components/user/user_settings/access_tokens/MyAccessTokens";
 import MySubscriptions from "components/user/user_settings/subscriptions/MySubscriptions";
 import {USER_SETTINGS_PAGES} from "components/user/user_settings/userSettings.paths";
+import AccessTokenDetailView from "components/user/user_settings/access_tokens/details/AccessTokenDetailView";
 
 export default function UserProfileRoutes() {
   return (
@@ -26,6 +27,12 @@ export default function UserProfileRoutes() {
         path={`/user/${USER_SETTINGS_PAGES.MY_ACCESS_TOKENS}`}
         exact={true}
         component={MyAccessTokens}
+        roleRequirement={ROLE_LEVELS.USERS_AND_SASS}
+      />
+      <RoleRestrictedRoute
+        path="/user/access-tokens/details/:tokenId"
+        exact={true}
+        component={AccessTokenDetailView}
         roleRequirement={ROLE_LEVELS.USERS_AND_SASS}
       />
       {/*<RoleRestrictedRoute*/}

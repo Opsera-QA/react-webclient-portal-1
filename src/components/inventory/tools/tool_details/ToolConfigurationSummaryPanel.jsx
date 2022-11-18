@@ -115,6 +115,10 @@ import GChatToolConfigurationSummaryPanel
 import FortifyToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/fortify/FortifyToolConfigurationSummaryPanel";
 import FortifyMetadata from "components/inventory/tools/tool_details/tool_jobs/fortify/fortify-tool-metadata";
+import ThycoticVaultToolConfigurationSummaryPanel 
+  from "components/inventory/tools/tool_details/tool_jobs/thycotic_vault/ThycoticVaultToolConfigurationSummaryPanel";
+import ThycoticVaultMetadata 
+  from "components/inventory/tools/tool_details/tool_jobs/thycotic_vault/thycoticVault-tool-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -320,6 +324,12 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
         return (
           <FortifyToolConfigurationSummaryPanel
             fortifyToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, FortifyMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.THYCOTIC_VAULT:
+        return (
+          <ThycoticVaultToolConfigurationSummaryPanel
+            thycoticVaultToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, ThycoticVaultMetadata)}
           />
         );        
       default:

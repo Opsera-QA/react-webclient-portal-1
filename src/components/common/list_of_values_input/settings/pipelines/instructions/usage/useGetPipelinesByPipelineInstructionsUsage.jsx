@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import { pipelineInstructionsActions } from "components/settings/pipelines/instructions/pipelineInstructions.actions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import {pipelineInstructionsActions} from "components/workflow/instructions/pipelineInstructions.actions";
 
 export default function useGetPipelinesByPipelineInstructionsUsage(pipelineInstructionsId, handleErrorFunction) {
   const [isLoading, setIsLoading] = useState(false);

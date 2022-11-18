@@ -263,6 +263,45 @@ export const getTimeDisplay = (mins) => {
 };
 
 
+/**
+ * Get score text for given value
+ * @param maturityScore string
+ * @returns Returns score text.
+ */
+export const getMaturityScoreText = (maturityScore) => {
+  switch (maturityScore) {
+    case `elite`:
+      return "Elite";
+    case `high`:
+      return "High";
+    case `medium`:
+      return "Medium";
+    case `low`:
+      return "Low";
+    default:
+      return "NA";
+  }
+};
+
+/**
+ * Get css class from maturityScore
+ * @param maturityScore string
+ * @returns Returns css class name
+ */
+export const getMaturityColorClass = (maturityScore) => {
+  switch (maturityScore) {
+    case `elite`:
+      return "maturity-card-elite-color";
+    case `high`:
+      return "maturity-card-high-color";
+    case `medium`:
+      return "maturity-card-medium-color";
+    case `low`:
+      return "maturity-card-low-color";
+    default:
+      return "maturity-card-default-color";
+  }
+};
 export function getChartIconFromKpiConfiguration(kpiConfiguration) {
   return faChartBar;
 }
