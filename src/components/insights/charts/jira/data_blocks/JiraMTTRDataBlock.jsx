@@ -6,9 +6,12 @@ import MetricScoreText from "../../../../common/metrics/score/MetricScoreText";
 
 function JiraMTTRDataBlock({ incidents,prevIncidents,trend, dataPoint, getIcon, topText, bottomText }) {
     return (
-        <DataBlockBoxContainer showBorder={true}>
+        <DataBlockBoxContainer
+            showBorder={true}
+            className={"h-100"}
+        >
             <ThreeLineDataBlockBase
-                className={`${trend} p-2`}
+                className={`${trend} p-2 h-100`}
                 topText={topText}
                 icon={getIcon(trend)}
                 bottomText={`${bottomText}: ${prevIncidents}`}
