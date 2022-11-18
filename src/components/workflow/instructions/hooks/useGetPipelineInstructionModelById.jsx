@@ -11,7 +11,7 @@ export default function useGetPipelineInstructionModelById(
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
   const [pipelineInstructionsModel, setPipelineInstructionsModel] = useState(undefined);
-  const { getNewPipelineInstructionsModel } = useGetPipelineInstructionsModel();
+  const { getPipelineInstructionsModel } = useGetPipelineInstructionsModel();
   const {
     getAccessToken,
     cancelTokenSource,
@@ -52,7 +52,7 @@ export default function useGetPipelineInstructionModelById(
     const pipelineInstructions = response?.data?.data;
 
     if (pipelineInstructions) {
-      const newModel = getNewPipelineInstructionsModel(
+      const newModel = getPipelineInstructionsModel(
         pipelineInstructions,
         false,
         setPipelineInstructionsModel,

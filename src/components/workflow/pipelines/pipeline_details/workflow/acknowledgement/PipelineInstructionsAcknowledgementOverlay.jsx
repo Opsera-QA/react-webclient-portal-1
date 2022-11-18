@@ -19,8 +19,6 @@ import CloseButton from "components/common/buttons/CloseButton";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineInstructionsFieldBase
   from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsFieldBase";
-import useGetPipelineInstructionModelByPipelineStep
-  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import pipelineUserActionAcknowledgementMetadata
   from "@opsera/definitions/constants/pipelines/workflow/acknowledgement/pipelineUserActionAcknowledgement.metadata";
@@ -29,6 +27,8 @@ import { screenContainerHeights } from "components/common/panels/general/screenC
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import useGetPipelineInstructionModelByPipelineStep
+  from "components/workflow/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
 
 const INSTRUCTIONS_HEIGHT = `calc(${screenContainerHeights.TABLE_MINIMUM_HEIGHT_WITH_DESCRIPTION} - 250px)`;
 
