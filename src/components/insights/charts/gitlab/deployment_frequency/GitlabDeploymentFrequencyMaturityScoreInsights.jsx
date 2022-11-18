@@ -116,7 +116,7 @@ function GitlabDeploymentFrequencyMaturityScoreInsightsTable({
         >
           <GitlabDeploymentFrequencyInsightsDataBlock
             displayValue={insightsData?.step?.overallMaturityScoreValue}
-            displayText="Average Deployment Frequency"
+            displayText="Maturity Score Index"
             icon={faCircleInfo}
           />
         </Col>

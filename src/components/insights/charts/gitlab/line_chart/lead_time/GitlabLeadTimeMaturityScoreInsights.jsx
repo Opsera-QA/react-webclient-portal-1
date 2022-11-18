@@ -113,8 +113,8 @@ function GitlabLeadTimeMaturityScoreInsights({ kpiConfiguration, insightsData })
       <Row className="pb-3 px-2">
         <Col lg={4} md={6} className="mt-3">
             <GitlabLeadTimeInsightsDataBlock
-                displayValue={getTimeDisplay(insightsData?.overallMaturityScoreValue)[0]}
-                displayText="Average Lead Time"
+                displayValue={insightsData?.overallMaturityScoreValue}
+                displayText="Maturity Score Index"
                 icon={faCircleInfo}
             />
         </Col>
