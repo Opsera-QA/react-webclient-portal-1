@@ -69,8 +69,6 @@ export default function UserActionPipelineStepActionSummaryPanel(
     return null;
   }
 
-  console.log("pipelineacknowledgementModel: " + JSON.stringify(pipelineAcknowledgementModel?.getPersistData()));
-
   return (
     <PipelineTaskSummaryPanelBase
       pipelineTaskData={pipelineTaskModel}

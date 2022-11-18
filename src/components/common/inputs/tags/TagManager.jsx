@@ -61,7 +61,6 @@ function TagManager(
     try {
       setIsLoading(true);
       await getTags(cancelSource);
-      await removeOldTags();
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -80,27 +79,8 @@ function TagManager(
     const response = await adminTagsActions.getAllTagsV2(getAccessToken, cancelSource);
     let tags = response?.data?.data;
 
-    if (isMounted?.current === true && Array.isArray(tags) && tags.length > 0)
-    {
+    if (isMounted?.current === true && Array.isArray(tags) && tags.length > 0) {
       loadTagOptions(tags);
-    }
-  };
-
-  const removeOldTags = async () => {
-    let newTags = [];
-
-    dataObject.getArrayData(fieldName).map((tag, index) => {
-      if (tag["type"] != null && tag["type"] !== "" && tag["value"] != null && tag["value"] !== "")
-      {
-        let tagOption = {type: tag["type"], value: tag["value"]};
-        newTags.push(tagOption);
-      }
-    });
-    let newDataObject = dataObject;
-    newDataObject.setData(fieldName, newTags);
-
-    if (isMounted?.current === true) {
-      setDataObject({...newDataObject});
     }
   };
 
