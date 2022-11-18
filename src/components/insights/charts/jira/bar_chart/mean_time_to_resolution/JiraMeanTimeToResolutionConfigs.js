@@ -7,6 +7,7 @@ export default (getColor, i) => ({
   enableLabel: true,
   labelTextColor: "white",
   label: (d) => `${d.data.Count}`,
+  legends: [],
   axisLeft: {
     legend: "Mean Time to Resolution (in hours)",
     format: (tickValue) => {
