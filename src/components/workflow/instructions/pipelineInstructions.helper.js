@@ -9,9 +9,9 @@ pipelineInstructionsHelper.getDetailViewLink = (
     return null;
   }
 
-  return `/workflow/instructions/${pipelineInstructionsId}`;
+  return `/workflow/catalog/${pipelineInstructionsId}`;
 };
 
 pipelineInstructionsHelper.getManagementScreenLink = () => {
-  return `/settings/pipelines/instructions/`;
+  return `/workflow/catalog/instructions/`;
 };
