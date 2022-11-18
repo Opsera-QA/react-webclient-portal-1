@@ -30,7 +30,7 @@ import CustomTab from "../../../../../common/tabs/CustomTab";
 import TabAndViewContainer from "../../../../../common/tabs/tree/TabTreeAndViewContainer";
 import TabPanelContainer from "../../../../../common/panels/general/TabPanelContainer";
 import GitlabLeadTimeInsightsDataBlock from "./GitlabLeadTimeInsightsDataBlock";
-import {getTimeDisplay} from "../../../charts-helpers";
+import {getMaturityScoreText} from "../../../charts-helpers";
 
 function GitlabLeadTimeMaturityScoreInsights({ kpiConfiguration, insightsData }) {
     const [activeHorizontalTab, setActiveHorizontalTab] = useState("one");
@@ -91,6 +91,7 @@ function GitlabLeadTimeMaturityScoreInsights({ kpiConfiguration, insightsData })
                 data = maturityScoreByTag.filter(tag => tag.name === activeVerticalTab);
             } else {
                 data = maturityScoreByTag.filter(tag => tag.name === maturityScoreByTag[0].name);
+                setActiveVerticalTab(maturityScoreByTag[0].name);
             }
             return (
                 <CustomTable
@@ -113,8 +114,8 @@ function GitlabLeadTimeMaturityScoreInsights({ kpiConfiguration, insightsData })
       <Row className="pb-3 px-2">
         <Col lg={4} md={6} className="mt-3">
             <GitlabLeadTimeInsightsDataBlock
-                displayValue={insightsData?.overallMaturityScoreValue}
-                displayText="Maturity Score Index"
+                displayValue={getMaturityScoreText(insightsData?.overallMaturityScoreText)}
+                displayText="Overall Maturity Score"
                 icon={faCircleInfo}
             />
         </Col>
@@ -225,7 +226,6 @@ function GitlabLeadTimeMaturityScoreInsights({ kpiConfiguration, insightsData })
 
 GitlabLeadTimeMaturityScoreInsights.propTypes = {
   kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
   insightsData: PropTypes.object,
 };
 

@@ -17,6 +17,7 @@ import CustomTabContainer from "../../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../../common/tabs/CustomTab";
 import VanitySetVerticalTab from "../../../../common/tabs/vertical_tabs/VanitySetVerticalTab";
 import GitlabDeploymentFrequencyInsightsDataBlock from "./GitlabDeploymentFrequencyInsightsDataBlock";
+import {getMaturityScoreText} from "../../charts-helpers";
 
 function GitlabDeploymentFrequencyMaturityScoreInsightsTable({
   kpiConfiguration,
@@ -90,6 +91,7 @@ function GitlabDeploymentFrequencyMaturityScoreInsightsTable({
         data = maturityScoreByTag.filter(
           (tag) => tag.name === maturityScoreByTag[0].name,
         );
+        setActiveVerticalTab(maturityScoreByTag[0].name);
       }
       return (
         <CustomTable
@@ -115,8 +117,8 @@ function GitlabDeploymentFrequencyMaturityScoreInsightsTable({
           className="mt-3"
         >
           <GitlabDeploymentFrequencyInsightsDataBlock
-            displayValue={insightsData?.step?.overallMaturityScoreValue}
-            displayText="Maturity Score Index"
+            displayValue={getMaturityScoreText(insightsData?.step?.overallMaturityScoreText)}
+            displayText="Overall Maturity Score"
             icon={faCircleInfo}
           />
         </Col>
@@ -237,7 +239,6 @@ function GitlabDeploymentFrequencyMaturityScoreInsightsTable({
 
 GitlabDeploymentFrequencyMaturityScoreInsightsTable.propTypes = {
   kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
   insightsData: PropTypes.object,
 };
 
