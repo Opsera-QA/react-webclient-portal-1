@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
-import { ResponsiveBar } from "@nivo/bar";
+import { ResponsiveLine } from "@nivo/line";
 import config from "./JiraMeanTimeToResolutionConfigs.js";
-import config2 from "./JiraSeverityCountConfig.js";
 import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
 import axios from "axios";
@@ -11,9 +10,7 @@ import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import {
   defaultConfig,
-  getColorByData,
   assignStandardColors,
-  adjustBarWidth,
   spaceOutServiceNowCountBySeverityLegend,
 } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
@@ -24,8 +21,7 @@ import { JIRA_MEAN_TIME_TO_RESOLUTION_CONSTANTS as constants } from "./JiraMeanT
 import DataPointVisibilityWrapper from "../../../../../common/metrics/data_points/DataPointVisibilityWrapper";
 import jiraAction from "../../jira.action";
 import JiraMTTRDataBlock from "../../data_blocks/JiraMTTRDataBlock";
-import JiraMTTRChartHelpDocumentation
-  from "../../../../../common/help/documentation/insights/charts/JiraMTTRChartHelpDocumentation";
+import JiraMTTRChartHelpDocumentation from "../../../../../common/help/documentation/insights/charts/JiraMTTRChartHelpDocumentation";
 import {
   getMaturityColorClass,
   getMaturityScoreText,
@@ -36,8 +32,10 @@ import {
 } from "../../../charts-helpers";
 import BadgeBase from "../../../../../common/badges/BadgeBase";
 import JiraMeanTimeToResolutionMaturityBlock from "./JiraMeanTimeToResolutionMaturityBlock";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import JiraMeanTimeToResolutionSeverityChartPanel from './JiraMeanTimeToResolutionSeverityChartPanel';
 
-function JiraMeanTimeToResolutionBarChart({
+function JiraMeanTimeToResolutionChart({
   kpiConfiguration,
   setKpiConfiguration,
   dashboardData,
@@ -55,20 +53,14 @@ function JiraMeanTimeToResolutionBarChart({
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [dataBlock, setDataBlock] = useState({});
-  const [tickValues, setTickValues] = useState([]);
-  const [tickValues2, setTickValues2] = useState([]);
-
-  const [goalsData, setGoalsData] = useState(undefined);
-  const [lastFiveDays, setLastFiveDays] = useState(0);
-  const [fiveToFifteenDays, setFiveToFifteenDays] = useState(0);
-  const [fifteenToThirtyDays, setFifteenToThirtyDays] = useState(0);
-  const [beforeThirtyDays, setBeforeThirtyDays] = useState(0);
   // const [priorityOne, setPriorityOne] = useState(0);
   // const [priorityTwo, setPriorityTwo] = useState(0);
   // const [priorityThree, setPriorityThree] = useState(0);
   // const [priorityFour, setPriorityFour] = useState(0);
   // const [priorityFive, setPriorityFive] = useState(0);
   // const toastContext = useContext(DialogToastContext);
+  const toastContext = useContext(DialogToastContext);
+
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -102,27 +94,27 @@ function JiraMeanTimeToResolutionBarChart({
       const dashboardTags =
           dashboardData?.data?.filters[
             dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
-          ]?.value,
-        goals =
-          kpiConfiguration?.filters[
-            kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")
-          ]?.value,
-        response = await jiraAction.getJiraMTTR(
+          ]?.value;
+      const response = await jiraAction.getJiraMTTR(
           getAccessToken,
           cancelSource,
           kpiConfiguration,
           dashboardTags,
           dashboardOrgs,
         );
-      const dataObject = response?.data?.data?.jiraMTTR?.data?.docs,
-        barchart = response?.data?.data?.jiraMTTR?.data?.severityData;
+      const responseData = response?.data;
 
-      setGoalsData(goals);
+      setDataBlock(responseData);
+
+      const dataObject = responseData?.docs;
+      const barchart = responseData?.severityData;
+
       assignStandardColors(dataObject, true);
+
       if (dataObject && dataObject.length) {
         dataObject.forEach((data) => (data.Count = data?.number_of_incidents));
       }
-      spaceOutServiceNowCountBySeverityLegend(barchart);
+
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         setSevMetrics(barchart);
@@ -132,22 +124,9 @@ function JiraMeanTimeToResolutionBarChart({
         setMetrics([]);
         setSevMetrics([]);
       }
-      const responseData = response?.data?.data?.jiraMTTR?.data;
-      setDataBlock(responseData);
-      setLastFiveDays(
-        responseData?.lastFiveDays ? responseData?.lastFiveDays : 0,
-      );
-      setFiveToFifteenDays(
-        responseData?.fiveToFifteenDays ? responseData?.fiveToFifteenDays : 0,
-      );
-      setFifteenToThirtyDays(
-        responseData?.fifteenToThirtyDays
-          ? responseData?.fifteenToThirtyDays
-          : 0,
-      );
-      setBeforeThirtyDays(
-        responseData?.beforeThirtyDays ? responseData?.beforeThirtyDays : 0,
-      );
+
+      spaceOutServiceNowCountBySeverityLegend(barchart);
+
       // THIS IS USED WHEN ACTIONABLE INSIGHTS ARE DEVELOPED
       // if (responseData) {
       //   setPriorityOne(responseData["Blocker"] || 0);
@@ -301,11 +280,19 @@ function JiraMeanTimeToResolutionBarChart({
   //   );
   // };
 
+  const closePanel = () => {
+    toastContext.clearOverlayPanel();
+  };
+
+  const openPanel = () => {
+    toastContext.showOverlayPanel(<JiraMeanTimeToResolutionSeverityChartPanel severityChartData={sevMetrics} closePanel={closePanel} />);
+  };
+
   const getChartBody = () => {
     if (
+      !metrics ||
       !Array.isArray(metrics) ||
       !Array.isArray(sevMetrics) ||
-      metrics.length === 0 ||
       sevMetrics.length === 0 ||
       !dataBlock?.totalIncidents
     ) {
@@ -313,14 +300,14 @@ function JiraMeanTimeToResolutionBarChart({
     }
 
     const dataPoints = kpiConfiguration?.dataPoints;
-    const mttrChartDataPoint = dataPointHelpers.getDataPoint(
-      dataPoints,
-      constants.SUPPORTED_DATA_POINT_IDENTIFIERS.MTTR_DATA_POINT,
-    );
     const numberOfIncidentsDataPoint = dataPointHelpers.getDataPoint(
       dataPoints,
       constants.SUPPORTED_DATA_POINT_IDENTIFIERS
         .NUMBER_OF_INCIDENTS_DATA_POINT,
+    );
+    const mttrChartDataPoint = dataPointHelpers.getDataPoint(
+      dataPoints,
+      constants.SUPPORTED_DATA_POINT_IDENTIFIERS.MTTR_DATA_POINT,
     );
     const averageMTTRDataBlockDataPoint = dataPointHelpers.getDataPoint(
       dataPoints,
@@ -344,96 +331,75 @@ function JiraMeanTimeToResolutionBarChart({
             badgeText={"Chart depicts recent 15 results"}
           />
         </div>
-        <div
-          className="new-chart m-3 p-0"
-          style={
-            isOneChartVisible
-              ? { minHeight: "500px", display: "flex" }
-              : { display: "flex" }
-          }
-        >
-          <Row className={"w-100"}>
+        <div className="new-chart m-3 p-0">
+          <div className="d-flex flex-row justify-content-center">
             {/* TODO Values to be integrated from APIs with Actionable insights  */}
             {/* <JiraMeanTimeToResolutionMaturityBlock
                 maturityScore={getMaturityScoreText(maturityScore)}
                 maturityColor={maturityColor}
                 iconOverlayBody={constants.MATURITY_TOOL_TIP[maturityScore]}
             /> */}
-            <Row
-              xl={4}
-              lg={4}
-              md={4}
-              className={`mb-2 ml-3 py-2 d-flex justify-content-center`}
+            <JiraMTTRDataBlock
+              incidents={dataBlock.totalIncidents}
+              prevIncidents={dataBlock.previousTotalIncidents}
+              dataPoint={numberOfIncidentsDataPoint}
+              trend={getReverseTrend(dataBlock.totalIncidents,dataBlock.previousTotalIncidents)}
+              getIcon = {getReverseTrendIcon}
+              topText={"Total Incidents"}
+              bottomText={"Prev Total Incidents"}
+              onClick={openPanel}
+              classes="mr-2"
+              style={{ maxWidth: '300px' }}
+            />
+            <JiraMTTRDataBlock
+              incidents={dataBlock.totalResolvedIncidents}
+              prevIncidents={dataBlock.previousTotalResolvedIncidents}
+              dataPoint={numberOfIncidentsDataPoint}
+              trend={getTrend(dataBlock.totalResolvedIncidents,dataBlock.previousTotalResolvedIncidents)}
+              getIcon = {getTrendIcon}
+              topText={"Resolved Incidents"}
+              bottomText={"Prev Resolved Incidents"}
+              classes="mr-2"
+              style={{ maxWidth: '300px' }}
+            />
+            <DataPointVisibilityWrapper
+              dataPoint={averageMTTRDataBlockDataPoint}
             >
-              <Col md={12}>
-                <JiraMTTRDataBlock
-                  incidents={dataBlock.totalIncidents}
-                  prevIncidents={dataBlock.previousTotalIncidents}
-                  dataPoint={numberOfIncidentsDataPoint}
-                  trend={getReverseTrend(dataBlock.totalIncidents,dataBlock.previousTotalIncidents)}
-                  getIcon = {getReverseTrendIcon}
-                  topText={"Total Incidents"}
-                  bottomText={"Prev Total Incidents"}
-                />
-              </Col>
-              <Col md={12}>
-                <JiraMTTRDataBlock
-                  incidents={dataBlock.totalResolvedIncidents}
-                  prevIncidents={dataBlock.previousTotalResolvedIncidents}
-                  dataPoint={numberOfIncidentsDataPoint}
-                  trend={getTrend(dataBlock.totalResolvedIncidents,dataBlock.previousTotalResolvedIncidents)}
-                  getIcon = {getTrendIcon}
-                  topText={"Resolved Incidents"}
-                  bottomText={"Prev Resolved Incidents"}
-                />
-              </Col>
-              <DataPointVisibilityWrapper
-                dataPoint={averageMTTRDataBlockDataPoint}
-              >
-                <Col md={12}>
-                  <JiraMTTRDataBlock
-                    incidents={dataBlock.overallMttrHours}
-                    prevIncidents={dataBlock.previousOverallMttrHours}
-                    dataPoint={numberOfIncidentsDataPoint}
-                    trend={getReverseTrend(dataBlock.overallMttrHours,dataBlock.previousOverallMttrHours)}
-                    getIcon = {getReverseTrendIcon}
-                    topText={"Average MTTR (Hours)"}
-                    bottomText={"Prev Average MTTR"}
-                  />
-                </Col>
-              </DataPointVisibilityWrapper>
-              <Col md={12}>
-                <JiraMTTRDataBlock
-                  incidents={dataBlock.minMTTR}
-                  prevIncidents={dataBlock.previousMinMTTR}
-                  dataPoint={numberOfIncidentsDataPoint}
-                  trend={getReverseTrend(dataBlock.minMTTR,dataBlock.previousMinMTTR)}
-                  getIcon = {getReverseTrendIcon}
-                  topText={"Min MTTR (Hours)"}
-                  bottomText={"Prev Min MTTR"}
-                />
-              </Col>
-              {/*<Col md={12}>*/}
-              {/*  <JiraMTTRDataBlock*/}
-              {/*    incidents={dataBlock.maxMTTR}*/}
-              {/*    prevIncidents={dataBlock.previousMaxMTTR}*/}
-              {/*    dataPoint={numberOfIncidentsDataPoint}*/}
-              {/*    trend={getReverseTrend(dataBlock.maxMTTR,dataBlock.previousMaxMTTR)}*/}
-              {/*    getIcon = {getReverseTrendIcon}*/}
-              {/*    topText={"Max MTTR (Hours)"}*/}
-              {/*    bottomText={"Prev Max MTTR"}*/}
-              {/*  />*/}
-              {/*</Col>*/}
-            </Row>
+              <JiraMTTRDataBlock
+                incidents={Number(dataBlock?.overallMttrHours)}
+                prevIncidents={dataBlock.previousOverallMttrHours}
+                dataPoint={numberOfIncidentsDataPoint}
+                trend={getReverseTrend(dataBlock.overallMttrHours,dataBlock.previousOverallMttrHours)}
+                getIcon = {getReverseTrendIcon}
+                topText={"Average MTTR (Hours)"}
+                bottomText={"Prev Average MTTR"}
+                style={{ maxWidth: '300px' }}
+              />
+            </DataPointVisibilityWrapper>
+          </div>
+          <div className="d-flex flex-row justify-content-center">
+            <div className="d-flex flex-column mr-5">
+              <div className="chart-label-text"><strong>Min MTTR Hours: </strong>{dataBlock.minMTTR}</div>
+              <div className="chart-label-text"><strong>Previous Min MTTR Hours: </strong>{dataBlock.previousMinMTTR}</div>
+            </div>
+            <div className="d-flex flex-column">
+              <div className="chart-label-text"><strong>Max MTTR Hours: </strong>{dataBlock.maxMTTR}</div>
+              <div className="chart-label-text"><strong>Previous Max MTTR Hours: </strong>{dataBlock.previousMaxMTTR}</div>
+            </div>
+          </div>
+          <Row>
             {dataPointHelpers.isDataPointVisible(mttrChartDataPoint) && (
               <Col
-                xl={6}
-                lg={6}
-                md={3}
-                className={"my-2 p-0 d-flex flex-column align-items-end"}
+                lg={12}
+                md={6}
+                className={"my-2 d-flex flex-column align-items-end"}
+                style={{
+                  minHeight: '300px',
+                  paddingRight: '5rem',
+                  paddingLeft: '5rem'
+                }}
               >
-                <ResponsiveBar
-                  data={metrics}
+                <ResponsiveLine
                   {...defaultConfig(
                     "Mean Time to Resolution (in hours)",
                     "Date",
@@ -442,11 +408,10 @@ function JiraMeanTimeToResolutionBarChart({
                     "wholeNumbers",
                     "monthDate2",
                   )}
-                  {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY,0)}
-                  {...adjustBarWidth(metrics)}
-                  // onClick={(data) => onRowSelect(data)}
+                  {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY, 0)}
                   valueScale={{ type:'symlog'}}
-                  tooltip={({ indexValue, value, data, color }) => (
+                  data={metrics}
+                  tooltip={({ point: { data: { Count, x, y }}}) => (
                     <ChartTooltip
                       titles={[
                         "Date",
@@ -454,45 +419,11 @@ function JiraMeanTimeToResolutionBarChart({
                         "Number of Incidents",
                       ]}
                       values={[
-                        new Date(indexValue).toDateString(),
-                        `${value} hours`,
-                        data.Count,
+                        new Date(x).toDateString(),
+                        `${y} hours`,
+                        Count,
                       ]}
                       style={false}
-                      // color={color}
-                    />
-                  )}
-                />
-              </Col>
-            )}
-            {dataPointHelpers.isDataPointVisible(
-              numberOfIncidentsDataPoint,
-            ) && (
-              <Col
-                xl={6}
-                lg={6}
-                md={3}
-                className={"my-2 p-0 d-flex flex-column align-items-end"}
-              >
-                <ResponsiveBar
-                  data={sevMetrics}
-                  {...defaultConfig(
-                    "Number of Incidents",
-                    "Severity",
-                    false,
-                    false,
-                    "wholeNumbers",
-                  )}
-                  {...config2(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY,0)}
-                  valueScale={{ type:'symlog'}}
-                  {...adjustBarWidth(sevMetrics)}
-                  // onClick={(data) => onRowSelect(data)}
-                  tooltip={({ indexValue, value }) => (
-                    <ChartTooltip
-                      titles={["Priority", "Number of Incidents"]}
-                      values={[indexValue, `${value}`]}
-                      style={false}
-                      // color={color}
                     />
                   )}
                 />
@@ -535,7 +466,7 @@ function JiraMeanTimeToResolutionBarChart({
   );
 }
 
-JiraMeanTimeToResolutionBarChart.propTypes = {
+JiraMeanTimeToResolutionChart.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -547,4 +478,4 @@ JiraMeanTimeToResolutionBarChart.propTypes = {
   showSettingsToggle: PropTypes.bool,
 };
 
-export default JiraMeanTimeToResolutionBarChart;
+export default JiraMeanTimeToResolutionChart;
