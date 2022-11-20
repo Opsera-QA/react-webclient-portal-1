@@ -20,6 +20,7 @@ function InsightsSubNavigationBar({currentTab}) {
   const history = useHistory();
   const {
     isSiteAdministrator,
+    isSaasUser,
   } = useComponentStateReference();
 
   const handleTabClick = (tabSelection) => e => {
@@ -96,7 +97,7 @@ function InsightsSubNavigationBar({currentTab}) {
   };
 
   const getSiteAdministratorOnlyTabs = () => {
-    if (isSiteAdministrator === true) {
+    if (isSiteAdministrator === true || isSaasUser === true) {
       return (
         <>
           <NavigationTab
