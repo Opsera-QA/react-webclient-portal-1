@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext, useRef} from "react";
-import { AuthContext } from "contexts/AuthContext";
+import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Model from "core/data_model/model";
 import axios from "axios";
@@ -10,7 +10,7 @@ import GitCustodianDetails from "./GitCustodianDetails";
 import GitCustodianLookUpHelpDocumentation
   from "../../common/help/documentation/insights/GitCustodianLookUpHelpDocumentation";
 import EditGitCustodianFiltersIcon from "./filters/EditGitCustodianFiltersIcon";
-import { GitCustodianFilterMetadata } from "components/insights/gitCustodian/table/gitCustodianFilter.metadata";
+import {GitCustodianFilterMetadata} from "components/insights/gitCustodian/table/gitCustodianFilter.metadata";
 import useComponentStateReference from "../../../hooks/useComponentStateReference";
 import AccessDeniedContainer from "../../common/panels/detail_view_container/AccessDeniedContainer";
 
@@ -23,7 +23,10 @@ function GitCustodian() {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [gitCustodianData, setGitCustodianData] = useState(undefined);
   const [gitCustodianFilterModel, setGitCustodianFilterModel] = useState(new Model({...GitCustodianFilterMetadata.newObjectFields}, GitCustodianFilterMetadata, false));
-  const { isSiteAdministrator } =useComponentStateReference();
+  const {
+    isSiteAdministrator,
+    isSaasUser,
+  } = useComponentStateReference();
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -81,12 +84,8 @@ function GitCustodian() {
     }
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm" message="Loading Git Custodian"/>);
-  }
-
   const getTitleActionBar = () => {
-    return(
+    return (
       <EditGitCustodianFiltersIcon
         gitCustodianFilterModel={gitCustodianFilterModel}
         setGitCustodianFilterModel={setGitCustodianFilterModel}
@@ -116,7 +115,12 @@ function GitCustodian() {
     );
   };
 
-  if (isSiteAdministrator !== true) {
+  if (!accessRoleData) {
+    return (<LoadingDialog size="sm" message="Loading Git Custodian" />);
+  }
+
+
+  if (isSiteAdministrator !== true && isSaasUser !== true) {
     return (
       <AccessDeniedContainer
         navigationTabContainer={<InsightsSubNavigationBar currentTab={"gitCustodian"}/>}
