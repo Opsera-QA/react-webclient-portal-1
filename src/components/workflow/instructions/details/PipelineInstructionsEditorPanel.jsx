@@ -84,6 +84,7 @@ export default function PipelineInstructionsEditorPanel(
             fieldName={"name"}
             dataObject={pipelineInstructionsModel}
             setDataObject={setPipelineInstructionsModel}
+            disabled={pipelineInstructionsModel?.isNew() !== true}
           />
         </Col>
         <Col xs={12} md={6}>

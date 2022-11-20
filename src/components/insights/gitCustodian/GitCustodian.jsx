@@ -96,6 +96,26 @@ function GitCustodian() {
     );
   };
 
+  const getBody = () => {
+    if (isLoading) {
+      return (
+        <LoadingDialog
+          size={"sm"}
+          message={"Loading Git Custodian Report"}
+        />
+      );
+    }
+
+    return (
+      <GitCustodianDetails
+        gitCustodianData={gitCustodianData}
+        gitCustodianFilterModel={gitCustodianFilterModel}
+        setGitCustodianFilterModel={setGitCustodianFilterModel}
+        loadData={loadData}
+      />
+    );
+  };
+
   if (isSiteAdministrator !== true) {
     return (
       <AccessDeniedContainer
@@ -112,14 +132,7 @@ function GitCustodian() {
       helpComponent={<GitCustodianLookUpHelpDocumentation/>}
       titleActionBar={getTitleActionBar()}
     >
-      {isLoading ? <LoadingDialog size="sm" message="Loading Git Custodian Report"/> :
-        <GitCustodianDetails
-          gitCustodianData={gitCustodianData}
-          gitCustodianFilterModel={gitCustodianFilterModel}
-          setGitCustodianFilterModel={setGitCustodianFilterModel}
-          loadData={loadData}
-        />
-      }
+      {getBody()}
     </ScreenContainer>
   );
 

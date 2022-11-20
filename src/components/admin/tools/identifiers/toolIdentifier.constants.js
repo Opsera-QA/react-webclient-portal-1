@@ -60,6 +60,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   LIQUIBASE: "liquibase",
   MOCK_STEP: "mock-step",
   MONGO_DB: "mongodb",
+  MONGODB_REALM: "mongodb_realm",
   NEXUS: "nexus",
   NPM: "npm",
   NUNIT: "nunit",
