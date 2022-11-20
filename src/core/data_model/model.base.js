@@ -53,6 +53,17 @@ export default class ModelBase {
     return dataParsingHelper.safeObjectPropertyParser(this.data, fieldName);
   };
 
+  removeArrayItem = (fieldName, index) => {
+    const array = DataParsingHelper.parseArray(this.getData(fieldName));
+
+    if (!array || array.length <= index) {
+      return;
+    }
+
+    array.splice(index, 1);
+    this.setData(fieldName, array);
+  };
+
   setData = (fieldName, newValue, addToChangeMap = true, refreshState = false) => {
     const oldValue = this.getData(fieldName);
 
