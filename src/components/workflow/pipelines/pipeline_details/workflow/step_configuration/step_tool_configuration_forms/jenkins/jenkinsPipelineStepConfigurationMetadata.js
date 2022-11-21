@@ -1,69 +1,74 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const jenkinsPipelineStepConfigurationMetadata = {
   type: "Jenkins Pipeline Step Configuration",
   fields: [
     {
       label: "Jenkins Tool",
       id: "toolConfigId",
-      isRequired: true
+      isRequired: true,
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.MONGO_DB_ID,
     },
     {
       label: "Job Type",
       id: "jobType",
-      isRequired: true
+      isRequired: true,
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
       label: "Job Name",
       id: "jobName",
-      isRequired: true,
-      maxLength:150
+      // isRequired: true,
+      maxLength: 150,
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
       label: "Tool Job",
       id: "toolJobId",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Git Account",
       id: "gitCredential",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Workspace",
       id: "workspace",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Repository",
       id: "repository",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Branch",
       id: "branch",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Rollback Branch Name",
       id: "rollbackBranchName",
-      isRequired: true,
+      // isRequired: true,
       formText:"An Orphan branch will be created with only the back up specific files.",
       maxLength:50,
     },
     {
       label: "Branch Name",
       id: "gitBranch",
-      isRequired: true,
+      // isRequired: true,
       maxLength:50,
     },
     {
       label: "Build/Xml Step Info",
       id: "stepIdXML",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Docker Name",
       id: "dockerName",
-      isRequired: true,
+      // isRequired: true,
       maxLength:256,
       // TODO: This should be the pattern but this is probably fine.
       regexValidator: RegExp("^[a-zA-Z0-9_.-]*$"),
@@ -143,7 +148,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label:"Specify Salesforce Credentials",
       id:"sfdcToolId",
-      isRequired: true,
+      // isRequired: true,
     },
     {
       label:"Unit Test Type",
@@ -153,12 +158,12 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label:"Destination Salesforce Credentials",
       id:"sfdcDestToolId",
-      isRequired: true
+      // isRequired: true
     },
     {
       id:"upstreamBranch",
       label:"Specify Upstream Branch",
-      isRequired: true
+      // isRequired: true
     },
     {
       id:"terraformStepId",
@@ -180,7 +185,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label:"Jenkins Job Type",
       id:"job_type",
-      isRequired: true,
+      // isRequired: true,
     },
     {
       label: "Dependency",
