@@ -71,13 +71,13 @@ function WorkflowSubNavigationBar({currentTab}) {
         toolTipText={"Pipelines"}
         icon={faDraftingCompass}
       />
-      {/*<NavigationTab*/}
-      {/*  icon={faBallotCheck}*/}
-      {/*  tabName={"pipelineInstructionsManagement"}*/}
-      {/*  handleTabClick={handleTabClick}*/}
-      {/*  activeTab={currentTab}*/}
-      {/*  tabText={"Instructions"}*/}
-      {/*/>*/}
+      <NavigationTab
+        icon={faBallotCheck}
+        tabName={"pipelineInstructionsManagement"}
+        handleTabClick={handleTabClick}
+        activeTab={currentTab}
+        tabText={"Instructions"}
+      />
       {getActiveViewerTab()}
     </NavigationTabContainer>
   );

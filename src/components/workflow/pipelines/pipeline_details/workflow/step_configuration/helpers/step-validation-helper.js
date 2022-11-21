@@ -1,23 +1,20 @@
-// Helper that maps a step to a tool identifier and returns validation status based on the
-//   current configuration
-
-//IF this returns false it will flag a pipelien step as "Warning, missing configration"
-
-import {toolIdentifierConstants} from "../../../../../../admin/tools/identifiers/toolIdentifier.constants";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const StepValidationHelper = {};
 
+StepValidationHelper.isValidConfiguration = (pipelineStep) => {
+  const parsedPipelineStep = DataParsingHelper.parseObject(pipelineStep);
 
-StepValidationHelper.isValidConfiguration = (stepConfig) => {
-  if (!stepConfig) {
+  if (!parsedPipelineStep) {
     return false;
   }
 
-  if (!stepConfig.configuration || !stepConfig.tool_identifier) {
+  if (!parsedPipelineStep.configuration || !parsedPipelineStep.tool_identifier) {
     return false;
   }
 
-  const { configuration, tool_identifier } = stepConfig;
+  const { configuration, tool_identifier } = parsedPipelineStep;
 
   try {
     //return true if the fields are found
@@ -45,7 +42,7 @@ StepValidationHelper.isValidConfiguration = (stepConfig) => {
     }
 
   } catch (err) {
-    console.error("Error attempting to validate step configuration: ", tool_identifier, JSON.stringify(stepConfig));
+    console.error("Error attempting to validate step configuration: ", tool_identifier, JSON.stringify(pipelineStep));
   }
 };
 
