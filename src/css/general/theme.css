@@ -1612,8 +1612,22 @@ div.data-blocks-ellipses {
 }
 
 .full-screen-center-overlay {
-    /* full-height of container - button panel height */
-    height: calc(100vh - 110px);
+    /*
+      full-height - button panel height
+      - top + bottom margins
+      - opsera footer
+     */
+    height: calc(100vh - 20px - 21px);
+}
+
+.full-screen-center-overlay-with-buttons {
+    /*
+      full-height - button panel height
+      - top + bottom margins
+      - opsera footer
+      - button container size (with margins)
+     */
+    height: calc(100vh - 20px - 21px - 38px - 1rem);
 }
 
 .full-screen-overlay-panel-body {
@@ -1625,14 +1639,25 @@ div.data-blocks-ellipses {
 
 .full-screen-overlay-panel-body-with-buttons {
     overflow-y: auto;
-    /* full-height - (10px x 2 top + bottom margins - title height - button panel height) */
-    height: calc(100vh - 20px - 48px - 63px);
-    max-height: calc(100vh - 20px - 48px - 63px);
+    /*
+      full-height
+      - top + bottom margins
+      - title height
+      - button panel height (with margins)
+      - footer height
+    */
+    height: calc(100vh - 20px - 48px - 38px - 2rem);
+    max-height: calc(100vh - 20px - 48px - 38px - 2rem);
 }
 
 .full-screen-overlay-selection-container {
     overflow-y: auto;
-    /* full-height - (10px x 2 top + bottom margins - title height - button panel height - filter container taken space) */
+    /* full-height
+    - top + bottom margins
+    - title height
+    - button panel height
+    - filter container taken space
+    */
     height: calc(100vh - 20px - 48px - 63px - 85px);
     max-height: calc(100vh - 20px - 48px - 63px - 85px);
 }

@@ -35,7 +35,7 @@ import PipelineTaskDetailViewer
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
-const INSTRUCTIONS_HEIGHT = `calc(${screenContainerHeights.TABLE_MINIMUM_HEIGHT_WITH_DESCRIPTION} - 250px)`;
+const INSTRUCTIONS_HEIGHT = `max(calc(${screenContainerHeights.TABLE_MINIMUM_HEIGHT_WITH_DESCRIPTION} - 250px), 435px)`;
 
 export default function PipelineInstructionsAcknowledgementOverlay(
   {
