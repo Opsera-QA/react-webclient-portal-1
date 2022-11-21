@@ -12,6 +12,7 @@ function PipelineSourceRepositoryToolSelectInput({className, fieldName, model, s
     newModel.setData("workspace", "");
     newModel.setData("workspaceName", "");
     newModel.setData("repository", "");
+    newModel.setData("repoId", "");
     newModel.setData("branch", "");
     setModel({...newModel});
   };
