@@ -37,7 +37,7 @@ export default function PipelineUserApprovalButton(
   const handleAcknowledgementClick = () => {
     toastContext.showOverlayPanel(
       <PipelineInstructionsAcknowledgementOverlay
-        pipeline={pipeline}
+        pipelineId={pipeline?._id}
         loadPipelineFunction={loadPipelineFunction}
       />,
     );

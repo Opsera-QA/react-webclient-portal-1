@@ -49,7 +49,7 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
     if (approvalStepToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION) {
       toastContext.showOverlayPanel(
         <PipelineInstructionsAcknowledgementOverlay
-          pipeline={pipeline}
+          pipelineId={pipeline?._id}
           loadPipelineFunction={loadPipelineFunction}
         />,
       );
