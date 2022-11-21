@@ -3,6 +3,7 @@ import ModelBase from "core/data_model/model.base";
 import {kpiSettingsMetadata} from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import _ from "lodash";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const modelHelpers = {};
 
@@ -122,6 +123,17 @@ modelHelpers.getDashboardSettingsModel = (kpiConfiguration, metadata = kpiSettin
   }
 
   return new Model({...metadata?.newObjectFields}, metadata, true);
+};
+
+modelHelpers.isDataValid = (data, metadata) => {
+  const parsedData = DataParsingHelper.parseObject(data);
+  const parsedMetadata = DataParsingHelper.parseObject(metadata);
+
+  if (!parsedData || !parsedMetadata) {
+    return false;
+  }
+
+  return modelHelpers.parseObjectIntoModel(data, metadata)?.checkCurrentValidity() === true;
 };
 
 export default modelHelpers;
