@@ -217,7 +217,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
       titleIcon={faFileCheck}
       buttonContainer={getButtonContainer()}
     >
-      <div className={"mx-3 mb-3 mt-2"}>
+      <div className={"mx-3 mt-2"}>
         <div>
           This pipeline requires the following actions be taken at this time.
           Acknowledgement of these actions is required before the pipeline can proceed.

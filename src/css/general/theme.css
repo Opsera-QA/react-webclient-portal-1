@@ -1646,8 +1646,8 @@ div.data-blocks-ellipses {
       - button panel height (with margins)
       - footer height
     */
-    height: calc(100vh - 20px - 48px - 38px - 2rem);
-    max-height: calc(100vh - 20px - 48px - 38px - 2rem);
+    height: calc(100vh - 20px - 48px - 40px - 3rem);
+    max-height: calc(100vh - 20px - 48px - 40px - 3rem);
 }
 
 .full-screen-overlay-selection-container {
