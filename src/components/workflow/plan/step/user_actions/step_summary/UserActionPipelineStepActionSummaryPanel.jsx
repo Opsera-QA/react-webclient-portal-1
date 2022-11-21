@@ -7,7 +7,7 @@ import RichTextField from "components/common/fields/rich_text/RichTextField";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {
   userAcknowledgementMetadata
-} from "components/workflow/plan/step/user_actions/step_summary/UserActionAcknoweledgement.metadata";
+} from "components/workflow/plan/step/user_actions/step_summary/UserActionAcknowledgement.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 import BooleanField from "components/common/fields/boolean/BooleanField";

@@ -29,14 +29,23 @@ import Col from "react-bootstrap/Col";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import useGetPipelineInstructionModelByPipelineStep
   from "components/workflow/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
+import useGetPipelineById from "hooks/workflow/pipelines/useGetPipelineById";
+import PipelineTaskDetailViewer
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineTaskDetailViewer";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 const INSTRUCTIONS_HEIGHT = `calc(${screenContainerHeights.TABLE_MINIMUM_HEIGHT_WITH_DESCRIPTION} - 250px)`;
 
 export default function PipelineInstructionsAcknowledgementOverlay(
   {
-    pipeline,
+    pipelineId,
+    pipelineActivityLogId,
     loadPipelineFunction,
   }) {
+  const getPipelineByIdHook = useGetPipelineById(pipelineId);
+  const pipeline = getPipelineByIdHook?.pipeline;
+  const isPaused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
   const approvalStep = PipelineHelpers.getPendingApprovalStep(pipeline);
   const toolIdentifier = PipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
   const configuration = DataParsingHelper.parseNestedObject(approvalStep, "tool.configuration");
@@ -149,6 +158,14 @@ export default function PipelineInstructionsAcknowledgementOverlay(
   };
 
   const getBody = () => {
+    if (getPipelineByIdHook.isLoading === true) {
+      return (
+        <CenterLoadingIndicator
+          customMessage={"Loading Data"}
+        />
+      );
+    }
+
     if (isLoading !== true && error) {
       return (
         <H5FieldSubHeader
@@ -180,6 +197,15 @@ export default function PipelineInstructionsAcknowledgementOverlay(
     );
   };
 
+  if (isPaused !== true && getPipelineByIdHook.isLoading !== true && isMongoDbId(pipelineActivityLogId) === true) {
+    return (
+      <PipelineTaskDetailViewer
+        pipelineName={pipeline?.name}
+        pipelineActivityLogId={pipelineActivityLogId}
+      />
+    );
+  }
+
   if (hasStringValue(toolIdentifier) !== true || toolIdentifier !== toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION) {
     return null;
   }
@@ -205,7 +231,8 @@ export default function PipelineInstructionsAcknowledgementOverlay(
 
 PipelineInstructionsAcknowledgementOverlay.propTypes = {
   loadPipelineFunction: PropTypes.func,
-  pipeline: PropTypes.object,
+  pipelineId: PropTypes.string,
+  pipelineActivityLogId: PropTypes.string,
 };
 
 
