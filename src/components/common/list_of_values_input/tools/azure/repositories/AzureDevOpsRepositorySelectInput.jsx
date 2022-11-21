@@ -43,7 +43,7 @@ function AzureDevOpsRepositorySelectInput({
     setError(undefined);
 
     if (isMongoDbId(toolId) === true) {
-      loadData(source).catch((error) => {
+      loadData(undefined, toolId, source).catch((error) => {
         throw error;
       });
     }
@@ -61,7 +61,7 @@ function AzureDevOpsRepositorySelectInput({
   ) => {
     try {
       setIsLoading(true);
-      await loadAzureRepositories("", currentToolId, cancelSource);
+      await loadAzureRepositories(searchTerm, currentToolId, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
