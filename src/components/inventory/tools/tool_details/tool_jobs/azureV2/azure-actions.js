@@ -25,16 +25,24 @@ azureActions.deleteAzureCredential = async (getAccessToken, cancelTokenSource, t
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-azureActions.getRepositoriesFromAzureInstanceV2 = async (getAccessToken, cancelTokenSource, toolId) => {
+azureActions.getRepositoriesFromAzureInstanceV2 = async (getAccessToken, cancelTokenSource, toolId, searchTerm, pageSize = 100, currentPage) => {
   const apiUrl = `/azure-devops/${toolId}/v2/repositories`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  const queryParams = {
+    params: {
+      searchTerm: searchTerm,
+      pageSize: pageSize,
+      currentPage: currentPage,
+    },
+  };
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
 };
 
-azureActions.getBranchesFromAzureInstanceV2 = async (getAccessToken, cancelTokenSource, toolId, repositoryId) => {
+azureActions.getBranchesFromAzureInstanceV2 = async (getAccessToken, cancelTokenSource, toolId, repositoryId, searchTerm ) => {
   const apiUrl = `/azure-devops/${toolId}/v2/branches`;
   const queryParams = {
     params: {
-      repositoryId: repositoryId
+      repositoryId: repositoryId,
+      searchTerm: searchTerm ? searchTerm : "",
     },
   };
 
