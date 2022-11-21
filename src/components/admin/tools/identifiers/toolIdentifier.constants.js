@@ -9,6 +9,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   APPROVAL: "approval",
   ARGO: "argo",
   AWS_ACCOUNT: "aws_account",
+  AWS_DEPLOY: "aws-deploy",
   AWS_ECS_DEPLOY: "aws_ecs_deploy",
   AWS_LAMDA: "aws_lambda",
   AZURE: "azure",
