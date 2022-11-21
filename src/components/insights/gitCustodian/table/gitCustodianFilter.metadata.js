@@ -129,51 +129,58 @@ export const GitCustodianFilterMetadata = {
     let activeFilters = [];
 
     if (filterDto.getData("repositories") != null) {
-      activeFilters = [...activeFilters, ...filterDto.getData("repositories").map(filter => ({
+      activeFilters = [...activeFilters, ...filterDto.getData("repositories").map((filter, index) => ({
         filterId: "repositories",
         text: `Repository: ${filter}`,
+        index: index,
       }))];
     }
 
     if (filterDto.getData("authors") != null) {
-      activeFilters = [...activeFilters, ...filterDto.getData("authors").map(filter => ({
+      activeFilters = [...activeFilters, ...filterDto.getData("authors").map((filter, index) => ({
         filterId: "authors",
         text: `Author: ${filter}`,
+        index: index,
       }))];
     }
 
     if (filterDto.getData("status") != null) {
-      activeFilters = [...activeFilters, ...filterDto.getData("status").map(filter => ({
+      activeFilters = [...activeFilters, ...filterDto.getData("status").map((filter, index) => ({
         filterId: "status",
         text: `Status: ${filter}`,
+        index: index,
       }))];
     }
 
     if (filterDto.getData("service") != null) {
-      activeFilters = [...activeFilters, ...filterDto.getData("service").map(filter => ({
+      activeFilters = [...activeFilters, ...filterDto.getData("service").map((filter, index) => ({
         filterId: "service",
         text: `Origin: ${filter}`,
+        index: index,
       }))];
     }
 
     if (filterDto.getData("email") != null) {
-      activeFilters = [...activeFilters, ...filterDto.getData("email").map(filter => ({
+      activeFilters = [...activeFilters, ...filterDto.getData("email").map((filter, index) => ({
         filterId: "email",
         text: `Email: ${filter}`,
+        index: index,
       }))];
     }
 
     if (filterDto.getData("type") != null) {
-      activeFilters = [...activeFilters, ...filterDto.getData("type").map(filter => ({
+      activeFilters = [...activeFilters, ...filterDto.getData("type").map((filter, index) => ({
         filterId: "type",
         text: `Type: ${filter}`,
+        index: index,
       }))];
     }
 
     if (filterDto.getData("tags") != null) {
-      activeFilters = [...activeFilters, ...filterDto.getData("tags").map(filter => ({
+      activeFilters = [...activeFilters, ...filterDto.getData("tags").map((filter, index) => ({
         filterId: "tags",
         text: `${filter.type}: ${filter.value}`,
+        index: index,
       }))];
     }
 
