@@ -117,7 +117,7 @@ function PipelineCatalogLibrary() {
       <CustomTabContainer>
         <PipelineCatalogCustomTab
           activeTab={activeTab}
-          tabText={"Marketplace Pipelines"}
+          tabText={"Pipeline Marketplace"}
           handleTabClick={handleTabClick}
           tabName={"all"}
         />
