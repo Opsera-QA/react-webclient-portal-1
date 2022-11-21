@@ -1,30 +1,35 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {
+  useContext,
+  useEffect,
+  useRef,
+  useCallback,
+  useState,
+} from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
-import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
-import {hasStringValue} from "components/common/helpers/string-helpers";
+import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
+import _ from "lodash";
 
-function AzureDevOpsRepositorySelectInput(
-  {
-    fieldName,
-    model,
-    setModel,
-    toolId,
-    disabled,
-    setDataFunction,
-    clearDataFunction,
-    valueField,
-    textField,
-  }) {
+function AzureDevOpsRepositorySelectInput({
+  fieldName,
+  model,
+  setModel,
+  toolId,
+  disabled,
+  setDataFunction,
+  clearDataFunction,
+  valueField,
+  textField,
+}) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [azureRepositories, setAzureRepositories] = useState([]);
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
-  const {getAccessToken} = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -49,10 +54,14 @@ function AzureDevOpsRepositorySelectInput(
     };
   }, [toolId]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (
+    searchTerm = "",
+    currentToolId = toolId,
+    cancelSource = cancelTokenSource,
+  ) => {
     try {
       setIsLoading(true);
-      await loadAzureRepositories(cancelSource);
+      await loadAzureRepositories("", currentToolId, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
@@ -64,28 +73,34 @@ function AzureDevOpsRepositorySelectInput(
     }
   };
 
-  const loadAzureRepositories = async (cancelSource = cancelTokenSource) => {
-    const response = await azureActions.getRepositoriesFromAzureInstanceV2(getAccessToken, cancelSource, toolId);
+  const loadAzureRepositories = async (
+    searchTerm,
+    currentToolId = toolId,
+    cancelSource = cancelTokenSource,
+  ) => {
+    const response = await azureActions.getRepositoriesFromAzureInstanceV2(
+      getAccessToken,
+      cancelSource,
+      currentToolId,
+      searchTerm,
+    );
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
       setAzureRepositories([...repositories]);
-      const existingRepository = model?.getData(fieldName);
-
-      if (hasStringValue(existingRepository) === true) {
-        const existingRepositoryExists = repositories.find((repository) => repository["nameSpacedPath"] === existingRepository);
-
-        if (existingRepositoryExists == null) {
-          setError(
-            "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list."
-          );
-        }
-      }
     }
   };
 
+  const delayedSearchQuery = useCallback(
+    _.debounce(
+      (searchTerm, toolId) => loadAzureRepositories(searchTerm, toolId),
+      600,
+    ),
+    [],
+  );
+
   return (
-    <SelectInputBase
+    <LazyLoadSelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
@@ -99,6 +114,7 @@ function AzureDevOpsRepositorySelectInput(
       pluralTopic={"Azure Repositories"}
       singularTopic={"Azure Repository"}
       error={error}
+      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
     />
   );
 }
