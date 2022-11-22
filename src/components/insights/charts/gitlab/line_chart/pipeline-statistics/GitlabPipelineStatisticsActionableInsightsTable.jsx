@@ -16,8 +16,10 @@ import { faDraftingCompass, faCircleInfo, faTimer, faLightbulbOn } from "@fortaw
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
-import GitlabPipelineInsightsDataBlock from "./GitlabPipelineInsgihtsDataBlock";
+import GitlabPipelineInsightsDataBlock from "./GitlabPipelineInsightsDataBlock";
 import {getTimeDisplay} from "../../../charts-helpers";
+
+const MAX_STAGE_NAME_LENGTH = 12;
 
 function GitlabPipelineStatisticsActionableInsightsTable({ kpiConfiguration, insightsData,  activeTab }) {
   const [tableFilterDto, setTableFilterDto] = useState(
@@ -39,7 +41,7 @@ function GitlabPipelineStatisticsActionableInsightsTable({ kpiConfiguration, ins
       getTableDurationTextColumn(getField(fields, "pipelineDuration")),
       getTableTextColumn(getField(fields, "overallStatus")),
       getTableTextColumn(getField(fields, "commitId")),
-      getTableDateTimeColumn(getField(fields, "pipelineEndTime")),
+      getTableDateTimeColumn(getField(fields, "pipelineEndTime"), null, "N/A"),
     ],
     []
   );
@@ -140,6 +142,7 @@ function GitlabPipelineStatisticsActionableInsightsTable({ kpiConfiguration, ins
             displayValue={stepData[activeTab]?.maxDurationStep}
             displayText="Most Time Consuming Stage"
             icon={faLightbulbOn}
+            truncateLength={MAX_STAGE_NAME_LENGTH}
           />
         </Col>
         <Col lg={4} md={6} className="mt-3">
@@ -147,6 +150,7 @@ function GitlabPipelineStatisticsActionableInsightsTable({ kpiConfiguration, ins
             displayValue={stepData[activeTab]?.maxStepFailed}
             displayText="Most Failed Stage"
             icon={faLightbulbOn}
+            truncateLength={MAX_STAGE_NAME_LENGTH}
           />
         </Col>
         <Col lg={4} md={6} className="mt-3">
@@ -154,6 +158,7 @@ function GitlabPipelineStatisticsActionableInsightsTable({ kpiConfiguration, ins
             displayValue={stepData[activeTab]?.maxStepSkipped}
             displayText="Most Skipped Stage"
             icon={faLightbulbOn}
+            truncateLength={MAX_STAGE_NAME_LENGTH}
           />
         </Col>
       </Row>
