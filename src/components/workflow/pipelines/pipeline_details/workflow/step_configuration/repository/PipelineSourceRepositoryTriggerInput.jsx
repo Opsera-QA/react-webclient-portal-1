@@ -15,6 +15,7 @@ function PipelineSourceRepositoryEventBasedTriggerInput({className, model, setMo
             pipeline={pipeline}
             savePipelineFunction={savePipelineFunction}
             model={model}
+            setModel={setModel}
           />
           <PipelineSourceRepositorySecretInput
             model={model}
@@ -26,10 +27,19 @@ function PipelineSourceRepositoryEventBasedTriggerInput({className, model, setMo
     }
   };
 
+  const enableWebhookTrigger = (fieldName, newValue) => {
+    const newModel = {...model};
+      newModel?.setData("trigger_active", newValue);
+      newModel?.setData("isPushEvent", newValue === true ? true : false);
+      newModel?.setData("isPrEvent", false);
+      setModel({...newModel});
+  };
+
   return (
     <div className={className}>
       <BooleanToggleInput
         dataObject={model}
+        setDataFunction={enableWebhookTrigger}
         setDataObject={setModel}
         fieldName={"trigger_active"}
         disabled={disabled}

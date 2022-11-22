@@ -106,6 +106,7 @@ export default function UserActionsPipelineStepEditorPanel(
             fieldName={"pipelineInstructionsId"}
             model={userActionsStepModel}
             setModel={setUserActionsStepModel}
+            allowCreate={true}
           />
         </Col>
         <Col xs={12}>
@@ -113,6 +114,7 @@ export default function UserActionsPipelineStepEditorPanel(
             model={userActionsStepModel}
             fieldName={"pipelineInstructionsId"}
             showInstructions={true}
+            allowEditing={true}
           />
         </Col>
         <Col xs={12}>
@@ -128,13 +130,6 @@ export default function UserActionsPipelineStepEditorPanel(
             dataObject={userActionsStepModel}
             setDataObject={setUserActionsStepModel}
             disabled={userActionsStepModel?.getData("sendCustomMessage") !== true}
-          />
-        </Col>
-        <Col xs={12}>
-          <LdapUserSelectInput
-            fieldName={"contact"}
-            model={userActionsStepModel}
-            setModel={setUserActionsStepModel}
           />
         </Col>
       </Row>

@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { DateRangePicker } from "react-date-range";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
-// import { Button } from "react-bootstrap";
-import { useEffect } from "react";
 import InputContainer from "components/common/inputs/InputContainer";
 import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
@@ -11,6 +9,7 @@ import { addDays, isSameDay } from "date-fns";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import IconBase from "components/common/icons/IconBase";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+
 // TODO: If this can't be used elsewhere, Tejas, we should change the name to be KPI Specific.
 function DateRangeInput({ fieldName, dataObject, setDataObject }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
@@ -61,7 +60,7 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
           hasError={hasStringValue(errorMessage) === true}
         />
         <TooltipWrapper innerText={"Clear this Value"}>
-          <span onClick={() => clearCalendar()} className="my-auto badge badge-danger clear-value-badge pointer">
+          <span onClick={() => clearCalendar()} className="my-auto badge badge-danger pointer">
             <IconBase icon={faTimes} className={"mr-1"} />
             Clear Value
           </span>

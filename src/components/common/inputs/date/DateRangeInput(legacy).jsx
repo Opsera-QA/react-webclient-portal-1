@@ -66,7 +66,7 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
           hasError={hasStringValue(errorMessage) === true}
         />
         <TooltipWrapper innerText={"Clear this Value"}>
-          <span onClick={() => clearCalendar()} className="my-auto badge badge-danger clear-value-badge pointer">
+          <span onClick={() => clearCalendar()} className="my-auto badge badge-danger pointer">
             <IconBase icon={faTimes} className={"mr-1"} />
             Clear Value
           </span>

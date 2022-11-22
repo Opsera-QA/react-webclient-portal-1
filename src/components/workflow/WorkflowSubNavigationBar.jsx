@@ -2,8 +2,9 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faDraftingCompass, faHexagon, faLayerGroup} from "@fortawesome/pro-light-svg-icons";
+import {faBallotCheck, faDraftingCompass, faHexagon, faLayerGroup} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import {pipelineInstructionsHelper} from "components/workflow/instructions/pipelineInstructions.helper";
 
 function WorkflowSubNavigationBar({currentTab}) {
   const history = useHistory();
@@ -17,6 +18,9 @@ function WorkflowSubNavigationBar({currentTab}) {
         return;
       case "pipelines":
         history.push(`/workflow/`);
+        return;
+      case "pipelineInstructionsManagement":
+        history.push(pipelineInstructionsHelper.getManagementScreenLink());
         return;
     }
   };
@@ -32,6 +36,16 @@ function WorkflowSubNavigationBar({currentTab}) {
             tabName={"pipelineViewer"}
             toolTipText={"Pipeline Viewer"}
             icon={faLayerGroup}
+          />
+        );
+      case "pipelineInstructionsViewer":
+        return (
+          <NavigationTab
+            icon={faBallotCheck}
+            tabName={"pipelineInstructionsViewer"}
+            handleTabClick={handleTabClick}
+            activeTab={currentTab}
+            tabText={"Pipeline Instructions Viewer"}
           />
         );
       default:
@@ -56,6 +70,13 @@ function WorkflowSubNavigationBar({currentTab}) {
         tabName={"pipelines"}
         toolTipText={"Pipelines"}
         icon={faDraftingCompass}
+      />
+      <NavigationTab
+        icon={faBallotCheck}
+        tabName={"pipelineInstructionsManagement"}
+        handleTabClick={handleTabClick}
+        activeTab={currentTab}
+        tabText={"Instructions"}
       />
       {getActiveViewerTab()}
     </NavigationTabContainer>

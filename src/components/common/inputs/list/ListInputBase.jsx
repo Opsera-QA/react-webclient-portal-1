@@ -1,16 +1,13 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 import {List} from "@opsera/dhx-suite-package";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingWrapper";
-import IconBase from "components/common/icons/IconBase";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import ClearSelectionInputButton from "components/common/inputs/buttons/ClearSelectionInputButton";
-import SelectAllValuesInputButton from "components/common/inputs/buttons/SelectAllValuesInputButton";
+import SelectAllIcon from "components/common/icons/field/SelectAllIcon";
+import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
 
 // TODO: Make an actual base version and rename this VanityListInput
 // TODO: Refactor
@@ -209,7 +206,7 @@ function ListInputBase(
   const getClearDataIcon = () => {
     if (!disabled && dataObject?.getArrayData(field?.id)?.length > 0 && showClearValueButton !== false) {
       return (
-        <ClearSelectionInputButton
+        <ClearDataIcon
           className={"ml-2 my-auto"}
           clearValueFunction={clearValue}
         />
@@ -243,7 +240,7 @@ function ListInputBase(
   const getSelectAllIcon = () => {
     if (!disabled && selectOptions.length > 0 && showSelectAllButton === true) {
       return (
-        <SelectAllValuesInputButton
+        <SelectAllIcon
           selectAllFunction={selectAllOptions}
           className={"ml-2 my-auto"}
         />

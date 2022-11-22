@@ -1,13 +1,12 @@
 import React from "react";
 import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
 import PropTypes from "prop-types";
-import { TASK_TYPES } from "../../../../tasks/task.types";
-import { getTaskTypeLabel } from "../../../../tasks/task.types";
+import { TASK_TYPES, getTaskTypeLabel } from "components/tasks/task.types";
 
 function AwsEcsClusterCreationTaskHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer helpTopic={getTaskTypeLabel(TASK_TYPES.AWS_CREATE_ECS_CLUSTER)} closeHelpPanel={closeHelpPanel}>
-      <div className={"mb-1"}>When creating an ECS Cluster, it is important to know the correct values to enter. It is a nuanced operation and prior knowledge is essential. There are 2 steps to cluster creation including template creation. Once the template is created, you must select <b>Run Task</b>. If the Activity Logs indicate that cluster creation is successful, the cluster has been created in AWS and the task can be linked to a pipeline step.</div>
+      <div className={"mb-1"}>When creating an ECS Cluster, it is important to know the correct values to enter. It is a nuanced operation and prior knowledge is essential. There are 2 steps to cluster creation including template creation. Once the template is created, you must select <b>Run Task</b>. If the Activity Logs indicate that cluster creation is successful, the cluster has been created in AWS and the task can be linked to a pipeline step. For more detailed information on the {getTaskTypeLabel(TASK_TYPES.AWS_CREATE_ECS_CLUSTER)} Task including pipeline configuration, view the <a href="https://docs.opsera.io/aws-native-support/aws-ecs#setup-aws-ecs-service-creation-task" target="_blank" rel="noreferrer"><b>AWS ECS Cluster Creation Task Documentation</b>.</a></div>
       <div className={"mt-2"}><h5>Task Setup Instructions:</h5></div>
       <ol>
         <li>Select <b>{getTaskTypeLabel(TASK_TYPES.AWS_CREATE_ECS_CLUSTER)}</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:

@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import InfoDialog from "components/common/status_notifications/info";
-import PipelinesTableBase from "components/workflow/pipelines/pipeline_details/PipelinesTableBase";
 import InformationDialog from "components/common/status_notifications/info";
+import PipelinesTableBase from "components/workflow/pipelines/pipeline_details/PipelinesTableBase";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
@@ -128,14 +127,14 @@ function ImportPipelineTableCardView(
       if (activeFilters && activeFilters.length > 0) {
         return (
           <div className="px-2 max-content-width mx-auto" style={{ minWidth: "505px" }}>
-            <div className="my-5"><InfoDialog message="No pipelines meeting the filter requirements were found."/></div>
+            <div className="my-5"><InformationDialog message="No pipelines meeting the filter requirements were found."/></div>
           </div>
         );
       }
 
       return (
         <div className="px-2 max-content-width" style={{ minWidth: "505px" }}>
-          <div className="my-5"><InfoDialog message="No pipelines are available for this view at this time."/></div>
+          <div className="my-5"><InformationDialog message="No pipelines are available for this view at this time."/></div>
         </div>
       );
     }

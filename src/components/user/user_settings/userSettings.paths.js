@@ -5,7 +5,8 @@ export const USER_SETTINGS_PAGES = {
   MY_USER_RECORD: "myUserRecord",
   MY_ACCESS_TOKENS: "myAccessTokens",
   MY_CURRENT_TOKEN: "myCurrentToken",
-  MY_SUBSCRIPTIONS: "subscriptions"
+  MY_SUBSCRIPTIONS: "subscriptions",
+  ACCESS_TOKEN_DETAIL_VIEW: "accessTokenDetailView",
 };
 
 userSettingsPaths.myUserProfile = "user/myUserProfile";

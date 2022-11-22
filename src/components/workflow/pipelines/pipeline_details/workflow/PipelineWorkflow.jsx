@@ -424,8 +424,17 @@ function PipelineWorkflow({
             />
           </div>
 
-          <SteppedLineTo from="source" to="step-items" delay={100} orientation="v" zIndex={-1}
-                         borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="top"/>
+          <SteppedLineTo
+            from={"source"}
+            to={"step-items"}
+            delay={100}
+            orientation={"v"}
+            zIndex={10}
+            borderColor={"#0f3e84"}
+            borderWidth={2}
+            fromAnchor={"bottom"}
+            toAnchor={"top"}
+          />
 
 
           <div

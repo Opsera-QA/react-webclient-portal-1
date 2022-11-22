@@ -30,7 +30,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import InsightsSettings from "components/settings/insights/InsightsSettings";
 import RoleRestrictedRoute from "temp-library-components/routes/RoleRestrictedRoute";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
-import PipelineSettingsRoutes from "components/settings/pipelines/PipelineSettingsRoutes";
+import PipelinesSettingsRoutes from "components/settings/pipelines/PipelinesSettingsRoutes";
 
 export default function SettingsRoutes() {
   const {
@@ -215,7 +215,7 @@ export default function SettingsRoutes() {
         roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       />
 
-      <PipelineSettingsRoutes />
+      <PipelinesSettingsRoutes />
     </>
   );
 }

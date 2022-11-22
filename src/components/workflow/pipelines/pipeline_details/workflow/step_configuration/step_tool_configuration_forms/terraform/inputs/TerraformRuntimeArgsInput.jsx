@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import JsonInput from "../../../../../../../../common/inputs/object/JsonInput";
 import HelpOverlayBase from "../../../../../../../../common/overlays/center/help/HelpOverlayBase";
-import { DialogToastContext } from "../../../../../../../../../contexts/DialogToastContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 // TODO: This needs to be refactored.
 function TerraformRuntimeArgs({ dataObject, setDataObject }) {
@@ -16,7 +16,7 @@ function TerraformRuntimeArgs({ dataObject, setDataObject }) {
     return (
       <div className="text-muted mb-2">
         Enter Runtime arguments as a key value pair JSON. You can add any number of runtime arguments to the JSON
-        Object. Sample: {" { Key1: \'Value1\', Key2: \'value2\' }"}
+        Object. Sample: {` { Key1: 'Value1', Key2: 'value2' }`}
       </div>
     );
   };

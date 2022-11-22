@@ -56,7 +56,11 @@ export default class ToolModel extends ModelBase {
       throw "Access Denied";
     }
 
-    const vaultDeleteResponse = await vaultActions.deleteOwnerVaultRecordsForToolIdV2(this.getAccessToken, this.cancelTokenSource, this);
+    const vaultDeleteResponse = await vaultActions.deleteToolVaultKeys(
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this.getMongoDbId(),
+    );
     if (vaultDeleteResponse?.status !== 200) {
       const errorMsg = `Error reported by services while deleting tool information from Vault. Please try again`;
       // toastContext.showErrorDialog(errorMsg);

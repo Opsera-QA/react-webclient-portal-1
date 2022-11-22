@@ -48,6 +48,10 @@ export const jiraChangeFailureRateMetadata = {
       id: "createdAt"
     },
     {
+      label: "Priority",
+      id: "priority"
+    },
+    {
       label: "Service Component Name",
       id: "serviceComponent",
     },

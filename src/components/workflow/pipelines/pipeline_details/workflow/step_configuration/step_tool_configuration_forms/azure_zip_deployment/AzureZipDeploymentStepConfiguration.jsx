@@ -12,6 +12,8 @@ import AzureResourceGroupSelectInput from "./inputs/AzureResourceGroupSelectInpu
 import AzureStorageAccountInput from "./inputs/AzureStorageAccountSelectInput";
 import AzureContainerSelectInput from "./inputs/AzureContainerSelectInput";
 import UseExistingContainerToggle from "./inputs/UseExistingContainerToggle";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function AzureZipDeploymentStepConfiguration({
   stepTool,
@@ -127,6 +129,16 @@ function AzureZipDeploymentStepConfiguration({
         stepId={stepId}
         model={azureZipDeploymentModel}
         setModel={setAzureZipDeploymentModel}
+      />
+      <BooleanToggleInput
+        dataObject={azureZipDeploymentModel}
+        setDataObject={setAzureZipDeploymentModel}
+        fieldName={"useRunCount"}
+      />
+      <TextInputBase
+        dataObject={azureZipDeploymentModel}
+        setDataObject={setAzureZipDeploymentModel}
+        fieldName={"containerPath"}
       />
     </PipelineStepEditorPanelContainer>
   );

@@ -7,12 +7,14 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import HelpInfoOverlayIcon from "components/common/icons/general/HelpInfoOverlayIcon";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 import ReloadDataIcon from "components/common/icons/reload/ReloadDataIcon";
+import EnableEditingIcon from "components/common/icons/enable/EnableEditingIcon";
 
 function InputLabel(
   {
     field,
     model,
     clearDataFunction,
+    enableEditingFunction,
     requireClearDataConfirmation,
     linkTooltipText,
     detailViewLink,
@@ -29,6 +31,7 @@ function InputLabel(
     loadDataFunction,
     disabled,
     isLoading,
+    ellipsisOnClickFunction,
   }) {
   const getInputHelpIcon = () => {
     if (inputHelpOverlay != null) {
@@ -99,19 +102,27 @@ function InputLabel(
           />
           <EllipsisIcon
             overlay={infoOverlay}
+            onClickFunction={ellipsisOnClickFunction}
             tooltipText={ellipsisTooltipText}
             className={"ml-1 view-details-icon"}
           />
+          <EnableEditingIcon
+            enableEditingFunction={enableEditingFunction}
+            disabled={disabled}
+            isLoading={isLoading}
+            className={"ml-2 my-auto"}
+          />
           <ReloadDataIcon
             loadDataFunction={loadDataFunction}
-            disabled={disabled || isLoading}
-            className={"ml-2"}
+            disabled={disabled}
+            isLoading={isLoading}
+            className={"ml-2 my-auto"}
           />
           <ClearDataIcon
             requireConfirmation={requireClearDataConfirmation}
             clearValueFunction={clearDataFunction}
             furtherDetails={clearDataDetails}
-            className={"ml-2"}
+            className={"ml-2 my-auto"}
             disabled={disabled || isLoading}
           />
           {extraActionButtons}
@@ -130,6 +141,7 @@ InputLabel.propTypes = {
   detailViewLink: PropTypes.string,
   linkTooltipText: PropTypes.string,
   clearDataFunction: PropTypes.func,
+  enableEditingFunction: PropTypes.func,
   requireClearDataConfirmation: PropTypes.bool,
   clearDataDetails: PropTypes.any,
   extraActionButtons: PropTypes.any,
@@ -141,6 +153,7 @@ InputLabel.propTypes = {
   loadDataFunction: PropTypes.bool,
   disabled: PropTypes.bool,
   isLoading: PropTypes.bool,
+  ellipsisOnClickFunction: PropTypes.func,
 };
 
 export default InputLabel;

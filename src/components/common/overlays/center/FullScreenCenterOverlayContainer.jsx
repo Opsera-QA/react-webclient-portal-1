@@ -57,7 +57,11 @@ function FullScreenCenterOverlayContainer(
   return (
     <div className={`overlay-panel center-overlay-shadow-background`}>
       <div className={"overlay-margin bg-white"}>
-        <div className={"full-screen-center-overlay content-card-1"}>
+        <div className={
+          showCloseButton === true || buttonContainer != null
+            ? "full-screen-center-overlay-with-buttons content-card-1"
+            : "full-screen-center-overlay content-card-1"
+        }>
           <OverlayTitleBar
             handleClose={closePanel}
             isLoading={isLoading}

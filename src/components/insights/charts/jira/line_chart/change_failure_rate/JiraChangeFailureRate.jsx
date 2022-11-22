@@ -5,14 +5,28 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import axios from "axios";
-import { JIRA_CHANGE_FAILURE_RATE_CONSTANTS as constants } from "./JiraChangeFailureRate_kpi_datapoint_identifiers";
+import { JIRA_CHANGE_FAILURE_RATE_CONSTANTS as constants } from "./JiraChangeFailureRateConstants";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers";
 import jiraAction from "../../jira.action";
-import JiraChangeFailureRateDataBlockContainer from "./JiraChangeFailureRateDataBlockContainer";
-import {getResultFromKpiConfiguration,getReverseTrend} from "../../../charts-helpers";
+import {
+  getMaturityColorClass,
+  getMaturityScoreText,
+  getResultFromKpiConfiguration,
+  getReverseTrend,
+  getReverseTrendIcon
+} from "../../../charts-helpers";
 import JiraChangeFailureRateHelpDocumentation
   from "../../../../../common/help/documentation/insights/charts/JiraChangeFailureRateHelpDocumentation";
 import BadgeBase from "../../../../../common/badges/BadgeBase";
+import GitlabLeadTimeMaturityBlock from "../../../gitlab/line_chart/lead_time/GitlabLeadTimeMaturityBlock";
+import GitlabLeadTimeDataBlock from "../../../gitlab/line_chart/lead_time/GitlabLeadTimeDataBlock";
+import GitlabLeadTimeTrendDataBlock from "../../../gitlab/line_chart/lead_time/GitlabLeadTimeTrendDataBlock";
+import GitlabLeadTimeScatterPlotContainer
+  from "../../../gitlab/line_chart/lead_time/GitlabLeadTimeScatterPlotContainer";
+import JiraChangeFailureRateMaturityBlock from "./JiraChangeFailureRateMaturityBlock";
+import JiraChangeFailureRateDataBlock from "./JiraChangeFailureRateDataBlock";
+import JiraChangeFailureRateTrendDataBlock from "./JiraChangeFailureRateTrendDataBlock";
+import JiraChangeFailureRateLineChartContainer from "./JiraChangeFailureRateLineChartContainer";
 
 const DEFAULT_GOALS = {
   change_failure_rate: 10,
@@ -123,39 +137,86 @@ function JiraChangeFailureRate({
     setChangeFailureRateDataPoint(dataPoint);
   };
 
-  const getDataBlock = () => {
-    if (dataPointHelpers.isDataPointVisible(changeFailureRateDataPoint) === false) {
-      return null;
-    }
-
-    return (
-      <Row className={"mx-0 p-2 justify-content-between"}>
-        {dataPointHelpers.isDataPointVisible(changeFailureRateDataPoint) && (
-          <>
-            <Col className={"px-0"} xl={12} md={12}>
-              <JiraChangeFailureRateDataBlockContainer
-                metricData={metricData}
-                chartData={chartData}
-                goalsData={goalsData?.change_failure_rate}
-                kpiConfiguration={kpiConfiguration}
-                dataPoint={changeFailureRateDataPoint}
-                trend={getReverseTrend(metricData.changeFailureRate,metricData.prevChangeFailureRate)}
-              />
-            </Col>
-            <BadgeBase className={"mx-2"} badgeText={"Note: Results fetched are based on UTC timezone of selected dates"} />
-          </>
-        )}
-      </Row>
-    );
-  };
   const getChartBody = () => {
     if (!metricData || !Array.isArray(chartData) || !metricData.changeFailureRate) {
       return null;
     }
+    const jiraResolutionNames =
+        getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names')?.length || 0;
+    // const maturityScore = metricData?.maturityScore;
+    // const maturityColor = getMaturityColorClass(maturityScore);
+    const changeFailureRate = !isNaN(metricData?.changeFailureRate) ? metricData?.changeFailureRate +` %` :'NA';
+    const prevChangeFailureRate = !isNaN(metricData?.prevChangeFailureRate) ? metricData?.prevChangeFailureRate +` %` :'NA';
+
     return (
-      <>
-        {getDataBlock()}
-      </>
+    <div
+        className="new-chart m-3 p-0"
+        style={{ minHeight: "500px", display: "flex" }}
+    >
+      <Row className={"w-100"}>
+        {/* TODO Values to be integrated from APIs with Actionable insights */}
+        {/*<JiraChangeFailureRateMaturityBlock*/}
+        {/*  maturityScore={getMaturityScoreText(maturityScore)}*/}
+        {/*  maturityColor={maturityColor}*/}
+        {/*  iconOverlayBody={constants.MATURITY_TOOL_TIP[maturityScore]}*/}
+        {/*/>*/}
+        <Row
+          xl={4}
+          lg={4}
+          md={4}
+          className={`mb-2 ml-3 py-2 d-flex justify-content-center`}
+        >
+          {/*This would get removed when average merge time is fixed*/}
+          <Col md={12}>
+            <JiraChangeFailureRateDataBlock
+                value={jiraResolutionNames}
+                prevValue={""}
+                topText={"Selected Failure Status"}
+                bottomText={""}
+            />
+          </Col>
+          <Col md={12} className={"pl-2 pr-1"}>
+            <JiraChangeFailureRateTrendDataBlock
+                value={changeFailureRate}
+                prevValue={prevChangeFailureRate}
+                trend={getReverseTrend(
+                  changeFailureRate,
+                  prevChangeFailureRate
+                )}
+                getTrendIcon={getReverseTrendIcon}
+                topText={"Change Failure Rate"}
+                bottomText={"Prev CFR: "}
+                dataPoint={changeFailureRateDataPoint}
+            />
+          </Col>
+          <Col md={12} className={"px-2"}>
+            <JiraChangeFailureRateDataBlock
+                value={metricData?.total}
+                prevValue={metricData?.prevTotal}
+                topText={`Total Changes`}
+                bottomText={`Prev Total Changes: `}
+            />
+          </Col>
+          <Col md={12}>
+            <JiraChangeFailureRateDataBlock
+              value={metricData?.totalFailure}
+              prevValue={metricData?.prevTotalFailure}
+              topText={`Changes Failed`}
+              bottomText={`Prev Changes Failed: `}
+            />
+          </Col>
+        </Row>
+        <Col md={12} className={"my-2 p-0 d-flex flex-column align-items-end"}>
+          <JiraChangeFailureRateLineChartContainer
+            chartData={chartData}
+            goalsData={goalsData?.change_failure_rate}
+          />
+        </Col>
+        <Col md={12} className={"my-2 p-0"}>
+          <BadgeBase className={"mx-2"} badgeText={"Note: Results fetched are based on UTC timezone of selected dates"} />
+        </Col>
+      </Row>
+    </div>
     );
   };
 

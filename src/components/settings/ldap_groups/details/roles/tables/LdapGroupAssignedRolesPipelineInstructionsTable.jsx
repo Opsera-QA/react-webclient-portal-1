@@ -7,9 +7,9 @@ import {
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import { useHistory } from "react-router-dom";
-import { pipelineInstructionsHelper } from "components/settings/pipelines/instructions/pipelineInstructions.helper";
+import {pipelineInstructionsHelper} from "components/workflow/instructions/pipelineInstructions.helper";
 import pipelineInstructionsMetadata
-  from "@opsera/definitions/constants/settings/pipelines/instructions/pipelineInstructions.metadata";
+  from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructions.metadata";
 
 export default function LdapGroupAssignedRolesPipelineInstructionsTable(
   {

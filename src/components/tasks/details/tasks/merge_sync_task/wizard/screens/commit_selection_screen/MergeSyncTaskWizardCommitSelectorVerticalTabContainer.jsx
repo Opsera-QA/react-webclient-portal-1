@@ -15,6 +15,9 @@ import {
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import {faPlus, faMinus, faEdit} from "@fortawesome/free-solid-svg-icons";
 import IconBase from "../../../../../../../common/icons/IconBase";
+import ToggleThemeIcon from "../../../../../../../common/buttons/toggle/ToggleThemeIcon";
+import ToggleDiffViewIcon from "../../../../../../../common/buttons/toggle/ToggleDiffViewIcon";
+import {MONACO_CODE_THEME_TYPES} from "../../../../../../../common/inputs/code/monaco/MonacoCodeDiffInput";
 
 const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
     {
@@ -30,6 +33,10 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const noDataFilesPulledMessage = "The Comparison Files pull has been completed. There is no data for the selected criteria.";
   const noDataFilesNotPulledMessage = "The Comparison Files list has not been received. Please click the table's refresh button to resume polling for the files.";
+  const [internalTheme, setInternalTheme] = useState(
+      MONACO_CODE_THEME_TYPES.LIGHT,
+  );
+  const [inlineDiff, setInlineDiff] = useState(false);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -55,6 +62,19 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
     if (newTab !== activeTab) {
       setActiveTab(newTab);
     }
+  };
+
+  const toggleTheme = () => {
+    const newTheme =
+        internalTheme === MONACO_CODE_THEME_TYPES.DARK
+            ? MONACO_CODE_THEME_TYPES.LIGHT
+            : MONACO_CODE_THEME_TYPES.DARK;
+    setInternalTheme(newTheme);
+  };
+
+  const toggleDiffView = () => {
+    const oldInlineDiff = inlineDiff;
+    setInlineDiff(!oldInlineDiff);
   };
 
   const getShortenedName = (diffFile) => {
@@ -112,6 +132,8 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
               wizardModel={wizardModel}
               setWizardModel={setWizardModel}
               diffFile={diffFileList[activeTab]}
+              theme={internalTheme}
+              inlineDiff={inlineDiff}
           />
       );
     }
@@ -150,10 +172,26 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
     );
   }
 
+  const getTitleBarActionButtons = () => {
+    return (
+        <div className={"d-flex"}>
+          <ToggleThemeIcon
+              theme={internalTheme}
+              toggleTheme={toggleTheme}
+          />
+          <ToggleDiffViewIcon
+              toggleDiffView={toggleDiffView}
+              className={"mr-2 ml-2"}
+          />
+        </div>
+    );
+  };
+
   return (
       <VanitySetTabAndViewContainer
           icon={faBracketsCurly}
           title={`Merge Change Selection`}
+          titleRightSideButton={getTitleBarActionButtons()}
           verticalTabContainer={getVerticalTabContainer()}
           bodyClassName={"mx-0"}
           currentView={getCurrentView()}

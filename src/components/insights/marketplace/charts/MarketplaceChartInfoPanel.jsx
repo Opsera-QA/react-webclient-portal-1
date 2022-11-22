@@ -1,10 +1,9 @@
 import React, {useState, useContext, useEffect, useRef} from "react";
-import { Image } from "react-bootstrap";
+import { Image, Row, Col } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import { formatDistanceToNowStrict } from "date-fns";
 import PropTypes from 'prop-types';
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
-import { Row, Col } from "react-bootstrap";
 import axios from "axios";
 import Model from "core/data_model/model";
 import dashboardSelectMetadata from "components/insights/marketplace/charts/dashboard-select-metadata";

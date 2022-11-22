@@ -114,6 +114,12 @@ regexDefinitions.pathField = {
   errorFormText: "Only letters, numbers, dashes, slashes, colons, underscores, quotes, and periods are allowed"
 };
 
+regexDefinitions.pathFieldWithoutQuotes = {
+  regex: /^[A-Za-z0-9\-_:./\\]*$/,
+  formText: "Letters, numbers, dashes, slashes, colons, underscores, and periods are allowed",
+  errorFormText: "Only letters, numbers, dashes, slashes, colons, underscores, and periods are allowed"
+};
+
 regexDefinitions.domainNameField = {
   regex: /^[A-Za-z0-9\-.]*$/,
   formText: "Letters, numbers, dashes, and periods are allowed",
@@ -157,7 +163,7 @@ regexDefinitions.decimalField = {
 };
 
 regexDefinitions.hostnameRegex = {
-  regex: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/,
+  regex: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9-]*[A-Za-z0-9])$/,
   formText: "Host names must follow the RFC 1123 standard",
   errorFormText: "Host names must follow the RFC 1123 standard",
 };
@@ -202,7 +208,7 @@ regexDefinitions.jsonFile = {
 };
 
 regexDefinitions.collectionName = {
-  regex: /^[a-zA-Z0-9_-]*(?:\.[a-zA-Z0-9_-]+)$/,
+  regex: /^[a-zA-Z0-9_-]*\.[a-zA-Z0-9_-]+$/,
   formText: "Accepts input in [DatabaseName].[CollectionName] format",
   errorFormText: "Input should be in [DatabaseName].[CollectionName] format. Only letters, numbers, dashes, underscores and periods are allowed",
 };

@@ -22,6 +22,7 @@ function ViewToggle(
           className={"mr-2"}
           size={"sm"}
           onClick={() => switchView()}
+          onFocus={(e) => (e.target.blur())}
           disabled={isLoading}
         >
           <IconBase icon={faList} />
@@ -31,6 +32,7 @@ function ViewToggle(
           size={"sm"}
           onClick={() => switchView()}
           disabled={isLoading}
+          onFocus={(e) => (e.target.blur())}
         >
           <IconBase icon={faThLarge} />
         </Button>
@@ -42,7 +44,6 @@ function ViewToggle(
     let newFilterDto = filterModel;
     const newViewType = filterModel.getData("viewType") === "list" ? "card" : "list";
     newFilterDto.setData("viewType", newViewType);
-
     setFilterModel({ ...newFilterDto });
   };
 
