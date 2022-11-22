@@ -285,13 +285,12 @@ function PipelineStepConfigurationSummary({
             anchoreDataObject={getModelWrappedObject(anchoreScanStepConfigurationMetadata)}
           />
         );
-        case "ansible":
-          return (
-            <AnsibleStepConfigurationSummaryPanel
-              pipelineData={pipelineData}
-              ansibleDataObject={getModelWrappedObject(ansibleStepMetadata)}
-            />
-          );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ANSIBLE:
+        return (
+          <AnsibleStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+          />
+        );
       case "approval":
         return (
           <ApprovalGatePipelineStepConfigurationSummaryPanel
