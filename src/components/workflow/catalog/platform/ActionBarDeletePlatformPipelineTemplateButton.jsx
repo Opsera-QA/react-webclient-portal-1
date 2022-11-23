@@ -6,7 +6,7 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import DeletePlatformDashboardTemplateConfirmationOverlay
   from "components/insights/marketplace/dashboards/templates/platform/DeletePlatformDashboardTemplateConfirmationOverlay";
 
-export default function ActionBarDeletePlatformDashboardTemplateButton(
+export default function ActionBarDeletePlatformPipelineTemplateButton(
   {
     dashboardId,
     loadData,
@@ -39,7 +39,7 @@ export default function ActionBarDeletePlatformDashboardTemplateButton(
   );
 }
 
-ActionBarDeletePlatformDashboardTemplateButton.propTypes = {
+ActionBarDeletePlatformPipelineTemplateButton.propTypes = {
   dashboardId: PropTypes.string,
   loadData: PropTypes.func,
   className: PropTypes.string,

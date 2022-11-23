@@ -5,17 +5,31 @@ import { faClipboard, faTag, faUsers } from "@fortawesome/pro-light-svg-icons";
 import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
-import ActionBarDeletePlatformDashboardTemplateButton
-  from "components/insights/marketplace/dashboards/templates/platform/ActionBarDeletePlatformDashboardTemplateButton";
-import AddPlatformDashboardButton
-  from "components/insights/marketplace/dashboards/templates/platform/AddPlatformDashboardButton";
+import ActionBarDeleteCustomerDashboardTemplateButton
+  from "components/insights/marketplace/dashboards/templates/private/ActionBarDeleteCustomerDashboardTemplateButton";
+import AddCustomerDashboardButton
+  from "components/insights/marketplace/dashboards/templates/private/AddCustomerDashboardButton";
+import AccessRoleDisplayerField from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayerField";
+import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
 
 // TODO: This needs to be rewritten, I only separated out the two types of dashboards but did not work on this
-export default function PlatformDashboardTemplateCard(
+export default function CustomerPipelineTemplateCard(
   {
     dashboardTemplate,
     loadData,
   }) {
+  const getOwnerNameField = () => {
+    if (dashboardTemplate?.owner_name) {
+      return (
+        <Card.Text>
+          <span className="text-muted">
+            {dashboardTemplate.owner_name}
+          </span>
+        </Card.Text>
+      );
+    }
+  };
+
   const getDescriptionField = () => {
     if (dashboardTemplate?.description) {
       return (
@@ -52,6 +66,7 @@ export default function PlatformDashboardTemplateCard(
       <Card.Body>
         <Card.Title>{dashboardTemplate.name}</Card.Title>
         {getDescriptionField()}
+        {getOwnerNameField()}
         <CustomBadgeContainer>
           <CustomBadge icon={faUsers} className="mr-1 upper-case-first"
                        badgeText={dashboardTemplate.attributes?.persona} />
@@ -59,21 +74,32 @@ export default function PlatformDashboardTemplateCard(
         </CustomBadgeContainer>
         {getTagsField()}
         <div className={"d-flex justify-content-between mt-3"}>
-          <AddPlatformDashboardButton
+          <AddCustomerDashboardButton
             dashboardTemplateId={dashboardTemplate?._id}
           />
-          <ActionBarDeletePlatformDashboardTemplateButton
-            loadData={loadData}
-            dashboardId={dashboardTemplate?._id}
-            className={"mt-auto"}
-          />
+          <div className={"d-flex"}>
+            <AccessRoleIconBase
+              owner={dashboardTemplate?.creator}
+              type={"Dashboard Template"}
+              roles={dashboardTemplate?.roles}
+              className={"mt-auto"}
+              tooltipPlacement={"top"}
+              iconSize={"lg"}
+            />
+            <ActionBarDeleteCustomerDashboardTemplateButton
+              loadData={loadData}
+              dashboardId={dashboardTemplate?._id}
+              ownerId={dashboardTemplate?.creator}
+              className={"mt-auto ml-3"}
+            />
+          </div>
         </div>
       </Card.Body>
     </Card>
   );
 }
 
-PlatformDashboardTemplateCard.propTypes = {
+CustomerPipelineTemplateCard.propTypes = {
   dashboardTemplate: PropTypes.object,
   loadData: PropTypes.func,
 };

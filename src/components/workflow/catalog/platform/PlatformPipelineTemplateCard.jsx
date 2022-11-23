@@ -11,7 +11,7 @@ import AddPlatformDashboardButton
   from "components/insights/marketplace/dashboards/templates/platform/AddPlatformDashboardButton";
 
 // TODO: This needs to be rewritten, I only separated out the two types of dashboards but did not work on this
-export default function PlatformDashboardTemplateCard(
+export default function PlatformPipelineTemplateCard(
   {
     dashboardTemplate,
     loadData,
@@ -73,7 +73,7 @@ export default function PlatformDashboardTemplateCard(
   );
 }
 
-PlatformDashboardTemplateCard.propTypes = {
+PlatformPipelineTemplateCard.propTypes = {
   dashboardTemplate: PropTypes.object,
   loadData: PropTypes.func,
 };

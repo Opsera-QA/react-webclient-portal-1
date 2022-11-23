@@ -3,30 +3,36 @@ import PropTypes from "prop-types";
 import ActionBarDeleteButtonBase from "components/common/actions/buttons/ActionBarDeleteButtonBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import DeletePlatformDashboardTemplateConfirmationOverlay
-  from "components/insights/marketplace/dashboards/templates/platform/DeletePlatformDashboardTemplateConfirmationOverlay";
+import DeleteCustomerDashboardTemplateConfirmationOverlay
+  from "components/insights/marketplace/dashboards/templates/private/DeleteCustomerDashboardTemplateConfirmationOverlay";
 
-export default function ActionBarDeletePlatformDashboardTemplateButton(
+export default function ActionBarDeleteCustomerPipelineTemplateButton(
   {
     dashboardId,
+    ownerId,
     loadData,
     className,
   }) {
   const {
     toastContext,
-    isOpseraAdministrator,
+    isSiteAdministrator,
+    userData,
   } = useComponentStateReference();
 
   const showDeleteConfirmationOverlay = () => {
     toastContext.showOverlayPanel(
-      <DeletePlatformDashboardTemplateConfirmationOverlay
+      <DeleteCustomerDashboardTemplateConfirmationOverlay
         dashboardId={dashboardId}
         loadData={loadData}
       />
     );
   };
 
-  if (isMongoDbId(dashboardId) !== true || isOpseraAdministrator !== true) {
+  if (
+    isMongoDbId(dashboardId) !== true
+    || isMongoDbId(ownerId) !== true
+    || (isSiteAdministrator !== true && ownerId !== userData?._id)
+  ) {
     return null;
   }
 
@@ -39,8 +45,9 @@ export default function ActionBarDeletePlatformDashboardTemplateButton(
   );
 }
 
-ActionBarDeletePlatformDashboardTemplateButton.propTypes = {
+ActionBarDeleteCustomerPipelineTemplateButton.propTypes = {
   dashboardId: PropTypes.string,
+  ownerId: PropTypes.string,
   loadData: PropTypes.func,
   className: PropTypes.string,
 };

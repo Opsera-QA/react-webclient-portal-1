@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
-import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import {
-  customerDashboardTemplateCatalogActions
-} from "components/insights/marketplace/dashboards/templates/private/customerDashboardTemplateCatalog.actions";
+  platformDashboardTemplateActions
+} from "components/insights/marketplace/dashboards/templates/platform/platformDashboardTemplate.actions";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
-export default function AddCustomerDashboardButton(
+export default function AddPlatformPipelineButton(
   {
     disabled,
     dashboardTemplateId,
@@ -25,7 +25,7 @@ export default function AddCustomerDashboardButton(
   const addTemplateToDashboards = async () => {
     try {
       setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
-      await customerDashboardTemplateCatalogActions.deployCustomerTemplate(
+      await platformDashboardTemplateActions.deployPlatformTemplate(
         getAccessToken,
         cancelTokenSource,
         dashboardTemplateId,
@@ -59,7 +59,7 @@ export default function AddCustomerDashboardButton(
   );
 }
 
-AddCustomerDashboardButton.propTypes = {
+AddPlatformPipelineButton.propTypes = {
   dashboardTemplateId: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,

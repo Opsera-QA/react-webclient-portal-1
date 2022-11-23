@@ -5,10 +5,10 @@ import DeleteOverlayBase from "components/common/overlays/center/delete/DeleteOv
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import {
-  customerDashboardTemplateCatalogActions
-} from "components/insights/marketplace/dashboards/templates/private/customerDashboardTemplateCatalog.actions";
+  platformDashboardTemplateActions
+} from "components/insights/marketplace/dashboards/templates/platform/platformDashboardTemplate.actions";
 
-export default function DeleteCustomerTemplateConfirmationOverlay(
+export default function DeletePlatformPipelineTemplateConfirmationOverlay(
   {
     dashboardId,
     loadData,
@@ -19,42 +19,43 @@ export default function DeleteCustomerTemplateConfirmationOverlay(
     cancelTokenSource,
     toastContext,
     getAccessToken,
+    isOpseraAdministrator,
   } = useComponentStateReference();
 
   const handleDeleteFunction = async () => {
     try {
       setDeleteState(buttonLabelHelper.BUTTON_STATES.BUSY);
-      await customerDashboardTemplateCatalogActions.deleteTemplate(
+      await platformDashboardTemplateActions.deleteTemplate(
         getAccessToken,
         cancelTokenSource,
         dashboardId,
       );
-      toastContext.showSystemSuccessToast("Successfully Deleted Customer Dashboard Template");
+      toastContext.showSystemSuccessToast("Successfully Deleted Platform Dashboard Template");
       setDeleteState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
       loadData();
       toastContext.clearOverlayPanel();
     } catch (error) {
       if (isMounted?.current === true) {
         setDeleteState(buttonLabelHelper.BUTTON_STATES.ERROR);
-        toastContext.showDeleteFailureResultDialog("Customer Dashboard Template", error);
+        toastContext.showDeleteFailureResultDialog("Platform Dashboard Template", error);
       }
     }
   };
 
-  if (isMongoDbId(dashboardId) !== true) {
+  if (isMongoDbId(dashboardId) !== true || isOpseraAdministrator !== true) {
     return null;
   }
 
   return (
     <DeleteOverlayBase
-      objectType={"Customer Dashboard Template"}
+      objectType={"Platform Dashboard Template"}
       deleteState={deleteState}
       handleDeleteFunction={handleDeleteFunction}
     />
   );
 }
 
-DeleteCustomerTemplateConfirmationOverlay.propTypes = {
+DeletePlatformPipelineTemplateConfirmationOverlay.propTypes = {
   dashboardId: PropTypes.string,
   loadData: PropTypes.func,
 };
