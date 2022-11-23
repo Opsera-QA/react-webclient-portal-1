@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
-import { ResponsiveLine } from "@nivo/line";
-import config from "./JiraMeanTimeToResolutionConfigs.js";
 import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
 import axios from "axios";
@@ -9,13 +7,9 @@ import { Col, Row } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import {
-  defaultConfig,
   assignStandardColors,
   spaceOutServiceNowCountBySeverityLegend,
 } from "../../../charts-views";
-import ChartTooltip from "../../../ChartTooltip";
-import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
-import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
 import { dataPointHelpers } from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import { JIRA_MEAN_TIME_TO_RESOLUTION_CONSTANTS as constants } from "./JiraMeanTimeToResolutionConstants";
 import DataPointVisibilityWrapper from "../../../../../common/metrics/data_points/DataPointVisibilityWrapper";
@@ -33,9 +27,13 @@ import {
 import BadgeBase from "../../../../../common/badges/BadgeBase";
 import JiraMeanTimeToResolutionMaturityBlock from "./JiraMeanTimeToResolutionMaturityBlock";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import JiraMeanTimeToResolutionSeverityChartPanel from './JiraMeanTimeToResolutionSeverityChartPanel';
+import JiraMeanTimeToResolutionPriorityChartPanel from './JiraMeanTimeToResolutionPriorityChartPanel';
+import JiraMeanTimeToResolutionLineChart from "./JiraMeanTimeToResolutionLineChart";
+import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+import {faTable} from "@fortawesome/pro-light-svg-icons";
+import JiraMeanTimeToResolutionMaturityScoreInsights from "./JiraMeanTimeToResolutionMaturityScoreInsights";
 
-function JiraMeanTimeToResolutionChart({
+function JiraMeanTimeToResolution({
   kpiConfiguration,
   setKpiConfiguration,
   dashboardData,
@@ -44,7 +42,6 @@ function JiraMeanTimeToResolutionChart({
   showSettingsToggle,
 }) {
   const { getAccessToken } = useContext(AuthContext);
-  // const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [sevMetrics, setSevMetrics] = useState([]);
@@ -53,12 +50,6 @@ function JiraMeanTimeToResolutionChart({
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [dataBlock, setDataBlock] = useState({});
-  // const [priorityOne, setPriorityOne] = useState(0);
-  // const [priorityTwo, setPriorityTwo] = useState(0);
-  // const [priorityThree, setPriorityThree] = useState(0);
-  // const [priorityFour, setPriorityFour] = useState(0);
-  // const [priorityFive, setPriorityFive] = useState(0);
-  // const toastContext = useContext(DialogToastContext);
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -127,14 +118,6 @@ function JiraMeanTimeToResolutionChart({
 
       spaceOutServiceNowCountBySeverityLegend(barchart);
 
-      // THIS IS USED WHEN ACTIONABLE INSIGHTS ARE DEVELOPED
-      // if (responseData) {
-      //   setPriorityOne(responseData["Blocker"] || 0);
-      //   setPriorityTwo(responseData["Highest"] || 0);
-      //   setPriorityThree(responseData["High"] || 0);
-      //   setPriorityFour(responseData["Medium"] || 0);
-      //   setPriorityFive(responseData["Low"] || 0);
-      // }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -147,146 +130,38 @@ function JiraMeanTimeToResolutionChart({
     }
   };
 
-  // const onRowSelect = () => {
-  //   toastContext.showOverlayPanel(
-  //     <MTTRActionableInsightOverlay
-  //       kpiConfiguration={kpiConfiguration}
-  //       dashboardData={dashboardData}
-  //     />
-  //   );
-  // };
-
-  // const getMetricBottomRow = () => {
-  //   return (
-  //     <Row>
-  //       <Col
-  //         xl={2}
-  //         lg={2}
-  //         md={2}
-  //       >
-  //         <MetricBadgeBase
-  //           className={"mr-3"}
-  //           badgeText={`Resolved Tickets by Severity:`}
-  //         />
-  //       </Col>
-  {/*      <Col*/}
-  //         xl={2}
-  //         lg={4}
-  //         md={2}
-  //       >
-  //         <MetricBadgeBase
-  //           className={"mr-3"}
-  //           badgeText={`Sev-1: ${priorityOne}`}
-  //         />
-  {/*      </Col>*/}
-  {/*      <Col*/}
-  {/*        xl={2}*/}
-  {/*        lg={2}*/}
-  {/*        md={2}*/}
-  {/*      >*/}
-  {/*        <MetricBadgeBase*/}
-  //           className={"mr-3"}
-  //           badgeText={`Sev-2: ${priorityTwo}`}
-  //         />
-  //       </Col>
-  {/*      <Col*/}
-  //         xl={2}
-  //         lg={2}
-  //         md={2}
-  {/*      >*/}
-  {/*        <MetricBadgeBase*/}
-  //           className={"mr-3"}
-  //           badgeText={`Sev-3: ${priorityThree}`}
-  {/*        />*/}
-  {/*      </Col>*/}
-  {/*      <Col*/}
-  {/*        xl={2}*/}
-  //         lg={2}
-  //         md={2}
-  //       >
-  //         <MetricBadgeBase
-  //           className={"mr-3"}
-  //           badgeText={`Sev-4: ${priorityFour}`}
-  //         />
-  //       </Col>
-  //       <Col
-  //         xl={2}
-  //         lg={2}
-  //         md={2}
-  //       >
-  //         <MetricBadgeBase
-  //           className={"mr-3"}
-  //           badgeText={`Sev-5: ${priorityFive}`}
-  //         />
-  //       </Col>
-  //     </Row>
-  //   );
-  // };
-  // Todo Aruna wanted to revisit this formula and this can be delivered during insights.
-  // const getMetricTopRow = () => {
-  //   return (
-  //     <Row>
-  //       <Col
-  //         xl={2}
-  //         lg={2}
-  //         md={2}
-  //       >
-  //         <MetricBadgeBase
-  //           className={"mr-3"}
-  //           badgeText={`Aging of unresolved tickets:`}
-  //         />
-  //       </Col>
-  //       <Col
-  //         xl={2}
-  //         lg={4}
-  //         md={2}
-  //       >
-  //         <MetricBadgeBase
-  //           className={"mr-3"}
-  //           badgeText={`Last Five Days: ${lastFiveDays}`}
-  //         />
-  //       </Col>
-  //       <Col
-  //         xl={2}
-  //         lg={2}
-  //         md={2}
-  //       >
-  //         <MetricBadgeBase
-  //           className={"mr-3"}
-  //           badgeText={`5-15 days: ${fiveToFifteenDays}`}
-  //         />
-  //       </Col>
-  //       <Col
-  //         xl={2}
-  //         lg={2}
-  //         md={2}
-  //       >
-  //         <MetricBadgeBase
-  //           className={"mr-3"}
-  //           badgeText={`15-30 days: ${fifteenToThirtyDays}`}
-  //         />
-  //       </Col>
-  //       <Col
-  //         xl={2}
-  //         lg={2}
-  //         md={2}
-  //       >
-  //         <MetricBadgeBase
-  //           className={"mr-3"}
-  //           badgeText={`> 30 Days: ${beforeThirtyDays}`}
-  //         />
-  //       </Col>
-  //     </Row>
-  //   );
-  // };
-
   const closePanel = () => {
     toastContext.clearOverlayPanel();
   };
 
   const openPanel = () => {
-    toastContext.showOverlayPanel(<JiraMeanTimeToResolutionSeverityChartPanel severityChartData={sevMetrics} closePanel={closePanel} />);
+    toastContext.showOverlayPanel(<JiraMeanTimeToResolutionPriorityChartPanel severityChartData={sevMetrics} closePanel={closePanel} />);
   };
+
+  const closeMaturityPanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
+
+  const onRowSelect = () => {
+    toastContext.showOverlayPanel(
+      <FullScreenCenterOverlayContainer
+        closePanel={closeMaturityPanel}
+        showPanel={true}
+        titleText={`Jira MTTR  Maturity Score Statistics`}
+        showToasts={true}
+        titleIcon={faTable}
+      >
+        <div className={"p-3"}>
+          <JiraMeanTimeToResolutionMaturityScoreInsights
+            kpiConfiguration={kpiConfiguration}
+            insightsData={dataBlock}
+          />
+        </div>
+      </FullScreenCenterOverlayContainer>,
+    );
+  };
+
 
   const getChartBody = () => {
     if (
@@ -314,31 +189,29 @@ function JiraMeanTimeToResolutionChart({
       constants.SUPPORTED_DATA_POINT_IDENTIFIERS
         .AVERAGE_MTTR_DATA_BLOCK_DATA_POINT,
     );
-    const isOneChartVisible =
-      dataPointHelpers.isDataPointVisible(mttrChartDataPoint) ||
-      dataPointHelpers.isDataPointVisible(numberOfIncidentsDataPoint);
 
-    // const maturityScore = dataBlock?.maturityScore;
-    // const maturityColor = getMaturityColorClass(maturityScore);
+    const maturityScore = dataBlock?.overallMaturityScoreText;
+    const maturityColor = getMaturityColorClass(maturityScore);
     return (
       <>
         <div
-          className={"chart-footer-text"}
-          style={{ marginTop: "10px" }}
+          className="new-chart m-3 p-0"
+          style={{ minHeight: "500px", display: "flex" }}
         >
-          <MetricBadgeBase
-            className={"mx-2"}
-            badgeText={"Chart depicts recent 15 results"}
-          />
-        </div>
-        <div className="new-chart m-3 p-0">
-          <div className="d-flex flex-row justify-content-center">
-            {/* TODO Values to be integrated from APIs with Actionable insights  */}
-            {/* <JiraMeanTimeToResolutionMaturityBlock
+          <Row className={"w-100"}>
+            <JiraMeanTimeToResolutionMaturityBlock
                 maturityScore={getMaturityScoreText(maturityScore)}
                 maturityColor={maturityColor}
                 iconOverlayBody={constants.MATURITY_TOOL_TIP[maturityScore]}
-            /> */}
+                onClick={onRowSelect}
+            />
+            <Row
+                xl={4}
+                lg={4}
+                md={4}
+                className={`mb-2 ml-3 py-2 d-flex justify-content-center ${maturityColor}`}
+            >
+              <Col md={12}>
             <JiraMTTRDataBlock
               incidents={dataBlock.totalIncidents}
               prevIncidents={dataBlock.previousTotalIncidents}
@@ -348,9 +221,9 @@ function JiraMeanTimeToResolutionChart({
               topText={"Total Incidents"}
               bottomText={"Prev Total Incidents"}
               onClick={openPanel}
-              classes="mr-2"
-              style={{ maxWidth: '300px' }}
             />
+              </Col>
+            <Col md={12}>
             <JiraMTTRDataBlock
               incidents={dataBlock.totalResolvedIncidents}
               prevIncidents={dataBlock.previousTotalResolvedIncidents}
@@ -359,9 +232,9 @@ function JiraMeanTimeToResolutionChart({
               getIcon = {getTrendIcon}
               topText={"Resolved Incidents"}
               bottomText={"Prev Resolved Incidents"}
-              classes="mr-2"
-              style={{ maxWidth: '300px' }}
             />
+                </Col>
+              <Col md={12}>
             <DataPointVisibilityWrapper
               dataPoint={averageMTTRDataBlockDataPoint}
             >
@@ -373,21 +246,21 @@ function JiraMeanTimeToResolutionChart({
                 getIcon = {getReverseTrendIcon}
                 topText={"Average MTTR (Hours)"}
                 bottomText={"Prev Average MTTR"}
-                style={{ maxWidth: '300px' }}
               />
             </DataPointVisibilityWrapper>
-          </div>
-          <div className="d-flex flex-row justify-content-center">
-            <div className="d-flex flex-column mr-5">
-              <div className="chart-label-text"><strong>Min MTTR Hours: </strong>{dataBlock.minMTTR}</div>
-              <div className="chart-label-text"><strong>Previous Min MTTR Hours: </strong>{dataBlock.previousMinMTTR}</div>
-            </div>
-            <div className="d-flex flex-column">
-              <div className="chart-label-text"><strong>Max MTTR Hours: </strong>{dataBlock.maxMTTR}</div>
-              <div className="chart-label-text"><strong>Previous Max MTTR Hours: </strong>{dataBlock.previousMaxMTTR}</div>
-            </div>
-          </div>
-          <Row>
+              </Col>
+              <Col md={12}>
+                <JiraMTTRDataBlock
+                  incidents={dataBlock.maxMTTR}
+                  prevIncidents={dataBlock.previousMaxMTTR}
+                  dataPoint={numberOfIncidentsDataPoint}
+                  trend={getTrend(dataBlock.maxMTTR,dataBlock.previousMaxMTTR)}
+                  getIcon = {getTrendIcon}
+                  topText={"Max MTTR"}
+                  bottomText={"Prev Max MTTR"}
+                />
+              </Col>
+            </Row>
             {dataPointHelpers.isDataPointVisible(mttrChartDataPoint) && (
               <Col
                 lg={12}
@@ -399,40 +272,14 @@ function JiraMeanTimeToResolutionChart({
                   paddingLeft: '5rem'
                 }}
               >
-                <ResponsiveLine
-                  {...defaultConfig(
-                    "Mean Time to Resolution (in hours)",
-                    "Date",
-                    false,
-                    false,
-                    "wholeNumbers",
-                    "monthDate2",
-                  )}
-                  {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY, 0)}
-                  valueScale={{ type:'symlog'}}
-                  data={metrics}
-                  tooltip={({ point: { data: { Count, x, y }}}) => (
-                    <ChartTooltip
-                      titles={[
-                        "Date",
-                        "Mean Time to Resolution",
-                        "Number of Incidents",
-                      ]}
-                      values={[
-                        new Date(x).toDateString(),
-                        `${y} hours`,
-                        Count,
-                      ]}
-                      style={false}
-                    />
-                  )}
-                />
+              <JiraMeanTimeToResolutionLineChart metrics={metrics}/>
               </Col>
             )}
           </Row>
         </div>
-        {/*<div className="ml-2 p-0">{getMetricTopRow()}</div>*/}
-        <BadgeBase className={"mx-2"} badgeText={"Note: Results fetched are based on UTC timezone of selected dates"} />
+        <Col md={12} className={"my-2 p-0"}>
+          <BadgeBase className={"mx-2"} badgeText={"Note: Results fetched are based on UTC timezone of selected dates"} />
+        </Col>
       </>
     );
   };
@@ -466,7 +313,7 @@ function JiraMeanTimeToResolutionChart({
   );
 }
 
-JiraMeanTimeToResolutionChart.propTypes = {
+JiraMeanTimeToResolution.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -478,4 +325,4 @@ JiraMeanTimeToResolutionChart.propTypes = {
   showSettingsToggle: PropTypes.bool,
 };
 
-export default JiraMeanTimeToResolutionChart;
+export default JiraMeanTimeToResolution;
