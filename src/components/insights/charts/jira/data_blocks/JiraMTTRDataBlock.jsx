@@ -7,23 +7,21 @@ import MetricScoreText from "../../../../common/metrics/score/MetricScoreText";
 function JiraMTTRDataBlock({ incidents, prevIncidents, trend, dataPoint, getIcon, topText, bottomText, onClick, classes, style }) {
     const finalBottomText = prevIncidents ? `${bottomText}: ${prevIncidents}` : bottomText;
     return (
-        <div className={classes} style={style}>
-            <DataBlockBoxContainer className={"h-100"} showBorder={true} onClickFunction={onClick}>
-                <ThreeLineDataBlockBase
-                    className={`${trend} p-2 h-100`}
-                    topText={topText}
-                    icon={getIcon(trend)}
-                    bottomText={finalBottomText}
-                    middleText={
-                        <MetricScoreText
-                            score={incidents}
-                            dataPoint={dataPoint}
-                            className={"metric-block-content-text"}
-                        />}
-                    dataPoint={dataPoint}
-                />
-            </DataBlockBoxContainer>
-        </div>
+        <DataBlockBoxContainer className={"h-100"} showBorder={true} onClickFunction={onClick}>
+            <ThreeLineDataBlockBase
+                className={`${trend} p-2 h-100`}
+                topText={topText}
+                icon={getIcon(trend)}
+                bottomText={finalBottomText}
+                middleText={
+                    <MetricScoreText
+                        score={incidents}
+                        dataPoint={dataPoint}
+                        className={"metric-block-content-text"}
+                    />}
+                dataPoint={dataPoint}
+            />
+        </DataBlockBoxContainer>
     );
 }
 

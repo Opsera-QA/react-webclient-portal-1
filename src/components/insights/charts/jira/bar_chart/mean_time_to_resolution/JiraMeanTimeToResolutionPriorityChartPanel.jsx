@@ -7,10 +7,10 @@ import ChartTooltip from "../../../ChartTooltip";
 import { defaultConfig, adjustBarWidth } from "../../../charts-views";
 import config2 from "./JiraSeverityCountConfig.js";
 
-function JiraMeanTimeToResolutionSeverityChartPanel({ severityChartData, closePanel }) {
+function JiraMeanTimeToResolutionPriorityChartPanel({ severityChartData, closePanel }) {
   return (
     <FullScreenCenterOverlayContainer titleText="Number of Incidents" closePanel={closePanel}>
-      <div className='mt-3 h-100'>
+      <div className='pt-3 h-100'>
         <ResponsiveBar
           data={severityChartData}
           {...defaultConfig(
@@ -36,7 +36,7 @@ function JiraMeanTimeToResolutionSeverityChartPanel({ severityChartData, closePa
   );
 }
 
-JiraMeanTimeToResolutionSeverityChartPanel.propTypes = {
+JiraMeanTimeToResolutionPriorityChartPanel.propTypes = {
   severityChartData: PropTypes.shape({
     id: PropTypes.oneOf([ PropTypes.string, PropTypes.number ]),
     data: PropTypes.array
@@ -44,4 +44,4 @@ JiraMeanTimeToResolutionSeverityChartPanel.propTypes = {
   closePanel: PropTypes.func.isRequired
 };
 
-export default JiraMeanTimeToResolutionSeverityChartPanel;
+export default JiraMeanTimeToResolutionPriorityChartPanel;
