@@ -5,66 +5,60 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
-import modelHelpers from "components/common/model/modelHelpers";
-import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
+import LoadingDialog from "../../../../../../../common/status_notifications/loading";
 
-function AnsibleStepConfigurationSummaryPanel({ pipelineStep, setActiveTab }) {
-  const ansibleModel = modelHelpers.getPipelineStepModelForToolIdentifier(toolIdentifierConstants.TOOL_IDENTIFIERS.ANSIBLE, pipelineStep);
-
-  if (ansibleModel == null) {
-    return undefined;
+function AnsibleStepConfigurationSummaryPanel({ ansiblePipelineDataObject, pipelineData, setActiveTab }) {
+  if (ansiblePipelineDataObject == null) {
+    return <LoadingDialog size="sm" />;
   }
 
   return (
-    <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineStep}>
+    <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <ToolNameField model={ansibleModel} fieldName={"toolConfigId"}/>
+          <ToolNameField model={ansiblePipelineDataObject} fieldName={"toolConfigId"}/>
         </Col>
         <Col lg={6}>
-          <ToolNameField model={ansibleModel} fieldName={"gitToolId"}/>
+          <ToolNameField model={ansiblePipelineDataObject} fieldName={"gitToolId"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansibleModel} fieldName={"repoId"}/>
+          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"repoId"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansibleModel} fieldName={"projectId"}/>
+          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"projectId"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansibleModel} fieldName={"service"}/>
+          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"service"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansibleModel} fieldName={"gitUrl"}/>
+          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"gitUrl"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansibleModel} fieldName={"sshUrl"}/>
+          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"sshUrl"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansibleModel} fieldName={"repository"}/>
+          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"repository"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansibleModel} fieldName={"workspace"}/>
+          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"workspace"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansibleModel} fieldName={"workspaceName"}/>
+          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"workspaceName"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansibleModel} fieldName={"defaultBranch"}/>
+          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"defaultBranch"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansibleModel} fieldName={"playbookFileName"}/>
+          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"playbookFileName"}/>
         </Col>
-        {/*Disabling Command Line args as part of OPL 2400*/}
-        {/*<Col lg={6}>*/}
-        {/*  <JsonField dataObject={ansibleModel} fieldName={"commandArgs"}/>*/}
-        {/*</Col>        */}
       </Row>
     </PipelineStepSummaryPanelContainer>
   );
 }
 
 AnsibleStepConfigurationSummaryPanel.propTypes = {
-  pipelineStep: PropTypes.object,
+  ansiblePipelineDataObject: PropTypes.object,
+  pipelineData: PropTypes.object,
   setActiveTab: PropTypes.func
 };
 

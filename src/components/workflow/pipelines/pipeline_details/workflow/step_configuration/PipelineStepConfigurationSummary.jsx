@@ -239,6 +239,14 @@ import UserActionsPipelineStepSummaryPanel
 import {
   userActionsPipelineStepMetadata
 } from "components/workflow/plan/step/user_actions/userActionsPipelineStep.metadata";
+import JFrogMavenPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/jfrog_artifactory_maven/JFrogMavenPipelineStepConfigurationSummaryPanel";
+import AzureZipDeploymentStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfigurationSummaryPanel";
+import azureZipDeploymentMetadata
+  from "./step_tool_configuration_forms/azure_zip_deployment/azureZipDeployment.metadata";
+import jfrogMavenStepFormMetadata
+  from "./step_tool_configuration_forms/jfrog_artifactory_maven/jfrog-maven-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -289,6 +297,7 @@ function PipelineStepConfigurationSummary({
         return (
           <AnsibleStepConfigurationSummaryPanel
             pipelineData={pipelineData}
+            ansiblePipelineDataObject={getModelWrappedObject(ansibleStepMetadata)}
           />
         );
       case "approval":
@@ -536,6 +545,13 @@ function PipelineStepConfigurationSummary({
             jFrogPipelineDataObject={getModelWrappedObject(jfrogStepFormMetadata)}
           />
         );
+      case "jfrog_artifactory_maven":
+        return (
+          <JFrogMavenPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            jFrogPipelineDataObject={getModelWrappedObject(jfrogMavenStepFormMetadata)}
+          />
+        );
       case "terrascan":
         return (
           <TerrascanPipelineStepConfigurationSummaryPanel
@@ -555,6 +571,13 @@ function PipelineStepConfigurationSummary({
           <AzureAcrPushPipelineStepConfigurationSummary
             pipelineData={pipelineData}
             azureAcrPushPipelineDataObject={getModelWrappedObject(azureAcrPushStepFormMetadata)}
+          />
+        );
+      case "azure-zip-deployment":
+        return (
+          <AzureZipDeploymentStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            azureFunctionsPipelineDataObject={getModelWrappedObject(azureZipDeploymentMetadata)}
           />
         );
       case "kafka_connect":
