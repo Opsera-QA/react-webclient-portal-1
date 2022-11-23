@@ -18,15 +18,14 @@ import {
 import JiraChangeFailureRateHelpDocumentation
   from "../../../../../common/help/documentation/insights/charts/JiraChangeFailureRateHelpDocumentation";
 import BadgeBase from "../../../../../common/badges/BadgeBase";
-import GitlabLeadTimeMaturityBlock from "../../../gitlab/line_chart/lead_time/GitlabLeadTimeMaturityBlock";
-import GitlabLeadTimeDataBlock from "../../../gitlab/line_chart/lead_time/GitlabLeadTimeDataBlock";
-import GitlabLeadTimeTrendDataBlock from "../../../gitlab/line_chart/lead_time/GitlabLeadTimeTrendDataBlock";
-import GitlabLeadTimeScatterPlotContainer
-  from "../../../gitlab/line_chart/lead_time/GitlabLeadTimeScatterPlotContainer";
 import JiraChangeFailureRateMaturityBlock from "./JiraChangeFailureRateMaturityBlock";
 import JiraChangeFailureRateDataBlock from "./JiraChangeFailureRateDataBlock";
 import JiraChangeFailureRateTrendDataBlock from "./JiraChangeFailureRateTrendDataBlock";
 import JiraChangeFailureRateLineChartContainer from "./JiraChangeFailureRateLineChartContainer";
+import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
+import {faTable} from "@fortawesome/pro-light-svg-icons";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import JiraChangeFailureRateMaturityScoreInsights from "./JiraChangeFailureRateMaturityScoreInsights";
 
 const DEFAULT_GOALS = {
   change_failure_rate: 10,
@@ -39,6 +38,7 @@ function JiraChangeFailureRate({
   index,
   setKpis,
 }) {
+  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metricData, setMetricData] =
@@ -137,14 +137,38 @@ function JiraChangeFailureRate({
     setChangeFailureRateDataPoint(dataPoint);
   };
 
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
+
+  const onRowSelect = () => {
+    toastContext.showOverlayPanel(
+      <FullScreenCenterOverlayContainer
+        closePanel={closePanel}
+        showPanel={true}
+        titleText={`Jira Change Failure Rate Maturity Score Statistics`}
+        showToasts={true}
+        titleIcon={faTable}
+      >
+        <div className={"p-3"}>
+          <JiraChangeFailureRateMaturityScoreInsights
+            kpiConfiguration={kpiConfiguration}
+            insightsData={metricData}
+          />
+        </div>
+      </FullScreenCenterOverlayContainer>,
+    );
+  };
+
   const getChartBody = () => {
-    if (!metricData || !Array.isArray(chartData) || !metricData.changeFailureRate) {
+    if (!metricData || !Array.isArray(chartData) || !metricData.changeFailureRate || !metricData.total) {
       return null;
     }
     const jiraResolutionNames =
         getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names')?.length || 0;
-    // const maturityScore = metricData?.maturityScore;
-    // const maturityColor = getMaturityColorClass(maturityScore);
+    const maturityScore = metricData?.overallMaturityScoreText;
+    const maturityColor = getMaturityColorClass(maturityScore);
     const changeFailureRate = !isNaN(metricData?.changeFailureRate) ? metricData?.changeFailureRate +` %` :'NA';
     const prevChangeFailureRate = !isNaN(metricData?.prevChangeFailureRate) ? metricData?.prevChangeFailureRate +` %` :'NA';
 
@@ -154,17 +178,17 @@ function JiraChangeFailureRate({
         style={{ minHeight: "500px", display: "flex" }}
     >
       <Row className={"w-100"}>
-        {/* TODO Values to be integrated from APIs with Actionable insights */}
-        {/*<JiraChangeFailureRateMaturityBlock*/}
-        {/*  maturityScore={getMaturityScoreText(maturityScore)}*/}
-        {/*  maturityColor={maturityColor}*/}
-        {/*  iconOverlayBody={constants.MATURITY_TOOL_TIP[maturityScore]}*/}
-        {/*/>*/}
+        <JiraChangeFailureRateMaturityBlock
+          maturityScore={getMaturityScoreText(maturityScore)}
+          maturityColor={maturityColor}
+          iconOverlayBody={constants.MATURITY_TOOL_TIP[maturityScore]}
+          onClick={onRowSelect}
+        />
         <Row
           xl={4}
           lg={4}
           md={4}
-          className={`mb-2 ml-3 py-2 d-flex justify-content-center`}
+          className={`mb-2 ml-3 py-2 d-flex justify-content-center ${maturityColor}`}
         >
           {/*This would get removed when average merge time is fixed*/}
           <Col md={12}>
