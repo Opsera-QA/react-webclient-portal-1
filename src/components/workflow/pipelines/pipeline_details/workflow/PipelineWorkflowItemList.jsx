@@ -1,10 +1,10 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { SteppedLineTo } from "react-lineto";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { faPlusSquare, faCaretSquareDown, faCaretSquareUp, faCopy } from "@fortawesome/pro-light-svg-icons";
 import PipelineWorkflowItem from "./PipelineWorkflowItem";
-import StepValidationHelper from "./step_configuration/helpers/step-validation-helper";
+import { pipelineValidationHelper } from "components/workflow/pipelines/helpers/pipelineValidation.helper";
 import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
@@ -173,7 +173,7 @@ function PipelineWorkflowItemList(
     const item_id = item._id;
     let classString = "step-" + item_id;
 
-    const isStepValid = StepValidationHelper.isValidConfiguration(item.tool);
+    const isStepValid = pipelineValidationHelper.isPipelineStepToolValid(item.tool);
 
     let stepStatusClass = item.tool === undefined ? "workflow-step-warning"
       : item.tool.configuration === undefined ? "workflow-step-warning"
