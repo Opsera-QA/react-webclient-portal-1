@@ -35,7 +35,6 @@ customerPipelineTemplateCatalogActions.getCustomerCatalogPipelineTemplateById = 
     getAccessToken,
     cancelTokenSource,
     apiUrl,
-    urlParams,
   );
 };
 
