@@ -2,11 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import {CardColumns} from "react-bootstrap";
 import CardView from "components/common/card/CardView";
-import DashboardTemplateCard from "components/insights/marketplace/dashboards/DashboardTemplateCard";
 import InlineInformation from "components/common/status_notifications/inline/InlineInformation";
 import LoadingDialog from "components/common/status_notifications/loading";
+import CustomerDashboardTemplateCard
+  from "components/insights/marketplace/dashboards/templates/private/CustomerDashboardTemplateCard";
 
-function DashboardTemplateCardView({ dashboardTemplates, dashboardTemplateFilterModel, setDashboardTemplateFilterModel, loadData, isLoading }) {
+function CustomerPipelineTemplateCardView(
+  {
+    dashboardTemplates,
+    dashboardTemplateFilterModel,
+    setDashboardTemplateFilterModel,
+    loadData,
+    isLoading,
+  }) {
   const getCards = () => {
     if (isLoading) {
       return <LoadingDialog message={"Loading Dashboard Templates"} size={"sm"} />;
@@ -17,13 +25,7 @@ function DashboardTemplateCardView({ dashboardTemplates, dashboardTemplateFilter
         <div className={"py-5"}>
           <InlineInformation
             className={"mt-1 mb-3"}
-            message={
-              `
-                No Dashboard Templates Found. 
-                You can publish a dashboard to your private catalog when viewing its details. 
-                Opsera will be providing pre-made dashboards in the public catalog in the future. 
-              `
-            }
+            message={`No Customer Catalog Dashboard Templates Found.`}
           />
         </div>
       );
@@ -32,12 +34,10 @@ function DashboardTemplateCardView({ dashboardTemplates, dashboardTemplateFilter
     return (
       <CardColumns>
         {dashboardTemplates.map((dashboardTemplate, index) => {
-          let source = dashboardTemplateFilterModel?.getFilterValue("source");
           return (
-            <DashboardTemplateCard
+            <CustomerDashboardTemplateCard
               key={index}
               dashboardTemplate={dashboardTemplate}
-              catalog={source === "customer" ? "private" : "public"}
               loadData={loadData}
             />
          );
@@ -57,7 +57,7 @@ function DashboardTemplateCardView({ dashboardTemplates, dashboardTemplateFilter
   );
 }
 
-DashboardTemplateCardView.propTypes = {
+CustomerPipelineTemplateCardView.propTypes = {
   dashboardTemplates: PropTypes.array,
   dashboardTemplateFilterModel: PropTypes.object,
   setDashboardTemplateFilterModel: PropTypes.func,
@@ -65,4 +65,4 @@ DashboardTemplateCardView.propTypes = {
   isLoading: PropTypes.bool
 };
 
-export default DashboardTemplateCardView;
+export default CustomerPipelineTemplateCardView;

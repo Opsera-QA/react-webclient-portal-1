@@ -16,6 +16,7 @@ function NavigationTab(
     disabled,
     toolTipText,
     isBeta,
+    hideIfInactive,
   }) {
   const getTab = () => {
     return (
@@ -39,7 +40,7 @@ function NavigationTab(
     }
   };
 
-  if (visible === false) {
+  if (visible === false || (hideIfInactive === true && activeTab !== tabName)) {
     return null;
   }
 
@@ -76,6 +77,7 @@ NavigationTab.propTypes = {
   disabled: PropTypes.bool,
   toolTipText: PropTypes.string,
   isBeta: PropTypes.bool,
+  hideIfInactive: PropTypes.bool,
 };
 
 export default NavigationTab;

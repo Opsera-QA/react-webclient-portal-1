@@ -8,7 +8,7 @@ import {
   platformDashboardTemplateActions
 } from "components/insights/marketplace/dashboards/templates/platform/platformDashboardTemplate.actions";
 
-export default function DeletePlatformTemplateConfirmationOverlay(
+export default function DeletePlatformDashboardTemplateConfirmationOverlay(
   {
     dashboardId,
     loadData,
@@ -55,7 +55,7 @@ export default function DeletePlatformTemplateConfirmationOverlay(
   );
 }
 
-DeletePlatformTemplateConfirmationOverlay.propTypes = {
+DeletePlatformDashboardTemplateConfirmationOverlay.propTypes = {
   dashboardId: PropTypes.string,
   loadData: PropTypes.func,
 };
