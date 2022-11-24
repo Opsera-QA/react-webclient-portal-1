@@ -6,7 +6,7 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import { Row, Col } from "react-bootstrap";
 import CustomTable from "components/common/table/CustomTable";
 
-import { faCircleInfo, faTable } from "@fortawesome/pro-light-svg-icons";
+import { faCircleInfo, faTable, faPeople, faTags, faFolderGear } from "@fortawesome/pro-light-svg-icons";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
@@ -19,12 +19,13 @@ import TabPanelContainer from "../../../../../common/panels/general/TabPanelCont
 import { getMaturityScoreText } from "../../../charts-helpers";
 import JiraMeanTimeToResolutionInsightsDataBlock from "./JiraMeanTimeToResolutionInsightsDataBlock";
 import JiraMeanTimeToResolutionMaturityScoreInsightsMetadata from "./JiraMeanTimeToResolutionMaturityScoreInsightsMetaData";
+import FilterContainer from "../../../../../common/table/FilterContainer";
 
 function JiraMeanTimeToResolutionMaturityScoreInsights({
   kpiConfiguration,
   insightsData,
 }) {
-  const [activeHorizontalTab, setActiveHorizontalTab] = useState("one");
+  const [activeHorizontalTab, setActiveHorizontalTab] = useState("projects");
   const [activeVerticalTab, setActiveVerticalTab] = useState(null);
 
   const [tableFilterDto, setTableFilterDto] = useState(
@@ -104,37 +105,31 @@ function JiraMeanTimeToResolutionMaturityScoreInsights({
   };
   const getTable = () => {
     let data;
-    if (activeHorizontalTab == "one") {
+    if (activeHorizontalTab == "projects") {
       return (
-        <CustomTable
-          columns={projectColumns}
-          data={maturityScoreByProject}
-          noDataMessage={noDataMessage}
-          paginationDto={tableFilterDto}
-          setPaginationDto={setTableFilterDto}
+        <FilterContainer
+          title={"Maturity Score by Projects"}
+          body={getTableContainer(projectColumns, maturityScoreByProject)}
+          className={"px-2 pb-2"}
         />
       );
-    } else if (activeHorizontalTab == "two") {
+    } else if (activeHorizontalTab == "teams") {
       return (
-        <CustomTable
-          columns={teamNameColumns}
-          data={maturityScoreByTeam}
-          noDataMessage={noDataMessage}
-          paginationDto={tableFilterDto}
-          setPaginationDto={setTableFilterDto}
+        <FilterContainer
+          title={"Maturity Score by Teams"}
+          body={getTableContainer(teamNameColumns, maturityScoreByTeam)}
+          className={"px-2 pb-2"}
         />
       );
-    } else if (activeHorizontalTab == "three") {
+    } else if (activeHorizontalTab == "serviceCompoents") {
       return (
-        <CustomTable
-          columns={serviceComponentColumns}
-          data={maturityScoreByServiceComponent}
-          noDataMessage={noDataMessage}
-          paginationDto={tableFilterDto}
-          setPaginationDto={setTableFilterDto}
+        <FilterContainer
+          title={"Maturity Score by Service Components"}
+          body={getTableContainer(serviceComponentColumns, maturityScoreByServiceComponent)}
+          className={"px-2 pb-2"}
         />
       );
-    } else if (activeHorizontalTab == "four") {
+    } else if (activeHorizontalTab == "tags") {
       if (activeVerticalTab) {
         data = maturityScoreByTag.filter(
           (tag) => tag.name === activeVerticalTab,
@@ -145,15 +140,25 @@ function JiraMeanTimeToResolutionMaturityScoreInsights({
         );
       }
       return (
-        <CustomTable
-          columns={tagColumns}
-          data={data[0]?.values || []}
-          noDataMessage={noDataMessage}
-          paginationDto={tableFilterDto}
-          setPaginationDto={setTableFilterDto}
+        <FilterContainer
+          title={"Maturity Score by Tags"}
+          body={getTableContainer(tagColumns, data[0]?.values || [])}
+          className={"px-2 pb-2"}
         />
       );
     }
+  };
+
+  const getTableContainer = (columns, data) => {
+    return (
+      <CustomTable
+        columns={columns}
+        data={data}
+        noDataMessage={noDataMessage}
+        paginationDto={tableFilterDto}
+        setPaginationDto={setTableFilterDto}
+      />
+    );
   };
 
   const getBuildSummaryDetails = () => {
@@ -218,40 +223,40 @@ function JiraMeanTimeToResolutionMaturityScoreInsights({
 
   const getTabNav = () => {
     return (
-      <CustomTabContainer>
+      <CustomTabContainer styling={"metric-detail-tabs"}>
         <CustomTab
           activeTab={activeHorizontalTab}
           tabText={"Projects"}
           handleTabClick={handleHorizontalTabClick}
-          tabName={"one"}
+          tabName={"projects"}
           icon={faTable}
         />
         <CustomTab
           activeTab={activeHorizontalTab}
           tabText={"Teams"}
           handleTabClick={handleHorizontalTabClick}
-          tabName={"two"}
-          icon={faTable}
+          tabName={"teams"}
+          icon={faPeople}
         />
         <CustomTab
           activeTab={activeHorizontalTab}
           tabText={"Service Components"}
           handleTabClick={handleHorizontalTabClick}
-          tabName={"three"}
-          icon={faTable}
+          tabName={"serviceComponents"}
+          icon={faFolderGear}
         />
         <CustomTab
           activeTab={activeHorizontalTab}
           tabText={"Tags"}
           handleTabClick={handleHorizontalTabClick}
-          tabName={"four"}
-          icon={faTable}
+          tabName={"tags"}
+          icon={faTags}
         />
       </CustomTabContainer>
     );
   };
   const getTabBody = () => {
-    if (activeHorizontalTab == "four") {
+    if (activeHorizontalTab == "tags") {
       return (
         <TabAndViewContainer
           verticalTabContainer={getVerticalTabContainer()}
