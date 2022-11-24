@@ -4,12 +4,9 @@ import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlo
 import ThreeLineDataBlockBase from "../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import MetricScoreText from "../../../../common/metrics/score/MetricScoreText";
 
-function JiraMTTRDataBlock({ incidents,prevIncidents,trend, dataPoint, getIcon, topText, bottomText }) {
+function JiraMTTRDataBlock({ incidents, prevIncidents, trend, dataPoint, getIcon, topText, bottomText, onClick }) {
     return (
-        <DataBlockBoxContainer
-            showBorder={true}
-            className={"h-100"}
-        >
+        <DataBlockBoxContainer className={"h-100"} showBorder={true} onClickFunction={onClick}>
             <ThreeLineDataBlockBase
                 className={`${trend} p-2 h-100`}
                 topText={topText}
@@ -35,7 +32,16 @@ JiraMTTRDataBlock.propTypes = {
     getIcon: PropTypes.func,
     topText: PropTypes.string,
     bottomText: PropTypes.string,
+    onClick: PropTypes.func,
+    classes: PropTypes.string,
+    style: PropTypes.object
+};
 
+JiraMTTRDataBlock.defaultProps = {
+    getIcon: () => {},
+    onClick: () => {},
+    classes: "",
+    style: {}
 };
 
 export default JiraMTTRDataBlock;
