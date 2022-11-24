@@ -72,6 +72,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   PMD: "pmd",
   POWERSHELL: "powershell",
   PROVAR: "provar",
+  RUNTIME_SETTINGS: "runtime_settings",
   S3: "s3",
   SAP: "sap-cpq",
   SALESFORCE_CODE_ANALYZER: "salesforce-code-analyzer",
