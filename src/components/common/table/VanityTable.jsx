@@ -19,6 +19,7 @@ function VanityTable(
     setPaginationModel,
     tableHeight,
     loadingMessage,
+    error,
   }) {
   const getTableBody = () => {
     return (
@@ -48,6 +49,7 @@ function VanityTable(
       isLoading={isLoading}
       data={data}
       noDataMessage={noDataMessage}
+      error={error}
       tableComponent={getTableBody()}
       tableHeight={tableHeight}
     />
@@ -67,6 +69,7 @@ VanityTable.propTypes = {
   loadData: PropTypes.func,
   tableHeight: PropTypes.string,
   loadingMessage: PropTypes.string,
+  error: PropTypes.any,
 };
 
 export default VanityTable;
