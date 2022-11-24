@@ -21,6 +21,7 @@ const PackerTagSelectInput = ({
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -30,6 +31,7 @@ const PackerTagSelectInput = ({
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+    setErrorMessage("");
 
     loadData(source).catch((error) => {
       if (isMounted.current === true) {
@@ -64,7 +66,7 @@ const PackerTagSelectInput = ({
 
     } catch (error) {
       console.error(error);
-      toastContext.showServiceUnavailableDialog(error);
+      setErrorMessage(error);
     }
   };
 
@@ -79,6 +81,7 @@ const PackerTagSelectInput = ({
       busy={isLoading}
       placeholderText="Select Packer Version"
       disabled={disabled || isLoading || (!isLoading && (packerTags == null || packerTags.length === 0))}
+      error={errorMessage}
     />
   );
 };
