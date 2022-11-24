@@ -33,11 +33,11 @@ export const jiraMeanTimeToResolutionMetadata = {
       id: "issueProjectName"
     },
     {
-      label: "Id",
+      label: "ID",
       id: "issueKey",
     },
     {
-      label: "Created",
+      label: "Created Date",
       id: "issueCreated"
     },
     {
