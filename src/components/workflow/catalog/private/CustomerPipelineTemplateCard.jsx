@@ -1,105 +1,141 @@
-import React from "react";
 import PropTypes from "prop-types";
-import { Card } from "react-bootstrap";
-import { faClipboard, faTag, faUsers } from "@fortawesome/pro-light-svg-icons";
-import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
-import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
-import CustomBadge from "components/common/badges/CustomBadge";
-import ActionBarDeleteCustomerDashboardTemplateButton
-  from "components/insights/marketplace/dashboards/templates/private/ActionBarDeleteCustomerDashboardTemplateButton";
-import AddCustomerDashboardButton
-  from "components/insights/marketplace/dashboards/templates/private/AddCustomerDashboardButton";
-import AccessRoleDisplayerField from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayerField";
-import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
+import {useHistory} from "react-router-dom";
+import {Button, Card, Col, Row} from "react-bootstrap";
+import {faPlus, faSearch, faHexagon} from "@fortawesome/pro-light-svg-icons";
+import {format} from "date-fns";
+import React, {useEffect, useState} from "react";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import pipelineActions from "components/workflow/pipeline-actions";
+import IconBase from "components/common/icons/IconBase";
+import LoadingIcon from "components/common/icons/LoadingIcon";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
+import {pipelineCatalogHelper} from "components/workflow/catalog/pipelineCatalog.helper";
 
-// TODO: This needs to be rewritten, I only separated out the two types of dashboards but did not work on this
-export default function CustomerPipelineTemplateCard(
-  {
-    dashboardTemplate,
-    loadData,
-  }) {
-  const getOwnerNameField = () => {
-    if (dashboardTemplate?.owner_name) {
-      return (
-        <Card.Text>
-          <span className="text-muted">
-            {dashboardTemplate.owner_name}
-          </span>
-        </Card.Text>
-      );
+export default function CustomerPipelineTemplateCard({template, activeTemplates}) {
+  const history = useHistory();
+  const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+    isOpseraAdministrator,
+    accessRoleData,
+  } = useComponentStateReference();
+
+  useEffect(() => {
+    if (isOpseraAdministrator !== true && (template.readOnly || (template.singleUse === true && activeTemplates.includes(template?._id?.toString())))) {
+      setDisabled(true);
+    }
+  }, [template, activeTemplates]);
+
+  const showPipelineDetails = () => {
+    history.push(pipelineCatalogHelper.getDetailViewLink(template?._id));
+  };
+
+  const deployTemplate = async () => {
+    try {
+      setLoading(true);
+      const result = await pipelineActions.deployTemplateV2(getAccessToken, cancelTokenSource, template?._id);
+      const newPipelineId = result?.data?._id;
+
+      if (isMongoDbId(newPipelineId) === true) {
+        history.push(pipelineHelper.getDetailViewLink(newPipelineId));
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setLoading(false);
+      }
     }
   };
 
-  const getDescriptionField = () => {
-    if (dashboardTemplate?.description) {
-      return (
-        <Card.Text>
-          <span className="overflow-text">
-            {dashboardTemplate.description}
-          </span>
-        </Card.Text>
-      );
-    }
+  const getEnabledBody = () => {
+    return (
+      <Col className="col-6 d-flex flex-nowrap">
+        <TooltipWrapper innerText={"Create a new Pipeline from this template"}>
+          <Button variant="success" size="sm" className="mr-2 mt-2 text-nowrap"
+                  style={{minWidth: "128px", maxHeight: "34px"}} onClick={() => deployTemplate()}>            {loading ?
+            <><LoadingIcon className={"mr-1"}/>Working</> :
+            <><IconBase icon={faPlus} className={"d-xl-none mr-1"}/>Create Pipeline </>
+          }
+          </Button>
+        </TooltipWrapper>
+        <Button variant="outline-secondary" size="sm" className="mr-1 mt-2"
+                style={{minWidth: "128px", maxHeight: "34px"}} onClick={() => showPipelineDetails()}>
+          <IconBase icon={faSearch} className={"d-xl-none mr-1"}/>
+          Details
+        </Button>
+      </Col>
+    );
   };
 
-  const getTagsField = () => {
-    if (Array.isArray(dashboardTemplate?.tags) && dashboardTemplate.tags.length > 0) {
-      return (
-        <CustomBadgeContainer>
-          {dashboardTemplate.tags.map((tag, i) => {
-            return (
-              <CustomBadge
-                key={i}
-                className={"mr-2 mb-1"}
-                icon={faTag}
-                badgeText={`${capitalizeFirstLetter(tag?.type)}: ${tag.value}`}
-              />
-            );
-          })}
-        </CustomBadgeContainer>
-      );
+  const getBody = () => {
+    if (disabled) {
+      if (template?.readOnly) {
+        return (
+          <Col>
+            <div className="info-text">Not available for use at this time.</div>
+          </Col>
+        );
+      }
+
+      if (template?.singleUse) {
+        return (
+          <Col>
+            <div className="info-text">Already in use as a pipeline.</div>
+          </Col>
+        );
+      }
+
+      return;
     }
+
+    return getEnabledBody();
   };
 
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title>{dashboardTemplate.name}</Card.Title>
-        {getDescriptionField()}
-        {getOwnerNameField()}
-        <CustomBadgeContainer>
-          <CustomBadge icon={faUsers} className="mr-1 upper-case-first"
-                       badgeText={dashboardTemplate.attributes?.persona} />
-          <CustomBadge icon={faClipboard} className={"upper-case-first"} badgeText={dashboardTemplate.type} />
-        </CustomBadgeContainer>
-        {getTagsField()}
-        <div className={"d-flex justify-content-between mt-3"}>
-          <AddCustomerDashboardButton
-            dashboardTemplateId={dashboardTemplate?._id}
-          />
-          <div className={"d-flex"}>
-            <AccessRoleIconBase
-              owner={dashboardTemplate?.creator}
-              type={"Dashboard Template"}
-              roles={dashboardTemplate?.roles}
-              className={"mt-auto"}
-              tooltipPlacement={"top"}
-              iconSize={"lg"}
-            />
-            <ActionBarDeleteCustomerDashboardTemplateButton
-              loadData={loadData}
-              dashboardId={dashboardTemplate?._id}
-              ownerId={dashboardTemplate?.creator}
-              className={"mt-auto ml-3"}
-            />
+    <Card style={{height: "100%", opacity: template.readOnly ? ".5" : "1"}}>
+      <Card.Title className="pb-0">
+        <div className="d-flex catalog-card-title p-2">
+          <div>
+            {template.name}
+          </div>
+          <div className="ml-auto mr-1 text-muted small upper-case-first d-flex">
+            <IconBase icon={faHexagon} size={"lg"}/>
           </div>
         </div>
+      </Card.Title>
+      <Card.Body className="pt-0 pb-2">
+        <Row className="catalog-card-text">
+          <Col lg={12}>
+            <Card.Text className="mb-2">{template.description}</Card.Text>
+          </Col>
+        </Row>
+        <Row className="d-flex">
+          {getBody()}
+          <Col className="col-6 pr-1">
+            <div className="text-right">
+              <div><small><span className="text-muted mr-1 pb-1">Updated:</span><span
+                className="text-nowrap">{template.updatedAt && format(new Date(template.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</span></small>
+              </div>
+              <div><small><span className="text-muted mr-1 pb-1">Created:</span><span
+                className="">{template.updatedAt && format(new Date(template.createdAt), "yyyy-MM-dd', 'hh:mm a")}</span></small>
+              </div>
+            </div>
+          </Col>
+        </Row>
       </Card.Body>
     </Card>
   );
 }
 
 CustomerPipelineTemplateCard.propTypes = {
-  dashboardTemplate: PropTypes.object,
-  loadData: PropTypes.func,
+  template: PropTypes.object,
+  activeTemplates: PropTypes.array,
 };

@@ -11,7 +11,6 @@ import {
   faRedo,
   faInfoCircle, faRepeat1, faClock,
 } from "@fortawesome/pro-light-svg-icons";
-import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
 import CancelPipelineQueueConfirmationOverlay
   from "components/workflow/pipelines/pipeline_details/queuing/cancellation/CancelPipelineQueueConfirmationOverlay";
 import commonActions from "../../../common/common.actions";
@@ -45,12 +44,6 @@ function PipelineActionControls(
   const [isApprovalGate, setIsApprovalGate] = useState(false);
   const [statusMessage, setStatusMessage] = useState(false);
   const [statusMessageBody, setStatusMessageBody] = useState("");
-  const [freetrialWizardModal, setFreetrialWizardModal] = useState({
-    show: false,
-    pipelineId: "",
-    templateId: "",
-    pipelineOrientation: "",
-  });
   const [hasQueuedRequest, setHasQueuedRequest] = useState(false);
   const [queueingEnabled, setQueueingEnabled] = useState(false);
   const {
@@ -343,26 +336,6 @@ function PipelineActionControls(
     toastContext.clearOverlayPanel();
   };
 
-  const launchFreeTrialPipelineStartWizard = (pipelineId, pipelineOrientation, handleCloseFreeTrialDeploy) => {
-    setFreetrialWizardModal({
-      show: true,
-      pipelineId: pipelineId,
-      templateId: "",
-      pipelineOrientation: pipelineOrientation,
-    });
-  };
-
-  const handleCloseFreeTrialDeploy = () => {
-    setFreetrialWizardModal({
-      show: false,
-      pipelineId: "",
-      pipelineOrientation: "",
-      handleCloseFreeTrialDeploy: "",
-    });
-
-    delayRefresh();
-  };
-
   const handlePipelineWizardRequest = async (pipelineId, restartBln) => {
     handlePipelineStartWizardClose();
     if (restartBln) {
@@ -416,11 +389,13 @@ function PipelineActionControls(
     }
   };
 
+  // TODO: Put into a separate run button
   const handleRunPipelineClick = async (pipelineId) => {
     //check type of pipeline to determine if pre-flight wizard is required
     // is pipeline at the beginning or stopped midway or end of prior?
-    const pipelineType = typeof pipeline.type !== "undefined" && pipeline.type[0] !== undefined ? pipeline.type[0] : ""; //for now type is just the first entry
-    const pipelineTags = typeof pipeline.tags !== "undefined" && pipeline.tags !== undefined ? pipeline.tags : "";
+    const pipelineTypes = DataParsingHelper.parseArray(pipeline.type, []);
+    //for now type is just the first entry
+    const pipelineType = DataParsingHelper.parseString(pipelineTypes[0], "");
 
     let pipelineOrientation = "start";
     const stoppedStepId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.step_id");
@@ -435,9 +410,7 @@ function PipelineActionControls(
       }
     }
 
-    if (pipelineTags.some(el => el.value === "freetrial")) {
-      launchFreeTrialPipelineStartWizard(pipelineId, "", handleCloseFreeTrialDeploy);
-    } else if (pipelineType === "sfdc") {
+    if (pipelineType === "sfdc") {
       launchPipelineStartWizard(pipelineOrientation, pipelineType, pipelineId);
     }else if (pipelineType === "apigee") {
       launchApigeeRunAssistant(pipelineOrientation, pipelineId);
@@ -610,13 +583,6 @@ function PipelineActionControls(
 
         </div>
       </div>
-
-      {freetrialWizardModal.show &&
-      <FreeTrialPipelineWizard pipelineId={freetrialWizardModal.pipelineId}
-                               templateId={freetrialWizardModal.templateId}
-                               pipelineOrientation={freetrialWizardModal.pipelineOrientation}
-                               autoRun={true}
-                               handleClose={handleCloseFreeTrialDeploy} />}
     </>);
 }
 

@@ -2,7 +2,6 @@ import React, {useState, useEffect} from "react";
 import pipelineActions from "components/workflow/pipeline-actions";
 import PipelineCatalog from "components/workflow/catalog/PipelineCatalog";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import PipelineCatalogCustomTab from "components/workflow/catalog/PipelineCatalogCustomTab";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import CatalogHelpDocumentation from "components/common/help/documentation/pipelines/catalog/CatalogHelpDocumentation";
@@ -10,6 +9,7 @@ import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationB
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import CustomerPipelineTemplateCatalog from "components/workflow/catalog/private/CustomerPipelineTemplateCatalog";
+import CustomTab from "components/common/tabs/CustomTab";
 
 function PipelineCatalogLibrary() {
   const [activeTemplates, setActiveTemplates] = useState([]);
@@ -93,13 +93,13 @@ function PipelineCatalogLibrary() {
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <PipelineCatalogCustomTab
+        <CustomTab
           activeTab={activeTab}
           tabText={"Pipeline Marketplace"}
           handleTabClick={handleTabClick}
           tabName={"all"}
         />
-        <PipelineCatalogCustomTab
+        <CustomTab
           activeTab={activeTab}
           tabText={"Shared Templates"}
           handleTabClick={handleTabClick}
