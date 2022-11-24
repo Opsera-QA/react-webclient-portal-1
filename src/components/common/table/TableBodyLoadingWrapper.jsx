@@ -26,15 +26,15 @@ function TableBodyLoadingWrapper(
   if (error) {
     return (
       <CenteredContentWrapper minHeight={tableHeight}>
-        <span className={"error-text-alt"}>
+        <div className={"error-text-alt mx-3"}>
           <IconBase
             icon={faExclamationCircle}
             isLoading={isLoading}
-            className={"mr-2 mt-1"}
             iconSize={"xl"}
+            className={"mr-2"}
           />
           {errorHelpers.parseApiErrorForInfoText(undefined, error)}
-        </span>
+        </div>
       </CenteredContentWrapper>
     );
   }
@@ -42,15 +42,15 @@ function TableBodyLoadingWrapper(
   if (!Array.isArray(data) || data.length === 0) {
     return (
       <CenteredContentWrapper minHeight={tableHeight}>
-        <span className={"info-text-alt"}>
+        <div className={"info-text-alt mx-3"}>
           <IconBase
             iconSize={"xl"}
             icon={faTriangleExclamation}
             isLoading={isLoading}
-            className={"mr-2 mt-1"}
+            className={"mr-2"}
           />
           {getNoDataMessage()}
-        </span>
+        </div>
       </CenteredContentWrapper>
     );
   }
