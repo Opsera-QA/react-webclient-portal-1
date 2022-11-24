@@ -211,51 +211,51 @@ function JiraMeanTimeToResolution({
                 md={4}
                 className={`mb-2 ml-3 py-2 d-flex justify-content-center ${maturityColor}`}
             >
-              <Col md={12}>
-            <JiraMTTRDataBlock
-              incidents={dataBlock.totalIncidents}
-              prevIncidents={dataBlock.previousTotalIncidents}
-              dataPoint={numberOfIncidentsDataPoint}
-              trend={getReverseTrend(dataBlock.totalIncidents,dataBlock.previousTotalIncidents)}
-              getIcon = {getReverseTrendIcon}
-              topText={"Total Incidents"}
-              bottomText={"Prev Total Incidents"}
-              onClick={openPanel}
-            />
+              <Col md={12} className={"pl-2 pr-1"}>
+                <JiraMTTRDataBlock
+                  incidents={dataBlock.totalIncidents}
+                  prevIncidents={dataBlock.previousTotalIncidents}
+                  dataPoint={numberOfIncidentsDataPoint}
+                  trend={getReverseTrend(dataBlock.totalIncidents,dataBlock.previousTotalIncidents)}
+                  getIcon = {getReverseTrendIcon}
+                  topText={"Total Incidents"}
+                  bottomText={"Prev Total Incidents"}
+                  onClick={openPanel}
+                />
               </Col>
-            <Col md={12}>
-            <JiraMTTRDataBlock
-              incidents={dataBlock.totalResolvedIncidents}
-              prevIncidents={dataBlock.previousTotalResolvedIncidents}
-              dataPoint={numberOfIncidentsDataPoint}
-              trend={getTrend(dataBlock.totalResolvedIncidents,dataBlock.previousTotalResolvedIncidents)}
-              getIcon = {getTrendIcon}
-              topText={"Resolved Incidents"}
-              bottomText={"Prev Resolved Incidents"}
-            />
-                </Col>
-              <Col md={12}>
-            <DataPointVisibilityWrapper
-              dataPoint={averageMTTRDataBlockDataPoint}
-            >
-              <JiraMTTRDataBlock
-                incidents={Number(dataBlock?.overallMttrHours)}
-                prevIncidents={dataBlock.previousOverallMttrHours}
-                dataPoint={numberOfIncidentsDataPoint}
-                trend={getReverseTrend(dataBlock.overallMttrHours,dataBlock.previousOverallMttrHours)}
-                getIcon = {getReverseTrendIcon}
-                topText={"Average MTTR (Hours)"}
-                bottomText={"Prev Average MTTR"}
-              />
-            </DataPointVisibilityWrapper>
+              <Col md={12} className={"px-1"}>
+                <JiraMTTRDataBlock
+                  incidents={dataBlock.totalResolvedIncidents}
+                  prevIncidents={dataBlock.previousTotalResolvedIncidents}
+                  dataPoint={numberOfIncidentsDataPoint}
+                  trend={getTrend(dataBlock.totalResolvedIncidents,dataBlock.previousTotalResolvedIncidents)}
+                  getIcon = {getTrendIcon}
+                  topText={"Resolved Incidents"}
+                  bottomText={"Prev Resolved Incidents"}
+                />
               </Col>
-              <Col md={12}>
+              <Col md={12} className={"px-1"}>
+                <DataPointVisibilityWrapper
+                  dataPoint={averageMTTRDataBlockDataPoint}
+                >
+                  <JiraMTTRDataBlock
+                    incidents={Number(dataBlock?.overallMttrHours)}
+                    prevIncidents={dataBlock.previousOverallMttrHours}
+                    dataPoint={numberOfIncidentsDataPoint}
+                    trend={getReverseTrend(dataBlock.overallMttrHours,dataBlock.previousOverallMttrHours)}
+                    getIcon = {getReverseTrendIcon}
+                    topText={"Average MTTR (Hours)"}
+                    bottomText={"Prev Average MTTR"}
+                  />
+                </DataPointVisibilityWrapper>
+              </Col>
+              <Col md={12} className={"pl-1 pr-2"}>
                 <JiraMTTRDataBlock
                   incidents={dataBlock.maxMTTR}
                   prevIncidents={dataBlock.previousMaxMTTR}
                   dataPoint={numberOfIncidentsDataPoint}
                   trend={getReverseTrend(dataBlock.maxMTTR,dataBlock.previousMaxMTTR)}
-                  getIcon = {getReverseTrend}
+                  getIcon = {getReverseTrendIcon}
                   topText={"Max MTTR (Hours)"}
                   bottomText={"Prev Max MTTR"}
                 />

@@ -9,12 +9,11 @@ import { Row, Col } from "react-bootstrap";
 import CustomTable from "components/common/table/CustomTable";
 
 import {
-    faDraftingCompass,
     faCircleInfo,
-    faTimer,
-    faLightbulbOn,
-    faDatabase,
-    faTable
+    faTable,
+    faPeople,
+    faFolderGear,
+    faTags
 } from "@fortawesome/pro-light-svg-icons";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
@@ -29,6 +28,7 @@ import {getMaturityScoreText} from "../../../charts-helpers";
 import JiraChangeFailureRateMaturityScoreInsightsMetadata from "./JiraChangeFailureRateMaturityScoreInsightsMetaData";
 import JiraMeanTimeToResolutionInsightsDataBlock
     from "../../bar_chart/mean_time_to_resolution/JiraMeanTimeToResolutionInsightsDataBlock";
+import FilterContainer from "../../../../../common/table/FilterContainer";
 
 function JiraChangeFailureRateMaturityScoreInsights({ kpiConfiguration, insightsData }) {
     const [activeHorizontalTab, setActiveHorizontalTab] = useState("one");
@@ -111,32 +111,26 @@ function JiraChangeFailureRateMaturityScoreInsights({ kpiConfiguration, insights
         let data;
         if(activeHorizontalTab == "one") {
             return (
-                <CustomTable
-                    columns={projectColumns}
-                    data={maturityScoreByProject}
-                    noDataMessage={noDataMessage}
-                    paginationDto={tableFilterDto}
-                    setPaginationDto={setTableFilterDto}
+                <FilterContainer
+                    title={"Maturity Score by Projects"}
+                    body={getTableContainer(projectColumns, maturityScoreByProject)}
+                    className={"px-2 pb-2"}
                 />
             );
         } else if(activeHorizontalTab == "two") {
             return (
-                <CustomTable
-                    columns={teamNameColumns}
-                    data={maturityScoreByTeam}
-                    noDataMessage={noDataMessage}
-                    paginationDto={tableFilterDto}
-                    setPaginationDto={setTableFilterDto}
+                <FilterContainer
+                    title={"Maturity Score by Teams"}
+                    body={getTableContainer(teamNameColumns, maturityScoreByTeam)}
+                    className={"px-2 pb-2"}
                 />
             );
         } else if(activeHorizontalTab == "three") {
             return (
-                <CustomTable
-                    columns={serviceComponentColumns}
-                    data={maturityScoreByServiceComponent}
-                    noDataMessage={noDataMessage}
-                    paginationDto={tableFilterDto}
-                    setPaginationDto={setTableFilterDto}
+                <FilterContainer
+                    title={"Maturity Score by Service Components"}
+                    body={getTableContainer(serviceComponentColumns, maturityScoreByServiceComponent)}
+                    className={"px-2 pb-2"}
                 />
             );
         } else if(activeHorizontalTab == "four") {
@@ -146,18 +140,27 @@ function JiraChangeFailureRateMaturityScoreInsights({ kpiConfiguration, insights
                 data = maturityScoreByTag.filter(tag => tag.name === maturityScoreByTag[0].name);
             }
             return (
-                <CustomTable
-                    columns={tagColumns}
-                    data={data[0]?.values || []}
-                    noDataMessage={noDataMessage}
-                    paginationDto={tableFilterDto}
-                    setPaginationDto={setTableFilterDto}
+                <FilterContainer
+                    title={"Maturity Score by Tags"}
+                    body={getTableContainer(tagColumns, data[0]?.values || [])}
+                    className={"px-2 pb-2"}
                 />
             );
         }
 
     };
 
+    const getTableContainer = (columns, data) => {
+        return (
+            <CustomTable
+                columns={columns}
+                data={data}
+                noDataMessage={noDataMessage}
+                paginationDto={tableFilterDto}
+                setPaginationDto={setTableFilterDto}
+            />
+        );
+    };
     const getBuildSummaryDetails = () => {
         if (!insightsData) {
             return null;
@@ -214,7 +217,7 @@ function JiraChangeFailureRateMaturityScoreInsights({ kpiConfiguration, insights
 
     const getTabNav = () => {
         return (
-            <CustomTabContainer>
+            <CustomTabContainer styling={"metric-detail-tabs"}>
                 <CustomTab
                     activeTab={activeHorizontalTab}
                     tabText={"Projects"}
@@ -227,21 +230,21 @@ function JiraChangeFailureRateMaturityScoreInsights({ kpiConfiguration, insights
                     tabText={"Teams"}
                     handleTabClick={handleHorizontalTabClick}
                     tabName={"two"}
-                    icon={faTable}
+                    icon={faPeople}
                 />
                 <CustomTab
                     activeTab={activeHorizontalTab}
                     tabText={"Service Components"}
                     handleTabClick={handleHorizontalTabClick}
                     tabName={"three"}
-                    icon={faTable}
+                    icon={faFolderGear}
                 />
                 <CustomTab
                     activeTab={activeHorizontalTab}
                     tabText={"Tags"}
                     handleTabClick={handleHorizontalTabClick}
                     tabName={"four"}
-                    icon={faTable}
+                    icon={faTags}
                 />
             </CustomTabContainer>
         );
