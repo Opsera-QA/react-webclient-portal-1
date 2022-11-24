@@ -261,6 +261,13 @@ function JiraMeanTimeToResolution({
                 />
               </Col>
             </Row>
+            <Col md={12}>
+              <div className={"d-flex md-2"}>
+                <div className={"mr-4"}>
+                  <b>Minimum MTTR :</b> {dataBlock?.minMTTR || "NA"}
+                </div>
+              </div>
+            </Col>
             {dataPointHelpers.isDataPointVisible(mttrChartDataPoint) && (
               <Col
                 lg={12}
