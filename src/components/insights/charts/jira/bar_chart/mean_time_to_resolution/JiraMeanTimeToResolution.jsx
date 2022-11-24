@@ -254,8 +254,8 @@ function JiraMeanTimeToResolution({
                   incidents={dataBlock.maxMTTR}
                   prevIncidents={dataBlock.previousMaxMTTR}
                   dataPoint={numberOfIncidentsDataPoint}
-                  trend={getTrend(dataBlock.maxMTTR,dataBlock.previousMaxMTTR)}
-                  getIcon = {getTrendIcon}
+                  trend={getReverseTrend(dataBlock.maxMTTR,dataBlock.previousMaxMTTR)}
+                  getIcon = {getReverseTrend}
                   topText={"Max MTTR (Hours)"}
                   bottomText={"Prev Max MTTR"}
                 />
