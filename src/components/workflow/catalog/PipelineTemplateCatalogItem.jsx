@@ -37,7 +37,7 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
   }, [template, activeTemplates]);
 
   const showPipelineDetails = () => {
-    history.push(pipelineCatalogHelper.getDetailViewLink(template?._id));
+    // history.push(pipelineCatalogHelper.getDetailViewLink(template?._id));
     setShowModal(true);
   };
 
