@@ -31,7 +31,7 @@ import JiraMeanTimeToResolutionInsightsDataBlock
 import FilterContainer from "../../../../../common/table/FilterContainer";
 
 function JiraChangeFailureRateMaturityScoreInsights({ kpiConfiguration, insightsData }) {
-    const [activeHorizontalTab, setActiveHorizontalTab] = useState("one");
+    const [activeHorizontalTab, setActiveHorizontalTab] = useState("projects");
     const [activeVerticalTab, setActiveVerticalTab] = useState(null);
 
     const [tableFilterDto, setTableFilterDto] = useState(
@@ -109,7 +109,7 @@ function JiraChangeFailureRateMaturityScoreInsights({ kpiConfiguration, insights
     };
     const getTable = () => {
         let data;
-        if(activeHorizontalTab == "one") {
+        if(activeHorizontalTab == "projects") {
             return (
                 <FilterContainer
                     title={"Maturity Score by Projects"}
@@ -117,7 +117,7 @@ function JiraChangeFailureRateMaturityScoreInsights({ kpiConfiguration, insights
                     className={"px-2 pb-2"}
                 />
             );
-        } else if(activeHorizontalTab == "two") {
+        } else if(activeHorizontalTab == "teams") {
             return (
                 <FilterContainer
                     title={"Maturity Score by Teams"}
@@ -125,7 +125,7 @@ function JiraChangeFailureRateMaturityScoreInsights({ kpiConfiguration, insights
                     className={"px-2 pb-2"}
                 />
             );
-        } else if(activeHorizontalTab == "three") {
+        } else if(activeHorizontalTab == "serviceComponents") {
             return (
                 <FilterContainer
                     title={"Maturity Score by Service Components"}
@@ -133,7 +133,7 @@ function JiraChangeFailureRateMaturityScoreInsights({ kpiConfiguration, insights
                     className={"px-2 pb-2"}
                 />
             );
-        } else if(activeHorizontalTab == "four") {
+        } else if(activeHorizontalTab == "tags") {
             if(activeVerticalTab) {
                 data = maturityScoreByTag.filter(tag => tag.name === activeVerticalTab);
             } else {
@@ -222,35 +222,35 @@ function JiraChangeFailureRateMaturityScoreInsights({ kpiConfiguration, insights
                     activeTab={activeHorizontalTab}
                     tabText={"Projects"}
                     handleTabClick={handleHorizontalTabClick}
-                    tabName={"one"}
+                    tabName={"projects"}
                     icon={faTable}
                 />
                 <CustomTab
                     activeTab={activeHorizontalTab}
                     tabText={"Teams"}
                     handleTabClick={handleHorizontalTabClick}
-                    tabName={"two"}
+                    tabName={"teams"}
                     icon={faPeople}
                 />
                 <CustomTab
                     activeTab={activeHorizontalTab}
                     tabText={"Service Components"}
                     handleTabClick={handleHorizontalTabClick}
-                    tabName={"three"}
+                    tabName={"serviceComponents"}
                     icon={faFolderGear}
                 />
                 <CustomTab
                     activeTab={activeHorizontalTab}
                     tabText={"Tags"}
                     handleTabClick={handleHorizontalTabClick}
-                    tabName={"four"}
+                    tabName={"tags"}
                     icon={faTags}
                 />
             </CustomTabContainer>
         );
     };
     const getTabBody = () => {
-        if(activeHorizontalTab == "four") {
+        if(activeHorizontalTab == "tags") {
             return (
                 <TabAndViewContainer
                     verticalTabContainer={getVerticalTabContainer()}
