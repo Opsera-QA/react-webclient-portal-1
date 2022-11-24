@@ -156,3 +156,30 @@ awsActions.getVpcs = async (
     urlParams,
   );
 };
+
+awsActions.getS3BucketList = async (
+  getAccessToken,
+  cancelTokenSource,
+  toolId,
+) => {
+  const apiUrl = `/tools/${toolId}/aws/buckets`;
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+// TODO: Can we deprecate one of these?
+awsActions.getS3BucketListWithRegions = async (
+  getAccessToken,
+  cancelTokenSource,
+  toolId,
+) => {
+  const apiUrl = `/tools/${toolId}/aws/buckets`;
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
