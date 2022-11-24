@@ -12,6 +12,7 @@ function CustomTab({activeTab, tabName, tabText, handleTabClick, icon, visible, 
       return (
         <IconBase
           icon={icon}
+          className={"mr-2"}
         />
       );
     }
@@ -21,9 +22,7 @@ function CustomTab({activeTab, tabName, tabText, handleTabClick, icon, visible, 
     if (hasStringValue(tabText) === true && icon) {
       return (
         <span>
-          <span className={"mr-2"}>
-            {getIcon()}
-          </span>
+          {getIcon()}
           {tabText}
         </span>
       );

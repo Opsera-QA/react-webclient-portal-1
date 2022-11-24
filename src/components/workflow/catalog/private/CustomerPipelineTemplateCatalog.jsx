@@ -1,17 +1,17 @@
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import pipelineActions from "components/workflow/pipeline-actions";
 import Model from "core/data_model/model";
 import catalogFilterMetadata from "components/workflow/catalog/catalog-filter-metadata";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faOctagon} from "@fortawesome/pro-light-svg-icons";
 import InlinePipelineTypeFilter from "components/common/filters/admin/templates/pipeline_type/InlinePipelineTypeFilter";
-import PipelineCatalogCardView from "components/workflow/catalog/PipelineCatalogCardView";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {
   customerPipelineTemplateCatalogActions
 } from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
+import CustomerPipelineTemplateCardView from "components/workflow/catalog/private/CustomerPipelineTemplateCardView";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function CustomerPipelineTemplateCatalog({activeTemplates}) {
   const [workflowTemplates, setWorkflowTemplates] = useState([]);
@@ -20,7 +20,6 @@ export default function CustomerPipelineTemplateCatalog({activeTemplates}) {
   const {
     getAccessToken,
     cancelTokenSource,
-    accessRoleData,
     isMounted,
     toastContext,
   } = useComponentStateReference();
@@ -51,11 +50,15 @@ export default function CustomerPipelineTemplateCatalog({activeTemplates}) {
   };
 
   const loadWorkflowTemplates = async (filterModel = catalogFilterModel) => {
-    const response = await customerPipelineTemplateCatalogActions.getCustomerCatalogPipelineTemplates(getAccessToken, cancelTokenSource, filterModel);
-    const workflowTemplates = response?.data?.data;
+    const response = await customerPipelineTemplateCatalogActions.getCustomerCatalogPipelineTemplates(
+      getAccessToken,
+      cancelTokenSource,
+      filterModel,
+    );
+    const workflowTemplates = DataParsingHelper.parseArray(response?.data?.data, []);
 
-    if (isMounted?.current === true && Array.isArray(workflowTemplates)) {
-      setWorkflowTemplates(workflowTemplates);
+    if (isMounted?.current === true) {
+      setWorkflowTemplates([...workflowTemplates]);
       let newFilterDto = filterModel;
       newFilterDto.setData("totalCount", response?.data?.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
@@ -65,13 +68,12 @@ export default function CustomerPipelineTemplateCatalog({activeTemplates}) {
 
   const getPipelineCardView = () => {
     return (
-      <PipelineCatalogCardView
+      <CustomerPipelineTemplateCardView
         isLoading={isLoading}
         loadData={loadData}
-        data={workflowTemplates}
-        catalogFilterModel={catalogFilterModel}
-        setCatalogFilterModel={setCatalogFilterModel}
-        accessRoleData={accessRoleData}
+        pipelineTemplates={workflowTemplates}
+        pipelineTemplateFilterModel={catalogFilterModel}
+        setPipelineTemplateFilterModel={setCatalogFilterModel}
         activeTemplates={activeTemplates}
       />
     );
@@ -79,13 +81,22 @@ export default function CustomerPipelineTemplateCatalog({activeTemplates}) {
 
   const getDropdownFilters = () => {
     return (
-      <TagFilter filterDto={catalogFilterModel} setFilterDto={setCatalogFilterModel} />
+      <TagFilter
+        filterDto={catalogFilterModel}
+        setFilterDto={setCatalogFilterModel}
+      />
     );
   };
 
   const getInlineFilters = () => {
     return (
-      <InlinePipelineTypeFilter isLoading={isLoading} loadData={loadData} filterModel={catalogFilterModel} setFilterModel={setCatalogFilterModel} className={"mr-2"} />
+      <InlinePipelineTypeFilter
+        isLoading={isLoading}
+        loadData={loadData}
+        filterModel={catalogFilterModel}
+        setFilterModel={setCatalogFilterModel}
+        className={"mr-2"}
+      />
     );
   };
 
