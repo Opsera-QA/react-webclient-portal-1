@@ -40,6 +40,7 @@ function JiraMeanTimeToResolutionMaturityScoreInsights({
   const fields = JiraMeanTimeToResolutionMaturityScoreInsightsMetadata.fields;
   const maturityScoreByTag = insightsData?.maturityScoreByTag;
   const maturityScoreByTeam = insightsData?.maturityScoreByTeam;
+  const maturityScoreByProject = insightsData?.maturityScoreByProject;
   const maturityScoreByServiceComponent =
     insightsData?.maturityScoreByServiceComponent;
 
@@ -72,6 +73,15 @@ function JiraMeanTimeToResolutionMaturityScoreInsights({
     [],
   );
 
+  const projectColumns = useMemo(
+      () => [
+        getTableTextColumn(getField(fields, "issueProjectName")),
+        getTableTextColumn(getField(fields, "maturityScoreText")),
+        getTableTextColumn(getField(fields, "maturityScoreValue")),
+      ],
+      [],
+  );
+
   const getDateRange = () => {
     const date = getMetricFilterValue(kpiConfiguration?.filters, "date");
     return (
@@ -96,6 +106,16 @@ function JiraMeanTimeToResolutionMaturityScoreInsights({
     if (activeHorizontalTab == "one") {
       return (
         <CustomTable
+          columns={projectColumns}
+          data={maturityScoreByProject}
+          noDataMessage={noDataMessage}
+          paginationDto={tableFilterDto}
+          setPaginationDto={setTableFilterDto}
+        />
+      );
+    } else if (activeHorizontalTab == "two") {
+      return (
+        <CustomTable
           columns={teamNameColumns}
           data={maturityScoreByTeam}
           noDataMessage={noDataMessage}
@@ -103,7 +123,7 @@ function JiraMeanTimeToResolutionMaturityScoreInsights({
           setPaginationDto={setTableFilterDto}
         />
       );
-    } else if (activeHorizontalTab == "two") {
+    } else if (activeHorizontalTab == "three") {
       return (
         <CustomTable
           columns={serviceComponentColumns}
@@ -113,7 +133,7 @@ function JiraMeanTimeToResolutionMaturityScoreInsights({
           setPaginationDto={setTableFilterDto}
         />
       );
-    } else if (activeHorizontalTab == "three") {
+    } else if (activeHorizontalTab == "four") {
       if (activeVerticalTab) {
         data = maturityScoreByTag.filter(
           (tag) => tag.name === activeVerticalTab,
@@ -200,30 +220,37 @@ function JiraMeanTimeToResolutionMaturityScoreInsights({
       <CustomTabContainer>
         <CustomTab
           activeTab={activeHorizontalTab}
-          tabText={"Teams"}
+          tabText={"Projects"}
           handleTabClick={handleHorizontalTabClick}
           tabName={"one"}
           icon={faTable}
         />
         <CustomTab
           activeTab={activeHorizontalTab}
-          tabText={"Service Components"}
+          tabText={"Teams"}
           handleTabClick={handleHorizontalTabClick}
           tabName={"two"}
           icon={faTable}
         />
         <CustomTab
           activeTab={activeHorizontalTab}
-          tabText={"Tags"}
+          tabText={"Service Components"}
           handleTabClick={handleHorizontalTabClick}
           tabName={"three"}
+          icon={faTable}
+        />
+        <CustomTab
+          activeTab={activeHorizontalTab}
+          tabText={"Tags"}
+          handleTabClick={handleHorizontalTabClick}
+          tabName={"four"}
           icon={faTable}
         />
       </CustomTabContainer>
     );
   };
   const getTabBody = () => {
-    if (activeHorizontalTab == "three") {
+    if (activeHorizontalTab == "four") {
       return (
         <TabAndViewContainer
           verticalTabContainer={getVerticalTabContainer()}

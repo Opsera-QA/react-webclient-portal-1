@@ -7,6 +7,10 @@ const JiraMeanTimeToResolutionMaturityScoreInsightsMetadata = {
       id: "issueTeamName",
     },
     {
+      label: "Project Name",
+      id: "issueProjectName",
+    },
+    {
       label: "Service Component",
       id: "issueServiceComponent",
     },

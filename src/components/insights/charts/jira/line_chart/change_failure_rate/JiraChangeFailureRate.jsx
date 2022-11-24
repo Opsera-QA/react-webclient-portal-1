@@ -204,8 +204,8 @@ function JiraChangeFailureRate({
                 value={changeFailureRate}
                 prevValue={prevChangeFailureRate}
                 trend={getReverseTrend(
-                  changeFailureRate,
-                  prevChangeFailureRate
+                  metricData?.changeFailureRate,
+                  metricData?.prevChangeFailureRate
                 )}
                 getTrendIcon={getReverseTrendIcon}
                 topText={"Change Failure Rate"}
