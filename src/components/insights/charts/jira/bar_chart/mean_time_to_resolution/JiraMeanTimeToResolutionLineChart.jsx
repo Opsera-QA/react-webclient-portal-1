@@ -14,15 +14,32 @@ import {
 } from "components/common/helpers/metrics/metricTheme.helpers";
 import IconBase from "components/common/icons/IconBase";
 import ChartTooltip from "../../../ChartTooltip";
+import JiraMeanTimeToResolutionInsightsOverlay from "./JiraMeanTimeToResolutionInsightsOverlay";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 
 function JiraMeanTimeToResolutionLineChart({ metrics }) {
+  const toastContext = useContext(DialogToastContext);
   let mttrChartData = [
     {
       id: "MTTR",
       data: metrics,
     },
   ];
-  const getTrendChart = () => {
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
+
+  const onNodeSelect = (node) => {
+    toastContext.showOverlayPanel(
+      <JiraMeanTimeToResolutionInsightsOverlay
+        data={node?.data?.tickets || []}
+        closePanel={closePanel}
+      />
+    );
+  };
+
+    const getTrendChart = () => {
     return (
       <>
         <div
@@ -51,18 +68,20 @@ function JiraMeanTimeToResolutionLineChart({ metrics }) {
           {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY, 0)}
           valueScale={{ type: "symlog" }}
           data={mttrChartData}
+          onClick={(node) => onNodeSelect(node)}
           tooltip={({
             point: {
-              data: { Count, x, y,range },
+              data: { Count, x, y,range, maxMTTR },
             },
           }) => (
             <ChartTooltip
               titles={[
                 "Date",
-                "Mean Time to Resolution",
+                "Average MTTR",
+                "Max MTTR",
                 "Number of Incidents",
               ]}
-              values={[range, `${y} hours`, Count]}
+              values={[range, `${y} hours`,`${maxMTTR} hours`,  Count]}
               style={false}
             />
           )}
