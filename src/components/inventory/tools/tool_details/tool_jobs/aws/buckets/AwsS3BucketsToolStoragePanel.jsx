@@ -65,7 +65,7 @@ function AwsS3BucketsToolStoragePanel({ toolData }) {
       toolData={toolData}
       loadData={loadData}
       awsS3Buckets={awsS3Buckets}
-      // error={error}
+      error={error}
     />
   );
 }
