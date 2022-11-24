@@ -7,6 +7,7 @@ function JiraChangeFailureRateMaturityBlock({
   maturityScore,
   iconOverlayBody,
   maturityColor,
+  onClick
 }) {
   return (
     <MaturityScoreCardDataBlock
@@ -16,6 +17,7 @@ function JiraChangeFailureRateMaturityBlock({
       maturityScore={maturityScore}
       iconOverlayBody={iconOverlayBody}
       maturityColor={maturityColor}
+      onClick={onClick}
     />
   );
 }
@@ -24,6 +26,7 @@ JiraChangeFailureRateMaturityBlock.propTypes = {
   maturityScore: PropTypes.string,
   iconOverlayBody: PropTypes.string,
   maturityColor: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default JiraChangeFailureRateMaturityBlock;
