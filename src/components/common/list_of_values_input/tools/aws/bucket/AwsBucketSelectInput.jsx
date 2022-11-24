@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import awsActions from "components/inventory/tools/tool_details/tool_jobs/aws/aws-actions";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import {awsActions} from "components/common/list_of_values_input/tools/aws/aws.actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function AwsBucketSelectInput(
   {
@@ -67,12 +68,9 @@ function AwsBucketSelectInput(
   };
 
   const loadAwsStorageAccounts = async (cancelSource) => {
-    const response = await awsActions.getS3BucketList(s3ToolId, getAccessToken, cancelSource);
-    const buckets = response?.data?.message;
-
-    if (isMounted?.current === true && Array.isArray(buckets)) {
-      setAwsBuckets(buckets);
-    }
+    const response = await awsActions.getS3BucketList(getAccessToken, cancelSource, s3ToolId);
+    const buckets = DataParsingHelper.parseArray(response?.data?.data, []);
+    setAwsBuckets([...buckets]);
   };
 
   return (

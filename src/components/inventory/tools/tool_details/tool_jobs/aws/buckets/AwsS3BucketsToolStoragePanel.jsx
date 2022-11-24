@@ -3,8 +3,9 @@ import AwsS3BucketsTable from "./AwsS3BucketsTable";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import awsActions from "../aws-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import {awsActions} from "components/common/list_of_values_input/tools/aws/aws.actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 // TODO: Only pass in tool id
 function AwsS3BucketsToolStoragePanel({ toolData }) {
@@ -54,14 +55,10 @@ function AwsS3BucketsToolStoragePanel({ toolData }) {
     }
   };
 
-
   const loadBuckets = async (cancelSource = cancelTokenSource) => {
-    const response = await awsActions.getS3BucketList(toolData.getData("_id"), getAccessToken, cancelSource);
-    const buckets = response?.data?.message;
-
-    if (isMounted?.current === true && buckets) {
-      setAwsS3Buckets(buckets);
-    }
+    const response = await awsActions.getS3BucketList(getAccessToken, cancelSource, toolData.getData("_id"));
+    const buckets = DataParsingHelper.parseArray(response?.data?.data, []);
+    setAwsS3Buckets([...buckets]);
   };
 
   return (
