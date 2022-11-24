@@ -53,7 +53,7 @@ function JiraMeanTimeToResolutionLineChart({ metrics }) {
           data={mttrChartData}
           tooltip={({
             point: {
-              data: { Count, x, y },
+              data: { Count, x, y,range },
             },
           }) => (
             <ChartTooltip
@@ -62,7 +62,7 @@ function JiraMeanTimeToResolutionLineChart({ metrics }) {
                 "Mean Time to Resolution",
                 "Number of Incidents",
               ]}
-              values={[new Date(x).toDateString(), `${y} hours`, Count]}
+              values={[range, `${y} hours`, Count]}
               style={false}
             />
           )}

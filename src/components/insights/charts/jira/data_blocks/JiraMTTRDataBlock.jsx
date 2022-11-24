@@ -4,15 +4,14 @@ import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlo
 import ThreeLineDataBlockBase from "../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import MetricScoreText from "../../../../common/metrics/score/MetricScoreText";
 
-function JiraMTTRDataBlock({ incidents, prevIncidents, trend, dataPoint, getIcon, topText, bottomText, onClick, classes, style }) {
-    const finalBottomText = prevIncidents ? `${bottomText}: ${prevIncidents}` : bottomText;
+function JiraMTTRDataBlock({ incidents, prevIncidents, trend, dataPoint, getIcon, topText, bottomText, onClick }) {
     return (
         <DataBlockBoxContainer className={"h-100"} showBorder={true} onClickFunction={onClick}>
             <ThreeLineDataBlockBase
                 className={`${trend} p-2 h-100`}
                 topText={topText}
                 icon={getIcon(trend)}
-                bottomText={finalBottomText}
+                bottomText={`${bottomText}: ${prevIncidents}`}
                 middleText={
                     <MetricScoreText
                         score={incidents}
