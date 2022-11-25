@@ -53,6 +53,7 @@ const sfdcStepFormMetadata = {
         // isRequired: true
       },
       {
+        label: "Repository",
         id: "repoId",
       },    
       

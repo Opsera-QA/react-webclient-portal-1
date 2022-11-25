@@ -17,11 +17,11 @@ const gitScraperReposMetadata = {
       id: "keyValueMap",
     },
     {
-      label: "Git Repository ID",
+      label: "Repository",
       id: "repoId",
     },
     {
-      label: "Git Project ID",
+      label: "Repository",
       id: "projectId",
     },
     {

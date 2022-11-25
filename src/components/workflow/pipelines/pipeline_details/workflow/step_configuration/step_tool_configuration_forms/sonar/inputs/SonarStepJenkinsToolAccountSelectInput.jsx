@@ -13,6 +13,7 @@ function SonarStepJenkinsToolAccountSelectInput({model, setModel, disabled, clas
     newDataObject.setDefaultValue("gitUrl");
     newDataObject.setDefaultValue("sshUrl");
     newDataObject.setDefaultValue("repository");
+    newDataObject.setDefaultValue("repoId");
     newDataObject.setDefaultValue("workspace");
     newDataObject.setDefaultValue("workspaceName");
     newDataObject.setDefaultValue("branch");

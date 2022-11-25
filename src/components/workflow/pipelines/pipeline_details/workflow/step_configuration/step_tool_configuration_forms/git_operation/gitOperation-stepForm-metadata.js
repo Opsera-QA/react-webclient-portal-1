@@ -25,6 +25,13 @@ const gitOperationStepFormMetadata = {
       formText:" "
     },
     {
+      label: "Repository",
+      id: "repoId",
+      isRequired: true,
+      maxLength: 255,
+      formText:" "
+    },
+    {
       label: "Workspace/Project",
       id: "workspace",
       maxLength: 255,
@@ -85,7 +92,7 @@ const gitOperationStepFormMetadata = {
       label: "Select Reviewers",
       id: "prReviewers",
       maxLength: 10,
-      isRequiredFunction: (model) => { 
+      isRequiredFunction: (model) => {
         return model?.getData("action") === "pr-creation" && model?.getData("addReviewers") === true;
       },
     },

@@ -17,8 +17,7 @@ const sonarPipelineStepMetadata = {
       label: "Job Type",
       id: "job_type",
       isRequired: true,
-    },
-    {
+    },{
       label: "Project Key",
       id: "projectKey",
       maxLength: 150,
@@ -100,6 +99,16 @@ const sonarPipelineStepMetadata = {
         return (
           model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB
           && model?.getData("isScanArtifact") !== true
+        );
+      },
+    },
+    {
+      label: "Repository",
+      id: "repoId",
+      isRequiredFunction: (model) => {
+        return (
+            model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB
+            && model?.getData("isScanArtifact") !== true
         );
       },
     },

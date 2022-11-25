@@ -52,7 +52,9 @@ const commandLineStepFormMetadata = {
       isRequired: true
     },
     {
+      label: "Repository",
       id: "repoId",
+      isRequired: true
     },
     
     {
@@ -268,7 +270,9 @@ const commandLineStepFormMetadata = {
       id: "workspaceDeleteFlag",
     },
     {
+      label: "Repository",
       id: "repoId",
+      isRequired: true
     },
     
     {

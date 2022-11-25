@@ -36,7 +36,7 @@ function GitToGitSyncTaskRepositorySelectInput({model, setModel, disabled}) {
 
   return (
      <RepositorySelectInput
-       fieldName={"repository"}
+       fieldName={"projectId"}
        service={model?.getData("service")}
        gitToolId={model?.getData("gitToolId")}
        workspace={model?.getData("workspace")}

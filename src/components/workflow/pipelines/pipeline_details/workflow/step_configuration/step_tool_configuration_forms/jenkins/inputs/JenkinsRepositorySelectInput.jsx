@@ -57,18 +57,18 @@ function JenkinsRepositorySelectInput({dataObject, setDataObject, disabled, gitT
   }
 
   return (
-     <RepositorySelectInput
-       fieldName={"repository"}
-       service={dataObject.getData("service")}
-       gitToolId={dataObject.getData("gitToolId")}
-       workspace={dataObject.getData("workspace")}
-       validateSavedData={true}
-       dataObject={dataObject}
-       setDataObject={setDataObject}
-       setDataFunction={setDataFunction}
-       disabled={disabled}
-       clearDataFunction={clearDataFunction}
-     />
+    <RepositorySelectInput
+      fieldName={"repoId"}
+      service={dataObject.getData("service")}
+      gitToolId={dataObject.getData("gitToolId")}
+      workspace={dataObject.getData("workspace")}
+      validateSavedData={true}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={setDataFunction}
+      disabled={disabled}
+      clearDataFunction={clearDataFunction}
+    />
   );
 }
 

@@ -66,7 +66,7 @@ const azureCliStepFormMetadata = {
       },
     },    
     {
-      label: "Git Repository ID",
+      label: "Repository",
       id: "gitRepositoryID",
       isRequiredFunction: (model) => {
         return model?.getData("scriptType") === "package";

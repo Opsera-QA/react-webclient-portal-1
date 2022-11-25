@@ -48,7 +48,7 @@ const nunitStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Repo ID",
+      label: "Repository",
       id: "repoId",
     },
     {

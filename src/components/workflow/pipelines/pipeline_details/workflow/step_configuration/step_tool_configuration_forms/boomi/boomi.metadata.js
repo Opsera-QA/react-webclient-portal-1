@@ -11,7 +11,7 @@ const boomiMetadata = {
             id: "gitToolId",
         },
         {
-            label: "Repository ID",
+            label: "Repository",
             id: "repoId",
         },
         {
@@ -110,7 +110,10 @@ const boomiMetadata = {
         environmentName: "",
         environmentId: "",
         targetEnvironmentName: "",
-        targetEnvironmentId: ""
+        targetEnvironmentId: "",
+        sourceEnvironmentName: "",
+        sourceEnvironmentId: "",
+        fetchComponentsFromGit: false,
     }
 };
 

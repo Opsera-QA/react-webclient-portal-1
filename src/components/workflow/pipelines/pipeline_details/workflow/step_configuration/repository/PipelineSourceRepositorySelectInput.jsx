@@ -50,7 +50,7 @@ PipelineSourceRepositorySelectInput.propTypes = {
 };
 
 PipelineSourceRepositorySelectInput.defaultProps = {
-  fieldName: "repository",
+  fieldName: "repoId",
 };
 
 export default PipelineSourceRepositorySelectInput;
