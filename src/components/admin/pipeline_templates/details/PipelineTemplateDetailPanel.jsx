@@ -6,6 +6,10 @@ import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import PipelineTemplateSummaryPanel from "components/admin/pipeline_templates/details/PipelineTemplateSummaryPanel";
 import PipelineTemplateEditorPanel from "components/admin/pipeline_templates/details/PipelineTemplateEditorPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
+import PipelineTemplatePlanOverviewContainer
+  from "components/workflow/catalog/overview/PipelineTemplatePlanOverviewContainer";
+import CustomTab from "components/common/tabs/CustomTab";
+import {faFileAlt} from "@fortawesome/pro-light-svg-icons";
 
 function PipelineTemplateDetailPanel({ templateData, setTemplateData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -23,6 +27,13 @@ function PipelineTemplateDetailPanel({ templateData, setTemplateData }) {
     return (
       <CustomTabContainer>
         <SummaryTab activeTab={activeTab} handleTabClick={handleTabClick} />
+        <CustomTab
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          icon={faFileAlt}
+          tabText={"Pipeline Configuration Details"}
+          tabName={"details"}
+        />
         <SettingsTab activeTab={activeTab} handleTabClick={handleTabClick} />
       </CustomTabContainer>
     );
@@ -32,6 +43,13 @@ function PipelineTemplateDetailPanel({ templateData, setTemplateData }) {
     switch (activeTab) {
       case "summary":
         return <PipelineTemplateSummaryPanel templateData={templateData} setActiveTab={setActiveTab} setTemplateData={setTemplateData} />;
+      case "details":
+        return (
+          <PipelineTemplatePlanOverviewContainer
+            pipelineTemplateModel={templateData}
+            className={"mt-1"}
+          />
+        );
       case "settings":
         return (
           <PipelineTemplateEditorPanel
