@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineActionControlButtonBase
   from "components/workflow/pipelines/action_controls/PipelineActionControlButtonBase";
-import { faFlag } from "@fortawesome/pro-light-svg-icons";
+import { faStopCircle } from "@fortawesome/pro-light-svg-icons";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import {buttonLabelHelper} from "temp-library-components/helpers/label/button/buttonLabel.helper";
 
@@ -22,6 +22,7 @@ export default function PipelineStopButton(
     return null;
   }
 
+  // TODO: Make the run button handle these different states for the run button
   return (
     <>
       <PipelineActionControlButtonBase
@@ -32,7 +33,7 @@ export default function PipelineStopButton(
         variant={"outline-dark"}
       />
       <PipelineActionControlButtonBase
-        icon={faFlag}
+        icon={faStopCircle}
         normalText={"Stop"}
         buttonState={pipelineIsStopping === true ? buttonLabelHelper.BUTTON_STATES.BUSY : undefined}
         onClickFunction={handleStopWorkflowClick}

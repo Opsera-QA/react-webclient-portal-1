@@ -440,14 +440,23 @@ function PipelineActionControls(
     // TODO: Validate value
     if (statusMessage) {
       return (
-        <div className="warning-theme warning-text text-left">
+        <div
+          className={"warning-text-alt text-left"}
+          style={{cursor: "help"}}
+        >
           <OverlayTrigger
             placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: statusMessageBody })}>
-            <IconBase icon={faInfoCircle} className={"mr-1"} style={{ cursor: "help" }} />
+            delay={{show: 250, hide: 400}}
+            overlay={renderTooltip({message: statusMessageBody})}>
+            <div>
+              <IconBase
+                icon={faInfoCircle}
+                className={"mr-1"}
+                iconSize={"lg"}
+              />
+              {statusMessage}
+            </div>
           </OverlayTrigger>
-          {statusMessage}
         </div>
       );
     }
