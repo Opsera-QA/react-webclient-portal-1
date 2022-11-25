@@ -16,6 +16,7 @@ export default function PipelineUserApprovalButton(
   {
     pipeline,
     loadPipelineFunction,
+    workflowStatus,
   }) {
   const {
     toastContext,
@@ -43,7 +44,7 @@ export default function PipelineUserApprovalButton(
     );
   };
 
-  if (isPaused !== true) {
+  if (isPaused !== true || workflowStatus !== "paused") {
     return null;
   }
 
@@ -74,4 +75,5 @@ export default function PipelineUserApprovalButton(
 PipelineUserApprovalButton.propTypes = {
   pipeline: PropTypes.object,
   loadPipelineFunction: PropTypes.func,
+  workflowStatus: PropTypes.string,
 };
