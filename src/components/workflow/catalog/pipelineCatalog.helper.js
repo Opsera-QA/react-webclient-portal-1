@@ -7,10 +7,10 @@ pipelineCatalogHelper.getManagementScreenLink = () => {
   return `/workflow/catalog/library`;
 };
 
-pipelineCatalogHelper.getDetailViewLink = (templateId) => {
+pipelineCatalogHelper.getCustomerPipelineTemplateDetailViewLink = (templateId) => {
   if (isMongoDbId(templateId) !== true) {
     return null;
   }
 
-  return `/workflow/catalog/library/${templateId}`;
+  return `/workflow/catalog/customer/${templateId}`;
 };

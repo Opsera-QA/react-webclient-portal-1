@@ -13,7 +13,11 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import {pipelineCatalogHelper} from "components/workflow/catalog/pipelineCatalog.helper";
 
-export default function CustomerPipelineTemplateCard({template, activeTemplates}) {
+export default function CustomerPipelineTemplateCard(
+  {
+    template,
+    activeTemplates,
+  }) {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
@@ -22,7 +26,6 @@ export default function CustomerPipelineTemplateCard({template, activeTemplates}
     isMounted,
     getAccessToken,
     isOpseraAdministrator,
-    accessRoleData,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -32,7 +35,7 @@ export default function CustomerPipelineTemplateCard({template, activeTemplates}
   }, [template, activeTemplates]);
 
   const showPipelineDetails = () => {
-    history.push(pipelineCatalogHelper.getDetailViewLink(template?._id));
+    history.push(pipelineCatalogHelper.getCustomerPipelineTemplateDetailViewLink(template?._id));
   };
 
   const deployTemplate = async () => {

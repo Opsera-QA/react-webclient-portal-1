@@ -41,7 +41,16 @@ function WorkflowSubNavigationBar({currentTab}) {
         activeTab={currentTab}
         tabText={"Pipeline Template Viewer"}
         handleTabClick={handleTabClick}
-        tabName={"pipelineTemplateViewer"}
+        tabName={"customerPipelineTemplateDetailView"}
+        toolTipText={"Pipeline Template Viewer"}
+        icon={faHexagon}
+        hideIfInactive={true}
+      />
+      <NavigationTab
+        activeTab={currentTab}
+        tabText={"Pipeline Template Viewer"}
+        handleTabClick={handleTabClick}
+        tabName={"platformPipelineTemplateDetailView"}
         toolTipText={"Pipeline Template Viewer"}
         icon={faHexagon}
         hideIfInactive={true}

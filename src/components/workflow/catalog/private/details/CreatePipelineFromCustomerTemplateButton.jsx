@@ -8,7 +8,7 @@ import {
   customerDashboardTemplateCatalogActions
 } from "components/insights/marketplace/dashboards/templates/private/customerDashboardTemplateCatalog.actions";
 
-export default function AddCustomerPipelineButton(
+export default function CreatePipelineFromCustomerTemplateButton(
   {
     disabled,
     dashboardTemplateId,
@@ -59,7 +59,7 @@ export default function AddCustomerPipelineButton(
   );
 }
 
-AddCustomerPipelineButton.propTypes = {
+CreatePipelineFromCustomerTemplateButton.propTypes = {
   dashboardTemplateId: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,
