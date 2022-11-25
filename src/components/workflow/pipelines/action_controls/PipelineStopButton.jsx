@@ -23,14 +23,22 @@ export default function PipelineStopButton(
   }
 
   return (
-    <PipelineActionControlButtonBase
-      icon={faFlag}
-      normalText={"Stop"}
-      buttonState={pipelineIsStopping === true ? buttonLabelHelper.BUTTON_STATES.BUSY : undefined}
-      onClickFunction={handleStopWorkflowClick}
-      disabled={PipelineRoleHelper.canStopPipeline(userData, pipeline) !== true}
-      variant={"danger"}
-    />
+    <>
+      <PipelineActionControlButtonBase
+        normalText={"Running"}
+        buttonState={buttonLabelHelper.BUTTON_STATES.BUSY}
+        disabled={true}
+        variant={"outline-dark"}
+      />
+      <PipelineActionControlButtonBase
+        icon={faFlag}
+        normalText={"Stop"}
+        buttonState={pipelineIsStopping === true ? buttonLabelHelper.BUTTON_STATES.BUSY : undefined}
+        onClickFunction={handleStopWorkflowClick}
+        disabled={PipelineRoleHelper.canStopPipeline(userData, pipeline) !== true}
+        variant={"danger"}
+      />
+    </>
   );
 }
 
