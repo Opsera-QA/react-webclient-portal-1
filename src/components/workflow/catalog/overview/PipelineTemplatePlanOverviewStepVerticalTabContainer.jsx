@@ -3,15 +3,14 @@ import PropTypes from "prop-types";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 
-// TODO: Rename Vertical Tab Container
-function PipelineOverviewStepTree(
+export default function PipelineTemplatePlanOverviewStepVerticalTabContainer(
   {
-    pipelineSteps,
+    plan,
   }) {
   const getPipelineStepTabs = () => {
-    if (Array.isArray(pipelineSteps) && pipelineSteps.length > 0) {
+    if (Array.isArray(plan) && plan.length > 0) {
       return (
-        pipelineSteps.map((pipelineStep, index) => (
+        plan.map((pipelineStep, index) => (
           <VanitySetVerticalTab
             key={index + 1}
             tabText={`Step ${index + 1}: ${pipelineStep?.name}`}
@@ -27,18 +26,11 @@ function PipelineOverviewStepTree(
     <VanitySetVerticalTabContainer
       title={`Pipeline Steps`}
     >
-      <VanitySetVerticalTab
-        tabText={"Overview"}
-        tabName={0}
-      />
       {getPipelineStepTabs()}
     </VanitySetVerticalTabContainer>
   );
 }
 
-
-PipelineOverviewStepTree.propTypes = {
-  pipelineSteps: PropTypes.array,
+PipelineTemplatePlanOverviewStepVerticalTabContainer.propTypes = {
+  plan: PropTypes.array,
 };
-
-export default PipelineOverviewStepTree;
