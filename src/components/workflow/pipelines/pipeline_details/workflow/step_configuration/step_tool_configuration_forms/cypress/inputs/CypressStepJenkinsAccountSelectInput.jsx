@@ -15,6 +15,7 @@ function CypressStepJenkinsAccountSelectInput({model, setModel, disabled}) {
     newModel.setData("repository", "");
     newModel.setData("branch", "");
     newModel.setData("projectId", "");
+    newModel.setData("repoId", "");
     newModel.setData("defaultBranch", "");
     newModel.setData("workspace", "");
     newModel.setData("workspaceName", "");

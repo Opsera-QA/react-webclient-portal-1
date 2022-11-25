@@ -23,7 +23,7 @@ const provarStepFormMetadata = {
             isRequired: true
         },
         {
-            label: "Repository ID",
+            label: "Repository",
             id: "repoId",
         },
         {

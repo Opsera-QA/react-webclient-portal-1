@@ -56,6 +56,15 @@ const InformaticaIdqStepFormMetadata = {
       formText:" "
     },
     {
+      label: "Repository",
+      id: "repoId",
+      isRequiredFunction: (model) => {
+        return model?.getData("jobType") === "export";
+      },
+      maxLength: 255,
+      formText:" "
+    },
+    {
       label: "Workspace/Project",
       id: "workspace",
       maxLength: 255,
@@ -118,6 +127,7 @@ const InformaticaIdqStepFormMetadata = {
     service: "",
     gitToolId : "",
     repository: "",
+    repoId: "",
     workspace: "",
     gitBranch: "",
     sourceProject: "",

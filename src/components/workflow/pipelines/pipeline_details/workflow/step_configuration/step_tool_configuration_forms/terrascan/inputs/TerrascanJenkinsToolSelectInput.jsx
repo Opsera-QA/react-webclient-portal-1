@@ -17,6 +17,7 @@ function TerrascanJenkinsToolSelectInput({model, setModel, disabled}) {
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("gitCredential", "");
     newDataObject.setData("repository", "");
+    newDataObject.setData("repoId", "");
     newDataObject.setData("gitBranch", "");
     newDataObject.setData("workspace", "");
     newDataObject.setData("autoScaleEnable", selectedOption?.configuration?.autoScaleEnable === true);

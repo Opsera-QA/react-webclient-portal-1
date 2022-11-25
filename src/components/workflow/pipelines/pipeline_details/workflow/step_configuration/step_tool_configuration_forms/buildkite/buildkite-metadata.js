@@ -17,7 +17,7 @@ const buildkiteMetadata = {
       formText: "Selected SCM info must match the data configured in the buildkite pipeline"
     },
     {
-      label: "Repository ID",
+      label: "Repository",
       id: "repoId",
       formText: "Selected SCM info must match the data configured in the buildkite pipeline"
     },

@@ -34,7 +34,7 @@ const PackerStepFormMetadata = {
       id: "gitFilePath",      
     },    
     {
-      label: "Git Repository ID",
+      label: "Repository",
       id: "gitRepositoryID",
     },
     {
@@ -134,7 +134,7 @@ const PackerStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Git Repository ID",
+      label: "Repository",
       id: "gitRepositoryID",
     },
     {

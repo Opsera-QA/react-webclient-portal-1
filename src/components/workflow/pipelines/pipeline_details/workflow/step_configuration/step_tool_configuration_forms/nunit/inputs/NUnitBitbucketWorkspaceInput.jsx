@@ -7,6 +7,8 @@ function NUnitBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
     let newDataObject = {...dataObject};
     newDataObject.setData("workspace", selectedOption);
     newDataObject.setData("workspaceName", selectedOption.name);
+    newDataObject.setData("repoId", "");
+    newDataObject.setData("gitBranch", "");
     setDataObject({...newDataObject});
   };
 

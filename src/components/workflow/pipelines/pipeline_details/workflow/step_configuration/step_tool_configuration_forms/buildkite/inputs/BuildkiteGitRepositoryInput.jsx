@@ -5,6 +5,7 @@ import RepositorySelectInput from "components/common/list_of_values_input/tools/
 function BuildkiteGitRepositoryInput({dataObject, setDataObject, disabled}) {
   const setRepository = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
+
     const repoId = selectedOption?._id || selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     const sshUrl = selectedOption?.sshUrl || selectedOption?.configuration?.sshUrl || "";
@@ -12,14 +13,14 @@ function BuildkiteGitRepositoryInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("repository", selectedOption.name);
     newDataObject.setData("repoId", repoId);
     newDataObject.setData("projectId", repoId);
-    newDataObject.setData("sshUrl", sshUrl);
+    newDataObject.setData("sshUrl", sshUrl || "");
     newDataObject.setData("gitUrl", gitUrl);
     setDataObject({...newDataObject});
   };
 
   return (
      <RepositorySelectInput
-       fieldName={"repository"}
+       fieldName={"repoId"}
        service={dataObject.getData("service")}
        gitToolId={dataObject.getData("gitToolId")}
        workspace={dataObject.getData("workspace")}

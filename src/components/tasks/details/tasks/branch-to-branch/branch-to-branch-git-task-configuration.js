@@ -24,9 +24,9 @@ const branchToBranchGitTaskConfigurationMetadata = {
       regexDefinitionName: "mongoId",
     },        
     {
+      label: "Repository",
       id: "projectId",
       maxLength: 100,
-      regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
       id: "gitUrl",

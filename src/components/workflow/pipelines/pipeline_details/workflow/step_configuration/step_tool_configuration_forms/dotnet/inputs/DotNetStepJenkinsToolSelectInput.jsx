@@ -17,20 +17,21 @@ function DotNetStepJenkinsToolSelectInput({dataObject, setDataObject, disabled})
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("gitCredential", "");
     newDataObject.setData("repository", "");
+    newDataObject.setData("repoId", "");
     newDataObject.setData("gitBranch", "");
     newDataObject.setData("workspace", "");
     setDataObject({...newDataObject});
   };
 
   return (
-    <RoleRestrictedJenkinsToolSelectInput
-      fieldName={"toolConfigId"}
-      configurationRequired={true}
-      model={dataObject}
-      setModel={setDataObject}
-      setDataFunction={setDataFunction}
-      disabled={disabled}
-    />
+     <RoleRestrictedJenkinsToolSelectInput
+       fieldName={"toolConfigId"}
+       configurationRequired={true}
+       model={dataObject}
+       setModel={setDataObject}
+       setDataFunction={setDataFunction}
+       disabled={disabled}
+     />
   );
 }
 

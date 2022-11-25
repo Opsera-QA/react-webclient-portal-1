@@ -30,7 +30,7 @@ const BlackDuckStepFormMetadata = {
       isRequired: true
     },    
     {
-      label: "GIT Repository ID",
+      label: "Repository",
       id: "gitRepositoryID",
     },
     {

@@ -28,13 +28,18 @@ const jenkinsPipelineStepConfigurationMetadata = {
       // isRequired: true
     },
     {
-      label: "Git Account",
+      label: "Account",
       id: "gitCredential",
       // isRequired: true
     },
     {
       label: "Workspace",
       id: "workspace",
+      // isRequired: true
+    },
+    {
+      label: "Repository",
+      id: "repoId",
       // isRequired: true
     },
     {
@@ -313,7 +318,8 @@ const jenkinsPipelineStepConfigurationMetadata = {
     useBuildStepResource: false,
     buildStepId: "",
     commands: "",
-    environmentVariables: [],    
+    environmentVariables: [],
+    enableQuickDeploy: false
   }
 };
 
