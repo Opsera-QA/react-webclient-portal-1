@@ -26,6 +26,7 @@ import { toolIdentifierConstants } from "components/admin/tools/identifiers/tool
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PipelineStartWizard from "components/workflow/pipelines/pipeline_details/PipelineStartWizard";
 import PipelineUserApprovalButton from "components/workflow/pipelines/action_controls/PipelineUserApprovalButton";
+import PipelineStopButton from "components/workflow/pipelines/action_controls/PipelineStopButton";
 
 const delayCheckInterval = 15000;
 let internalRefreshCount = 1;
@@ -435,48 +436,55 @@ function PipelineActionControls(
     }
   };
 
+  const getWarningMessage = () => {
+    // TODO: Validate value
+    if (statusMessage) {
+      return (
+        <div
+          className={"warning-text-alt text-left"}
+          style={{cursor: "help"}}
+        >
+          <OverlayTrigger
+            placement="top"
+            delay={{show: 250, hide: 400}}
+            overlay={renderTooltip({message: statusMessageBody})}>
+            <div>
+              <IconBase
+                icon={faInfoCircle}
+                className={"mr-1"}
+                iconSize={"lg"}
+              />
+              {statusMessage}
+            </div>
+          </OverlayTrigger>
+        </div>
+      );
+    }
+  };
+
   // TODO: Make base button components for these in the future
   //  and wire up the functions inside those components to clean up PipelineActionControls
   return (
     <>
       <div className="d-flex flex-fill">
 
-        {statusMessage &&
-        <div className="warning-theme warning-text text-left">
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: statusMessageBody })}>
-            <IconBase icon={faInfoCircle} className={"mr-1"} style={{ cursor: "help" }} />
-          </OverlayTrigger>
-          {statusMessage}
-        </div>
-        }
+        {getWarningMessage()}
         <div className="flex-fill p-2"></div>
         <div className="text-right btn-group btn-group-sized">
           {workflowStatus === "running" &&
-          <>
-            <Button variant="outline-dark"
-                    className="btn-default"
-                    size="sm"
-                    disabled>
-              <IconBase isLoading={true} className={"mr-1"} />Running</Button>
-            <Button variant="danger"
-                    className="btn-default"
-                    size="sm"
-                    onClick={() => {
-                      handleStopWorkflowClick(pipeline._id);
-                    }}
-                    disabled={PipelineRoleHelper.canStopPipeline(userData, pipeline) !== true}>
-                <IconBase isLoading={stopPipeline} icon={faStopCircle} className="mr-1" />
-              Stop
-            </Button>
-          </>}
+            <PipelineStopButton
+              pipeline={pipeline}
+              workflowStatus={workflowStatus}
+              handleStopWorkflowClick={handleStopWorkflowClick}
+              pipelineIsStopping={stopPipeline}
+            />
+          }
 
           {workflowStatus === "paused" &&
             <PipelineUserApprovalButton
               loadPipelineFunction={fetchData}
               pipeline={pipeline}
+              workflowStatus={workflowStatus}
             />
           }
 

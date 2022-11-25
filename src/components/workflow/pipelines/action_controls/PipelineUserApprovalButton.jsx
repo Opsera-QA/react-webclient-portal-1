@@ -16,12 +16,12 @@ export default function PipelineUserApprovalButton(
   {
     pipeline,
     loadPipelineFunction,
+    workflowStatus,
   }) {
   const {
     toastContext,
     userData,
   } = useComponentStateReference();
-  const isPaused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
   const approvalStep = PipelineHelpers.getPendingApprovalStep(pipeline);
   const approvalStepToolIdentifier = PipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
 
@@ -43,7 +43,7 @@ export default function PipelineUserApprovalButton(
     );
   };
 
-  if (isPaused !== true) {
+  if (workflowStatus !== "paused") {
     return null;
   }
 
@@ -74,4 +74,5 @@ export default function PipelineUserApprovalButton(
 PipelineUserApprovalButton.propTypes = {
   pipeline: PropTypes.object,
   loadPipelineFunction: PropTypes.func,
+  workflowStatus: PropTypes.string,
 };
