@@ -475,6 +475,7 @@ function PipelineActionControls(
             <PipelineUserApprovalButton
               loadPipelineFunction={fetchData}
               pipeline={pipeline}
+              workflowStatus={workflowStatus}
             />
           }
 
