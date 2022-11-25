@@ -319,7 +319,6 @@ const jenkinsPipelineStepConfigurationMetadata = {
     buildStepId: "",
     commands: "",
     environmentVariables: [],
-    enableQuickDeploy: false
   }
 };
 
