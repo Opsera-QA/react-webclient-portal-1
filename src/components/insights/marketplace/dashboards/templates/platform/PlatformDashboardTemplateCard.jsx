@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Card } from "react-bootstrap";
 import { faClipboard, faTag, faUsers } from "@fortawesome/pro-light-svg-icons";
 import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
-import AddDashboardTemplateButton from "components/common/buttons/dashboards/AddDashboardButton";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
 import ActionBarDeletePlatformDashboardTemplateButton

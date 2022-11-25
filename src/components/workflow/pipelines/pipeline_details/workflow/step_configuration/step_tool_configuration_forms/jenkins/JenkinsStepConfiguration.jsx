@@ -26,6 +26,7 @@ import JenkinsStepJobTypeSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepJobTypeSelectInput";
 import JenkinsSfdcDataTransformerRulesSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsSfdcDataTransformerRulesSelectInput";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
 // TODO: This should probably be moved to some helper function so we only need to update it in one spot
 //  and also use ENUMs to make it easier to ensure spelling it is correct and consistent everywhere.
@@ -240,7 +241,7 @@ function JenkinsStepConfiguration({
           setModel={setJenkinsStepConfigurationDto}
           jobType={jenkinsStepConfigurationDto?.getData("jobType")}
           toolId={jenkinsStepConfigurationDto?.getData("sfdcToolId")}
-          disabled={jenkinsStepConfigurationDto?.getData("sfdcToolId") == undefined || jenkinsStepConfigurationDto?.getData("sfdcToolId") === ""}
+          disabled={isMongoDbId(jenkinsStepConfigurationDto?.getData("sfdcToolId")) !== true}
         />
         <JenkinsXmlStepInfoSelectInput
           dataObject={jenkinsStepConfigurationDto}

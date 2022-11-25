@@ -24,7 +24,6 @@ function PipelineActivityLogTable(
     pipeline,
     pipelineActivityFilterDto,
     currentRunNumber,
-    pipelineStatus,
     currentStepId,
     loadPipelineFunction,
     latestPipelineLogId,
@@ -36,7 +35,7 @@ function PipelineActivityLogTable(
   const fields = pipelineActivityMetadata?.fields;
 
   useEffect(() => {
-  }, [pipelineLogData, pipelineStatus]);
+  }, [pipelineLogData, latestPipelineLogId]);
 
   const columns = useMemo(
     () => [
@@ -83,8 +82,9 @@ function PipelineActivityLogTable(
           case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
             toastContext.showOverlayPanel(
               <PipelineInstructionsAcknowledgementOverlay
-                pipeline={pipeline}
+                pipelineId={pipeline?._id}
                 loadPipelineFunction={loadPipelineFunction}
+                pipelineActivityLogId={row._id}
               />,
             );
             return;
@@ -159,7 +159,6 @@ PipelineActivityLogTable.propTypes = {
   currentStepId: PropTypes.string,
   loadPipelineFunction: PropTypes.func,
   latestPipelineLogId: PropTypes.string,
-  pipelineStatus: PropTypes.any,
 };
 
 export default PipelineActivityLogTable;

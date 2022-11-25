@@ -2,12 +2,12 @@ import React, {useContext, useEffect, useState, useRef} from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {AuthContext} from "contexts/AuthContext";
-import AWSActionsHelper
-  from "components/common/list_of_values_input/tools/aws/aws-actions-helper";
 import axios from "axios";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import {awsActions} from "components/common/list_of_values_input/tools/aws/aws.actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function AWSBucketNameSelectionInput({  awsToolId, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled}) {
+function AwsS3BucketNameSelectInput({  awsToolId, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled}) {
   const { getAccessToken } = useContext(AuthContext);
   const [bucketList, setBucketList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -58,14 +58,9 @@ function AWSBucketNameSelectionInput({  awsToolId, visible, fieldName, model, se
   };
 
   const getBucketList = async (cancelSource = cancelTokenSource) => {
-    if (isMounted?.current === true) {
-      const response  = await AWSActionsHelper.getBucketList(awsToolId, getAccessToken, cancelSource);
-      let bucketListResponse = response?.data?.data;
-
-      if (Array.isArray(bucketListResponse)) {
-        setBucketList(bucketListResponse);
-      }
-    }
+    const response = await awsActions.getS3BucketListWithRegions(getAccessToken, cancelSource, awsToolId);
+    const buckets = DataParsingHelper.parseArray(response?.data?.data, []);
+    setBucketList([...buckets]);
   };
 
   if (visible === false) {
@@ -73,25 +68,23 @@ function AWSBucketNameSelectionInput({  awsToolId, visible, fieldName, model, se
   }
 
   return (
-    <div>
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={model}
-        setDataObject={setModel}
-        setDataFunction={setDataFunction}
-        selectOptions={bucketList}
-        busy={isLoading}
-        clearDataFunction={clearDataFunction}
-        valueField={"name"}
-        textField={"name"}
-        disabled={disabled}
-        error={error}
-      />
-    </div>
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
+      selectOptions={bucketList}
+      busy={isLoading}
+      clearDataFunction={clearDataFunction}
+      valueField={"name"}
+      textField={"name"}
+      disabled={disabled}
+      error={error}
+    />
   );
 }
 
-AWSBucketNameSelectionInput.propTypes = {
+AwsS3BucketNameSelectInput.propTypes = {
   awsToolId: PropTypes.string,
   fieldName: PropTypes.string,
   model: PropTypes.object,
@@ -102,4 +95,4 @@ AWSBucketNameSelectionInput.propTypes = {
   clearDataFunction: PropTypes.func
 };
 
-export default AWSBucketNameSelectionInput;
+export default AwsS3BucketNameSelectInput;

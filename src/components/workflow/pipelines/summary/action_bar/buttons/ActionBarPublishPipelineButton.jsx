@@ -1,11 +1,8 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 import {faShareAll} from "@fortawesome/pro-light-svg-icons";
 import pipelineActions from "components/workflow/pipeline-actions";
-import axios from "axios";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 

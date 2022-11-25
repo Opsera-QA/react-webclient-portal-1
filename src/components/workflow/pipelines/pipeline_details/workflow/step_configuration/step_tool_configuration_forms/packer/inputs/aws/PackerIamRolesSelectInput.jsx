@@ -23,6 +23,7 @@ function PackerIamRolesSelectInput({
   const [placeholder, setPlaceholder] = useState("Select an IAM Role");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -32,6 +33,7 @@ function PackerIamRolesSelectInput({
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+    setErrorMessage("");
 
     if (!disabled) {
       loadData(source).catch((error) => {
@@ -86,7 +88,7 @@ function PackerIamRolesSelectInput({
     } catch (error) {
       setPlaceholder("No IAM Roles Found");
       console.error(error);
-      toastContext.showServiceUnavailableDialog();
+      setErrorMessage(error);
     }
   };
 
@@ -109,6 +111,7 @@ function PackerIamRolesSelectInput({
       busy={isLoading}
       placeholderText={placeholder}
       disabled={disabled || isLoading || (!isLoading && (loadBalancers == null || loadBalancers.length === 0))}
+      error={errorMessage}
     />
   );
 }
