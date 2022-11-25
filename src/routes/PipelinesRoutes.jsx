@@ -8,13 +8,21 @@ import RoleRestrictedRoute from "temp-library-components/routes/RoleRestrictedRo
 import PipelineInstructionsManagement from "components/workflow/instructions/PipelineInstructionsManagement";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import PipelineInstructionsDetailView from "components/workflow/instructions/details/PipelineInstructionsDetailView";
+import CustomerPipelineTemplateDetailView
+  from "components/workflow/catalog/private/details/CustomerPipelineTemplateDetailView";
 
 export default function PipelinesRoutes() {
   return (
     <>
       <SecureRoute path="/pipeline" component={Pipeline} />
       <SecureRoute path="/workflow/catalog/library" exact component={PipelineCatalogLibrary} />
-      <SecureRoute path="/workflow/:tab?" exact component={Pipelines} />
+      <SecureRoute
+        path="/workflow/catalog/customer/:id"
+        exact
+        component={CustomerPipelineTemplateDetailView}
+      />
+      <SecureRoute path="/workflow/" exact component={Pipelines} />
+      <SecureRoute path="/workflow/owner" exact component={Pipelines} />
       <SecureRoute path="/workflow/details/:id/:tab?" exact component={PipelineDetailView} />
 
       <RoleRestrictedRoute

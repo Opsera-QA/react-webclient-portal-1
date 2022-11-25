@@ -29,7 +29,7 @@ customerPipelineTemplateCatalogActions.getCustomerCatalogPipelineTemplateById = 
   cancelTokenSource,
   templateId,
 ) => {
-  const apiUrl = "/workflow/templates/customer";
+  const apiUrl = `/workflow/templates/customer/${templateId}`;
 
   return await baseActions.apiGetCallV3(
     getAccessToken,
@@ -38,46 +38,40 @@ customerPipelineTemplateCatalogActions.getCustomerCatalogPipelineTemplateById = 
   );
 };
 
-customerPipelineTemplateCatalogActions.publishTemplateV2 = async (
+customerPipelineTemplateCatalogActions.publishPipelineToCustomerCatalog = async (
   getAccessToken,
   cancelTokenSource,
-  dashboardId,
-  roles,
+  pipelineId,
 ) => {
-  const apiUrl = `/analytics/customer/dashboard/templates/publish/${dashboardId}`;
-  const postBody = {};
-
-  if (Array.isArray(roles)) {
-    postBody.roles = roles;
-  }
-
-  return await baseActions.apiPutCallV2(
-    getAccessToken,
-    cancelTokenSource,
-    apiUrl,
-    postBody,
-  );
-};
-
-customerPipelineTemplateCatalogActions.deployCustomerTemplate = async (
-  getAccessToken,
-  cancelTokenSource,
-  templateId,
-) => {
-  const apiUrl = `/analytics/dashboards/deploy/customer/${templateId}`;
-  return await baseActions.apiPutCallV2(
+  const apiUrl = `/workflow/templates/customer/${pipelineId}`;
+  return await baseActions.apiPostCallV2(
     getAccessToken,
     cancelTokenSource,
     apiUrl,
   );
 };
 
-customerPipelineTemplateCatalogActions.deleteTemplate = async (
+customerPipelineTemplateCatalogActions.updateCustomerPipelineTemplate = async (
+  getAccessToken,
+  cancelTokenSource,
+  templateId,
+  pipelineTemplateModel,
+) => {
+  const apiUrl = `/workflow/templates/customer/${templateId}`;
+  return await baseActions.apiPutCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    pipelineTemplateModel?.getPersistData(),
+  );
+};
+
+customerPipelineTemplateCatalogActions.deleteCustomerPipelineTemplate = async (
   getAccessToken,
   cancelTokenSource,
   templateId,
 ) => {
-  const apiUrl = `/analytics/customer/dashboard/templates/${templateId}`;
+  const apiUrl = `/workflow/templates/customer/${templateId}`;
   return await baseActions.apiDeleteCallV2(
     getAccessToken,
     cancelTokenSource,

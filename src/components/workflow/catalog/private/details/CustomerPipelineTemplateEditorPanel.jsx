@@ -1,22 +1,33 @@
-import React, {useContext} from "react";
-import {Col, Row} from "react-bootstrap";
-import {AuthContext} from "contexts/AuthContext";
+import React, {useState, useContext, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
+import { AuthContext } from "contexts/AuthContext";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
+import adminTagsActions from "components/settings/tags/admin-tags-actions";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import TagTypeSelectInput from "components/common/list_of_values_input/settings/tags/TagTypeSelectInput";
+import TagConfigurationInput from "components/common/list_of_values_input/settings/tags/TagConfigurationInput";
+import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
+import axios from "axios";
+import useComponentStateReference from "hooks/useComponentStateReference";
 import pipelineTemplateActions from "components/admin/pipeline_templates/pipelineTemplate.actions";
 import LoadingDialog from "components/common/status_notifications/loading";
-import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PipelineTypeMultiSelectInput
   from "components/common/list_of_values_input/admin/pipeline_templates/PipelineTypeMultiSelectInput";
-import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import LdapOrganizationAccountSelectInput
   from "components/common/list_of_values_input/admin/accounts/ldap_accounts/LdapOrganizationAccountSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import JsonInput from "components/common/inputs/object/JsonInput";
 import TagManager from "components/common/inputs/tags/TagManager";
-import useComponentStateReference from "hooks/useComponentStateReference";
 
-function PipelineTemplateEditorPanel({templateModel, setTemplateModel, handleClose}) {
+function CustomerPipelineTemplateEditorPanel(
+  { 
+    pipelineTemplateModel, 
+    setPipelineTemplateModel, 
+    handleClose,
+  }) {
   const {getAccessToken} = useContext(AuthContext);
   const {cancelTokenSource} = useComponentStateReference();
 
@@ -24,7 +35,7 @@ function PipelineTemplateEditorPanel({templateModel, setTemplateModel, handleClo
     return await pipelineTemplateActions.createTemplateV2(
       getAccessToken,
       cancelTokenSource,
-      templateModel
+      pipelineTemplateModel
     );
   };
 
@@ -32,11 +43,11 @@ function PipelineTemplateEditorPanel({templateModel, setTemplateModel, handleClo
     return await pipelineTemplateActions.updateTemplateV2(
       getAccessToken,
       cancelTokenSource,
-      templateModel
+      pipelineTemplateModel
     );
   };
 
-  if (templateModel == null) {
+  if (pipelineTemplateModel == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
@@ -44,80 +55,80 @@ function PipelineTemplateEditorPanel({templateModel, setTemplateModel, handleClo
     <EditorPanelContainer
       createRecord={createTemplate}
       updateRecord={updateTemplate}
-      recordDto={templateModel}
+      recordDto={pipelineTemplateModel}
       handleClose={handleClose}
-      setRecordDto={setTemplateModel}
+      setRecordDto={setPipelineTemplateModel}
     >
       <Row>
         <Col lg={6}>
           <TextInputBase
             fieldName={"name"}
-            dataObject={templateModel}
-            setDataObject={setTemplateModel}
+            dataObject={pipelineTemplateModel}
+            setDataObject={setPipelineTemplateModel}
           />
         </Col>
         <Col lg={6}>
           <ActivityToggleInput
             fieldName={"active"}
-            dataObject={templateModel}
-            setDataObject={setTemplateModel}
+            dataObject={pipelineTemplateModel}
+            setDataObject={setPipelineTemplateModel}
           />
         </Col>
         <Col lg={6}>
           <TextInputBase
             fieldName={"identifier"}
-            dataObject={templateModel}
-            setDataObject={setTemplateModel}
+            dataObject={pipelineTemplateModel}
+            setDataObject={setPipelineTemplateModel}
             // inputHelpOverlay={PipelineTemplateIdentifierHelpOverlay}
           />
         </Col>
         <Col lg={12}>
           <TextInputBase
             fieldName={"description"}
-            dataObject={templateModel}
-            setDataObject={setTemplateModel}
+            dataObject={pipelineTemplateModel}
+            setDataObject={setPipelineTemplateModel}
           />
         </Col>
         <Col lg={6}>
           <PipelineTypeMultiSelectInput
-            dataObject={templateModel}
-            setDataObject={setTemplateModel}
+            dataObject={pipelineTemplateModel}
+            setDataObject={setPipelineTemplateModel}
           />
           <LdapOrganizationAccountSelectInput
             fieldName={"account"}
-            model={templateModel}
-            setModel={setTemplateModel}
+            model={pipelineTemplateModel}
+            setModel={setPipelineTemplateModel}
           />
         </Col>
         <Col lg={6} className="my-auto">
           <BooleanToggleInput
             fieldName={"readOnly"}
-            dataObject={templateModel}
-            setDataObject={setTemplateModel}
+            dataObject={pipelineTemplateModel}
+            setDataObject={setPipelineTemplateModel}
           />
           <BooleanToggleInput
             fieldName={"singleUse"}
-            dataObject={templateModel}
-            setDataObject={setTemplateModel}
+            dataObject={pipelineTemplateModel}
+            setDataObject={setPipelineTemplateModel}
           />
           <BooleanToggleInput
             fieldName={"publicUse"}
-            dataObject={templateModel}
-            setDataObject={setTemplateModel}
+            dataObject={pipelineTemplateModel}
+            setDataObject={setPipelineTemplateModel}
           />
         </Col>
         <Col lg={6}>
           <JsonInput
             fieldName={"plan"}
-            model={templateModel}
-            setModel={setTemplateModel}
+            model={pipelineTemplateModel}
+            setModel={setPipelineTemplateModel}
           />
         </Col>
         <Col lg={6}>
           <TagManager
             type={"template"}
-            dataObject={templateModel}
-            setDataObject={setTemplateModel}
+            dataObject={pipelineTemplateModel}
+            setDataObject={setPipelineTemplateModel}
           />
         </Col>
       </Row>
@@ -125,12 +136,12 @@ function PipelineTemplateEditorPanel({templateModel, setTemplateModel, handleClo
   );
 }
 
-PipelineTemplateEditorPanel.propTypes = {
-  templateModel: PropTypes.object,
-  setTemplateModel: PropTypes.func,
+CustomerPipelineTemplateEditorPanel.propTypes = {
+  pipelineTemplateModel: PropTypes.object,
+  setPipelineTemplateModel: PropTypes.func,
   handleClose: PropTypes.func
 };
 
-export default PipelineTemplateEditorPanel;
+export default CustomerPipelineTemplateEditorPanel;
 
 
