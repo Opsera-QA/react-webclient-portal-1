@@ -7,7 +7,6 @@ import {
   faPlay,
   faSync,
   faSpinner,
-  faStopCircle,
   faRedo,
   faInfoCircle, faRepeat1, faClock,
 } from "@fortawesome/pro-light-svg-icons";
@@ -43,8 +42,6 @@ function PipelineActionControls(
   const [startPipeline, setStartPipeline] = useState(false);
   const [stopPipeline, setStopPipeline] = useState(false);
   const [isApprovalGate, setIsApprovalGate] = useState(false);
-  const [statusMessage, setStatusMessage] = useState(false);
-  const [statusMessageBody, setStatusMessageBody] = useState("");
   const [hasQueuedRequest, setHasQueuedRequest] = useState(false);
   const [queueingEnabled, setQueueingEnabled] = useState(false);
   const {
@@ -70,25 +67,15 @@ function PipelineActionControls(
         throw error;
       }
     });
-
-    if (workflowStatus === "paused") {
-      setStatusMessage("This pipeline is currently paused awaiting user response");
-      setStatusMessageBody("A paused pipeline requires a user to review and either approve or acknowledge completed actions in order to proceed.");
-    } else {
-      setStatusMessage(false);
-      setStatusMessageBody("");
-    }
   }, [workflowStatus, JSON.stringify(pipeline.workflow)]);
-
 
   useEffect(() => {
     if (pipeline && startPipeline === true) {
-      const state = pipeline?.workflow?.last_step?.status;
+      const state = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status");
 
       if (state !== "running") {
         handleDelayCheckRefresh(pipeline?._id);
-      }
-      else {
+      } else {
         setStartPipeline(false);
       }
     }
@@ -158,14 +145,14 @@ function PipelineActionControls(
     await checkPipelineQueueStatus();
   };
 
-  const handleStopWorkflowClick = async (pipelineId) => {
+  const handleStopWorkflowClick = async () => {
     setResetPipeline(true);
     setWorkflowStatus("stopped");
-    await stopPipelineRun(pipelineId);
+    await stopPipelineRun(pipeline?._id);
     await fetchData();
     setResetPipeline(false);
     setStartPipeline(false);
-    await PipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipelineId);
+    await PipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
     await checkPipelineQueueStatus();
   };
 
@@ -437,8 +424,7 @@ function PipelineActionControls(
   };
 
   const getWarningMessage = () => {
-    // TODO: Validate value
-    if (statusMessage) {
+    if (workflowStatus === "paused") {
       return (
         <div
           className={"warning-text-alt text-left"}
@@ -447,14 +433,14 @@ function PipelineActionControls(
           <OverlayTrigger
             placement="top"
             delay={{show: 250, hide: 400}}
-            overlay={renderTooltip({message: statusMessageBody})}>
+            overlay={renderTooltip({message: "A paused pipeline requires a user to review and either approve or acknowledge completed actions in order to proceed."})}>
             <div>
               <IconBase
                 icon={faInfoCircle}
                 className={"mr-1"}
                 iconSize={"lg"}
               />
-              {statusMessage}
+              {"This pipeline is currently paused awaiting user response"}
             </div>
           </OverlayTrigger>
         </div>
