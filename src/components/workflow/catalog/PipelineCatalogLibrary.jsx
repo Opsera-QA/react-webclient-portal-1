@@ -10,6 +10,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import CustomerPipelineTemplateCatalog from "components/workflow/catalog/private/CustomerPipelineTemplateCatalog";
 import CustomTab from "components/common/tabs/CustomTab";
+import OpseraPipelineMarketplace from "components/workflow/catalog/platform/OpseraPlatformMarketplace";
 
 function PipelineCatalogLibrary() {
   const [activeTemplates, setActiveTemplates] = useState([]);
@@ -70,6 +71,9 @@ function PipelineCatalogLibrary() {
             </div>
             <PipelineCatalog source={undefined} activeTemplates={activeTemplates} />
           </>
+          // <OpseraPipelineMarketplace
+          //   activeTemplates={activeTemplates}
+          // />
         );
       case "customer":
         return (
@@ -113,7 +117,6 @@ function PipelineCatalogLibrary() {
     <ScreenContainer
       breadcrumbDestination={"catalog"}
       navigationTabContainer={<WorkflowSubNavigationBar currentTab={"catalog"} />}
-      pageDescription={"To begin building your pipeline, choose one of the pipeline templates provided in the Marketplace or Private Catalogs."}
       helpComponent={<CatalogHelpDocumentation/>}
     >
       <div className={"px-3"}>

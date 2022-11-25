@@ -11,6 +11,7 @@ pipelinesTrails.catalog = {
   title: "Pipeline Catalogs",
   linkText: "Pipeline Catalogs",
   icon: faHexagon,
+  pageDescription: "To begin building your pipeline, choose one of the pipeline templates provided in the Marketplace or Private Catalogs.",
 };
 
 pipelinesTrails.customerPipelineTemplateDetailView = {
