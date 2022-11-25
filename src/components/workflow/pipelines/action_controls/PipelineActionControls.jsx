@@ -467,6 +467,7 @@ function PipelineActionControls(
               pipeline={pipeline}
               workflowStatus={workflowStatus}
               handleStopWorkflowClick={handleStopWorkflowClick}
+              pipelineIsStopping={stopPipeline}
             />
           }
 
