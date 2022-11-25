@@ -26,6 +26,7 @@ export default function PipelineStopButton(
     <>
       <PipelineActionControlButtonBase
         normalText={"Running"}
+        busyText={"Running"}
         buttonState={buttonLabelHelper.BUTTON_STATES.BUSY}
         disabled={true}
         variant={"outline-dark"}
