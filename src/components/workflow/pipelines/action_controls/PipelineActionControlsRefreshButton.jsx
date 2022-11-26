@@ -17,6 +17,7 @@ export default function PipelineActionControlsRefreshButton(
       onClickFunction={handleRefreshWorkflowClick}
       variant={"secondary"}
       className={""}
+      iconClassName={""}
     />
   );
 }
