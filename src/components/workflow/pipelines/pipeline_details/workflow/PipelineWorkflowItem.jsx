@@ -37,6 +37,7 @@ import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineR
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineWorkflowItemActionField
   from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemActionField";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
@@ -250,38 +251,150 @@ const PipelineWorkflowItem = (
     );
   };
 
+  // TODO: In the long term we should stamp which field in the metadata should correspond to this,
+  //  so we can capture cases where they're saved in different fields
   const getRepositoryField = () => {
-    if (item && item.tool) {
-      const { configuration } = item.tool;
-      if (configuration && configuration.repository) {
-        return (
-          <div className="pl-1 pt-1 text-muted small">
-            <IconBase icon={faCodeBranch} iconSize={"sm"} className={"mr-1"} />
-            Repository: {configuration.repository}
-          </div>
-        );
-      }
+    const repository = DataParsingHelper.parseNestedString(item, "tool.configuration.repository");
+    if (repository) {
+      return (
+        <div className="pl-1 pt-1 text-muted small">
+          <IconBase icon={faCodeBranch} iconSize={"sm"} className={"mr-1"}/>
+          Repository: {repository}
+        </div>
+      );
     }
+
+    return (
+      <div/>
+    );
+  };
+
+  // TODO: In the long term we should stamp which field in the metadata should correspond to this,
+  //  so we can capture cases where they're saved in different fields
+  const getBranchField = () => {
+    const stepConfiguration = DataParsingHelper.parseNestedObject(item, "tool.configuration", {});
+    const branch = stepConfiguration.branch || stepConfiguration.gitBranch || stepConfiguration.defaultBranch;
+    if (hasStringValue(branch) === true) {
+      return (
+        <div className="pl-1 pt-1 text-muted small">
+          <IconBase icon={faCodeBranch} iconSize={"sm"} className={"mr-1"}/>
+          Branch: {branch}
+        </div>
+      );
+    }
+
     return (
       <div />
     );
   };
 
-  const getBranchField = () => {
-    if (item && item.tool) {
-      const { configuration } = item.tool;
-      if (configuration && (configuration.branch || configuration.gitBranch || configuration.defaultBranch)) {
-        return (
-          <div className="pl-1 pt-1 text-muted small">
-            <IconBase icon={faCodeBranch} iconSize={"sm"} className={"mr-1"} />
-            Branch: {configuration.branch || configuration.gitBranch || configuration.defaultBranch}
-          </div>
-        );
-      }
+  const getBottomActionBarButtons = () => {
+    if (isToolSet === true) {
+      return (
+      <div className={"ml-auto d-flex"}>
+        {!editWorkflow &&
+          <>
+            {PipelineRoleHelper.canViewStepConfiguration(userData, pipeline) &&
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "View Settings" })}>
+                <div>
+                  <IconBase icon={faSearchPlus} //settings!
+                            className={"text-muted mx-1 pointer"}
+                            onClickFunction={() => {
+                              handleSummaryViewClick();
+                            }} />
+                </div>
+              </OverlayTrigger>
+            }
+
+            {itemState !== "running" ? //if THIS step is running
+              <>
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "View Step Activity Logs" })}>
+                  <div>
+                    <IconBase icon={faArchive}
+                              className={"text-muted mx-1 pointer"}
+                              onClickFunction={() => {
+                                handleViewStepActivityLogClick(pipelineId, item.tool.tool_identifier, item._id);
+                              }} />
+                  </div>
+                </OverlayTrigger>
+              </>
+              :
+              <>
+                {toolIdentifier?.properties && toolIdentifier?.properties?.isLiveStream && <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "View Running Tool Activity (if available)" })}>
+                  <div>
+                    <IconBase icon={faTerminal}
+                              className={"green mx-1 pointer"}
+                              onClickFunction={() => {
+                                setShowToolActivity(true);
+                              }} />
+                  </div>
+                </OverlayTrigger>}
+              </>}
+
+            {parentWorkflowStatus !== "running" && parentWorkflowStatus !== "paused" ? //if the overall pipeline is in a running/locked state
+              <>
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "Configure Step Notification and Approval Rules" })}>
+                  <div>
+                    <IconBase icon={faEnvelope}
+                              className={"pointer text-muted mx-1"}
+                              onClickFunction={() => {
+                                editStepNotificationConfiguration(item);
+                              }} />
+                  </div>
+                </OverlayTrigger>
+
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "Configure Step Settings" })}>
+                  <div>
+                    <IconBase icon={faCog}
+                              className={"text-muted mx-1 pointer"}
+                              onClickFunction={() => {
+                                handleEditClick("tool", item.tool, item._id, item);
+                              }}
+                    />
+                  </div>
+                </OverlayTrigger>
+              </>
+              :
+              <>
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
+                  <div>
+                    <IconBase icon={faEnvelope}
+                              className={"text-muted mx-1"} />
+                  </div>
+                </OverlayTrigger>
+
+                <OverlayTrigger
+                  placement="top"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
+                  <div>
+                    <IconBase icon={faCog}
+                              className={"text-muted mx-1"} />
+                  </div>
+                </OverlayTrigger>
+              </>}
+          </>}
+      </div>
+      );
     }
-    return (
-      <div style={{ height: "26px" }} />
-    );
   };
 
   return (
@@ -446,8 +559,11 @@ const PipelineWorkflowItem = (
                   </OverlayTrigger>
 
               </>}
-              <StepToolHelpIcon iconClassName={"mb-1"} className={"mr-0"}
-                                tool={item?.tool?.tool_identifier?.toLowerCase()} />
+              <StepToolHelpIcon
+                iconClassName={"mb-1"}
+                className={"mr-0"}
+                tool={item?.tool?.tool_identifier}
+              />
             </div>
           </div>
         </div>
@@ -468,113 +584,16 @@ const PipelineWorkflowItem = (
 
         {getBranchField()}
 
-        <div className="ml-auto mt-auto">
-        <div className="p-1 ml-auto d-flex">
-          {isToolSet &&
+        <div
+          className={"ml-auto mt-auto pt-2 "}
+          style={{
+            height: "30px",
+          }}
+        >
           <div className={"ml-auto d-flex"}>
-            {!editWorkflow &&
-            <>
-              {PipelineRoleHelper.canViewStepConfiguration(userData, pipeline) &&
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip({ message: "View Settings" })}>
-                <div>
-                  <IconBase icon={faSearchPlus} //settings!
-                            className={"text-muted mx-1 pointer"}
-                            onClickFunction={() => {
-                              handleSummaryViewClick();
-                            }} />
-                </div>
-              </OverlayTrigger>
-              }
-
-              {itemState !== "running" ? //if THIS step is running
-                <>
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "View Step Activity Logs" })}>
-                    <div>
-                      <IconBase icon={faArchive}
-                                className={"text-muted mx-1 pointer"}
-                                onClickFunction={() => {
-                                  handleViewStepActivityLogClick(pipelineId, item.tool.tool_identifier, item._id);
-                                }} />
-                    </div>
-                  </OverlayTrigger>
-                </>
-                :
-                <>
-                  {toolIdentifier?.properties && toolIdentifier?.properties?.isLiveStream && <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "View Running Tool Activity (if available)" })}>
-                    <div>
-                      <IconBase icon={faTerminal}
-                                className={"green mx-1 pointer"}
-                                onClickFunction={() => {
-                                  setShowToolActivity(true);
-                                }} />
-                    </div>
-                  </OverlayTrigger>}
-                </>}
-
-              {parentWorkflowStatus !== "running" && parentWorkflowStatus !== "paused" ? //if the overall pipeline is in a running/locked state
-                <>
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "Configure Step Notification and Approval Rules" })}>
-                    <div>
-                      <IconBase icon={faEnvelope}
-                                className={"pointer text-muted mx-1"}
-                                onClickFunction={() => {
-                                  editStepNotificationConfiguration(item);
-                                }} />
-                    </div>
-                  </OverlayTrigger>
-
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "Configure Step Settings" })}>
-                    <div>
-                      <IconBase icon={faCog}
-                                className={"text-muted mx-1 pointer"}
-                                onClickFunction={() => {
-                                  handleEditClick("tool", item.tool, item._id, item);
-                                }}
-                      />
-                    </div>
-                  </OverlayTrigger>
-                </>
-                :
-                <>
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
-                    <div>
-                      <IconBase icon={faEnvelope}
-                                className={"text-muted mx-1"} />
-                    </div>
-                  </OverlayTrigger>
-
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
-                    <div>
-                      <IconBase icon={faCog}
-                                className={"text-muted mx-1"} />
-                    </div>
-                  </OverlayTrigger>
-                </>}
-            </>}
-          </div>}
+            {getBottomActionBarButtons()}
+          </div>
         </div>
-      </div>
       </div>
 
       <ModalActivityLogs
