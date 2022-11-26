@@ -222,8 +222,8 @@ function PipelineWorkflow({
     return (
       <div className="source workflow-module-container workflow-module-container-width mt-2 mx-auto">
         {!softLoading ?
-          <div className="pt-2 text-center mx-auto">Start of Workflow</div> :
-          <div className="pt-2 text-center mx-auto green">
+          <div className="title-text-6 pt-2 text-center mx-auto">Start of Workflow</div> :
+          <div className="title-text-6 pt-2 text-center mx-auto green">
             <LoadingIcon className={"mr-1"} /> Processing Workflow...</div>
         }
 
