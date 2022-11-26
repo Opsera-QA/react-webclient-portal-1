@@ -9,6 +9,7 @@ import { addDays, isSameDay } from "date-fns";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import IconBase from "components/common/icons/IconBase";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import {getDatesFromLabel} from "../../../insights/charts/charts-helpers";
 
 // TODO: If this can't be used elsewhere, Tejas, we should change the name to be KPI Specific.
 function DateRangeInput({ fieldName, dataObject, setDataObject }) {
@@ -20,7 +21,15 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
   });
   const [errorMessage, setErrorMessage] = useState("");
   const loadData = () => {
-    if (dataObject.getData(fieldName)) {
+    const dateObject = dataObject.getData(fieldName);
+    if(dateObject?.label) {
+      const date = getDatesFromLabel(dateObject?.label);
+      setDate({
+        startDate: new Date(date?.startDate),
+        endDate: new Date(date?.endDate),
+        key: dataObject.getData(fieldName).key,
+      });
+    } else if (dataObject.getData(fieldName)) {
       setDate({
         startDate: new Date(dataObject.getData(fieldName).startDate),
         endDate: new Date(dataObject.getData(fieldName).endDate),
@@ -32,6 +41,11 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
     loadData();
   }, []);
   const validateAndSetData = (value) => {
+    if(value?.label){
+      setDate({...getDatesFromLabel(value?.label), key: "selection"});
+    } else {
+      setDate(value);
+    }
     let newDataObject = dataObject;
     if (value.startDate === null && value.endDate === null) {
       value = null;
@@ -42,7 +56,6 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
   };
   const dateChange = (item) => {
     validateAndSetData(item);
-    setDate(item);
   };
   const clearCalendar = () => {
     dateChange({
@@ -80,6 +93,7 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
             {
               label: "Today",
               range: () => ({
+                label: "Today",
                 startDate: new Date(),
                 endDate: new Date(),
               }),
@@ -93,6 +107,7 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
             {
               label: "Last Week",
               range: () => ({
+                label: "Last Week",
                 startDate: new Date(addDays(new Date(), -7).setHours(0, 0, 0, 0)),
                 endDate: new Date(new Date().setHours(0, 0, 0, 0)),
               }),
@@ -106,6 +121,7 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
             {
               label: "Last Month",
               range: () => ({
+                label: "Last Month",
                 startDate: new Date(addDays(new Date(), -30).setHours(0, 0, 0, 0)),
                 endDate: new Date(new Date().setHours(0, 0, 0, 0)),
               }),
@@ -119,6 +135,7 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
             {
               label: "Last 3 Months",
               range: () => ({
+                label: "Last 3 Months",
                 startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
                 endDate: new Date(new Date().setHours(0, 0, 0, 0)),
               }),
@@ -132,6 +149,7 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
             {
               label: "Last 6 Months",
               range: () => ({
+                label: "Last 6 Months",
                 startDate: new Date(addDays(new Date(), -180).setHours(0, 0, 0, 0)),
                 endDate: new Date(new Date().setHours(0, 0, 0, 0)),
               }),
@@ -145,6 +163,7 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
             {
               label: "Last 1 Year",
               range: () => ({
+                label: "Last 1 Year",
                 startDate: new Date(addDays(new Date(), -365).setHours(0, 0, 0, 0)),
                 endDate: new Date(new Date().setHours(0, 0, 0, 0)),
               }),
