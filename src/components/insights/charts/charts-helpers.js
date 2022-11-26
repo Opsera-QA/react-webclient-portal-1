@@ -4,12 +4,13 @@ import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/fr
 import moment from "moment";
 
 export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
-  if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")]?.value) {
+  const date = kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")]?.value;
+  if (date) {
     return {
-      start: kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")].value.startDate,
+      start: date.startDate,
       end: addDays(
         new Date(
-          kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")].value.endDate
+          date.endDate
         ),
         1
       ).toISOString(),
@@ -20,6 +21,47 @@ export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
     end: addDays(new Date(new Date().setHours(0, 0, 0, 0)), 1).toISOString(),
   };
 }
+
+export function getDatesFromLabel(label) {
+  switch (label) {
+    case 'Today':
+      return {
+        startDate: new Date(),
+        endDate: new Date(),
+      };
+    case 'Last Week':
+      return {
+        startDate: new Date(addDays(new Date(), -7).setHours(0, 0, 0, 0)),
+        endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+      };
+    case 'Last Month':
+      return {
+        startDate: new Date(addDays(new Date(), -30).setHours(0, 0, 0, 0)),
+        endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+      };
+    case 'Last 3 Months':
+      return {
+        startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
+        endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+      };
+    case 'Last 6 Months':
+      return {
+        startDate: new Date(addDays(new Date(), -180).setHours(0, 0, 0, 0)),
+        endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+      };
+    case 'Last 1 Year':
+      return {
+        startDate: new Date(addDays(new Date(), -365).setHours(0, 0, 0, 0)),
+        endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+      };
+    default:
+      return {
+        startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
+        endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+      };
+  }
+}
+
 
 export function getUseKpiTagsFromKpiConfiguration(kpiConfiguration) {
   return kpiConfiguration?.settings?.useKpiTags !== false;
