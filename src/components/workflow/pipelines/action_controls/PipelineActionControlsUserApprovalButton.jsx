@@ -12,7 +12,7 @@ import PipelineActionControlButtonBase
 import { faFlag } from "@fortawesome/pro-light-svg-icons";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 
-export default function PipelineUserApprovalButton(
+export default function PipelineActionControlsUserApprovalButton(
   {
     pipeline,
     loadPipelineFunction,
@@ -71,7 +71,7 @@ export default function PipelineUserApprovalButton(
   );
 }
 
-PipelineUserApprovalButton.propTypes = {
+PipelineActionControlsUserApprovalButton.propTypes = {
   pipeline: PropTypes.object,
   loadPipelineFunction: PropTypes.func,
   workflowStatus: PropTypes.string,

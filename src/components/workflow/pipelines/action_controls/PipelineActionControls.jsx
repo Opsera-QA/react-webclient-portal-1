@@ -24,8 +24,10 @@ import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineR
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PipelineStartWizard from "components/workflow/pipelines/pipeline_details/PipelineStartWizard";
-import PipelineUserApprovalButton from "components/workflow/pipelines/action_controls/PipelineUserApprovalButton";
-import PipelineStopButton from "components/workflow/pipelines/action_controls/PipelineStopButton";
+import PipelineActionControlsUserApprovalButton from "components/workflow/pipelines/action_controls/PipelineActionControlsUserApprovalButton";
+import PipelineActionControlsStopButton from "components/workflow/pipelines/action_controls/PipelineActionControlsStopButton";
+import PipelineActionControlsRefreshButton
+  from "components/workflow/pipelines/action_controls/PipelineActionControlsRefreshButton";
 
 const delayCheckInterval = 15000;
 let internalRefreshCount = 1;
@@ -458,7 +460,7 @@ function PipelineActionControls(
         <div className="flex-fill p-2"></div>
         <div className="text-right btn-group btn-group-sized">
           {workflowStatus === "running" &&
-            <PipelineStopButton
+            <PipelineActionControlsStopButton
               pipeline={pipeline}
               workflowStatus={workflowStatus}
               handleStopWorkflowClick={handleStopWorkflowClick}
@@ -467,7 +469,7 @@ function PipelineActionControls(
           }
 
           {workflowStatus === "paused" &&
-            <PipelineUserApprovalButton
+            <PipelineActionControlsUserApprovalButton
               loadPipelineFunction={fetchData}
               pipeline={pipeline}
               workflowStatus={workflowStatus}
@@ -562,19 +564,10 @@ function PipelineActionControls(
             </OverlayTrigger>
           }
 
-
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Refresh view" })}>
-            <Button variant="secondary"
-                    size="sm"
-                    onClick={() => {
-                      handleRefreshClick();
-                    }}>
-              <IconBase isLoading={isLoading} icon={faSync} /></Button>
-          </OverlayTrigger>
-
+          <PipelineActionControlsRefreshButton
+            handleRefreshWorkflowClick={handleRefreshClick}
+            isLoading={isLoading}
+          />
         </div>
       </div>
     </>);

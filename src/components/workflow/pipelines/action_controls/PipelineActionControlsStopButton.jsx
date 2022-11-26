@@ -7,7 +7,7 @@ import { faStopCircle } from "@fortawesome/pro-light-svg-icons";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import {buttonLabelHelper} from "temp-library-components/helpers/label/button/buttonLabel.helper";
 
-export default function PipelineStopButton(
+export default function PipelineActionControlsStopButton(
   {
     pipeline,
     handleStopWorkflowClick, // TODO: Move logic in here
@@ -44,7 +44,7 @@ export default function PipelineStopButton(
   );
 }
 
-PipelineStopButton.propTypes = {
+PipelineActionControlsStopButton.propTypes = {
   pipeline: PropTypes.object,
   handleStopWorkflowClick: PropTypes.func,
   workflowStatus: PropTypes.string,
