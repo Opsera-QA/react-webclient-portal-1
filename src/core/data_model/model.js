@@ -143,6 +143,17 @@ export class Model {
     return currentValue;
   };
 
+  removeArrayItem = (fieldName, index) => {
+    const array = DataParsingHelper.parseArray(this.getData(fieldName));
+
+    if (!array || array.length <= index) {
+      return;
+    }
+
+    array.splice(index, 1);
+    this.setData(fieldName, array);
+  };
+
   getStringValue = (fieldName, defaultValue = "") => {
     const currentValue = this.getData(fieldName);
 

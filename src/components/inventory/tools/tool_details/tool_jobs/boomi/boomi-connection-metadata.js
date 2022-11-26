@@ -32,6 +32,30 @@ const BoomiConnectionMetadata = {
       id: "apiType",
       isRequired: true
     },
+    {
+      label: "Client ID",
+      id: "clientId",
+      isRequiredFunction: (model) => {
+        return model?.getData("apiType") === "custom";
+      },
+      maxLength: 1024
+    },
+    {
+      label: "Client Secret",
+      id: "clientSecret",
+      isRequiredFunction: (model) => {
+        return model?.getData("apiType") === "custom";
+      },
+      maxLength: 1024
+    },
+    {
+      label: "Auth Server URL",
+      id: "authServerUrl",
+      isRequiredFunction: (model) => {
+        return model?.getData("apiType") === "custom";
+      },
+      isSecureUrl: true,
+    },
   ],
   newObjectFields:
     {
@@ -39,7 +63,10 @@ const BoomiConnectionMetadata = {
       accountId: "",
       accountUsername: "",
       accountPassword: "",
-      apiType: ""
+      apiType: "",
+      clientId: "",
+      clientSecret: "",
+      authServerUrl: "",
     }
 };
 

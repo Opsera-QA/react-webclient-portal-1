@@ -3,48 +3,38 @@ import { useHistory } from "react-router-dom";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import { faPlus, faSearch, faHexagon } from "@fortawesome/pro-light-svg-icons";
 import { format } from "date-fns";
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {AuthContext} from "contexts/AuthContext";
-import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
 import pipelineActions from "components/workflow/pipeline-actions";
 import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
-import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
 
-const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates }) => {
-  let history = useHistory();
-  const { getAccessToken } = useContext(AuthContext);
+const PipelineTemplateCatalogItem = ({ template, activeTemplates }) => {
+  const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
-  const [showFreeTrialModal, setShowFreeTrialModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [tempPipelineId, setTempPipelineId] = useState("");
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+    isOpseraAdministrator,
+    accessRoleData,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    if (template.readOnly || (template.singleUse === true && activeTemplates.includes(template?._id?.toString()))) {
+    // if (isOpseraAdministrator !== true && (template.readOnly || (template.singleUse === true && activeTemplates.includes(template?._id?.toString())))) {
+      if (template.readOnly || (template.singleUse === true && activeTemplates.includes(template?._id?.toString()))) {
       setDisabled(true);
     }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [template, activeTemplates]);
 
   const showPipelineDetails = () => {
+    // history.push(pipelineCatalogHelper.getDetailViewLink(template?._id));
     setShowModal(true);
   };
 
@@ -55,11 +45,7 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
       const newPipelineId = result?.data?._id;
 
       if (isMongoDbId(newPipelineId) === true) {
-        // check if its a free trial and then proceed
-        // if (!template.tags.some(el => el.value === "freetrial")) {
-          history.push(`/workflow/details/${newPipelineId}/summary`);
-        // }
-        // openFreeTrialWizard(newPipelineId, templateId, "freetrial");
+        history.push(pipelineHelper.getDetailViewLink(newPipelineId));
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -101,7 +87,7 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
         </Button>
       </TooltipWrapper>
 
-      {accessRoleData.OpseraAdministrator &&
+      {isOpseraAdministrator === true &&
         <Button variant="outline-secondary" size="sm" className="mr-1 mt-2" style={{minWidth: "128px", maxHeight: "34px"}} onClick={() => showPipelineDetails()}>
           <IconBase icon={faSearch} className={"d-xl-none mr-1"}/>
              Details
@@ -117,36 +103,6 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
     }
 
     return getEnabledBody();
-  };
-
-  const handleClose = async () => {
-    setShowFreeTrialModal(false);
-    await pipelineActions.deletePipelineV2(getAccessToken, cancelTokenSource, tempPipelineId?._id);
-    setTempPipelineId("");
-  };
-
-  const getFreeTrialModal = () => {
-    if (showFreeTrialModal) {
-      return (
-        <FreeTrialPipelineWizard
-          pipelineId={tempPipelineId}
-          templateId={template?._id}
-          pipelineOrientation={""}
-          autoRun={false}
-          handleClose={handleClose}
-        />
-      );
-    }
-  };
-
-  const openFreeTrialWizard = (pipelineId, templateType) => {
-    if (!pipelineId) {
-      setShowFreeTrialModal(false);
-      return;
-    }
-
-    setTempPipelineId(pipelineId);
-    setShowFreeTrialModal(true);
   };
 
   return (
@@ -182,9 +138,7 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
             </Col>
           </Row>
         </Card.Body>
-        <Card.Footer/>
       </Card>
-      {getFreeTrialModal()}
       <ModalActivityLogsDialog header="Template Details" size="lg" jsonData={template} show={showModal} setParentVisibility={setShowModal} />
     </>
   );
@@ -194,7 +148,6 @@ PipelineTemplateCatalogItem.propTypes = {
   template: PropTypes.object,
   parentCallback: PropTypes.func,
   openFreeTrialWizard: PropTypes.func,
-  accessRoleData: PropTypes.object,
   activeTemplates: PropTypes.array,
 };
 

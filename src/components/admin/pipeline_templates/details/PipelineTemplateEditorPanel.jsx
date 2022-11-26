@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
-import { Col, Row } from "react-bootstrap";
-import { AuthContext } from "contexts/AuthContext";
+import React, {useContext} from "react";
+import {Col, Row} from "react-bootstrap";
+import {AuthContext} from "contexts/AuthContext";
 import PropTypes from "prop-types";
 import pipelineTemplateActions from "components/admin/pipeline_templates/pipelineTemplate.actions";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -16,9 +16,9 @@ import JsonInput from "components/common/inputs/object/JsonInput";
 import TagManager from "components/common/inputs/tags/TagManager";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-function PipelineTemplateEditorPanel({ templateModel, setTemplateModel, handleClose }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const { cancelTokenSource } = useComponentStateReference();
+function PipelineTemplateEditorPanel({templateModel, setTemplateModel, handleClose}) {
+  const {getAccessToken} = useContext(AuthContext);
+  const {cancelTokenSource} = useComponentStateReference();
 
   const createTemplate = async () => {
     return await pipelineTemplateActions.createTemplateV2(
@@ -122,7 +122,7 @@ function PipelineTemplateEditorPanel({ templateModel, setTemplateModel, handleCl
         </Col>
       </Row>
     </EditorPanelContainer>
-    );
+  );
 }
 
 PipelineTemplateEditorPanel.propTypes = {

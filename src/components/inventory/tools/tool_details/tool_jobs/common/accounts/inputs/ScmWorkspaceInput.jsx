@@ -9,6 +9,7 @@ function ScmWorkspaceInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("workspaceName", selectedOption.name);
     newDataObject.setData("repository", "");
     newDataObject.setData("repoId", "");
+    newDataObject.setData("projectId", "");
     newDataObject.setData("reviewerName", "");
     newDataObject.setData("reviewerId", "");
     setDataObject({...newDataObject});
@@ -20,6 +21,7 @@ function ScmWorkspaceInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("repository", "");
     newDataObject.setData("repoId", "");
+    newDataObject.setData("projectId", "");
     newDataObject.setData("reviewerName", "");
     newDataObject.setData("reviewerId", "");
     setDataObject({...newDataObject});

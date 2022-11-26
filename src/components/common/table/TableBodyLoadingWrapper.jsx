@@ -1,12 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
+import {faExclamationCircle, faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import {errorHelpers} from "components/common/helpers/error-helpers";
 
 // TODO: Fix so when passing in height the height doesn't change after the table loads
-function TableBodyLoadingWrapper({ isLoading, data, tableComponent, noDataMessage, tableHeight }) {
+function TableBodyLoadingWrapper(
+  {
+    isLoading,
+    data,
+    tableComponent,
+    noDataMessage,
+    tableHeight,
+    error,
+  }) {
   const getNoDataMessage = () => {
     if (isLoading === true) {
       return ("Loading Data");
@@ -15,16 +23,35 @@ function TableBodyLoadingWrapper({ isLoading, data, tableComponent, noDataMessag
     return noDataMessage;
   };
 
+  if (error) {
+    return (
+      <CenteredContentWrapper minHeight={tableHeight}>
+        <div className={"error-text-alt mx-3"}>
+          <IconBase
+            icon={faExclamationCircle}
+            isLoading={isLoading}
+            iconSize={"xl"}
+            className={"mr-2"}
+          />
+          {errorHelpers.parseApiErrorForInfoText(undefined, error)}
+        </div>
+      </CenteredContentWrapper>
+    );
+  }
+
   if (!Array.isArray(data) || data.length === 0) {
     return (
-      <Row className={"mx-0 w-100"} style={{height: tableHeight}}>
-        <Col xs={12} className={"my-auto text-center px-0"}>
-          <span className={"info-text"}>
-            <IconBase icon={faExclamationCircle} isLoading={isLoading} className={"mr-2 mt-1"}/>
-            {getNoDataMessage()}
-          </span>
-        </Col>
-      </Row>
+      <CenteredContentWrapper minHeight={tableHeight}>
+        <div className={"info-text-alt mx-3"}>
+          <IconBase
+            iconSize={"xl"}
+            icon={faTriangleExclamation}
+            isLoading={isLoading}
+            className={"mr-2"}
+          />
+          {getNoDataMessage()}
+        </div>
+      </CenteredContentWrapper>
     );
   }
 
@@ -40,7 +67,8 @@ TableBodyLoadingWrapper.propTypes = {
   data: PropTypes.array,
   tableComponent: PropTypes.object,
   noDataMessage: PropTypes.string,
-  tableHeight: PropTypes.string
+  tableHeight: PropTypes.string,
+  error: PropTypes.any,
 };
 
 TableBodyLoadingWrapper.defaultProps = {

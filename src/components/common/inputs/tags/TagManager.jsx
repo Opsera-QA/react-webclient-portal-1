@@ -13,7 +13,20 @@ import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/s
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 import {fieldValidation} from "core/data_model/modelValidation";
 
-function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setDataFunction, allowCreate, inline, allowedTypes, getDisabledTags, placeholderText}) {
+function TagManager(
+  {
+    fieldName,
+    type,
+    dataObject,
+    setDataObject,
+    disabled,
+    setDataFunction,
+    allowCreate,
+    inline,
+    allowedTypes,
+    getDisabledTags,
+    placeholderText,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [field] = useState(dataObject?.getFieldById(fieldName));
@@ -48,7 +61,6 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
     try {
       setIsLoading(true);
       await getTags(cancelSource);
-      await removeOldTags();
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -67,27 +79,8 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
     const response = await adminTagsActions.getAllTagsV2(getAccessToken, cancelSource);
     let tags = response?.data?.data;
 
-    if (isMounted?.current === true && Array.isArray(tags) && tags.length > 0)
-    {
+    if (isMounted?.current === true && Array.isArray(tags) && tags.length > 0) {
       loadTagOptions(tags);
-    }
-  };
-
-  const removeOldTags = async () => {
-    let newTags = [];
-
-    dataObject.getArrayData(fieldName).map((tag, index) => {
-      if (tag["type"] != null && tag["type"] !== "" && tag["value"] != null && tag["value"] !== "")
-      {
-        let tagOption = {type: tag["type"], value: tag["value"]};
-        newTags.push(tagOption);
-      }
-    });
-    let newDataObject = dataObject;
-    newDataObject.setData(fieldName, newTags);
-
-    if (isMounted?.current === true) {
-      setDataObject({...newDataObject});
     }
   };
 

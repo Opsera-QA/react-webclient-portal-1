@@ -10,15 +10,6 @@ AWSActionsHelper.searchECRRepositories = async (awsToolId, getAccessToken, cance
     return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-AWSActionsHelper.getBucketList = async (awsToolId, getAccessToken, cancelTokenSource) => {
-  const apiUrl = "/tools/aws/buckets";
-  const postBody = {
-    toolId: awsToolId
-  };
-  return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-
-};
-
 AWSActionsHelper.getKeyPairs = async (awsToolId, getAccessToken, cancelTokenSource) => {
   const apiUrl = "/tools/aws/keypairs";
   const postBody = {

@@ -19,8 +19,6 @@ import CloseButton from "components/common/buttons/CloseButton";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineInstructionsFieldBase
   from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsFieldBase";
-import useGetPipelineInstructionModelByPipelineStep
-  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import pipelineUserActionAcknowledgementMetadata
   from "@opsera/definitions/constants/pipelines/workflow/acknowledgement/pipelineUserActionAcknowledgement.metadata";
@@ -29,14 +27,25 @@ import { screenContainerHeights } from "components/common/panels/general/screenC
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import useGetPipelineInstructionModelByPipelineStep
+  from "components/workflow/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
+import useGetPipelineById from "hooks/workflow/pipelines/useGetPipelineById";
+import PipelineTaskDetailViewer
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineTaskDetailViewer";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
-const INSTRUCTIONS_HEIGHT = `calc(${screenContainerHeights.TABLE_MINIMUM_HEIGHT_WITH_DESCRIPTION} - 250px)`;
+const INSTRUCTIONS_HEIGHT = `max(calc(${screenContainerHeights.TABLE_MINIMUM_HEIGHT_WITH_DESCRIPTION} - 250px), 435px)`;
 
 export default function PipelineInstructionsAcknowledgementOverlay(
   {
-    pipeline,
+    pipelineId,
+    pipelineActivityLogId,
     loadPipelineFunction,
   }) {
+  const getPipelineByIdHook = useGetPipelineById(pipelineId);
+  const pipeline = getPipelineByIdHook?.pipeline;
+  const isPaused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
   const approvalStep = PipelineHelpers.getPendingApprovalStep(pipeline);
   const toolIdentifier = PipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
   const configuration = DataParsingHelper.parseNestedObject(approvalStep, "tool.configuration");
@@ -126,14 +135,14 @@ export default function PipelineInstructionsAcknowledgementOverlay(
     if (hasStringValue(userActionsStepModel?.getData("message")) === true) {
       return (
         <Row>
-          <Col xs={12} lg={6}>
+          <Col xs={12} lg={8}>
+            {getTextInput()}
+          </Col>
+          <Col xs={12} lg={4}>
             <MessageField
               model={userActionsStepModel}
               fieldName={"message"}
             />
-          </Col>
-          <Col xs={12} lg={6}>
-            {getTextInput()}
           </Col>
         </Row>
       );
@@ -149,6 +158,14 @@ export default function PipelineInstructionsAcknowledgementOverlay(
   };
 
   const getBody = () => {
+    if (getPipelineByIdHook.isLoading === true) {
+      return (
+        <CenterLoadingIndicator
+          customMessage={"Loading Data"}
+        />
+      );
+    }
+
     if (isLoading !== true && error) {
       return (
         <H5FieldSubHeader
@@ -166,7 +183,6 @@ export default function PipelineInstructionsAcknowledgementOverlay(
       <>
         <PipelineInstructionsFieldBase
           showInstructions={true}
-          allowEditing={true}
           pipelineInstructionsModel={pipelineInstructionsModel}
           pipelineInstructionsId={userActionsStepModel?.getData("pipelineInstructionsId")}
           setPipelineInstructionsModel={setPipelineInstructionsModel}
@@ -181,6 +197,15 @@ export default function PipelineInstructionsAcknowledgementOverlay(
     );
   };
 
+  if (isPaused !== true && getPipelineByIdHook.isLoading !== true && isMongoDbId(pipelineActivityLogId) === true) {
+    return (
+      <PipelineTaskDetailViewer
+        pipelineName={pipeline?.name}
+        pipelineActivityLogId={pipelineActivityLogId}
+      />
+    );
+  }
+
   if (hasStringValue(toolIdentifier) !== true || toolIdentifier !== toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION) {
     return null;
   }
@@ -192,7 +217,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
       titleIcon={faFileCheck}
       buttonContainer={getButtonContainer()}
     >
-      <div className={"mx-3 mb-3 mt-2"}>
+      <div className={"mx-3 mt-2"}>
         <div>
           This pipeline requires the following actions be taken at this time.
           Acknowledgement of these actions is required before the pipeline can proceed.
@@ -206,7 +231,8 @@ export default function PipelineInstructionsAcknowledgementOverlay(
 
 PipelineInstructionsAcknowledgementOverlay.propTypes = {
   loadPipelineFunction: PropTypes.func,
-  pipeline: PropTypes.object,
+  pipelineId: PropTypes.string,
+  pipelineActivityLogId: PropTypes.string,
 };
 
 

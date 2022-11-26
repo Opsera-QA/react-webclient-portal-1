@@ -1,6 +1,7 @@
 import { addDays } from "date-fns";
 import { faChartBar } from "@fortawesome/pro-light-svg-icons";
 import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
+import moment from "moment";
 
 export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
   if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")]?.value) {
@@ -313,4 +314,45 @@ export const getTimeDisplay = (mins) => {
     return "0 sec";
   }
   return [arrayToDisplay.slice(0, 2).join(", "),arrayToDisplay.join(", ")];
+};
+
+
+/**
+ * Get score text for given value
+ * @param maturityScore string
+ * @returns Returns score text.
+ */
+export const getMaturityScoreText = (maturityScore) => {
+  switch (maturityScore) {
+    case `elite`:
+      return "Elite";
+    case `high`:
+      return "High";
+    case `medium`:
+      return "Medium";
+    case `low`:
+      return "Low";
+    default:
+      return "NA";
+  }
+};
+
+/**
+ * Get css class from maturityScore
+ * @param maturityScore string
+ * @returns Returns css class name
+ */
+export const getMaturityColorClass = (maturityScore) => {
+  switch (maturityScore) {
+    case `elite`:
+      return "maturity-card-elite-color";
+    case `high`:
+      return "maturity-card-high-color";
+    case `medium`:
+      return "maturity-card-medium-color";
+    case `low`:
+      return "maturity-card-low-color";
+    default:
+      return "maturity-card-default-color";
+  }
 };

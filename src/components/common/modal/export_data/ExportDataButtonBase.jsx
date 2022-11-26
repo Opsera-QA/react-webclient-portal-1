@@ -44,8 +44,8 @@ ExportDataButtonBase.propTypes = {
   launchOverlayFunction: PropTypes.func,
   isLoading: PropTypes.bool,
   showExportPanel: PropTypes.bool,
-  disabled: PropTypes.bool,
   buttonSize: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 ExportDataButtonBase.defaultProps = {

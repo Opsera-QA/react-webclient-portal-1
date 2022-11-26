@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { faFilter, faTimes } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function ActiveFilterDisplayer(
   {
@@ -30,14 +31,22 @@ function ActiveFilterDisplayer(
         <span key={key} className="mx-1 badge badge-light filter-badge">
           <span className="mr-1"><IconBase icon={faFilter} /></span>
           <span>{filter?.text}</span>
-          {getFilterCloseButton(filter?.filterId)}
+          {getFilterCloseButton(filter)}
        </span>
       );
     }
   };
 
-  const removeFilter = (fieldName) => {
-    filterModel?.setDefaultValue(fieldName);
+  const removeFilter = (filter) => {
+    const fieldName = filter?.filterId;
+    const index = DataParsingHelper.parseNumber(filter?.index);
+
+    if (typeof index === "number") {
+      filterModel?.removeArrayItem(fieldName);
+    } else {
+      filterModel?.setDefaultValue(fieldName);
+    }
+
     filterModel?.setData("currentPage", 1);
     loadData(filterModel);
   };

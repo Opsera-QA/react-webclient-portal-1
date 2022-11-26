@@ -6,18 +6,8 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { faFileCheck } from "@fortawesome/pro-light-svg-icons";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import useGetPipelineInstructionModelById
-  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelById";
-import PipelineHelpers from "components/workflow/pipelineHelpers";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import modelHelpers from "components/common/model/modelHelpers";
-import {
-  userActionsPipelineStepMetadata
-} from "components/workflow/plan/step/user_actions/userActionsPipelineStep.metadata";
-import pipelineUserActionAcknowledgementMetadata
-  from "@opsera/definitions/constants/pipelines/workflow/acknowledgement/pipelineUserActionAcknowledgement.metadata";
 import useGetPipelineInstructionModelByPipelineStep
-  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
+  from "components/workflow/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
 
 export default function UserActionsPipelineInstructionsDisplayerOverlay(
   {

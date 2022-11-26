@@ -1,10 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import useGetPipelineInstructions from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import NewPipelineInstructionsOverlay from "components/settings/pipelines/instructions/NewPipelineInstructionsOverlay";
+import useGetPipelineInstructions from "components/workflow/instructions/hooks/useGetPipelineInstructions";
+import NewPipelineInstructionsOverlay from "components/workflow/instructions/NewPipelineInstructionsOverlay";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import {pipelineInstructionsHelper} from "components/workflow/instructions/pipelineInstructions.helper";
+import {useHistory} from "react-router-dom";
 
 export default function PipelineInstructionsSelectInput(
   {
@@ -18,6 +21,7 @@ export default function PipelineInstructionsSelectInput(
     textField,
     allowCreate,
   }) {
+  const history = useHistory();
   const {
     toastContext,
   } = useComponentStateReference();
@@ -57,6 +61,24 @@ export default function PipelineInstructionsSelectInput(
     await loadData();
   };
 
+  const handleEllipsisClick = () => {
+    toastContext.clearOverlayPanel();
+    if (isMongoDbId(model?.getData(fieldName)) === true) {
+      history.push(pipelineInstructionsHelper.getDetailViewLink(model?.getData(fieldName)));
+      return;
+    }
+
+    history.push(pipelineInstructionsHelper.getManagementScreenLink());
+  };
+
+  const getEllipsisTooltipText = () => {
+    if (isMongoDbId(model?.getData(fieldName)) === true) {
+      return ("View selected Instructions details");
+    }
+
+    return "View Instructions Management Screen";
+  };
+
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -69,7 +91,9 @@ export default function PipelineInstructionsSelectInput(
       error={error}
       valueField={valueField}
       textField={textField}
-      handleCreateFunction={allowCreate === true ? launchCreationOverlay : undefined}
+      ellipsisOnClickFunction={handleEllipsisClick}
+      // handleCreateFunction={allowCreate === true ? launchCreationOverlay : undefined}
+      ellipsisTooltipText={getEllipsisTooltipText()}
       disabled={disabled}
       className={className}
       singularTopic={"Pipeline Instruction"}

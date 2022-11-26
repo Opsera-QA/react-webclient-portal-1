@@ -17,18 +17,21 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import MergeSyncTaskWizardAdvancedEditingModePanel
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/file_editor/MergeSyncTaskWizardAdvancedEditingModePanel";
 import MergeSyncTaskWizardSubmitEditedFileButton from "./file_editor/MergeSyncTaskWizardSubmitEditedFileButton";
+import RefreshButton from "../../../../../../../common/buttons/data/RefreshButton";
 
 const MergeSyncTaskWizardCommitViewer = ({
   wizardModel,
   setWizardModel,
   diffFile,
+  theme,
+  inlineDiff,
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [comparisonFileModel, setComparisonFileModel] = useState(undefined);
   const [inEditingMode, setInEditingMode] = useState(false);
-  const { isMounted, cancelTokenSource} = useComponentStateReference();
+  const { isMounted, cancelTokenSource } = useComponentStateReference();
 
   useEffect(() => {
     setComparisonFileModel(undefined);
@@ -57,18 +60,22 @@ const MergeSyncTaskWizardCommitViewer = ({
   };
 
   const getDiffFileList = async () => {
-    const response = await mergeSyncTaskWizardActions.retrieveSelectedFileContent(
-      getAccessToken,
-      cancelTokenSource,
-      wizardModel?.getData("taskId"),
-      wizardModel?.getData("runCount"),
-      diffFile?.committedFile,
-    );
+    const response =
+      await mergeSyncTaskWizardActions.retrieveSelectedFileContent(
+        getAccessToken,
+        cancelTokenSource,
+        wizardModel?.getData("taskId"),
+        wizardModel?.getData("runCount"),
+        diffFile?.committedFile,
+      );
 
     const fileContent = response?.data?.data;
 
     if (isMounted?.current === true && fileContent) {
-      const newComparisonFileModel = modelHelpers.parseObjectIntoModel(fileContent, comparisonFileMetadata);
+      const newComparisonFileModel = modelHelpers.parseObjectIntoModel(
+        fileContent,
+        comparisonFileMetadata,
+      );
       setComparisonFileModel(newComparisonFileModel);
     }
   };
@@ -109,6 +116,8 @@ const MergeSyncTaskWizardCommitViewer = ({
             "destinationContent",
           )}
           sourceContent={comparisonFileModel?.getData("sourceContent")}
+          theme={theme}
+          inlineDiff={inlineDiff}
         />
         {/*<div>*/}
         {/*  <ButtonContainerBase className={"mt-2"}>*/}
@@ -132,20 +141,52 @@ const MergeSyncTaskWizardCommitViewer = ({
       delta.ignoreIncoming = ignoreIncoming;
       deltas[index] = delta;
       comparisonFileModel.setData("deltas", [...deltas]);
-      setComparisonFileModel({...comparisonFileModel});
+      setComparisonFileModel({ ...comparisonFileModel });
     }
   };
 
   if (isLoading === true) {
-    return (<LoadingDialog size={"sm"} message={"Loading Selected File Changes"} />);
+    return (
+      <LoadingDialog
+        size={"sm"}
+        message={"Loading Selected File Changes"}
+      />
+    );
   }
 
+  const getTitleActionButtons = () => {
+    return (
+        <div className={"d-flex justify-content-between"}>
+          <TextFieldBase
+              dataObject={comparisonFileModel}
+              fieldName={"file"}
+              className={"my-auto"}
+          />
+          <div className={"d-flex"}>
+            <RefreshButton
+                loadDataFunction={loadData}
+                isLoading={isLoading}
+            />
+            <MergeSyncTaskWizardSubmitEditedFileButton
+                fileName={comparisonFileModel?.getData("file")}
+                fileContent={comparisonFileModel?.getData("manualContent")}
+                comparisonFileModel={comparisonFileModel}
+                wizardModel={wizardModel}
+                setWizardModel={setWizardModel}
+                className={"ml-2 my-auto"}
+            />
+          </div>
+        </div>
+    );
+  };
+
   return (
-    <div className={"mt-1 mx-3"} style={{ overflowX: "hidden" }}>
-      <TextFieldBase
-        dataObject={comparisonFileModel}
-        fieldName={"file"}
-      />
+
+    <div
+      className={"mt-1 mx-3"}
+      style={{ overflowX: "hidden" }}
+    >
+      {getTitleActionButtons()}
       {getCurrentView()}
     </div>
   );
@@ -155,6 +196,8 @@ MergeSyncTaskWizardCommitViewer.propTypes = {
   wizardModel: PropTypes.object,
   setWizardModel: PropTypes.func,
   diffFile: PropTypes.object,
+  theme: PropTypes.string,
+  inlineDiff: PropTypes.bool
 };
 
 export default MergeSyncTaskWizardCommitViewer;

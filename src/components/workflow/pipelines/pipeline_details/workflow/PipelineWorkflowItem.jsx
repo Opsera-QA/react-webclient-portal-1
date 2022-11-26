@@ -23,7 +23,7 @@ import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import StepToolActivityView from "./step_configuration/StepToolActivityView";
 import pipelineActions from "components/workflow/pipeline-actions";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
-import StepValidationHelper from "./step_configuration/helpers/step-validation-helper";
+import { pipelineValidationHelper } from "components/workflow/pipelines/helpers/pipelineValidation.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import PipelineStepNotificationConfigurationOverlay
   from "components/workflow/plan/step/notifications/PipelineStepNotificationConfigurationOverlay";
@@ -91,7 +91,7 @@ const PipelineWorkflowItem = (
     setIsToolSet(false);
 
     if (item !== undefined) {
-      if (!StepValidationHelper.isValidConfiguration(item.tool)) {
+      if (!pipelineValidationHelper.isPipelineStepToolValid(item.tool)) {
         setItemState("warning");
       }
 

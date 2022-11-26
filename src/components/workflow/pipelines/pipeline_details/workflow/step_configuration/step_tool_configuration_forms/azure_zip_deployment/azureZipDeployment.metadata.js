@@ -42,6 +42,16 @@ const azureZipDeploymentMetadata = {
       minLength: 3,
       maxLength: 63
     },
+    {
+      label:"Use Run Count",
+      id:"useRunCount"
+    },
+    {
+      label:"Container Path",
+      id:"containerPath",        
+      maxLength: 1024,
+      regexDefinitionName: "pathFieldWithoutQuotes",
+    }
   ],
   newObjectFields: {
     azureToolId : "",
@@ -50,7 +60,9 @@ const azureZipDeploymentMetadata = {
     buildStepId: "",
     resourceGroup: "",
     containerName: "",
-    existingContainer: false
+    existingContainer: false,
+    useRunCount: false,
+    containerPath: "",
   }
 };
 

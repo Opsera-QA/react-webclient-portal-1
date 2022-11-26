@@ -7,11 +7,9 @@ import {
   faPlay,
   faSync,
   faSpinner,
-  faStopCircle,
   faRedo,
   faInfoCircle, faRepeat1, faClock,
 } from "@fortawesome/pro-light-svg-icons";
-import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
 import CancelPipelineQueueConfirmationOverlay
   from "components/workflow/pipelines/pipeline_details/queuing/cancellation/CancelPipelineQueueConfirmationOverlay";
 import commonActions from "../../../common/common.actions";
@@ -26,7 +24,10 @@ import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineR
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PipelineStartWizard from "components/workflow/pipelines/pipeline_details/PipelineStartWizard";
-import PipelineUserApprovalButton from "components/workflow/pipelines/action_controls/PipelineUserApprovalButton";
+import PipelineActionControlsUserApprovalButton from "components/workflow/pipelines/action_controls/PipelineActionControlsUserApprovalButton";
+import PipelineActionControlsStopButton from "components/workflow/pipelines/action_controls/PipelineActionControlsStopButton";
+import PipelineActionControlsRefreshButton
+  from "components/workflow/pipelines/action_controls/PipelineActionControlsRefreshButton";
 
 const delayCheckInterval = 15000;
 let internalRefreshCount = 1;
@@ -44,14 +45,6 @@ function PipelineActionControls(
   const [startPipeline, setStartPipeline] = useState(false);
   const [stopPipeline, setStopPipeline] = useState(false);
   const [isApprovalGate, setIsApprovalGate] = useState(false);
-  const [statusMessage, setStatusMessage] = useState(false);
-  const [statusMessageBody, setStatusMessageBody] = useState("");
-  const [freetrialWizardModal, setFreetrialWizardModal] = useState({
-    show: false,
-    pipelineId: "",
-    templateId: "",
-    pipelineOrientation: "",
-  });
   const [hasQueuedRequest, setHasQueuedRequest] = useState(false);
   const [queueingEnabled, setQueueingEnabled] = useState(false);
   const {
@@ -77,25 +70,15 @@ function PipelineActionControls(
         throw error;
       }
     });
-
-    if (workflowStatus === "paused") {
-      setStatusMessage("This pipeline is currently paused awaiting user response");
-      setStatusMessageBody("A paused pipeline requires a user to review and either approve or acknowledge completed actions in order to proceed.");
-    } else {
-      setStatusMessage(false);
-      setStatusMessageBody("");
-    }
   }, [workflowStatus, JSON.stringify(pipeline.workflow)]);
-
 
   useEffect(() => {
     if (pipeline && startPipeline === true) {
-      const state = pipeline?.workflow?.last_step?.status;
+      const state = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status");
 
       if (state !== "running") {
         handleDelayCheckRefresh(pipeline?._id);
-      }
-      else {
+      } else {
         setStartPipeline(false);
       }
     }
@@ -165,14 +148,14 @@ function PipelineActionControls(
     await checkPipelineQueueStatus();
   };
 
-  const handleStopWorkflowClick = async (pipelineId) => {
+  const handleStopWorkflowClick = async () => {
     setResetPipeline(true);
     setWorkflowStatus("stopped");
-    await stopPipelineRun(pipelineId);
+    await stopPipelineRun(pipeline?._id);
     await fetchData();
     setResetPipeline(false);
     setStartPipeline(false);
-    await PipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipelineId);
+    await PipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
     await checkPipelineQueueStatus();
   };
 
@@ -344,26 +327,6 @@ function PipelineActionControls(
     toastContext.clearOverlayPanel();
   };
 
-  const launchFreeTrialPipelineStartWizard = (pipelineId, pipelineOrientation, handleCloseFreeTrialDeploy) => {
-    setFreetrialWizardModal({
-      show: true,
-      pipelineId: pipelineId,
-      templateId: "",
-      pipelineOrientation: pipelineOrientation,
-    });
-  };
-
-  const handleCloseFreeTrialDeploy = () => {
-    setFreetrialWizardModal({
-      show: false,
-      pipelineId: "",
-      pipelineOrientation: "",
-      handleCloseFreeTrialDeploy: "",
-    });
-
-    delayRefresh();
-  };
-
   const handlePipelineWizardRequest = async (pipelineId, restartBln) => {
     handlePipelineStartWizardClose();
     if (restartBln) {
@@ -417,11 +380,13 @@ function PipelineActionControls(
     }
   };
 
+  // TODO: Put into a separate run button
   const handleRunPipelineClick = async (pipelineId) => {
     //check type of pipeline to determine if pre-flight wizard is required
     // is pipeline at the beginning or stopped midway or end of prior?
-    const pipelineType = typeof pipeline.type !== "undefined" && pipeline.type[0] !== undefined ? pipeline.type[0] : ""; //for now type is just the first entry
-    const pipelineTags = typeof pipeline.tags !== "undefined" && pipeline.tags !== undefined ? pipeline.tags : "";
+    const pipelineTypes = DataParsingHelper.parseArray(pipeline.type, []);
+    //for now type is just the first entry
+    const pipelineType = DataParsingHelper.parseString(pipelineTypes[0], "");
 
     let pipelineOrientation = "start";
     const stoppedStepId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.step_id");
@@ -436,9 +401,7 @@ function PipelineActionControls(
       }
     }
 
-    if (pipelineTags.some(el => el.value === "freetrial")) {
-      launchFreeTrialPipelineStartWizard(pipelineId, "", handleCloseFreeTrialDeploy);
-    } else if (pipelineType === "sfdc") {
+    if (pipelineType === "sfdc") {
       launchPipelineStartWizard(pipelineOrientation, pipelineType, pipelineId);
     }else if (pipelineType === "apigee") {
       launchApigeeRunAssistant(pipelineOrientation, pipelineId);
@@ -463,47 +426,54 @@ function PipelineActionControls(
     }
   };
 
+  const getWarningMessage = () => {
+    if (workflowStatus === "paused") {
+      return (
+        <div
+          className={"warning-text-alt text-left mr-2"}
+          style={{cursor: "help"}}
+        >
+          <OverlayTrigger
+            placement="top"
+            delay={{show: 250, hide: 400}}
+            overlay={renderTooltip({message: "A paused pipeline requires a user to review and either approve or acknowledge completed actions in order to proceed."})}>
+            <div>
+              <IconBase
+                icon={faInfoCircle}
+                className={"mr-1"}
+                iconSize={"lg"}
+              />
+              {"This pipeline is currently paused awaiting user response"}
+            </div>
+          </OverlayTrigger>
+        </div>
+      );
+    }
+  };
+
   // TODO: Make base button components for these in the future
   //  and wire up the functions inside those components to clean up PipelineActionControls
   return (
     <div className={className}>
       <div className="d-flex">
-        {statusMessage &&
-        <div className="warning-theme warning-text text-left mr-2">
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: statusMessageBody })}>
-            <IconBase icon={faInfoCircle} className={"mr-1"} style={{ cursor: "help" }} />
-          </OverlayTrigger>
-          {statusMessage}
-        </div>
-        }
-        <div className="py-2" />
+
+        {getWarningMessage()}
+        <div className="flex-fill p-2"></div>
         <div className="text-right btn-group btn-group-sized">
           {workflowStatus === "running" &&
-          <>
-            <Button variant="outline-dark"
-                    className="btn-default"
-                    size="sm"
-                    disabled>
-              <IconBase isLoading={true} className={"mr-1"} />Running</Button>
-            <Button variant="danger"
-                    className="btn-default"
-                    size="sm"
-                    onClick={() => {
-                      handleStopWorkflowClick(pipeline._id);
-                    }}
-                    disabled={PipelineRoleHelper.canStopPipeline(userData, pipeline) !== true}>
-                <IconBase isLoading={stopPipeline} icon={faStopCircle} className="mr-1" />
-              Stop
-            </Button>
-          </>}
+            <PipelineActionControlsStopButton
+              pipeline={pipeline}
+              workflowStatus={workflowStatus}
+              handleStopWorkflowClick={handleStopWorkflowClick}
+              pipelineIsStopping={stopPipeline}
+            />
+          }
 
           {workflowStatus === "paused" &&
-            <PipelineUserApprovalButton
+            <PipelineActionControlsUserApprovalButton
               loadPipelineFunction={fetchData}
               pipeline={pipeline}
+              workflowStatus={workflowStatus}
             />
           }
 
@@ -595,28 +565,12 @@ function PipelineActionControls(
             </OverlayTrigger>
           }
 
-
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Refresh view" })}>
-            <Button variant="secondary"
-                    size="sm"
-                    onClick={() => {
-                      handleRefreshClick();
-                    }}>
-              <IconBase isLoading={isLoading} icon={faSync} /></Button>
-          </OverlayTrigger>
-
+          <PipelineActionControlsRefreshButton
+            handleRefreshWorkflowClick={handleRefreshClick}
+            isLoading={isLoading}
+          />
         </div>
       </div>
-
-      {freetrialWizardModal.show &&
-      <FreeTrialPipelineWizard pipelineId={freetrialWizardModal.pipelineId}
-                               templateId={freetrialWizardModal.templateId}
-                               pipelineOrientation={freetrialWizardModal.pipelineOrientation}
-                               autoRun={true}
-                               handleClose={handleCloseFreeTrialDeploy} />}
     </div>);
 }
 

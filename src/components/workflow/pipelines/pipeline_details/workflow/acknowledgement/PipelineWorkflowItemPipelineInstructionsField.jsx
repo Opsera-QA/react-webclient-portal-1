@@ -11,12 +11,12 @@ import pipelineHelpers from "components/workflow/pipelineHelpers";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import PipelineInstructionsAcknowledgementOverlay
   from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
-import useGetPipelineInstructionModelByPipelineStep
-  from "components/settings/pipelines/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
 import UserActionsPipelineInstructionsDisplayerOverlay
   from "components/workflow/plan/step/user_actions/UserActionsPipelineInstructionsDisplayerOverlay";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import useGetPipelineInstructionModelByPipelineStep
+  from "components/workflow/instructions/hooks/useGetPipelineInstructionModelByPipelineStep";
 
 export default function PipelineWorkflowItemPipelineInstructionsField(
   {
@@ -49,7 +49,7 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
     if (approvalStepToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION) {
       toastContext.showOverlayPanel(
         <PipelineInstructionsAcknowledgementOverlay
-          pipeline={pipeline}
+          pipelineId={pipeline?._id}
           loadPipelineFunction={loadPipelineFunction}
         />,
       );

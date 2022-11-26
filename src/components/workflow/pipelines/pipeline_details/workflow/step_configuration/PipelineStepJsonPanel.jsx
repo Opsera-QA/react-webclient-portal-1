@@ -10,8 +10,8 @@ export default function PipelineStepJsonPanel({ pipelineStepData }) {
         json={pipelineStepData}
         displayDataTypes={false}
         collapsed={false}
-        minimumHeight={"calc(100vh - 18px)"}
-        maximumHeight={"calc(100vh - 18px)"}
+        minimumHeight={"calc(100vh - 325px)"}
+        maximumHeight={"calc(100vh - 325px)"}
       />
     </div>
   );

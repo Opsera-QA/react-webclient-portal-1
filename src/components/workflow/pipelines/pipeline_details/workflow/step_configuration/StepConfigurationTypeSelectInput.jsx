@@ -26,7 +26,7 @@ export default function StepConfigurationTypeSelectInput(
       valueField={valueField}
       textField={textField}
       includeInactive={false}
-      // requireUserEnable={USER_ACTION_STEPS.includes(model?.getData("tool_identifier"))}
+      requireUserEnable={USER_ACTION_STEPS.includes(model?.getData("tool_identifier"))}
     />
   );
 }

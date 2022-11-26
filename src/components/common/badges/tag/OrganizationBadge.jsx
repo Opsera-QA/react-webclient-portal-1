@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { capitalizeFirstLetter, truncateString } from "components/common/helpers/string-helpers";
-import TagBadgeBase from "components/common/badges/tag/TagBadgeBase";
+import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
 import OrganizationBadgeBase from "components/common/badges/tag/OrganizationBadgeBase";
 
 function OrganizationBadge({ tag, className }) {

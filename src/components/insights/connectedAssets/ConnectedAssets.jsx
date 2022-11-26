@@ -31,7 +31,7 @@ function ConnectedAssets() {
   const [calenderActivation, setCalenderActivation] = useState(false);
   const node = useRef();
   const ref = useRef(null);
-  const { isMounted, isSiteAdministrator } = useComponentStateReference();
+  const { isMounted, isSiteAdministrator, isSaasUser } = useComponentStateReference();
 
   useEffect(() => {
     const newModel = new Model({...connectedAssetsMetadata.newObjectFields}, connectedAssetsMetadata, true);
@@ -178,7 +178,7 @@ function ConnectedAssets() {
     );
   };
 
-  if (isSiteAdministrator !== true) {
+  if (isSiteAdministrator !== true && isSaasUser !== true) {
     return (
       <AccessDeniedContainer
         navigationTabContainer={<InsightsSubNavigationBar currentTab={"connectedAssets"}/>}

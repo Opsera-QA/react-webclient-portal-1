@@ -7,12 +7,15 @@ import RichTextField from "components/common/fields/rich_text/RichTextField";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {
   userAcknowledgementMetadata
-} from "components/workflow/plan/step/user_actions/step_summary/UserActionAcknoweledgement.metadata";
+} from "components/workflow/plan/step/user_actions/step_summary/UserActionAcknowledgement.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
+import useGetPipelineInstructionsModel from "components/workflow/instructions/hooks/useGetPipelineInstructionsModel";
+import PipelineInstructionsFieldBase
+  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsFieldBase";
 
 export default function UserActionPipelineStepActionSummaryPanel(
   {
@@ -21,6 +24,10 @@ export default function UserActionPipelineStepActionSummaryPanel(
   }) {
   const acknowledgementData = DataParsingHelper.parseNestedObject(pipelineTaskModel?.getPersistData(), "api_response.threshold.value", {});
   const acknowledgementModel = modelHelpers.parseObjectIntoModel(acknowledgementData, userAcknowledgementMetadata);
+  const {
+    getPipelineInstructionsModel,
+  } = useGetPipelineInstructionsModel();
+  const pipelineInstructionsModel = getPipelineInstructionsModel(pipelineTaskModel?.getData("api_response.instructions"));
 
   const getDynamicFields = () => {
     if (acknowledgementModel?.getData("denied") === true) {
@@ -84,9 +91,11 @@ export default function UserActionPipelineStepActionSummaryPanel(
       </Col>
       {getDynamicFields()}
       <Col xs={12}>
-        <RichTextField
-          fieldName={"api_response.instructions"}
-          model={pipelineTaskModel}
+        <PipelineInstructionsFieldBase
+          fieldName={"instructions"}
+          pipelineInstructionsModel={pipelineInstructionsModel}
+          showInstructions={true}
+          pipelineInstructionsId={pipelineInstructionsModel?.getData("_id")}
         />
       </Col>
     </PipelineTaskSummaryPanelBase>
