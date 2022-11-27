@@ -79,60 +79,58 @@ const PipelineWorkflowItem = (
       throw error;
     });
 
-    const { run_count } = pipeline.workflow;
-
-    setRunCountState(run_count);
-
+    setRunCountState(DataParsingHelper.parseNestedInteger(pipeline, "workflow.run_count", 0));
   }, [JSON.stringify(item), lastStep, JSON.stringify(pipeline.workflow)]);
 
 
   const loadFormData = async (item, lastStep, index, plan) => {
     setCurrentStatus({});
     setItemState("");
-    setIsToolSet(false);
+    setIsToolSet(DataParsingHelper.parseNestedString(item, "tool.tool_identifier") !== false);
 
+    // TOOD: We should make a helper function to handle this
     if (item !== undefined) {
       if (!pipelineValidationHelper.isPipelineStepToolValid(item.tool)) {
         setItemState("warning");
       }
 
-      if (item.tool?.tool_identifier) {
-        setIsToolSet(true);
+      const lastStepSuccess = DataParsingHelper.parseNestedObject(lastStep, "success");
+
+      if (lastStepSuccess) {
+        let stepArrayIndex = plan.findIndex((x) => {
+          if (x._id && x._id.toString() === lastStepSuccess.step_id) {
+            return true;
+          }
+        });
+        if (index === stepArrayIndex) {  //current step is successful, so it's completed
+          setCurrentStatus(lastStepSuccess);
+          setItemState("completed");
+        }
       }
 
-      if (lastStep !== undefined) {
-        if (lastStep?.success && lastStep.success !== undefined && Object.keys(lastStep.success).length > 0) {
-          let stepArrayIndex = plan.findIndex((x) => {
-            if (x._id && x._id.toString() === lastStep.success.step_id) {
-              return true;
-            }
-          });
-          if (index === stepArrayIndex) {  //current step is successful, so it's completed
-            setCurrentStatus(lastStep.success);
-            setItemState("completed");
+      const lastStepRunning = DataParsingHelper.parseNestedObject(lastStep, "running");
+
+      if (lastStepRunning) {
+        let stepArrayIndex = plan.findIndex(x => x?._id?.toString() === lastStepRunning.step_id);
+        if (index === stepArrayIndex) {  //current step is successful, so it's completed
+          setCurrentStatus(lastStepRunning);
+          if (lastStepRunning.paused) {
+            setItemState("paused");
+          } else if (lastStepRunning.status === "stopped") {
+            setItemState("stopped");
+          } else {
+            setItemState("running");
           }
         }
+      }
 
-        if (lastStep.running && lastStep.running !== undefined && Object.keys(lastStep.running).length > 0) {
-          let stepArrayIndex = plan.findIndex(x => x?._id?.toString() === lastStep.running.step_id);
-          if (index === stepArrayIndex) {  //current step is successful, so it's completed
-            setCurrentStatus(lastStep.running);
-            if (lastStep.running.paused) {
-              setItemState("paused");
-            } else if (lastStep.running.status === "stopped") {
-              setItemState("stopped");
-            } else {
-              setItemState("running");
-            }
-          }
-        }
+      const lastStepFailed = DataParsingHelper.parseNestedObject(lastStep, "failed");
 
-        if (lastStep.failed && lastStep.failed !== undefined && Object.keys(lastStep.failed).length > 0) {
-          let stepArrayIndex = plan.findIndex(x => x?._id?.toString() === lastStep.failed.step_id);
-          if (index === stepArrayIndex) {  //current step is successful, so it's completed
-            setCurrentStatus(lastStep.failed);
-            setItemState("failed");
-          }
+      if (lastStepFailed) {
+        let stepArrayIndex = plan.findIndex(x => x?._id?.toString() === lastStepFailed.step_id);
+        if (index === stepArrayIndex) {  //current step is successful, so it's completed
+          setCurrentStatus(lastStepFailed);
+          setItemState("failed");
         }
       }
     }
@@ -404,9 +402,9 @@ const PipelineWorkflowItem = (
           <div className="text-muted mr-1">{item.name || "Un-configured Step"}</div>
 
           <div className={"ml-auto d-flex"}>
-            <div className={"ml-auto d-flex"}>
+            <div className={"ml-auto d-flex mr-1"}>
 
-              {isLoading && <LoadingIcon className={"mr-2 green"} />}
+              {isLoading && <LoadingIcon className={"green"} />}
 
               {isToolSet && !editWorkflow && !isLoading &&
               <>
@@ -416,7 +414,7 @@ const PipelineWorkflowItem = (
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip({ message: "View Errors" })}>
                   <div>
-                    <IconBase icon={faTimesCircle} className={"mr-2 red pointer"}
+                    <IconBase icon={faTimesCircle} className={"ml-2 red pointer"}
                               onClickFunction={() => {
                                 parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
                               }} />
@@ -429,7 +427,7 @@ const PipelineWorkflowItem = (
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip({ message: "The last run of this pipeline was stopped while this step was running." })}>
                   <div>
-                    <IconBase icon={faOctagon} className={"mr-2 danger-red"}
+                    <IconBase icon={faOctagon} className={"ml-2 danger-red"}
                               iconStyling={{ cursor: "help" }}
                     />
                   </div>
@@ -441,7 +439,7 @@ const PipelineWorkflowItem = (
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip({ message: "View last completed log" })}>
                   <div>
-                    <IconBase icon={faCheckCircle} className={"mr-2 green pointer"}
+                    <IconBase icon={faCheckCircle} className={"ml-2 green pointer"}
                               onClickFunction={() => {
                                 parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
                               }} />
@@ -454,7 +452,7 @@ const PipelineWorkflowItem = (
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip({ message: "View running step configuration" })}>
                   <div>
-                  <IconBase icon={faSpinner} className={"mr-2 green pointer"}
+                  <IconBase icon={faSpinner} className={"ml-2 green pointer"}
                                    spinIcon={true}
                                    onClickFunction={() => {
                                      parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
@@ -469,7 +467,7 @@ const PipelineWorkflowItem = (
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip({ message: "Approval of this step is required to proceed. Only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action." })}>
                   <div>
-                    <IconBase icon={faFlag} className={"mr-2 red"} iconStyling={{ cursor: "help" }} />
+                    <IconBase icon={faFlag} className={"ml-2 red"} iconStyling={{ cursor: "help" }} />
                   </div>
                 </OverlayTrigger>}
 
@@ -479,7 +477,7 @@ const PipelineWorkflowItem = (
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip({ message: "Warning: Step configuration settings are incomplete!" })}>
                   <div>
-                  <IconBase icon={faExclamationTriangle} className="mr-2 yellow pointer"
+                  <IconBase icon={faExclamationTriangle} className="ml-2 yellow pointer"
                                    onClickFunction={() => {
                                      setInfoModal({
                                        show: true,
@@ -513,15 +511,20 @@ const PipelineWorkflowItem = (
                   placement="top"
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip({ message: "This step is currently disabled" })}>
-                  <IconBase icon={faBan} className="mr-2 dark-grey pointer"
-                                   onClickFunction={() => {
-                                     setInfoModal({
-                                       show: true,
-                                       header: "Step Disabled",
-                                       message: "This step is currently disabled and will be skipped during a pipeline run.  To enable this step, edit the workflow (via the pipeline editor icon at the top) and mark the step as Active.",
-                                       button: "OK",
-                                     });
-                                   }} />
+                  <div>
+                    <IconBase
+                      icon={faBan}
+                      className={"ml-2 dark-grey pointer"}
+                      onClickFunction={() => {
+                        setInfoModal({
+                          show: true,
+                          header: "Step Disabled",
+                          message: "This step is currently disabled and will be skipped during a pipeline run.  To enable this step, edit the workflow (via the pipeline editor icon at the top) and mark the step as Active.",
+                          button: "OK",
+                        });
+                      }}
+                    />
+                  </div>
                 </OverlayTrigger>
                 }
 
@@ -537,7 +540,7 @@ const PipelineWorkflowItem = (
                     delay={{ show: 250, hide: 400 }}
                     overlay={renderTooltip({ message: "Delete Step" })}>
                     <div>
-                      <IconBase icon={faTrash} className="mr-2 red pointer"
+                      <IconBase icon={faTrash} className="ml-2 red pointer"
                                 onClickFunction={() => {
                                   handleDeleteStepClick(index, pipeline, item);
                                 }} />
@@ -551,7 +554,7 @@ const PipelineWorkflowItem = (
                     overlay={renderTooltip({ message: "Step Setup" })}>
                     <div>
                       <IconBase icon={faPen}
-                                className="text-muted mr-1 pointer"
+                                className="text-muted ml-2 pointer"
                                 onClickFunction={() => {
                                   handleEditClick("step", item.tool, item._id, item);
                                 }} />

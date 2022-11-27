@@ -29,6 +29,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import sourceRepositoryConfigurationMetadata from "./step_configuration/repository/source-repository-configuration-metadata";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 // TODO: Clean up and refactor to make separate components. IE the source repository begin workflow box can be its own component
 function PipelineWorkflow({
@@ -58,25 +59,17 @@ function PipelineWorkflow({
     loadFormData(pipeline);
   }, [refreshCount, JSON.stringify(pipeline)]);
 
-
   const loadFormData = (pipeline) => {
-    if (!pipeline.workflow) {
-      return;
-    }
+    const lastStep = DataParsingHelper.parseNestedObject(pipeline, "workflow.last_step", {});
+    setLastStep(lastStep);
 
-    //setState({ items: pipeline.workflow.plan });
-    setLastStep(pipeline.workflow.last_step);
+    const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status");
+    const isPaused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
 
-    if (pipeline.workflow.last_step !== undefined) {
-      let status = Object.prototype.hasOwnProperty.call(pipeline.workflow.last_step, "status") ? pipeline.workflow.last_step.status : false;
-
-      if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
-        setWorkflowStatus("paused");
-      } else {
-        setWorkflowStatus(status);
-      }
+    if (status === "stopped" && isPaused === true) {
+      setWorkflowStatus("paused");
     } else {
-      setWorkflowStatus(false);
+      setWorkflowStatus(status);
     }
   };
 
@@ -412,7 +405,6 @@ function PipelineWorkflow({
             <PipelineWorkflowItemList
               pipeline={pipeline}
               lastStep={lastStep}
-              lastStepId={lastStep && lastStep.step_id}
               editWorkflow={editWorkflow}
               pipelineId={pipeline._id}
               fetchPlan={fetchPlan}
