@@ -10,9 +10,11 @@ const override = (config, env) => {
       "util": require.resolve('util'),
     },
     alias: Object.assign(config.resolve.alias, {
+      "*": resolve("src"),
       "components": resolve("src/components"),
       "api": resolve("src/api"),
       "core": resolve("src/core"),
+      "css": resolve("src/core/css"),
       "contexts": resolve("src/contexts"),
       "hooks": resolve("src/hooks"),
       "markdown": resolve("src/markdown"),

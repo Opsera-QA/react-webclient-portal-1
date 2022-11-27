@@ -2,7 +2,7 @@ import React  from "react";
 import LoginForm from "components/login/LoginForm";
 import { Route } from "react-router-dom";
 import { LoginCallback } from "@okta/okta-react";
-import Home from "Home";
+import Home from "components/home/Home";
 import Logout from "components/login/Logout";
 import About from "components/about/About";
 import Pricing from "components/about/Pricing";

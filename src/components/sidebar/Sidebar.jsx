@@ -17,7 +17,6 @@ import {
   faEnvelope,
   faTasks,
 } from "@fortawesome/pro-light-svg-icons";
-import "css/general/sidebar.css";
 import IconBase from "components/common/icons/IconBase";
 import ToolchainSidebarNavigationLink from "components/sidebar/links/ToolchainSidebarNavigationLink";
 import useComponentStateReference from "hooks/useComponentStateReference";
