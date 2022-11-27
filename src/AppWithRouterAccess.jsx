@@ -19,6 +19,22 @@ import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { LoginCallback, Security } from "@okta/okta-react";
 
 const isFreeTrial = false;
+const OKTA_CONFIG = {
+  issuer: process.env.REACT_APP_OKTA_ISSUER,
+  client_id: process.env.REACT_APP_OKTA_CLIENT_ID,
+  redirect_uri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
+};
+
+const authClient = new OktaAuth({
+  issuer: OKTA_CONFIG.issuer,
+  clientId: OKTA_CONFIG.client_id,
+  redirectUri: OKTA_CONFIG.redirect_uri,
+  responseMode: "fragment",
+  tokenManager: {
+    autoRenew: true,
+    expireEarlySeconds: 160,
+  },
+});
 
 const AppWithRouterAccess = () => {
   const [loading, setLoading] = useState(false);
@@ -41,23 +57,6 @@ const AppWithRouterAccess = () => {
     //   console.log("app with router access return");
     // };
   }, []);
-
-  const OKTA_CONFIG = {
-    issuer: process.env.REACT_APP_OKTA_ISSUER,
-    client_id: process.env.REACT_APP_OKTA_CLIENT_ID,
-    redirect_uri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
-  };
-
-  const authClient = new OktaAuth({
-    issuer: OKTA_CONFIG.issuer,
-    clientId: OKTA_CONFIG.client_id,
-    redirectUri: OKTA_CONFIG.redirect_uri,
-    responseMode: "fragment",
-    tokenManager: {
-      autoRenew: true,
-      expireEarlySeconds: 160,
-    },
-  });
 
   authClient.start();
 
@@ -195,7 +194,10 @@ const AppWithRouterAccess = () => {
   }
 
   return (
-    <Security oktaAuth={authClient} restoreOriginalUri={restoreOriginalUri}>
+    <Security
+      oktaAuth={authClient}
+      restoreOriginalUri={restoreOriginalUri}
+    >
       {getError()}
         <AuthContextProvider
           userData={userData}
