@@ -9,7 +9,7 @@ import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIden
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function PipelineWorkflowItemList(
   {
@@ -50,7 +50,6 @@ function PipelineWorkflowItemList(
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     }
@@ -170,20 +169,21 @@ function PipelineWorkflowItemList(
 
 
   const setStepStatusClass = (last_step, item) => {
-    const item_id = item._id;
+    const item_id = DataParsingHelper.parseMongoDbId(item?._id);
     let classString = "step-" + item_id;
 
     const isStepValid = pipelineValidationHelper.isPipelineStepToolValid(item.tool);
 
-    let stepStatusClass = item.tool === undefined ? "workflow-step-warning"
-      : item.tool.configuration === undefined ? "workflow-step-warning"
-        : !isStepValid ? "workflow-step-warning"
-          : !item.active ? "workflow-step-disabled"
-            : "";
+    let stepStatusClass =
+      !item.active
+        ? "workflow-step-disabled"
+        : !isStepValid
+          ? "workflow-step-warning"
+          : "";
 
     //if operations have occurred and the step is still valid
     if (typeof (last_step) !== "undefined" && isStepValid) {
-      const { success, running, failed } = last_step;
+      const {success, running, failed} = last_step;
 
       if (success && success.step_id === item_id) {
         stepStatusClass = "workflow-step-success";
