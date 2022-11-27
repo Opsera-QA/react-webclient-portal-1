@@ -46,6 +46,7 @@
     "no-duplicate-imports": "error",
     "react/prop-types": "error",
     "react/no-unescaped-entities": "error",
+    "react/no-unsafe-optional-chaining": "off",
     "react/display-name": "error",
     "react/jsx-no-target-blank": "error",
     "no-prototype-builtins": "error",
