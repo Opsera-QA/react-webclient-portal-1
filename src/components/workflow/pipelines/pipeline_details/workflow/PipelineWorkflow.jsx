@@ -222,8 +222,8 @@ function PipelineWorkflow({
     return (
       <div className="source workflow-module-container workflow-module-container-width mt-2 mx-auto">
         {!softLoading ?
-          <div className="title-text-6 pt-2 text-center mx-auto">Start of Workflow</div> :
-          <div className="title-text-6 pt-2 text-center mx-auto green">
+          <div className="text-muted title-text-6 pt-2 text-center mx-auto">Start of Workflow</div> :
+          <div className="text-muted title-text-6 pt-2 text-center mx-auto green">
             <LoadingIcon className={"mr-1"} /> Processing Workflow...</div>
         }
 
@@ -288,7 +288,7 @@ function PipelineWorkflow({
               overlay={renderTooltip({ message: "View Settings" })}>
               <div>
                 <IconBase icon={faSearchPlus}
-                          className={"text-muted mr-2 pointer"}
+                          className={"text-muted ml-2 pointer"}
                           onClickFunction={() => {
                             showWebhookConfigurationSummary();
                           }}/>
@@ -304,7 +304,7 @@ function PipelineWorkflow({
                   overlay={renderTooltip({ message: "Configure pipeline level settings such as source repository and webhook events" })}>
                   <div>
                     <IconBase icon={faCog}
-                              className={"text-muted pointer"}
+                              className={"text-muted pointer ml-2"}
                               onClickFunction={() => {
                                 handleEditSourceSettingsClick();
                               }}/>
@@ -319,7 +319,7 @@ function PipelineWorkflow({
                   overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
                   <div>
                     <IconBase icon={faCog}
-                              className={"text-muted mx-1"} />
+                              className={"text-muted ml-2"} />
                   </div>
                 </OverlayTrigger>
               </>
@@ -438,7 +438,7 @@ function PipelineWorkflow({
 
 
           <div
-            className="workflow-module-container workflow-module-container-width p-2 mb-4 text-center mx-auto">
+            className="title-text-6 text-muted workflow-module-container workflow-module-container-width p-2 mb-4 text-center mx-auto">
             End of Workflow
           </div>
         </div>
