@@ -5,7 +5,7 @@ import LoadingDialog from "./components/common/status_notifications/loading";
 import AppRoutes from "routes/AppRoutes";
 import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
 import { generateUUID } from "components/common/helpers/string-helpers";
-import FreeTrialAppRoutes from "FreeTrialAppRoutes";
+import FreeTrialAppRoutes from "routes/FreeTrialAppRoutes";
 import LoginForm from "components/login/LoginForm";
 import Logout from "components/login/Logout";
 import OpseraFooter from "components/footer/OpseraFooter";
