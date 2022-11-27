@@ -1,15 +1,3 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "src/*": ["src/*"],
-      "components/*": ["src/components/*"],
-      "api/*": ["src/api/*"],
-      "contexts/*": ["src/contexts/*"],
-      "core/*": ["src/core/*"],
-      "routes/*": ["src/routes/*"],
-      "utils/*": ["src/utils/*"]
-    }
-  },
-  "include": ["src", "src/components"]
+  "extends": "./paths.json"
 }

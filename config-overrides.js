@@ -1,5 +1,4 @@
 const override = (config, env) => {
-  console.log("in override");
   config.resolve = {
     fallback: {
       "buffer": require.resolve('buffer'),
@@ -9,18 +8,8 @@ const override = (config, env) => {
     },
     extensions: ['.js', '.jsx'],
   };
-  env.compilerOptions = {
-    "baseUrl": "src",
-    "paths": {
-      "src/*": ["src/*"],
-      "components/*": ["src/components/*"],
-      "api/*": ["src/api/*"],
-      "contexts/*": ["src/contexts/*"],
-      "core/*": ["src/core/*"],
-      "utils/*": ["src/utils/*"],
-    },
-  };
 
+  console.log("config: " + JSON.stringify(config));
   return config;
 };
 
