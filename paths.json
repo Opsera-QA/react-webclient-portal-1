@@ -2,11 +2,13 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
+      "*": ["src/*"],
       "components/*": ["components/*"],
       "api/*": ["api/*"],
       "contexts/*": ["contexts/*"],
       "core/*": ["core/*"],
       "routes/*": ["routes/*"],
+      "temp-library-components/*": ["temp-library-components/*"],
       "utils/*": ["utils/*"]
     }
   },
