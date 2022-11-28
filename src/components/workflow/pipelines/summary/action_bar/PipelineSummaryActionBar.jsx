@@ -1,7 +1,6 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import ActionBarTransferPipelineButton from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarTransferPipelineButton";
-import ActionBarPublishPipelineButton from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarPublishPipelineButton";
 import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -11,6 +10,10 @@ import ActionBarDuplicatePipelineButton
 import ActionBarDeletePipelineButton from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarDeletePipelineButton";
 import ActionBarShowPipelineSummaryOverlayButton
   from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarShowPipelineSummaryOverlayButton";
+import ActionBarPublishPipelineToCustomerCatalogButton
+  from "components/workflow/pipelines/summary/action_bar/buttons/publish/ActionBarPublishPipelineToCustomerCatalogButton";
+import ActionBarPublishPipelineButton
+  from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarPublishPipelineButton";
 
 function PipelineSummaryActionBar({pipelineModel, pipeline, loadPipeline}) {
   const toastContext = useContext(DialogToastContext);
@@ -33,6 +36,10 @@ function PipelineSummaryActionBar({pipelineModel, pipeline, loadPipeline}) {
       <ActionBarPublishPipelineButton
         pipeline={pipeline}
       />
+      {/*<ActionBarPublishPipelineToCustomerCatalogButton*/}
+      {/*  pipelineModel={pipelineModel}*/}
+      {/*  className={"ml-3"}*/}
+      {/*/>*/}
       <ActionBarDuplicatePipelineButton
         pipeline={pipeline}
       />

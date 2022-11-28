@@ -1,28 +1,32 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { faShareSquare } from "@fortawesome/pro-light-svg-icons";
+import {faShareAll} from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import PublishDashboardToPrivateCatalogButton
-  from "components/insights/marketplace/dashboards/templates/private/publish/PublishDashboardToPrivateCatalogButton";
 import CancelButton from "components/common/buttons/CancelButton";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
+import PublishPipelineToPrivateCatalogButton
+  from "components/workflow/pipelines/summary/action_bar/buttons/publish/PublishPipelineToPrivateCatalogButton";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 
 export default function PublishCustomerPipelineOverlay(
   {
-    dashboardModel,
+    pipelineModel,
   }) {
-  const [dashboardModelCopy, setDashboardModelCopy] = useState(undefined);
+  const [pipelineModelCopy, setPipelineModelCopy] = useState(undefined);
+  const {
+    userData,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (dashboardModel) {
-      setDashboardModelCopy({...dashboardModel.clone()});
+    if (pipelineModel) {
+      setPipelineModelCopy({...pipelineModel.clone()});
     }
-  }, [dashboardModel]);
+  }, [pipelineModel]);
 
   const {
     toastContext,
@@ -42,40 +46,41 @@ export default function PublishCustomerPipelineOverlay(
             size={"md"}
             className={"mr-2"}
           />
-          <PublishDashboardToPrivateCatalogButton
-            dashboardModel={dashboardModelCopy}
+          <PublishPipelineToPrivateCatalogButton
+            pipelineId={pipelineModelCopy?.getMongoDbId()}
+            roles={pipelineModelCopy?.getMongoDbId()}
           />
         </div>
       </ButtonContainerBase>
     );
   };
 
-  if (dashboardModel?.canPublishDashboardToPrivateCatalog() !== true) {
+  if (PipelineRoleHelper.canPublishPipelineToCatalog(userData, pipelineModel?.getCurrentData()) !== true) {
     return null;
   }
 
   return (
     <CenterOverlayContainer
       showPanel={true}
-      titleText={`Publish Dashboard to Private Catalog`}
+      titleText={`Publish Pipeline to Private Catalog`}
       showToasts={true}
-      titleIcon={faShareSquare}
+      titleIcon={faShareAll}
       closePanel={closePanelFunction}
       buttonContainer={getButtonContainer()}
     >
       <div className={"p-3"}>
         <H5FieldSubHeader
-          subheaderText={"Are you sure you would like to publish this Dashboard to your private catalog?"}
+          subheaderText={"Are you sure you would like to publish this Pipeline to your private catalog?"}
           className={"mb-2"}
         />
         <div className={"my-3"}>
-          {`Please specify the access rule restrictions for viewing this Dashboard in your organization's private catalog. By default, it copies the access rules applied to the Dashboard.`}
+          {`Please specify the access rule restrictions for viewing this Pipeline in your organization's private catalog. By default, it copies the access rules applied to the Pipeline.`}
         </div>
         <Row>
           <Col xs={12}>
             <RoleAccessInput
-              model={dashboardModelCopy}
-              setModel={setDashboardModelCopy}
+              model={pipelineModelCopy}
+              setModel={setPipelineModelCopy}
             />
           </Col>
         </Row>
@@ -85,5 +90,5 @@ export default function PublishCustomerPipelineOverlay(
 }
 
 PublishCustomerPipelineOverlay.propTypes = {
-  dashboardModel: PropTypes.object,
+  pipelineModel: PropTypes.object,
 };

@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { faShareSquare } from "@fortawesome/pro-light-svg-icons";
+import {faShareAll} from "@fortawesome/pro-light-svg-icons";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {
-  customerDashboardTemplateCatalogActions
-} from "components/insights/marketplace/dashboards/templates/private/customerDashboardTemplateCatalog.actions";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
+import pipelineActions from "components/workflow/pipeline-actions";
+import {
+  customerPipelineTemplateCatalogActions
+} from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
 
 export default function PublishPipelineToPrivateCatalogButton(
   {
     disabled,
     className,
     buttonSize,
-    dashboardModel,
+    pipelineId,
+    roles,
   }) {
   const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
   const {
@@ -23,28 +25,22 @@ export default function PublishPipelineToPrivateCatalogButton(
     getAccessToken,
   } = useComponentStateReference();
 
-  const addDashboardToCustomerCatalog = async () => {
+  const handlePublishPipelineFunction = async () => {
     try {
       setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
-      await customerDashboardTemplateCatalogActions.publishTemplateV2(
+      await customerPipelineTemplateCatalogActions.publishPipelineToCustomerCatalog(
         getAccessToken,
         cancelTokenSource,
-        dashboardModel?.getMongoDbId(),
-        dashboardModel?.getData("roles"),
+        pipelineId,
+        roles,
       );
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
-      toastContext.showFormSuccessToast(
-        `Published Dashboard to your organization's Private Catalog`,
-      );
-      toastContext.removeInlineMessage();
+      toastContext.showSystemInformationToast("You have published a copy of this pipeline template in your organization's private catalog for others in your organization to use.  Overall settings of the pipeline are shared but no tools or activity logs have been duplicated in this process.");
       toastContext.clearOverlayPanel();
     } catch (error) {
       if (isMounted?.current === true) {
         setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);
-        toastContext.showInlineErrorMessage(
-          error,
-          `Error Publishing Dashboard to your organization's Private Catalog:`,
-        );
+        toastContext.showSystemErrorToast(error, "There was an issue publishing this Pipeline");
       }
     }
   };
@@ -52,22 +48,23 @@ export default function PublishPipelineToPrivateCatalogButton(
   return (
     <VanityButtonBase
       className={className}
-      icon={faShareSquare}
+      icon={faShareAll}
       disabled={disabled}
-      onClickFunction={addDashboardToCustomerCatalog}
+      onClickFunction={handlePublishPipelineFunction}
       buttonSize={buttonSize}
       buttonState={buttonState}
-      normalText={"Publish Dashboard to Private Catalog"}
-      errorText={"Failed to Publish Dashboard to Private Catalog"}
-      successText={"Successfully Published Dashboard to Private Catalog"}
-      busyText={"Publishing Dashboard to Private Catalog"}
+      normalText={"Publish Pipeline to Private Catalog"}
+      errorText={"Failed to Publish Pipeline to Private Catalog"}
+      successText={"Successfully Published Pipeline to Private Catalog"}
+      busyText={"Publishing Pipeline to Private Catalog"}
     />
   );
 }
 
 PublishPipelineToPrivateCatalogButton.propTypes = {
-  dashboardModel: PropTypes.object,
+  pipelineId: PropTypes.string,
   className: PropTypes.string,
   disabled: PropTypes.bool,
   buttonSize: PropTypes.string,
+  roles: PropTypes.array,
 };
