@@ -212,6 +212,10 @@ export default function RoleAccessInput(
     }
   };
 
+  const clearRolesArray = () => {
+    validateAndSetData([]);
+  };
+
   const getDisabledUsers = () => {
     if (roles.length > 0) {
       const disabledUsers = [];
@@ -458,6 +462,7 @@ export default function RoleAccessInput(
         addAllowed={lastRoleComplete() && disabled !== true}
         helpComponent={getHelpComponent()}
         incompleteRowMessage={getIncompleteRoleMessage()}
+        clearDataFunction={disabled !== true ? clearRolesArray : undefined}
       >
         <div>
           <div className={"filter-bg-white"}>
