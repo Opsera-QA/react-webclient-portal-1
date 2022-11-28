@@ -6,14 +6,14 @@ import {AuthContext} from "contexts/AuthContext";
 import {Col, Button} from "react-bootstrap";
 import { apiServerUrl } from "config";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
-function SfdcOAuthConnectButton({ model, authType, toolId }) {
+function SfdcOAuthConnectButton({ model, authType, toolId, visible }) {
 
   const { getUserRecord, getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useState("");
-  const [oauthDetails, setOauthDetails] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -26,7 +26,7 @@ function SfdcOAuthConnectButton({ model, authType, toolId }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadOAuthDetails(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -36,21 +36,33 @@ function SfdcOAuthConnectButton({ model, authType, toolId }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, [authType]);
+  }, []);
 
-  const loadOAuthDetails = async (cancelSource = cancelTokenSource) => {
-    if (authType === "basic") {      
-      return;
+  const loadData = async () => {    
+    try { 
+      const user = await getUserRecord();
+      setUserId(user._id);
+    } catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        toastContext.showErrorDialog(error);
+      }
     }
+  };
+
+  const connectToSfdcOauth = async () => {    
+    const toolUrl = model.getData("toolURL");
+    const userName = model.getData("accountUsername");
+    const redirectUri = `${apiServerUrl}/auth/sfdc`;
     try {
       setIsLoading(true);
-      const user = await getUserRecord();
-      setUserId(user._id);      
       const response = await sfdcActions.getOauthDetails(
         getAccessToken,
-        cancelSource
+        cancelTokenSource
       );
-      setOauthDetails(response?.data);
+  
+      const url = `${toolUrl}/services/oauth2/authorize?client_id=${response?.data?.clientId}&redirect_uri=${redirectUri}&response_type=code&login_hint=${userName}&code_challenge=${response?.data?.challenge}&state=${userId}|${toolId}|${toolUrl}|${userName}|${redirectUri}|${response?.data?.token}&display=popup&prompt=login%20consent`;
+      window.open(url);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -58,19 +70,10 @@ function SfdcOAuthConnectButton({ model, authType, toolId }) {
       }
     } finally {
       setIsLoading(false);
-    }
+    }  
   };
 
-  const connectToSfdcOauth = () => {    
-    const toolUrl = model.getData("toolURL");
-    const userName = model.getData("accountUsername");
-    const redirectUri = `${apiServerUrl}/auth/sfdc`;
-
-    const url = `${toolUrl}/services/oauth2/authorize?client_id=${oauthDetails?.clientId}&redirect_uri=${redirectUri}&response_type=code&login_hint=${userName}&code_challenge=${oauthDetails?.challenge}&state=${userId}|${toolId}|${toolUrl}|${userName}|${redirectUri}|${oauthDetails?.token}&display=popup`;    
-    window.open(url);
-  };
-
-  if (authType === "basic") {
+  if (authType === "basic" || !visible) {
     return null;
   }
 
@@ -82,9 +85,9 @@ function SfdcOAuthConnectButton({ model, authType, toolId }) {
             size="sm"
             variant="outline-secondary"
             onClick={() => connectToSfdcOauth()}
-            disabled={model.getData("toolURL") === "" || model.getData("accountUsername") === "" || isLoading || !oauthDetails}
+            disabled={model.getData("toolURL") === "" || model.getData("accountUsername") === "" || isLoading}
           >
-            Re-Connect OAuth
+            {isLoading ? <>Launching OAuth Screen <LoadingIcon className={"mr-2"} /></> : "Re-Connect OAuth"}
           </Button>
         </Col>
       </>
@@ -97,9 +100,9 @@ function SfdcOAuthConnectButton({ model, authType, toolId }) {
           size="sm"
           variant="success"
           onClick={() => connectToSfdcOauth()}
-          disabled={model.getData("toolURL") === "" || model.getData("accountUsername") === "" || isLoading || !oauthDetails}
+          disabled={model.getData("toolURL") === "" || model.getData("accountUsername") === "" || isLoading}
         >
-          Connect OAuth
+          {isLoading ? <>Launching OAuth Screen <LoadingIcon className={"mr-2"} /></> : "Connect OAuth"}
         </Button>
       </Col>
     </>
@@ -111,6 +114,7 @@ SfdcOAuthConnectButton.propTypes = {
   model: PropTypes.object,
   authType: PropTypes.string,
   toolId: PropTypes.string,
+  visible: PropTypes.bool,
 };
 
 export default SfdcOAuthConnectButton;
