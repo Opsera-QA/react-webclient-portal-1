@@ -13,6 +13,8 @@ export default function PipelineTemplateManagement() {
     isLoading,
     loadData,
     error,
+    pipelineTemplateFilterModel,
+    setPipelineTemplateFilterModel,
   } = useGetPlatformPipelineTemplates();
   const {
     accessRoleData,
@@ -39,6 +41,8 @@ export default function PipelineTemplateManagement() {
         isLoading={isLoading}
         loadData={loadData}
         error={error}
+        pipelineTemplateFilterModel={pipelineTemplateFilterModel}
+        setPipelineTemplateFilterModel={setPipelineTemplateFilterModel}
       />
     </ScreenContainer>
   );
