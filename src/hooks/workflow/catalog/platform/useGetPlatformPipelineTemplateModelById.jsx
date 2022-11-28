@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import useGetCustomerPipelineTemplateById from "hooks/workflow/catalog/customer/useGetCustomerPipelineTemplateById";
 import useGetPlatformPipelineTemplateModel from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplateModel";
+import useGetPlatformPipelineTemplateById from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplateById";
 
 export default function useGetPlatformPipelineTemplateModelById(
   id,
@@ -12,7 +12,7 @@ export default function useGetPlatformPipelineTemplateModelById(
     error,
     setError,
     loadData,
-  } = useGetCustomerPipelineTemplateById(id, handleErrorFunction);
+  } = useGetPlatformPipelineTemplateById(id, handleErrorFunction);
   const {getPlatformPipelineTemplateModel} = useGetPlatformPipelineTemplateModel();
   const [pipelineTemplateModel, setPipelineTemplateModel] = useState(undefined);
 

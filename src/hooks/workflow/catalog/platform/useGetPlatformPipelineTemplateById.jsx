@@ -36,7 +36,7 @@ export default function useGetPlatformPipelineTemplateById(
       return;
     }
 
-    const response = await platformPipelineTemplateCatalogActions.getCustomerCatalogPipelineTemplateById(
+    const response = await platformPipelineTemplateCatalogActions.getPlatformCatalogPipelineTemplateById(
       getAccessToken,
       cancelTokenSource,
       id,

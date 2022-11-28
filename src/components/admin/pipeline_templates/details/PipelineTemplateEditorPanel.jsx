@@ -15,6 +15,9 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import JsonInput from "components/common/inputs/object/JsonInput";
 import TagManager from "components/common/inputs/tags/TagManager";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import {
+  platformPipelineTemplateCatalogActions
+} from "components/workflow/catalog/platform/platformPipelineTemplateCatalog.actions";
 
 function PipelineTemplateEditorPanel({templateModel, setTemplateModel, handleClose}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -29,10 +32,10 @@ function PipelineTemplateEditorPanel({templateModel, setTemplateModel, handleClo
   };
 
   const updateTemplate = async () => {
-    return await pipelineTemplateActions.updateTemplateV2(
+    return await platformPipelineTemplateCatalogActions.updatePlatformPipelineTemplate(
       getAccessToken,
       cancelTokenSource,
-      templateModel
+      templateModel,
     );
   };
 
