@@ -4,7 +4,7 @@ import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/Rol
 import {AuthContext} from "contexts/AuthContext";
 import pipelineTemplateActions from "components/admin/pipeline_templates/pipelineTemplate.actions";
 
-function PipelineTemplateRoleAccessInput({fieldName, dataObject, setDataObject, disabled, visible}) {
+export default function PipelineTemplateRoleAccessInput({fieldName, dataObject, setDataObject, disabled, visible}) {
   const { getAccessToken } = useContext(AuthContext);
 
   const saveData = async (newRoles) => {
@@ -42,7 +42,5 @@ PipelineTemplateRoleAccessInput.propTypes = {
 };
 
 PipelineTemplateRoleAccessInput.defaultProps = {
-  fieldName: "access"
+  fieldName: "roles"
 };
-
-export default PipelineTemplateRoleAccessInput;

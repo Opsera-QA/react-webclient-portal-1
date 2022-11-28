@@ -357,9 +357,23 @@ pipelineActions.getLogs = async (pipelineId, getAccessToken) => {
   return response;
 };
 
-pipelineActions.deployTemplateV2 = async (getAccessToken, cancelTokenSource, templateId) => {
+pipelineActions.deployTemplateV2 = async (
+  getAccessToken,
+  cancelTokenSource,
+  templateId,
+  roles,
+) => {
   const apiUrl = `/pipelines/deploy/${templateId}`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  const postBody = {
+    roles: roles,
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody
+  );
 };
 
 pipelineActions.approve = async (templateId, postBody, getAccessToken) => {

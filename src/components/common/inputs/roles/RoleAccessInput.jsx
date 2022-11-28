@@ -28,6 +28,7 @@ export default function RoleAccessInput(
     disabled,
     visible,
   }) {
+  const field = model?.getFieldById(fieldName);
   const [userList, setUserList] = useState([]);
   const [groupList, setGroupList] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -43,7 +44,6 @@ export default function RoleAccessInput(
     userData,
     getAccessToken,
   } = useComponentStateReference();
-  const field = model?.getFieldById(fieldName);
 
   useEffect(() => {
     if (isSaasUser === false && visible !== true) {
