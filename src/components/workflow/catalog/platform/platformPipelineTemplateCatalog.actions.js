@@ -2,7 +2,7 @@ import baseActions from "utils/actionsBase";
 
 export const platformPipelineTemplateCatalogActions = {};
 
-platformPipelineTemplateCatalogActions.getCustomerCatalogPipelineTemplates = async (
+platformPipelineTemplateCatalogActions.getPlatformCatalogPipelineTemplates = async (
   getAccessToken,
   cancelTokenSource,
   pipelineCatalogFilterModel,
@@ -24,7 +24,7 @@ platformPipelineTemplateCatalogActions.getCustomerCatalogPipelineTemplates = asy
   );
 };
 
-platformPipelineTemplateCatalogActions.getCustomerCatalogPipelineTemplateById = async (
+platformPipelineTemplateCatalogActions.getPlatformCatalogPipelineTemplateById = async (
   getAccessToken,
   cancelTokenSource,
   templateId,
@@ -38,7 +38,7 @@ platformPipelineTemplateCatalogActions.getCustomerCatalogPipelineTemplateById = 
   );
 };
 
-platformPipelineTemplateCatalogActions.publishPipelineToCustomerCatalog = async (
+platformPipelineTemplateCatalogActions.publishPipelineToPlatformCatalog = async (
   getAccessToken,
   cancelTokenSource,
   pipelineId,
@@ -57,13 +57,12 @@ platformPipelineTemplateCatalogActions.publishPipelineToCustomerCatalog = async 
   );
 };
 
-platformPipelineTemplateCatalogActions.updateCustomerPipelineTemplate = async (
+platformPipelineTemplateCatalogActions.updatePlatformPipelineTemplate = async (
   getAccessToken,
   cancelTokenSource,
-  templateId,
   pipelineTemplateModel,
 ) => {
-  const apiUrl = `/workflow/templates/platform/${templateId}`;
+  const apiUrl = `/workflow/templates/platform/${pipelineTemplateModel?.getMongoDbId()}`;
   return await baseActions.apiPutCallV2(
     getAccessToken,
     cancelTokenSource,
@@ -72,7 +71,7 @@ platformPipelineTemplateCatalogActions.updateCustomerPipelineTemplate = async (
   );
 };
 
-platformPipelineTemplateCatalogActions.deleteCustomerPipelineTemplate = async (
+platformPipelineTemplateCatalogActions.deletePlatformPipelineTemplate = async (
   getAccessToken,
   cancelTokenSource,
   templateId,

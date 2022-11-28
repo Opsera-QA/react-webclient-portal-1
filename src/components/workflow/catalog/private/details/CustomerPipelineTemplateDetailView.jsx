@@ -3,7 +3,6 @@ import {useParams} from "react-router-dom";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import TagManagementSubNavigationBar from "components/settings/tags/TagManagementSubNavigationBar";
 import useGetCustomerPipelineTemplateModelById
   from "hooks/workflow/catalog/customer/useGetCustomerPipelineTemplateModelById";
 import pipelineTemplateMetadata from "components/admin/pipeline_templates/pipelineTemplate.metadata";

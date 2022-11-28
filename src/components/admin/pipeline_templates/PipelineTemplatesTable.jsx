@@ -15,7 +15,13 @@ import {faStream} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import NewPipelineTemplateWizard from "components/admin/pipeline_templates/create/wizard/NewPipelineTemplateWizard";
 
-function PipelineTemplatesTable({ pipelineTemplates, loadData, isLoading }) {
+function PipelineTemplatesTable(
+  {
+    pipelineTemplates,
+    loadData,
+    isLoading,
+    error,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   const fields = templateEditorMetadata.fields;
@@ -62,6 +68,7 @@ function PipelineTemplatesTable({ pipelineTemplates, loadData, isLoading }) {
         data={pipelineTemplates}
         columns={columns}
         rowStyling={rowStyling}
+        error={error}
       />
     );
   };
@@ -75,7 +82,7 @@ function PipelineTemplatesTable({ pipelineTemplates, loadData, isLoading }) {
         titleIcon={faStream}
         title={"Pipeline Templates"}
         type={"Pipeline Template"}
-        className="px-2 pb-2"
+        className={"px-2 pb-2"}
       />
   );
 }
@@ -84,6 +91,7 @@ PipelineTemplatesTable.propTypes = {
   pipelineTemplates: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
+  error: PropTypes.any,
 };
 
 export default PipelineTemplatesTable;

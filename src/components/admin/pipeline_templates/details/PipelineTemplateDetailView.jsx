@@ -1,9 +1,6 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
-import { useParams } from "react-router-dom";
-import Model from "core/data_model/model";
+import React from "react";
+import {useParams} from "react-router-dom";
 import pipelineTemplateActions from "components/admin/pipeline_templates/pipelineTemplate.actions";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
 import templateEditorMetadata from "components/admin/pipeline_templates/pipelineTemplate.metadata";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
@@ -11,110 +8,70 @@ import ActionBarShowJsonButton from "components/common/actions/buttons/ActionBar
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import PipelineTemplateDetailPanel from "components/admin/pipeline_templates/details/PipelineTemplateDetailPanel";
-import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import PipelineTemplateManagementSubNavigationBar
   from "components/admin/pipeline_templates/PipelineTemplateManagementSubNavigationBar";
-import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import useGetPlatformPipelineTemplateModelById
+  from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplateModelById";
+import {
+  platformPipelineTemplateCatalogActions
+} from "components/workflow/catalog/platform/platformPipelineTemplateCatalog.actions";
 
 function PipelineTemplateDetailView() {
   const {templateId} = useParams();
-  const toastContext = useContext(DialogToastContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
-  const [templateData, setTemplateData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      await getRoles(cancelSource);
-    }
-    catch (error) {
-      if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
-        console.error(error);
-        toastContext.showLoadingErrorDialog(error);
-      }
-    }
-    finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-
-      if (templateId != null && userRoleAccess?.OpseraAdministrator === true) {
-        await getTemplate(cancelSource);
-      }
-    }
-  };
-
-  const getTemplate = async (cancelSource = cancelTokenSource) => {
-    const response = await pipelineTemplateActions.getTemplateByIdV2(getAccessToken, cancelSource, templateId);
-    // TODO: remove grabbing first when it only sends object instead of array
-    if (isMounted?.current === true && response?.data?.length > 0) {
-      setTemplateData(new Model(response.data[0], templateEditorMetadata, false));
-    }
-  };
+  const {
+    isOpseraAdministrator,
+    getAccessToken,
+    cancelTokenSource,
+    accessRoleData,
+  } = useComponentStateReference();
+  const {
+    pipelineTemplateModel,
+    setPipelineTemplateModel,
+    isLoading,
+  } = useGetPlatformPipelineTemplateModelById(templateId);
 
   const getActionBar = () => {
-    if (templateData == null) {
+    if (pipelineTemplateModel == null) {
       return <></>;
     }
 
     return (
       <ActionBarContainer>
         <div>
-          <ActionBarBackButton path={"/admin/templates"} />
+          <ActionBarBackButton path={"/admin/templates"}/>
         </div>
         <div className={"d-flex"}>
-          <ActionBarShowJsonButton dataObject={templateData} />
-          {accessRoleData?.OpseraAdministrator === true
-            && <ActionBarDeleteButton2 relocationPath={"/admin/templates"} dataObject={templateData} handleDelete={deleteTemplate}/>}
+          <ActionBarShowJsonButton dataObject={pipelineTemplateModel}/>
+          <ActionBarDeleteButton2
+            relocationPath={"/admin/templates"}
+            dataObject={pipelineTemplateModel}
+            handleDelete={deleteTemplate}
+          />
         </div>
       </ActionBarContainer>
     );
   };
 
   const deleteTemplate = () => {
-    return pipelineTemplateActions.deleteTemplateV2(getAccessToken, cancelTokenSource, templateData);
+    return platformPipelineTemplateCatalogActions.deletePlatformPipelineTemplate(
+      getAccessToken,
+      cancelTokenSource,
+      templateId,
+    );
   };
+
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
 
   return (
     <DetailScreenContainer
       breadcrumbDestination={"templateDetailView"}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
-      dataObject={templateData}
+      dataObject={pipelineTemplateModel}
       isLoading={isLoading}
       metadata={templateEditorMetadata}
       actionBar={getActionBar()}
@@ -123,7 +80,12 @@ function PipelineTemplateDetailView() {
           activeTab={"pipelineTemplateViewer"}
         />
       }
-      detailPanel={<PipelineTemplateDetailPanel setTemplateData={setTemplateData} templateData={templateData} />}
+      detailPanel={
+        <PipelineTemplateDetailPanel
+          setTemplateData={setPipelineTemplateModel}
+          templateData={pipelineTemplateModel}
+        />
+      }
     />
   );
 }
