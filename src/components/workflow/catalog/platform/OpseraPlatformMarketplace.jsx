@@ -10,8 +10,8 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import {
   customerPipelineTemplateCatalogActions
 } from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
-import CustomerPipelineTemplateCardView from "components/workflow/catalog/private/CustomerPipelineTemplateCardView";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import PlatformPipelineTemplateCardView from "components/workflow/catalog/platform/PlatformPipelineTemplateCardView";
 
 export default function OpseraPipelineMarketplace({activeTemplates}) {
   const [workflowTemplates, setWorkflowTemplates] = useState([]);
@@ -68,7 +68,7 @@ export default function OpseraPipelineMarketplace({activeTemplates}) {
 
   const getPipelineCardView = () => {
     return (
-      <CustomerPipelineTemplateCardView
+      <PlatformPipelineTemplateCardView
         isLoading={isLoading}
         loadData={loadData}
         pipelineTemplates={workflowTemplates}

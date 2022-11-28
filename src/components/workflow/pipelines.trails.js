@@ -23,6 +23,15 @@ pipelinesTrails.customerPipelineTemplateDetailView = {
   icon: faHexagon,
 };
 
+pipelinesTrails.platformPipelineTemplateDetailView = {
+  parent: "pipelines",
+  name: "platformPipelineTemplateDetailView",
+  path: pipelinesPaths.platformPipelineTemplateDetailView,
+  title: "Pipeline Template Details",
+  linkText: "Pipeline Template Details",
+  icon: faHexagon,
+};
+
 // Pipelines
 pipelinesTrails.pipelines = {
   parent: undefined,

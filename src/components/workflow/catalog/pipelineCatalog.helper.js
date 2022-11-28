@@ -14,3 +14,11 @@ pipelineCatalogHelper.getCustomerPipelineTemplateDetailViewLink = (templateId) =
 
   return `/workflow/catalog/customer/${templateId}`;
 };
+
+pipelineCatalogHelper.getPlatformPipelineTemplateDetailViewLink = (templateId) => {
+  if (isMongoDbId(templateId) !== true) {
+    return null;
+  }
+
+  return `/workflow/catalog/platform/${templateId}`;
+};
