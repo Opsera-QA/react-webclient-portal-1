@@ -10,7 +10,9 @@ import {pipelineCatalogHelper} from "components/workflow/catalog/pipelineCatalog
 import CreateCustomerPipelineButton from "components/workflow/catalog/private/deploy/CreateCustomerPipelineButton";
 import pipelineTemplateMetadata from "components/admin/pipeline_templates/pipelineTemplate.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
+import {truncateString} from "components/common/helpers/string-helpers";
 
+// TODO: This needs to be rewritten, I just copied what existed for the catalog work
 export default function CustomerPipelineTemplateCard(
   {
     template,
@@ -32,7 +34,7 @@ export default function CustomerPipelineTemplateCard(
     history.push(pipelineCatalogHelper.getCustomerPipelineTemplateDetailViewLink(template?._id));
   };
 
-  const getEnabledBody = () => {
+  const getBody = () => {
     return (
       <Col className="col-6 d-flex flex-nowrap">
         <CreateCustomerPipelineButton
@@ -70,11 +72,6 @@ export default function CustomerPipelineTemplateCard(
     }
   };
 
-  const getBody = () => {
-
-    return getEnabledBody();
-  };
-
   return (
     <Card style={{height: "100%", opacity: template.readOnly ? ".5" : "1"}}>
       <Card.Title className="pb-0">
@@ -82,7 +79,7 @@ export default function CustomerPipelineTemplateCard(
           <div>
             {template.name}
           </div>
-          <div className="ml-auto mr-1 text-muted small upper-case-first d-flex">
+          <div className={"ml-auto mr-1"}>
             <IconBase icon={faHexagon} size={"lg"}/>
           </div>
         </div>
@@ -90,7 +87,7 @@ export default function CustomerPipelineTemplateCard(
       <Card.Body className="pt-0 pb-2">
         <Row className="catalog-card-text">
           <Col lg={12}>
-            <Card.Text className="mb-2">{template.description}</Card.Text>
+            <Card.Text className="mb-2">{truncateString(template.description, 150)}</Card.Text>
           </Col>
         </Row>
         <Row className="d-flex">
