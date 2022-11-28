@@ -26,18 +26,18 @@ export default function useGetCustomerPipelineTemplates(
 
   useEffect(() => {
     setPipelineTemplates([]);
-    loadData(getPipelineTemplate, handleErrorFunction).catch(() => {
+    loadData(getPipelineTemplates, handleErrorFunction).catch(() => {
     });
   }, []);
 
-  const getPipelineTemplate = async () => {
+  const getPipelineTemplates = async () => {
     const response = await customerPipelineTemplateCatalogActions.getCustomerCatalogPipelineTemplates(
       getAccessToken,
       cancelTokenSource,
+      pipelineTemplateFilterModel,
     );
-    const newPipelineTemplate = DataParsingHelper.parseArray(response?.data?.data, []);
-
-    setPipelineTemplates([...newPipelineTemplate]);
+    const newPipelineTemplates = DataParsingHelper.parseArray(response?.data?.data, []);
+    setPipelineTemplates([...newPipelineTemplates]);
     pipelineTemplateFilterModel.setData("totalCount", response?.data?.count);
     pipelineTemplateFilterModel.setData("activeFilters", pipelineTemplateFilterModel.getActiveFilters());
     setPipelineTemplateFilterModel({...pipelineTemplateFilterModel});
@@ -48,7 +48,7 @@ export default function useGetCustomerPipelineTemplates(
     setPipelineTemplates: setPipelineTemplates,
     pipelineTemplateFilterModel: pipelineTemplateFilterModel,
     setPipelineTemplateFilterModel: setPipelineTemplateFilterModel,
-    loadData: () => loadData(getPipelineTemplate, handleErrorFunction),
+    loadData: () => loadData(getPipelineTemplates, handleErrorFunction),
     isLoading: isLoading,
     error: error,
     setError: setError,

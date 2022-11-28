@@ -21,6 +21,8 @@ function PipelineTemplatesTable(
     loadData,
     isLoading,
     error,
+    pipelineTemplateFilterModel,
+    setPipelineTemplateFilterModel,
   }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
@@ -69,6 +71,9 @@ function PipelineTemplatesTable(
         columns={columns}
         rowStyling={rowStyling}
         error={error}
+        paginationDto={pipelineTemplateFilterModel}
+        setPaginationDto={setPipelineTemplateFilterModel}
+        loadData={loadData}
       />
     );
   };
@@ -77,6 +82,8 @@ function PipelineTemplatesTable(
       <FilterContainer
         loadData={loadData}
         addRecordFunction={createTemplate}
+        filterDto={pipelineTemplateFilterModel}
+        setFilterDto={setPipelineTemplateFilterModel}
         isLoading={isLoading}
         body={getTemplateTable()}
         titleIcon={faStream}
@@ -92,6 +99,8 @@ PipelineTemplatesTable.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   error: PropTypes.any,
+  pipelineTemplateFilterModel: PropTypes.object,
+  setPipelineTemplateFilterModel: PropTypes.func,
 };
 
 export default PipelineTemplatesTable;
