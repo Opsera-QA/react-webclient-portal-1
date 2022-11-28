@@ -14,7 +14,7 @@ function SfdxQuickDeployTaskDetailsHelpDocumentation() {
   const getHelpDocumentation = () => {
     return (
       <div>
-        The <b>{getTaskTypeLabel(TASK_TYPES.SALESFORCE_QUICK_DEPLOY)} Task</b>  offers quick deploy where any pipeline with validate step with unit test are eligible. Upon pipeline run, a unique <b>Deploy ID</b> is generated which can be used for quick deploy task to be performed. This workflow requires first running a SFDX/ANT pipeline with a unit test in order to retrieve the unique <b>Deploy ID</b> used in task configuration. For more detailed information on the Salesforce Quick Deployment workflow including troubleshooting, view the <a href="https://opsera.atlassian.net/l/c/SN87X68R" target="_blank" rel="noreferrer"><b>Salesforce Quick Deployment Documentation</b>.</a>
+        The <b>{getTaskTypeLabel(TASK_TYPES.SALESFORCE_QUICK_DEPLOY)} Task</b>  offers quick deploy where any pipeline with validate step with unit test are eligible. Upon pipeline run, a unique <b>Deploy ID</b> is generated which can be used for quick deploy task to be performed. This workflow requires first running a SFDX/ANT pipeline with a unit test in order to retrieve the unique <b>Deploy ID</b> used in task configuration. For more detailed information on the Salesforce Quick Deployment workflow including troubleshooting, view the <a href="https://docs.opsera.io/salesforce/salesforce-quick-deployment-documentation" target="_blank" rel="noreferrer"><b>Salesforce Quick Deploy Documentation</b>.</a>
       </div>
     );
   };
