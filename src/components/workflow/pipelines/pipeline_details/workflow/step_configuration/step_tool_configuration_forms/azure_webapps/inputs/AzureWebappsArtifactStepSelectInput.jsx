@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import {getArtifactorySteps} from "components/common/helpers/pipelines/pipeline.helpers";
@@ -19,11 +18,11 @@ function AzureWebappsArtifactStepSelectInput({
   stepId,
   deploymentType
 }) {
-  const toastContext = useContext(DialogToastContext);
   const [dockerList, setDockerList] = useState([]);
   const [packageList, setPackageList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select Azure Push Step");
+  const [placeholder, setPlaceholder] = useState("Select Artifactory Step");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     loadData();
@@ -31,6 +30,8 @@ function AzureWebappsArtifactStepSelectInput({
 
   const loadData = async () => {
     try {
+      setPlaceholder("Select Artifactory Step");
+      setErrorMessage("");
       setIsLoading(true);
       if (deploymentType === PACKAGE) {
         await fetchPackageStepDetails();
@@ -38,7 +39,7 @@ function AzureWebappsArtifactStepSelectInput({
         await fetchDockerStepDetails();
       }
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      setErrorMessage(error);
     } finally {
       setIsLoading(false);
     }
@@ -60,15 +61,14 @@ function AzureWebappsArtifactStepSelectInput({
       }
     } catch (error) {
       setPlaceholder("No Azure Push Steps Configured");
-      console.error(error);
-      toastContext.showServiceUnavailableDialog();
+      setErrorMessage(error);
     }
   };
 
   const fetchPackageStepDetails = async () => {
     try {
       if (plan && stepId) {
-        const packageSteps = getArtifactorySteps(plan, stepId, [toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_ZIP_DEPLOYMENT]);
+        const packageSteps = getArtifactorySteps(plan, stepId, [toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_ZIP_DEPLOYMENT, toolIdentifierConstants.TOOL_IDENTIFIERS.JFROG_ARTIFACTORY_MAVEN, toolIdentifierConstants.TOOL_IDENTIFIERS.NEXUS]);
         if (packageSteps.length === 0) {
           let newDataObject = { ...model };
           newDataObject.setData("artifactStepId", "");
@@ -76,13 +76,12 @@ function AzureWebappsArtifactStepSelectInput({
         }
         setPackageList(packageSteps);
         if (packageSteps.length === 0) {
-          setPlaceholder("No Azure Push Steps Configured");
+          setPlaceholder("No Artifactory Steps Configured");
         }
       }
     } catch (error) {
-      setPlaceholder("No Azure Push Steps Configured");
-      console.error(error);
-      toastContext.showServiceUnavailableDialog();
+      setPlaceholder("No Artifactory Steps Configured");
+      setErrorMessage(error);
     }
   };
 
@@ -107,6 +106,7 @@ function AzureWebappsArtifactStepSelectInput({
       textField={textField}
       placeholderText={placeholder}
       disabled={disabled || isLoading || (!isLoading && deploymentType === PACKAGE && (packageList == null || packageList.length === 0)) || (!isLoading && deploymentType === DOCKER && (dockerList == null || dockerList.length === 0))}
+      error={errorMessage}
     />
   );
 }
