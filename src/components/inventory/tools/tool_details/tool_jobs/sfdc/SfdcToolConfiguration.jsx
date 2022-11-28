@@ -99,7 +99,12 @@ function SfdcToolConfiguration({ toolData }) {
           <TextInputBase dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"accountUsername"} />
           {getDynamicFields()}
           <SFDCBuildTypeSelectInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"buildType"} />
-          <SfdcOAuthConnectButton model={sfdcConfigurationDto} authType={sfdcConfigurationDto?.getData("authType")} toolId={toolData.id} />
+          <SfdcOAuthConnectButton 
+            model={sfdcConfigurationDto} 
+            authType={sfdcConfigurationDto?.getData("authType")} 
+            toolId={toolData.id} 
+            visible={sfdcConfigurationDto?.checkCurrentValidity() === true && !sfdcConfigurationDto?.isChanged()} 
+          />
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
