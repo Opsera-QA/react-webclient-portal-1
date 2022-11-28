@@ -117,7 +117,7 @@ nodeAnalyticsApiService.handleNodeAnalyticsApiDeleteRequest = async (
 const getNodeAnalyticsAxiosInstance = (token, cancelToken) => {
   const axiosConfig = {
     baseURL: config.NODE_ANALYTICS_API_SERVER_URL,
-    timeout: 90000,
+    timeout: 150000,
     cancelToken: cancelToken,
   };
 
