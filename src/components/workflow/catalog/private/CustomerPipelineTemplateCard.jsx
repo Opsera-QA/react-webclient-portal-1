@@ -1,17 +1,15 @@
 import PropTypes from "prop-types";
 import {useHistory} from "react-router-dom";
 import {Button, Card, Col, Row} from "react-bootstrap";
-import {faPlus, faSearch, faHexagon} from "@fortawesome/pro-light-svg-icons";
+import {faSearch, faHexagon} from "@fortawesome/pro-light-svg-icons";
 import {format} from "date-fns";
 import React, {useEffect, useState} from "react";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import pipelineActions from "components/workflow/pipeline-actions";
 import IconBase from "components/common/icons/IconBase";
-import LoadingIcon from "components/common/icons/LoadingIcon";
-import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {pipelineHelper} from "components/workflow/pipeline.helper";
 import {pipelineCatalogHelper} from "components/workflow/catalog/pipelineCatalog.helper";
+import CreateCustomerPipelineButton from "components/workflow/catalog/private/deploy/CreateCustomerPipelineButton";
+import pipelineTemplateMetadata from "components/admin/pipeline_templates/pipelineTemplate.metadata";
+import modelHelpers from "components/common/model/modelHelpers";
 
 export default function CustomerPipelineTemplateCard(
   {
@@ -19,12 +17,8 @@ export default function CustomerPipelineTemplateCard(
     activeTemplates,
   }) {
   const history = useHistory();
-  const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const {
-    cancelTokenSource,
-    isMounted,
-    getAccessToken,
     isOpseraAdministrator,
   } = useComponentStateReference();
 
@@ -38,47 +32,25 @@ export default function CustomerPipelineTemplateCard(
     history.push(pipelineCatalogHelper.getCustomerPipelineTemplateDetailViewLink(template?._id));
   };
 
-  const deployTemplate = async () => {
-    try {
-      setLoading(true);
-      const result = await pipelineActions.deployTemplateV2(getAccessToken, cancelTokenSource, template?._id);
-      const newPipelineId = result?.data?._id;
-
-      if (isMongoDbId(newPipelineId) === true) {
-        history.push(pipelineHelper.getDetailViewLink(newPipelineId));
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.error(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setLoading(false);
-      }
-    }
-  };
-
   const getEnabledBody = () => {
     return (
       <Col className="col-6 d-flex flex-nowrap">
-        <TooltipWrapper innerText={"Create a new Pipeline from this template"}>
-          <Button variant="success" size="sm" className="mr-2 mt-2 text-nowrap"
-                  style={{minWidth: "128px", maxHeight: "34px"}} onClick={() => deployTemplate()}>            {loading ?
-            <><LoadingIcon className={"mr-1"}/>Working</> :
-            <><IconBase icon={faPlus} className={"d-xl-none mr-1"}/>Create Pipeline </>
-          }
+        <CreateCustomerPipelineButton
+          customerPipelineTemplateModel={modelHelpers.parseObjectIntoModel(template, pipelineTemplateMetadata)}
+          className={"mr-2"}
+        />
+        <div>
+          <Button variant="outline-secondary" size={"sm"} className={"mr-2"}
+                  style={{minWidth: "128px"}} onClick={() => showPipelineDetails()}>
+            <IconBase icon={faSearch} className={"d-xl-none mr-1"}/>
+            Details
           </Button>
-        </TooltipWrapper>
-        <Button variant="outline-secondary" size="sm" className="mr-1 mt-2"
-                style={{minWidth: "128px", maxHeight: "34px"}} onClick={() => showPipelineDetails()}>
-          <IconBase icon={faSearch} className={"d-xl-none mr-1"}/>
-          Details
-        </Button>
+        </div>
       </Col>
     );
   };
 
-  const getBody = () => {
+  const getDisabledText = () => {
     if (disabled) {
       if (template?.readOnly) {
         return (
@@ -95,9 +67,10 @@ export default function CustomerPipelineTemplateCard(
           </Col>
         );
       }
-
-      return;
     }
+  };
+
+  const getBody = () => {
 
     return getEnabledBody();
   };
@@ -121,6 +94,7 @@ export default function CustomerPipelineTemplateCard(
           </Col>
         </Row>
         <Row className="d-flex">
+          {getDisabledText()}
           {getBody()}
           <Col className="col-6 pr-1">
             <div className="text-right">

@@ -113,19 +113,19 @@ function PipelineCatalog({source, activeTemplates}) {
 
   return (
     <div style={{minWidth: "660px"}}>
-    <FilterContainer
-      loadData={loadData}
-      filterDto={catalogFilterModel}
-      setFilterDto={setCatalogFilterModel}
-      supportSearch={true}
-      isLoading={isLoading}
-      body={getPipelineCardView()}
-      dropdownFilters={getDropdownFilters()}
-      inlineFilters={getInlineFilters()}
-      titleIcon={faOctagon}
-      title={"Pipeline Templates"}
-      className={"pb-2"}
-    />
+      <FilterContainer
+        loadData={loadData}
+        filterDto={catalogFilterModel}
+        setFilterDto={setCatalogFilterModel}
+        supportSearch={true}
+        isLoading={isLoading}
+        body={getPipelineCardView()}
+        dropdownFilters={getDropdownFilters()}
+        inlineFilters={getInlineFilters()}
+        titleIcon={faOctagon}
+        title={"Pipeline Templates"}
+        className={"pb-2"}
+      />
     </div>
   );
 }
