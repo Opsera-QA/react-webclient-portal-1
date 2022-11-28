@@ -48,7 +48,7 @@ export default function PublishCustomerPipelineOverlay(
           />
           <PublishPipelineToPrivateCatalogButton
             pipelineId={pipelineModelCopy?.getMongoDbId()}
-            roles={pipelineModelCopy?.getMongoDbId()}
+            roles={pipelineModelCopy?.getData("roles")}
           />
         </div>
       </ButtonContainerBase>

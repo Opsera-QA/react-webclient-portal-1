@@ -42,12 +42,18 @@ customerPipelineTemplateCatalogActions.publishPipelineToCustomerCatalog = async 
   getAccessToken,
   cancelTokenSource,
   pipelineId,
+  roles,
 ) => {
   const apiUrl = `/workflow/templates/customer/${pipelineId}`;
+  const postBody = {
+    roles: roles,
+  };
+
   return await baseActions.apiPostCallV2(
     getAccessToken,
     cancelTokenSource,
     apiUrl,
+    postBody,
   );
 };
 
