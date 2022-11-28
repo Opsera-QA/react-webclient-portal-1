@@ -10,16 +10,16 @@ const templateEditorMetadata = {
   },
   fields: [
     {
+      label: "ID",
+      id: "_id",
+    },
+    {
       label: "Name",
       id: "name",
       minLength: 3,
-      maxLength:50,
+      maxLength: 50,
       isRequired: true,
       regexDefinitionName: "expandedTextAndSymbolsWithSpaces"
-    },
-    {
-      label: "ID",
-      id: "_id",
     },
     {
       label: "Identifier",
@@ -33,7 +33,7 @@ const templateEditorMetadata = {
       label: "Description",
       id: "description",
       minLength: 3,
-      maxLength:1000,
+      maxLength: 1000,
       isRequired: true,
       regexDefinitionName: "expandedTextAndSymbolsWithSpaces"
     },
@@ -45,6 +45,10 @@ const templateEditorMetadata = {
     {
       label: "Created At",
       id: "createdAt",
+    },
+    {
+      label: "Updated At",
+      id: "updatedAt",
     },
     {
       label: "Roles",
@@ -88,17 +92,6 @@ const templateEditorMetadata = {
       type: "JSON",
       toShow: true,
       isCollapsed: true,
-      value: [
-        {
-          "tool": {},
-          "trigger": [],
-          "type": [],
-          "notification": [],
-          "name": "",
-          "description": "",
-          "active": true,
-        },
-      ],
     },
   ],
   newObjectFields: {
@@ -113,7 +106,17 @@ const templateEditorMetadata = {
     account: "",
     access: [],
     roles: [],
-    plan: [{}],
+    plan: [
+      {
+        "tool": {},
+        "trigger": [],
+        "type": [],
+        "notification": [],
+        "name": "",
+        "description": "",
+        "active": true,
+      },
+    ],
   },
 };
 

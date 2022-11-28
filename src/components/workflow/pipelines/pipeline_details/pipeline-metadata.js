@@ -9,7 +9,10 @@ const pipelineMetadata = {
     {
       label: "Name",
       id: "name",
-      isRequired: true
+      minLength: 3,
+      maxLength: 50,
+      isRequired: true,
+      regexDefinitionName: "expandedTextAndSymbolsWithSpaces"
     },
     {
       label: "Run Count",

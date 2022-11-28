@@ -3,12 +3,12 @@ import {useParams} from "react-router-dom";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import useGetCustomerPipelineTemplateModelById
-  from "hooks/workflow/catalog/customer/useGetCustomerPipelineTemplateModelById";
 import pipelineTemplateMetadata from "components/admin/pipeline_templates/pipelineTemplate.metadata";
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 import PlatformPipelineTemplateDetailPanel
   from "components/workflow/catalog/platform/details/PlatformPipelineTemplateDetailPanel";
+import useGetPlatformPipelineTemplateModelById
+  from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplateModelById";
 
 export default function PlatformPipelineTemplateDetailView() {
   const {id} = useParams();
@@ -16,7 +16,7 @@ export default function PlatformPipelineTemplateDetailView() {
     pipelineTemplateModel,
     setPipelineTemplateModel,
     isLoading,
-  } = useGetCustomerPipelineTemplateModelById(id);
+  } = useGetPlatformPipelineTemplateModelById(id);
 
   const getActionBar = () => {
     if (pipelineTemplateModel != null) {

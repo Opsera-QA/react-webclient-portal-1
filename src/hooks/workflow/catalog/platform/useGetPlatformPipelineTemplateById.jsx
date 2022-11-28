@@ -4,10 +4,10 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import {
-  customerPipelineTemplateCatalogActions
-} from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
+  platformPipelineTemplateCatalogActions
+} from "components/workflow/catalog/platform/platformPipelineTemplateCatalog.actions";
 
-export default function useGetCustomerPipelineTemplateById(
+export default function useGetPlatformPipelineTemplateById(
   id,
   handleErrorFunction,
 ) {
@@ -36,7 +36,7 @@ export default function useGetCustomerPipelineTemplateById(
       return;
     }
 
-    const response = await customerPipelineTemplateCatalogActions.getCustomerCatalogPipelineTemplateById(
+    const response = await platformPipelineTemplateCatalogActions.getCustomerCatalogPipelineTemplateById(
       getAccessToken,
       cancelTokenSource,
       id,
