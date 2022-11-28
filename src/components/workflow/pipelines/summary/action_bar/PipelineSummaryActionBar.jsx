@@ -33,13 +33,10 @@ function PipelineSummaryActionBar({pipelineModel, pipeline, loadPipeline}) {
       <ActionBarShowPipelineSummaryOverlayButton
         pipeline={pipeline}
       />
-      <ActionBarPublishPipelineButton
-        pipeline={pipeline}
+      <ActionBarPublishPipelineToCustomerCatalogButton
+        pipelineModel={pipelineModel}
+        className={"ml-3"}
       />
-      {/*<ActionBarPublishPipelineToCustomerCatalogButton*/}
-      {/*  pipelineModel={pipelineModel}*/}
-      {/*  className={"ml-3"}*/}
-      {/*/>*/}
       <ActionBarDuplicatePipelineButton
         pipeline={pipeline}
       />

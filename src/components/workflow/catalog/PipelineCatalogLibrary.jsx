@@ -9,6 +9,7 @@ import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationB
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import CustomTab from "components/common/tabs/CustomTab";
+import CustomerPipelineTemplateCatalog from "components/workflow/catalog/private/CustomerPipelineTemplateCatalog";
 
 function PipelineCatalogLibrary() {
   const [activeTemplates, setActiveTemplates] = useState([]);
@@ -75,17 +76,9 @@ function PipelineCatalogLibrary() {
         );
       case "customer":
         return (
-          <>
-            <div className={"p-2"}>
-              {`
-                This is your organization’s private catalog of pipeline templates. These are accessible to you and your organization only. To share a pipeline template with your organization, publish it to this catalog in Pipeline Summary.
-              `}
-            </div>
-            <PipelineCatalog source={"customer"} activeTemplates={activeTemplates} />
-          </>
-          // <CustomerPipelineTemplateCatalog
-          //   activeTemplates={activeTemplates}
-          // />
+          <CustomerPipelineTemplateCatalog
+            activeTemplates={activeTemplates}
+          />
         );
       default:
         return null;
