@@ -8,9 +8,7 @@ import CatalogHelpDocumentation from "components/common/help/documentation/pipel
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import CustomerPipelineTemplateCatalog from "components/workflow/catalog/private/CustomerPipelineTemplateCatalog";
 import CustomTab from "components/common/tabs/CustomTab";
-import OpseraPipelineMarketplace from "components/workflow/catalog/platform/OpseraPlatformMarketplace";
 
 function PipelineCatalogLibrary() {
   const [activeTemplates, setActiveTemplates] = useState([]);

@@ -338,11 +338,6 @@ pipelineActions.duplicatePipelineV2 = async (getAccessToken, cancelTokenSource, 
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-pipelineActions.publishPipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
-  const apiUrl = `/pipelines/${pipelineId}/publish-template/`;
-  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
 pipelineActions.publish = async (pipelineId, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/${pipelineId}/publish-template/`;
