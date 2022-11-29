@@ -43,7 +43,7 @@ export default function ActionBarDeleteCustomerPipelineTemplateButton(
   };
 
   if (CustomerPipelineTemplateRoleHelper.canDeleteCustomerPipelineTemplate(userData, customerPipelineTemplateModel?.getOriginalData()) !== true) {
-    return undefined;
+    return null;
   }
 
   return (
