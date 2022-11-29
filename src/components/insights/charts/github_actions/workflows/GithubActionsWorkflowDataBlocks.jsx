@@ -293,7 +293,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                 icon={getIcon(metrics?.successPercentageTrend?.trend)}
                 iconOverlayBody={getDescription(metrics?.successPercentageTrend?.trend)}
                 percentage={metrics?.successPercentage}
-                subtitle={"% Success"}
+                topText={"% Success"}
                 dataPoint={successPercentDataPoint}
               />
             </div>
@@ -307,7 +307,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                 className={getIconColor(metrics?.avgSuccessTimeTrend?.trend)}
                 score={getTimeDisplay(metrics?.avgSuccessTime)}
                 bottomText={"Previous: " + getTimeDisplay(metrics?.prevSuccessTime)}
-                subtitle={"Average Time For Success Runs (mins)"}
+                topText={"Average Time For Success Runs (mins)"}
                 icon={getIcon(metrics?.avgSuccessTimeTrend?.trend)}
                 iconOverlayBody={getDescription(metrics?.avgSuccessTimeTrend?.trend)}
                 dataPoint={averageSuccessDataPoint}
@@ -338,7 +338,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                 icon={getIcon(metrics?.failedPercentageTrend?.trend)}
                 iconOverlayBody={getDescription(metrics?.failedPercentageTrend?.trend)}
                 percentage={metrics?.failedPercentage}
-                subtitle={"% Failures"}
+                topText={"% Failures"}
                 dataPoint={failurePercentDataPoint}
               />
             </div>
@@ -354,7 +354,7 @@ function GithubActionsWorkflowDataBlocks({ kpiConfiguration, dashboardData, setE
                 icon={getIcon(metrics?.avgFailedTimeTrend?.trend)}
                 iconOverlayBody={getDescription(metrics?.avgFailedTimeTrend?.trend)}
                 score={getTimeDisplay(metrics?.avgFailedTime)}
-                subtitle={"Average Time For Failed Runs (mins)"}
+                topText={"Average Time For Failed Runs (mins)"}
                 dataPoint={averageFailureDataPoint}
               />
             </div>
