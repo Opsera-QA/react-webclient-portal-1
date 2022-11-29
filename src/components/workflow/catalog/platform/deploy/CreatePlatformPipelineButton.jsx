@@ -36,7 +36,6 @@ export default function CreatePlatformPipelineButton(
       disabled={disabled}
       onClickFunction={launchConfirmationOverlay}
       variant={"success"}
-      buttonSize={"sm"}
       normalText={"Create Pipeline"}
       tooltip={"Create a new Pipeline from this Template"}
     />

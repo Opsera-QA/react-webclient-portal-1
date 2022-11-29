@@ -10,6 +10,8 @@ import GenericItemField from "components/common/fields/multiple_items/GenericIte
 import PipelineTemplateRoleAccessInput
   from "components/admin/pipeline_templates/details/inputs/PipelineTemplateRoleAccessInput";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import CreatePlatformPipelineButton from "components/workflow/catalog/platform/deploy/CreatePlatformPipelineButton";
 
 export default function PlatformPipelineTemplateSummaryPanel(
   {
@@ -71,6 +73,13 @@ export default function PlatformPipelineTemplateSummaryPanel(
             dataObject={pipelineTemplateModel}
             fieldName={"tags"}
           />
+        </Col>
+        <Col lg={12}>
+          <ButtonContainerBase>
+            <CreatePlatformPipelineButton
+              platformPipelineTemplateModel={pipelineTemplateModel}
+            />
+          </ButtonContainerBase>
         </Col>
       </Row>
     </SummaryPanelContainer>

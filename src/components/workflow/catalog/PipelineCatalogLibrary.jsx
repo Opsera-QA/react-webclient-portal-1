@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import pipelineActions from "components/workflow/pipeline-actions";
-import PipelineCatalog from "components/workflow/catalog/PipelineCatalog";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
@@ -10,6 +9,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import CustomTab from "components/common/tabs/CustomTab";
 import CustomerPipelineTemplateCatalog from "components/workflow/catalog/private/CustomerPipelineTemplateCatalog";
+import OpseraPipelineMarketplace from "components/workflow/catalog/platform/OpseraPlatformMarketplace";
 
 function PipelineCatalogLibrary() {
   const [activeTemplates, setActiveTemplates] = useState([]);
@@ -62,17 +62,9 @@ function PipelineCatalogLibrary() {
     switch (activeTab) {
       case "all":
         return (
-          <>
-            <div className={"p-2"}>
-              {`
-                These are publicly available pipeline templates provided by Opsera. All users have access to them.
-              `}
-            </div>
-            <PipelineCatalog source={undefined} activeTemplates={activeTemplates} />
-          </>
-          // <OpseraPipelineMarketplace
-          //   activeTemplates={activeTemplates}
-          // />
+          <OpseraPipelineMarketplace
+            activeTemplates={activeTemplates}
+          />
         );
       case "customer":
         return (
