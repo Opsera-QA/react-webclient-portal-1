@@ -12,6 +12,8 @@ import PipelineTemplateRoleAccessInput
   from "components/admin/pipeline_templates/details/inputs/PipelineTemplateRoleAccessInput";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import CreateCustomerPipelineButton from "components/workflow/catalog/private/deploy/CreateCustomerPipelineButton";
 
 function CustomerPipelineTemplateSummaryPanel(
   {
@@ -74,6 +76,13 @@ function CustomerPipelineTemplateSummaryPanel(
             dataObject={pipelineTemplateModel}
             fieldName={"tags"}
           />
+        </Col>
+        <Col lg={12}>
+          <ButtonContainerBase>
+            <CreateCustomerPipelineButton
+              customerPipelineTemplateModel={pipelineTemplateModel}
+            />
+          </ButtonContainerBase>
         </Col>
       </Row>
     </SummaryPanelContainer>
