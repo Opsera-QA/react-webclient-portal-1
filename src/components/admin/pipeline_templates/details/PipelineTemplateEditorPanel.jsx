@@ -24,7 +24,7 @@ function PipelineTemplateEditorPanel({templateModel, setTemplateModel, handleClo
   const {cancelTokenSource} = useComponentStateReference();
 
   const createTemplate = async () => {
-    return await pipelineTemplateActions.createTemplateV2(
+    return await platformPipelineTemplateCatalogActions.createPlatformPipelineTemplate(
       getAccessToken,
       cancelTokenSource,
       templateModel

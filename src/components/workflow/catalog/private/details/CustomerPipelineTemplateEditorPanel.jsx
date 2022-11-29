@@ -31,14 +31,6 @@ function CustomerPipelineTemplateEditorPanel(
   const {getAccessToken} = useContext(AuthContext);
   const {cancelTokenSource} = useComponentStateReference();
 
-  const createTemplate = async () => {
-    return await pipelineTemplateActions.createTemplateV2(
-      getAccessToken,
-      cancelTokenSource,
-      pipelineTemplateModel
-    );
-  };
-
   const updateTemplate = async () => {
     return await pipelineTemplateActions.updateTemplateV2(
       getAccessToken,
@@ -53,7 +45,6 @@ function CustomerPipelineTemplateEditorPanel(
 
   return (
     <EditorPanelContainer
-      createRecord={createTemplate}
       updateRecord={updateTemplate}
       recordDto={pipelineTemplateModel}
       handleClose={handleClose}
