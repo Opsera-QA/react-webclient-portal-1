@@ -4,6 +4,8 @@ import IconBase from "components/common/icons/IconBase";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 import BetaBadge from "components/common/badges/BetaBadge";
 import useLocationReference from "hooks/useLocationReference";
+import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboardIconBase";
+import {faLink} from "@fortawesome/pro-light-svg-icons";
 
 function ScreenContainerTitleBar(
   {
@@ -30,13 +32,13 @@ function ScreenContainerTitleBar(
       <div className="ml-auto d-flex mr-2">
         {getInactiveText()}
         {titleActionBar}
-        {/*<CopyToClipboardIconBase*/}
-        {/*  className={"ml-2"}*/}
-        {/*  copyString={currentUrl}*/}
-        {/*  copyIcon={faLink}*/}
-        {/*  copyText={"Copy direct link to this page."}*/}
-        {/*  copiedText={"Copied direct link to clipboard!"}*/}
-        {/*/>*/}
+        <CopyToClipboardIconBase
+          className={"ml-2"}
+          copyString={currentUrl}
+          copyIcon={faLink}
+          copyText={"Copy direct link to this page."}
+          copiedText={"Copied direct link to clipboard!"}
+        />
         <LaunchHelpIcon helpComponent={helpComponent} className={"ml-2"} />
         <BetaBadge
           isBeta={isBeta}

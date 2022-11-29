@@ -57,6 +57,20 @@ platformPipelineTemplateCatalogActions.publishPipelineToPlatformCatalog = async 
   );
 };
 
+platformPipelineTemplateCatalogActions.createPlatformPipelineTemplate = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineTemplateModel,
+) => {
+  const apiUrl = `/workflow/templates/platform/`;
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    pipelineTemplateModel?.getPersistData(),
+  );
+};
+
 platformPipelineTemplateCatalogActions.updatePlatformPipelineTemplate = async (
   getAccessToken,
   cancelTokenSource,
