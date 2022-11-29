@@ -52,10 +52,15 @@ export default function RuntimeSettingsTaskApiResponseSummaryPanel(
             settings={apiResponseModel?.getData("settings")}
           />
           <Col xs={12}>
+            <H5FieldSubHeader
+              subheaderText={"Updated Pipeline Steps"}
+              className={"my-2"}
+            />
             {parsedChangedSteps.map((changedStep) => {
               return (
-                <div key={changedStep?._id}>
-
+                <div key={changedStep?.stepId} className={"d-flex"}>
+                  <div className={"mr-2"}>{changedStep?.name}</div>
+                  <div>{changedStep?.stepId}</div>
                 </div>
               );
             })}
