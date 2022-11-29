@@ -5,9 +5,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
-import GenericItemField from "components/common/fields/multiple_items/GenericItemField";
 import PipelineTemplateRoleAccessInput
   from "components/admin/pipeline_templates/details/inputs/PipelineTemplateRoleAccessInput";
 import useComponentStateReference from "hooks/useComponentStateReference";
@@ -17,6 +15,8 @@ import CreateCustomerPipelineButton from "components/workflow/catalog/private/de
 import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
 import CustomerPipelineTemplateRoleHelper
   from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
+import PrimaryPipelineTypeField
+  from "components/common/list_of_values_input/admin/pipeline_templates/PrimaryPipelineTypeField";
 
 function CustomerPipelineTemplateSummaryPanel(
   {
@@ -60,8 +60,8 @@ function CustomerPipelineTemplateSummaryPanel(
           />
         </Col>
         <Col lg={6}>
-          <GenericItemField
-            dataObject={pipelineTemplateModel}
+          <PrimaryPipelineTypeField
+            model={pipelineTemplateModel}
             fieldName={"type"}
           />
         </Col>
