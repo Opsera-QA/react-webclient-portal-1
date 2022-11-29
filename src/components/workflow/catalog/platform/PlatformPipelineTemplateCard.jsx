@@ -31,7 +31,7 @@ export default function PlatformPipelineTemplateCard(
 
   const getBody = () => {
     return (
-      <Col className="col-6 d-flex flex-nowrap">
+      <Col xs={6} className={"d-flex"}>
         <CreateCustomerPipelineButton
           customerPipelineTemplateModel={modelHelpers.parseObjectIntoModel(template, pipelineTemplateMetadata)}
           className={"mr-2"}
@@ -84,13 +84,15 @@ export default function PlatformPipelineTemplateCard(
         <Row className="d-flex">
           {getDisabledText()}
           {getBody()}
-          <Col className="col-6 pr-1">
-            <div className="text-right">
-              <div><small><span className="text-muted mr-1 pb-1">Updated:</span><span
-                className="text-nowrap">{template.updatedAt && format(new Date(template.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</span></small>
-              </div>
-              <div><small><span className="text-muted mr-1 pb-1">Created:</span><span
-                className="">{template.updatedAt && format(new Date(template.createdAt), "yyyy-MM-dd', 'hh:mm a")}</span></small>
+          <Col xs={6}>
+            <div className={"w-100 d-flex"}>
+              <div className={"ml-auto"}>
+                <div><small><span className="text-muted mr-1 pb-1">Updated:</span><span
+                  className="text-nowrap">{template.updatedAt && format(new Date(template.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</span></small>
+                </div>
+                <div><small><span className="text-muted mr-1 pb-1">Created:</span><span
+                  className="">{template.updatedAt && format(new Date(template.createdAt), "yyyy-MM-dd', 'hh:mm a")}</span></small>
+                </div>
               </div>
             </div>
           </Col>

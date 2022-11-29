@@ -14,6 +14,9 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import CreateCustomerPipelineButton from "components/workflow/catalog/private/deploy/CreateCustomerPipelineButton";
+import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
+import CustomerPipelineTemplateRoleHelper
+  from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
 
 function CustomerPipelineTemplateSummaryPanel(
   {
@@ -22,7 +25,7 @@ function CustomerPipelineTemplateSummaryPanel(
     setActiveTab,
   }) {
   const {
-    accessRoleData,
+    userData,
   } = useComponentStateReference();
 
   if (pipelineTemplateModel == null) {
@@ -30,7 +33,13 @@ function CustomerPipelineTemplateSummaryPanel(
   }
 
   return (
-    <SummaryPanelContainer setActiveTab={meetsRequirements(ROLE_LEVELS.ADMINISTRATORS_AND_SASS, accessRoleData) ? setActiveTab : undefined}>
+    <SummaryPanelContainer setActiveTab={
+      CustomerPipelineTemplateRoleHelper.canUpdateCustomerPipelineTemplate(
+        userData,
+        pipelineTemplateModel?.getOriginalData()
+      ) === true ? setActiveTab : undefined
+    }
+    >
       <Row className={"mt-2"}>
         <Col lg={6}>
           <TextFieldBase
@@ -40,12 +49,21 @@ function CustomerPipelineTemplateSummaryPanel(
           />
         </Col>
         <Col lg={6}>
+          <SsoUserField
+            model={pipelineTemplateModel}
+            fieldName={"owner"}
+          />
+        </Col>
+        <Col lg={6}>
           <SmartIdField
             model={pipelineTemplateModel}
           />
         </Col>
-        <Col lg={12}>
-          <TextFieldBase dataObject={pipelineTemplateModel} fieldName={"description"}/>
+        <Col lg={6}>
+          <GenericItemField
+            dataObject={pipelineTemplateModel}
+            fieldName={"type"}
+          />
         </Col>
         <Col lg={6}>
           <DateFieldBase
@@ -59,11 +77,8 @@ function CustomerPipelineTemplateSummaryPanel(
             fieldName={"updatedAt"}
           />
         </Col>
-        <Col lg={6}>
-          <GenericItemField
-            dataObject={pipelineTemplateModel}
-            fieldName={"type"}
-          />
+        <Col lg={12}>
+          <TextFieldBase dataObject={pipelineTemplateModel} fieldName={"description"}/>
         </Col>
         <Col lg={12}>
           <PipelineTemplateRoleAccessInput

@@ -2,31 +2,34 @@ import React from "react";
 import PropTypes from "prop-types";
 import {faShareAlt} from "@fortawesome/pro-light-svg-icons";
 import ActionBarPopoverButton from "components/common/actions/buttons/ActionBarPopoverButton";
-import ToolOwnershipTransferOverlay from "components/inventory/tools/action_bar/ToolOwnershipTransferOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import CustomerPipelineTemplateOwnershipTransferOverlay
+  from "components/workflow/catalog/private/action_bar/CustomerPipelineTemplateOwnershipTransferOverlay";
+import CustomerPipelineTemplateRoleHelper
+  from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
 
-function ActionBarTransferCustomerPipelineTemplateButton(
+export default function ActionBarTransferCustomerPipelineTemplateButton(
   {
-    toolModel,
-    loadTool,
+    templateModel,
+    loadTemplate,
     className,
   }) {
   const {
     isSassUser,
+    userData,
     toastContext,
   } = useComponentStateReference();
 
   const launchOwnershipTransferOverlay = () => {
     toastContext.showOverlayPanel(
-      <ToolOwnershipTransferOverlay
-        toolModel={toolModel}
-        loadTool={loadTool}
-        type={"Tool"}
+      <CustomerPipelineTemplateOwnershipTransferOverlay
+        templateModel={templateModel}
+        loadTemplate={loadTemplate}
       />,
     );
   };
 
-  if (isSassUser !== false || toolModel?.canTransferRegistryToolOwnership() !== true) {
+  if (isSassUser !== false || CustomerPipelineTemplateRoleHelper.canTransferOwnership(userData, templateModel?.getOriginalData()) !== true) {
     return null;
   }
 
@@ -34,7 +37,7 @@ function ActionBarTransferCustomerPipelineTemplateButton(
     <div className={className}>
       <ActionBarPopoverButton
         icon={faShareAlt}
-        popoverText={`Transfer Tool to new Owner`}
+        popoverText={`Transfer Pipeline Template to new Owner`}
         onClickFunction={launchOwnershipTransferOverlay}
       />
     </div>
@@ -42,9 +45,7 @@ function ActionBarTransferCustomerPipelineTemplateButton(
 }
 
 ActionBarTransferCustomerPipelineTemplateButton.propTypes = {
-  toolModel: PropTypes.object,
-  loadTool: PropTypes.func,
+  templateModel: PropTypes.object,
+  loadTemplate: PropTypes.func,
   className: PropTypes.string
 };
-
-export default ActionBarTransferCustomerPipelineTemplateButton;

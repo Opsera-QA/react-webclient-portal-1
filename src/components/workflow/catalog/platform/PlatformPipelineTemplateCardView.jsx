@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {CardColumns} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 import CardView from "components/common/card/CardView";
 import InlineInformation from "components/common/status_notifications/inline/InlineInformation";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -33,17 +33,18 @@ export default function PlatformPipelineTemplateCardView(
     }
 
     return (
-      <CardColumns>
+      <Row>
         {pipelineTemplates.map((template) => {
           return (
-            <PlatformPipelineTemplateCard
-              key={template._id}
-              template={template}
-              activeTemplates={activeTemplates}
-            />
-         );
+            <Col xs={12} xl={6} key={template._id} className={"pb-2"}>
+              <PlatformPipelineTemplateCard
+                template={template}
+                activeTemplates={activeTemplates}
+              />
+            </Col>
+          );
         })}
-      </CardColumns>
+      </Row>
     );
   };
 

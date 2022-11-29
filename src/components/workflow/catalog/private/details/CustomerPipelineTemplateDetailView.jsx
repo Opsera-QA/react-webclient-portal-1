@@ -14,6 +14,12 @@ import {
   customerPipelineTemplateCatalogActions
 } from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import ActionBarTransferCustomerPipelineTemplateButton
+  from "components/workflow/catalog/private/action_bar/ActionBarTransferCustomerPipelineTemplateButton";
+import CustomerPipelineTemplateRoleHelper
+  from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
+import ActionBarDeleteCustomerPipelineTemplateButton
+  from "components/workflow/catalog/private/action_bar/ActionBarDeleteCustomerPipelineTemplateButton";
 
 export default function CustomerPipelineTemplateDetailView() {
   const {id} = useParams();
@@ -21,15 +27,8 @@ export default function CustomerPipelineTemplateDetailView() {
     pipelineTemplateModel,
     setPipelineTemplateModel,
     isLoading,
+    loadData,
   } = useGetCustomerPipelineTemplateModelById(id);
-  const {
-    getAccessToken,
-    cancelTokenSource,
-  } = useComponentStateReference();
-
-  const deletePipelineTemplate = async () => {
-  return await customerPipelineTemplateCatalogActions.deleteCustomerPipelineTemplate(getAccessToken, cancelTokenSource, id);
-  };
 
   const getActionBar = () => {
     if (pipelineTemplateModel != null) {
@@ -39,9 +38,14 @@ export default function CustomerPipelineTemplateDetailView() {
             <ActionBarBackButton path={"/workflow/catalog/library"}/>
           </div>
           <div className="d-flex">
-            {/*<TagSubscriptionIcon tagModel={pipelineTemplateModel} className={"mr-3"} />*/}
-            {/*TODO: Hook requirements up inside action bar buttons/inputs*/}
-            <ActionBarDeleteButton2 dataObject={pipelineTemplateModel} handleDelete={deletePipelineTemplate} relocationPath={"/workflow/catalog/library"} />
+            <ActionBarTransferCustomerPipelineTemplateButton
+              templateModel={pipelineTemplateModel}
+              loadTemplate={loadData}
+              className={"mr-3"}
+            />
+            <ActionBarDeleteCustomerPipelineTemplateButton
+              customerPipelineTemplateModel={pipelineTemplateModel}
+            />
           </div>
         </ActionBarContainer>
       );

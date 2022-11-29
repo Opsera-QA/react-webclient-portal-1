@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import toolsActions from "components/inventory/tools/tools-actions";
 import RoleHelper from "@opsera/know-your-role/roles/role.helper";
 import OwnershipTransferOverlayBase from "components/common/overlays/center/ownership/OwnershipTransferOverlayBase";
 import { useHistory } from "react-router-dom";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import OwnershipTransferConfirmationOverlay
   from "components/common/overlays/center/ownership/OwnershipTransferConfirmationOverlay";
+import {
+  customerPipelineTemplateCatalogActions
+} from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
+import {pipelineCatalogHelper} from "components/workflow/catalog/pipelineCatalog.helper";
 
 export default function CustomerPipelineTemplateOwnershipTransferOverlay(
   {
-    toolModel,
-    loadTool,
+    templateModel,
+    loadTemplate,
   }) {
   const history = useHistory();
-  const [toolCopy, setToolCopy] = useState(undefined);
+  const [pipelineTemplateCopy, setPipelineTemplateCopy] = useState(undefined);
   const {
     cancelTokenSource,
     isSassUser,
@@ -24,16 +27,21 @@ export default function CustomerPipelineTemplateOwnershipTransferOverlay(
   } = useComponentStateReference();
 
   useEffect(() => {
-    setToolCopy(toolModel?.clone());
-  }, [toolModel]);
+    setPipelineTemplateCopy(templateModel?.clone());
+  }, [templateModel]);
 
   const transferToolOwnership = async (willLoseAccess) => {
-    const response = await toolsActions.transferToolOwnership(getAccessToken, cancelTokenSource, toolCopy);
+    const response = await customerPipelineTemplateCatalogActions.transferCustomerPipelineTemplateOwnership(
+      getAccessToken,
+      cancelTokenSource,
+      templateModel?.getMongoDbId(),
+      pipelineTemplateCopy?.getData("owner"),
+      );
 
     if (willLoseAccess !== true) {
-      await loadTool();
+      await loadTemplate();
     } else {
-      history.push("/inventory");
+      history.push(pipelineCatalogHelper.getManagementScreenLink());
     }
 
     return response;
@@ -43,14 +51,14 @@ export default function CustomerPipelineTemplateOwnershipTransferOverlay(
     document.body.click();
     const willLoseAccess = RoleHelper.willLoseAccessIfOwnerChanged(
       userData,
-      toolModel?.getOriginalData(),
-      toolCopy?.getData("owner"),
+      templateModel?.getOriginalData(),
+      pipelineTemplateCopy?.getData("owner"),
     );
 
     toastContext.showOverlayPanel(
       <OwnershipTransferConfirmationOverlay
         ownershipTransferFunction={() => transferToolOwnership(willLoseAccess)}
-        type={"Tool"}
+        type={"Template"}
         willLoseAccess={willLoseAccess}
         closePanelFunction={handleClosePanelFunction}
       />,
@@ -61,22 +69,22 @@ export default function CustomerPipelineTemplateOwnershipTransferOverlay(
     toastContext.clearOverlayPanel();
   };
 
-  if (isSassUser !== false || toolModel?.canTransferRegistryToolOwnership() !== true) {
+  if (isSassUser !== false) {
     return null;
   }
 
   return (
     <OwnershipTransferOverlayBase
       ownershipTransferFunction={launchOwnershipTransferConfirmation}
-      type={"Tool"}
-      model={toolCopy}
-      setModel={setToolCopy}
+      type={"Template"}
+      model={pipelineTemplateCopy}
+      setModel={setPipelineTemplateCopy}
     />
   );
 }
 
 CustomerPipelineTemplateOwnershipTransferOverlay.propTypes = {
-  toolModel: PropTypes.object,
-  loadTool: PropTypes.func,
+  templateModel: PropTypes.object,
+  loadTemplate: PropTypes.func,
 };
 
