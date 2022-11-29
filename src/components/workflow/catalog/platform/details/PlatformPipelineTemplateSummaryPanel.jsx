@@ -6,12 +6,13 @@ import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
-import GenericItemField from "components/common/fields/multiple_items/GenericItemField";
 import PipelineTemplateRoleAccessInput
   from "components/admin/pipeline_templates/details/inputs/PipelineTemplateRoleAccessInput";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import CreatePlatformPipelineButton from "components/workflow/catalog/platform/deploy/CreatePlatformPipelineButton";
+import PrimaryPipelineTypeField
+  from "components/common/list_of_values_input/admin/pipeline_templates/PrimaryPipelineTypeField";
 
 export default function PlatformPipelineTemplateSummaryPanel(
   {
@@ -56,8 +57,8 @@ export default function PlatformPipelineTemplateSummaryPanel(
           />
         </Col>
         <Col lg={6}>
-          <GenericItemField
-            dataObject={pipelineTemplateModel}
+          <PrimaryPipelineTypeField
+            model={pipelineTemplateModel}
             fieldName={"type"}
           />
         </Col>
