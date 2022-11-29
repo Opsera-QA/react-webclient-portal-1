@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
-import TitleBar from "components/common/fields/TitleBar";
+import ScreenContainerTitleBar from "components/common/fields/ScreenContainerTitleBar";
 import {getBreadcrumb, getParentBreadcrumb} from "components/common/navigation/trails";
 import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
 import {meetsRequirements} from "components/common/helpers/role-helpers";
@@ -55,7 +55,7 @@ function DetailScreenContainer(
   const getTitleBar = () => {
     const activeField = dataObject?.getActiveField();
     return (
-      <TitleBar
+      <ScreenContainerTitleBar
         isLoading={isLoading}
         parentBreadcrumb={parentBreadcrumb}
         titleIcon={breadcrumb?.dynamicIconFunction ? breadcrumb?.dynamicIconFunction(dataObject) : breadcrumb?.icon}
