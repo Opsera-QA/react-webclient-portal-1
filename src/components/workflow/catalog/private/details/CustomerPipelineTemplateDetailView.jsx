@@ -9,15 +9,8 @@ import pipelineTemplateMetadata from "components/admin/pipeline_templates/pipeli
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 import CustomerPipelineTemplateDetailPanel
   from "components/workflow/catalog/private/details/CustomerPipelineTemplateDetailPanel";
-import useComponentStateReference from "hooks/useComponentStateReference";
-import {
-  customerPipelineTemplateCatalogActions
-} from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
-import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import ActionBarTransferCustomerPipelineTemplateButton
   from "components/workflow/catalog/private/action_bar/ActionBarTransferCustomerPipelineTemplateButton";
-import CustomerPipelineTemplateRoleHelper
-  from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
 import ActionBarDeleteCustomerPipelineTemplateButton
   from "components/workflow/catalog/private/action_bar/ActionBarDeleteCustomerPipelineTemplateButton";
 
