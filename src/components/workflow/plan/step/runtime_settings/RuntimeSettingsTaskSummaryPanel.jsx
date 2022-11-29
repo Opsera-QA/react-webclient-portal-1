@@ -14,6 +14,7 @@ export default function RuntimeSettingsTaskSummaryPanel({ pipelineTaskModel }) {
     <PipelineTaskSummaryPanelBase pipelineTaskData={pipelineTaskModel}>
       <RuntimeSettingsTaskApiResponseSummaryPanel
         apiResponse={pipelineTaskModel?.getData("api_response")}
+        changedSteps={pipelineTaskModel.getData("step_configuration.changedSteps")}
       />
     </PipelineTaskSummaryPanelBase>
   );
