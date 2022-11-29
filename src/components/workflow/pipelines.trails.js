@@ -35,7 +35,7 @@ pipelinesTrails.platformPipelineTemplateDetailView = {
   linkText: "Pipeline Template Details",
   icon: faHexagon,
   dynamicIconFunction: (model) => {
-    return tpipelineTypeConstants.getIconForPipelineTypeArray(model?.getData("type"));
+    return pipelineTypeConstants.getIconForPipelineTypeArray(model?.getData("type"));
   },
 };
 
