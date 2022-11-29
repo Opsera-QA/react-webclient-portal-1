@@ -19,6 +19,7 @@ import JenkinsRegistryToolJobSelectInput
   from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import JiraProjectSelectInput from "components/common/list_of_values_input/tools/jira/projects/JiraProjectSelectInput";
+import JiraCustomTagFieldSelectInput from "components/common/list_of_values_input/tools/jira/custom_tag_fields/JiraCustomTagFieldSelectInput";
 
 const determineKeyFromFullPath = keyPath => {
   const splitPath = keyPath.split('/');
@@ -53,6 +54,13 @@ function ProjectDataMappingEditorPanel(
     projectDataMappingModel.setData('key', determineKeyFromFullPath(selectedOption?.nameSpacedPath));
     projectDataMappingModel.setData('keyPath', selectedOption?.nameSpacedPath);
     setProjectDataMappingModel({ ...projectDataMappingModel });
+  };
+
+  const setJiraDataHandler = (fieldName, selectedOption) => {
+    const newProjectDataMappingModel = {...projectDataMappingModel};
+    newProjectDataMappingModel.setData('key', selectedOption?.name);
+    newProjectDataMappingModel.setData('projectKey', selectedOption?.key);
+    setProjectDataMappingModel({ ...newProjectDataMappingModel });
   };
 
   // TODO: Rewrite into switch statement or sub panels
@@ -130,6 +138,23 @@ function ProjectDataMappingEditorPanel(
             jiraToolId={projectDataMappingModel.getData("tool_id")}
             valueField={"name"}
             fieldName={"key"}
+            setDataFunction={setJiraDataHandler}
+          />
+        </Col>
+      );
+    }
+  };
+
+  const getCustomTagFieldInput = () => {
+    if (projectDataMappingModel?.getData("tool_identifier") === "jira" && projectDataMappingModel?.getData("projectKey") && projectDataMappingModel?.getData("projectKey") !== "") {
+      return (
+        <Col lg={12}>
+          <JiraCustomTagFieldSelectInput
+            model={projectDataMappingModel}
+            setModel={setProjectDataMappingModel}
+            jiraToolId={projectDataMappingModel.getData("tool_id")}
+            projectKey={projectDataMappingModel?.getData("projectKey")}
+            fieldName={"customTagFields"}
           />
         </Col>
       );
@@ -186,6 +211,7 @@ function ProjectDataMappingEditorPanel(
             disabled={projectDataMappingModel && projectDataMappingModel.getData("tool_id").length === 0}
           />
         </Col>
+        {getCustomTagFieldInput()}
         <Col lg={12}>
           <ActivityToggleInput
             dataObject={projectDataMappingModel}
