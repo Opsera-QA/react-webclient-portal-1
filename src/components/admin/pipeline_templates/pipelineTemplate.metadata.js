@@ -87,6 +87,10 @@ const templateEditorMetadata = {
       id: "access"
     },
     {
+      label: "Owner",
+      id: "owner"
+    },
+    {
       label: "Plan",
       id: "plan",
       type: "JSON",

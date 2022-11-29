@@ -84,3 +84,17 @@ customerPipelineTemplateCatalogActions.deleteCustomerPipelineTemplate = async (
     apiUrl,
   );
 };
+
+customerPipelineTemplateCatalogActions.transferCustomerPipelineTemplateOwnership = async (
+  getAccessToken,
+  cancelTokenSource,
+  templateId,
+  newOwnerId,
+) => {
+  const apiUrl = `/workflow/templates/customer/${templateId}/owner/${newOwnerId}`;
+  return await baseActions.apiPatchCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
