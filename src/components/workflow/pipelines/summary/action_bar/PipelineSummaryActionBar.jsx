@@ -12,8 +12,6 @@ import ActionBarShowPipelineSummaryOverlayButton
   from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarShowPipelineSummaryOverlayButton";
 import ActionBarPublishPipelineToCustomerCatalogButton
   from "components/workflow/pipelines/summary/action_bar/buttons/publish/ActionBarPublishPipelineToCustomerCatalogButton";
-import ActionBarPublishPipelineButton
-  from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarPublishPipelineButton";
 
 function PipelineSummaryActionBar({pipelineModel, pipeline, loadPipeline}) {
   const toastContext = useContext(DialogToastContext);

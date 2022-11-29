@@ -2,11 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import {faShareAll} from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
 import PublishCustomerPipelineOverlay
   from "components/workflow/pipelines/summary/action_bar/buttons/publish/PublishCustomerPipelineOverlay";
+import CustomerPipelineTemplateRoleHelper
+  from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
 
 export default function ActionBarPublishPipelineToCustomerCatalogButton({pipelineModel, className}) {
   const {
@@ -22,7 +23,7 @@ export default function ActionBarPublishPipelineToCustomerCatalogButton({pipelin
     );
   };
 
-  if (pipelineModel == null || PipelineRoleHelper.canPublishPipelineToCatalog(userData, pipelineModel?.getCurrentData()) !== true) {
+  if (pipelineModel == null || CustomerPipelineTemplateRoleHelper.canPublishCustomerPipelineTemplate(userData, pipelineModel?.getCurrentData()) !== true) {
     return null;
   }
 
