@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
-import TitleBar from "components/common/fields/TitleBar";
+import ScreenContainerTitleBar from "components/common/fields/ScreenContainerTitleBar";
 import {getBreadcrumb, getParentBreadcrumb} from "components/common/navigation/trails";
 import ScreenContainerBodyLoadingDialog
   from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
@@ -136,7 +136,7 @@ function DashboardScreenContainer(
   const getTitleBar = () => {
     const activeField = dashboardModel?.getActiveField();
     return (
-      <TitleBar
+      <ScreenContainerTitleBar
         isLoading={isLoading}
         parentBreadcrumb={parentBreadcrumb}
         titleIcon={breadcrumb?.icon}
