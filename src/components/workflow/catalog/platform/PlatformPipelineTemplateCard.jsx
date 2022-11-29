@@ -1,16 +1,16 @@
 import PropTypes from "prop-types";
-import {useHistory} from "react-router-dom";
-import {Button, Card, Col, Row} from "react-bootstrap";
-import {faSearch, faHexagon} from "@fortawesome/pro-light-svg-icons";
+import {Card, Col, Row} from "react-bootstrap";
+import {faHexagon} from "@fortawesome/pro-light-svg-icons";
 import {format} from "date-fns";
 import React, {useEffect, useState} from "react";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {pipelineCatalogHelper} from "components/workflow/catalog/pipelineCatalog.helper";
 import CreateCustomerPipelineButton from "components/workflow/catalog/private/deploy/CreateCustomerPipelineButton";
 import pipelineTemplateMetadata from "components/admin/pipeline_templates/pipelineTemplate.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import {truncateString} from "components/common/helpers/string-helpers";
+import ViewPlatformPipelineTemplateDetailsButton
+  from "components/workflow/catalog/platform/ViewPlatformPipelineTemplateDetailsButton";
 
 // TODO: This needs to be rewritten, I just copied what existed for the catalog work
 export default function PlatformPipelineTemplateCard(
@@ -18,7 +18,6 @@ export default function PlatformPipelineTemplateCard(
     template,
     activeTemplates,
   }) {
-  const history = useHistory();
   const [disabled, setDisabled] = useState(false);
   const {
     isOpseraAdministrator,
@@ -30,14 +29,6 @@ export default function PlatformPipelineTemplateCard(
     }
   }, [template, activeTemplates]);
 
-  const showPipelineDetails = () => {
-    if (isOpseraAdministrator === true) {
-      history.push(`/admin/templates/details/${template?._id}`);
-    } else {
-      history.push(pipelineCatalogHelper.getPlatformPipelineTemplateDetailViewLink(template?._id));
-    }
-  };
-
   const getBody = () => {
     return (
       <Col className="col-6 d-flex flex-nowrap">
@@ -45,13 +36,9 @@ export default function PlatformPipelineTemplateCard(
           customerPipelineTemplateModel={modelHelpers.parseObjectIntoModel(template, pipelineTemplateMetadata)}
           className={"mr-2"}
         />
-        <div>
-          <Button variant="outline-secondary" size={"sm"} className={"mr-2"}
-                  style={{minWidth: "128px"}} onClick={() => showPipelineDetails()}>
-            <IconBase icon={faSearch} className={"d-xl-none mr-1"}/>
-            Details
-          </Button>
-        </div>
+        <ViewPlatformPipelineTemplateDetailsButton
+          templateId={template?._id}
+        />
       </Col>
     );
   };
