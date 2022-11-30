@@ -11,14 +11,13 @@ import {
   userActionsPipelineStepMetadata
 } from "components/workflow/plan/step/user_actions/userActionsPipelineStep.metadata";
 import PipelineInstructionsSelectInput
-  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsSelectInput";
+  from "components/common/list_of_values_input/workflow/instructions/PipelineInstructionsSelectInput";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import pipelineActions from "components/workflow/pipeline-actions";
-import LdapUserSelectInput from "components/common/list_of_values_input/users/LdapUserSelectInput";
 import { Col, Row } from "react-bootstrap";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import PipelineInstructionsField
-  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsField";
+  from "components/common/list_of_values_input/workflow/instructions/PipelineInstructionsField";
 
 export default function UserActionsPipelineStepEditorPanel(
   {

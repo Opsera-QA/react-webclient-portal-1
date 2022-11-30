@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import useGetPipelinesByPipelineInstructionsUsage
-  from "components/common/list_of_values_input/settings/pipelines/instructions/usage/useGetPipelinesByPipelineInstructionsUsage";
+  from "components/common/list_of_values_input/workflow/instructions/usage/useGetPipelinesByPipelineInstructionsUsage";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import PipelineUsageFieldBase from "components/common/list_of_values_input/pipelines/usage/PipelineUsageFieldBase";
 
