@@ -97,3 +97,36 @@ platformPipelineTemplateCatalogActions.deletePlatformPipelineTemplate = async (
     apiUrl,
   );
 };
+
+// platformPipelineTemplateCatalogActions.transferPlatformPipelineTemplateOwnership = async (
+//   getAccessToken,
+//   cancelTokenSource,
+//   templateId,
+//   newOwnerId,
+// ) => {
+//   const apiUrl = `/workflow/templates/platform/${templateId}/owner/${newOwnerId}`;
+//   return await baseActions.apiPatchCallV2(
+//     getAccessToken,
+//     cancelTokenSource,
+//     apiUrl,
+//   );
+// };
+
+platformPipelineTemplateCatalogActions.updatePlatformPipelineTemplateAccessRoles = async (
+  getAccessToken,
+  cancelTokenSource,
+  templateId,
+  accessRoles,
+) => {
+  const apiUrl = `/workflow/templates/platform/${templateId}/access-roles`;
+  const postBody = {
+    roles: accessRoles,
+  };
+
+  return await baseActions.apiPatchCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};

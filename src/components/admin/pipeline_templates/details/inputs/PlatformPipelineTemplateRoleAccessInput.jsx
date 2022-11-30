@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import {
-  customerPipelineTemplateCatalogActions
-} from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
-import CustomerPipelineTemplateRoleHelper
-  from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
+  platformPipelineTemplateCatalogActions
+} from "components/workflow/catalog/platform/platformPipelineTemplateCatalog.actions";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import PlatformPipelineTemplateRoleHelper
+  from "@opsera/know-your-role/roles/pipelines/templates/platform/platformPipelineTemplateRole.helper";
 
-export default function CustomerPipelineTemplateRoleAccessInput(
+export default function PlatformPipelineTemplateRoleAccessInput(
   {
     fieldName,
     model,
@@ -22,7 +22,7 @@ export default function CustomerPipelineTemplateRoleAccessInput(
   } = useComponentStateReference();
 
   const saveData = async (newRoles) => {
-    const response = await customerPipelineTemplateCatalogActions.updateCustomerPipelineTemplateAccessRoles(
+    const response = await platformPipelineTemplateCatalogActions.updatePlatformPipelineTemplateAccessRoles(
       getAccessToken,
       cancelTokenSource,
       model?.getMongoDbId(),
@@ -43,7 +43,7 @@ export default function CustomerPipelineTemplateRoleAccessInput(
     <RoleAccessInlineInputBase
       fieldName={fieldName}
       model={model}
-      disabled={CustomerPipelineTemplateRoleHelper.canUpdateAccessRoles(userData, model?.getOriginalData()) !== true}
+      disabled={PlatformPipelineTemplateRoleHelper.canUpdateAccessRoles(userData, model?.getOriginalData()) !== true}
       visible={visible}
       saveData={saveData}
       noDataMessage={getNoDataMessage()}
@@ -51,13 +51,13 @@ export default function CustomerPipelineTemplateRoleAccessInput(
   );
 }
 
-CustomerPipelineTemplateRoleAccessInput.propTypes = {
+PlatformPipelineTemplateRoleAccessInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
   visible: PropTypes.bool,
 };
 
-CustomerPipelineTemplateRoleAccessInput.defaultProps = {
+PlatformPipelineTemplateRoleAccessInput.defaultProps = {
   fieldName: "roles"
 };
