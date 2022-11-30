@@ -71,7 +71,7 @@ export default function VanitySetTextInputBase(
     let classes = `form-control`;
 
     if (errorMessage !== "") {
-      classes += ` border border-danger error-text`;
+      classes += ` border border-danger error-text-alt`;
     }
 
     if (inputClasses) {

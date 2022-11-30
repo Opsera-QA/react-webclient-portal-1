@@ -83,7 +83,7 @@ function TextInputBase(
 
   const getErrorStyling = () => {
     if (hasStringValue(errorMessage) === true) {
-      return ` error-text-alt input-styling`;
+      return ` error-text-alt`;
     }
 
     return "";
