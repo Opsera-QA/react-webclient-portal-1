@@ -33,10 +33,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, }) => {
   return (
     <div className={"w-100 px-3"}>
       <div className={"d-flex flex-row"}>
-        {/*{getSideBar()}*/}
         <div className={"w-100 hide-x-overflow"}>
-          {/*<Router history={history}>*/}
-          {/*  <Switch>*/}
           <SecureRoute path="/trial/settings" exact component={OpseraFreeTrialSettingsManagement} />
           <SecureRoute path="/workspace" component={FreeTrialWorkspace} />
           <SecureRoute path="/unified-insights" component={FreeTrialInsightsLanding} />
