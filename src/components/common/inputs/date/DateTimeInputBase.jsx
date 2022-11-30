@@ -27,7 +27,7 @@ function DateTimeInputBase(
     infoOverlay,
     helpTooltipText,
   }) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
   Moment.locale("en");
 
