@@ -11,38 +11,8 @@ pipelineActions.getPipelineByIdV2 = async (getAccessToken, cancelTokenSource, pi
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-pipelineActions.getWorkflowTemplatesV2 = async (getAccessToken, cancelTokenSource, catalogFilterModel, source) => {
-  let sortOption = catalogFilterModel.getData("sortOption");
-
-  const urlParams = {
-    params: {
-      sort: sortOption ? sortOption.value : null,
-      size: catalogFilterModel.getData("pageSize"),
-      page: catalogFilterModel.getData("currentPage"),
-      search: catalogFilterModel.getFilterValue("search"),
-      type: catalogFilterModel.getFilterValue("type"),
-      tag: catalogFilterModel.getFilterValue("tag"),
-      source: source ? source : undefined
-    },
-  };
-
-  let apiUrl = `/pipelines/workflows/v2`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
-pipelineActions.getPipelineTemplatesByType = async (getAccessToken, cancelTokenSource, type) => {
-  const urlParams = {
-    params: {
-      type: type,
-    },
-  };
-
-  let apiUrl = `/pipelines/workflows/v2`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
 pipelineActions.getInUseTemplatesV2 = async (getAccessToken, cancelTokenSource) => {
-  let apiUrl = `/pipelines/workflows/inuse-templates`;
+  const apiUrl = `/workflow/templates/in-use`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
