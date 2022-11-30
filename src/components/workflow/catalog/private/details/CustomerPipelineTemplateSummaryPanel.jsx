@@ -6,8 +6,6 @@ import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
-import PipelineTemplateRoleAccessInput
-  from "components/admin/pipeline_templates/details/inputs/PipelineTemplateRoleAccessInput";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
@@ -17,6 +15,8 @@ import CustomerPipelineTemplateRoleHelper
   from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
 import PrimaryPipelineTypeField
   from "components/common/list_of_values_input/admin/pipeline_templates/PrimaryPipelineTypeField";
+import CustomerPipelineTemplateRoleAccessInput
+  from "components/workflow/catalog/private/details/CustomerPipelineTemplateRoleAccessInput";
 
 function CustomerPipelineTemplateSummaryPanel(
   {
@@ -81,9 +81,9 @@ function CustomerPipelineTemplateSummaryPanel(
           <TextFieldBase dataObject={pipelineTemplateModel} fieldName={"description"}/>
         </Col>
         <Col lg={12}>
-          <PipelineTemplateRoleAccessInput
-            dataObject={pipelineTemplateModel}
-            setDataObject={setPipelineTemplateModel}
+          <CustomerPipelineTemplateRoleAccessInput
+            model={pipelineTemplateModel}
+            setModel={setPipelineTemplateModel}
           />
         </Col>
         <Col lg={12}>
