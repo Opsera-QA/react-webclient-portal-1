@@ -23,14 +23,14 @@ export default function RuntimeSettingsTaskApiResponseSettingsSummaryPanel({ set
           className={"my-2"}
         />
       </Col>
-      <Col xs={6}>
+      <Col xs={12}>
         <TextFieldBase
           fieldName={"repository"}
           dataObject={runtimeSettingsModel}
           requireSavedValue={true}
         />
       </Col>
-      <Col xs={6}>
+      <Col xs={12}>
         <TextFieldBase
           fieldName={"branch"}
           dataObject={runtimeSettingsModel}
