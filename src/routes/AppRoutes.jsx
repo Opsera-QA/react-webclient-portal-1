@@ -71,8 +71,6 @@ AppRoutes.propTypes = {
   authenticatedState: PropTypes.bool,
   isPublicPathState: PropTypes.bool,
   authClient: PropTypes.object,
-  userData: PropTypes.object,
-  hideSideBar: PropTypes.bool,
 };
 
 export default AppRoutes;

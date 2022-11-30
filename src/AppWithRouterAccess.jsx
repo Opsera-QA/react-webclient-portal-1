@@ -16,6 +16,7 @@ import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.he
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { LoginCallback, Security } from "@okta/okta-react";
 import LoadingDialog from "components/common/status_notifications/loading";
+import AppRoutes from "routes/AppRoutes";
 
 const isFreeTrial = true;
 
@@ -192,10 +193,10 @@ const AppWithRouterAccess = () => {
     }
 
     return (
-      <FreeTrialAppRoutes
+      <AppRoutes
+        authenticatedState={authenticatedState}
         authClient={authClient}
         isPublicPathState={isPublicPathState}
-        userData={userData}
       />
     );
   };
