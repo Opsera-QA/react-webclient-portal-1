@@ -98,3 +98,22 @@ customerPipelineTemplateCatalogActions.transferCustomerPipelineTemplateOwnership
     apiUrl,
   );
 };
+
+customerPipelineTemplateCatalogActions.updateCustomerPipelineTemplateAccessRoles = async (
+  getAccessToken,
+  cancelTokenSource,
+  templateId,
+  accessRoles,
+) => {
+  const apiUrl = `/workflow/templates/customer/${templateId}/access-roles`;
+  const postBody = {
+    roles: accessRoles,
+  };
+
+  return await baseActions.apiPatchCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
