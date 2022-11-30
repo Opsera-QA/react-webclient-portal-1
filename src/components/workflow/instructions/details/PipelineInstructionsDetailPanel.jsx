@@ -5,7 +5,7 @@ import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import PipelineInstructionsPipelineUsageField
-  from "components/common/list_of_values_input/settings/pipelines/instructions/usage/PipelineInstructionsPipelineUsageField";
+  from "components/common/list_of_values_input/workflow/instructions/usage/PipelineInstructionsPipelineUsageField";
 import CustomTab from "components/common/tabs/CustomTab";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import PipelineInstructionsSummaryPanel

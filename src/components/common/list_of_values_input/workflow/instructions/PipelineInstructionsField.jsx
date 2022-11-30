@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PipelineInstructionsFieldBase
-  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsFieldBase";
+  from "components/common/list_of_values_input/workflow/instructions/PipelineInstructionsFieldBase";
 import useGetPipelineInstructionModelById
   from "components/workflow/instructions/hooks/useGetPipelineInstructionModelById";
 
