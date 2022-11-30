@@ -1656,29 +1656,12 @@ div.data-blocks-ellipses {
     min-height: calc(100vh - 20px - 48px - 40px - 45px);
 }
 
-.full-screen-overlay-selection-container {
-    overflow-y: auto;
-    /* full-height
-    - top + bottom margins
-    - title height
-    - button panel height
-    - filter container taken space
-    */
-    height: calc(100vh - 20px - 48px - 63px - 85px);
-    max-height: calc(100vh - 20px - 48px - 63px - 85px);
-}
-
 .full-screen-overlay-tab-panel-body-with-buttons {
-    overflow-y: hidden;
-    height: calc(100vh - 20px - 48px - 63px - 32px);
-    max-height: calc(100vh - 20px - 48px - 63px - 32px);
     border-bottom: 1px solid #dee2e6;
 }
 
 .full-screen-overlay-tab-panel-inner-body-with-buttons {
-    overflow-y: auto;
-    height: calc(100vh - 20px - 48px - 63px - 68px);
-    max-height: calc(100vh - 20px - 48px - 63px - 68px);
+    min-height: calc(100vh - 20px - 48px - 63px - 68px);
 }
 
 .overlay-margin {
