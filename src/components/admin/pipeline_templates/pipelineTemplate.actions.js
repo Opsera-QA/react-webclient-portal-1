@@ -18,13 +18,15 @@ pipelineTemplateActions.updateTemplateV2 = async (getAccessToken, cancelTokenSou
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+// TODO: Move to platformPipelineTemplateCatalog.actions
 pipelineTemplateActions.deployTemplateByIdentifierV2 = async (getAccessToken, cancelTokenSource, identifier) => {
-  const apiUrl = `/pipelines/workflows/platform/identifier/${identifier}/deploy`;
+  const apiUrl = `/workflow/templates/platform/identifier/${identifier}/deploy`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+// TODO: Move to platformPipelineTemplateCatalog.actions
 pipelineTemplateActions.getPipelineTemplateByIdentifierV2 = async (getAccessToken, cancelTokenSource, identifier) => {
-  let apiUrl = `/pipelines/workflows/platform/identifier/${identifier}`;
+  const apiUrl = `/workflow/templates/platform/identifier/${identifier}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
