@@ -2,7 +2,6 @@ import React, {useContext} from "react";
 import {Col, Row} from "react-bootstrap";
 import {AuthContext} from "contexts/AuthContext";
 import PropTypes from "prop-types";
-import pipelineTemplateActions from "components/admin/pipeline_templates/pipelineTemplate.actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
