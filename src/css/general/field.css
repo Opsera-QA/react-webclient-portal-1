@@ -136,8 +136,16 @@ pre {
     z-index: 1600 !important;
 }
 
-.rw-dropdown-list .rw-popup {
-    max-height: 155px !important;
+.rw-multiselect .rw-popup, .rw-dropdown-list .rw-popup {
+    max-height: 130px !important;
+}
+
+.rw-list-optgroup {
+    padding-top: 0;
+}
+
+.rw-list-option {
+    padding: 0.25rem 1rem;
 }
 
 .dhx_tooltip {

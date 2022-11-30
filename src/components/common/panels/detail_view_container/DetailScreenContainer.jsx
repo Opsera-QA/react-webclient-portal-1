@@ -155,7 +155,7 @@ function DetailScreenContainer(
   }
 
   return (
-    <div className={"max-content-width max-content-height scroll-y hide-x-overflow"}>
+    <div className={"max-content-width"}>
       {getTopNavigation()}
       <div
         className={"content-container content-card-1"}
