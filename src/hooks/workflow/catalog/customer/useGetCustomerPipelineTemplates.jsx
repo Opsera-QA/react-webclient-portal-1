@@ -3,7 +3,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import Model from "core/data_model/model";
-import catalogFilterMetadata from "components/workflow/catalog/catalog-filter-metadata";
+import pipelineTemplateCatalogFilterMetadata from "components/workflow/catalog/pipelineTemplateCatalogFilter.metadata";
 import {
   customerPipelineTemplateCatalogActions
 } from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
@@ -12,7 +12,7 @@ export default function useGetCustomerPipelineTemplates(
   handleErrorFunction,
 ) {
   const [pipelineTemplates, setPipelineTemplates] = useState([]);
-  const [pipelineTemplateFilterModel, setPipelineTemplateFilterModel] = useState(new Model({...catalogFilterMetadata.newObjectFields}, catalogFilterMetadata, false));
+  const [pipelineTemplateFilterModel, setPipelineTemplateFilterModel] = useState(new Model({...pipelineTemplateCatalogFilterMetadata.newObjectFields}, pipelineTemplateCatalogFilterMetadata, false));
   const {
     getAccessToken,
     cancelTokenSource,
