@@ -1635,7 +1635,7 @@ div.data-blocks-ellipses {
       - opsera footer
       - button container size (with margins)
      */
-    min-height: calc(100vh - 20px - 21px - 38px - 1rem);
+    min-height: calc(100vh - 20px - 48px - 40px - 45px);
 }
 
 .full-screen-overlay-panel-body {
@@ -1653,8 +1653,7 @@ div.data-blocks-ellipses {
       - button panel height (with margins)
       - footer height
     */
-    min-height: calc(100vh - 20px - 48px - 40px - 4rem);
-    max-height: calc(100vh - 20px - 48px - 40px - 4rem);
+    min-height: calc(100vh - 20px - 48px - 40px - 45px);
 }
 
 .full-screen-overlay-selection-container {
@@ -1683,8 +1682,6 @@ div.data-blocks-ellipses {
 }
 
 .overlay-margin {
-    /* height is 100% - 10px x2 top and bottom margins */
-    height: calc(100% - 20px);
     margin: 10px;
 }
 

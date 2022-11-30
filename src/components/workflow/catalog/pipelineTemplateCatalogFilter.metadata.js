@@ -1,4 +1,4 @@
-const catalogFilterMetadata = {
+const pipelineTemplateCatalogFilterMetadata = {
   idProperty: "_id",
   type: "Pipeline Catalog",
   fields: [
@@ -75,4 +75,4 @@ const catalogFilterMetadata = {
   ]
 };
 
-export default catalogFilterMetadata;
+export default pipelineTemplateCatalogFilterMetadata;

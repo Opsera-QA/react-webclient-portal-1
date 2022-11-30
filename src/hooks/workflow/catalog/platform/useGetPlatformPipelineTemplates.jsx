@@ -6,13 +6,13 @@ import {
   platformPipelineTemplateCatalogActions
 } from "components/workflow/catalog/platform/platformPipelineTemplateCatalog.actions";
 import Model from "core/data_model/model";
-import catalogFilterMetadata from "components/workflow/catalog/catalog-filter-metadata";
+import pipelineTemplateCatalogFilterMetadata from "components/workflow/catalog/pipelineTemplateCatalogFilter.metadata";
 
 export default function useGetPlatformPipelineTemplates(
   handleErrorFunction,
 ) {
   const [pipelineTemplates, setPipelineTemplates] = useState([]);
-  const [pipelineTemplateFilterModel, setPipelineTemplateFilterModel] = useState(new Model({...catalogFilterMetadata.newObjectFields}, catalogFilterMetadata, false));
+  const [pipelineTemplateFilterModel, setPipelineTemplateFilterModel] = useState(new Model({...pipelineTemplateCatalogFilterMetadata.newObjectFields}, pipelineTemplateCatalogFilterMetadata, false));
   const {
     getAccessToken,
     cancelTokenSource,
