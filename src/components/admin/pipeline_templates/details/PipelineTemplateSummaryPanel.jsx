@@ -11,8 +11,8 @@ import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import BooleanField from "components/common/fields/boolean/BooleanField";
-import PipelineTemplateRoleAccessInput
-  from "components/admin/pipeline_templates/details/inputs/PipelineTemplateRoleAccessInput";
+import PlatformPipelineTemplateRoleAccessInput
+  from "components/admin/pipeline_templates/details/inputs/PlatformPipelineTemplateRoleAccessInput";
 
 function PipelineTemplateSummaryPanel({ templateData, setActiveTab, setTemplateData }) {
   if (templateData == null) {
@@ -59,7 +59,10 @@ function PipelineTemplateSummaryPanel({ templateData, setActiveTab, setTemplateD
           <JsonField dataObject={templateData} fieldName={"plan"}/>
         </Col>
         <Col lg={12}>
-          <PipelineTemplateRoleAccessInput dataObject={templateData} setDataObject={setTemplateData} />
+          <PlatformPipelineTemplateRoleAccessInput
+            model={templateData}
+            setModel={setTemplateData}
+          />
         </Col>
       </Row>
     </SummaryPanelContainer>

@@ -1,5 +1,6 @@
 import {faBallotCheck, faDraftingCompass, faHexagon} from "@fortawesome/pro-light-svg-icons";
 import {pipelinesPaths} from "components/workflow/pipelines.paths";
+import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 
 export const pipelinesTrails = {};
 
@@ -11,7 +12,7 @@ pipelinesTrails.catalog = {
   title: "Pipeline Catalogs",
   linkText: "Pipeline Catalogs",
   icon: faHexagon,
-  pageDescription: "To begin building your pipeline, choose one of the pipeline templates provided in the Marketplace or Private Catalogs.",
+  pageDescription: "To begin building your pipeline, choose one of the pipeline templates provided in the Pipeline Marketplace or Shared Templates Catalogs.",
 };
 
 pipelinesTrails.customerPipelineTemplateDetailView = {
@@ -21,6 +22,21 @@ pipelinesTrails.customerPipelineTemplateDetailView = {
   title: "Pipeline Template Details",
   linkText: "Pipeline Template Details",
   icon: faHexagon,
+  dynamicIconFunction: (model) => {
+    return pipelineTypeConstants.getIconForPipelineTypeArray(model?.getData("type"));
+  },
+};
+
+pipelinesTrails.platformPipelineTemplateDetailView = {
+  parent: "pipelines",
+  name: "platformPipelineTemplateDetailView",
+  path: pipelinesPaths.platformPipelineTemplateDetailView,
+  title: "Pipeline Template Details",
+  linkText: "Pipeline Template Details",
+  icon: faHexagon,
+  dynamicIconFunction: (model) => {
+    return pipelineTypeConstants.getIconForPipelineTypeArray(model?.getData("type"));
+  },
 };
 
 // Pipelines

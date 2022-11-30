@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, {useState, useRef, useEffect} from "react";
 import { Route, useHistory } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext";
 import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
@@ -32,6 +32,14 @@ const AppWithRouterAccess = () => {
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
     history.replace(toRelativeUrl(originalUri ? originalUri : "/", window.location.origin));
   };
+
+  useEffect(() => {
+    // console.log("app with router access starting up");
+    //
+    // return () => {
+    //   console.log("app with router access return");
+    // };
+  }, []);
 
   const OKTA_CONFIG = {
     issuer: process.env.REACT_APP_OKTA_ISSUER,

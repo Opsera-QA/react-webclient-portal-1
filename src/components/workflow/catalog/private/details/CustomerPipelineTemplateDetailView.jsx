@@ -3,18 +3,16 @@ import {useParams} from "react-router-dom";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import TagManagementSubNavigationBar from "components/settings/tags/TagManagementSubNavigationBar";
 import useGetCustomerPipelineTemplateModelById
   from "hooks/workflow/catalog/customer/useGetCustomerPipelineTemplateModelById";
 import pipelineTemplateMetadata from "components/admin/pipeline_templates/pipelineTemplate.metadata";
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 import CustomerPipelineTemplateDetailPanel
   from "components/workflow/catalog/private/details/CustomerPipelineTemplateDetailPanel";
-import useComponentStateReference from "hooks/useComponentStateReference";
-import {
-  customerPipelineTemplateCatalogActions
-} from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
-import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import ActionBarTransferCustomerPipelineTemplateButton
+  from "components/workflow/catalog/private/action_bar/ActionBarTransferCustomerPipelineTemplateButton";
+import ActionBarDeleteCustomerPipelineTemplateButton
+  from "components/workflow/catalog/private/action_bar/ActionBarDeleteCustomerPipelineTemplateButton";
 
 export default function CustomerPipelineTemplateDetailView() {
   const {id} = useParams();
@@ -22,15 +20,8 @@ export default function CustomerPipelineTemplateDetailView() {
     pipelineTemplateModel,
     setPipelineTemplateModel,
     isLoading,
+    loadData,
   } = useGetCustomerPipelineTemplateModelById(id);
-  const {
-    getAccessToken,
-    cancelTokenSource,
-  } = useComponentStateReference();
-
-  const deletePipelineTemplate = async () => {
-  return await customerPipelineTemplateCatalogActions.deleteCustomerPipelineTemplate(getAccessToken, cancelTokenSource, id);
-  };
 
   const getActionBar = () => {
     if (pipelineTemplateModel != null) {
@@ -40,9 +31,14 @@ export default function CustomerPipelineTemplateDetailView() {
             <ActionBarBackButton path={"/workflow/catalog/library"}/>
           </div>
           <div className="d-flex">
-            {/*<TagSubscriptionIcon tagModel={pipelineTemplateModel} className={"mr-3"} />*/}
-            {/*TODO: Hook requirements up inside action bar buttons/inputs*/}
-            <ActionBarDeleteButton2 dataObject={pipelineTemplateModel} handleDelete={deletePipelineTemplate} relocationPath={"/workflow/catalog/library"} />
+            <ActionBarTransferCustomerPipelineTemplateButton
+              templateModel={pipelineTemplateModel}
+              loadTemplate={loadData}
+              className={"mr-3"}
+            />
+            <ActionBarDeleteCustomerPipelineTemplateButton
+              customerPipelineTemplateModel={pipelineTemplateModel}
+            />
           </div>
         </ActionBarContainer>
       );

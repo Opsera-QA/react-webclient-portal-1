@@ -783,10 +783,12 @@ a.nav-link {
 }
 
 .sub-navigation .nav-tabs .nav-link {
+    border-bottom: none;
+
+    /*If we want to use the folder tab-style tabs commented out below, these lines need to be removed*/
+    border-radius: 0;
     border-left: none;
     border-right: none;
-    border-bottom: none;
-    border-radius: 0;
 }
 
 .sub-navigation li {
@@ -802,6 +804,9 @@ a.nav-link {
 .sub-navigation .nav-tabs > li a.active, .sub-navigation .nav-tabs > li a.active:focus {
     color: #CF940C;
     border-top: 5px solid #CF940C;
+    /*border-left: 1px solid #CF940C;*/
+    /*border-right: 1px solid #CF940C;*/
+    /*border-radius: .75rem .75rem 0 0;*/
     text-decoration: none;
 }
 
@@ -818,6 +823,9 @@ a.nav-link {
 
 .sub-navigation .nav-tabs > li a {
     border-top: 5px solid #E6E5E3;
+    /*border-left: 1px solid #E6E5E3;*/
+    /*border-right: 1px solid #E6E5E3;*/
+    /*border-radius: .75rem .75rem 0 0;*/
 }
 
 .sub-navigation li a:hover {
@@ -1638,7 +1646,7 @@ div.data-blocks-ellipses {
       - opsera footer
       - button container size (with margins)
      */
-    min-height: calc(100vh - 20px - 21px - 38px - 1rem);
+    min-height: calc(100vh - 20px - 48px - 40px - 45px);
 }
 
 .full-screen-overlay-panel-body {
@@ -1656,8 +1664,7 @@ div.data-blocks-ellipses {
       - button panel height (with margins)
       - footer height
     */
-    min-height: calc(100vh - 20px - 48px - 40px - 4rem);
-    max-height: calc(100vh - 20px - 48px - 40px - 4rem);
+    min-height: calc(100vh - 20px - 48px - 40px - 45px);
 }
 
 .full-screen-overlay-selection-container {
@@ -1686,8 +1693,6 @@ div.data-blocks-ellipses {
 }
 
 .overlay-margin {
-    /* height is 100% - 10px x2 top and bottom margins */
-    height: calc(100% - 20px);
     margin: 10px;
 }
 

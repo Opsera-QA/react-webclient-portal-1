@@ -31,6 +31,7 @@ import PipelineWorkflowExportWorkflowButton
   from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowExportWorkflowButton";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 // TODO: Clean up and refactor to make separate components. IE the source repository begin workflow box can be its own component
 function PipelineWorkflow({
@@ -61,25 +62,17 @@ function PipelineWorkflow({
     loadFormData(pipeline);
   }, [refreshCount, JSON.stringify(pipeline)]);
 
-
   const loadFormData = (pipeline) => {
-    if (!pipeline.workflow) {
-      return;
-    }
+    const lastStep = DataParsingHelper.parseNestedObject(pipeline, "workflow.last_step", {});
+    setLastStep(lastStep);
 
-    //setState({ items: pipeline.workflow.plan });
-    setLastStep(pipeline.workflow.last_step);
+    const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status");
+    const isPaused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
 
-    if (pipeline.workflow.last_step !== undefined) {
-      let status = Object.prototype.hasOwnProperty.call(pipeline.workflow.last_step, "status") ? pipeline.workflow.last_step.status : false;
-
-      if (status === "stopped" && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
-        setWorkflowStatus("paused");
-      } else {
-        setWorkflowStatus(status);
-      }
+    if (status === "stopped" && isPaused === true) {
+      setWorkflowStatus("paused");
     } else {
-      setWorkflowStatus(false);
+      setWorkflowStatus(status);
     }
   };
 
@@ -190,8 +183,8 @@ function PipelineWorkflow({
     return (
       <div className="source workflow-module-container workflow-module-container-width mt-2 mx-auto">
         {!softLoading ?
-          <div className="pt-2 text-center mx-auto">Start of Workflow</div> :
-          <div className="pt-2 text-center mx-auto green">
+          <div className="text-muted title-text-6 pt-2 text-center mx-auto">Start of Workflow</div> :
+          <div className="text-muted title-text-6 pt-2 text-center mx-auto green">
             <LoadingIcon className={"mr-1"} /> Processing Workflow...</div>
         }
 
@@ -256,7 +249,7 @@ function PipelineWorkflow({
               overlay={renderTooltip({ message: "View Settings" })}>
               <div>
                 <IconBase icon={faSearchPlus}
-                          className={"text-muted mr-2 pointer"}
+                          className={"text-muted ml-2 pointer"}
                           onClickFunction={() => {
                             showWebhookConfigurationSummary();
                           }}/>
@@ -272,7 +265,7 @@ function PipelineWorkflow({
                   overlay={renderTooltip({ message: "Configure pipeline level settings such as source repository and webhook events" })}>
                   <div>
                     <IconBase icon={faCog}
-                              className={"text-muted pointer"}
+                              className={"text-muted pointer ml-2"}
                               onClickFunction={() => {
                                 handleEditSourceSettingsClick();
                               }}/>
@@ -287,7 +280,7 @@ function PipelineWorkflow({
                   overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
                   <div>
                     <IconBase icon={faCog}
-                              className={"text-muted mx-1"} />
+                              className={"text-muted ml-2"} />
                   </div>
                 </OverlayTrigger>
               </>
@@ -357,7 +350,6 @@ function PipelineWorkflow({
             <PipelineWorkflowItemList
               pipeline={pipeline}
               lastStep={lastStep}
-              lastStepId={lastStep && lastStep.step_id}
               editWorkflow={editWorkflow}
               pipelineId={pipeline._id}
               fetchPlan={fetchPlan}
@@ -383,7 +375,7 @@ function PipelineWorkflow({
 
 
           <div
-            className="workflow-module-container workflow-module-container-width p-2 mb-4 text-center mx-auto">
+            className="title-text-6 text-muted workflow-module-container workflow-module-container-width p-2 mb-4 text-center mx-auto">
             End of Workflow
           </div>
         </div>

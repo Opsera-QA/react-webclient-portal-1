@@ -10,6 +10,8 @@ import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import PipelineInstructionsDetailView from "components/workflow/instructions/details/PipelineInstructionsDetailView";
 import CustomerPipelineTemplateDetailView
   from "components/workflow/catalog/private/details/CustomerPipelineTemplateDetailView";
+import PlatformPipelineTemplateDetailView
+  from "components/workflow/catalog/platform/details/PlatformPipelineTemplateDetailView";
 
 export default function PipelinesRoutes() {
   return (
@@ -20,6 +22,11 @@ export default function PipelinesRoutes() {
         path="/workflow/catalog/customer/:id"
         exact
         component={CustomerPipelineTemplateDetailView}
+      />
+      <SecureRoute
+        path="/workflow/catalog/platform/:id"
+        exact
+        component={PlatformPipelineTemplateDetailView}
       />
       <SecureRoute path="/workflow/" exact component={Pipelines} />
       <SecureRoute path="/workflow/owner" exact component={Pipelines} />

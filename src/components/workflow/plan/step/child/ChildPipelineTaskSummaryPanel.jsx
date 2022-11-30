@@ -14,10 +14,10 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 
 function ChildPipelineTaskSummaryPanel({ pipelineTaskData }) {
   return (
-    <SummaryPanelContainer>
+    <SummaryPanelContainer className={"mt-2"}>
       <Row>
         <Col md={12}>
-          <H5FieldSubHeader subheaderText={"Step Activity Log Summary:"} />
+          <H5FieldSubHeader subheaderText={"Step Activity Log Summary"} />
         </Col>
         <Col md={12}>
           <UserNameField model={pipelineTaskData} fieldName={"user_id"} />

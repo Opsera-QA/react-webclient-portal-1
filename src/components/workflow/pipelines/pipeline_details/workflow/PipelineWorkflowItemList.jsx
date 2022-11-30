@@ -9,7 +9,7 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {SteppedLineTo} from "react-lineto";
-
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function PipelineWorkflowItemList(
   {
@@ -50,7 +50,6 @@ function PipelineWorkflowItemList(
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     }
@@ -170,20 +169,21 @@ function PipelineWorkflowItemList(
 
 
   const setStepStatusClass = (last_step, item) => {
-    const item_id = item._id;
+    const item_id = DataParsingHelper.parseMongoDbId(item?._id);
     let classString = "step-" + item_id;
 
     const isStepValid = pipelineValidationHelper.isPipelineStepToolValid(item.tool);
 
-    let stepStatusClass = item.tool === undefined ? "workflow-step-warning"
-      : item.tool.configuration === undefined ? "workflow-step-warning"
-        : !isStepValid ? "workflow-step-warning"
-          : !item.active ? "workflow-step-disabled"
-            : "";
+    let stepStatusClass =
+      !item.active
+        ? "workflow-step-disabled"
+        : !isStepValid
+          ? "workflow-step-warning"
+          : "";
 
     //if operations have occurred and the step is still valid
     if (typeof (last_step) !== "undefined" && isStepValid) {
-      const { success, running, failed } = last_step;
+      const {success, running, failed} = last_step;
 
       if (success && success.step_id === item_id) {
         stepStatusClass = "workflow-step-success";
@@ -209,6 +209,84 @@ function PipelineWorkflowItemList(
     }
   };
 
+  const getPipelineWorkflowItemControls = (item, index) => {
+    if (editWorkflow) {
+      return (
+        <div
+          className={"text-center d-flex step-plus-" + index}
+          style={{
+            height: "42px",
+          }}
+        >
+          <div className={"m-auto"}>
+          <OverlayTrigger
+            placement="top"
+            delay={{show: 250, hide: 400}}
+            overlay={renderTooltip({message: "Move lower step up one position"})}>
+            <IconBase icon={faCaretSquareUp} iconSize={"lg"}
+                      className={index === 0 ? "fa-disabled" : "pointer dark-grey"}
+                      onClickFunction={() => {
+                        handleMoveStep(item._id, index, "up");
+                      }}/>
+          </OverlayTrigger>
+
+          <OverlayTrigger
+            placement="top"
+            delay={{show: 250, hide: 400}}
+            overlay={renderTooltip({message: "Add new step here"})}>
+            <IconBase icon={faPlusSquare}
+                      iconSize={"lg"}
+                      className={"green pointer ml-2 mr-1"}
+                      onClickFunction={() => {
+                        handleAddStep(item._id, index);
+                      }}/>
+          </OverlayTrigger>
+
+          <OverlayTrigger
+            placement="top"
+            delay={{show: 250, hide: 400}}
+            overlay={renderTooltip({message: "Copy previous step"})}>
+            <IconBase icon={faCopy}
+                      iconSize={"lg"}
+                      className={"yellow pointer ml-1 mr-2"}
+                      onClickFunction={() => {
+                        handleCopyStep(item, index);
+                      }}/>
+          </OverlayTrigger>
+
+          <OverlayTrigger
+            placement="top"
+            delay={{show: 250, hide: 400}}
+            overlay={renderTooltip({message: "Move upper step down one position"})}>
+            <IconBase icon={faCaretSquareDown} iconSize={"lg"}
+                      className={index === pipelineSteps.length - 1 ? "fa-disabled" : "pointer dark-grey"}
+                      onClickFunction={() => {
+                        handleMoveStep(item._id, index, "down");
+                      }}/>
+          </OverlayTrigger>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <>
+        <SteppedLineTo
+          from={"step-" + item._id}
+          to={"step-" + index}
+          delay={100}
+          orientation={"v"}
+          zIndex={10}
+          borderColor={"#0f3e84"}
+          borderWidth={2}
+          fromAnchor={"bottom"}
+          toAnchor={"bottom"}
+        />
+        <div style={{ height: "42px" }} className={"step-" + index}>&nbsp;</div>
+      </>
+    );
+  };
+
   return (
     <>
       {pipelineSteps && pipelineSteps.map((item, index) => (
@@ -217,10 +295,10 @@ function PipelineWorkflowItemList(
           className={isSaving ? "fa-disabled" : ""}
         >
           <div
-            className={"mb-1 p-1 workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(lastStep, item)}
+            className={"p-1 workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(lastStep, item)}
             style={{
               boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)",
-              // borderRadius: "1rem",
+              borderRadius: ".2rem",
             }}
           >
             <PipelineWorkflowItem
@@ -240,72 +318,7 @@ function PipelineWorkflowItemList(
               loadPipeline={fetchPlan}
             />
           </div>
-
-          {editWorkflow ? <>
-              <div className={"text-center my-3 step-plus-" + index}>
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Move lower step up one position" })}>
-                  <IconBase icon={faCaretSquareUp} iconSize={"lg"}
-                                   className={index === 0 ? "fa-disabled" : "pointer dark-grey"}
-                                   onClickFunction={() => {
-                                     handleMoveStep(item._id, index, "up");
-                                   }} />
-                </OverlayTrigger>
-
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Add new step here" })}>
-                  <IconBase icon={faPlusSquare}
-                                   iconSize={"lg"}
-                                   className={"green pointer ml-2 mr-1"}
-                                   onClickFunction={() => {
-                                     handleAddStep(item._id, index);
-                                   }} />
-                </OverlayTrigger>
-
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Copy previous step" })}>
-                  <IconBase icon={faCopy}
-                                   iconSize={"lg"}
-                                   className={"yellow pointer ml-1 mr-2"}
-                            onClickFunction={() => {
-                                     handleCopyStep(item, index);
-                                   }} />
-                </OverlayTrigger>
-
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Move upper step down one position" })}>
-                  <IconBase icon={faCaretSquareDown} iconSize={"lg"}
-                                   className={index === pipelineSteps.length - 1 ? "fa-disabled" : "pointer dark-grey"}
-                                   onClickFunction={() => {
-                                     handleMoveStep(item._id, index, "down");
-                                   }} />
-                </OverlayTrigger>
-              </div>
-            </> :
-            <>
-              <SteppedLineTo
-                from={"step-" + item._id}
-                to={"step-" + index}
-                delay={100}
-                orientation={"v"}
-                zIndex={10}
-                borderColor={"#0f3e84"}
-                borderWidth={2}
-                fromAnchor={"bottom"}
-                toAnchor={"bottom"}
-              />
-              <div style={{ height: "40px" }} className={"step-" + index}>&nbsp;</div>
-            </>
-          }
-
+          {getPipelineWorkflowItemControls(item, index)}
         </div>
       ))}
     </>

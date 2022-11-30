@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TitleBar from "components/common/fields/TitleBar";
+import ScreenContainerTitleBar from "components/common/fields/ScreenContainerTitleBar";
 import AccessDeniedMessage from "components/common/status_notifications/AccessDeniedMessage";
 import { faExclamationTriangle } from "@fortawesome/pro-light-svg-icons";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
@@ -49,7 +49,7 @@ export default function AccessDeniedContainer(
       >
         <div className={"px-3 content-block-header title-text-header-1 py-2 d-flex"}>
           <div className={"my-auto w-100"}>
-            <TitleBar
+            <ScreenContainerTitleBar
               titleIcon={faExclamationTriangle}
               title={"Access Denied!"}
             />

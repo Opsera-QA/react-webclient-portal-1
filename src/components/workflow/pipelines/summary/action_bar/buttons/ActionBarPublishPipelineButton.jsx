@@ -5,6 +5,9 @@ import {faShareAll} from "@fortawesome/pro-light-svg-icons";
 import pipelineActions from "components/workflow/pipeline-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
+import {
+  customerPipelineTemplateCatalogActions
+} from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
 
 function ActionBarPublishPipelineButton({pipeline}) {
   const [isPublishing, setIsPublishing] = useState(false);
@@ -20,7 +23,7 @@ function ActionBarPublishPipelineButton({pipeline}) {
   const handlePublishPipelineFunction = async () => {
     try {
       setIsPublishing(true);
-      await pipelineActions.publishPipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
+      await customerPipelineTemplateCatalogActions.publishPipelineToCustomerCatalog(getAccessToken, cancelTokenSource, pipeline?._id);
       toastContext.showSystemInformationToast("You have published a copy of this pipeline template in your organization's private catalog for others in your organization to use.  Overall settings of the pipeline are shared but no tools or activity logs have been duplicated in this process.");
     } catch (error) {
       if (isMounted?.current === true) {

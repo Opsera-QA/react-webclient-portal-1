@@ -339,11 +339,6 @@ pipelineActions.duplicatePipelineV2 = async (getAccessToken, cancelTokenSource, 
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-pipelineActions.publishPipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
-  const apiUrl = `/pipelines/${pipelineId}/publish-template/`;
-  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
 pipelineActions.publish = async (pipelineId, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/${pipelineId}/publish-template/`;
@@ -362,9 +357,23 @@ pipelineActions.getLogs = async (pipelineId, getAccessToken) => {
   return response;
 };
 
-pipelineActions.deployTemplateV2 = async (getAccessToken, cancelTokenSource, templateId) => {
+pipelineActions.deployTemplateV2 = async (
+  getAccessToken,
+  cancelTokenSource,
+  templateId,
+  roles,
+) => {
   const apiUrl = `/pipelines/deploy/${templateId}`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  const postBody = {
+    roles: roles,
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody
+  );
 };
 
 pipelineActions.approve = async (templateId, postBody, getAccessToken) => {

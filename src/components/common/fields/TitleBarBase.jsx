@@ -4,9 +4,9 @@ import IconBase from "components/common/icons/IconBase";
 
 function TitleBarBase({ icon, isLoading, title, actionButtons }) {
   return (
-    <div className="px-2 d-flex input-title-bar justify-content-between">
+    <div className={"my-1 d-flex justify-content-between"}>
       <div className={"my-auto"}>
-        <IconBase icon={icon} isLoading={isLoading} className={"mr-1"}/>
+        <IconBase icon={icon} isLoading={isLoading} className={"mr-2"}/>
         <span>{title}</span>
       </div>
       <div className={"my-auto"}>

@@ -245,7 +245,7 @@ taskActions.getTaskAuditLogsByTaskId = async (
   cancelTokenSource,
   taskId,
 ) => {
-  const apiUrl = `/audit-logs/task/${taskId}`;
+  const apiUrl = `/audit-logs/tasks/${taskId}`;
   return await baseActions.apiGetCallV2(
     getAccessToken,
     cancelTokenSource,

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import {getBreadcrumb} from "components/common/navigation/trails";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
-import TitleBar from "components/common/fields/TitleBar";
+import ScreenContainerTitleBar from "components/common/fields/ScreenContainerTitleBar";
 import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
 import {meetsRequirements} from "components/common/helpers/role-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -159,7 +159,7 @@ function ScreenContainer(
         }}
         >
           <div className={"px-3 py-2 content-block-header title-text-header-1"}>
-            <TitleBar
+            <ScreenContainerTitleBar
               titleIcon={breadcrumb?.icon}
               title={breadcrumb?.title}
               isBeta={breadcrumb?.isBeta === true}

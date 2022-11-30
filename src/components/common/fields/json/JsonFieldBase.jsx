@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ReactJson from "react-json-view";
-import { objectHelpers } from "components/common/helpers/object/object.helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function JsonFieldBase(
   {
@@ -11,14 +11,10 @@ function JsonFieldBase(
     enableClipboard,
     displayDataTypes,
   }) {
-  const getJsonBody = () => {
-    return objectHelpers.parseJson(json);
-  };
-
   return (
     <div className={className}>
       <ReactJson
-        src={getJsonBody()}
+        src={DataParsingHelper.parseJson(json, {})}
         enableClipboard={enableClipboard}
         displayDataTypes={displayDataTypes}
         collapsed={collapsed}
@@ -30,7 +26,7 @@ function JsonFieldBase(
 }
 
 JsonFieldBase.propTypes = {
-  json: PropTypes.object,
+  json: PropTypes.any,
   className: PropTypes.string,
   collapsed: PropTypes.bool,
   enableClipboard: PropTypes.bool,

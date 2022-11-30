@@ -4,7 +4,9 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import PropTypes from "prop-types";
-import pipelineTemplateActions from "components/admin/pipeline_templates/pipelineTemplate.actions";
+import {
+  platformPipelineTemplateCatalogActions
+} from "components/workflow/catalog/platform/platformPipelineTemplateCatalog.actions";
 
 export default function CreateWorkflowWizardPipelineInitializationScreen(
   {
@@ -32,7 +34,7 @@ export default function CreateWorkflowWizardPipelineInitializationScreen(
   const initializeSalesforcePipelineTemplate = async () => {
     try {
       setStatus(buttonLabelHelper.BUTTON_STATES.BUSY);
-      const response = await pipelineTemplateActions.deployTemplateByIdentifierV2(
+      const response = await platformPipelineTemplateCatalogActions.deployPlatformTemplateByIdentifier(
         getAccessToken,
         cancelTokenSource,
         templateIdentifier,

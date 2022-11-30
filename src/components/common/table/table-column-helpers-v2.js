@@ -311,7 +311,7 @@ export const getPipelineActivityStatusColumn = (field, className) => {
       if (text == null || text === "") {
         return (
           `<span>
-          <i class="fal fa-question-circle cell-icon vertical-align-item"></i>
+          <i class="fal fa-question-circle cell-icon my-auto"></i>
           <span class="ml-1">Unknown</span>
         </span>`
         );
@@ -319,7 +319,7 @@ export const getPipelineActivityStatusColumn = (field, className) => {
 
       return (
         `<span>
-          <i class="fal ${getPipelineStatusIconCss(text)} cell-icon vertical-align-item"></i>
+          <i class="fal ${getPipelineStatusIconCss(text)} cell-icon my-auto"></i>
           <span class="ml-1">${capitalizeFirstLetter(text)}</span>
         </span>`
       );
@@ -344,34 +344,6 @@ export const getPipelineThresholdLevelColumn = (field, className) => {
       }
 
       return "";
-    },
-    class: className ? className : undefined
-  };
-};
-
-export const getTaskStatusColumn = (field, className) => {
-  let header = getColumnHeader(field);
-
-  return {
-    header: header,
-    id: getColumnId(field),
-    width: 105,
-    template: function (text) {
-      if (text == null || text === "") {
-        return (
-          `<span>
-          <i class="fal fa-play-circle green cell-icon vertical-align-item"></i>
-          <span class="ml-1">Created</span>
-        </span>`
-        );
-      }
-
-      return (
-        `<span>
-          <i class="fal ${getPipelineStatusIconCss(text)} cell-icon vertical-align-item"></i>
-          <span class="ml-1">${capitalizeFirstLetter(text)}</span>
-        </span>`
-      );
     },
     class: className ? className : undefined
   };

@@ -1,30 +1,25 @@
 import PropTypes from "prop-types";
-import {useHistory} from "react-router-dom";
-import {Button, Card, Col, Row} from "react-bootstrap";
-import {faPlus, faSearch, faHexagon} from "@fortawesome/pro-light-svg-icons";
+import {Card, Col, Row} from "react-bootstrap";
+import {faHexagon} from "@fortawesome/pro-light-svg-icons";
 import {format} from "date-fns";
 import React, {useEffect, useState} from "react";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import pipelineActions from "components/workflow/pipeline-actions";
 import IconBase from "components/common/icons/IconBase";
-import LoadingIcon from "components/common/icons/LoadingIcon";
-import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {pipelineHelper} from "components/workflow/pipeline.helper";
-import {pipelineCatalogHelper} from "components/workflow/catalog/pipelineCatalog.helper";
+import CreateCustomerPipelineButton from "components/workflow/catalog/private/deploy/CreateCustomerPipelineButton";
+import pipelineTemplateMetadata from "components/admin/pipeline_templates/pipelineTemplate.metadata";
+import modelHelpers from "components/common/model/modelHelpers";
+import {truncateString} from "components/common/helpers/string-helpers";
+import ViewCustomerPipelineTemplateDetailsButton
+  from "components/workflow/catalog/private/ViewCustomerPipelineTemplateDetailsButton";
 
+// TODO: This needs to be rewritten, I just copied what existed for the catalog work
 export default function CustomerPipelineTemplateCard(
   {
     template,
     activeTemplates,
   }) {
-  const history = useHistory();
-  const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const {
-    cancelTokenSource,
-    isMounted,
-    getAccessToken,
     isOpseraAdministrator,
   } = useComponentStateReference();
 
@@ -34,51 +29,21 @@ export default function CustomerPipelineTemplateCard(
     }
   }, [template, activeTemplates]);
 
-  const showPipelineDetails = () => {
-    history.push(pipelineCatalogHelper.getCustomerPipelineTemplateDetailViewLink(template?._id));
-  };
-
-  const deployTemplate = async () => {
-    try {
-      setLoading(true);
-      const result = await pipelineActions.deployTemplateV2(getAccessToken, cancelTokenSource, template?._id);
-      const newPipelineId = result?.data?._id;
-
-      if (isMongoDbId(newPipelineId) === true) {
-        history.push(pipelineHelper.getDetailViewLink(newPipelineId));
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.error(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setLoading(false);
-      }
-    }
-  };
-
-  const getEnabledBody = () => {
+  const getBody = () => {
     return (
-      <Col className="col-6 d-flex flex-nowrap">
-        <TooltipWrapper innerText={"Create a new Pipeline from this template"}>
-          <Button variant="success" size="sm" className="mr-2 mt-2 text-nowrap"
-                  style={{minWidth: "128px", maxHeight: "34px"}} onClick={() => deployTemplate()}>            {loading ?
-            <><LoadingIcon className={"mr-1"}/>Working</> :
-            <><IconBase icon={faPlus} className={"d-xl-none mr-1"}/>Create Pipeline </>
-          }
-          </Button>
-        </TooltipWrapper>
-        <Button variant="outline-secondary" size="sm" className="mr-1 mt-2"
-                style={{minWidth: "128px", maxHeight: "34px"}} onClick={() => showPipelineDetails()}>
-          <IconBase icon={faSearch} className={"d-xl-none mr-1"}/>
-          Details
-        </Button>
+      <Col xs={6} className={"d-flex"}>
+        <CreateCustomerPipelineButton
+          customerPipelineTemplateModel={modelHelpers.parseObjectIntoModel(template, pipelineTemplateMetadata)}
+          className={"mr-2"}
+        />
+        <ViewCustomerPipelineTemplateDetailsButton
+          templateId={template?._id}
+        />
       </Col>
     );
   };
 
-  const getBody = () => {
+  const getDisabledText = () => {
     if (disabled) {
       if (template?.readOnly) {
         return (
@@ -95,11 +60,7 @@ export default function CustomerPipelineTemplateCard(
           </Col>
         );
       }
-
-      return;
     }
-
-    return getEnabledBody();
   };
 
   return (
@@ -109,7 +70,7 @@ export default function CustomerPipelineTemplateCard(
           <div>
             {template.name}
           </div>
-          <div className="ml-auto mr-1 text-muted small upper-case-first d-flex">
+          <div className={"ml-auto mr-1"}>
             <IconBase icon={faHexagon} size={"lg"}/>
           </div>
         </div>
@@ -117,18 +78,21 @@ export default function CustomerPipelineTemplateCard(
       <Card.Body className="pt-0 pb-2">
         <Row className="catalog-card-text">
           <Col lg={12}>
-            <Card.Text className="mb-2">{template.description}</Card.Text>
+            <Card.Text className="mb-2">{truncateString(template.description, 150)}</Card.Text>
           </Col>
         </Row>
         <Row className="d-flex">
+          {getDisabledText()}
           {getBody()}
-          <Col className="col-6 pr-1">
-            <div className="text-right">
-              <div><small><span className="text-muted mr-1 pb-1">Updated:</span><span
-                className="text-nowrap">{template.updatedAt && format(new Date(template.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</span></small>
-              </div>
-              <div><small><span className="text-muted mr-1 pb-1">Created:</span><span
-                className="">{template.updatedAt && format(new Date(template.createdAt), "yyyy-MM-dd', 'hh:mm a")}</span></small>
+          <Col xs={6} className={"d-flex"}>
+            <div className={"w-100 d-flex"}>
+              <div className={"ml-auto"}>
+                <div><small><span className="text-muted mr-1 pb-1">Updated:</span><span
+                  className="text-nowrap">{template.updatedAt && format(new Date(template.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</span></small>
+                </div>
+                <div><small><span className="text-muted mr-1 pb-1">Created:</span><span
+                  className="">{template.updatedAt && format(new Date(template.createdAt), "yyyy-MM-dd', 'hh:mm a")}</span></small>
+                </div>
               </div>
             </div>
           </Col>
