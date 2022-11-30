@@ -130,3 +130,13 @@ platformPipelineTemplateCatalogActions.updatePlatformPipelineTemplateAccessRoles
     postBody,
   );
 };
+
+platformPipelineTemplateCatalogActions.deployPlatformTemplateByIdentifier = async (getAccessToken, cancelTokenSource, identifier) => {
+  const apiUrl = `/workflow/templates/platform/identifier/${identifier}/deploy`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+platformPipelineTemplateCatalogActions.getPlatformPipelineTemplateByIdentifier = async (getAccessToken, cancelTokenSource, identifier) => {
+  const apiUrl = `/workflow/templates/platform/identifier/${identifier}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};

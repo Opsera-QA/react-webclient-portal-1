@@ -1,6 +1,5 @@
 import React from "react";
 import {useParams} from "react-router-dom";
-import pipelineTemplateActions from "components/admin/pipeline_templates/pipelineTemplate.actions";
 import templateEditorMetadata from "components/admin/pipeline_templates/pipelineTemplate.metadata";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
