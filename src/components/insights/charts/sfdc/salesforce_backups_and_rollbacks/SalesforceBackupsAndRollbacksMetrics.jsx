@@ -119,7 +119,7 @@ function SalesforceBackupsAndRollbacksMetrics({ kpiConfiguration, setKpiConfigur
         <Col xl={6} lg={6} sm={6} className={"my-3"}>
           <SfdcBackupFailureDataBlock
             score={rollbacks && rollbacks.length > 0 ? rollbacks[0].failure.toString() : "0"}
-            subtitle="Failed Backups"
+            subtitle="Failed Rollbacks"
             onClickFunction={() => onRowSelect("pipelinesSFDCRollbacksFailure")}
           />
         </Col>
