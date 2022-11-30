@@ -70,8 +70,8 @@ function TextInputBase(
   const getInputClasses = () => {
     let classes = `form-control`;
 
-    if (errorMessage !== "") {
-      classes += ` border border-danger error-text`;
+    if (hasStringValue(errorMessage) === true) {
+      classes += ` border border-danger error-text-alt`;
     }
 
     if (inputClasses) {
@@ -79,6 +79,14 @@ function TextInputBase(
     }
 
     return classes;
+  };
+
+  const getErrorStyling = () => {
+    if (hasStringValue(errorMessage) === true) {
+      return ` error-text-alt`;
+    }
+
+    return "";
   };
 
   const getInputButtons = () => {
@@ -119,7 +127,7 @@ function TextInputBase(
     }
 
     return (
-      <div className={"d-flex"}>
+      <div className={"d-flex" + getErrorStyling()}>
         {getInputBody()}
         {getInputButtons()}
       </div>
