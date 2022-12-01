@@ -53,9 +53,9 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
       regexDefinitionName: "mongoId",
     },        
     {
+      label: "Repository",
       id: "projectId",
       maxLength: 100,
-      regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
       id: "gitUrl",
@@ -118,7 +118,6 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("isNewBranch") === true;
       },
-
     },
     {
       label: "Include Package XML",
@@ -172,7 +171,7 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
     packageXmlReferencePath: "",
     reviewers: [],
     reviewerNames: [],
-  },
+  }
 };
 
 export default salesforceOrganizationSyncTaskConfigurationMetadata;

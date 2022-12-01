@@ -31,6 +31,7 @@ function ArgoRepositoryScmTypeSelectInput({dataObject, setDataObject, disabled})
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repositoryName", "");
+    newDataObject.setData("repoId", "");
     newDataObject.setData("projectId", "");
     newDataObject.setData("workspace", "");
     setDataObject({...newDataObject});
@@ -40,6 +41,7 @@ function ArgoRepositoryScmTypeSelectInput({dataObject, setDataObject, disabled})
     let newDataObject = {...dataObject};
     newDataObject.setData("service", "");
     newDataObject.setData("gitToolId", "");
+    newDataObject.setData("repoId", "");
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repositoryName", "");
