@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { DateRangePicker } from "react-date-range";
 import {STATIC_DATE_RANGES} from "components/common/inputs/date/DateRangeInput";
@@ -11,11 +11,11 @@ export default function StandaloneDateRangeInput(
     key,
     months,
   }) {
-  const internalDate = useState({
+  const internalDate = {
     startDate: startDate,
     endDate: endDate,
-    key: "selection",
-  });
+    key: key,
+  };
 
   return (
     <DateRangePicker

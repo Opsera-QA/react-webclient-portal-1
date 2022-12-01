@@ -10,7 +10,7 @@ pipelineInstructionsActions.getPipelineInstructions = async (
   type,
   tag,
   owner,
-  release_date,
+  release_date_range,
   ) => {
   const apiUrl = "/settings/pipelines/instructions";
   const queryParameters = {
@@ -19,7 +19,7 @@ pipelineInstructionsActions.getPipelineInstructions = async (
     type: type,
     tag: tag,
     owner: owner,
-    release_date: release_date,
+    release_date_range: release_date_range,
   };
 
   return await baseActions.apiGetCallV3(

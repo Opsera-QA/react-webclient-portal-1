@@ -41,7 +41,7 @@ export default function useGetPipelineInstructions() {
       newFilterModel?.getFilterValue("type"),
       newFilterModel?.getData("tag"),
       newFilterModel?.getFilterValue("owner"),
-      newFilterModel?.getFilterValue("release_date"),
+      newFilterModel?.getFilterValue("release_date_range"),
     );
 
     const pipelineInstructionList = DataParsingHelper.parseArray(response?.data?.data, []);
