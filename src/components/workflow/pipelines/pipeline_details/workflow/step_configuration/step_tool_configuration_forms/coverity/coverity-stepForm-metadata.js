@@ -31,8 +31,9 @@ const coverityStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Repository ID",
+      label: "Repository",
       id: "repoId",
+      isRequired: true
     },
 
     {

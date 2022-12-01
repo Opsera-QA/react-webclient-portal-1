@@ -48,7 +48,9 @@ const powershellStepFormMetadata = {
       isRequired: true
     },
     {
+      label: "Repository",
       id: "repoId",
+      isRequired: true
     },
     
     {

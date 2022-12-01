@@ -22,7 +22,7 @@ const SentenialStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Git Repository ID",
+      label: "Repository",
       id: "repoId",
     },
     {

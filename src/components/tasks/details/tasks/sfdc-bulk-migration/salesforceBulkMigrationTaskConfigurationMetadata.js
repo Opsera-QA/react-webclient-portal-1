@@ -50,9 +50,9 @@ export const salesforceBulkMigrationTaskConfigurationMetadata = {
       regexDefinitionName: "mongoId",
     },
     {
+      label: "Repository",
       id: "projectId",
       maxLength: 100,
-      regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
       label: "Git URL",

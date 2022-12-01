@@ -72,7 +72,7 @@ export const ArgoCdStepConfigurationMetadata = {
       id: "gitWorkspace",
     },
     {
-      label: "Git Repository ID",
+      label: "Repository",
       id: "gitRepositoryID",
     },
     {

@@ -27,6 +27,7 @@ function PackerScmToolTypeSelectInput({model, setModel, isLoading, disabled}) {
     newModel.setData("gitFilePath", "");
     newModel.setData("bitbucketWorkspace", "");
     newModel.setData("bitbucketWorkspaceName", "");
+    newModel.setData("gitRepositoryID", "");
     setModel({...newModel});
   };
 

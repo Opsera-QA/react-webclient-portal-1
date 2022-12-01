@@ -31,6 +31,11 @@ export const salesforceToSalesforceMergeConflictResolutionTaskConfigurationMetad
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
+      label: "Repository",
+      id: "repoId",
+      isRequired: true,
+    },
+    {
       label: "Workspace",
       id: "workspace",
       maxLength: 255,
@@ -73,6 +78,7 @@ export const salesforceToSalesforceMergeConflictResolutionTaskConfigurationMetad
     service: "",
     workspace: "",
     repository: "",
+    repoId: "",
     targetBranch: "",
     sourceBranch: "",
     upstreamBranch: "",
