@@ -12,8 +12,10 @@ function JiraChangeFailureRateTrendDataBlock({
   getTrendIcon,
   topText,
   bottomText,
-  dataPoint
+  dataPoint,
+  dataPointValue
 }) {
+    const score = dataPointValue ? dataPointValue : value;
     return (
         <DataBlockBoxContainer
             showBorder={true}
@@ -26,10 +28,11 @@ function JiraChangeFailureRateTrendDataBlock({
                 bottomText={`${bottomText}${prevValue}`}
                 middleText={
                     <MetricScoreText
-                        score={value}
+                        score={score}
                         dataPoint={dataPoint}
                     />
                 }
+                dataPoint={dataPoint}
             />
         </DataBlockBoxContainer>
     );
@@ -42,7 +45,8 @@ JiraChangeFailureRateTrendDataBlock.propTypes = {
     getTrendIcon: PropTypes.func,
     topText: PropTypes.string,
     bottomText: PropTypes.string,
-    dataPoint: PropTypes.any
+    dataPoint: PropTypes.any,
+    dataPointValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default JiraChangeFailureRateTrendDataBlock;
