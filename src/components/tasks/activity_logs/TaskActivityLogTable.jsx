@@ -67,7 +67,7 @@ export default function TaskActivityLogsTable(
         isLoading={isLoading}
         onRowSelect={onRowSelect}
       />
-    )
+    );
   };
 
   return (
@@ -76,6 +76,7 @@ export default function TaskActivityLogsTable(
         isLoading={isLoading}
         data={taskLogData}
         noDataMessage={noDataMessage}
+        tableComponent={getTable()}
       />
     </div>
   );
