@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
 import { defaultConfig } from "components/insights/charts/charts-views";
@@ -7,9 +7,14 @@ import { faSquare } from "@fortawesome/pro-solid-svg-icons";
 import config from "./GitlabDeploymentFrequencyLineChartConfig";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import IconBase from "components/common/icons/IconBase";
+import JiraChangeFailureRateInsightsOverlay
+    from "../../jira/line_chart/change_failure_rate/JiraChangeFailureRateInsightsOverlay";
+import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
+import GitlabDeploymentFreqActionableMasterTab from "./actionable_insights/GitlabDeploymentFreqActionableMasterTab";
 
 function GitlabDeploymentFrequencyLineChartContainer({ chartData }) {
   const [maxCharVal, setMaxChartVal] = useState(0);
+    const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     let dataStepHigh = _.maxBy(chartData.step, "y");
@@ -30,7 +35,23 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData }) {
     },
   ];
 
-  const getTrendChart = () => {
+    const closePanel = () => {
+        toastContext.removeInlineMessage();
+        toastContext.clearOverlayPanel();
+    };
+
+    const onNodeSelect = (slice) => {
+        console.log("slice", slice);
+        toastContext.showOverlayPanel(
+            <GitlabDeploymentFreqActionableMasterTab
+                data={slice?.data?.report || []}
+                closePanel={closePanel}
+            />
+        );
+    };
+
+
+    const getTrendChart = () => {
     return (
       <>
         <div
@@ -70,6 +91,7 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData }) {
             legendOffset: -38,
             legendPosition: "middle",
           }}
+          onClick={(slice) => onNodeSelect(slice)}
           sliceTooltip={({ slice }) => {
             return (
               <div className={"p-1 bg-white border border-dark"}>
