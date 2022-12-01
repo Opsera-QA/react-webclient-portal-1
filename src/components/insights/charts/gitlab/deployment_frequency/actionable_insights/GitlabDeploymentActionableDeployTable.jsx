@@ -19,11 +19,10 @@ function GitlabDeploymentActionableDeployTable({ data, isLoading, loadData, filt
     const columns = useMemo(
         () => [
             getTableTextColumn(getField(fields, "stepName"), "stepName"),
-            getTableTextColumn(getField(fields, "duration"), "duration"),
             getTableTextColumn(getField(fields, "stepStatus"), "stepStatus"),
             getTableDateTimeColumn(getField(fields, "activityDate"), "activityDate"),
+            getTableTextColumn(getField(fields, "duration"), "duration"),
             getTableTextColumn(getField(fields, "commitId"), "commitId"),
-            getTableTextColumn(getField(fields, "pipelineId"), "pipelineId"),
             getTableTextColumn(getField(fields, "repoUrl"), "repoUrl"),
             getTableTextColumn(getField(fields, "repoName"), "repoName"),
             getTableTextColumn(getField(fields, "branch"), "branch"),
