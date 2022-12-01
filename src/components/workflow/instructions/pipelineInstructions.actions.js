@@ -6,25 +6,27 @@ pipelineInstructionsActions.getPipelineInstructions = async (
   getAccessToken,
   cancelTokenSource,
   searchKeyword,
+  status,
   type,
   tag,
   owner,
+  release_date,
   ) => {
   const apiUrl = "/settings/pipelines/instructions";
-  const urlParams = {
-    params: {
-      search: searchKeyword,
-      type: type,
-      tag: tag,
-      owner: owner,
-    },
+  const queryParameters = {
+    search: searchKeyword,
+    status: status,
+    type: type,
+    tag: tag,
+    owner: owner,
+    release_date: release_date,
   };
 
-  return await baseActions.apiGetCallV2(
+  return await baseActions.apiGetCallV3(
     getAccessToken,
     cancelTokenSource,
     apiUrl,
-    urlParams,
+    queryParameters,
   );
 };
 

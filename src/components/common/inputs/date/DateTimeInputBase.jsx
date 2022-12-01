@@ -39,27 +39,33 @@ function DateTimeInputBase(
   }, [dataObject]);
 
   const validateAndSetData = (value) => {
-    if (value) {
-      let newDataObject;
-      if (setDataFunction) {
-        newDataObject = setDataFunction(fieldName, value);
-      } else {
-        newDataObject = {...dataObject};
-        newDataObject.setData(fieldName, value);
-        setDataObject({...newDataObject});
-      }
+    if (setDataFunction) {
+      const newDataObject = setDataFunction(fieldName, value);
 
       if (newDataObject) {
-        setErrorMessage(newDataObject.getFieldError(fieldName));
+        setErrorMessage(newDataObject?.getFieldError(fieldName));
       }
+    } else {
+      dataObject?.setData(fieldName, value);
+      setDataObject({...dataObject});
+      setErrorMessage(dataObject?.getFieldError(fieldName));
+    }
+  };
+
+  const parseAndSetValue = (value) => {
+    if (showTime === false) {
+      const dateWithoutTime = new Date(value).toISOString().split('T')[0];
+      validateAndSetData(dateWithoutTime);
+    } else {
+      validateAndSetData(value);
     }
   };
 
   const clearValue = () => {
     if (!setDataFunction && !clearDataFunction) {
-      validateAndSetData(dataObject?.getDefaultValue(fieldName));
-    }
-    else if (clearDataFunction) {
+      const newValue = defaultToNull === true ? null : dataObject?.getDefaultValue(fieldName);
+      validateAndSetData(newValue);
+    } else if (clearDataFunction) {
       clearDataFunction();
     }
   };
@@ -70,6 +76,7 @@ function DateTimeInputBase(
       && field?.isRequired !== true
       && disabled !== true
       && showClearValueButton !== false
+      && (setDataFunction == null || clearDataFunction != null)
     ) {
       return clearValue;
     }
@@ -97,7 +104,7 @@ function DateTimeInputBase(
         disabled={disabled}
         dropUp={dropUp}
         value={hasDateValue(dataObject?.getData(fieldName)) === true ? new Date(dataObject?.getData(fieldName)) : null}
-        setDataFunction={validateAndSetData}
+        setDataFunction={parseAndSetValue}
         defaultToNull={defaultToNull}
         hasError={hasStringValue(errorMessage) === true}
       />

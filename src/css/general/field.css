@@ -152,6 +152,11 @@ pre {
     z-index: 9999 !important;
 }
 
+.rdrDateRangePickerWrapper {
+    margin: 0;
+    padding: 0;
+}
+
 /* End Select input styling */
 
 /* Summary Card Styling */

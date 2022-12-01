@@ -2,7 +2,7 @@ import React from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetPipelineInstructions from "components/workflow/instructions/hooks/useGetPipelineInstructions";
-import PipelineInstructionTable from "components/workflow/instructions/PipelineInstructionTable";
+import PipelineInstructionsTable from "components/workflow/instructions/PipelineInstructionsTable";
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 
 export default function PipelineInstructionsManagement() {
@@ -23,7 +23,7 @@ export default function PipelineInstructionsManagement() {
       breadcrumbDestination={"pipelineInstructionsManagement"}
       accessRoleData={accessRoleData}
     >
-      <PipelineInstructionTable
+      <PipelineInstructionsTable
         isLoading={isLoading}
         loadData={loadData}
         pipelineInstructions={pipelineInstructions}

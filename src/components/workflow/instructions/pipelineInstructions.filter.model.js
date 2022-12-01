@@ -3,6 +3,10 @@ import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/s
 import TagParsingHelper from "@opsera/persephone/helpers/data/tags/tagParsing.helper";
 import pipelineInstructionsTypeConstants
   from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructionsType.constants";
+import pipelineInstructionsStatusConstants
+  from "@opsera/definitions/constants/pipelines/instructions/status/pipelineInstructionsStatus.constants";
+import {hasDateValue} from "components/common/helpers/date/date.helpers";
+import {getFormattedDate} from "components/common/fields/date/DateFieldBase";
 
 const pipelineInstructionsFilterMetadata = {
   fields: [
@@ -38,6 +42,14 @@ const pipelineInstructionsFilterMetadata = {
       label: "Type",
       id: "type",
     },
+    {
+      label: "Status",
+      id: "status",
+    },
+    {
+      label: "Release Date",
+      id: "release_date",
+    },
   ],
   newObjectFields: {
     pageSize: 100,
@@ -46,6 +58,8 @@ const pipelineInstructionsFilterMetadata = {
     tag: undefined,
     type: "",
     search: "",
+    status: "",
+    release_date: undefined,
     activeFilters: []
   },
 };
@@ -85,6 +99,18 @@ export class PipelineInstructionsFilterModel extends FilterModelBase {
 
     if (hasStringValue(type) === true) {
       activeFilters.push({filterId: "type", text: `Type: ${pipelineInstructionsTypeConstants.getPipelineInstructionTypeLabel(type)}`});
+    }
+
+    const status = this.getData("status");
+
+    if (hasStringValue(status) === true) {
+      activeFilters.push({filterId: "status", text: `Status: ${pipelineInstructionsStatusConstants.getPipelineInstructionStatusLabel(status)}`});
+    }
+
+    const releaseDate = this.getData("release_date");
+
+    if (hasDateValue(releaseDate) === true) {
+      activeFilters.push({filterId: "release_date", text: `Release Date: ${getFormattedDate(releaseDate)}`});
     }
 
     return activeFilters;
