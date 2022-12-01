@@ -962,6 +962,12 @@ a.nav-link {
     border-radius: 0 0 1rem 1rem;
 }
 
+.content-container-hide-overflow {
+    border: 1px solid #E6E5E3;
+    border-radius: 0 0 1rem 1rem;
+    overflow: hidden;
+}
+
 .content-container-shadow {
     /*-moz-box-shadow: 0px 2px 8px #8F86BB; !* Firefox *!
     -webkit-box-shadow: 0px 2px 8px #8F86BB; !* Safari, Chrome *!

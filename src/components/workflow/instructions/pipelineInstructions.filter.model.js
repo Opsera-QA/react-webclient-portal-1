@@ -7,6 +7,7 @@ import pipelineInstructionsStatusConstants
   from "@opsera/definitions/constants/pipelines/instructions/status/pipelineInstructionsStatus.constants";
 import {hasDateValue} from "components/common/helpers/date/date.helpers";
 import {getFormattedDate} from "components/common/fields/date/DateFieldBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const pipelineInstructionsFilterMetadata = {
   fields: [
@@ -50,6 +51,10 @@ const pipelineInstructionsFilterMetadata = {
       label: "Release Date",
       id: "release_date",
     },
+    {
+      label: "Release Date Range",
+      id: "release_date_range",
+    },
   ],
   newObjectFields: {
     pageSize: 100,
@@ -60,6 +65,7 @@ const pipelineInstructionsFilterMetadata = {
     search: "",
     status: "",
     release_date: undefined,
+    release_date_range: undefined,
     activeFilters: []
   },
 };
@@ -111,6 +117,17 @@ export class PipelineInstructionsFilterModel extends FilterModelBase {
 
     if (hasDateValue(releaseDate) === true) {
       activeFilters.push({filterId: "release_date", text: `Release Date: ${getFormattedDate(releaseDate)}`});
+    }
+
+    const releaseDateRange = DataParsingHelper.parseObject(this.getData("release_date_range"));
+
+    if (releaseDateRange) {
+      const parsedStartDate = DataParsingHelper.parseDate(releaseDateRange.startDate);
+      const parsedEndDate = DataParsingHelper.parseDate(releaseDateRange.endDate);
+
+      if (parsedStartDate && parsedEndDate) {
+        activeFilters.push({filterId: "release_date_range", text: `Release Date: ${getFormattedDate(parsedStartDate)} to ${getFormattedDate(parsedEndDate)}`});
+      }
     }
 
     return activeFilters;
