@@ -19,7 +19,7 @@ function AnsibleStepGitBranchSelectInput({model, setModel, disabled}) {
        fieldName={"defaultBranch"}
        service={model?.getData("service")}
        gitToolId={model?.getData("gitToolId")}
-       //workspace={model?.getData("workspace")}
+       workspace={model?.getData("workspace")}
        repoId={model?.getData("repoId")}
        dataObject={model}
        clearDataFunction={clearDataFunction}
