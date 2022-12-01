@@ -11,6 +11,7 @@ import {TaskActivityLogFilterModel} from "components/tasks/activity_logs/taskAct
 import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import TaskActivityLogTreeTable from "components/tasks/details/TaskActivityLogTreeTable";
+import AllTasksActivityLogTreeTable from "components/tasks/activity_logs/AllTasksActivityLogTreeTable";
 
 function TaskAllActivityPanel() {
   const toastContext = useContext(DialogToastContext);
@@ -152,7 +153,7 @@ function TaskAllActivityPanel() {
       `}
       navigationTabContainer={<TasksSubNavigationBar currentTab={"activity"}/>}
     >
-      <TaskActivityLogTreeTable
+      <AllTasksActivityLogTreeTable
         taskLogData={activityData}
         taskActivityMetadata={taskActivityMetadata}
         loadData={pullLogs}
