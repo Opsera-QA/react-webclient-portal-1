@@ -155,10 +155,10 @@ function DetailScreenContainer(
   }
 
   return (
-    <div className={"max-content-width max-content-height scroll-y hide-x-overflow"}>
+    <div className={"max-content-width"}>
       {getTopNavigation()}
       <div
-        className={"content-container content-card-1"}
+        className={"content-container content-card-1 mb-2"}
         style={{ minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT}}
       >
         <div className={"pl-2 content-block-header title-text-header-1 d-flex"}>

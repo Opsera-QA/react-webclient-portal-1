@@ -9,6 +9,7 @@ function MetricDataPointEvaluationWarningRuleInputBase(
   {
     dataPointEvaluationRules,
     updateRuleFunction,
+    dataPointType
   }) {
   return (
     <MetricDataPointEvaluationRuleInputBase
@@ -19,6 +20,7 @@ function MetricDataPointEvaluationWarningRuleInputBase(
       icon={faExclamationTriangle}
       errorMessage={dataPointEvaluationRulesHelpers.getConflictingRuleError(dataPointEvaluationRules)}
       headerClassName={"yellow-header"}
+      dataPointType={dataPointType}
     />
   );
 }
@@ -26,6 +28,7 @@ function MetricDataPointEvaluationWarningRuleInputBase(
 MetricDataPointEvaluationWarningRuleInputBase.propTypes = {
   dataPointEvaluationRules: PropTypes.object,
   updateRuleFunction: PropTypes.func,
+  dataPointType: PropTypes.string,
 };
 
 export default MetricDataPointEvaluationWarningRuleInputBase;

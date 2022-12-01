@@ -19,6 +19,7 @@ function FilterSelectInputBase(
     className,
     inline,
     disabled,
+    loadDataFunction,
   }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
@@ -29,7 +30,10 @@ function FilterSelectInputBase(
   };
 
   const updateValue = (newValue) => {
-    if (setDataFunction) {
+    if (inline === true && loadDataFunction) {
+      dataObject.setData(fieldName, newValue);
+      loadDataFunction(dataObject);
+    } if (setDataFunction) {
       setDataFunction(field?.id, newValue);
     }
     else {
@@ -75,6 +79,7 @@ FilterSelectInputBase.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
+  loadDataFunction: PropTypes.func,
   selectOptions: PropTypes.array.isRequired,
   groupBy: PropTypes.string,
   valueField: PropTypes.string,
@@ -85,7 +90,7 @@ FilterSelectInputBase.propTypes = {
   busy: PropTypes.bool,
   className: PropTypes.string,
   inline: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
 };
 
 FilterSelectInputBase.defaultProps = {

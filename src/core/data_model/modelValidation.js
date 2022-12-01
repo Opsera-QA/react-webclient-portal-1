@@ -39,7 +39,13 @@ export const validatePotentialValue = (potentialValue, data, field) => {
 };
 
 export const validateField = (data, field) => {
-  return fieldValidation(data.getData(field.id), data, field);
+  const parsedField = DataParsingHelper.parseObject(field);
+
+  if (!parsedField) {
+    return [];
+  }
+
+  return fieldValidation(data.getData(field?.id), data, field);
 };
 
 export const fieldValidation = (value, model, field) => {

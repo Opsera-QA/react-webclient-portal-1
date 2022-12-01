@@ -169,9 +169,9 @@ function JiraChangeFailureRate({
         getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names')?.length || 0;
     const maturityScore = metricData?.overallMaturityScoreText;
     const maturityColor = getMaturityColorClass(maturityScore);
-    const changeFailureRate = !isNaN(metricData?.changeFailureRate) ? metricData?.changeFailureRate +` %` :'NA';
-    const prevChangeFailureRate = !isNaN(metricData?.prevChangeFailureRate) ? metricData?.prevChangeFailureRate +` %` :'NA';
-
+    const changeFailureRate = metricData?.changeFailureRate;
+    const changeFailureRateDisplay = !isNaN(changeFailureRate) ? changeFailureRate +` %` :'NA';
+    const prevChangeFailureRateDisplay = !isNaN(metricData?.prevChangeFailureRate) ? metricData?.prevChangeFailureRate +` %` :'NA';
     return (
     <div
         className="new-chart m-3 p-0"
@@ -201,16 +201,17 @@ function JiraChangeFailureRate({
           </Col>
           <Col md={12} className={"px-1"}>
             <JiraChangeFailureRateTrendDataBlock
-                value={changeFailureRate}
-                prevValue={prevChangeFailureRate}
+                value={changeFailureRateDisplay}
+                prevValue={prevChangeFailureRateDisplay}
                 trend={getReverseTrend(
-                  metricData?.changeFailureRate,
+                  changeFailureRate,
                   metricData?.prevChangeFailureRate
                 )}
                 getTrendIcon={getReverseTrendIcon}
                 topText={"Change Failure Rate"}
                 bottomText={"Prev CFR: "}
                 dataPoint={changeFailureRateDataPoint}
+                dataPointValue={changeFailureRate}
             />
           </Col>
           <Col md={12} className={"px-1"}>
