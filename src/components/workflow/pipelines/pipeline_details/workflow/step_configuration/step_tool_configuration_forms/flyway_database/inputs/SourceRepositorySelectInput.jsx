@@ -53,7 +53,7 @@ SourceRepositorySelectInput.propTypes = {
 };
 
 SourceRepositorySelectInput.defaultProps = {
-  fieldName: "repository",
+  fieldName: "repoId",
 };
 
 export default SourceRepositorySelectInput;

@@ -8,6 +8,8 @@ function TerrascanBitbucketWorkspaceInput({dataObject, setDataObject, disabled})
     console.log(selectedOption);
     newDataObject.setData("workspace", selectedOption.key);
     newDataObject.setData("workspaceName", selectedOption.name);
+    newDataObject.setData("repoId", "");
+    newDataObject.setData("branch", "");
     setDataObject({...newDataObject});
   };
 

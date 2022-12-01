@@ -47,6 +47,11 @@ const argoRepositoryMetadata = {
       isRequired: true
     },
     {
+      label: "Repository Name",
+      id: "repoId",
+      isRequired: true
+    },
+    {
       label: "Repository Type",
       id: "repositoryType",
       isRequired: true
@@ -65,6 +70,7 @@ const argoRepositoryMetadata = {
     sshUrl: "",
     workspace: "",
     repositoryName: "",
+    repoId: "",
     repositoryType: "git",
     projectName: "",
   }

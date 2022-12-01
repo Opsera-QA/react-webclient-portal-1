@@ -8,6 +8,7 @@ function SourceRepositoryToolSelectInput({className, fieldName, model, setModel,
     let newModel = {...model};
     newModel.setData("gitToolId", selectedOption?._id);
     newModel.setData("workspace", "");
+    newModel.setData("repoId", "");
     newModel.setData("repository", "");
     newModel.setData("gitBranch", "");
     setModel({...newModel});
@@ -17,7 +18,7 @@ function SourceRepositoryToolSelectInput({className, fieldName, model, setModel,
     const accountName = tool?.configuration?.accountUsername || "No Account Assigned";
     const toolName = tool?.name;
 
-    return (`${accountName} (${toolName})`);
+    return (`${toolName} (${accountName})`);
   };
 
   return (

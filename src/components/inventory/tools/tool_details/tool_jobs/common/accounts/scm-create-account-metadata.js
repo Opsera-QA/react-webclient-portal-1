@@ -25,6 +25,11 @@ const scmCreateAccountMetadata = {
         regexDefinitionName: "generalTextWithSpaces",
       },
       {
+        label: "Repository",
+        id: "repoId",
+        isRequired: true,
+      },
+      {
         label: "Account Name",
         id: "reviewerName",
         isRequired: true,
@@ -79,6 +84,11 @@ const scmCreateAccountMetadata = {
         regexDefinitionName: "generalTextWithSpaces",
       },
       {
+        label: "Repository",
+        id: "repoId",
+        isRequired: true,
+      },
+      {
         label: "Password",
         id: "accountPassword",        
         maxLength: 256
@@ -121,6 +131,11 @@ const scmCreateAccountMetadata = {
         isRequired: true,
         maxLength: 255,
         regexDefinitionName: "generalTextWithSpaces",
+      },
+      {
+        label: "Repository",
+        id: "repoId",
+        isRequired: true,
       },
       {
         label: "Account Name",
