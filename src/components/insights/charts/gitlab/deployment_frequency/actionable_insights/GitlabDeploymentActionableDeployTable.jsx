@@ -9,9 +9,9 @@ import {
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 
-function GitlabDeploymentActionableDeployTable({ data, isLoading, loadData, filterModel, setFilterModel, priority, tableTitleIcon }) {
+function GitlabDeploymentActionableDeployTable({ data, isLoading, loadData, filterModel, setFilterModel, priority, tableTitleIcon, count, range }) {
     const fields = GitlabDeploymentFrequencyActionableMetadata.fields;
-    const tableTitle = "Gitlab Deployments Actionable Report";
+    const tableTitle = "Deployments Report";
     const noDataMessage = "No report found";
 
 
@@ -45,16 +45,26 @@ function GitlabDeploymentActionableDeployTable({ data, isLoading, loadData, filt
     };
 
     return (
-        <FilterContainer
-            isLoading={isLoading}
-            title={tableTitle}
-            titleIcon={tableTitleIcon}
-            body={getTable()}
-            className={"px-2 pb-2"}
-            loadData={loadData}
-            setFilterDto={setFilterModel}
-            filterDto={filterModel}
-        />
+        <div>
+            <div className={"d-flex details-title-text"}>
+                <div className={'mr-4'}>
+                    <b>Total Deployments:</b> {count}
+                </div>
+                <div className={'mr-4'}>
+                    <b>Date Range:</b> {range}
+                </div>
+            </div>
+            <FilterContainer
+                isLoading={isLoading}
+                title={tableTitle}
+                titleIcon={tableTitleIcon}
+                body={getTable()}
+                className={"px-2 pb-2"}
+                loadData={loadData}
+                setFilterDto={setFilterModel}
+                filterDto={filterModel}
+            />
+        </div>
     );
 }
 
@@ -65,7 +75,9 @@ GitlabDeploymentActionableDeployTable.propTypes = {
     filterModel: PropTypes.object,
     setFilterModel: PropTypes.func,
     priority: PropTypes.number,
-    tableTitleIcon: PropTypes.object
+    tableTitleIcon: PropTypes.object,
+    count: PropTypes.number,
+    range: PropTypes.string,
 };
 
 export default GitlabDeploymentActionableDeployTable;

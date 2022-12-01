@@ -14,6 +14,7 @@ import JiraChangeFailureRateInsightsOverlay
 import GitlabDeploymentActionablePipelinesOverlay
     from "./actionable_insights/GitlabDeploymentActionablePipelinesOverlay";
 import GitlabDeploymentActionableDeployOverlay from "./actionable_insights/GitlabDeploymentActionableDeployOverlay";
+import ChartTooltip from "../../ChartTooltip";
 
 
 function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfiguration, dashboardData }) {
@@ -73,6 +74,7 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfigurati
                     dashboardData={dashboardData}
                     start={node?.data?.x}
                     end={node?.data?.upperBound}
+                    range={node?.data?.range}
                 />
             );
         }
@@ -83,6 +85,7 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfigurati
                     dashboardData={dashboardData}
                     start={node?.data?.x}
                     end={node?.data?.upperBound}
+                    range={node?.data?.range}
                 />
             );
         }
@@ -148,34 +151,42 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfigurati
             legendPosition: "middle",
           }}
           onClick={(node) => onNodeSelect(node)}
+          tooltip={(node) => (
+              <ChartTooltip
+              titles={["Date Range", "Total Runs", "Average Runs"]}
+              values={[node.point.data.range, node.point.data.total, node.point.data.y]}
+              />
+          )}
           // sliceTooltip={({ slice }) => {
-          //   return (
-          //     <div className={"p-1 bg-white border border-dark"}>
-          //       <div>Date: {slice?.points[0]?.data?.range}</div>
-          //       <div className={'py-1'}
-          //         style={{
-          //           color: slice?.points[0]?.serieColor,
-          //         }}
-          //       >
-          //         Total Deployments:
-          //         <strong>{slice?.points[0]?.data?.total}</strong>
-          //       </div>
-          //       <div className={'py-1'}
-          //         style={{
-          //           color: slice?.points[0]?.serieColor,
-          //         }}
-          //       >
-          //         Average Deployments: <strong>{slice?.points[0]?.data?.y}</strong>
-          //       </div>
-          //       <div className={'py-1'}
-          //         style={{
-          //           color: slice?.points[1]?.serieColor,
-          //         }}
-          //       >
-          //         Total Pipelines: <strong>{slice?.points[1]?.data?.total}</strong>
-          //       </div>
-          //     </div>
-          //   );
+          //     if(slice?.points?.data?.type === "deployment" ) {
+          //         return (
+          //             <div className={"p-1 bg-white border border-dark"}>
+          //                 <div>Date: {slice?.points[0]?.data?.range}</div>
+          //                 <div className={'py-1'}
+          //                      style={{
+          //                          color: slice?.points[0]?.serieColor,
+          //                      }}
+          //                 >
+          //                     Total Deployments:
+          //                     <strong>{slice?.points[0]?.data?.total}</strong>
+          //                 </div>
+          //                 <div className={'py-1'}
+          //                      style={{
+          //                          color: slice?.points[0]?.serieColor,
+          //                      }}
+          //                 >
+          //                     Average Deployments: <strong>{slice?.points[0]?.data?.y}</strong>
+          //                 </div>
+          //                 <div className={'py-1'}
+          //                      style={{
+          //                          color: slice?.points[1]?.serieColor,
+          //                      }}
+          //                 >
+          //                     Total Pipelines: <strong>{slice?.points[1]?.data?.total}</strong>
+          //                 </div>
+          //             </div>
+          //         );
+          //     }
           // }}
         />
       </>

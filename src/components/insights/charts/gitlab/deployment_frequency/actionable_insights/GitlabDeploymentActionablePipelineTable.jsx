@@ -9,9 +9,9 @@ import {
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 
-function GitlabDeploymentActionablePipelinesTable({ data, isLoading, loadData, filterModel, setFilterModel, priority, tableTitleIcon }) {
+function GitlabDeploymentActionablePipelinesTable({ data, isLoading, loadData, filterModel, setFilterModel, tableTitleIcon, count, range}) {
     const fields = GitlabDeploymentFrequencyActionableMetadata.fields;
-    const tableTitle = "Gitlab Pipeline Actionable Report";
+    const tableTitle = "Pipelines Report";
     const noDataMessage = "No report found";
 
 
@@ -45,16 +45,26 @@ function GitlabDeploymentActionablePipelinesTable({ data, isLoading, loadData, f
     };
 
     return (
-        <FilterContainer
-            isLoading={isLoading}
-            title={tableTitle}
-            titleIcon={tableTitleIcon}
-            body={getTable()}
-            className={"px-2 pb-2"}
-            loadData={loadData}
-            setFilterDto={setFilterModel}
-            filterDto={filterModel}
-        />
+        <div>
+            <div className={"d-flex details-title-text"}>
+                <div className={'mr-4'}>
+                    <b>Total Pipelines:</b> {count}
+                </div>
+                <div className={'mr-4'}>
+                    <b>Date Range:</b> {range}
+                </div>
+            </div>
+            <FilterContainer
+                isLoading={isLoading}
+                title={tableTitle}
+                titleIcon={tableTitleIcon}
+                body={getTable()}
+                className={"px-2 pb-2"}
+                loadData={loadData}
+                setFilterDto={setFilterModel}
+                filterDto={filterModel}
+            />
+        </div>
     );
 }
 
@@ -65,7 +75,9 @@ GitlabDeploymentActionablePipelinesTable.propTypes = {
     filterModel: PropTypes.object,
     setFilterModel: PropTypes.func,
     priority: PropTypes.number,
-    tableTitleIcon: PropTypes.object
+    tableTitleIcon: PropTypes.object,
+    count: PropTypes.number,
+    range: PropTypes.string,
 };
 
 export default GitlabDeploymentActionablePipelinesTable;

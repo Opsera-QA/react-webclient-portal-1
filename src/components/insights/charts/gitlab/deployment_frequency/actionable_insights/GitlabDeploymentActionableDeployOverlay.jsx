@@ -18,12 +18,13 @@ import {DialogToastContext} from "../../../../../../contexts/DialogToastContext"
 
 function GitlabDeploymentActionableDeployOverlay({
                                                         kpiConfiguration,
-                                                        dashboardData, start, end
+                                                        dashboardData, start, end, range
                                                     }) {
     const { getAccessToken } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
     const [error, setError] = useState(undefined);
     const [metrics, setMetrics] = useState([]);
+    const [totalCount, setTotalCount] = useState([]);
     const [chartData, setChartData] =
         useState(undefined);
     const [isLoading, setIsLoading] = useState(false);
@@ -87,6 +88,9 @@ function GitlabDeploymentActionableDeployOverlay({
             let dataCount = response?.data
                 ? response?.data?.data?.getActionableDeploymentsChartData?.data[0]?.count[0]?.count
                 : [];
+            let totalCount = response?.data
+                ? response?.data?.data?.getActionableDeploymentsChartData?.data[0]?.count[0]?.count
+                : [];
             dataObject = dataObject.map((bd, index) => ({
                 ...bd,
                 _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
@@ -97,6 +101,7 @@ function GitlabDeploymentActionableDeployOverlay({
             setFilterModel({ ...newFilterDto });
             if (isMounted?.current === true && dataObject) {
                 setMetrics(dataObject);
+                setTotalCount(totalCount);
             }
         } catch (error) {
             if (isMounted?.current === true) {
@@ -132,6 +137,8 @@ function GitlabDeploymentActionableDeployOverlay({
                     filterModel={filterModel}
                     setFilterModel={setFilterModel}
                     loadData={loadData}
+                    range={range}
+                    count={totalCount}
                 />
             </div>
         </FullScreenCenterOverlayContainer>
@@ -143,6 +150,7 @@ GitlabDeploymentActionableDeployOverlay.propTypes = {
     dashboardData: PropTypes.object,
     start: PropTypes.string,
     end: PropTypes.string,
+    range: PropTypes.string,
 };
 
 export default GitlabDeploymentActionableDeployOverlay;
