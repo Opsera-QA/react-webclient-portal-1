@@ -28,6 +28,7 @@ import PipelineActionControlsRefreshButton
 import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import PipelineActionControlsStartPipelineButton
   from "components/workflow/pipelines/action_controls/PipelineActionControlsStartPipelineButton";
+import useGetFeatureFlags from "hooks/platform/useGetFeatureFlags";
 
 const delayCheckInterval = 15000;
 let internalRefreshCount = 1;
@@ -53,15 +54,10 @@ function PipelineActionControls(
     toastContext,
     getAccessToken,
   } = useComponentStateReference();
-
-  /***
-   * Used to get status of Pipeline Queuing Flag specifically
-   * @returns {Promise<*>}
-   */
-  const getFeatureFlags = async () => {
-    const response = await commonActions.getFeatureFlagsV2(getAccessToken, cancelTokenSource);
-    return response?.data;
-  };
+  const {
+    enabledServices,
+    orchestrationFeatureFlags,
+  } = useGetFeatureFlags();
 
   useEffect(() => {
     loadData(pipeline).catch((error) => {
@@ -124,15 +120,12 @@ function PipelineActionControls(
   };
 
   const checkPipelineQueueStatus = async () => {
-    const featureFlags = await getFeatureFlags();
-    const orchestration = featureFlags?.orchestration;
+    setQueueingEnabled(orchestrationFeatureFlags?.enableQueuing);
 
-    setQueueingEnabled(orchestration?.enableQueuing);
-
-    if (orchestration?.enableQueuing) {
-      const queuedRequest = await PipelineActions.getQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
-      const isQueued = typeof queuedRequest?.data === "object" && Object.keys(queuedRequest?.data)?.length > 0;
-      setHasQueuedRequest(isQueued);
+    if (orchestrationFeatureFlags?.enableQueuing) {
+      const response = await PipelineActions.getQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
+      const isQueued = DataParsingHelper.parseNestedObject(response, "data");
+      setHasQueuedRequest(isQueued != null);
     }
   };
 
