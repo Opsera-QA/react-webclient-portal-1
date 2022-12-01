@@ -26,7 +26,7 @@ function PipelineInstructionsStatusFilterSelectInput(
       textField={inline === true ? (selectOption) => {return `Status: ${selectOption?.text}`;} : undefined}
       setDataObject={setFilterModel}
       setDataFunction={setDataFunction}
-      placeholderText={"Select Pipeline Status"}
+      placeholderText={"Filter By Instructions Status"}
       dataObject={filterModel}
       selectOptions={pipelineInstructionsStatusConstants.PIPELINE_INSTRUCTION_STATUS_SELECT_OPTIONS}
       loadDataFunction={loadDataFunction}
