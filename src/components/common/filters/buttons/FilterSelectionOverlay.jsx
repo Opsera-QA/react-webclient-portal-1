@@ -43,6 +43,11 @@ export default function FilterSelectionOverlay(
     closePanelFunction();
   };
 
+  const handleFilterRemoval = () => {
+    resetFiltersAndCloseItem();
+    closePanelFunction();
+  };
+
   if (dropdownFilters == null) {
     return null;
   }
@@ -75,7 +80,7 @@ export default function FilterSelectionOverlay(
           {/*/>*/}
             <Button
               variant={"outline-secondary"}
-              onClick={() => resetFiltersAndCloseItem()}
+              onClick={handleFilterRemoval}
               disabled={isLoading || filterDto?.getData("activeFilters").length === 0}
             >
               <span><span className={"mr-2"}><StackedFilterRemovalIcon/></span>Remove</span>
