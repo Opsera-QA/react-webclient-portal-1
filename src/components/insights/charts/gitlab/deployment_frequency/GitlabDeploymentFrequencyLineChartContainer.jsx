@@ -71,6 +71,8 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfigurati
                 <GitlabDeploymentActionablePipelinesOverlay
                     kpiConfiguration={kpiConfiguration}
                     dashboardData={dashboardData}
+                    start={node?.data?.x}
+                    end={node?.data?.upperBound}
                 />
             );
         }
@@ -79,6 +81,8 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfigurati
                 <GitlabDeploymentActionableDeployOverlay
                     kpiConfiguration={kpiConfiguration}
                     dashboardData={dashboardData}
+                    start={node?.data?.x}
+                    end={node?.data?.upperBound}
                 />
             );
         }

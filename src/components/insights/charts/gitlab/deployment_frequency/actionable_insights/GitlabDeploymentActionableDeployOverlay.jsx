@@ -18,7 +18,7 @@ import {DialogToastContext} from "../../../../../../contexts/DialogToastContext"
 
 function GitlabDeploymentActionableDeployOverlay({
                                                         kpiConfiguration,
-                                                        dashboardData,
+                                                        dashboardData, start, end
                                                     }) {
     const { getAccessToken } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
@@ -78,15 +78,14 @@ function GitlabDeploymentActionableDeployOverlay({
                 kpiConfiguration,
                 dashboardTags,
                 dashboardOrgs,
-                filterDto
+                filterDto,
+                start,
+                end
             );
             console.log("deploy response", response);
-            let dataObject = response?.data ? response?.data?.data[0]?.serviceNowMTTRActionableInsights?.data[0].tableData : [];
+            let dataObject = response?.data ? response?.data?.data?.getActionableDeploymentsChartData?.data[0]?.deployments : [];
             let dataCount = response?.data
-                ? response?.data?.data[0]?.serviceNowMTTRActionableInsights?.data[0]?.count[0]?.count
-                : [];
-            let DataBlocks = response?.data
-                ? response?.data?.data[0]?.serviceNowMTTRActionableInsights?.data[0]?.blockData[0]
+                ? response?.data?.data?.getActionableDeploymentsChartData?.data[0]?.count[0]?.count
                 : [];
             dataObject = dataObject.map((bd, index) => ({
                 ...bd,
@@ -142,6 +141,8 @@ function GitlabDeploymentActionableDeployOverlay({
 GitlabDeploymentActionableDeployOverlay.propTypes = {
     kpiConfiguration: PropTypes.object,
     dashboardData: PropTypes.object,
+    start: PropTypes.string,
+    end: PropTypes.string,
 };
 
 export default GitlabDeploymentActionableDeployOverlay;

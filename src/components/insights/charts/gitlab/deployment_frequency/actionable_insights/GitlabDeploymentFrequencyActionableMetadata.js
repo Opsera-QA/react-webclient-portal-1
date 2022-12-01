@@ -8,7 +8,7 @@ const GitlabDeploymentFrequencyActionableMetadata = {
         },
         {
             label: "Status",
-            id: "status",
+            id: "stepStatus",
         },
         {
             label: "Duration",

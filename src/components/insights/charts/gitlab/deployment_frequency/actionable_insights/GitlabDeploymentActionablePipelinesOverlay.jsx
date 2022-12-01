@@ -16,8 +16,9 @@ import FullScreenCenterOverlayContainer from "../../../../../common/overlays/cen
 
 function GitlabDeploymentActionablePipelinesOverlay({
                                        kpiConfiguration,
-                                       dashboardData,
+                                       dashboardData, start, end
                                    }) {
+    console.log("start", start);
 
     const { getAccessToken } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
@@ -77,15 +78,14 @@ function GitlabDeploymentActionablePipelinesOverlay({
                 kpiConfiguration,
                 dashboardTags,
                 dashboardOrgs,
-                filterDto
+                filterDto,
+                start,
+                end
             );
             console.log("pipeline response", response);
-            let dataObject = response?.data ? response?.data?.data[0]?.serviceNowMTTRActionableInsights?.data[0].tableData : [];
+            let dataObject = response?.data ? response?.data?.data?.getActionablePipelinesChartData?.data[0]?.deployments : [];
             let dataCount = response?.data
-                ? response?.data?.data[0]?.serviceNowMTTRActionableInsights?.data[0]?.count[0]?.count
-                : [];
-            let DataBlocks = response?.data
-                ? response?.data?.data[0]?.serviceNowMTTRActionableInsights?.data[0]?.blockData[0]
+                ? response?.data?.data?.getActionablePipelinesChartData?.data[0]?.count[0]?.count
                 : [];
             dataObject = dataObject.map((bd, index) => ({
                 ...bd,
@@ -141,6 +141,8 @@ function GitlabDeploymentActionablePipelinesOverlay({
 GitlabDeploymentActionablePipelinesOverlay.propTypes = {
     kpiConfiguration: PropTypes.object,
     dashboardData: PropTypes.object,
+    start: PropTypes.string,
+    end: PropTypes.string,
 };
 
 export default GitlabDeploymentActionablePipelinesOverlay;
