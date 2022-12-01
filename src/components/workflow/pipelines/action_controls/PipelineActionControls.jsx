@@ -4,9 +4,6 @@ import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import PipelineHelpers from "../../pipelineHelpers";
 import PipelineActions from "../../pipeline-actions";
 import {
-  faPlay,
-  faSync,
-  faSpinner,
   faRedo,
   faInfoCircle, faRepeat1, faClock,
 } from "@fortawesome/pro-light-svg-icons";
@@ -28,6 +25,9 @@ import PipelineActionControlsUserApprovalButton from "components/workflow/pipeli
 import PipelineActionControlsStopButton from "components/workflow/pipelines/action_controls/PipelineActionControlsStopButton";
 import PipelineActionControlsRefreshButton
   from "components/workflow/pipelines/action_controls/PipelineActionControlsRefreshButton";
+import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
+import PipelineActionControlsStartPipelineButton
+  from "components/workflow/pipelines/action_controls/PipelineActionControlsStartPipelineButton";
 
 const delayCheckInterval = 15000;
 let internalRefreshCount = 1;
@@ -306,7 +306,6 @@ function PipelineActionControls(
         pipelineOrientation={pipelineOrientation}
         pipelineId={pipelineId}
         pipeline={pipeline}
-        handleClose={handlePipelineStartWizardClose}
         handlePipelineWizardRequest={handlePipelineWizardRequest}
       />,
     );
@@ -321,13 +320,9 @@ function PipelineActionControls(
     );
   };
 
-  const handlePipelineStartWizardClose = () => {
-    //console.log("closing wizard");
-    toastContext.clearOverlayPanel();
-  };
-
   const handlePipelineWizardRequest = async (pipelineId, restartBln) => {
-    handlePipelineStartWizardClose();
+    toastContext.clearOverlayPanel();
+
     if (restartBln) {
       console.log("Starting pipeline from beginning: clearing current pipeline status and activity");
       /*await resetPipelineState(pipelineId);
@@ -380,20 +375,23 @@ function PipelineActionControls(
   };
 
   // TODO: Put into a separate run button
-  const handleRunPipelineClick = async (pipelineId) => {
+  const handleRunPipelineClick = async () => {
+    const pipelineId = pipeline?._id;
     //check type of pipeline to determine if pre-flight wizard is required
-    // is pipeline at the beginning or stopped midway or end of prior?
-    const pipelineTypes = DataParsingHelper.parseArray(pipeline.type, []);
     //for now type is just the first entry
-    const pipelineType = DataParsingHelper.parseString(pipelineTypes[0], "");
+    const pipelineType = pipelineTypeConstants.getTypeForTypesArray(pipeline?.type);
+    const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
+    const pipelineStepCount = plan.length;
 
     let pipelineOrientation = "start";
     const stoppedStepId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.step_id");
+
+    // is pipeline at the beginning or stopped midway or end of prior?
     //what step are we currently on in the pipeline: first, last or middle?
     if (DataParsingHelper.isValidMongoDbId(stoppedStepId) === true) {
       const stepIndex = PipelineHelpers.getStepIndex(pipeline, stoppedStepId);
-      console.log("current resting step index: ", stepIndex);
-      if (stepIndex + 1 === Object.keys(pipeline.workflow.plan).length) {
+      console.log(`current resting step index: ${stepIndex} of ${pipelineStepCount}`);
+      if (stepIndex + 1 === pipelineStepCount) {
         pipelineOrientation = "end";
       } else {
         pipelineOrientation = "middle";
@@ -450,6 +448,38 @@ function PipelineActionControls(
     }
   };
 
+  //TODO: Do the workflow status check inside the component and move inline.
+  // Separating out for now to avoid causing unexpected issues.
+  const getStopButton = () => {
+    if (workflowStatus === "running") {
+      return (
+        <PipelineActionControlsStopButton
+          pipeline={pipeline}
+          workflowStatus={workflowStatus}
+          handleStopWorkflowClick={handleStopWorkflowClick}
+          pipelineIsStopping={stopPipeline}
+        />
+      );
+    }
+  };
+
+  //TODO: Do the workflow status check inside the component and move inline.
+  // Separating out for now to avoid causing unexpected issues.
+  const getRunPipelineButton = () => {
+    if (!workflowStatus || workflowStatus === "stopped") {
+      return (
+        <PipelineActionControlsStartPipelineButton
+          pipeline={pipeline}
+          workflowStatus={workflowStatus}
+          handleRunPipelineClick={handleRunPipelineClick}
+          disabledActionState={disabledActionState}
+          hasQueuedRequest={hasQueuedRequest}
+          pipelineIsStarting={startPipeline}
+        />
+      );
+    }
+  };
+
   // TODO: Make base button components for these in the future
   //  and wire up the functions inside those components to clean up PipelineActionControls
   return (
@@ -459,14 +489,7 @@ function PipelineActionControls(
         {getWarningMessage()}
         <div className="flex-fill p-2"></div>
         <div className="text-right btn-group btn-group-sized">
-          {workflowStatus === "running" &&
-            <PipelineActionControlsStopButton
-              pipeline={pipeline}
-              workflowStatus={workflowStatus}
-              handleStopWorkflowClick={handleStopWorkflowClick}
-              pipelineIsStopping={stopPipeline}
-            />
-          }
+          {getStopButton()}
 
           {workflowStatus === "paused" &&
             <PipelineActionControlsUserApprovalButton
@@ -476,24 +499,7 @@ function PipelineActionControls(
             />
           }
 
-          {
-            (workflowStatus === "stopped" || !workflowStatus) &&
-            <OverlayTrigger
-              placement="top"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "Start pipeline from the beginning." })}>
-              <Button variant="success"
-                      className="btn-default"
-                      size="sm"
-                      onClick={() => {
-                        handleRunPipelineClick(pipeline._id);
-                      }}
-                      disabled={PipelineRoleHelper.canStartPipeline(userData, pipeline) !== true || disabledActionState || startPipeline || hasQueuedRequest}>
-                {startPipeline ? <><IconBase isLoading={true} icon={faSpinner} className={"mr-1"} /> Starting</> :
-                  <><IconBase icon={faPlay} className={"mr-1"} /> Start Pipeline</>}
-              </Button>
-            </OverlayTrigger>
-          }
+          {getRunPipelineButton()}
 
           {
             (queueingEnabled && !hasQueuedRequest) && (workflowStatus === "paused" || workflowStatus === "running") &&
