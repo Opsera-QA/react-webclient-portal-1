@@ -11,7 +11,7 @@ const GitlabDeploymentFrequencyActionableMetadata = {
             id: "stepStatus",
         },
         {
-            label: "Duration (secs)",
+            label: "Duration (seconds)",
             id: "duration",
         },
         {
