@@ -37,9 +37,11 @@ export default function useGetPipelineInstructions() {
       getAccessToken,
       cancelTokenSource,
       newFilterModel?.getFilterValue("search"),
+      newFilterModel?.getFilterValue("status"),
       newFilterModel?.getFilterValue("type"),
       newFilterModel?.getData("tag"),
       newFilterModel?.getFilterValue("owner"),
+      newFilterModel?.getFilterValue("release_date"),
     );
 
     const pipelineInstructionList = DataParsingHelper.parseArray(response?.data?.data, []);

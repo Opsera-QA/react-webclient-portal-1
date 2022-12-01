@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import pipelineInstructionsTypeConstants
-  from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructionsType.constants";
+import pipelineInstructionsStatusConstants
+  from "@opsera/definitions/constants/pipelines/instructions/status/pipelineInstructionsStatus.constants";
 
 export default function PipelineInstructionsStatusSelectInput(
   {
@@ -17,7 +17,7 @@ export default function PipelineInstructionsStatusSelectInput(
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={pipelineInstructionsTypeConstants.PIPELINE_INSTRUCTION_TYPE_SELECT_OPTIONS}
+      selectOptions={pipelineInstructionsStatusConstants.PIPELINE_INSTRUCTION_STATUS_SELECT_OPTIONS}
       setDataFunction={setDataFunction}
       placeholderText={"Select Type"}
       valueField={"value"}

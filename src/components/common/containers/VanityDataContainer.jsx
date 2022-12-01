@@ -24,6 +24,7 @@ function VanityDataContainer(
     minimumHeight,
     maximumHeight,
     type,
+    launchFilterOverlay,
   }) {
 
   const getFilterBar = () => {
@@ -40,6 +41,7 @@ function VanityDataContainer(
         dropdownFilters={dropdownFilters}
         inlineFilters={inlineFilters}
         exportButton={exportButton}
+        launchFilterOverlay={launchFilterOverlay}
       />
     );
   };
@@ -100,6 +102,7 @@ VanityDataContainer.propTypes = {
   showBorder: PropTypes.bool,
   minimumHeight: PropTypes.string,
   maximumHeight: PropTypes.string,
+  launchFilterOverlay: PropTypes.bool,
 };
 
 export default VanityDataContainer;
