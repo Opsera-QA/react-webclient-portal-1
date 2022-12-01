@@ -18,7 +18,7 @@ import {DialogToastContext} from "../../../../../../contexts/DialogToastContext"
 
 function GitlabDeploymentActionableDeployOverlay({
                                                         kpiConfiguration,
-                                                        dashboardData, start, end, range
+                                                        dashboardData, start, end, range, average
                                                     }) {
     const { getAccessToken } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
@@ -138,6 +138,7 @@ function GitlabDeploymentActionableDeployOverlay({
                     loadData={loadData}
                     range={range}
                     count={totalCount}
+                    average={average}
                 />
             </div>
         </FullScreenCenterOverlayContainer>
@@ -150,6 +151,7 @@ GitlabDeploymentActionableDeployOverlay.propTypes = {
     start: PropTypes.string,
     end: PropTypes.string,
     range: PropTypes.string,
+    average: PropTypes.number,
 };
 
 export default GitlabDeploymentActionableDeployOverlay;

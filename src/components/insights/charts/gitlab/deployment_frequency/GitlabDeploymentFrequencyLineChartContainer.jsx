@@ -8,9 +8,6 @@ import config from "./GitlabDeploymentFrequencyLineChartConfig";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import IconBase from "components/common/icons/IconBase";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import GitlabDeploymentFreqActionableMasterTab from "./actionable_insights/GitlabDeploymentFreqActionableMasterTab";
-import JiraChangeFailureRateInsightsOverlay
-    from "../../jira/line_chart/change_failure_rate/JiraChangeFailureRateInsightsOverlay";
 import GitlabDeploymentActionablePipelinesOverlay
     from "./actionable_insights/GitlabDeploymentActionablePipelinesOverlay";
 import GitlabDeploymentActionableDeployOverlay from "./actionable_insights/GitlabDeploymentActionableDeployOverlay";
@@ -65,6 +62,7 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfigurati
                     start={node?.data?.x}
                     end={node?.data?.upperBound}
                     range={node?.data?.range}
+                    average={node?.data?.y}
                 />
             );
         }
