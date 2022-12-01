@@ -9,8 +9,15 @@ import TableBase from "components/common/table/TableBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {getTaskTypeLabel} from "components/tasks/task.types";
+import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
 
-function TaskActivityLogsTable({ taskLogData, taskActivityMetadata, isLoading }) {
+export default function TaskActivityLogsTable(
+  {
+    taskLogData,
+    taskActivityMetadata,
+    isLoading,
+    noDataMessage,
+  }) {
   const [columns, setColumns] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
@@ -52,13 +59,23 @@ function TaskActivityLogsTable({ taskLogData, taskActivityMetadata, isLoading })
     }
   };
 
-  return (
-    <div className={"tree-table"}>
+  const getTable = () => {
+    return (
       <TableBase
         columns={columns}
         data={taskLogData}
         isLoading={isLoading}
         onRowSelect={onRowSelect}
+      />
+    )
+  };
+
+  return (
+    <div className={"tree-table"}>
+      <TableBodyLoadingWrapper
+        isLoading={isLoading}
+        data={taskLogData}
+        noDataMessage={noDataMessage}
       />
     </div>
   );
@@ -67,6 +84,5 @@ TaskActivityLogsTable.propTypes = {
   taskLogData: PropTypes.array,
   isLoading: PropTypes.bool,
   taskActivityMetadata: PropTypes.object,
+  noDataMessage: PropTypes.any,
 };
-
-export default TaskActivityLogsTable;
