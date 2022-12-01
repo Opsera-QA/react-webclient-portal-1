@@ -2,6 +2,7 @@ import { addDays } from "date-fns";
 import { faChartBar } from "@fortawesome/pro-light-svg-icons";
 import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
+import {METRIC_QUALITY_LEVELS} from "../../common/metrics/text/MetricTextBase";
 
 export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
   if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")]?.value) {
@@ -355,4 +356,40 @@ export const getMaturityColorClass = (maturityScore) => {
     default:
       return "maturity-card-default-color";
   }
+};
+
+/**
+ * Get css class from strategic criteria color class
+ * @param qualityLevel string
+ * @returns Returns css class name
+ */
+export const getQualityBasedClassName = (qualityLevel) => {
+  switch (qualityLevel) {
+    case METRIC_QUALITY_LEVELS.SUCCESS:
+      return "green";
+    case METRIC_QUALITY_LEVELS.WARNING:
+      return "yellow";
+    case METRIC_QUALITY_LEVELS.DANGER:
+      return "danger-red";
+    default:
+      return '';
+  }
+};
+
+/**
+ * Get given milliseconds as days
+ * @param milliseconds string
+ * @returns number
+ */
+export const convertMStoDays = (milliseconds) => {
+  return milliseconds/(1000*3600*24);
+};
+
+/**
+ * Get given milliseconds as hours
+ * @param milliseconds string
+ * @returns number
+ */
+export const convertMStoHours = (milliseconds) => {
+  return milliseconds/(1000*3600);
 };
