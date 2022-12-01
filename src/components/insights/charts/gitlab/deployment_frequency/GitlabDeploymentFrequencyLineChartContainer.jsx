@@ -7,12 +7,16 @@ import { faSquare } from "@fortawesome/pro-solid-svg-icons";
 import config from "./GitlabDeploymentFrequencyLineChartConfig";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import IconBase from "components/common/icons/IconBase";
-import JiraChangeFailureRateInsightsOverlay
-    from "../../jira/line_chart/change_failure_rate/JiraChangeFailureRateInsightsOverlay";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import GitlabDeploymentFreqActionableMasterTab from "./actionable_insights/GitlabDeploymentFreqActionableMasterTab";
+import JiraChangeFailureRateInsightsOverlay
+    from "../../jira/line_chart/change_failure_rate/JiraChangeFailureRateInsightsOverlay";
+import GitlabDeploymentActionablePipelinesOverlay
+    from "./actionable_insights/GitlabDeploymentActionablePipelinesOverlay";
+import GitlabDeploymentActionableDeployOverlay from "./actionable_insights/GitlabDeploymentActionableDeployOverlay";
 
-function GitlabDeploymentFrequencyLineChartContainer({ chartData }) {
+
+function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfiguration, dashboardData }) {
   const [maxCharVal, setMaxChartVal] = useState(0);
     const toastContext = useContext(DialogToastContext);
 
@@ -40,15 +44,63 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData }) {
         toastContext.clearOverlayPanel();
     };
 
-    const onNodeSelect = (slice) => {
-        console.log("slice", slice);
-        toastContext.showOverlayPanel(
-            <GitlabDeploymentFreqActionableMasterTab
-                data={slice?.data?.report || []}
-                closePanel={closePanel}
-            />
-        );
+    // const onNodeSelect = (node) => {
+    //     console.log("inside loop", node);
+    //     if(node?.points[0]) {
+    //         toastContext.showOverlayPanel(
+    //             <GitlabDeploymentFreqActionableMasterTab
+    //                 data={node || []}
+    //                 closePanel={closePanel}
+    //             />
+    //         );
+    //     }
+    //     if(node?.points[1]) {
+    //         toastContext.showOverlayPanel(
+    //             <GitlabDeploymentFreqActionableMasterTab
+    //                 data={node || []}
+    //                 closePanel={closePanel}
+    //             />
+    //         );
+    //     }
+    // };
+
+    const onNodeSelect = (node) => {
+        console.log("inside loop", node);
+        if(node?.data?.type === "pipeline") {
+            toastContext.showOverlayPanel(
+                <GitlabDeploymentActionablePipelinesOverlay
+                    kpiConfiguration={kpiConfiguration}
+                    dashboardData={dashboardData}
+                />
+            );
+        }
+        if(node?.data?.type === "deployment") {
+            toastContext.showOverlayPanel(
+                <GitlabDeploymentActionableDeployOverlay
+                    kpiConfiguration={kpiConfiguration}
+                    dashboardData={dashboardData}
+                />
+            );
+        }
     };
+
+    // const onNodeSelect = (node) => {
+    //     if(node?.data?.type === "deploy"){
+    //         setShowModal(true);
+    //         setModalData(node?.data?.commits || []);
+    //     }
+    // };
+
+    // const onRowSelect = (data) => {
+    //     toastContext.showOverlayPanel(
+    //         <GitScrapperActionableInsightOverlay
+    //             kpiConfiguration={kpiConfiguration}
+    //             dashboardData={dashboardData}
+    //             title={data?.label}
+    //             gitScrapperType={data?.type}
+    //         />,
+    //     );
+    // };
 
 
     const getTrendChart = () => {
@@ -91,36 +143,36 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData }) {
             legendOffset: -38,
             legendPosition: "middle",
           }}
-          onClick={(slice) => onNodeSelect(slice)}
-          sliceTooltip={({ slice }) => {
-            return (
-              <div className={"p-1 bg-white border border-dark"}>
-                <div>Date: {slice?.points[0]?.data?.range}</div>
-                <div className={'py-1'}
-                  style={{
-                    color: slice?.points[0]?.serieColor,
-                  }}
-                >
-                  Total Deployments:
-                  <strong>{slice?.points[0]?.data?.total}</strong>
-                </div>
-                <div className={'py-1'}
-                  style={{
-                    color: slice?.points[0]?.serieColor,
-                  }}
-                >
-                  Average Deployments: <strong>{slice?.points[0]?.data?.y}</strong>
-                </div>
-                <div className={'py-1'}
-                  style={{
-                    color: slice?.points[1]?.serieColor,
-                  }}
-                >
-                  Total Pipelines: <strong>{slice?.points[1]?.data?.total}</strong>
-                </div>
-              </div>
-            );
-          }}
+          onClick={(node) => onNodeSelect(node)}
+          // sliceTooltip={({ slice }) => {
+          //   return (
+          //     <div className={"p-1 bg-white border border-dark"}>
+          //       <div>Date: {slice?.points[0]?.data?.range}</div>
+          //       <div className={'py-1'}
+          //         style={{
+          //           color: slice?.points[0]?.serieColor,
+          //         }}
+          //       >
+          //         Total Deployments:
+          //         <strong>{slice?.points[0]?.data?.total}</strong>
+          //       </div>
+          //       <div className={'py-1'}
+          //         style={{
+          //           color: slice?.points[0]?.serieColor,
+          //         }}
+          //       >
+          //         Average Deployments: <strong>{slice?.points[0]?.data?.y}</strong>
+          //       </div>
+          //       <div className={'py-1'}
+          //         style={{
+          //           color: slice?.points[1]?.serieColor,
+          //         }}
+          //       >
+          //         Total Pipelines: <strong>{slice?.points[1]?.data?.total}</strong>
+          //       </div>
+          //     </div>
+          //   );
+          // }}
         />
       </>
     );

@@ -136,7 +136,6 @@ gitlabActions.gitlabDeploymentStatistics = async (
     kpiConfiguration,
     dashboardTags,
     dashboardOrgs,
-    tableFilterDto
 ) => {
     const apiUrl = gitlabBaseURL + "gitlabDeploymentStatistics";
     const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
@@ -163,8 +162,6 @@ gitlabActions.gitlabDeploymentStatistics = async (
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
         tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
-        page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
-        size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
         dashboardOrgs: dashboardOrgs,
         deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
         gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration)
@@ -178,7 +175,8 @@ gitlabActions.getActionablePipelinesChartData = async (
     cancelTokenSource,
     kpiConfiguration,
     dashboardTags,
-    dashboardOrgs
+    dashboardOrgs,
+    tableFilterDto
 ) => {
     const apiUrl = gitlabBaseURL + "getActionablePipelinesChartData";
     const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
@@ -207,7 +205,9 @@ gitlabActions.getActionablePipelinesChartData = async (
         tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
         dashboardOrgs: dashboardOrgs,
         deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
-        gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration)
+        gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
+        page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
+        size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
     };
 
     return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
@@ -218,7 +218,8 @@ gitlabActions.getActionableDeploymentsChartData = async (
     cancelTokenSource,
     kpiConfiguration,
     dashboardTags,
-    dashboardOrgs
+    dashboardOrgs,
+    tableFilterDto
 ) => {
     const apiUrl = gitlabBaseURL + "getActionableDeploymentsChartData";
     const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
@@ -247,7 +248,9 @@ gitlabActions.getActionableDeploymentsChartData = async (
         tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
         dashboardOrgs: dashboardOrgs,
         deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
-        gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration)
+        gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
+        page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
+        size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
     };
 
     return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);

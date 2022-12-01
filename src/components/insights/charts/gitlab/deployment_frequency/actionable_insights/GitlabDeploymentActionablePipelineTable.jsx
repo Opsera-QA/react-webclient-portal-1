@@ -18,13 +18,15 @@ function GitlabDeploymentActionablePipelinesTable({ data, isLoading, loadData, f
 
     const columns = useMemo(
         () => [
-            getTableTextColumn(getField(fields, "_id"), "_id"),
-            getTableTextColumn(getField(fields, "taskDescription"), "taskDescription"),
+            getTableTextColumn(getField(fields, "stepName"), "stepName"),
+            getTableTextColumn(getField(fields, "duration"), "duration"),
             getTableTextColumn(getField(fields, "status"), "status"),
-            getTableDateTimeColumn(getField(fields, "dateOpened"), "dateOpened"),
-            getTableDateTimeColumn(getField(fields, "dateClosed"), "dateClosed"),
-            getTableTextColumn(getField(fields, "assignmentGroup"), "assignmentGroup"),
-            getTableTextColumn(getField(fields, "openedBy"), "openedBy"),
+            getTableDateTimeColumn(getField(fields, "activityDate"), "activityDate"),
+            getTableTextColumn(getField(fields, "commitId"), "commitId"),
+            getTableTextColumn(getField(fields, "pipelineId"), "pipelineId"),
+            getTableTextColumn(getField(fields, "repoUrl"), "repoUrl"),
+            getTableTextColumn(getField(fields, "repoName"), "repoName"),
+            getTableTextColumn(getField(fields, "branch"), "branch"),
         ],
         []
     );
