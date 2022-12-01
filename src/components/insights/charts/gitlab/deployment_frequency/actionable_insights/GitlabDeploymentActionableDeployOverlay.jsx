@@ -83,13 +83,12 @@ function GitlabDeploymentActionableDeployOverlay({
                 start,
                 end
             );
-            console.log("deploy response", response);
-            let dataObject = response?.data ? response?.data?.data?.getActionableDeploymentsChartData?.data[0]?.deployments : [];
+            let dataObject = response?.data ? response?.data[0]?.deployments : [];
             let dataCount = response?.data
-                ? response?.data?.data?.getActionableDeploymentsChartData?.data[0]?.count[0]?.count
+                ? response?.data[0]?.count[0]?.count
                 : [];
             let totalCount = response?.data
-                ? response?.data?.data?.getActionableDeploymentsChartData?.data[0]?.count[0]?.count
+                ? response?.data[0]?.count[0]?.count
                 : [];
             dataObject = dataObject.map((bd, index) => ({
                 ...bd,

@@ -83,13 +83,12 @@ function GitlabDeploymentActionablePipelinesOverlay({
                 start,
                 end
             );
-            console.log("pipeline response", response);
-            let dataObject = response?.data ? response?.data?.data?.getActionablePipelinesChartData?.data[0]?.pipelines : [];
+            let dataObject = response?.data ? response?.data[0]?.pipelines : [];
             let dataCount = response?.data
-                ? response?.data?.data?.getActionablePipelinesChartData?.data[0]?.count[0]?.count
+                ? response?.data[0]?.count[0]?.count
                 : [];
             let totalCount = response?.data
-                ? response?.data?.data?.getActionablePipelinesChartData?.data[0]?.count[0]?.count
+                ? response?.data[0]?.count[0]?.count
                 : [];
             dataObject = dataObject.map((bd, index) => ({
                 ...bd,

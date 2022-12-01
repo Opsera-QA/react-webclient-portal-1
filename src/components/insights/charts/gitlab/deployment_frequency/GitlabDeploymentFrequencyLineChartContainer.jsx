@@ -45,28 +45,7 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfigurati
         toastContext.clearOverlayPanel();
     };
 
-    // const onNodeSelect = (node) => {
-    //     console.log("inside loop", node);
-    //     if(node?.points[0]) {
-    //         toastContext.showOverlayPanel(
-    //             <GitlabDeploymentFreqActionableMasterTab
-    //                 data={node || []}
-    //                 closePanel={closePanel}
-    //             />
-    //         );
-    //     }
-    //     if(node?.points[1]) {
-    //         toastContext.showOverlayPanel(
-    //             <GitlabDeploymentFreqActionableMasterTab
-    //                 data={node || []}
-    //                 closePanel={closePanel}
-    //             />
-    //         );
-    //     }
-    // };
-
     const onNodeSelect = (node) => {
-        console.log("inside loop", node);
         if(node?.data?.type === "pipeline") {
             toastContext.showOverlayPanel(
                 <GitlabDeploymentActionablePipelinesOverlay
@@ -90,25 +69,6 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfigurati
             );
         }
     };
-
-    // const onNodeSelect = (node) => {
-    //     if(node?.data?.type === "deploy"){
-    //         setShowModal(true);
-    //         setModalData(node?.data?.commits || []);
-    //     }
-    // };
-
-    // const onRowSelect = (data) => {
-    //     toastContext.showOverlayPanel(
-    //         <GitScrapperActionableInsightOverlay
-    //             kpiConfiguration={kpiConfiguration}
-    //             dashboardData={dashboardData}
-    //             title={data?.label}
-    //             gitScrapperType={data?.type}
-    //         />,
-    //     );
-    // };
-
 
     const getTrendChart = () => {
     return (
@@ -153,7 +113,7 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfigurati
           onClick={(node) => onNodeSelect(node)}
           tooltip={(node) => (
               <ChartTooltip
-              titles={["Date Range", "Total Runs", "Average Runs"]}
+              titles={["Date Range", "Total Runs", "Average"]}
               values={[node.point.data.range, node.point.data.total, node.point.data.y]}
               />
           )}
