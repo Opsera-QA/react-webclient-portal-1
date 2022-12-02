@@ -18,8 +18,9 @@ function BooleanToggleInput(
     id,
     infoOverlay,
     inputHelpOverlay,
+    customInfoText,
   }) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
@@ -138,6 +139,7 @@ function BooleanToggleInput(
           field={field}
           model={dataObject}
           fieldName={fieldName}
+          customMessage={customInfoText}
         />
       </InputContainer>
     </div>
@@ -154,6 +156,7 @@ BooleanToggleInput.propTypes = {
   id: PropTypes.string,
   infoOverlay: PropTypes.any,
   inputHelpOverlay: PropTypes.any,
+  customInfoText: PropTypes.any,
 };
 
 export default BooleanToggleInput;

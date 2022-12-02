@@ -55,7 +55,6 @@ function PipelineActionControls(
     getAccessToken,
   } = useComponentStateReference();
   const {
-    enabledServices,
     orchestrationFeatureFlags,
   } = useGetFeatureFlags();
 

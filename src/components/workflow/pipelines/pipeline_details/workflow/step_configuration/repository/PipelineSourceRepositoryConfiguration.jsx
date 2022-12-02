@@ -1,8 +1,6 @@
 import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import sourceRepositoryConfigurationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/source-repository-configuration-metadata";
 import PipelineSourceRepositoryToolIdentifierSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryToolIdentifierSelectInput";
 import PipelineSourceRepositoryBitbucketWorkspaceSelectInput
@@ -24,8 +22,19 @@ import PipelineSourceRepositorySecondaryBranchesMultiSelectInput
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import PipelineSourceRepositoryGitExportEnabledInput from "./PipelineSourceRepositoryGitExportEnabledInput";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
+import PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
+  from "components/workflow/plan/source/PipelineSourceRepositoryDynamicSettingsBooleanToggleInput";
+import {
+  sourceRepositoryConfigurationMetadata
+} from "components/workflow/plan/source/sourceRepositoryConfiguration.metadata";
 
-function PipelineSourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseClick }) {
+function PipelineSourceRepositoryConfiguration(
+  {
+    pipeline,
+    parentCallback,
+    handleCloseClick,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [sourceRepositoryModel, setSourceRepositoryModel] = useState(undefined);
@@ -164,7 +173,6 @@ function PipelineSourceRepositoryConfiguration({ pipeline, parentCallback, handl
         setModel={setSourceRepositoryModel}
         primaryBranch={sourceRepositoryModel?.getData("branch")}
       />
-
       <H5FieldSubHeader
         className={"text-muted mt-3"}
         subheaderText={"Webhook"}
@@ -184,17 +192,23 @@ function PipelineSourceRepositoryConfiguration({ pipeline, parentCallback, handl
       <div className={"p-3"} >COMING SOON</div>
       
         <hr />*/}
-      <div className="text-muted h5 mt-3">Pipeline Git Revisions</div>
+      <H5FieldSubHeader
+        className={"text-muted mt-3"}
+        subheaderText={"Pipeline Git Revisions"}
+      />
+      <div className="text-muted h5 mt-3"></div>
         <PipelineSourceRepositoryGitExportEnabledInput
           fieldName={"gitExportEnabled"}
           model={sourceRepositoryModel}
           setModel={setSourceRepositoryModel}
           disabled={sourceRepositoryModel.getData("service") !== "gitlab" && sourceRepositoryModel.getData("service") !== "github"}
         />
-      {/* <div className={"p-3"} >COMING SOON</div> */}
-
-
-
+      <PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
+        className={sourceRepositoryModel}
+        model={sourceRepositoryModel}
+        setModel={setSourceRepositoryModel}
+        pipelineType={pipelineTypeConstants.getTypeForTypesArray(pipeline?.type, false)}
+      />
     </PipelineStepEditorPanelContainer>
   );
 }
