@@ -6,7 +6,18 @@ import {METRIC_QUALITY_LEVELS} from "../../common/metrics/text/MetricTextBase";
 
 export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
   const date = kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")]?.value;
-  if (date) {
+  if(date?.label) {
+    const dateRange = getDatesFromLabel(date?.label);
+    return {
+      start: dateRange.startDate,
+      end: addDays(
+          new Date(
+              dateRange.endDate
+          ),
+          1
+      ).toISOString(),
+    };
+  } else if (date) {
     return {
       start: date.startDate,
       end: addDays(
