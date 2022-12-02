@@ -19,6 +19,7 @@ function BooleanToggleInput(
     infoOverlay,
     inputHelpOverlay,
     customInfoText,
+    helpTooltip,
   }) {
   const field = dataObject?.getFieldById(fieldName);
 
@@ -92,6 +93,18 @@ function BooleanToggleInput(
       );
     }
 
+    if (helpTooltip) {
+      return (
+        <HelpInfoOverlayIcon
+          infoOverlay={helpTooltip}
+          title={`${field?.label} Help`}
+          className={"ml-2 mt-auto view-details-icon"}
+          overlayPlacement={"top"}
+          overlayHeight={100}
+        />
+      );
+    }
+
     const fieldHelpTooltipText = field?.helpTooltipText;
 
     if (hasStringValue(fieldHelpTooltipText) === true) {
@@ -99,7 +112,7 @@ function BooleanToggleInput(
         <HelpInfoOverlayIcon
           infoOverlay={fieldHelpTooltipText}
           title={`${field?.label} Help`}
-          className={"ml-2 mt-auto"}
+          className={"ml-1 view-details-icon"}
           overlayPlacement={"top"}
         />
       );
@@ -157,6 +170,7 @@ BooleanToggleInput.propTypes = {
   infoOverlay: PropTypes.any,
   inputHelpOverlay: PropTypes.any,
   customInfoText: PropTypes.any,
+  helpTooltip: PropTypes.any,
 };
 
 export default BooleanToggleInput;
