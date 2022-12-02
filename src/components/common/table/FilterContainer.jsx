@@ -35,7 +35,7 @@ function FilterContainer(
     maximumHeight,
     showRefreshButton,
     disableNewRecordButton,
-    launchFilterOverlay, // TODO: Always open in overlay instead of small popup?
+    filterSelectionOverlayPanel,
     // TODO: Remove after filters are used everywhere
     type
   }) {
@@ -59,7 +59,7 @@ function FilterContainer(
         handleImportFunction={handleImportFunction}
         showRefreshButton={showRefreshButton}
         disableNewRecordButton={disableNewRecordButton}
-        launchFilterOverlay={launchFilterOverlay}
+        filterSelectionOverlayPanel={filterSelectionOverlayPanel}
       />
     );
   };
@@ -140,7 +140,7 @@ FilterContainer.propTypes = {
   loadingMessage: PropTypes.string,
   showRefreshButton: PropTypes.bool,
   disableNewRecordButton: PropTypes.bool,
-  launchFilterOverlay: PropTypes.bool,
+  filterSelectionOverlayPanel: PropTypes.any,
 };
 
 FilterContainer.defaultProps = {
