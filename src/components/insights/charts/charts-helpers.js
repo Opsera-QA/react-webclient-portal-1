@@ -5,7 +5,19 @@ import moment from "moment";
 
 export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
   const date = kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")]?.value;
-  if (date) {
+  // eslint-disable-next-line no-constant-condition
+  if(date?.label) {
+    const dateRange = getDatesFromLabel(date?.label);
+    return {
+      start: dateRange.startDate,
+      end: addDays(
+          new Date(
+              dateRange.endDate
+          ),
+          1
+      ).toISOString(),
+    };
+  } else if (date) {
     return {
       start: date.startDate,
       end: addDays(
