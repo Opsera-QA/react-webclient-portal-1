@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import sourceRepositoryConfigurationMetadata
@@ -12,7 +12,6 @@ import PipelineSourceRepositorySelectInput
 import modelHelpers from "components/common/model/modelHelpers";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
-import axios from "axios";
 import PipelineSourceRepositoryPrimaryBranchSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryPrimaryBranchSelectInput";
 import PipelineSourceRepositoryEventBasedTriggerInput
@@ -24,9 +23,9 @@ import PipelineSourceRepositorySecondaryBranchesMultiSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySecondaryBranchesMultiSelectInput";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import PipelineSourceRepositoryGitExportEnabledInput from "./PipelineSourceRepositoryGitExportEnabledInput";
-import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
-function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseClick }) {
+function PipelineSourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseClick }) {
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [sourceRepositoryModel, setSourceRepositoryModel] = useState(undefined);
@@ -119,9 +118,10 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
       isLoading={isLoading}
       disableSaveButton={sourceRepositoryModel?.getData("service")?.length === 0}
     >
-
-
-      <div className="text-muted h5 mt-2">Repository</div>
+      <H5FieldSubHeader
+        className={"text-muted"}
+        subheaderText={"Repository"}
+      />
       <div className={"text-muted mb-2"}>
         Opsera uses the pipeline level Git Repository settings to define webhook activity{/*, where to read
         YAML settings from as well as for pipeline revision history*/}.  Configure
@@ -165,7 +165,10 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
         primaryBranch={sourceRepositoryModel?.getData("branch")}
       />
 
-      <div className="text-muted h5 mt-3">Webhook</div>
+      <H5FieldSubHeader
+        className={"text-muted mt-3"}
+        subheaderText={"Webhook"}
+      />
       <PipelineSourceRepositoryEventBasedTriggerInput
         model={sourceRepositoryModel}
         setModel={setSourceRepositoryModel}
@@ -186,7 +189,7 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
           fieldName={"gitExportEnabled"}
           model={sourceRepositoryModel}
           setModel={setSourceRepositoryModel}
-          disabled={sourceRepositoryModel.getData("service") === "gitlab" || sourceRepositoryModel.getData("service") === "github" ? false : true}
+          disabled={sourceRepositoryModel.getData("service") !== "gitlab" && sourceRepositoryModel.getData("service") !== "github"}
         />
       {/* <div className={"p-3"} >COMING SOON</div> */}
 
@@ -196,10 +199,10 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
   );
 }
 
-SourceRepositoryConfiguration.propTypes = {
+PipelineSourceRepositoryConfiguration.propTypes = {
   pipeline: PropTypes.object,
   parentCallback: PropTypes.func,
   handleCloseClick: PropTypes.func,
 };
 
-export default SourceRepositoryConfiguration;
+export default PipelineSourceRepositoryConfiguration;

@@ -8,8 +8,8 @@ import StepToolConfiguration from "./step_configuration/StepToolConfiguration";
 import StepConfiguration from "./step_configuration/StepConfiguration";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
-import SourceRepositoryConfiguration
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/SourceRepositoryConfiguration";
+import PipelineSourceRepositoryConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryConfiguration";
 import IconBase from "components/common/icons/IconBase";
 
 const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPlan }) => {
@@ -63,14 +63,22 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
 
   const getTitleBar = (title) => {
     return (
-      <div className="px-2 my-auto content-block-header">
-        <h5 className={"py-2 d-flex justify-content-between mb-0"}>
-          <div className={"my-auto"}>{title}</div>
-          <div className={"d-flex"}>
-            <StepToolHelpIcon type={editItem?.type} tool={editItem?.tool_name?.toLowerCase()} />
-            <IconBase icon={faTimes} iconSize={"lg"} className={"pointer"} onClickFunction={() => {handleCloseClick();}}/>
-          </div>
-        </h5>
+      <div className={"px-2 my-auto content-block-header d-flex"}>
+          <h5 className={"my-auto d-flex justify-content-between h-100 w-100"}>
+            <div className={"my-auto"}>{title}</div>
+            <div className={"d-flex"}>
+              <StepToolHelpIcon
+                type={editItem?.type}
+                tool={editItem?.tool_name?.toLowerCase()}
+              />
+              <IconBase
+                icon={faTimes}
+                iconSize={"lg"}
+                className={"pointer"}
+                onClickFunction={() => {handleCloseClick();}}
+              />
+            </div>
+          </h5>
       </div>
     );
   };
@@ -83,7 +91,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
     return (<>
       {getTitleBar("Pipeline Settings")}
       <div className="p-3 bg-white step-settings-container">
-        <SourceRepositoryConfiguration
+        <PipelineSourceRepositoryConfiguration
           pipeline={pipeline}
           parentCallback={callbackFunctionSource}
           handleCloseClick={handleCloseClick}/>
