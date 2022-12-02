@@ -37,11 +37,11 @@ export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInpu
       );
     }
 
-    if (pipelineType !== pipelineTypeConstants.PIPELINE_TYPES.SOFTWARE_DEVELOPMENT) {
+    if (hasStringValue(model?.getData("repoId")) !== true) {
       return (
         <div className={"d-flex mb-1 warning-text-alt"}>
           <div><IconBase icon={faTriangleExclamation} className={"mr-1"} /></div>
-          This feature requires a Git repository to be set to be enabled
+          This feature requires a Git repository to be set to be enabled.
         </div>
       );
     }
