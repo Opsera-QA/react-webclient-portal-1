@@ -4,7 +4,7 @@ import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilte
 import sessionHelper from "utils/session.helper";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
-function OwnerFilter(
+export default function OwnerFilter(
   { 
     filterModel, 
     setFilterModel, 
@@ -12,8 +12,8 @@ function OwnerFilter(
     visible,
   }) {
   const setDataFunction = (fieldName, selectedOption) => {
-    filterModel.setData(fieldName, selectedOption?.value);
-    filterModel.setData("ownerName", selectedOption?.text);
+    filterModel.setData(fieldName, selectedOption?._id);
+    filterModel.setData("ownerName", `${selectedOption?.firstName} ${selectedOption?.lastName} (${selectedOption?.email})`);
     setFilterModel({...filterModel});
   };
 
@@ -34,7 +34,5 @@ OwnerFilter.propTypes = {
   className: PropTypes.string,
   visible: PropTypes.bool,
 };
-
-export default OwnerFilter;
 
 

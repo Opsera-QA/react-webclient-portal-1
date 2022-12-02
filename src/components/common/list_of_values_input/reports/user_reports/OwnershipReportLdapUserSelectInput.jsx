@@ -6,8 +6,8 @@ import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilte
 function OwnershipReportLdapUserSelectInput({ model, loadData }) {
   const { isSassUser } = useContext(AuthContext);
 
-  const setDataFunction = (fieldName, value) => {
-    model.setData("owner", value);
+  const setDataFunction = (fieldName, user) => {
+    model.setData("owner", user?._id);
     loadData(model);
   };
 
