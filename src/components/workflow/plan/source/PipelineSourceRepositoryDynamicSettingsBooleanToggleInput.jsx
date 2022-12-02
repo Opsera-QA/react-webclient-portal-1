@@ -87,7 +87,7 @@ export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInpu
       setDataObject={setModel}
       fieldName={"dynamicSettings"}
       customInfoText={getInfoText()}
-      // inputHelpOverlay={helpText()}
+      helpTooltip={helpText()}
       disabled={
         pipelineType !== pipelineTypeConstants.PIPELINE_TYPES.SOFTWARE_DEVELOPMENT
         || hasStringValue(model?.getData("repoId")) !== true

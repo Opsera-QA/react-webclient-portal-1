@@ -9,7 +9,6 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import CancelPipelineQueueConfirmationOverlay
   from "components/workflow/pipelines/pipeline_details/queuing/cancellation/CancelPipelineQueueConfirmationOverlay";
-import commonActions from "../../../common/common.actions";
 import InformaticaPipelineRunAssistantOverlay
   from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
 import ApigeePipelineRunAssistantOverlay from "components/workflow/run_assistants/apigee/ApigeePipelineRunAssistantOverlay";
@@ -56,6 +55,7 @@ function PipelineActionControls(
   } = useComponentStateReference();
   const {
     orchestrationFeatureFlags,
+    enabledServices,
   } = useGetFeatureFlags();
 
   useEffect(() => {
@@ -191,8 +191,18 @@ function PipelineActionControls(
     }
   };
 
-  const runPipeline = async (pipelineId) => {
+  const runPipeline = async (pipelineId, dynamicBranch) => {
     try {
+      const postBody = {};
+
+      const parsedDynamicBranch = DataParsingHelper.parseString(dynamicBranch);
+
+      if (enabledServices?.dynamicSettings === true && parsedDynamicBranch) {
+        postBody.settings = {
+          branch: parsedDynamicBranch,
+        };
+      }
+
       setStartPipeline(true);
       toastContext.showInformationToast("A request to start this pipeline has been submitted.", 20);
       const response = await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
@@ -367,7 +377,7 @@ function PipelineActionControls(
   };
 
   // TODO: Put into a separate run button
-  const handleRunPipelineClick = async () => {
+  const handleRunPipelineClick = async (dynamicBranch) => {
     const pipelineId = pipeline?._id;
     //check type of pipeline to determine if pre-flight wizard is required
     //for now type is just the first entry
@@ -405,11 +415,11 @@ function PipelineActionControls(
       } else { //this is starting from beginning:
         if (pipelineOrientation === "start") {
           console.log("starting pipeline from scratch");
-          await runPipeline(pipelineId);
+          await runPipeline(pipelineId, dynamicBranch);
         } else {
           console.log("clearing pipeline activity and then starting over");
           await resetPipelineState(pipelineId);
-          await runPipeline(pipelineId);
+          await runPipeline(pipelineId, dynamicBranch);
         }
       }
     }
@@ -467,6 +477,7 @@ function PipelineActionControls(
           disabledActionState={disabledActionState}
           hasQueuedRequest={hasQueuedRequest}
           pipelineIsStarting={startPipeline}
+          dynamicSettingsEnabled={enabledServices?.dynamicSettings === true}
         />
       );
     }

@@ -14,11 +14,22 @@ export default function PipelineActionControlsStartPipelineButton(
     pipelineIsStarting,
     disabledActionState,
     hasQueuedRequest,
+    dynamicSettingsEnabled,
     handleRunPipelineClick, // TODO: Move actual start functionality in here
   }) {
   const {
     userData,
   } = useComponentStateReference();
+
+
+
+  const handlePipelineStartClick = () => {
+    if (dynamicSettingsEnabled === true) {
+      handleRunPipelineClick();
+    } else {
+      handleRunPipelineClick();
+    }
+  };
 
   if (!!workflowStatus && workflowStatus !== "stopped") {
     return null;
@@ -31,7 +42,7 @@ export default function PipelineActionControlsStartPipelineButton(
       normalText={"Start Pipeline"}
       busyText={"Starting"}
       buttonState={pipelineIsStarting === true ? buttonLabelHelper.BUTTON_STATES.BUSY : undefined}
-      onClickFunction={handleRunPipelineClick}
+      onClickFunction={handlePipelineStartClick}
       disabled={PipelineRoleHelper.canStartPipeline(userData, pipeline) !== true || disabledActionState || pipelineIsStarting || hasQueuedRequest}
       variant={"success"}
     />
@@ -42,7 +53,8 @@ PipelineActionControlsStartPipelineButton.propTypes = {
   pipeline: PropTypes.object,
   handleRunPipelineClick: PropTypes.func,
   workflowStatus: PropTypes.string,
-      pipelineIsStarting: PropTypes.any,
-      disabledActionState: PropTypes.any,
+  pipelineIsStarting: PropTypes.any,
+  disabledActionState: PropTypes.any,
   hasQueuedRequest: PropTypes.any,
+  dynamicSettingsEnabled: PropTypes.bool,
 };
