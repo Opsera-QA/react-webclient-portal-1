@@ -1,17 +1,18 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import H4FieldSubHeader from "components/common/fields/subheader/H4FieldSubHeader";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import dataPointVisibilityMetadata
   from "components/common/inputs/metric/data_points/visibility/dataPointVisibility.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
+import H4MetricSubHeader from "components/common/fields/subheader/metric/H4MetricSubHeader";
 
-function MetricDataPointVisibilityInput(
+function DashboardDefaultNotificationInput(
   {
     fieldName,
     model,
     setModel,
     disabled,
+    className,
   }) {
   const [dataPointVisibilityModel, setDataPointVisibilityModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -35,28 +36,6 @@ function MetricDataPointVisibilityInput(
     const visibility = newModel?.getPersistData();
     model?.setData(fieldName, visibility);
     setModel({...model});
-    setDataPointVisibilityModel({...newModel});
-  };
-
-  const getUserVisibilityToggle = () => {
-    return (
-      <BooleanToggleInput
-        dataObject={dataPointVisibilityModel}
-        setDataObject={setDataFunction}
-        fieldName={"userVisibilityToggleSupport"}
-        disabled={disabled}
-      />
-    );
-  };
-  const getDefaultNotificationToggle = () => {
-    return (
-      <BooleanToggleInput
-        dataObject={dataPointVisibilityModel}
-        setDataObject={setDataFunction}
-        fieldName={"defaultNotificationToggle"}
-        disabled={disabled}
-      />
-    );
   };
 
   if (model == null || dataPointVisibilityModel == null) {
@@ -64,30 +43,30 @@ function MetricDataPointVisibilityInput(
   }
 
   return (
-    <div>
-      <H4FieldSubHeader subheaderText={"Visibility"}/>
-      {getUserVisibilityToggle()}
+    <div className={className}>
+      <H4MetricSubHeader subheaderText={"Notifications"}/>
       <BooleanToggleInput
         dataObject={dataPointVisibilityModel}
         setDataObject={setDataFunction}
-        fieldName={"isVisible"}
+        fieldName={"sendDefaultCriteriaNotification"}
         disabled={disabled}
       />
-      {getDefaultNotificationToggle()}
     </div>
   );
 }
 
-MetricDataPointVisibilityInput.propTypes = {
+DashboardDefaultNotificationInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   fromDashboardMetric: PropTypes.bool,
+  dataPoint: PropTypes.object,
+  className: PropTypes.string,
 };
 
-MetricDataPointVisibilityInput.defaultProps = {
-  fieldName: "visibility",
+DashboardDefaultNotificationInput.defaultProps = {
+  fieldName: "sendDefaultCriteriaNotification",
 };
 
-export default MetricDataPointVisibilityInput;
+export default DashboardDefaultNotificationInput;
