@@ -26,6 +26,9 @@ export const PIPELINE_TYPE_LABELS = {
   SOFTWARE_DEVELOPMENT: "Software Development Life Cycle (SDLC)",
 };
 
+pipelineTypeConstants.PIPELINE_TYPES = PIPELINE_TYPES;
+pipelineTypeConstants.PIPELINE_TYPE_LABELS = PIPELINE_TYPE_LABELS;
+
 export const getPipelineTypeLabel = (pipelineType) => {
   switch (pipelineType) {
     case PIPELINE_TYPES.APIGEE:
@@ -44,17 +47,18 @@ export const getPipelineTypeLabel = (pipelineType) => {
   }
 };
 
-pipelineTypeConstants.getTypeForTypesArray = (pipelineTypes) => {
+pipelineTypeConstants.getTypeForTypesArray = (pipelineTypes, defaultToSdlc = true) => {
   const parsedTypes = DataParsingHelper.parseArray(pipelineTypes);
+  const defaultType = defaultToSdlc === false ? undefined : PIPELINE_TYPES.SOFTWARE_DEVELOPMENT;
 
   if (!parsedTypes) {
-    return PIPELINE_TYPES.SOFTWARE_DEVELOPMENT;
+    return defaultType;
   }
 
   const isTypeValid = constantsHelper.isValueValid(PIPELINE_TYPES, parsedTypes[0]);
 
   if (!isTypeValid) {
-    return PIPELINE_TYPES.SOFTWARE_DEVELOPMENT;
+    return defaultType;
   }
 
   return parsedTypes[0];
