@@ -203,7 +203,6 @@ function PipelineActionControls(
         };
       }
 
-      console.log("postBody: " + JSON.stringify(postBody));
       setStartPipeline(true);
       toastContext.showInformationToast("A request to start this pipeline has been submitted.", 20);
       const response = await PipelineActions.runPipelineV2(
