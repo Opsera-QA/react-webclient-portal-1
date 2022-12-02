@@ -39,7 +39,10 @@ const ansibleStepMetadata = {
     },
     {
       label: "Workspace",
-      id: "workspace"
+      id: "workspace",
+      isRequiredFunction: (model) => {
+        return model?.getData("service") === "bitbucket";
+      },
     },
     {
       label: "Workspace/Project",
