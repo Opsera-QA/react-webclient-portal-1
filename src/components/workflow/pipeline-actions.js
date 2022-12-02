@@ -142,9 +142,9 @@ pipelineActions.run = async (pipelineId, postBody, getAccessToken) => {
   return response;
 };
 
-pipelineActions.runPipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
+pipelineActions.runPipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId, postBody) => {
   const apiUrl = `/pipelines/${pipelineId}/run/`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 //new-start which first resets the pipeline and then triggers a fresh run all in a single API call

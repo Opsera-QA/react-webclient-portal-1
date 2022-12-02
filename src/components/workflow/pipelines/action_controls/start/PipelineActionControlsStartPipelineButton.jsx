@@ -18,6 +18,7 @@ export default function PipelineActionControlsStartPipelineButton(
     disabledActionState,
     hasQueuedRequest,
     dynamicSettingsEnabled,
+    pipelineOrientation,
     handleRunPipelineClick, // TODO: Move actual start functionality in here
   }) {
   const {
@@ -26,16 +27,17 @@ export default function PipelineActionControlsStartPipelineButton(
   } = useComponentStateReference();
 
   const handlePipelineStartClick = () => {
-    // if (dynamicSettingsEnabled === true && pipelineValidationHelper.isPipelineSourceRepositoryValidForDynamicSettings(pipeline) === true) {
-    //   toastContext.showOverlayPanel(
-    //     <PipelineActionRuntimeSettingsSelectionOverlay
-    //       pipeline={pipeline}
-    //       handleRunPipelineFunction={handleRunPipelineClick}
-    //     />
-    //   );
-    // } else {
+    // TODO: Allow middle of the pipeline to configure if they start over
+    if (dynamicSettingsEnabled === true && pipelineOrientation === "start" && pipelineValidationHelper.isPipelineSourceRepositoryValidForDynamicSettings(pipeline) === true) {
+      toastContext.showOverlayPanel(
+        <PipelineActionRuntimeSettingsSelectionOverlay
+          pipeline={pipeline}
+          handleRunPipelineFunction={handleRunPipelineClick}
+        />
+      );
+    } else {
       handleRunPipelineClick();
-    // }
+    }
   };
 
   if (!!workflowStatus && workflowStatus !== "stopped") {
@@ -64,4 +66,5 @@ PipelineActionControlsStartPipelineButton.propTypes = {
   disabledActionState: PropTypes.any,
   hasQueuedRequest: PropTypes.any,
   dynamicSettingsEnabled: PropTypes.bool,
+  pipelineOrientation: PropTypes.string,
 };
