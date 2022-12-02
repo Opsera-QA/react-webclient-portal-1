@@ -12,7 +12,6 @@ import Model from "core/data_model/model";
 export default function FilterSelectionOverlayContainer(
   {
     filterModel,
-    isLoading,
     filterDropdownTitle,
     size,
     children,
@@ -27,20 +26,12 @@ export default function FilterSelectionOverlayContainer(
   };
 
   const loadFilters = async () => {
-    if (isLoading === true) {
-      return;
-    }
-
     filterModel?.setData("currentPage", 1);
     loadDataFunction(filterModel);
-    document.body.click();
+    closePanelFunction();
   };
 
   const resetFilters = () => {
-    if (isLoading === true) {
-      return;
-    }
-
     let newFilterModel;
     const sortOption = filterModel?.getData("sortOption");
     const pageSize = filterModel?.getData("pageSize");
@@ -83,7 +74,6 @@ export default function FilterSelectionOverlayContainer(
         {children}
         <ButtonContainerBase>
             <VanityButtonBase
-              disabled={isLoading}
               onClickFunction={loadFilters}
               normalText={"Filter"}
               className={"mr-2"}
@@ -99,7 +89,6 @@ export default function FilterSelectionOverlayContainer(
             <Button
               variant={"outline-secondary"}
               onClick={resetFilters}
-              disabled={isLoading}
             >
               <span><span className={"mr-2"}><StackedFilterRemovalIcon/></span>Remove</span>
             </Button>

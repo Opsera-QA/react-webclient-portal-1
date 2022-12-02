@@ -95,7 +95,6 @@ export default function PipelineInstructionsTable(
     return (
       <PipelineInstructionsFilterOverlay
         pipelineInstructionsFilterModel={pipelineInstructionsFilterModel}
-        setPipelineInstructionsFilterModel={setPipelineInstructionsFilterModel}
         loadDataFunction={loadData}
       />
     );

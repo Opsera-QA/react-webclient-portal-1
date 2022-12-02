@@ -22,11 +22,9 @@ function FilterSelectInputBase(
     loadDataFunction,
   }) {
   const field = dataObject?.getFieldById(fieldName);
-  const [internalValue, setInternalValue] = useState(dataObject?.getData(fieldName));
 
   const validateAndSetData = (fieldName, selectedOption) => {
     dataObject?.setData(fieldName, selectedOption);
-    setInternalValue(selectedOption);
     setDataObject({...dataObject});
   };
 
@@ -66,7 +64,7 @@ function FilterSelectInputBase(
         filter={filter}
         className={inline ? `inline-filter-input inline-select-filter` : undefined}
         groupBy={groupBy}
-        value={internalValue}
+        value={dataObject?.getData(fieldName)}
         disabled={disabled || busy}
         busy={busy}
         placeholderText={placeholderText}

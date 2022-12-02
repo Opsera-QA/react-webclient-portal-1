@@ -5,6 +5,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import axios from "axios";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function LdapOwnerFilter(
   { 
@@ -13,6 +14,7 @@ function LdapOwnerFilter(
     setDataFunction, 
     className,
     visible,
+    valueField,
   }) {
   const { getAccessToken, isSassUser } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
@@ -63,18 +65,23 @@ function LdapOwnerFilter(
 
   const getUsers = async (cancelSource = cancelTokenSource) => {
     const response = await accountsActions.getAccountUsersV2(getAccessToken, cancelSource);
-    const userOptions = [];
-    const parsedUsers = response?.data;
-
-    if (isMounted?.current === true && Array.isArray(parsedUsers) && parsedUsers.length > 0) {
-      parsedUsers.map((user, index) => {
-        userOptions.push({text: `${user.firstName} ${user.lastName} (${user.email})`, value:`${user._id}`});
-      });
-    }
+    const parsedUsers = DataParsingHelper.parseArray(response?.data, []);
 
     if (isMounted.current === true) {
-      setUserOptions(userOptions);
+      setUserOptions([...parsedUsers]);
     }
+  };
+
+  const getTextField = (user) => {
+    if (user) {
+      return `${user.firstName} ${user.lastName} (${user.email})`;
+    }
+
+    if (isLoading) {
+      return "Loading Data";
+    }
+
+    return filterModel?.getData("owner");
   };
 
   if (isSassUser() !== false || visible === false) {
@@ -89,6 +96,8 @@ function LdapOwnerFilter(
         placeholderText={"Filter by Owner"}
         setDataObject={setFilterModel}
         dataObject={filterModel}
+        textField={getTextField}
+        valueField={valueField}
         selectOptions={userOptions}
         setDataFunction={setDataFunction}
       />
@@ -102,6 +111,11 @@ LdapOwnerFilter.propTypes = {
   className: PropTypes.string,
   setDataFunction: PropTypes.func,
   visible: PropTypes.bool,
+  valueField: PropTypes.string,
+};
+
+LdapOwnerFilter.defaultProps = {
+  valueField: "_id",
 };
 
 export default LdapOwnerFilter;
