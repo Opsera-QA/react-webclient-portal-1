@@ -5,7 +5,6 @@ import moment from "moment";
 
 export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
   const date = kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")]?.value;
-  // eslint-disable-next-line no-constant-condition
   if(date?.label) {
     const dateRange = getDatesFromLabel(date?.label);
     return {
