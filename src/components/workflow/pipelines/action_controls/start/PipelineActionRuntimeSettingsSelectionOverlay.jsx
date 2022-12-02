@@ -20,6 +20,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
+import {buttonLabelHelper} from "temp-library-components/helpers/label/button/buttonLabel.helper";
 
 export default function PipelineActionRuntimeSettingsSelectionOverlay(
   {
@@ -27,6 +28,7 @@ export default function PipelineActionRuntimeSettingsSelectionOverlay(
     handleRunPipelineFunction,
   }) {
   const [runtimeSettingsModel, setRuntimeSettingsModel] = useState(undefined);
+  const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
   const {
     toastContext,
   } = useComponentStateReference();
@@ -37,6 +39,7 @@ export default function PipelineActionRuntimeSettingsSelectionOverlay(
       branch: DataParsingHelper.parseNestedString(pipeline, "workflow.source.branch"),
       toolId: DataParsingHelper.parseNestedString(pipeline, "workflow.source.accountId"),
       workspace: DataParsingHelper.parseNestedString(pipeline, "workflow.source.workspace"),
+      service: DataParsingHelper.parseNestedString(pipeline, "workflow.source.service"),
     };
     setRuntimeSettingsModel({...modelHelpers.parseObjectIntoModel(runtimeSettings, pipelineRuntimeSettingsMetadata)});
   }, [pipeline]);
@@ -62,9 +65,14 @@ export default function PipelineActionRuntimeSettingsSelectionOverlay(
     toastContext.clearOverlayPanel();
   };
 
-  const handlePipelineRun = () => {
-    handleRunPipelineFunction(runtimeSettingsModel?.getData("branch"));
-    closePanel();
+  const handlePipelineRun = async () => {
+    try {
+      setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
+      await handleRunPipelineFunction(runtimeSettingsModel?.getData("branch"));
+      closePanel();
+    } catch (error) {
+      setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);
+    }
   };
 
   const getButtonContainer = () => {
@@ -72,8 +80,11 @@ export default function PipelineActionRuntimeSettingsSelectionOverlay(
       <ButtonContainerBase className={"p-3"}>
         <VanityButtonBase
           icon={faArrowRight}
+          buttonState={buttonState}
           className={"mr-2"}
-          normalText={"Run Pipeline"}
+          normalText={"Start Pipeline"}
+          busyText={"Starting Pipeline"}
+          errorText={"Failed to Start Pipeline"}
           variant={"success"}
           onClickFunction={handlePipelineRun}
           disabled={hasStringValue(runtimeSettingsModel?.getData("branch")) !== true}
@@ -94,32 +105,28 @@ export default function PipelineActionRuntimeSettingsSelectionOverlay(
       titleIcon={faDraftingCompass}
       showCloseButton={false}
       buttonContainer={getButtonContainer()}
+      bodyClassName={""}
     >
       <div className={"m-3"}>
         {getWelcomeText()}
         <H5FieldSubHeader
           subheaderText={"Pipeline Run: Pre Run Tasks"}
         />
-        <div>Please select the branch you wish to use during this Pipeline run</div>
+        <div className={"mb-2"}>Please select the branch you wish to use during this Pipeline run</div>
         <Row>
-          <Col xs={3} />
-          <Col xs={6}>
+          <Col xs={12}>
             <ToolNameField
               model={runtimeSettingsModel}
               fieldName={"toolId"}
             />
           </Col>
-          <Col xs={3} />
-          <Col xs={3} />
-          <Col xs={6}>
+          <Col xs={12}>
             <TextFieldBase
               dataObject={runtimeSettingsModel}
               fieldName={"repository"}
             />
           </Col>
-          <Col xs={3} />
-          <Col xs={3} />
-          <Col xs={6}>
+          <Col xs={12}>
             <GitBranchInput
               fieldName={"branch"}
               service={runtimeSettingsModel?.getData("service")}
@@ -127,10 +134,9 @@ export default function PipelineActionRuntimeSettingsSelectionOverlay(
               workspace={runtimeSettingsModel?.getData("workspace")}
               repoId={runtimeSettingsModel?.getData("repository")}
               dataObject={runtimeSettingsModel}
+              setDataObject={setRuntimeSettingsModel}
             />
           </Col>
-          <Col xs={3} />
-          <Col xs={3} />
         </Row>
       </div>
     </CenterOverlayContainer>

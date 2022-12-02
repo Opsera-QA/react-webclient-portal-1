@@ -203,9 +203,15 @@ function PipelineActionControls(
         };
       }
 
+      console.log("postBody: " + JSON.stringify(postBody));
       setStartPipeline(true);
       toastContext.showInformationToast("A request to start this pipeline has been submitted.", 20);
-      const response = await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      const response = await PipelineActions.runPipelineV2(
+        getAccessToken,
+        cancelTokenSource,
+        pipelineId,
+        postBody,
+      );
       const message = response?.data?.message;
 
       if (hasStringValue(message) === true) {
@@ -376,6 +382,27 @@ function PipelineActionControls(
     }
   };
 
+  // TODO: Move to helper
+  const getPipelineOrientation = () => {
+    const stoppedStepId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.step_id");
+    const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
+    const pipelineStepCount = plan.length;
+
+    // is pipeline at the beginning or stopped midway or end of prior?
+    //what step are we currently on in the pipeline: first, last or middle?
+    if (DataParsingHelper.isValidMongoDbId(stoppedStepId) === true) {
+      const stepIndex = PipelineHelpers.getStepIndex(pipeline, stoppedStepId);
+      console.log(`current resting step index: ${stepIndex} of ${pipelineStepCount}`);
+      if (stepIndex + 1 === pipelineStepCount) {
+        return "end";
+      } else {
+        return "middle";
+      }
+    }
+
+    return "start";
+  };
+
   // TODO: Put into a separate run button
   const handleRunPipelineClick = async (dynamicBranch) => {
     const pipelineId = pipeline?._id;
@@ -478,6 +505,7 @@ function PipelineActionControls(
           hasQueuedRequest={hasQueuedRequest}
           pipelineIsStarting={startPipeline}
           dynamicSettingsEnabled={enabledServices?.dynamicSettings === true}
+          pipelineOrientation={getPipelineOrientation()}
         />
       );
     }
