@@ -6,6 +6,9 @@ import PipelineActionControlButtonBase
 import {faPlay} from "@fortawesome/pro-light-svg-icons";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import {buttonLabelHelper} from "temp-library-components/helpers/label/button/buttonLabel.helper";
+import {pipelineValidationHelper} from "components/workflow/pipelines/helpers/pipelineValidation.helper";
+import PipelineActionRuntimeSettingsSelectionOverlay
+  from "components/workflow/pipelines/action_controls/start/PipelineActionRuntimeSettingsSelectionOverlay";
 
 export default function PipelineActionControlsStartPipelineButton(
   {
@@ -19,16 +22,20 @@ export default function PipelineActionControlsStartPipelineButton(
   }) {
   const {
     userData,
+    toastContext,
   } = useComponentStateReference();
 
-
-
   const handlePipelineStartClick = () => {
-    if (dynamicSettingsEnabled === true) {
+    // if (dynamicSettingsEnabled === true && pipelineValidationHelper.isPipelineSourceRepositoryValidForDynamicSettings(pipeline) === true) {
+    //   toastContext.showOverlayPanel(
+    //     <PipelineActionRuntimeSettingsSelectionOverlay
+    //       pipeline={pipeline}
+    //       handleRunPipelineFunction={handleRunPipelineClick}
+    //     />
+    //   );
+    // } else {
       handleRunPipelineClick();
-    } else {
-      handleRunPipelineClick();
-    }
+    // }
   };
 
   if (!!workflowStatus && workflowStatus !== "stopped") {

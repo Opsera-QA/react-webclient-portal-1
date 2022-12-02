@@ -26,7 +26,7 @@ import PipelineActionControlsRefreshButton
   from "components/workflow/pipelines/action_controls/PipelineActionControlsRefreshButton";
 import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import PipelineActionControlsStartPipelineButton
-  from "components/workflow/pipelines/action_controls/PipelineActionControlsStartPipelineButton";
+  from "components/workflow/pipelines/action_controls/start/PipelineActionControlsStartPipelineButton";
 import useGetFeatureFlags from "hooks/platform/useGetFeatureFlags";
 
 const delayCheckInterval = 15000;
