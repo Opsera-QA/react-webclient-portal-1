@@ -3,6 +3,11 @@ const sfdcConnectionMetadata = {
   idProperty: "_id",
   fields: [
     {
+      label: "Authentication Type",
+      id: "authType",
+      isRequired: true,
+    },
+    {
       label: "Domain URL",
       id: "toolURL",
       isRequired: true,
@@ -17,13 +22,17 @@ const sfdcConnectionMetadata = {
     {
       label: "Salesforce Client ID (Consumer Key from Connected App)",
       id: "sfdc_client_id",
-      isRequired: true,
+      isRequiredFunction: (model) => {
+        return model?.getData("authType") === "basic";
+      },
       maxLength: 256
     },
     {
       label: "Salesforce Client Secret (Consumer Secret from Connected App)",
       id: "sfdc_client_secret",
-      isRequired: true,
+      isRequiredFunction: (model) => {
+        return model?.getData("authType") === "basic";
+      },
       maxLength: 256
     },
     {
@@ -34,7 +43,9 @@ const sfdcConnectionMetadata = {
     {
       label: "Password",
       id: "sfdc_password",
-      isRequired: true,
+      isRequiredFunction: (model) => {
+        return model?.getData("authType") === "basic";
+      },
       maxLength: 256
     },
     {
@@ -45,15 +56,16 @@ const sfdcConnectionMetadata = {
     }
   ],
   newObjectFields:
-    {
-      toolURL: "https://login.salesforce.com",
-      accountUsername : "",
-      sfdc_client_id: "",
-      sfdc_client_secret: "",
-      sfdc_token: "",
-      sfdc_password: "",
-      buildType: "ant",
-    }
+  {
+    authType: "basic",
+    toolURL: "https://login.salesforce.com",
+    accountUsername: "",
+    sfdc_client_id: "",
+    sfdc_client_secret: "",
+    sfdc_token: "",
+    sfdc_password: "",
+    buildType: "ant",
+  }
 };
 
 export default sfdcConnectionMetadata;

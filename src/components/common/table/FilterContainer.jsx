@@ -37,6 +37,7 @@ function FilterContainer(
     disableNewRecordButton,
     bodyStyling,
     hideXOverflow,
+    filterSelectionOverlayPanel,
     // TODO: Remove after filters are used everywhere
     type
   }) {
@@ -60,6 +61,7 @@ function FilterContainer(
         handleImportFunction={handleImportFunction}
         showRefreshButton={showRefreshButton}
         disableNewRecordButton={disableNewRecordButton}
+        filterSelectionOverlayPanel={filterSelectionOverlayPanel}
       />
     );
   };
@@ -146,6 +148,7 @@ FilterContainer.propTypes = {
   disableNewRecordButton: PropTypes.bool,
   bodyStyling: PropTypes.object,
   hideXOverflow: PropTypes.bool,
+  filterSelectionOverlayPanel: PropTypes.any,
 };
 
 FilterContainer.defaultProps = {

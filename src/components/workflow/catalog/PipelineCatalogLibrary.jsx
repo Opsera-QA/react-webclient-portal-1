@@ -55,7 +55,7 @@ function PipelineCatalogLibrary() {
 
   const loadInUseIds = async () => {
     const response = await pipelineActions.getInUseTemplatesV2(getAccessToken, cancelTokenSource);
-    setActiveTemplates([...DataParsingHelper.parseArray(response?.data, [])]);
+    setActiveTemplates([...DataParsingHelper.parseNestedArray(response, "data.data", [])]);
   };
 
   const getCurrentView = () => {

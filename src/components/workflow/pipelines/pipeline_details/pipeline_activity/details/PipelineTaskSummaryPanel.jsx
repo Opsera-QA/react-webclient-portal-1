@@ -31,6 +31,7 @@ const PIPELINE_TASK_ACTIONS = {
   USER_ACTION: "user action",
 };
 
+// TODO: Rename PipelineActivityLogTaskSummaryPannel for clarity or something similar
 function PipelineTaskSummaryPanel(
   {
     pipelineTaskData,

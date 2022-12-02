@@ -11,10 +11,12 @@ function JsonFieldBase(
     enableClipboard,
     displayDataTypes,
   }) {
+  const parsedJson = DataParsingHelper.parseJson(json, {});
+
   return (
     <div className={className}>
       <ReactJson
-        src={DataParsingHelper.parseJson(json, {})}
+        src={parsedJson}
         enableClipboard={enableClipboard}
         displayDataTypes={displayDataTypes}
         collapsed={collapsed}

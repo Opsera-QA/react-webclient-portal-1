@@ -25,7 +25,12 @@ import BlueprintsRoutes from "routes/BlueprintsRoutes";
 import FreeTrialSettingsRoutes from "routes/FreeTrialSettingsRoutes";
 import FreeTrialAdminToolsRoutes from "routes/FreeTrialAdminToolsRoutes";
 
-const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, }) => {
+export default function AppRoutes(
+  {
+    authenticatedState,
+    isPublicPathState,
+    authClient,
+  }) {
   useEffect(() => {
   }, [authenticatedState, isPublicPathState]);
 
@@ -65,13 +70,10 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, }) => {
       <OpseraFooter />
     </div>
   );
-};
+}
 
 AppRoutes.propTypes = {
   authenticatedState: PropTypes.bool,
   isPublicPathState: PropTypes.bool,
   authClient: PropTypes.object,
 };
-
-export default AppRoutes;
-

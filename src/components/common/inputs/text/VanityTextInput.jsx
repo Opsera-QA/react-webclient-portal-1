@@ -21,7 +21,7 @@ function VanityTextInput({fieldName, className, dataObject, setDataObject, setDa
     let classes = `text-input`;
 
     if (errorMessage !== "") {
-      classes += ` border border-danger error-text`;
+      classes += ` border border-danger error-text-alt`;
     }
 
     // if (inputClasses) {

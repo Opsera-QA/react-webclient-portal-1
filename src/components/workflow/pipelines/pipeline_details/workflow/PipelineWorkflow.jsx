@@ -19,7 +19,6 @@ import LoadingIcon from "components/common/icons/LoadingIcon";
 import PipelineSourceConfigurationDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/source/PipelineSourceConfigurationDetailsOverviewOverlay";
 import modelHelpers from "components/common/model/modelHelpers";
-import sourceRepositoryConfigurationMetadata from "./step_configuration/repository/source-repository-configuration-metadata";
 import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -32,6 +31,9 @@ import PipelineWorkflowExportWorkflowButton
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import {
+  sourceRepositoryConfigurationMetadata
+} from "components/workflow/plan/source/sourceRepositoryConfiguration.metadata";
 
 // TODO: Clean up and refactor to make separate components. IE the source repository begin workflow box can be its own component
 function PipelineWorkflow({

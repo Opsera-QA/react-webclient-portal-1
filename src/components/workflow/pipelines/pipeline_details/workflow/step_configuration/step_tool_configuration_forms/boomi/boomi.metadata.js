@@ -11,7 +11,7 @@ const boomiMetadata = {
             id: "gitToolId",
         },
         {
-            label: "Repository ID",
+            label: "Repository",
             id: "repoId",
         },
         {

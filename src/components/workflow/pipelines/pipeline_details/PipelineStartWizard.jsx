@@ -19,7 +19,6 @@ function PipelineStartWizard(
     pipelineId,
     pipelineOrientation,
     pipeline,
-    handleClose,
     handlePipelineWizardRequest,
   }) {
   const [currentScreen, setCurrentScreen] = useState(PIPELINE_START_WIZARD_FLOWS.PRE_RUN_TASK_SCREEN);
@@ -64,7 +63,7 @@ function PipelineStartWizard(
           pipelineId={pipelineId}
           pipeline={pipeline}
           handlePipelineWizardRequest={handlePipelineWizardRequest}
-          handleClose={handleClose}
+          handleClose={closePanel}
           pipelineOrientation={pipelineOrientation}
         />
       );
@@ -92,7 +91,6 @@ PipelineStartWizard.propTypes = {
   pipeline: PropTypes.object,
   pipelineOrientation: PropTypes.string,
   handlePipelineWizardRequest: PropTypes.func,
-  handleClose: PropTypes.func,
 };
 
 export default PipelineStartWizard;

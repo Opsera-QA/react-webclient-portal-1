@@ -28,6 +28,11 @@ export const mergeSyncTaskGitConfigurationMetadata = {
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
+      label: "Repository",
+      id: "repoId",
+      isRequired: true,
+    },
+    {
       label: "Workspace",
       id: "workspace",
       maxLength: 255,

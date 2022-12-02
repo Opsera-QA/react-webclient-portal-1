@@ -25,7 +25,7 @@ function SnaplogicScmRepositorySelectInput({model, setModel, disabled}) {
 
   return (
      <RepositorySelectInput
-       fieldName={"gitRepository"}
+       fieldName={"repoId"}
        service={model?.getData("service")}
        gitToolId={model?.getData("gitToolId")}
        dataObject={model}

@@ -149,7 +149,7 @@ GitlabRepositorySelectInput.propTypes = {
 };
 
 GitlabRepositorySelectInput.defaultProps = {
-  valueField: "name",
+  valueField: "id",
   textField: "nameSpacedPath",
 };
 

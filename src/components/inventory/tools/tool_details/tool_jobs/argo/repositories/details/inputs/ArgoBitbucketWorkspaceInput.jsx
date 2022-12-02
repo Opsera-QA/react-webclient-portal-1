@@ -7,6 +7,7 @@ function ArgoBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
     let newDataObject = {...dataObject};
     newDataObject.setData("workspace", selectedOption.key);
     newDataObject.setData("workspaceName", selectedOption.name);
+    newDataObject.setData("repoId", "");
     setDataObject({...newDataObject});
   };
 
@@ -14,6 +15,7 @@ function ArgoBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
     let newDataObject = {...dataObject};
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");
+    newDataObject.setData("repoId", "");
     setDataObject({...newDataObject});
   };
 

@@ -1,8 +1,6 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import sourceRepositoryConfigurationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/source-repository-configuration-metadata";
 import PipelineSourceRepositoryToolIdentifierSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryToolIdentifierSelectInput";
 import PipelineSourceRepositoryBitbucketWorkspaceSelectInput
@@ -12,7 +10,6 @@ import PipelineSourceRepositorySelectInput
 import modelHelpers from "components/common/model/modelHelpers";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
-import axios from "axios";
 import PipelineSourceRepositoryPrimaryBranchSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryPrimaryBranchSelectInput";
 import PipelineSourceRepositoryEventBasedTriggerInput
@@ -23,10 +20,20 @@ import PipelineSourceRepositoryToolSelectInput
 import PipelineSourceRepositorySecondaryBranchesMultiSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySecondaryBranchesMultiSelectInput";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
-import PipelineSourceRepositoryGitExportEnabledInput from "./PipelineSourceRepositoryGitExportEnabledInput";
-import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
+import PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
+  from "components/workflow/plan/source/PipelineSourceRepositoryDynamicSettingsBooleanToggleInput";
+import {
+  sourceRepositoryConfigurationMetadata
+} from "components/workflow/plan/source/sourceRepositoryConfiguration.metadata";
 
-function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseClick }) {
+function PipelineSourceRepositoryConfiguration(
+  {
+    pipeline,
+    parentCallback,
+    handleCloseClick,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [sourceRepositoryModel, setSourceRepositoryModel] = useState(undefined);
@@ -50,7 +57,7 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
       }
 
       // TODO: Don't deconstruct like this.
-      let { name, service, accountId, username, password, repository, branch, key, trigger_active, repoId, sshUrl, gitUrl, workspace, workspaceName, secondary_branches, gitExportEnabled, gitExportPath, isPushEvent, isPrEvent, prCreatedEvent, prApprovedEvent  } = persistData;
+      let { name, dynamicSettings, service, accountId, username, password, repository, branch, key, trigger_active, repoId, sshUrl, gitUrl, workspace, workspaceName, secondary_branches, gitExportEnabled, gitExportPath, isPushEvent, isPrEvent, prCreatedEvent, prApprovedEvent  } = persistData;
       const item = {
         name: name,
         service: service,
@@ -72,7 +79,8 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
         prCreatedEvent: prCreatedEvent,
         prApprovedEvent: prApprovedEvent,
         gitExportEnabled: gitExportEnabled, 
-        gitExportPath: gitExportPath
+        gitExportPath: gitExportPath,
+        dynamicSettings: dynamicSettings,
       };
       //console.log("saving config: " + JSON.stringify(item));
       //console.log("saving getPersistData: " + JSON.stringify(sourceRepositoryModel?.getPersistData()));
@@ -119,9 +127,10 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
       isLoading={isLoading}
       disableSaveButton={sourceRepositoryModel?.getData("service")?.length === 0}
     >
-
-
-      <div className="text-muted h5 mt-2">Repository</div>
+      <H5FieldSubHeader
+        className={"text-muted"}
+        subheaderText={"Repository"}
+      />
       <div className={"text-muted mb-2"}>
         Opsera uses the pipeline level Git Repository settings to define webhook activity{/*, where to read
         YAML settings from as well as for pipeline revision history*/}.  Configure
@@ -164,8 +173,10 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
         setModel={setSourceRepositoryModel}
         primaryBranch={sourceRepositoryModel?.getData("branch")}
       />
-
-      <div className="text-muted h5 mt-3">Webhook</div>
+      <H5FieldSubHeader
+        className={"text-muted mt-3"}
+        subheaderText={"Webhook"}
+      />
       <PipelineSourceRepositoryEventBasedTriggerInput
         model={sourceRepositoryModel}
         setModel={setSourceRepositoryModel}
@@ -181,22 +192,33 @@ function SourceRepositoryConfiguration({ pipeline, parentCallback, handleCloseCl
       <div className={"p-3"} >COMING SOON</div>
       
         <hr />*/}
-      <div className="text-muted h5 mt-3">Pipeline Git Revisions</div>
+      <H5FieldSubHeader
+        className={"text-muted mt-3"}
+        subheaderText={"Pipeline Git Revisions"}
+      />
+      <div className="text-muted h5 mt-3"></div>
         <PipelineSourceRepositoryGitExportEnabledInput
           fieldName={"gitExportEnabled"}
           model={sourceRepositoryModel}
           setModel={setSourceRepositoryModel}
           service={sourceRepositoryModel?.getData("service")}
-        />
       {/* <div className={"p-3"} >COMING SOON</div> */}
+          disabled={sourceRepositoryModel.getData("service") !== "gitlab" && sourceRepositoryModel.getData("service") !== "github"}
+        />
+      <PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
+        className={sourceRepositoryModel}
+        model={sourceRepositoryModel}
+        setModel={setSourceRepositoryModel}
+        pipelineType={pipelineTypeConstants.getTypeForTypesArray(pipeline?.type, false)}
+      />
     </PipelineStepEditorPanelContainer>
   );
 }
 
-SourceRepositoryConfiguration.propTypes = {
+PipelineSourceRepositoryConfiguration.propTypes = {
   pipeline: PropTypes.object,
   parentCallback: PropTypes.func,
   handleCloseClick: PropTypes.func,
 };
 
-export default SourceRepositoryConfiguration;
+export default PipelineSourceRepositoryConfiguration;

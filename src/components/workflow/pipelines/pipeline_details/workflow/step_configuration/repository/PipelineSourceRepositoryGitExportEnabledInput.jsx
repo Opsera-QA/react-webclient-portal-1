@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
-
 export default function PipelineSourceRepositoryGitExportEnabledInput(
   {
     className,

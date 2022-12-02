@@ -11,7 +11,7 @@ const kafkaConnectStepFormMetadata = {
       id: "gitToolId",
     },
     {
-      label: "Repository ID",
+      label: "Repository",
       id: "repoId",
     },
     {

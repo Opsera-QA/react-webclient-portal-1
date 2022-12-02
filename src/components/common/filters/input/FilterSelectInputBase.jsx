@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
@@ -19,17 +19,20 @@ function FilterSelectInputBase(
     className,
     inline,
     disabled,
+    loadDataFunction,
   }) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
 
   const validateAndSetData = (fieldName, selectedOption) => {
-    const newFilterModel = dataObject;
-    newFilterModel?.setData(fieldName, selectedOption);
-    setDataObject({...newFilterModel});
+    dataObject?.setData(fieldName, selectedOption);
+    setDataObject({...dataObject});
   };
 
   const updateValue = (newValue) => {
-    if (setDataFunction) {
+    if (inline === true && loadDataFunction) {
+      dataObject.setData(fieldName, newValue);
+      loadDataFunction(dataObject);
+    } if (setDataFunction) {
       setDataFunction(field?.id, newValue);
     }
     else {
@@ -75,6 +78,7 @@ FilterSelectInputBase.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
+  loadDataFunction: PropTypes.func,
   selectOptions: PropTypes.array.isRequired,
   groupBy: PropTypes.string,
   valueField: PropTypes.string,
@@ -85,7 +89,7 @@ FilterSelectInputBase.propTypes = {
   busy: PropTypes.bool,
   className: PropTypes.string,
   inline: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
 };
 
 FilterSelectInputBase.defaultProps = {
