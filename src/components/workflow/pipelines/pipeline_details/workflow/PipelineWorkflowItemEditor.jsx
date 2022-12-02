@@ -31,12 +31,11 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
     const apiUrl = `/pipelines/${pipeline._id}/update`;
     try {
       const response = await axiosApiService(accessToken).post(apiUrl, pipeline);
-      toastContext.showUpdateSuccessResultDialog(type);
       await fetchPlan();
       return response;
-    } catch (err) {
+    } catch (error) {
       setLoading(false);
-      toastContext.showLoadingErrorDialog(err);
+      toastContext.showSaveFailureToast(type, error);
     }
   };
 
