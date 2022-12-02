@@ -209,6 +209,7 @@ function ProjectDataMappingEditorPanel(
             fieldName={"value"}
             setDataObject={setProjectDataMappingModel}
             disabled={projectDataMappingModel && projectDataMappingModel.getData("tool_id").length === 0}
+            allowedTypes={["project"]}
           />
         </Col>
         {getCustomTagFieldInput()}
