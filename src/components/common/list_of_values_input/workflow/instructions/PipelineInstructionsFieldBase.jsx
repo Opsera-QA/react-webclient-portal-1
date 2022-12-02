@@ -22,6 +22,9 @@ import useGetPipelineInstructionsAttributesModel
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
+import DateFieldBase from "components/common/fields/date/DateFieldBase";
+import PipelineInstructionsStatusField
+  from "components/common/list_of_values_input/workflow/instructions/status/PipelineInstructionsStatusField";
 
 export default function PipelineInstructionsFieldBase(
   {
@@ -161,6 +164,15 @@ export default function PipelineInstructionsFieldBase(
               fieldName={"point_of_contact"}
               dataObject={pipelineInstructionsAttributesModel}
               requireSavedValue={true}
+            />
+            <DateFieldBase
+              fieldName={"release_date"}
+              dataObject={pipelineInstructionsAttributesModel}
+              requireSavedValue={true}
+            />
+            <PipelineInstructionsStatusField
+              fieldName={"status"}
+              model={pipelineInstructionsAttributesModel}
             />
             <TextFieldBase
               fieldName={"jira"}

@@ -58,7 +58,7 @@ function PipelineSourceRepositoryConfiguration(
       }
 
       // TODO: Don't deconstruct like this.
-      let { name, service, accountId, username, password, repository, branch, key, trigger_active, repoId, sshUrl, gitUrl, workspace, workspaceName, secondary_branches, gitExportEnabled, gitExportPath, isPushEvent, isPrEvent, prCreatedEvent, prApprovedEvent  } = persistData;
+      let { name, dynamicSettings, service, accountId, username, password, repository, branch, key, trigger_active, repoId, sshUrl, gitUrl, workspace, workspaceName, secondary_branches, gitExportEnabled, gitExportPath, isPushEvent, isPrEvent, prCreatedEvent, prApprovedEvent  } = persistData;
       const item = {
         name: name,
         service: service,
@@ -80,7 +80,8 @@ function PipelineSourceRepositoryConfiguration(
         prCreatedEvent: prCreatedEvent,
         prApprovedEvent: prApprovedEvent,
         gitExportEnabled: gitExportEnabled, 
-        gitExportPath: gitExportPath
+        gitExportPath: gitExportPath,
+        dynamicSettings: dynamicSettings,
       };
       //console.log("saving config: " + JSON.stringify(item));
       //console.log("saving getPersistData: " + JSON.stringify(sourceRepositoryModel?.getPersistData()));

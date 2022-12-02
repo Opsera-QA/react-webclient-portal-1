@@ -5,6 +5,7 @@ import useGetFeatureFlags from "hooks/platform/useGetFeatureFlags";
 import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import IconBase from "components/common/icons/IconBase";
 import {faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInput(
   {
@@ -35,6 +36,15 @@ export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInpu
         </div>
       );
     }
+
+    if (hasStringValue(model?.getData("repoId")) !== true) {
+      return (
+        <div className={"d-flex mb-1 warning-text-alt"}>
+          <div><IconBase icon={faTriangleExclamation} className={"mr-1"} /></div>
+          This feature requires a Git repository to be set to be enabled.
+        </div>
+      );
+    }
   };
 
   const getInfoText = () => {
@@ -55,6 +65,17 @@ export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInpu
     );
   };
 
+  const helpText = () => {
+    return (
+      <div>
+        {getDynamicText()}
+        <div>
+          Please note, the Git repository is required for this feature to work, but webhooks do not need to be enabled.
+        </div>
+      </div>
+    );
+  };
+
   if (enabledServices?.dynamicSettings !== true) {
     return null;
   }
@@ -66,6 +87,11 @@ export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInpu
       setDataObject={setModel}
       fieldName={"dynamicSettings"}
       customInfoText={getInfoText()}
+      // inputHelpOverlay={helpText()}
+      disabled={
+        pipelineType !== pipelineTypeConstants.PIPELINE_TYPES.SOFTWARE_DEVELOPMENT
+        || hasStringValue(model?.getData("repoId")) !== true
+      }
     />
   );
 }

@@ -131,5 +131,6 @@ export const sourceRepositoryConfigurationMetadata = {
     isPrEvent: false,
     prCreatedEvent: true,
     prApprovedEvent: false,
+    dynamicSettings: false,
   },
 };
