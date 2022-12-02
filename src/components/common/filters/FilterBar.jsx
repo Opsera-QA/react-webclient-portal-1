@@ -30,7 +30,7 @@ function FilterBar(
     handleImportFunction,
     showRefreshButton,
     disableNewRecordButton,
-    launchFilterOverlay,
+    filterSelectionOverlayPanel,
   }) {
   const getType = () => {
     if (hasStringValue(type) === true) {
@@ -115,13 +115,13 @@ function FilterBar(
             filterModel={filterModel}
             setFilterModel={setFilterModel}
             isLoading={isLoading}
-            className={dropdownFilters != null || loadData != null ? "mr-2" : null}
+            className={dropdownFilters != null || filterSelectionOverlayPanel != null || loadData != null ? "mr-2" : null}
           />
           {showRefreshButton &&
             <RefreshButton
               isLoading={isLoading}
               loadDataFunction={loadData}
-              className={dropdownFilters != null ? "mr-2" : null}
+              className={dropdownFilters != null || filterSelectionOverlayPanel != null ? "mr-2" : null}
             />
           }
           <FilterButtons
@@ -129,7 +129,7 @@ function FilterBar(
             loadData={loadData}
             dropdownFilters={dropdownFilters}
             filterDto={filterModel}
-            launchFilterOverlay={launchFilterOverlay}
+            filterSelectionOverlayPanel={filterSelectionOverlayPanel}
           />
           {exportButton}
         </div>
@@ -158,7 +158,7 @@ FilterBar.propTypes = {
   handleImportFunction: PropTypes.func,
   showRefreshButton: PropTypes.bool,
   disableNewRecordButton: PropTypes.bool,
-  launchFilterOverlay: PropTypes.bool,
+  filterSelectionOverlayPanel: PropTypes.object,
 };
 
 FilterBar.defaultProps = {
