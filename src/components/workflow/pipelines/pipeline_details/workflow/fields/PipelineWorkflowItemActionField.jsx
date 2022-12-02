@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import PipelineWorkflowItemFieldBase
   from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
@@ -19,8 +19,14 @@ export default function PipelineWorkflowItemActionField(
     loadPipelineFunction,
   }) {
   const toolIdentifier = DataParsingHelper.parseNestedString(pipelineStep, "tool.tool_identifier", "");
+  const pipelineInstructionsId = DataParsingHelper.parseNestedMongoDbId(pipelineStep, "tool.configuration.pipelineInstructionsId");
 
   const getValueField = () => {
+    // TODO: This check should be in a better spot
+    if (toolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION && DataParsingHelper.isValidMongoDbId(pipelineInstructionsId) !== true) {
+      return null;
+    }
+
     switch (toolIdentifier) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
         return (
