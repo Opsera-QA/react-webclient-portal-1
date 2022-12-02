@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
@@ -21,12 +21,13 @@ function FilterSelectInputBase(
     disabled,
     loadDataFunction,
   }) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
+  const [internalValue, setInternalValue] = useState(dataObject?.getData(fieldName));
 
   const validateAndSetData = (fieldName, selectedOption) => {
-    const newFilterModel = dataObject;
-    newFilterModel?.setData(fieldName, selectedOption);
-    setDataObject({...newFilterModel});
+    dataObject?.setData(fieldName, selectedOption);
+    setInternalValue(selectedOption);
+    setDataObject({...dataObject});
   };
 
   const updateValue = (newValue) => {
@@ -65,7 +66,7 @@ function FilterSelectInputBase(
         filter={filter}
         className={inline ? `inline-filter-input inline-select-filter` : undefined}
         groupBy={groupBy}
-        value={dataObject?.getData(fieldName)}
+        value={internalValue}
         disabled={disabled || busy}
         busy={busy}
         placeholderText={placeholderText}

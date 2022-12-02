@@ -7,48 +7,66 @@ import CenterOverlayContainer from "components/common/overlays/center/CenterOver
 import useComponentStateReference from "hooks/useComponentStateReference";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
+import Model from "core/data_model/model";
 
-export default function FilterSelectionOverlay(
+export default function FilterSelectionOverlayContainer(
   {
-    dropdownFilters,
-    filterDto,
-    loadFilters,
+    filterModel,
     isLoading,
-    resetFiltersAndCloseItem,
     filterDropdownTitle,
     size,
+    children,
+    loadDataFunction,
   }) {
   const {
     toastContext,
   } = useComponentStateReference();
 
-  const getInnerFilters = () => {
-    if (dropdownFilters) {
-      if (Array.isArray(dropdownFilters)) {
-        return (dropdownFilters.map((child, index) => {
-          return (<div key={index} className="mb-2">{child}</div>);
-        }));
-      } else {
-        return <div className="mb-2">{dropdownFilters}</div>;
-      }
-    }
-  };
-
   const closePanelFunction = () => {
     toastContext.clearOverlayPanel();
   };
 
-  const handleFilterLoading = () => {
-    loadFilters();
+  const loadFilters = async () => {
+    if (isLoading === true) {
+      return;
+    }
+
+    filterModel?.setData("currentPage", 1);
+    loadDataFunction(filterModel);
+    document.body.click();
+  };
+
+  const resetFilters = () => {
+    if (isLoading === true) {
+      return;
+    }
+
+    let newFilterModel;
+    const sortOption = filterModel?.getData("sortOption");
+    const pageSize = filterModel?.getData("pageSize");
+
+    if (filterModel?.getNewInstance) {
+      newFilterModel = filterModel.getNewInstance();
+    } else {
+      newFilterModel = new Model({...filterModel.getNewObjectFields()}, filterModel.getMetaData(), false);
+    }
+
+    if (sortOption) {
+      newFilterModel.setData("pageSize", pageSize);
+    }
+
+    if (pageSize) {
+      newFilterModel.setData("sortOption", sortOption);
+    }
+
+    if (loadDataFunction) {
+      loadDataFunction(newFilterModel);
+    }
+
     closePanelFunction();
   };
 
-  const handleFilterRemoval = () => {
-    resetFiltersAndCloseItem();
-    closePanelFunction();
-  };
-
-  if (dropdownFilters == null) {
+  if (children == null) {
     return null;
   }
 
@@ -62,11 +80,11 @@ export default function FilterSelectionOverlay(
       size={size}
     >
       <div className={"bg-white m-3"}>
-        {getInnerFilters()}
+        {children}
         <ButtonContainerBase>
             <VanityButtonBase
               disabled={isLoading}
-              onClickFunction={handleFilterLoading}
+              onClickFunction={loadFilters}
               normalText={"Filter"}
               className={"mr-2"}
               icon={faFilter}
@@ -80,8 +98,8 @@ export default function FilterSelectionOverlay(
           {/*/>*/}
             <Button
               variant={"outline-secondary"}
-              onClick={handleFilterRemoval}
-              disabled={isLoading || filterDto?.getData("activeFilters").length === 0}
+              onClick={resetFilters}
+              disabled={isLoading}
             >
               <span><span className={"mr-2"}><StackedFilterRemovalIcon/></span>Remove</span>
             </Button>
@@ -91,16 +109,15 @@ export default function FilterSelectionOverlay(
   );
 }
 
-FilterSelectionOverlay.propTypes = {
+FilterSelectionOverlayContainer.propTypes = {
   isLoading: PropTypes.bool,
-  filterDto: PropTypes.object,
-  dropdownFilters: PropTypes.any,
-  loadFilters: PropTypes.func,
-  resetFiltersAndCloseItem: PropTypes.func,
+  filterModel: PropTypes.object,
+  loadDataFunction: PropTypes.func,
   filterDropdownTitle: PropTypes.string,
   size: PropTypes.string,
+  children: PropTypes.any,
 };
 
-FilterSelectionOverlay.defaultProps = {
+FilterSelectionOverlayContainer.defaultProps = {
   filterDropdownTitle: "Filter Selection",
 };
