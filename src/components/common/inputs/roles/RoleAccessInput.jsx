@@ -28,6 +28,7 @@ export default function RoleAccessInput(
     disabled,
     visible,
   }) {
+  const field = model?.getFieldById(fieldName);
   const [userList, setUserList] = useState([]);
   const [groupList, setGroupList] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -43,7 +44,6 @@ export default function RoleAccessInput(
     userData,
     getAccessToken,
   } = useComponentStateReference();
-  const field = model?.getFieldById(fieldName);
 
   useEffect(() => {
     if (isSaasUser === false && visible !== true) {
@@ -210,6 +210,10 @@ export default function RoleAccessInput(
       newPropertyList[index][innerField] = newValue;
       validateAndSetData(newPropertyList);
     }
+  };
+
+  const clearRolesArray = () => {
+    validateAndSetData([]);
   };
 
   const getDisabledUsers = () => {
@@ -458,6 +462,7 @@ export default function RoleAccessInput(
         addAllowed={lastRoleComplete() && disabled !== true}
         helpComponent={getHelpComponent()}
         incompleteRowMessage={getIncompleteRoleMessage()}
+        clearDataFunction={disabled !== true ? clearRolesArray : undefined}
       >
         <div>
           <div className={"filter-bg-white"}>

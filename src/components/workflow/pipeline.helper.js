@@ -5,6 +5,10 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 
 export const pipelineHelper = {};
 
+pipelineHelper.getManagementScreenLink = () => {
+  return `/workflow`;
+};
+
 pipelineHelper.getDetailViewLink = (pipelineId) => {
   if (isMongoDbId(pipelineId) !== true) {
     return null;

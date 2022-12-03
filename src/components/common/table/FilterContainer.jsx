@@ -35,6 +35,7 @@ function FilterContainer(
     maximumHeight,
     showRefreshButton,
     disableNewRecordButton,
+    filterSelectionOverlayPanel,
     // TODO: Remove after filters are used everywhere
     type
   }) {
@@ -58,6 +59,7 @@ function FilterContainer(
         handleImportFunction={handleImportFunction}
         showRefreshButton={showRefreshButton}
         disableNewRecordButton={disableNewRecordButton}
+        filterSelectionOverlayPanel={filterSelectionOverlayPanel}
       />
     );
   };
@@ -137,7 +139,8 @@ FilterContainer.propTypes = {
   maximumHeight: PropTypes.string,
   loadingMessage: PropTypes.string,
   showRefreshButton: PropTypes.bool,
-  disableNewRecordButton: PropTypes.bool
+  disableNewRecordButton: PropTypes.bool,
+  filterSelectionOverlayPanel: PropTypes.any,
 };
 
 FilterContainer.defaultProps = {

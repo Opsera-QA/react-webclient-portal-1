@@ -80,9 +80,6 @@ function LogsExportScheduledTaskEditorPanel({ scheduledTaskData, handleClose, ta
     }
   };
 
-  console.log("schedulerTaskModel.getErrors(): " + JSON.stringify(schedulerTaskModel?.getErrors()));
-  console.log("scheduleModel.getErrors(): " + JSON.stringify(scheduleModel?.getErrors()));
-
   return (
     <EditorPanelContainer
       recordDto={schedulerTaskModel}

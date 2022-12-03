@@ -3,6 +3,11 @@ import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/s
 import TagParsingHelper from "@opsera/persephone/helpers/data/tags/tagParsing.helper";
 import pipelineInstructionsTypeConstants
   from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructionsType.constants";
+import pipelineInstructionsStatusConstants
+  from "@opsera/definitions/constants/pipelines/instructions/status/pipelineInstructionsStatus.constants";
+import {hasDateValue} from "components/common/helpers/date/date.helpers";
+import {getFormattedDate} from "components/common/fields/date/DateFieldBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const pipelineInstructionsFilterMetadata = {
   fields: [
@@ -38,6 +43,18 @@ const pipelineInstructionsFilterMetadata = {
       label: "Type",
       id: "type",
     },
+    {
+      label: "Status",
+      id: "status",
+    },
+    {
+      label: "Release Date",
+      id: "release_date",
+    },
+    {
+      label: "Release Date Range",
+      id: "release_date_range",
+    },
   ],
   newObjectFields: {
     pageSize: 100,
@@ -46,6 +63,9 @@ const pipelineInstructionsFilterMetadata = {
     tag: undefined,
     type: "",
     search: "",
+    status: "",
+    release_date: undefined,
+    release_date_range: undefined,
     activeFilters: []
   },
 };
@@ -87,6 +107,29 @@ export class PipelineInstructionsFilterModel extends FilterModelBase {
       activeFilters.push({filterId: "type", text: `Type: ${pipelineInstructionsTypeConstants.getPipelineInstructionTypeLabel(type)}`});
     }
 
+    const status = this.getData("status");
+
+    if (hasStringValue(status) === true) {
+      activeFilters.push({filterId: "status", text: `Status: ${pipelineInstructionsStatusConstants.getPipelineInstructionStatusLabel(status)}`});
+    }
+
+    const releaseDate = this.getData("release_date");
+
+    if (hasDateValue(releaseDate) === true) {
+      activeFilters.push({filterId: "release_date", text: `Release Date: ${getFormattedDate(releaseDate)}`});
+    }
+
+    const releaseDateRange = DataParsingHelper.parseObject(this.getData("release_date_range"));
+
+    if (releaseDateRange) {
+      const parsedStartDate = DataParsingHelper.parseDate(releaseDateRange.startDate);
+      const parsedEndDate = DataParsingHelper.parseDate(releaseDateRange.endDate);
+
+      if (parsedStartDate && parsedEndDate) {
+        activeFilters.push({filterId: "release_date_range", text: `Release Date: ${getFormattedDate(parsedStartDate)} to ${getFormattedDate(parsedEndDate)}`});
+      }
+    }
+
     return activeFilters;
   };
 
@@ -94,7 +137,4 @@ export class PipelineInstructionsFilterModel extends FilterModelBase {
     return false;
   }
 }
-
-export default PipelineInstructionsFilterModel;
-
 

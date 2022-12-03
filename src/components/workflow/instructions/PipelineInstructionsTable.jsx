@@ -6,7 +6,7 @@ import VanityDataContainer from "components/common/containers/VanityDataContaine
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {
   getFormattedLabelWithFunctionColumnDefinition,
-  getOwnerNameField,
+  getOwnerNameField, getTableDateColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import CustomTable from "components/common/table/CustomTable";
@@ -22,15 +22,14 @@ import pipelineInstructionsMetadata
   from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructions.metadata";
 import pipelineInstructionsTypeConstants
   from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructionsType.constants";
-import PipelineStatusFilter from "components/common/filters/pipelines/status/PipelineStatusFilter";
-import TagFilter from "components/common/filters/tags/tag/TagFilter";
-import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
-import PipelineInstructionsTypeFilter
-  from "components/common/filters/pipelines/instructions/PipelineInstructionsTypeFilter";
 import InlinePipelineInstructionsTypeFilter
   from "components/common/filters/pipelines/instructions/InlinePipelineInstructionsTypeFilter";
+import pipelineInstructionsStatusConstants
+  from "@opsera/definitions/constants/pipelines/instructions/status/pipelineInstructionsStatus.constants";
+import PipelineInstructionsFilterOverlay
+  from "components/workflow/instructions/filter_overlay/PipelineInstructionsFilterOverlay";
 
-export default function PipelineInstructionTable(
+export default function PipelineInstructionsTable(
   {
     pipelineInstructions,
     loadData,
@@ -43,12 +42,20 @@ export default function PipelineInstructionTable(
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
+      getOwnerNameField(),
       getFormattedLabelWithFunctionColumnDefinition(
         getField(fields, "type"),
         pipelineInstructionsTypeConstants.getPipelineInstructionTypeLabel,
         "no-wrap-inline",
       ),
-      getOwnerNameField(),
+      getFormattedLabelWithFunctionColumnDefinition(
+        getField(fields, "attributes.status"),
+        pipelineInstructionsStatusConstants.getPipelineInstructionStatusLabel,
+        "no-wrap-inline",
+      ),
+      getTableDateColumn(
+        getField(fields, "attributes.release_date"),
+      ),
     ],
     []
   );
@@ -84,25 +91,12 @@ export default function PipelineInstructionTable(
     );
   };
 
-  const getDropdownFilters = () => {
+  const getFilterSelectionOverlayPanel = () => {
     return (
-      <>
-        <PipelineInstructionsTypeFilter
-          filterModel={pipelineInstructionsFilterModel}
-          setFilterModel={setPipelineInstructionsFilterModel}
-        />
-        <TagFilter
-          filterDto={pipelineInstructionsFilterModel}
-          setFilterDto={setPipelineInstructionsFilterModel}
-          valueField={"value2"}
-          className={"mt-2"}
-        />
-        <OwnerFilter
-          filterModel={pipelineInstructionsFilterModel}
-          setFilterModel={setPipelineInstructionsFilterModel}
-          className={"mt-2"}
-        />
-      </>
+      <PipelineInstructionsFilterOverlay
+        pipelineInstructionsFilterModel={pipelineInstructionsFilterModel}
+        loadDataFunction={loadData}
+      />
     );
   };
 
@@ -134,19 +128,20 @@ export default function PipelineInstructionTable(
       isLoading={isLoading}
       inlineFilters={getInlineFilters()}
       body={getTable()}
+      filterSelectionOverlayPanel={getFilterSelectionOverlayPanel()}
       metadata={pipelineInstructionsMetadata}
-      dropdownFilters={getDropdownFilters()}
       titleIcon={faBallotCheck}
       title={"Pipeline Instructions"}
       type={"Pipeline Instructions"}
       className={"px-2 pb-2"}
       minimumHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
       maximumHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
+      launchFilterOverlay={true}
     />
   );
 }
 
-PipelineInstructionTable.propTypes = {
+PipelineInstructionsTable.propTypes = {
   pipelineInstructions: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,

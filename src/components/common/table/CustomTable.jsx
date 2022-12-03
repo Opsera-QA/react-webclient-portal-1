@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 import MakeupTableBase from "components/common/table/makeup/MakeupTableBase";
+import TableBase from "components/common/table/TableBase";
+import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
 
 // TODO: Rename ServerSidePaginationMakeupTable when design is complete
 function CustomTable(
@@ -18,29 +20,43 @@ function CustomTable(
     setPaginationDto,
     loadData,
     scrollOnLoad,
-    nextGeneration
+    nextGeneration,
+    error,
+    tableHeight,
   }) {
+  const getTableBody = () => {
+    return (
+      <PaginationContainer
+        nextGeneration={nextGeneration}
+        isLoading={isLoading}
+        filterDto={paginationDto}
+        setFilterDto={setPaginationDto}
+        loadData={loadData}
+        scrollOnLoad={scrollOnLoad}
+      >
+        <MakeupTableBase
+          data={data}
+          isLoading={isLoading}
+          columns={columns}
+          rowStyling={rowStyling}
+          onRowSelect={onRowSelect}
+          noDataMessage={noDataMessage}
+          className={className}
+          initialState={initialState}
+        />
+      </PaginationContainer>
+    );
+  };
 
   return (
-    <PaginationContainer
-      nextGeneration={nextGeneration}
+    <TableBodyLoadingWrapper
       isLoading={isLoading}
-      filterDto={paginationDto}
-      setFilterDto={setPaginationDto}
-      loadData={loadData}
-      scrollOnLoad={scrollOnLoad}
-    >
-      <MakeupTableBase
-        data={data}
-        isLoading={isLoading}
-        columns={columns}
-        rowStyling={rowStyling}
-        onRowSelect={onRowSelect}
-        noDataMessage={noDataMessage}
-        className={className}
-        initialState={initialState}
-      />
-    </PaginationContainer>
+      data={data}
+      noDataMessage={noDataMessage}
+      error={error}
+      tableComponent={getTableBody()}
+      tableHeight={tableHeight}
+    />
   );
 }
 
@@ -59,6 +75,8 @@ CustomTable.propTypes = {
   className: PropTypes.string,
   scrollOnLoad: PropTypes.bool,
   nextGeneration: PropTypes.bool,
+  tableHeight: PropTypes.string,
+  error: PropTypes.any,
 };
 
 export default CustomTable;

@@ -23,12 +23,15 @@ import axios from "axios";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import PipelineUserActionSummaryPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/user_action/PipelineUserActionSummaryPanel";
+import RuntimeSettingsTaskSummaryPanel
+  from "components/workflow/plan/step/runtime_settings/RuntimeSettingsTaskSummaryPanel";
 
 const PIPELINE_TASK_ACTIONS = {
   REPORT: "report",
   USER_ACTION: "user action",
 };
 
+// TODO: Rename PipelineActivityLogTaskSummaryPannel for clarity or something similar
 function PipelineTaskSummaryPanel(
   {
     pipelineTaskData,
@@ -128,6 +131,12 @@ function PipelineTaskSummaryPanel(
             externalRestApiIntegrationStepTaskModel={wrapObject(pipelineTaskMetadata)}
             endpoint={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoint")}
             endpoints={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoints")}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.RUNTIME_SETTINGS:
+        return (
+          <RuntimeSettingsTaskSummaryPanel
+            pipelineTaskModel={wrapObject(pipelineTaskMetadata)}
           />
         );
       default:

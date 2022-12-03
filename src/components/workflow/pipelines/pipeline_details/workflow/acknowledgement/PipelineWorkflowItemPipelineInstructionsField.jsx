@@ -29,8 +29,7 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
   const {
     pipelineInstructionsModel,
     isLoading,
-    error,
-  } = useGetPipelineInstructionModelByPipelineStep(pipeline?._id, pipelineStep?._id, false);
+  } = useGetPipelineInstructionModelByPipelineStep(pipeline?._id, pipelineStep?._id);
   const {
     toastContext,
   } = useComponentStateReference();
@@ -89,7 +88,7 @@ export default function PipelineWorkflowItemPipelineInstructionsField(
     return null;
   }
 
-  if (isLoading !== true && error != null) {
+  if (isLoading !== true && pipelineInstructionsModel == null) {
     return (
       <span className={"danger-red"}>
         Pipeline Instructions Not Found!

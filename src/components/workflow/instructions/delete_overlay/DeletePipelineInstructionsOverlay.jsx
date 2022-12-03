@@ -4,7 +4,7 @@ import DestructiveDeleteConfirmationOverlay
   from "components/common/overlays/center/delete/DestructiveDeleteConfirmationOverlay";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import useGetPipelinesByPipelineInstructionsUsage
-  from "components/common/list_of_values_input/settings/pipelines/instructions/usage/useGetPipelinesByPipelineInstructionsUsage";
+  from "components/common/list_of_values_input/workflow/instructions/usage/useGetPipelinesByPipelineInstructionsUsage";
 import PipelineUsageFieldBase from "components/common/list_of_values_input/pipelines/usage/PipelineUsageFieldBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { useHistory } from "react-router-dom";

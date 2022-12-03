@@ -711,11 +711,10 @@ a:hover, .active, .link-text:hover {
 }
 
 .error-text {
-    color: #dc3545;
     padding: 5px;
 }
 
-.error-text-alt, .error-text-alt .form-control:focus {
+.error-text, .error-text-alt, .error-text-alt .form-control:focus {
     color: #dc3545;
 }
 
@@ -725,8 +724,11 @@ a:hover, .active, .link-text:hover {
 }
 
 .info-text {
-    color: #3D3B36;
     padding: 5px;
+}
+
+.info-text-alt, .info-text {
+    color: #3D3B36;
 }
 
 .details-title-text {

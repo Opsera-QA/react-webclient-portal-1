@@ -12,7 +12,7 @@ function PipelineTaskConsoleLogPanel({ pipelineTaskData }) {
         <Col md={12}>
           <PipelineConsoleLogField
             dataObject={pipelineTaskData}
-            apiResponse={pipelineTaskData["api_response"]}
+            apiResponse={pipelineTaskData?.api_response}
           />
         </Col>
       </Row>

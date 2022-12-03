@@ -59,11 +59,6 @@ paths.apiConnectionTest = paths.admin + "/demo/api";
 paths.kpiManagement = paths.admin + "/kpis";
 paths.kpiDetailView = paths.kpiManagement;
 
-// Pipelines Paths
-paths.pipelines = "workflow";
-paths.catalog = paths.pipelines + "/catalog";
-paths.pipelineDetailView = paths.pipelines + "/details";
-
 // Insights Paths
 paths.insights = "insights/dashboards";
 paths.dashboardDetails = paths.insights;

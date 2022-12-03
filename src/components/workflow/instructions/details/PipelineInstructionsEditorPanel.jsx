@@ -9,7 +9,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
 import RichTextInput from "components/common/inputs/rich_text/RichTextInput";
 import PipelineInstructionsTypeSelectInput
-  from "components/common/list_of_values_input/settings/pipelines/instructions/type/PipelineInstructionsTypeSelectInput";
+  from "components/common/list_of_values_input/workflow/instructions/type/PipelineInstructionsTypeSelectInput";
 import PipelineInstructionsAttributesEditorPanel
   from "components/workflow/instructions/details/PipelineInstructionsAttributesEditorPanel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";

@@ -7,6 +7,10 @@ import useGetPipelineInstructionsAttributesModel
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TagManager from "components/common/inputs/tags/TagManager";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import DateTimeInput from "components/common/inputs/date/DateTimeInput";
+import PipelineInstructionsStatusSelectInput
+  from "components/common/list_of_values_input/workflow/instructions/status/PipelineInstructionsStatusSelectInput";
+import DateInput from "components/common/inputs/date/DateInput";
 
 export default function PipelineInstructionsAttributesEditorPanel(
   {
@@ -61,6 +65,20 @@ export default function PipelineInstructionsAttributesEditorPanel(
         />
       </Col>
       <Col xs={12} sm={6}>
+        <PipelineInstructionsStatusSelectInput
+          fieldName={"status"}
+          model={attributesModel}
+          setModel={setModelFunction}
+        />
+      </Col>
+      <Col xs={12} sm={6}>
+        <DateInput
+          fieldName={"release_date"}
+          model={attributesModel}
+          setModel={setModelFunction}
+        />
+      </Col>
+      <Col xs={12} sm={6}>
         <TextInputBase
           fieldName={"action_owner"}
           dataObject={attributesModel}
@@ -88,6 +106,7 @@ export default function PipelineInstructionsAttributesEditorPanel(
           allowedTypes={["environment"]}
           dataObject={attributesModel}
           setDataObject={setModelFunction}
+          allowCreate={false}
         />
       </Col>
       <Col xs={12}>
@@ -97,6 +116,7 @@ export default function PipelineInstructionsAttributesEditorPanel(
           allowedTypes={["release"]}
           dataObject={attributesModel}
           setDataObject={setModelFunction}
+          allowCreate={false}
         />
       </Col>
     </>

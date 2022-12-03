@@ -1,10 +1,14 @@
 import React from "react";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 
 function RequiredFieldsMessage() {
   return (
-    <div>
-      <small className="form-text text-muted text-right mt-3"><span className="danger-red">*</span> Required Fields</small>
-    </div>
+    <ButtonContainerBase className={"mt-4"}>
+      <div className={"text-muted d-flex"}>
+        <div className={"danger-red mr-2"}>*</div>
+        <div>Required Fields</div>
+      </div>
+    </ButtonContainerBase>
   );
 }
 

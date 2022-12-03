@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import StepApprovalOverlay from "components/workflow/StepApprovalOverlay";
 import PipelineInstructionsAcknowledgementOverlay
   from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
@@ -12,16 +11,16 @@ import PipelineActionControlButtonBase
 import { faFlag } from "@fortawesome/pro-light-svg-icons";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 
-export default function PipelineUserApprovalButton(
+export default function PipelineActionControlsUserApprovalButton(
   {
     pipeline,
     loadPipelineFunction,
+    workflowStatus,
   }) {
   const {
     toastContext,
     userData,
   } = useComponentStateReference();
-  const isPaused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
   const approvalStep = PipelineHelpers.getPendingApprovalStep(pipeline);
   const approvalStepToolIdentifier = PipelineHelpers.getToolIdentifierFromPipelineStep(approvalStep);
 
@@ -43,7 +42,7 @@ export default function PipelineUserApprovalButton(
     );
   };
 
-  if (isPaused !== true) {
+  if (workflowStatus !== "paused") {
     return null;
   }
 
@@ -71,7 +70,8 @@ export default function PipelineUserApprovalButton(
   );
 }
 
-PipelineUserApprovalButton.propTypes = {
+PipelineActionControlsUserApprovalButton.propTypes = {
   pipeline: PropTypes.object,
   loadPipelineFunction: PropTypes.func,
+  workflowStatus: PropTypes.string,
 };

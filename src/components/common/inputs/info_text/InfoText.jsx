@@ -18,7 +18,7 @@ function InfoText(
   }) {
   if (hasStringValue(errorMessage) === true) {
     return (
-      <small className={"danger-red form-text ml-1"}>
+      <small className={"danger-red form-text mx-1"}>
         <div>{errorMessage}</div>
       </small>
     );
@@ -26,7 +26,7 @@ function InfoText(
 
   if(hasStringValue(successMessage) === true) {
     return (
-      <small className={"green form-text ml-1"}>
+      <small className={"green form-text mx-1"}>
         <div>{successMessage}</div>
       </small>
     );
@@ -34,7 +34,7 @@ function InfoText(
 
   if (hasStringValue(field?.formText) === true) {
     return (
-      <small className={"text-muted form-text ml-1"}>
+      <small className={"text-muted form-text mx-1"}>
         <div>{field?.formText}</div>
       </small>
     );
@@ -47,7 +47,7 @@ function InfoText(
 
     if (hideRegexDefinitionText !== true && regexDefinition != null && (isRequiredFunction == null || isRequiredFunction(model) === true)) {
       return (
-        <small className={"text-muted form-text ml-1"}>
+        <small className={"text-muted form-text mx-1"}>
           <div>{regexDefinition?.formText}</div>
         </small>
       );
@@ -56,7 +56,7 @@ function InfoText(
 
   if (hasStringValue(warningMessage) === true) {
     return (
-      <span className={"warning-text-alt form-text ml-1"}>
+      <span className={"warning-text-alt form-text mx-1"}>
         <div>
           <IconBase
             icon={faTriangleExclamation}
@@ -73,7 +73,7 @@ function InfoText(
 
       if (hasStringValue(warning) === true) {
         return (
-          <small className={"warning-text-alt form-text ml-1"}>
+          <small className={"warning-text-alt form-text mx-1"}>
             <div>{warning}</div>
           </small>
         );
@@ -85,7 +85,7 @@ function InfoText(
   }
 
   return (
-    <small className={"text-muted form-text ml-1"}>
+    <small className={"text-muted form-text mx-1"}>
       <div>{customMessage}</div>
     </small>
   );
@@ -94,7 +94,7 @@ function InfoText(
 InfoText.propTypes = {
   field: PropTypes.object,
   errorMessage: PropTypes.string,
-  customMessage: PropTypes.string,
+  customMessage: PropTypes.any,
   successMessage: PropTypes.string,
   hideRegexDefinitionText: PropTypes.bool,
   model: PropTypes.object,

@@ -89,7 +89,7 @@ function ModalActivityLogsDialog({ header, size, jsonData, show, setParentVisibi
 ModalActivityLogsDialog.propTypes = {
   header: PropTypes.string,
   size: PropTypes.string,  
-  jsonData: PropTypes.object,
+  jsonData: PropTypes.any,
   jsonMessage: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   show: PropTypes.bool,
   setParentVisibility: PropTypes.func

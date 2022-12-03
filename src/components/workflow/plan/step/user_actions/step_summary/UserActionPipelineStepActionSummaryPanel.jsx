@@ -15,7 +15,7 @@ import DateTimeField from "components/common/fields/date/DateTimeField";
 import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
 import useGetPipelineInstructionsModel from "components/workflow/instructions/hooks/useGetPipelineInstructionsModel";
 import PipelineInstructionsFieldBase
-  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsFieldBase";
+  from "components/common/list_of_values_input/workflow/instructions/PipelineInstructionsFieldBase";
 
 export default function UserActionPipelineStepActionSummaryPanel(
   {

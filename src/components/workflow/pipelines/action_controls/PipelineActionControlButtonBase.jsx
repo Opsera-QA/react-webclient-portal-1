@@ -4,6 +4,7 @@ import { buttonLabelHelper } from "temp-library-components/helpers/label/button/
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 import { Button } from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 // TODO: When all action buttons are converted to this, use VanityButtonBase instead
 export default function PipelineActionControlButtonBase(
@@ -18,6 +19,8 @@ export default function PipelineActionControlButtonBase(
     errorText,
     successText,
     buttonState,
+    className,
+    iconClassName,
   }) {
   const getLabel = () => {
     return buttonLabelHelper.getLabelForStatus(
@@ -56,13 +59,13 @@ export default function PipelineActionControlButtonBase(
         onClick={onClickFunction}
         variant={getButtonVariant()}
         size={"sm"}
-        className={"btn-default"}
+        className={className}
       >
           <span>
             <IconBase
               isLoading={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY}
               icon={getButtonIcon()}
-              className={"mr-2"}
+              className={iconClassName}
             />
             {getLabel()}
           </span>
@@ -82,4 +85,11 @@ PipelineActionControlButtonBase.propTypes = {
   errorText: PropTypes.string,
   successText: PropTypes.string,
   buttonState: PropTypes.string,
+  className: PropTypes.string,
+  iconClassName: PropTypes.string,
+};
+
+PipelineActionControlButtonBase.defaultProps = {
+  className: "btn-default",
+  iconClassName: "mr-2",
 };

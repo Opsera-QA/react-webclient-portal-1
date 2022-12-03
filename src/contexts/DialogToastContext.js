@@ -390,7 +390,7 @@ function ToastContextProvider({children, navBar}) {
 
   const showSavingIncompleteObjectSuccessResultToast = () => {
     let id = generateUUID();
-    let informationToast = getInformationToast(`WARNING! An incomplete configuration is being saved. This must be fully configured in order to use this feature.`, id);
+    let informationToast = getInformationToast(`WARNING! The configuration was successfully saved, but it is incomplete. It must be fully configured in order to use this feature.`, id);
     addToast(informationToast, id, notificationTypes.FORM);
   };
 

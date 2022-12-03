@@ -12,7 +12,11 @@ import PipelineTaskRunConfigurationSummaryPanel, {
   RUN_CONFIGURATION_SUMMARY_SUPPORTED_TOOL_IDENTIFIERS
 } from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskRunConfigurationSummaryPanel";
 import CustomTab from "components/common/tabs/CustomTab";
-import { faFile } from "@fortawesome/pro-light-svg-icons";
+import {faFile, faShield} from "@fortawesome/pro-light-svg-icons";
+import PipelineTaskAuditLogSummaryPanel, {
+  AUDIT_LOG_SUMMARY_SUPPORTED_TOOL_IDENTIFIERS
+} from "components/workflow/pipelines/activity/PipelineTaskAuditLogSummaryPanel";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function PipelineTaskTabPanel({ pipelineTaskData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -51,6 +55,20 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
         />
       );
     }
+
+    // const auditLogRecordId = DataParsingHelper.parseNestedMongoDbId(pipelineTaskData, "api_response.auditRecordId");
+    //
+    // if (auditLogRecordId) {
+    //   return (
+    //     <CustomTab
+    //       handleTabClick={handleTabClick}
+    //       activeTab={activeTab}
+    //       tabText={"Runtime Settings Audit Log"}
+    //       tabName={"audit"}
+    //       icon={faShield}
+    //     />
+    //   );
+    // }
   };
 
   const getTabContainer = () => {
@@ -76,6 +94,12 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
       case "configuration":
         return (
           <PipelineTaskRunConfigurationSummaryPanel
+            pipelineTaskData={pipelineTaskData}
+          />
+        );
+      case "audit":
+        return (
+          <PipelineTaskAuditLogSummaryPanel
             pipelineTaskData={pipelineTaskData}
           />
         );

@@ -4,7 +4,10 @@ import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 
 // TODO: Rename Vertical Tab Container
-function PipelineOverviewStepTree({ pipelineSteps }) {
+function PipelineOverviewStepTree(
+  {
+    pipelineSteps,
+  }) {
   const getPipelineStepTabs = () => {
     if (Array.isArray(pipelineSteps) && pipelineSteps.length > 0) {
       return (

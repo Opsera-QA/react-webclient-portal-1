@@ -2,11 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
-import BadgeBase from "components/common/badges/BadgeBase";
-import { faCircleInfo } from "@fortawesome/pro-light-svg-icons";
 import BetaBadge from "components/common/badges/BetaBadge";
+import useLocationReference from "hooks/useLocationReference";
+import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboardIconBase";
+import {faLink} from "@fortawesome/pro-light-svg-icons";
 
-function TitleBar(
+function ScreenContainerTitleBar(
   {
     title,
     titleIcon,
@@ -16,6 +17,10 @@ function TitleBar(
     helpComponent,
     isBeta,
   }) {
+  const {
+    currentUrl,
+  } = useLocationReference();
+
   const getInactiveText = () => {
     if (inactive) {
       return (<span className="text-white-50 mx-1">{inactive && "Inactive"}</span>);
@@ -27,6 +32,13 @@ function TitleBar(
       <div className="ml-auto d-flex mr-2">
         {getInactiveText()}
         {titleActionBar}
+        <CopyToClipboardIconBase
+          className={"ml-2"}
+          copyString={currentUrl}
+          copyIcon={faLink}
+          copyText={"Copy direct link to this page."}
+          copiedText={"Copied direct link to clipboard!"}
+        />
         <LaunchHelpIcon helpComponent={helpComponent} className={"ml-2"} />
         <BetaBadge
           isBeta={isBeta}
@@ -49,7 +61,7 @@ function TitleBar(
 }
 
 
-TitleBar.propTypes = {
+ScreenContainerTitleBar.propTypes = {
   inactive: PropTypes.bool,
   title: PropTypes.string,
   titleActionBar: PropTypes.object,
@@ -59,4 +71,4 @@ TitleBar.propTypes = {
   isBeta: PropTypes.bool,
 };
 
-export default TitleBar;
+export default ScreenContainerTitleBar;
