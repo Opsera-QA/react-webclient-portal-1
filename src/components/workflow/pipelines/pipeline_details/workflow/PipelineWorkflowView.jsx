@@ -52,7 +52,6 @@ function PipelineWorkflowView({
         {!editItem && <div className="float-right pt-1 mr-2">
           <PipelineActionControls
             pipeline={pipeline}
-            disabledActionState={false}
             fetchData={fetchPlan}
             setPipeline={setPipeline}
             workflowStatus={pipelineStatus}

@@ -29,6 +29,9 @@ import PipelineActionControlsStartPipelineButton
   from "components/workflow/pipelines/action_controls/start/PipelineActionControlsStartPipelineButton";
 import useGetFeatureFlags from "hooks/platform/useGetFeatureFlags";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
+import {buttonLabelHelper} from "temp-library-components/helpers/label/button/buttonLabel.helper";
+import PipelineActionControlButtonBase
+  from "components/workflow/pipelines/action_controls/PipelineActionControlButtonBase";
 
 const PIPELINE_ACTION_STATES = {
   READY: "ready",
@@ -37,19 +40,19 @@ const PIPELINE_ACTION_STATES = {
   STARTING: "starting",
 };
 
+const approvalGateIdentifiers = [toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL, toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION];
+
 function PipelineActionControls(
   {
     pipeline,
     workflowStatus,
     isLoading,
-    disabledActionState,
     fetchData,
     isQueued,
   }) {
   const [resetPipeline, setResetPipeline] = useState(false);
   const [startPipeline, setStartPipeline] = useState(false);
   const [stopPipeline, setStopPipeline] = useState(false);
-  const [isApprovalGate, setIsApprovalGate] = useState(false);
   const {
     isMounted,
     cancelTokenSource,
@@ -68,15 +71,6 @@ function PipelineActionControls(
     } else {
       setStopPipeline(false);
       setResetPipeline(false);
-    }
-
-    if (workflowStatus === "paused") {
-      const parsedPipelineStepToolIdentifier = PipelineHelpers.getPendingApprovalStepToolIdentifier(pipeline);
-      //if step set currently running is an approval step, flag that
-      if (parsedPipelineStepToolIdentifier) {
-        const approvalGateIdentifiers = [toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL, toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION];
-        setIsApprovalGate(approvalGateIdentifiers.includes(parsedPipelineStepToolIdentifier));
-      }
     }
   }, [workflowStatus]);
 
@@ -110,7 +104,7 @@ function PipelineActionControls(
 
   const resetPipelineState = async () => {
     try {
-      setStopPipeline(true);
+      setResetPipeline(true);
       await PipelineActions.resetPipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
     }
     catch (error) {
@@ -366,17 +360,56 @@ function PipelineActionControls(
   //TODO: Do the workflow status check inside the component and move inline.
   // Separating out for now to avoid causing unexpected issues.
   const getRunPipelineButton = () => {
-    if (!workflowStatus || workflowStatus === "stopped") {
+    if (workflowStatus === "stopped") {
       return (
         <PipelineActionControlsStartPipelineButton
           pipeline={pipeline}
           workflowStatus={workflowStatus}
           handleRunPipelineClick={handleRunPipelineClick}
-          disabledActionState={disabledActionState}
           hasQueuedRequest={isQueued}
           pipelineIsStarting={startPipeline}
           dynamicSettingsEnabled={enabledServices?.dynamicSettings === true}
           pipelineOrientation={pipelineHelper.getPipelineOrientation(pipeline)}
+        />
+      );
+    } else if (stopPipeline) {
+      return (
+        <PipelineActionControlButtonBase
+          normalText={"Stopping Pipeline"}
+          busyText={"Stopping Pipeline"}
+          buttonState={buttonLabelHelper.BUTTON_STATES.BUSY}
+          disabled={true}
+          variant={"outline-danger"}
+        />
+      );
+    } else if (startPipeline) {
+      return (
+        <PipelineActionControlButtonBase
+          normalText={"Starting Pipeline"}
+          busyText={"Starting Pipeline"}
+          buttonState={buttonLabelHelper.BUTTON_STATES.BUSY}
+          disabled={true}
+          variant={"outline-dark"}
+        />
+      );
+    } else if (resetPipeline) {
+      return (
+        <PipelineActionControlButtonBase
+          normalText={"Resetting Pipeline"}
+          busyText={"Resetting Pipeline"}
+          buttonState={buttonLabelHelper.BUTTON_STATES.BUSY}
+          disabled={true}
+          variant={"outline-dark"}
+        />
+      );
+    } else if (workflowStatus === "running") {
+      return (
+        <PipelineActionControlButtonBase
+          normalText={"Running"}
+          busyText={"Running"}
+          buttonState={buttonLabelHelper.BUTTON_STATES.BUSY}
+          disabled={true}
+          variant={"outline-dark"}
         />
       );
     }
@@ -387,7 +420,7 @@ function PipelineActionControls(
       return;
     }
 
-    if (isQueued === true) {
+    if (isQueued === true && workflowStatus !== "stopped") {
       return (
         <OverlayTrigger
           placement="top"
@@ -395,6 +428,7 @@ function PipelineActionControls(
           overlay={renderTooltip({ message: "A queued request to start this pipeline is pending.  Upon successful completion of this run, the pipeline will restart." })}>
           <Button variant="secondary"
                   size="sm"
+                  disabled={startPipeline || stopPipeline || resetPipeline}
                   onClick={() => {
                     showCancelQueueOverlay();
                   }}>
@@ -411,6 +445,7 @@ function PipelineActionControls(
           overlay={renderTooltip({ message: "Request a re-start of this pipeline after the successful completion of the current run." })}>
           <Button variant="success"
                   size="sm"
+                  disabled={startPipeline || stopPipeline || resetPipeline}
                   onClick={() => {
                     runPipelineLight(pipeline._id);
                   }}>
@@ -429,6 +464,7 @@ function PipelineActionControls(
         {getWarningMessage()}
         <div className="flex-fill p-2"></div>
         <div className="text-right btn-group btn-group-sized">
+          {getRunPipelineButton()}
           {getStopButton()}
 
           {workflowStatus === "paused" && startPipeline !== true && resetPipeline !== true &&
@@ -436,13 +472,13 @@ function PipelineActionControls(
               pipeline={pipeline}
               workflowStatus={workflowStatus}
               setPipelineStarting={setStartPipeline}
+              disabled={startPipeline || stopPipeline || resetPipeline}
             />
           }
 
-          {getRunPipelineButton()}
           {getQueueButton()}
 
-          {((workflowStatus === "paused" && !isApprovalGate) ||
+          {((workflowStatus === "paused" && approvalGateIdentifiers.includes(PipelineHelpers.getPendingApprovalStepToolIdentifier(pipeline)) === false) ||
             (workflowStatus === "stopped" &&
               pipeline.workflow.last_run?.run_count &&
               pipeline.workflow.run_count !== pipeline.workflow.last_run.run_count &&
@@ -457,7 +493,7 @@ function PipelineActionControls(
                     onClick={() => {
                       handleResumeWorkflowClick(pipeline._id);
                     }}
-                    disabled={PipelineRoleHelper.canStartPipeline(userData, pipeline) !== true || disabledActionState || startPipeline}>
+                    disabled={PipelineRoleHelper.canStartPipeline(userData, pipeline) !== true || startPipeline || stopPipeline || resetPipeline}>
                 <IconBase isLoading={startPipeline} icon={faRedo} className={ "mr-1"} />
               <span className="d-none d-md-inline">Resume</span></Button>
           </OverlayTrigger>}
@@ -474,7 +510,7 @@ function PipelineActionControls(
                       onClick={() => {
                         handleResetWorkflowClick(pipeline._id);
                       }}
-                      disabled={PipelineRoleHelper.canResetPipeline(userData, pipeline) !== true || disabledActionState || startPipeline}>
+                      disabled={PipelineRoleHelper.canResetPipeline(userData, pipeline) !== true || startPipeline || stopPipeline || resetPipeline}>
                   <IconBase isLoading={resetPipeline} icon={faRedo} fixedWidth className="mr-1" />
                 <span className="d-none d-md-inline">Reset Pipeline</span></Button>
             </OverlayTrigger>
@@ -500,7 +536,6 @@ function renderTooltip(props) {
 
 PipelineActionControls.propTypes = {
   pipeline: PropTypes.object,
-  disabledActionState: PropTypes.bool,
   fetchData: PropTypes.func,
   isLoading: PropTypes.bool,
   workflowStatus: PropTypes.string,
