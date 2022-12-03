@@ -66,7 +66,7 @@ function PipelineSummaryPanel(
     toastContext,
   } = useComponentStateReference();
 
-  useEffect(() => {}, [pipeline]);
+  useEffect(() => {}, [pipeline, parentWorkflowStatus]);
 
   const handleSavePropertyClick = async (pipelineId, value, type) => {
     if (Object.keys(value).length > 0 && type.length > 0) {
@@ -243,6 +243,7 @@ function PipelineSummaryPanel(
             setPipeline={setPipeline}
             isLoading={isLoading}
             isQueued={isQueued}
+            workflowStatus={parentWorkflowStatus}
           />
         </div>
       );
