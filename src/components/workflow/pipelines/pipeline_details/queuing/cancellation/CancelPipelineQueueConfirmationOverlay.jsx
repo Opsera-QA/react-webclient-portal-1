@@ -38,7 +38,6 @@ function CancelPipelineQueueConfirmationOverlay({ pipeline, setHasQueuedRequest 
   const deletePipelineQueueRequest = async () => {
     try {
       await pipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
-      setHasQueuedRequest(false);
       handleClose();
       toastContext.showInformationToast("The pipeline queue request has been cancelled.");
     }

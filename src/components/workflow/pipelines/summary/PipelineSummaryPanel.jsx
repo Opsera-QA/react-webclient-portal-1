@@ -48,10 +48,10 @@ function PipelineSummaryPanel(
     pipeline,
     parentWorkflowStatus,
     fetchPlan,
-    setWorkflowStatus,
     setPipeline,
     showActionControls,
     isLoading,
+    isQueued,
   }) {
   const contextType = useContext(AuthContext);
   const [editTitle, setEditTitle] = useState(false);
@@ -241,8 +241,8 @@ function PipelineSummaryPanel(
             disabledActionState={false}
             fetchData={fetchPlan}
             setPipeline={setPipeline}
-            setParentWorkflowStatus={setWorkflowStatus}
             isLoading={isLoading}
+            isQueued={isQueued}
           />
         </div>
       );
@@ -446,10 +446,10 @@ PipelineSummaryPanel.propTypes = {
   pipeline: PropTypes.object,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   fetchPlan: PropTypes.func,
-  setWorkflowStatus: PropTypes.func,
   setPipeline: PropTypes.func,
   showActionControls: PropTypes.bool,
   isLoading: PropTypes.bool,
+  isQueued: PropTypes.bool,
 };
 
 export default PipelineSummaryPanel;

@@ -10,10 +10,11 @@ function PipelineWorkflowView({
   editItem,
   setEditItem,
   fetchPlan,
-  setWorkflowStatus,
   refreshCount,
   setPipeline,
   softLoading,
+  pipelineStatus,
+                                isQueued,
 }) {
 
   const closeEditorPanel = () => {
@@ -54,8 +55,9 @@ function PipelineWorkflowView({
             disabledActionState={false}
             fetchData={fetchPlan}
             setPipeline={setPipeline}
-            setParentWorkflowStatus={setWorkflowStatus}
+            workflowStatus={pipelineStatus}
             isLoading={softLoading}
+            isQueued={isQueued}
           />
         </div>}
       </div>
@@ -72,18 +74,18 @@ function PipelineWorkflowView({
   );
 }
 
-
 PipelineWorkflowView.propTypes = {
   pipeline: PropTypes.object,
   editItem: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   setEditItem: PropTypes.func,
   setActiveTab: PropTypes.func,
   fetchPlan: PropTypes.func,
-  setWorkflowStatus: PropTypes.func,
+  pipelineStatus: PropTypes.string,
   setPipeline: PropTypes.func,
   refreshCount: PropTypes.number,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   softLoading: PropTypes.bool,
+  isQueued: PropTypes.bool,
 };
 
 export default PipelineWorkflowView;
