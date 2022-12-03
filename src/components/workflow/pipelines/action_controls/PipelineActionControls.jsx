@@ -81,7 +81,7 @@ function PipelineActionControls(
   };
 
   const handleStopWorkflowClick = async () => {
-    setResetPipeline(true);
+    setStopPipeline(true);
     setIsApprovalGate(false);
     await stopPipelineRun(pipeline?._id);
     await PipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
