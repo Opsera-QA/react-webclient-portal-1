@@ -35,17 +35,19 @@ function PipelineDetailView() {
   const {
     status,
     isQueued,
+    runCount,
+    lastStep,
   } = useGetPollingPipelineOrchestrationStatusById(id, refreshInterval);
 
   useEffect(() => {
-    console.log("Received new pipeline status: " + JSON.stringify(status));
+    console.log(`Refreshing pipeline with \n   status: [${status}]\n    run count: [${runCount}]`);
     evaluatePipelineStatus(pipeline);
     loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-  }, [status]);
+  }, [status, runCount, lastStep]);
 
   const loadData = async () => {
     try {
