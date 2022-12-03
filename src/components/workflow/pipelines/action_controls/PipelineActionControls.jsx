@@ -68,10 +68,10 @@ function PipelineActionControls(
   }, [workflowStatus]);
 
   // button handlers
-  const handleResetWorkflowClick = async (pipelineId) => {
+  const handleResetWorkflowClick = async () => {
     setResetPipeline(true);
     setIsApprovalGate(false);
-    await resetPipelineState(pipelineId);
+    await resetPipelineState(pipeline?._id);
     setResetPipeline(false);
     setStartPipeline(false);
   };
@@ -89,10 +89,10 @@ function PipelineActionControls(
     await fetchData();
   };
 
-  const stopPipelineRun = async (pipelineId) => {
+  const stopPipelineRun = async () => {
     try {
       setStopPipeline(true);
-      await PipelineActions.stopPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      await PipelineActions.stopPipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
     }
     catch (error) {
       if (isMounted.current === true) {
@@ -107,10 +107,10 @@ function PipelineActionControls(
     }
   };
 
-  const resetPipelineState = async (pipelineId) => {
+  const resetPipelineState = async () => {
     try {
       setStopPipeline(true);
-      await PipelineActions.resetPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      await PipelineActions.resetPipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
     }
     catch (error) {
       if (isMounted.current === true) {
@@ -142,7 +142,7 @@ function PipelineActionControls(
       const response = await PipelineActions.runPipelineV2(
         getAccessToken,
         cancelTokenSource,
-        pipelineId,
+        pipeline?._id,
         postBody,
       );
       const message = response?.data?.message;
@@ -164,10 +164,10 @@ function PipelineActionControls(
    * @param pipelineId
    * @returns {Promise<void>}
    */
-  const runPipelineLight = async (pipelineId) => {
+  const runPipelineLight = async () => {
     try {
       toastContext.showInformationToast("A request to re-start this pipeline has been added to the queue.  Upon successful completion of this pipeline run, the pipeline will start again.", 20);
-      await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -176,11 +176,11 @@ function PipelineActionControls(
     }
   };
 
-  const startNewPipelineRun = async (pipelineId) => {
+  const startNewPipelineRun = async () => {
     try {
       setStartPipeline(true);
       toastContext.showInformationToast("A request to start this pipeline from the start has been submitted.  Resetting pipeline status and then the pipeline will begin momentarily.", 20);
-      await PipelineActions.triggerPipelineNewStartV2(getAccessToken, cancelTokenSource, pipelineId);
+      await PipelineActions.triggerPipelineNewStartV2(getAccessToken, cancelTokenSource, pipeline?._id);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -202,7 +202,7 @@ function PipelineActionControls(
     }
   };
 
-  const launchPipelineStartWizard = (pipelineOrientation, pipelineType, pipelineId) => {
+  const launchPipelineStartWizard = (pipelineOrientation, pipelineType) => {
     //console.log("launching wizard");
     //console.log("pipelineOrientation ", pipelineOrientation);
     //console.log("pipelineType ", pipelineType);
@@ -212,7 +212,7 @@ function PipelineActionControls(
       <PipelineStartWizard
         pipelineType={pipelineType}
         pipelineOrientation={pipelineOrientation}
-        pipelineId={pipelineId}
+        pipelineId={pipeline?._id}
         pipeline={pipeline}
         handlePipelineWizardRequest={handlePipelineWizardRequest}
       />,
@@ -234,50 +234,50 @@ function PipelineActionControls(
       console.log("Starting pipeline from beginning: clearing current pipeline status and activity");
       /*await resetPipelineState(pipelineId);
       await runPipeline(pipelineId);*/
-      await startNewPipelineRun(pipelineId);
+      await startNewPipelineRun(pipeline?._id);
       return;
     }
 
-    await handleResumeWorkflowClick(pipelineId);
+    await handleResumeWorkflowClick(pipeline?._id);
   };
 
-  const launchInformaticaRunAssistant = (pipelineOrientation, pipelineId) => {
+  const launchInformaticaRunAssistant = (pipelineOrientation) => {
     toastContext.showOverlayPanel(
       <InformaticaPipelineRunAssistantOverlay
         pipeline={pipeline}
-        startPipelineRunFunction={() => triggerInformaticaPipelineRun(pipelineOrientation, pipelineId)}
+        startPipelineRunFunction={() => triggerInformaticaPipelineRun(pipelineOrientation, pipeline?._id)}
       />
     );
   };
 
-  const launchApigeeRunAssistant = (pipelineOrientation, pipelineId) => {
+  const launchApigeeRunAssistant = (pipelineOrientation) => {
     toastContext.showOverlayPanel(
       <ApigeePipelineRunAssistantOverlay
         pipeline={pipeline}
-        startPipelineRunFunction={() => triggerInformaticaPipelineRun(pipelineOrientation, pipelineId)}
+        startPipelineRunFunction={() => triggerInformaticaPipelineRun(pipelineOrientation, pipeline?._id)}
       />
     );
   };
 
-  const launchSapCpqRunAssistant = (pipelineOrientation, pipelineId) => {
+  const launchSapCpqRunAssistant = (pipelineOrientation) => {
     toastContext.showOverlayPanel(
         <SapCpqPipelineRunAssistantOverlay
             pipeline={pipeline}
-            startPipelineRunFunction={() => triggerInformaticaPipelineRun(pipelineOrientation, pipelineId)}
+            startPipelineRunFunction={() => triggerInformaticaPipelineRun(pipelineOrientation, pipeline?._id)}
         />
     );
   };
 
 
   // TODO: Handle more gracefully
-  const triggerInformaticaPipelineRun = async (pipelineOrientation, pipelineId) => {
+  const triggerInformaticaPipelineRun = async (pipelineOrientation) => {
     if (pipelineOrientation === "start") {
       console.log("starting pipeline from scratch");
-      await runPipeline(pipelineId);
+      await runPipeline(pipeline?._id);
     } else {
       console.log("clearing pipeline activity and then starting over");
-      await resetPipelineState(pipelineId);
-      await runPipeline(pipelineId);
+      await resetPipelineState(pipeline?._id);
+      await runPipeline(pipeline?._id);
     }
   };
 
