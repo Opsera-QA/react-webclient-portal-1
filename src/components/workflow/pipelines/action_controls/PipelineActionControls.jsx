@@ -58,6 +58,9 @@ function PipelineActionControls(
   useEffect(() => {
     if (workflowStatus !== "stopped") {
       setStartPipeline(false);
+    } else {
+      setStopPipeline(false);
+      setResetPipeline(false);
     }
 
     if (workflowStatus === "paused") {
@@ -75,16 +78,12 @@ function PipelineActionControls(
     setResetPipeline(true);
     setIsApprovalGate(false);
     await resetPipelineState();
-    setResetPipeline(false);
-    setStartPipeline(false);
   };
 
   const handleStopWorkflowClick = async () => {
     setResetPipeline(true);
     setIsApprovalGate(false);
     await stopPipelineRun(pipeline?._id);
-    setResetPipeline(false);
-    setStartPipeline(false);
     await PipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
   };
 
@@ -102,12 +101,6 @@ function PipelineActionControls(
         toastContext.showSystemErrorToast(error, "There was an issue stopping this pipeline");
       }
     }
-    finally {
-      if (isMounted?.current === true) {
-        setStopPipeline(false);
-        setStartPipeline(false);
-      }
-    }
   };
 
   const resetPipelineState = async () => {
@@ -118,12 +111,6 @@ function PipelineActionControls(
     catch (error) {
       if (isMounted.current === true) {
         toastContext.showSystemErrorToast(error, "There was an issue resetting this pipeline");
-      }
-    }
-    finally {
-      if (isMounted?.current === true) {
-        setStopPipeline(false);
-        setStartPipeline(false);
       }
     }
   };
