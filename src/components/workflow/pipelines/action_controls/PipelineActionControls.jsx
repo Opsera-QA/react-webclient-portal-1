@@ -60,17 +60,11 @@ function PipelineActionControls(
         throw error;
       }
     });
-  }, [workflowStatus]);
 
-  useEffect(() => {
-    if (pipeline && startPipeline === true) {
-      const state = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status");
-
-      if (state === "running") {
-        setStartPipeline(false);
-      }
+    if (workflowStatus === "running") {
+      setStartPipeline(false);
     }
-  }, [pipeline]);
+  }, [workflowStatus]);
 
   const loadData = async () => {
     const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status");

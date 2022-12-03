@@ -83,7 +83,6 @@ PipelineWorkflowView.propTypes = {
   pipelineStatus: PropTypes.string,
   setPipeline: PropTypes.func,
   refreshCount: PropTypes.number,
-  parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   softLoading: PropTypes.bool,
   isQueued: PropTypes.bool,
 };
