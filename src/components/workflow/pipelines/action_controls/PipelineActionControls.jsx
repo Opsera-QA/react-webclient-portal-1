@@ -56,6 +56,10 @@ function PipelineActionControls(
   } = useGetFeatureFlags();
 
   useEffect(() => {
+    if (workflowStatus !== "stopped") {
+      setStartPipeline(false);
+    }
+
     if (workflowStatus === "paused") {
       const parsedPipelineStepToolIdentifier = PipelineHelpers.getPendingApprovalStepToolIdentifier(pipeline);
       //if step set currently running is an approval step, flag that
@@ -63,8 +67,6 @@ function PipelineActionControls(
         const approvalGateIdentifiers = [toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL, toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION];
         setIsApprovalGate(approvalGateIdentifiers.includes(parsedPipelineStepToolIdentifier));
       }
-    } else if (workflowStatus === "running") {
-      setStartPipeline(false);
     }
   }, [workflowStatus]);
 
