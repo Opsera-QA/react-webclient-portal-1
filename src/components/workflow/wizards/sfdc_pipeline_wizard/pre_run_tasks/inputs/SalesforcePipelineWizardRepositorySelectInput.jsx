@@ -53,5 +53,5 @@ SalesforcePipelineWizardRepositorySelectInput.propTypes = {
 };
 
 SalesforcePipelineWizardRepositorySelectInput.defaultProps = {
-  fieldName: "repository",
+  fieldName: "repoId",
 };

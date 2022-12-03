@@ -103,6 +103,16 @@ const sonarPipelineStepMetadata = {
       },
     },
     {
+      label: "Repository",
+      id: "repoId",
+      isRequiredFunction: (model) => {
+        return (
+            model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB
+            && model?.getData("isScanArtifact") !== true
+        );
+      },
+    },
+    {
       label: "Branch",
       id: "branch",
       isRequiredFunction: (model) => {

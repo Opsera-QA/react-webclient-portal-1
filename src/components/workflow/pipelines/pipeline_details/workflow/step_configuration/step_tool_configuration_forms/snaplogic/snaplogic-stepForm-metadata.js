@@ -22,7 +22,7 @@ const SnaplogicStepFormMetadata = {
       isRequired: true
     },    
     {
-      label: "Repo ID",
+      label: "Repository",
       id: "repoId",
     },
     {

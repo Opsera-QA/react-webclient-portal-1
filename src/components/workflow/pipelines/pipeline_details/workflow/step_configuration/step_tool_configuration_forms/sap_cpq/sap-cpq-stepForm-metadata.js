@@ -59,6 +59,7 @@ const SapCpqStepFormMetadata = {
     service: "",
     gitToolId : "",
     repository: "",
+    repoId: "",
     workspace: "",
     gitBranch: "",
   }
