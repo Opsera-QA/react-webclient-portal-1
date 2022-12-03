@@ -55,7 +55,7 @@ function PipelineActionControls(
   } = useGetFeatureFlags();
 
   useEffect(() => {
-    loadData(pipeline).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -72,7 +72,7 @@ function PipelineActionControls(
     }
   }, [pipeline]);
 
-  const loadData = async (pipeline) => {
+  const loadData = async () => {
     const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status");
     const isPaused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
 
