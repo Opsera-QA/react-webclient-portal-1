@@ -70,16 +70,16 @@ function PipelineActionControls(
   // button handlers
   const handleResetWorkflowClick = async (pipelineId) => {
     setResetPipeline(true);
+    setIsApprovalGate(false);
     await resetPipelineState(pipelineId);
-    await fetchData();
     setResetPipeline(false);
     setStartPipeline(false);
   };
 
   const handleStopWorkflowClick = async () => {
     setResetPipeline(true);
+    setIsApprovalGate(false);
     await stopPipelineRun(pipeline?._id);
-    await fetchData();
     setResetPipeline(false);
     setStartPipeline(false);
     await PipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
@@ -426,9 +426,9 @@ function PipelineActionControls(
 
           {workflowStatus === "paused" &&
             <PipelineActionControlsUserApprovalButton
-              loadPipelineFunction={fetchData}
               pipeline={pipeline}
               workflowStatus={workflowStatus}
+              setPipelineStarting={setStartPipeline}
             />
           }
 

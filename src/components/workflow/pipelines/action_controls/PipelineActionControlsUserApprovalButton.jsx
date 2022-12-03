@@ -14,8 +14,8 @@ import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineR
 export default function PipelineActionControlsUserApprovalButton(
   {
     pipeline,
-    loadPipelineFunction,
     workflowStatus,
+    setPipelineStarting
   }) {
   const {
     toastContext,
@@ -28,7 +28,7 @@ export default function PipelineActionControlsUserApprovalButton(
     toastContext.showOverlayPanel(
       <StepApprovalOverlay
         pipelineId={pipeline?._id}
-        loadPipelineFunction={loadPipelineFunction}
+        setPipelineStarting={setPipelineStarting}
       />,
     );
   };
@@ -37,7 +37,7 @@ export default function PipelineActionControlsUserApprovalButton(
     toastContext.showOverlayPanel(
       <PipelineInstructionsAcknowledgementOverlay
         pipelineId={pipeline?._id}
-        loadPipelineFunction={loadPipelineFunction}
+        setPipelineStarting={setPipelineStarting}
       />,
     );
   };
@@ -72,6 +72,6 @@ export default function PipelineActionControlsUserApprovalButton(
 
 PipelineActionControlsUserApprovalButton.propTypes = {
   pipeline: PropTypes.object,
-  loadPipelineFunction: PropTypes.func,
   workflowStatus: PropTypes.string,
+  setPipelineStarting: PropTypes.func,
 };

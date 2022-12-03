@@ -160,7 +160,7 @@ function PipelineDetailView() {
   };
 
   const getBody = () => {
-    if (isLoading) {
+    if (isLoading && !pipeline) {
       return (
         <LoadingDialog
           size="md"
