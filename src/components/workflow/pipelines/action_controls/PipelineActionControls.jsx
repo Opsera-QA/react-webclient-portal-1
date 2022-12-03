@@ -72,7 +72,7 @@ function PipelineActionControls(
   const handleResetWorkflowClick = async () => {
     setResetPipeline(true);
     setIsApprovalGate(false);
-    await resetPipelineState(pipeline?._id);
+    await resetPipelineState();
     setResetPipeline(false);
     setStartPipeline(false);
   };
@@ -233,8 +233,6 @@ function PipelineActionControls(
 
     if (restartBln) {
       console.log("Starting pipeline from beginning: clearing current pipeline status and activity");
-      /*await resetPipelineState(pipelineId);
-      await runPipeline(pipelineId);*/
       await startNewPipelineRun(pipeline?._id);
       return;
     }
@@ -277,7 +275,7 @@ function PipelineActionControls(
       await runPipeline(pipeline?._id);
     } else {
       console.log("clearing pipeline activity and then starting over");
-      await resetPipelineState(pipeline?._id);
+      await resetPipelineState();
       await runPipeline(pipeline?._id);
     }
   };
@@ -324,7 +322,7 @@ function PipelineActionControls(
           await runPipeline(pipelineId, dynamicBranch);
         } else {
           console.log("clearing pipeline activity and then starting over");
-          await resetPipelineState(pipelineId);
+          await resetPipelineState();
           await runPipeline(pipelineId, dynamicBranch);
         }
       }
