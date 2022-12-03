@@ -48,9 +48,10 @@ function PipelineSummaryPanel(
     pipeline,
     parentWorkflowStatus,
     fetchPlan,
-    setWorkflowStatus,
     setPipeline,
     showActionControls,
+    isLoading,
+    isQueued,
   }) {
   const contextType = useContext(AuthContext);
   const [editTitle, setEditTitle] = useState(false);
@@ -65,7 +66,7 @@ function PipelineSummaryPanel(
     toastContext,
   } = useComponentStateReference();
 
-  useEffect(() => {}, [pipeline]);
+  useEffect(() => {}, [pipeline, parentWorkflowStatus]);
 
   const handleSavePropertyClick = async (pipelineId, value, type) => {
     if (Object.keys(value).length > 0 && type.length > 0) {
@@ -240,7 +241,9 @@ function PipelineSummaryPanel(
             disabledActionState={false}
             fetchData={fetchPlan}
             setPipeline={setPipeline}
-            setParentWorkflowStatus={setWorkflowStatus}
+            isLoading={isLoading}
+            isQueued={isQueued}
+            workflowStatus={parentWorkflowStatus}
           />
         </div>
       );
@@ -374,19 +377,16 @@ function PipelineSummaryPanel(
               pipeline={pipeline}
               pipelineModel={pipelineModel}
               loadPipeline={fetchPlan}
-              // className={"my-3"}
             />
           </Col>
           <Col xs={12} sm={6}>
             <OwnerNameField
               model={pipelineModel}
-              // className={"my-3"}
             />
           </Col>
           <Col sm={12} md={6}>
             <SmartIdField
               model={pipelineModel}
-              // className={"my-3"}
             />
           </Col>
           <Col xs={12}>
@@ -395,21 +395,18 @@ function PipelineSummaryPanel(
               pipelineModel={pipelineModel}
               setPipelineModel={setPipelineModel}
               disabled={parentWorkflowStatus === "running"}
-              // className={"my-3"}
             />
           </Col>
           <Col sm={12} md={6}>
             <TextFieldBase
               dataObject={pipelineModel}
               fieldName={"workflow.run_count"}
-              // className={"my-3"}
             />
           </Col>
           <Col xs={12} sm={6}>
             <DateTimeField
               fieldName={"createdAt"}
               dataObject={pipelineModel}
-              // className={"my-3"}
             />
           </Col>
           <Col xs={12} sm={6}>
@@ -423,7 +420,6 @@ function PipelineSummaryPanel(
             <TextFieldBase
               dataObject={pipelineModel}
               fieldName={"account"}
-              // className={"my-3"}
             />
           </Col>
           <Col xs={12} sm={6}>
@@ -449,12 +445,12 @@ function PipelineSummaryPanel(
 
 PipelineSummaryPanel.propTypes = {
   pipeline: PropTypes.object,
-  ownerName: PropTypes.string,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   fetchPlan: PropTypes.func,
-  setWorkflowStatus: PropTypes.func,
   setPipeline: PropTypes.func,
   showActionControls: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  isQueued: PropTypes.bool,
 };
 
 export default PipelineSummaryPanel;

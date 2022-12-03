@@ -15,6 +15,9 @@ export default function useGetPollingPipelineOrchestrationStatusById(
     loadData,
     status,
     isQueued,
+    lastStep,
+    runCount,
+    restingStepId,
   } = useGetPipelineOrchestrationStatusById(id, handleErrorFunction);
 
   usePollingInterval(() => {
@@ -26,6 +29,9 @@ export default function useGetPollingPipelineOrchestrationStatusById(
   return ({
     status: status,
     isQueued: isQueued,
+    lastStep: lastStep,
+    runCount: runCount,
+    restingStepId,
     loadData: loadData,
     isLoading: isLoading,
     error: error,
