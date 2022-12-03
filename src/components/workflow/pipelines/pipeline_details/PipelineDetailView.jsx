@@ -117,7 +117,7 @@ function PipelineDetailView() {
     if (tab === "model") {
       return (
         <PipelineWorkflowView
-          parentWorkflowStatus={status}
+          pipelineStatus={status}
           pipeline={pipeline}
           setPipeline={setPipeline}
           refreshCount={refreshCount}
