@@ -5,6 +5,7 @@ import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import {cannotBeUndone} from "components/common/tooltip/popover-text";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function DeleteButton({deleteRecord, dataObject, disabled, size, icon, className, buttonText}) {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -39,7 +40,7 @@ function DeleteButton({deleteRecord, dataObject, disabled, size, icon, className
     return (`Delete ${dataObject.getType()}`);
   };
 
-  if (dataObject == null) {
+  if (dataObject == null && hasStringValue(buttonText) !== true) {
     return null;
   }
 
