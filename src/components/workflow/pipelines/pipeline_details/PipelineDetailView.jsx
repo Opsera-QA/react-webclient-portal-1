@@ -9,7 +9,6 @@ import PipelineSummaryPanel from "components/workflow/pipelines/summary/Pipeline
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 import pipelineActions from "components/workflow/pipeline-actions";
 import PipelineWorkflowTabBar from "components/workflow/pipelines/pipeline_details/PipelineWorkflowTabBar";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetPollingPipelineOrchestrationStatusById
   from "hooks/workflow/pipelines/orchestration/useGetPollingPipelineOrchestrationStatusById";
@@ -154,7 +153,7 @@ function PipelineDetailView() {
             pipelineStatus={status}
             pipelineId={id}
             getPipeline={getPipeline}
-            pipelineRunCount={DataParsingHelper.parseNestedInteger(pipeline, "workflow.run_count")}
+            pipelineRunCount={runCount}
             loadPipelineFunction={fetchPlan}
           />
         </div>

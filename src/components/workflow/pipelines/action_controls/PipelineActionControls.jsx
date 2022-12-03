@@ -76,13 +76,11 @@ function PipelineActionControls(
   // button handlers
   const handleResetWorkflowClick = async () => {
     setResetPipeline(true);
-    setIsApprovalGate(false);
     await resetPipelineState();
   };
 
   const handleStopWorkflowClick = async () => {
     setStopPipeline(true);
-    setIsApprovalGate(false);
     await stopPipelineRun(pipeline?._id);
     await PipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
   };
