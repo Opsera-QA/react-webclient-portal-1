@@ -30,6 +30,13 @@ import PipelineActionControlsStartPipelineButton
 import useGetFeatureFlags from "hooks/platform/useGetFeatureFlags";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 
+const PIPELINE_ACTION_STATES = {
+  READY: "ready",
+  STOPPING: "stopping",
+  RESETTING: "resetting",
+  STARTING: "starting",
+};
+
 function PipelineActionControls(
   {
     pipeline,
@@ -375,6 +382,44 @@ function PipelineActionControls(
     }
   };
 
+  const getQueueButton = () => {
+    if (stopPipeline || startPipeline || resetPipeline) {
+      return;
+    }
+
+    if (isQueued === true) {
+      return (
+        <OverlayTrigger
+          placement="top"
+          delay={{ show: 250, hide: 400 }}
+          overlay={renderTooltip({ message: "A queued request to start this pipeline is pending.  Upon successful completion of this run, the pipeline will restart." })}>
+          <Button variant="secondary"
+                  size="sm"
+                  onClick={() => {
+                    showCancelQueueOverlay();
+                  }}>
+            <IconBase icon={faClock} /> Queued Request</Button>
+        </OverlayTrigger>
+      );
+    }
+
+    if (orchestrationFeatureFlags?.enableQueuing === true && workflowStatus !== "stopped") {
+      return (
+        <OverlayTrigger
+          placement="top"
+          delay={{ show: 250, hide: 400 }}
+          overlay={renderTooltip({ message: "Request a re-start of this pipeline after the successful completion of the current run." })}>
+          <Button variant="success"
+                  size="sm"
+                  onClick={() => {
+                    runPipelineLight(pipeline._id);
+                  }}>
+            <IconBase icon={faRepeat1} /> Repeat Once</Button>
+        </OverlayTrigger>
+      );
+    }
+  };
+
   // TODO: Make base button components for these in the future
   //  and wire up the functions inside those components to clean up PipelineActionControls
   return (
@@ -395,21 +440,7 @@ function PipelineActionControls(
           }
 
           {getRunPipelineButton()}
-
-          {
-            (orchestrationFeatureFlags?.enableQueuing === true && !isQueued) && (workflowStatus === "paused" || workflowStatus === "running") &&
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip({ message: "Request a re-start of this pipeline after the successful completion of the current run." })}>
-                <Button variant="success"
-                        size="sm"
-                        onClick={() => {
-                          runPipelineLight(pipeline._id);
-                        }}>
-                  <IconBase icon={faRepeat1} /> Repeat Once</Button>
-              </OverlayTrigger>
-          }
+          {getQueueButton()}
 
           {((workflowStatus === "paused" && !isApprovalGate) ||
             (workflowStatus === "stopped" &&
@@ -448,23 +479,6 @@ function PipelineActionControls(
                 <span className="d-none d-md-inline">Reset Pipeline</span></Button>
             </OverlayTrigger>
           }
-
-
-          {
-            isQueued &&
-            <OverlayTrigger
-              placement="top"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "A queued request to start this pipeline is pending.  Upon successful completion of this run, the pipeline will restart." })}>
-              <Button variant="secondary"
-                      size="sm"
-                      onClick={() => {
-                        showCancelQueueOverlay();
-                      }}>
-                <IconBase icon={faClock} /> Queued Request</Button>
-            </OverlayTrigger>
-          }
-
           <PipelineActionControlsRefreshButton
             handleRefreshWorkflowClick={handleRefreshClick}
             isLoading={isLoading}
