@@ -37,17 +37,18 @@ function PipelineDetailView() {
     isQueued,
     runCount,
     lastStep,
+    restingStepId,
   } = useGetPollingPipelineOrchestrationStatusById(id, refreshInterval);
 
   useEffect(() => {
-    console.log(`Refreshing pipeline with \n   status: [${status}]\n    run count: [${runCount}]`);
+    console.log(`Refreshing pipeline with \n   status: [${status}]\n    run count: [${runCount}]\n   Resting Step ID: [${restingStepId}]`);
     evaluatePipelineStatus(pipeline);
     loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-  }, [status, runCount]);
+  }, [status, runCount, restingStepId]);
 
   const loadData = async () => {
     try {
