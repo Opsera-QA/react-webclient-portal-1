@@ -388,7 +388,7 @@ function PipelineActionControls(
         <div className="text-right btn-group btn-group-sized">
           {getStopButton()}
 
-          {workflowStatus === "paused" &&
+          {workflowStatus === "paused" && startPipeline !== true && resetPipeline !== true &&
             <PipelineActionControlsUserApprovalButton
               pipeline={pipeline}
               workflowStatus={workflowStatus}
