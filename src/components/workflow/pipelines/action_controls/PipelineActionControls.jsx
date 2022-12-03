@@ -28,6 +28,7 @@ import {pipelineTypeConstants} from "components/common/list_of_values_input/pipe
 import PipelineActionControlsStartPipelineButton
   from "components/workflow/pipelines/action_controls/start/PipelineActionControlsStartPipelineButton";
 import useGetFeatureFlags from "hooks/platform/useGetFeatureFlags";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
 
 function PipelineActionControls(
   {
@@ -281,30 +282,6 @@ function PipelineActionControls(
     }
   };
 
-  // TODO: Move to helper
-  const getPipelineOrientation = () => {
-    const stoppedStepId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.step_id");
-    const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
-    const pipelineStepCount = plan.length;
-
-    // is pipeline at the beginning or stopped midway or end of prior?
-    //what step are we currently on in the pipeline: first, last or middle?
-    if (DataParsingHelper.isValidMongoDbId(stoppedStepId) === true) {
-      const stepIndex = PipelineHelpers.getStepIndex(pipeline, stoppedStepId);
-
-      if (stepIndex !== -1) {
-        console.log(`current resting step index: ${stepIndex} of ${pipelineStepCount}`);
-        if (stepIndex + 1 === pipelineStepCount) {
-          return "end";
-        } else {
-          return "middle";
-        }
-      }
-    }
-
-    return "start";
-  };
-
   // TODO: Put into a separate run button
   const handleRunPipelineClick = async (dynamicBranch) => {
     const pipelineId = pipeline?._id;
@@ -407,7 +384,7 @@ function PipelineActionControls(
           hasQueuedRequest={isQueued}
           pipelineIsStarting={startPipeline}
           dynamicSettingsEnabled={enabledServices?.dynamicSettings === true}
-          pipelineOrientation={getPipelineOrientation()}
+          pipelineOrientation={pipelineHelper.getPipelineOrientation(pipeline)}
         />
       );
     }

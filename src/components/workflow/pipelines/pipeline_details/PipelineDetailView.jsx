@@ -47,7 +47,7 @@ function PipelineDetailView() {
         throw error;
       }
     });
-  }, [status, runCount, lastStep]);
+  }, [status, runCount]);
 
   const loadData = async () => {
     try {
