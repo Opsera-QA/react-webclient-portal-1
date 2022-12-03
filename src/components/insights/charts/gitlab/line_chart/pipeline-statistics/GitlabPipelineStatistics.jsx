@@ -34,8 +34,11 @@ function GitlabPipelineStatistics({
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [pipelineStatsDataPoint, setPipelineStatsDataPoint] =
-    useState(undefined);
+  const [pipelineStatsDataPoint, setPipelineStatsDataPoint] = useState(undefined);
+  const [failurePercentDataPoint, setFailurePercentDataPoint] = useState(undefined);
+  const [skippedPercentDataPoint, setSkippedPercentDataPoint] = useState(undefined);
+  const [cancelledPercentDataPoint, setCancelledPercentDataPoint] = useState(undefined);
+
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -107,6 +110,18 @@ function GitlabPipelineStatistics({
           .PIPELINE_STATISTICS_DATA_POINT,
     );
     setPipelineStatsDataPoint(dataPoint);
+    setFailurePercentDataPoint(dataPointHelpers.getDataPoint(
+      dataPoints,
+      constants.SUPPORTED_DATA_POINT_IDENTIFIERS.FAILURE_PERCENT_DATA_POINT,
+    ));
+    setSkippedPercentDataPoint(dataPointHelpers.getDataPoint(
+      dataPoints,
+      constants.SUPPORTED_DATA_POINT_IDENTIFIERS.SKIPPED_PERCENT_DATA_POINT,
+    ));
+    setCancelledPercentDataPoint(dataPointHelpers.getDataPoint(
+      dataPoints,
+      constants.SUPPORTED_DATA_POINT_IDENTIFIERS.CANCELLED_PERCENT_DATA_POINT,
+    ));
   };
 
   const closePanel = () => {
@@ -170,6 +185,7 @@ function GitlabPipelineStatistics({
                 getTrendIcon={getTrendIcon}
                 topText={"Success"}
                 bottomText={"Prev: "}
+                dataPointValue={metricData?.pipeline?.successPercentage}
               />
             </Col>
             <Col md={12}>
@@ -184,6 +200,8 @@ function GitlabPipelineStatistics({
                 getTrendIcon={getReverseTrendIcon}
                 topText={"Failure"}
                 bottomText={"Prev: "}
+                dataPoint={failurePercentDataPoint}
+                dataPointValue={metricData?.pipeline?.failedPercentage}
               />
             </Col>
             <Col md={12}>
@@ -198,6 +216,8 @@ function GitlabPipelineStatistics({
                 getTrendIcon={getReverseTrendIcon}
                 topText={"Skipped"}
                 bottomText={"Prev: "}
+                dataPoint={skippedPercentDataPoint}
+                dataPointValue={metricData?.pipeline?.skippedPercentage}
               />
             </Col>
             <Col md={12}>
@@ -212,6 +232,8 @@ function GitlabPipelineStatistics({
                 getTrendIcon={getReverseTrendIcon}
                 topText={`Cancelled`}
                 bottomText={'Prev: '}
+                dataPoint={cancelledPercentDataPoint}
+                dataPointValue={metricData?.pipeline?.cancelledPercentage}
               />
             </Col>
           </Row>
