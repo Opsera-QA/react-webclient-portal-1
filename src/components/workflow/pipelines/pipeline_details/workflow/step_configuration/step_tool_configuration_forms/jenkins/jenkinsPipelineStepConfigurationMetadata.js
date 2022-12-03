@@ -38,6 +38,11 @@ const jenkinsPipelineStepConfigurationMetadata = {
       isRequired: true
     },
     {
+      label: "Repository",
+      id: "repoId",
+      // isRequired: true
+    },
+    {
       label: "Branch",
       id: "branch",
       isRequired: true

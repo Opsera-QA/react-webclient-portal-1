@@ -26,6 +26,7 @@ function SalesforceToGitMergeSyncTaskRepositorySelectInput({
     const newModel = { ...model };
     newModel.setDefaultValue("repository");
     newModel.setDefaultValue("gitUrl");
+    newModel.setDefaultValue("repoId");
     newModel.setDefaultValue("targetBranch");
     newModel.setDefaultValue("sourceBranch");
     newModel.setDefaultValue("upstreamBranch");
@@ -35,7 +36,7 @@ function SalesforceToGitMergeSyncTaskRepositorySelectInput({
 
   return (
     <RepositorySelectInput
-      fieldName={"repository"}
+      fieldName={"repoId"}
       service={model?.getData("service")}
       gitToolId={model?.getData("toolId")}
       workspace={model?.getData("workspace")}

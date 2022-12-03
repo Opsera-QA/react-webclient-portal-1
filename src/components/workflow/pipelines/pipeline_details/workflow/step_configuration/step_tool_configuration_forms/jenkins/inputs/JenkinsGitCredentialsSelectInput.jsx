@@ -38,6 +38,7 @@ function JenkinsGitCredentialsSelectInput({
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");
+    newDataObject.setData("repoId", "");
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("branch", "");
@@ -61,6 +62,7 @@ function JenkinsGitCredentialsSelectInput({
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("branch", "");
     newDataObject.setData("projectId", "");
+    newDataObject.setData("repoId", "");
     newDataObject.setData("defaultBranch", "");
     newDataObject.setData("gitToolId", "");
     newDataObject.setData("gitCredential", "");

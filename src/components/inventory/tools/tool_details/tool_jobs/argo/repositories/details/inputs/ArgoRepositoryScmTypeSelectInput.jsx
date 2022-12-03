@@ -32,6 +32,7 @@ function ArgoRepositoryScmTypeSelectInput({dataObject, setDataObject, disabled})
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repositoryName", "");
     newDataObject.setData("projectId", "");
+    newDataObject.setData("repoId", "");
     newDataObject.setData("workspace", "");
     setDataObject({...newDataObject});
   };
@@ -43,6 +44,7 @@ function ArgoRepositoryScmTypeSelectInput({dataObject, setDataObject, disabled})
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repositoryName", "");
+    newDataObject.setData("repoId", "");
     newDataObject.setData("projectId", "");
     newDataObject.setData("workspace", "");
     setDataObject({...newDataObject});

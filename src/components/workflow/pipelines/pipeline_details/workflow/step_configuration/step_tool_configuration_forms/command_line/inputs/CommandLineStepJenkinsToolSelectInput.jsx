@@ -17,6 +17,8 @@ function CommandLineStepJenkinsToolSelectInput({model, setModel, disabled}) {
     newModel.setData("sshUrl", "");
     newModel.setData("gitCredential", "");
     newModel.setData("repository", "");
+    newModel.setData("repoId", "");
+    newModel.setData("gitBranch", "");
     newModel.setData("gitBranch", "");
     newModel.setData("workspace", "");
     newModel.setData("autoScaleEnable", selectedOption?.configuration?.autoScaleEnable || false);

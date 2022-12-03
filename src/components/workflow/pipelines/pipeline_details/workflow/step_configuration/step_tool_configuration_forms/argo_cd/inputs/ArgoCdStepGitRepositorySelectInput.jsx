@@ -50,7 +50,7 @@ ArgoCdStepGitRepositorySelectInput.propTypes = {
 };
 
 ArgoCdStepGitRepositorySelectInput.defaultProps = {
-  fieldName: "gitRepository",
+  fieldName: "gitRepositoryID",
 };
 
 export default ArgoCdStepGitRepositorySelectInput;

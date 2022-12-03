@@ -37,6 +37,12 @@ const flywayDatabaseStepFormMetadata = {
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
+      label: "Repository",
+      id: "repoId",
+      isRequired: true,
+      maxLength: 255,
+    },
+    {
       label: "Workspace/Project",
       id: "workspace",
       maxLength: 255,
@@ -103,6 +109,7 @@ const flywayDatabaseStepFormMetadata = {
     service: "",
     gitToolId : "",
     repository: "",
+    repoId: "",
     workspace: "",
     gitBranch: "",
     outOfOrder: false,

@@ -23,7 +23,7 @@ function CypressStepBitbucketWorkspaceSelectInput({model, setModel, disabled}) {
 
   return (
     <BitbucketWorkspaceInput
-      fieldName={"repository"}
+      fieldName={"workspace"}
       gitToolId={model?.getData("gitToolId")}
       dataObject={model}
       setDataObject={setModel}

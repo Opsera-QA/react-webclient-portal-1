@@ -33,6 +33,12 @@ const SapCpqStepFormMetadata = {
       formText:" "
     },
     {
+      label: "Repository",
+      id: "repoId",
+      isRequired: true,
+      formText:" "
+    },
+    {
       label: "Workspace/Project",
       id: "workspace",
       maxLength: 255,

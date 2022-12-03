@@ -15,12 +15,12 @@ const argoRepositoryMetadata = {
       lowercase: true,
       spacesAllowed: false,
       formText: "Name cannot contain spaces.",
-      maxLength: 63
+      maxLength: 63,
     },
     {
       label: "SCM type",
       id: "service",
-      isRequired: true
+      isRequired: true,
     },
     {
       label: "SCM Tool",
@@ -28,7 +28,7 @@ const argoRepositoryMetadata = {
       isRequired: true,
       maxLength: 24,
       regexDefinitionName: "mongoId",
-    },   
+    },
     {
       id: "gitUrl",
     },
@@ -44,17 +44,22 @@ const argoRepositoryMetadata = {
     {
       label: "Repository Name",
       id: "repositoryName",
-      isRequired: true
+      isRequired: true,
+    },
+    {
+      label: "Repository Name",
+      id: "repoId",
+      isRequired: true,
     },
     {
       label: "Repository Type",
       id: "repositoryType",
-      isRequired: true
+      isRequired: true,
     },
     {
       label: "Project Name",
       id: "projectName",
-      isRequired: true
+      isRequired: true,
     },
   ],
   newObjectFields: {
@@ -63,11 +68,12 @@ const argoRepositoryMetadata = {
     service: "",
     gitUrl: "",
     sshUrl: "",
+    repoId: "",
     workspace: "",
     repositoryName: "",
     repositoryType: "git",
     projectName: "",
-  }
+  },
 };
 
 export default argoRepositoryMetadata;

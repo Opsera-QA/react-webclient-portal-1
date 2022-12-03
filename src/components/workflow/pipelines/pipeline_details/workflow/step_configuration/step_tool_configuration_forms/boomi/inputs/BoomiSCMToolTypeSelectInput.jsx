@@ -10,6 +10,7 @@ function BoomiSCMToolTypeSelectInput({dataObject, setDataObject, isLoading, disa
     newDataObject.setData("gitToolId", "");
     newDataObject.setData("repoId", "");
     newDataObject.setData("projectId", "");
+    newDataObject.setData("repoId", "");
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");

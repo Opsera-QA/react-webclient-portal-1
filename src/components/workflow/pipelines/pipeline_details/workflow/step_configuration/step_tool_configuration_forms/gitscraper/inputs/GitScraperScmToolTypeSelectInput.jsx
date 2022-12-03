@@ -23,6 +23,7 @@ function GitScraperScmToolTypeSelectInput({model, setModel, isLoading, disabled}
     await newModel.setData(fieldName, selectedOption?.value);
     newModel.setData("gitToolId", "");
     newModel.setData("repository", "");
+    newModel.setData("repoId", "");
     newModel.setData("gitBranch", "");
     newModel.setData("gitFilePath", "");
     newModel.setData("workspace", "");
