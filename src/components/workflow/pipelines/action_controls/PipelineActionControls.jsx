@@ -55,30 +55,17 @@ function PipelineActionControls(
   } = useGetFeatureFlags();
 
   useEffect(() => {
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    if (workflowStatus === "running") {
-      setStartPipeline(false);
-    }
-  }, [workflowStatus]);
-
-  const loadData = async () => {
-    const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status");
-    const isPaused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
-
-    if (status === "stopped" && isPaused === true) {
+    if (workflowStatus === "paused") {
       const parsedPipelineStepToolIdentifier = PipelineHelpers.getPendingApprovalStepToolIdentifier(pipeline);
       //if step set currently running is an approval step, flag that
       if (parsedPipelineStepToolIdentifier) {
-          const approvalGateIdentifiers = [toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL, toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION];
-          setIsApprovalGate(approvalGateIdentifiers.includes(parsedPipelineStepToolIdentifier));
+        const approvalGateIdentifiers = [toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL, toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION];
+        setIsApprovalGate(approvalGateIdentifiers.includes(parsedPipelineStepToolIdentifier));
       }
+    } else if (workflowStatus === "running") {
+      setStartPipeline(false);
     }
-  };
+  }, [workflowStatus]);
 
   // button handlers
   const handleResetWorkflowClick = async (pipelineId) => {
