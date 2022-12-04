@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { faLaptopMedical, faPlay, faStop } from "@fortawesome/pro-light-svg-icons";
@@ -23,6 +23,14 @@ function TasksEcsActionButtons(
     getAccessToken,
     cancelTokenSource,
   } = useComponentStateReference();
+
+  useEffect(() => {
+    if (status !== "stopped") {
+      setIsStarting(false);
+    } else {
+      setIsCanceling(false);
+    }
+  }, [status]);
 
   const handleRunTask = async () => {
     try {
