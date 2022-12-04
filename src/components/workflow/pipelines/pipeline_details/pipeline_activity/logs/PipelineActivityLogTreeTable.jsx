@@ -19,6 +19,8 @@ import pipelineLogHelpers
 import CustomTable from "components/common/table/CustomTable";
 import PaginationHelper from "@opsera/persephone/helpers/array/pagination.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import useGetPollingPipelineActivityLogCountForRun
+  from "hooks/workflow/pipelines/logs/useGetPollingPipelineActivityLogCountForRun";
 
 function PipelineActivityLogTreeTable(
   {
@@ -41,47 +43,26 @@ function PipelineActivityLogTreeTable(
     getAccessToken,
     toastContext,
   } = useComponentStateReference();
+  const {
+    logCount,
+  } = useGetPollingPipelineActivityLogCountForRun(pipelineId, currentRunNumber === pipelineRunCount ? currentRunNumber : undefined);
 
   useEffect(() => {
+    console.log("got new log count: " + logCount);
     loadData(pipelineActivityFilterModel).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-  }, [pipelineRunCount]);
-
-  const loadData = async (newFilterModel = pipelineActivityFilterModel) => {
-    if (isLoading || typeof pipelineRunCount !== "number" || pipelineRunCount <= 0) {
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      setActivityData([]);
-      const newPipelineTree = pipelineLogHelpers.constructTopLevelTreeBasedOnRunCount(pipelineRunCount);
-      pipelineTree.current = [...newPipelineTree];
-      await getSingleRunLogs(newFilterModel);
-    } catch (error) {
-      if (isMounted.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
+  }, [logCount]);
 
   useEffect(() => {
-    if (pipeline) {
-      pullLogs(pipelineActivityFilterModel).catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
+    const newTree = pipelineLogHelpers.addRunNumberToPipelineTree(pipelineTree?.current, pipelineRunCount);
+
+    if (newTree) {
+      pipelineTree.current = [...newTree];
     }
-  }, [pipeline]);
+  }, [pipelineRunCount]);
 
   useEffect(() => {
     setActivityData([]);
@@ -95,13 +76,25 @@ function PipelineActivityLogTreeTable(
     }
   }, [currentRunNumber]);
 
-  useEffect(() => {
-    const newTree = pipelineLogHelpers.addRunNumberToPipelineTree(pipelineTree?.current, pipelineRunCount);
-
-    if (newTree) {
-      pipelineTree.current = [...newTree];
+  const loadData = async (newFilterModel = pipelineActivityFilterModel) => {
+    if (isLoading || typeof pipelineRunCount !== "number" || pipelineRunCount <= 0) {
+      return;
     }
-  }, [pipelineRunCount]);
+
+    try {
+      setIsLoading(true);
+      await getSingleRunLogs(newFilterModel);
+    } catch (error) {
+      if (isMounted.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    } finally {
+
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
 
   const pullLogs = async (newFilterModel = pipelineActivityFilterModel) => {
     try {

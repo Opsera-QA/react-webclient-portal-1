@@ -1,10 +1,9 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {faPlay} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
-import axios from "axios";
 import RunTaskOverlay from "components/tasks/details/RunTaskOverlay";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {TASK_TYPES} from "components/tasks/task.types";
@@ -13,6 +12,7 @@ import GitToGitMergeSyncTaskWizardOverlay
   from "components/tasks/details/tasks/merge_sync_task/wizard/git_to_git/GitToGitMergeSyncTaskWizardOverlay";
 import SalesforceToGitMergeSyncTaskWizardOverlay
   from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_GIT_BRANCHES,
@@ -27,35 +27,37 @@ const ALLOWED_TASK_TYPES = [
 ];
 
 // TODO: This should be broken into two buttons and this should be renamed as the container
-function RunTaskButton({taskModel, setTaskModel, disable, className, loadData, actionAllowed, taskType }) {
-  const [taskStarting, setTaskStarting] = useState(false);
+function RunTaskButton(
+  {
+    taskModel,
+    setTaskModel,
+    disable,
+    className,
+    loadData,
+    actionAllowed,
+    taskType,
+    status,
+  }) {
+  const [isStarting, setIsStarting] = useState(false);
   const toastContext = useContext(DialogToastContext);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+    if (status !== "stopped") {
+      setIsStarting(false);
     }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
+  }, [status]);
 
   const handleClose = () => {
     toastContext.clearOverlayPanel();
     // TODO: This should be passed to modal
-    setTaskStarting(true);
+    setIsStarting(true);
   };
 
   const getButton = () => {
-    if (taskModel?.getData("status") === "running") {
+    if (status === "running") {
       return (
         <CancelTaskButton
           className={"p-3"}
@@ -69,7 +71,7 @@ function RunTaskButton({taskModel, setTaskModel, disable, className, loadData, a
     return (
       <Button
         variant={"success"}
-        disabled={taskModel?.getData("status") === "running" || disable || taskStarting || actionAllowed !== true}
+        disabled={status === "running" || disable || isStarting || actionAllowed !== true}
         onClick={() => {
           showTaskRunOverlay();
         }}
@@ -86,7 +88,7 @@ function RunTaskButton({taskModel, setTaskModel, disable, className, loadData, a
   const showTaskRunOverlay = async () => {
     if (taskModel?.getData("type") === TASK_TYPES.GIT_TO_GIT_MERGE_SYNC) {
       try{
-        setTaskStarting(true);
+        setIsStarting(true);
         // const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
         // gitTasksData.setData("configuration", configuration);
         // await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
@@ -102,13 +104,13 @@ function RunTaskButton({taskModel, setTaskModel, disable, className, loadData, a
         }
       } finally {
         if (isMounted?.current === true) {
-          setTaskStarting(false);
+          setIsStarting(false);
         }
       }
     }
     else if (taskModel?.getData("type") === TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC) {
       try{
-        setTaskStarting(true);
+        setIsStarting(true);
         // const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
         // gitTasksData.setData("configuration", configuration);
         // await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
@@ -124,7 +126,7 @@ function RunTaskButton({taskModel, setTaskModel, disable, className, loadData, a
         }
       } finally {
         if (isMounted?.current === true) {
-          setTaskStarting(false);
+          setIsStarting(false);
         }
       }
     }
@@ -160,6 +162,7 @@ RunTaskButton.propTypes = {
   className: PropTypes.string,
   actionAllowed: PropTypes.bool,
   taskType: PropTypes.string,
+  status: PropTypes.string,
 };
 
 export default RunTaskButton;
