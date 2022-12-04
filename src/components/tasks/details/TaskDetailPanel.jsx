@@ -5,10 +5,10 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faTable, faKey, faComputerClassic} from "@fortawesome/pro-light-svg-icons";
-import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
-import CertManagementPanel from "./tasks/sfdx-cert-gen/CertManagementPanel";
 import TaskSummaryPanel
   from "components/tasks/details/TaskSummaryPanel";
+import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
+import CertManagementPanel from "./tasks/sfdx-cert-gen/CertManagementPanel";
 import TaskActivityPanel from "components/tasks/activity_logs/TaskActivityPanel";
 import {TASK_TYPES} from "components/tasks/task.types";
 import TaskAuditLogPanel from "components/tasks/details/audit/TaskAuditLogPanel";
@@ -22,6 +22,7 @@ function TaskDetailPanel(
     accessRoleData,
     runTask,
     status,
+    runCount,
   }) {
   const {featureFlagHideItemInProd} = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState(runTask ? "settings" : "summary");
@@ -110,7 +111,10 @@ function TaskDetailPanel(
         return (
           <TaskActivityPanel
             taskModel={gitTasksData}
-            />
+            taskId={gitTasksData?.getMongoDbId()}
+            taskRunCount={runCount}
+            status={status}
+          />
         );
       case "cert":
         return (
@@ -141,6 +145,7 @@ TaskDetailPanel.propTypes = {
   accessRoleData: PropTypes.object,
   runTask: PropTypes.bool,
   status: PropTypes.string,
+  runCount: PropTypes.number,
 };
 
 export default TaskDetailPanel;

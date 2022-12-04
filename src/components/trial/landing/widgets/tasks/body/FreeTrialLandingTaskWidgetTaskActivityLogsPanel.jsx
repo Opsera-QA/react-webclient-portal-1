@@ -16,6 +16,8 @@ export default function FreeTrialLandingTaskWidgetTaskActivityLogsPanel(
       <TaskActivityPanel
         taskModel={taskModel}
         showFilterContainerIcon={false}
+        taskId={taskModel?.getMongoDbId()}
+        taskRunCount={taskModel?.getData("run_count")}
       />
     </div>
   );

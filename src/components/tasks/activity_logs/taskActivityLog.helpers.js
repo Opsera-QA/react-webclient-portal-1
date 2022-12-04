@@ -1,4 +1,5 @@
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const taskActivityLogHelpers = {};
 
@@ -32,6 +33,25 @@ taskActivityLogHelpers.constructRunCountTree = (task) => {
   if (typeof runCount === "number" && runCount > 0) {
     for (let runNumber = 1; runNumber <= runCount; runNumber++) {
       const newTreeItem = createRunCountLevelTreeItem(task, runNumber);
+
+      if (newTreeItem) {
+        runCountTree.push(newTreeItem);
+      }
+    }
+  }
+
+  return sortRunCountTree(runCountTree);
+};
+
+// TODO: Simplify the task flows to always accept task Id
+taskActivityLogHelpers.constructRunCountTreeWithRunCountAndTaskId = (runCount, taskId) => {
+  const runCountTree = [];
+  const parsedRunCount = DataParsingHelper.parseInteger(runCount, 0);
+  const parsedTaskId = DataParsingHelper.parseMongoDbId(taskId);
+
+  if (parsedTaskId && parsedRunCount > 0) {
+    for (let runNumber = 1; runNumber <= parsedRunCount; runNumber++) {
+      const newTreeItem = createRunCountLevelTreeItem({_id: parsedTaskId}, runNumber);
 
       if (newTreeItem) {
         runCountTree.push(newTreeItem);
