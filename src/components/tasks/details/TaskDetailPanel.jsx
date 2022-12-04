@@ -22,6 +22,7 @@ function TaskDetailPanel(
     accessRoleData,
     runTask,
     status,
+    runCount,
   }) {
   const {featureFlagHideItemInProd} = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState(runTask ? "settings" : "summary");
@@ -110,7 +111,10 @@ function TaskDetailPanel(
         return (
           <TaskActivityPanel
             taskModel={gitTasksData}
-            />
+            taskId={gitTasksData?.getMongoDbId()}
+            taskRunCount={runCount}
+            status={status}
+          />
         );
       case "cert":
         return (
@@ -141,6 +145,7 @@ TaskDetailPanel.propTypes = {
   accessRoleData: PropTypes.object,
   runTask: PropTypes.bool,
   status: PropTypes.string,
+  runCount: PropTypes.number,
 };
 
 export default TaskDetailPanel;

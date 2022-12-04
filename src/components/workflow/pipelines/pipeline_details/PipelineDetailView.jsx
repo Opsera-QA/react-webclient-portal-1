@@ -129,6 +129,7 @@ function PipelineDetailView() {
           softLoading={softLoading}
           isQueued={isQueued}
           lastStep={lastStep}
+          runCount={runCount}
         />
       );
     }
@@ -146,6 +147,7 @@ function PipelineDetailView() {
             fetchPlan={fetchPlan}
             isLoading={softLoading || isLoading}
             isQueued={isQueued}
+            runCount={runCount}
           />
         </div>
         <div className="max-content-width-1875">

@@ -52,6 +52,7 @@ function PipelineSummaryPanel(
     showActionControls,
     isLoading,
     isQueued,
+    runCount,
   }) {
   const contextType = useContext(AuthContext);
   const [editTitle, setEditTitle] = useState(false);
@@ -244,6 +245,7 @@ function PipelineSummaryPanel(
             isLoading={isLoading}
             isQueued={isQueued}
             workflowStatus={parentWorkflowStatus}
+            runCount={runCount}
           />
         </div>
       );
@@ -451,6 +453,7 @@ PipelineSummaryPanel.propTypes = {
   showActionControls: PropTypes.bool,
   isLoading: PropTypes.bool,
   isQueued: PropTypes.bool,
+  runCount: PropTypes.number,
 };
 
 export default PipelineSummaryPanel;

@@ -17,6 +17,7 @@ function PipelineWorkflowView(
     pipelineStatus,
     isQueued,
     lastStep,
+    runCount,
   }) {
   const closeEditorPanel = () => {
     setEditItem(false);
@@ -57,6 +58,7 @@ function PipelineWorkflowView(
             workflowStatus={pipelineStatus}
             isLoading={softLoading}
             isQueued={isQueued}
+            runCount={runCount}
           />
         </div>}
       </div>
@@ -86,6 +88,7 @@ PipelineWorkflowView.propTypes = {
   softLoading: PropTypes.bool,
   isQueued: PropTypes.bool,
   lastStep: PropTypes.any,
+  runCount: PipelineWorkflow.number,
 };
 
 export default PipelineWorkflowView;

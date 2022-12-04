@@ -130,6 +130,8 @@ function TaskDetailView() {
           accessRoleData={accessRoleData}
           loadData={loadData}
           runTask={location?.state?.runTask}
+          status={status}
+          runCount={runCount}
         />
       }
     />
