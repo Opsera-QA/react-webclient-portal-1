@@ -352,6 +352,7 @@ function PipelineActionControls(
           workflowStatus={workflowStatus}
           handleStopWorkflowClick={handleStopWorkflowClick}
           pipelineIsStopping={stopPipeline}
+          disabled={startPipeline || resetPipeline}
         />
       );
     }
@@ -372,16 +373,16 @@ function PipelineActionControls(
           pipelineOrientation={pipelineHelper.getPipelineOrientation(pipeline)}
         />
       );
-    } else if (stopPipeline) {
-      return (
-        <PipelineActionControlButtonBase
-          normalText={"Stopping Pipeline"}
-          busyText={"Stopping Pipeline"}
-          buttonState={buttonLabelHelper.BUTTON_STATES.BUSY}
-          disabled={true}
-          variant={"outline-danger"}
-        />
-      );
+    // } else if (stopPipeline) {
+    //   return (
+    //     <PipelineActionControlButtonBase
+    //       normalText={"Stopping Pipeline"}
+    //       busyText={"Stopping Pipeline"}
+    //       buttonState={buttonLabelHelper.BUTTON_STATES.BUSY}
+    //       disabled={true}
+    //       variant={"outline-danger"}
+    //     />
+    //   );
     } else if (startPipeline) {
       return (
         <PipelineActionControlButtonBase
@@ -392,16 +393,16 @@ function PipelineActionControls(
           variant={"outline-dark"}
         />
       );
-    } else if (resetPipeline) {
-      return (
-        <PipelineActionControlButtonBase
-          normalText={"Resetting Pipeline"}
-          busyText={"Resetting Pipeline"}
-          buttonState={buttonLabelHelper.BUTTON_STATES.BUSY}
-          disabled={true}
-          variant={"outline-dark"}
-        />
-      );
+    // } else if (resetPipeline) {
+    //   return (
+    //     <PipelineActionControlButtonBase
+    //       normalText={"Resetting Pipeline"}
+    //       busyText={"Resetting Pipeline"}
+    //       buttonState={buttonLabelHelper.BUTTON_STATES.BUSY}
+    //       disabled={true}
+    //       variant={"outline-dark"}
+    //     />
+    //   );
     } else if (workflowStatus === "running") {
       return (
         <PipelineActionControlButtonBase

@@ -13,6 +13,7 @@ export default function PipelineActionControlsStopButton(
     handleStopWorkflowClick, // TODO: Move logic in here
     workflowStatus,
     pipelineIsStopping,
+    disabled,
   }) {
   const {
     userData,
@@ -29,7 +30,7 @@ export default function PipelineActionControlsStopButton(
       busyText={"Stopping"}
       buttonState={pipelineIsStopping === true ? buttonLabelHelper.BUTTON_STATES.BUSY : undefined}
       onClickFunction={handleStopWorkflowClick}
-      disabled={PipelineRoleHelper.canStopPipeline(userData, pipeline) !== true}
+      disabled={PipelineRoleHelper.canStopPipeline(userData, pipeline) !== true || disabled}
       variant={"danger"}
     />
   );
@@ -40,4 +41,5 @@ PipelineActionControlsStopButton.propTypes = {
   handleStopWorkflowClick: PropTypes.func,
   workflowStatus: PropTypes.string,
   pipelineIsStopping: PropTypes.bool,
+  disabled: PropTypes.bool,
 };

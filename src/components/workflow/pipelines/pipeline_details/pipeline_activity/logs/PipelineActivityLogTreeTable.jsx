@@ -33,7 +33,7 @@ function PipelineActivityLogTreeTable(
   }) {
   const [pipelineActivityFilterModel, setPipelineActivityFilterModel] = useState(new PipelineActivityFilterModel());
   const [activityData, setActivityData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingActivityLogs, setIsLoadingActivityLogs] = useState(false);
   const pipelineTree = useRef([]);
   const [currentRunNumber, setCurrentRunNumber] = useState(pipelineRunCount);
   const [currentStepId, setCurrentStepId] = useState(undefined);
@@ -45,10 +45,13 @@ function PipelineActivityLogTreeTable(
   } = useComponentStateReference();
   const {
     logCount,
-  } = useGetPollingPipelineActivityLogCountForRun(pipelineId, currentRunNumber === pipelineRunCount ? currentRunNumber : undefined);
+    isLoading,
+  } = useGetPollingPipelineActivityLogCountForRun(
+    pipelineId,
+    currentRunNumber === pipelineRunCount ? currentRunNumber : undefined
+  );
 
   useEffect(() => {
-    console.log("got new log count: " + logCount);
     loadData(pipelineActivityFilterModel).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -57,11 +60,8 @@ function PipelineActivityLogTreeTable(
   }, [logCount]);
 
   useEffect(() => {
-    const newTree = pipelineLogHelpers.addRunNumberToPipelineTree(pipelineTree?.current, pipelineRunCount);
-
-    if (newTree) {
-      pipelineTree.current = [...newTree];
-    }
+    const newPipelineTree = pipelineLogHelpers.constructTopLevelTreeBasedOnRunCount(pipelineRunCount);
+    pipelineTree.current = [...newPipelineTree];
   }, [pipelineRunCount]);
 
   useEffect(() => {
@@ -77,12 +77,13 @@ function PipelineActivityLogTreeTable(
   }, [currentRunNumber]);
 
   const loadData = async (newFilterModel = pipelineActivityFilterModel) => {
-    if (isLoading || typeof pipelineRunCount !== "number" || pipelineRunCount <= 0) {
+    if (isLoadingActivityLogs || typeof pipelineRunCount !== "number" || pipelineRunCount <= 0) {
       return;
     }
 
     try {
-      setIsLoading(true);
+      console.log("pulling pipeline logs");
+      setIsLoadingActivityLogs(true);
       await getSingleRunLogs(newFilterModel);
     } catch (error) {
       if (isMounted.current === true) {
@@ -91,14 +92,14 @@ function PipelineActivityLogTreeTable(
     } finally {
 
       if (isMounted?.current === true) {
-        setIsLoading(false);
+        setIsLoadingActivityLogs(false);
       }
     }
   };
 
   const pullLogs = async (newFilterModel = pipelineActivityFilterModel) => {
     try {
-      setIsLoading(true);
+      setIsLoadingActivityLogs(true);
 
       console.log("pulling pipeline logs");
       if (currentRunNumber === "latest") {
@@ -115,7 +116,7 @@ function PipelineActivityLogTreeTable(
       }
     } finally {
       if (isMounted.current === true) {
-        setIsLoading(false);
+        setIsLoadingActivityLogs(false);
       }
     }
   };
@@ -184,7 +185,7 @@ function PipelineActivityLogTreeTable(
   const getTable = () => {
     return (
       <PipelineActivityLogTable
-        isLoading={isLoading}
+        isLoading={isLoadingActivityLogs || isLoading}
         pipeline={pipeline}
         pipelineLogData={activityData}
         latestPipelineLogId={PaginationHelper.getLatestCreatedItemInDataArray(activityData)?._id}
@@ -211,7 +212,7 @@ function PipelineActivityLogTreeTable(
     if (pipelineRunCount === 0) {
       return (
         <CustomTable
-          isLoading={isLoading}
+          isLoading={isLoadingActivityLogs || isLoading}
           data={[]}
           noDataMessage={getNoDataMessage()}
         />
@@ -221,7 +222,7 @@ function PipelineActivityLogTreeTable(
     return (
       <TreeAndTableBase
         data={activityData}
-        isLoading={isLoading}
+        isLoading={isLoadingActivityLogs || isLoading}
         noDataMessage={getNoDataMessage()}
         tableComponent={getTable()}
         loadData={loadData}
@@ -257,7 +258,7 @@ function PipelineActivityLogTreeTable(
         loadData={loadData}
         filterDto={pipelineActivityFilterModel}
         setFilterDto={setPipelineActivityFilterModel}
-        isLoading={isLoading}
+        isLoading={isLoadingActivityLogs}
         title={"Pipeline Logs"}
         inlineFilters={getInlineFilters()}
         dropdownFilters={getDropdownFilters()}
@@ -267,7 +268,7 @@ function PipelineActivityLogTreeTable(
         exportButton={
           <ExportPipelineActivityLogButton
             className={"ml-2"}
-            isLoading={isLoading}
+            isLoading={isLoadingActivityLogs}
             activityLogData={activityData}
           />
         }
