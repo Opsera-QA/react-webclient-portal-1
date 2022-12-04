@@ -128,6 +128,7 @@ function PipelineDetailView() {
           fetchPlan={fetchPlan}
           softLoading={softLoading}
           isQueued={isQueued}
+          lastStep={lastStep}
         />
       );
     }

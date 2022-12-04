@@ -12,6 +12,7 @@ import GitToGitMergeSyncTaskWizardOverlay
   from "components/tasks/details/tasks/merge_sync_task/wizard/git_to_git/GitToGitMergeSyncTaskWizardOverlay";
 import SalesforceToGitMergeSyncTaskWizardOverlay
   from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
+import SalesforceOrganizationSyncTaskWizardOverlay from "components/tasks/wizard/organization_sync/SalesforceOrganizationSyncTaskWizardOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 const ALLOWED_TASK_TYPES = [
@@ -22,8 +23,8 @@ const ALLOWED_TASK_TYPES = [
   TASK_TYPES.GIT_TO_GIT_MERGE_SYNC,
   TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC,
   TASK_TYPES.SALESFORCE_QUICK_DEPLOY,
-  TASK_TYPES.SNAPLOGIC_TASK,
   TASK_TYPES.GITSCRAPER,
+  TASK_TYPES.SNAPLOGIC_TASK,
 ];
 
 // TODO: This should be broken into two buttons and this should be renamed as the container
@@ -86,6 +87,7 @@ function RunTaskButton(
   };
 
   const showTaskRunOverlay = async () => {
+    setIsStarting(true);
     if (taskModel?.getData("type") === TASK_TYPES.GIT_TO_GIT_MERGE_SYNC) {
       try{
         setIsStarting(true);
@@ -101,10 +103,6 @@ function RunTaskButton(
       } catch (error) {
         if (isMounted?.current === true) {
           toastContext.showLoadingErrorDialog(error);
-        }
-      } finally {
-        if (isMounted?.current === true) {
-          setIsStarting(false);
         }
       }
     }
@@ -124,11 +122,18 @@ function RunTaskButton(
         if (isMounted?.current === true) {
           toastContext.showLoadingErrorDialog(error);
         }
-      } finally {
-        if (isMounted?.current === true) {
-          setIsStarting(false);
-        }
       }
+    }
+    else if (taskModel?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {
+      // const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
+      // gitTasksData.setData("configuration", configuration);
+      // await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
+      handleClose();
+      toastContext.showOverlayPanel(
+        <SalesforceOrganizationSyncTaskWizardOverlay
+          taskModel={taskModel}
+        />
+      );
     }
     else {
       toastContext.showOverlayPanel(

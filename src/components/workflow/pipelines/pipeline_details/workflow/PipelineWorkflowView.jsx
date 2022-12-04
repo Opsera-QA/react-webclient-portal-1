@@ -16,6 +16,7 @@ function PipelineWorkflowView(
     softLoading,
     pipelineStatus,
     isQueued,
+    lastStep,
   }) {
   const closeEditorPanel = () => {
     setEditItem(false);
@@ -30,7 +31,6 @@ function PipelineWorkflowView(
             <PipelineWorkflowEditor editItem={editItem} pipeline={pipeline} closeEditorPanel={closeEditorPanel}
                                     fetchPlan={fetchPlan}/>
           </div>
-          <div className="content-block-footer"/>
         </div>
       </>);
     }
@@ -63,10 +63,11 @@ function PipelineWorkflowView(
       <div style={{minWidth: "740px"}}>
         <PipelineWorkflow
           pipeline={pipeline}
-          editItemId={editItem.step_id}
           fetchPlan={fetchPlan}
+          status={pipelineStatus}
           refreshCount={refreshCount}
           softLoading={softLoading}
+          lastStep={lastStep}
         />
       </div>
     </div>
@@ -84,6 +85,7 @@ PipelineWorkflowView.propTypes = {
   refreshCount: PropTypes.number,
   softLoading: PropTypes.bool,
   isQueued: PropTypes.bool,
+  lastStep: PropTypes.any,
 };
 
 export default PipelineWorkflowView;
