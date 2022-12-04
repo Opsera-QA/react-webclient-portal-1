@@ -1,10 +1,7 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { faPlay, faStop } from "@fortawesome/pro-light-svg-icons";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import { AuthContext } from "contexts/AuthContext";
-import axios from "axios";
 import taskActions from "components/tasks/task.actions";
 import IconBase from "components/common/icons/IconBase";
 import {TASK_TYPES} from "components/tasks/task.types";
@@ -38,6 +35,7 @@ function TaskAksActionButtons(
       toastContext.showSuccessDialog("AKS Cluster Creation Triggered Successfully");
       setIsStarting(true);
     } catch (error) {
+      setIsStarting(false);
       console.log(error);
       if (error?.error?.response?.data?.message) {
         toastContext.showCreateFailureResultDialog("AKS Cluster", error.error.response.data.message);
@@ -54,7 +52,7 @@ function TaskAksActionButtons(
     try {
       setIsCanceling(true);
       await taskActions.stopTask(getAccessToken, cancelTokenSource, gitTasksData);
-      await taskActions.logAksClusterCancellation(getAccessToken, axios.CancelToken.source(), gitTasksData);
+      await taskActions.logAksClusterCancellation(getAccessToken, cancelTokenSource, gitTasksData);
 
       if (automatic) {
         toastContext.showInformationToast(
@@ -69,15 +67,6 @@ function TaskAksActionButtons(
   };
 
   const getRunningLabel = () => {
-    if (status === "running") {
-      return (
-        <span>
-          <IconBase icon={faPlay} className={"mr-1"} />
-          Run Task
-        </span>
-      );
-    }
-
     if (isStarting === true) {
       return (
         <span>
@@ -87,10 +76,19 @@ function TaskAksActionButtons(
       );
     }
 
+    if (status === "running") {
+      return (
+        <span>
+          <IconBase icon={faPlay} className={"mr-1"} />
+          Running Task
+        </span>
+      );
+    }
+
     return (
       <span>
         <IconBase isLoading={true} className={"mr-1"} />
-        Running Task
+        Run Task
       </span>
     );
   };
@@ -104,6 +102,7 @@ function TaskAksActionButtons(
         </span>
       );
     }
+
     return (
       <span>
         <IconBase icon={faStop} className={"mr-1"} />
