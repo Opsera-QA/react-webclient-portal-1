@@ -155,9 +155,6 @@ function TaskSummaryPanel(
         <Col md={6}>
           <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
         </Col>
-        <Col md={6}>
-          <TextFieldBase dataObject={gitTasksData} fieldName={"run_count"} />
-        </Col>
         {getNotificationsInput()}
         {getSchedulerField()}
         {getDynamicField()}
