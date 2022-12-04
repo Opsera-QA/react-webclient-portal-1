@@ -5,18 +5,18 @@ import PipelineWorkflowEditor from "./PipelineWorkflowItemEditor";
 import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
 import InformationDialog from "components/common/status_notifications/info";
 
-function PipelineWorkflowView({
-  pipeline,
-  editItem,
-  setEditItem,
-  fetchPlan,
-  refreshCount,
-  setPipeline,
-  softLoading,
-  pipelineStatus,
-                                isQueued,
-}) {
-
+function PipelineWorkflowView(
+  {
+    pipeline,
+    editItem,
+    setEditItem,
+    fetchPlan,
+    refreshCount,
+    setPipeline,
+    softLoading,
+    pipelineStatus,
+    isQueued,
+  }) {
   const closeEditorPanel = () => {
     setEditItem(false);
   };
