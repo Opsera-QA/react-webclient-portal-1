@@ -1,9 +1,8 @@
 import React from 'react';
 import usePollingInterval from "hooks/general/usePollingInterval";
-import useGetPipelineOrchestrationStatusById
-  from "hooks/workflow/pipelines/orchestration/useGetPipelineOrchestrationStatusById";
+import useGetTaskOrchestrationStatusById from "hooks/workflow/tasks/orchestration/useGetTaskOrchestrationStatusById";
 
-export default function useGetPollingPipelineOrchestrationStatusById(
+export default function useGetPollingTaskOrchestrationStatusById(
   id,
   pollingDelayInMs = 10000,
   handleErrorFunction,
@@ -14,11 +13,9 @@ export default function useGetPollingPipelineOrchestrationStatusById(
     setError,
     loadData,
     status,
-    isQueued,
-    lastStep,
     runCount,
     restingStepId,
-  } = useGetPipelineOrchestrationStatusById(id, handleErrorFunction);
+  } = useGetTaskOrchestrationStatusById(id, handleErrorFunction);
 
   usePollingInterval(() => {
     if (loadData) {
@@ -28,10 +25,8 @@ export default function useGetPollingPipelineOrchestrationStatusById(
 
   return ({
     status: status,
-    isQueued: isQueued,
-    lastStep: lastStep,
     runCount: runCount,
-    restingStepId: restingStepId,
+    restingStepId,
     loadData: loadData,
     isLoading: isLoading,
     error: error,
