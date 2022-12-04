@@ -49,6 +49,7 @@ function PipelineActionControls(
     isLoading,
     fetchData,
     isQueued,
+    runCount,
   }) {
   const [resetPipeline, setResetPipeline] = useState(false);
   const [startPipeline, setStartPipeline] = useState(false);
@@ -74,17 +75,10 @@ function PipelineActionControls(
     }
   }, [workflowStatus]);
 
-  // button handlers
-  const handleResetWorkflowClick = async () => {
-    setResetPipeline(true);
-    await resetPipelineState();
-  };
+  useEffect(() => {
+    setStartPipeline(false);
+  }, [runCount]);
 
-  const handleStopWorkflowClick = async () => {
-    setStopPipeline(true);
-    await stopPipelineRun(pipeline?._id);
-    await PipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
-  };
 
   const handleRefreshClick = async () => {
     await fetchData();
@@ -94,6 +88,7 @@ function PipelineActionControls(
     try {
       setStopPipeline(true);
       await PipelineActions.stopPipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
+      await PipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
     }
     catch (error) {
       if (isMounted.current === true) {
@@ -350,7 +345,7 @@ function PipelineActionControls(
         <PipelineActionControlsStopButton
           pipeline={pipeline}
           workflowStatus={workflowStatus}
-          handleStopWorkflowClick={handleStopWorkflowClick}
+          handleStopWorkflowClick={stopPipelineRun}
           pipelineIsStopping={stopPipeline}
           disabled={startPipeline || resetPipeline}
         />
@@ -509,7 +504,7 @@ function PipelineActionControls(
                       className="btn-default"
                       size="sm"
                       onClick={() => {
-                        handleResetWorkflowClick(pipeline._id);
+                        resetPipelineState();
                       }}
                       disabled={PipelineRoleHelper.canResetPipeline(userData, pipeline) !== true || startPipeline || stopPipeline || resetPipeline}>
                   <IconBase isLoading={resetPipeline} icon={faRedo} fixedWidth className="mr-1" />
@@ -541,6 +536,7 @@ PipelineActionControls.propTypes = {
   isLoading: PropTypes.bool,
   workflowStatus: PropTypes.string,
   isQueued: PropTypes.bool,
+  runCount: PropTypes.number,
 };
 
 export default PipelineActionControls;
