@@ -56,9 +56,6 @@ export const taskActivityFilterMetadata = {
 export class TaskActivityLogFilterModel extends FilterModelBase {
   constructor(getAccessToken, cancelTokenSource, loadData) {
     super(taskActivityFilterMetadata);
-    this.getAccessToken = getAccessToken;
-    this.cancelTokenSource = cancelTokenSource;
-    this.loadData = loadData;
   }
 
   canSearch = () => {
@@ -107,7 +104,7 @@ export class TaskActivityLogFilterModel extends FilterModelBase {
   };
 
   getNewInstance = () => {
-    return new TaskActivityLogFilterModel(this.getAccessToken, this.cancelTokenSource, this.loadData);
+    return new TaskActivityLogFilterModel();
   };
 }
 

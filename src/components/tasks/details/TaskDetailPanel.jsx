@@ -14,7 +14,16 @@ import {TASK_TYPES} from "components/tasks/task.types";
 import TaskAuditLogPanel from "components/tasks/details/audit/TaskAuditLogPanel";
 import { AuthContext } from "contexts/AuthContext";
 
-function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleData, runTask }) {
+function TaskDetailPanel(
+  {
+    gitTasksData,
+    setGitTasksData,
+    loadData,
+    accessRoleData,
+    runTask,
+    status,
+    runCount,
+  }) {
   const {featureFlagHideItemInProd} = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState(runTask ? "settings" : "summary");
 
@@ -85,6 +94,7 @@ function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleDa
             accessRoleData={accessRoleData}
             setGitTasksData={setGitTasksData}
             loadData={loadData}
+            status={status}
           />
         );
       case "settings":
@@ -101,7 +111,10 @@ function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleDa
         return (
           <TaskActivityPanel
             taskModel={gitTasksData}
-            />
+            taskId={gitTasksData?.getMongoDbId()}
+            taskRunCount={runCount}
+            status={status}
+          />
         );
       case "cert":
         return (
@@ -131,6 +144,8 @@ TaskDetailPanel.propTypes = {
   loadData: PropTypes.func,
   accessRoleData: PropTypes.object,
   runTask: PropTypes.bool,
+  status: PropTypes.string,
+  runCount: PropTypes.number,
 };
 
 export default TaskDetailPanel;

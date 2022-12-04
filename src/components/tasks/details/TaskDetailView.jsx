@@ -115,6 +115,7 @@ function TaskDetailView() {
     <VanitySetDetailScreenContainer
       breadcrumbDestination={"taskManagementDetailView"}
       metadata={tasksMetadata}
+      isLoading={isLoading && taskModel == null}
       model={taskModel}
       accessRoleData={accessRoleData}
       navigationTabContainer={<TasksSubNavigationBar currentTab={"taskViewer"} />}
