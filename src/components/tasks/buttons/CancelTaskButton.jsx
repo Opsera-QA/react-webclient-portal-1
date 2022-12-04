@@ -57,7 +57,7 @@ function CancelTaskButton(
       toastContext.showInformationToast("A request to cancel this Task has been submitted", 10);
     }
     catch (error) {
-      setIsCanceling(false)
+      setIsCanceling(false);
       if (isMounted?.current === true) {
         toastContext.showSystemErrorToast(error, "There was an issue canceling this Task:");
       }
