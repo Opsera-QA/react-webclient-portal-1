@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { faPlay, faStop } from "@fortawesome/pro-light-svg-icons";
@@ -20,6 +20,14 @@ function GitScraperActionButton(
     getAccessToken,
     toastContext,
   } = useComponentStateReference();
+
+  useEffect(() => {
+    if (status !== "stopped") {
+      setIsStarting(false);
+    } else {
+      setIsCanceling(false);
+    }
+  }, [status]);
 
   const handleRunTask = async () => {
     try {
@@ -58,15 +66,6 @@ function GitScraperActionButton(
   };
 
   const getRunningLabel = () => {
-    if (status !== "running") {
-      return (
-        <span>
-          <IconBase icon={faPlay} className={"mr-1"} />
-          Run Task
-        </span>
-      );
-    }
-
     if (isStarting === true) {
       return (
         <span>
@@ -76,10 +75,19 @@ function GitScraperActionButton(
       );
     }
 
+    if (status === "running") {
+      return (
+        <span>
+          <IconBase icon={faPlay} className={"mr-1"} />
+          Running Task
+        </span>
+      );
+    }
+
     return (
       <span>
         <IconBase isLoading={true} className={"mr-1"} />
-        Running Task
+        Run Task
       </span>
     );
   };

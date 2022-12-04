@@ -122,7 +122,6 @@ function TaskSummaryPanel(
     }
   };
 
-
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab} editingAllowed={TaskRoleHelper.canUpdateTask(userData, gitTasksData?.getPersistData())}>
       <Row>

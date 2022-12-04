@@ -41,8 +41,6 @@ function TasksEcsActionButtons(
           "A service level error has occurred in creation of the ECS Cluster - check the Activity Logs for a complete error log."
         );
       }
-
-      setIsStarting(false);
     }
   };
 
@@ -78,7 +76,6 @@ function TasksEcsActionButtons(
         toastContext.showSuccessDialog("Status check successful. View Activity Logs for a detailed report");
       } catch (error) {
         console.log(error);
-        setCheckStatus(false);
       } finally {
         setCheckStatus(false);
       }
@@ -86,15 +83,6 @@ function TasksEcsActionButtons(
   };
 
   const getRunningLabel = () => {
-    if (status === "running") {
-      return (
-        <span>
-          <IconBase icon={faPlay} className={"mr-1"} />
-          Run Task
-        </span>
-      );
-    }
-
     if (isStarting === true) {
       return (
         <span>
@@ -104,10 +92,19 @@ function TasksEcsActionButtons(
       );
     }
 
+    if (status === "running") {
+      return (
+        <span>
+          <IconBase icon={faPlay} className={"mr-1"} />
+          Running Task
+        </span>
+      );
+    }
+
     return (
       <span>
         <LoadingIcon className={"mr-2"} />
-        Running Task
+        Run Task
       </span>
     );
   };
@@ -121,6 +118,7 @@ function TasksEcsActionButtons(
         </span>
       );
     }
+
     return (
       <span>
         <IconBase icon={faStop} className={"mr-1"} />
@@ -138,6 +136,7 @@ function TasksEcsActionButtons(
         </span>
       );
     }
+
     return (
       <span>
         <IconBase icon={faLaptopMedical} className={"mr-1"} />
