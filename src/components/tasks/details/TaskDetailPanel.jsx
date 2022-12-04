@@ -14,7 +14,15 @@ import {TASK_TYPES} from "components/tasks/task.types";
 import TaskAuditLogPanel from "components/tasks/details/audit/TaskAuditLogPanel";
 import { AuthContext } from "contexts/AuthContext";
 
-function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleData, runTask }) {
+function TaskDetailPanel(
+  {
+    gitTasksData,
+    setGitTasksData,
+    loadData,
+    accessRoleData,
+    runTask,
+    status,
+  }) {
   const {featureFlagHideItemInProd} = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState(runTask ? "settings" : "summary");
 
@@ -85,6 +93,7 @@ function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleDa
             accessRoleData={accessRoleData}
             setGitTasksData={setGitTasksData}
             loadData={loadData}
+            status={status}
           />
         );
       case "settings":
@@ -131,6 +140,7 @@ TaskDetailPanel.propTypes = {
   loadData: PropTypes.func,
   accessRoleData: PropTypes.object,
   runTask: PropTypes.bool,
+  status: PropTypes.string,
 };
 
 export default TaskDetailPanel;
