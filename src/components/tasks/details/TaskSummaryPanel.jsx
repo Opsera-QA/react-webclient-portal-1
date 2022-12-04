@@ -22,6 +22,7 @@ import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import RbacWarningField from "temp-library-components/fields/rbac/RbacWarningField";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import TaskStateField from "temp-library-components/fields/orchestration/state/task/TaskStateField";
 
 function TaskSummaryPanel(
   {
@@ -129,6 +130,14 @@ function TaskSummaryPanel(
         </Col>
         <Col md={6}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"owner_name"} />
+        </Col>
+        <Col md={6}>
+          <TaskStateField
+            model={gitTasksData}
+          />
+        </Col>
+        <Col md={6}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"run_count"} />
         </Col>
         <Col lg={12}>
           <TaskRoleAccessInput
