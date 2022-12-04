@@ -90,6 +90,7 @@ function RunTaskButton(
     setIsStarting(true);
     if (taskModel?.getData("type") === TASK_TYPES.GIT_TO_GIT_MERGE_SYNC) {
       try{
+        setIsStarting(true);
         // const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
         // gitTasksData.setData("configuration", configuration);
         // await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
@@ -103,14 +104,11 @@ function RunTaskButton(
         if (isMounted?.current === true) {
           toastContext.showLoadingErrorDialog(error);
         }
-      } finally {
-        if (isMounted?.current === true) {
-          setIsStarting(false);
-        }
       }
     }
     else if (taskModel?.getData("type") === TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC) {
       try{
+        setIsStarting(true);
         // const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
         // gitTasksData.setData("configuration", configuration);
         // await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
