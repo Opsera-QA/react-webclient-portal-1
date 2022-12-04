@@ -116,7 +116,6 @@ function TaskDetailView() {
       breadcrumbDestination={"taskManagementDetailView"}
       metadata={tasksMetadata}
       model={taskModel}
-      isLoading={isLoading}
       accessRoleData={accessRoleData}
       navigationTabContainer={<TasksSubNavigationBar currentTab={"taskViewer"} />}
       objectRoles={taskModel?.getData("roles")}
