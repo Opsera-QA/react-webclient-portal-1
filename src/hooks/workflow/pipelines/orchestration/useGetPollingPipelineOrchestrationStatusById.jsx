@@ -31,7 +31,7 @@ export default function useGetPollingPipelineOrchestrationStatusById(
     isQueued: isQueued,
     lastStep: lastStep,
     runCount: runCount,
-    restingStepId,
+    restingStepId: restingStepId,
     loadData: loadData,
     isLoading: isLoading,
     error: error,
