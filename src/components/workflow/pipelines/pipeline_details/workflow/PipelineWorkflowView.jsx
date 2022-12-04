@@ -17,7 +17,6 @@ function PipelineWorkflowView(
     pipelineStatus,
     isQueued,
   }) {
-
   const closeEditorPanel = () => {
     setEditItem(false);
   };
