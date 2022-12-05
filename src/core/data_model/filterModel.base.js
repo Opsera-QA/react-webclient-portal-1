@@ -455,6 +455,10 @@ export class FilterModelBase {
   getSortOption = () => {
     return this.getData("sortOption");
   };
+
+  clone = () => {
+    return dataParsingHelper.cloneDeep(this);
+  };
 }
 
 export default FilterModelBase;

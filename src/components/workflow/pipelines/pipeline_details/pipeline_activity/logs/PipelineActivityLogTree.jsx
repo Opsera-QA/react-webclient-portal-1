@@ -29,7 +29,7 @@ function PipelineActivityLogTree(
   }, [pipelineLogTree]);
 
   useEffect(() => {
-    if (isMounted.current === true && pipelineRunCount && Array.isArray(pipelineLogTree) && pipelineLogTree.length > 0) {
+    if (pipelineRunCount) {
       setSelectedId(`${pipelineRunCount}`);
       setCurrentStepId(undefined);
       setCurrentRunNumber(pipelineRunCount);

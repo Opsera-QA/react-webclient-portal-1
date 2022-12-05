@@ -22,18 +22,12 @@ import pipelineInstructionsMetadata
   from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructions.metadata";
 import pipelineInstructionsTypeConstants
   from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructionsType.constants";
-import TagFilter from "components/common/filters/tags/tag/TagFilter";
-import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
-import PipelineInstructionsTypeFilter
-  from "components/common/filters/pipelines/instructions/PipelineInstructionsTypeFilter";
 import InlinePipelineInstructionsTypeFilter
   from "components/common/filters/pipelines/instructions/InlinePipelineInstructionsTypeFilter";
 import pipelineInstructionsStatusConstants
   from "@opsera/definitions/constants/pipelines/instructions/status/pipelineInstructionsStatus.constants";
-import PipelineInstructionsStatusFilterSelectInput
-  from "components/common/list_of_values_input/workflow/instructions/status/PipelineInstructionsStatusFilterSelectInput";
-import NewDateRangeInput from "components/common/inputs/date/range/NewDateRangeInput";
-import { Row, Col } from "react-bootstrap";
+import PipelineInstructionsFilterOverlay
+  from "components/workflow/instructions/filter_overlay/PipelineInstructionsFilterOverlay";
 
 export default function PipelineInstructionsTable(
   {
@@ -97,40 +91,12 @@ export default function PipelineInstructionsTable(
     );
   };
 
-  const getDropdownFilters = () => {
+  const getFilterSelectionOverlayPanel = () => {
     return (
-      <div className={"d-flex"}>
-        <div className={"mr-3"}>
-          <NewDateRangeInput
-            model={pipelineInstructionsFilterModel}
-            setModel={setPipelineInstructionsFilterModel}
-            fieldName={"release_date_range"}
-          />
-        </div>
-        <div className={"w-100 my-2"}>
-          <PipelineInstructionsTypeFilter
-            filterModel={pipelineInstructionsFilterModel}
-            setFilterModel={setPipelineInstructionsFilterModel}
-            className={"my-2"}
-          />
-          <TagFilter
-            filterDto={pipelineInstructionsFilterModel}
-            setFilterDto={setPipelineInstructionsFilterModel}
-            valueField={"value2"}
-            className={"my-2"}
-          />
-          <OwnerFilter
-            filterModel={pipelineInstructionsFilterModel}
-            setFilterModel={setPipelineInstructionsFilterModel}
-            className={"my-2"}
-          />
-          <PipelineInstructionsStatusFilterSelectInput
-            filterModel={pipelineInstructionsFilterModel}
-            setFilterModel={setPipelineInstructionsFilterModel}
-            className={"my-2"}
-          />
-        </div>
-      </div>
+      <PipelineInstructionsFilterOverlay
+        pipelineInstructionsFilterModel={pipelineInstructionsFilterModel}
+        loadDataFunction={loadData}
+      />
     );
   };
 
@@ -162,8 +128,8 @@ export default function PipelineInstructionsTable(
       isLoading={isLoading}
       inlineFilters={getInlineFilters()}
       body={getTable()}
+      filterSelectionOverlayPanel={getFilterSelectionOverlayPanel()}
       metadata={pipelineInstructionsMetadata}
-      dropdownFilters={getDropdownFilters()}
       titleIcon={faBallotCheck}
       title={"Pipeline Instructions"}
       type={"Pipeline Instructions"}

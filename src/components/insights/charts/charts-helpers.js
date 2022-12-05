@@ -6,7 +6,14 @@ import {METRIC_QUALITY_LEVELS} from "../../common/metrics/text/MetricTextBase";
 
 export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
   const date = kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")]?.value;
-  if (date) {
+  if(date?.label) {
+    const dateRange = getDatesFromLabel(date?.label);
+    return {
+      label: date?.label,
+      start: dateRange.startDate,
+      end: dateRange.endDate
+    };
+  } else if (date) {
     return {
       start: date.startDate,
       end: addDays(
@@ -25,40 +32,47 @@ export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
 
 export function getDatesFromLabel(label) {
   switch (label) {
-    case 'Today':
+    case 'Last 24 Hours':
       return {
-        startDate: new Date(),
+        label: 'Last 24 Hours',
+        startDate: new Date(addDays(new Date(), -1)),
         endDate: new Date(),
       };
     case 'Last Week':
       return {
-        startDate: new Date(addDays(new Date(), -7).setHours(0, 0, 0, 0)),
-        endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+        label: 'Last Week',
+        startDate: new Date(addDays(new Date(), -7)),
+        endDate: new Date(),
       };
     case 'Last Month':
       return {
-        startDate: new Date(addDays(new Date(), -30).setHours(0, 0, 0, 0)),
-        endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+        label: 'Last Month',
+        startDate: new Date(addDays(new Date(), -30)),
+        endDate: new Date(),
       };
     case 'Last 3 Months':
       return {
-        startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
-        endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+        label: 'Last 3 Months',
+        startDate: new Date(addDays(new Date(), -90)),
+        endDate: new Date(),
       };
     case 'Last 6 Months':
       return {
-        startDate: new Date(addDays(new Date(), -180).setHours(0, 0, 0, 0)),
-        endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+        label: 'Last 6 Months',
+        startDate: new Date(addDays(new Date(), -180)),
+        endDate: new Date(),
       };
     case 'Last 1 Year':
       return {
-        startDate: new Date(addDays(new Date(), -365).setHours(0, 0, 0, 0)),
-        endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+        label: 'Last 1 Year',
+        startDate: new Date(addDays(new Date(), -365)),
+        endDate: new Date(),
       };
     default:
       return {
-        startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
-        endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+        label: 'Last 3 Months',
+        startDate: new Date(addDays(new Date(), -90)),
+        endDate: new Date(),
       };
   }
 }

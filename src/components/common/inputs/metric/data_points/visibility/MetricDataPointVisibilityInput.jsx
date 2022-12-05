@@ -48,6 +48,16 @@ function MetricDataPointVisibilityInput(
       />
     );
   };
+  const getDefaultNotificationToggle = () => {
+    return (
+      <BooleanToggleInput
+        dataObject={dataPointVisibilityModel}
+        setDataObject={setDataFunction}
+        fieldName={"defaultNotificationToggle"}
+        disabled={disabled}
+      />
+    );
+  };
 
   if (model == null || dataPointVisibilityModel == null) {
     return null;
@@ -63,6 +73,7 @@ function MetricDataPointVisibilityInput(
         fieldName={"isVisible"}
         disabled={disabled}
       />
+      {getDefaultNotificationToggle()}
     </div>
   );
 }

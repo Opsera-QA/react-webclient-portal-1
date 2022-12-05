@@ -1,14 +1,12 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { faLaptopMedical, faPlay, faStop } from "@fortawesome/pro-light-svg-icons";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import { AuthContext } from "contexts/AuthContext";
-import axios from "axios";
 import taskActions from "components/tasks/task.actions";
 import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import {TASK_TYPES} from "components/tasks/task.types";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 // TODO: This needs to be completely rewritten. It was causing massive amounts of data pulls
 function TasksEcsActionButtons(
@@ -17,107 +15,30 @@ function TasksEcsActionButtons(
     disable,
     status,
   }) {
-  let toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [isTaskRunning, setIsTaskRunning] = useState(false);
+  const [isStarting, setIsStarting] = useState(false);
   const [isCanceling, setIsCanceling] = useState(false);
   const [isCheckingStatus, setCheckStatus] = useState(false);
-  let timerIds = [];
+  const {
+    toastContext,
+    getAccessToken,
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+    if (status !== "stopped") {
+      setIsStarting(false);
+    } else {
+      setIsCanceling(false);
     }
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    setIsTaskRunning(status === "running");
-
-    if (status === "running" && gitTasksData?.getData("type") === TASK_TYPES.AWS_CREATE_ECS_CLUSTER) {
-      loadData(source).catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-      stopPolling();
-    };
   }, [status]);
-
-  const stopPolling = () => {
-    if (Array.isArray(timerIds) && timerIds.length > 0) {
-      timerIds?.forEach((timerId) => clearTimeout(timerId));
-    }
-  };
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      await startTaskPolling(cancelSource);
-    } catch (error) {
-      toastContext.showInlineErrorMessage(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const startTaskPolling = async (cancelSource = cancelTokenSource, count = 1) => {
-    if (isMounted?.current !== true) {
-      return;
-    }
-    const taskAtHand = await getTaskStatus(cancelSource);
-    console.log("task at hand status: " + JSON.stringify(taskAtHand?.status));
-
-    if (count > 15) {
-      await handleCancelRunTask(true);
-    }
-
-    if (taskAtHand?.status === "running") {
-      let timeout = 15000;
-      if (count > 4) {
-        timeout = timeout * count;
-      }
-      await new Promise((resolve) => timerIds.push(setTimeout(resolve, timeout)));
-      return await startTaskPolling(cancelSource, count + 1);
-    }
-    else {
-      setIsTaskRunning(false);
-    }
-  };
-
-  const getTaskStatus = async (cancelSource = cancelTokenSource) => {
-    console.info("tasks ecs check status");
-    const response = await taskActions.getTaskByIdV2(getAccessToken, cancelSource, gitTasksData.getData("_id"));
-    const taskData = response?.data?.data;
-
-    if (isMounted?.current === true && taskData) {
-      if (taskData?.status !== "running") {
-        setIsLoading(false);
-        setIsTaskRunning(false);
-      }
-
-      return taskData;
-    }
-  };
 
   const handleRunTask = async () => {
     try {
-      setIsLoading(true);
+      setIsStarting(true);
       await taskActions.createEcsClusterWithTaskIdV2(getAccessToken, cancelTokenSource, gitTasksData?.getData("_id"));
       toastContext.showSuccessDialog("ECS Cluster Creation Triggered Successfully");
-      setIsTaskRunning(true);
-      await startTaskPolling();
     } catch (error) {
-      setIsTaskRunning(false);
-      isMounted.current = false;
+      setIsStarting(false);
       console.log(error);
 
       if (error?.error?.response?.data?.message) {
@@ -128,33 +49,28 @@ function TasksEcsActionButtons(
           "A service level error has occurred in creation of the ECS Cluster - check the Activity Logs for a complete error log."
         );
       }
-
-      setIsLoading(false);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const handleCancelRunTask = async (automatic) => {
-    setIsCanceling(true);
-    let gitTaskDataCopy = gitTasksData;
-    gitTaskDataCopy.setData("status", "stopped");
-    await taskActions.updateGitTaskV2(getAccessToken, axios.CancelToken.source(), gitTaskDataCopy);
-    await taskActions.logClusterCancellation(getAccessToken, axios.CancelToken.source(), gitTaskDataCopy);
-    setIsTaskRunning(true);
-    isMounted.current = false;
+    try {
+      setIsCanceling(true);
+      let gitTaskDataCopy = gitTasksData;
+      gitTaskDataCopy.setData("status", "stopped");
+      await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTaskDataCopy);
+      await taskActions.logClusterCancellation(getAccessToken, cancelTokenSource, gitTaskDataCopy);
 
-    if (automatic) {
-      toastContext.showInformationToast(
-        "Automatic status checks have been paused, please use the manual status check button in order to check the cluster status."
-      );
-    } else {
-      toastContext.showInformationToast("Task has been cancelled", 10);
+      if (automatic) {
+        toastContext.showInformationToast(
+          "Automatic status checks have been paused, please use the manual status check button in order to check the cluster status."
+        );
+      } else {
+        toastContext.showInformationToast("Task has been cancelled", 10);
+      }
+    } catch (error) {
+      setIsCanceling(false);
+      toastContext.showSystemErrorToast(error, "There was an issue canceling this Task:");
     }
-
-    gitTasksData.setData("status", "stopped");
-    setIsCanceling(false);
-    window.location.reload();
   };
 
   const handleCheckStatus = async () => {
@@ -168,7 +84,6 @@ function TasksEcsActionButtons(
         toastContext.showSuccessDialog("Status check successful. View Activity Logs for a detailed report");
       } catch (error) {
         console.log(error);
-        setCheckStatus(false);
       } finally {
         setCheckStatus(false);
       }
@@ -176,18 +91,28 @@ function TasksEcsActionButtons(
   };
 
   const getRunningLabel = () => {
-    if (isTaskRunning === false) {
+    if (isStarting === true) {
       return (
         <span>
-          <IconBase icon={faPlay} className={"mr-1"} />
-          Run Task
+          <IconBase isLoading={true} className={"mr-1"} />
+          Starting Task
         </span>
       );
     }
+
+    if (status === "running") {
+      return (
+        <span>
+          <IconBase icon={faPlay} className={"mr-1"} />
+          Running Task
+        </span>
+      );
+    }
+
     return (
       <span>
         <LoadingIcon className={"mr-2"} />
-        Running Task
+        Run Task
       </span>
     );
   };
@@ -201,6 +126,7 @@ function TasksEcsActionButtons(
         </span>
       );
     }
+
     return (
       <span>
         <IconBase icon={faStop} className={"mr-1"} />
@@ -218,6 +144,7 @@ function TasksEcsActionButtons(
         </span>
       );
     }
+
     return (
       <span>
         <IconBase icon={faLaptopMedical} className={"mr-1"} />
@@ -238,7 +165,7 @@ function TasksEcsActionButtons(
     return (
       <Button
         variant={"warning"}
-        disabled={status === "running" || disable || isLoading}
+        disabled={status === "running" || disable || isStarting || isCanceling}
         onClick={() => {
           handleCheckStatus(true);
         }}
@@ -253,7 +180,7 @@ function TasksEcsActionButtons(
     return (
       <Button
         variant={"danger"}
-        disabled={status !== "running" || disable || isLoading}
+        disabled={status !== "running" || disable || isStarting || isCanceling}
         onClick={() => {
           handleCancelRunTask(false);
         }}
@@ -269,7 +196,7 @@ function TasksEcsActionButtons(
     return (
       <Button
         variant={"success"}
-        disabled={status === "running" || disable || isLoading}
+        disabled={status === "running" || disable || isStarting}
         onClick={() => {
           handleRunTask(true);
         }}

@@ -16,6 +16,10 @@ dataPointHelpers.canUserToggleVisibility = (dataPoint) => {
   return dataPoint?.visibility?.userVisibilityToggleSupport === true;
 };
 
+dataPointHelpers.canUserToggleDefaultNotification = (dataPoint) => {
+  return dataPoint?.visibility?.defaultNotificationToggle === true;
+};
+
 dataPointHelpers.canUserEditStrategicCriteria = (dataPoint) => {
   return dataPoint?.strategic_criteria?.isUserEditable === true;
 };

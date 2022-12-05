@@ -6,7 +6,6 @@ import StackedFilterRemovalIcon from "components/common/icons/StackedFilterRemov
 import Model from "core/data_model/model";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import FilterSelectionOverlay from "components/common/filters/buttons/FilterSelectionOverlay";
 import FilterSelectionPopoverButton from "components/common/filters/buttons/FilterSelectionPopoverButton";
 
 function FilterButtons(
@@ -20,7 +19,7 @@ function FilterButtons(
     includeButtonText,
     filterDropdownTitle,
     inlineFilters,
-    launchFilterOverlay,
+    filterSelectionOverlayPanel,
   }) {
   const {
     toastContext,
@@ -70,37 +69,28 @@ function FilterButtons(
   };
 
   const launchFilterSelectionOverlay = () => {
-    toastContext.showOverlayPanel(
-      <FilterSelectionOverlay
-        resetFiltersAndCloseItem={resetFiltersAndCloseItem}
-        filterDto={filterDto}
-        loadFilters={loadFilters}
-        dropdownFilters={dropdownFilters}
-        isLoading={isLoading}
-        filterDropdownTitle={filterDropdownTitle}
-      />
-    );
+    toastContext.showOverlayPanel(filterSelectionOverlayPanel);
   };
 
   const getFilterButton = () => {
-    if (dropdownFilters) {
-      if (launchFilterOverlay === true) {
-        return (
-          <div className={"mr-2"}>
-            <Button
-              className={filterBtnClassName}
-              disabled={filterDto == null || isLoading}
-              variant={"outline-primary"}
-              size={"sm"}
-              onClick={launchFilterSelectionOverlay}
-            >
-              <span><IconBase icon={faFilter}/></span>
-              {includeButtonText && <span>Filter Results</span>}
-            </Button>
-          </div>
-        );
-      }
+    if (filterSelectionOverlayPanel) {
+      return (
+        <div className={"mr-2"}>
+          <Button
+            className={filterBtnClassName}
+            disabled={filterDto == null || isLoading}
+            variant={"outline-primary"}
+            size={"sm"}
+            onClick={launchFilterSelectionOverlay}
+          >
+            <span><IconBase icon={faFilter}/></span>
+            {includeButtonText && <span>Filter Results</span>}
+          </Button>
+        </div>
+      );
+    }
 
+    if (dropdownFilters) {
       return (
         <FilterSelectionPopoverButton
           resetFiltersAndCloseItem={resetFiltersAndCloseItem}
@@ -116,7 +106,7 @@ function FilterButtons(
     }
   };
 
-  if (dropdownFilters == null && inlineFilters == null) {
+  if (dropdownFilters == null && inlineFilters == null && filterSelectionOverlayPanel == null) {
     return null;
   }
 
@@ -151,7 +141,7 @@ FilterButtons.propTypes = {
   filterBtnClassName: PropTypes.string,
   includeButtonText: PropTypes.bool,
   filterDropdownTitle: PropTypes.string,
-  launchFilterOverlay: PropTypes.bool,
+  filterSelectionOverlayPanel: PropTypes.object,
 };
 
 export default FilterButtons;

@@ -18,15 +18,19 @@ pipelineHelper.getDetailViewLink = (pipelineId) => {
 };
 
 pipelineHelper.getPipelineOrientation = (pipeline) => {
-  const restingStepId = pipeline?.workflow?.last_step?.step_id;
+  const restingStepId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.step_id");
 
   if (isMongoDbId(restingStepId) === true) {
     const stepIndex = PipelineHelpers.getStepIndex(pipeline, restingStepId);
+    const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
+    const stepCount = plan.length;
 
-    if (stepIndex + 1 === Object.keys(pipeline.workflow.plan).length) {
-      return "end";
-    } else {
-      return "middle";
+    if (stepIndex !== -1) {
+      if (stepIndex + 1 === stepCount) {
+        return "end";
+      } else {
+        return "middle";
+      }
     }
   }
 

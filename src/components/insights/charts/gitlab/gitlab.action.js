@@ -141,7 +141,10 @@ gitlabActions.gitlabDeploymentStatistics = async (
     const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
     let tags = getTagsFromKpiConfiguration(kpiConfiguration);
     // TODO Revert this code when timezone is fixed everywhere
-    const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    let timeOffsetInMins = 0;
+    if(!dateRange.label){
+        timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    }
     const startDate =  new Date(dateRange?.start);
     const endDate =  new Date(dateRange?.end);
     startDate.setTime(startDate.getTime() - timeOffsetInMins);
@@ -184,7 +187,10 @@ gitlabActions.getActionablePipelinesChartData = async (
     const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
     let tags = getTagsFromKpiConfiguration(kpiConfiguration);
     // TODO Revert this code when timezone is fixed everywhere
-    const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    let timeOffsetInMins = 0;
+    if(!dateRange.label){
+        timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    }
     const startDate =  new Date(dateRange?.start);
     const endDate =  new Date(dateRange?.end);
     startDate.setTime(startDate.getTime() - timeOffsetInMins);
@@ -231,7 +237,10 @@ gitlabActions.getActionableDeploymentsChartData = async (
     const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
     let tags = getTagsFromKpiConfiguration(kpiConfiguration);
     // TODO Revert this code when timezone is fixed everywhere
-    const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    let timeOffsetInMins = 0;
+    if(!dateRange.label){
+        timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    }
     const startDate =  new Date(dateRange?.start);
     const endDate =  new Date(dateRange?.end);
     startDate.setTime(startDate.getTime() - timeOffsetInMins);
@@ -275,7 +284,10 @@ gitlabActions.gitlabLeadTimeForChange = async (
     const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
     let tags = getTagsFromKpiConfiguration(kpiConfiguration);
     // TODO Revert this code when timezone is fixed everywhere
-    const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    let timeOffsetInMins = 0;
+    if(!dateRange.label){
+        timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    }
     const startDate =  new Date(dateRange?.start);
     const endDate =  new Date(dateRange?.end);
     startDate.setTime(startDate.getTime() - timeOffsetInMins);
@@ -317,7 +329,10 @@ gitlabActions.gitlabAverageCommitTimeToMerge = async (
     const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
     let tags = getTagsFromKpiConfiguration(kpiConfiguration);
     // TODO Revert this code when timezone is fixed everywhere
-    const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    let timeOffsetInMins = 0;
+    if(!dateRange.label){
+        timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    }
     const startDate =  new Date(dateRange?.start);
     const endDate =  new Date(dateRange?.end);
     startDate.setTime(startDate.getTime() - timeOffsetInMins);
@@ -366,7 +381,10 @@ gitlabActions.gitlabPipelineData = async (
     const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
     let tags = getTagsFromKpiConfiguration(kpiConfiguration);
     // TODO Revert this code when timezone is fixed everywhere
-    const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    let timeOffsetInMins = 0;
+    if(!dateRange.label){
+        timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    }
     const startDate =  new Date(dateRange?.start);
     const endDate =  new Date(dateRange?.end);
     startDate.setTime(startDate.getTime() - timeOffsetInMins);

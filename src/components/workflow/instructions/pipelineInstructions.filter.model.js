@@ -138,6 +138,3 @@ export class PipelineInstructionsFilterModel extends FilterModelBase {
   }
 }
 
-export default PipelineInstructionsFilterModel;
-
-

@@ -26,52 +26,34 @@ import PipelineSourceConfigurationDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/source/PipelineSourceConfigurationDetailsOverviewOverlay";
 import PipelineExportToGitOverlay from "components/workflow/pipelines/pipeline_details/workflow/PipelineExportToGitOverlay";
 import modelHelpers from "components/common/model/modelHelpers";
-import sourceRepositoryConfigurationMetadata from "./step_configuration/repository/source-repository-configuration-metadata";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import {
+  sourceRepositoryConfigurationMetadata
+} from "components/workflow/plan/source/sourceRepositoryConfiguration.metadata";
 
 // TODO: Clean up and refactor to make separate components. IE the source repository begin workflow box can be its own component
 function PipelineWorkflow({
   pipeline,
   fetchPlan,
-  editItemId,
-  refreshCount,
   softLoading,
+  status,
+  lastStep,
 }) {
   const [modalHeader, setModalHeader] = useState("");
-  const [lastStep, setLastStep] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [zoomValue, setZoomValue] = useState(2); //1,2, or 3 with 2 being default zoom
   const [modalMessage, setModalMessage] = useState({});
-  const [workflowStatus, setWorkflowStatus] = useState(false);
   const [editWorkflow, setEditWorkflow] = useState(false);
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
-  const gitExportEnabled = pipeline?.workflow?.source?.gitExportEnabled; 
+  const gitExportEnabled = pipeline?.workflow?.source?.gitExportEnabled;
   const sourceRepositoryModel = modelHelpers.parseObjectIntoModel(pipeline?.workflow?.source, sourceRepositoryConfigurationMetadata);
   const {
     userData,
     toastContext,
     getAccessToken,
    } = useComponentStateReference();
-
-  useEffect(() => {
-    loadFormData(pipeline);
-  }, [refreshCount, JSON.stringify(pipeline)]);
-
-  const loadFormData = (pipeline) => {
-    const lastStep = DataParsingHelper.parseNestedObject(pipeline, "workflow.last_step", {});
-    setLastStep(lastStep);
-
-    const status = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status");
-    const isPaused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
-
-    if (status === "stopped" && isPaused === true) {
-      setWorkflowStatus("paused");
-    } else {
-      setWorkflowStatus(status);
-    }
-  };
 
   const showWebhookConfigurationSummary = () => {
     toastContext.showOverlayPanel(
@@ -289,7 +271,7 @@ function PipelineWorkflow({
             </OverlayTrigger>
             }
 
-            {workflowStatus !== "running" && workflowStatus !== "paused" ?
+            {status !== "running" && status !== "paused" ?
               <>
                 <OverlayTrigger
                   placement="top"
@@ -367,7 +349,7 @@ function PipelineWorkflow({
                         onClick={() => {
                           handleEditWorkflowClick();
                         }}
-                        disabled={(workflowStatus && workflowStatus !== "stopped")}>
+                        disabled={(status && status !== "stopped")}>
                   <IconBase icon={faPen} className={"mr-1"}/>Edit Workflow</Button>
               </OverlayTrigger>
               }
@@ -379,14 +361,14 @@ function PipelineWorkflow({
               <OverlayTrigger
                 placement="top"
                 delay={{ show: 250, hide: 400 }}
-                overlay={gitExportEnabled ? 
-                  renderTooltip({ message: "Push the current version of this pipeline to your Git repository configured in the top level workflow settings for this pipeline." }) : 
+                overlay={gitExportEnabled ?
+                  renderTooltip({ message: "Push the current version of this pipeline to your Git repository configured in the top level workflow settings for this pipeline." }) :
                   renderTooltip({ message: "This feature allows users to push the current version of this pipeline to a configured git repository.  To use this feature go to workflow settings for this pipeline and enable Pipeline Git Revisions." }) }>
                 <Button variant="outline-secondary" size="sm"
                         onClick={() => {
                           handleExportToGitClick();
                         }}
-                        disabled={(workflowStatus && workflowStatus !== "stopped") || gitExportEnabled !== true || sourceRepositoryModel?.isModelValid() !== true}>
+                        disabled={(status && status !== "stopped") || gitExportEnabled !== true || sourceRepositoryModel?.isModelValid() !== true}>
                   <IconBase icon={faGitAlt} className={"mr-1"}/>Export to Git</Button>
               </OverlayTrigger>
             </>}
@@ -408,11 +390,10 @@ function PipelineWorkflow({
               editWorkflow={editWorkflow}
               pipelineId={pipeline._id}
               fetchPlan={fetchPlan}
-              refreshCount={refreshCount}
               parentCallbackEditItem={callbackFunctionEditItem}
               quietSavePlan={quietSavePlan}
               parentHandleViewSourceActivityLog={handleViewSourceActivityLog}
-              parentWorkflowStatus={workflowStatus}
+              parentWorkflowStatus={status}
             />
           </div>
 
@@ -479,8 +460,8 @@ function renderTooltip(props) {
 PipelineWorkflow.propTypes = {
   pipeline: PropTypes.object,
   fetchPlan: PropTypes.func,
-  editItemId: PropTypes.string,
-  refreshCount: PropTypes.number,
   softLoading: PropTypes.bool,
+  status: PropTypes.string,
+  lastStep: PropTypes.any,
 };
 export default PipelineWorkflow;

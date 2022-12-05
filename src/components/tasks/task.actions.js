@@ -92,6 +92,20 @@ taskActions.deleteTask = async (getAccessToken, cancelTokenSource, taskId) => {
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+taskActions.getTaskOrchestrationStatus = async (
+  getAccessToken,
+  cancelTokenSource,
+  taskId,
+  ) => {
+  const apiUrl = `/tasks/${taskId}/status`;
+  return await baseActions.apiGetCallV3(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+
 taskActions.runTaskV3 = async (getAccessToken, cancelTokenSource, taskId, postBody) => {
   const apiUrl = `/tasks/${taskId}/run`;
   return await baseActions.apiPostCallV2(

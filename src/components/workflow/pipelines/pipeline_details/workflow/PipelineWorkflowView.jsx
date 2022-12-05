@@ -1,21 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
-import InfoDialog from "../../../../common/status_notifications/info";
 import PipelineWorkflow from "./PipelineWorkflow";
 import PipelineWorkflowEditor from "./PipelineWorkflowItemEditor";
 import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
+import InformationDialog from "components/common/status_notifications/info";
 
-function PipelineWorkflowView({
-  pipeline,
-  editItem,
-  setEditItem,
-  fetchPlan,
-  setWorkflowStatus,
-  refreshCount,
-  setPipeline,
-  softLoading,
-}) {
-
+function PipelineWorkflowView(
+  {
+    pipeline,
+    editItem,
+    setEditItem,
+    fetchPlan,
+    setPipeline,
+    softLoading,
+    pipelineStatus,
+    isQueued,
+    lastStep,
+    runCount,
+  }) {
   const closeEditorPanel = () => {
     setEditItem(false);
   };
@@ -29,46 +31,48 @@ function PipelineWorkflowView({
             <PipelineWorkflowEditor editItem={editItem} pipeline={pipeline} closeEditorPanel={closeEditorPanel}
                                     fetchPlan={fetchPlan}/>
           </div>
-          <div className="content-block-footer"/>
         </div>
       </>);
     }
   };
 
   if (!pipeline || Object.keys(pipeline).length <= 0) {
-    return (<InfoDialog
-      message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
+    return (
+      <InformationDialog
+        message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."
+      />
+    );
   }
 
   return (
-    <>
-      <div className="workflow-view h-100">
-        {getPipelineWorkflowEditor(editItem)}
+    <div className="workflow-view h-100">
+      {getPipelineWorkflowEditor(editItem)}
 
-        <div className="py-1 text-right" style={{minHeight:"42px"}}>
-          {!editItem && <div className="float-right pt-1 mr-2">
-            <PipelineActionControls
-              pipeline={pipeline}
-              disabledActionState={false}
-              fetchData={fetchPlan}
-              setPipeline={setPipeline}
-              setParentWorkflowStatus={setWorkflowStatus}
-              isLoading={softLoading}
-            />
-          </div>}
-        </div>
-        <div style={{ minWidth: "740px" }}>
-          <PipelineWorkflow pipeline={pipeline}
-                            editItemId={editItem.step_id}
-                            fetchPlan={fetchPlan}
-                            refreshCount={refreshCount}
-                            softLoading={softLoading}/>
-        </div>
+      <div className="py-1 text-right" style={{minHeight: "42px"}}>
+        {!editItem && <div className="float-right pt-1 mr-2">
+          <PipelineActionControls
+            pipeline={pipeline}
+            fetchData={fetchPlan}
+            setPipeline={setPipeline}
+            workflowStatus={pipelineStatus}
+            isLoading={softLoading}
+            isQueued={isQueued}
+            runCount={runCount}
+          />
+        </div>}
       </div>
-    </>
+      <div style={{minWidth: "740px"}}>
+        <PipelineWorkflow
+          pipeline={pipeline}
+          fetchPlan={fetchPlan}
+          status={pipelineStatus}
+          softLoading={softLoading}
+          lastStep={lastStep}
+        />
+      </div>
+    </div>
   );
 }
-
 
 PipelineWorkflowView.propTypes = {
   pipeline: PropTypes.object,
@@ -76,11 +80,12 @@ PipelineWorkflowView.propTypes = {
   setEditItem: PropTypes.func,
   setActiveTab: PropTypes.func,
   fetchPlan: PropTypes.func,
-  setWorkflowStatus: PropTypes.func,
+  pipelineStatus: PropTypes.string,
   setPipeline: PropTypes.func,
-  refreshCount: PropTypes.number,
-  parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   softLoading: PropTypes.bool,
+  isQueued: PropTypes.bool,
+  lastStep: PropTypes.any,
+  runCount: PipelineWorkflow.number,
 };
 
 export default PipelineWorkflowView;

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {pipelineInstructionsActions} from "components/workflow/instructions/pipelineInstructions.actions";
-import PipelineInstructionsFilterModel from "components/workflow/instructions/pipelineInstructions.filter.model";
+import {PipelineInstructionsFilterModel} from "components/workflow/instructions/pipelineInstructions.filter.model";
 
 export default function useGetPipelineInstructions() {
   const [isLoading, setIsLoading] = useState(false);
