@@ -25,7 +25,9 @@ function GitScraperActionButton(
   useEffect(() => {
     if (status !== "stopped") {
       setIsStarting(false);
-    } else {
+    }
+
+    if (status !== "running") {
       setIsCanceling(false);
     }
   }, [status]);
@@ -105,7 +107,7 @@ function GitScraperActionButton(
 
     return (
       <span>
-        <IconBase icon={faStop} className={"mr-1"}/>
+        <IconBase icon={faStop} className={"mr-2"}/>
         Cancel Task
       </span>
     );

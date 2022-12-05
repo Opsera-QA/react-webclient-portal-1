@@ -27,7 +27,9 @@ function TasksEcsActionButtons(
   useEffect(() => {
     if (status !== "stopped") {
       setIsStarting(false);
-    } else {
+    }
+
+    if (status !== "running") {
       setIsCanceling(false);
     }
   }, [status]);
