@@ -234,12 +234,12 @@ export const getTableDateColumn = (field, className) => {
   };
 };
 
-export const getTableDateTimeColumn = (field, className) => {
+export const getTableDateTimeColumn = (field, className, emptyValuePlaceholder = '') => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function parseDateTime(row) {
-      return row.value ? format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a") : "";
+      return row.value ? format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a") : emptyValuePlaceholder;
     },
     class: className ? className : "no-wrap-inline"
   };
