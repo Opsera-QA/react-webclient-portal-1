@@ -531,7 +531,7 @@ function PipelineActionControls(
                         resetPipelineState();
                       }}
                       disabled={PipelineRoleHelper.canResetPipeline(userData, pipeline) !== true || startPipeline || stopPipeline || resetPipeline}>
-                  <IconBase isLoading={resetPipeline && workflowStatus !== "stopped"} icon={faRedo} fixedWidth className="mr-1" />
+                  <IconBase isLoading={resetPipeline} icon={faRedo} fixedWidth className="mr-1" />
                 <span className="d-none d-md-inline">Reset Pipeline</span></Button>
             </OverlayTrigger>
           }
