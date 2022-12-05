@@ -12,7 +12,7 @@ import {DialogToastContext} from "../../../../../../contexts/DialogToastContext"
 import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import {metricHelpers} from "../../../../metric.helpers";
 
-function GitlabDeploymentActionablePipelinesOverlay({ kpiConfiguration, dashboardData, start, end, range}) {
+function GitlabDeploymentActionablePipelinesOverlay({ kpiConfiguration, dashboardData, start, end, range, icon}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(undefined);
@@ -96,15 +96,6 @@ function GitlabDeploymentActionablePipelinesOverlay({ kpiConfiguration, dashboar
   };
 
   return (
-    <FullScreenCenterOverlayContainer
-      closePanel={closePanel}
-      showPanel={true}
-      titleText={`Github Pipelines Actionable Report`}
-      showToasts={true}
-      titleIcon={faTable}
-      isLoading={false}
-      linkTooltipText={"View Full Blueprint"}
-    >
       <div className={"p-3"}>
         <GitlabDeploymentActionablePipelinesTable
           isLoading={isLoading}
@@ -114,9 +105,9 @@ function GitlabDeploymentActionablePipelinesOverlay({ kpiConfiguration, dashboar
           loadData={loadData}
           range={range}
           count={totalCount}
+          tableTitleIcon={icon}
         />
       </div>
-    </FullScreenCenterOverlayContainer>
   );
 }
 
@@ -126,6 +117,7 @@ GitlabDeploymentActionablePipelinesOverlay.propTypes = {
   start: PropTypes.string,
   end: PropTypes.string,
   range: PropTypes.string,
+  icon: PropTypes.object,
 };
 
 export default GitlabDeploymentActionablePipelinesOverlay;
