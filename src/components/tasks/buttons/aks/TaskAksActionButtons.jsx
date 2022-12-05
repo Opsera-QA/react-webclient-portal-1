@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
-import { faPlay, faStop } from "@fortawesome/pro-light-svg-icons";
+import {Button} from "react-bootstrap";
+import {faPlay, faStop} from "@fortawesome/pro-light-svg-icons";
 import taskActions from "components/tasks/task.actions";
 import IconBase from "components/common/icons/IconBase";
 import {TASK_TYPES} from "components/tasks/task.types";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 // TODO: This needs to be completely rewritten. It was causing massive amounts of data pulls
 function TaskAksActionButtons(
@@ -70,7 +71,7 @@ function TaskAksActionButtons(
     if (isStarting === true) {
       return (
         <span>
-          <IconBase isLoading={true} className={"mr-1"} />
+        <LoadingIcon className={"mr-2"}/>
           Starting Task
         </span>
       );
@@ -79,7 +80,7 @@ function TaskAksActionButtons(
     if (status === "running") {
       return (
         <span>
-          <IconBase icon={faPlay} className={"mr-1"} />
+        <LoadingIcon className={"mr-2"}/>
           Running Task
         </span>
       );
@@ -87,7 +88,7 @@ function TaskAksActionButtons(
 
     return (
       <span>
-        <IconBase isLoading={true} className={"mr-1"} />
+          <IconBase icon={faPlay} className={"mr-2"}/>
         Run Task
       </span>
     );
@@ -97,7 +98,7 @@ function TaskAksActionButtons(
     if (isCanceling) {
       return (
         <span>
-        <IconBase isLoading={true} className={"mr-1"} />
+        <LoadingIcon className={"mr-2"}/>
           Cancelling
         </span>
       );
@@ -105,7 +106,7 @@ function TaskAksActionButtons(
 
     return (
       <span>
-        <IconBase icon={faStop} className={"mr-1"} />
+        <IconBase icon={faStop} className={"mr-2"}/>
         Cancel Task
       </span>
     );
