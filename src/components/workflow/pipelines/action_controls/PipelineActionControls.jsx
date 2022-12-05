@@ -71,8 +71,9 @@ function PipelineActionControls(
       setStartPipeline(false);
     } else {
       setStopPipeline(false);
-      setResetPipeline(false);
     }
+
+    setResetPipeline(false);
   }, [workflowStatus]);
 
   useEffect(() => {
@@ -91,6 +92,7 @@ function PipelineActionControls(
       await PipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
     }
     catch (error) {
+      setStopPipeline(true);
       if (isMounted.current === true) {
         toastContext.showSystemErrorToast(error, "There was an issue stopping this pipeline");
       }
@@ -103,6 +105,7 @@ function PipelineActionControls(
       await PipelineActions.resetPipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
     }
     catch (error) {
+      setResetPipeline(false);
       if (isMounted.current === true) {
         toastContext.showSystemErrorToast(error, "There was an issue resetting this pipeline");
       }
@@ -136,6 +139,7 @@ function PipelineActionControls(
       }
     }
     catch (error) {
+      setStartPipeline(false);
       if (isMounted.current === true) {
         toastContext.showSystemErrorToast(error, "There was an issue starting this pipeline");
       }
@@ -150,10 +154,12 @@ function PipelineActionControls(
    */
   const runPipelineLight = async () => {
     try {
+      setStartPipeline(true);
       toastContext.showInformationToast("A request to re-start this pipeline has been added to the queue.  Upon successful completion of this pipeline run, the pipeline will start again.", 20);
       await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
     }
     catch (error) {
+      setStartPipeline(false);
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
       }
@@ -167,6 +173,7 @@ function PipelineActionControls(
       await PipelineActions.triggerPipelineNewStartV2(getAccessToken, cancelTokenSource, pipeline?._id);
     }
     catch (error) {
+      setStartPipeline(false);
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
       }
@@ -180,6 +187,7 @@ function PipelineActionControls(
       await PipelineActions.resumePipelineV2(getAccessToken, cancelTokenSource, pipelineId);
     }
     catch (error) {
+      setStartPipeline(false);
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
       }
