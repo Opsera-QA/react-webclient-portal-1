@@ -13,9 +13,9 @@ import {getDatesFromLabel} from "../../../insights/charts/charts-helpers";
 
 export const STATIC_DATE_RANGES = [
   {
-    label: "Today",
+    label: "Last 24 Hours",
     range: () => ({
-      label: "Today",
+      label: "Last 24 Hours",
       startDate: new Date(),
       endDate: new Date(),
     }),
