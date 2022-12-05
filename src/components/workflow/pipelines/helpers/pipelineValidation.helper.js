@@ -10,8 +10,13 @@ pipelineValidationHelper.isPipelineStepToolValid = (pipelineStep) => {
   const configuration = DataParsingHelper.parseObject(parsedPipelineStep.configuration);
   const parsedToolIdentifier = DataParsingHelper.parseString(parsedPipelineStep.tool_identifier);
 
-  if (!configuration || !parsedToolIdentifier || parsedToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS) {
+  if (!configuration || !parsedToolIdentifier) {
     return false;
+  }
+
+  // Manually disabling jenkins validation for now
+  if (parsedToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS) {
+    return true;
   }
 
   try {
