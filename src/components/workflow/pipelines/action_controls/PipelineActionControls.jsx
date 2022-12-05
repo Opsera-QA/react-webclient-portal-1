@@ -97,6 +97,14 @@ function PipelineActionControls(
         toastContext.showSystemErrorToast(error, "There was an issue stopping this pipeline");
       }
     }
+    finally {
+      // TODO: Remove
+      if (isMounted?.current === true) {
+        setStopPipeline(false);
+        setStartPipeline(false);
+        setResetPipeline(false);
+      }
+    }
   };
 
   const resetPipelineState = async () => {
@@ -108,6 +116,14 @@ function PipelineActionControls(
       setResetPipeline(false);
       if (isMounted.current === true) {
         toastContext.showSystemErrorToast(error, "There was an issue resetting this pipeline");
+      }
+    }
+    finally {
+      // TODO: Remove
+      if (isMounted?.current === true) {
+        setStopPipeline(false);
+        setStartPipeline(false);
+        setResetPipeline(false);
       }
     }
   };
