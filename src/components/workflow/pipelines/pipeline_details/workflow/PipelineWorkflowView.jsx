@@ -11,7 +11,6 @@ function PipelineWorkflowView(
     editItem,
     setEditItem,
     fetchPlan,
-    refreshCount,
     setPipeline,
     softLoading,
     pipelineStatus,
@@ -67,7 +66,6 @@ function PipelineWorkflowView(
           pipeline={pipeline}
           fetchPlan={fetchPlan}
           status={pipelineStatus}
-          refreshCount={refreshCount}
           softLoading={softLoading}
           lastStep={lastStep}
         />
@@ -84,7 +82,6 @@ PipelineWorkflowView.propTypes = {
   fetchPlan: PropTypes.func,
   pipelineStatus: PropTypes.string,
   setPipeline: PropTypes.func,
-  refreshCount: PropTypes.number,
   softLoading: PropTypes.bool,
   isQueued: PropTypes.bool,
   lastStep: PropTypes.any,

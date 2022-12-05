@@ -22,7 +22,6 @@ function PipelineWorkflowItemList(
     quietSavePlan,
     fetchPlan,
     parentWorkflowStatus,
-    refreshCount,
   }) {
   const [isSaving, setIsSaving] = useState(false);
   const [pipelineSteps, setPipelineSteps] = useState(pipeline.workflow.plan);
@@ -73,7 +72,7 @@ function PipelineWorkflowItemList(
     if (pipeline) {
       setPipelineSteps(pipeline?.workflow?.plan);
     }
-  }, [refreshCount, JSON.stringify(lastStep), JSON.stringify(pipeline.workflow)]);
+  }, [JSON.stringify(lastStep), JSON.stringify(pipeline.workflow)]);
 
 
   const handleAddStep = async (itemId, index) => {
@@ -311,7 +310,6 @@ function PipelineWorkflowItemList(
               pipelineId={pipelineId}
               parentCallbackEditItem={parentCallbackEditItem}
               deleteStep={deleteStep}
-              refreshCount={refreshCount}
               parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog}
               parentWorkflowStatus={parentWorkflowStatus}
               toolIdentifier={getToolIdentifierForStep(item?.tool?.tool_identifier)}
@@ -342,11 +340,9 @@ PipelineWorkflowItemList.propTypes = {
   pipelineId: PropTypes.string,
   parentCallbackEditItem: PropTypes.func,
   parentHandleViewSourceActivityLog: PropTypes.func,
-  setStateItems: PropTypes.func,
   quietSavePlan: PropTypes.func,
   fetchPlan: PropTypes.func,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  refreshCount: PropTypes.number,
 };
 
 
