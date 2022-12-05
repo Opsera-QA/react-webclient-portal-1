@@ -37,7 +37,6 @@ import {
 function PipelineWorkflow({
   pipeline,
   fetchPlan,
-  refreshCount,
   softLoading,
   status,
   lastStep,
@@ -391,7 +390,6 @@ function PipelineWorkflow({
               editWorkflow={editWorkflow}
               pipelineId={pipeline._id}
               fetchPlan={fetchPlan}
-              refreshCount={refreshCount}
               parentCallbackEditItem={callbackFunctionEditItem}
               quietSavePlan={quietSavePlan}
               parentHandleViewSourceActivityLog={handleViewSourceActivityLog}
@@ -462,7 +460,6 @@ function renderTooltip(props) {
 PipelineWorkflow.propTypes = {
   pipeline: PropTypes.object,
   fetchPlan: PropTypes.func,
-  refreshCount: PropTypes.number,
   softLoading: PropTypes.bool,
   status: PropTypes.string,
   lastStep: PropTypes.any,

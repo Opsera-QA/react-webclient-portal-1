@@ -23,7 +23,6 @@ function PipelineDetailView() {
   const [isLoading, setIsLoading] = useState(false);
   const [softLoading, setSoftLoading] = useState(false);
   const [editItem, setEditItem] = useState(false);
-  const [refreshCount, setRefreshCount] = useState(0);
   const [isPipelineRunning, setIsPipelineRunning] = useState(false);
   const {
     getAccessToken,
@@ -39,6 +38,7 @@ function PipelineDetailView() {
     restingStepId,
   } = useGetPollingPipelineOrchestrationStatusById(id, refreshInterval);
 
+  // TODO: We probably don't need to refresh the pipeline on resting step changes.
   useEffect(() => {
     console.log(`Refreshing pipeline with \n   status: [${status}]\n    run count: [${runCount}]\n   Resting Step ID: [${restingStepId}]`);
     evaluatePipelineStatus(pipeline);
@@ -70,9 +70,6 @@ function PipelineDetailView() {
       if (isMounted?.current !== true) {
         return;
       }
-
-      const newRefreshCount = refreshCount + 1;
-      setRefreshCount(newRefreshCount);
 
       setSoftLoading(true);
       console.log("refreshing pipeline");
@@ -122,7 +119,6 @@ function PipelineDetailView() {
           pipelineStatus={status}
           pipeline={pipeline}
           setPipeline={setPipeline}
-          refreshCount={refreshCount}
           editItem={editItem}
           setEditItem={setEditItem}
           fetchPlan={fetchPlan}

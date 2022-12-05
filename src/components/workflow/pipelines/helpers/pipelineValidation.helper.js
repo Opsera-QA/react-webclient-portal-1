@@ -14,6 +14,11 @@ pipelineValidationHelper.isPipelineStepToolValid = (pipelineStep) => {
     return false;
   }
 
+  // Manually disabling jenkins validation for now
+  if (parsedToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS) {
+    return true;
+  }
+
   try {
     const metadata = pipelineStepMetadataConstants.getMetadataForIdentifier(parsedToolIdentifier);
 
