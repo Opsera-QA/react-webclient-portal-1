@@ -245,7 +245,7 @@ const PipelineWorkflowItem = (
     }
 
     return (
-      <div />
+      <div style={{height: "23px" }} />
     );
   };
 
