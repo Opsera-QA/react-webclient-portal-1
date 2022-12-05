@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
-import { faPlay, faStop } from "@fortawesome/pro-light-svg-icons";
+import {Button} from "react-bootstrap";
+import {faPlay, faStop} from "@fortawesome/pro-light-svg-icons";
 import taskActions from "components/tasks/task.actions";
 import IconBase from "components/common/icons/IconBase";
 import {TASK_TYPES} from "components/tasks/task.types";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 // TODO: This needs to be completely rewritten. It was causing massive amounts of data pulls
 function GitScraperActionButton(
@@ -69,7 +70,7 @@ function GitScraperActionButton(
     if (isStarting === true) {
       return (
         <span>
-          <IconBase isLoading={true} className={"mr-1"} />
+        <LoadingIcon className={"mr-2"}/>
           Starting Task
         </span>
       );
@@ -78,7 +79,7 @@ function GitScraperActionButton(
     if (status === "running") {
       return (
         <span>
-          <IconBase icon={faPlay} className={"mr-1"} />
+        <LoadingIcon className={"mr-2"}/>
           Running Task
         </span>
       );
@@ -86,7 +87,7 @@ function GitScraperActionButton(
 
     return (
       <span>
-        <IconBase isLoading={true} className={"mr-1"} />
+          <IconBase icon={faPlay} className={"mr-2"}/>
         Run Task
       </span>
     );
@@ -96,7 +97,7 @@ function GitScraperActionButton(
     if (isCanceling) {
       return (
         <span>
-        <IconBase isLoading={true} className={"mr-1"} />
+        <LoadingIcon className={"mr-2"}/>
           Cancelling
         </span>
       );
@@ -104,7 +105,7 @@ function GitScraperActionButton(
 
     return (
       <span>
-        <IconBase icon={faStop} className={"mr-1"} />
+        <IconBase icon={faStop} className={"mr-1"}/>
         Cancel Task
       </span>
     );
