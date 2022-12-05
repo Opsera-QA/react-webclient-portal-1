@@ -28,6 +28,9 @@ function PipelineSummaryActionBar({pipelineModel, pipeline, loadPipeline}) {
         pullSubscriptionStatus={true}
         className={"ml-3"}
       />
+      {/*<ActionBarViewPipelineAuditLogsButton*/}
+      {/*  pipeline={pipeline}*/}
+      {/*/>*/}
       <ActionBarShowPipelineSummaryOverlayButton
         pipeline={pipeline}
       />
