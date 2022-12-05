@@ -14,7 +14,7 @@ import {metricHelpers} from "../../../../metric.helpers";
 
 function GitlabDeploymentActionableDeployOverlay({
                                                         kpiConfiguration,
-                                                        dashboardData, start, end, range, average
+                                                        dashboardData, start, end, range, icon
                                                     }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -101,15 +101,6 @@ function GitlabDeploymentActionableDeployOverlay({
   };
 
   return (
-    <FullScreenCenterOverlayContainer
-       closePanel={closePanel}
-       showPanel={true}
-       titleText={`Github Deployments Actionable Report`}
-       showToasts={true}
-       titleIcon={faTable}
-       isLoading={false}
-       linkTooltipText={"View Full Blueprint"}
-    >
     <div className={"p-3"}>
       <GitlabDeploymentActionableDeployTable
          isLoading={isLoading}
@@ -119,10 +110,9 @@ function GitlabDeploymentActionableDeployOverlay({
          loadData={loadData}
          range={range}
          count={totalCount}
-         average={average}
+         tableTitleIcon={icon}
       />
     </div>
-    </FullScreenCenterOverlayContainer>
   );
 }
 
@@ -132,7 +122,7 @@ GitlabDeploymentActionableDeployOverlay.propTypes = {
  start: PropTypes.string,
  end: PropTypes.string,
  range: PropTypes.string,
- average: PropTypes.number,
+ icon: PropTypes.object,
 };
 
 export default GitlabDeploymentActionableDeployOverlay;

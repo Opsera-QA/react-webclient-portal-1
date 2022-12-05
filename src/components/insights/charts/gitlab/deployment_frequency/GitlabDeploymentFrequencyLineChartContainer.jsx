@@ -12,6 +12,8 @@ import GitlabDeploymentActionablePipelinesOverlay
     from "./actionable_insights/GitlabDeploymentActionablePipelinesOverlay";
 import GitlabDeploymentActionableDeployOverlay from "./actionable_insights/GitlabDeploymentActionableDeployOverlay";
 import ChartTooltip from "../../ChartTooltip";
+import GitlabDeploymentFreqActionableMasterTab
+    from "./actionable_insights/tabs/GitlabDeploymentFreqActionableMasterTab";
 
 
 function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfiguration, dashboardData }) {
@@ -43,29 +45,16 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfigurati
     };
 
     const onNodeSelect = (node) => {
-        if(node?.data?.type === "pipeline") {
-            toastContext.showOverlayPanel(
-                <GitlabDeploymentActionablePipelinesOverlay
-                    kpiConfiguration={kpiConfiguration}
-                    dashboardData={dashboardData}
-                    start={node?.data?.x}
-                    end={node?.data?.upperBound}
-                    range={node?.data?.range}
-                />
-            );
-        }
-        if(node?.data?.type === "deployment") {
-            toastContext.showOverlayPanel(
-                <GitlabDeploymentActionableDeployOverlay
-                    kpiConfiguration={kpiConfiguration}
-                    dashboardData={dashboardData}
-                    start={node?.data?.x}
-                    end={node?.data?.upperBound}
-                    range={node?.data?.range}
-                    average={node?.data?.y}
-                />
-            );
-        }
+        toastContext.showOverlayPanel(
+            <GitlabDeploymentFreqActionableMasterTab
+                kpiConfiguration={kpiConfiguration}
+                dashboardData={dashboardData}
+                start={node?.data?.x}
+                end={node?.data?.upperBound}
+                range={node?.data?.range}
+                type={node?.data?.type}
+            />
+        );
     };
 
     const getTrendChart = () => {
@@ -111,40 +100,38 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfigurati
           onClick={(node) => onNodeSelect(node)}
           tooltip={(node) => (
               <ChartTooltip
-              titles={["Date Range", "Total Runs", "Average"]}
-              values={[node.point.data.range, node.point.data.total, node.point.data.y]}
+              titles={["Type","Date Range", "Total Runs", "Average"]}
+              values={[ node.point.data.type, node.point.data.range, node.point.data.total, node.point.data.y]}
               />
           )}
           // sliceTooltip={({ slice }) => {
-          //     if(slice?.points?.data?.type === "deployment" ) {
-          //         return (
-          //             <div className={"p-1 bg-white border border-dark"}>
-          //                 <div>Date: {slice?.points[0]?.data?.range}</div>
-          //                 <div className={'py-1'}
-          //                      style={{
-          //                          color: slice?.points[0]?.serieColor,
-          //                      }}
-          //                 >
-          //                     Total Deployments:
-          //                     <strong>{slice?.points[0]?.data?.total}</strong>
-          //                 </div>
-          //                 <div className={'py-1'}
-          //                      style={{
-          //                          color: slice?.points[0]?.serieColor,
-          //                      }}
-          //                 >
-          //                     Average Deployments: <strong>{slice?.points[0]?.data?.y}</strong>
-          //                 </div>
-          //                 <div className={'py-1'}
-          //                      style={{
-          //                          color: slice?.points[1]?.serieColor,
-          //                      }}
-          //                 >
-          //                     Total Pipelines: <strong>{slice?.points[1]?.data?.total}</strong>
-          //                 </div>
+          //     return (
+          //         <div className={"p-1 bg-white border border-dark"}>
+          //             <div>Date: {slice?.points[0]?.data?.range}</div>
+          //             <div className={'py-1'}
+          //                  style={{
+          //                      color: slice?.points[0]?.serieColor,
+          //                  }}
+          //             >
+          //                 Total Deployments:
+          //                 <strong>{slice?.points[0]?.data?.total}</strong>
           //             </div>
-          //         );
-          //     }
+          //             <div className={'py-1'}
+          //                  style={{
+          //                      color: slice?.points[0]?.serieColor,
+          //                  }}
+          //             >
+          //                 Average Deployments: <strong>{slice?.points[0]?.data?.y}</strong>
+          //             </div>
+          //             <div className={'py-1'}
+          //                  style={{
+          //                      color: slice?.points[1]?.serieColor,
+          //                  }}
+          //             >
+          //                 Total Pipelines: <strong>{slice?.points[1]?.data?.total}</strong>
+          //             </div>
+          //         </div>
+          //     );
           // }}
         />
       </>
