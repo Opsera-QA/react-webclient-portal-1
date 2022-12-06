@@ -19,6 +19,7 @@ function JenkinsStepToolSelectInput({ model, setModel, disabled }) {
     newDataObject.setData("gitCredential", "");
     newDataObject.setData("gitUserName", "");
     newDataObject.setData("repository", "");
+    newDataObject?.setData("repositoryName", "");
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("branch", "");

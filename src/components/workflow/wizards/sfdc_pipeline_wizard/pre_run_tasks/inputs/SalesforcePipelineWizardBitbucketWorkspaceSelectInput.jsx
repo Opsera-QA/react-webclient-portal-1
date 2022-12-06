@@ -17,6 +17,7 @@ export default function SalesforcePipelineWizardBitbucketWorkspaceSelectInput(
     // const updatedPipeline = salesforcePipelineHelper.updateBitbucketWorkspaceInSalesforcePipelineSteps(pipeline, value);
     // setPipeline({...updatedPipeline});
     model.setData("repository", "");
+    model?.setData("repositoryName", "");
     model.setData("repoId", "");
     model.setData("projectId", "");
     model.setData("gitUrl", "");

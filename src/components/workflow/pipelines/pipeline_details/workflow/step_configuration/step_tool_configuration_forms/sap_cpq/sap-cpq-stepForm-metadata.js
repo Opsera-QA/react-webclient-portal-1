@@ -34,6 +34,14 @@ const SapCpqStepFormMetadata = {
     },
     {
       label: "Repository",
+      id: "repositoryName",
+      isRequired: true,
+      maxLength: 255,
+      regexDefinitionName: "generalTextWithSpacesSlash",
+      formText:" "
+    },
+    {
+      label: "Repository",
       id: "repoId",
       isRequired: true,
       formText:" "
@@ -59,6 +67,7 @@ const SapCpqStepFormMetadata = {
     service: "",
     gitToolId : "",
     repository: "",
+    repositoryName: "",
     repoId: "",
     workspace: "",
     gitBranch: "",

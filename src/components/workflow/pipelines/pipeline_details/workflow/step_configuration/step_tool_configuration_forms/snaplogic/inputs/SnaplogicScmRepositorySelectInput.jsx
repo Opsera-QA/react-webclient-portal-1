@@ -7,6 +7,8 @@ function SnaplogicScmRepositorySelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
+    const repoName = selectedOption?.nameSpacedPath || selectedOption?.name || "";
+    newModel.setData("repositoryName", repoName);
     newModel.setData("gitRepository", selectedOption?.name);
     newModel.setData("repoId", repoId);
     newModel.setData("gitBranch", "");
@@ -17,6 +19,7 @@ function SnaplogicScmRepositorySelectInput({model, setModel, disabled}) {
   const clearDataFunction = (fieldName) => {
     let newModel = {...model};
     newModel.setData("gitRepository", "");
+    newModel.setData("repositoryName", "");
     newModel.setData("repoId", "");
     newModel.setData("gitBranch", "");
     newModel.setData("targetBranch", "");
@@ -25,7 +28,7 @@ function SnaplogicScmRepositorySelectInput({model, setModel, disabled}) {
 
   return (
      <RepositorySelectInput
-       fieldName={"repoId"}
+       fieldName={"repositoryName"}
        service={model?.getData("service")}
        gitToolId={model?.getData("gitToolId")}
        dataObject={model}

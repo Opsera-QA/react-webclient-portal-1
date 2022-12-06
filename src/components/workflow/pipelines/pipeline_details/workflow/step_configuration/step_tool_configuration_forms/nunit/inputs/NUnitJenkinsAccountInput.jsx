@@ -12,6 +12,7 @@ function NUnitJenkinsAccountInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");
+    newDataObject?.setData("repositoryName", "");
     newDataObject.setData("gitBranch", "");
     newDataObject.setData("workspace", "");
     setDataObject({...newDataObject});

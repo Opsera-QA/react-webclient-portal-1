@@ -9,6 +9,8 @@ function LiquibaseGitRepositoryInput({model, setModel, disabled}) {
     const repoId = selectedOption?._id || selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     const sshUrl = selectedOption?.sshUrl || selectedOption?.configuration?.sshUrl || "";
+    const repoName = selectedOption?.nameSpacedPath || selectedOption?.name || "";
+    newModel.setData("repositoryName", repoName);
     newModel.setData("gitRepository", selectedOption.name);
     newModel.setData("repoId", repoId);
     newModel.setData("sshUrl", sshUrl);
@@ -20,6 +22,7 @@ function LiquibaseGitRepositoryInput({model, setModel, disabled}) {
   const clearDataFunction = (fieldName) => {
     let newModel = {...model};
     newModel.setDefaultValue("gitRepository");
+    newModel.setDefaultValue("repositoryName");
     newModel.setDefaultValue("repoId");
     newModel.setDefaultValue("sshUrl");
     newModel.setDefaultValue("gitUrl");
@@ -29,7 +32,7 @@ function LiquibaseGitRepositoryInput({model, setModel, disabled}) {
 
   return (
      <RepositorySelectInput
-       fieldName={"repoId"}
+       fieldName={"repositoryName"}
        service={model.getData("service")}
        gitToolId={model.getData("gitToolId")}
        workspace={model.getData("workspace")}

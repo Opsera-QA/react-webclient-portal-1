@@ -79,6 +79,13 @@ const sfdcGitBranchTaskConfigurationMetadata = {
     },
     
     {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true,
+      maxLength: 255,
+      regexDefinitionName: "generalTextWithSpacesSlash",
+    },
+    {
       label: "Workspace",
       id: "workspace",
       maxLength: 255,
@@ -138,6 +145,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
     workspace: "",
     workspaceName: "",
     repository: "",
+    repositoryName: "",
     gitBranch: "",
     defaultBranch: "",
     dependencyType:"",

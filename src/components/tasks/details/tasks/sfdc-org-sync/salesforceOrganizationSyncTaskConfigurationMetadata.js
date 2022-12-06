@@ -71,6 +71,13 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
+    {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true,
+      maxLength: 255,
+      regexDefinitionName: "generalTextWithSpacesSlash",
+    },
     
     {
       label: "Workspace",
@@ -156,6 +163,7 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
     workspace: "",
     workspaceName: "",
     repository: "",
+    repositoryName: "",
     branch: "",
     gitBranch: "",
     sourceBranch: "",

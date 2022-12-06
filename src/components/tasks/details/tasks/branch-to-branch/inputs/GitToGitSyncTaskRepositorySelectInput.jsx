@@ -22,6 +22,7 @@ function GitToGitSyncTaskRepositorySelectInput({model, setModel, disabled}) {
   const clearDataFunction = () => {
     let newDataObject = {...model};
     newDataObject.setData("repository", "");
+    newDataObject.setData("repositoryName", "");
     newDataObject.setData("projectId", "");
     newDataObject.setData("repoId", "");
     newDataObject.setData("projectId", "");

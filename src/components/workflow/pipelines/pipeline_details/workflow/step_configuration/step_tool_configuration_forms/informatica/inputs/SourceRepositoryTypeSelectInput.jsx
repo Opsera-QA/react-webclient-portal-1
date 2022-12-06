@@ -9,7 +9,8 @@ function SourceRepositoryTypeSelectInput({ fieldName, model, setModel, disabled 
     newModel?.setData("service", selectedOption?.value);
     newModel?.setData("gitToolId", "");
     newModel?.setData("workspace", "");    
-    newModel?.setData("repository", "");
+    newModel?.setData("repositoryName", "");
+    newModel.setData("repositoryName", "");
     newModel?.setData("repoId", "");
     newModel?.setData("gitUrl", "");
     newModel?.setData("sshUrl", "");
@@ -23,6 +24,7 @@ function SourceRepositoryTypeSelectInput({ fieldName, model, setModel, disabled 
     newModel?.setData("gitToolId", "");
     newModel?.setData("workspace", "");    
     newModel?.setData("repository", "");
+    newModel?.setData("repositoryName", "");
     newModel?.setData("repoId", "");
     newModel?.setData("gitUrl", "");
     newModel?.setData("sshUrl", "");

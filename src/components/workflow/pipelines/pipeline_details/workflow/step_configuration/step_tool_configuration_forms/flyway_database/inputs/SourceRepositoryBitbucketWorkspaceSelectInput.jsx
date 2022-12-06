@@ -7,6 +7,7 @@ function SourceRepositoryBitbucketWorkspaceSelectInput({className, fieldName, mo
     let newModel = {...model};
     newModel.setData("workspace", selectedOption?.key);
     newModel.setData("repository", "");
+    newModel.setData("repositoryName", "");
     newModel.setData("repoId", "");
     newModel.setData("gitUrl", "");
     newModel.setData("sshUrl", "");

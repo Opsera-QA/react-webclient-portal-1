@@ -75,6 +75,11 @@ const nunitStepFormMetadata = {
       id: "repository",
       isRequired: true
     },
+    {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
     
     {
       label: "Workspace",
@@ -145,6 +150,7 @@ const nunitStepFormMetadata = {
     workspace: "",
     workspaceName: "",
     repository: "",
+    repositoryName: "",
     gitBranch: "",
 
     agentLabels: "",

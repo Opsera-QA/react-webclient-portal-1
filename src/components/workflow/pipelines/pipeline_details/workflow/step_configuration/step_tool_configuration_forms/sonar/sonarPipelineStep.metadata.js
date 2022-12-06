@@ -104,6 +104,16 @@ const sonarPipelineStepMetadata = {
     },
     {
       label: "Repository",
+      id: "repositoryName",
+      isRequiredFunction: (model) => {
+        return (
+          model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB
+          && model?.getData("isScanArtifact") !== true
+        );
+      },
+    },
+    {
+      label: "Repository",
       id: "repoId",
       isRequiredFunction: (model) => {
         return (
@@ -176,6 +186,7 @@ const sonarPipelineStepMetadata = {
     gitCredential: "",
     gitUserName: "",
     repository: "",
+    repositoryName: "",
     branch: "",
     sonarSourcePath: "",
     workspace: "",

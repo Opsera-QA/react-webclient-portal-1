@@ -23,6 +23,7 @@ function SentenialScmToolTypeSelectInput({model, setModel, isLoading, disabled})
     await newModel.setData(fieldName, selectedOption?.value);
     newModel.setData("gitToolId", "");
     newModel.setData("repository", "");
+    newModel?.setData("repositoryName", "");
     newModel.setData("gitBranch", "");
     newModel.setData("bitbucketWorkspace", "");
     newModel.setData("bitbucketWorkspaceName", "");

@@ -81,6 +81,11 @@ const commandLineStepFormMetadata = {
       id: "repository",
       isRequired: true
     },
+    {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
     
     {
       label: "Workspace",
@@ -301,6 +306,11 @@ const commandLineStepFormMetadata = {
     },
     
     {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
+    {
       label: "Workspace",
       id: "workspace",
       // isRequired: true
@@ -453,6 +463,7 @@ const commandLineStepFormMetadata = {
     workspace: "",
     workspaceName: "",
     repository: "",
+    repositoryName: "",
     gitBranch: "",
 
     agentLabels: "",

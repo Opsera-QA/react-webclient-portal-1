@@ -48,6 +48,11 @@ const pmdScanStepFormMetadata = {
     },
     {
       label: "Repository",
+      id: "repositoryName",
+      // isRequired: true
+    },
+    {
+      label: "Repository",
       id: "repoId",
       // isRequired: true
     },
@@ -113,6 +118,7 @@ const pmdScanStepFormMetadata = {
     gitCredential: "",
     gitUserName: "",
     repository: "",
+    repositoryName: "",
     branch: "",
     workspace: "",
     stepIdXML: "",

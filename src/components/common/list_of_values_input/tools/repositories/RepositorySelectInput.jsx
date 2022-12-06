@@ -29,14 +29,6 @@ function RepositorySelectInput(
     valueField
   }) {
 
-  // TODO : Use this for other SCMs if they match
-  const getGitLabTextField = (repo) => {
-    const repoName = repo?.name || "No Repository";
-    const repoFullName = repo?.nameSpacedPath || "";
-    const repoId = repo?.id || "No Repository ID Assigned";
-    return (`${repoName} (${repoFullName})`);
-  };
-
   const getRelevantInput = () => {
     switch(service) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS:
@@ -86,8 +78,7 @@ function RepositorySelectInput(
             fieldName={fieldName}
             disabled={disabled}
             clearDataFunction={clearDataFunction}
-            textField={(repo) => getGitLabTextField(repo)}
-            valueField={"id"}
+            valueField={valueField}
           />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB_DEPLOY_KEY:

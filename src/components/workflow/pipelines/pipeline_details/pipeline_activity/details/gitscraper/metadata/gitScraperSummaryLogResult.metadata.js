@@ -4,6 +4,9 @@ const gitScraperSummaryLogResultMetaData = {
     {
       label: "Repository",
       id: "repository",
+    },{
+      label: "Repository",
+      id: "repositoryName",
     },
     {
       label: "Branch Name",
@@ -20,6 +23,7 @@ const gitScraperSummaryLogResultMetaData = {
   ],
   newObjectFields: {
     repository: "",
+    repositoryName: "",
     branch: "",
     scannedOn: "",
     library: "",

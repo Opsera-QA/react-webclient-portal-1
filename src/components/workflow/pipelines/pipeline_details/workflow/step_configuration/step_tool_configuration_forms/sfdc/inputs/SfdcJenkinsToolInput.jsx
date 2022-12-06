@@ -23,6 +23,7 @@ function SfdcJenkinsToolInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("gitCredential", "");
     newDataObject.setData("repository", "");
+    newDataObject?.setData("repositoryName", "");
     newDataObject.setData("defaultBranch", "");
     newDataObject.setData("gitBranch", "");
     newDataObject.setData("workspace", "");

@@ -48,6 +48,11 @@ const jmeterPipelineStepConfigurationMetadata = {
     },
     {
       label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
+    {
+      label: "Repository",
       id: "repoId",
       isRequired: true
     },
@@ -111,6 +116,7 @@ const jmeterPipelineStepConfigurationMetadata = {
     gitCredential: "",
     gitUserName: "",
     repository: "",
+    repositoryName: "",
     branch: "",
     jmeterExportFileName: "",
     jmeterFileName: "",

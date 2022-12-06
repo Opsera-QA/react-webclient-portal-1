@@ -13,6 +13,7 @@ function ProvarSCMToolTypeSelectInput({dataObject, setDataObject, isLoading, dis
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");
+    newDataObject?.setData("repositoryName", "");
     newDataObject.setData("repoId", "");
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");

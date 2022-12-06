@@ -8,6 +8,7 @@ function StepConfigBitbucketWorkspaceInput({dataObject, setDataObject, disabled}
     newDataObject.setData("workspace", selectedOption.key);
     newDataObject.setData("workspaceName", selectedOption.name);
     newDataObject.setData("repository", "");
+    newDataObject.setData("repositoryName", "");
     newDataObject.setData("repoId", "");
     newDataObject.setData("projectId", "");
     newDataObject.setData("gitUrl", "");
@@ -24,6 +25,7 @@ function StepConfigBitbucketWorkspaceInput({dataObject, setDataObject, disabled}
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("repository", "");
+    newDataObject.setData("repositoryName", "");
     newDataObject.setData("repoId", "");
     newDataObject.setData("projectId", "");
     newDataObject.setData("gitUrl", "");

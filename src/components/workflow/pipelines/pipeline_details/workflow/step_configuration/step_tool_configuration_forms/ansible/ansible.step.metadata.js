@@ -38,6 +38,11 @@ const ansibleStepMetadata = {
       isRequired: true
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
+    {
       label: "Workspace",
       id: "workspace",
       isRequiredFunction: (model) => {
@@ -74,6 +79,7 @@ const ansibleStepMetadata = {
     workspace: "",
     workspaceName: "",
     repository: "",
+    repositoryName: "",
     defaultBranch: "",
     playbookFileName : "",
     playbookFilePath : "",

@@ -46,6 +46,7 @@ function KafkaConnectActionSelectInput({dataObject, setDataObject, isLoading, di
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("repository", "");
+    newDataObject?.setData("repositoryName", "");
     newDataObject.setData("gitBranch", "");
     newDataObject.setData("connectorFileName", "");
     newDataObject.setData("connectorFilePath", "");

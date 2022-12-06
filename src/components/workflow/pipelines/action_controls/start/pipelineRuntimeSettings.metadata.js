@@ -14,6 +14,10 @@ export const pipelineRuntimeSettingsMetadata = {
       id: "repository",
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+    },
+    {
       label: "Workspace",
       id: "workspace",
     },
@@ -25,6 +29,7 @@ export const pipelineRuntimeSettingsMetadata = {
   newObjectFields: {
     toolId: "",
     repository: "",
+    repositoryName: "",
     service: "",
     workspace: "",
     branch: "",

@@ -48,6 +48,11 @@ const seleniumPipelineStepConfigurationMetadata = {
     },
     {
       label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
+    {
+      label: "Repository",
       id: "repoId",
       isRequired: true
     },
@@ -100,6 +105,7 @@ const seleniumPipelineStepConfigurationMetadata = {
     gitCredential: "",
     gitUserName: "",
     repository: "",
+    repositoryName: "",
     branch: "",
     workspace: "",
     // agentLabels : "",

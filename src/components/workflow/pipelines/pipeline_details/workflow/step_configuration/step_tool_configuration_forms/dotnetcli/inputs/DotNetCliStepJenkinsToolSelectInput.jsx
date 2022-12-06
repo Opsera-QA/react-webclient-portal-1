@@ -17,6 +17,7 @@ function DotNetCliStepJenkinsToolSelectInput({dataObject, setDataObject, disable
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("gitCredential", "");
     newDataObject.setData("repository", "");
+    newDataObject.setData("repositoryName", "");
     newDataObject.setData("repoId", "");
     newDataObject.setData("gitBranch", "");
     newDataObject.setData("workspace", "");

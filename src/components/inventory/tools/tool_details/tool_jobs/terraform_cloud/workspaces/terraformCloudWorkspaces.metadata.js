@@ -61,6 +61,14 @@ export const terraformCloudWorkspacesMetadata = {
         formText: "If you cannot find your Repository in the list, please choose 'Others' option and enter the Repoitory Name",
       },
       {
+        label: "Repository",
+        id: "repositoryName",
+        isRequiredFunction: (model) => {
+          return model?.getData("workFlowType") === "VCS";
+        },
+        formText: "If you cannot find your Repository in the list, please choose 'Others' option and enter the Repoitory Name",
+      },
+      {
         label: "Repository Name",
         id: "repositoryText",
       },
@@ -84,6 +92,7 @@ export const terraformCloudWorkspacesMetadata = {
       providerId: "",
       oauthToken: "",
       repository: "",
+      repositoryName: "",
       branch: "",
       type: "workspaces",
       repositoryText: "",

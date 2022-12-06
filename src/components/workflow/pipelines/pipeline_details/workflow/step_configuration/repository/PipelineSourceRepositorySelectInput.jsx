@@ -7,6 +7,8 @@ function PipelineSourceRepositorySelectInput({className, fieldName, model, setMo
     let newModel = {...model};
     const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
+    const repoName = selectedOption?.nameSpacedPath || selectedOption?.name || "";
+    newModel.setData("repositoryName", repoName);
     newModel.setData("repository", selectedOption?.name);
     newModel.setData("repoId", repoId);
     newModel.setData("gitUrl", gitUrl);
@@ -51,7 +53,7 @@ PipelineSourceRepositorySelectInput.propTypes = {
 };
 
 PipelineSourceRepositorySelectInput.defaultProps = {
-  fieldName: "repoId",
+  fieldName: "repositoryName",
 };
 
 export default PipelineSourceRepositorySelectInput;

@@ -81,6 +81,11 @@ const sfdcStepFormMetadata = {
         id: "repository",
         // isRequired: true
       },
+      {
+        label: "Repository",
+        id: "repositoryName",
+        // isRequired: true
+      },
       
       {
         label: "Workspace",
@@ -221,6 +226,7 @@ const sfdcStepFormMetadata = {
       workspace: "",
       workspaceName: "",
       repository: "",
+      repositoryName: "",
       gitBranch: "",
       defaultBranch: "",
       dependencyType:"",

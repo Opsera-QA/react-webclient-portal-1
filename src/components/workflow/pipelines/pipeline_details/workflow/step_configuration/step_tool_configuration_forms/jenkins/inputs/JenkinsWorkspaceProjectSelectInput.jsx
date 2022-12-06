@@ -13,6 +13,7 @@ function JenkinsWorkspaceProjectSelectInput({ fieldName, dataObject, setDataObje
   const setDataFunction = (fieldName, value) => {
     let newDataObject = { ...dataObject };
     newDataObject.setData("repository", "");
+    newDataObject?.setData("repositoryName", "");
     newDataObject.setData("repoId", "");
     newDataObject.setData("projectId", "");
     newDataObject.setData("gitUrl", "");
@@ -28,6 +29,7 @@ function JenkinsWorkspaceProjectSelectInput({ fieldName, dataObject, setDataObje
   const clearDataFunction = () => {
     let newDataObject = {...dataObject};
     newDataObject.setData("repository", "");
+    newDataObject?.setData("repositoryName", "");
     newDataObject.setData("repoId", "");
     newDataObject.setData("projectId", "");
     newDataObject.setData("gitUrl", "");

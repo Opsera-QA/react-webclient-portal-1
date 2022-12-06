@@ -9,7 +9,8 @@ function DockerCliGitRepositoryInput({model, setModel, disabled}) {
     const repoId = selectedOption?._id || selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     const sshUrl = selectedOption?.sshUrl || selectedOption?.configuration?.sshUrl || "";
-    newModel.setData("gitRepository", selectedOption.name);
+    const repoName = selectedOption?.nameSpacedPath || selectedOption?.name || "";
+    newModel.setData("gitRepository", repoName);
     newModel.setData("repoId", repoId);
     newModel.setData("sshUrl", sshUrl);
     newModel.setData("gitUrl", gitUrl);

@@ -39,6 +39,7 @@ function BoomiJobTypeSelectInput({
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("repository", "");
+    newDataObject?.setData("repositoryName", "");
     newDataObject.setData("gitBranch", "");
     newDataObject.setData("filePath", "");
     newDataObject.setData("fileName", "");
@@ -62,6 +63,7 @@ function BoomiJobTypeSelectInput({
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("repository", "");
+    newDataObject?.setData("repositoryName", "");
     newDataObject.setData("gitBranch", "");
     newDataObject.setData("filePath", "");
     newDataObject.setData("fileName", "");

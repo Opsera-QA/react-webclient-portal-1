@@ -48,6 +48,11 @@ const salesforceScanStepFormMetadata = {
     },
     {
       label: "Repository",
+      id: "repositoryName",
+      // isRequired: true
+    },
+    {
+      label: "Repository",
       id: "repoId",
       // isRequired: true
     },
@@ -89,6 +94,7 @@ const salesforceScanStepFormMetadata = {
     gitCredential: "",
     gitUserName: "",
     repository: "",
+    repositoryName: "",
     branch: "",
     workspace: "",
     stepIdXML: "",

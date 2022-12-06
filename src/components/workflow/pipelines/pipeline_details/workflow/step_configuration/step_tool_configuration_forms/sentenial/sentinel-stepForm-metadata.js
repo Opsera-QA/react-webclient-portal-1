@@ -17,6 +17,11 @@ const SentenialStepFormMetadata = {
       isRequired: true
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
+    {
       label: "Branch",
       id: "gitBranch",
       isRequired: true
@@ -49,6 +54,7 @@ const SentenialStepFormMetadata = {
   ],
   newObjectFields: {
     repository: "",
+    repositoryName: "",
     gitBranch: "",
     service:"",
     gitToolId : "",

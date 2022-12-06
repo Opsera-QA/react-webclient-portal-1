@@ -61,6 +61,11 @@ const sfdcPipelineStepConfigurationMetadata = {
       isRequired: true
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
+    {
       label: "Branch",
       id: "branch",
       isRequired: true
@@ -87,6 +92,7 @@ const sfdcPipelineStepConfigurationMetadata = {
     username: "",
     password: "",
     repository: "",
+    repositoryName: "",
     branch: "",
 
     jobDescription: "PACKAGEXML_CREATION",

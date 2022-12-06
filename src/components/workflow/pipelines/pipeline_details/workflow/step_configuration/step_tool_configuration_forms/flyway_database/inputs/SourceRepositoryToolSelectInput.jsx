@@ -11,6 +11,7 @@ function SourceRepositoryToolSelectInput({className, fieldName, model, setModel,
     newModel.setData("projectId", "");
     newModel.setData("workspace", "");
     newModel.setData("repository", "");
+    newModel.setData("repositoryName", "");
     newModel.setData("gitBranch", "");
     newModel.setData("targetBranch", "");
     setModel({...newModel});

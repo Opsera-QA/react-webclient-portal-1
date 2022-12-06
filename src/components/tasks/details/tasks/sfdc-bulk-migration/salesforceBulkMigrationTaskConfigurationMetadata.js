@@ -71,6 +71,13 @@ export const salesforceBulkMigrationTaskConfigurationMetadata = {
     },
 
     {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true,
+      maxLength: 255,
+      regexDefinitionName: "generalTextWithSpacesSlash",
+    },
+    {
       label: "Workspace",
       id: "workspace",
       maxLength: 255,
@@ -152,6 +159,7 @@ export const salesforceBulkMigrationTaskConfigurationMetadata = {
     workspace: "",
     workspaceName: "",
     repository: "",
+    repositoryName: "",
     branch: "",
     gitBranch: "",
     sourceBranch: "",

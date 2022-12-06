@@ -7,6 +7,8 @@ function ScmRepositoryInput({dataObject, setDataObject, disabled}) {
     let newDataObject = {...dataObject};
     const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
+    const repoName = selectedOption?.nameSpacedPath || selectedOption?.name || "";
+    newDataObject.setData("repositoryName", repoName);
     newDataObject.setData("repository", selectedOption.name);
     newDataObject.setData("repoId", repoId);
     newDataObject.setData("gitUrl", gitUrl);
@@ -19,6 +21,7 @@ function ScmRepositoryInput({dataObject, setDataObject, disabled}) {
   const clearDataFunction = (fieldName) => {
     let newDataObject = {...dataObject};
     newDataObject.setData("repository", "");
+    newDataObject.setData("repositoryName", "");
     newDataObject.setData("repoId", "");
     newDataObject.setData("projectId", "");
     newDataObject.setData("reviewerName", "");
@@ -29,7 +32,7 @@ function ScmRepositoryInput({dataObject, setDataObject, disabled}) {
 
   return (
      <RepositorySelectInput
-       fieldName={"repoId"}
+       fieldName={"repositoryName"}
        service={dataObject.getData("service")}
        gitToolId={dataObject.getData("toolId")}
        workspace={dataObject.getData("workspace")}

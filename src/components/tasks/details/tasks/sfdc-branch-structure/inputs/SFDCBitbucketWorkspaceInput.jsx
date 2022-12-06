@@ -8,6 +8,7 @@ function SFDCBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("workspace", selectedOption.key);
     newDataObject.setData("workspaceName", selectedOption.name);
     newDataObject.setData("repository", "");
+    newDataObject.setData("repositoryName", "");
     newDataObject.setData("projectId", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("gitUrl", "");

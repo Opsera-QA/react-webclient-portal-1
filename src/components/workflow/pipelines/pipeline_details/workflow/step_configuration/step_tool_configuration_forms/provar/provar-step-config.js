@@ -49,6 +49,11 @@ const provarStepFormMetadata = {
             isRequired: true
         },
         {
+            label: "Repository",
+            id: "repositoryName",
+            isRequired: true
+        },
+        {
             label: "Workspace",
             id: "workspace"
         },
@@ -94,6 +99,7 @@ const provarStepFormMetadata = {
         workspace: "",
         workspaceName: "",
         repository: "",
+        repositoryName: "",
         gitBranch: "",
         buildXmlPath : "",
         antTarget: "",

@@ -42,6 +42,13 @@ const branchToBranchGitTaskConfigurationMetadata = {
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
+    {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true,
+      maxLength: 255,
+      regexDefinitionName: "generalTextWithSpacesSlash",
+    },
     
     {
       label: "Workspace",
@@ -110,6 +117,7 @@ const branchToBranchGitTaskConfigurationMetadata = {
     workspace: "",
     workspaceName: "",
     repository: "",
+    repositoryName: "",
     gitBranch: "",
     sourceBranch: "",
     defaultBranch: "",

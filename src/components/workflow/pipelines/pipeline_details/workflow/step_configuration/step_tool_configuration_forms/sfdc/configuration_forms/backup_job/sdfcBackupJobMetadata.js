@@ -19,6 +19,11 @@ const sdfcBackupJobMetadata = {
             label: "Repository",
             id: "repository",
             isRequired: true
+        },      
+        {
+            label: "Repository",
+            id: "repositoryName",
+            isRequired: true
         },
         {
             label: "Rollback Branch Name",

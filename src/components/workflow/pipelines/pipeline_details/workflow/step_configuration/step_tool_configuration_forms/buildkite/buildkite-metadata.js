@@ -47,6 +47,11 @@ const buildkiteMetadata = {
       formText: "Selected SCM info must match the data configured in the buildkite pipeline"
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+      formText: "Selected SCM info must match the data configured in the buildkite pipeline"
+    },
+    {
       label: "Workspace",
       id: "workspace",
       formText: "Selected SCM info must match the data configured in the buildkite pipeline"
@@ -80,6 +85,7 @@ const buildkiteMetadata = {
     gitUrl : "",
     sshUrl : "",
     repository : "",
+    repositoryName: "",
     workspace : "",
     workspaceName : "",
     branch : "",

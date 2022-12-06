@@ -12,6 +12,7 @@ function GitToGitSyncTaskScmTypeSelectInput({model, setModel, disabled}) {
     newModel.setData("gitUrl", "");
     newModel.setData("sshUrl", "");
     newModel.setData("repository", "");
+    newModel.setData("repositoryName", "");
     newModel.setData("projectId", "");
     newModel.setData("gitBranch", "");
     newModel.setData("defaultBranch", "");
@@ -32,6 +33,7 @@ function GitToGitSyncTaskScmTypeSelectInput({model, setModel, disabled}) {
     newModel.setData("gitUrl", "");
     newModel.setData("sshUrl", "");
     newModel.setData("repository", "");
+    newModel.setData("repositoryName", "");
     newModel.setData("projectId", "");
     newModel.setData("gitBranch", "");
     newModel.setData("defaultBranch", "");

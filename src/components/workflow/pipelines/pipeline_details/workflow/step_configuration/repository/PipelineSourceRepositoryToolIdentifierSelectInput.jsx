@@ -11,6 +11,7 @@ function PipelineSourceRepositoryToolIdentifierSelectInput({ fieldName, model, s
     newModel?.setData("username", "");
     newModel?.setData("password", "");
     newModel?.setData("repository", "");
+    newModel?.setData("repositoryName", "");
     newModel?.setData("workspace", "");
     newModel?.setData("workspaceName", "");
     newModel?.setData("repoId", "");
@@ -29,6 +30,7 @@ function PipelineSourceRepositoryToolIdentifierSelectInput({ fieldName, model, s
     newModel?.setData("username", "");
     newModel?.setData("password", "");
     newModel?.setData("repository", "");
+    newModel?.setData("repositoryName", "");
     newModel?.setData("workspace", "");
     newModel?.setData("workspaceName", "");
     newModel?.setData("repoId", "");

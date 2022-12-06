@@ -12,6 +12,7 @@ function CommandLineJenkinsAccountInput({dataObject, setDataObject, disabled, cl
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");
+    newDataObject.setData("repositoryName", "");
     newDataObject.setData("repoId", "");
     newDataObject.setData("gitBranch", "");
     newDataObject.setData("workspace", "");

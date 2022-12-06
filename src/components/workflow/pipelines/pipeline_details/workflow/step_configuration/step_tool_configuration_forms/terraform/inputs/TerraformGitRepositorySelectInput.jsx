@@ -7,6 +7,8 @@ function TerraformGitRepositorySelectInput({model, setModel, disabled}) {
     let newModel = {...model};
     const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
+    const repoName = selectedOption?.nameSpacedPath || selectedOption?.name || "";
+    newModel.setData("repositoryName", repoName);
     newModel.setData("gitRepository", selectedOption?.name);
     newModel.setData("gitRepositoryID", repoId);
     newModel.setData("sshUrl", selectedOption?.sshUrl || "");
@@ -16,7 +18,7 @@ function TerraformGitRepositorySelectInput({model, setModel, disabled}) {
 
   return (
      <RepositorySelectInput
-       fieldName={"gitRepository"}
+       fieldName={"repositoryName"}
        service={model?.getData("type")}
        gitToolId={model?.getData("gitToolId")}
        workspace={model?.getData("bitbucketWorkspace")}

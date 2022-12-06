@@ -7,6 +7,8 @@ function GitScraperGitRepositorySelectInput({model, setModel, disabled}) {
     let newModel = {...model};
     const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
+    const repoName = selectedOption?.nameSpacedPath || selectedOption?.name || "";
+    newModel.setData("repositoryName", repoName);
     newModel.setData("repository", selectedOption?.name);
     newModel.setData("repoId", repoId);
     newModel.setData("projectId", repoId);
@@ -17,7 +19,7 @@ function GitScraperGitRepositorySelectInput({model, setModel, disabled}) {
 
   return (
      <RepositorySelectInput
-       fieldName={"repoId"}
+       fieldName={"repositoryName"}
        service={model?.getData("service")}
        gitToolId={model?.getData("gitToolId")}
        workspace={model?.getData("workspace")}

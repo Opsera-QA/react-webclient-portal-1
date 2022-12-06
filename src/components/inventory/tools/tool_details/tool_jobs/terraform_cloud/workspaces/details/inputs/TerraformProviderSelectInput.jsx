@@ -19,6 +19,7 @@ function TerraformProviderSelectInput({ fieldName, dataObject, setDataObject, di
     newDataObject.setData("providerId", "");
     newDataObject.setData("oauthToken", "");
     newDataObject.setData("repository", "");
+    newDataObject.setData("repositoryName", "");
     setDataObject({...newDataObject});
   };
 

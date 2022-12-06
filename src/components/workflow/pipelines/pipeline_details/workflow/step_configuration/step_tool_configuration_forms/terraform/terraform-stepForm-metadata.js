@@ -22,6 +22,11 @@ const TerraformStepFormMetadata = {
       isRequired: true
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
+    {
       label: "AWS Credentials",
       id: "awsToolConfigId",
     },
@@ -188,7 +193,7 @@ const TerraformStepFormMetadata = {
       id: "azureCPToolConfigId",
     },
   ],
-  fieldsAlt: [
+  fieldsAlt:[
     {
       label: "Source Code Management Tool Type",
       id: "type",
@@ -207,6 +212,11 @@ const TerraformStepFormMetadata = {
     {
       label: "Repository",
       id: "gitRepository",
+      isRequired: true
+    },
+    {
+      label: "Repository",
+      id: "repositoryName",
       isRequired: true
     },
     {
@@ -266,7 +276,7 @@ const TerraformStepFormMetadata = {
     },
     {
       label: "IAM Roles", 
-      id:"iamRoleFlag"
+      id:"iamRoleFlag",
     },
     {
       label: "IAM Role",
@@ -279,16 +289,11 @@ const TerraformStepFormMetadata = {
     },
     {
       label: "S3 Bucket Name",
-      id: "bucketName"
+      id: "bucketName"      
     },
     {
       label: "Bucket Region",
       id: "bucketRegion"
-    },
-    {
-      label: "Cloud Provider",
-      id: "cloudProvider",
-      isRequired: true
     },
     {
       label: "Terraform Version",
@@ -376,11 +381,16 @@ const TerraformStepFormMetadata = {
       label: "Azure Tool",
       id: "azureCPToolConfigId",
     },
+    {
+      label: "Cloud Provider",
+      id: "cloudProvider"
+    },
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
     gitFilePath: "",
     gitRepository: "",
+    repositoryName: "",
     defaultBranch: "",
     awsToolConfigId : "",
     accessKeyParamName: "",

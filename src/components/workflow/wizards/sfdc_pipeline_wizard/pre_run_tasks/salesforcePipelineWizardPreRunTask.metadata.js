@@ -9,9 +9,14 @@ export const salesforcePipelineWizardPreRunTaskMetadata = {
       label: "Repository",
       id: "repository",
     },
+    {
+      label: "Repository",
+      id: "repositoryName",
+    },
   ],
   newObjectFields: {
     branch: "",
     repository: "",
+    repositoryName: "",
   }
 };

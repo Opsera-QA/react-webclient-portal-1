@@ -35,6 +35,10 @@ const kafkaConnectStepFormMetadata = {
       id: "repository",
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+    },
+    {
       label: "Workspace",
       id: "workspace"
     },
@@ -75,6 +79,7 @@ const kafkaConnectStepFormMetadata = {
     workspace: "",
     workspaceName: "",
     repository: "",
+    repositoryName: "",
     defaultBranch: "",
     connectorFileName : "",
     connectorFilePath : "",
