@@ -38,6 +38,8 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineWorkflowItemActionField
   from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemActionField";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import PipelineStepWorkflowItemBody
+  from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepWorkflowItemBody";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
@@ -571,23 +573,12 @@ const PipelineWorkflowItem = (
           </div>
         </div>
 
-        <div
-          style={{
-            minHeight: "46px",
-          }}
-        >
-          <div className="pl-1 pt-1 text-muted small">
-            <IconBase icon={faIdBadge} iconSize={"sm"} className={"mr-1"} />ID: {item._id}
-          </div>
-          {getToolField()}
-          <PipelineWorkflowItemActionField
-            pipelineStep={item}
-            pipeline={pipeline}
-            loadPipelineFunction={loadPipeline}
-          />
-          {getRepositoryField()}
-          {getBranchField()}
-        </div>
+        <PipelineStepWorkflowItemBody
+          pipeline={pipeline}
+          step={item}
+          loadPipeline={loadPipeline}
+          toolIdentifier={toolIdentifier}
+        />
         <div
           className={"ml-auto mt-auto pt-2 "}
           style={{
