@@ -7,6 +7,8 @@ function SourceRepositorySelectInput({className, fieldName, model, setModel, dis
     let newModel = {...model};
     const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
+    const repoName = selectedOption?.nameSpacedPath || selectedOption?.name || "";
+    newModel.setData("repositoryName", repoName);
     newModel.setData("repository", selectedOption?.name);
     newModel.setData("repoId", repoId);
     newModel.setData("gitUrl", gitUrl);
@@ -49,7 +51,7 @@ SourceRepositorySelectInput.propTypes = {
 };
 
 SourceRepositorySelectInput.defaultProps = {
-  fieldName: "repoId",
+  fieldName: "repositoryName",
 };
 
 export default SourceRepositorySelectInput;

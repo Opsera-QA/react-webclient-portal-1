@@ -64,7 +64,14 @@ const azureCliStepFormMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("scriptType") === "package";
       },
-    },    
+    },
+    {
+      label: "Repository",
+      id: "repositoryName",
+      isRequiredFunction: (model) => {
+        return model?.getData("scriptType") === "package";
+      },
+    },
     {
       label: "Repository",
       id: "gitRepositoryID",
@@ -114,6 +121,7 @@ const azureCliStepFormMetadata = {
     bitbucketWorkspace: "",
     bitbucketWorkspaceName: "",
     gitRepository: "",
+    repositoryName: "",
     gitRepositoryID: "",
     defaultBranch: "",
     enableInputParameters: false,

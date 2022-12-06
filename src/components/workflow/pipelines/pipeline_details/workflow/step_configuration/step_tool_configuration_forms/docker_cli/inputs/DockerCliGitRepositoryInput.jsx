@@ -10,8 +10,7 @@ function DockerCliGitRepositoryInput({model, setModel, disabled}) {
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     const sshUrl = selectedOption?.sshUrl || selectedOption?.configuration?.sshUrl || "";
     const repoName = selectedOption?.nameSpacedPath || selectedOption?.name || "";
-    newModel.setData("repositoryName", repoName);
-    newModel.setData("gitRepository", selectedOption.name);
+    newModel.setData("gitRepository", repoName);
     newModel.setData("repoId", repoId);
     newModel.setData("sshUrl", sshUrl);
     newModel.setData("gitUrl", gitUrl);
@@ -22,6 +21,7 @@ function DockerCliGitRepositoryInput({model, setModel, disabled}) {
   const clearDataFunction = (fieldName) => {
     let newModel = {...model};
     newModel.setDefaultValue("gitRepository");
+    newModel.setDefaultValue("repositoryName");
     newModel.setDefaultValue("repoId");
     newModel.setDefaultValue("sshUrl");
     newModel.setDefaultValue("gitUrl");

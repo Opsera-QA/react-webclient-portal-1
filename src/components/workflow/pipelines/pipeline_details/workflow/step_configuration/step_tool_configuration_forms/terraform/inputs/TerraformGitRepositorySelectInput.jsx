@@ -18,7 +18,7 @@ function TerraformGitRepositorySelectInput({model, setModel, disabled}) {
 
   return (
      <RepositorySelectInput
-       fieldName={"gitRepository"}
+       fieldName={"repositoryName"}
        service={model?.getData("type")}
        gitToolId={model?.getData("gitToolId")}
        workspace={model?.getData("bitbucketWorkspace")}

@@ -22,6 +22,7 @@ function BlackDuckGitRepositoryInput({model, setModel, disabled}) {
   const clearDataFunction = (fieldName) => {
     let newModel = {...model};
     newModel.setDefaultValue("gitRepository");
+    newModel.setDefaultValue("repositoryName");
     newModel.setDefaultValue("gitRepositoryID");
     newModel.setDefaultValue("sshUrl");
     newModel.setDefaultValue("gitUrl");
@@ -31,7 +32,7 @@ function BlackDuckGitRepositoryInput({model, setModel, disabled}) {
 
   return (
      <RepositorySelectInput
-       fieldName={"gitRepositoryID"}
+       fieldName={"repositoryName"}
        service={model.getData("type")}
        gitToolId={model.getData("gitToolId")}
        workspace={model.getData("workspace")}

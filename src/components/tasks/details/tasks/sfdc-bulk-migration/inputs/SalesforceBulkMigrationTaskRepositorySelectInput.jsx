@@ -7,6 +7,8 @@ function SalesforceBulkMigrationTaskRepositorySelectInput({model, setModel, disa
     let newModel = {...model};
     const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
+    const repoName = selectedOption?.nameSpacedPath || selectedOption?.name || "";
+    newModel.setData("repositoryName", repoName);
     newModel.setData("repository", selectedOption.name);
     newModel.setData("projectId", repoId);
     newModel.setData("sshUrl", selectedOption.sshUrl || "");
@@ -23,6 +25,7 @@ function SalesforceBulkMigrationTaskRepositorySelectInput({model, setModel, disa
   const clearDataFunction = () => {
     let newModel = {...model};
     newModel.setDefaultValue("repository");
+    newModel.setDefaultValue("repositoryName");
     newModel.setDefaultValue("projectId");
     newModel.setDefaultValue("sshUrl");
     newModel.setDefaultValue("gitUrl");
@@ -37,7 +40,7 @@ function SalesforceBulkMigrationTaskRepositorySelectInput({model, setModel, disa
 
   return (
     <RepositorySelectInput
-      fieldName={"projectId"}
+      fieldName={"repositoryName"}
       service={model?.getData("service")}
       gitToolId={model?.getData("gitToolId")}
       workspace={model?.getData("workspace")}

@@ -7,6 +7,8 @@ function GitToGitSyncTaskRepositorySelectInput({model, setModel, disabled}) {
     let newDataObject = {...model};
     const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
+    const repoName = selectedOption?.nameSpacedPath || selectedOption?.name || "";
+    newDataObject.setData("repositoryName", repoName);
     newDataObject.setData("repository", selectedOption?.name);
     newDataObject.setData("projectId", repoId);
     newDataObject.setData("repoId", repoId);
@@ -36,7 +38,7 @@ function GitToGitSyncTaskRepositorySelectInput({model, setModel, disabled}) {
 
   return (
      <RepositorySelectInput
-       fieldName={"projectId"}
+       fieldName={"repositoryName"}
        service={model?.getData("service")}
        gitToolId={model?.getData("gitToolId")}
        workspace={model?.getData("workspace")}
