@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useGetAuditLogsForPipeline from "hooks/workflow/pipelines/audit/useGetAuditLogsForPipeline";
-import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faShieldCheck} from "@fortawesome/pro-light-svg-icons";
+import PipelineAuditLogsTable from "components/workflow/pipelines/audit/PipelineAuditLogsTable";
 
 export default function PipelineAuditLogsDisplayer(
   {
@@ -16,17 +16,12 @@ export default function PipelineAuditLogsDisplayer(
   } = useGetAuditLogsForPipeline(pipelineId);
 
   const getBody = () => {
-    if (isLoading === true) {
-      return (
-        <CenterLoadingIndicator
-        />
-      );
-    }
-
     return (
-      <div>
-        {JSON.stringify(auditLogs)}
-      </div>
+      <PipelineAuditLogsTable
+        auditLogs={auditLogs}
+        isLoading={isLoading}
+        loadDataFunction={loadData}
+      />
     );
   };
 

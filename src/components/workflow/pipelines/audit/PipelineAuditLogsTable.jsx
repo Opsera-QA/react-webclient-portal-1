@@ -1,50 +1,49 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
-import useGetAuditLogsForPipeline from "hooks/workflow/pipelines/audit/useGetAuditLogsForPipeline";
-import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import FilterContainer from "components/common/table/FilterContainer";
-import {faShieldCheck} from "@fortawesome/pro-light-svg-icons";
+import {
+  getOwnerNameField,
+  getTableCreatedAtColumn,
+  getTableTextColumn
+} from "components/common/table/table-column-helpers";
+import {getField} from "components/common/metadata/metadata-helpers";
+import CustomTable from "components/common/table/CustomTable";
+import userActivityAuditLogMetadata from "@opsera/definitions/constants/audit-logs/user/userActivityAuditLog.metadata";
 
 export default function PipelineAuditLogsTable(
   {
-    pipelineId,
-  }) {
-  const {
     auditLogs,
+    filterModel,
+    setFilterModel,
     isLoading,
-    loadData,
-  } = useGetAuditLogsForPipeline(pipelineId);
+    loadDataFunction,
+  }) {
+  const fields = userActivityAuditLogMetadata.fields;
 
-  const getBody = () => {
-    if (isLoading === true) {
-      return (
-        <CenterLoadingIndicator
-        />
-      );
-    }
-
-    return (
-      <div>
-        {JSON.stringify(auditLogs)}
-      </div>
-    );
-  };
-
-  if (pipelineId == null) {
-    return null;
-  }
+  const columns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "action")),
+      getOwnerNameField("User"),
+      getTableCreatedAtColumn("Date"),
+    ],
+    [fields]
+  );
 
   return (
-    <FilterContainer
+    <CustomTable
       isLoading={isLoading}
-      title={"Pipeline Audit Logs"}
-      titleIcon={faShieldCheck}
-      body={getBody()}
-      loadData={loadData}
+      data={auditLogs}
+      columns={columns}
+      paginationDto={filterModel}
+      setPaginationDto={setFilterModel}
+      loadData={loadDataFunction}
     />
   );
 }
 
 PipelineAuditLogsTable.propTypes = {
-  pipelineId: PropTypes.string,
+  auditLogs: PropTypes.array,
+  filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
+  isLoading: PropTypes.bool,
+  loadDataFunction: PropTypes.func,
 };
