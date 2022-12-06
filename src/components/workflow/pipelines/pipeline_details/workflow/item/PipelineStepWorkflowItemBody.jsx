@@ -62,7 +62,7 @@ export default function PipelineStepWorkflowItemBody(
         <PipelineWorkflowItemFieldBase
           className={"pl-1 pt-1"}
           icon={faCodeBranch}
-          label={"Repository"}
+          label={"Branch"}
           value={branch}
         />
       );
