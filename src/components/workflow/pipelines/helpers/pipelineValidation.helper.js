@@ -15,21 +15,21 @@ pipelineValidationHelper.isPipelineStepToolValid = (pipelineStep) => {
   }
 
   // Manually disabling jenkins validation for now
-  if (parsedToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS) {
+  // if (parsedToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS) {
+  //   return true;
+  // }
+
+  // try {
+    // const metadata = pipelineStepMetadataConstants.getMetadataForIdentifier(parsedToolIdentifier);
+    //
+    // if (metadata) {
+    //   return modelHelpers.isDataValid(configuration, metadata) === true;
+    // }
+
     return true;
-  }
-
-  try {
-    const metadata = pipelineStepMetadataConstants.getMetadataForIdentifier(parsedToolIdentifier);
-
-    if (metadata) {
-      return modelHelpers.isDataValid(configuration, metadata) === true;
-    }
-
-    return true;
-  } catch (error) {
-    console.error("Error attempting to validate step configuration: ", parsedToolIdentifier, JSON.stringify(pipelineStep));
-  }
+  // } catch (error) {
+  //   console.error("Error attempting to validate step configuration: ", parsedToolIdentifier, JSON.stringify(pipelineStep));
+  // }
 };
 
 pipelineValidationHelper.isPipelineSourceRepositoryValidForDynamicSettings = (pipeline) => {
