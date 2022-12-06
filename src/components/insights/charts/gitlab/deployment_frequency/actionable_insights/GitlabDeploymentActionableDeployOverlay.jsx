@@ -8,13 +8,12 @@ import Model from "../../../../../../core/data_model/model";
 import actionableInsightsGenericChartFilterMetadata
     from "../../../generic_filters/actionableInsightsGenericChartFilterMetadata";
 import GitlabDeploymentActionableDeployTable from "./GitlabDeploymentActionableDeployTable";
-import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import {metricHelpers} from "../../../../metric.helpers";
 
 function GitlabDeploymentActionableDeployOverlay({
                                                      kpiConfiguration,
-                                                     dashboardData, start, end, range, average
+                                                     dashboardData, start, end, range, icon
                                                  }) {
     const { getAccessToken } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
@@ -101,28 +100,18 @@ function GitlabDeploymentActionableDeployOverlay({
     };
 
     return (
-        <FullScreenCenterOverlayContainer
-            closePanel={closePanel}
-            showPanel={true}
-            titleText={`Github Deployments Actionable Report`}
-            showToasts={true}
-            titleIcon={faTable}
-            isLoading={false}
-            linkTooltipText={"View Full Blueprint"}
-        >
-            <div className={"p-3"}>
-                <GitlabDeploymentActionableDeployTable
-                    isLoading={isLoading}
-                    data={metrics}
-                    filterModel={filterModel}
-                    setFilterModel={setFilterModel}
-                    loadData={loadData}
-                    range={range}
-                    count={totalCount}
-                    average={average}
-                />
-            </div>
-        </FullScreenCenterOverlayContainer>
+      <div className={"p-3"}>
+        <GitlabDeploymentActionableDeployTable
+            isLoading={isLoading}
+            data={metrics}
+            filterModel={filterModel}
+            setFilterModel={setFilterModel}
+            loadData={loadData}
+            range={range}
+            count={totalCount}
+            tableTitleIcon={icon}
+        />
+      </div>
     );
 }
 
@@ -132,7 +121,7 @@ GitlabDeploymentActionableDeployOverlay.propTypes = {
     start: PropTypes.string,
     end: PropTypes.string,
     range: PropTypes.string,
-    average: PropTypes.number,
+    icon: PropTypes.object,
 };
 
 export default GitlabDeploymentActionableDeployOverlay;
