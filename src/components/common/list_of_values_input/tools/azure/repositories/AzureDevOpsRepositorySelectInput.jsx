@@ -132,7 +132,7 @@ AzureDevOpsRepositorySelectInput.propTypes = {
 };
 
 AzureDevOpsRepositorySelectInput.defaultProps = {
-  valueField: "repositoryId",
+  valueField: "id",
   textField: "nameSpacedPath",
 };
 
