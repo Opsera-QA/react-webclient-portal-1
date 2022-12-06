@@ -245,6 +245,21 @@ export const getTableDateTimeColumn = (field, className, emptyValuePlaceholder =
   };
 };
 
+export const getTableCreatedAtColumn = (
+  header = "Created",
+  className = "no-wrap-inline",
+  emptyValuePlaceholder = '',
+) => {
+  return {
+    Header: header,
+    accessor: "createdAt",
+    Cell: function parseDateTime(row) {
+      return row.value ? format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a") : emptyValuePlaceholder;
+    },
+    class: className,
+  };
+};
+
 export const getTableDateAndTimeUntilValueColumn = (
   header,
   id,
