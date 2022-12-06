@@ -9,7 +9,7 @@ import {
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 
-function GitlabDeploymentActionableDeployTable({ data, isLoading, loadData, filterModel, setFilterModel, priority, tableTitleIcon, count, range, average }) {
+function GitlabDeploymentActionableDeployTable({ data, isLoading, loadData, filterModel, setFilterModel, tableTitleIcon, count, range }) {
     const fields = GitlabDeploymentFrequencyActionableMetadata.fields;
     const tableTitle = "Deployments Report";
     const noDataMessage = "No report found";
@@ -49,9 +49,6 @@ function GitlabDeploymentActionableDeployTable({ data, isLoading, loadData, filt
                     <b>Total Deployments:</b> {count}
                 </div>
                 <div className={'mr-4'}>
-                    <b>Average Deployments:</b> {average}
-                </div>
-                <div className={'mr-4'}>
                     <b>Date Range:</b> {range}
                 </div>
             </div>
@@ -79,7 +76,6 @@ GitlabDeploymentActionableDeployTable.propTypes = {
     tableTitleIcon: PropTypes.object,
     count: PropTypes.number,
     range: PropTypes.string,
-    average: PropTypes.number,
 };
 
 export default GitlabDeploymentActionableDeployTable;
