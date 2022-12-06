@@ -245,7 +245,7 @@ const PipelineWorkflowItem = (
     }
 
     return (
-      <div style={{height: "23px" }} />
+      <div />
     );
   };
 
@@ -571,22 +571,23 @@ const PipelineWorkflowItem = (
           </div>
         </div>
 
-        <div className="pl-1 pt-1 text-muted small">
-          <IconBase icon={faIdBadge} iconSize={"sm"} className={"mr-1"} />ID: {item._id}
+        <div
+          style={{
+            minHeight: "46px",
+          }}
+        >
+          <div className="pl-1 pt-1 text-muted small">
+            <IconBase icon={faIdBadge} iconSize={"sm"} className={"mr-1"} />ID: {item._id}
+          </div>
+          {getToolField()}
+          <PipelineWorkflowItemActionField
+            pipelineStep={item}
+            pipeline={pipeline}
+            loadPipelineFunction={loadPipeline}
+          />
+          {getRepositoryField()}
+          {getBranchField()}
         </div>
-
-        {getToolField()}
-
-        <PipelineWorkflowItemActionField
-          pipelineStep={item}
-          pipeline={pipeline}
-          loadPipelineFunction={loadPipeline}
-        />
-
-        {getRepositoryField()}
-
-        {getBranchField()}
-
         <div
           className={"ml-auto mt-auto pt-2 "}
           style={{
