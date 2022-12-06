@@ -94,6 +94,7 @@ function ResetMetricConfirmationPanel(
 
       if (resetKpiModel.getData("internalProperties") === true) {
         metricModel?.setData("kpi_category", defaultKpiConfiguration?.category);
+        metricModel?.setData("dashboardNotificationsEnabled", defaultKpiConfiguration?.dashboardNotificationsEnabled);
         metricModel?.setData("kpi_settings", defaultKpiConfiguration?.settings);
         metricModel?.setData("filters", defaultKpiConfiguration?.supported_filters);
         metricModel.setData("dataPoints", defaultKpiConfiguration?.dataPoints);
