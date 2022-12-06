@@ -34,43 +34,36 @@ export function getDatesFromLabel(label) {
   switch (label) {
     case 'Last 24 Hours':
       return {
-        label: 'Last 24 Hours',
         startDate: new Date(addDays(new Date(), -1)),
         endDate: new Date(),
       };
     case 'Last Week':
       return {
-        label: 'Last Week',
         startDate: new Date(addDays(new Date(), -7)),
         endDate: new Date(),
       };
     case 'Last Month':
       return {
-        label: 'Last Month',
         startDate: new Date(addDays(new Date(), -30)),
         endDate: new Date(),
       };
     case 'Last 3 Months':
       return {
-        label: 'Last 3 Months',
         startDate: new Date(addDays(new Date(), -90)),
         endDate: new Date(),
       };
     case 'Last 6 Months':
       return {
-        label: 'Last 6 Months',
         startDate: new Date(addDays(new Date(), -180)),
         endDate: new Date(),
       };
     case 'Last 1 Year':
       return {
-        label: 'Last 1 Year',
         startDate: new Date(addDays(new Date(), -365)),
         endDate: new Date(),
       };
     default:
       return {
-        label: 'Last 3 Months',
         startDate: new Date(addDays(new Date(), -90)),
         endDate: new Date(),
       };
