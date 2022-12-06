@@ -24,7 +24,6 @@ const GitScraperStepFormMetadata = {
     {
       label: "Git File Path",
       id: "gitFilePath",
-      isRequired: true,
     },
     {
       label: "Runtime Arguments",
