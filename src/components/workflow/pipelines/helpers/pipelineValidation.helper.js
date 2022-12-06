@@ -19,7 +19,7 @@ pipelineValidationHelper.isPipelineStepToolValid = (pipelineStep) => {
   //   return true;
   // }
 
-  try {
+  // try {
     // const metadata = pipelineStepMetadataConstants.getMetadataForIdentifier(parsedToolIdentifier);
     //
     // if (metadata) {
@@ -27,9 +27,9 @@ pipelineValidationHelper.isPipelineStepToolValid = (pipelineStep) => {
     // }
 
     return true;
-  } catch (error) {
-    console.error("Error attempting to validate step configuration: ", parsedToolIdentifier, JSON.stringify(pipelineStep));
-  }
+  // } catch (error) {
+  //   console.error("Error attempting to validate step configuration: ", parsedToolIdentifier, JSON.stringify(pipelineStep));
+  // }
 };
 
 pipelineValidationHelper.isPipelineSourceRepositoryValidForDynamicSettings = (pipeline) => {
