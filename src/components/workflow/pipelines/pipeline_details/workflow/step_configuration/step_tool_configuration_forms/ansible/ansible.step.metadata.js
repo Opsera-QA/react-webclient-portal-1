@@ -35,6 +35,10 @@ const ansibleStepMetadata = {
       id: "repository",
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+    },
+    {
       label: "Workspace",
       id: "workspace"
     },
@@ -66,6 +70,7 @@ const ansibleStepMetadata = {
     workspace: "",
     workspaceName: "",
     repository: "",
+    repositoryName: "", // for UI display only
     defaultBranch: "",
     playbookFileName : "",
     playbookFilePath : "",

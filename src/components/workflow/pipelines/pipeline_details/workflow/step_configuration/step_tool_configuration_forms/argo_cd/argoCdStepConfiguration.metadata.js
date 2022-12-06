@@ -23,6 +23,13 @@ export const ArgoCdStepConfigurationMetadata = {
       },
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+      isRequiredFunction: (model) => {
+        return model?.getData("kustomizeFlag") === false;
+      },
+    },
+    {
       label: "Branch",
       id: "defaultBranch",
       isRequiredFunction: (model) => {
@@ -146,6 +153,7 @@ export const ArgoCdStepConfigurationMetadata = {
     dockerStepID: "",
     gitFilePath: "",
     gitRepository: "",
+    repositoryName: "",
     defaultBranch: "",
     gitWorkspace: "",
     type: "",

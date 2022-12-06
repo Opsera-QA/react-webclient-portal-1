@@ -72,6 +72,7 @@ function TerraformVcsServiceSelectInput({ fieldName, dataObject, setDataObject, 
     newDataObject.setData("providerId", "");
     newDataObject.setData("oauthToken", "");
     newDataObject.setData("repository", "");
+    newDataObject?.setData("repositoryName", "");
     setDataObject({...newDataObject});
   };
 
@@ -83,6 +84,7 @@ function TerraformVcsServiceSelectInput({ fieldName, dataObject, setDataObject, 
     newDataObject.setData("providerId", "");
     newDataObject.setData("oauthToken", "");
     newDataObject.setData("repository", "");
+    newDataObject?.setData("repositoryName", "");
     setDataObject({...newDataObject});
   };
 

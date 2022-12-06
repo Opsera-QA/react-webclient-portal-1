@@ -17,6 +17,7 @@ function DockerPushStepJenkinsToolSelectInput({model, setModel, disabled}) {
     newModel.setData("sshUrl", "");
     newModel.setData("gitCredential", "");
     newModel.setData("repository", "");
+    newModel?.setData("repositoryName", "");
     newModel.setData("gitBranch", "");
     newModel.setData("workspace", "");
     newModel.setData("autoScaleEnable", selectedOption?.configuration?.autoScaleEnable || false);
@@ -36,6 +37,7 @@ function DockerPushStepJenkinsToolSelectInput({model, setModel, disabled}) {
     newModel.setData("sshUrl", "");
     newModel.setData("gitCredential", "");
     newModel.setData("repository", "");
+    newModel?.setData("repositoryName", "");
     newModel.setData("gitBranch", "");
     newModel.setData("workspace", "");
     newModel.setData("autoScaleEnable", false);

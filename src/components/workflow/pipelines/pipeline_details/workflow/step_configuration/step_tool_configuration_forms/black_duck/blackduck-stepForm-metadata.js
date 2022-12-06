@@ -28,7 +28,12 @@ const BlackDuckStepFormMetadata = {
       label: "Repository",
       id: "gitRepository",
       isRequired: true
-    },    
+    },
+    {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
     {
       label: "Repository",
       id: "gitRepositoryID",
@@ -80,6 +85,7 @@ const BlackDuckStepFormMetadata = {
     workspace: "",
     workspaceName: "",
     gitRepository: "",
+    repositoryName: "",
     gitRepositoryID: "",
     defaultBranch: "",
     sshUrl: "",    

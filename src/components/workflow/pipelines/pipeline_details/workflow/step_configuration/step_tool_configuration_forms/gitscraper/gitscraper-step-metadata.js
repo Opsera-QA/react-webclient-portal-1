@@ -17,6 +17,11 @@ const GitScraperStepFormMetadata = {
       isRequired: true,
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true,
+    },
+    {
       label: "Branch",
       id: "gitBranch",
       isRequired: true,
@@ -79,6 +84,7 @@ const GitScraperStepFormMetadata = {
   newObjectFields: {
     gitFilePath: "",
     repository: "",
+    repositoryName: "",
     gitBranch: "",
     gitToolId: "",
     repoId: "",

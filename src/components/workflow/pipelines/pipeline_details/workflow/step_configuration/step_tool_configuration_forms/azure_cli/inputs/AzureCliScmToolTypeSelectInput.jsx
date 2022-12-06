@@ -23,6 +23,7 @@ function AzureCliScmToolTypeSelectInput({model, setModel, isLoading, disabled}) 
     await newModel.setData(fieldName, selectedOption?.value);
     newModel.setData("gitToolId", "");
     newModel.setData("gitRepository", "");
+    newModel.setData("repositoryName", "");
     newModel.setData("gitRepositoryID", "");
     newModel.setData("defaultBranch", "");    
     newModel.setData("bitbucketWorkspace", "");

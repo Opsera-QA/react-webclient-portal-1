@@ -29,6 +29,13 @@ export const mergeSyncTaskGitConfigurationMetadata = {
     },
     {
       label: "Repository",
+      id: "repositoryName",
+      isRequired: true,
+      maxLength: 255,
+      regexDefinitionName: "generalTextWithSpacesSlash",
+    },
+    {
+      label: "Repository",
       id: "repoId",
       isRequired: true,
     },
@@ -80,6 +87,7 @@ export const mergeSyncTaskGitConfigurationMetadata = {
     service: "",
     workspace: "",
     repository: "",
+    repositoryName: "", // for UI display only
     repoId: "",
     targetBranch: "",
     sourceBranch: "",

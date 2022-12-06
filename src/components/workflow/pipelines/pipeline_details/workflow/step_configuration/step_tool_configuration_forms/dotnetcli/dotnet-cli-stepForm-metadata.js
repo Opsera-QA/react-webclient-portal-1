@@ -81,10 +81,15 @@ const dotnetCliStepFormMetadata = {
       id: "sshUrl",
       // isRequired: true
     },
-    
+
     {
       label: "Repository",
       id: "repository",
+      isRequired: true
+    },
+    {
+      label: "Repository",
+      id: "repositoryName",
       isRequired: true
     },
     
@@ -176,6 +181,7 @@ const dotnetCliStepFormMetadata = {
 
     workspace: "",
     repository: "",
+    repositoryName: "",
     gitBranch: "",
 
     agentLabels: "",

@@ -20,7 +20,12 @@ const SnaplogicStepFormMetadata = {
       label: "Repository",
       id: "gitRepository",
       isRequired: true
-    },    
+    },
+    {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
     {
       label: "Repository",
       id: "repoId",
@@ -45,7 +50,8 @@ const SnaplogicStepFormMetadata = {
     toolConfigId: "",
     gitToolId: "",
     service: "",
-    gitRepository: "",    
+    gitRepository: "",
+    repositoryName: "",
     repoId: "",
     gitBranch: "",
     projectSpace: "",

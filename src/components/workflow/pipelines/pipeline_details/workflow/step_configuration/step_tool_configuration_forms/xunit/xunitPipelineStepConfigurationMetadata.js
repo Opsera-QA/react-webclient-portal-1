@@ -47,6 +47,11 @@ const xunitPipelineStepConfigurationMetadata = {
       isRequired: true
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
+    {
       label: "Branch",
       id: "branch",
       isRequired: true
@@ -95,6 +100,7 @@ const xunitPipelineStepConfigurationMetadata = {
     gitCredential: "",
     gitUserName: "",
     repository: "",
+    repositoryName: "",
     branch: "",
     workspace: "",
     workspaceDeleteFlag: false

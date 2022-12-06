@@ -77,6 +77,11 @@ const dotnetStepFormMetadata = {
       id: "repository",
       isRequired: true
     },
+    {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
     
     {
       label: "Workspace",
@@ -194,6 +199,7 @@ const dotnetStepFormMetadata = {
 
     workspace: "",
     repository: "",
+    repositoryName: "",
     gitBranch: "",
 
     agentLabels: "",

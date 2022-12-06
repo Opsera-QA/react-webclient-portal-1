@@ -17,6 +17,11 @@ const PackerStepFormMetadata = {
       isRequired: true
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
+    {
       label: "AWS Credentials",
       id: "awsToolConfigId",
     },    
@@ -116,6 +121,11 @@ const PackerStepFormMetadata = {
       isRequired: true
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
+    {
       label: "AWS Credentials",
       id: "awsToolConfigId",
     },    
@@ -203,6 +213,7 @@ const PackerStepFormMetadata = {
   newObjectFields: {
     gitFilePath: "",
     gitRepository: "",
+    repositoryName: "",
     defaultBranch: "",
     awsToolConfigId : "",
     gcpToolConfigId: "",    

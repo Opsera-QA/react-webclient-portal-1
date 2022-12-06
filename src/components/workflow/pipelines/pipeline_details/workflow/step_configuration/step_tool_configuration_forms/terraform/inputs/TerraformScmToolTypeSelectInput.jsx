@@ -23,6 +23,7 @@ function TerraformScmToolTypeSelectInput({model, setModel, isLoading, disabled})
     await newModel.setData(fieldName, selectedOption?.value);
     newModel.setData("gitToolId", "");
     newModel.setData("gitRepository", "");
+    newModel.setData("repositoryName", "");
     newModel.setData("defaultBranch", "");
     newModel.setData("gitFilePath", "");
     newModel.setData("bitbucketWorkspace", "");

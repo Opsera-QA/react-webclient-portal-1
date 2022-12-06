@@ -57,6 +57,16 @@ const InformaticaStepFormMetadata = {
     },
     {
       label: "Repository",
+      id: "repositoryName",
+      isRequiredFunction: (model) => {
+        return model?.getData("type") === "export" || model?.getData("deployFromGit");
+      },
+      maxLength: 255,
+      regexDefinitionName: "generalTextWithSpacesSlash",
+      formText:" "
+    },
+    {
+      label: "Repository",
       id: "repoId",
       isRequiredFunction: (model) => {
         return model?.getData("type") === "export" || model?.getData("deployFromGit");
@@ -132,6 +142,7 @@ const InformaticaStepFormMetadata = {
     service: "",
     gitToolId : "",
     repository: "",
+    repositoryName: "",
     repoId: "",
     workspace: "",
     gitBranch: "",

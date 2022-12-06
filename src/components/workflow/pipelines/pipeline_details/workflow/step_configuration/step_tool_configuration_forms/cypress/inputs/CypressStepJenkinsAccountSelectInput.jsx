@@ -13,6 +13,7 @@ function CypressStepJenkinsAccountSelectInput({model, setModel, disabled}) {
     newModel.setData("gitUrl", "");
     newModel.setData("sshUrl", "");
     newModel.setData("repository", "");
+    newModel?.setData("repositoryName", "");
     newModel.setData("branch", "");
     newModel.setData("projectId", "");
     newModel.setData("defaultBranch", "");

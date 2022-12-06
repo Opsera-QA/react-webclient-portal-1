@@ -9,6 +9,8 @@ function BlackDuckGitRepositoryInput({model, setModel, disabled}) {
     const repoId = selectedOption?._id || selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     const sshUrl = selectedOption?.sshUrl || selectedOption?.configuration?.sshUrl || "";
+    const repoName = selectedOption?.nameSpacedPath || selectedOption?.name || "";
+    newModel.setData("repositoryName", repoName);
     newModel.setData("gitRepository", selectedOption.name);
     newModel.setData("gitRepositoryID", repoId);
     newModel.setData("sshUrl", sshUrl);

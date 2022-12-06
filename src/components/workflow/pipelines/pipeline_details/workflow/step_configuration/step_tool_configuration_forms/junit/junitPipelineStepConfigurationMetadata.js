@@ -48,6 +48,11 @@ const junitPipelineStepConfigurationMetadata = {
     },
     {
       label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
+    {
+      label: "Repository",
       id: "repoId",
       isRequired: true
     },
@@ -100,6 +105,7 @@ const junitPipelineStepConfigurationMetadata = {
     gitCredential: "",
     gitUserName: "",
     repository: "",
+    repositoryName: "",
     branch: "",
     workspace: "",
     workspaceDeleteFlag: false

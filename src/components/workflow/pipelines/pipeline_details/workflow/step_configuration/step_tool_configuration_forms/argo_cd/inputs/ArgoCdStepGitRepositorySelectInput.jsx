@@ -19,6 +19,7 @@ function ArgoCdStepGitRepositorySelectInput({className, fieldName, model, setMod
     const repoId = selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     newModel.setData("gitRepository", repoName);
+    newModel.setData("repositoryName", repoName);
     newModel.setData("gitRepositoryID", repoId);
     newModel.setData("gitUrl", gitUrl);
     newModel.setData("sshUrl", selectedOption?.sshUrl || "");

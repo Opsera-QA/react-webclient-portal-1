@@ -12,7 +12,8 @@ function StepConfigJenkinsAccountInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("repoId", "");
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
-    newDataObject.setData("repository", "");    
+    newDataObject.setData("repository", "");
+    newDataObject?.setData("repositoryName", "");
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("branch", "");
@@ -31,7 +32,8 @@ function StepConfigJenkinsAccountInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("repoId", "");
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
-    newDataObject.setData("repository", "");    
+    newDataObject.setData("repository", "");
+    newDataObject?.setData("repositoryName", "");
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("branch", "");

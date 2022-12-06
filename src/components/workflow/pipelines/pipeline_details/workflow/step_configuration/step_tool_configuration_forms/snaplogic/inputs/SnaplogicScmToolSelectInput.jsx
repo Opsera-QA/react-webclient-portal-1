@@ -9,6 +9,7 @@ function SnaplogicScmToolSelectInput({model, setModel, className, disabled}) {
     let newModel = {...model};
     newModel.setData(fieldName, selectedOption._id);
     newModel.setData("gitRepository", "");
+    newModel.setData("repositoryName", "");
     newModel.setData("repoId", "");
     newModel.setData("gitBranch", "");
     newModel.setData("targetBranch", "");
@@ -19,6 +20,7 @@ function SnaplogicScmToolSelectInput({model, setModel, className, disabled}) {
     let newModel = {...model};
     newModel.setData("gitToolId", "");
     newModel.setData("gitRepository", "");
+    newModel.setData("repositoryName", "");
     newModel.setData("repoId", "");
     newModel.setData("gitBranch", "");
     newModel.setData("targetBranch", "");

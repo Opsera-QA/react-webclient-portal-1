@@ -22,6 +22,11 @@ const TerraformStepFormMetadata = {
       isRequired: true
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
+    {
       label: "AWS Credentials",
       id: "awsToolConfigId",
     },
@@ -210,6 +215,11 @@ const TerraformStepFormMetadata = {
       isRequired: true
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
+    {
       label: "AWS Credentials",
       id: "awsToolConfigId",
     },
@@ -380,6 +390,7 @@ const TerraformStepFormMetadata = {
     toolActionType: "EXECUTE",
     gitFilePath: "",
     gitRepository: "",
+    repositoryName: "",
     defaultBranch: "",
     awsToolConfigId : "",
     accessKeyParamName: "",

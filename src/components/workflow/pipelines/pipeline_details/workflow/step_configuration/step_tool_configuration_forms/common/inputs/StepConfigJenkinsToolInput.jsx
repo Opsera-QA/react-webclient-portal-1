@@ -32,6 +32,7 @@ function StepConfigJenkinsToolInput({model, setModel, disabled}) {
     newModel.setData("gitCredential", "");
     newModel.setData("gitUserName", "");
     newModel.setData("repository", "");
+    newModel?.setData("repositoryName", "");
     newModel.setData("branch", "");
     newModel.setData("gitBranch", "");
     newModel.setData("workspace", "");
@@ -70,6 +71,7 @@ function StepConfigJenkinsToolInput({model, setModel, disabled}) {
     newModel.setData("gitCredential", "");
     newModel.setData("gitUserName", "");
     newModel.setData("repository", "");
+    newModel?.setData("repositoryName", "");
     newModel.setData("branch", "");
     newModel.setData("gitBranch", "");
     newModel.setData("workspace", "");

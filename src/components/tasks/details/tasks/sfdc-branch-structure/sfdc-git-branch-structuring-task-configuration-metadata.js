@@ -14,17 +14,17 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       isRequired: true,
       maxLength: 250,
       regexDefinitionName: "generalTextWithSpacesSlash",
-    },  
+    },
     {
       label: "Auto Scaling",
-      id: "autoScaleEnable"
+      id: "autoScaleEnable",
     },
     {
       label: "Agent Label",
       id: "agentLabels",
       regexDefinitionName: "generalTextWithoutSpacesPeriod",
-      maxLength: 50
-    },  
+      maxLength: 50,
+    },
     {
       label: "Jenkins Job Name",
       id: "jobName",
@@ -37,7 +37,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       isRequired: true,
       maxLength: 10,
       lowercase: true,
-    },    
+    },
     {
       label: "Account",
       id: "gitCredential",
@@ -50,7 +50,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       isRequired: true,
       maxLength: 24,
       regexDefinitionName: "mongoId",
-    },        
+    },
     {
       id: "projectId",
       maxLength: 100,
@@ -66,7 +66,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
     {
       id: "gitUrl",
     },
-    
+
     {
       id: "sshUrl",
     },
@@ -77,7 +77,14 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
-    
+    {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true,
+      maxLength: 255,
+      regexDefinitionName: "generalTextWithSpacesSlash",
+    },
+
     {
       label: "Workspace",
       id: "workspace",
@@ -120,8 +127,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
   ],
-  newObjectFields:
-    {
+  newObjectFields: {
     toolConfigId: "",
     jobType: "SFDC_CONVERT_METADATA",
     autoScaleEnable: false,
@@ -138,15 +144,16 @@ const sfdcGitBranchTaskConfigurationMetadata = {
     workspace: "",
     workspaceName: "",
     repository: "",
+    repositoryName: "", // for UI display only
     gitBranch: "",
     defaultBranch: "",
-    dependencyType:"",
+    dependencyType: "",
     sfdcToolId: "",
     sfdcToolName: "",
     accountUsername: "",
     conversionType: "",
-    destinationBranch: ""
-    }
+    destinationBranch: "",
+  },
 };
 
 export default sfdcGitBranchTaskConfigurationMetadata;

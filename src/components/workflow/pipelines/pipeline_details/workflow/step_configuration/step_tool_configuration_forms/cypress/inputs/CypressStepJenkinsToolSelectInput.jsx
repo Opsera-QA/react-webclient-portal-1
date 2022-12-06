@@ -21,6 +21,7 @@ function CypressStepJenkinsToolSelectInput({model, setModel, disabled}) {
     newModel.setData("workspace", "");
     newModel.setData("workspaceName", "");
     newModel.setData("repository", "");
+    newModel?.setData("repositoryName", "");
     newModel.setData("branch", "");
     newModel.setData("toolJobId", "");
     newModel.setData("toolJobType", "");

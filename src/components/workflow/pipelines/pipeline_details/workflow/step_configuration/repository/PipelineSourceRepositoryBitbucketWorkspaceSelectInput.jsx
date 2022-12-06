@@ -8,6 +8,7 @@ function PipelineSourceRepositoryBitbucketWorkspaceSelectInput({className, field
     newModel.setData("workspace", selectedOption?.key);
     newModel.setData("workspaceName", selectedOption?.name);
     newModel.setData("repository", "");
+    newModel?.setData("repositoryName", "");
     newModel.setData("gitUrl", "");
     newModel.setData("sshUrl", "");
     newModel.setData("branch", "");

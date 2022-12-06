@@ -39,6 +39,11 @@ const mongodbRealmStepFormMetadata = {
       },
       {
         label: "Repository",
+        id: "repositoryName",
+        isRequired: true
+      },
+      {
+        label: "Repository",
         id: "repoId",
         isRequired: true
       },
@@ -63,6 +68,7 @@ const mongodbRealmStepFormMetadata = {
       workspace: "",
       workspaceName: "",
       repository: "",
+      repositoryName: "",
       repoId: "",
       gitBranch: "",
       schemaGitFileList: [],

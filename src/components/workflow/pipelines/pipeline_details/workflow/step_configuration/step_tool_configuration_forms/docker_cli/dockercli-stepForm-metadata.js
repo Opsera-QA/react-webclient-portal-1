@@ -23,7 +23,7 @@ const dockerCliStepFormMetadata = {
       label: "Repository",
       id: "gitRepository",
       isRequired: true
-    },    
+    },
     {
       label: "Repository",
       id: "repoId",

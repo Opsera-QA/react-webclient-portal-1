@@ -13,6 +13,7 @@ function KafkaConnectSCMToolTypeSelectInput({dataObject, setDataObject, isLoadin
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");
+    newDataObject?.setData("repositoryName", "");
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("gitBranch", "");

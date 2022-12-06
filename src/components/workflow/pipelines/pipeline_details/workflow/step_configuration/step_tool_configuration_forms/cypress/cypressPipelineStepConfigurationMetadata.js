@@ -65,6 +65,10 @@ const cypressPipelineStepConfigurationMetadata = {
     },
     {
       label: "Repository",
+      id: "repositoryName",
+    },
+    {
+      label: "Repository",
       id: "repoId",
     },
     {
@@ -144,6 +148,7 @@ const cypressPipelineStepConfigurationMetadata = {
     gitCredential: "",
     gitUserName: "",
     repository: "",
+    repositoryName: "",
     branch: "",
     jsonPath: "",
     workspace: "",

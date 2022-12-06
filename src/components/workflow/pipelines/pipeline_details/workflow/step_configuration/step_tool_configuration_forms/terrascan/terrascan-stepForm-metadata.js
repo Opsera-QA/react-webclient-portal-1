@@ -81,6 +81,11 @@ const terrascanStepFormMetadata = {
       id: "repository",
       isRequired: true
     },
+    {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
     
     {
       label: "Workspace",
@@ -160,6 +165,7 @@ const terrascanStepFormMetadata = {
     workspace: "",
     workspaceName: "",
     repository: "",
+    repositoryName: "",
     gitBranch: "",
     agentLabels: "",
     autoScaleEnable: false,

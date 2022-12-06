@@ -8,6 +8,11 @@ const gitScraperReposMetadata = {
       isRequired: true,
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true,
+    },
+    {
       label: "Branch",
       id: "gitBranch",
       isRequired: true,
@@ -43,6 +48,7 @@ const gitScraperReposMetadata = {
   ],
   newObjectFields: {
     repository: "",
+    repositoryName: "", // for UI display only
     gitBranch: [],
     repoId: "",
     sshUrl: "",

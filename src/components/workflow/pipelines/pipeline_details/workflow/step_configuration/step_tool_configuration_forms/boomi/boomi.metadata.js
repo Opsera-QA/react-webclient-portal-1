@@ -35,6 +35,10 @@ const boomiMetadata = {
             id: "repository",
         },
         {
+            label: "Repository",
+            id: "repositoryName",
+        },
+        {
             label: "Workspace",
             id: "workspace"
         },
@@ -103,6 +107,7 @@ const boomiMetadata = {
         workspace: "",
         workspaceName: "",
         repository: "",
+        repositoryName: "", // for UI display only
         gitBranch: "",
         filePath: "",
         fileName: "",

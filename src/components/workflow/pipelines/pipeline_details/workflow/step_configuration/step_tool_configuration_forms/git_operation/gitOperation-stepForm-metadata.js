@@ -26,6 +26,14 @@ const gitOperationStepFormMetadata = {
     },
     {
       label: "Repository",
+      id: "repositoryName",
+      isRequired: true,
+      maxLength: 255,
+      regexDefinitionName: "generalTextWithSpacesSlash",
+      formText:" "
+    },
+    {
+      label: "Repository",
       id: "repoId",
       isRequired: true,
       maxLength: 255,
@@ -105,6 +113,7 @@ const gitOperationStepFormMetadata = {
     sshUrl: "",
     service: "",
     repository: "",
+    repositoryName: "",
     workspace: "",
     action: "",
     targetBranch: "",

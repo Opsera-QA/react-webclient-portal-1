@@ -80,7 +80,12 @@ const FortifyStepFormMetadata = {
       label: "Repository",
       id: "gitRepository",
       isRequired: true
-    },    
+    },
+    {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
     {
       label: "Repository",
       id: "repoId",
@@ -115,7 +120,8 @@ const FortifyStepFormMetadata = {
     gitToolId: "",
     workspace: "",
     workspaceName: "",
-    gitRepository: "",    
+    gitRepository: "",
+    repositoryName: "",
     repoId: "",
     gitBranch: "",
     sshUrl: "",

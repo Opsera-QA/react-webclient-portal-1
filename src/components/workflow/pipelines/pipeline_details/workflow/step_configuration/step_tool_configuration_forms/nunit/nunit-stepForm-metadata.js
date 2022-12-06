@@ -69,10 +69,15 @@ const nunitStepFormMetadata = {
       id: "sshUrl",
       // isRequired: true
     },
-    
+
     {
       label: "Repository",
       id: "repository",
+      isRequired: true
+    },
+    {
+      label: "Repository",
+      id: "repositoryName",
       isRequired: true
     },
     
@@ -145,6 +150,7 @@ const nunitStepFormMetadata = {
     workspace: "",
     workspaceName: "",
     repository: "",
+    repositoryName: "",
     gitBranch: "",
 
     agentLabels: "",

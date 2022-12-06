@@ -39,6 +39,11 @@ const jenkinsPipelineStepConfigurationMetadata = {
     },
     {
       label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
+    {
+      label: "Repository",
       id: "repoId",
       // isRequired: true
     },
@@ -286,6 +291,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     gitCredential: "",
     gitUserName: "",
     repository: "",
+    repositoryName: "",
     branch: "",
     buildArgs: {},
     isOrgToOrg: false,

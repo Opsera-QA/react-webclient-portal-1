@@ -10,6 +10,7 @@ function ArgoCdStepSourceControlManagementToolIdentifierSelectInput({ fieldName,
     newModel.setData("type", option?.value);
     newModel.setData("gitToolId", "");
     newModel.setData("gitRepository", "");
+    newModel.setData("repositoryName", "");
     newModel.setData("gitRepositoryID", "");
     newModel.setData("defaultBranch", "");
     newModel.setData("gitFilePath", "");

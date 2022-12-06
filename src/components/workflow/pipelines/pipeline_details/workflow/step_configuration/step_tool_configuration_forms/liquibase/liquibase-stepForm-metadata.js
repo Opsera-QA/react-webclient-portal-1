@@ -45,7 +45,12 @@ const LiquibaseStepFormMetadata = {
       label: "Repository",
       id: "gitRepository",
       isRequired: true
-    },    
+    },
+    {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
     {
       label: "Repository",
       id: "repoId",
@@ -93,7 +98,8 @@ const LiquibaseStepFormMetadata = {
     gitToolId: "",
     workspace: "",
     workspaceName: "",
-    gitRepository: "",    
+    gitRepository: "",
+    repositoryName: "",
     repoId: "",
     gitBranch: "",
     sshUrl: "",

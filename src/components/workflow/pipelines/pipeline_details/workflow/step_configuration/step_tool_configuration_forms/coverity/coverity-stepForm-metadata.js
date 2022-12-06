@@ -60,6 +60,11 @@ const coverityStepFormMetadata = {
       isRequired: true
     },
     {
+      label: "Repository",
+      id: "repositoryName",
+      isRequired: true
+    },
+    {
       label: "Workspace",
       id: "workspace",
     },
@@ -128,6 +133,7 @@ const coverityStepFormMetadata = {
     workspace: "",
     workspaceName: "",
     repository: "",
+    repositoryName: "",
     gitBranch: "",
     branch: "",
     jobType:"COVERITY_SCAN",

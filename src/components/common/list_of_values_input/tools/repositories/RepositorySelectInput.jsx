@@ -28,13 +28,6 @@ function RepositorySelectInput(
     disabled,
     valueField
   }) {
-    // TODO : Use this for other SCMs if they match
-    const getGitLabTextField = (repo) => {
-      const repoName = repo?.name || "No Repository";
-      const repoFullName = repo?.nameSpacedPath || "";
-      const repoId = repo?.id || "No Repository ID Assigned";
-      return `${repoName} (${repoFullName})`;
-    };
 
     const getRelevantInput = () => {
       switch (service) {
@@ -84,8 +77,7 @@ function RepositorySelectInput(
               setDataFunction={setDataFunction}
               fieldName={fieldName}
               disabled={disabled}
-              textField={(repo) => getGitLabTextField(repo)}
-              valueField={"id"}
+              valueField={valueField}
               clearDataFunction={clearDataFunction}
             />
           );

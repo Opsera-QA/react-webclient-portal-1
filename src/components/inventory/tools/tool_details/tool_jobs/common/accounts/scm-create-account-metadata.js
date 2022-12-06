@@ -26,6 +26,13 @@ const scmCreateAccountMetadata = {
       },
       {
         label: "Repository",
+        id: "repositoryName",
+        isRequired: true,
+        maxLength: 255,
+        regexDefinitionName: "generalTextWithSpaces",
+      },
+      {
+        label: "Repository",
         id: "repoId",
         isRequired: true,
       },
@@ -85,6 +92,13 @@ const scmCreateAccountMetadata = {
       },
       {
         label: "Repository",
+        id: "repositoryName",
+        isRequired: true,
+        maxLength: 255,
+        regexDefinitionName: "generalTextWithSpaces",
+      },
+      {
+        label: "Repository",
         id: "repoId",
         isRequired: true,
       },
@@ -134,6 +148,13 @@ const scmCreateAccountMetadata = {
       },
       {
         label: "Repository",
+        id: "repositoryName",
+        isRequired: true,
+        maxLength: 255,
+        regexDefinitionName: "generalTextWithSpaces",
+      },
+      {
+        label: "Repository",
         id: "repoId",
         isRequired: true,
       },
@@ -172,6 +193,7 @@ const scmCreateAccountMetadata = {
       service: "",
       workspaceName: "",
       repository: "",
+      repositoryName: "", // for UI display only
       repoId: "",
       reviewerName: "",
       accountType: "",
