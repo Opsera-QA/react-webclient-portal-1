@@ -5,7 +5,7 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import FilterContainer from "components/common/table/FilterContainer";
 import {faShieldCheck} from "@fortawesome/pro-light-svg-icons";
 
-export default function PipelineAuditLogsDisplayer(
+export default function PipelineAuditLogsTable(
   {
     pipelineId,
   }) {
@@ -45,6 +45,6 @@ export default function PipelineAuditLogsDisplayer(
   );
 }
 
-PipelineAuditLogsDisplayer.propTypes = {
+PipelineAuditLogsTable.propTypes = {
   pipelineId: PropTypes.string,
 };
