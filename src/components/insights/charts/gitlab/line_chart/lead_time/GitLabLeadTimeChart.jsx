@@ -10,6 +10,7 @@ import GitlabLeadTimeHelpDocumentation from "../../../../../common/help/document
 import GitlabLeadTimeScatterPlotContainer from "./GitlabLeadTimeScatterPlotContainer";
 import GitlabLeadTimeDataBlock from "./GitlabLeadTimeDataBlock";
 import {
+  convertMStoDays, convertMStoHours,
   getDeploymentStageFromKpiConfiguration,
   getMaturityColorClass,
   getMaturityScoreText,
@@ -19,6 +20,7 @@ import {
 } from "../../../charts-helpers";
 import GitlabLeadTimeTrendDataBlock from "./GitlabLeadTimeTrendDataBlock";
 import gitlabAction from "../../gitlab.action";
+import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import InfoDialog from "../../../../../common/status_notifications/info";
 import BadgeBase from "../../../../../common/badges/BadgeBase";
 import GitlabLeadTimeMaturityBlock from "./GitlabLeadTimeMaturityBlock";
@@ -44,8 +46,8 @@ function GitLabLeadTimeChart({
   const [meanCommitData, setMeanCommitData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
-  const [leadtimeDataPoint, setLeadTimeDataPoint] =
-      useState(undefined);
+  const [leadTimeDataPoint, setLeadTimeDataPoint] = useState(undefined);
+  const [medianLeadTimeDataPoint, setMedianTimeDataPoint] = useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -72,7 +74,7 @@ function GitLabLeadTimeChart({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      // await loadDataPoints(cancelSource);
+      await loadDataPoints(cancelSource);
       let dashboardTags =
         dashboardData?.data?.filters[
           dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
@@ -131,15 +133,19 @@ function GitLabLeadTimeChart({
     }
   };
 
-  // const loadDataPoints = async () => {
-  //   const dataPoints = kpiConfiguration?.dataPoints;
-  //   const dataPoint = dataPointHelpers.getDataPoint(
-  //     dataPoints,
-  //     constants.SUPPORTED_DATA_POINT_IDENTIFIERS
-  //       .LEADTIME_DATA_POINT,
-  //   );
-  //   setLeadTimeDataPoint(dataPoint);
-  // };
+  const loadDataPoints = async () => {
+    const dataPoints = kpiConfiguration?.dataPoints;
+    const dataPoint = dataPointHelpers.getDataPoint(
+      dataPoints,
+      constants.SUPPORTED_DATA_POINT_IDENTIFIERS
+        .LEADTIME_DATA_POINT,
+    );
+    setLeadTimeDataPoint(dataPoint);
+    setMedianTimeDataPoint(dataPointHelpers.getDataPoint(
+      dataPoints,
+      constants.SUPPORTED_DATA_POINT_IDENTIFIERS.MEDIAN_TIME_DATA_POINT,
+    ));
+  };
  const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
@@ -199,6 +205,16 @@ function GitLabLeadTimeChart({
     const previousTotalAverageLeadTimeDisplay = getTimeDisplay(metricData?.previousTotalAverageLeadTime);
     const totalMedianTimeDisplay = getTimeDisplay(metricData?.totalMedianTime);
     const previousTotalMedianTimeDisplay = getTimeDisplay(metricData?.previousTotalMedianTime);
+    // data point settings
+    const dataPointType = leadTimeDataPoint?.type;
+    let leadTimeDataPointValue;
+    // This is set by admin currently, this can be moved as a feature to select the unit type for strategic criteria
+    if(dataPointType == 'days') {
+      leadTimeDataPointValue = convertMStoDays(metricData?.totalAverageLeadTimeInMS);
+    } else if (dataPointType == 'hours') {
+      leadTimeDataPointValue = convertMStoHours(metricData?.totalAverageLeadTimeInMS);
+    }
+    const medianTimeDataPointValue = metricData?.totalAverageLeadTime;
     const maturityScore = metricData?.overallMaturityScoreText;
     const maturityColor = getMaturityColorClass(maturityScore);
     return (
@@ -240,6 +256,8 @@ function GitLabLeadTimeChart({
                 topText={"Average LTFC"}
                 bottomText={"Prev LTFC: "}
                 toolTipText={totalAverageLeadTimeDisplay[1]}
+                dataPoint={leadTimeDataPoint}
+                dataPointValue={leadTimeDataPointValue}
               />
             </Col>
             <Col md={12} className={"px-1"}>
@@ -254,6 +272,8 @@ function GitLabLeadTimeChart({
                 topText={"Median LTFC"}
                 bottomText={"Prev Median: "}
                 toolTipText={totalMedianTimeDisplay[1]}
+                dataPoint={medianLeadTimeDataPoint}
+                dataPointValue={medianTimeDataPointValue}
               />
             </Col>
             {/*TODO This will be enabled after fixing the formula*/}

@@ -9,6 +9,7 @@ function GitlabPipelineStatisticsTrendDataBlock({
   prevValue,
   trend,
   dataPoint,
+  dataPointValue,
   getTrendIcon,
   topText,
   bottomText,
@@ -29,6 +30,7 @@ function GitlabPipelineStatisticsTrendDataBlock({
           <MetricScoreText
             score={`${value} %`}
             dataPoint={dataPoint}
+            dataPointValue={dataPointValue}
           />
         }
         dataPoint={dataPoint}
@@ -42,6 +44,7 @@ GitlabPipelineStatisticsTrendDataBlock.propTypes = {
   prevValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   trend: PropTypes.string,
   dataPoint: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+  dataPointValue:  PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   getTrendIcon: PropTypes.func,
   topText: PropTypes.string,
   bottomText: PropTypes.string,
