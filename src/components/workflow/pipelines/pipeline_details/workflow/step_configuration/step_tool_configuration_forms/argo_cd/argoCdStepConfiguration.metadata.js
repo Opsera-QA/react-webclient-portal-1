@@ -142,7 +142,10 @@ export const ArgoCdStepConfigurationMetadata = {
     },
     {
       label: "Image Reference Key",
-      id: "imageReference"
+      id: "imageReference",
+      isRequiredFunction: (model) => {
+        return model?.getData("kustomizeFlag") === true;
+      },
     }
   ],
   newObjectFields: {
