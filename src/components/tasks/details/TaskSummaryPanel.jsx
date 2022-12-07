@@ -22,8 +22,16 @@ import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import RbacWarningField from "temp-library-components/fields/rbac/RbacWarningField";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import TaskStateField from "temp-library-components/fields/orchestration/state/task/TaskStateField";
 
-function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData }) {
+function TaskSummaryPanel(
+  {
+    gitTasksData,
+    setGitTasksData,
+    setActiveTab,
+    loadData,
+    status,
+  }) {
   const {
     cancelTokenSource,
     getAccessToken,
@@ -34,14 +42,6 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
     const response = await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newDataModel);
     loadData();
     return response;
-  };
-
-  const updateRunCount = async () => {
-    let newDataObject = gitTasksData;
-    const currRunCount = gitTasksData?.getData("run_count") ? gitTasksData?.getData("run_count") : 0;
-    newDataObject.setData("run_count", currRunCount + 1);
-    newDataObject.setData("status", "running");
-    setGitTasksData(newDataObject);
   };
 
   const getDynamicField = () => {
@@ -64,22 +64,21 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         return (
           <TaskAksActionButtons
             gitTasksData={gitTasksData}
-            status={gitTasksData?.getData("status")}
+            status={status}
           />
         );
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
         return (
           <TasksEcsActionButtons
             gitTasksData={gitTasksData}
-            status={gitTasksData?.getData("status")}
+            status={status}
           />
         );
       case TASK_TYPES.GITSCRAPER:
         return (
           <GitScraperActionButton
             gitTasksData={gitTasksData}
-            status={gitTasksData?.getData("status")}
-            runCountUpdate={updateRunCount}
+            status={status}
           />
         );
       default:
@@ -88,6 +87,7 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
             taskModel={gitTasksData}
             setTaskModel={setGitTasksData}
             loadData={loadData}
+            status={status}
             actionAllowed={TaskRoleHelper.canRunTask(userData, gitTasksData?.getPersistData())}
             taskType={gitTasksData?.getData("type")}
           />
@@ -122,7 +122,6 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
     }
   };
 
-
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab} editingAllowed={TaskRoleHelper.canUpdateTask(userData, gitTasksData?.getPersistData())}>
       <Row>
@@ -131,6 +130,14 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         </Col>
         <Col md={6}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"owner_name"} />
+        </Col>
+        <Col md={6}>
+          <TaskStateField
+            model={gitTasksData}
+          />
+        </Col>
+        <Col md={6}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"run_count"} />
         </Col>
         <Col lg={12}>
           <TaskRoleAccessInput
@@ -144,10 +151,6 @@ function TaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadDat
         </Col>
         <Col md={6}>
           <SmartIdField model={gitTasksData} fieldName={"_id"} />
-        </Col>
-
-        <Col md={6}>
-          <TextFieldBase dataObject={gitTasksData} fieldName={"run_count"} />
         </Col>
         <Col md={6}>
           <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
@@ -188,6 +191,7 @@ TaskSummaryPanel.propTypes = {
   setActiveTab: PropTypes.func,
   setGitTasksData: PropTypes.func,
   loadData: PropTypes.func,
+  status: PropTypes.string,
 };
 
 export default TaskSummaryPanel;
