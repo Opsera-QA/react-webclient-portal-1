@@ -2,57 +2,32 @@ const sonarReportMetaData = {
   type: "Sonar Report Metadata",
   fields: [
     {
-      label: "Id",
-      id: "id",
+      label: "Name",
+      id: "name",
     },
     {
-      label: "Scan Id",
-      id: "scanId",
+      label: "Operation",
+      id: "operation",
     },
     {
-      label: "Release Id",
-      id: "releaseId"
+      label: "Actual",
+      id: "actual"
     },
     {
-      label: "File Name",
-      id: "fileName",
+      label: "Error",
+      id: "error",
     },
     {
-      label: "File Path",
-      id: "filePath",
-    },
-    {
-      label: "Severity",
-      id: "severity"
-    },
-    {
-      label: "Category",
-      id: "category"
-    },
-    {
-      label: "Status",
-      id: "status"
-    },
-    {
-      label: "Sub-Category",
-      id: "subCategory"
-    },
-    {
-      label: "Line Number",
-      id: "lineNumber"
-    },
+      label: "Level",
+      id: "level",
+    },    
   ],
   newObjectFields: {
-    id: "",
-    scanId: "",
-    releaseId: "",
-    fileName: "",
-    filePath: "",
-    severity: "",
-    category: "",
-    status: "",
-    subCategory: "",
-    lineNumber: "",    
+    name: "",
+    operation: "",
+    actual: "",
+    error: "",
+    level: "",
   }
 };
 
