@@ -12,7 +12,6 @@ import CustomTable from "components/common/table/CustomTable";
 export default function AllTasksActivityLogTreeTable(
   {
     taskLogData,
-    taskActivityMetadata,
     loadData,
     isLoading,
     taskActivityFilterModel,
@@ -53,7 +52,6 @@ export default function AllTasksActivityLogTreeTable(
       <TaskActivityLogsTable
         isLoading={isLoading}
         taskLogData={taskLogData}
-        taskActivityMetadata={taskActivityMetadata}
         noDataMessage={getNoDataMessage()}
       />
     );
@@ -117,7 +115,6 @@ AllTasksActivityLogTreeTable.propTypes = {
   taskActivityFilterModel: PropTypes.object,
   setTaskActivityFilterModel: PropTypes.func,
   loadData: PropTypes.func,
-  taskActivityMetadata: PropTypes.object,
   taskActivityTreeData: PropTypes.array,
   setCurrentRunNumber: PropTypes.func,
   currentRunNumber: PropTypes.oneOfType([

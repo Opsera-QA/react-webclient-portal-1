@@ -16,7 +16,6 @@ function TaskActivityPanel(
     showFilterContainerIcon,
     status,
   }) {
-  const [taskActivityMetadata, setTaskActivityMetadata] = useState(undefined);
   const [activityData, setActivityData] = useState([]);
   const taskLogsTree = useRef([]);
   const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
@@ -96,7 +95,6 @@ function TaskActivityPanel(
 
       if (Array.isArray(taskActivityData)) {
         setActivityData([...taskActivityData]);
-        setTaskActivityMetadata(response?.data?.metadata);
         newFilterModel?.setData("totalCount", response?.data?.count);
         newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
         setTaskActivityFilterModel({...newFilterModel});
@@ -120,7 +118,6 @@ function TaskActivityPanel(
 
       if (Array.isArray(taskActivityData)) {
         setActivityData([...taskActivityData]);
-        setTaskActivityMetadata(response?.data?.metadata);
         newFilterModel?.setData("totalCount", response?.data?.count);
         newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
         setTaskActivityFilterModel({...newFilterModel});
@@ -144,7 +141,6 @@ function TaskActivityPanel(
 
       if (Array.isArray(taskActivityData)) {
         setActivityData([...taskActivityData]);
-        setTaskActivityMetadata(response?.data?.metadata);
         newFilterModel?.setData("totalCount", response?.data?.count);
         newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
         setTaskActivityFilterModel({...newFilterModel});
@@ -168,11 +164,11 @@ function TaskActivityPanel(
   return (
     <TaskActivityLogTreeTable
       taskLogData={activityData}
-      isLoading={isLoading || loadingActivityLogs}
+      isLoading={loadingActivityLogs}
+      isPolling={isLoading}
       loadData={pullLogs}
       taskActivityFilterModel={taskActivityFilterModel}
       setTaskActivityFilterModel={setTaskActivityFilterModel}
-      taskActivityMetadata={taskActivityMetadata}
       taskActivityTreeData={taskLogsTree?.current}
       setCurrentRunNumber={setCurrentRunNumber}
       currentRunNumber={currentRunNumber}
