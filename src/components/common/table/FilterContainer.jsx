@@ -20,6 +20,7 @@ function FilterContainer(
     inlineFilters,
     loadData,
     isLoading,
+    isPolling,
     body,
     addRecordFunction,
     supportSearch,
@@ -90,6 +91,7 @@ function FilterContainer(
           <div className={"px-2 d-flex content-block-header"}>
             <FilterTitleBar
               isLoading={isLoading}
+              isPolling={isPolling}
               title={title}
               type={type}
               filterDto={filterDto}
@@ -141,6 +143,7 @@ FilterContainer.propTypes = {
   showRefreshButton: PropTypes.bool,
   disableNewRecordButton: PropTypes.bool,
   filterSelectionOverlayPanel: PropTypes.any,
+  isPolling: PropTypes.bool,
 };
 
 FilterContainer.defaultProps = {

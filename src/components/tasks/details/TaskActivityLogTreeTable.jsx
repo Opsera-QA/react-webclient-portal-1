@@ -12,9 +12,9 @@ import CustomTable from "components/common/table/CustomTable";
 function TaskActivityLogTreeTable(
   {
     taskLogData,
-    taskActivityMetadata,
     loadData,
     isLoading,
+    isPolling,
     taskActivityFilterModel,
     setTaskActivityFilterModel,
     taskActivityTreeData,
@@ -48,12 +48,12 @@ function TaskActivityLogTreeTable(
 
     return (`Task activity data has not been generated yet for Run ${currentRunNumber}`);
   };
+
   const getTable = () => {
     return (
       <TaskActivityLogsTable
         isLoading={isLoading}
         taskLogData={taskLogData}
-        taskActivityMetadata={taskActivityMetadata}
       />
     );
   };
@@ -110,6 +110,7 @@ function TaskActivityLogTreeTable(
       filterDto={taskActivityFilterModel}
       setFilterDto={setTaskActivityFilterModel}
       isLoading={isLoading}
+      isPolling={isPolling}
       title={"Activity Logs"}
       titleIcon={showFilterContainerIcon !== false ? faClipboardList : undefined}
       dropdownFilters={getDropdownFilters()}
@@ -126,7 +127,6 @@ TaskActivityLogTreeTable.propTypes = {
   taskActivityFilterModel: PropTypes.object,
   setTaskActivityFilterModel: PropTypes.func,
   loadData: PropTypes.func,
-  taskActivityMetadata: PropTypes.object,
   taskActivityTreeData: PropTypes.array,
   setCurrentRunNumber: PropTypes.func,
   currentRunNumber: PropTypes.oneOfType([
@@ -136,6 +136,7 @@ TaskActivityLogTreeTable.propTypes = {
   setCurrentTaskId: PropTypes.func,
   taskRunCount: PropTypes.number,
   showFilterContainerIcon: PropTypes.bool,
+  isPolling: PropTypes.bool,
 };
 
 export default TaskActivityLogTreeTable;
