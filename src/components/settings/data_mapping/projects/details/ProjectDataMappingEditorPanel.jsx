@@ -60,6 +60,8 @@ function ProjectDataMappingEditorPanel(
     const newProjectDataMappingModel = {...projectDataMappingModel};
     newProjectDataMappingModel.setData('key', selectedOption?.name);
     newProjectDataMappingModel.setData('projectKey', selectedOption?.key);
+    newProjectDataMappingModel.setDefaultValue("value");
+    newProjectDataMappingModel.setDefaultValue("customTagFields");
     setProjectDataMappingModel({ ...newProjectDataMappingModel });
   };
 
