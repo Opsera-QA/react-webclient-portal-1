@@ -9,14 +9,13 @@ function MetricScoreText(
     score,
     qualityLevel, // TODO: Remove after strategic criteria is wired up everywhere
     dataPoint,
-    dataPointValue
   }) {
   const getQualityLevel = () => {
     let evaluation = qualityLevel;
 
     // TODO: allow existing data points to use their quality level but eventually require the use of strategic criteria
     if (dataPoint) {
-      const evaluatedDataPoint = dataPointHelpers.evaluateDataPointQualityLevel(dataPoint, dataPointValue);
+      const evaluatedDataPoint = dataPointHelpers.evaluateDataPointQualityLevel(dataPoint, score);
       if (typeof evaluatedDataPoint === "string") {
         evaluation = evaluatedDataPoint;
       }
@@ -39,7 +38,6 @@ MetricScoreText.propTypes = {
   score: PropTypes.number,
   qualityLevel: PropTypes.string,
   dataPoint: PropTypes.object,
-  dataPointValue:  PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default MetricScoreText;
