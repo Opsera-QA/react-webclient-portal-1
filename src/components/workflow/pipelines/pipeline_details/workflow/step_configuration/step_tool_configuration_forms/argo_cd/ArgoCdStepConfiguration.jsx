@@ -31,8 +31,8 @@ import pipelineHelpers from "components/workflow/pipelineHelpers";
 import ArgoBlueGreenDeploymentHelpDocumentation 
   from "components/common/help/documentation/pipelines/step_configuration/fields/ArgoBlueGreenDeploymentHelpDocumentation";
 import ArgoCdStepKustomizeBooleanInput from "./inputs/ArgoCdStepKustomizeBooleanInput";
-import ArgoClusterSelectInput from "components/common/list_of_values_input/tools/argo_cd/cluster/ArgoClusterSelectInput";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
+import ArgoClusterSelectInput from "components/common/list_of_values_input/tools/argo_cd/cluster/ArgoClusterSelectInput";
 
 function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel, pipelineId }) {
   const toastContext = useContext(DialogToastContext);
@@ -194,6 +194,24 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
     }
   };
 
+const getKustomizationInputFields = () => {
+  return (
+      <>
+        <ArgoCdStepKustomizeBooleanInput
+            model={argoCdModel}
+            setModel={setArgoCdModel}
+        />
+        { argoCdModel?.getData("kustomizeFlag") &&
+            <TextInputBase
+                setDataObject={setArgoCdModel}
+                dataObject={argoCdModel}
+                fieldName={"imageReference"}
+            />
+        }
+      </>
+  );
+};
+
   if (isLoading || argoCdModel === undefined) {
     return <LoadingDialog size="sm"/>;
   }
@@ -224,11 +242,8 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
         }
       />
       {getCommandLineSpecificInput()}
-      <ArgoCdStepKustomizeBooleanInput
-          model={argoCdModel}
-          setModel={setArgoCdModel}
-      />
       {getSCMInputs()}
+      {getKustomizationInputFields()}
       {getAppVariablesInputFields()}
       {getRollbackInputs()}
       <BooleanToggleInput

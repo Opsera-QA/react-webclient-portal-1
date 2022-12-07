@@ -139,6 +139,10 @@ export const ArgoCdStepConfigurationMetadata = {
     {
       label: "Custom Parameter",
       id: "customParameterId"
+    },
+    {
+      label: "Image Reference Key",
+      id: "imageReference"
     }
   ],
   newObjectFields: {
@@ -168,6 +172,7 @@ export const ArgoCdStepConfigurationMetadata = {
     imageUrl: "",
     isBlueGreenDeployment: false,
     dockerStepType: "",
-    customParameterId: ""
+    customParameterId: "",
+    imageReference: ""
   },
 };
