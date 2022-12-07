@@ -108,7 +108,7 @@ export const sourceRepositoryConfigurationMetadata = {
       formText: "Enable this if you want to trigger only if PR is approved"
     },
     {
-      label: "Dynamic Settings",
+      label: "Enabled",
       id: "dynamicSettings",
     },
   ],
