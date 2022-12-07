@@ -32,6 +32,7 @@ function ArgoApplicationsTable(
       getTableTextColumn(getField(fields, "applicationName")),
       getTableTextColumn(getField(fields, "cluster")),
       getTableTextColumn(getField(fields, "gitPath")),
+      getTableBooleanIconColumn(getField(fields, "autoSync")),
       getTableBooleanIconColumn(getField(fields, "active"))
     ],
     []

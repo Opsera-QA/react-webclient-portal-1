@@ -50,6 +50,10 @@ const argoApplicationsMetadata = {
       isRequired: true,
       maxLength: 28,
       regexDefinitionName: "generalText",
+    },
+    {
+      label: "Auto Sync",
+      id: "autoSync",
     }
   ],
   newObjectFields: {
@@ -62,6 +66,7 @@ const argoApplicationsMetadata = {
     projectName: "",
     branchName: "",
     active: true,
+    autoSync: false
   }
 };
 
