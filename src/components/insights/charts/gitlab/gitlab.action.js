@@ -140,12 +140,8 @@ gitlabActions.gitlabDeploymentStatistics = async (
   const apiUrl = gitlabBaseURL + "gitlabDeploymentStatistics";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  // TODO Revert this code when timezone is fixed everywhere
-  const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
-  const startDate = new Date(dateRange?.start);
-  const endDate = new Date(dateRange?.end);
-  startDate.setTime(startDate.getTime() - timeOffsetInMins);
-  endDate.setTime(endDate.getTime() - timeOffsetInMins);
+  const startDate =  new Date(dateRange?.start);
+  const endDate =  new Date(dateRange?.end);
 
   // Checking the use kpi tags toggle
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
@@ -183,12 +179,8 @@ gitlabActions.getActionablePipelinesChartData = async (
   const apiUrl = gitlabBaseURL + "getActionablePipelinesChartData";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  // TODO Revert this code when timezone is fixed everywhere
-  const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
   const startDate =  new Date(dateRange?.start);
   const endDate =  new Date(dateRange?.end);
-  startDate.setTime(startDate.getTime() - timeOffsetInMins);
-  endDate.setTime(endDate.getTime() - timeOffsetInMins);
 
   // Checking the use kpi tags toggle
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
@@ -230,12 +222,8 @@ gitlabActions.getActionableDeploymentsChartData = async (
   const apiUrl = gitlabBaseURL + "getActionableDeploymentsChartData";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  // TODO Revert this code when timezone is fixed everywhere
-  const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
   const startDate =  new Date(dateRange?.start);
   const endDate =  new Date(dateRange?.end);
-  startDate.setTime(startDate.getTime() - timeOffsetInMins);
-  endDate.setTime(endDate.getTime() - timeOffsetInMins);
 
   // Checking the use kpi tags toggle
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
@@ -274,12 +262,8 @@ gitlabActions.gitlabLeadTimeForChange = async (
   const apiUrl = gitlabBaseURL + "gitlabLeadTimeForChange";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  // TODO Revert this code when timezone is fixed everywhere
-  const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
-  const startDate = new Date(dateRange?.start);
-  const endDate = new Date(dateRange?.end);
-  startDate.setTime(startDate.getTime() - timeOffsetInMins);
-  endDate.setTime(endDate.getTime() - timeOffsetInMins);
+  const startDate =  new Date(dateRange?.start);
+  const endDate =  new Date(dateRange?.end);
 
   // Checking the use kpi tags toggle
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
@@ -316,12 +300,8 @@ gitlabActions.gitlabAverageCommitTimeToMerge = async (
   const apiUrl = gitlabBaseURL + "gitlabAverageCommitTimeToMerge";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  // TODO Revert this code when timezone is fixed everywhere
-  const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
-  const startDate = new Date(dateRange?.start);
-  const endDate = new Date(dateRange?.end);
-  startDate.setTime(startDate.getTime() - timeOffsetInMins);
-  endDate.setTime(endDate.getTime() - timeOffsetInMins);
+  const startDate =  new Date(dateRange?.start);
+  const endDate =  new Date(dateRange?.end);
 
   // Checking the use kpi tags toggle
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
@@ -365,13 +345,21 @@ gitlabActions.gitlabPipelineData = async (
   const apiUrl = gitlabBaseURL + "gitlabPipelineData";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  // TODO Revert this code when timezone is fixed everywhere
-  const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
-  const startDate = new Date(dateRange?.start);
-  const endDate = new Date(dateRange?.end);
-  startDate.setTime(startDate.getTime() - timeOffsetInMins);
-  endDate.setTime(endDate.getTime() - timeOffsetInMins);
+  const startDate =  new Date(dateRange?.start);
+  const endDate =  new Date(dateRange?.end);
 
+  // Checking the use kpi tags toggle
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
+  
   const postBody = {
     startDate: startDate.toISOString(),
     endDate: endDate.toISOString(),
@@ -379,7 +367,7 @@ gitlabActions.gitlabPipelineData = async (
     dashboardOrgs: dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
-    gitlabBranches: getResultFromKpiConfiguration(kpiConfiguration, "gitlab-branch"),
+    gitlabBranches: getResultFromKpiConfiguration( kpiConfiguration, "gitlab-branch")
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);

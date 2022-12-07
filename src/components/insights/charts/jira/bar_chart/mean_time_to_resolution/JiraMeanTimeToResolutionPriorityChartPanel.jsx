@@ -10,7 +10,7 @@ import config2 from "./JiraSeverityCountConfig.js";
 function JiraMeanTimeToResolutionPriorityChartPanel({ severityChartData, closePanel }) {
   return (
     <FullScreenCenterOverlayContainer titleText="Number of Incidents" closePanel={closePanel}>
-      <div className='pt-3 h-100'>
+      <div className="new-chart" style={{height:'500px'}}>
         <ResponsiveBar
           data={severityChartData}
           {...defaultConfig(
@@ -37,10 +37,7 @@ function JiraMeanTimeToResolutionPriorityChartPanel({ severityChartData, closePa
 }
 
 JiraMeanTimeToResolutionPriorityChartPanel.propTypes = {
-  severityChartData: PropTypes.shape({
-    id: PropTypes.oneOf([ PropTypes.string, PropTypes.number ]),
-    data: PropTypes.array
-  }),
+  severityChartData: PropTypes.array,
   closePanel: PropTypes.func.isRequired
 };
 
