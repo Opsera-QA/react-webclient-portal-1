@@ -15,6 +15,7 @@ import axios from "axios";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import ArgoApplicationArgoProjectSelectInput
   from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/inputs/ArgoApplicationArgoProjectSelectInput";
+import BooleanToggleInput from "../../../../../../../common/inputs/boolean/BooleanToggleInput";
 
 function ArgoApplicationEditorPanel({ argoApplicationData, toolData, applicationId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -146,6 +147,13 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
               fieldName={"branchName"}
               setDataObject={setArgoApplicationModel}
               disabled={!argoApplicationData?.isNew()}
+            />
+          </Col>
+          <Col lg={12}>
+            <BooleanToggleInput
+                fieldName={"autoSync"}
+                dataObject={argoApplicationModel}
+                setDataObject={setArgoApplicationModel}
             />
           </Col>
           <Col lg={12}>

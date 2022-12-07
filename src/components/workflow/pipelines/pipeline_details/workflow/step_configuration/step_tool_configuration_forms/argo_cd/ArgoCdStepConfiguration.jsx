@@ -194,6 +194,24 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
     }
   };
 
+const getKustomizationInputFields = () => {
+  return (
+      <>
+        <ArgoCdStepKustomizeBooleanInput
+            model={argoCdModel}
+            setModel={setArgoCdModel}
+        />
+        { argoCdModel?.getData("kustomizeFlag") &&
+            <TextInputBase
+                setDataObject={setArgoCdModel}
+                dataObject={argoCdModel}
+                fieldName={"imageReference"}
+            />
+        }
+      </>
+  );
+};
+
   if (isLoading || argoCdModel === undefined) {
     return <LoadingDialog size="sm"/>;
   }
@@ -224,11 +242,8 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
         }
       />
       {getCommandLineSpecificInput()}
-      <ArgoCdStepKustomizeBooleanInput
-          model={argoCdModel}
-          setModel={setArgoCdModel}
-      />
       {getSCMInputs()}
+      {getKustomizationInputFields()}
       {getAppVariablesInputFields()}
       {getRollbackInputs()}
       <BooleanToggleInput
