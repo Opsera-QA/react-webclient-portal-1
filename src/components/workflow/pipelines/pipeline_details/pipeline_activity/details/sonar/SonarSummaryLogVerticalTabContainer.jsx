@@ -8,8 +8,13 @@ function SonarSummaryLogVerticalTabContainer() {
     <VanitySetVerticalTabContainer>
       <VanitySetVerticalTab
         icon={faFileAlt}
-        tabText={"Overview"}
-        tabName={"summary"}
+        tabText={"Sonar Quality Gate"}
+        tabName={"sonar"}
+      />
+      <VanitySetVerticalTab
+        icon={faFileAlt}
+        tabText={"Opsera Threshold Validation"}
+        tabName={"opsera"}
       />
     </VanitySetVerticalTabContainer>
   );

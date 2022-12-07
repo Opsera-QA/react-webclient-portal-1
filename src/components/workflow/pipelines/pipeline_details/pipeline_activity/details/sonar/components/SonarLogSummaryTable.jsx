@@ -21,12 +21,10 @@ function SonarLogSummaryTable({ sonarObj }) {
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "fileName")),
-      getTableTextColumn(getField(fields, "filePath")),
-      getTableTextColumn(getField(fields, "lineNumber")),
-      getTableTextColumn(getField(fields, "category")),
-      getTableTextColumn(getField(fields, "severity")),
-      getTableTextColumn(getField(fields, "status")),
+      getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "actual")),
+      getTableTextColumn(getField(fields, "error")),
+      getTableTextColumn(getField(fields, "level")),      
     ],
     [],
   );
@@ -58,7 +56,7 @@ function SonarLogSummaryTable({ sonarObj }) {
           className={"mr-2"}
           icon={faCheckCircle}
         />
-        There were no secrets identified with this execution.
+        No report generated for this execution.
       </div>
     );
   }
