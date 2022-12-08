@@ -55,7 +55,7 @@ export const ArgoCdStepConfigurationMetadata = {
     {
       label: "Git File Path",
       id: "gitFilePath",
-      isRequired: true,
+      // isRequired: true,
     },
     {
       label: "Git Workspace",
