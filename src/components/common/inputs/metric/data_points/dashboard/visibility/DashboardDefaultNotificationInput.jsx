@@ -66,7 +66,7 @@ DashboardDefaultNotificationInput.propTypes = {
 };
 
 DashboardDefaultNotificationInput.defaultProps = {
-  fieldName: "sendDefaultCriteriaNotification",
+  fieldName: "visibility",
 };
 
 export default DashboardDefaultNotificationInput;
