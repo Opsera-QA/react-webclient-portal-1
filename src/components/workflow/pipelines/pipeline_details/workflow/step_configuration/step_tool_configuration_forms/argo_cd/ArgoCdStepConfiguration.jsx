@@ -1,40 +1,36 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
-import ArgoCdStepSourceControlManagementToolIdentifierSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepSourceControlManagementToolIdentifierSelectInput";
-import {ArgoCdStepConfigurationMetadata}
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/argoCdStepConfiguration.metadata";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import ArgoCdStepSourceControlManagementToolIdentifierSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepSourceControlManagementToolIdentifierSelectInput";
+import { ArgoCdStepConfigurationMetadata } from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/argoCdStepConfiguration.metadata";
 import ArgoCdStepSourceControlManagementToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepSourceControlManagementToolSelectInput";
-import ArgoCdStepBitbucketWorkspaceInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepBitbucketWorkspaceInput";
-import ArgoCdStepGitRepositorySelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepGitRepositorySelectInput";
-import ArgoCdStepGitBranchSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepGitBranchSelectInput";
+import ArgoCdStepBitbucketWorkspaceInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepBitbucketWorkspaceInput";
+import ArgoCdStepGitRepositorySelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepGitRepositorySelectInput";
+import ArgoCdStepGitBranchSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepGitBranchSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import ArgoCdApplicationSelectInput
-  from "components/common/list_of_values_input/tools/argo_cd/application/ArgoCdApplicationSelectInput";
-import {hasStringValue} from "components/common/helpers/string-helpers";
-import ArgoCdStepArgoToolSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepArgoToolSelectInput";
-import ArgoCdStepPipelineStepSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepPipelineStepSelectInput";
-import ArgoCdRepositoryTagSelectInput
-  from "components/common/list_of_values_input/tools/argo_cd/tags/ArgoCdRepositoryTagSelectInput";
+import ArgoCdApplicationSelectInput from "components/common/list_of_values_input/tools/argo_cd/application/ArgoCdApplicationSelectInput";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import ArgoCdStepArgoToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepArgoToolSelectInput";
+import ArgoCdStepPipelineStepSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/inputs/ArgoCdStepPipelineStepSelectInput";
+import ArgoCdRepositoryTagSelectInput from "components/common/list_of_values_input/tools/argo_cd/tags/ArgoCdRepositoryTagSelectInput";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
-import ArgoBlueGreenDeploymentHelpDocumentation 
-  from "components/common/help/documentation/pipelines/step_configuration/fields/ArgoBlueGreenDeploymentHelpDocumentation";
+import ArgoBlueGreenDeploymentHelpDocumentation from "components/common/help/documentation/pipelines/step_configuration/fields/ArgoBlueGreenDeploymentHelpDocumentation";
 import ArgoCdStepKustomizeBooleanInput from "./inputs/ArgoCdStepKustomizeBooleanInput";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 import ArgoClusterSelectInput from "components/common/list_of_values_input/tools/argo_cd/cluster/ArgoClusterSelectInput";
 
-function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel, pipelineId }) {
+function ArgoCdStepConfiguration({
+  stepTool,
+  plan,
+  stepId,
+  parentCallback,
+  closeEditorPanel,
+  pipelineId,
+}) {
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [argoCdModel, setArgoCdModel] = useState(undefined);
@@ -57,13 +53,14 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
   const loadData = async () => {
     try {
       setIsLoading(true);
-      const parsedModel = modelHelpers.parseObjectIntoModel(stepTool?.configuration, ArgoCdStepConfigurationMetadata);
+      const parsedModel = modelHelpers.parseObjectIntoModel(
+        stepTool?.configuration,
+        ArgoCdStepConfigurationMetadata,
+      );
       setArgoCdModel(parsedModel);
-    }
-    catch (error) {
+    } catch (error) {
       toastContext.showLoadingErrorDialog(error);
-    }
-    finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -73,7 +70,7 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
       configuration: argoCdModel.getPersistData(),
       threshold: {
         type: stepTool?.threshold?.type || "",
-        value:  stepTool?.threshold?.value || "",
+        value: stepTool?.threshold?.value || "",
       },
     };
     parentCallback(item);
@@ -88,7 +85,10 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
           setModel={setArgoCdModel}
           pipelineId={pipelineId}
           stepId={argoCdModel?.getData("dockerStepID")}
-          toolIdentifier={pipelineHelpers.getToolIdentifierFromPlanForStepId(plan, argoCdModel?.getData("dockerStepID"))}
+          toolIdentifier={pipelineHelpers.getToolIdentifierFromPlanForStepId(
+            plan,
+            argoCdModel?.getData("dockerStepID"),
+          )}
           valueField={"value"}
           plan={plan}
         />
@@ -134,68 +134,84 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
             disabled={!argoCdModel?.getData("toolConfigId")}
           />
           <TextInputBase
-            dataObject={argoCdModel}  
-            setDataObject={setArgoCdModel}        
+            dataObject={argoCdModel}
+            setDataObject={setArgoCdModel}
             fieldName={"yamlPath"}
           />
         </>
-      );      
+      );
     }
   };
 
   const getCommandLineSpecificInput = () => {
-    if(argoCdModel?.getData("dockerStepType") === "command-line") {
+    if (argoCdModel?.getData("dockerStepType") === "command-line") {
       return (
-          <CustomParameterSelectInput
-              model={argoCdModel}
-              setModel={setArgoCdModel}
-              fieldName={"customParameterId"}
-          />
+        <CustomParameterSelectInput
+          model={argoCdModel}
+          setModel={setArgoCdModel}
+          fieldName={"customParameterId"}
+        />
       );
     }
   };
 
   const getSCMInputs = () => {
-    if (!argoCdModel?.getData("kustomizeFlag")) {
-      return (
-        <>
-          <ArgoCdStepSourceControlManagementToolIdentifierSelectInput
-              model={argoCdModel}
-              setModel={setArgoCdModel}
-          />
-          <ArgoCdStepSourceControlManagementToolSelectInput
-            gitYamlTool={argoCdModel?.getData("type")}
-            model={argoCdModel}
-            setModel={setArgoCdModel}
-          />
-          <ArgoCdStepBitbucketWorkspaceInput
-            gitToolId={argoCdModel?.getData("gitToolId")}
-            model={argoCdModel}
-            setModel={setArgoCdModel}
-          />
-          <ArgoCdStepGitRepositorySelectInput
-            model={argoCdModel}
-            setModel={setArgoCdModel}
-          />
-          <ArgoCdStepGitBranchSelectInput
-            model={argoCdModel}
-            setModel={setArgoCdModel}
-          />
+    return (
+      <>
+        <ArgoCdStepSourceControlManagementToolIdentifierSelectInput
+          model={argoCdModel}
+          setModel={setArgoCdModel}
+        />
+        <ArgoCdStepSourceControlManagementToolSelectInput
+          gitYamlTool={argoCdModel?.getData("type")}
+          model={argoCdModel}
+          setModel={setArgoCdModel}
+        />
+        <ArgoCdStepBitbucketWorkspaceInput
+          gitToolId={argoCdModel?.getData("gitToolId")}
+          model={argoCdModel}
+          setModel={setArgoCdModel}
+        />
+        <ArgoCdStepGitRepositorySelectInput
+          model={argoCdModel}
+          setModel={setArgoCdModel}
+        />
+        <ArgoCdStepGitBranchSelectInput
+          model={argoCdModel}
+          setModel={setArgoCdModel}
+        />
+        <TextInputBase
+          setDataObject={setArgoCdModel}
+          dataObject={argoCdModel}
+          fieldName={"gitFilePath"}
+          disabled={
+            hasStringValue(argoCdModel?.getData("defaultBranch")) !== true
+          }
+        />
+      </>
+    );
+  };
+
+  const getKustomizationInputFields = () => {
+    return (
+      <>
+        <ArgoCdStepKustomizeBooleanInput
+          model={argoCdModel}
+          setModel={setArgoCdModel}
+        />
+        {argoCdModel?.getData("kustomizeFlag") && (
           <TextInputBase
             setDataObject={setArgoCdModel}
             dataObject={argoCdModel}
-            fieldName={"gitFilePath"}
-            disabled={
-              hasStringValue(argoCdModel?.getData("defaultBranch")) !== true
-            }
+            fieldName={"imageReference"}
           />
-        </>
-      );
-    }
+        )}
+      </>
+    );
   };
 
   if (isLoading || argoCdModel === undefined) {
-    return <LoadingDialog size="sm"/>;
+    return <LoadingDialog size="sm" />;
   }
 
   return (
@@ -224,11 +240,8 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
         }
       />
       {getCommandLineSpecificInput()}
-      <ArgoCdStepKustomizeBooleanInput
-          model={argoCdModel}
-          setModel={setArgoCdModel}
-      />
       {getSCMInputs()}
+      {getKustomizationInputFields()}
       {getAppVariablesInputFields()}
       {getRollbackInputs()}
       <BooleanToggleInput
