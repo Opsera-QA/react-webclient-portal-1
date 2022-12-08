@@ -4,9 +4,9 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import SonarLogSummaryTable
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/sonar/components/SonarLogSummaryTable";
 
-function SonarReportView({ sonarObj }) {
+function SonarReportView({ sonarReport }) {
 
-  if (sonarObj == null) {
+  if (sonarReport == null) {
     return (
       <LoadingDialog
         message={"Loading Execution Result"}
@@ -17,14 +17,14 @@ function SonarReportView({ sonarObj }) {
 
   return (
     <SonarLogSummaryTable
-      sonarObj={sonarObj}
+      sonarReport={sonarReport}
     />
   );
 }
 
 
 SonarReportView.propTypes = {
-  sonarObj: PropTypes.array,
+  sonarReport: PropTypes.array,
 };
 
 export default SonarReportView;

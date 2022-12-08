@@ -15,7 +15,7 @@ import IconBase from "components/common/icons/IconBase";
 import ExportSonarReportButton from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/sonar/export/ExportSonarReportButton";
 import ExportSonarReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/sonar/export/ExportSonarReportPanel";
 
-function SonarLogSummaryTable({ sonarObj }) {
+function SonarLogSummaryTable({ sonarReport }) {
   const [showExportPanel, setShowExportPanel] = useState(false);
   const fields = sonarReportMetaData?.fields;
 
@@ -35,21 +35,21 @@ function SonarLogSummaryTable({ sonarObj }) {
         <ExportSonarReportPanel
           showExportPanel={showExportPanel}
           setShowExportPanel={setShowExportPanel}
-          sonarData={sonarObj}
+          sonarData={sonarReport}
         />
       );
     }
 
     return (
       <VanityTable
-        data={sonarObj}
+        data={sonarReport}
         columns={columns}
         tableHeight={"28.2vh"}
       />
     );
   };
 
-  if (!Array.isArray(sonarObj) || sonarObj.length === 0) {
+  if (!Array.isArray(sonarReport) || sonarReport.length === 0) {
     return (
       <div className={"mt-3"}>
         <IconBase
@@ -80,7 +80,7 @@ function SonarLogSummaryTable({ sonarObj }) {
 }
 
 SonarLogSummaryTable.propTypes = {
-  sonarObj: PropTypes.array,
+  sonarReport: PropTypes.array,
 };
 
 export default SonarLogSummaryTable;

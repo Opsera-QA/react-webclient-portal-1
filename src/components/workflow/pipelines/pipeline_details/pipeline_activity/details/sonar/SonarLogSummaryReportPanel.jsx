@@ -14,8 +14,8 @@ import {Col, Row} from "react-bootstrap";
 import H4FieldSubHeader from "components/common/fields/subheader/H4FieldSubHeader";
 
 function SonarLogSummaryReportPanel({ pipelineTaskData }) {  
-  const [sonarObj, setSonarObj] = useState(undefined);
-  const [opseraObj, setOpseraObj] = useState(undefined);
+  const [sonarQualityGateReport, setSonarQualityGateReport] = useState(undefined);
+  const [opseraThresholdValidationReport, setOpseraThresholdValidationReport] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
 
@@ -36,10 +36,10 @@ function SonarLogSummaryReportPanel({ pipelineTaskData }) {
   const initializeData = async () => {
     try {
       const jobDetails = pipelineTaskData?.api_response?.summaryReport;
-      const sonarDetails = Object.keys(jobDetails)?.length > 0 && jobDetails?.report["Sonar Quality Gate"]?.conditions ? jobDetails?.report["Sonar Quality Gate"]?.conditions : [];
-      setSonarObj(sonarDetails);
-      const opseraDetails = Object.keys(jobDetails)?.length > 0 && jobDetails?.report["Opsera Threshold Validation"]?.conditions ? jobDetails?.report["Opsera Threshold Validation"]?.conditions : [];
-      setOpseraObj(opseraDetails);      
+      const sonarQualityGateReportDetails = Object.keys(jobDetails)?.length > 0 && jobDetails?.report?.sonar_quality_gate?.conditions ? jobDetails?.report?.sonar_quality_gate?.conditions : [];
+      setSonarQualityGateReport(sonarQualityGateReportDetails);
+      const opseraThresholdValidationDetails = Object.keys(jobDetails)?.length > 0 && jobDetails?.report?.opsera_threshold_validation?.conditions ? jobDetails?.report?.opsera_threshold_validation?.conditions : [];
+      setOpseraThresholdValidationReport(opseraThresholdValidationDetails);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -62,7 +62,7 @@ function SonarLogSummaryReportPanel({ pipelineTaskData }) {
               <Col lg={12}><H4FieldSubHeader subheaderText={"Sonar Quality Gate Report"}/></Col>
             </Row>
             <SonarReportView
-              sonarObj={sonarObj}
+              sonarReport={sonarQualityGateReport}
             />
           </SummaryPanelContainer>
         </VanitySetTabView>
@@ -72,7 +72,7 @@ function SonarLogSummaryReportPanel({ pipelineTaskData }) {
               <Col lg={12}><H4FieldSubHeader subheaderText={"Opsera Threshold Validation Report"}/></Col>
             </Row>
             <SonarReportView
-              sonarObj={opseraObj}
+              sonarReport={opseraThresholdValidationReport}
             />
           </SummaryPanelContainer>
         </VanitySetTabView>
