@@ -9,13 +9,14 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import userActivityAuditLogMetadata from "@opsera/definitions/constants/audit-logs/user/userActivityAuditLog.metadata";
 
-export default function PipelineAuditLogsTable(
+export default function UserActivityAuditLogTableBase(
   {
     auditLogs,
     filterModel,
     setFilterModel,
     isLoading,
     loadDataFunction,
+    setSelectedActivityLogId,
   }) {
   const fields = userActivityAuditLogMetadata.fields;
 
@@ -28,6 +29,10 @@ export default function PipelineAuditLogsTable(
     [fields]
   );
 
+  const rowClickFunction = (row) => {
+    setSelectedActivityLogId(row?.original?._id);
+  };
+
   return (
     <CustomTable
       isLoading={isLoading}
@@ -36,14 +41,16 @@ export default function PipelineAuditLogsTable(
       paginationDto={filterModel}
       setPaginationDto={setFilterModel}
       loadData={loadDataFunction}
+      onRowSelect={rowClickFunction}
     />
   );
 }
 
-PipelineAuditLogsTable.propTypes = {
+UserActivityAuditLogTableBase.propTypes = {
   auditLogs: PropTypes.array,
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
   isLoading: PropTypes.bool,
   loadDataFunction: PropTypes.func,
+  setSelectedActivityLogId: PropTypes.func,
 };
