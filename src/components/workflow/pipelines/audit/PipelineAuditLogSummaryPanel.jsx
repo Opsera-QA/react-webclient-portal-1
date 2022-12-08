@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import UserActivityAuditLogSummaryPanelBase from "components/common/audit_log/UserActivityAuditLogSummaryPanelBase";
-import useGetPipelineAuditLogById from "hooks/workflow/pipelines/audit/useGetPipelineAuditLogById";
+import useGetPipelineAuditLogModelById from "hooks/workflow/pipelines/audit/useGetPipelineAuditLogModelById";
 
 export default function PipelineAuditLogSummaryPanel(
   {
@@ -10,9 +10,10 @@ export default function PipelineAuditLogSummaryPanel(
     auditLogId,
   }) {
   const {
-    auditLog,
+    pipelineAuditLogModel,
     isLoading,
-  } = useGetPipelineAuditLogById(pipelineId, auditLogId);
+    error,
+  } = useGetPipelineAuditLogModelById(pipelineId, auditLogId);
 
   if (isLoading === true) {
     return (
@@ -22,7 +23,7 @@ export default function PipelineAuditLogSummaryPanel(
 
   return (
     <UserActivityAuditLogSummaryPanelBase
-      auditLogModel={auditLog}
+      auditLogModel={pipelineAuditLogModel}
     />
   );
 }
