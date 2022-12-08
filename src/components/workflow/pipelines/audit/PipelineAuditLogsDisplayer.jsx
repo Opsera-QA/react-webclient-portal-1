@@ -6,6 +6,7 @@ import {faShieldCheck} from "@fortawesome/pro-light-svg-icons";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import UserActivityAuditLogTableBase from "components/common/audit_log/UserActivityAuditLogTableBase";
 import PipelineAuditLogSummaryPanel from "components/workflow/pipelines/audit/PipelineAuditLogSummaryPanel";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 
 export default function PipelineAuditLogsDisplayer(
   {
@@ -35,10 +36,15 @@ export default function PipelineAuditLogsDisplayer(
 
   if (isMongoDbId(selectedActivityLogId) === true) {
     return (
-      <PipelineAuditLogSummaryPanel
-        pipelineId={pipelineId}
-        auditLogId={selectedActivityLogId}
-      />
+      <div>
+        <PipelineAuditLogSummaryPanel
+          pipelineId={pipelineId}
+          auditLogId={selectedActivityLogId}
+        />
+        <BackButtonBase
+          backButtonFunction={() => setSelectedActivityLogId(undefined)}
+        />
+      </div>
     );
   }
 
