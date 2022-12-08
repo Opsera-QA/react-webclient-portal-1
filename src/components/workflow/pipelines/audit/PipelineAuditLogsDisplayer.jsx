@@ -5,6 +5,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faShieldCheck} from "@fortawesome/pro-light-svg-icons";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import UserActivityAuditLogTableBase from "components/common/audit_log/UserActivityAuditLogTableBase";
+import PipelineAuditLogSummaryPanel from "components/workflow/pipelines/audit/PipelineAuditLogSummaryPanel";
 
 export default function PipelineAuditLogsDisplayer(
   {
@@ -18,10 +19,6 @@ export default function PipelineAuditLogsDisplayer(
   } = useGetAuditLogsForPipeline(pipelineId);
 
   const getBody = () => {
-    if (isMongoDbId(selectedActivityLogId) === true) {
-      return selectedActivityLogId;
-    }
-
     return (
       <UserActivityAuditLogTableBase
         auditLogs={auditLogs}
@@ -32,8 +29,17 @@ export default function PipelineAuditLogsDisplayer(
     );
   };
 
-  if (pipelineId == null) {
+  if (isMongoDbId(pipelineId) !== true) {
     return null;
+  }
+
+  if (isMongoDbId(selectedActivityLogId) === true) {
+    return (
+      <PipelineAuditLogSummaryPanel
+        pipelineId={pipelineId}
+        auditLogId={selectedActivityLogId}
+      />
+    );
   }
 
   return (
