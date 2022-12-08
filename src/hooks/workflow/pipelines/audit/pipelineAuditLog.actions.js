@@ -14,3 +14,17 @@ pipelineAuditLogActions.getAuditLogsForPipeline = async (
     apiUrl,
   );
 };
+
+pipelineAuditLogActions.getPipelineAuditLogById = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineId,
+  auditLogId,
+) => {
+  const apiUrl = `/audit-logs/pipelines/${pipelineId}/log/${auditLogId}`;
+  return await baseActions.apiGetCallV3(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
