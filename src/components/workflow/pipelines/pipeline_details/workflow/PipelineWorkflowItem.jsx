@@ -6,9 +6,7 @@ import {
   faSearchPlus,
   faCog,
   faArchive,
-  faHourglassStart,
   faFlag,
-  faIdBadge,
   faPen,
   faExclamationTriangle,
   faSpinner,
@@ -17,7 +15,7 @@ import {
   faTimesCircle,
   faTrash,
   faBan,
-  faTerminal, faToolbox, faOctagon, faCodeBranch
+  faTerminal, faOctagon,
 } from "@fortawesome/pro-light-svg-icons";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import StepToolActivityView from "./step_configuration/StepToolActivityView";
@@ -35,9 +33,9 @@ import PipelineStepDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/step/PipelineStepDetailsOverviewOverlay";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PipelineWorkflowItemActionField
-  from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemActionField";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import PipelineStepWorkflowItemBody
+  from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepWorkflowItemBody";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
@@ -232,58 +230,6 @@ const PipelineWorkflowItem = (
       await pipelineActions.deleteJenkinsJob(deleteObj, getAccessToken);
     }
     deleteStep(index);
-  };
-
-  const getToolField = () => {
-    if (toolIdentifier?.identifier !== null && toolIdentifier?.identifier !== toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS) {
-      return (
-        <div className="pl-1 pt-1 text-muted small">
-          <IconBase icon={faToolbox} iconSize={"sm"} className={"mr-1"} />
-          Tool: {toolIdentifier?.name || ""}
-        </div>
-      );
-    }
-
-    return (
-      <div />
-    );
-  };
-
-  // TODO: In the long term we should stamp which field in the metadata should correspond to this,
-  //  so we can capture cases where they're saved in different fields
-  const getRepositoryField = () => {
-    const repository = DataParsingHelper.parseNestedString(item, "tool.configuration.repository");
-    if (repository) {
-      return (
-        <div className="pl-1 pt-1 text-muted small">
-          <IconBase icon={faCodeBranch} iconSize={"sm"} className={"mr-1"}/>
-          Repository: {repository}
-        </div>
-      );
-    }
-
-    return (
-      <div/>
-    );
-  };
-
-  // TODO: In the long term we should stamp which field in the metadata should correspond to this,
-  //  so we can capture cases where they're saved in different fields
-  const getBranchField = () => {
-    const stepConfiguration = DataParsingHelper.parseNestedObject(item, "tool.configuration", {});
-    const branch = stepConfiguration.branch || stepConfiguration.gitBranch || stepConfiguration.defaultBranch;
-    if (hasStringValue(branch) === true) {
-      return (
-        <div className="pl-1 pt-1 text-muted small">
-          <IconBase icon={faCodeBranch} iconSize={"sm"} className={"mr-1"}/>
-          Branch: {branch}
-        </div>
-      );
-    }
-
-    return (
-      <div />
-    );
   };
 
   const getBottomActionBarButtons = () => {
@@ -571,23 +517,12 @@ const PipelineWorkflowItem = (
           </div>
         </div>
 
-        <div
-          style={{
-            minHeight: "46px",
-          }}
-        >
-          <div className="pl-1 pt-1 text-muted small">
-            <IconBase icon={faIdBadge} iconSize={"sm"} className={"mr-1"} />ID: {item._id}
-          </div>
-          {getToolField()}
-          <PipelineWorkflowItemActionField
-            pipelineStep={item}
-            pipeline={pipeline}
-            loadPipelineFunction={loadPipeline}
-          />
-          {getRepositoryField()}
-          {getBranchField()}
-        </div>
+        <PipelineStepWorkflowItemBody
+          pipeline={pipeline}
+          step={item}
+          loadPipeline={loadPipeline}
+          toolIdentifier={toolIdentifier}
+        />
         <div
           className={"ml-auto mt-auto pt-2 "}
           style={{

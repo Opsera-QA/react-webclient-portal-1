@@ -5,9 +5,9 @@ import AccessRoleDisplayer from "components/common/fields/multiple_items/roles/d
 import IconBase from "components/common/icons/IconBase";
 import { faSearch } from "@fortawesome/pro-light-svg-icons";
 
-function AccessRoleDisplayerField({roles, className, noDataMessage}) {
+export default function AccessRoleDisplayerField({roles, className, noDataMessage}) {
   if (!Array.isArray(roles) || roles?.length === 0) {
-    return (noDataMessage);
+    return noDataMessage;
   }
 
   return (
@@ -33,4 +33,6 @@ AccessRoleDisplayerField.propTypes = {
   noDataMessage: PropTypes.any,
 };
 
-export default AccessRoleDisplayerField;
+AccessRoleDisplayerField.defaultProps = {
+  noDataMessage: "No Access Roles Applied",
+};

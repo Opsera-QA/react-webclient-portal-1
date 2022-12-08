@@ -1,15 +1,15 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import FieldContainer from "components/common/fields/FieldContainer";
 
-function JsonField(
+export default function JsonField(
   {
     dataObject,
     fieldName,
     className,
   }) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
 
   if (field == null) {
     return null;
@@ -32,5 +32,3 @@ JsonField.propTypes = {
   dataObject: PropTypes.object,
   className: PropTypes.string
 };
-
-export default JsonField;

@@ -2,12 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 
-function FilterTitleBar({ title, inlineFilters, titleIcon, isLoading }) {
+function FilterTitleBar(
+  {
+    title,
+    inlineFilters,
+    titleIcon,
+    isLoading,
+    isPolling,
+  }) {
   return (
     <div className={"d-flex w-100 justify-content-between filter-title-bar"}>
       <div className={"my-auto mr-2 filter-title-text text-nowrap"}>
         <span className={"d-flex"}>
-          <IconBase icon={titleIcon} isLoading={isLoading} className={"mr-2 d-none d-lg-block"} />
+          <IconBase icon={titleIcon} isLoading={isLoading || isPolling} className={"mr-2 d-none d-lg-block"} />
           {title}
         </span>
       </div>
@@ -25,6 +32,7 @@ FilterTitleBar.propTypes = {
   titleIcon: PropTypes.object,
   inlineFilters: PropTypes.any,
   isLoading: PropTypes.bool,
+  isPolling: PropTypes.bool,
 };
 
 export default FilterTitleBar;
