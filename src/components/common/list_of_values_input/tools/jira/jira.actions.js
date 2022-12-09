@@ -90,3 +90,8 @@ jiraActions.installJiraApp = async (getAccessToken, cancelTokenSource, toolId) =
   const apiUrl = `/connectors/jira/${toolId}/app/install`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
+
+jiraActions.getJiraCustomTagFields = async (getAccessToken, cancelTokenSource, toolId, projectKey) => {
+  const apiUrl = `/tool/jira/${toolId}/project/${projectKey}/customTagFields`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
