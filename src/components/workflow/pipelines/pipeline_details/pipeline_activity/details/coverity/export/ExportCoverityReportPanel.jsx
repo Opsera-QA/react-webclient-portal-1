@@ -29,14 +29,17 @@ export default function ExportCoverityReportPanel({
       showHead: "firstPage",
       headStyles: { fontSize: 8, minCellWidth: 19, fillColor: [54, 46, 84] },
       margin: { left: 2, right: 2 },
-      head: [["File Name", "File Path", "Line Number", "Category", "Severity", "Status"]],
+      head: [["Type", "Status", "CWE", "Impact", "Issue Type", "Category", "Count", "Component", "File"]],
       body: coverityData.map((item) => [
-        item.fileName,
-        item.filePath,
-        item.lineNumber,
-        item.category,
-        item.severity,
+        item.displayType,
         item.status,
+        item.cwe.key,
+        item.displayImpact,
+        item.displayIssueKind,
+        item.displayCategory,
+        item.occurrenceCount,
+        item.displayComponent,
+        item.displayFile.key,
       ]),
     });
 
@@ -45,14 +48,17 @@ export default function ExportCoverityReportPanel({
 
   const getCsvData = () => {
     return [
-      ["File Name", "File Path", "Line Number", "Category", "Severity", "Status"],
+      ["Type", "Status", "CWE", "Impact", "Issue Type", "Category", "Count", "Component", "File"],
       ...coverityData.map((item) => [
-        item.fileName,
-        item.filePath,
-        item.lineNumber,
-        item.category,
-        item.severity,
+        item.displayType,
         item.status,
+        item.cwe.key,
+        item.displayImpact,
+        item.displayIssueKind,
+        item.displayCategory,
+        item.occurrenceCount,
+        item.displayComponent,
+        item.displayFile.key,
       ]),
     ];
   };
