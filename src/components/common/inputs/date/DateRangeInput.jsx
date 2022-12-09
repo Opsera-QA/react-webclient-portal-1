@@ -5,87 +5,94 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import { addDays, isSameDay } from "date-fns";
+import {addDays, isSameSecond} from "date-fns";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import IconBase from "components/common/icons/IconBase";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import {getDatesFromLabel} from "../../../insights/charts/charts-helpers";
 
 export const STATIC_DATE_RANGES = [
   {
-    label: "Today",
+    label: "Last 24 Hours",
     range: () => ({
-      startDate: new Date(),
+      label: "Last 24 Hours",
+      startDate: new Date(addDays(new Date(), -1)),
       endDate: new Date(),
     }),
     isSelected(range) {
       const definedRange = this.range();
       return (
-        isSameDay(range.startDate, definedRange.startDate) && isSameDay(range.endDate, definedRange.endDate)
+        isSameSecond(range.startDate, definedRange.startDate) && isSameSecond(range.endDate, definedRange.endDate)
       );
     },
   },
   {
     label: "Last Week",
     range: () => ({
-      startDate: new Date(addDays(new Date(), -7).setHours(0, 0, 0, 0)),
-      endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+      label: "Last Week",
+      startDate: new Date(addDays(new Date(), -7)),
+      endDate: new Date(),
     }),
     isSelected(range) {
       const definedRange = this.range();
       return (
-        isSameDay(range.startDate, definedRange.startDate) && isSameDay(range.endDate, definedRange.endDate)
+        isSameSecond(range.startDate, definedRange.startDate) && isSameSecond(range.endDate, definedRange.endDate)
       );
     },
   },
   {
     label: "Last Month",
     range: () => ({
-      startDate: new Date(addDays(new Date(), -30).setHours(0, 0, 0, 0)),
-      endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+      label: "Last Month",
+      startDate: new Date(addDays(new Date(), -30)),
+      endDate: new Date(),
     }),
     isSelected(range) {
       const definedRange = this.range();
       return (
-        isSameDay(range.startDate, definedRange.startDate) && isSameDay(range.endDate, definedRange.endDate)
+        isSameSecond(range.startDate, definedRange.startDate) && isSameSecond(range.endDate, definedRange.endDate)
       );
     },
   },
   {
     label: "Last 3 Months",
     range: () => ({
-      startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
-      endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+      label: "Last 3 Months",
+      startDate: new Date(addDays(new Date(), -90)),
+      endDate: new Date(),
     }),
     isSelected(range) {
       const definedRange = this.range();
       return (
-        isSameDay(range.startDate, definedRange.startDate) && isSameDay(range.endDate, definedRange.endDate)
+        isSameSecond(range.startDate, definedRange.startDate) && isSameSecond(range.endDate, definedRange.endDate)
       );
     },
   },
   {
     label: "Last 6 Months",
     range: () => ({
-      startDate: new Date(addDays(new Date(), -180).setHours(0, 0, 0, 0)),
-      endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+      label: "Last 6 Months",
+      startDate: new Date(addDays(new Date(), -180)),
+      endDate: new Date(),
     }),
     isSelected(range) {
       const definedRange = this.range();
       return (
-        isSameDay(range.startDate, definedRange.startDate) && isSameDay(range.endDate, definedRange.endDate)
+        isSameSecond(range.startDate, definedRange.startDate) && isSameSecond(range.endDate, definedRange.endDate)
       );
     },
   },
   {
     label: "Last 1 Year",
     range: () => ({
-      startDate: new Date(addDays(new Date(), -365).setHours(0, 0, 0, 0)),
-      endDate: new Date(new Date().setHours(0, 0, 0, 0)),
+      label: "Last 1 Year",
+      startDate: new Date(addDays(new Date(), -365)),
+      endDate: new Date(),
     }),
     isSelected(range) {
       const definedRange = this.range();
       return (
-        isSameDay(range.startDate, definedRange.startDate) && isSameDay(range.endDate, definedRange.endDate)
+        isSameSecond(range.startDate, definedRange.startDate) && isSameSecond(range.endDate, definedRange.endDate)
       );
     },
   },
@@ -106,16 +113,31 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
   }, []);
 
   const loadData = () => {
-    if (dataObject.getData(fieldName)) {
+    // dateObject and dataObjects are different.
+    const dateObject = dataObject.getData(fieldName);
+    if(dateObject?.label) {
+      const date = getDatesFromLabel(dateObject?.label);
       setDate({
-        startDate: new Date(dataObject.getData(fieldName).startDate),
-        endDate: new Date(dataObject.getData(fieldName).endDate),
-        key: dataObject.getData(fieldName).key,
+        label: dateObject?.label,
+        startDate: new Date(date?.startDate),
+        endDate: new Date(date?.endDate),
+        key: dateObject?.key,
+      });
+    } else if (dateObject) {
+      setDate({
+        startDate: new Date(dateObject.startDate),
+        endDate: new Date(dateObject.endDate),
+        key: dateObject?.key,
       });
     }
   };
 
   const validateAndSetData = (value) => {
+    if(value?.label){
+      setDate({...getDatesFromLabel(value?.label), key: "selection"});
+    } else {
+      setDate(value);
+    }
     let newDataObject = dataObject;
     if (value.startDate === null && value.endDate === null) {
       value = null;
@@ -127,7 +149,6 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
 
   const dateChange = (item) => {
     validateAndSetData(item);
-    setDate(item);
   };
 
   const clearCalendar = () => {
