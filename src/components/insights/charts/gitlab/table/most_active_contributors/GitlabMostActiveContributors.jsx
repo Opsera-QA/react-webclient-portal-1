@@ -105,18 +105,16 @@ function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
   };
 
   const getChartTable = () => {
-    return (
-      <div style={{height:METRIC_CHART_STANDARD_HEIGHT}}>
-        <CustomTable
-          columns={columns}
-          data={metrics}
-          noDataMessage={noDataMessage}
-          paginationDto={tableFilterDto}
-          setPaginationDto={setTableFilterDto}
-          loadData={loadData}
-          scrollOnLoad={false}
-        />
-      </div>
+    return (      
+      <CustomTable
+        columns={columns}
+        data={metrics}
+        noDataMessage={noDataMessage}
+        paginationDto={tableFilterDto}
+        setPaginationDto={setTableFilterDto}
+        loadData={loadData}
+        scrollOnLoad={false}
+      />
     );
   };
 
