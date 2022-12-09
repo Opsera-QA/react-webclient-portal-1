@@ -36,9 +36,6 @@ function PipelineSummaryActionBar({pipelineModel, pipeline, loadPipeline}) {
       <ActionBarShowPipelineSummaryOverlayButton
         pipeline={pipeline}
       />
-      <ActionBarShowPipelineSummaryOverlayButton
-        pipeline={pipeline}
-      />
       <ActionBarPublishPipelineToCustomerCatalogButton
         pipelineModel={pipelineModel}
         className={"ml-3"}
