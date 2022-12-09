@@ -2,17 +2,17 @@ import {useEffect, useState} from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
-import Model from "core/data_model/model";
 import pipelineTemplateCatalogFilterMetadata from "components/workflow/catalog/pipelineTemplateCatalogFilter.metadata";
 import {
   customerPipelineTemplateCatalogActions
 } from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
+import FilterModelBase from "core/data_model/filterModel.base";
 
 export default function useGetCustomerPipelineTemplates(
   handleErrorFunction,
 ) {
   const [pipelineTemplates, setPipelineTemplates] = useState([]);
-  const [pipelineTemplateFilterModel, setPipelineTemplateFilterModel] = useState(new Model({...pipelineTemplateCatalogFilterMetadata.newObjectFields}, pipelineTemplateCatalogFilterMetadata, false));
+  const [pipelineTemplateFilterModel, setPipelineTemplateFilterModel] = useState(new FilterModelBase(pipelineTemplateCatalogFilterMetadata));
   const {
     getAccessToken,
     cancelTokenSource,
@@ -30,17 +30,17 @@ export default function useGetCustomerPipelineTemplates(
     });
   }, []);
 
-  const getPipelineTemplates = async () => {
+  const getPipelineTemplates = async (newFilterModel = pipelineTemplateFilterModel) => {
     const response = await customerPipelineTemplateCatalogActions.getCustomerCatalogPipelineTemplates(
       getAccessToken,
       cancelTokenSource,
-      pipelineTemplateFilterModel,
+      newFilterModel,
     );
     const newPipelineTemplates = DataParsingHelper.parseArray(response?.data?.data, []);
     setPipelineTemplates([...newPipelineTemplates]);
-    pipelineTemplateFilterModel.setData("totalCount", response?.data?.count);
-    pipelineTemplateFilterModel.setData("activeFilters", pipelineTemplateFilterModel.getActiveFilters());
-    setPipelineTemplateFilterModel({...pipelineTemplateFilterModel});
+    newFilterModel.setData("totalCount", response?.data?.count);
+    newFilterModel.setData("activeFilters", pipelineTemplateCatalogFilterMetadata.getActiveFilters(newFilterModel));
+    setPipelineTemplateFilterModel({...newFilterModel});
   };
 
   return ({
