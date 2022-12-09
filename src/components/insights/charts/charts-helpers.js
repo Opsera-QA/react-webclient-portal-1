@@ -4,12 +4,20 @@ import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/fr
 import moment from "moment";
 
 export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
-  if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")]?.value) {
+  const date = kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")]?.value;
+  if(date?.label) {
+    const dateRange = getDatesFromLabel(date?.label);
     return {
-      start: kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")].value.startDate,
+      label: date?.label,
+      start: dateRange.startDate,
+      end: dateRange.endDate
+    };
+  } else if (date) {
+    return {
+      start: date.startDate,
       end: addDays(
         new Date(
-          kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")].value.endDate
+          date.endDate
         ),
         1
       ).toISOString(),
@@ -20,6 +28,47 @@ export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
     end: addDays(new Date(new Date().setHours(0, 0, 0, 0)), 1).toISOString(),
   };
 }
+
+export function getDatesFromLabel(label) {
+  switch (label) {
+    case 'Last 24 Hours':
+      return {
+        startDate: new Date(addDays(new Date(), -1)),
+        endDate: new Date(),
+      };
+    case 'Last Week':
+      return {
+        startDate: new Date(addDays(new Date(), -7)),
+        endDate: new Date(),
+      };
+    case 'Last Month':
+      return {
+        startDate: new Date(addDays(new Date(), -30)),
+        endDate: new Date(),
+      };
+    case 'Last 3 Months':
+      return {
+        startDate: new Date(addDays(new Date(), -90)),
+        endDate: new Date(),
+      };
+    case 'Last 6 Months':
+      return {
+        startDate: new Date(addDays(new Date(), -180)),
+        endDate: new Date(),
+      };
+    case 'Last 1 Year':
+      return {
+        startDate: new Date(addDays(new Date(), -365)),
+        endDate: new Date(),
+      };
+    default:
+      return {
+        startDate: new Date(addDays(new Date(), -90)),
+        endDate: new Date(),
+      };
+  }
+}
+
 
 export function getUseKpiTagsFromKpiConfiguration(kpiConfiguration) {
   return kpiConfiguration?.settings?.useKpiTags !== false;
