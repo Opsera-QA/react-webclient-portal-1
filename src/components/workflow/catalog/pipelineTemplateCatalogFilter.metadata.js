@@ -1,3 +1,5 @@
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+
 const pipelineTemplateCatalogFilterMetadata = {
   idProperty: "_id",
   type: "Pipeline Catalog",
@@ -44,7 +46,7 @@ const pipelineTemplateCatalogFilterMetadata = {
 
     if (filterDto.getData("tag") != null) {
       const tag = filterDto.getData("tag");
-      activeFilters.push({filterId: "tag", text: `Tag: ${tag?.value}`});
+      activeFilters.push({filterId: "tag", text: `Tag: ${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`});
     }
 
     if (filterDto.getData("type") !== "") {
