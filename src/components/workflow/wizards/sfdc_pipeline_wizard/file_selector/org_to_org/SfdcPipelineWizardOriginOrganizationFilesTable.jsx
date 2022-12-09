@@ -89,7 +89,7 @@ const SfdcPipelineWizardOriginOrganizationFilesTable = ({ pipelineWizardModel, s
 
     if (isMounted?.current === true && data) {
       if (data?.error) {
-        toastContext.showInlineErrorMessage("Salesforce Fetch Error : " + data.sfdcErrorMessage);
+        toastContext.showInlineErrorMessage("Salesforce Fetch Error : " + data.error);
       }
 
       if (data.warning) {
