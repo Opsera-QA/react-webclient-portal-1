@@ -163,7 +163,107 @@ gitlabActions.gitlabDeploymentStatistics = async (
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
   };
 
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+    return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+gitlabActions.getActionablePipelinesChartData = async (
+    getAccessToken,
+    cancelTokenSource,
+    kpiConfiguration,
+    dashboardTags,
+    dashboardOrgs,
+    tableFilterDto,
+    start,
+    end
+) => {
+    const apiUrl = gitlabBaseURL + "getActionablePipelinesChartData";
+    const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+    let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+    // TODO Revert this code when timezone is fixed everywhere
+    let timeOffsetInMins = 0;
+    if(!dateRange.label){
+        timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    }
+    const startDate =  new Date(dateRange?.start);
+    const endDate =  new Date(dateRange?.end);
+    startDate.setTime(startDate.getTime() - timeOffsetInMins);
+    endDate.setTime(endDate.getTime() - timeOffsetInMins);
+
+    // Checking the use kpi tags toggle
+    const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+    const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+    if (!useKpiTags) {
+        tags = null;
+    }
+    if (!useDashboardTags) {
+        dashboardTags = null;
+        dashboardOrgs = null;
+    }
+    const postBody = {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+        dashboardOrgs: dashboardOrgs,
+        deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
+        gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
+        page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
+        size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
+        start: start,
+        end: end
+    };
+
+    return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+gitlabActions.getActionableDeploymentsChartData = async (
+    getAccessToken,
+    cancelTokenSource,
+    kpiConfiguration,
+    dashboardTags,
+    dashboardOrgs,
+    tableFilterDto,
+    start,
+    end
+) => {
+    const apiUrl = gitlabBaseURL + "getActionableDeploymentsChartData";
+    const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+    let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+    // TODO Revert this code when timezone is fixed everywhere
+    let timeOffsetInMins = 0;
+    if(!dateRange.label){
+        timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
+    }
+    const startDate =  new Date(dateRange?.start);
+    const endDate =  new Date(dateRange?.end);
+    startDate.setTime(startDate.getTime() - timeOffsetInMins);
+    endDate.setTime(endDate.getTime() - timeOffsetInMins);
+
+    // Checking the use kpi tags toggle
+    const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+    const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+    if (!useKpiTags) {
+        tags = null;
+    }
+    if (!useDashboardTags) {
+        dashboardTags = null;
+        dashboardOrgs = null;
+    }
+    const postBody = {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+        dashboardOrgs: dashboardOrgs,
+        deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
+        gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
+        page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
+        size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
+        start: start,
+        end: end
+    };
+
+    return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 gitlabActions.getActionablePipelinesChartData = async (

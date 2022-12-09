@@ -37,6 +37,7 @@ export default function CustomerPipelineTemplateCatalog({activeTemplates}) {
       <TagFilter
         filterDto={pipelineTemplateFilterModel}
         setFilterDto={setPipelineTemplateFilterModel}
+        valueField={"value2"}
       />
     );
   };
