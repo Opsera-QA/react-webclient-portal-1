@@ -7,6 +7,8 @@ import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import UserActivityAuditLogTableBase from "components/common/audit_log/UserActivityAuditLogTableBase";
 import PipelineAuditLogSummaryPanel from "components/workflow/pipelines/audit/PipelineAuditLogSummaryPanel";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
+import InlinePlatformSsoUserFilterSelectInput
+  from "components/common/list_of_values_input/users/sso/platform/InlinePlatformSsoUserFilterSelectInput";
 
 export default function PipelineAuditLogsDisplayer(
   {
@@ -14,10 +16,18 @@ export default function PipelineAuditLogsDisplayer(
   }) {
   const [selectedActivityLogId, setSelectedActivityLogId] = useState(undefined);
   const {
+    pipelineAuditLogFilterModel,
+    setPipelineAuditLogFilterModel,
     auditLogs,
     isLoading,
     loadData,
   } = useGetAuditLogsForPipeline(pipelineId);
+
+  // const getInlineFilters = () => {
+  //   return (
+  //     <InlinePlatformSsoUserFilterSelectInput
+  //   );
+  // };
 
   const getBody = () => {
     return (
@@ -26,6 +36,8 @@ export default function PipelineAuditLogsDisplayer(
         isLoading={isLoading}
         loadDataFunction={loadData}
         setSelectedActivityLogId={setSelectedActivityLogId}
+        filterModel={pipelineAuditLogFilterModel}
+        setFilterModel={setPipelineAuditLogFilterModel}
       />
     );
   };
@@ -55,6 +67,8 @@ export default function PipelineAuditLogsDisplayer(
       titleIcon={faShieldCheck}
       body={getBody()}
       loadData={loadData}
+      filterDto={pipelineAuditLogFilterModel}
+      setFilterDto={setPipelineAuditLogFilterModel}
     />
   );
 }
