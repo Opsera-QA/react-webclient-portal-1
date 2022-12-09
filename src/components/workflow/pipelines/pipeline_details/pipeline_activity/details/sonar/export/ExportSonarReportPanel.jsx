@@ -29,11 +29,11 @@ export default function ExportSonarReportPanel({
       showHead: "firstPage",
       headStyles: { fontSize: 8, minCellWidth: 19, fillColor: [54, 46, 84] },
       margin: { left: 2, right: 2 },
-      head: [["Name", "Actual", "Error", "Level"]],
+      head: [["Name", "Actual", "Threshold", "Level"]],
       body: sonarData.map((item) => [
         item.name,
         item.actual,
-        item.error,
+        item.threshold,
         item.level,
       ]),
     });
@@ -43,11 +43,11 @@ export default function ExportSonarReportPanel({
 
   const getCsvData = () => {
     return [
-      ["Name", "Actual", "Error", "Level"],
+      ["Name", "Actual", "Threshold", "Level"],
       ...sonarData.map((item) => [
         item.name,
         item.actual,
-        item.error,
+        item.threshold,
         item.level,
       ]),
     ];

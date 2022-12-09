@@ -14,8 +14,8 @@ const sonarReportMetaData = {
       id: "actual"
     },
     {
-      label: "Error",
-      id: "error",
+      label: "Threshold",
+      id: "threshold",
     },
     {
       label: "Level",
@@ -26,7 +26,7 @@ const sonarReportMetaData = {
     name: "",
     operation: "",
     actual: "",
-    error: "",
+    threshold: "",
     level: "",
   }
 };

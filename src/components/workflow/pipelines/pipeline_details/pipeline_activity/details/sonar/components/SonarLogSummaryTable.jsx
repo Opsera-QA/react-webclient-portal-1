@@ -23,7 +23,7 @@ function SonarLogSummaryTable({ sonarReport }) {
     () => [
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "actual")),
-      getTableTextColumn(getField(fields, "error")),
+      getTableTextColumn(getField(fields, "threshold")),
       getTableTextColumn(getField(fields, "level")),      
     ],
     [],
