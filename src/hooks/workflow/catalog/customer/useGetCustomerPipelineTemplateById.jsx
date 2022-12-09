@@ -41,7 +41,6 @@ export default function useGetCustomerPipelineTemplateById(
       cancelTokenSource,
       id,
     );
-    console.log("response: " + JSON.stringify(response));
     const newPipelineTemplate = DataParsingHelper.parseObject(response?.data?.data);
 
     if (newPipelineTemplate) {

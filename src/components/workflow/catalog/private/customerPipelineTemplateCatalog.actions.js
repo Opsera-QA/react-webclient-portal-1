@@ -14,6 +14,7 @@ customerPipelineTemplateCatalogActions.getCustomerCatalogPipelineTemplates = asy
     size: pipelineCatalogFilterModel?.getFilterValue("pageSize"),
     search: pipelineCatalogFilterModel?.getFilterValue("search"),
     type: pipelineCatalogFilterModel?.getFilterValue("type"),
+    tag: pipelineCatalogFilterModel?.getData("tag"),
   };
 
   return await baseActions.apiGetCallV3(
@@ -42,12 +43,18 @@ customerPipelineTemplateCatalogActions.publishPipelineToCustomerCatalog = async 
   getAccessToken,
   cancelTokenSource,
   pipelineId,
+  roles,
 ) => {
   const apiUrl = `/workflow/templates/customer/${pipelineId}`;
+  const postBody = {
+    roles: roles,
+  };
+
   return await baseActions.apiPostCallV2(
     getAccessToken,
     cancelTokenSource,
     apiUrl,
+    postBody,
   );
 };
 
@@ -76,5 +83,38 @@ customerPipelineTemplateCatalogActions.deleteCustomerPipelineTemplate = async (
     getAccessToken,
     cancelTokenSource,
     apiUrl,
+  );
+};
+
+customerPipelineTemplateCatalogActions.transferCustomerPipelineTemplateOwnership = async (
+  getAccessToken,
+  cancelTokenSource,
+  templateId,
+  newOwnerId,
+) => {
+  const apiUrl = `/workflow/templates/customer/${templateId}/owner/${newOwnerId}`;
+  return await baseActions.apiPatchCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+customerPipelineTemplateCatalogActions.updateCustomerPipelineTemplateAccessRoles = async (
+  getAccessToken,
+  cancelTokenSource,
+  templateId,
+  accessRoles,
+) => {
+  const apiUrl = `/workflow/templates/customer/${templateId}/access-roles`;
+  const postBody = {
+    roles: accessRoles,
+  };
+
+  return await baseActions.apiPatchCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
   );
 };

@@ -5,10 +5,98 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import { addDays, isSameDay } from "date-fns";
+import {addDays, isSameSecond} from "date-fns";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import IconBase from "components/common/icons/IconBase";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import {getDatesFromLabel} from "../../../insights/charts/charts-helpers";
+
+export const STATIC_DATE_RANGES = [
+  {
+    label: "Last 24 Hours",
+    range: () => ({
+      label: "Last 24 Hours",
+      startDate: new Date(addDays(new Date(), -1)),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const definedRange = this.range();
+      return (
+        isSameSecond(range.startDate, definedRange.startDate) && isSameSecond(range.endDate, definedRange.endDate)
+      );
+    },
+  },
+  {
+    label: "Last Week",
+    range: () => ({
+      label: "Last Week",
+      startDate: new Date(addDays(new Date(), -7)),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const definedRange = this.range();
+      return (
+        isSameSecond(range.startDate, definedRange.startDate) && isSameSecond(range.endDate, definedRange.endDate)
+      );
+    },
+  },
+  {
+    label: "Last Month",
+    range: () => ({
+      label: "Last Month",
+      startDate: new Date(addDays(new Date(), -30)),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const definedRange = this.range();
+      return (
+        isSameSecond(range.startDate, definedRange.startDate) && isSameSecond(range.endDate, definedRange.endDate)
+      );
+    },
+  },
+  {
+    label: "Last 3 Months",
+    range: () => ({
+      label: "Last 3 Months",
+      startDate: new Date(addDays(new Date(), -90)),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const definedRange = this.range();
+      return (
+        isSameSecond(range.startDate, definedRange.startDate) && isSameSecond(range.endDate, definedRange.endDate)
+      );
+    },
+  },
+  {
+    label: "Last 6 Months",
+    range: () => ({
+      label: "Last 6 Months",
+      startDate: new Date(addDays(new Date(), -180)),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const definedRange = this.range();
+      return (
+        isSameSecond(range.startDate, definedRange.startDate) && isSameSecond(range.endDate, definedRange.endDate)
+      );
+    },
+  },
+  {
+    label: "Last 1 Year",
+    range: () => ({
+      label: "Last 1 Year",
+      startDate: new Date(addDays(new Date(), -365)),
+      endDate: new Date(),
+    }),
+    isSelected(range) {
+      const definedRange = this.range();
+      return (
+        isSameSecond(range.startDate, definedRange.startDate) && isSameSecond(range.endDate, definedRange.endDate)
+      );
+    },
+  },
+];
 
 // TODO: If this can't be used elsewhere, Tejas, we should change the name to be KPI Specific.
 function DateRangeInput({ fieldName, dataObject, setDataObject }) {
@@ -19,19 +107,37 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
     key: "selection",
   });
   const [errorMessage, setErrorMessage] = useState("");
-  const loadData = () => {
-    if (dataObject.getData(fieldName)) {
-      setDate({
-        startDate: new Date(dataObject.getData(fieldName).startDate),
-        endDate: new Date(dataObject.getData(fieldName).endDate),
-        key: dataObject.getData(fieldName).key,
-      });
-    }
-  };
+
   useEffect(() => {
     loadData();
   }, []);
+
+  const loadData = () => {
+    // dateObject and dataObjects are different.
+    const dateObject = dataObject.getData(fieldName);
+    if(dateObject?.label) {
+      const date = getDatesFromLabel(dateObject?.label);
+      setDate({
+        label: dateObject?.label,
+        startDate: new Date(date?.startDate),
+        endDate: new Date(date?.endDate),
+        key: dateObject?.key,
+      });
+    } else if (dateObject) {
+      setDate({
+        startDate: new Date(dateObject.startDate),
+        endDate: new Date(dateObject.endDate),
+        key: dateObject?.key,
+      });
+    }
+  };
+
   const validateAndSetData = (value) => {
+    if(value?.label){
+      setDate({...getDatesFromLabel(value?.label), key: "selection"});
+    } else {
+      setDate(value);
+    }
     let newDataObject = dataObject;
     if (value.startDate === null && value.endDate === null) {
       value = null;
@@ -40,10 +146,11 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
     setErrorMessage(newDataObject.getFieldError(fieldName));
     setDataObject({ ...newDataObject });
   };
+
   const dateChange = (item) => {
     validateAndSetData(item);
-    setDate(item);
   };
+
   const clearCalendar = () => {
     dateChange({
       startDate: null,
@@ -51,6 +158,7 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
       key: "selection",
     });
   };
+
   return (
     <InputContainer fieldName={fieldName}>
       <div className={"d-flex justify-content-between date-range-header"}>
@@ -58,6 +166,7 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
           field={field}
           model={dataObject}
           hasError={hasStringValue(errorMessage) === true}
+          clearDataFunction={clearCalendar}
         />
         <TooltipWrapper innerText={"Clear this Value"}>
           <span onClick={() => clearCalendar()} className="my-auto badge badge-danger pointer">
@@ -68,96 +177,17 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
       </div>
       <div style={{ width: "1150px" }}>
         <DateRangePicker
-          startDatePlaceholder="Start Date"
-          endDatePlaceholder="End Date"
+          startDatePlaceholder={"Start Date"}
+          endDatePlaceholder={"End Date"}
           showSelectionPreview={true}
           moveRangeOnFirstSelection={false}
-          selectionType="range"
+          selectionType={"range"}
           months={1}
           ranges={[date]}
           showCustomRangeLabel={true}
-          staticRanges={[
-            {
-              label: "Today",
-              range: () => ({
-                startDate: new Date(),
-                endDate: new Date(),
-              }),
-              isSelected(range) {
-                const definedRange = this.range();
-                return (
-                  isSameDay(range.startDate, definedRange.startDate) && isSameDay(range.endDate, definedRange.endDate)
-                );
-              },
-            },
-            {
-              label: "Last Week",
-              range: () => ({
-                startDate: new Date(addDays(new Date(), -7).setHours(0, 0, 0, 0)),
-                endDate: new Date(new Date().setHours(0, 0, 0, 0)),
-              }),
-              isSelected(range) {
-                const definedRange = this.range();
-                return (
-                  isSameDay(range.startDate, definedRange.startDate) && isSameDay(range.endDate, definedRange.endDate)
-                );
-              },
-            },
-            {
-              label: "Last Month",
-              range: () => ({
-                startDate: new Date(addDays(new Date(), -30).setHours(0, 0, 0, 0)),
-                endDate: new Date(new Date().setHours(0, 0, 0, 0)),
-              }),
-              isSelected(range) {
-                const definedRange = this.range();
-                return (
-                  isSameDay(range.startDate, definedRange.startDate) && isSameDay(range.endDate, definedRange.endDate)
-                );
-              },
-            },
-            {
-              label: "Last 3 Months",
-              range: () => ({
-                startDate: new Date(addDays(new Date(), -90).setHours(0, 0, 0, 0)),
-                endDate: new Date(new Date().setHours(0, 0, 0, 0)),
-              }),
-              isSelected(range) {
-                const definedRange = this.range();
-                return (
-                  isSameDay(range.startDate, definedRange.startDate) && isSameDay(range.endDate, definedRange.endDate)
-                );
-              },
-            },
-            {
-              label: "Last 6 Months",
-              range: () => ({
-                startDate: new Date(addDays(new Date(), -180).setHours(0, 0, 0, 0)),
-                endDate: new Date(new Date().setHours(0, 0, 0, 0)),
-              }),
-              isSelected(range) {
-                const definedRange = this.range();
-                return (
-                  isSameDay(range.startDate, definedRange.startDate) && isSameDay(range.endDate, definedRange.endDate)
-                );
-              },
-            },
-            {
-              label: "Last 1 Year",
-              range: () => ({
-                startDate: new Date(addDays(new Date(), -365).setHours(0, 0, 0, 0)),
-                endDate: new Date(new Date().setHours(0, 0, 0, 0)),
-              }),
-              isSelected(range) {
-                const definedRange = this.range();
-                return (
-                  isSameDay(range.startDate, definedRange.startDate) && isSameDay(range.endDate, definedRange.endDate)
-                );
-              },
-            },
-          ]}
+          staticRanges={STATIC_DATE_RANGES}
           onChange={(e) => dateChange(e.selection)}
-          direction="horizontal"
+          direction={"horizontal"}
         />
       </div>
       <InfoText
@@ -169,9 +199,11 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
     </InputContainer>
   );
 }
+
 DateRangeInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
 };
+
 export default DateRangeInput;

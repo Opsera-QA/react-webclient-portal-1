@@ -2,18 +2,21 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import ActivityField from "components/common/fields/boolean/ActivityField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import BooleanField from "components/common/fields/boolean/BooleanField";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
-import GenericItemField from "components/common/fields/multiple_items/GenericItemField";
-import JsonField from "components/common/fields/json/JsonField";
-import PipelineTemplateRoleAccessInput
-  from "components/admin/pipeline_templates/details/inputs/PipelineTemplateRoleAccessInput";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import SmartIdField from "components/common/fields/text/id/SmartIdField";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import CreateCustomerPipelineButton from "components/workflow/catalog/private/deploy/CreateCustomerPipelineButton";
+import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
+import CustomerPipelineTemplateRoleHelper
+  from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
+import PrimaryPipelineTypeField
+  from "components/common/list_of_values_input/admin/pipeline_templates/PrimaryPipelineTypeField";
+import CustomerPipelineTemplateRoleAccessInput
+  from "components/workflow/catalog/private/details/CustomerPipelineTemplateRoleAccessInput";
 
 function CustomerPipelineTemplateSummaryPanel(
   {
@@ -22,7 +25,7 @@ function CustomerPipelineTemplateSummaryPanel(
     setActiveTab,
   }) {
   const {
-    accessRoleData,
+    userData,
   } = useComponentStateReference();
 
   if (pipelineTemplateModel == null) {
@@ -30,46 +33,71 @@ function CustomerPipelineTemplateSummaryPanel(
   }
 
   return (
-    <SummaryPanelContainer setActiveTab={meetsRequirements(ROLE_LEVELS.ADMINISTRATORS_AND_SASS, accessRoleData) ? setActiveTab : undefined}>
-      <Row className={"m-2"}>
+    <SummaryPanelContainer setActiveTab={
+      CustomerPipelineTemplateRoleHelper.canUpdateCustomerPipelineTemplate(
+        userData,
+        pipelineTemplateModel?.getOriginalData()
+      ) === true ? setActiveTab : undefined
+    }
+    >
+      <Row className={"mt-2"}>
         <Col lg={6}>
-          <TextFieldBase dataObject={pipelineTemplateModel} fieldName={"name"}/>
+          <TextFieldBase
+            dataObject={pipelineTemplateModel}
+            fieldName={"name"}
+            showDetailLinkClipboardIcon={false}
+          />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={pipelineTemplateModel} fieldName={"_id"}/>
+          <SsoUserField
+            model={pipelineTemplateModel}
+            fieldName={"owner"}
+          />
+        </Col>
+        <Col lg={6}>
+          <SmartIdField
+            model={pipelineTemplateModel}
+          />
+        </Col>
+        <Col lg={6}>
+          <PrimaryPipelineTypeField
+            model={pipelineTemplateModel}
+            fieldName={"type"}
+          />
+        </Col>
+        <Col lg={6}>
+          <DateFieldBase
+            dataObject={pipelineTemplateModel}
+            fieldName={"createdAt"}
+          />
+        </Col>
+        <Col lg={6}>
+          <DateFieldBase
+            dataObject={pipelineTemplateModel}
+            fieldName={"updatedAt"}
+          />
         </Col>
         <Col lg={12}>
           <TextFieldBase dataObject={pipelineTemplateModel} fieldName={"description"}/>
         </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={pipelineTemplateModel} fieldName={"account"}/>
-        </Col>
-        <Col lg={6}>
-          <DateFieldBase dataObject={pipelineTemplateModel} fieldName={"createdAt"}/>
-        </Col>
-        <Col lg={6}>
-          <BooleanField dataObject={pipelineTemplateModel} fieldName={"readOnly"}/>
-        </Col>
-        <Col lg={6}>
-          <BooleanField dataObject={pipelineTemplateModel} fieldName={"singleUse"}/>
-        </Col>
-        <Col lg={6}>
-          <BooleanField dataObject={pipelineTemplateModel} fieldName={"publicUse"}/>
-        </Col>
-        <Col lg={6}>
-          <ActivityField dataObject={pipelineTemplateModel} fieldName={"active"}/>
-        </Col>
-        <Col lg={6}>
-          <TagField dataObject={pipelineTemplateModel} fieldName={"tags"}/>
-        </Col>
-        <Col lg={6}>
-          <GenericItemField dataObject={pipelineTemplateModel} fieldName={"type"}/>
-        </Col>
-        <Col lg={6}>
-          <JsonField dataObject={pipelineTemplateModel} fieldName={"plan"}/>
+        <Col lg={12}>
+          <CustomerPipelineTemplateRoleAccessInput
+            model={pipelineTemplateModel}
+            setModel={setPipelineTemplateModel}
+          />
         </Col>
         <Col lg={12}>
-          <PipelineTemplateRoleAccessInput dataObject={pipelineTemplateModel} setDataObject={setPipelineTemplateModel} />
+          <TagField
+            dataObject={pipelineTemplateModel}
+            fieldName={"tags"}
+          />
+        </Col>
+        <Col lg={12}>
+          <ButtonContainerBase>
+            <CreateCustomerPipelineButton
+              customerPipelineTemplateModel={pipelineTemplateModel}
+            />
+          </ButtonContainerBase>
         </Col>
       </Row>
     </SummaryPanelContainer>

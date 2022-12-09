@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import Row from "react-bootstrap/Row";
 import {Button} from "react-bootstrap";
-import {faExclamationTriangle, faPlus} from "@fortawesome/pro-light-svg-icons";
+import {faExclamationTriangle, faPlus, faTrash} from "@fortawesome/pro-light-svg-icons";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import IconBase from "components/common/icons/IconBase";
 
@@ -16,20 +16,29 @@ function PropertyInputContainer(
     field,
     errorMessage,
     addProperty,
+    clearDataFunction,
     type,
     addAllowed,
     helpComponent,
     incompleteRowMessage,
     model,
   }) {
+  const getClearDataButton = () => {
+    if (clearDataFunction) {
+      return (
+        <Button className={"mr-2"} variant="danger" disabled={!addAllowed} onClick={() => clearDataFunction()} size="sm">
+          <span className="text-white"><IconBase className={"text-white mr-2"} icon={faTrash}/>Remove All {type}s</span>
+        </Button>
+      );
+    }
+  };
+
   const getAddPropertyButton = () => {
     if (addProperty) {
       return (
-        <div className="ml-auto m-2 d-flex">
-          <Button variant="secondary" disabled={!addAllowed} onClick={() => addProperty()} size="sm">
-            <span className="text-white"><IconBase className={"text-white mr-2"} icon={faPlus} />Add {type}</span>
-          </Button>
-        </div>
+        <Button variant="secondary" disabled={!addAllowed} onClick={() => addProperty()} size="sm">
+          <span className="text-white"><IconBase className={"text-white mr-2"} icon={faPlus}/>Add {type}</span>
+        </Button>
       );
     }
   };
@@ -59,7 +68,8 @@ function PropertyInputContainer(
           <div className={"mt-auto"}>
             {getIncompleteRowBlock()}
           </div>
-          <div>
+          <div className={"ml-auto m-2 d-flex"}>
+            {getClearDataButton()}
             {getAddPropertyButton()}
           </div>
         </Row>
@@ -87,6 +97,7 @@ PropertyInputContainer.propTypes = {
   isLoading: PropTypes.bool,
   incompleteRowMessage: PropTypes.string,
   model: PropTypes.object,
+  clearDataFunction: PropTypes.func,
 };
 
 export default PropertyInputContainer;

@@ -15,15 +15,15 @@ function CatalogHelpDocumentation() {
         <div className={"mb-1"}>
           Catalog Templates are the framework for building a pipeline.
           They can be simple and basic or complex and detailed. To begin building a pipeline,
-          choose one of the pipeline templates provided in the <b>Marketplace</b> or <b>Private</b> Catalogs below.
-        </div>
-        <div className={"mt-3"}>
-          <b>Marketplace</b> - These are publicly available pipeline templates provided by Opsera. All users have access to them.
+          choose one of the pipeline templates provided in the Catalogs below.
         </div>
         <div>
-          <b>Private</b> -  This is your organization’s private catalog of pipeline templates.
-          These are accessible to you and your organization only.
-          To share a pipeline template with your organization, publish it to this catalog in Pipeline Summary.
+          <ul style={{listStyleType: "none"}}>
+            <li><b>Pipeline Marketplace</b> - These are publicly available pipeline templates provided by Opsera. All users have access to them.</li>
+            <li><b>Shared Templates</b> -  This is your organization’s private catalog of pipeline templates.
+              These are accessible to you and your organization only.
+              To share a pipeline template with your organization, publish it to this catalog in Pipeline Summary.</li>
+          </ul>
         </div>
       </div>
     );
@@ -33,7 +33,7 @@ function CatalogHelpDocumentation() {
     <HelpOverlayBase
       closePanel={closePanel}
       showPanel={true}
-      helpTopic={"Catalog"}
+      helpTopic={"Pipeline Catalogs"}
       helpDocumentation={getHelpDocumentation()}
     />
   );

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {pipelineInstructionsActions} from "components/workflow/instructions/pipelineInstructions.actions";
-import PipelineInstructionsFilterModel from "components/workflow/instructions/pipelineInstructions.filter.model";
+import {PipelineInstructionsFilterModel} from "components/workflow/instructions/pipelineInstructions.filter.model";
 
 export default function useGetPipelineInstructions() {
   const [isLoading, setIsLoading] = useState(false);
@@ -37,9 +37,11 @@ export default function useGetPipelineInstructions() {
       getAccessToken,
       cancelTokenSource,
       newFilterModel?.getFilterValue("search"),
+      newFilterModel?.getFilterValue("status"),
       newFilterModel?.getFilterValue("type"),
       newFilterModel?.getData("tag"),
       newFilterModel?.getFilterValue("owner"),
+      newFilterModel?.getFilterValue("release_date_range"),
     );
 
     const pipelineInstructionList = DataParsingHelper.parseArray(response?.data?.data, []);

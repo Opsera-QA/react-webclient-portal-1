@@ -80,7 +80,7 @@ function PipelineTaskDetailViewer({ pipelineActivityLogId, pipelineName }) {
       titleIcon={faClipboardList}
       isLoading={isLoading}
     >
-      <div className={"m-3"}>
+      <div className={"p-3"}>
         <PipelineTaskTabPanel pipelineTaskData={pipelineTaskData?.data} />
       </div>
     </FullScreenCenterOverlayContainer>

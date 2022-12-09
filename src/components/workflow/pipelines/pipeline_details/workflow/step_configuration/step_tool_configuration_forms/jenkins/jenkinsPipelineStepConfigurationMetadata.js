@@ -39,6 +39,11 @@ const jenkinsPipelineStepConfigurationMetadata = {
     },
     {
       label: "Repository",
+      id: "repoId",
+      // isRequired: true
+    },
+    {
+      label: "Repository",
       id: "repository",
       // isRequired: true
     },

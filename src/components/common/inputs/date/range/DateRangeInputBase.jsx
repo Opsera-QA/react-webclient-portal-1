@@ -4,9 +4,10 @@ import { DateRangePicker } from "react-date-range";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoContainer from "components/common/containers/InfoContainer";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
+import {STATIC_DATE_RANGES} from "components/common/inputs/date/DateRangeInput";
 
 // TODO: This should be reworked
-function DateRangeInputBase(
+export default function DateRangeInputBase(
   {
     model,
     setModel,
@@ -73,6 +74,7 @@ function DateRangeInputBase(
             moveRangeOnFirstSelection={false}
             months={1}
             ranges={[internalDate]}
+            staticRanges={STATIC_DATE_RANGES}
             direction={"horizontal"}
             className={"mx-auto"}
           />
@@ -98,5 +100,3 @@ DateRangeInputBase.defaultProps = {
   key: "selection",
   titleText: "Date Range",
 };
-
-export default DateRangeInputBase;

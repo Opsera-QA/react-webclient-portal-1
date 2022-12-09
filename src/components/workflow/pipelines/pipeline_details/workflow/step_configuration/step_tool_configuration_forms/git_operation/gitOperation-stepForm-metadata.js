@@ -25,6 +25,13 @@ const gitOperationStepFormMetadata = {
       formText:" "
     },
     {
+      label: "Repository",
+      id: "repoId",
+      isRequired: true,
+      maxLength: 255,
+      formText:" "
+    },
+    {
       label: "Workspace/Project",
       id: "workspace",
       maxLength: 255,

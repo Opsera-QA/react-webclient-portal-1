@@ -12,6 +12,8 @@ function AnsibleStepGitRepositorySelectInput({model, setModel, disabled}) {
     newModelObject.setData("projectId", repoId);
     newModelObject.setData("sshUrl", selectedOption.sshUrl || "");
     newModelObject.setData("gitUrl", gitUrl);
+    newModelObject.setData("defaultBranch", '');
+    newModelObject.setData("gitBranch", '');
     setModel({...newModelObject});
   };
   const clearDataFunction=(fieldName)=>{
@@ -21,6 +23,8 @@ function AnsibleStepGitRepositorySelectInput({model, setModel, disabled}) {
     newModelObject.setData("projectId", '');
     newModelObject.setData("sshUrl", '');
     newModelObject.setData("gitUrl", '');
+    newModelObject.setData("defaultBranch", '');
+    newModelObject.setData("gitBranch", '');
     setModel({...newModelObject});
   };
 
@@ -30,7 +34,7 @@ function AnsibleStepGitRepositorySelectInput({model, setModel, disabled}) {
 
   return (
      <RepositorySelectInput
-       fieldName={"repository"}
+       fieldName={"repoId"}
        service={model?.getData("service")}
        gitToolId={model?.getData("gitToolId")}
        workspace={model?.getData("workspace")}

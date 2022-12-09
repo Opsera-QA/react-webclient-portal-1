@@ -62,7 +62,7 @@ export default function VanityButtonBase(
           size={buttonSize}
           className={buttonClassName}
         >
-          <span>
+          <span className={"no-wrap-inline"}>
             <IconBase
               isLoading={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY}
               icon={getButtonIcon()}

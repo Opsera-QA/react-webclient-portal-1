@@ -4,15 +4,11 @@ import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import PipelineHelpers from "../../pipelineHelpers";
 import PipelineActions from "../../pipeline-actions";
 import {
-  faPlay,
-  faSync,
-  faSpinner,
   faRedo,
   faInfoCircle, faRepeat1, faClock,
 } from "@fortawesome/pro-light-svg-icons";
 import CancelPipelineQueueConfirmationOverlay
   from "components/workflow/pipelines/pipeline_details/queuing/cancellation/CancelPipelineQueueConfirmationOverlay";
-import commonActions from "../../../common/common.actions";
 import InformaticaPipelineRunAssistantOverlay
   from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
 import ApigeePipelineRunAssistantOverlay from "components/workflow/run_assistants/apigee/ApigeePipelineRunAssistantOverlay";
@@ -28,6 +24,10 @@ import PipelineActionControlsUserApprovalButton from "components/workflow/pipeli
 import PipelineActionControlsStopButton from "components/workflow/pipelines/action_controls/PipelineActionControlsStopButton";
 import PipelineActionControlsRefreshButton
   from "components/workflow/pipelines/action_controls/PipelineActionControlsRefreshButton";
+import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
+import PipelineActionControlsStartPipelineButton
+  from "components/workflow/pipelines/action_controls/start/PipelineActionControlsStartPipelineButton";
+import useGetFeatureFlags from "hooks/platform/useGetFeatureFlags";
 
 const delayCheckInterval = 15000;
 let internalRefreshCount = 1;
@@ -53,15 +53,10 @@ function PipelineActionControls(
     toastContext,
     getAccessToken,
   } = useComponentStateReference();
-
-  /***
-   * Used to get status of Pipeline Queuing Flag specifically
-   * @returns {Promise<*>}
-   */
-  const getFeatureFlags = async () => {
-    const response = await commonActions.getFeatureFlagsV2(getAccessToken, cancelTokenSource);
-    return response?.data;
-  };
+  const {
+    orchestrationFeatureFlags,
+    enabledServices,
+  } = useGetFeatureFlags();
 
   useEffect(() => {
     loadData(pipeline).catch((error) => {
@@ -124,15 +119,12 @@ function PipelineActionControls(
   };
 
   const checkPipelineQueueStatus = async () => {
-    const featureFlags = await getFeatureFlags();
-    const orchestration = featureFlags?.orchestration;
+    setQueueingEnabled(orchestrationFeatureFlags?.enableQueuing);
 
-    setQueueingEnabled(orchestration?.enableQueuing);
-
-    if (orchestration?.enableQueuing) {
-      const queuedRequest = await PipelineActions.getQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
-      const isQueued = typeof queuedRequest?.data === "object" && Object.keys(queuedRequest?.data)?.length > 0;
-      setHasQueuedRequest(isQueued);
+    if (orchestrationFeatureFlags?.enableQueuing) {
+      const response = await PipelineActions.getQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
+      const isQueued = DataParsingHelper.parseNestedObject(response, "data");
+      setHasQueuedRequest(isQueued != null);
     }
   };
 
@@ -199,11 +191,26 @@ function PipelineActionControls(
     }
   };
 
-  const runPipeline = async (pipelineId) => {
+  const runPipeline = async (pipelineId, dynamicBranch) => {
     try {
+      const postBody = {};
+
+      const parsedDynamicBranch = DataParsingHelper.parseString(dynamicBranch);
+
+      if (enabledServices?.dynamicSettings === true && parsedDynamicBranch) {
+        postBody.settings = {
+          branch: parsedDynamicBranch,
+        };
+      }
+
       setStartPipeline(true);
       toastContext.showInformationToast("A request to start this pipeline has been submitted.", 20);
-      const response = await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      const response = await PipelineActions.runPipelineV2(
+        getAccessToken,
+        cancelTokenSource,
+        pipelineId,
+        postBody,
+      );
       const message = response?.data?.message;
 
       if (hasStringValue(message) === true) {
@@ -306,7 +313,6 @@ function PipelineActionControls(
         pipelineOrientation={pipelineOrientation}
         pipelineId={pipelineId}
         pipeline={pipeline}
-        handleClose={handlePipelineStartWizardClose}
         handlePipelineWizardRequest={handlePipelineWizardRequest}
       />,
     );
@@ -321,13 +327,9 @@ function PipelineActionControls(
     );
   };
 
-  const handlePipelineStartWizardClose = () => {
-    //console.log("closing wizard");
-    toastContext.clearOverlayPanel();
-  };
-
   const handlePipelineWizardRequest = async (pipelineId, restartBln) => {
-    handlePipelineStartWizardClose();
+    toastContext.clearOverlayPanel();
+
     if (restartBln) {
       console.log("Starting pipeline from beginning: clearing current pipeline status and activity");
       /*await resetPipelineState(pipelineId);
@@ -379,21 +381,45 @@ function PipelineActionControls(
     }
   };
 
-  // TODO: Put into a separate run button
-  const handleRunPipelineClick = async (pipelineId) => {
-    //check type of pipeline to determine if pre-flight wizard is required
-    // is pipeline at the beginning or stopped midway or end of prior?
-    const pipelineTypes = DataParsingHelper.parseArray(pipeline.type, []);
-    //for now type is just the first entry
-    const pipelineType = DataParsingHelper.parseString(pipelineTypes[0], "");
-
-    let pipelineOrientation = "start";
+  // TODO: Move to helper
+  const getPipelineOrientation = () => {
     const stoppedStepId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.step_id");
+    const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
+    const pipelineStepCount = plan.length;
+
+    // is pipeline at the beginning or stopped midway or end of prior?
     //what step are we currently on in the pipeline: first, last or middle?
     if (DataParsingHelper.isValidMongoDbId(stoppedStepId) === true) {
       const stepIndex = PipelineHelpers.getStepIndex(pipeline, stoppedStepId);
-      console.log("current resting step index: ", stepIndex);
-      if (stepIndex + 1 === Object.keys(pipeline.workflow.plan).length) {
+      console.log(`current resting step index: ${stepIndex} of ${pipelineStepCount}`);
+      if (stepIndex + 1 === pipelineStepCount) {
+        return "end";
+      } else {
+        return "middle";
+      }
+    }
+
+    return "start";
+  };
+
+  // TODO: Put into a separate run button
+  const handleRunPipelineClick = async (dynamicBranch) => {
+    const pipelineId = pipeline?._id;
+    //check type of pipeline to determine if pre-flight wizard is required
+    //for now type is just the first entry
+    const pipelineType = pipelineTypeConstants.getTypeForTypesArray(pipeline?.type);
+    const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
+    const pipelineStepCount = plan.length;
+
+    let pipelineOrientation = "start";
+    const stoppedStepId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.step_id");
+
+    // is pipeline at the beginning or stopped midway or end of prior?
+    //what step are we currently on in the pipeline: first, last or middle?
+    if (DataParsingHelper.isValidMongoDbId(stoppedStepId) === true) {
+      const stepIndex = PipelineHelpers.getStepIndex(pipeline, stoppedStepId);
+      console.log(`current resting step index: ${stepIndex} of ${pipelineStepCount}`);
+      if (stepIndex + 1 === pipelineStepCount) {
         pipelineOrientation = "end";
       } else {
         pipelineOrientation = "middle";
@@ -415,11 +441,11 @@ function PipelineActionControls(
       } else { //this is starting from beginning:
         if (pipelineOrientation === "start") {
           console.log("starting pipeline from scratch");
-          await runPipeline(pipelineId);
+          await runPipeline(pipelineId, dynamicBranch);
         } else {
           console.log("clearing pipeline activity and then starting over");
           await resetPipelineState(pipelineId);
-          await runPipeline(pipelineId);
+          await runPipeline(pipelineId, dynamicBranch);
         }
       }
     }
@@ -450,6 +476,40 @@ function PipelineActionControls(
     }
   };
 
+  //TODO: Do the workflow status check inside the component and move inline.
+  // Separating out for now to avoid causing unexpected issues.
+  const getStopButton = () => {
+    if (workflowStatus === "running") {
+      return (
+        <PipelineActionControlsStopButton
+          pipeline={pipeline}
+          workflowStatus={workflowStatus}
+          handleStopWorkflowClick={handleStopWorkflowClick}
+          pipelineIsStopping={stopPipeline}
+        />
+      );
+    }
+  };
+
+  //TODO: Do the workflow status check inside the component and move inline.
+  // Separating out for now to avoid causing unexpected issues.
+  const getRunPipelineButton = () => {
+    if (!workflowStatus || workflowStatus === "stopped") {
+      return (
+        <PipelineActionControlsStartPipelineButton
+          pipeline={pipeline}
+          workflowStatus={workflowStatus}
+          handleRunPipelineClick={handleRunPipelineClick}
+          disabledActionState={disabledActionState}
+          hasQueuedRequest={hasQueuedRequest}
+          pipelineIsStarting={startPipeline}
+          dynamicSettingsEnabled={enabledServices?.dynamicSettings === true}
+          pipelineOrientation={getPipelineOrientation()}
+        />
+      );
+    }
+  };
+
   // TODO: Make base button components for these in the future
   //  and wire up the functions inside those components to clean up PipelineActionControls
   return (
@@ -459,14 +519,7 @@ function PipelineActionControls(
         {getWarningMessage()}
         <div className="flex-fill p-2"></div>
         <div className="text-right btn-group btn-group-sized">
-          {workflowStatus === "running" &&
-            <PipelineActionControlsStopButton
-              pipeline={pipeline}
-              workflowStatus={workflowStatus}
-              handleStopWorkflowClick={handleStopWorkflowClick}
-              pipelineIsStopping={stopPipeline}
-            />
-          }
+          {getStopButton()}
 
           {workflowStatus === "paused" &&
             <PipelineActionControlsUserApprovalButton
@@ -476,24 +529,7 @@ function PipelineActionControls(
             />
           }
 
-          {
-            (workflowStatus === "stopped" || !workflowStatus) &&
-            <OverlayTrigger
-              placement="top"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "Start pipeline from the beginning." })}>
-              <Button variant="success"
-                      className="btn-default"
-                      size="sm"
-                      onClick={() => {
-                        handleRunPipelineClick(pipeline._id);
-                      }}
-                      disabled={PipelineRoleHelper.canStartPipeline(userData, pipeline) !== true || disabledActionState || startPipeline || hasQueuedRequest}>
-                {startPipeline ? <><IconBase isLoading={true} icon={faSpinner} className={"mr-1"} /> Starting</> :
-                  <><IconBase icon={faPlay} className={"mr-1"} /> Start Pipeline</>}
-              </Button>
-            </OverlayTrigger>
-          }
+          {getRunPipelineButton()}
 
           {
             (queueingEnabled && !hasQueuedRequest) && (workflowStatus === "paused" || workflowStatus === "running") &&

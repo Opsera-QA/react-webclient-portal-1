@@ -11,6 +11,7 @@ function PipelineSourceRepositorySelectInput({className, fieldName, model, setMo
     newModel.setData("repoId", repoId);
     newModel.setData("gitUrl", gitUrl);
     newModel.setData("sshUrl", selectedOption?.sshUrl);
+    newModel.setData("dynamicSettings", false);
     newModel.setData("branch", "");
     newModel.setData("secondary_branches", []);
     setModel({...newModel});
@@ -50,7 +51,7 @@ PipelineSourceRepositorySelectInput.propTypes = {
 };
 
 PipelineSourceRepositorySelectInput.defaultProps = {
-  fieldName: "repository",
+  fieldName: "repoId",
 };
 
 export default PipelineSourceRepositorySelectInput;

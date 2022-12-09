@@ -11,38 +11,8 @@ pipelineActions.getPipelineByIdV2 = async (getAccessToken, cancelTokenSource, pi
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-pipelineActions.getWorkflowTemplatesV2 = async (getAccessToken, cancelTokenSource, catalogFilterModel, source) => {
-  let sortOption = catalogFilterModel.getData("sortOption");
-
-  const urlParams = {
-    params: {
-      sort: sortOption ? sortOption.value : null,
-      size: catalogFilterModel.getData("pageSize"),
-      page: catalogFilterModel.getData("currentPage"),
-      search: catalogFilterModel.getFilterValue("search"),
-      type: catalogFilterModel.getFilterValue("type"),
-      tag: catalogFilterModel.getFilterValue("tag"),
-      source: source ? source : undefined
-    },
-  };
-
-  let apiUrl = `/pipelines/workflows/v2`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
-pipelineActions.getPipelineTemplatesByType = async (getAccessToken, cancelTokenSource, type) => {
-  const urlParams = {
-    params: {
-      type: type,
-    },
-  };
-
-  let apiUrl = `/pipelines/workflows/v2`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
 pipelineActions.getInUseTemplatesV2 = async (getAccessToken, cancelTokenSource) => {
-  let apiUrl = `/pipelines/workflows/inuse-templates`;
+  const apiUrl = `/workflow/templates/in-use`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
@@ -172,9 +142,9 @@ pipelineActions.run = async (pipelineId, postBody, getAccessToken) => {
   return response;
 };
 
-pipelineActions.runPipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
+pipelineActions.runPipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId, postBody) => {
   const apiUrl = `/pipelines/${pipelineId}/run/`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 //new-start which first resets the pipeline and then triggers a fresh run all in a single API call
@@ -339,11 +309,6 @@ pipelineActions.duplicatePipelineV2 = async (getAccessToken, cancelTokenSource, 
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-pipelineActions.publishPipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
-  const apiUrl = `/pipelines/${pipelineId}/publish-template/`;
-  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
 pipelineActions.publish = async (pipelineId, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/${pipelineId}/publish-template/`;
@@ -362,9 +327,23 @@ pipelineActions.getLogs = async (pipelineId, getAccessToken) => {
   return response;
 };
 
-pipelineActions.deployTemplateV2 = async (getAccessToken, cancelTokenSource, templateId) => {
+pipelineActions.deployTemplateV2 = async (
+  getAccessToken,
+  cancelTokenSource,
+  templateId,
+  roles,
+) => {
   const apiUrl = `/pipelines/deploy/${templateId}`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  const postBody = {
+    roles: roles,
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody
+  );
 };
 
 pipelineActions.approve = async (templateId, postBody, getAccessToken) => {

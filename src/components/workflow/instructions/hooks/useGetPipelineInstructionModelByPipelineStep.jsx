@@ -7,7 +7,6 @@ import useGetPipelineInstructionsModel from "components/workflow/instructions/ho
 export default function useGetPipelineInstructionModelByPipelineStep(
   pipelineId,
   pipelineStepId,
-  throwErrorToast = true,
 ) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
@@ -16,7 +15,6 @@ export default function useGetPipelineInstructionModelByPipelineStep(
   const {
     getAccessToken,
     cancelTokenSource,
-    toastContext,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -35,9 +33,6 @@ export default function useGetPipelineInstructionModelByPipelineStep(
       await getPipelineInstructions();
     } catch (error) {
       setError(error);
-      if (throwErrorToast === true && !error?.error?.message?.includes(404)) {
-        toastContext.showLoadingErrorDialog(error);
-      }
     } finally {
       setIsLoading(false);
     }

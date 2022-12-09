@@ -11,7 +11,14 @@ export const PIPELINE_START_WIZARD_FLOWS = {
   SALESFORCE_PIPELINE_WIZARD: "salesforce_pipeline_wizard",
 };
 
-function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, pipeline, handleClose, handlePipelineWizardRequest }) {
+function PipelineStartWizard(
+  {
+    pipelineType,
+    pipelineId,
+    pipelineOrientation,
+    pipeline,
+    handlePipelineWizardRequest,
+  }) {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -30,7 +37,7 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
           pipelineId={pipelineId}
           pipeline={pipeline}
           handlePipelineWizardRequest={handlePipelineWizardRequest}
-          handleClose={handleClose}
+          handleClose={closePanel}
           pipelineOrientation={pipelineOrientation}
         />
       );
@@ -59,7 +66,6 @@ PipelineStartWizard.propTypes = {
   pipeline: PropTypes.object,
   pipelineOrientation: PropTypes.string,
   handlePipelineWizardRequest: PropTypes.func,
-  handleClose: PropTypes.func,
 };
 
 export default PipelineStartWizard;

@@ -12,6 +12,7 @@ function DotNetJenkinsAccountInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");
+    newDataObject.setData("repoId", "");
     newDataObject.setData("gitBranch", "");
     newDataObject.setData("workspace", "");
     setDataObject({...newDataObject});

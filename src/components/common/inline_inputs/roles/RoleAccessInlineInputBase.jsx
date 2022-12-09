@@ -22,6 +22,7 @@ function RoleAccessInlineInputBase(
   const {
     isFreeTrial,
     isOpseraAdministrator,
+    isSassUser,
   } = useComponentStateReference();
 
   const showEditor = () => {
@@ -36,7 +37,7 @@ function RoleAccessInlineInputBase(
     }
   };
 
-  if (visible === false || (isFreeTrial === true && isOpseraAdministrator !== true)) {
+  if (visible === false || isSassUser === true || (isFreeTrial === true && isOpseraAdministrator !== true)) {
     return null;
   }
 

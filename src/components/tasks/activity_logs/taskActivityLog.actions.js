@@ -2,6 +2,16 @@ import baseActions from "utils/actionsBase";
 
 export const taskActivityLogActions = {};
 
+taskActivityLogActions.getTaskActivityLogCountForTaskRun = async (
+  getAccessToken,
+  cancelTokenSource,
+  taskId,
+  runCount,
+) => {
+  const apiUrl = `/tasks/${taskId}/${runCount}/logs/activity/count/`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 taskActivityLogActions.pullLiveLogV2 = async (getAccessToken, cancelTokenSource, taskId, runCount) => {
   const apiUrl = `/tasks/logs/${taskId}/activity/v2/run/${runCount}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);

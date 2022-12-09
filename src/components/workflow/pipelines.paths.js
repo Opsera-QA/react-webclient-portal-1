@@ -7,6 +7,7 @@ export const pipelinesPaths = {};
 // Pipeline Catalog Routes
 pipelinesPaths.catalog = pipelineCatalogHelper.getManagementScreenLink();
 pipelinesPaths.customerPipelineTemplateDetailView = `${pipelinesPaths.catalog}/:id`;
+pipelinesPaths.platformPipelineTemplateDetailView = `${pipelinesPaths.catalog}/:id`;
 
 // Pipelines Paths
 pipelinesPaths.pipelines = pipelineHelper.getManagementScreenLink();

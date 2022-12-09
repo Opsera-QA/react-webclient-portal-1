@@ -74,11 +74,15 @@ function FullScreenCenterOverlayContainer(
             {actionBar}
             <div className={showCloseButton === true || buttonContainer != null ? "full-screen-overlay-panel-body-with-buttons" : "full-screen-overlay-panel-body"}>
               {showToasts && toastContext?.getInlineBanner()}
-              {getBody()}
+              <div className={"bg-white"}>
+                {getBody()}
+              </div>
             </div>
           </div>
         </div>
-        {getButtons()}
+        <div className={"mt-auto bg-white"}>
+          {getButtons()}
+        </div>
       </div>
     </div>
   );

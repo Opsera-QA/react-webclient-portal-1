@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {CardColumns} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 import CardView from "components/common/card/CardView";
 import InlineInformation from "components/common/status_notifications/inline/InlineInformation";
 import LoadingDialog from "components/common/status_notifications/loading";
-import PipelineTemplateCatalogItem from "components/workflow/catalog/PipelineTemplateCatalogItem";
 import CustomerPipelineTemplateCard from "components/workflow/catalog/private/CustomerPipelineTemplateCard";
 
 export default function CustomerPipelineTemplateCardView(
@@ -18,7 +17,7 @@ export default function CustomerPipelineTemplateCardView(
   }) {
   const getCards = () => {
     if (isLoading) {
-      return <LoadingDialog message={"Loading Dashboard Templates"} size={"sm"} />;
+      return <LoadingDialog message={"Loading Dashboard Templates"} size={"sm"}/>;
     }
 
     if (!Array.isArray(pipelineTemplates) || pipelineTemplates.length === 0) {
@@ -33,17 +32,19 @@ export default function CustomerPipelineTemplateCardView(
     }
 
     return (
-      <CardColumns>
+      <Row>
         {pipelineTemplates.map((template) => {
           return (
-            <CustomerPipelineTemplateCard
-              key={template._id}
-              template={template}
-              activeTemplates={activeTemplates}
-            />
-         );
+            <Col xs={12} xl={6} key={template._id} className={"pb-2"}>
+              <CustomerPipelineTemplateCard
+                key={template._id}
+                template={template}
+                activeTemplates={activeTemplates}
+              />
+            </Col>
+          );
         })}
-      </CardColumns>
+      </Row>
     );
   };
 

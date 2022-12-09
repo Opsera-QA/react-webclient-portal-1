@@ -10,8 +10,8 @@ function PipelineTypeMultiSelectInput({ fieldName, dataObject, setDataObject, di
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={PIPELINE_TYPE_SELECT_OPTIONS}
-      valueField="value"
-      textField="text"
+      valueField={"value"}
+      textField={"text"}
       disabled={disabled}
     />
   );

@@ -10,16 +10,16 @@ const templateEditorMetadata = {
   },
   fields: [
     {
+      label: "ID",
+      id: "_id",
+    },
+    {
       label: "Name",
       id: "name",
       minLength: 3,
-      maxLength:50,
+      maxLength: 50,
       isRequired: true,
       regexDefinitionName: "expandedTextAndSymbolsWithSpaces"
-    },
-    {
-      label: "ID",
-      id: "_id",
     },
     {
       label: "Identifier",
@@ -33,24 +33,25 @@ const templateEditorMetadata = {
       label: "Description",
       id: "description",
       minLength: 3,
-      maxLength:1000,
+      maxLength: 1000,
       isRequired: true,
       regexDefinitionName: "expandedTextAndSymbolsWithSpaces"
     },
     {
       label: "Type",
       id: "type",
-      formText: "Type of pipeline supported.  Current supported values: sfdc or freetrial."
     },
     {
       label: "Created At",
       id: "createdAt",
     },
     {
+      label: "Updated At",
+      id: "updatedAt",
+    },
+    {
       label: "Roles",
       id: "roles",
-      value: ["opsera", "everyone"],
-      formText: "Defines who can see this template.  This works in concert with Account.  If Everyone is selected here, all customers see it.  To restrict this template to one customer account, remove everyone here and select that account in the Account field."
     },
     { //this should be a dropdown that lists Org Accounts (showing domain in UI) but saving orgAccount name in fields
       label: "LDAP Account",
@@ -85,22 +86,15 @@ const templateEditorMetadata = {
       id: "access"
     },
     {
+      label: "Owner",
+      id: "owner"
+    },
+    {
       label: "Plan",
       id: "plan",
       type: "JSON",
       toShow: true,
       isCollapsed: true,
-      value: [
-        {
-          "tool": {},
-          "trigger": [],
-          "type": [],
-          "notification": [],
-          "name": "",
-          "description": "",
-          "active": true,
-        },
-      ],
     },
   ],
   newObjectFields: {
@@ -114,7 +108,18 @@ const templateEditorMetadata = {
     singleUse: false,
     account: "",
     access: [],
-    plan: [{}],
+    roles: [],
+    plan: [
+      {
+        "tool": {},
+        "trigger": [],
+        "type": [],
+        "notification": [],
+        "name": "",
+        "description": "",
+        "active": true,
+      },
+    ],
   },
 };
 

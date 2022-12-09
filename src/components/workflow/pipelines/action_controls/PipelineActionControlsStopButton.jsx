@@ -22,7 +22,7 @@ export default function PipelineActionControlsStopButton(
     return null;
   }
 
-  // TODO: Make the run button handle these different states for the run button
+  // TODO: Make the run button handle these different states for the run button?
   return (
     <>
       <PipelineActionControlButtonBase
@@ -35,6 +35,7 @@ export default function PipelineActionControlsStopButton(
       <PipelineActionControlButtonBase
         icon={faStopCircle}
         normalText={"Stop"}
+        busyText={"Stopping"}
         buttonState={pipelineIsStopping === true ? buttonLabelHelper.BUTTON_STATES.BUSY : undefined}
         onClickFunction={handleStopWorkflowClick}
         disabled={PipelineRoleHelper.canStopPipeline(userData, pipeline) !== true}

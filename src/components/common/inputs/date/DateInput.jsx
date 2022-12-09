@@ -2,33 +2,37 @@ import React from "react";
 import PropTypes from "prop-types";
 import DateTimeInputBase from "components/common/inputs/date/DateTimeInputBase";
 
-function DateInput({ fieldName, dataObject, setDataObject, disabled }) {
-  const setDataFunction = (fieldName, value) => {
-    let newDataObject = dataObject;
-    // cut off time value from date
-    const dateWithoutTime = new Date(value).toISOString().split('T')[0];
-    newDataObject.setData(fieldName, dateWithoutTime);
-    setDataObject({...newDataObject});
-    return newDataObject;
-  };
-
+export default function DateInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    setDataFunction,
+    disabled,
+    defaultToNull,
+  }) {
   return (
     <DateTimeInputBase
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      dataObject={model}
+      setDataObject={setModel}
       fieldName={fieldName}
       disabled={disabled}
       setDataFunction={setDataFunction}
       showTime={false}
+      defaultToNull={defaultToNull}
     />
   );
 }
 
 DateInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
+  setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
+  defaultToNull: PropTypes.bool,
 };
 
-export default DateInput;
+DateInput.defaultProps = {
+  defaultToNull: true,
+};

@@ -155,7 +155,6 @@ import CoverityPipelineStepConfigurationSummaryPanel from "./step_tool_configura
 import AksServiceDeployStepSummary
   from "./step_tool_configuration_forms/aks_service_deploy/AksServiceDeployStepSummary";
 import aksStepFormMetadata from "./step_tool_configuration_forms/aks_service_deploy/aks-stepForm-metadata";
-
 import AwsLambdaPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaPipelineStepConfigurationSummary";
 import {s3PipelineStepConfigurationMetadata} from "components/workflow/plan/step/s3/s3PipelineStepConfiguration.metadata";
@@ -238,6 +237,18 @@ import UserActionsPipelineStepSummaryPanel
 import {
   userActionsPipelineStepMetadata
 } from "components/workflow/plan/step/user_actions/userActionsPipelineStep.metadata";
+import JFrogMavenPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/jfrog_artifactory_maven/JFrogMavenPipelineStepConfigurationSummaryPanel";
+import jfrogMavenStepFormMetadata
+  from "./step_tool_configuration_forms/jfrog_artifactory_maven/jfrog-maven-stepForm-metadata";
+import AnsibleStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/ansible/AnsibleStepConfigurationSummaryPanel";
+import ansibleStepMetadata from "./step_tool_configuration_forms/ansible/ansible.step.metadata";
+import azureZipDeploymentMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_zip_deployment/azureZipDeployment.metadata";
+import AzureZipDeploymentStepConfigurationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfigurationSummaryPanel";
+
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -282,6 +293,13 @@ function PipelineStepConfigurationSummary({
           <AnchoreScanStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             anchoreDataObject={getModelWrappedObject(anchoreScanStepConfigurationMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ANSIBLE:
+        return (
+          <AnsibleStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            ansibleDataObject={getModelWrappedObject(ansibleStepMetadata)}
           />
         );
       case "approval":
@@ -529,6 +547,13 @@ function PipelineStepConfigurationSummary({
             jFrogPipelineDataObject={getModelWrappedObject(jfrogStepFormMetadata)}
           />
         );
+      case "jfrog_artifactory_maven":
+        return (
+          <JFrogMavenPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            jFrogPipelineDataObject={getModelWrappedObject(jfrogMavenStepFormMetadata)}
+          />
+        );
       case "terrascan":
         return (
           <TerrascanPipelineStepConfigurationSummaryPanel
@@ -548,6 +573,13 @@ function PipelineStepConfigurationSummary({
           <AzureAcrPushPipelineStepConfigurationSummary
             pipelineData={pipelineData}
             azureAcrPushPipelineDataObject={getModelWrappedObject(azureAcrPushStepFormMetadata)}
+          />
+        );
+      case "azure_zip-deployment":
+        return (
+          <AzureZipDeploymentStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            azureFunctionsPipelineDataObject={getModelWrappedObject(azureZipDeploymentMetadata)}
           />
         );
       case "kafka_connect":

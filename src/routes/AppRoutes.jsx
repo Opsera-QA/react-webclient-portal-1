@@ -22,7 +22,12 @@ import BlueprintsRoutes from "routes/BlueprintsRoutes";
 import FreeTrialSettingsRoutes from "routes/FreeTrialSettingsRoutes";
 import FreeTrialAdminToolsRoutes from "routes/FreeTrialAdminToolsRoutes";
 
-const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, }) => {
+export default function AppRoutes(
+  {
+    authenticatedState,
+    isPublicPathState,
+    authClient,
+  }) {
   useEffect(() => {
   }, [authenticatedState, isPublicPathState]);
 
@@ -31,8 +36,7 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, }) => {
     <div className={"w-100 px-3"}>
       <div className={"d-flex flex-row"}>
         <Sidebar />
-
-        <div className={"w-100 hide-x-overflow"}>
+        <div className={"w-100"}>
           <PublicRoutes
             authClient={authClient}
           />
@@ -60,15 +64,10 @@ const AppRoutes = ({ authenticatedState, isPublicPathState, authClient, }) => {
       <OpseraFooter />
     </div>
   );
-};
+}
 
 AppRoutes.propTypes = {
   authenticatedState: PropTypes.bool,
   isPublicPathState: PropTypes.bool,
   authClient: PropTypes.object,
-  OKTA_CONFIG: PropTypes.object,
-  userData: PropTypes.object,
-  hideSideBar: PropTypes.bool,
 };
-export default AppRoutes;
-

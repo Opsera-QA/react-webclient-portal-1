@@ -121,7 +121,7 @@ function JiraMeanTimeToResolutionMaturityScoreInsights({
           className={"px-2 pb-2"}
         />
       );
-    } else if (activeHorizontalTab == "serviceCompoents") {
+    } else if (activeHorizontalTab == "serviceComponents") {
       return (
         <FilterContainer
           title={"Maturity Score by Service Components"}
