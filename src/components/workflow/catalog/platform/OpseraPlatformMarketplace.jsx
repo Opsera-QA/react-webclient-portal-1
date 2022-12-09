@@ -36,6 +36,7 @@ export default function OpseraPipelineMarketplace({activeTemplates}) {
       <TagFilter
         filterDto={pipelineTemplateFilterModel}
         setFilterDto={setPipelineTemplateFilterModel}
+        valueField={"value2"}
       />
     );
   };
