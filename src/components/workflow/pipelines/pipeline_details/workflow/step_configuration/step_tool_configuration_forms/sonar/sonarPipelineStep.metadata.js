@@ -149,6 +149,18 @@ const sonarPipelineStepMetadata = {
       label: "Commands",
       id: "commands"
     },
+    {
+      label: "Enable Client Side thresholds",
+      id: "clientSideThreshold"
+    },
+    {
+      label: "Compliance Threshold",
+      id: "thresholdCompliance",
+    },
+    {
+      label: "Rating Threshold",
+      id: "thresholdRating",
+    },
   ],
   newObjectFields: {
     jobType: "",
@@ -189,6 +201,9 @@ const sonarPipelineStepMetadata = {
     isScanArtifact: false,
     stepIdXml: "",
     commands: "",
+    clientSideThreshold: false,
+    thresholdCompliance: [],
+    thresholdRating: [],
   }
 };
 
