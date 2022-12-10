@@ -1,5 +1,4 @@
 /* The side navigation menu */
-
 .sidebar-container {
   font-size: .9rem;
   box-shadow: none;
@@ -12,18 +11,15 @@
   letter-spacing: .05rem;
 }
 
-.sidebar-menu .nav-link-sub {
-  /*padding-left: 15px !important;*/
-  /*font-size: .8rem;*/
-
-  /*padding-top: 0;*/
-}
-
 .sub-header {
   color: #241F3D;
   text-transform: uppercase;
   font-size: 0.85rem;
   letter-spacing: .3rem;
+}
+
+.sidebar-container .is-closed .sub-header, .sidebar-container .is-closed .menu-text {
+    display: none;
 }
 
 .sidebar-menu .menu-text {
