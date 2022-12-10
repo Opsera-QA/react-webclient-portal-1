@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import SidebarNavigationLinkBase from "components/common/links/sidebar/SidebarNavigationLinkBase";
-import { faBox } from "@fortawesome/pro-light-svg-icons";
+import {faAnalytics} from "@fortawesome/pro-light-svg-icons";
 
-export default function ToolchainSidebarNavigationLink() {
+export default function ReportsSidebarNavigationLink() {
   const {
     userAccessRoles,
     isSassUser,
@@ -25,9 +25,9 @@ export default function ToolchainSidebarNavigationLink() {
 
   return (
     <SidebarNavigationLinkBase
-      link={`/platform`}
-      label={"Toolchain"}
-      icon={faBox}
+      link={`/reports`}
+      label={"Reports"}
+      icon={faAnalytics}
     />
   );
 }

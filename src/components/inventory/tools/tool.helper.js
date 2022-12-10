@@ -24,3 +24,7 @@ toolHelper.getDetailViewLink = (toolId) => {
 
   return `/inventory/tools/details/${toolId}`;
 };
+
+toolHelper.getManagementScreenLink = () => {
+  return `/inventory`;
+};
