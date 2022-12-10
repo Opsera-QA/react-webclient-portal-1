@@ -8,6 +8,7 @@ export default function HomeSidebarNavigationLink() {
       link={"/"}
       label={"Home"}
       icon={faHome}
+      exact={true}
     />
   );
 }

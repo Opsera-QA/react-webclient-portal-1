@@ -40,29 +40,29 @@ export default function Sidebar({ hideSideBar }) {
 
   return (
     <div
-      className={isSidebarOpened === true ? "w-20 pt-1 d-block is-opened" : "w-20 pt-1 d-block"}
+      className={"w-20 pt-1 d-block sidebar-container"}
       onMouseEnter={() => setIsSidebarOpened(true)}
       onMouseLeave={() => setIsSidebarOpened(false)}
     >
-      <div className="sidebar-container sticky-top">
-        <div className="sidebar-menu pt-3">
-          <HomeSidebarNavigationLink />
+      <div
+        className={isSidebarOpened === true ? "sticky-top py-5 sidebar-menu" : "sticky-top py-5 sidebar-menu is-closed"}
+      >
+        <HomeSidebarNavigationLink/>
 
-          <div className="mt-3 mb-2 sub-header">Products</div>
-          <ToolchainSidebarNavigationLink />
-          <PipelinesSidebarNavigationLink />
-          <InsightsSidebarNavigationLink />
+        <div className={"mt-3 mb-2 sub-header"}>Products</div>
+        <ToolchainSidebarNavigationLink/>
+        <PipelinesSidebarNavigationLink/>
+        <InsightsSidebarNavigationLink/>
 
-          <div className="mt-3 mb-2 sub-header">Operations</div>
-          <ToolRegistrySidebarNavigationLink />
-          <TasksSidebarNavigationLink />
-          <LogsSidebarNavigationLink />
-          <BlueprintsSidebarNavigationLink />
-          <ReportsSidebarNavigationLink />
-          <NotificationsSidebarNavigationLink />
-          <SettingsSidebarNavigationLink />
-          <AdminToolsSidebarNavigationLink />
-        </div>
+        <div className={"mt-3 mb-2 sub-header"}>Operations</div>
+        <ToolRegistrySidebarNavigationLink/>
+        <TasksSidebarNavigationLink/>
+        <LogsSidebarNavigationLink/>
+        <BlueprintsSidebarNavigationLink/>
+        <ReportsSidebarNavigationLink/>
+        <NotificationsSidebarNavigationLink/>
+        <SettingsSidebarNavigationLink/>
+        <AdminToolsSidebarNavigationLink/>
       </div>
     </div>
   );
