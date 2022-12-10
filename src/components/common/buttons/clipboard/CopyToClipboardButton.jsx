@@ -11,6 +11,7 @@ function CopyToClipboardButton(
     size,
     className,
     showLabel,
+    variant,
   }) {
   const [copiedToClipboard, setCopiedToClipboard] = useState(false);
 
@@ -39,7 +40,7 @@ function CopyToClipboardButton(
   return (
     <ButtonTooltip trigger={["hover", "focus"]} innerText={copiedToClipboard ? "Copied to Clipboard!" : "Copy to clipboard"}>
       <div className={className}>
-        <Button size={size} variant={copiedToClipboard ? "success" : "outline-secondary"} onClick={() => {copyToClipboard();}} disabled={copyString == null}>
+        <Button size={size} variant={variant} onClick={() => {copyToClipboard();}} disabled={copyString == null}>
           <IconBase
             icon={copiedToClipboard === true ? faClipboardCheck : faClipboardList}
           />
@@ -55,10 +56,12 @@ CopyToClipboardButton.propTypes = {
   size: PropTypes.string,
   className: PropTypes.string,
   showLabel: PropTypes.bool,
+  variant: PropTypes.string,
 };
 
 CopyToClipboardButton.defaultProps = {
   size: "sm",
+  variant: "outline-primary",
 };
 
 export default CopyToClipboardButton;
