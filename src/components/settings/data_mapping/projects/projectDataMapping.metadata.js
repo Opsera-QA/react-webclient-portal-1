@@ -58,6 +58,13 @@ const projectDataMappingMetadata = {
       id: "active",
     },
     {
+      label: "Custom Tag Fields",
+      id: "customTagFields",
+    },
+    {      
+      id: "projectKey",
+    },
+    {
       label: "Created At",
       id: "createdAt",
     },
@@ -112,6 +119,8 @@ const projectDataMappingMetadata = {
     key: "",
     value: [],
     tool_prop: "",
+    customTagFields: [],
+    projectKey: "",
     createdAt: "",
     active : true,
     pageSize: 50,

@@ -9,6 +9,7 @@ function MetricDataPointEvaluationFailureRuleInput(
   {
     dataPointEvaluationRules,
     updateRuleFunction,
+    dataPointType
   }) {
   return (
     <MetricDataPointEvaluationRuleInputBase
@@ -19,6 +20,7 @@ function MetricDataPointEvaluationFailureRuleInput(
       icon={faExclamationCircle}
       headerClassName={"danger-red-header"}
       errorMessage={dataPointEvaluationRulesHelpers.getConflictingRuleError(dataPointEvaluationRules)}
+      dataPointType={dataPointType}
     />
   );
 }
@@ -26,6 +28,7 @@ function MetricDataPointEvaluationFailureRuleInput(
 MetricDataPointEvaluationFailureRuleInput.propTypes = {
   dataPointEvaluationRules: PropTypes.object,
   updateRuleFunction: PropTypes.func,
+  dataPointType: PropTypes.string,
 };
 
 export default MetricDataPointEvaluationFailureRuleInput;

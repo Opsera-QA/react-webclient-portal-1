@@ -1,6 +1,5 @@
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import sessionHelper from "utils/session.helper";
-import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { numberHelpers } from "components/common/helpers/number/number.helpers";
 import { modelValidation, validateField } from "core/data_model/modelValidation";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
@@ -19,7 +18,7 @@ export class FilterModelBase {
       return null;
     }
 
-    return dataParsingHelper.safeObjectPropertyParser(this.data, fieldName);
+    return DataParsingHelper.safeObjectPropertyParser(this.data, fieldName);
   };
 
   getArrayData = (fieldName, index) => {
@@ -64,7 +63,7 @@ export class FilterModelBase {
   };
 
   setData = (fieldName, newValue, updateQueryParameters = true) => {
-    this.data = dataParsingHelper.safeObjectPropertySetter(this.data, fieldName, newValue);
+    this.data = DataParsingHelper.safeObjectPropertySetter(this.data, fieldName, newValue);
 
     if (updateQueryParameters === true && this.getUpdateUrlWithQueryParameters() === true) {
       sessionHelper.replaceStoredUrlParameter(fieldName, newValue);
@@ -181,7 +180,7 @@ export class FilterModelBase {
 
   unpackCommonBrowserStorageFields = () => {
     const browserStorage = sessionHelper.getStoredSessionValueByKey(this.sessionDataKey);
-    const parsedBrowserStorage = dataParsingHelper.parseJson(browserStorage);
+    const parsedBrowserStorage = DataParsingHelper.parseJson(browserStorage);
 
     if (parsedBrowserStorage) {
 
@@ -338,15 +337,15 @@ export class FilterModelBase {
   };
 
   updateActiveFilters = () => {
-    const activeFilters = dataParsingHelper.parseArray(this.getActiveFilters(), []);
+    const activeFilters = DataParsingHelper.parseArray(this.getActiveFilters(), []);
 
     if (Array.isArray(activeFilters)) {
-      this.data.activeFilters = activeFilters;
+      this.setData("activeFilters", activeFilters);
     }
   };
 
   updateTotalCount = (newTotalCount) => {
-    const parsedTotalCount = dataParsingHelper.parseInteger(newTotalCount, 0);
+    const parsedTotalCount = DataParsingHelper.parseInteger(newTotalCount, 0);
 
     if (numberHelpers.isNumberGreaterThanOrEqualTo(0, parsedTotalCount)) {
       this.data.totalCount = parsedTotalCount;
@@ -457,7 +456,7 @@ export class FilterModelBase {
   };
 
   clone = () => {
-    return dataParsingHelper.cloneDeep(this);
+    return DataParsingHelper.cloneDeep(this);
   };
 }
 
