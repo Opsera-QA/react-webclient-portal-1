@@ -7,7 +7,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
 import {MONACO_CODE_THEME_TYPES} from "components/common/inputs/code/monaco/MonacoCodeDiffInput";
 
-function ToggleThemeIcon({ theme, toggleTheme, className, size, variant }) {
+function ToggleThemeIconButton({ theme, toggleTheme, className, size, variant }) {
   if (toggleTheme == null || theme == null) {
     return null;
   }
@@ -27,7 +27,7 @@ function ToggleThemeIcon({ theme, toggleTheme, className, size, variant }) {
   );
 }
 
-ToggleThemeIcon.propTypes = {
+ToggleThemeIconButton.propTypes = {
   toggleTheme: PropTypes.func,
   className: PropTypes.string,
   theme: PropTypes.string,
@@ -35,9 +35,9 @@ ToggleThemeIcon.propTypes = {
   size: PropTypes.string,
 };
 
-ToggleThemeIcon.defaultProps = {
+ToggleThemeIconButton.defaultProps = {
   variant: "outline-primary",
   size: "sm"
 };
 
-export default ToggleThemeIcon;
+export default ToggleThemeIconButton;

@@ -7,6 +7,8 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 import JsonField from "components/common/fields/json/JsonField";
 import DateTimeField from "components/common/fields/date/DateTimeField";
+import MonacoEditorCodeDiffInputBase from "components/common/inputs/code/monaco/MonacoEditorCodeDiffInputBase";
+import MonacoCodeDiffInput from "components/common/inputs/code/monaco/MonacoCodeDiffInput";
 
 export default function UserActivityAuditLogSummaryPanelBase(
   {
@@ -66,6 +68,16 @@ export default function UserActivityAuditLogSummaryPanelBase(
           <TextFieldBase
             fieldName={"target_name"}
             dataObject={auditLogModel}
+          />
+        </Col>
+        <Col xs={12}>
+          <MonacoCodeDiffInput
+            originalContent={JSON.stringify(auditLogModel?.getData("originalData"), null, 2)}
+            modifiedContent={JSON.stringify(auditLogModel?.getData("newData"), null, 2)}
+            disabled={true}
+            height={"500px"}
+            model={auditLogModel}
+            fieldName={"changeLog"}
           />
         </Col>
         <Col xs={12} md={6}>

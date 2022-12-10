@@ -15,8 +15,8 @@ import {
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import {faPlus, faMinus, faEdit} from "@fortawesome/free-solid-svg-icons";
 import IconBase from "../../../../../../../common/icons/IconBase";
-import ToggleThemeIcon from "../../../../../../../common/buttons/toggle/ToggleThemeIcon";
-import ToggleDiffViewIcon from "../../../../../../../common/buttons/toggle/ToggleDiffViewIcon";
+import ToggleThemeIconButton from "components/common/buttons/toggle/ToggleThemeIconButton";
+import ToggleDiffViewIconButton from "components/common/buttons/toggle/ToggleDiffViewIconButton";
 import {MONACO_CODE_THEME_TYPES} from "../../../../../../../common/inputs/code/monaco/MonacoCodeDiffInput";
 
 const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
@@ -175,11 +175,11 @@ const MergeSyncTaskWizardCommitSelectorVerticalTabContainer = (
   const getTitleBarActionButtons = () => {
     return (
         <div className={"d-flex"}>
-          <ToggleThemeIcon
+          <ToggleThemeIconButton
               theme={internalTheme}
               toggleTheme={toggleTheme}
           />
-          <ToggleDiffViewIcon
+          <ToggleDiffViewIconButton
               toggleDiffView={toggleDiffView}
               className={"mr-2 ml-2"}
           />
