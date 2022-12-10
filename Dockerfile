@@ -12,7 +12,7 @@ COPY .npmrc /usr/src/app/.npmrc
 RUN npm install --legacy-peer-deps
 RUN npm install react-scripts -g --silent
 COPY . /usr/src/app
-RUN npm run build:${build_env}
+RUN npm run build:${build_env} --verbose
 RUN mv build* code
 RUN ls -lrt
 
