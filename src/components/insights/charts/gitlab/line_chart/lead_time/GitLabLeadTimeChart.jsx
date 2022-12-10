@@ -30,7 +30,6 @@ import GitlabDeploymentFrequencyMaturityScoreInsights
   from "../../deployment_frequency/GitlabDeploymentFrequencyMaturityScoreInsights";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import GitlabLeadTimeMaturityScoreInsights from "./GitlabLeadTimeMaturityScoreInsights";
-import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 
 function GitLabLeadTimeChart({
   kpiConfiguration,
