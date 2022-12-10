@@ -20,6 +20,7 @@ import {
 } from "../../../charts-helpers";
 import GitlabLeadTimeTrendDataBlock from "./GitlabLeadTimeTrendDataBlock";
 import gitlabAction from "../../gitlab.action";
+import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import InfoDialog from "../../../../../common/status_notifications/info";
 import BadgeBase from "../../../../../common/badges/BadgeBase";
 import GitlabLeadTimeMaturityBlock from "./GitlabLeadTimeMaturityBlock";
@@ -46,8 +47,8 @@ function GitLabLeadTimeChart({
   const [meanCommitData, setMeanCommitData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
-  const [leadTimeDataPoint, setLeadTimeDataPoint] =
-      useState(undefined);
+  const [leadTimeDataPoint, setLeadTimeDataPoint] = useState(undefined);
+  const [medianLeadTimeDataPoint, setMedianTimeDataPoint] = useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -138,9 +139,13 @@ function GitLabLeadTimeChart({
     const dataPoint = dataPointHelpers.getDataPoint(
       dataPoints,
       constants.SUPPORTED_DATA_POINT_IDENTIFIERS
-        .LEAD_TIME_DATA_POINT,
+        .LEADTIME_DATA_POINT,
     );
     setLeadTimeDataPoint(dataPoint);
+    setMedianTimeDataPoint(dataPointHelpers.getDataPoint(
+      dataPoints,
+      constants.SUPPORTED_DATA_POINT_IDENTIFIERS.MEDIAN_TIME_DATA_POINT,
+    ));
   };
  const closePanel = () => {
     toastContext.removeInlineMessage();
@@ -210,6 +215,7 @@ function GitLabLeadTimeChart({
     } else if (dataPointType == 'hours') {
       leadTimeDataPointValue = convertMStoHours(metricData?.totalAverageLeadTimeInMS);
     }
+    const medianTimeDataPointValue = metricData?.totalAverageLeadTime;
     const maturityScore = metricData?.overallMaturityScoreText;
     const maturityColor = getMaturityColorClass(maturityScore);
     return (
@@ -267,6 +273,8 @@ function GitLabLeadTimeChart({
                 topText={"Median LTFC"}
                 bottomText={"Prev Median: "}
                 toolTipText={totalMedianTimeDisplay[1]}
+                dataPoint={medianLeadTimeDataPoint}
+                dataPointValue={medianTimeDataPointValue}
               />
             </Col>
             {/*TODO This will be enabled after fixing the formula*/}
