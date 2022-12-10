@@ -86,8 +86,8 @@ function MonacoCodeDiffInput({
         <div className={"mr-2"}>{titleBarActionButtons}</div>
         <CopyToClipboardButton
           copyString={model?.getData(fieldName)}
-          showLabel={false}
           className={"ml-2"}
+          size={"sm"}
         />
         <ToggleThemeIconButton
           className={"ml-2"}

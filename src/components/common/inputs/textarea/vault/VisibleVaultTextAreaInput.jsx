@@ -4,7 +4,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import ShowSensitiveDataButton from "components/common/buttons/data/ShowSensitiveDataButton";
-import CopyToClipboardButton from "components/common/buttons/data/CopyToClipboardButton";
+import CopyToClipboardButton from "components/common/buttons/clipboard/CopyToClipboardButton";
 import {parseError} from "components/common/helpers/error-helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 

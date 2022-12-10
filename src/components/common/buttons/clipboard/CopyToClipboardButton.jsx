@@ -1,17 +1,21 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
 import {faClipboardCheck, faClipboardList} from "@fortawesome/pro-light-svg-icons";
-import IconBase from "components/common/icons/IconBase";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
+import {Button} from "react-bootstrap";
+import IconBase from "components/common/icons/IconBase";
 
 function CopyToClipboardButton(
   {
     copyString,
-    size,
     className,
-    showLabel,
+    copyText,
+    copiedText,
+    copyIcon,
+    copiedIcon,
+    size,
     variant,
+    showLabel,
   }) {
   const [copiedToClipboard, setCopiedToClipboard] = useState(false);
 
@@ -26,7 +30,7 @@ function CopyToClipboardButton(
   };
 
   const getLabel = () => {
-    if (showLabel === false) {
+    if (showLabel !== true) {
       return false;
     }
 
@@ -38,11 +42,18 @@ function CopyToClipboardButton(
   };
 
   return (
-    <ButtonTooltip trigger={["hover", "focus"]} innerText={copiedToClipboard ? "Copied to Clipboard!" : "Copy to clipboard"}>
+    <ButtonTooltip trigger={["hover", "focus"]} innerText={copiedToClipboard === true ? copiedText : copyText}>
       <div className={className}>
-        <Button size={size} variant={variant} onClick={() => {copyToClipboard();}} disabled={copyString == null}>
+        <Button
+          variant={variant}
+          size={size}
+          disabled={copyString == null}
+          onClick={() => {copyToClipboard();}}
+        >
           <IconBase
-            icon={copiedToClipboard === true ? faClipboardCheck : faClipboardList}
+            icon={copiedToClipboard === true ? copiedIcon : copyIcon}
+            iconSize={size}
+            className={"pointer"}
           />
           {getLabel()}
         </Button>
@@ -55,12 +66,19 @@ CopyToClipboardButton.propTypes = {
   copyString: PropTypes.string,
   size: PropTypes.string,
   className: PropTypes.string,
-  showLabel: PropTypes.bool,
+  copyText: PropTypes.string,
+  copiedText: PropTypes.string,
+  copyIcon: PropTypes.object,
+  copiedIcon: PropTypes.object,
   variant: PropTypes.string,
+  showLabel: PropTypes.bool,
 };
 
 CopyToClipboardButton.defaultProps = {
-  size: "sm",
+  copyText: "Copy to clipboard",
+  copiedText: "Copied to Clipboard!",
+  copyIcon: faClipboardList,
+  copiedIcon: faClipboardCheck,
   variant: "outline-primary",
 };
 
