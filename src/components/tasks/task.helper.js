@@ -3,6 +3,10 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 export const taskHelper = {};
 
+taskHelper.getManagementScreenLink = () => {
+   return `/task`;
+};
+
 taskHelper.getModelDetailViewLink = (taskModel) => {
   if (taskModel == null) {
     return null;
