@@ -20,7 +20,11 @@ function ToggleThemeIconButton({ theme, toggleTheme, className, size, variant })
     <TooltipWrapper innerText={"Toggle Theme"} >
       <div className={className}>
         <Button variant={variant} size={size}  onClick={() => {toggleTheme();}}>
-          <span><IconBase icon={getIcon()}/></span>
+          <span>
+            <IconBase
+              icon={getIcon()}
+            />
+          </span>
         </Button>
       </div>
     </TooltipWrapper>
