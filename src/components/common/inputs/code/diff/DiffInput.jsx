@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {faFileCode} from "@fortawesome/pro-light-svg-icons";
 import InputContainer from "components/common/inputs/InputContainer";
-import ToggleThemeIcon from "components/common/buttons/toggle/ToggleThemeIcon";
+import ToggleThemeIconButton from "components/common/buttons/toggle/ToggleThemeIconButton";
 import InfoContainer from "components/common/containers/InfoContainer";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
@@ -61,7 +61,7 @@ function DiffInput(
         <div className={"mr-2"}>
           {titleBarActionButtons}
         </div>
-        <ToggleThemeIcon theme={internalTheme} toggleTheme={toggleTheme} />
+        <ToggleThemeIconButton theme={internalTheme} toggleTheme={toggleTheme} />
       </div>
     );
   };

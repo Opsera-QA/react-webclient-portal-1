@@ -5,7 +5,7 @@ import {faCodeCompare} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
 
-function ToggleDiffViewIcon({ toggleDiffView, className, size, variant}) {
+function ToggleDiffViewIconButton({ toggleDiffView, className, size, variant}) {
   if (toggleDiffView == null) {
     return null;
   }
@@ -21,7 +21,7 @@ function ToggleDiffViewIcon({ toggleDiffView, className, size, variant}) {
   );
 }
 
-ToggleDiffViewIcon.propTypes = {
+ToggleDiffViewIconButton.propTypes = {
   toggleDiffView: PropTypes.func,
   className: PropTypes.string,
   theme: PropTypes.string,
@@ -29,9 +29,9 @@ ToggleDiffViewIcon.propTypes = {
   size: PropTypes.string,
 };
 
-ToggleDiffViewIcon.defaultProps = {
+ToggleDiffViewIconButton.defaultProps = {
   variant: "outline-primary",
   size: "sm"
 };
 
-export default ToggleDiffViewIcon;
+export default ToggleDiffViewIconButton;
