@@ -29,6 +29,12 @@ import PipelineStepSelectInput from "components/common/list_of_values_input/work
 import sonarPipelineStepMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStep.metadata";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
+import SonarStepComplianceThresholdInput 
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepComplianceThresholdInput";
+import SonarStepRatingThresholdInput 
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepRatingThresholdInput";
+import SonarStepThresholdToggleInput from 
+  "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepThresholdToggleInput";
 
 function SonarStepConfiguration(
   {
@@ -219,6 +225,23 @@ function SonarStepConfiguration(
     }
   };
 
+  const getThresholdInput = () => {
+    if (sonarStepModel?.getData("clientSideThreshold") === true) {
+      return (
+        <>
+          <SonarStepComplianceThresholdInput 
+            model={sonarStepModel}
+            setModel={setSonarStepModel}
+          />
+          <SonarStepRatingThresholdInput
+            model={sonarStepModel}
+            setModel={setSonarStepModel} 
+          />
+        </>        
+      );
+    }
+  };
+
   if (isLoading === true || sonarStepModel == null) {
     return (
       <LoadingDialog
@@ -245,6 +268,11 @@ function SonarStepConfiguration(
           setModel={setSonarStepModel}
         />
         {getDynamicFields()}
+        <SonarStepThresholdToggleInput 
+          model={sonarStepModel}
+          setModel={setSonarStepModel}
+        />
+        {getThresholdInput()}
       </div>
     </PipelineStepEditorPanelContainer>
   );
