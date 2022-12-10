@@ -9,6 +9,7 @@ import FullScreenCenterOverlayContainer from "components/common/overlays/center/
 import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import TaskActivityTabPanel from "components/tasks/activity_logs/details/TaskActivityTabPanel";
+import taskActivityMetadata from "@opsera/definitions/constants/tasks/taskActivity.metadata";
 
 function TaskDetailViewer({ taskActivityLogId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -65,7 +66,7 @@ function TaskDetailViewer({ taskActivityLogId }) {
     const taskActivityLog = response?.data?.data;
 
     if (isMounted?.current === true && taskActivityLog) {
-      setTaskActivityLogModel(new Model(taskActivityLog, response?.data?.metadata, false));
+      setTaskActivityLogModel(new Model(taskActivityLog, taskActivityMetadata, false));
     }
   };
 
