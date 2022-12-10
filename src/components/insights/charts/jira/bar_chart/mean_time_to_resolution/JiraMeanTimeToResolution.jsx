@@ -232,6 +232,7 @@ function JiraMeanTimeToResolution({
                   getIcon = {getTrendIcon}
                   topText={"Resolved Incidents"}
                   bottomText={"Prev Resolved Incidents"}
+                  onClick={null}
                 />
               </Col>
               <Col md={12} className={"px-1"}>
@@ -246,6 +247,7 @@ function JiraMeanTimeToResolution({
                     getIcon = {getReverseTrendIcon}
                     topText={"Average MTTR (Hours)"}
                     bottomText={"Prev Average MTTR"}
+                    onClick={null}
                   />
                 </DataPointVisibilityWrapper>
               </Col>
@@ -257,6 +259,7 @@ function JiraMeanTimeToResolution({
                   getIcon = {getReverseTrendIcon}
                   topText={"Max MTTR (Hours)"}
                   bottomText={"Prev Max MTTR"}
+                  onClick={null}
                 />
               </Col>
             </Row>
