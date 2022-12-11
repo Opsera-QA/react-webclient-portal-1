@@ -62,12 +62,12 @@ export class UserActivityAuditLogFilterModel extends FilterModelBase {
       activeFilters.push({filterId: "search", text: `Keywords: ${searchText}`});
     }
 
-    // const searchText = DataParsingHelper.parseMongoDbId(this.getData("search"));
-    //
-    // if (searchText) {
-    //   activeFilters.push({filterId: "search", text: `Keywords: ${searchText}`});
-    // }
+    const user = DataParsingHelper.parseMongoDbId(this.getData("user"));
+    const userName = DataParsingHelper.parseString(this.getData("ownerName"));
 
+    if (user) {
+      activeFilters.push({filterId: "user", text: `User: ${userName}`});
+    }
 
     return activeFilters;
   };
