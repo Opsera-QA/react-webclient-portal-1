@@ -2,56 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
-
-export const auditLogActionConstants = {};
-
-auditLogActionConstants.USER_ACTIVITY_LOG_ACTIONS = {
-  CREATE: "create",
-  COPY: "copy",
-  UPDATE: "update",
-  OWNERSHIP_TRANSFER: "ownership_transfer",
-  EDIT_ACCESS_ROLES: "edit_access_roles",
-  UPDATE_RUNTIME_SETTINGS: "update_runtime_settings",
-  DENIAL: "denial",
-  APPROVAL: "approval",
-  DELETE: "delete",
-  DEPLOY: "deploy",
-  PUBLISH: "publish",
-  START: "start",
-  STOP: "stop",
-  RESET: "reset",
-  RESUME: "resume",
-  WEBHOOK_START: "webhook-start",
-  LOGIN: "login",
-  // TODO: Remove or move inline
-  TASK_SPECIFIC_ACTIONS: {
-    CERTIFICATE_SYNC: "certificate_sync",
-  },
-};
-
-auditLogActionConstants.USER_ACTIVITY_LOG_ACTION_LABELS = {
-  CREATE: "Create",
-  COPY: "Copy",
-  UPDATE: "Update",
-  OWNERSHIP_TRANSFER: "Ownership Transfer",
-  EDIT_ACCESS_ROLES: "Update Access Roles",
-  UPDATE_RUNTIME_SETTINGS: "Update Runtime Settings",
-  DENIAL: "Denial",
-  APPROVAL: "Approval",
-  DELETE: "Delete",
-  DEPLOY: "Deploy",
-  PUBLISH: "Publish",
-  START: "Start",
-  STOP: "Stop",
-  RESET: "Reset",
-  RESUME: "Resume",
-  WEBHOOK_START: "Webhook Start",
-  LOGIN: "Login",
-  // TODO: Remove or move inline
-  TASK_SPECIFIC_ACTIONS: {
-    CERTIFICATE_SYNC: "Certificate Sync",
-  },
-};
+import auditLogActionConstants from "@opsera/definitions/constants/audit-logs/actions/auditLogAction.constants";
 
 //TODO: Wire up constants when I get access to JFrog again
 export default function PipelineAuditLogActionsVerticalTabContainer(
