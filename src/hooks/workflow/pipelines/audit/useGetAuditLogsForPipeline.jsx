@@ -40,6 +40,8 @@ export default function useGetAuditLogsForPipeline(
       getAccessToken,
       cancelTokenSource,
       pipelineId,
+      pipelineAuditLogFilterModel?.getData("user"),
+      pipelineAuditLogFilterModel?.getData("action"),
     );
     setAuditLogs(DataParsingHelper.parseArray(response?.data?.data, []));
     newFilterModel.setData("totalCount", response?.data?.count);

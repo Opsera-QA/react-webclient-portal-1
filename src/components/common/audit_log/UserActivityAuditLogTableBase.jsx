@@ -42,6 +42,7 @@ export default function UserActivityAuditLogTableBase(
       setPaginationDto={setFilterModel}
       loadData={loadDataFunction}
       onRowSelect={rowClickFunction}
+      nextGeneration={true}
     />
   );
 }

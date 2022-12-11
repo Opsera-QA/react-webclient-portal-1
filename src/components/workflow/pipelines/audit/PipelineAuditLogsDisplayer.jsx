@@ -7,8 +7,10 @@ import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import UserActivityAuditLogTableBase from "components/common/audit_log/UserActivityAuditLogTableBase";
 import PipelineAuditLogSummaryPanel from "components/workflow/pipelines/audit/PipelineAuditLogSummaryPanel";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
-import InlinePlatformSsoUserFilterSelectInput
-  from "components/common/list_of_values_input/users/sso/platform/InlinePlatformSsoUserFilterSelectInput";
+import InlineUserFilterSelectInput from "components/common/filters/ldap/owner/InlineUserFilterSelectInput";
+import PipelineAuditLogActionsVerticalTabContainer
+  from "components/workflow/pipelines/audit/PipelineAuditLogActionsVerticalTabContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
 
 export default function PipelineAuditLogsDisplayer(
   {
@@ -23,13 +25,18 @@ export default function PipelineAuditLogsDisplayer(
     loadData,
   } = useGetAuditLogsForPipeline(pipelineId);
 
-  // const getInlineFilters = () => {
-  //   return (
-  //     <InlinePlatformSsoUserFilterSelectInput
-  //   );
-  // };
+  const getInlineFilters = () => {
+    return (
+      <InlineUserFilterSelectInput
+        fieldName={"user"}
+        loadDataFunction={loadData}
+        filterModel={pipelineAuditLogFilterModel}
+        className={"mr-2"}
+      />
+    );
+  };
 
-  const getBody = () => {
+  const getTable = () => {
     return (
       <UserActivityAuditLogTableBase
         auditLogs={auditLogs}
@@ -38,6 +45,25 @@ export default function PipelineAuditLogsDisplayer(
         setSelectedActivityLogId={setSelectedActivityLogId}
         filterModel={pipelineAuditLogFilterModel}
         setFilterModel={setPipelineAuditLogFilterModel}
+      />
+    );
+  };
+
+  const getVerticalTabContainer = () => {
+    return (
+      <PipelineAuditLogActionsVerticalTabContainer
+        pipelineAuditLogFilterModel={pipelineAuditLogFilterModel}
+        isLoading={isLoading}
+        loadData={loadData}
+      />
+    );
+  };
+
+  const getBody = () => {
+    return (
+      <TabAndViewContainer
+        verticalTabContainer={getVerticalTabContainer()}
+        currentView={getTable()}
       />
     );
   };
@@ -69,6 +95,7 @@ export default function PipelineAuditLogsDisplayer(
       loadData={loadData}
       filterDto={pipelineAuditLogFilterModel}
       setFilterDto={setPipelineAuditLogFilterModel}
+      inlineFilters={getInlineFilters()}
     />
   );
 }
