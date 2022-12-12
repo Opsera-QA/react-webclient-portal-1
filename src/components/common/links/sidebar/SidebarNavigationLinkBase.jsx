@@ -23,6 +23,10 @@ export default function SidebarNavigationLinkBase(
         </span>
       );
     }
+
+    return (
+      <div className={"pr-3"} />
+    );
   };
 
   return (
