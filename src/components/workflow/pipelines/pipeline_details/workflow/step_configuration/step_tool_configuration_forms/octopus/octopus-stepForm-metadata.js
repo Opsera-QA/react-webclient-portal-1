@@ -30,7 +30,6 @@ const octopusStepFormMetadata = {
       {
         label: "Environment Name",
         id: "environmentName",
-        isRequired: true
       },
       {
         label: "Octopus Tool ID",
@@ -48,14 +47,13 @@ const octopusStepFormMetadata = {
       },
       {
         label: "Project Description",
-        id: "projectDescription",        
+        id: "projectDescription",
         regexDefinitionName: "generalText",
         maxLength: 100
       },
       {
         label: "Environment Name ID",
         id: "environmentId",
-        isRequired: true
       },
       {
         label: "Namespace",
@@ -66,7 +64,6 @@ const octopusStepFormMetadata = {
       {
         label: "Artifact Step",
         id: "ecrPushStepId",
-        // isRequired: true
       },
       {
         label: "Deployment ID",
@@ -294,15 +291,18 @@ const octopusStepFormMetadata = {
           This feature is currently limited to a maximum of 10 tenants.  
           If you have a need to exceed that limit, please contact Opsera with details on specific requirements.
         `,
-        maxItems: 30,
+        maxItems: 10,
       },
       {
-        id: "deploymentProcessId"
+        label: "Deployment Process Label",
+        id: "deploymentProcessId",
       },
       {
-        id: "tenantedDeploymentMode"
+        label: "Tenanted Deployment Mode",
+        id: "tenantedDeploymentMode",
       },
       {
+        label: "Custom Variable List",
         id: "customVariableList"
       }
     ],
@@ -361,7 +361,7 @@ const octopusStepFormMetadata = {
         dotNetClrVersion: "",
         applicationPoolIdentityType: "",
         applicationPoolIdentityUsername: "",
-        applicationPoolIdentityPassword : {},
+        applicationPoolIdentityPassword :  {},
         startApplicationPool : false,
         azureToolId: "",
         projectGroupId: "",
