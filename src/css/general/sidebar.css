@@ -1,61 +1,54 @@
 /* The side navigation menu */
-
 .sidebar-container {
-  font-size: .9rem;
-  box-shadow: none;
-  border-right-width: 1px;
+    font-size: .9rem;
+    box-shadow: none;
+    border-right-width: 1px;
 }
 
 .sidebar-menu .nav-link {
-  padding-left: 0 !important;
-  /* font-size: 1rem; */
-  letter-spacing: .05rem;
-}
-
-.sidebar-menu .nav-link-sub {
-  /*padding-left: 15px !important;*/
-  /*font-size: .8rem;*/
-
-  /*padding-top: 0;*/
+    padding-left: 0;
+    padding-right: 0;
+    /* font-size: 1rem; */
+    letter-spacing: .05rem;
 }
 
 .sub-header {
-  color: #241F3D;
-  text-transform: uppercase;
-  font-size: 0.85rem;
-  letter-spacing: .3rem;
+    color: #241F3D;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: .3rem;
 }
 
-.sidebar-menu .menu-text {
-  margin-left: 5px;
+.sidebar-container .is-closed .sub-header, .sidebar-container .is-closed .menu-text {
+    display: none;
 }
 
 .sidebar-menu .menu-text-sub {
-  margin-left: 2rem;
+    margin-left: 2rem;
 }
 
 .sidebar-menu .nav-link {
-  color: #3D3B36; /*#1578dc;*/
+    color: #3D3B36; /*#1578dc;*/
 }
 
 .sidebar-menu a.chosen {
-  color: #CF940C; /* #0f3e84;*/
+    color: #CF940C; /* #0f3e84;*/
 }
 
 .sidebar-menu a:hover {
-  /*color: #7A756C;*/ /* #0f3e84;*/
-  color: #CF940C;
+    /*color: #7A756C;*/ /* #0f3e84;*/
+    color: #CF940C;
 }
 
 .sidebar-menu a.chosen:hover {
-  /*color: #7A756C;*/
-  color: #CF940C;
+    /*color: #7A756C;*/
+    color: #CF940C;
 }
 
 .fixed-row-footer-bottom {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #f2f2f2;
-  z-index: 1200;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f2f2f2;
+    z-index: 1200;
 }

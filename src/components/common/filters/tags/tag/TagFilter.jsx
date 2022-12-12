@@ -6,6 +6,7 @@ import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import axios from "axios";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 // TODO: Deprecate the current string value and pass actual tag object instead
 function TagFilter(
@@ -62,9 +63,9 @@ function TagFilter(
   };
 
   const getTags = async (cancelSource = cancelTokenSource) => {
-    const response = await adminTagsActions.getAllTagsV2(getAccessToken, cancelSource, "active");
-    let tags = response?.data?.data;
-    let tagOptions = [];
+    const response = await adminTagsActions.getAllTagsV2(getAccessToken, cancelSource, false);
+    const tags = DataParsingHelper.parseNestedArray(response, "data.data", []);
+    const tagOptions = [];
 
     if (Array.isArray(tags) && tags.length > 0) {
       tags.map((tag, index) => {

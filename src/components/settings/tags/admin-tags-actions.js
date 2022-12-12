@@ -49,6 +49,18 @@ adminTagsActions.getAllTagsV2 = async (getAccessToken, cancelTokenSource, status
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+adminTagsActions.getPlatformTags = async (
+  getAccessToken,
+  cancelTokenSource,
+) => {
+  const apiUrl = "/tags/platform";
+  return await baseActions.apiGetCallV3(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
 adminTagsActions.getTags = async (getAccessToken, cancelTokenSource, tagFilterModel) => {
   const apiUrl = "/tags";
   const urlParams = {

@@ -27,6 +27,7 @@ function TextAreaClipboardField({textAreaValue, description, className, rows, al
         {getDescription()}
         <CopyToClipboardButton
           size={"md"}
+          showLabel={true}
           copyString={textAreaValue}
         />
       </div>

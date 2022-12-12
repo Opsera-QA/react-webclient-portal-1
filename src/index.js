@@ -14,6 +14,7 @@ import "css/general/index.css";
 import "css/general/freetrial.css";
 import "css/analytics/analytics.css";
 import "css/pipelines/workflows.css";
+import "css/general/sidebar.css";
 import "css/table/table.css";
 import "css/inputs/rich-text-input.css";
 import * as serviceWorker from "./serviceWorker";

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import InfoContainer from "components/common/containers/InfoContainer";
 import { faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
 import JsonFieldBase from "components/common/fields/json/JsonFieldBase";
-import CopyToClipboardButton from "components/common/buttons/data/CopyToClipboardButton";
+import CopyToClipboardButton from "components/common/buttons/clipboard/CopyToClipboardButton";
 import ExportJsonButton from "temp-library-components/button/export/ExportJsonButton";
 
 function StandaloneJsonField(

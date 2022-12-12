@@ -22,12 +22,8 @@ jiraActions.getJiraMTTR = async (
   const apiUrl = jiraBaseURL + "jiraMTTR";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  // TODO Revert this code when timezone is fixed everywhere
-  const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
   const startDate =  new Date(dateRange?.start);
   const endDate =  new Date(dateRange?.end);
-  startDate.setTime(startDate.getTime() - timeOffsetInMins);
-  endDate.setTime(endDate.getTime() - timeOffsetInMins);
 
   // Checking the use kpi tags toggle
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
@@ -196,12 +192,8 @@ jiraActions.getJiraChangeFailureRate = async (
   const apiUrl = jiraBaseURL + "jiraChangeFailureRate";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  // TODO Revert this code when timezone is fixed everywhere
-  const timeOffsetInMins = new Date(dateRange?.start).getTimezoneOffset() * 60000;
   const startDate =  new Date(dateRange?.start);
   const endDate =  new Date(dateRange?.end);
-  startDate.setTime(startDate.getTime() - timeOffsetInMins);
-  endDate.setTime(endDate.getTime() - timeOffsetInMins);
 
   // Checking the use kpi tags toggle
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);

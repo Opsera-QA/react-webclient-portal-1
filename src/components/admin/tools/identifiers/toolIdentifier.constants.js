@@ -74,7 +74,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   PROVAR: "provar",
   RUNTIME_SETTINGS: "runtime_settings",
   S3: "s3",
-  SAP: "sap-cpq",
+  SAP_CPQ: "sap-cpq",
   SALESFORCE_CODE_ANALYZER: "salesforce-code-analyzer",
   SELENIUM: "selenium",
   SENTINEL: "sentinel",

@@ -1,19 +1,19 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Navbar, Nav, NavDropdown, Button, OverlayTrigger } from "react-bootstrap";
-import userActions from "./components/user/user-actions";
+import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { faUserCircle } from "@fortawesome/pro-light-svg-icons";
-import { renderTooltip } from "utils/helpers";
-import {ACCESS_ROLE_PERMISSION_MESSAGES} from "components/common/helpers/role-helpers";
-import IconBase from "components/common/icons/IconBase";
+import {getAccessRolePermissionMessage} from "components/common/helpers/role-helpers";
 import sessionHelper from "utils/session.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useLocationReference from "hooks/useLocationReference";
 import {USER_SETTINGS_PAGES} from "components/user/user_settings/userSettings.paths";
+import OpseraHeaderIcon from "components/header/OpseraHeaderIcon";
+import userActions from "components/user/user-actions";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
 export const EXTERNAL_LINKS = {
   KNOWLEDGE_BASE: `https://docs.opsera.io/`,
@@ -28,9 +28,10 @@ export const EXTERNAL_LINKS = {
   HOW_TO_VIDEO: 'https://www.youtube.com/embed/8oeBwmapAHU'
 };
 
+// TODO: Combine with the Free Trial one
 function HeaderNavBar({ hideAuthComponents }) {
   const { isPublicPathState } = useLocationReference();
-  const { setAccessRoles, getAccessToken, featureFlagHideItemInProd, featureFlagHideItemInTest, loginUserContext, logoutUserContext } = useContext(AuthContext);
+  const { featureFlagHideItemInProd, featureFlagHideItemInTest, loginUserContext, logoutUserContext } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   const [fullName, setFullName] = useState("User Profile");
@@ -38,6 +39,7 @@ function HeaderNavBar({ hideAuthComponents }) {
     accessRoleData,
     isSaasUser,
     userData,
+    getAccessToken,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -65,33 +67,14 @@ function HeaderNavBar({ hideAuthComponents }) {
   };
 
   const getPermissionsMessage = () => {
-    let permissionsMessage;
-
-    switch (accessRoleData?.Role) {
-    case "administrator":
-      permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.ADMINISTRATOR;
-      break;
-    case "power_user":
-      permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.POWER_USER;
-      break;
-    case "user":
-      permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.USER;
-      break;
-    case "guest":
-      permissionsMessage = ACCESS_ROLE_PERMISSION_MESSAGES.GUEST;
-      break;
-    }
-
     return (
-      <div className="mt-2 py-1 opsera-banner-text-on-purple-background">
-        <OverlayTrigger
-          placement="auto"
-          delay={{ hide: 400 }}
-          overlay={renderTooltip({ message: permissionsMessage })}>
-          <div>
-            <IconBase icon={faUserCircle} iconStyling={{ fontSize: "larger" }}/>
-          </div>
-        </OverlayTrigger>
+      <div className={"my-auto opsera-banner-text-on-purple-background"}>
+        <OverlayIconBase
+          icon={faUserCircle}
+          iconSize={"lg"}
+          overlayBody={getAccessRolePermissionMessage(accessRoleData)}
+          overlayPlacement={"bottom"}
+        />
       </div>
     );
   };
@@ -127,14 +110,9 @@ function HeaderNavBar({ hideAuthComponents }) {
   };
 
   return (
-    <Navbar className="nav-bar">
+    <Navbar className={"nav-bar py-2 px-3"}>
       <Navbar.Brand href="/">
-        <img alt="Opsera Inc."
-             src="/img/logos/opsera_logo_white_horizontal_240_42.png"
-             width="240"
-             height="42"
-             className="d-inline-block align-top ml-3"
-        />
+        <OpseraHeaderIcon />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav"/>
       <Navbar.Collapse id="basic-navbar-nav">
