@@ -4,30 +4,22 @@ export const ArgoCdStepConfigurationMetadata = {
     {
       label: "Source Code Management Tool Type",
       id: "type",
-      isRequiredFunction: (model) => {
-        return model?.getData("kustomizeFlag") === false;
-      },
+      isRequired: true,
     },
     {
       label: "Source Code Management Tool",
       id: "gitToolId",
-      isRequiredFunction: (model) => {
-        return model?.getData("kustomizeFlag") === false;
-      },
+      isRequired: true,
     },
     {
       label: "Repository",
       id: "gitRepository",
-      isRequiredFunction: (model) => {
-        return model?.getData("kustomizeFlag") === false;
-      },
+      isRequired: true,
     },
     {
       label: "Branch",
       id: "defaultBranch",
-      isRequiredFunction: (model) => {
-        return model?.getData("kustomizeFlag") === false;
-      },
+      isRequired: true,
     },
     {
       label: "Docker/ECR Step",
@@ -63,16 +55,14 @@ export const ArgoCdStepConfigurationMetadata = {
     {
       label: "Git File Path",
       id: "gitFilePath",
-      isRequiredFunction: (model) => {
-        return model?.getData("kustomizeFlag") === false;
-      },
+      // isRequired: true,
     },
     {
       label: "Git Workspace",
       id: "gitWorkspace",
     },
     {
-      label: "Git Repository ID",
+      label: "Repository",
       id: "gitRepositoryID",
     },
     {
@@ -139,6 +129,13 @@ export const ArgoCdStepConfigurationMetadata = {
     {
       label: "Custom Parameter",
       id: "customParameterId"
+    },
+    {
+      label: "Image Reference Key",
+      id: "imageReference",
+      isRequiredFunction: (model) => {
+        return model?.getData("kustomizeFlag") === true;
+      },
     }
   ],
   newObjectFields: {
@@ -168,6 +165,7 @@ export const ArgoCdStepConfigurationMetadata = {
     imageUrl: "",
     isBlueGreenDeployment: false,
     dockerStepType: "",
-    customParameterId: ""
+    customParameterId: "",
+    imageReference: ""
   },
 };

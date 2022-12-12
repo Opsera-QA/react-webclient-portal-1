@@ -29,7 +29,6 @@ import {
   faUsers,
   faChartArea,
   faHome,
-  faHexagon,
   faListAlt,
   faFileArchive,
   faUserChart,
@@ -58,6 +57,7 @@ import {
 import { taskTypeConstants } from "components/tasks/task.types";
 import { pipelineSettingsTrails } from "components/settings/pipelines/pipelineSettings.trails";
 import {userSettingsTrails} from "components/user/user_settings/userSettings.trails";
+import {pipelinesTrails} from "components/workflow/pipelines.trails";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
 const breadcrumbs = {
@@ -694,32 +694,6 @@ const breadcrumbs = {
     `,
   },
 
-  //Pipelines
-  pipelines: {
-    parent: undefined,
-    name: "pipelines",
-    path: paths.pipelines,
-    title: "Pipelines",
-    linkText: "Pipelines",
-    icon: faDraftingCompass
-  },
-  catalog: {
-    parent: "pipelines",
-    name: "catalog",
-    path: paths.pipelines,
-    title: "Catalog",
-    linkText: "Catalog",
-    icon: faHexagon
-  },
-  pipelineDetailView: {
-    parent: "pipelines",
-    name: "pipelineDetailView",
-    path: paths.pipelineDetailView,
-    title: "Pipeline Details",
-    linkText: "Pipeline Details",
-    icon: faDraftingCompass
-  },
-
   //Insights
   insights: {
     parent: undefined,
@@ -1164,6 +1138,7 @@ const breadcrumbs = {
   },
 
   ...pipelineSettingsTrails,
+  ...pipelinesTrails,
   ...userSettingsTrails,
 };
 

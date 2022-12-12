@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Card, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { faChartNetwork } from "@fortawesome/pro-light-svg-icons";
-import TitleBar from "components/common/fields/TitleBar";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import TitleBarBase from "components/common/fields/TitleBarBase";
 
 function AnalyticsProfileSettings() {
   const history = useHistory();
@@ -18,7 +18,10 @@ function AnalyticsProfileSettings() {
       <div className="content-container content-card-analytics">
         <div className={"pl-2 content-block-header title-text-header-2 d-flex"}>
           <div className={"my-auto w-100"}>
-            <TitleBar titleIcon={faChartNetwork} title={"Activate Opsera Analytics"} />
+            <TitleBarBase
+              icon={faChartNetwork}
+              title={"Activate Opsera Analytics"}
+            />
           </div>
         </div>
         {toastContext.getInlineBanner()}

@@ -45,6 +45,7 @@ export default function useLocationReference() {
     isPublicPathState: isPublicPath,
     location: location,
     currentPath: location.pathname,
+    currentUrl: `${process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL}${location.pathname}`,
     locationKey: location.key,
   });
 }

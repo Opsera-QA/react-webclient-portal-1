@@ -17,7 +17,6 @@ function MetricScoreText(
     // TODO: allow existing data points to use their quality level but eventually require the use of strategic criteria
     if (dataPoint) {
       const evaluatedDataPoint = dataPointHelpers.evaluateDataPointQualityLevel(dataPoint, score);
-
       if (typeof evaluatedDataPoint === "string") {
         evaluation = evaluatedDataPoint;
       }

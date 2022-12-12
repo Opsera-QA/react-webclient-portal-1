@@ -78,7 +78,7 @@ function PipelineDetailView() {
 
       if (isMounted?.current === true) {
         if (newPipeline) {
-          setPipeline(newPipeline);
+          setPipeline({...newPipeline});
         } else {
           toastContext.showLoadingErrorDialog("Pipeline not found");
         }

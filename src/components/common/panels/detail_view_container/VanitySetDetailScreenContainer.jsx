@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
-import TitleBar from "components/common/fields/TitleBar";
+import ScreenContainerTitleBar from "components/common/fields/ScreenContainerTitleBar";
 import {getBreadcrumb} from "components/common/navigation/trails";
 import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
 import {meetsRequirements} from "components/common/helpers/role-helpers";
@@ -44,7 +44,7 @@ function VanitySetDetailScreenContainer(
 
   const getTitleBar = () => {
     return (
-      <TitleBar
+      <ScreenContainerTitleBar
         isLoading={isLoading}
         titleIcon={breadcrumb?.dynamicIconFunction ? breadcrumb?.dynamicIconFunction(model) : breadcrumb?.icon}
         title={model?.getDetailViewTitle()}
@@ -131,7 +131,7 @@ function VanitySetDetailScreenContainer(
   }
 
   return (
-    <div className={"max-content-width max-content-height scroll-y hide-x-overflow"}>
+    <div className={"max-content-width"}>
       {getTopNavigation()}
       <div className={"screen-container content-container content-card-1"}>
         <div className={"px-2 content-block-header title-text-header-1 d-flex"}>

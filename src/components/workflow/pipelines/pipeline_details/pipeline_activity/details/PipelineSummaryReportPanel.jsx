@@ -17,6 +17,10 @@ import ProvarLogSummaryReportPanel
 import BoomiLogSummaryReportPanel from "./boomi/BoomiLogSummaryReportPanel";
 import FortifyLogSummaryReportPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/fortify/FortifyLogSummaryReportPanel";
+import CoveritySummaryReportPanel 
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/coverity/CoveritySummaryReportPanel";
+import SonarLogSummaryReportPanel 
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/sonar/SonarLogSummaryReportPanel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function PipelineSummaryReportPanel(
@@ -99,6 +103,14 @@ function PipelineSummaryReportPanel(
       case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
         return (
           <FortifyLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.COVERITY:
+        return (
+          <CoveritySummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SONAR:
+        return (
+          <SonarLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
         );
       default:
         return (

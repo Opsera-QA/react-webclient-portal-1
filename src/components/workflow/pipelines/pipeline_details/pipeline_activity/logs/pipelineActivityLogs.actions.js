@@ -2,6 +2,25 @@ import baseActions from "utils/actionsBase";
 
 const pipelineActivityLogsActions = {};
 
+pipelineActivityLogsActions.getPipelineActivityLogCountForRun = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineId,
+  runCount,
+) => {
+  const apiUrl = `/pipelines/${pipelineId}/activity/count`;
+  const queryParameters = {
+    runCount: runCount,
+  };
+
+  return await baseActions.apiGetCallV3(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    queryParameters,
+  );
+};
+
 pipelineActivityLogsActions.getPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterModel, currentRunNumber) => {
   const urlParams = {
     params: {

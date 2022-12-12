@@ -10,14 +10,13 @@ import taskActions from "components/tasks/task.actions";
 import {TaskActivityLogFilterModel} from "components/tasks/activity_logs/taskActivityLog.filter.model";
 import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import TaskActivityLogTreeTable from "components/tasks/details/TaskActivityLogTreeTable";
+import AllTasksActivityLogTreeTable from "components/tasks/activity_logs/AllTasksActivityLogTreeTable";
 
 function TaskAllActivityPanel() {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [taskActivityFilterModel, setTaskActivityFilterModel] = useState(undefined);
-  const [taskActivityMetadata, setTaskActivityMetadata] = useState(undefined);
   const [activityData, setActivityData] = useState([]);
   const taskLogsTree = useRef([]);
   const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
@@ -111,7 +110,6 @@ function TaskAllActivityPanel() {
 
     if (Array.isArray(taskActivityData)) {
       setActivityData([...taskActivityData]);
-      setTaskActivityMetadata(response?.data?.metadata);
       newFilterModel?.setData("totalCount", response?.data?.count);
       newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
       setTaskActivityFilterModel({...newFilterModel});
@@ -124,7 +122,6 @@ function TaskAllActivityPanel() {
 
     if (Array.isArray(taskActivityData)) {
       setActivityData([...taskActivityData]);
-      setTaskActivityMetadata(response?.data?.metadata);
       newFilterModel?.setData("totalCount", response?.data?.count);
       newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
       setTaskActivityFilterModel({...newFilterModel});
@@ -137,7 +134,6 @@ function TaskAllActivityPanel() {
 
     if (Array.isArray(taskActivityData)) {
       setActivityData([...taskActivityData]);
-      setTaskActivityMetadata(response?.data?.metadata);
       newFilterModel?.setData("totalCount", response?.data?.count);
       newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
       setTaskActivityFilterModel({...newFilterModel});
@@ -152,9 +148,8 @@ function TaskAllActivityPanel() {
       `}
       navigationTabContainer={<TasksSubNavigationBar currentTab={"activity"}/>}
     >
-      <TaskActivityLogTreeTable
+      <AllTasksActivityLogTreeTable
         taskLogData={activityData}
-        taskActivityMetadata={taskActivityMetadata}
         loadData={pullLogs}
         isLoading={isLoading}
         taskActivityFilterModel={taskActivityFilterModel}

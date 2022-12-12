@@ -18,7 +18,7 @@ import RefusePipelineInstructionsAcknowledgementButton
 import CloseButton from "components/common/buttons/CloseButton";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineInstructionsFieldBase
-  from "components/common/list_of_values_input/settings/pipelines/instructions/PipelineInstructionsFieldBase";
+  from "components/common/list_of_values_input/workflow/instructions/PipelineInstructionsFieldBase";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import pipelineUserActionAcknowledgementMetadata
   from "@opsera/definitions/constants/pipelines/workflow/acknowledgement/pipelineUserActionAcknowledgement.metadata";

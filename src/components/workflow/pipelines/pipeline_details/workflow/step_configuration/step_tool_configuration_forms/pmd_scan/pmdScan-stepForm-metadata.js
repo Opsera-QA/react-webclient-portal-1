@@ -47,6 +47,11 @@ const pmdScanStepFormMetadata = {
       // isRequired: true
     },
     {
+      label: "Repository",
+      id: "repoId",
+      // isRequired: true
+    },
+    {
       label: "Branch Name",
       id: "gitBranch",
       // isRequired: true

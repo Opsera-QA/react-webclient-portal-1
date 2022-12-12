@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
-import { Col, Row } from "react-bootstrap";
-import { AuthContext } from "contexts/AuthContext";
+import React, {useContext} from "react";
+import {Col, Row} from "react-bootstrap";
+import {AuthContext} from "contexts/AuthContext";
 import PropTypes from "prop-types";
-import pipelineTemplateActions from "components/admin/pipeline_templates/pipelineTemplate.actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
@@ -15,13 +14,16 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import JsonInput from "components/common/inputs/object/JsonInput";
 import TagManager from "components/common/inputs/tags/TagManager";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import {
+  platformPipelineTemplateCatalogActions
+} from "components/workflow/catalog/platform/platformPipelineTemplateCatalog.actions";
 
-function PipelineTemplateEditorPanel({ templateModel, setTemplateModel, handleClose }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const { cancelTokenSource } = useComponentStateReference();
+function PipelineTemplateEditorPanel({templateModel, setTemplateModel, handleClose}) {
+  const {getAccessToken} = useContext(AuthContext);
+  const {cancelTokenSource} = useComponentStateReference();
 
   const createTemplate = async () => {
-    return await pipelineTemplateActions.createTemplateV2(
+    return await platformPipelineTemplateCatalogActions.createPlatformPipelineTemplate(
       getAccessToken,
       cancelTokenSource,
       templateModel
@@ -29,10 +31,10 @@ function PipelineTemplateEditorPanel({ templateModel, setTemplateModel, handleCl
   };
 
   const updateTemplate = async () => {
-    return await pipelineTemplateActions.updateTemplateV2(
+    return await platformPipelineTemplateCatalogActions.updatePlatformPipelineTemplate(
       getAccessToken,
       cancelTokenSource,
-      templateModel
+      templateModel,
     );
   };
 
@@ -122,7 +124,7 @@ function PipelineTemplateEditorPanel({ templateModel, setTemplateModel, handleCl
         </Col>
       </Row>
     </EditorPanelContainer>
-    );
+  );
 }
 
 PipelineTemplateEditorPanel.propTypes = {

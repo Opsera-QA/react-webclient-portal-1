@@ -311,7 +311,7 @@ export const getPipelineActivityStatusColumn = (field, className) => {
       if (text == null || text === "") {
         return (
           `<span>
-          <i class="fal fa-question-circle cell-icon vertical-align-item"></i>
+          <i class="fal fa-question-circle cell-icon my-auto"></i>
           <span class="ml-1">Unknown</span>
         </span>`
         );
@@ -319,7 +319,7 @@ export const getPipelineActivityStatusColumn = (field, className) => {
 
       return (
         `<span>
-          <i class="fal ${getPipelineStatusIconCss(text)} cell-icon vertical-align-item"></i>
+          <i class="fal ${getPipelineStatusIconCss(text)} cell-icon my-auto"></i>
           <span class="ml-1">${capitalizeFirstLetter(text)}</span>
         </span>`
       );
@@ -344,34 +344,6 @@ export const getPipelineThresholdLevelColumn = (field, className) => {
       }
 
       return "";
-    },
-    class: className ? className : undefined
-  };
-};
-
-export const getTaskStatusColumn = (field, className) => {
-  let header = getColumnHeader(field);
-
-  return {
-    header: header,
-    id: getColumnId(field),
-    width: 105,
-    template: function (text) {
-      if (text == null || text === "") {
-        return (
-          `<span>
-          <i class="fal fa-play-circle green cell-icon vertical-align-item"></i>
-          <span class="ml-1">Created</span>
-        </span>`
-        );
-      }
-
-      return (
-        `<span>
-          <i class="fal ${getPipelineStatusIconCss(text)} cell-icon vertical-align-item"></i>
-          <span class="ml-1">${capitalizeFirstLetter(text)}</span>
-        </span>`
-      );
     },
     class: className ? className : undefined
   };
@@ -687,5 +659,25 @@ export const getDurationInDaysHours = (field, className) => {
       const value = row?.value;
       return getDurationInDaysAndHours(value);
     }
+  };
+};
+
+export const getExternalLinkWithIcon = (field, className, width) => {
+  return {
+    header: getColumnHeader(field),
+    id: getColumnId(field),
+    class: className,
+    width: width,
+    tooltipTemplate: function (value) {
+      return `<div class="custom-tooltip"><span>${value?.key}</span></div>`;
+    },
+    template: function (value) {
+      return (`
+        <a href=${value?.url} target="_blank" className="text-muted console-text-invert-modal">
+          <i class="fal fa-external-link cell-icon my-auto"></i>
+          <span>${value?.key}</span>
+        </a>
+      `);      
+    },
   };
 };

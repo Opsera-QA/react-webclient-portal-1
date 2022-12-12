@@ -9,7 +9,6 @@ import ToolNameField from "components/common/fields/inventory/ToolNameField";
 import JsonField from "components/common/fields/json/JsonField";
 
 function AnsibleStepConfigurationSummaryPanel({ ansibleDataObject, pipelineData, setActiveTab }) {
-
   if (ansibleDataObject == null) {
     return <LoadingDialog size="sm" />;
   }

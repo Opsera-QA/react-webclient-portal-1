@@ -88,7 +88,7 @@ function TagFilter(
     }
 
     if (valueField === "value2") {
-      return `${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`;
+      return `${capitalizeFirstLetter(tag?.type)}: ${tag?.text}`;
     }
 
     return tag?.text;

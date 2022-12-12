@@ -12,6 +12,9 @@ import SourceControlManagementToolIdentifierSelectInput
     newModel.setData("gitUrl", "");
     newModel.setData("sshUrl", "");
     newModel.setData("repository", "");
+    newModel.setData("workspace", "");
+    newModel.setData("workspaceName", "");
+    newModel.setData("defaultBranch", "");
     newModel.setData("gitBranch", "");
     setModel({...newModel});
   };
@@ -23,7 +26,10 @@ import SourceControlManagementToolIdentifierSelectInput
     newModel.setData("repoId", "");
     newModel.setData("gitUrl", "");
     newModel.setData("sshUrl", "");
+    newModel.setData("workspace", "");
+    newModel.setData("workspaceName", "");
     newModel.setData("repository", "");
+    newModel.setData("defaultBranch", "");
     newModel.setData("gitBranch", "");
     setModel({...newModel});
   };

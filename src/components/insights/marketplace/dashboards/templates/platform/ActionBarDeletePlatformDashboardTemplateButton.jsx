@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import ActionBarDeleteButtonBase from "components/common/actions/buttons/ActionBarDeleteButtonBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import DeletePlatformTemplateConfirmationOverlay
-  from "components/insights/marketplace/dashboards/templates/platform/DeletePlatformTemplateConfirmationOverlay";
+import DeletePlatformDashboardTemplateConfirmationOverlay
+  from "components/insights/marketplace/dashboards/templates/platform/DeletePlatformDashboardTemplateConfirmationOverlay";
 
 export default function ActionBarDeletePlatformDashboardTemplateButton(
   {
@@ -19,7 +19,7 @@ export default function ActionBarDeletePlatformDashboardTemplateButton(
 
   const showDeleteConfirmationOverlay = () => {
     toastContext.showOverlayPanel(
-      <DeletePlatformTemplateConfirmationOverlay
+      <DeletePlatformDashboardTemplateConfirmationOverlay
         dashboardId={dashboardId}
         loadData={loadData}
       />

@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
+import {getArtifactorySteps} from "components/common/helpers/pipelines/pipeline.helpers";
 
 // TODO: We should probably make base components for this. One that can be passed a tool identifier abd a docker push specific one
 function AzureFunctionsStepDockerStepSelectInput({
@@ -14,11 +15,10 @@ function AzureFunctionsStepDockerStepSelectInput({
   plan,
   stepId,
 }) {
-  const toastContext = useContext(DialogToastContext);
-  const [dockerList, setDockerList] = useState([]);
-  const [isDockerSearching, setIsDockerSearching] = useState(false);
+  const [packageList, setPackageList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select Azure Push Step");
+  const [placeholder, setPlaceholder] = useState("Select Artifactory Step");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     loadData();
@@ -27,49 +27,35 @@ function AzureFunctionsStepDockerStepSelectInput({
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await fetchDockerStepDetails();
+      setPlaceholder("Select Artifactory Step");
+      setErrorMessage("");
+      await fetchArtifactoryStepDetails();
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      setErrorMessage(error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const fetchDockerStepDetails = async () => {
-    setIsDockerSearching(true);
+  const fetchArtifactoryStepDetails = async () => {    
     try {
-      if (plan && stepId) {
-        let pipelineSteps = formatStepOptions(plan, stepId);
-        let dockerSteps = pipelineSteps.filter((step) => step.tool.tool_identifier.toLowerCase() === "azure_acr_push" || step.tool.tool_identifier.toLowerCase() === "azure-zip-deployment");
-        if (dockerSteps.length === 0) {
+      if (plan && stepId) {        
+        const packageSteps = getArtifactorySteps(plan, stepId, [toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_ACR_PUSH, toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_ZIP_DEPLOYMENT, toolIdentifierConstants.TOOL_IDENTIFIERS.JFROG_ARTIFACTORY_MAVEN, toolIdentifierConstants.TOOL_IDENTIFIERS.NEXUS]);
+        if (packageSteps.length === 0) {
           let newDataObject = { ...dataObject };
           newDataObject.setData("artifactStepId", "");
           setDataObject({ ...newDataObject });
         }
-        setDockerList(dockerSteps);
-        if (dockerSteps.length === 0) {
-          setPlaceholder("No Azure Push Steps Configured");
+        setPackageList(packageSteps);
+        if (packageSteps.length === 0) {
+          setPlaceholder("No Artifactory Steps Configured");
         }
       }
     } catch (error) {
-      setPlaceholder("No Azure Push Steps Configured");
-      console.error(error);
-      toastContext.showServiceUnavailableDialog();
-    } finally {
-      setIsDockerSearching(false);
+      setPlaceholder("No Artifactory Steps Configured");
+      setErrorMessage(error);
     }
   };
-
-  const formatStepOptions = (plan, stepId) => {
-    return plan.slice(
-      0,
-      plan.findIndex((element) => element._id === stepId)
-    );
-  };
-
-  // if (dockerList === null || dockerList.length === 0) {
-  //   return null;
-  // }
 
   return (
     <SelectInputBase
@@ -77,12 +63,13 @@ function AzureFunctionsStepDockerStepSelectInput({
       dataObject={dataObject}
       className={"mb-3"}
       setDataObject={setDataObject}
-      selectOptions={dockerList ? dockerList : []}
-      busy={isDockerSearching || isLoading}
+      selectOptions={packageList ? packageList : []}
+      busy={isLoading}
       valueField={valueField}
       textField={textField}
       placeholderText={placeholder}
-      disabled={disabled || isLoading || (!isLoading && (dockerList == null || dockerList.length === 0))}
+      disabled={disabled || isLoading || (!isLoading && (packageList == null || packageList.length === 0))}
+      error={errorMessage}
     />
   );
 }

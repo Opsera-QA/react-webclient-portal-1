@@ -35,7 +35,6 @@ function PipelineActivityLogTreeTable(
   const pipelineTree = useRef([]);
   const [currentRunNumber, setCurrentRunNumber] = useState(pipelineRunCount);
   const [currentStepId, setCurrentStepId] = useState(undefined);
-  const [latestRunNumber, setLatestRunNumber] = useState(undefined);
   const {
     cancelTokenSource,
     isMounted,
@@ -101,7 +100,6 @@ function PipelineActivityLogTreeTable(
 
     if (newTree) {
       pipelineTree.current = [...newTree];
-      setLatestRunNumber(pipelineRunCount);
     }
   }, [pipelineRunCount]);
 
@@ -211,7 +209,7 @@ function PipelineActivityLogTreeTable(
         pipelineLogTree={pipelineTree?.current}
         setCurrentRunNumber={setCurrentRunNumber}
         setCurrentStepId={setCurrentStepId}
-        pipelineRunCount={latestRunNumber}
+        pipelineRunCount={pipelineRunCount}
       />
     );
   };

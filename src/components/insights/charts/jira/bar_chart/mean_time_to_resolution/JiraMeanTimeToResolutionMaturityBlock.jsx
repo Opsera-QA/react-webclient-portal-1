@@ -7,6 +7,7 @@ function JiraMeanTimeToResolutionMaturityBlock({
   maturityScore,
   iconOverlayBody,
   maturityColor,
+  onClick,
 }) {
   return (
     <MaturityScoreCardDataBlock
@@ -16,6 +17,7 @@ function JiraMeanTimeToResolutionMaturityBlock({
       maturityScore={maturityScore}
       iconOverlayBody={iconOverlayBody}
       maturityColor={maturityColor}
+      onClick={onClick}
     />
   );
 }
@@ -23,7 +25,8 @@ function JiraMeanTimeToResolutionMaturityBlock({
 JiraMeanTimeToResolutionMaturityBlock.propTypes = {
   maturityScore: PropTypes.string,
   iconOverlayBody: PropTypes.string,
-  maturityColor: PropTypes.string
+  maturityColor: PropTypes.string,
+  onClick: PropTypes.func
 };
 
 export default JiraMeanTimeToResolutionMaturityBlock;

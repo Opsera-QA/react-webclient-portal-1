@@ -98,6 +98,7 @@ function EventBasedTriggerDetails({
           size={"sm"}
           copyString={triggerUrl}
           className={"mr-2"}
+          showLabel={true}
         />
         <RegisterSourceRepositoryHookButton
           model={model}

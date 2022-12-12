@@ -1,10 +1,9 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
-import axios from "axios";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function LdapOwnerFilter(
   { 
@@ -13,45 +12,38 @@ function LdapOwnerFilter(
     setDataFunction, 
     className,
     visible,
+    valueField,
+    fieldName,
+    placeholderText,
+    inline,
   }) {
-  const { getAccessToken, isSassUser } = useContext(AuthContext);
-  const toastContext  = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [userOptions, setUserOptions] = useState([]);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [ldapUsers, setLdapUsers] = useState([]);
+  const {
+    toastContext,
+    getAccessToken,
+    isSaasUser,
+    isMounted,
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    if (isSassUser() === false) {
-      loadData(source).catch((error) => {
+    if (isSaasUser === false) {
+      loadData().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
       });
     }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setIsLoading(true);
-      await getUsers(cancelSource);
+      await getUsers();
     } catch (error) {
       if (isMounted.current === true) {
         toastContext.showErrorDialog(error,"Could not load users.");
-        console.error(error);
       }
     }
     finally {
@@ -61,36 +53,45 @@ function LdapOwnerFilter(
     }
   };
 
-  const getUsers = async (cancelSource = cancelTokenSource) => {
-    const response = await accountsActions.getAccountUsersV2(getAccessToken, cancelSource);
-    const userOptions = [];
-    const parsedUsers = response?.data;
-
-    if (isMounted?.current === true && Array.isArray(parsedUsers) && parsedUsers.length > 0) {
-      parsedUsers.map((user, index) => {
-        userOptions.push({text: `${user.firstName} ${user.lastName} (${user.email})`, value:`${user._id}`});
-      });
-    }
+  const getUsers = async () => {
+    const response = await accountsActions.getAccountUsersV2(getAccessToken, cancelTokenSource);
+    const parsedUsers = DataParsingHelper.parseArray(response?.data, []);
 
     if (isMounted.current === true) {
-      setUserOptions(userOptions);
+      setLdapUsers([...parsedUsers]);
     }
   };
 
-  if (isSassUser() !== false || visible === false) {
+  const getTextField = (user) => {
+    if (user) {
+      return `${user.firstName} ${user.lastName} (${user.email})`;
+    }
+
+    if (isLoading) {
+      return "Loading Data";
+    }
+
+    return filterModel?.getData("owner");
+  };
+
+  if (isSaasUser !== false || visible === false) {
     return null;
   }
+
 
   return (
     <div className={className}>
       <FilterSelectInputBase
-        fieldName={"owner"}
+        fieldName={fieldName}
         busy={isLoading}
-        placeholderText={"Filter by Owner"}
+        placeholderText={placeholderText}
         setDataObject={setFilterModel}
         dataObject={filterModel}
-        selectOptions={userOptions}
+        textField={getTextField}
+        valueField={valueField}
+        selectOptions={ldapUsers}
         setDataFunction={setDataFunction}
+        inline={inline}
       />
     </div>
   );
@@ -102,6 +103,16 @@ LdapOwnerFilter.propTypes = {
   className: PropTypes.string,
   setDataFunction: PropTypes.func,
   visible: PropTypes.bool,
+  valueField: PropTypes.string,
+  fieldName: PropTypes.string,
+  placeholderText: PropTypes.string,
+  inline: PropTypes.bool,
+};
+
+LdapOwnerFilter.defaultProps = {
+  valueField: "_id",
+  fieldName: "owner",
+  placeholderText: "Filter by Owner",
 };
 
 export default LdapOwnerFilter;

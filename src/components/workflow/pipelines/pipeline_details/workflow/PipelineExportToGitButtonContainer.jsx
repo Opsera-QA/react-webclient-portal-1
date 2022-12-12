@@ -21,7 +21,7 @@ function PipelineExportToGitButtonContainer({ pipeline, handleClose }) {
     try {
       setIsLoading(true);
       await SourceRepositoryActions.exportToGitlab(getAccessToken, cancelTokenSource, pipeline._id, service, gitToolId);
-      toastContext.showSuccessDialog(`Pipeline configuration has been commited to ${service}`);
+      toastContext.showSuccessDialog(`Pipeline configuration has been committed to ${service}`);
       setIsLoading(false);
       handleClose();
     } catch (error) {

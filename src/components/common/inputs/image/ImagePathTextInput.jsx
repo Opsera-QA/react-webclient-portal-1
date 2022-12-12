@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import CopyToClipboardButton from "components/common/buttons/data/CopyToClipboardButton";
+import CopyToClipboardButton from "components/common/buttons/clipboard/CopyToClipboardButton";
 import ShowAndHideButton from "components/common/buttons/visibility/ShowAndHideButton";
 import ImageContainer from "components/common/fields/image/ImageContainer";
 import {hasStringValue} from "components/common/helpers/string-helpers";

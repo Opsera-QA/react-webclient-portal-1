@@ -64,6 +64,10 @@ const cypressPipelineStepConfigurationMetadata = {
       id: "repository",
     },
     {
+      label: "Repository",
+      id: "repoId",
+    },
+    {
       label: "Branch",
       id: "branch",
     },

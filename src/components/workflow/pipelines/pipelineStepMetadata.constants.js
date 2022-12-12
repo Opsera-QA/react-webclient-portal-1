@@ -224,6 +224,7 @@ pipelineStepMetadataConstants.METADATA_FOR_TOOL_IDENTIFIER = {
   PMD: pmdScanStepFormMetadata,
   POWERSHELL: powershellStepFormMetadata,
   PROVAR: provarStepFormMetadata,
+  RUNTIME_SETTINGS: undefined,
   S3: s3PipelineStepConfigurationMetadata,
   SAP: sapCpqStepFormMetadata,
   SALESFORCE_CODE_ANALYZER: salesforceScanStepFormMetadata,

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import PropTypes from "prop-types";
-import dashboardTemplatesActions from "components/insights/marketplace/dashboards/dashboard-template-actions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";

@@ -17,6 +17,6 @@ export default () => ({
   },
   layers: ['grid', 'markers', 'axes', 'areas', 'crosshair', 'lines', 'points', 'slices', 'mesh'],
   pointSize: 6,
-  enableSlices: "x",
+  //enableSlices: "x",
   enableArea: true
 });

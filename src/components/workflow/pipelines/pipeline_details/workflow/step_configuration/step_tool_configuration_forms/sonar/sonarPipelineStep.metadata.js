@@ -103,6 +103,16 @@ const sonarPipelineStepMetadata = {
       },
     },
     {
+      label: "Repository",
+      id: "repoId",
+      isRequiredFunction: (model) => {
+        return (
+            model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB
+            && model?.getData("isScanArtifact") !== true
+        );
+      },
+    },
+    {
       label: "Branch",
       id: "branch",
       isRequiredFunction: (model) => {
@@ -138,6 +148,18 @@ const sonarPipelineStepMetadata = {
     {
       label: "Commands",
       id: "commands"
+    },
+    {
+      label: "Enable Client Side thresholds",
+      id: "clientSideThreshold"
+    },
+    {
+      label: "Compliance Threshold",
+      id: "thresholdCompliance",
+    },
+    {
+      label: "Rating Threshold",
+      id: "thresholdRating",
     },
   ],
   newObjectFields: {
@@ -179,6 +201,9 @@ const sonarPipelineStepMetadata = {
     isScanArtifact: false,
     stepIdXml: "",
     commands: "",
+    clientSideThreshold: false,
+    thresholdCompliance: [],
+    thresholdRating: [],
   }
 };
 

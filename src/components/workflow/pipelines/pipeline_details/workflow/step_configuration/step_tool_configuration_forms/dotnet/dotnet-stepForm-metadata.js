@@ -48,7 +48,7 @@ const dotnetStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Repository ID",
+      label: "Repository",
       id: "repoId",
     },
     

@@ -7,8 +7,6 @@ import IconBase from "components/common/icons/IconBase";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
-import PipelineInstructionsAcknowledgementOverlay
-  from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";
 
 const pipelineHelpers = {};
 

@@ -3,7 +3,7 @@ import { AuthContext } from "contexts/AuthContext";
 import SidebarNavigationLinkBase from "components/common/links/sidebar/SidebarNavigationLinkBase";
 import { faBox } from "@fortawesome/pro-light-svg-icons";
 
-function ToolchainSidebarNavigationLink() {
+export default function ToolchainSidebarNavigationLink() {
   const {
     userAccessRoles,
     isSassUser,
@@ -31,7 +31,3 @@ function ToolchainSidebarNavigationLink() {
     />
   );
 }
-
-ToolchainSidebarNavigationLink.propTypes = {};
-
-export default ToolchainSidebarNavigationLink;

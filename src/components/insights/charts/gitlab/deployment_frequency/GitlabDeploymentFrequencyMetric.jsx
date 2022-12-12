@@ -233,6 +233,8 @@ const onRowSelect = () => {
           <Col md={12} className={"my-2 p-0 d-flex flex-column align-items-end"}>
             <GitlabDeploymentFrequencyLineChartContainer
               chartData={chartData}
+              kpiConfiguration={kpiConfiguration}
+              dashboardData={dashboardData}
             />
           </Col>
           <Col md={12} className={"my-2 p-0"}>

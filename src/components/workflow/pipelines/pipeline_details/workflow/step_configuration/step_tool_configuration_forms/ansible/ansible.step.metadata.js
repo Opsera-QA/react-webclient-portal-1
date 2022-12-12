@@ -9,10 +9,12 @@ const ansibleStepMetadata = {
     {
       label: "SCM Tool",
       id: "gitToolId",
+      isRequired: true
     },
     {
-      label: "Repository ID",
+      label: "Repository",
       id: "repoId",
+      isRequired: true
     },
     {
       label: "Project ID",
@@ -33,10 +35,14 @@ const ansibleStepMetadata = {
     {
       label: "Repository",
       id: "repository",
+      isRequired: true
     },
     {
       label: "Workspace",
-      id: "workspace"
+      id: "workspace",
+      isRequiredFunction: (model) => {
+        return model?.getData("service") === "bitbucket";
+      },
     },
     {
       label: "Workspace/Project",
@@ -45,10 +51,12 @@ const ansibleStepMetadata = {
     {
       label: "Branch",
       id: "defaultBranch",
+      isRequired: true
     },
     {
       label: "Playbook File Name",
       id: "playbookFileName",
+      isRequired: true
     },
     {
       label: "Playbook File Path",

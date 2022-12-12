@@ -20,6 +20,7 @@ function FilterContainer(
     inlineFilters,
     loadData,
     isLoading,
+    isPolling,
     body,
     addRecordFunction,
     supportSearch,
@@ -35,6 +36,7 @@ function FilterContainer(
     maximumHeight,
     showRefreshButton,
     disableNewRecordButton,
+    filterSelectionOverlayPanel,
     // TODO: Remove after filters are used everywhere
     type
   }) {
@@ -58,6 +60,7 @@ function FilterContainer(
         handleImportFunction={handleImportFunction}
         showRefreshButton={showRefreshButton}
         disableNewRecordButton={disableNewRecordButton}
+        filterSelectionOverlayPanel={filterSelectionOverlayPanel}
       />
     );
   };
@@ -88,6 +91,7 @@ function FilterContainer(
           <div className={"px-2 d-flex content-block-header"}>
             <FilterTitleBar
               isLoading={isLoading}
+              isPolling={isPolling}
               title={title}
               type={type}
               filterDto={filterDto}
@@ -137,7 +141,9 @@ FilterContainer.propTypes = {
   maximumHeight: PropTypes.string,
   loadingMessage: PropTypes.string,
   showRefreshButton: PropTypes.bool,
-  disableNewRecordButton: PropTypes.bool
+  disableNewRecordButton: PropTypes.bool,
+  filterSelectionOverlayPanel: PropTypes.any,
+  isPolling: PropTypes.bool,
 };
 
 FilterContainer.defaultProps = {

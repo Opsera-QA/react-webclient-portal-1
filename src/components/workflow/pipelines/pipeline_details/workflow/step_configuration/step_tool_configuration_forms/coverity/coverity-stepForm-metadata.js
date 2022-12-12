@@ -31,8 +31,9 @@ const coverityStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Repository ID",
+      label: "Repository",
       id: "repoId",
+      isRequired: true
     },
 
     {
@@ -111,6 +112,14 @@ const coverityStepFormMetadata = {
       id: "customParameters",
       maxItems: 15,
     },
+    {
+      label: "Enable Client Side thresholds",
+      id: "clientSideThreshold",
+    },
+    {
+      label: "Vulnerability Threshold",
+      id: "displayImpactThreshold",
+    },
   ],
   newObjectFields: {
     coverityToolId: "",
@@ -138,6 +147,8 @@ const coverityStepFormMetadata = {
     dotnetSdkVersion : "",
     commandLineArguments: "",
     customParameters: [],
+    clientSideThreshold: false,
+    displayImpactThreshold: [],
   }
 };
 
