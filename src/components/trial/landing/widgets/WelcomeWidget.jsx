@@ -6,7 +6,7 @@ import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
 import IconBase from "components/common/icons/IconBase";
 import { ExternalLink } from "temp-library-components/link/ExternalLink";
-import { EXTERNAL_LINKS } from "Navbar";
+import { EXTERNAL_LINKS } from "HeaderNavBar";
 import { Button } from "react-bootstrap";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import FreetrialWizardHelpDocumentation
