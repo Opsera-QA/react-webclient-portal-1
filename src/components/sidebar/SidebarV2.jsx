@@ -1,21 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
-import {
-  faClipboardList,
-  faArchive,
-  faHome,
-  faTools,
-  faDraftingCompass,
-  faLayerGroup,
-  faCogs,
-  faChartNetwork,
-  faAnalytics,
-  faEnvelope,
-  faTasks,
-} from "@fortawesome/pro-light-svg-icons";
 import "css/general/sidebar.css";
-import IconBase from "components/common/icons/IconBase";
 import ToolchainSidebarNavigationLink from "components/sidebar/links/ToolchainSidebarNavigationLink";
 import PipelinesSidebarNavigationLink from "components/sidebar/links/PipelinesSidebarNavigationLink";
 import InsightsSidebarNavigationLink from "components/sidebar/links/InsightsSidebarNavigationLink";
@@ -29,10 +14,14 @@ import NotificationsSidebarNavigationLink from "components/sidebar/links/Notific
 import BlueprintsSidebarNavigationLink from "components/sidebar/links/BlueprintsSidebarNavigationLink";
 import LogsSidebarNavigationLink from "components/sidebar/links/LogsSidebarNavigationLink";
 import TasksSidebarNavigationLink from "components/sidebar/links/TasksSidebarNavigationLink";
+import ToggleSidebarSizeIcon from "components/sidebar/ToggleSidebarSizeIcon";
+import SidebarSubheaderText from "components/sidebar/SidebarSubheaderText";
+import sessionHelper from "utils/session.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function Sidebar({ hideSideBar }) {
   const { userData } = useComponentStateReference();
-  const [isSidebarOpened, setIsSidebarOpened] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(DataParsingHelper.parseBooleanV2(sessionHelper.getStoredSessionValueByKey("SIDEBAR_COLLAPSED"), false));
 
   if (userData == null || hideSideBar === true) {
     return null;
@@ -40,29 +29,60 @@ export default function Sidebar({ hideSideBar }) {
 
   return (
     <div
-      className={"w-20 pt-1 d-block sidebar-container"}
-      onMouseEnter={() => setIsSidebarOpened(true)}
-      onMouseLeave={() => setIsSidebarOpened(false)}
+      className={isSidebarCollapsed === true ? "d-block sidebar-container" : "w-20 d-block sidebar-container"}
     >
-      <div
-        className={isSidebarOpened === true ? "sticky-top py-5 sidebar-menu" : "sticky-top py-5 sidebar-menu is-closed"}
-      >
-        <HomeSidebarNavigationLink/>
+      <div className={"sticky-top py-5 sidebar-menu"}>
+        <HomeSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
 
-        <div className={"mt-3 mb-2 sub-header"}>Products</div>
-        <ToolchainSidebarNavigationLink/>
-        <PipelinesSidebarNavigationLink/>
-        <InsightsSidebarNavigationLink/>
+        <SidebarSubheaderText
+          isSidebarCollapsed={isSidebarCollapsed}
+          subheaderText={"Products"}
+        />
+        <ToolchainSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <PipelinesSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <InsightsSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
 
-        <div className={"mt-3 mb-2 sub-header"}>Operations</div>
-        <ToolRegistrySidebarNavigationLink/>
-        <TasksSidebarNavigationLink/>
-        <LogsSidebarNavigationLink/>
-        <BlueprintsSidebarNavigationLink/>
-        <ReportsSidebarNavigationLink/>
-        <NotificationsSidebarNavigationLink/>
-        <SettingsSidebarNavigationLink/>
-        <AdminToolsSidebarNavigationLink/>
+        <SidebarSubheaderText
+          isSidebarCollapsed={isSidebarCollapsed}
+          subheaderText={"Operations"}
+        />
+        <ToolRegistrySidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <TasksSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <LogsSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <BlueprintsSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <ReportsSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <NotificationsSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <SettingsSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <AdminToolsSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <ToggleSidebarSizeIcon
+          isSidebarCollapsed={isSidebarCollapsed === true}
+          setIsSidebarCollapsed={setIsSidebarCollapsed}
+          className={"mt-3"}
+        />
       </div>
     </div>
   );

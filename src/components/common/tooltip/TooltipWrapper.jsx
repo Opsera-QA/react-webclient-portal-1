@@ -137,7 +137,7 @@ TooltipWrapper.defaultProps = {
   placement: "top",
   className: "popover-container",
   trigger: ["hover", "focus"],
-  delay: { show: 250, hide: 400 },
+  delay: { show: 100, hide: 400 },
   rootClose: true,
 };
 
