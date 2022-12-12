@@ -30,7 +30,6 @@ const octopusStepFormMetadata = {
       {
         label: "Environment Name",
         id: "environmentName",
-        isRequired: true
       },
       {
         label: "Octopus Tool ID",
@@ -55,7 +54,6 @@ const octopusStepFormMetadata = {
       {
         label: "Environment Name ID",
         id: "environmentId",
-        isRequired: true
       },
       {
         label: "Namespace",
@@ -297,12 +295,15 @@ const octopusStepFormMetadata = {
         maxItems: 10,
       },
       {
-        id: "deploymentProcessId"
+        label: "Deployment Process Label",
+        id: "deploymentProcessId",
       },
       {
-        id: "tenantedDeploymentMode"
+        label: "Tenanted Deployment Mode",
+        id: "tenantedDeploymentMode",
       },
       {
+        label: "Custom Variable List",
         id: "customVariableList"
       }
     ],
