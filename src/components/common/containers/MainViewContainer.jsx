@@ -4,8 +4,8 @@ import useLocationReference from "hooks/useLocationReference";
 import ToastContextProvider from "contexts/DialogToastContext";
 import OpseraHeaderBar from "components/header/OpseraHeaderBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import HeaderNavBar from "Navbar";
 import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
+import HeaderNavBar from "components/header/legacy/HeaderNavBar";
 
 export default function MainViewContainer(
   {

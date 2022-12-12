@@ -18,7 +18,7 @@ export default function SidebarNavigationLinkBase(
   const getLabel = () => {
     if (isSidebarCollapsed !== true && hasStringValue(label) === true) {
       return (
-        <span className="menu-text">
+        <span className={"ml-2"}>
           {label}
         </span>
       );
