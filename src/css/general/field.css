@@ -137,7 +137,7 @@ pre {
 }
 
 .rw-multiselect .rw-popup, .rw-dropdown-list .rw-popup {
-    /* 30px per row item + top padding */
+    /* 31px per row item + top padding */
     max-height: calc((31px * 6) + 1rem) !important;
 }
 
