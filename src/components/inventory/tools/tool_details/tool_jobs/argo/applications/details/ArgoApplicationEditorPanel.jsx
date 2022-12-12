@@ -154,6 +154,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
                 fieldName={"autoSync"}
                 dataObject={argoApplicationModel}
                 setDataObject={setArgoApplicationModel}
+                disabled={!argoApplicationData?.isNew()}
             />
           </Col>
           <Col lg={12}>
