@@ -138,15 +138,12 @@ pre {
 
 .rw-multiselect .rw-popup, .rw-dropdown-list .rw-popup {
     /* 31px per row item + top padding */
-    max-height: calc((31px * 6) + 1rem) !important;
+    max-height: calc((30px * 6) + 1rem) !important;
 }
 
-.rw-list-optgroup {
+.rw-multiselect .rw-popup .rw-list div[role=group]:first-child .rw-list-optgroup,
+.rw-dropdown-list .rw-popup .rw-list div[role=group]:first-child .rw-list-optgroup {
     padding-top: 0;
-}
-
-.rw-list-option {
-    padding: 0.25rem 1rem;
 }
 
 .dhx_tooltip {
