@@ -14,8 +14,13 @@ pipelineValidationHelper.isPipelineStepToolValid = (pipelineStep) => {
     return false;
   }
 
-  // Manually disabling jenkins validation for now
-  if (parsedToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS) {
+  // Manually disabling specific step validation for now
+  // Do not add to this list. This is only here until these steps can be addressed
+  const disabledPipelineStepIdentifiers = [
+    toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS,
+  ];
+
+  if (disabledPipelineStepIdentifiers.includes(parsedToolIdentifier)) {
     return true;
   }
 

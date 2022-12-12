@@ -26,11 +26,11 @@ const mongodbRealmStepFormMetadata = {
     },
     {
       label: "Workspace",
-      id: "workspace",        
+      id: "workspace",
     },
     {
       label: "Workspace/Project",
-      id: "workspaceName",        
+      id: "workspaceName",
     },
     {
       label: "Repository",
@@ -51,13 +51,13 @@ const mongodbRealmStepFormMetadata = {
       label: "Schema Map",
       id: "schemaGitFileList",
       isRequired: true,
+      minItems: 1,
       maxItems: 10,
-
     },
   ],
-  newObjectFields: {    
+  newObjectFields: {
     toolConfigId: "",
-    mongoToolId:"",
+    mongoToolId: "",
     applicationName: "",
     gitCredential: "",
     workspace: "",
@@ -67,12 +67,12 @@ const mongodbRealmStepFormMetadata = {
     gitBranch: "",
     schemaGitFileList: [],
     jobType: "MONGODB_REALM_DEPLOY",
-    toolJobType : [
+    toolJobType: [
       "MONGODB_REALM_DEPLOY"
     ],
-    agentLabels : "generic-linux",
-    workspaceDeleteFlag:false,
-    jobName:""
+    agentLabels: "generic-linux",
+    workspaceDeleteFlag: false,
+    jobName: ""
   }
 };
 
