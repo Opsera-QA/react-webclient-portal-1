@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import packerStepFormMetadata from "../../packer-stepForm-metadata";
 
 function PackerIAmRoleFlagToggleInput({model, setModel, disabled}) {
   
