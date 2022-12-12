@@ -30,7 +30,6 @@ function RoleRestrictedToolByIdentifierInputBase(
     valueField,
     filterDataFunction,
   }) {
-  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -66,6 +65,7 @@ function RoleRestrictedToolByIdentifierInputBase(
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
+      setError(undefined);
       setIsLoading(true);
       await loadTools(cancelSource);
     }
