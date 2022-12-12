@@ -5,7 +5,7 @@ const PackerStepFormMetadata = {
       label: "SCM Tool Type",
       id: "type",
       isRequired: true
-    },    
+    },
     {
       label: "SCM Tool",
       id: "gitToolId",
@@ -19,119 +19,22 @@ const PackerStepFormMetadata = {
     {
       label: "AWS Credentials",
       id: "awsToolConfigId",
-    },    
+    },
     {
       label: "GCP Credentials",
       id: "gcpToolConfigId",
     },
     {
       label: "Branch",
-      id: "defaultBranch", 
-      isRequired: true
-    },
-    {
-      label: "Git File Path",
-      id: "gitFilePath",      
-    },    
-    {
-      label: "Repository",
-      id: "gitRepositoryID",
-    },
-    {
-      label: "BitBucket Workspace",
-      id: "bitbucketWorkspace",
-    },
-    {
-      label: "BitBucket Workspace/Project",
-      id: "bitbucketWorkspaceName",
-    },    
-    {
-      label: "IAM Roles", 
-      id:"iamRoleFlag"
-    },
-    {
-      label: "IAM Role",
-      id: "roleArn"
-    },    
-    {
-      label: "Cloud Provider",
-      id: "cloudProvider"
-    },
-    {
-      label: "Packer Version",
-      id: "tag",
-      isRequired: true
-    },    
-    {
-      label: "Azure Tool",
-      id: "azureToolConfigId",
-    },    
-    {
-      label: "Azure Credential",
-      id: "azureCredentialId",
-    },
-    {
-      label: "Input Parameters",
-      id: "inputParameters",
-    },    
-    {
-      label: "Packer Execution Script",
-      id: "customScript"
-    },
-    {
-      label: "Packer Commands",
-      id: "commands"
-    },    
-    {
-      label: "Environment Variables",
-      id: "environmentVariables"
-    },
-    {
-      label: "Use Variable File",
-      id: "isVariableFile"
-    },
-    {
-      label: "Packer Variables Files",
-      id: "inputFilePaths"
-    },
-    {
-      label: "Input File Name",
-      id: "inputFileName"
-    },
-  ],
-  fieldsAlt: [
-    {
-      label: "SCM Tool Type",
-      id: "type",
-      isRequired: true
-    },    
-    {
-      label: "SCM Tool",
-      id: "gitToolId",
-      isRequired: true
-    },
-    {
-      label: "Repository",
-      id: "gitRepository",
-      isRequired: true
-    },
-    {
-      label: "AWS Credentials",
-      id: "awsToolConfigId",
-    },    
-    {
-      label: "GCP Credentials",
-      id: "gcpToolConfigId",
-    },
-    {
-      label: "Branch",
-      id: "defaultBranch", 
+      id: "defaultBranch",
       isRequired: true
     },
     {
       label: "Git File Path",
       id: "gitFilePath",
-      isRequired: true
+      isRequiredFunction: (model) => {
+        return model?.getData("iamRoleFlag") === true;
+      }
     },
     {
       label: "Repository",
@@ -146,14 +49,16 @@ const PackerStepFormMetadata = {
       id: "bitbucketWorkspaceName",
     },
     {
-      label: "IAM Roles", 
+      label: "IAM Roles",
       id:"iamRoleFlag"
     },
     {
       label: "IAM Role",
       id: "roleArn",
-      isRequired:true
-    },    
+      isRequiredFunction: (model) => {
+        return model?.getData("iamRoleFlag") === true;
+      }
+    },
     {
       label: "Cloud Provider",
       id: "cloudProvider"
@@ -162,11 +67,11 @@ const PackerStepFormMetadata = {
       label: "Packer Version",
       id: "tag",
       isRequired: true
-    },    
+    },
     {
       label: "Azure Tool",
       id: "azureToolConfigId",
-    },    
+    },
     {
       label: "Azure Credential",
       id: "azureCredentialId",
@@ -174,7 +79,7 @@ const PackerStepFormMetadata = {
     {
       label: "Input Parameters",
       id: "inputParameters",
-    },    
+    },
     {
       label: "Packer Execution Script",
       id: "customScript"
@@ -182,7 +87,7 @@ const PackerStepFormMetadata = {
     {
       label: "Packer Commands",
       id: "commands"
-    },    
+    },
     {
       label: "Environment Variables",
       id: "environmentVariables"
@@ -205,7 +110,7 @@ const PackerStepFormMetadata = {
     gitRepository: "",
     defaultBranch: "",
     awsToolConfigId : "",
-    gcpToolConfigId: "",    
+    gcpToolConfigId: "",
     type:"",
     gitToolId : "",
     gitRepositoryID: "",
@@ -217,12 +122,12 @@ const PackerStepFormMetadata = {
     roleArn:"",
     roleName:"",
     cloudProvider: "",
-    tag: "",    
+    tag: "",
     azureToolConfigId : "",
     azureCredentialId: "",
     inputParameters: "",
     customScript: false,
-    commands: "",    
+    commands: "",
     environmentVariables: [],
     isVariableFile: false,
     inputFilePaths: [],

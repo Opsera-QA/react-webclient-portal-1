@@ -10,7 +10,6 @@ function PackerIAmRoleFlagToggleInput({model, setModel, disabled}) {
     newModel.setData(fieldName, selectedValue);
     newModel.setData("roleArn", "");
     newModel.setData("roleName", "");
-    newModel.setMetaDataFields(selectedValue === true ? packerStepFormMetadata.fieldsAlt : packerStepFormMetadata.fields);
     setModel({...newModel});
   };
   
