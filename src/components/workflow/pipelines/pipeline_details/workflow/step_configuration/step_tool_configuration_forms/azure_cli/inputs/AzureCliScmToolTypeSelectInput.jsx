@@ -15,6 +15,10 @@ export const PACKER_SCM_TOOL_LIST = [
     name: "Bitbucket",
     value: "bitbucket",
   },
+  {
+    name: "Azure",
+    value: toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS,
+  },
 ];
 
 function AzureCliScmToolTypeSelectInput({model, setModel, isLoading, disabled}) {
