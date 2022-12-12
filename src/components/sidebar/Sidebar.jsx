@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import "css/general/sidebar.css";
 import ToolchainSidebarNavigationLink from "components/sidebar/links/ToolchainSidebarNavigationLink";
 import PipelinesSidebarNavigationLink from "components/sidebar/links/PipelinesSidebarNavigationLink";
 import InsightsSidebarNavigationLink from "components/sidebar/links/InsightsSidebarNavigationLink";
