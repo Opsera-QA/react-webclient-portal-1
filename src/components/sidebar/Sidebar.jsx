@@ -80,7 +80,7 @@ export default function Sidebar({ hideSideBar }) {
         <ToggleSidebarSizeIcon
           isSidebarCollapsed={isSidebarCollapsed === true}
           setIsSidebarCollapsed={setIsSidebarCollapsed}
-          className={"mt-3"}
+          className={"mt-3 collapse-icon"}
         />
       </div>
     </div>
