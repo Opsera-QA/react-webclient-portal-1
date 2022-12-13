@@ -1,39 +1,23 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import {faRepeat1} from "@fortawesome/pro-light-svg-icons";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import Row from "react-bootstrap/Row";
-import TriggerTaskRunButton from "components/tasks/buttons/run_task/TriggerTaskRunButton";
 import CloseButton from "components/common/buttons/CloseButton";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import pipelineActions from "components/workflow/pipeline-actions";
-import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
-import CancelButton from "components/common/buttons/CancelButton";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function CancelPipelineQueueConfirmationOverlay({ pipeline, setHasQueuedRequest }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
+  const {
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   const deletePipelineQueueRequest = async () => {
     try {

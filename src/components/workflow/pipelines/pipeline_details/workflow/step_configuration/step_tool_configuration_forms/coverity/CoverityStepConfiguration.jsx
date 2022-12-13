@@ -19,13 +19,15 @@ import CoverityStepJenkinsJobSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepJenkinsJobSelectInput";
 import DotNetCliTypeSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliTypeSelectInput";
-import DotNetCliSdkVersionSelectInput 
+import DotNetCliSdkVersionSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliSdkVersionSelectInput";
-import ParameterSelectListInputBase 
+import ParameterSelectListInputBase
   from "components/common/list_of_values_input/parameters/ParameterSelectListInputBase";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import CoverityStepImpactThresholdInput from "./inputs/CoverityStepImpactThresholdInput";
 
-function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, closeEditorPanel, parentCallback }) {
+function CoverityStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
   const [coverityStepConfigurationDto, setCoverityStepConfigurationDataDto] = useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
@@ -80,14 +82,14 @@ function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, clo
     if (coverityStepConfigurationDto.getData("agentLabels") === "generic-windows") {
       return (
         <>
-          <DotNetCliTypeSelectInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} fieldName={"dotnetType"}  />
-          {coverityStepConfigurationDto?.getData("dotnetType") && 
+          <DotNetCliTypeSelectInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} fieldName={"dotnetType"} />
+          {coverityStepConfigurationDto?.getData("dotnetType") &&
             <DotNetCliSdkVersionSelectInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} />
           }
-          <TextAreaInput 
-            dataObject={coverityStepConfigurationDto}                         
+          <TextAreaInput
+            dataObject={coverityStepConfigurationDto}
             setDataObject={setCoverityStepConfigurationDataDto}
-            fieldName={"commandLineArguments"} 
+            fieldName={"commandLineArguments"}
           />
           <ParameterSelectListInputBase
             dataObject={coverityStepConfigurationDto}
@@ -114,11 +116,11 @@ function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, clo
       persistRecord={handleCreateJobAndSave}
       isLoading={isLoading}
     >
-     <CoverityStepJenkinsToolSelectInput
+      <CoverityStepJenkinsToolSelectInput
         model={coverityStepConfigurationDto}
         setModel={setCoverityStepConfigurationDataDto}
       />
-      <CoverityStepJenkinsJobSelectInput  
+      <CoverityStepJenkinsJobSelectInput
         model={coverityStepConfigurationDto}
         setModel={setCoverityStepConfigurationDataDto}
       />
@@ -131,21 +133,31 @@ function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, clo
         setDataObject={setCoverityStepConfigurationDataDto}
       />
       <TextInputBase
-              setDataObject={setCoverityStepConfigurationDataDto}
-              dataObject={coverityStepConfigurationDto}
-              fieldName={"projectName"}
+        setDataObject={setCoverityStepConfigurationDataDto}
+        dataObject={coverityStepConfigurationDto}
+        fieldName={"projectName"}
       />
       <TextInputBase
-              setDataObject={setCoverityStepConfigurationDataDto}
-              dataObject={coverityStepConfigurationDto}
-              fieldName={"streamName"}
+        setDataObject={setCoverityStepConfigurationDataDto}
+        dataObject={coverityStepConfigurationDto}
+        fieldName={"streamName"}
       />
-      { getDotnetFields() }
+      {getDotnetFields()}
       <CoverityJenkinsAccountInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} />
       <CoverityBitbucketWorkspaceInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} />
       <CoverityGitRepositoryInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} />
-      <CoverityGitBranchInput  dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} />
+      <CoverityGitBranchInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} />
       <WorkspaceDeleteToggleInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} fieldName={"workspaceDeleteFlag"} />
+      <BooleanToggleInput
+        dataObject={coverityStepConfigurationDto}
+        setDataObject={setCoverityStepConfigurationDataDto}
+        fieldName={"clientSideThreshold"}
+      />
+      <CoverityStepImpactThresholdInput
+        model={coverityStepConfigurationDto}
+        setModel={setCoverityStepConfigurationDataDto}
+        visible={coverityStepConfigurationDto.getData("clientSideThreshold")}
+      />
     </PipelineStepEditorPanelContainer>
   );
 }

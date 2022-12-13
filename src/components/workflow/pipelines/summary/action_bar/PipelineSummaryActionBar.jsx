@@ -14,6 +14,8 @@ import ActionBarPublishPipelineToCustomerCatalogButton
   from "components/workflow/pipelines/summary/action_bar/buttons/publish/ActionBarPublishPipelineToCustomerCatalogButton";
 import ActionBarPublishPipelineButton
   from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarPublishPipelineButton";
+import ActionBarViewPipelineAuditLogsButton
+  from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarViewPipelineAuditLogsButton";
 
 function PipelineSummaryActionBar({pipelineModel, pipeline, loadPipeline, refreshAfterDeletion}) {
   const toastContext = useContext(DialogToastContext);
@@ -30,6 +32,9 @@ function PipelineSummaryActionBar({pipelineModel, pipeline, loadPipeline, refres
         pullSubscriptionStatus={true}
         className={"ml-3"}
       />
+      {/*<ActionBarViewPipelineAuditLogsButton*/}
+      {/*  pipeline={pipeline}*/}
+      {/*/>*/}
       <ActionBarShowPipelineSummaryOverlayButton
         pipeline={pipeline}
       />

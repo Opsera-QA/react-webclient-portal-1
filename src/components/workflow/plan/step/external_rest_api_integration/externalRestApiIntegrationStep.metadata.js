@@ -9,7 +9,9 @@ export const externalRestApiIntegrationStepMetadata = {
     {
       label: "Connection Validation Endpoint",
       id: "connectionCheckEndpointId",
-      isRequired: true,
+      isRequiredFunction: (model) => {
+        return model?.getData("useConnectionCheck") === true;
+      },
     },
     {
       label: "Validate Connection",
@@ -18,7 +20,6 @@ export const externalRestApiIntegrationStepMetadata = {
     {
       label: "Connection Validation Request Parameters",
       id: "connectionCheckRequestParameters",
-      isRequired: true,
     },
     {
       label: "Connection Validation Response Evaluation Rules",
@@ -33,7 +34,6 @@ export const externalRestApiIntegrationStepMetadata = {
     {
       label: "Call Operation Request Parameters",
       id: "runEndpointRequestParameters",
-      isRequired: true,
     },
     {
       label: "Call Operation Response Evaluation Rules",
@@ -48,7 +48,6 @@ export const externalRestApiIntegrationStepMetadata = {
     {
       label: "Status Check Request Parameters",
       id: "statusEndpointRequestParameters",
-      isRequired: true,
     },
     {
       label: "Status Check Response Evaluation Rules",

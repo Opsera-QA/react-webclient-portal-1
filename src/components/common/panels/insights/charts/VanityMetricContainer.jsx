@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { faExclamationCircle } from "@fortawesome/pro-light-svg-icons";
+import {faCalendar, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import InfoDialog from "components/common/status_notifications/info";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
@@ -13,6 +13,8 @@ import AppliedMetricTagBadge from "components/common/badges/tag/metrics/AppliedM
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import SpyglassIcon from "components/common/icons/general/SpyglassIcon";
 import BetaBadge from "components/common/badges/BetaBadge";
+import BadgeBase from "../../../badges/BadgeBase";
+import MetricBadgeBase from "../../../badges/metric/MetricBadgeBase";
 
 function VanityMetricContainer(
   {
@@ -226,13 +228,24 @@ function VanityMetricContainer(
 
   const getDateBadge = () => {
     const date = getMetricFilterValue(kpiConfiguration?.filters, "date");
+    const isRollingDate = date?.label ? true : false;
+    if (isRollingDate) {
+      return (
+        <MetricBadgeBase
+          badgeText={`${date?.label}`}
+          icon={faCalendar}
+          className={"metric-subheader-text"}
+        />
+      );
+    } else {
+      return (
+        <MetricDateRangeBadge
+          startDate={date?.startDate}
+          endDate={date?.endDate}
+        />
+      );
+    }
 
-    return (
-      <MetricDateRangeBadge
-        startDate={date?.startDate}
-        endDate={date?.endDate}
-      />
-    );
   };
 
   return (

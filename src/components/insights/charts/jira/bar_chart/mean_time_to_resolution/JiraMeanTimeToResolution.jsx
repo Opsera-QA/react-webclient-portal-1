@@ -213,8 +213,8 @@ function JiraMeanTimeToResolution({
             >
               <Col md={12} className={"pl-2 pr-1"}>
                 <JiraMTTRDataBlock
-                  incidents={dataBlock.totalIncidents}
-                  prevIncidents={dataBlock.previousTotalIncidents}
+                  value={dataBlock.totalIncidents}
+                  previousValue={dataBlock.previousTotalIncidents}
                   dataPoint={numberOfIncidentsDataPoint}
                   trend={getReverseTrend(dataBlock.totalIncidents,dataBlock.previousTotalIncidents)}
                   getIcon = {getReverseTrendIcon}
@@ -225,8 +225,8 @@ function JiraMeanTimeToResolution({
               </Col>
               <Col md={12} className={"px-1"}>
                 <JiraMTTRDataBlock
-                  incidents={dataBlock.totalResolvedIncidents}
-                  prevIncidents={dataBlock.previousTotalResolvedIncidents}
+                  value={dataBlock.totalResolvedIncidents}
+                  previousValue={dataBlock.previousTotalResolvedIncidents}
                   dataPoint={numberOfIncidentsDataPoint}
                   trend={getTrend(dataBlock.totalResolvedIncidents,dataBlock.previousTotalResolvedIncidents)}
                   getIcon = {getTrendIcon}
@@ -239,9 +239,9 @@ function JiraMeanTimeToResolution({
                   dataPoint={averageMTTRDataBlockDataPoint}
                 >
                   <JiraMTTRDataBlock
-                    incidents={Number(dataBlock?.overallMttrHours)}
-                    prevIncidents={dataBlock.previousOverallMttrHours}
-                    dataPoint={numberOfIncidentsDataPoint}
+                    value={Number(dataBlock?.overallMttrHours)}
+                    previousValue={dataBlock.previousOverallMttrHours}
+                    dataPoint={averageMTTRDataBlockDataPoint}
                     trend={getReverseTrend(dataBlock.overallMttrHours,dataBlock.previousOverallMttrHours)}
                     getIcon = {getReverseTrendIcon}
                     topText={"Average MTTR (Hours)"}
@@ -251,9 +251,8 @@ function JiraMeanTimeToResolution({
               </Col>
               <Col md={12} className={"pl-1 pr-2"}>
                 <JiraMTTRDataBlock
-                  incidents={dataBlock.maxMTTR}
-                  prevIncidents={dataBlock.previousMaxMTTR}
-                  dataPoint={numberOfIncidentsDataPoint}
+                  value={dataBlock.maxMTTR}
+                  previousValue={dataBlock.previousMaxMTTR}
                   trend={getReverseTrend(dataBlock.maxMTTR,dataBlock.previousMaxMTTR)}
                   getIcon = {getReverseTrendIcon}
                   topText={"Max MTTR (Hours)"}

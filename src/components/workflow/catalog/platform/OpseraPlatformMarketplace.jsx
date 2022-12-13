@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faOctagon} from "@fortawesome/pro-light-svg-icons";
 import InlinePipelineTypeFilter from "components/common/filters/admin/templates/pipeline_type/InlinePipelineTypeFilter";
 import PlatformPipelineTemplateCardView from "components/workflow/catalog/platform/PlatformPipelineTemplateCardView";
 import useGetPlatformPipelineTemplates from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplates";
+import PlatformTagFilter from "components/common/filters/tags/tag/PlatformTagFilter";
 
 export default function OpseraPipelineMarketplace({activeTemplates}) {
   const {
@@ -33,9 +33,9 @@ export default function OpseraPipelineMarketplace({activeTemplates}) {
 
   const getDropdownFilters = () => {
     return (
-      <TagFilter
-        filterDto={pipelineTemplateFilterModel}
-        setFilterDto={setPipelineTemplateFilterModel}
+      <PlatformTagFilter
+        filterModel={pipelineTemplateFilterModel}
+        setFilterModel={setPipelineTemplateFilterModel}
       />
     );
   };

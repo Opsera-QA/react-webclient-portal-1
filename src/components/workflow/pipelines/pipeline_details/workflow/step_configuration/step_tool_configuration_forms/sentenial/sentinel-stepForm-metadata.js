@@ -14,7 +14,6 @@ const SentenialStepFormMetadata = {
     {
       label: "Repository",
       id: "repository",
-      isRequired: true
     },
     {
       label: "Branch",
@@ -24,6 +23,7 @@ const SentenialStepFormMetadata = {
     {
       label: "Repository",
       id: "repoId",
+      isRequired: true
     },
     {
       label: "BitBucket Workspace",

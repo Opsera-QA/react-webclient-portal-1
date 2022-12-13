@@ -18,12 +18,9 @@ import PackerEnvironmentVariables from "components/workflow/pipelines/pipeline_d
 
 function PackerStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [jobType, setJobType] = useState("");
   const [packerStepConfigurationModel, setPackerStepConfigurationModel] = useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
-  // const [configuration, setConfiguration] = useState("");
-
 
   useEffect(() => {
     loadData();
@@ -34,16 +31,7 @@ function PackerStepConfiguration({ pipelineId, stepTool, stepId, createJob, clos
 
     let { threshold, job_type } = stepTool;
     let packerConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, packerStepFormMetadata);
-
-    if (packerConfigurationData.getData("iamRoleFlag") === true) {
-      packerConfigurationData.setMetaDataFields(packerStepFormMetadata.fieldsAlt);
-    }
-    
     setPackerStepConfigurationModel(packerConfigurationData);
-    
-    if (job_type) {
-      setJobType(job_type);
-    }
 
     if (threshold) {
       setThresholdType(threshold?.type);
@@ -63,18 +51,18 @@ function PackerStepConfiguration({ pipelineId, stepTool, stepId, createJob, clos
     };
     await parentCallback(item);
   };
- 
+
   if (isLoading || packerStepConfigurationModel == null) {
     return <DetailPanelLoadingDialog />;
   }
-  
+
   return (
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
       recordDto={packerStepConfigurationModel}
       persistRecord={callbackFunction}
       isLoading={isLoading}
-    >      
+    >
       <PackerScmToolTypeSelectInput model={packerStepConfigurationModel} setModel={setPackerStepConfigurationModel} />
       <PackerScmToolSelectInput model={packerStepConfigurationModel} setModel={setPackerStepConfigurationModel} />
       <PackerBitbucketWorkspaceSelectInput model={packerStepConfigurationModel} setModel={setPackerStepConfigurationModel} />
@@ -83,7 +71,7 @@ function PackerStepConfiguration({ pipelineId, stepTool, stepId, createJob, clos
       <TextInputBase dataObject={packerStepConfigurationModel} fieldName={"gitFilePath"} setDataObject={setPackerStepConfigurationModel}/>
       <PackerTagSelectInput model={packerStepConfigurationModel} setModel={setPackerStepConfigurationModel} />
       <PackerCloudProviderSelectInput dataObject={packerStepConfigurationModel} setDataObject={setPackerStepConfigurationModel} fieldName={"cloudProvider"} />
-      <PackerCloudCredentialSubForm model={packerStepConfigurationModel} setModel={setPackerStepConfigurationModel} cloudProvider={packerStepConfigurationModel?.getData("cloudProvider")} />      
+      <PackerCloudCredentialSubForm model={packerStepConfigurationModel} setModel={setPackerStepConfigurationModel} cloudProvider={packerStepConfigurationModel?.getData("cloudProvider")} />
       <PackerCustomScriptSubForm model={packerStepConfigurationModel} setModel={setPackerStepConfigurationModel} />
       <PackerEnvironmentVariables dataObject={packerStepConfigurationModel} setDataObject={setPackerStepConfigurationModel} />
     </PipelineStepEditorPanelContainer>

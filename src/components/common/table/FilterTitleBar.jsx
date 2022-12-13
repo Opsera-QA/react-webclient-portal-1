@@ -10,6 +10,7 @@ function FilterTitleBar(
     titleIcon,
     isLoading,
     className,
+    isPolling,
   }) {
   const getClassNames = () => {
     if (hasStringValue(className) === true) {
@@ -22,7 +23,7 @@ function FilterTitleBar(
   return (
     <div className={getClassNames()}>
       <div className={"my-auto filter-title-text text-nowrap w-100 d-flex"}>
-        <IconBase icon={titleIcon} isLoading={isLoading} className={"mr-2 my-auto d-none d-lg-block"} />
+        <IconBase icon={titleIcon} isLoading={isLoading || isPolling} className={"mr-2 my-auto d-none d-lg-block"} />
         {title}
       </div>
       <div className={"d-flex"}>
@@ -38,6 +39,7 @@ FilterTitleBar.propTypes = {
   inlineFilters: PropTypes.any,
   isLoading: PropTypes.bool,
   className: PropTypes.string,
+  isPolling: PropTypes.bool,
 };
 
 export default FilterTitleBar;

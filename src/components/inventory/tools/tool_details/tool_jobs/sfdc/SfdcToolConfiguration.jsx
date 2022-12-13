@@ -60,7 +60,11 @@ function SfdcToolConfiguration({ toolData }) {
     if (sfdcConfigurationDto?.getData("authType") === "oauth") {
       const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelTokenSource, toolData.id);
       const tool = response?.data?.data;
-      newConfiguration.sfdc_refresh_token = tool?.configuration?.sfdc_refresh_token;      
+      newConfiguration.sfdc_refresh_token = tool?.configuration?.sfdc_refresh_token;
+      newConfiguration.sfdc_client_id = {};
+      newConfiguration.sfdc_client_secret = {};
+      newConfiguration.sfdc_password = {};
+      newConfiguration.sfdc_token = {};
     }
 
     const item = { configuration: newConfiguration };

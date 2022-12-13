@@ -661,3 +661,23 @@ export const getDurationInDaysHours = (field, className) => {
     }
   };
 };
+
+export const getExternalLinkWithIcon = (field, className, width) => {
+  return {
+    header: getColumnHeader(field),
+    id: getColumnId(field),
+    class: className,
+    width: width,
+    tooltipTemplate: function (value) {
+      return `<div class="custom-tooltip"><span>${value?.key}</span></div>`;
+    },
+    template: function (value) {
+      return (`
+        <a href=${value?.url} target="_blank" className="text-muted console-text-invert-modal">
+          <i class="fal fa-external-link cell-icon my-auto"></i>
+          <span>${value?.key}</span>
+        </a>
+      `);      
+    },
+  };
+};

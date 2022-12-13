@@ -13,6 +13,7 @@ screenContainerHeights.CONTENT_BLOCK_FOOTER_HEIGHT = "1.5em";
 screenContainerHeights.PAGE_DESCRIPTION_HEIGHT = "calc(2em + 1rem)";
 screenContainerHeights.ROLE_REQUIREMENT_FIELD_HEIGHT = "2.2em";
 screenContainerHeights.TITLE_BAR_HEIGHT = "48px";
+screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT = "max(calc(100vh - 20px - 48px - 40px - 45px - 48px - 36px), 500px)";
 
 screenContainerHeights.TABLE_MINIMUM_HEIGHT = `calc(${screenContainerHeights.SCREEN_CONTAINER_HEIGHT} - ${screenContainerHeights.TITLE_BAR_HEIGHT})`;
 screenContainerHeights.TABLE_MINIMUM_HEIGHT_WITH_DESCRIPTION = `calc(${screenContainerHeights.TABLE_MINIMUM_HEIGHT} - ${screenContainerHeights.PAGE_DESCRIPTION_HEIGHT})`;

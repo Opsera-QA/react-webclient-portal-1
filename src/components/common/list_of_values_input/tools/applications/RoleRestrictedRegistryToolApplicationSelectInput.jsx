@@ -27,6 +27,7 @@ function RoleRestrictedRegistryToolApplicationSelectInput(
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -55,11 +56,12 @@ function RoleRestrictedRegistryToolApplicationSelectInput(
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
+      setError(undefined);
       setIsLoading(true);
       await loadApplications(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      setError(error);
     }
     finally {
       setIsLoading(false);
@@ -115,6 +117,7 @@ function RoleRestrictedRegistryToolApplicationSelectInput(
       clearDataFunction={clearDataFunction}
       disabled={disabled}
       errorMessage={errorMessage}
+      error={error}
     />
   );
 }

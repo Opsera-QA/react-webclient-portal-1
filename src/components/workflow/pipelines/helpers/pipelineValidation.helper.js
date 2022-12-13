@@ -1,6 +1,7 @@
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {pipelineStepMetadataConstants} from "components/workflow/pipelines/pipelineStepMetadata.constants";
 import modelHelpers from "components/common/model/modelHelpers";
+import toolIdentifierConstants from "@opsera/definitions/constants/tool_identifiers/toolIdentifier.constants";
 
 export const pipelineValidationHelper = {};
 
@@ -11,6 +12,16 @@ pipelineValidationHelper.isPipelineStepToolValid = (pipelineStep) => {
 
   if (!configuration || !parsedToolIdentifier) {
     return false;
+  }
+
+  // Manually disabling specific step validation for now
+  // Do not add to this list. This is only here until these steps can be addressed
+  const disabledPipelineStepIdentifiers = [
+    toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS,
+  ];
+
+  if (disabledPipelineStepIdentifiers.includes(parsedToolIdentifier)) {
+    return true;
   }
 
   try {
@@ -24,4 +35,33 @@ pipelineValidationHelper.isPipelineStepToolValid = (pipelineStep) => {
   } catch (error) {
     console.error("Error attempting to validate step configuration: ", parsedToolIdentifier, JSON.stringify(pipelineStep));
   }
+};
+
+pipelineValidationHelper.isPipelineSourceRepositoryValidForDynamicSettings = (pipeline) => {
+  const pipelineSourceRepository = DataParsingHelper.parseNestedObject(pipeline, "workflow.source");
+
+  if (!pipelineSourceRepository) {
+    return false;
+  }
+
+  const dynamicSettingsEnabled  = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.source.dynamicSettings");
+
+  if (dynamicSettingsEnabled !== true) {
+    return;
+  }
+
+  const repository = DataParsingHelper.parseNestedString(pipeline, "workflow.source.repoId");
+  const service = DataParsingHelper.parseNestedString(pipeline, "workflow.source.service");
+  const toolId = DataParsingHelper.parseNestedString(pipeline, "workflow.source.accountId");
+  const workspace = DataParsingHelper.parseNestedString(pipeline, "workflow.source.workspace");
+
+  if (!repository || !toolId) {
+    return false;
+  }
+
+  if (service === toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET && !workspace) {
+    return false;
+  }
+
+  return true;
 };

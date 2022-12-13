@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useLocation, useParams } from "react-router-dom";
 import TaskDetailPanel from "components/tasks/details/TaskDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
@@ -35,6 +35,10 @@ import ActionBarDeleteTaskButton from "components/tasks/buttons/ActionBarDeleteT
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetTaskModelById from "components/tasks/hooks/useGetTaskModelById";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
+import useGetPollingTaskOrchestrationStatusById
+  from "hooks/workflow/tasks/orchestration/useGetPollingTaskOrchestrationStatusById";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import {numberHelpers} from "components/common/helpers/number/number.helpers";
 
 function TaskDetailView() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"workspace"} />);
@@ -49,6 +53,20 @@ function TaskDetailView() {
     loadData,
     isLoading,
   } = useGetTaskModelById(id);
+  const {
+    status,
+    runCount,
+  } = useGetPollingTaskOrchestrationStatusById(id, 15000);
+
+  useEffect(() => {
+    if (hasStringValue(status) === true && numberHelpers.hasNumberValue(runCount) === true &&
+      (taskModel?.getData("status") !== status || taskModel?.getData("run_count") !== runCount)
+    ) {
+      console.log(`got polling update for Task [${id}] status [${status}] run count [${runCount}]`);
+
+      loadData();
+    }
+  }, [status, runCount]);
 
   const getActionBar = () => {
     return (
@@ -100,8 +118,8 @@ function TaskDetailView() {
     <VanitySetDetailScreenContainer
       breadcrumbDestination={"taskManagementDetailView"}
       metadata={tasksMetadata}
+      isLoading={isLoading && taskModel == null}
       model={taskModel}
-      isLoading={isLoading}
       accessRoleData={accessRoleData}
       navigationTabContainer={<TasksSubNavigationBar currentTab={"taskViewer"} />}
       objectRoles={taskModel?.getData("roles")}
@@ -115,6 +133,8 @@ function TaskDetailView() {
           accessRoleData={accessRoleData}
           loadData={loadData}
           runTask={location?.state?.runTask}
+          status={status}
+          runCount={runCount}
         />
       }
     />

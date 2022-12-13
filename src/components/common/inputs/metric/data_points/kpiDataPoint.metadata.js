@@ -49,6 +49,8 @@ const kpiDataPointMetadata = {
     },
     visibility: {
       userVisibilityToggleSupport: false,
+      defaultNotificationToggle: false,
+      sendDefaultCriteriaNotification: false,
       isVisible: true,
     }
   },

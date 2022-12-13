@@ -7,15 +7,15 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import ToggleThemeIcon from "components/common/buttons/toggle/ToggleThemeIcon";
+import ToggleThemeIconButton from "components/common/buttons/toggle/ToggleThemeIconButton";
 import IconBase from "components/common/icons/IconBase";
 import InfoContainer from "components/common/containers/InfoContainer";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import CopyToClipboardIcon from "components/common/icons/CopyToClipboardIcon";
 import MonacoEditorCodeDiffInputBase from "./MonacoEditorCodeDiffInputBase";
-import ToggleDiffViewIcon from "components/common/buttons/toggle/ToggleDiffViewIcon";
+import ToggleDiffViewIconButton from "components/common/buttons/toggle/ToggleDiffViewIconButton";
+import CopyToClipboardButton from "components/common/buttons/clipboard/CopyToClipboardButton";
 
 // TODO: If more are added, make sure to add the respective imports into CodeInputBase
 export const MONACO_CODE_THEME_TYPES = {
@@ -40,7 +40,7 @@ function MonacoCodeDiffInput({
   customTitleText,
   theme,
 }) {
-  const [field] = useState(model?.getFieldById(fieldName));
+  const field = model?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
   const [internalTheme, setInternalTheme] = useState(
     theme === MONACO_CODE_THEME_TYPES?.DARK
@@ -84,15 +84,17 @@ function MonacoCodeDiffInput({
     return (
       <div className={"d-flex"}>
         <div className={"mr-2"}>{titleBarActionButtons}</div>
-        <CopyToClipboardIcon
+        <CopyToClipboardButton
           copyString={model?.getData(fieldName)}
-          className={"mr-2"}
+          className={"ml-2"}
+          size={"sm"}
         />
-        <ToggleThemeIcon
+        <ToggleThemeIconButton
+          className={"ml-2"}
           theme={internalTheme}
           toggleTheme={toggleTheme}
         />
-        <ToggleDiffViewIcon
+        <ToggleDiffViewIconButton
           toggleDiffView={toggleDiffView}
           className={"mr-2 ml-2"}
         />
@@ -169,6 +171,7 @@ function MonacoCodeDiffInput({
         titleIcon={faFileCode}
         titleText={getTitleText()}
         titleRightSideButton={getTitleBarActionButtons()}
+        bodyClassName={"content-container-hide-overflow"}
       >
         <div style={{ height: height }}>{getBody()}</div>
       </InfoContainer>

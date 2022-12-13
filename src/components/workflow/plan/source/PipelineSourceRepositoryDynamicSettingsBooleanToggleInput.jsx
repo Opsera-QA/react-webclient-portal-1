@@ -6,6 +6,7 @@ import {pipelineTypeConstants} from "components/common/list_of_values_input/pipe
 import IconBase from "components/common/icons/IconBase";
 import {faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
 export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInput(
   {
@@ -81,18 +82,23 @@ export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInpu
   }
 
   return (
-    <BooleanToggleInput
-      className={className}
-      dataObject={model}
-      setDataObject={setModel}
-      fieldName={"dynamicSettings"}
-      customInfoText={getInfoText()}
-      // inputHelpOverlay={helpText()}
-      disabled={
-        pipelineType !== pipelineTypeConstants.PIPELINE_TYPES.SOFTWARE_DEVELOPMENT
-        || hasStringValue(model?.getData("repoId")) !== true
-      }
-    />
+    <div className={className}>
+      <H5FieldSubHeader
+        className={"text-muted mt-3"}
+        subheaderText={"Dynamic Settings"}
+      />
+      <BooleanToggleInput
+        dataObject={model}
+        setDataObject={setModel}
+        fieldName={"dynamicSettings"}
+        customInfoText={getInfoText()}
+        helpTooltip={helpText()}
+        disabled={
+          pipelineType !== pipelineTypeConstants.PIPELINE_TYPES.SOFTWARE_DEVELOPMENT
+          || hasStringValue(model?.getData("repoId")) !== true
+        }
+      />
+    </div>
   );
 }
 

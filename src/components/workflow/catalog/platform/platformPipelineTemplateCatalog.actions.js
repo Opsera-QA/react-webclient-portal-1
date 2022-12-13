@@ -14,6 +14,7 @@ platformPipelineTemplateCatalogActions.getPlatformCatalogPipelineTemplates = asy
     size: pipelineCatalogFilterModel?.getFilterValue("pageSize"),
     search: pipelineCatalogFilterModel?.getFilterValue("search"),
     type: pipelineCatalogFilterModel?.getFilterValue("type"),
+    tag: pipelineCatalogFilterModel?.getData("tag"),
   };
 
   return await baseActions.apiGetCallV3(

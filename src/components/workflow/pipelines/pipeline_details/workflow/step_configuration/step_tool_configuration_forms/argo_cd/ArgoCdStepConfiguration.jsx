@@ -156,43 +156,59 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
   };
 
   const getSCMInputs = () => {
-    if (!argoCdModel?.getData("kustomizeFlag")) {
-      return (
-        <>
-          <ArgoCdStepSourceControlManagementToolIdentifierSelectInput
-              model={argoCdModel}
-              setModel={setArgoCdModel}
-          />
-          <ArgoCdStepSourceControlManagementToolSelectInput
-            gitYamlTool={argoCdModel?.getData("type")}
-            model={argoCdModel}
-            setModel={setArgoCdModel}
-          />
-          <ArgoCdStepBitbucketWorkspaceInput
-            gitToolId={argoCdModel?.getData("gitToolId")}
-            model={argoCdModel}
-            setModel={setArgoCdModel}
-          />
-          <ArgoCdStepGitRepositorySelectInput
-            model={argoCdModel}
-            setModel={setArgoCdModel}
-          />
-          <ArgoCdStepGitBranchSelectInput
-            model={argoCdModel}
-            setModel={setArgoCdModel}
-          />
-          <TextInputBase
-            setDataObject={setArgoCdModel}
-            dataObject={argoCdModel}
-            fieldName={"gitFilePath"}
-            disabled={
-              hasStringValue(argoCdModel?.getData("defaultBranch")) !== true
-            }
-          />
-        </>
-      );
-    }
+    return (
+      <>
+        <ArgoCdStepSourceControlManagementToolIdentifierSelectInput
+          model={argoCdModel}
+          setModel={setArgoCdModel}
+        />
+        <ArgoCdStepSourceControlManagementToolSelectInput
+          gitYamlTool={argoCdModel?.getData("type")}
+          model={argoCdModel}
+          setModel={setArgoCdModel}
+        />
+        <ArgoCdStepBitbucketWorkspaceInput
+          gitToolId={argoCdModel?.getData("gitToolId")}
+          model={argoCdModel}
+          setModel={setArgoCdModel}
+        />
+        <ArgoCdStepGitRepositorySelectInput
+          model={argoCdModel}
+          setModel={setArgoCdModel}
+        />
+        <ArgoCdStepGitBranchSelectInput
+          model={argoCdModel}
+          setModel={setArgoCdModel}
+        />
+        <TextInputBase
+          setDataObject={setArgoCdModel}
+          dataObject={argoCdModel}
+          fieldName={"gitFilePath"}
+          disabled={
+            hasStringValue(argoCdModel?.getData("defaultBranch")) !== true
+          }
+        />
+      </>
+    );
   };
+
+const getKustomizationInputFields = () => {
+  return (
+      <>
+        <ArgoCdStepKustomizeBooleanInput
+            model={argoCdModel}
+            setModel={setArgoCdModel}
+        />
+        { argoCdModel?.getData("kustomizeFlag") &&
+            <TextInputBase
+                setDataObject={setArgoCdModel}
+                dataObject={argoCdModel}
+                fieldName={"imageReference"}
+            />
+        }
+      </>
+  );
+};
 
   if (isLoading || argoCdModel === undefined) {
     return <LoadingDialog size="sm"/>;
@@ -224,11 +240,8 @@ function ArgoCdStepConfiguration({ stepTool, plan, stepId, parentCallback, close
         }
       />
       {getCommandLineSpecificInput()}
-      <ArgoCdStepKustomizeBooleanInput
-          model={argoCdModel}
-          setModel={setArgoCdModel}
-      />
       {getSCMInputs()}
+      {getKustomizationInputFields()}
       {getAppVariablesInputFields()}
       {getRollbackInputs()}
       <BooleanToggleInput

@@ -9,7 +9,6 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import CancelPipelineQueueConfirmationOverlay
   from "components/workflow/pipelines/pipeline_details/queuing/cancellation/CancelPipelineQueueConfirmationOverlay";
-import commonActions from "../../../common/common.actions";
 import InformaticaPipelineRunAssistantOverlay
   from "components/workflow/run_assistants/informatica/InformaticaPipelineRunAssistantOverlay";
 import ApigeePipelineRunAssistantOverlay from "components/workflow/run_assistants/apigee/ApigeePipelineRunAssistantOverlay";
@@ -27,7 +26,7 @@ import PipelineActionControlsRefreshButton
   from "components/workflow/pipelines/action_controls/PipelineActionControlsRefreshButton";
 import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import PipelineActionControlsStartPipelineButton
-  from "components/workflow/pipelines/action_controls/PipelineActionControlsStartPipelineButton";
+  from "components/workflow/pipelines/action_controls/start/PipelineActionControlsStartPipelineButton";
 import useGetFeatureFlags from "hooks/platform/useGetFeatureFlags";
 
 const delayCheckInterval = 15000;
@@ -57,6 +56,7 @@ function PipelineActionControls(
   } = useComponentStateReference();
   const {
     orchestrationFeatureFlags,
+    enabledServices,
   } = useGetFeatureFlags();
 
   useEffect(() => {
@@ -192,11 +192,26 @@ function PipelineActionControls(
     }
   };
 
-  const runPipeline = async (pipelineId) => {
+  const runPipeline = async (pipelineId, dynamicBranch) => {
     try {
+      const postBody = {};
+
+      const parsedDynamicBranch = DataParsingHelper.parseString(dynamicBranch);
+
+      if (enabledServices?.dynamicSettings === true && parsedDynamicBranch) {
+        postBody.settings = {
+          branch: parsedDynamicBranch,
+        };
+      }
+
       setStartPipeline(true);
       toastContext.showInformationToast("A request to start this pipeline has been submitted.", 20);
-      const response = await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      const response = await PipelineActions.runPipelineV2(
+        getAccessToken,
+        cancelTokenSource,
+        pipelineId,
+        postBody,
+      );
       const message = response?.data?.message;
 
       if (hasStringValue(message) === true) {
@@ -367,8 +382,29 @@ function PipelineActionControls(
     }
   };
 
+  // TODO: Move to helper
+  const getPipelineOrientation = () => {
+    const stoppedStepId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.step_id");
+    const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
+    const pipelineStepCount = plan.length;
+
+    // is pipeline at the beginning or stopped midway or end of prior?
+    //what step are we currently on in the pipeline: first, last or middle?
+    if (DataParsingHelper.isValidMongoDbId(stoppedStepId) === true) {
+      const stepIndex = PipelineHelpers.getStepIndex(pipeline, stoppedStepId);
+      console.log(`current resting step index: ${stepIndex} of ${pipelineStepCount}`);
+      if (stepIndex + 1 === pipelineStepCount) {
+        return "end";
+      } else {
+        return "middle";
+      }
+    }
+
+    return "start";
+  };
+
   // TODO: Put into a separate run button
-  const handleRunPipelineClick = async () => {
+  const handleRunPipelineClick = async (dynamicBranch) => {
     const pipelineId = pipeline?._id;
     //check type of pipeline to determine if pre-flight wizard is required
     //for now type is just the first entry
@@ -406,11 +442,11 @@ function PipelineActionControls(
       } else { //this is starting from beginning:
         if (pipelineOrientation === "start") {
           console.log("starting pipeline from scratch");
-          await runPipeline(pipelineId);
+          await runPipeline(pipelineId, dynamicBranch);
         } else {
           console.log("clearing pipeline activity and then starting over");
           await resetPipelineState(pipelineId);
-          await runPipeline(pipelineId);
+          await runPipeline(pipelineId, dynamicBranch);
         }
       }
     }
@@ -468,6 +504,8 @@ function PipelineActionControls(
           disabledActionState={disabledActionState}
           hasQueuedRequest={hasQueuedRequest}
           pipelineIsStarting={startPipeline}
+          dynamicSettingsEnabled={enabledServices?.dynamicSettings === true}
+          pipelineOrientation={getPipelineOrientation()}
         />
       );
     }
