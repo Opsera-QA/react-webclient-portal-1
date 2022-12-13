@@ -4,39 +4,39 @@ const cypressPipelineStepConfigurationMetadata = {
     {
       label: "Jenkins Tool",
       id: "toolConfigId",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Job Type",
       id: "jobType",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Job Type",
       id: "opsera_job_type",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Job Name",
       id: "jobName",
-      isRequiredFunction: (model) => {
-        return model?.getData("opsera_job_type") === "job";
-      },
+      // isRequiredFunction: (model) => {
+      //   return model?.getData("opsera_job_type") === "job";
+      // },
     },
     {
       label: "Jenkins URL",
       id: "jenkinsUrl",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Jenkins User ID",
       id: "jUserId",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Jenkins Authorization Token",
       id: "jAuthToken",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Job",
@@ -86,16 +86,16 @@ const cypressPipelineStepConfigurationMetadata = {
     {
       label: "Docker Name",
       id: "dockerName",
-      isRequiredFunction: (model) => {
-        return model?.getData("buildType") === "docker";
-      },
+      // isRequiredFunction: (model) => {
+      //   return model?.getData("buildType") === "docker";
+      // },
     },
     {
       label: "Docker Tag",
       id: "dockerTagName",
-      isRequiredFunction: (model) => {
-        return model?.getData("buildType") === "docker";
-      },
+      // isRequiredFunction: (model) => {
+      //   return model?.getData("buildType") === "docker";
+      // },
     },
     {
       label: "JSON Path",
