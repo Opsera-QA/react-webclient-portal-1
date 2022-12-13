@@ -80,36 +80,6 @@ export default function UserActivityAuditLogSummaryPanelBase(
             fieldName={"changeLog"}
           />
         </Col>
-        <Col xs={12} md={6}>
-          <JsonField
-            fieldName={"attributes"}
-            dataObject={auditLogModel}
-          />
-        </Col>
-        <Col xs={12} md={6}>
-          <JsonField
-            fieldName={"attributes2"}
-            dataObject={auditLogModel}
-          />
-        </Col>
-        {/*<Col xs={12}>*/}
-        {/*  <JsonField*/}
-        {/*    fieldName={"changeLog"}*/}
-        {/*    dataObject={auditLogModel}*/}
-        {/*  />*/}
-        {/*</Col>*/}
-        <Col xs={12} md={6}>
-          <JsonField
-            fieldName={"originalData"}
-            dataObject={auditLogModel}
-          />
-        </Col>
-        <Col xs={12} md={6}>
-          <JsonField
-            fieldName={"newData"}
-            dataObject={auditLogModel}
-          />
-        </Col>
       </Row>
     </div>
   );

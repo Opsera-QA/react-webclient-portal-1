@@ -5,10 +5,10 @@ import FullScreenCenterOverlayContainer from "components/common/overlays/center/
 import PipelineAuditLogsDisplayer from "components/workflow/pipelines/audit/PipelineAuditLogsDisplayer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import PipelineAuditLogDetailOverlay from "components/workflow/pipelines/audit/PipelineAuditLogDetailOverlay";
+import PipelineAuditLogDetailOverlay from "components/workflow/pipelines/audit/details/PipelineAuditLogDetailOverlay";
 
 export default function PipelineAuditLogOverlay({pipelineId}) {
-  const [selectedActivityLogId, setSelectedActivityLogId] = useState(undefined);
+  const [selectedAuditLogId, setSelectedAuditLogId] = useState(undefined);
   const {
     toastContext,
   } = useComponentStateReference();
@@ -22,12 +22,12 @@ export default function PipelineAuditLogOverlay({pipelineId}) {
     return null;
   }
 
-  if (isMongoDbId(selectedActivityLogId) === true) {
+  if (isMongoDbId(selectedAuditLogId) === true) {
     return (
       <PipelineAuditLogDetailOverlay
         pipelineId={pipelineId}
-        selectedActivityLogId={selectedActivityLogId}
-        setSelectedActivityLogId={setSelectedActivityLogId}
+        selectedAuditLogId={selectedAuditLogId}
+        setSelectedAuditLogId={setSelectedAuditLogId}
       />
     );
   }
@@ -42,7 +42,7 @@ export default function PipelineAuditLogOverlay({pipelineId}) {
       <div className={"p-3"}>
         <PipelineAuditLogsDisplayer
           pipelineId={pipelineId}
-          setSelectedActivityLogId={setSelectedActivityLogId}
+          setSelectedAuditLogId={setSelectedAuditLogId}
         />
       </div>
     </FullScreenCenterOverlayContainer>

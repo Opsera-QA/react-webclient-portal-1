@@ -171,6 +171,7 @@ function MonacoCodeDiffInput({
         titleIcon={faFileCode}
         titleText={getTitleText()}
         titleRightSideButton={getTitleBarActionButtons()}
+        bodyClassName={"content-container-hide-overflow"}
       >
         <div style={{ height: height }}>{getBody()}</div>
       </InfoContainer>

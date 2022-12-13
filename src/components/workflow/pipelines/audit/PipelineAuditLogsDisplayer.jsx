@@ -5,8 +5,6 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faShieldCheck} from "@fortawesome/pro-light-svg-icons";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import UserActivityAuditLogTableBase from "components/common/audit_log/UserActivityAuditLogTableBase";
-import PipelineAuditLogSummaryPanel from "components/workflow/pipelines/audit/PipelineAuditLogSummaryPanel";
-import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 import InlineUserFilterSelectInput from "components/common/filters/ldap/owner/InlineUserFilterSelectInput";
 import PipelineAuditLogActionsVerticalTabContainer
   from "components/workflow/pipelines/audit/PipelineAuditLogActionsVerticalTabContainer";
@@ -16,7 +14,7 @@ import {screenContainerHeights} from "components/common/panels/general/screenCon
 export default function PipelineAuditLogsDisplayer(
   {
     pipelineId,
-    setSelectedActivityLogId,
+    setSelectedAuditLogId,
   }) {
   const {
     pipelineAuditLogFilterModel,
@@ -43,7 +41,7 @@ export default function PipelineAuditLogsDisplayer(
         auditLogs={auditLogs}
         isLoading={isLoading}
         loadDataFunction={loadData}
-        setSelectedActivityLogId={setSelectedActivityLogId}
+        setSelectedActivityLogId={setSelectedAuditLogId}
         filterModel={pipelineAuditLogFilterModel}
         setFilterModel={setPipelineAuditLogFilterModel}
       />
@@ -91,5 +89,5 @@ export default function PipelineAuditLogsDisplayer(
 
 PipelineAuditLogsDisplayer.propTypes = {
   pipelineId: PropTypes.string,
-  setSelectedActivityLogId: PropTypes.func,
+  setSelectedAuditLogId: PropTypes.func,
 };
