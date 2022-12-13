@@ -11,12 +11,13 @@ import InlineUserFilterSelectInput from "components/common/filters/ldap/owner/In
 import PipelineAuditLogActionsVerticalTabContainer
   from "components/workflow/pipelines/audit/PipelineAuditLogActionsVerticalTabContainer";
 import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
+import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
 
 export default function PipelineAuditLogsDisplayer(
   {
     pipelineId,
+    setSelectedActivityLogId,
   }) {
-  const [selectedActivityLogId, setSelectedActivityLogId] = useState(undefined);
   const {
     pipelineAuditLogFilterModel,
     setPipelineAuditLogFilterModel,
@@ -72,22 +73,10 @@ export default function PipelineAuditLogsDisplayer(
     return null;
   }
 
-  if (isMongoDbId(selectedActivityLogId) === true) {
-    return (
-      <div>
-        <PipelineAuditLogSummaryPanel
-          pipelineId={pipelineId}
-          auditLogId={selectedActivityLogId}
-        />
-        <BackButtonBase
-          backButtonFunction={() => setSelectedActivityLogId(undefined)}
-        />
-      </div>
-    );
-  }
-
   return (
     <FilterContainer
+      minimumHeight={screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT}
+      maximumHeight={screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT}
       isLoading={isLoading}
       title={"Pipeline Audit Logs"}
       titleIcon={faShieldCheck}
@@ -102,4 +91,5 @@ export default function PipelineAuditLogsDisplayer(
 
 PipelineAuditLogsDisplayer.propTypes = {
   pipelineId: PropTypes.string,
+  setSelectedActivityLogId: PropTypes.func,
 };
