@@ -22,11 +22,11 @@ const dockerCliStepFormMetadata = {
     {
       label: "Repository",
       id: "gitRepository",
-      isRequired: true
-    },    
+    },
     {
       label: "Repository",
       id: "repoId",
+      isRequired: true,
     },
     {
       label: "Branch",
@@ -42,7 +42,7 @@ const dockerCliStepFormMetadata = {
     {
       label: "Git File Path",
       id: "gitFilePath",
-    },    
+    },
     {
       label: "Enable Dependency",
       id: "enableDependency"
@@ -62,7 +62,7 @@ const dockerCliStepFormMetadata = {
     {
       label: "Dynamic Parameters",
       id: "environmentVariables",
-      maxItems: 15,      
+      maxItems: 15,
     },
     {
       label: "Enable Docker Build",
@@ -71,12 +71,14 @@ const dockerCliStepFormMetadata = {
     {
       label: "Input File Name",
       id: "inputFileName"
-    },    
+    },
     {
       label: "Docker Name",
       id: "dockerName",
-      isRequired: true,
-      maxLength:256,
+      isRequiredFunction: (model) => {
+        return model?.getData("enableDockerBuild") === true;
+      },
+      maxLength: 256,
       // TODO: This should be the pattern but this is probably fine.
       regexValidator: RegExp("^[a-zA-Z0-9_.-]*$"),
       isLowercase: true,
