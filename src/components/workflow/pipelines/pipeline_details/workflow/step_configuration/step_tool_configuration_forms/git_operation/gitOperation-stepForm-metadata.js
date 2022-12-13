@@ -5,7 +5,7 @@ const gitOperationStepFormMetadata = {
       label: "SCM Type",
       id: "service",
       isRequired: true,
-      maxLength: 10,
+      maxLength: 150,
       lowercase: true,
     },
     {
@@ -14,29 +14,24 @@ const gitOperationStepFormMetadata = {
       isRequired: true,
       maxLength: 24,
       regexDefinitionName: "mongoId",
-      formText:" "
     },
     {
       label: "Repository",
       id: "repository",
-      isRequired: true,
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
-      formText:" "
     },
     {
       label: "Repository",
       id: "repoId",
       isRequired: true,
       maxLength: 255,
-      formText:" "
     },
     {
       label: "Workspace/Project",
       id: "workspace",
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
-      formText:" "
     },
     {
       label: "Branch",
@@ -44,7 +39,6 @@ const gitOperationStepFormMetadata = {
       isRequired: true,
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
-      formText:" "
     },
     {
       label: "Target Branch",
@@ -54,7 +48,6 @@ const gitOperationStepFormMetadata = {
       },
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
-      formText:" "
     },
     {
       label: "Description",
@@ -84,14 +77,12 @@ const gitOperationStepFormMetadata = {
     {
       label: "Add Reviewer",
       id: "addReviewers",
-      maxLength: 50,
-      isRequired: true,
-      lowercase: true,
     },
     {
       label: "Select Reviewers",
       id: "prReviewers",
       maxLength: 10,
+      minLength: 1,
       isRequiredFunction: (model) => {
         return model?.getData("action") === "pr-creation" && model?.getData("addReviewers") === true;
       },
