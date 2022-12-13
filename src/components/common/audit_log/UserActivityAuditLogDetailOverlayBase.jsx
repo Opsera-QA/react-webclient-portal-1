@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 import {faShieldCheck} from "@fortawesome/pro-light-svg-icons";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import PipelineAuditLogSummaryPanel from "components/workflow/pipelines/audit/PipelineAuditLogSummaryPanel";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import CloseButton from "components/common/buttons/CloseButton";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import UserActivityAuditLogDetailPanel from "components/common/audit_log/UserActivityAuditLogDetailPanel";
 
-export default function PipelineAuditLogDetailOverlay(
+export default function UserActivityAuditLogDetailOverlayBase(
   {
-    pipelineId,
-    selectedActivityLogId,
-    setSelectedActivityLogId,
+    type,
+    auditLogModel,
+    isLoading,
+    setSelectedAuditLogId,
   }) {
   const {
     toastContext,
@@ -30,7 +32,7 @@ export default function PipelineAuditLogDetailOverlay(
         leftSideButtons={
           <BackButtonBase
             size={"sm"}
-            backButtonFunction={() => setSelectedActivityLogId(undefined)}
+            backButtonFunction={() => setSelectedAuditLogId(undefined)}
           />
         }
       >
@@ -43,26 +45,39 @@ export default function PipelineAuditLogDetailOverlay(
     );
   };
 
+  const getBody = () => {
+    if (isLoading === true) {
+      return (
+        <CenterLoadingIndicator type={`Audit Log`} />
+      );
+    }
+
+    return (
+      <UserActivityAuditLogDetailPanel
+        auditLogModel={auditLogModel}
+      />
+    );
+  };
+
+
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
-      titleText={`Pipeline Audit Log Viewer`}
+      titleText={`${type} Audit Log Viewer`}
       titleIcon={faShieldCheck}
       showToasts={true}
       buttonContainer={getButtonContainer()}
     >
-      <div className={"p-3"}>
-        <PipelineAuditLogSummaryPanel
-          pipelineId={pipelineId}
-          auditLogId={selectedActivityLogId}
-        />
+      <div className={"pt-3"}>
+        {getBody()}
       </div>
     </FullScreenCenterOverlayContainer>
   );
 }
 
-PipelineAuditLogDetailOverlay.propTypes = {
-  pipelineId: PropTypes.string,
-  selectedActivityLogId: PropTypes.string,
-  setSelectedActivityLogId: PropTypes.func,
+UserActivityAuditLogDetailOverlayBase.propTypes = {
+  type: PropTypes.string,
+  auditLogModel: PropTypes.object,
+  isLoading: PropTypes.bool,
+  setSelectedAuditLogId: PropTypes.func,
 };
