@@ -36,7 +36,7 @@ export default function UserActivityAuditLogDetailPanel({ auditLogModel }) {
         return (
           <UserActivityAuditLogSummaryPanelBase
             auditLogModel={auditLogModel}
-            className={"m-2"}
+            className={"mt-2 mx-2"}
           />
         );
       case "json":
