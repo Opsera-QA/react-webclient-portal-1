@@ -9,7 +9,7 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import { getSingularOrPluralString } from "components/common/helpers/string-helpers";
 import OpseraInfinityLogoLarge from "components/logo/OpseraInfinityLogoLarge";
 import { widgetHelper } from "temp-library-components/helpers/widgets/widget.helper";
-import { EXTERNAL_LINKS } from "HeaderNavBar";
+import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
 import { ExternalLink } from "temp-library-components/link/ExternalLink";
 
 // TODO: This needs to be rewritten to be standardized and cleaned up

@@ -125,7 +125,7 @@ function RunTaskButton(
       }
     }
     else if (taskModel?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {
-      setTaskStarting(true);
+      setIsStarting(true);
       // const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
       // gitTasksData.setData("configuration", configuration);
       // await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
