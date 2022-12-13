@@ -18,6 +18,25 @@ pipelineValidationHelper.isPipelineStepToolValid = (pipelineStep) => {
   // Do not add to this list. This is only here until these steps can be addressed
   const disabledPipelineStepIdentifiers = [
     toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.GIT_CUSTODIAN,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.COVERITY,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.PMD,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.SONAR,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.JUNIT,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.NUNIT,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.XUNIT,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.DATABRICKS_NOTEBOOK,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.GIT_OPERATION,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.PROVAR,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.SELENIUM,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.TERRASCAN,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.ANCHORE_SCAN,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.SERVICE_NOW,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.SPINNAKER,
   ];
 
   if (disabledPipelineStepIdentifiers.includes(parsedToolIdentifier)) {
