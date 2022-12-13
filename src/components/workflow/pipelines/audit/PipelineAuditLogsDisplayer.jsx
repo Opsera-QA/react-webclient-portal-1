@@ -61,6 +61,8 @@ export default function PipelineAuditLogsDisplayer(
   const getBody = () => {
     return (
       <TabAndViewContainer
+        minimumHeight={screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT}
+        maximumHeight={screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT}
         verticalTabContainer={getVerticalTabContainer()}
         currentView={getTable()}
       />

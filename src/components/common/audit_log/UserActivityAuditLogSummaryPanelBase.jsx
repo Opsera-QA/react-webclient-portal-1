@@ -9,6 +9,7 @@ import JsonField from "components/common/fields/json/JsonField";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import MonacoEditorCodeDiffInputBase from "components/common/inputs/code/monaco/MonacoEditorCodeDiffInputBase";
 import MonacoCodeDiffInput from "components/common/inputs/code/monaco/MonacoCodeDiffInput";
+import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
 
 export default function UserActivityAuditLogSummaryPanelBase(
   {
@@ -75,7 +76,7 @@ export default function UserActivityAuditLogSummaryPanelBase(
             originalContent={JSON.stringify(auditLogModel?.getData("originalData"), null, 2)}
             modifiedContent={JSON.stringify(auditLogModel?.getData("newData"), null, 2)}
             disabled={true}
-            height={"500px"}
+            height={`max(calc(${screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT} - 215px), 350px)`}
             model={auditLogModel}
             fieldName={"changeLog"}
           />
