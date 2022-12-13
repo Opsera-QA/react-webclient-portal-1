@@ -5,18 +5,17 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faShieldCheck} from "@fortawesome/pro-light-svg-icons";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import UserActivityAuditLogTableBase from "components/common/audit_log/UserActivityAuditLogTableBase";
-import PipelineAuditLogSummaryPanel from "components/workflow/pipelines/audit/PipelineAuditLogSummaryPanel";
-import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 import InlineUserFilterSelectInput from "components/common/filters/ldap/owner/InlineUserFilterSelectInput";
 import PipelineAuditLogActionsVerticalTabContainer
   from "components/workflow/pipelines/audit/PipelineAuditLogActionsVerticalTabContainer";
 import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
+import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
 
 export default function PipelineAuditLogsDisplayer(
   {
     pipelineId,
+    setSelectedAuditLogId,
   }) {
-  const [selectedActivityLogId, setSelectedActivityLogId] = useState(undefined);
   const {
     pipelineAuditLogFilterModel,
     setPipelineAuditLogFilterModel,
@@ -42,7 +41,7 @@ export default function PipelineAuditLogsDisplayer(
         auditLogs={auditLogs}
         isLoading={isLoading}
         loadDataFunction={loadData}
-        setSelectedActivityLogId={setSelectedActivityLogId}
+        setSelectedActivityLogId={setSelectedAuditLogId}
         filterModel={pipelineAuditLogFilterModel}
         setFilterModel={setPipelineAuditLogFilterModel}
       />
@@ -62,6 +61,8 @@ export default function PipelineAuditLogsDisplayer(
   const getBody = () => {
     return (
       <TabAndViewContainer
+        minimumHeight={screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT}
+        maximumHeight={screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT}
         verticalTabContainer={getVerticalTabContainer()}
         currentView={getTable()}
       />
@@ -72,22 +73,10 @@ export default function PipelineAuditLogsDisplayer(
     return null;
   }
 
-  if (isMongoDbId(selectedActivityLogId) === true) {
-    return (
-      <div>
-        <PipelineAuditLogSummaryPanel
-          pipelineId={pipelineId}
-          auditLogId={selectedActivityLogId}
-        />
-        <BackButtonBase
-          backButtonFunction={() => setSelectedActivityLogId(undefined)}
-        />
-      </div>
-    );
-  }
-
   return (
     <FilterContainer
+      minimumHeight={screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT}
+      maximumHeight={screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT}
       isLoading={isLoading}
       title={"Pipeline Audit Logs"}
       titleIcon={faShieldCheck}
@@ -102,4 +91,5 @@ export default function PipelineAuditLogsDisplayer(
 
 PipelineAuditLogsDisplayer.propTypes = {
   pipelineId: PropTypes.string,
+  setSelectedAuditLogId: PropTypes.func,
 };

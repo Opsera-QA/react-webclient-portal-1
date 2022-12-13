@@ -16,6 +16,7 @@ function CopyToClipboardButton(
     size,
     variant,
     showLabel,
+    visible,
   }) {
   const [copiedToClipboard, setCopiedToClipboard] = useState(false);
 
@@ -40,6 +41,10 @@ function CopyToClipboardButton(
 
     return (<span className={"ml-2"}>Copy to Clipboard</span>);
   };
+
+  if (visible === false) {
+    return null;
+  }
 
   return (
     <ButtonTooltip trigger={["hover", "focus"]} innerText={copiedToClipboard === true ? copiedText : copyText}>
@@ -72,6 +77,7 @@ CopyToClipboardButton.propTypes = {
   copiedIcon: PropTypes.object,
   variant: PropTypes.string,
   showLabel: PropTypes.bool,
+  visible: PropTypes.bool,
 };
 
 CopyToClipboardButton.defaultProps = {

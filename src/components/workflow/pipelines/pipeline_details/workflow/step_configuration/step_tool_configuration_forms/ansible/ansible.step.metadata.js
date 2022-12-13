@@ -35,7 +35,6 @@ const ansibleStepMetadata = {
     {
       label: "Repository",
       id: "repository",
-      isRequired: true
     },
     {
       label: "Workspace",

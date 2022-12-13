@@ -39,6 +39,7 @@ function MonacoCodeDiffInput({
   height,
   customTitleText,
   theme,
+  hideClipboardButton,
 }) {
   const field = model?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
@@ -88,6 +89,7 @@ function MonacoCodeDiffInput({
           copyString={model?.getData(fieldName)}
           className={"ml-2"}
           size={"sm"}
+          visible={hideClipboardButton !== true}
         />
         <ToggleThemeIconButton
           className={"ml-2"}
@@ -171,6 +173,7 @@ function MonacoCodeDiffInput({
         titleIcon={faFileCode}
         titleText={getTitleText()}
         titleRightSideButton={getTitleBarActionButtons()}
+        bodyClassName={"content-container-hide-overflow"}
       >
         <div style={{ height: height }}>{getBody()}</div>
       </InfoContainer>
@@ -200,6 +203,7 @@ MonacoCodeDiffInput.propTypes = {
   height: PropTypes.string,
   customTitleText: PropTypes.string,
   theme: PropTypes.string,
+  hideClipboardButton: PropTypes.bool,
 };
 
 MonacoCodeDiffInput.defaultProps = {
