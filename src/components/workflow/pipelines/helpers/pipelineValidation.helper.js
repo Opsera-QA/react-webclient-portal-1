@@ -19,7 +19,7 @@ pipelineValidationHelper.isPipelineStepToolValid = (pipelineStep) => {
   const disabledPipelineStepIdentifiers = [
     toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS,
     toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY,
-    toolIdentifierConstants.TOOL_IDENTIFIERS.GIT_CUSTODIAN,
+    toolIdentifierConstants.TOOL_IDENTIFIERS.GITSCRAPER,
     toolIdentifierConstants.TOOL_IDENTIFIERS.COVERITY,
     toolIdentifierConstants.TOOL_IDENTIFIERS.SALESFORCE_CODE_ANALYZER,
     toolIdentifierConstants.TOOL_IDENTIFIERS.PMD,
