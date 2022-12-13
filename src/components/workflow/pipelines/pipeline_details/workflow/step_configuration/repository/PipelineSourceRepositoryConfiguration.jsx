@@ -27,6 +27,8 @@ import PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
 import {
   sourceRepositoryConfigurationMetadata
 } from "components/workflow/plan/source/sourceRepositoryConfiguration.metadata";
+import PipelineSourceRepositoryGitExportEnabledInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryGitExportEnabledInput";
 
 function PipelineSourceRepositoryConfiguration(
   {
@@ -202,7 +204,6 @@ function PipelineSourceRepositoryConfiguration(
           model={sourceRepositoryModel}
           setModel={setSourceRepositoryModel}
           service={sourceRepositoryModel?.getData("service")}
-      {/* <div className={"p-3"} >COMING SOON</div> */}
           disabled={sourceRepositoryModel.getData("service") !== "gitlab" && sourceRepositoryModel.getData("service") !== "github"}
         />
       <PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
