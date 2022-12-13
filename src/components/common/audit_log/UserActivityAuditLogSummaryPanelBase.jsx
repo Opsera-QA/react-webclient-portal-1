@@ -7,15 +7,55 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 import JsonField from "components/common/fields/json/JsonField";
 import DateTimeField from "components/common/fields/date/DateTimeField";
-import MonacoEditorCodeDiffInputBase from "components/common/inputs/code/monaco/MonacoEditorCodeDiffInputBase";
 import MonacoCodeDiffInput from "components/common/inputs/code/monaco/MonacoCodeDiffInput";
 import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function UserActivityAuditLogSummaryPanelBase(
   {
     auditLogModel,
     className,
   }) {
+
+  const getDiffView = () => {
+    const originalData = DataParsingHelper.parseObject(auditLogModel?.getData("originalData"));
+    const newData = DataParsingHelper.parseObject(auditLogModel?.getData("newData"));
+
+    if (originalData && !newData) {
+      return (
+        <JsonField
+          dataObject={auditLogModel}
+          fieldName={"originalData"}
+          customTitle={"Object Reference"}
+        />
+      );
+    }
+
+    if (!originalData && newData) {
+      return (
+        <JsonField
+          dataObject={auditLogModel}
+          fieldName={"newData"}
+          customTitle={"Object Reference"}
+        />
+      );
+    }
+
+
+    if (originalData && newData) {
+      return (
+        <MonacoCodeDiffInput
+          originalContent={JSON.stringify(originalData, null, 2)}
+          modifiedContent={JSON.stringify(newData, null, 2)}
+          disabled={true}
+          height={`max(calc(${screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT} - 215px), 350px)`}
+          model={auditLogModel}
+          fieldName={"changeLog"}
+          hideClipboardButton={true}
+        />
+      );
+    }
+  };
 
   if (auditLogModel == null) {
     return null;
@@ -72,14 +112,7 @@ export default function UserActivityAuditLogSummaryPanelBase(
           />
         </Col>
         <Col xs={12}>
-          <MonacoCodeDiffInput
-            originalContent={JSON.stringify(auditLogModel?.getData("originalData"), null, 2)}
-            modifiedContent={JSON.stringify(auditLogModel?.getData("newData"), null, 2)}
-            disabled={true}
-            height={`max(calc(${screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT} - 215px), 350px)`}
-            model={auditLogModel}
-            fieldName={"changeLog"}
-          />
+          {getDiffView()}
         </Col>
       </Row>
     </div>
