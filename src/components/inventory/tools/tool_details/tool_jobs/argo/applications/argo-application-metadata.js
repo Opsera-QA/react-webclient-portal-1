@@ -33,7 +33,7 @@ const argoApplicationsMetadata = {
       id: "namespace",
       isRequired: true,
       maxLength: 28,
-      // regexDefinitionName: "generalText",
+      regexDefinitionName: "domainField",
     },
     {
       label: "Project Name",
