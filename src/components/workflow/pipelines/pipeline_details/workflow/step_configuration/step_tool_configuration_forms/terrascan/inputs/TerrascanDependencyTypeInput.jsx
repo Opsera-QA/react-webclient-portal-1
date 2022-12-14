@@ -8,13 +8,8 @@ function TerrascanDependencyTypeInput({dataObject, setDataObject, disabled}) {
 
   const setDependencyTypes = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
-
-    let dependenciesObj = {};
-    selectedOption.map((item) => {
-      dependenciesObj[item.dependencyType] = item.version;
-    });
-    newDataObject.setData("dependencyType", selectedOption);
-    newDataObject.setData("dependencies", dependenciesObj);
+    newDataObject.setData("dependencyType", selectedOption.dependencyType);
+    newDataObject.setData("dependencies", selectedOption.dependencies);
     setDataObject({...newDataObject});
   };
 
