@@ -12,6 +12,7 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
 import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
 import _ from "lodash";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function AzureDevOpsRepositorySelectInput({
   fieldName,
