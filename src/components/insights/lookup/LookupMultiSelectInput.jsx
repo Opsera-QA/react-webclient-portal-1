@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { insightsLookupActions } from "components/insights/lookup/insightsLookup.actions";
+import {capitalizeFirstLetter} from "../../common/helpers/string-helpers";
 
 function LookupMultiSelectInput(
   {
@@ -54,14 +55,17 @@ function LookupMultiSelectInput(
     const pipelinesResponse = await insightsLookupActions.getPipelines(getAccessToken, cancelTokenSource);
     const tasksResponse = await insightsLookupActions.getTasks(getAccessToken, cancelTokenSource);
     const orgsResponse = await insightsLookupActions.getOrgs(getAccessToken, cancelTokenSource);
+    // const componentNamesList = await insightsLookupActions.getComponentNames(getAccessToken, cancelTokenSource);
 
     const types = componentTypeResponse?.data?.data;
     const pipelines = pipelinesResponse?.data?.results;
     const tasks = tasksResponse?.data?.results;
     const orgs = orgsResponse?.data?.results;
+    // const names = componentNamesList?.data?.data?.componentNames;
 
-    if (isMounted?.current === true && Array.isArray(types)) {
-      setSalesforceComponentNames(types);
+    if (isMounted?.current === true && Array.isArray(pipelines) && Array.isArray(pipelines) && Array.isArray(tasks) && Array.isArray(orgs) && Array.isArray(types)) {
+      const resultArray = [...types, ...pipelines, ...tasks, ...orgs];
+      setSalesforceComponentNames(resultArray);
     }
   };
 
@@ -75,9 +79,10 @@ function LookupMultiSelectInput(
       selectOptions={salesforceComponentNames}
       formatDataFunction={formatDataFunction}
       clearDataFunction={clearDataFunction}
+      groupBy={(filterOption) => capitalizeFirstLetter(filterOption?.type, " ", "Undefined Type")}
+      textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + capitalizeFirstLetter(data["name"])}
       busy={isLoading}
       valueField={valueField}
-      textField={textField}
       disabled={disabled}
       error={error}
     />
