@@ -60,7 +60,9 @@ function Lookup() {
         formattedStartDate,
         formattedEndDate,
         newFilterModel.getData("selectedComponentNames"),
+        newFilterModel.getData("selectedComponentFilterData"),
       );
+      console.log(newFilterModel.getData("selectedComponentFilterData"));
       const searchResults = insightsLookupActions.generateTransformedResults(response?.data?.data?.data);
 
       if (isMounted?.current === true && Array.isArray(searchResults)) {
