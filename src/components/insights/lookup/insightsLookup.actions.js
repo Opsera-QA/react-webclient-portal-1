@@ -34,13 +34,14 @@ insightsLookupActions.getOrgs = async (getAccessToken, cancelTokenSource) => {
   return await baseActions.handleNodeAnalyticsApiGetRequest(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-insightsLookupActions.searchComponents = async (getAccessToken, cancelTokenSource, startDate, endDate, componentNames) => {
+insightsLookupActions.searchComponents = async (getAccessToken, cancelTokenSource, startDate, endDate, componentNames, selectedComponentFilterData) => {
   const apiUrl = `/analytics/sfdc/v1/component`;
   const urlParams = {
     params: {
       startDate: startDate,
       endDate: endDate,
       fullNameArr: componentNames,
+      selectedComponentFilterData: selectedComponentFilterData
     },
   };
   return await baseActions.handleNodeAnalyticsApiGetRequest(getAccessToken, cancelTokenSource, apiUrl, urlParams);
