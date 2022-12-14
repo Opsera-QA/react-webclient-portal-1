@@ -55,16 +55,16 @@ function LookupMultiSelectInput(
     const pipelinesResponse = await insightsLookupActions.getPipelines(getAccessToken, cancelTokenSource);
     const tasksResponse = await insightsLookupActions.getTasks(getAccessToken, cancelTokenSource);
     const orgsResponse = await insightsLookupActions.getOrgs(getAccessToken, cancelTokenSource);
-    // const componentNamesList = await insightsLookupActions.getComponentNames(getAccessToken, cancelTokenSource);
+    const componentNamesList = await insightsLookupActions.getComponentNames(getAccessToken, cancelTokenSource);
 
     const types = componentTypeResponse?.data?.data;
     const pipelines = pipelinesResponse?.data?.results;
     const tasks = tasksResponse?.data?.results;
     const orgs = orgsResponse?.data?.results;
-    // const names = componentNamesList?.data?.data?.componentNames;
+    const names = componentNamesList?.data?.data?.componentNames;
 
-    if (isMounted?.current === true && Array.isArray(pipelines) && Array.isArray(pipelines) && Array.isArray(tasks) && Array.isArray(orgs) && Array.isArray(types)) {
-      const resultArray = [...types, ...pipelines, ...tasks, ...orgs];
+    if (isMounted?.current === true && Array.isArray(pipelines) && Array.isArray(pipelines) && Array.isArray(tasks) && Array.isArray(orgs) && Array.isArray(types) && Array.isArray(names)) {
+      const resultArray = [...types, ...pipelines, ...tasks, ...orgs, ...names];
       setSalesforceComponentNames(resultArray);
     }
   };
@@ -102,7 +102,7 @@ LookupMultiSelectInput.propTypes = {
 };
 
 LookupMultiSelectInput.defaultProps = {
-  valueField: "id",
+  // valueField: "id",
   textField: "name"
 };
 
