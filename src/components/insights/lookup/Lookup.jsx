@@ -14,6 +14,7 @@ import DateRangeInputBase from "components/common/inputs/date/range/DateRangeInp
 import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import { formatDate } from "components/common/helpers/date/date.helpers";
 import LookupFilterModel from "components/insights/lookup/lookup.filter.model";
+import LookupMultiSelectInput from "components/insights/lookup/LookupMultiSelectInput";
 
 function Lookup() {
   const [isLoading, setIsLoading] = useState(false);
@@ -108,11 +109,18 @@ function Lookup() {
 
   const getBody = () => {
     return (
+      <>
+      <LookupMultiSelectInput
+        fieldName={"selectedComponentFilterData"}
+        model={filterModel}
+        setModel={setFilterModel}
+      />
       <LookupResults
         isLoading={isLoading}
         searchResults={searchResults}
         noDataMessage={getNoDataMessage()}
       />
+      </>
     );
   };
 
