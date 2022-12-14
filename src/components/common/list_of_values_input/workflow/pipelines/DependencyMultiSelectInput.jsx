@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export const itemArray = [
   {
@@ -338,6 +339,7 @@ function DependencyMultiSelectInput({
   dataObject,
   setDataObject,
   setDataFunction,
+  clearDataFunction,
 }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
@@ -396,19 +398,41 @@ function DependencyMultiSelectInput({
       .map((dependency) => dependency.dependencyType);
   };
 
+  const getFilteredItems = () => {
+    const currentData = DataParsingHelper.parseArray(
+      dataObject.getData(fieldName),
+      [],
+    );
+    console.log(currentData);
+    const selectedDependencyTypes = currentData.map(
+      (dependency) => dependency.dependencyType,
+    );
+    return itemArray.filter(
+      (dependency) =>
+        !selectedDependencyTypes.includes(dependency.dependencyType),
+    );
+  };
+
   const setFormatDataFunction = (fieldName, selectedOption) => {
-    let formattedOptions = {
-      dependencyType: [],
-      dependencies: {}
-    };
-    let dependenciesObj = {};
-    let UniqueSelections  = [...new Map(selectedOption.map((item) => [item["name"], item])).values()];
+    const dependenciesObject = {};
+    const uniqueTypes = [
+      ...new Map(selectedOption.map((item) => [item["name"], item])).values(),
+    ];
     selectedOption.map((item) => {
-      dependenciesObj[item.dependencyType] = item.version;
+      dependenciesObject[item.dependencyType] = item.version;
     });
-    formattedOptions.dependencyType= UniqueSelections;
-    formattedOptions.dependencies= dependenciesObj;
-    setDataFunction(fieldName, formattedOptions);
+
+    const finalObject = {
+      dependencies: dependenciesObject,
+      dependencyType: uniqueTypes,
+    };
+
+    if (setDataFunction) {
+      setDataFunction(fieldName, finalObject);
+    } else {
+      dataObject.setData(fieldName, finalObject);
+      setDataObject({ ...dataObject });
+    }
   };
 
   return (
@@ -416,12 +440,12 @@ function DependencyMultiSelectInput({
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      selectOptions={itemArray}
+      clearDataFunction={clearDataFunction}
+      selectOptions={getFilteredItems()}
       setDataFunction={setFormatDataFunction}
-      groupBy="dependencyType"
-      // valueField="version"
-      textField="name"
-      disabled={disabledItems}
+      groupBy={"dependencyType"}
+      // valueField={"version"}
+      textField={"name"}
     />
   );
 }
@@ -432,6 +456,7 @@ DependencyMultiSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   setDataFunction: PropTypes.func,
+  clearDataFunction: PropTypes.func,
 };
 
 export default DependencyMultiSelectInput;

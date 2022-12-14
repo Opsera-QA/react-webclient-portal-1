@@ -13,10 +13,18 @@ function TerrascanDependencyTypeInput({dataObject, setDataObject, disabled}) {
     setDataObject({...newDataObject});
   };
 
+  const clearDataFunction = () => {
+    let newDataObject = { ...dataObject };
+    newDataObject?.setDefaultValue("dependencyType");
+    newDataObject?.setDefaultValue("dependencies");
+    setDataObject({ ...newDataObject });
+  };
+
   return (
     <DependencyMultiSelectInput
       dataObject={dataObject}
       setDataFunction={setDependencyTypes}
+      clearDataFunction={clearDataFunction}
       fieldName={"dependencyType"}
       setDataObject={setDataObject}
     />
