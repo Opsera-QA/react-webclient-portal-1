@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const dockerCliStepFormMetadata = {
   type: "Docker CLI Tool Configuration",
   fields: [
@@ -22,15 +24,18 @@ const dockerCliStepFormMetadata = {
     {
       label: "Repository",
       id: "gitRepository",
-    },
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
+      isRequired: true
+    },    
     {
       label: "Repository",
       id: "repoId",
-      isRequired: true,
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       label: "Branch",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequired: true
     },
     {
@@ -42,7 +47,7 @@ const dockerCliStepFormMetadata = {
     {
       label: "Git File Path",
       id: "gitFilePath",
-    },
+    },    
     {
       label: "Enable Dependency",
       id: "enableDependency"
@@ -62,7 +67,7 @@ const dockerCliStepFormMetadata = {
     {
       label: "Dynamic Parameters",
       id: "environmentVariables",
-      maxItems: 15,
+      maxItems: 15,      
     },
     {
       label: "Enable Docker Build",
@@ -71,14 +76,12 @@ const dockerCliStepFormMetadata = {
     {
       label: "Input File Name",
       id: "inputFileName"
-    },
+    },    
     {
       label: "Docker Name",
       id: "dockerName",
-      isRequiredFunction: (model) => {
-        return model?.getData("enableDockerBuild") === true;
-      },
-      maxLength: 256,
+      isRequired: true,
+      maxLength:256,
       // TODO: This should be the pattern but this is probably fine.
       regexValidator: RegExp("^[a-zA-Z0-9_.-]*$"),
       isLowercase: true,

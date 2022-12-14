@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const ansibleStepMetadata = {
   type: "Ansible Tool Configuration",
   fields: [
@@ -14,11 +16,13 @@ const ansibleStepMetadata = {
     {
       label: "Repository",
       id: "repoId",
-      isRequired: true
+      isRequired: true,
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       label: "Project ID",
       id: "projectId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       label: "Source Control Management Service Type",
@@ -35,6 +39,8 @@ const ansibleStepMetadata = {
     {
       label: "Repository",
       id: "repository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
+      isRequired: true
     },
     {
       label: "Workspace",
@@ -50,7 +56,8 @@ const ansibleStepMetadata = {
     {
       label: "Branch",
       id: "defaultBranch",
-      isRequired: true
+      isRequired: true,
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
     },
     {
       label: "Playbook File Name",

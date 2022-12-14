@@ -233,10 +233,6 @@ const jenkinsPipelineStepConfigurationMetadata = {
       },
     },
     {
-      label: "Enable Quick Deploy",
-      id: "enableQuickDeploy",
-    },
-    {
       label: "Use build step resource",
       id: "useBuildStepResource"
     },
@@ -260,6 +256,10 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "environmentVariables",
       maxItems: 15
     },
+    {
+      label: "Enable Quick Deploy",
+      id: "enableQuickDeploy",
+    }
   ],
   newObjectFields: {
     jobType: "",
@@ -314,11 +314,11 @@ const jenkinsPipelineStepConfigurationMetadata = {
     dependencies: {},
     dependencyType:"",
     ruleIds: [],
-    enableQuickDeploy: false,
     useBuildStepResource: false,
     buildStepId: "",
     commands: "",
     environmentVariables: [],
+    enableQuickDeploy: false
   }
 };
 

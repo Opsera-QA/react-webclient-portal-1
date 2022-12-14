@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const InformaticaIdqStepFormMetadata = {
   type: "Informatica Tool Configuration",
   fields: [
@@ -48,6 +50,7 @@ const InformaticaIdqStepFormMetadata = {
     {
       label: "Repository",
       id: "repository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
       isRequiredFunction: (model) => {
         return model?.getData("jobType") === "export";
       },
@@ -58,6 +61,7 @@ const InformaticaIdqStepFormMetadata = {
     {
       label: "Repository",
       id: "repoId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
       isRequiredFunction: (model) => {
         return model?.getData("jobType") === "export";
       },
@@ -74,6 +78,7 @@ const InformaticaIdqStepFormMetadata = {
     {
       label: "Branch",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequiredFunction: (model) => {
         return model?.getData("jobType") === "export";
       },

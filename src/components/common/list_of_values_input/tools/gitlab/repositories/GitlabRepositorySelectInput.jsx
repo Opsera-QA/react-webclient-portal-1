@@ -39,12 +39,19 @@ function GitlabRepositorySelectInput({
 
     isMounted.current = true;
     const cancelSource = axios.CancelToken.source();
+    let defaultSearchTerm = "";
     setCancelTokenSource(cancelSource);
     setError(undefined);
     setGitlabRepositories([]);
 
     if (isMongoDbId(toolId) === true) {
-      loadData("", toolId, cancelSource).catch((error) => {
+      const existingRepository = model?.getData("gitRepository") || model?.getData("repository");
+      // console.log(existingRepository);
+      if (hasStringValue(existingRepository) === true) {
+        defaultSearchTerm = existingRepository;
+      }
+
+      loadData(defaultSearchTerm, toolId, cancelSource).catch((error) => {
         throw error;
       });
     }

@@ -7,6 +7,11 @@ function ArgoCdStepSourceControlManagementToolSelectInput({className, fieldName,
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("gitToolId", selectedOption?._id);
+    newModel.setData("gitRepository", "");
+    newModel.setData("gitRepositoryID", "");
+    newModel.setData("defaultBranch", "");
+    newModel.setData("bitbucketWorkspace", "");
+    newModel.setData("bitbucketWorkspaceName", "");
     setModel({...newModel});
   };
 

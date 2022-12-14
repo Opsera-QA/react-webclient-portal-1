@@ -29,6 +29,7 @@ function GitIgnoreToggleInput({model, setModel, fieldName, disabled, plan}) {
         regexValidationRequired={false}
         titleText={"Secrets To Ignore"}
         plan={plan}
+        showHelp={false}
       />
       );
     }

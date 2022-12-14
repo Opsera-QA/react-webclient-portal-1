@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const TerraformStepFormMetadata = {
   type: "Terraform Step Configuration",
   fields: [
@@ -19,6 +21,7 @@ const TerraformStepFormMetadata = {
     {
       label: "Repository",
       id: "gitRepository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
       isRequired: true
     },
     {
@@ -39,7 +42,8 @@ const TerraformStepFormMetadata = {
     },
     {
       label: "Branch",
-      id: "defaultBranch", 
+      id: "defaultBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequired: true
     },
     {
@@ -54,6 +58,7 @@ const TerraformStepFormMetadata = {
     {
       label: "Git Repository ID",
       id: "gitRepositoryID",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       label: "BitBucket Workspace",
@@ -88,12 +93,12 @@ const TerraformStepFormMetadata = {
       id: "roleArn"
     },
     {
-      label: "Store State in S3 Bucket", 
+      label: "Store State in S3 Bucket",
       id:"storeStateInBucket"
     },
     {
       label: "S3 Bucket Name",
-      id: "bucketName"      
+      id: "bucketName"
     },
     {
       label: "Bucket Region",
