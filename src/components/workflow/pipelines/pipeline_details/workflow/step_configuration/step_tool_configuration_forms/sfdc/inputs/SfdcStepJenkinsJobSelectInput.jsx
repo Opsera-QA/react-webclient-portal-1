@@ -5,34 +5,36 @@ import JenkinsRegistryToolJobSelectInput
 
 function SfdcStepJenkinsJobSelectInput({model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
-    let newModel = {...model};
-    newModel.setData("toolJobName", selectedOption?.name);
-    newModel.setData("toolJobType", selectedOption?.type);
-    newModel.setData("toolJobId", selectedOption?._id);
-    newModel.setData("jobType", selectedOption?.configuration?.jobType);
-    newModel.setData("jobDescription", selectedOption?.description);
-    newModel.setData("buildType", selectedOption?.configuration?.buildType || "ant");
-    newModel.setData("agentLabels", selectedOption?.configuration?.agentLabels || "");
-    setModel({...newModel});
+    let newDataObject = {...model};
+    newDataObject.setData("toolJobName", selectedOption.name);
+    newDataObject.setData("toolJobType", selectedOption.type);
+    newDataObject.setData("toolJobId", selectedOption._id);
+    newDataObject.setData("jobType", selectedOption.configuration.jobType);
+    newDataObject.setData("jobDescription", selectedOption.description);
+    newDataObject.setData("buildType", selectedOption.configuration.buildType || "ant");
+    newDataObject.setData("agentLabels", selectedOption.configuration?.agentLabels || "");
+    setModel({...newDataObject});
   };
 
   const clearDataFunction = () => {
-    let newModel = {...model};
-    newModel.setData("toolJobName", "");
-    newModel.setData("toolJobType", "");
-    newModel.setData("toolJobId", "");
-    newModel.setData("jobType", "");
-    newModel.setData("jobDescription", "");
-    newModel.setData("buildType", "");
-    newModel.setData("agentLabels", "");
-    setModel({...newModel});
+    let newDataObject = {...model};
+    newDataObject.setData("toolJobName", "");
+    newDataObject.setData("toolJobType", "");
+    newDataObject.setData("toolJobId", "");
+    newDataObject.setData("jobType", "");
+    newDataObject.setData("jobDescription", "");
+    newDataObject.setData("buildType", "");
+    newDataObject.setData("agentLabels", "");
+    setModel({...newDataObject});
   };
 
+  // TODO : Type filter needs to be checked 
   return (
     <JenkinsRegistryToolJobSelectInput
       fieldName={"toolJobId"}
       jenkinsToolId={model?.getData("toolConfigId")}
       typeFilter={"SFDC"}
+      configurationRequired={true}
       model={model}
       setModel={setModel}
       setDataFunction={setDataFunction}

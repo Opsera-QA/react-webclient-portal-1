@@ -15,6 +15,7 @@ function BuildkiteGitRepositoryInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("projectId", repoId);
     newDataObject.setData("sshUrl", sshUrl || "");
     newDataObject.setData("gitUrl", gitUrl);
+    newDataObject.setData("branch", "");
     setDataObject({...newDataObject});
   };
 

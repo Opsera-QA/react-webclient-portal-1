@@ -295,7 +295,7 @@ function MultiTaskSelectInputBase({
       <>
         <div className="flex-fill">
           {(dataObject?.getData("lambdaTasks") && Array.isArray(dataObject?.getData("lambdaTasks"))
-            ? dataObject.getData("lambdaTasks")
+            ? dataObject?.getData("lambdaTasks")
             : []
           ).map((property, index) => {
             return getPropertyRow(property, index);

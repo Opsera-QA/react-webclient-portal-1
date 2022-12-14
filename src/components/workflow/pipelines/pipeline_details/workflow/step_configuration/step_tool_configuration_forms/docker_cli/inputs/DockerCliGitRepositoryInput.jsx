@@ -29,7 +29,7 @@ function DockerCliGitRepositoryInput({model, setModel, disabled}) {
 
   return (
      <RepositorySelectInput
-       fieldName={"repoId"}
+       fieldName={"gitRepository"}
        service={model.getData("service")}
        gitToolId={model.getData("gitToolId")}
        workspace={model.getData("workspace")}
