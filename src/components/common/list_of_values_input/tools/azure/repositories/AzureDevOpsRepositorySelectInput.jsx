@@ -39,11 +39,18 @@ function AzureDevOpsRepositorySelectInput({
     isMounted.current = true;
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
+    let defaultSearchTerm = "";
     setAzureRepositories([]);
     setError(undefined);
 
     if (isMongoDbId(toolId) === true) {
-      loadData(undefined, toolId, source).catch((error) => {
+      const existingRepository = model?.getData("gitRepository") || model?.getData("repository");
+      // console.log(existingRepository);
+      if (hasStringValue(existingRepository) === true) {
+        defaultSearchTerm = existingRepository;
+      }
+
+      loadData(defaultSearchTerm, toolId, cancelSource).catch((error) => {
         throw error;
       });
     }
