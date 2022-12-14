@@ -1,27 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DependencyMultiSelectInput
-  from "components/common/list_of_values_input/workflow/pipelines/DependencyMultiSelectInput";
+import DependencyMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/DependencyMultiSelectInput";
 
-function CommandLineDependencyTypeInput({dataObject, setDataObject, disabled}) {
+function CommandLineDependencyTypeInput({
+  dataObject,
+  setDataObject,
+  disabled,
+}) {
   const setDependencyTypes = (fieldName, selectedOption) => {
-    let newDataObject = {...dataObject};
-
-    // Faseeh, this should be dealt with before sending it here. If this isn't good, change the way you store the item inside the base component
-    let dependenciesObj = {};
-    selectedOption.map((item) => {
-      dependenciesObj[item.dependencyType] = item.version;
-    });
-    // console.log(dependenciesObj);
-    newDataObject.setData("dependencyType", selectedOption);
-    newDataObject.setData("dependencies", dependenciesObj);
-    setDataObject({...newDataObject});
+    let newDataObject = { ...dataObject };
+    newDataObject.setData("dependencyType", selectedOption.dependencyType);
+    newDataObject.setData("dependencies", selectedOption.dependencies);
+    setDataObject({ ...newDataObject });
   };
 
+  const clearDataFunction = () => {
+    let newDataObject = { ...dataObject };
+    newDataObject?.setDefaultValue("dependencyType");
+    newDataObject?.setDefaultValue("dependencies");
+    setDataObject({ ...newDataObject });
+  };
+  
   return (
     <DependencyMultiSelectInput
       dataObject={dataObject}
       setDataFunction={setDependencyTypes}
+      clearDataFunction={clearDataFunction}
       fieldName={"dependencyType"}
       setDataObject={setDataObject}
     />
