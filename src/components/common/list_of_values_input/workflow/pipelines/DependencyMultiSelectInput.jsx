@@ -396,13 +396,28 @@ function DependencyMultiSelectInput({
       .map((dependency) => dependency.dependencyType);
   };
 
+  const setFormatFunction = (fieldName, selectedOption) => {
+    let formattedOptions = {
+      dependencyType: [],
+      dependencies: {}
+    };
+    let dependenciesObj = {};
+    let UniqueSelections  = [...new Map(selectedOption.map((item) => [item["name"], item])).values()];
+    selectedOption.map((item) => {
+      dependenciesObj[item.dependencyType] = item.version;
+    });
+    formattedOptions.dependencyType= UniqueSelections;
+    formattedOptions.dependencies= dependenciesObj;
+    setDataFunction(fieldName, formattedOptions);
+  };
+
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={itemArray}
-      setDataFunction={setDataFunction}
+      setDataFunction={setFormatFunction}
       groupBy="dependencyType"
       // valueField="version"
       textField="name"

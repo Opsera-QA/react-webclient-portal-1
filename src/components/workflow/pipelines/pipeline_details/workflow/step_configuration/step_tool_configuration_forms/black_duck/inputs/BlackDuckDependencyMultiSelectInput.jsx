@@ -8,13 +8,8 @@ function BlackDuckDependencyMultiSelectInput({model, setModel, disabled}) {
 
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
-
-    let dependenciesObj = {};
-    selectedOption.map((item) => {
-      dependenciesObj[item.dependencyType] = item.version;
-    });
-    newModel.setData("dependencyType", selectedOption);
-    newModel.setData("dependencies", dependenciesObj);
+    newModel.setData("dependencyType", selectedOption.dependencyType);
+    newModel.setData("dependencies", selectedOption.dependencies);
     setModel({...newModel});
   };
 
