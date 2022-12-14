@@ -6,6 +6,7 @@ import TabTreeAndViewContainer from "components/common/tabs/tree/TabTreeAndViewC
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
+import LookupMultiSelectInput from "components/insights/lookup/LookupMultiSelectInput";
 
 function LookupResults({ isLoading, searchResults, noDataMessage }) {
   const [selectedComponentName, setSelectedComponentName] = useState(undefined);

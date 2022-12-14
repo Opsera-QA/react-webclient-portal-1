@@ -14,6 +14,26 @@ insightsLookupActions.getComponentByName = async (getAccessToken, cancelTokenSou
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+insightsLookupActions.getComponentTypes = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/analytics/sfdc/v1/component/get-component-types`;
+  return await baseActions.handleNodeAnalyticsApiGetRequest(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+insightsLookupActions.getPipelines = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/analytics/sfdc/v1/component/get-pipelines`;
+  return await baseActions.handleNodeAnalyticsApiGetRequest(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+insightsLookupActions.getTasks = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/analytics/sfdc/v1/component/get-tasks`;
+  return await baseActions.handleNodeAnalyticsApiGetRequest(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+insightsLookupActions.getOrgs = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/analytics/sfdc/v1/component/get-orgs`;
+  return await baseActions.handleNodeAnalyticsApiGetRequest(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 insightsLookupActions.searchComponents = async (getAccessToken, cancelTokenSource, startDate, endDate, componentNames) => {
   const apiUrl = `/analytics/sfdc/v1/component`;
   const urlParams = {
