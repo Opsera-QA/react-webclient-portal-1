@@ -128,7 +128,7 @@ regexDefinitions.domainNameField = {
 
 regexDefinitions.domainField = {
   regex: /^[a-z0-9](?!.*?[^\na-z0-9-]).*?[a-z0-9]$/,
-  formText: "This field must begin and end with an alphanumeric character lowercase only. Alphanumeric and Dashes are allowed otherwise.",
+  formText: "This field must begin and end with an alphanumeric character (lowercase only). Alphanumeric and Dashes are allowed otherwise.",
   errorFormText: "This field must begin and end with an alphanumeric character. Alphanumeric and Dashes are allowed otherwise.",
 };
 
