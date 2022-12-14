@@ -396,7 +396,7 @@ function DependencyMultiSelectInput({
       .map((dependency) => dependency.dependencyType);
   };
 
-  const setFormatFunction = (fieldName, selectedOption) => {
+  const setFormatDataFunction = (fieldName, selectedOption) => {
     let formattedOptions = {
       dependencyType: [],
       dependencies: {}
@@ -417,7 +417,7 @@ function DependencyMultiSelectInput({
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={itemArray}
-      setDataFunction={setFormatFunction}
+      setDataFunction={setFormatDataFunction}
       groupBy="dependencyType"
       // valueField="version"
       textField="name"
