@@ -50,7 +50,7 @@ function AzureDevOpsRepositorySelectInput({
         defaultSearchTerm = existingRepository;
       }
 
-      loadData(defaultSearchTerm, toolId, cancelSource).catch((error) => {
+      loadData(defaultSearchTerm, toolId, cancelTokenSource).catch((error) => {
         throw error;
       });
     }
