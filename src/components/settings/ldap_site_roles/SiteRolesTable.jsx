@@ -11,6 +11,15 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faServer} from "@fortawesome/pro-light-svg-icons";
 import ldapSiteRoleMetadata from "@opsera/definitions/constants/accounts/groups/role/ldapSiteRoles.metadata";
 
+const handleNameFormatting = (name) => {
+  if (name === "PowerUsers") {
+    return "Power Users";
+  }
+
+  return name;
+};
+
+
 export default function SiteRolesTable({ siteRoles, orgDomain, isLoading, loadData, className }) {
   const history = useHistory();
   const fields = ldapSiteRoleMetadata.fields;
@@ -22,14 +31,6 @@ export default function SiteRolesTable({ siteRoles, orgDomain, isLoading, loadDa
     ],
     [fields]
   );
-
-  const handleNameFormatting = (name) => {
-    if (name === "PowerUsers") {
-      return "Power Users";
-    }
-
-    return name;
-  };
 
   const onRowSelect = (rowData) => {
     history.push(`/settings/${orgDomain}/site-roles/details/${rowData.original.name}`);
