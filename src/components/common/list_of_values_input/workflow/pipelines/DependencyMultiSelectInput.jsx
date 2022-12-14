@@ -25,6 +25,26 @@ export const itemArray = [
     "dependencyType" : "node",
     "version": "15",
   },
+  {
+    "name": "Node Version 16",
+    "dependencyType" : "node",
+    "version": "16",
+  },
+  {
+    "name": "Node Version 17",
+    "dependencyType" : "node",
+    "version": "17",
+  },
+  {
+    "name": "Node Version 18",
+    "dependencyType" : "node",
+    "version": "18",
+  },
+  {
+    "name": "Node Version 19",
+    "dependencyType" : "node",
+    "version": "19",
+  },
 
   {
     "name": "Terraform Version 0.11.14",
