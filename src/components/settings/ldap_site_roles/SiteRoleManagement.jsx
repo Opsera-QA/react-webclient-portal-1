@@ -19,7 +19,6 @@ function SiteRoleManagement() {
   const {getUserRecord, setAccessRoles, getAccessToken} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const [siteRoles, setSiteRoles] = useState([]);
-  const [siteRoleMetadata, setSiteRoleMetadata] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -93,8 +92,6 @@ function SiteRoleManagement() {
         const roleGroups = response?.data?.data;
 
         if (Array.isArray(roleGroups)) {
-          const metadata = response?.data?.metadata;
-          setSiteRoleMetadata({...metadata});
           setSiteRoles(roleGroups);
         }
       } catch (error) {
@@ -132,7 +129,6 @@ function SiteRoleManagement() {
         isLoading={isLoading}
         siteRoles={siteRoles}
         loadData={loadData}
-        siteRoleMetadata={siteRoleMetadata}
         orgDomain={orgDomain}
       />
     </ScreenContainer>
