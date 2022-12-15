@@ -199,7 +199,7 @@ import ApigeePipelineStepConfigurationSummaryPanel
 import ApigeeStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/apigee/apigee-stepForm-metadata";
 import SnaplogicPipelineStepConfigurationSummary
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/SnaplogicPipelineStepConfigurationSummary";
-import SnaplogicStepFormMetadata 
+import SnaplogicStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/snaplogic-stepForm-metadata";
 import SapCpqPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/sap_cpq/SapCpqPipelineStepConfigurationSummaryPanel";
@@ -222,7 +222,7 @@ import LiquibaseStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/liquibase/liquibase-stepForm-metadata";
 import BlackDuckPipelineStepConfigurationSummary
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/black_duck/BlackDuckPipelineStepConfigurationSummary";
-import BlackDuckStepFormMetadata 
+import BlackDuckStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/black_duck/blackduck-stepForm-metadata";
 import FortifyPipelineStepConfigurationSummary
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/fortify/FortifyPipelineStepConfigurationSummary";
