@@ -24,6 +24,10 @@ const kpiDataPointMetadata = {
       regexDefinitionName: "nameField",
     },
     {
+      label: "Custom Fields Mapping",
+      id: "customFieldsMapping",
+    },
+    {
       label: "Strategic Criteria",
       id: "strategic_criteria",
     },
@@ -43,6 +47,10 @@ const kpiDataPointMetadata = {
     type: "",
     identifier: "",
     description: "",
+    customFieldsMapping: {
+      mappedFields: {},
+      enabled: false
+    },
     strategic_criteria: {
       data_point_evaluation_rules: {},
       isUserEditable: false,
