@@ -158,4 +158,8 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
 
   //Boomi
   BOOMI_PIPELINE_EXECUTIONS:"boomi-pipeline-executions",
+
+  //DORA
+  DORA_JIRA_GITLAB_ROLLED_UP:"dora-jira-gitlab-rolled-up",
+
 };
