@@ -184,6 +184,8 @@ import ApigeeSummaryChart from "./apigee/summary/ApigeeSummaryChart";
 // Approval Gates KPI
 import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
 
+// Dora KPI
+import DoraJiraGitlabRolledUpChart from "./dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpChart";
 
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
@@ -1717,7 +1719,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.DORA_JIRA_GITLAB_ROLLED_UP:
+        return (
+          <Col md={12} className="p-2">
+            <DoraJiraGitlabRolledUpChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       case "approval-gates":
         return (
           <Col md={12} className="p-2">
