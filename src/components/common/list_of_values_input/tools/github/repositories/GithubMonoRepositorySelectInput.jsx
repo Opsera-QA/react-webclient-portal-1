@@ -69,6 +69,7 @@ function GithubMonoRepositorySelectInput(
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
       setPlaceholderText("Select Github Repository");
+      console.log(repositories);
       setGithubRepositories([...repositories]);
 
       const existingRepository = model?.getData(fieldName);
@@ -116,7 +117,7 @@ GithubMonoRepositorySelectInput.propTypes = {
 };
 
 GithubMonoRepositorySelectInput.defaultProps = {
-  valueField: "name",
+  valueField: "_id",
   textField: "name",
 };
 
