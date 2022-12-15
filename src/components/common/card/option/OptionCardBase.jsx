@@ -2,7 +2,7 @@ import React  from "react";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 
-function PageLinkCard({body, icon, visible, className, onClickFunction}) {
+function OptionCardBase({body, icon, visible, className, onClickFunction}) {
   const getIcon = () => {
     if (icon) {
       return (
@@ -22,6 +22,7 @@ function PageLinkCard({body, icon, visible, className, onClickFunction}) {
   return (
     <div className={className}>
       <div className={'mb-3 page-link-card'} onClick={onClickFunction}>
+        {/*<div className={'mb-3 page-link-card container-border'} onClick={onClickFunction}>*/}
         <div className={"page-link-card-body d-flex p-2"}>
           {getIcon()}
           {body}
@@ -31,7 +32,7 @@ function PageLinkCard({body, icon, visible, className, onClickFunction}) {
   );
 }
 
-PageLinkCard.propTypes = {
+OptionCardBase.propTypes = {
   body: PropTypes.any,
   onClickFunction: PropTypes.func,
   icon: PropTypes.object,
@@ -40,4 +41,4 @@ PageLinkCard.propTypes = {
   pageDescription: PropTypes.string,
 };
 
-export default PageLinkCard;
+export default OptionCardBase;
