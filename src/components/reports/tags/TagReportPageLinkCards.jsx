@@ -6,7 +6,7 @@ import TagsUsedInToolsPageLinkCard from "./tools/TagsUsedInToolsPageLinkCard";
 
 function TagReportPageLinkCards({accessRoleData}) {
   return (
-    <div>
+    <div className={"mx-2"}>
       <TagsUsedInPipelinesPageLinkCard
         accessRoleData={accessRoleData}
       />
@@ -19,6 +19,7 @@ function TagReportPageLinkCards({accessRoleData}) {
     </div>
   );
 }
+
 TagReportPageLinkCards.propTypes = {
   accessRoleData: PropTypes.object,
 };

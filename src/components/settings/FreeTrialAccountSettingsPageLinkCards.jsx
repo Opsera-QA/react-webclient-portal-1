@@ -19,10 +19,10 @@ export default function FreeTrialAccountSettingsPageLinkCards() {
   }
 
   return (
-    <>
+    <div className={"mx-2"}>
       <FreeTrialUserExpirationManagementPageLinkCard />
       <FreeTrialUserActivityReportPageLinkCard />
-    </>
+    </div>
   );
 }
 

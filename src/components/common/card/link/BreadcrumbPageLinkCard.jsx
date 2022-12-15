@@ -37,7 +37,6 @@ export default function BreadcrumbPageLinkCard(
 
   return (
     <PageLinkCard
-      className={"ml-2"}
       linkText={breadcrumb?.linkText}
       icon={breadcrumb?.icon}
       link={`/${breadcrumbPath}`}

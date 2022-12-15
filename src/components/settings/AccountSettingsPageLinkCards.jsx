@@ -9,7 +9,7 @@ import TagManagementPageLinkCard from "components/settings/tags/TagManagementPag
 
 export default function AccountSettingsPageLinkCards() {
   return (
-    <div>
+    <div className={"mx-2"}>
       <DeleteToolsManagementPageLinkCard />
       <LdapGroupManagementPageLinkCard />
       <LogsBackupManagementPageLinkCard />

@@ -14,7 +14,7 @@ import PropTypes from "prop-types";
 function UserReportPageLinkCards({accessRoleData}) {
 
   return (
-    <div>
+    <div className={"mx-2"}>
       <GroupMembershipReportsPageLinkCard
         accessRoleData={accessRoleData}
       />
