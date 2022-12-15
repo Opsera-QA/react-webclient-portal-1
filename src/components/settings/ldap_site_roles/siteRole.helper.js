@@ -31,6 +31,22 @@ siteRoleHelper.getUsersSiteRoleDetailViewLink = (userData) => {
   }
 };
 
+siteRoleHelper.getSecurityManagersSiteRoleDetailViewLink = (userData) => {
+  const ldapDomain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
+
+  if (ldapDomain) {
+    return `settings/${ldapDomain}/site-roles/details/SecurityManagers`;
+  }
+};
+
+siteRoleHelper.getAuditorsSiteRoleDetailViewLink = (userData) => {
+  const ldapDomain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
+
+  if (ldapDomain) {
+    return `settings/${ldapDomain}/site-roles/details/Auditors`;
+  }
+};
+
 siteRoleHelper.getSiteRolePermissionText = (siteRole) => {
   const parsedSiteRole = DataParsingHelper.parseString(siteRole);
 

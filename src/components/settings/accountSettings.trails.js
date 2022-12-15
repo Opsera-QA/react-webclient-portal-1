@@ -53,3 +53,23 @@ accountSettingsTrails.ldapUsersSiteRoleDetailView = {
   linkText: "Users",
   pageDescription: siteRoleHelper.getSiteRolePermissionText("Users"),
 };
+
+accountSettingsTrails.ldapSecurityManagersSiteRoleDetailView = {
+  parent: "ldapSiteRolesManagement",
+  name: "ldapSecurityManagersSiteRoleDetailView",
+  path: accountSettingsPaths.ldapSiteRoleDetailView,
+  pathFunction: (userData) => siteRoleHelper.getSecurityManagersSiteRoleDetailViewLink(userData),
+  title: "Security Managers Site Role Details",
+  linkText: "Security Managers",
+  pageDescription: siteRoleHelper.getSiteRolePermissionText("SecurityManagers"),
+};
+
+accountSettingsTrails.ldapAuditorsSiteRoleDetailView = {
+  parent: "ldapSiteRolesManagement",
+  name: "ldapAuditorsSiteRoleDetailView",
+  path: accountSettingsPaths.ldapSiteRoleDetailView,
+  pathFunction: (userData) => siteRoleHelper.getAuditorsSiteRoleDetailViewLink(userData),
+  title: "Auditors Site Role Details",
+  linkText: "Auditors",
+  pageDescription: siteRoleHelper.getSiteRolePermissionText("Auditors"),
+};
