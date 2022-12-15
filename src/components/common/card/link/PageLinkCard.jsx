@@ -4,7 +4,7 @@ import {useHistory} from "react-router-dom";
 import OptionCardBase from "components/common/card/option/OptionCardBase";
 
 function PageLinkCard({link, linkText, icon, visible, className, pageDescription}) {
-  let history = useHistory();
+  const history = useHistory();
 
   const onClickFunction = () => {
     history.push(link);
