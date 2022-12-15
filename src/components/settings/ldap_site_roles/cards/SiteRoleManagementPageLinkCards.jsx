@@ -4,7 +4,7 @@ import AdministratorsSiteRolePageLinkCard
 
 export default function SiteRoleManagementPageLinkCards() {
   return (
-    <div>
+    <div className={"mx-2"}>
       <AdministratorsSiteRolePageLinkCard />
     </div>
   );
