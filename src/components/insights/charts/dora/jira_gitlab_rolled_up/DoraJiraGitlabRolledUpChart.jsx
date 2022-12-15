@@ -78,7 +78,6 @@ function DoraJiraGitlabRolledUpChart({
         );
 
         const metrics = response?.data?.data;
-        console.log(metrics);
 
         if (
           isMounted?.current === true && metrics?.length
