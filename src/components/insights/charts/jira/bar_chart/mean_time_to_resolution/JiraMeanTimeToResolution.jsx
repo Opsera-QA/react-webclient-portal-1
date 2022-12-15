@@ -244,8 +244,8 @@ function JiraMeanTimeToResolution({
                     dataPoint={averageMTTRDataBlockDataPoint}
                     trend={getReverseTrend(dataBlock.overallMttrHours,dataBlock.previousOverallMttrHours)}
                     getIcon = {getReverseTrendIcon}
-                    topText={"Average MTTR (Hours)"}
-                    bottomText={"Prev Average MTTR"}
+                    topText={dataBlock?.isCustom ? "Average Custom MTTR (Hours)" : "Average MTTR (Hours)"}
+                    bottomText={dataBlock?.isCustom ? "Prev Average Custom MTTR" : "Prev Average MTTR"}
                   />
                 </DataPointVisibilityWrapper>
               </Col>
@@ -255,15 +255,15 @@ function JiraMeanTimeToResolution({
                   previousValue={dataBlock.previousMaxMTTR}
                   trend={getReverseTrend(dataBlock.maxMTTR,dataBlock.previousMaxMTTR)}
                   getIcon = {getReverseTrendIcon}
-                  topText={"Max MTTR (Hours)"}
-                  bottomText={"Prev Max MTTR"}
+                  topText={dataBlock?.isCustom ? "Max Custom MTTR (Hours)" : "Max MTTR (Hours)"}
+                  bottomText={dataBlock?.isCustom ? "Prev Max Custom MTTR" : "Prev Max MTTR"}
                 />
               </Col>
             </Row>
             <Col md={12}>
               <div className={"d-flex md-2"}>
                 <div className={"mr-4"}>
-                  <b>Minimum MTTR (Hours) :</b> {dataBlock?.minMTTR || "NA"}
+                  <b>{dataBlock?.isCustom ? "Minimum Custom MTTR (Hours)" : "Minimum MTTR (Hours)"} :</b> {dataBlock?.minMTTR || "NA"}
                 </div>
               </div>
             </Col>

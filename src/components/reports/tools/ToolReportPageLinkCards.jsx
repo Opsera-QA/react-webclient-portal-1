@@ -5,7 +5,7 @@ import ToolsCountsPageLinkCard from "./counts/ToolsCountsPageLinkCard";
 
 function ToolReportPageLinkCards({accessRoleData}) {
   return (
-    <div>
+    <div className={"mx-2"}>
       <ToolsUsedByPipelinesPageLinkCard
         accessRoleData={accessRoleData}
       />
