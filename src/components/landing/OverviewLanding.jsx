@@ -229,7 +229,7 @@ function OverviewLanding() {
             <div className="h5 text-color"><IconBase icon={faQuestion} className={"text-muted mr-1"} />
               Frequently Asked Questions
             </div>
-            <div className="h6">
+            <div className="h6 ml-2">
               <Link to={"/faq"} >View our frequently asked questions.</Link>
             </div>
           </div>

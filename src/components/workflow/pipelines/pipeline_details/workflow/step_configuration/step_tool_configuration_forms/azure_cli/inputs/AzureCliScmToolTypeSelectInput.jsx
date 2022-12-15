@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import {toolIdentifierConstants} from "../../../../../../../../admin/tools/identifiers/toolIdentifier.constants";
 
 export const PACKER_SCM_TOOL_LIST = [
   {
@@ -14,6 +15,10 @@ export const PACKER_SCM_TOOL_LIST = [
   {
     name: "Bitbucket",
     value: "bitbucket",
+  },
+  {
+    name: "Azure",
+    value: toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS,
   },
 ];
 

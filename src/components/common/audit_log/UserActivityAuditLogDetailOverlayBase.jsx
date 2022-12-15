@@ -48,7 +48,7 @@ export default function UserActivityAuditLogDetailOverlayBase(
   const getBody = () => {
     if (isLoading === true) {
       return (
-        <CenterLoadingIndicator type={`Audit Log`} />
+        <CenterLoadingIndicator type={`${type} Audit Log`} />
       );
     }
 

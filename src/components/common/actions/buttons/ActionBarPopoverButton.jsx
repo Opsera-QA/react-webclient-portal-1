@@ -1,11 +1,9 @@
-import React  from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import IconBase from "components/common/icons/IconBase";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
 export default function ActionBarPopoverButton(
   {
-    iconClasses,
     popoverText,
     text,
     icon,
@@ -13,26 +11,22 @@ export default function ActionBarPopoverButton(
     onClickFunction,
   }) {
   return (
-    <TooltipWrapper innerText={popoverText}>
-      <span className={"action-bar-icon pointer"}>
-          <span className={className}>
-            <IconBase
-              iconSize={"lg"}
-              icon={icon}
-              iconClassName={iconClasses}
-              onClickFunction={onClickFunction}
-            />
-            <span>{text}</span>
-          </span>
-      </span>
-    </TooltipWrapper>
+    <div className={className}>
+      <OverlayIconBase
+        iconClassName={"action-bar-icon"}
+        overlayBody={popoverText}
+        iconSize={"lg"}
+        icon={icon}
+        onClickFunction={onClickFunction}
+      />
+      <span>{text}</span>
+    </div>
   );
 }
 
 ActionBarPopoverButton.propTypes = {
   icon: PropTypes.object,
   popoverText: PropTypes.string,
-  iconClasses: PropTypes.string,
   text: PropTypes.string,
   className: PropTypes.string,
   onClickFunction: PropTypes.func,

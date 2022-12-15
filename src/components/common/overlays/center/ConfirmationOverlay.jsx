@@ -66,7 +66,7 @@ function ConfirmationOverlay(
   return (
     <div className={`overlay-panel center-overlay-shadow-background`}>
       <div className={"confirmation-overlay-panel"}>
-        <div className={"screen-container confirmation-overlay content-card-1"}>
+        <div className={"confirmation-overlay content-card-1"}>
           <OverlayTitleBar
             handleClose={closePanel}
             isLoading={isLoading}

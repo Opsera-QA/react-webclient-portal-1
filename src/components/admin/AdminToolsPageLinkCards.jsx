@@ -27,7 +27,7 @@ import PlatformSettingsManagementPageLinkCard
 
 function AdminToolsPageLinkCards({accessRoleData}) {
   return (
-    <div>
+    <div className={"mx-2"}>
       <ApiConnectionDemoPageLinkCard
         accessRoleData={accessRoleData}
       />
