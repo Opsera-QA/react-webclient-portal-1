@@ -7,8 +7,8 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 
-function TerraformVcsStepConfigurationSummaryPanel({ terraformVcsPipelineDataObject, pipelineData, setActiveTab }) {
-  if (terraformVcsPipelineDataObject == null) {
+function TerraformVcsStepConfigurationSummaryPanel({ terraformVcsStepModel, pipelineData, setActiveTab }) {
+  if (terraformVcsStepModel == null) {
     return <LoadingDialog size="sm" />;
   }
 
@@ -16,10 +16,10 @@ function TerraformVcsStepConfigurationSummaryPanel({ terraformVcsPipelineDataObj
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={terraformVcsPipelineDataObject} fieldName={"organizationName"}/>
+          <TextFieldBase dataObject={terraformVcsStepModel} fieldName={"organizationName"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase model={terraformVcsPipelineDataObject} fieldName={"workspaceName"}/>
+          <TextFieldBase model={terraformVcsStepModel} fieldName={"workspaceName"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
@@ -27,7 +27,7 @@ function TerraformVcsStepConfigurationSummaryPanel({ terraformVcsPipelineDataObj
 }
 
 TerraformVcsStepConfigurationSummaryPanel.propTypes = {
-  terraformVcsPipelineDataObject: PropTypes.object,
+  terraformVcsStepModel: PropTypes.object,
   pipelineData: PropTypes.object,
   setActiveTab: PropTypes.func
 };
