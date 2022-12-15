@@ -36,15 +36,13 @@ insightsLookupActions.getOrgs = async (getAccessToken, cancelTokenSource) => {
 
 insightsLookupActions.searchComponents = async (getAccessToken, cancelTokenSource, startDate, endDate, componentNames, selectedComponentFilterData) => {
   const apiUrl = `/analytics/sfdc/v1/component`;
-  const urlParams = {
-    params: {
-      startDate: startDate,
-      endDate: endDate,
-      fullNameArr: componentNames,
-      selectedComponentFilterData: selectedComponentFilterData
-    },
+  const postBody = {
+    startDate: startDate,
+    endDate: endDate,
+    fullNameArr: componentNames,
+    selectedComponentFilterData: selectedComponentFilterData
   };
-  return await baseActions.handleNodeAnalyticsApiGetRequest(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 // TODO: Move to Node and delete from here
