@@ -17,6 +17,7 @@ import LookupMultiSelectInput from "components/insights/lookup/LookupMultiSelect
 
 function Lookup() {
   const [isLoading, setIsLoading] = useState(false);
+  const [salesforceComponentNames, setSalesforceComponentNames] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [filterModel, setFilterModel] = useState(undefined);
   const { getAccessToken } = useContext(AuthContext);
@@ -29,6 +30,46 @@ function Lookup() {
     newFilterModel.setData("endDate", new Date());
     setFilterModel({ ...newFilterModel });
   }, []);
+
+  useEffect(() => {
+    loadComponentNames();
+  }, [filterModel]);
+
+  const loadComponentNames = async (newFilterModel = filterModel) => {
+    const startDate = newFilterModel?.getData("startDate");
+    const endDate = newFilterModel?.getData("endDate");
+    const componentNames = newFilterModel?.getArrayData(
+      "selectedComponentNames",
+    );
+
+    if (!startDate || !endDate) {
+      toastContext.showInlineErrorMessage("Please select start and end dates.");
+      return;
+    }
+
+    // if (componentNames.length === 0) {
+    //   toastContext.showInlineErrorMessage('Please select at least one Salesforce component.');
+    //   return;
+    // }
+
+    // TODO: This should just use the dates from the input and Node should do any processing on the date if necessary
+    const DATE_STRING_FORMAT = "MM/dd/yyyy";
+    const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
+    const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
+    const response = await insightsLookupActions.getComponentNames(
+      getAccessToken,
+      cancelTokenSource,
+      formattedStartDate,
+      formattedEndDate,
+      newFilterModel.getData("selectedComponentNames"),
+      newFilterModel.getData("selectedComponentFilterData"),
+    );
+    const names = response?.data?.data?.componentNames;
+
+    if (isMounted?.current === true && Array.isArray(names)) {
+      setSalesforceComponentNames(names);
+    }
+  };
 
   const loadData = async (newFilterModel = filterModel) => {
     try {
@@ -69,7 +110,7 @@ function Lookup() {
       const searchResults = insightsLookupActions.generateTransformedResults(
         response?.data?.data?.data,
       );
-
+      console.log(searchResults);
       if (isMounted?.current === true && Array.isArray(searchResults)) {
         setSearchResults(searchResults);
         newFilterModel.setData("activeFilters", filterModel.getActiveFilters());
@@ -125,6 +166,7 @@ function Lookup() {
         <LookupResults
           isLoading={isLoading}
           searchResults={searchResults}
+          salesforceComponentNames={salesforceComponentNames}
           noDataMessage={getNoDataMessage()}
         />
       </>

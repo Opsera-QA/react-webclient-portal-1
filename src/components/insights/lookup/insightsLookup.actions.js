@@ -6,12 +6,23 @@ export const insightsLookupActions = {};
 insightsLookupActions.getComponentNames = async (
   getAccessToken,
   cancelTokenSource,
+  startDate,
+  endDate,
+  componentNames,
+  selectedComponentFilterData,
 ) => {
   const apiUrl = `/analytics/sfdc/v1/component/names`;
-  return await baseActions.handleNodeAnalyticsApiGetRequest(
+  const postBody = {
+    startDate: startDate,
+    endDate: endDate,
+    fullNameArr: componentNames,
+    selectedComponentFilterData: selectedComponentFilterData,
+  };
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
     cancelTokenSource,
     apiUrl,
+    postBody,
   );
 };
 

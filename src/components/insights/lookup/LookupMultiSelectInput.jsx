@@ -65,16 +65,16 @@ function LookupMultiSelectInput({
       getAccessToken,
       cancelTokenSource,
     );
-    const componentNamesList = await insightsLookupActions.getComponentNames(
-      getAccessToken,
-      cancelTokenSource,
-    );
+    // const componentNamesList = await insightsLookupActions.getComponentNames(
+    //   getAccessToken,
+    //   cancelTokenSource,
+    // );
 
     const types = componentTypeResponse?.data?.data;
     const pipelines = pipelinesResponse?.data?.results;
     const tasks = tasksResponse?.data?.results;
     const orgs = orgsResponse?.data?.results;
-    const names = componentNamesList?.data?.data?.componentNames;
+    // const names = componentNamesList?.data?.data?.componentNames;
 
     if (
       isMounted?.current === true &&
@@ -82,8 +82,8 @@ function LookupMultiSelectInput({
       Array.isArray(pipelines) &&
       Array.isArray(tasks) &&
       Array.isArray(orgs) &&
-      Array.isArray(types) &&
-      Array.isArray(names)
+      Array.isArray(types)
+      // Array.isArray(names)
     ) {
       const resultArray = [...types, ...pipelines, ...tasks, ...orgs];
       setSalesforceComponentNames(resultArray);
