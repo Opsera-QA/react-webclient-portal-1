@@ -41,7 +41,8 @@ import teamcityStepConfigurationMetadata
 import TerraformPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/terraform/TerraformPipelineStepConfigurationSummaryPanel";
 import TerraformStepFormMetadata from "./step_tool_configuration_forms/terraform/terraform-stepForm-metadata";
-import TerraformVcsStepConfigurationSummaryPanel from "./step_tool_configuration_forms/terraform_vcs/TerraformVcsStepConfigurationSummaryPanel";
+import TerraformVcsStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/terraform_vcs/TerraformVcsStepConfigurationSummaryPanel";
 import TerraformVcsStepFormMetadata from "./step_tool_configuration_forms/terraform_vcs/terraform-vcs-stepForm-metadata";
 import ParallelProcessPipelineStepConfigurationSummaryPanel
   from "components/workflow/plan/step/parallel_processor/ParallelProcessPipelineStepConfigurationSummaryPanel";
@@ -430,7 +431,7 @@ function PipelineStepConfigurationSummary({
         return (
           <TerraformVcsStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            terraformPipelineDataObject={getModelWrappedObject(TerraformVcsStepFormMetadata)}
+            terraformVcsStepModel={getModelWrappedObject(TerraformVcsStepFormMetadata)}
           />
         );  
       case "xunit":
