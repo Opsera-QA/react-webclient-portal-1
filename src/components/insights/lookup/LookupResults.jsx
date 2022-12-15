@@ -53,7 +53,7 @@ function LookupResults({
     const selectedComponent = searchResults?.find(
       (component) => component.componentName === selectedComponentName,
     );
-    console.log(searchResults);
+
     if (selectedComponent) {
       return (
         <div className={"m-2"}>
