@@ -3,7 +3,7 @@ import baseActions from "utils/actionsBase";
 import {
   getDateObjectFromKpiConfiguration,
   getResultFromKpiConfiguration,
-  getTagsFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration, getUseKpiTagsFromKpiConfiguration,
+  getTagsFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration, getUseKpiTagsFromKpiConfiguration, getCustomMappingFields
 } from "components/insights/charts/charts-helpers";
 
 const jiraBaseURL = "analytics/jira/v1/";
@@ -49,6 +49,7 @@ jiraActions.getJiraMTTR = async (
     jiraPriorities: getResultFromKpiConfiguration(kpiConfiguration, 'jira-priorities'),
     jiraServiceComponents: getResultFromKpiConfiguration(kpiConfiguration, 'jira-service-components'),
     jiraTeamNames: getResultFromKpiConfiguration(kpiConfiguration, 'jira-team-names'),
+    jiraCustomMappingFields: getCustomMappingFields(kpiConfiguration),
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
