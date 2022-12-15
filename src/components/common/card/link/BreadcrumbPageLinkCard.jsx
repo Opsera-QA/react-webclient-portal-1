@@ -33,8 +33,6 @@ export default function BreadcrumbPageLinkCard(
     return null;
   }
 
-  console.log("breadcrumbPath: " + JSON.stringify(breadcrumbPath));
-
   return (
     <PageLinkCard
       linkText={breadcrumb?.linkText}

@@ -1,6 +1,6 @@
 import {faServer} from "@fortawesome/pro-light-svg-icons";
 import {accountSettingsPaths} from "components/settings/accountSettings.paths";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import {siteRoleHelper} from "components/settings/ldap_site_roles/siteRole.helper";
 
 export const accountSettingsTrails = {};
 
@@ -28,18 +28,28 @@ accountSettingsTrails.ldapAdministratorsSiteRoleDetailView = {
   parent: "ldapSiteRolesManagement",
   name: "ldapAdministratorsSiteRoleDetailView",
   path: accountSettingsPaths.ldapSiteRoleDetailView,
-  pathFunction: (userData) => {
-    const ldapDomain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
-
-    if (ldapDomain) {
-      return `settings/${ldapDomain}/site-roles/details/Administrators`;
-    }
-  },
+  pathFunction: (userData) => siteRoleHelper.getAdministrationSiteRoleDetailViewLink(userData),
   title: "Administrators Site Role Details",
   linkText: "Administrators",
-  pageDescription: `
-    Administrators have full system access, allowing them to perform all actions on Toolchain, Pipelines, and Tool Registry. 
-    In Pipelines, an Administrator can perform all actions on the pipeline just as if they were the Owner of the Pipeline. 
-    Owner of a Pipeline equally is the same as an Administrator of that Pipeline.
-  `
+  pageDescription: siteRoleHelper.getSiteRolePermissionText("Administrators"),
+};
+
+accountSettingsTrails.ldapPowerUsersSiteRoleDetailView = {
+  parent: "ldapSiteRolesManagement",
+  name: "ldapPowerUsersSiteRoleDetailView",
+  path: accountSettingsPaths.ldapSiteRoleDetailView,
+  pathFunction: (userData) => siteRoleHelper.getPowerUsersSiteRoleDetailViewLink(userData),
+  title: "Power Users Site Role Details",
+  linkText: "Power Users",
+  pageDescription: siteRoleHelper.getSiteRolePermissionText("PowerUsers"),
+};
+
+accountSettingsTrails.ldapUsersSiteRoleDetailView = {
+  parent: "ldapSiteRolesManagement",
+  name: "ldapUsersSiteRoleDetailView",
+  path: accountSettingsPaths.ldapSiteRoleDetailView,
+  pathFunction: (userData) => siteRoleHelper.getUsersSiteRoleDetailViewLink(userData),
+  title: "Users Site Role Details",
+  linkText: "Users",
+  pageDescription: siteRoleHelper.getSiteRolePermissionText("Users"),
 };

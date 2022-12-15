@@ -2,14 +2,13 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import JsonField from "components/common/fields/json/JsonField";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 
-function TerraformVcsStepConfigurationSummaryPanel({ terraformVcsStepModel, pipelineData, setActiveTab }) {
+export default function TerraformVcsStepConfigurationSummaryPanel({ terraformVcsStepModel, pipelineData, setActiveTab }) {
   if (terraformVcsStepModel == null) {
-    return <LoadingDialog size="sm" />;
+    return null;
   }
 
   return (
@@ -31,6 +30,3 @@ TerraformVcsStepConfigurationSummaryPanel.propTypes = {
   pipelineData: PropTypes.object,
   setActiveTab: PropTypes.func
 };
-
-
-export default TerraformVcsStepConfigurationSummaryPanel;

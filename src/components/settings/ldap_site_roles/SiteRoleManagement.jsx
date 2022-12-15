@@ -96,7 +96,7 @@ export default function SiteRoleManagement() {
         `}
         />
       </CenteredContentWrapper>
-      {/*<SiteRoleManagementPageLinkCards />*/}
+      <SiteRoleManagementPageLinkCards />
       <SiteRolesTable
         className={"mx-2"}
         isMounted={isMounted}
