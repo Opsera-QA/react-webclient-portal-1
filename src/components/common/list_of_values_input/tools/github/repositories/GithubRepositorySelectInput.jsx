@@ -45,7 +45,7 @@ function GithubRepositorySelectInput(
         defaultSearchTerm = existingRepository;
       }
 
-      loadData(defaultSearchTerm, toolId, cancelTokenSource).catch((error) => {
+      loadData(defaultSearchTerm, toolId, source).catch((error) => {
         throw error;
       });
     }
