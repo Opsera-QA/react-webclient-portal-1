@@ -58,6 +58,7 @@ import { taskTypeConstants } from "components/tasks/task.types";
 import { pipelineSettingsTrails } from "components/settings/pipelines/pipelineSettings.trails";
 import {userSettingsTrails} from "components/user/user_settings/userSettings.trails";
 import {pipelinesTrails} from "components/workflow/pipelines.trails";
+import {accountSettingsTrails} from "components/settings/accountSettings.trails";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
 const breadcrumbs = {
@@ -534,25 +535,6 @@ const breadcrumbs = {
     title: "Group Details",
     linkText: "Group Details",
     icon: faUserFriends
-  },
-
-  // LDAP Site Roles Administration
-  ldapSiteRolesManagement: {
-    parent: "accountSettings",
-    name: "ldapSiteRolesManagement",
-    path: paths.ldapSiteRoleManagement,
-    title: "Site Roles Management",
-    linkText: "Site Roles",
-    icon: faServer,
-    pageDescription: "Manage Site Roles in the follow levels: Administrators, Power Users, and Users."
-  },
-  ldapSiteRoleDetailView: {
-    parent: "ldapSiteRolesManagement",
-    name: "ldapSiteRoleDetailView",
-    path: paths.ldapSiteRoleDetailView,
-    title: "Site Role Details",
-    linkText: "Site Role Details",
-    icon: faServer
   },
 
   // LDAP Departments Administration
@@ -1140,6 +1122,7 @@ const breadcrumbs = {
   ...pipelineSettingsTrails,
   ...pipelinesTrails,
   ...userSettingsTrails,
+  ...accountSettingsTrails,
 };
 
 export const getTrail = (breadcrumb) => {

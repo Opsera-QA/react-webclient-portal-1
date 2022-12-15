@@ -13,7 +13,6 @@ function LdapOrganizationAccountSiteRolesPanel({ ldapOrganizationAccountData, or
   const {getAccessToken} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const [siteRoles, setSiteRoles] = useState([]);
-  const [siteRoleMetadata, setSiteRoleMetadata] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -65,13 +64,10 @@ function LdapOrganizationAccountSiteRolesPanel({ ldapOrganizationAccountData, or
       const groups = response?.data?.data;
 
       if (Array.isArray(groups)) {
-        const metadata = response?.data?.metadata;
-        setSiteRoleMetadata({...metadata});
         setSiteRoles(groups);
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
-      console.error(error);
     }
   };
 
@@ -83,7 +79,6 @@ function LdapOrganizationAccountSiteRolesPanel({ ldapOrganizationAccountData, or
     <SiteRolesTable
       orgDomain={organizationDomain}
       siteRoles={siteRoles}
-      siteRoleMetadata={siteRoleMetadata}
       isMounted={isMounted}
       isLoading={isLoading}
       loadData={loadData}
