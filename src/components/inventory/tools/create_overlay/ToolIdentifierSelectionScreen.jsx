@@ -1,8 +1,5 @@
-import { AuthContext } from "contexts/AuthContext";
-import React, {useContext, useEffect, useRef, useState} from "react";
-import { DialogToastContext } from "contexts/DialogToastContext";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -12,45 +9,34 @@ import ToolFilterModel from "components/inventory/tools/tool.filter.model";
 import TableCardView from "components/common/table/TableCardView";
 import {hasStringValue, stringIncludesValue} from "components/common/helpers/string-helpers";
 import ToolIdentifierSelectionTable from "components/admin/tools/identifiers/ToolIdentifierSelectionTable";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import {CreateToolFilterModel} from "components/inventory/tools/create_overlay/createTool.filter.model";
 
 function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
-  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
-  const [toolIdentifierFilterModel, setToolIdentifierFilterModel] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [toolIdentifierFilterModel, setToolIdentifierFilterModel] = useState(new CreateToolFilterModel());
+  const {
+    isMounted,
+    getAccessToken,
+    toastContext,
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-    setToolIdentifierFilterModel(new ToolFilterModel());
-
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setLoading(true);
-      await getToolIdentifiers(cancelSource);
+      await getToolIdentifiers();
     } catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     } finally {
@@ -60,9 +46,9 @@ function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
     }
   };
 
-  const getToolIdentifiers = async (cancelSource) => {
+  const getToolIdentifiers = async () => {
     try {
-      const response = await toolIdentifierActions.getToolIdentifiersV2(getAccessToken, cancelSource, "active", true);
+      const response = await toolIdentifierActions.getToolIdentifiersV2(getAccessToken, cancelTokenSource, "active", true);
       const identifiers = response?.data?.data;
 
       if (isMounted?.current === true && Array.isArray(identifiers)) {
