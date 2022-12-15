@@ -10,7 +10,7 @@ import AnalyticsSalesforceComponentNameMultiSelectInput from "components/common/
 import { insightsLookupActions } from "components/insights/lookup/insightsLookup.actions";
 import LookupResults from "components/insights/lookup/LookupResults";
 import DateRangeInputBase from "components/common/inputs/date/range/DateRangeInputBase";
-import { faSearch } from "@fortawesome/pro-light-svg-icons";
+import { faSearch, faCalendarAlt } from "@fortawesome/pro-light-svg-icons";
 import { formatDate } from "components/common/helpers/date/date.helpers";
 import LookupFilterModel from "components/insights/lookup/lookup.filter.model";
 import LookupMultiSelectInput from "components/insights/lookup/LookupMultiSelectInput";
@@ -19,6 +19,9 @@ function Lookup() {
   const [isLoading, setIsLoading] = useState(false);
   const [salesforceComponentNames, setSalesforceComponentNames] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const [selectedComponentName, setSelectedComponentName] = useState(
+    salesforceComponentNames?.[0],
+  );
   const [filterModel, setFilterModel] = useState(undefined);
   const { getAccessToken } = useContext(AuthContext);
   const { isMounted, cancelTokenSource, toastContext } =
@@ -38,9 +41,6 @@ function Lookup() {
   const loadComponentNames = async (newFilterModel = filterModel) => {
     const startDate = newFilterModel?.getData("startDate");
     const endDate = newFilterModel?.getData("endDate");
-    const componentNames = newFilterModel?.getArrayData(
-      "selectedComponentNames",
-    );
 
     if (!startDate || !endDate) {
       toastContext.showInlineErrorMessage("Please select start and end dates.");
@@ -71,16 +71,13 @@ function Lookup() {
     }
   };
 
-  const loadData = async (newFilterModel = filterModel) => {
+  const loadData = async (newFilterModel = filterModel, componentName) => {
     try {
       setIsLoading(true);
       setSearchResults([]);
       toastContext.removeInlineMessage();
       const startDate = newFilterModel?.getData("startDate");
       const endDate = newFilterModel?.getData("endDate");
-      const componentNames = newFilterModel?.getArrayData(
-        "selectedComponentNames",
-      );
 
       if (!startDate || !endDate) {
         toastContext.showInlineErrorMessage(
@@ -98,19 +95,18 @@ function Lookup() {
       const DATE_STRING_FORMAT = "MM/dd/yyyy";
       const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
       const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
-
       const response = await insightsLookupActions.searchComponents(
         getAccessToken,
         cancelTokenSource,
         formattedStartDate,
         formattedEndDate,
-        newFilterModel.getData("selectedComponentNames"),
+        [componentName],
         newFilterModel.getData("selectedComponentFilterData"),
       );
       const searchResults = insightsLookupActions.generateTransformedResults(
         response?.data?.data?.data,
       );
-      console.log(searchResults);
+
       if (isMounted?.current === true && Array.isArray(searchResults)) {
         setSearchResults(searchResults);
         newFilterModel.setData("activeFilters", filterModel.getActiveFilters());
@@ -133,26 +129,26 @@ function Lookup() {
         model={filterModel}
         setModel={setFilterModel}
       />
-      <AnalyticsSalesforceComponentNameMultiSelectInput
+      {/* <AnalyticsSalesforceComponentNameMultiSelectInput
         fieldName={"selectedComponentNames"}
         model={filterModel}
         setModel={setFilterModel}
-      />
+      /> */}
     </div>
   );
 
   const getNoDataMessage = () => {
     const startDate = filterModel?.getData("startDate");
     const endDate = filterModel?.getData("endDate");
-    const componentNames = filterModel?.getArrayData("selectedComponentNames");
+    // const componentNames = filterModel?.getArrayData("selectedComponentNames");
 
     if (!startDate || !endDate) {
       return "Please select start and end dates.";
     }
 
-    if (componentNames.length === 0) {
-      return "Please select at least one Salesforce component.";
-    }
+    // if (componentNames.length === 0) {
+    //   return "Please select at least one Salesforce component.";
+    // }
   };
 
   const getBody = () => {
@@ -165,8 +161,12 @@ function Lookup() {
         />
         <LookupResults
           isLoading={isLoading}
+          filterModel={filterModel}
+          loadData={loadData}
           searchResults={searchResults}
           salesforceComponentNames={salesforceComponentNames}
+          selectedComponentName={selectedComponentName}
+          setSelectedComponentName={setSelectedComponentName}
           noDataMessage={getNoDataMessage()}
         />
       </>
@@ -196,6 +196,7 @@ function Lookup() {
         isLoading={isLoading}
         filterDto={filterModel}
         loadData={loadData}
+        // inlineFilters={getDropdownFilters()}
         dropdownFilters={getDropdownFilters()}
         body={getBody()}
         className={"mx-2"}

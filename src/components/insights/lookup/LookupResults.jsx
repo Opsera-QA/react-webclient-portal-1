@@ -10,24 +10,17 @@ import LookupMultiSelectInput from "components/insights/lookup/LookupMultiSelect
 
 function LookupResults({
   isLoading,
+  loadData,
+  filterModel,
   searchResults,
   salesforceComponentNames,
+  selectedComponentName,
+  setSelectedComponentName,
   noDataMessage,
 }) {
-  const [selectedComponentName, setSelectedComponentName] = useState(undefined);
-  useEffect(() => {
-    setSelectedComponentName(undefined);
-
-    if (
-      Array.isArray(salesforceComponentNames) &&
-      salesforceComponentNames.length > 0
-    ) {
-      setSelectedComponentName(salesforceComponentNames[0]);
-    }
-  }, [salesforceComponentNames]);
-
-  const handleTabClick = (componentName) => {
+  const handleTabClick = async (componentName) => {
     setSelectedComponentName(componentName);
+    loadData(filterModel, componentName);
   };
 
   const getTabContainer = () => {
@@ -57,9 +50,10 @@ function LookupResults({
   };
 
   const getCurrentView = () => {
-    const selectedComponent = salesforceComponentNames?.find(
-      (component) => component === selectedComponentName,
+    const selectedComponent = searchResults?.find(
+      (component) => component.componentName === selectedComponentName,
     );
+    console.log(searchResults);
     if (selectedComponent) {
       return (
         <div className={"m-2"}>
@@ -100,8 +94,12 @@ function LookupResults({
 
 LookupResults.propTypes = {
   isLoading: PropTypes.bool,
-  salesforceComponentNames: PropTypes.array,
+  filterModel: PropTypes.any,
   searchResults: PropTypes.array,
+  salesforceComponentNames: PropTypes.array,
+  loadData: PropTypes.func,
+  selectedComponentName: PropTypes.any,
+  setSelectedComponentName: PropTypes.func,
   noDataMessage: PropTypes.string,
 };
 
