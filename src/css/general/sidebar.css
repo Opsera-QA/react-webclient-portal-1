@@ -19,10 +19,6 @@
     letter-spacing: .3rem;
 }
 
-.sidebar-container .is-closed .sub-header, .sidebar-container .is-closed .menu-text {
-    display: none;
-}
-
 .sidebar-menu .menu-text-sub {
     margin-left: 2rem;
 }
