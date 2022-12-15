@@ -6,7 +6,7 @@ import AnalyticsProfilePageLinkCard from "components/settings/analytics/Analytic
 
 export default function InsightsSettingsPageLinkCards() {
   return (
-    <div>
+    <div className={"mx-2"}>
       <AnalyticsProfilePageLinkCard />
       <AnalyticsDataEntryPageLinkCard />
       <DataMappingManagementPageLinkCard />
