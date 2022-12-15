@@ -1,13 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
-import {subDays} from "date-fns";
-import {AuthContext} from "contexts/AuthContext";
+import { subDays } from "date-fns";
+import { AuthContext } from "contexts/AuthContext";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
-import ScreenContainer from 'components/common/panels/general/ScreenContainer';
-import SalesforceLookUpHelpDocumentation from '../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation';
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import SalesforceLookUpHelpDocumentation from "../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation";
 import FilterContainer from "components/common/table/FilterContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import AnalyticsSalesforceComponentNameMultiSelectInput
-  from "components/common/list_of_values_input/tools/salesforce/component_names/analytics/AnalyticsSalesforceComponentNameMultiSelectInput";
+import AnalyticsSalesforceComponentNameMultiSelectInput from "components/common/list_of_values_input/tools/salesforce/component_names/analytics/AnalyticsSalesforceComponentNameMultiSelectInput";
 import { insightsLookupActions } from "components/insights/lookup/insightsLookup.actions";
 import LookupResults from "components/insights/lookup/LookupResults";
 import DateRangeInputBase from "components/common/inputs/date/range/DateRangeInputBase";
@@ -21,13 +20,14 @@ function Lookup() {
   const [searchResults, setSearchResults] = useState([]);
   const [filterModel, setFilterModel] = useState(undefined);
   const { getAccessToken } = useContext(AuthContext);
-  const { isMounted, cancelTokenSource, toastContext } = useComponentStateReference();
+  const { isMounted, cancelTokenSource, toastContext } =
+    useComponentStateReference();
 
   useEffect(() => {
     const newFilterModel = new LookupFilterModel();
     newFilterModel.setData("startDate", subDays(new Date(), 7));
     newFilterModel.setData("endDate", new Date());
-    setFilterModel({...newFilterModel});
+    setFilterModel({ ...newFilterModel });
   }, []);
 
   const loadData = async (newFilterModel = filterModel) => {
@@ -37,17 +37,21 @@ function Lookup() {
       toastContext.removeInlineMessage();
       const startDate = newFilterModel?.getData("startDate");
       const endDate = newFilterModel?.getData("endDate");
-      const componentNames = newFilterModel?.getArrayData("selectedComponentNames");
+      const componentNames = newFilterModel?.getArrayData(
+        "selectedComponentNames",
+      );
 
       if (!startDate || !endDate) {
-        toastContext.showInlineErrorMessage('Please select start and end dates.');
+        toastContext.showInlineErrorMessage(
+          "Please select start and end dates.",
+        );
         return;
       }
 
-      if (componentNames.length === 0) {
-        toastContext.showInlineErrorMessage('Please select at least one Salesforce component.');
-        return;
-      }
+      // if (componentNames.length === 0) {
+      //   toastContext.showInlineErrorMessage('Please select at least one Salesforce component.');
+      //   return;
+      // }
 
       // TODO: This should just use the dates from the input and Node should do any processing on the date if necessary
       const DATE_STRING_FORMAT = "MM/dd/yyyy";
@@ -62,13 +66,14 @@ function Lookup() {
         newFilterModel.getData("selectedComponentNames"),
         newFilterModel.getData("selectedComponentFilterData"),
       );
-      console.log(newFilterModel.getData("selectedComponentFilterData"));
-      const searchResults = insightsLookupActions.generateTransformedResults(response?.data?.data?.data);
+      const searchResults = insightsLookupActions.generateTransformedResults(
+        response?.data?.data?.data,
+      );
 
       if (isMounted?.current === true && Array.isArray(searchResults)) {
         setSearchResults(searchResults);
         newFilterModel.setData("activeFilters", filterModel.getActiveFilters());
-        setFilterModel({...newFilterModel});
+        setFilterModel({ ...newFilterModel });
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -101,27 +106,27 @@ function Lookup() {
     const componentNames = filterModel?.getArrayData("selectedComponentNames");
 
     if (!startDate || !endDate) {
-      return 'Please select start and end dates.';
+      return "Please select start and end dates.";
     }
 
     if (componentNames.length === 0) {
-      return 'Please select at least one Salesforce component.';
+      return "Please select at least one Salesforce component.";
     }
   };
 
   const getBody = () => {
     return (
       <>
-      <LookupMultiSelectInput
-        fieldName={"selectedComponentFilterData"}
-        model={filterModel}
-        setModel={setFilterModel}
-      />
-      <LookupResults
-        isLoading={isLoading}
-        searchResults={searchResults}
-        noDataMessage={getNoDataMessage()}
-      />
+        <LookupMultiSelectInput
+          fieldName={"selectedComponentFilterData"}
+          model={filterModel}
+          setModel={setFilterModel}
+        />
+        <LookupResults
+          isLoading={isLoading}
+          searchResults={searchResults}
+          noDataMessage={getNoDataMessage()}
+        />
       </>
     );
   };
@@ -132,7 +137,9 @@ function Lookup() {
 
   return (
     <ScreenContainer
-      navigationTabContainer={<InsightsSubNavigationBar currentTab={"lookup"} />}
+      navigationTabContainer={
+        <InsightsSubNavigationBar currentTab={"lookup"} />
+      }
       isLoading={isLoading}
       breadcrumbDestination={"lookup"}
       helpComponent={<SalesforceLookUpHelpDocumentation />}

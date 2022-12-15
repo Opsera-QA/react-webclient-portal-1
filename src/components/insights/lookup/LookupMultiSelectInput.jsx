@@ -1,26 +1,26 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { insightsLookupActions } from "components/insights/lookup/insightsLookup.actions";
-import {capitalizeFirstLetter} from "../../common/helpers/string-helpers";
+import { capitalizeFirstLetter } from "../../common/helpers/string-helpers";
 
-function LookupMultiSelectInput(
-  {
-    fieldName,
-    model,
-    setModel,
-    disabled,
-    formatDataFunction,
-    textField,
-    valueField,
-    setDataFunction,
-    clearDataFunction
-  }) {
+function LookupMultiSelectInput({
+  fieldName,
+  model,
+  setModel,
+  disabled,
+  formatDataFunction,
+  textField,
+  valueField,
+  setDataFunction,
+  clearDataFunction,
+}) {
   const [salesforceComponentNames, setSalesforceComponentNames] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
-  const { isMounted, cancelTokenSource, getAccessToken } = useComponentStateReference();
+  const { isMounted, cancelTokenSource, getAccessToken } =
+    useComponentStateReference();
 
   useEffect(() => {
     setSalesforceComponentNames([]);
@@ -37,13 +37,11 @@ function LookupMultiSelectInput(
       setIsLoading(true);
       setError(undefined);
       await loadComponentNames();
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -51,11 +49,26 @@ function LookupMultiSelectInput(
   };
 
   const loadComponentNames = async () => {
-    const componentTypeResponse = await insightsLookupActions.getComponentTypes(getAccessToken, cancelTokenSource);
-    const pipelinesResponse = await insightsLookupActions.getPipelines(getAccessToken, cancelTokenSource);
-    const tasksResponse = await insightsLookupActions.getTasks(getAccessToken, cancelTokenSource);
-    const orgsResponse = await insightsLookupActions.getOrgs(getAccessToken, cancelTokenSource);
-    const componentNamesList = await insightsLookupActions.getComponentNames(getAccessToken, cancelTokenSource);
+    const componentTypeResponse = await insightsLookupActions.getComponentTypes(
+      getAccessToken,
+      cancelTokenSource,
+    );
+    const pipelinesResponse = await insightsLookupActions.getPipelines(
+      getAccessToken,
+      cancelTokenSource,
+    );
+    const tasksResponse = await insightsLookupActions.getTasks(
+      getAccessToken,
+      cancelTokenSource,
+    );
+    const orgsResponse = await insightsLookupActions.getOrgs(
+      getAccessToken,
+      cancelTokenSource,
+    );
+    const componentNamesList = await insightsLookupActions.getComponentNames(
+      getAccessToken,
+      cancelTokenSource,
+    );
 
     const types = componentTypeResponse?.data?.data;
     const pipelines = pipelinesResponse?.data?.results;
@@ -63,8 +76,16 @@ function LookupMultiSelectInput(
     const orgs = orgsResponse?.data?.results;
     const names = componentNamesList?.data?.data?.componentNames;
 
-    if (isMounted?.current === true && Array.isArray(pipelines) && Array.isArray(pipelines) && Array.isArray(tasks) && Array.isArray(orgs) && Array.isArray(types) && Array.isArray(names)) {
-      const resultArray = [...types, ...pipelines, ...tasks, ...orgs, ...names];
+    if (
+      isMounted?.current === true &&
+      Array.isArray(pipelines) &&
+      Array.isArray(pipelines) &&
+      Array.isArray(tasks) &&
+      Array.isArray(orgs) &&
+      Array.isArray(types) &&
+      Array.isArray(names)
+    ) {
+      const resultArray = [...types, ...pipelines, ...tasks, ...orgs];
       setSalesforceComponentNames(resultArray);
     }
   };
@@ -79,8 +100,14 @@ function LookupMultiSelectInput(
       selectOptions={salesforceComponentNames}
       formatDataFunction={formatDataFunction}
       clearDataFunction={clearDataFunction}
-      groupBy={(filterOption) => capitalizeFirstLetter(filterOption?.type, " ", "Undefined Type")}
-      textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + capitalizeFirstLetter(data["name"])}
+      groupBy={(filterOption) =>
+        capitalizeFirstLetter(filterOption?.type, " ", "Undefined Type")
+      }
+      textField={(data) =>
+        capitalizeFirstLetter(data["type"]) +
+        ": " +
+        capitalizeFirstLetter(data["name"])
+      }
       busy={isLoading}
       valueField={valueField}
       disabled={disabled}
@@ -103,7 +130,7 @@ LookupMultiSelectInput.propTypes = {
 
 LookupMultiSelectInput.defaultProps = {
   // valueField: "id",
-  textField: "name"
+  textField: "name",
 };
 
 export default LookupMultiSelectInput;
