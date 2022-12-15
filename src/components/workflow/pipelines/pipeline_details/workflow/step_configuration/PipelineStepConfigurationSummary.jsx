@@ -432,7 +432,7 @@ function PipelineStepConfigurationSummary({
         return (
           <TerraformVcsStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            terraformPipelineDataObject={getModelWrappedObject(TerraformVcsStepFormMetadata)}
+            terraformVcsStepModel={getModelWrappedObject(TerraformVcsStepFormMetadata)}
           />
         );
       case "xunit":
