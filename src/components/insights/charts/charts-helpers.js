@@ -442,3 +442,16 @@ export const convertMStoDays = (milliseconds) => {
 export const convertMStoHours = (milliseconds) => {
   return milliseconds/(1000*3600);
 };
+
+export function getCustomMappingFields(kpiConfiguration) {
+  if (kpiConfiguration?.dataPoints && kpiConfiguration?.dataPoints?.length > 0 && kpiConfiguration?.dataPoints.filter((point) => point?.customFieldsMapping?.enabled && point?.customFieldsMapping?.mappedFields).length > 0) {
+    let customFields = {};
+    kpiConfiguration?.dataPoints.forEach((point) => {
+      if (point?.customFieldsMapping?.enabled && point?.customFieldsMapping?.mappedFields) {
+        customFields = {...customFields, ...point?.customFieldsMapping?.mappedFields};
+      }
+    });
+    return customFields;
+  }
+  return null;
+}
