@@ -73,7 +73,8 @@ function AverageMttrCustomFieldsMappingInput(
 
     const response = await customFieldsStepActions.getJiraCustomFields(
       getAccessToken,
-      cancelSource
+      cancelSource,
+      "datetime"
     );
 
     const result = response?.data?.data;

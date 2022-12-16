@@ -5,6 +5,7 @@ import AverageMttrCustomFieldsMappingInput from "./inputs/average_mttr/AverageMt
 import dataPointCustomFieldsMappingMetadata
   from "components/common/inputs/metric/data_points/custom_fields/dataPointCustomFieldsMapping.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
+import DashboardMetricUseCustomFieldsToggleInput from "./DashboardMetricUseCustomFieldsToggleInput";
 
 function DashboardMetricCustomFieldsMappingForm(
   {    
@@ -41,6 +42,9 @@ function DashboardMetricCustomFieldsMappingForm(
   };
 
   const getMappingFields = () => {
+    if (!customFieldsMappingModel.getData("useCustomFields")) {
+      return null;
+    }
     const identifier = dataPoint?.identifier;
     switch (identifier) {
       case "average-mttr-data-block-data-point":
@@ -56,13 +60,18 @@ function DashboardMetricCustomFieldsMappingForm(
     }
   };
 
-  if (model == null) {
+  if (model == null || customFieldsMappingModel == null) {
     return null;
   }
 
   return (
     <div className={className}>
       <H4MetricSubHeader subheaderText={"Custom Fields Mapping"} />
+      <DashboardMetricUseCustomFieldsToggleInput
+        model={customFieldsMappingModel}
+        setModel={setDataFunction}
+        fieldName={"useCustomFields"}
+      />
       {getMappingFields()}
     </div>
   );
