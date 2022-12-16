@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState, useCallback} from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
@@ -8,7 +7,6 @@ import {bitbucketActions} from "components/inventory/tools/tool_details/tool_job
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
 import _ from "lodash";
-import useComponentStateReference from "hooks/useComponentStateReference";
 
 function BitbucketRepositorySelectInput(
     {
@@ -60,7 +58,13 @@ function BitbucketRepositorySelectInput(
     try {
       setError(undefined);
       setIsLoading(true);
-      await loadBitbucketRepositories(searchTerm, currentToolId, cancelSource);
+      let defaultSearchTerm = searchTerm;
+      const existingRepository = model?.getData("repositoryName") || model?.getData("gitRepository") || model?.getData("repository");
+      // console.log(existingRepository);
+      if ((defaultSearchTerm === "") && (hasStringValue(existingRepository) === true)) {
+        defaultSearchTerm = existingRepository;
+      }
+      await loadBitbucketRepositories(defaultSearchTerm, currentToolId, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);

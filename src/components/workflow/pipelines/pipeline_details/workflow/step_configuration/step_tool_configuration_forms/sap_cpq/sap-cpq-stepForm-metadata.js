@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const SapCpqStepFormMetadata = {
   type: "SAP CPQ Tool Configuration",
   fields: [
@@ -27,6 +29,7 @@ const SapCpqStepFormMetadata = {
     {
       label: "Repository",
       id: "repository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
       isRequired: true,
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
@@ -35,6 +38,7 @@ const SapCpqStepFormMetadata = {
     {
       label: "Repository",
       id: "repoId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
       isRequired: true,
       formText:" "
     },
@@ -48,6 +52,7 @@ const SapCpqStepFormMetadata = {
     {
       label: "Branch",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequired: true,
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",

@@ -7,6 +7,7 @@ function KafkaConnectBitbucketWorkspaceInput({dataObject, setDataObject, disable
     let newDataObject = {...dataObject};
     newDataObject.setData("workspace", selectedOption.key);
     newDataObject.setData("workspaceName", selectedOption.name);
+    newDataObject.setData("defaultBranch", "");
     setDataObject({...newDataObject});
   };
 

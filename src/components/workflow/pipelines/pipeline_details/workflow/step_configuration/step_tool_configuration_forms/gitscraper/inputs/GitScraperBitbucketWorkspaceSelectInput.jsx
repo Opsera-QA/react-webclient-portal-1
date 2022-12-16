@@ -7,6 +7,10 @@ function GitScraperBitbucketWorkspaceSelectInput({model, setModel, disabled}) {
     let newModel = {...model};
     newModel.setData("workspace", selectedOption?.key);
     newModel.setData("bitbucketWorkspaceName", selectedOption?.name);
+    newModel.setData("repository", "");
+    newModel.setData("repoId", "");
+    newModel.setData("projectId", "");
+    newModel.setData("gitBranch", "");
     setModel({...newModel});
   };
 
