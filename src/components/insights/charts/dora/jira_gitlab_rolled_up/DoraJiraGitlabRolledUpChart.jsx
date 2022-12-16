@@ -6,11 +6,9 @@ import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import axios from "axios";
 import {
-  getDeploymentStageFromKpiConfiguration, getResultFromKpiConfiguration,
+  getDeploymentStageFromKpiConfiguration, getResultFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration,
 } from "../../charts-helpers";
 
-import GitlabLeadTimeHelpDocumentation
-  from "../../../../common/help/documentation/insights/charts/GitlabLeadTimeHelpDocumentation";
 import InfoDialog from "../../../../common/status_notifications/info";
 import doraAction from "../dora.action";
 import DoraJiraGitlabRolledUpColumnDataBlock from "./DoraJiraGitlabRolledUpColumnDataBlock";
@@ -67,7 +65,8 @@ function DoraJiraGitlabRolledUpChart({
       const selectedDeploymentStages =
         getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
       const jiraResolutionNames = getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names');
-      if(selectedDeploymentStages && jiraResolutionNames?.length) {
+      const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+      if(selectedDeploymentStages && jiraResolutionNames?.length && useDashboardTags && dashboardOrgs?.length) {
         const response = await doraAction.jiraGitlabRolledUp(
           getAccessToken,
           cancelSource,
@@ -103,12 +102,19 @@ function DoraJiraGitlabRolledUpChart({
     const selectedDeploymentStages =
       getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
     const jiraResolutionNames = getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names');
-    if (!selectedDeploymentStages && !jiraResolutionNames?.length) {
+    const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+    let dashboardOrgs =
+        dashboardData?.data?.filters[
+            dashboardData?.data?.filters.findIndex(
+                (obj) => obj.type === "organizations",
+            )
+            ]?.value;
+    if (!selectedDeploymentStages || !jiraResolutionNames?.length || !useDashboardTags || !dashboardOrgs?.length) {
       return (
           <div className="new-chart mb-3" style={{ height: "300px" }}>
             <div className="max-content-width p-5 mt-5"
                  style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <InfoDialog message="Missing Required Filters. Deployment Stages and Jira Resolution Names are Mandatory" />
+              <InfoDialog message="Missing Required Filters. Dashboard Organization tags,Deployment Stages and Jira Resolution Names are Mandatory" />
             </div>
           </div>
       );
