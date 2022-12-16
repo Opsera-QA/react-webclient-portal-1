@@ -30,7 +30,7 @@ const anchoreReportMetadata = {
       id: "pkg",
     },
     {
-      label: "Link",
+      label: "Vulnerability",
       id: "vulnLink",
     },
   ],
