@@ -64,9 +64,9 @@ function AzureDevOpsRepositorySelectInput({
       setError(undefined);
       setIsLoading(true);
       let defaultSearchTerm = searchTerm;
-      const existingRepository = model?.getData("gitRepository") || model?.getData("repository");
+      const existingRepository = model?.getData("repositoryName") || model?.getData("gitRepository") || model?.getData("repository");
       // console.log(existingRepository);
-      if (defaultSearchTerm && defaultSearchTerm === "" && hasStringValue(existingRepository) === true) {
+      if ((defaultSearchTerm === "") && (hasStringValue(existingRepository) === true)) {
         defaultSearchTerm = existingRepository;
       }
       await loadAzureRepositories(defaultSearchTerm, currentToolId, cancelSource);
@@ -101,7 +101,7 @@ function AzureDevOpsRepositorySelectInput({
 
   const delayedSearchQuery = useCallback(
     _.debounce(
-      (searchTerm, toolId) => loadAzureRepositories(searchTerm, toolId),
+      (searchTerm, toolId) => loadData(searchTerm, toolId),
       600,
     ),
     [],
