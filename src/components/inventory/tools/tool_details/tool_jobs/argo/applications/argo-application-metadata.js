@@ -46,39 +46,44 @@ const argoApplicationsMetadata = {
     {
       label: "Branch Name",
       id: "branch",
+      isRequired: true,
+      maxLength: 28,
+      regexDefinitionName: "generalText",
     },
     {
       label: "Git URL",
       id: "repoUrl",
-    },
-    // NEWLY ADDED FIELDS ARE ABOVE.. TODO TO BE REVISITED AND REMOVE UNUSED
-    {
-      label: "Name",
-      id: "applicationName",
-      isRequired: true,
-      lowercase: true,
-      spacesAllowed: false,
-      formText: "Application Name cannot contain spaces.",
-      maxLength: 63
-    },
-    {
-      label: "Cluster",
-      id: "cluster",
-      isRequired: true
-    },
-    {
-      label: "Git Path",
-      id: "gitPath",
-      isRequired: true,
-      regexDefinitionName: "pathField",
-      maxLength: 256
-    },
-    {
-      label: "Git URL",
-      id: "gitUrl",
       isRequired: true,
       maxLength: 256,
     },
+    // NEWLY ADDED FIELDS ARE ABOVE.. TODO TO BE REVISITED AND REMOVE UNUSED
+    // {
+    //   label: "Name",
+    //   id: "applicationName",
+    //   isRequired: true,
+    //   lowercase: true,
+    //   spacesAllowed: false,
+    //   formText: "Application Name cannot contain spaces.",
+    //   maxLength: 63
+    // },
+    // {
+    //   label: "Cluster",
+    //   id: "cluster",
+    //   isRequired: true
+    // },
+    // {
+    //   label: "Git Path",
+    //   id: "gitPath",
+    //   isRequired: true,
+    //   regexDefinitionName: "pathField",
+    //   maxLength: 256
+    // },
+    // {
+    //   label: "Git URL",
+    //   id: "gitUrl",
+    //   isRequired: true,
+    //   maxLength: 256,
+    // },
     {
       label: "Namespace",
       id: "namespace",
@@ -86,22 +91,22 @@ const argoApplicationsMetadata = {
       maxLength: 28,
       regexDefinitionName: "domainField",
     },
-    {
-      label: "Project Name",
-      id: "projectName",
-      isRequired: true
-    },
+    // {
+    //   label: "Project Name",
+    //   id: "projectName",
+    //   isRequired: true
+    // },
     {
       label: "Active",
       id: "active",
     },
-    {
-      label: "Branch Name",
-      id: "branchName",
-      isRequired: true,
-      maxLength: 28,
-      regexDefinitionName: "generalText",
-    },
+    // {
+    //   label: "Branch Name",
+    //   id: "branchName",
+    //   isRequired: true,
+    //   maxLength: 28,
+    //   regexDefinitionName: "generalText",
+    // },
     {
       label: "Auto Sync",
       id: "autoSync",
@@ -110,6 +115,10 @@ const argoApplicationsMetadata = {
   newObjectFields: {
     _id: "",
     applicationName: "",
+    project: "",
+    branch:"",
+    clusterUrl:"",
+    path:"",
     cluster: "",
     gitPath: "",
     gitUrl: "",
