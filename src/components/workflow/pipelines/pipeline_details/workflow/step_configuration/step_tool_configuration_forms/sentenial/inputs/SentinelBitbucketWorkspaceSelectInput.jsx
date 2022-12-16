@@ -12,7 +12,7 @@ function SentenialBitbucketWorkspaceSelectInput({model, setModel, disabled}) {
     setModel({...newModel});
   };
 
-  if (model?.getData("type") !== "bitbucket") {
+  if (model?.getData("service") !== "bitbucket") {
     return <></>;
   }
 
