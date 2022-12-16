@@ -8,20 +8,12 @@ import AuditorsRolePageLinkCard from "components/settings/ldap_site_roles/cards/
 import SecurityManagersRolePageLinkCard
   from "components/settings/ldap_site_roles/cards/SecurityManagersRolePageLinkCard";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-
-// TODO: Replace with pull from roles library when deployed
-export const SITE_ROLE_GROUP_NAMES = {
-  ADMINISTRATORS: "Administrators",
-  POWER_USERS: "PowerUsers",
-  USERS: "Users",
-  AUDITORS: "Auditors",
-  SECURITY_MANAGERS: "SecurityManagers",
-};
+import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
 export default function SiteRoleManagementPageLinkCards({ siteRoles, }) {
   const parsedSiteRoles = DataParsingHelper.parseArray(siteRoles, []);
-  const securityManagersSiteRole = parsedSiteRoles.find((siteRole) => siteRole.name === SITE_ROLE_GROUP_NAMES.SECURITY_MANAGERS);
-  const auditorsSiteRole = parsedSiteRoles.find((siteRole) => siteRole.name === SITE_ROLE_GROUP_NAMES.AUDITORS);
+  const securityManagersSiteRole = parsedSiteRoles.find((siteRole) => siteRole.name === SiteRoleHelper.SITE_ROLE_GROUP_NAMES.SECURITY_MANAGERS);
+  const auditorsSiteRole = parsedSiteRoles.find((siteRole) => siteRole.name === SiteRoleHelper.SITE_ROLE_GROUP_NAMES.AUDITORS);
 
     if (!parsedSiteRoles) {
       return null;

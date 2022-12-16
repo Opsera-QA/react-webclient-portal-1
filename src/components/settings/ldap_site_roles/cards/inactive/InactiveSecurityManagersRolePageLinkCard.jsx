@@ -5,7 +5,7 @@ import SiteRoleActivationConfirmationOverlay
   from "components/settings/ldap_site_roles/cards/inactive/SiteRoleActivationConfirmationOverlay";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
-export default function InactiveAuditorsRolePageLinkCard() {
+export default function InactiveSecurityManagersRolePageLinkCard() {
   const {
     toastContext,
   } = useComponentStateReference();
@@ -17,7 +17,7 @@ export default function InactiveAuditorsRolePageLinkCard() {
   const launchActivationConfirmationOverlay = () => {
     toastContext.showOverlayPanel(
       <SiteRoleActivationConfirmationOverlay
-        siteRoleName={SiteRoleHelper.SITE_ROLE_GROUP_NAMES.AUDITORS}
+        siteRoleName={SiteRoleHelper.SITE_ROLE_GROUP_NAMES.SECURITY_MANAGERS}
       />
     );
   };
