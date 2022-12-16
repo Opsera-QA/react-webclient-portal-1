@@ -9,7 +9,6 @@ function ArgoGitRepositoryInput({dataObject, setDataObject, disabled}) {
     const repoId = selectedOption?._id || selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     const sshUrl = selectedOption?.sshUrl || selectedOption?.configuration?.sshUrl || "";
-
     newDataObject.setData("repositoryName", selectedOption.name);
     newDataObject.setData("projectId", repoId);
     newDataObject.setData("repoId", repoId);
@@ -23,7 +22,6 @@ function ArgoGitRepositoryInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("repositoryName", "");
     newDataObject.setData("projectId", "");
     newDataObject.setData("repoId", "");
-    newDataObject.setData("projectId", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("httpsUrl", "");
     setDataObject({...newDataObject});
@@ -31,7 +29,7 @@ function ArgoGitRepositoryInput({dataObject, setDataObject, disabled}) {
 
   return (
      <RepositorySelectInput
-       fieldName={"repoId"}
+       fieldName={"projectId"}
        service={dataObject.getData("service")}
        gitToolId={dataObject.getData("gitToolId")}
        workspace={dataObject.getData("workspace")}
