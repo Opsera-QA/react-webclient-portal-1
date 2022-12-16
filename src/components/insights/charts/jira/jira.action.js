@@ -3,7 +3,10 @@ import baseActions from "utils/actionsBase";
 import {
   getDateObjectFromKpiConfiguration,
   getResultFromKpiConfiguration,
-  getTagsFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration, getUseKpiTagsFromKpiConfiguration, getCustomMappingFields
+  getTagsFromKpiConfiguration,
+  getUseDashboardTagsFromKpiConfiguration,
+  getUseKpiTagsFromKpiConfiguration,
+  getCustomMappingFields,
 } from "components/insights/charts/charts-helpers";
 
 const jiraBaseURL = "analytics/jira/v1/";
@@ -20,12 +23,13 @@ jiraActions.getJiraMTTR = async (
   const apiUrl = jiraBaseURL + "jiraMTTR";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  const startDate =  new Date(dateRange?.start);
-  const endDate =  new Date(dateRange?.end);
+  const startDate = new Date(dateRange?.start);
+  const endDate = new Date(dateRange?.end);
 
   // Checking the use kpi tags toggle
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
-  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags =
+    getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
   if (!useKpiTags) {
     tags = null;
@@ -45,10 +49,22 @@ jiraActions.getJiraMTTR = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
-    jiraProjects: getResultFromKpiConfiguration(kpiConfiguration, 'jira-projects'),
-    jiraPriorities: getResultFromKpiConfiguration(kpiConfiguration, 'jira-priorities'),
-    jiraServiceComponents: getResultFromKpiConfiguration(kpiConfiguration, 'jira-service-components'),
-    jiraTeamNames: getResultFromKpiConfiguration(kpiConfiguration, 'jira-team-names'),
+    jiraProjects: getResultFromKpiConfiguration(
+      kpiConfiguration,
+      "jira-projects",
+    ),
+    jiraPriorities: getResultFromKpiConfiguration(
+      kpiConfiguration,
+      "jira-priorities",
+    ),
+    jiraServiceComponents: getResultFromKpiConfiguration(
+      kpiConfiguration,
+      "jira-service-components",
+    ),
+    jiraTeamNames: getResultFromKpiConfiguration(
+      kpiConfiguration,
+      "jira-team-names",
+    ),
     jiraCustomMappingFields: getCustomMappingFields(kpiConfiguration),
   };
 
@@ -83,18 +99,18 @@ jiraActions.getJiraProjects = async (getAccessToken, cancelTokenSource) => {
 jiraActions.getJiraChangeTypes = async (
   getAccessToken,
   cancelTokenSource,
-  project
+  project,
 ) => {
   const apiUrl = jiraBaseURL + "jiraChangeTypes";
   let postBody = {};
   // For change failure rate, project will be given as string
   // Api is written in such a way that it accepts multiple projects.
-  if(Array.isArray(project)) {
-    if(project.length > 0){
-      postBody = {jiraProjects:project};
+  if (Array.isArray(project)) {
+    if (project.length > 0) {
+      postBody = { jiraProjects: project };
     }
-  } else if(project){
-    postBody = {jiraProjects:[project]};
+  } else if (project) {
+    postBody = { jiraProjects: [project] };
   }
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -108,18 +124,18 @@ jiraActions.getJiraChangeTypes = async (
 jiraActions.getJiraServiceComponents = async (
   getAccessToken,
   cancelTokenSource,
-  project
+  project,
 ) => {
   const apiUrl = jiraBaseURL + "jiraServiceComponents";
   let postBody = {};
   // project will be given as string
   // Api is written in such a way that it accepts multiple projects.
-  if(Array.isArray(project)) {
-    if(project.length > 0){
-      postBody = {jiraProjects:project};
+  if (Array.isArray(project)) {
+    if (project.length > 0) {
+      postBody = { jiraProjects: project };
     }
-  } else if(project){
-    postBody = {jiraProjects:[project]};
+  } else if (project) {
+    postBody = { jiraProjects: [project] };
   }
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -133,18 +149,18 @@ jiraActions.getJiraServiceComponents = async (
 jiraActions.getJiraResolutionNames = async (
   getAccessToken,
   cancelTokenSource,
-  project
+  project,
 ) => {
   const apiUrl = jiraBaseURL + "jiraResolutionNames";
   let postBody = {};
   // project will be given as string
   // Api is written in such a way that it accepts multiple projects.
-  if(Array.isArray(project)) {
-    if(project.length > 0){
-      postBody = {jiraProjects:project};
+  if (Array.isArray(project)) {
+    if (project.length > 0) {
+      postBody = { jiraProjects: project };
     }
-  } else if(project){
-    postBody = {jiraProjects:[project]};
+  } else if (project) {
+    postBody = { jiraProjects: [project] };
   }
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -158,18 +174,18 @@ jiraActions.getJiraResolutionNames = async (
 jiraActions.getJiraTeamNames = async (
   getAccessToken,
   cancelTokenSource,
-  project
+  project,
 ) => {
   const apiUrl = jiraBaseURL + "jiraTeamNames";
   let postBody = {};
   // project will be given as string
   // Api is written in such a way that it accepts multiple projects.
-  if(Array.isArray(project)) {
-    if(project.length > 0){
-      postBody = {jiraProjects:project};
+  if (Array.isArray(project)) {
+    if (project.length > 0) {
+      postBody = { jiraProjects: project };
     }
-  } else if(project){
-    postBody = {jiraProjects:[project]};
+  } else if (project) {
+    postBody = { jiraProjects: [project] };
   }
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -187,16 +203,18 @@ jiraActions.getJiraChangeFailureRate = async (
   dashboardTags,
   dashboardOrgs,
   jiraResolutionNames,
+  jiraExcludedResolutionNames,
 ) => {
   const apiUrl = jiraBaseURL + "jiraChangeFailureRate";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  const startDate =  new Date(dateRange?.start);
-  const endDate =  new Date(dateRange?.end);
+  const startDate = new Date(dateRange?.start);
+  const endDate = new Date(dateRange?.end);
 
   // Checking the use kpi tags toggle
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
-  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags =
+    getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
   if (!useKpiTags) {
     tags = null;
@@ -216,11 +234,23 @@ jiraActions.getJiraChangeFailureRate = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
-    jiraProjects: [getResultFromKpiConfiguration(kpiConfiguration,'jira-projects')],
-    jiraChangeTypes: getResultFromKpiConfiguration(kpiConfiguration, 'jira-change-types'),
-    jiraServiceComponents: getResultFromKpiConfiguration(kpiConfiguration, 'jira-service-components'),
+    jiraProjects: [
+      getResultFromKpiConfiguration(kpiConfiguration, "jira-projects"),
+    ],
+    jiraChangeTypes: getResultFromKpiConfiguration(
+      kpiConfiguration,
+      "jira-change-types",
+    ),
+    jiraServiceComponents: getResultFromKpiConfiguration(
+      kpiConfiguration,
+      "jira-service-components",
+    ),
     jiraResolutionNames: jiraResolutionNames,
-    jiraTeamNames: getResultFromKpiConfiguration(kpiConfiguration, 'jira-team-names'),
+    jiraExcludedResolutionNames: jiraExcludedResolutionNames,
+    jiraTeamNames: getResultFromKpiConfiguration(
+      kpiConfiguration,
+      "jira-team-names",
+    ),
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
