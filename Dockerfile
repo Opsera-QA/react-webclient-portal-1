@@ -10,9 +10,11 @@ COPY package.json /usr/src/app/package.json
 COPY package-lock.json /usr/src/app/package-lock.json
 COPY .npmrc /usr/src/app/.npmrc
 RUN npm install --legacy-peer-deps
-RUN npm install react-scripts -g --silent
+RUN npm install react-scripts -g 
 COPY . /usr/src/app
-RUN npm run build:${build_env}
+ENV NODE_ENV=dev 
+ENV DEBUG=*
+RUN npm run build:${build_env} --verbose
 RUN mv build* code
 RUN ls -lrt
 
