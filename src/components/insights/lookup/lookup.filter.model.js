@@ -21,12 +21,17 @@ const insightsLookupMetadata = {
       label: "Component Names",
       id: "selectedComponentNames",
     },
+    {
+      label: "",
+      id: "selectedComponentFilterData",
+    },
   ],
   newObjectFields: {
     startDate: null,
     endDate: null,
     selectedComponentNames: [],
     activeFilters: [],
+    selectedComponentFilterData: [],
   },
 };
 
@@ -67,4 +72,5 @@ export class LookupFilterModel extends FilterModelBase {
 }
 
 export default LookupFilterModel;
+
 
