@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
@@ -15,9 +15,10 @@ import SiteRoleDetailPanel from "components/settings/ldap_site_roles/details/Sit
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 // TODO: Can we get an API Call to get role group names associated with an organization?
-const roleGroups = ["Administrators", "PowerUsers", "Users"];
+const roleGroups = ["Administrators", "PowerUsers", "Users", "Auditors", "SecurityManagers"];
 
 function SiteRoleDetailView() {
+  const history = useHistory();
   const {groupName, orgDomain} = useParams();
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});

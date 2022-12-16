@@ -20,6 +20,7 @@ export default function BreadcrumbPageLinkCard(
     breadcrumbDestination,
     visible,
     pathParameter,
+    className,
   }) {
   const breadcrumb = getBreadcrumb(breadcrumbDestination);
   const breadcrumbPath = getPathLink(breadcrumb, pathParameter);
@@ -40,6 +41,7 @@ export default function BreadcrumbPageLinkCard(
       link={`/${breadcrumbPath}`}
       visible={visible}
       pageDescription={breadcrumb?.pageDescription}
+      className={className}
     />
   );
 }
@@ -48,4 +50,5 @@ BreadcrumbPageLinkCard.propTypes = {
   breadcrumbDestination: PropTypes.string.isRequired,
   visible: PropTypes.bool,
   pathParameter: PropTypes.any,
+  className: PropTypes.string,
 };

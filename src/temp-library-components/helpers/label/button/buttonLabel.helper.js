@@ -1,14 +1,11 @@
 import { faCheckCircle, faExclamationCircle } from "@fortawesome/pro-light-svg-icons";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import {BUTTON_STATES} from "hooks/general/buttons/useButtonState";
 
 export const buttonLabelHelper = {};
 
-buttonLabelHelper.BUTTON_STATES = {
-  READY: "ready",
-  BUSY: "busy",
-  SUCCESS: "success",
-  ERROR: "error",
-};
+// TODO: Remove from here and wire up the hook everywhere instead
+buttonLabelHelper.BUTTON_STATES = BUTTON_STATES;
 
 buttonLabelHelper.BUTTON_VARIANTS = {
   PRIMARY: "primary",
