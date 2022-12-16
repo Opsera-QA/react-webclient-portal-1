@@ -11,7 +11,7 @@ export default function InactiveAuditorsRolePageLinkCard() {
   } = useComponentStateReference();
 
   const getBody = () => {
-    return "This Site Role has not been activated yet. Click it to begin the activation process.";
+    return "This Site Role has not been activated yet. Click here to begin the activation process.";
   };
 
   const launchActivationConfirmationOverlay = () => {
