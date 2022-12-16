@@ -6,48 +6,53 @@ import TabTreeAndViewContainer from "components/common/tabs/tree/TabTreeAndViewC
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
+import LookupMultiSelectInput from "components/insights/lookup/LookupMultiSelectInput";
 
-function LookupResults({ isLoading, searchResults, noDataMessage }) {
-  const [selectedComponentName, setSelectedComponentName] = useState(undefined);
-
-  useEffect(() => {
-    setSelectedComponentName(undefined);
-
-    if (Array.isArray(searchResults) && searchResults.length > 0) {
-      setSelectedComponentName(searchResults[0]?.componentName);
-    }
-  }, [searchResults]);
-
-  const handleTabClick = (componentName) => {
+function LookupResults({
+                         isLoading,
+                         loadData,
+                         filterModel,
+                         searchResults,
+                         salesforceComponentNames,
+                         selectedComponentName,
+                         setSelectedComponentName,
+                         noDataMessage,
+                       }) {
+  const handleTabClick = async (componentName) => {
     setSelectedComponentName(componentName);
+    loadData(filterModel, componentName);
   };
 
   const getTabContainer = () => {
-    if (!Array.isArray(searchResults) || searchResults.length === 0) {
+    if (
+      !Array.isArray(salesforceComponentNames) ||
+      salesforceComponentNames.length === 0
+    ) {
       return null;
     }
 
     return (
-    <VanitySetVerticalTabContainer>
-      {searchResults?.map((component, index) => {
-        const componentName = component?.componentName;
-
-        return (
-          <VanitySetVerticalTab
-            key={`${componentName}-${index}`}
-            tabText={componentName}
-            tabName={componentName}
-            handleTabClick={handleTabClick}
-            activeTab={selectedComponentName}
-          />
-        );
-      })}
-    </VanitySetVerticalTabContainer>
+      <VanitySetVerticalTabContainer>
+        {salesforceComponentNames?.map((component, index) => {
+          const componentName = component;
+          return (
+            <VanitySetVerticalTab
+              key={`${componentName}-${index}`}
+              tabText={componentName}
+              tabName={componentName}
+              handleTabClick={handleTabClick}
+              activeTab={selectedComponentName}
+            />
+          );
+        })}
+      </VanitySetVerticalTabContainer>
     );
-};
+  };
 
   const getCurrentView = () => {
-    const selectedComponent = searchResults?.find((component) => component?.componentName === selectedComponentName);
+    const selectedComponent = searchResults?.find(
+      (component) => component.componentName === selectedComponentName,
+    );
 
     if (selectedComponent) {
       return (
@@ -80,7 +85,7 @@ function LookupResults({ isLoading, searchResults, noDataMessage }) {
   return (
     <TableBodyLoadingWrapper
       isLoading={isLoading}
-      data={searchResults}
+      data={salesforceComponentNames}
       noDataMessage={noDataMessage}
       tableComponent={getBody()}
     />
@@ -89,7 +94,12 @@ function LookupResults({ isLoading, searchResults, noDataMessage }) {
 
 LookupResults.propTypes = {
   isLoading: PropTypes.bool,
+  filterModel: PropTypes.any,
   searchResults: PropTypes.array,
+  salesforceComponentNames: PropTypes.array,
+  loadData: PropTypes.func,
+  selectedComponentName: PropTypes.any,
+  setSelectedComponentName: PropTypes.func,
   noDataMessage: PropTypes.string,
 };
 
