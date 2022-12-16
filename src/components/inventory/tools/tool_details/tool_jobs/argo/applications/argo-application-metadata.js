@@ -3,6 +3,57 @@ const argoApplicationsMetadata = {
   fields: [
     {
       label: "Name",
+      id: "name",
+      isRequired: true,
+      lowercase: true,
+      spacesAllowed: false,
+      formText: "Application Name cannot contain spaces.",
+      maxLength: 63
+    },
+    {
+      label: "Cluster",
+      id: "clusterUrl",
+      isRequired: true
+    },
+    {
+      label: "Cluster Name",
+      id: "clusterName",
+    },
+    {
+      label: "Path",
+      id: "path",
+      isRequired: true,
+      regexDefinitionName: "pathField",
+      maxLength: 256
+    },
+    {
+      label: "Created At",
+      id: "creationTimestamp",
+    },
+    {
+      label: "Health",
+      id: "healthStatus",
+    },
+    {
+      label: "Sync",
+      id: "syncStatus",
+    },
+    {
+      label: "Project Name",
+      id: "project",
+      isRequired: true
+    },
+    {
+      label: "Branch Name",
+      id: "branch",
+    },
+    {
+      label: "Git URL",
+      id: "repoUrl",
+    },
+    // NEWLY ADDED FIELDS ARE ABOVE.. TODO TO BE REVISITED AND REMOVE UNUSED
+    {
+      label: "Name",
       id: "applicationName",
       isRequired: true,
       lowercase: true,
