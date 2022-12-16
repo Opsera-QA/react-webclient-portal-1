@@ -26,6 +26,8 @@ function TagManager(
     allowedTypes,
     getDisabledTags,
     placeholderText,
+    showClearValueButton,
+    clearDataFunction,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -176,6 +178,26 @@ function TagManager(
     }
   };
 
+  const clearValue = () => {
+    if (!setDataFunction) {
+      validateAndSetData(field.id, []);
+    } else if (clearDataFunction) {
+      clearDataFunction();
+    }
+  };
+
+  const getClearDataFunction = () => {
+    if (
+         dataObject?.getArrayData(fieldName).length !== 0
+      && disabled !== true
+      && showClearValueButton !== false
+      && (setDataFunction == null || clearDataFunction)
+    )
+    {
+      return (clearValue);
+    }
+  };
+
   if (type == null) {
     return (<div className="danger-red">Error for tag manager input: You forgot to wire up type!</div>);
   }
@@ -190,6 +212,7 @@ function TagManager(
         showLabel={inline !== true}
         model={dataObject}
         field={field}
+        clearDataFunction={getClearDataFunction()}
         hasError={hasStringValue(errorMessage) === true}
         disabled={disabled}
         isLoading={isLoading}
@@ -232,14 +255,17 @@ TagManager.propTypes = {
   inline: PropTypes.bool,
   allowedTypes: PropTypes.array,
   getDisabledTags: PropTypes.func,
-  placeholderText: PropTypes.string
+  placeholderText: PropTypes.string,
+  showClearValueButton: PropTypes.bool,
+  clearDataFunction: PropTypes.func,
 };
 
 TagManager.defaultProps = {
   allowCreate: "onFilter",
   fieldName: "tags",
   inline: false,
-  placeholderText: "Select Tags"
+  placeholderText: "Select Tags",
+  showClearValueButton: true
 };
 
 export default TagManager;

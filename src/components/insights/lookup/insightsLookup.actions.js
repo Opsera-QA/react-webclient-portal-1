@@ -3,33 +3,116 @@ import { dataParsingHelper } from "components/common/helpers/data/dataParsing.he
 
 export const insightsLookupActions = {};
 
-insightsLookupActions.getComponentNames = async (getAccessToken, cancelTokenSource) => {
+insightsLookupActions.getComponentNames = async (
+  getAccessToken,
+  cancelTokenSource,
+  startDate,
+  endDate,
+  componentNames,
+  selectedComponentFilterData,
+) => {
   const apiUrl = `/analytics/sfdc/v1/component/names`;
-  return await baseActions.handleNodeAnalyticsApiGetRequest(getAccessToken, cancelTokenSource, apiUrl);
+  const postBody = {
+    startDate: startDate,
+    endDate: endDate,
+    fullNameArr: componentNames,
+    selectedComponentFilterData: selectedComponentFilterData,
+  };
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
 };
 
-insightsLookupActions.getComponentByName = async (getAccessToken, cancelTokenSource, componentName) => {
+insightsLookupActions.getComponentByName = async (
+  getAccessToken,
+  cancelTokenSource,
+  componentName,
+) => {
   const apiUrl = `/analytics/sfdc/v1/component/get-component-by-name`;
   const postBody = { componentName: componentName };
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
 };
 
-insightsLookupActions.searchComponents = async (getAccessToken, cancelTokenSource, startDate, endDate, componentNames) => {
+insightsLookupActions.getComponentTypes = async (
+  getAccessToken,
+  cancelTokenSource,
+) => {
+  const apiUrl = `/analytics/sfdc/v1/component/get-component-types`;
+  return await baseActions.handleNodeAnalyticsApiGetRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+insightsLookupActions.getPipelines = async (
+  getAccessToken,
+  cancelTokenSource,
+) => {
+  const apiUrl = `/analytics/sfdc/v1/component/get-pipelines`;
+  return await baseActions.handleNodeAnalyticsApiGetRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+insightsLookupActions.getTasks = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/analytics/sfdc/v1/component/get-tasks`;
+  return await baseActions.handleNodeAnalyticsApiGetRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+insightsLookupActions.getOrgs = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/analytics/sfdc/v1/component/get-orgs`;
+  return await baseActions.handleNodeAnalyticsApiGetRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+insightsLookupActions.searchComponents = async (
+  getAccessToken,
+  cancelTokenSource,
+  startDate,
+  endDate,
+  componentNames,
+  selectedComponentFilterData,
+) => {
   const apiUrl = `/analytics/sfdc/v1/component`;
-  const urlParams = {
-    params: {
-      startDate: startDate,
-      endDate: endDate,
-      fullNameArr: componentNames,
-    },
+  const postBody = {
+    startDate: startDate,
+    endDate: endDate,
+    fullNameArr: componentNames,
+    selectedComponentFilterData: selectedComponentFilterData,
   };
-  return await baseActions.handleNodeAnalyticsApiGetRequest(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
 };
 
 // TODO: Move to Node and delete from here
 insightsLookupActions.generateTransformedResults = (searchResults) => {
   const results = [];
-  const parsedSearchResults = dataParsingHelper.parseObject(searchResults, false);
+  const parsedSearchResults = dataParsingHelper.parseObject(
+    searchResults,
+    false,
+  );
 
   if (!parsedSearchResults) {
     return results;
@@ -55,14 +138,16 @@ insightsLookupActions.generateTransformedResults = (searchResults) => {
 
   Object.entries(cleanedResults).forEach(([name, data]) => {
     const pipelineNames = Object.keys(data.pipelineData);
-    const totals = [{
-      deploy_count: data.totalTimesComponentDeployed,
-      validations_passed: data.totalValidationsPassed,
-      validations_failed: data.totalValidationsFailed,
-      unit_tests_passed: data.totalUnitTestsPassed,
-      unit_tests_failed: data.totalUnitTestsFailed,
-      pipelines: pipelineNames.length,
-    }];
+    const totals = [
+      {
+        deploy_count: data.totalTimesComponentDeployed,
+        validations_passed: data.totalValidationsPassed,
+        validations_failed: data.totalValidationsFailed,
+        unit_tests_passed: data.totalUnitTestsPassed,
+        unit_tests_failed: data.totalUnitTestsFailed,
+        pipelines: pipelineNames.length,
+      },
+    ];
 
     const pipelines = [];
     for (let j = 0, k = pipelineNames.length; j < k; j++) {

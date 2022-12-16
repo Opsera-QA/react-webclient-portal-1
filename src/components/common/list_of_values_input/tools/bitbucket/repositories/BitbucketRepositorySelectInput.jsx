@@ -37,18 +37,11 @@ function BitbucketRepositorySelectInput(
 
     isMounted.current = true;
     const cancelSource = axios.CancelToken.source();
-    let defaultSearchTerm = "";
     setBitbucketRepositories([]);
     setCancelTokenSource(cancelSource);
 
     if (isMongoDbId(toolId) === true && hasStringValue(workspace) === true) {
-      const existingRepository = model?.getData("gitRepository") || model?.getData("repository");
-      // console.log(existingRepository);
-      if (hasStringValue(existingRepository) === true) {
-        defaultSearchTerm = existingRepository;
-      }
-
-      loadData(defaultSearchTerm, toolId, cancelSource).catch((error) => {
+      loadData("", toolId, cancelSource).catch((error) => {
         throw error;
       });
     }
@@ -67,7 +60,13 @@ function BitbucketRepositorySelectInput(
     try {
       setError(undefined);
       setIsLoading(true);
-      await loadBitbucketRepositories(searchTerm, currentToolId, cancelSource);
+      let defaultSearchTerm = searchTerm;
+      const existingRepository = model?.getData("gitRepository") || model?.getData("repository");
+      // console.log(existingRepository);
+      if (defaultSearchTerm && defaultSearchTerm === "" && hasStringValue(existingRepository) === true) {
+        defaultSearchTerm = existingRepository;
+      }
+      await loadBitbucketRepositories(defaultSearchTerm, currentToolId, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
