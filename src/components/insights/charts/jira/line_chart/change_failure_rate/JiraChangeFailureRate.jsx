@@ -27,10 +27,6 @@ import {faTable} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import JiraChangeFailureRateMaturityScoreInsights from "./JiraChangeFailureRateMaturityScoreInsights";
 
-const DEFAULT_GOALS = {
-  change_failure_rate: 10,
-};
-
 function JiraChangeFailureRate({
   kpiConfiguration,
   setKpiConfiguration,
@@ -87,13 +83,6 @@ function JiraChangeFailureRate({
             (obj) => obj.type === "organizations",
           )
         ]?.value;
-      let goals =
-        kpiConfiguration?.dataPoints[0]?.strategic_criteria?.data_point_evaluation_rules?.success_rule?.primary_trigger_value;
-      if (goals) {
-        setGoalsData({change_failure_rate: goals});
-      } else {
-        setGoalsData(DEFAULT_GOALS);
-      }
       const jiraResolutionNames = getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names');
       let response;
       if(jiraResolutionNames?.length){
@@ -234,7 +223,6 @@ function JiraChangeFailureRate({
         <Col md={12} className={"my-2 p-0 d-flex flex-column align-items-end"}>
           <JiraChangeFailureRateLineChartContainer
             chartData={chartData}
-            goalsData={goalsData?.change_failure_rate}
           />
         </Col>
         <Col md={12} className={"my-2 p-0"}>
