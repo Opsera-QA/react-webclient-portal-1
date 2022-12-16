@@ -9,20 +9,18 @@ import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/met
 import IconBase from "components/common/icons/IconBase";
 import ChartTooltip from "../../../ChartTooltip";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
-import {getResultFromKpiConfiguration} from "../../../charts-helpers";
 import JiraChangeFailureRateInsightsOverlay from "./JiraChangeFailureRateInsightsOverlay";
 
-function JiraChangeFailureRateLineChartContainer({ chartData, goalsData }) {
-    const [maxGoalsValue, setMaxGoalsValue] = useState(goalsData);
+function JiraChangeFailureRateLineChartContainer({ chartData }) {
+    const [maxChartValue, setMaxChartValue] = useState(0);
 
     const toastContext = useContext(DialogToastContext);
 
     useEffect(() => {
         let dataHigh = {x: "", y: 0};
         dataHigh = _.maxBy(chartData, 'y');
-        const high = dataHigh?.y > goalsData ? dataHigh?.y : goalsData;
-        setMaxGoalsValue(Math.ceil(high));
-    }, [goalsData, chartData]);
+        setMaxChartValue(Math.ceil(dataHigh?.y));
+    },  [chartData]);
 
     let cfrChartData = [
         {
@@ -53,9 +51,6 @@ function JiraChangeFailureRateLineChartContainer({ chartData, goalsData }) {
                     className={"mr-2"}
                     style={{ float: "right", fontSize: "10px" }}
                 >
-                    Goal<b> ({goalsData})</b>
-                    <IconBase icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"} />
-                    <div className="row"/>
                     Change Failures{" "}
                     <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
                 </div>
@@ -64,9 +59,9 @@ function JiraChangeFailureRateLineChartContainer({ chartData, goalsData }) {
                     {...defaultConfig("", "Date",
                         false, true, "numbers", "monthDate2")}
                     {...config()}
-                    yScale={{ type: 'linear', min: '0', max: maxGoalsValue, stacked: false, reverse: false }}
+                    yScale={{ type: 'linear', min: '0', max: maxChartValue, stacked: false, reverse: false }}
                     axisLeft={{
-                        tickValues: [0, maxGoalsValue],
+                        tickValues: [0, maxChartValue],
                         legend: 'Failures',
                         legendOffset: -38,
                         legendPosition: 'middle'
@@ -78,14 +73,6 @@ function JiraChangeFailureRateLineChartContainer({ chartData, goalsData }) {
                             values={[node.point.data.range, node.point.data.total, node.point.data.y]}
                         />
                     )}
-                    markers={[
-                        {
-                            axis: 'y',
-                            value: goalsData,
-                            lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
-                            legend: '',
-                        }
-                    ]}
                 />
             </>
         );
