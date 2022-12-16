@@ -8,6 +8,7 @@ function DotNetBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
     console.log(selectedOption);
     newDataObject.setData("workspace", selectedOption.key);
     newDataObject.setData("workspaceName", selectedOption.name);
+    newDataObject.setData("gitBranch", "");
     setDataObject({...newDataObject});
   };
 

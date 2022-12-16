@@ -12,6 +12,7 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
 import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
 import _ from "lodash";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function AzureDevOpsRepositorySelectInput({
   fieldName,
@@ -43,7 +44,7 @@ function AzureDevOpsRepositorySelectInput({
     setError(undefined);
 
     if (isMongoDbId(toolId) === true) {
-      loadData(undefined, toolId, source).catch((error) => {
+      loadData("", toolId, source).catch((error) => {
         throw error;
       });
     }
@@ -60,8 +61,15 @@ function AzureDevOpsRepositorySelectInput({
     cancelSource = cancelTokenSource,
   ) => {
     try {
+      setError(undefined);
       setIsLoading(true);
-      await loadAzureRepositories(searchTerm, currentToolId, cancelSource);
+      let defaultSearchTerm = searchTerm;
+      const existingRepository = model?.getData("repositoryName") || model?.getData("gitRepository") || model?.getData("repository");
+      // console.log(existingRepository);
+      if ((defaultSearchTerm === "") && (hasStringValue(existingRepository) === true)) {
+        defaultSearchTerm = existingRepository;
+      }
+      await loadAzureRepositories(defaultSearchTerm, currentToolId, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
@@ -93,7 +101,7 @@ function AzureDevOpsRepositorySelectInput({
 
   const delayedSearchQuery = useCallback(
     _.debounce(
-      (searchTerm, toolId) => loadAzureRepositories(searchTerm, toolId),
+      (searchTerm, toolId) => loadData(searchTerm, toolId),
       600,
     ),
     [],

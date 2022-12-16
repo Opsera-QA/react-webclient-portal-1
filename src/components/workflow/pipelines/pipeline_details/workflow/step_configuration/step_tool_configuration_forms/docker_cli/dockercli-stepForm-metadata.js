@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const dockerCliStepFormMetadata = {
   type: "Docker CLI Tool Configuration",
   fields: [
@@ -22,15 +24,18 @@ const dockerCliStepFormMetadata = {
     {
       label: "Repository",
       id: "gitRepository",
-    },
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
+      isRequired: true
+    },    
     {
       label: "Repository",
       id: "repoId",
-      isRequired: true,
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       label: "Branch",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequired: true
     },
     {

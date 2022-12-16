@@ -20,7 +20,7 @@ function EventBasedTriggerDetails({
     setTriggerUrl(`${apiUrl}/hooks/${pipeline?.owner}/${pipeline?._id}/source`);
   }, [JSON.stringify(pipeline)]);
 
-  console.log(model.getPersistData());
+  // console.log(model.getPersistData());
 
   const setDataFunction = (fieldName, newValue) => {
     const newModel = { ...model };
@@ -30,10 +30,6 @@ function EventBasedTriggerDetails({
   };
 
   const EventTriggerOptions = () => {
-    // TODO : FF only for BB for now
-    if (model?.getData("source") && model?.getData("source") !== "bitbucket") {
-      return;
-    }
     return (
       <div className={"d-flex justify-content-between"}>
         <div>

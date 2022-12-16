@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const cypressPipelineStepConfigurationMetadata = {
   type: "Cypress Pipeline Step Configuration",
   fields: [
@@ -62,14 +64,17 @@ const cypressPipelineStepConfigurationMetadata = {
     {
       label: "Repository",
       id: "repository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
     },
     {
       label: "Repository",
       id: "repoId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       label: "Branch",
       id: "branch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
     },
     {
       label: "Rollback Branch Name",
@@ -78,6 +83,7 @@ const cypressPipelineStepConfigurationMetadata = {
     {
       label: "Branch Name",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
     },
     {
       label: "Build/Xml Step Info",

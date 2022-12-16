@@ -38,14 +38,8 @@ function GithubRepositorySelectInput(
     setGithubRepositories([]);
 
     if (isMongoDbId(toolId) === true) {
-      loadData(
-        "",
-        toolId,
-        source,
-      ).catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
+      loadData("", toolId, source).catch((error) => {
+        throw error;
       });
     }
 
@@ -61,12 +55,15 @@ function GithubRepositorySelectInput(
     cancelSource = cancelTokenSource,
   ) => {
     try {
+      setError(undefined);
       setIsLoading(true);
-      await loadGithubRepositories(
-        "",
-        currentToolId,
-        cancelSource,
-      );
+      let defaultSearchTerm = searchTerm;
+      const existingRepository = model?.getData("repositoryName") || model?.getData("gitRepository") || model?.getData("repository");
+      // console.log(existingRepository);
+      if ((defaultSearchTerm === "") && (hasStringValue(existingRepository) === true)) {
+        defaultSearchTerm = existingRepository;
+      }
+      await loadGithubRepositories(defaultSearchTerm, currentToolId, cancelSource);
     } catch (error) {
       if (isMounted.current === true) {
         setError(error);

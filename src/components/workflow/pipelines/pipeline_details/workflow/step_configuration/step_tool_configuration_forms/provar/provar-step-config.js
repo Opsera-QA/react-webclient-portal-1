@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const provarStepFormMetadata = {
     type: "Provar Tool Configuration",
     fields: [
@@ -25,10 +27,12 @@ const provarStepFormMetadata = {
         {
             label: "Repository",
             id: "repoId",
+            dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
         },
         {
             label: "Project ID",
             id: "projectId",
+            dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
         },
         {
             label: "SCM Service Type",
@@ -46,6 +50,7 @@ const provarStepFormMetadata = {
         {
             label: "Repository",
             id: "repository",
+            dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
             isRequired: true
         },
         {
@@ -62,6 +67,7 @@ const provarStepFormMetadata = {
         {
             label: "Branch",
             id: "gitBranch",
+            dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
             isRequired: true
         },
         {
