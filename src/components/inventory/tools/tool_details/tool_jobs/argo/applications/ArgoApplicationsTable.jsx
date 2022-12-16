@@ -7,7 +7,12 @@ import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateArgoApplicationOverlay
   from "components/inventory/tools/tool_details/tool_jobs/argo/applications/CreateArgoApplicationOverlay";
-import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
+import {
+    getLimitedTableTextColumn,
+    getTableBooleanIconColumn,
+    getTableDateTimeColumn,
+    getTableTextColumn
+} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 import modelHelpers from "components/common/model/modelHelpers";
 
@@ -18,7 +23,6 @@ function ArgoApplicationsTable(
     loadData,
     isLoading,
     setSelectedArgoApplication,
-    toolApplications,
   }) {
   const toastContext = useContext(DialogToastContext);
   let fields = argoApplicationsMetadata.fields;
@@ -29,22 +33,24 @@ function ArgoApplicationsTable(
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "applicationName")),
-      getTableTextColumn(getField(fields, "cluster")),
-      getTableTextColumn(getField(fields, "gitPath")),
+      getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "namespace")),
+      getTableTextColumn(getField(fields, "clusterName")),
+      getLimitedTableTextColumn(getField(fields, "clusterUrl"), 40),
+      getTableTextColumn(getField(fields, "path")),
+      getTableTextColumn(getField(fields, "syncStatus")),
+      getTableTextColumn(getField(fields, "healthStatus")),
       getTableBooleanIconColumn(getField(fields, "autoSync")),
-      getTableBooleanIconColumn(getField(fields, "active")),
+      getTableDateTimeColumn(getField(fields, "creationTimestamp")),
     ],
     [],
   );
 
   const onRowSelect = (grid, row) => {
-    const selectedRow = toolApplications[row?.index];
-
-    if (selectedRow) {
-      const applicationId = selectedRow?._id;
-      const parsedModel = modelHelpers.parseObjectIntoModel(selectedRow?.configuration, argoApplicationsMetadata);
-      parsedModel?.setData("applicationId", applicationId);
+    if (row) {
+      const applicationName = row?.name;
+      const parsedModel = modelHelpers.parseObjectIntoModel(row, argoApplicationsMetadata);
+      parsedModel?.setData("name", applicationName);
       setSelectedArgoApplication({...parsedModel});
     }
   };
@@ -81,7 +87,6 @@ ArgoApplicationsTable.propTypes = {
   isLoading: PropTypes.bool,
   argoApplications: PropTypes.array,
   setSelectedArgoApplication: PropTypes.func,
-  toolApplications: PropTypes.array,
 };
 
 export default ArgoApplicationsTable;
