@@ -35,7 +35,6 @@ function ArgoApplicationsTable(
     () => [
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "namespace")),
-      getTableTextColumn(getField(fields, "clusterName")),
       getLimitedTableTextColumn(getField(fields, "clusterUrl"), 40),
       getTableTextColumn(getField(fields, "path")),
       getTableTextColumn(getField(fields, "syncStatus")),
