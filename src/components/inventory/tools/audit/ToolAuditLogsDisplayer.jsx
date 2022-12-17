@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import useGetAuditLogsForPipeline from "hooks/audit_logs/pipelines/audit/useGetAuditLogsForPipeline";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faShieldCheck} from "@fortawesome/pro-light-svg-icons";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
@@ -10,26 +9,27 @@ import PipelineAuditLogActionsVerticalTabContainer
   from "components/workflow/pipelines/audit/PipelineAuditLogActionsVerticalTabContainer";
 import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
 import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
+import useGetAuditLogsForTool from "hooks/audit_logs/registry/tools/useGetAuditLogsForTool";
 
-export default function PipelineAuditLogsDisplayer(
+export default function ToolAuditLogsDisplayer(
   {
-    pipelineId,
+    toolId,
     setSelectedAuditLogId,
   }) {
   const {
-    pipelineAuditLogFilterModel,
-    setPipelineAuditLogFilterModel,
+    toolAuditLogFilterModel,
+    setToolAuditLogFilterModel,
     auditLogs,
     isLoading,
     loadData,
-  } = useGetAuditLogsForPipeline(pipelineId);
+  } = useGetAuditLogsForTool(toolId);
 
   const getInlineFilters = () => {
     return (
       <InlineUserFilterSelectInput
         fieldName={"user"}
         loadDataFunction={loadData}
-        filterModel={pipelineAuditLogFilterModel}
+        filterModel={toolAuditLogFilterModel}
         className={"mr-2"}
       />
     );
@@ -42,8 +42,8 @@ export default function PipelineAuditLogsDisplayer(
         isLoading={isLoading}
         loadDataFunction={loadData}
         setSelectedActivityLogId={setSelectedAuditLogId}
-        filterModel={pipelineAuditLogFilterModel}
-        setFilterModel={setPipelineAuditLogFilterModel}
+        filterModel={toolAuditLogFilterModel}
+        setFilterModel={setToolAuditLogFilterModel}
       />
     );
   };
@@ -51,7 +51,7 @@ export default function PipelineAuditLogsDisplayer(
   const getVerticalTabContainer = () => {
     return (
       <PipelineAuditLogActionsVerticalTabContainer
-        pipelineAuditLogFilterModel={pipelineAuditLogFilterModel}
+        pipelineAuditLogFilterModel={toolAuditLogFilterModel}
         isLoading={isLoading}
         loadData={loadData}
       />
@@ -69,7 +69,7 @@ export default function PipelineAuditLogsDisplayer(
     );
   };
 
-  if (isMongoDbId(pipelineId) !== true) {
+  if (isMongoDbId(toolId) !== true) {
     return null;
   }
 
@@ -78,18 +78,18 @@ export default function PipelineAuditLogsDisplayer(
       minimumHeight={screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT}
       maximumHeight={screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT}
       isLoading={isLoading}
-      title={"Pipeline Audit Logs"}
+      title={"Tool Audit Logs"}
       titleIcon={faShieldCheck}
-      body={getBody()}
+      body={getTable()}
       loadData={loadData}
-      filterDto={pipelineAuditLogFilterModel}
-      setFilterDto={setPipelineAuditLogFilterModel}
+      filterDto={toolAuditLogFilterModel}
+      setFilterDto={setToolAuditLogFilterModel}
       inlineFilters={getInlineFilters()}
     />
   );
 }
 
-PipelineAuditLogsDisplayer.propTypes = {
-  pipelineId: PropTypes.string,
+ToolAuditLogsDisplayer.propTypes = {
+  toolId: PropTypes.string,
   setSelectedAuditLogId: PropTypes.func,
 };

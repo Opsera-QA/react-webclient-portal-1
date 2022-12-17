@@ -11,6 +11,7 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SiteRoleManagementPageLinkCards from "components/settings/ldap_site_roles/cards/SiteRoleManagementPageLinkCards";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 export default function SiteRoleManagement() {
   const history = useHistory();
@@ -70,8 +71,29 @@ export default function SiteRoleManagement() {
     }
   };
 
-  const getHelpComponent = () => {
-      return (<SiteRolesHelpDocumentation/>);
+  const getBody = () => {
+    return (
+      <SiteRolesTable
+        className={"mx-2"}
+        isMounted={isMounted}
+        isLoading={isLoading}
+        siteRoles={siteRoles}
+        loadData={loadData}
+        orgDomain={orgDomain}
+      />
+    );
+
+    // if (isLoading === true) {
+    //   return (
+    //     <CenterLoadingIndicator type={"Site Roles"} />
+    //   );
+    // }
+    //
+    // return  (
+    //   <SiteRoleManagementPageLinkCards
+    //     siteRoles={siteRoles}
+    //   />
+    // );
   };
 
   if (isSaasUser === true) {
@@ -84,7 +106,7 @@ export default function SiteRoleManagement() {
       navigationTabContainer={<SiteRoleManagementSubNavigationBar activeTab={"siteRoles"} />}
       breadcrumbDestination={"ldapSiteRolesManagement"}
       pageDescription={"Site Roles determine a user’s level of accessibility. Manage Site Roles from this dashboard."}
-      helpComponent={getHelpComponent()}
+      helpComponent={<SiteRolesHelpDocumentation/>}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
     >
@@ -96,15 +118,7 @@ export default function SiteRoleManagement() {
         `}
         />
       </CenteredContentWrapper>
-      {/*<SiteRoleManagementPageLinkCards />*/}
-      <SiteRolesTable
-        className={"mx-2"}
-        isMounted={isMounted}
-        isLoading={isLoading}
-        siteRoles={siteRoles}
-        loadData={loadData}
-        orgDomain={orgDomain}
-      />
+      {getBody()}
     </ScreenContainer>
   );
 }
