@@ -41,7 +41,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
   {
     pipelineId,
     pipelineActivityLogId,
-    loadPipelineFunction,
+    setPipelineStarting,
   }) {
   const getPipelineByIdHook = useGetPipelineById(pipelineId);
   const pipeline = getPipelineByIdHook?.pipeline;
@@ -67,9 +67,13 @@ export default function PipelineInstructionsAcknowledgementOverlay(
   );
 
   const closePanelFunction = () => {
-    loadPipelineFunction();
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
+  };
+
+  const closeAndContinuePipelineFunction = () => {
+    setPipelineStarting(true);
+    closePanelFunction();
   };
 
   const getAcknowledgementButtons = () => {
@@ -80,7 +84,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
             pipelineId={pipeline?._id}
             pipelineStepId={approvalStep?._id}
             message={acknowledgementModel?.getData("message")}
-            closePanelFunction={closePanelFunction}
+            closePanelFunction={closeAndContinuePipelineFunction}
             disabled={pipelineInstructionsModel == null || acknowledgementModel?.checkCurrentValidity() !== true || inEditMode === true}
             className={"mr-2"}
           />
@@ -88,7 +92,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
             pipelineId={pipeline?._id}
             pipelineStepId={approvalStep?._id}
             message={acknowledgementModel?.getData("message")}
-            closePanelFunction={closePanelFunction}
+            closePanelFunction={closeAndContinuePipelineFunction}
             className={"mr-2"}
             disabled={pipelineInstructionsModel == null || acknowledgementModel?.checkCurrentValidity() !== true || inEditMode === true}
           />
@@ -99,7 +103,7 @@ export default function PipelineInstructionsAcknowledgementOverlay(
 
   const getButtonContainer = () => {
     return (
-      <ButtonContainerBase className={"mx-3"}>
+      <ButtonContainerBase className={"px-3 pb-3"}>
         {getAcknowledgementButtons()}
         <CloseButton
           closeEditorCallback={closePanelFunction}
@@ -230,9 +234,9 @@ export default function PipelineInstructionsAcknowledgementOverlay(
 }
 
 PipelineInstructionsAcknowledgementOverlay.propTypes = {
-  loadPipelineFunction: PropTypes.func,
   pipelineId: PropTypes.string,
   pipelineActivityLogId: PropTypes.string,
+  setPipelineStarting: PropTypes.func,
 };
 
 

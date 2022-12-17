@@ -14,8 +14,9 @@ import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineR
 export default function PipelineActionControlsUserApprovalButton(
   {
     pipeline,
-    loadPipelineFunction,
     workflowStatus,
+    setPipelineStarting,
+    disabled,
   }) {
   const {
     toastContext,
@@ -28,7 +29,7 @@ export default function PipelineActionControlsUserApprovalButton(
     toastContext.showOverlayPanel(
       <StepApprovalOverlay
         pipelineId={pipeline?._id}
-        loadPipelineFunction={loadPipelineFunction}
+        setPipelineStarting={setPipelineStarting}
       />,
     );
   };
@@ -37,7 +38,7 @@ export default function PipelineActionControlsUserApprovalButton(
     toastContext.showOverlayPanel(
       <PipelineInstructionsAcknowledgementOverlay
         pipelineId={pipeline?._id}
-        loadPipelineFunction={loadPipelineFunction}
+        setPipelineStarting={setPipelineStarting}
       />,
     );
   };
@@ -53,6 +54,7 @@ export default function PipelineActionControlsUserApprovalButton(
         normalText={"Acknowledge Action"}
         tooltipText={"A user action is required before this pipeline can proceed. Click here to see the instructions and complete the task."}
         onClickFunction={handleAcknowledgementClick}
+        disabled={disabled}
         variant={"warning"}
       />
     );
@@ -64,7 +66,7 @@ export default function PipelineActionControlsUserApprovalButton(
       normalText={"Approve Run"}
       tooltipText={"Approve the current pipeline run in order for it to proceed. Only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action."}
       onClickFunction={handleApprovalClick}
-      disabled={PipelineRoleHelper.canAuthorizeApprovalGate(userData, pipeline) !== true}
+      disabled={PipelineRoleHelper.canAuthorizeApprovalGate(userData, pipeline) !== true || disabled === true}
       variant={"warning"}
     />
   );
@@ -72,6 +74,7 @@ export default function PipelineActionControlsUserApprovalButton(
 
 PipelineActionControlsUserApprovalButton.propTypes = {
   pipeline: PropTypes.object,
-  loadPipelineFunction: PropTypes.func,
   workflowStatus: PropTypes.string,
+  setPipelineStarting: PropTypes.func,
+  disabled: PropTypes.bool,
 };
