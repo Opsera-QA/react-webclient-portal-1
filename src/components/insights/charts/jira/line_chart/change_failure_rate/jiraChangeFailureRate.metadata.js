@@ -15,41 +15,46 @@ export const jiraChangeFailureRateMetadata = {
     },
     {
       label: "Jira Service Components",
-      id: "jira-service-components"
+      id: "jira-service-components",
     },
     {
       label: "Jira Resolution Names",
-      id: "jira-resolution-names"
+      id: "jira-resolution-names",
+    },
+    {
+      label:
+        "Exclude Jira Resolution Names (Values will be excluded from results)",
+      id: "jira-excluded-resolution-names",
     },
     {
       label: "Jira Team Names",
-      id: "jira-team-names"
+      id: "jira-team-names",
     },
     {
       label: "Date Range",
       id: "date",
     },
   ],
-  commitFields:[
+  commitFields: [
     {
       label: "Ticket Number",
       id: "ticket",
     },
     {
       label: "Status",
-      id: "status"
+      id: "status",
     },
     {
       label: "Resolution Name",
-      id: "resolution"
+      id: "resolution",
     },
     {
       label: "Date Created",
-      id: "createdAt"
+      id: "createdAt",
     },
     {
       label: "Priority",
-      id: "priority"
+      id: "priority",
     },
     {
       label: "Service Component Name",
@@ -63,5 +68,5 @@ export const jiraChangeFailureRateMetadata = {
   newObjectFields: {
     tags: [],
     date: undefined,
-  }
+  },
 };
