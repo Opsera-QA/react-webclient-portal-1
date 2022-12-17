@@ -26,6 +26,7 @@ import { faTable } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
 import JiraChangeFailureRateMaturityScoreInsights from "./JiraChangeFailureRateMaturityScoreInsights";
 import _ from "lodash";
+import InfoDialog from "../../../../../common/status_notifications/info";
 function JiraChangeFailureRate({
   kpiConfiguration,
   setKpiConfiguration,
@@ -89,10 +90,7 @@ function JiraChangeFailureRate({
         "jira-excluded-resolution-names",
       );
       let response;
-      if (
-        (jiraResolutionNames?.length || jiraExcludedResolutionNames?.length) &&
-        !_.isEqual(jiraResolutionNames, jiraExcludedResolutionNames)
-      ) {
+      if (jiraResolutionNames?.length) {
         response = await jiraAction.getJiraChangeFailureRate(
           getAccessToken,
           cancelSource,
@@ -158,6 +156,19 @@ function JiraChangeFailureRate({
   };
 
   const getChartBody = () => {
+    const jiraResolutionNames =
+      getResultFromKpiConfiguration(kpiConfiguration, "jira-resolution-names")?.length || 0;
+    if (!jiraResolutionNames) {
+      return (
+          <div className="new-chart mb-3" style={{ height: "300px" }}>
+            <div className="max-content-width p-5 mt-5"
+                 style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <InfoDialog message="No Failure Status Applied. Please select a Change Failure Status(Resolution Name) on filters to proceed further." />
+            </div>
+          </div>
+      );
+    }
+
     if (
       !metricData ||
       !Array.isArray(chartData) ||
@@ -166,9 +177,6 @@ function JiraChangeFailureRate({
     ) {
       return null;
     }
-    const jiraResolutionNames =
-      getResultFromKpiConfiguration(kpiConfiguration, "jira-resolution-names")
-        ?.length || 0;
     const maturityScore = metricData?.overallMaturityScoreText;
     const maturityColor = getMaturityColorClass(maturityScore);
     const changeFailureRate = metricData?.changeFailureRate;
@@ -198,7 +206,6 @@ function JiraChangeFailureRate({
             md={4}
             className={`mb-2 ml-3 py-2 d-flex justify-content-center ${maturityColor}`}
           >
-            {/*This would get removed when average merge time is fixed*/}
             <Col
               md={12}
               className={"pl-2 pr-1"}
