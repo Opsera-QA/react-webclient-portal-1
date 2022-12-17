@@ -9,6 +9,7 @@ export const DATE_FORMATS = {
   DATE: "yyyy-MM-dd",
   TIMESTAMP: "yyyy-MM-dd', 'hh:mm:ss a",
   TIMESTAMP_WITHOUT_SECONDS: "yyyy-MM-dd', 'hh:mm a",
+  REVISION: "yyyy.MM.dd.HH.mm.ss.SSS",
 };
 
 export const getFormattedDate = (date, dateFormat = DATE_FORMATS.DATE, defaultValue) => {

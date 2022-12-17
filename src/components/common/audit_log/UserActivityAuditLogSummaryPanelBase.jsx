@@ -10,6 +10,7 @@ import DateTimeField from "components/common/fields/date/DateTimeField";
 import MonacoCodeDiffInput from "components/common/inputs/code/monaco/MonacoCodeDiffInput";
 import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import IdRevisionField from "components/common/fields/text/id/IdRevisionField";
 
 export default function UserActivityAuditLogSummaryPanelBase(
   {
@@ -70,15 +71,20 @@ export default function UserActivityAuditLogSummaryPanelBase(
           />
         </Col>
         <Col xs={6}>
-          <DateTimeField
-            fieldName={"createdAt"}
-            dataObject={auditLogModel}
+          <IdRevisionField
+            model={auditLogModel}
           />
         </Col>
         <Col xs={6}>
           <SsoUserField
             fieldName={"user_id"}
             model={auditLogModel}
+          />
+        </Col>
+        <Col xs={6}>
+          <DateTimeField
+            fieldName={"createdAt"}
+            dataObject={auditLogModel}
           />
         </Col>
         <Col xs={6}>
