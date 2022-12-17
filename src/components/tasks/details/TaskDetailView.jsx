@@ -37,6 +37,7 @@ import useGetPollingTaskOrchestrationStatusById
   from "hooks/workflow/tasks/orchestration/useGetPollingTaskOrchestrationStatusById";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {numberHelpers} from "components/common/helpers/number/number.helpers";
+import ViewTaskAuditLogsActionBarButton from "components/tasks/buttons/ViewTaskAuditLogsActionBarButton";
 
 function TaskDetailView() {
   const location = useLocation();
@@ -71,9 +72,14 @@ function TaskDetailView() {
         <div>
           <ActionBarBackButton path={"/task"} />
         </div>
-        <div>
+        <div className={"d-flex"}>
+          {/*<ViewTaskAuditLogsActionBarButton*/}
+          {/*  className={"ml-3"}*/}
+          {/*  taskModel={taskModel}*/}
+          {/*/>*/}
           <ActionBarDeleteTaskButton
             taskModel={taskModel}
+            className={"ml-3"}
           />
         </div>
       </ActionBarContainer>
