@@ -3,7 +3,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
-import {pipelineAuditLogActions} from "hooks/workflow/pipelines/audit/pipelineAuditLog.actions";
+import {pipelineAuditLogActions} from "hooks/audit_logs/pipelines/audit/pipelineAuditLog.actions";
 
 export default function useGetPipelineAuditLogById(
   pipelineId,
