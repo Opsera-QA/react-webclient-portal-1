@@ -20,7 +20,7 @@ function ArgoToolApplicationsPanel({ toolData }) {
   // TODO: Replace with actual filter model for this area OR make generic one
   const [parameterFilterModel, setParameterFilterModel] = useState(new ParameterFilterModel());
   const [isLoading, setIsLoading] = useState(false);
-  const [toolApplications, setToolApplications] = useState([]);
+  const [toolApplications, setToolApplications] = useState([]); // Could be removed in next iteration
   const [argoApplications, setArgoApplications] = useState([]);
   const [selectedArgoApplication, setSelectedArgoApplication] = useState(undefined);
 
@@ -65,13 +65,14 @@ function ArgoToolApplicationsPanel({ toolData }) {
   };
 
   const getArgoApplications = async (filterDto = parameterFilterModel, cancelSource = cancelTokenSource) => {
-    const response = await argoActions.getArgoToolApplicationsV2(getAccessToken, cancelSource, toolData?.getData("_id"));
+    const response = await argoActions.getArgoApplicationsV2(getAccessToken, cancelSource, toolData?.getData("_id"));
     const applications = response?.data?.data;
     // const userRoleAccess = await getAccessRoleData();
 
     if (isMounted?.current === true && Array.isArray(applications)) {
       setToolApplications([...applications]);
-      unpackApplications(applications);
+      // unpackApplications(applications); // could be removed
+      setArgoApplications(applications);
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
@@ -108,7 +109,7 @@ function ArgoToolApplicationsPanel({ toolData }) {
         handleClose={closeEditorPanel}
         toolData={toolData}
         argoApplicationData={selectedArgoApplication}
-        applicationId={selectedArgoApplication?.getData("applicationId")}
+        applicationName={selectedArgoApplication?.getData("name")}
       />
     );
   }
@@ -120,7 +121,6 @@ function ArgoToolApplicationsPanel({ toolData }) {
       loadData={loadData}
       argoApplications={argoApplications}
       setSelectedArgoApplication={setSelectedArgoApplication}
-      toolApplications={toolApplications}
     />
   );
 }
