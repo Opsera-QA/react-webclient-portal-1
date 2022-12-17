@@ -63,7 +63,7 @@ function SfdcOAuthConnectButton({ model, authType, toolId, visible }) {
       );
   
       const url = `${toolUrl}/services/oauth2/authorize?client_id=${response?.data?.clientId}&redirect_uri=${redirectUri}&response_type=code&login_hint=${userName}&code_challenge=${response?.data?.challenge}&state=${userId}|${toolId}|${toolUrl}|${userName}|${redirectUri}|${response?.data?.token}&display=popup&prompt=login%20consent`;
-      window.open(url, "_blank", rel="noopener noreferrer", windowFeatures);
+      window.open(url, "_blank", windowFeatures);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
