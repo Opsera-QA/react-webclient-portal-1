@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import useGetAuditLogsForPipeline from "hooks/audit_logs/pipelines/audit/useGetAuditLogsForPipeline";
+import useGetAuditLogsForPipeline from "hooks/audit_logs/pipelines/useGetAuditLogsForPipeline";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faShieldCheck} from "@fortawesome/pro-light-svg-icons";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";

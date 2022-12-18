@@ -3,15 +3,15 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
-import {pipelineAuditLogActions} from "hooks/audit_logs/pipelines/audit/pipelineAuditLog.actions";
+import {instructionsAuditLogActions} from "hooks/audit_logs/instructions/instructionsAuditLog.actions";
 import {UserActivityAuditLogFilterModel} from "hooks/audit_logs/userActivityAuditLogFilter.model";
 
-export default function useGetAuditLogsForPipeline(
-  pipelineId,
+export default function useGetAuditLogsForInstructions(
+  instructionsId,
   handleErrorFunction,
 ) {
   const [auditLogs, setAuditLogs] = useState([]);
-  const [pipelineAuditLogFilterModel, setPipelineAuditLogFilterModel] = useState(new UserActivityAuditLogFilterModel());
+  const [instructionsAuditLogFilterModel, setInstructionsAuditLogFilterModel] = useState(new UserActivityAuditLogFilterModel());
   const {
     getAccessToken,
     cancelTokenSource,
@@ -26,35 +26,35 @@ export default function useGetAuditLogsForPipeline(
   useEffect(() => {
     setAuditLogs([]);
 
-    if (isMongoDbId(pipelineId) === true && loadData) {
-      loadData(getAuditLogsForPipeline, handleErrorFunction).catch(() => {});
+    if (isMongoDbId(instructionsId) === true && loadData) {
+      loadData(getAuditLogsForInstructions, handleErrorFunction).catch(() => {});
     }
-  }, [pipelineId]);
+  }, [instructionsId]);
 
-  const getAuditLogsForPipeline = async (newFilterModel = pipelineAuditLogFilterModel) => {
-    if (isMongoDbId(pipelineId) !== true) {
+  const getAuditLogsForInstructions = async (newFilterModel = instructionsAuditLogFilterModel) => {
+    if (isMongoDbId(instructionsId) !== true) {
       return;
     }
 
-    const response = await pipelineAuditLogActions.getAuditLogsForPipeline(
+    const response = await instructionsAuditLogActions.getAuditLogsForInstructions(
       getAccessToken,
       cancelTokenSource,
-      pipelineId,
-      pipelineAuditLogFilterModel?.getData("user"),
-      pipelineAuditLogFilterModel?.getData("action"),
+      instructionsId,
+      instructionsAuditLogFilterModel?.getData("user"),
+      instructionsAuditLogFilterModel?.getData("action"),
     );
     setAuditLogs(DataParsingHelper.parseArray(response?.data?.data, []));
     newFilterModel.setData("totalCount", response?.data?.count);
     newFilterModel.updateActiveFilters();
-    setPipelineAuditLogFilterModel({...newFilterModel});
+    setInstructionsAuditLogFilterModel({...newFilterModel});
   };
 
   return ({
     auditLogs: auditLogs,
     setAuditLogs: setAuditLogs,
-    pipelineAuditLogFilterModel: pipelineAuditLogFilterModel,
-    setPipelineAuditLogFilterModel: setPipelineAuditLogFilterModel,
-    loadData: () => loadData(getAuditLogsForPipeline, handleErrorFunction),
+    instructionsAuditLogFilterModel: instructionsAuditLogFilterModel,
+    setInstructionsAuditLogFilterModel: setInstructionsAuditLogFilterModel,
+    loadData: () => loadData(getAuditLogsForInstructions, handleErrorFunction),
     isLoading: isLoading,
     error: error,
     setError: setError,

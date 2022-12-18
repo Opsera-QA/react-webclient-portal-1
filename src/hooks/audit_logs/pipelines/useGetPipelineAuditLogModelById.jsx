@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import useGetPipelineAuditLogById from "hooks/audit_logs/pipelines/audit/useGetPipelineAuditLogById";
+import useGetPipelineAuditLogById from "hooks/audit_logs/pipelines/useGetPipelineAuditLogById";
 import useGetUserActivityAuditLogModel from "hooks/audit_logs/useGetUserActivityAuditLogModel";
 
 export default function useGetPipelineAuditLogModelById(
