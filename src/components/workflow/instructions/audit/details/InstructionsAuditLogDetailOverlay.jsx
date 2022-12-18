@@ -1,32 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import useGetPipelineAuditLogModelById from "hooks/audit_logs/pipelines/useGetPipelineAuditLogModelById";
+import useGetInstructionsAuditLogModelById from "hooks/audit_logs/instructions/useGetInstructionsAuditLogModelById";
 import UserActivityAuditLogDetailOverlayBase from "components/common/audit_log/UserActivityAuditLogDetailOverlayBase";
 
-export default function PipelineAuditLogDetailOverlay(
+export default function InstructionsAuditLogDetailOverlay(
   {
-    pipelineId,
+    instructionsId,
     selectedAuditLogId,
     setSelectedAuditLogId,
   }) {
   const {
-    pipelineAuditLogModel,
+    instructionsAuditLogModel,
     isLoading,
     error,
-  } = useGetPipelineAuditLogModelById(pipelineId, selectedAuditLogId);
+  } = useGetInstructionsAuditLogModelById(instructionsId, selectedAuditLogId);
 
   return (
     <UserActivityAuditLogDetailOverlayBase
-      auditLogModel={pipelineAuditLogModel}
+      auditLogModel={instructionsAuditLogModel}
       isLoading={isLoading}
       setSelectedAuditLogId={setSelectedAuditLogId}
-      type={"Pipeline"}
+      type={"Instructions"}
     />
   );
 }
 
-PipelineAuditLogDetailOverlay.propTypes = {
-  pipelineId: PropTypes.string,
+InstructionsAuditLogDetailOverlay.propTypes = {
+  instructionsId: PropTypes.string,
   selectedAuditLogId: PropTypes.string,
   setSelectedAuditLogId: PropTypes.func,
 };

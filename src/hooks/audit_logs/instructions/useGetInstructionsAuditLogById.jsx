@@ -3,10 +3,10 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
-import {pipelineAuditLogActions} from "hooks/audit_logs/pipelines/audit/pipelineAuditLog.actions";
+import {instructionsAuditLogActions} from "hooks/audit_logs/instructions/instructionsAuditLog.actions";
 
-export default function useGetPipelineAuditLogById(
-  pipelineId,
+export default function useGetInstructionsAuditLogById(
+  instructionsId,
   auditLogId,
   handleErrorFunction,
 ) {
@@ -25,20 +25,20 @@ export default function useGetPipelineAuditLogById(
   useEffect(() => {
     setAuditLog(undefined);
 
-    if (isMongoDbId(pipelineId) === true && isMongoDbId(auditLogId) === true && loadData) {
-      loadData(getAuditLogsForPipeline, handleErrorFunction).catch(() => {});
+    if (isMongoDbId(instructionsId) === true && isMongoDbId(auditLogId) === true && loadData) {
+      loadData(getAuditLogsForInstructions, handleErrorFunction).catch(() => {});
     }
-  }, [pipelineId, auditLogId]);
+  }, [instructionsId, auditLogId]);
 
-  const getAuditLogsForPipeline = async () => {
-    if (isMongoDbId(pipelineId) !== true || isMongoDbId(auditLogId) !== true) {
+  const getAuditLogsForInstructions = async () => {
+    if (isMongoDbId(instructionsId) !== true || isMongoDbId(auditLogId) !== true) {
       return;
     }
 
-    const response = await pipelineAuditLogActions.getPipelineAuditLogById(
+    const response = await instructionsAuditLogActions.getInstructionsAuditLogById(
       getAccessToken,
       cancelTokenSource,
-      pipelineId,
+      instructionsId,
       auditLogId,
     );
     setAuditLog(DataParsingHelper.parseNestedObject(response, "data.data", undefined));
@@ -47,7 +47,7 @@ export default function useGetPipelineAuditLogById(
   return ({
     auditLog: auditLog,
     setAuditLog: setAuditLog,
-    loadData: () => loadData(getAuditLogsForPipeline, handleErrorFunction),
+    loadData: () => loadData(getAuditLogsForInstructions, handleErrorFunction),
     isLoading: isLoading,
     error: error,
     setError: setError,
