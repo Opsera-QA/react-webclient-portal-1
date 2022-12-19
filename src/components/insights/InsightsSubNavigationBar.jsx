@@ -14,6 +14,7 @@ import {
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import GitCustodianRoleHelper from "@opsera/know-your-role/roles/compliance/git_custodian/gitCustodianRole.helper";
 
 function InsightsSubNavigationBar({currentTab}) {
   const { featureFlagHideItemInProd } = useContext(AuthContext);
@@ -21,6 +22,7 @@ function InsightsSubNavigationBar({currentTab}) {
   const {
     isSiteAdministrator,
     isSaasUser,
+    userData,
   } = useComponentStateReference();
 
   const handleTabClick = (tabSelection) => e => {
@@ -96,30 +98,6 @@ function InsightsSubNavigationBar({currentTab}) {
     }
   };
 
-  const getSiteAdministratorOnlyTabs = () => {
-    if (isSiteAdministrator === true || isSaasUser === true) {
-      return (
-        <>
-          <NavigationTab
-            icon={faLink}
-            tabName={"connectedAssets"}
-            handleTabClick={handleTabClick}
-            activeTab={currentTab}
-            tabText={"Connected Assets"}
-            isBeta={true}
-          />
-          <NavigationTab
-            icon={faShieldKeyhole}
-            tabName={"gitCustodian"}
-            handleTabClick={handleTabClick}
-            activeTab={currentTab}
-            tabText={"Git Custodian"}
-          />
-        </>
-      );
-    }
-  };
-
   return (
     <NavigationTabContainer>
       <NavigationTab
@@ -153,7 +131,23 @@ function InsightsSubNavigationBar({currentTab}) {
         tabText={"Synopsis"}
       /> */}
       {/* {getRelease360Tab()} */}
-      {getSiteAdministratorOnlyTabs()}
+      <NavigationTab
+        icon={faLink}
+        tabName={"connectedAssets"}
+        handleTabClick={handleTabClick}
+        activeTab={currentTab}
+        tabText={"Connected Assets"}
+        isBeta={true}
+        visible={isSaasUser === true || isSiteAdministrator === true}
+      />
+      <NavigationTab
+        icon={faShieldKeyhole}
+        tabName={"gitCustodian"}
+        handleTabClick={handleTabClick}
+        activeTab={currentTab}
+        tabText={"Git Custodian"}
+        visible={GitCustodianRoleHelper.canViewGitCustodian(userData) === true}
+      />
       {getActiveViewerTab()}
     </NavigationTabContainer>
   );
