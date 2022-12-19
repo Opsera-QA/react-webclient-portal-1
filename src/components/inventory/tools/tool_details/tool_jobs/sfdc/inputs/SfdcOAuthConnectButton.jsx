@@ -4,7 +4,7 @@ import sfdcActions from "../sfdc-actions";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import {Col, Button} from "react-bootstrap";
-import { apiServerUrl } from "config";
+import { NODE_API_ORCHESTRATOR_SERVER_URL } from "config";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
@@ -53,7 +53,7 @@ function SfdcOAuthConnectButton({ model, authType, toolId, visible }) {
   const connectToSfdcOauth = async () => {    
     const toolUrl = model.getData("toolURL");
     const userName = model.getData("accountUsername");
-    const redirectUri = `${apiServerUrl}/auth/sfdc`;
+    const redirectUri = `${NODE_API_ORCHESTRATOR_SERVER_URL}/auth/sfdc`;
     try {
       setIsLoading(true);
       const response = await sfdcActions.getOauthDetails(

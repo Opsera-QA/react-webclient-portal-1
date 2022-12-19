@@ -169,7 +169,7 @@ const axiosTimeoutErrorMessage = `
 
 const getAxiosInstance = (token, cancelToken) => {
   const configuration = {
-    baseURL: config.apiServerUrl,
+    baseURL: config.NODE_API_ORCHESTRATOR_SERVER_URL,
     timeout: 50000,
     cancelToken: cancelToken,
   };
