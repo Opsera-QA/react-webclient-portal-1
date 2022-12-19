@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect, useContext } from "react";
 import { Button, Form, Col, Card, Alert } from "react-bootstrap";
-import { apiServerUrl } from "../../../config";
+import { NODE_API_ORCHESTRATOR_SERVER_URL } from "../../../config";
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
@@ -52,7 +52,7 @@ function GitHub() {
     const accessToken = await getAccessToken();
     const urlParams = state;
     new ApiService(
-      apiServerUrl + "/connectors/github/settings",
+      NODE_API_ORCHESTRATOR_SERVER_URL + "/connectors/github/settings",
       null,
       accessToken,
       urlParams).get()
@@ -137,7 +137,7 @@ function GitHub() {
     const urlParams = state;
     if (state.update) {
       new ApiService(
-        apiServerUrl + "/connectors/github/update",
+        NODE_API_ORCHESTRATOR_SERVER_URL + "/connectors/github/update",
         null,
         accessToken,
         urlParams).post()
@@ -152,7 +152,7 @@ function GitHub() {
         });
     } else {
       new ApiService(
-        apiServerUrl + "/connectors/github/createHook",
+        NODE_API_ORCHESTRATOR_SERVER_URL + "/connectors/github/createHook",
         null,
         accessToken,
         urlParams).post()
