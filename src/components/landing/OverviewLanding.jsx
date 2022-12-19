@@ -187,7 +187,7 @@ function OverviewLanding() {
   }
 
   return (
-    <div className="mt-3 ml-5 max-content-width">
+    <div className="mt-3 ml-3 max-content-width">
       <div className="alternate-tabs text-right">
         <ul className="nav nav-tabs mb-2">
           {getDataBlocks()}
