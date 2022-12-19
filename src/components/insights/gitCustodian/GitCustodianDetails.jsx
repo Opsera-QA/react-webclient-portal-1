@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import {AuthContext} from "../../../contexts/AuthContext";
 import axios from "axios";
 import LoadingDialog from "../../common/status_notifications/loading";
 import {parseError} from "../../common/helpers/error-helpers";
@@ -8,7 +7,6 @@ import { faShieldKeyhole } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "../../common/table/FilterContainer";
 import GitCustodianChartsView from "./charts/GitCustodianChartsView";
 import GitCustodianVulnerableCommits from "components/insights/gitCustodian/table/GitCustodianVulnerableCommits";
-
 
 function GitCustodianDetails({ gitCustodianData, gitCustodianFilterModel, setGitCustodianFilterModel, loadData }) {
   const [error, setError] = useState(undefined);

@@ -13,48 +13,30 @@ import EditGitCustodianFiltersIcon from "./filters/EditGitCustodianFiltersIcon";
 import {GitCustodianFilterMetadata} from "components/insights/gitCustodian/table/gitCustodianFilter.metadata";
 import useComponentStateReference from "../../../hooks/useComponentStateReference";
 import AccessDeniedContainer from "../../common/panels/detail_view_container/AccessDeniedContainer";
+import GitCustodianRoleHelper from "@opsera/know-your-role/roles/compliance/git_custodian/gitCustodianRole.helper";
 
 function GitCustodian() {
-  const {getUserRecord, setAccessRoles} = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const toastContext = useContext(DialogToastContext);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [gitCustodianData, setGitCustodianData] = useState(undefined);
   const [gitCustodianFilterModel, setGitCustodianFilterModel] = useState(new Model({...GitCustodianFilterMetadata.newObjectFields}, GitCustodianFilterMetadata, false));
   const {
-    isSiteAdministrator,
-    isSaasUser,
+    accessRoleData,
+    userData,
+    isMounted,
   } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-    // eslint-disable-next-line no-undef
-    let newDataObject = new Model({...GitCustodianFilterMetadata.newObjectFields}, GitCustodianFilterMetadata, true);
-    newDataObject.setData("filters", []);
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
-    loadData(newDataObject, source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (newDataObject = gitCustodianFilterModel, cancelSource = cancelTokenSource) => {
+  const loadData = async (newDataObject = gitCustodianFilterModel) => {
     try {
       setIsLoading(true);
-      await getRoles(cancelSource);
       let newFilterDto = newDataObject;
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
       newFilterDto.setData("totalCount", newFilterDto.getData('totalCount'));
@@ -72,15 +54,6 @@ function GitCustodian() {
       if (isMounted.current === true) {
         setIsLoading(false);
       }
-    }
-  };
-
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (isMounted.current === true && userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
     }
   };
 
@@ -120,7 +93,7 @@ function GitCustodian() {
   }
 
 
-  if (isSiteAdministrator !== true && isSaasUser !== true) {
+  if (GitCustodianRoleHelper.canViewGitCustodian(userData) !== true) {
     return (
       <AccessDeniedContainer
         navigationTabContainer={<InsightsSubNavigationBar currentTab={"gitCustodian"}/>}

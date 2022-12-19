@@ -13,8 +13,8 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
-import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import GitCustodianRoleHelper from "@opsera/know-your-role/roles/compliance/git_custodian/gitCustodianRole.helper";
 
 function InsightsSubNavigationBar({currentTab}) {
   const { featureFlagHideItemInProd } = useContext(AuthContext);
@@ -22,7 +22,7 @@ function InsightsSubNavigationBar({currentTab}) {
   const {
     isSiteAdministrator,
     isSaasUser,
-    accessRoleData,
+    userData,
   } = useComponentStateReference();
 
   const handleTabClick = (tabSelection) => e => {
@@ -46,9 +46,6 @@ function InsightsSubNavigationBar({currentTab}) {
         return;
       case "release360":
         history.push(`/insights/release360`);
-        return;
-      case "reports":
-        // history.push(`/insights/reports`);
         return;
       case "connectedAssets":
         history.push(`/insights/connected-assets`);
@@ -101,30 +98,6 @@ function InsightsSubNavigationBar({currentTab}) {
     }
   };
 
-  const getSiteAdministratorOnlyTabs = () => {
-    if (isSiteAdministrator === true || isSaasUser === true) {
-      return (
-        <>
-          <NavigationTab
-            icon={faLink}
-            tabName={"connectedAssets"}
-            handleTabClick={handleTabClick}
-            activeTab={currentTab}
-            tabText={"Connected Assets"}
-            isBeta={true}
-          />
-          <NavigationTab
-            icon={faShieldKeyhole}
-            tabName={"gitCustodian"}
-            handleTabClick={handleTabClick}
-            activeTab={currentTab}
-            tabText={"Git Custodian"}
-          />
-        </>
-      );
-    }
-  };
-
   return (
     <NavigationTabContainer>
       <NavigationTab
@@ -156,9 +129,25 @@ function InsightsSubNavigationBar({currentTab}) {
         handleTabClick={handleTabClick}
         activeTab={currentTab}
         tabText={"Synopsis"}
+      /> */}
+      {/* {getRelease360Tab()} */}
+      <NavigationTab
+        icon={faLink}
+        tabName={"connectedAssets"}
+        handleTabClick={handleTabClick}
+        activeTab={currentTab}
+        tabText={"Connected Assets"}
+        isBeta={true}
+        visible={isSaasUser === true || isSiteAdministrator === true}
       />
-      {getRelease360Tab()} */}
-      {getSiteAdministratorOnlyTabs()}
+      <NavigationTab
+        icon={faShieldKeyhole}
+        tabName={"gitCustodian"}
+        handleTabClick={handleTabClick}
+        activeTab={currentTab}
+        tabText={"Git Custodian"}
+        visible={GitCustodianRoleHelper.canViewGitCustodian(userData) === true}
+      />
       {getActiveViewerTab()}
     </NavigationTabContainer>
   );
