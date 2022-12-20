@@ -20,6 +20,7 @@ export default function MultiSelectCheckboxInputBase(
     checkboxOptions,
   }) {
   const field = model?.getFieldById(fieldName);
+  const selectedOptions = DataParsingHelper.parseArray(model?.getData(fieldName), []);
   const parsedCheckboxOptions = useMemo(() => DataParsingHelper.parseArray(checkboxOptions), [checkboxOptions]);
 
   const validateAndSetData = (value) => {
@@ -49,12 +50,11 @@ export default function MultiSelectCheckboxInputBase(
   };
 
   const getCheckboxes = () => {
-    const selectedOptions = DataParsingHelper.parseArray(model?.getData(fieldName), []);
-
-    return parsedCheckboxOptions.forEach((checkboxOption) => {
+    return parsedCheckboxOptions.map((checkboxOption) => {
       if (checkboxOption === "string") {
         return (
           <StandaloneCheckboxInput
+            key={checkboxOption}
             value={selectedOptions.includes(checkboxOption)}
             disabled={disabled}
             label={checkboxOption}
@@ -72,7 +72,8 @@ export default function MultiSelectCheckboxInputBase(
         if (text && value) {
           return (
             <StandaloneCheckboxInput
-              value={selectedOptions.includes(checkboxOption)}
+              key={value}
+              value={selectedOptions.includes(value)}
               disabled={disabled}
               label={text}
               setDataFunction={() => handleOptionSelection(value)}
