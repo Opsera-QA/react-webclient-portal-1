@@ -1,10 +1,12 @@
-import React, {useMemo, useState} from "react";
+import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneCheckboxInput from "components/common/inputs/boolean/checkbox/StandaloneCheckboxInput";
 import FieldLabel from "components/common/fields/FieldLabel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import InputLabel from "components/common/inputs/info_text/InputLabel";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 // This is the first version so will probably require tweaks
 export default function MultiSelectCheckboxInputBase(
@@ -18,6 +20,9 @@ export default function MultiSelectCheckboxInputBase(
     textField,
     valueField,
     checkboxOptions,
+    isLoading,
+    singularTopic,
+    pluralTopic,
   }) {
   const field = model?.getFieldById(fieldName);
   const selectedOptions = DataParsingHelper.parseArray(model?.getData(fieldName), []);
@@ -50,6 +55,14 @@ export default function MultiSelectCheckboxInputBase(
   };
 
   const getCheckboxes = () => {
+    if (isLoading === true && !parsedCheckboxOptions) {
+      return (
+        <CenterLoadingIndicator
+          type={pluralTopic}
+        />
+      );
+    }
+
     return parsedCheckboxOptions.map((checkboxOption) => {
       if (checkboxOption === "string") {
         return (
@@ -90,7 +103,8 @@ export default function MultiSelectCheckboxInputBase(
 
   return (
     <InputContainer fieldName={fieldName}>
-      <FieldLabel
+      <InputLabel
+        isLoading={isLoading}
         field={field}
         showLabel={showLabel}
       />
@@ -114,6 +128,9 @@ MultiSelectCheckboxInputBase.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   checkboxOptions: PropTypes.array,
+  isLoading: PropTypes.bool,
+  singularTopic: PropTypes.string,
+  pluralTopic: PropTypes.string,
 };
 
 MultiSelectCheckboxInputBase.defaultProps = {

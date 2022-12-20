@@ -5,6 +5,8 @@ import OverlayTitleBar from "components/common/overlays/OverlayTitleBar";
 import CloseButton from "components/common/buttons/CloseButton";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 
 function FullScreenCenterOverlayContainer(
   {
@@ -16,6 +18,7 @@ function FullScreenCenterOverlayContainer(
     isLoading,
     showToasts,
     showCloseButton,
+    showCloseBackButton,
     buttonContainer,
     pageLink,
     linkTooltipText,
@@ -28,6 +31,17 @@ function FullScreenCenterOverlayContainer(
     }
   }, [showToasts]);
 
+  const getCloseBackButton = () => {
+    if (showCloseBackButton === true) {
+      return (
+        <BackButtonBase
+          size={"sm"}
+          backButtonFunction={closePanel}
+        />
+      );
+    }
+  };
+
   const getButtons = () => {
     if (buttonContainer) {
       return buttonContainer;
@@ -35,13 +49,12 @@ function FullScreenCenterOverlayContainer(
 
     if (showCloseButton === true) {
       return (
-        <div className={"p-3"}>
-          <Row className="mx-0 mt-auto d-flex">
-            <div className="ml-auto d-flex">
-              <CloseButton size={"sm"} closeEditorCallback={closePanel} showUnsavedChangesMessage={false}/>
-            </div>
-          </Row>
-        </div>
+        <ButtonContainerBase
+          className={"p-3"}
+          leftSideButtons={getCloseBackButton()}
+        >
+          <CloseButton size={"sm"} closeEditorCallback={closePanel} showUnsavedChangesMessage={false}/>
+        </ButtonContainerBase>
       );
     }
   };
@@ -100,7 +113,8 @@ FullScreenCenterOverlayContainer.propTypes = {
   showCloseButton: PropTypes.bool,
   buttonContainer: PropTypes.object,
   pageLink: PropTypes.string,
-  linkTooltipText: PropTypes.string
+  linkTooltipText: PropTypes.string,
+  showCloseBackButton: PropTypes.bool,
 };
 
 FullScreenCenterOverlayContainer.defaultProps = {
