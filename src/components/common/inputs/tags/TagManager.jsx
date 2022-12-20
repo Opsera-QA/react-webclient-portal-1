@@ -24,6 +24,7 @@ function TagManager(
     allowCreate,
     inline,
     allowedTypes,
+    excludeTypes,
     getDisabledTags,
     placeholderText,
     showClearValueButton,
@@ -106,7 +107,11 @@ function TagManager(
           currentOptions.push(tagOption);
         }
       }
-      else {
+      else if (Array.isArray(excludeTypes) && excludeTypes.length > 0) {
+        if (!(excludeTypes.includes(tagOption.type))) {
+          currentOptions.push(tagOption);
+        }
+      } else {
         if (!dataObject.getArrayData(fieldName).some(item => item.type === tagOption.type && item.value === tagOption.value)) {
           currentOptions.push(tagOption);
         }
@@ -258,6 +263,7 @@ TagManager.propTypes = {
   placeholderText: PropTypes.string,
   showClearValueButton: PropTypes.bool,
   clearDataFunction: PropTypes.func,
+  excludeTypes: PropTypes.array,
 };
 
 TagManager.defaultProps = {
