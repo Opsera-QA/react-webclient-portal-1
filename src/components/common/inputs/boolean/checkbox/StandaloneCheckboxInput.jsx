@@ -3,7 +3,14 @@ import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
 import { generateUUID } from "components/common/helpers/string-helpers";
 
-function StandaloneCheckboxInput({id, value, label, setDataFunction, disabled}) {
+export default function StandaloneCheckboxInput(
+  {
+    id,
+    value,
+    label,
+    setDataFunction,
+    disabled,
+  }) {
   return (
     <Form.Check
       type={"checkbox"}
@@ -29,5 +36,3 @@ StandaloneCheckboxInput.propTypes = {
 StandaloneCheckboxInput.defaultProps = {
   id: generateUUID(),
 };
-
-export default StandaloneCheckboxInput;
