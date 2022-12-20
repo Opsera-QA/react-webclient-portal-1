@@ -16,7 +16,7 @@ export default function StandaloneCheckboxInput(
       type={"checkbox"}
       id={id}
       checked={!!value}
-      disabled={disabled}
+      disabled={disabled === true}
       label={label}
       onChange={() => {
         setDataFunction(!value);
