@@ -8,7 +8,7 @@ import UserActivityAuditLogTableBase from "components/common/audit_log/UserActiv
 import InlineUserFilterSelectInput from "components/common/filters/ldap/owner/InlineUserFilterSelectInput";
 import PipelineAuditLogActionsVerticalTabContainer
   from "components/workflow/pipelines/audit/PipelineAuditLogActionsVerticalTabContainer";
-import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
 
 export default function PipelineAuditLogsDisplayer(
