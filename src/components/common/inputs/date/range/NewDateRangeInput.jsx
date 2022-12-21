@@ -60,8 +60,8 @@ export default function NewDateRangeInput(
   return (
     <InputContainer>
       <div style={{
-          width: "560px",
-          maxWidth: "560px",
+          width: "525px",
+          maxWidth: "525px",
         }}
       >
         <InfoContainer
@@ -71,8 +71,8 @@ export default function NewDateRangeInput(
         >
           <div className={"d-flex"}
             style={{
-              width: "558px",
-              maxWidth: "558px",
+              width: "525px",
+              maxWidth: "525px",
             }}
           >
             <StandaloneDateRangeInput

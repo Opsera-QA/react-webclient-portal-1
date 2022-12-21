@@ -43,6 +43,7 @@ export default function useGetAuditLogsForPipeline(
       pipelineId,
       pipelineAuditLogFilterModel?.getData("user"),
       pipelineAuditLogFilterModel?.getData("actions"),
+      pipelineAuditLogFilterModel?.getData("dateRange"),
     );
     setAuditLogs(DataParsingHelper.parseArray(response?.data?.data, []));
     newFilterModel.setData("totalCount", response?.data?.count);

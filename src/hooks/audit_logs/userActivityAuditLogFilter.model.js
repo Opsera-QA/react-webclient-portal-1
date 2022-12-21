@@ -38,6 +38,10 @@ const userActivityAuditLogFilterMetadata = {
       label: "User",
       id: "user",
     },
+    {
+      label: "Date Range",
+      id: "dateRange",
+    },
   ],
   newObjectFields: {
     pageSize: 25,
@@ -46,6 +50,7 @@ const userActivityAuditLogFilterMetadata = {
     actions: [],
     search: "",
     user: "",
+    dateRange: undefined,
     activeFilters: [],
   },
 };
