@@ -55,7 +55,7 @@ export default function SideBySideViewBase(
         <div style={getRightSideStylingObject()}>
           {rightSideView}
         </div>
-      </Col>
+      </div>
     </div>
   );
 }
