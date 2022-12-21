@@ -53,6 +53,7 @@ export default function PipelineAuditLogsDisplayer(
         maximumHeight={`calc(${screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT} - 2px)`}
         leftSideView={getVerticalTabContainer()}
         leftSideMinimumWidth={"320px"}
+        overflowXBodyStyle={"none"}
         rightSideView={getTable()}
       />
     );
@@ -66,6 +67,7 @@ export default function PipelineAuditLogsDisplayer(
     <InfoContainer
       minimumHeight={screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT}
       maximumHeight={screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT}
+      overflowY={""}
       isLoading={isLoading}
       titleText={"Pipeline Audit Logs"}
       titleIcon={faShieldCheck}

@@ -3,6 +3,8 @@ import React from "react";
 import InlineUserFilterSelectInput from "components/common/filters/ldap/owner/InlineUserFilterSelectInput";
 import InlineAuditLogActionsMutiSelectCheckboxFilter
   from "components/common/audit_log/inputs/InlineAuditLogActionsMutiSelectCheckboxFilter";
+import NewDateRangeInput from "components/common/inputs/date/range/NewDateRangeInput";
+import NewInlineDateRangeFilter from "components/common/inputs/date/range/NewInlineDateRangeFilter";
 
 export default function UserActivityAuditLogFilterSidebarBase(
   {
@@ -12,7 +14,10 @@ export default function UserActivityAuditLogFilterSidebarBase(
     loadDataFunction,
   }) {
   return (
-    <div className={"h-100 w-100 p-2"}>
+    <div
+      className={"h-100 w-100 p-2"}
+      style={{overflowX: "hidden"}}
+    >
       <InlineUserFilterSelectInput
         fieldName={"user"}
         loadDataFunction={loadDataFunction}
@@ -23,6 +28,12 @@ export default function UserActivityAuditLogFilterSidebarBase(
         setModel={setUserActivityAuditLogFilterModel}
         loadDataFunction={loadDataFunction}
         fieldName={"actions"}
+      />
+      <NewInlineDateRangeFilter
+        model={userActivityAuditLogFilterModel}
+        setModel={setUserActivityAuditLogFilterModel}
+        loadDataFunction={loadDataFunction}
+        fieldName={"dateRange"}
       />
     </div>
   );

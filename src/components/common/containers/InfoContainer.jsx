@@ -19,6 +19,7 @@ function InfoContainer(
     backgroundColor,
     field,
     bodyClassName,
+    overflowY,
   }) {
   const getBodyStyling = () => {
     const styling = {};
@@ -31,7 +32,7 @@ function InfoContainer(
     styling.maxHeight = maximumHeight;
 
     if (hasStringValue(minimumHeight) === true && hasStringValue(maximumHeight) === true) {
-      styling.overflowY = "auto";
+      styling.overflowY = overflowY;
     }
 
     return styling;
@@ -74,10 +75,12 @@ InfoContainer.propTypes = {
   backgroundColor: PropTypes.string,
   field: PropTypes.object,
   bodyClassName: PropTypes.string,
+  overflowY: PropTypes.string,
 };
 
 InfoContainer.defaultProps = {
   bodyClassName: "content-container",
+  overflowY: "auto",
 };
 
 export default InfoContainer;

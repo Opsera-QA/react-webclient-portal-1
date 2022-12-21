@@ -14,7 +14,6 @@ export default function InlineAuditLogActionsMutiSelectCheckboxFilter(
     type,
   }) {
   const setDataFunction = (fieldName, newValues) => {
-    console.log("got new values: " + JSON.stringify(newValues));
     model.setData(fieldName, newValues);
     loadDataFunction({...model});
   };

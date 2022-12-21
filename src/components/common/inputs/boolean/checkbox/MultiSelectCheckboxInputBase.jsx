@@ -24,6 +24,7 @@ export default function MultiSelectCheckboxInputBase(
     singularTopic,
     pluralTopic,
     className,
+    clearDataFunction,
     visible,
   }) {
   const field = model?.getFieldById(fieldName);
@@ -43,6 +44,14 @@ export default function MultiSelectCheckboxInputBase(
     }
   };
 
+  const clearData = () => {
+    if (clearDataFunction) {
+      clearDataFunction();
+    } else {
+      updateValue([]);
+    }
+  };
+
   const handleOptionSelection = (value) => {
     const selectedOptions = DataParsingHelper.parseArray(model?.getData(fieldName), []);
     const index = selectedOptions.indexOf(value);
@@ -56,6 +65,28 @@ export default function MultiSelectCheckboxInputBase(
     updateValue(selectedOptions);
   };
 
+  const selectAllFunction = () => {
+    const items = [];
+
+    parsedCheckboxOptions.forEach((checkboxOption) => {
+      if (typeof checkboxOption === "string") {
+        items.push(checkboxOption);
+      }
+
+      const parsedSelectedOption = DataParsingHelper.parseObject(checkboxOption);
+
+      if (parsedSelectedOption) {
+        const value = parsedSelectedOption[valueField];
+
+        if (value) {
+          items.push(value);
+        }
+      }
+    });
+
+    updateValue(items);
+  };
+
   const getCheckboxes = () => {
     if (isLoading === true && !parsedCheckboxOptions) {
       return (
@@ -66,7 +97,7 @@ export default function MultiSelectCheckboxInputBase(
     }
 
     return parsedCheckboxOptions.map((checkboxOption) => {
-      if (checkboxOption === "string") {
+      if (typeof checkboxOption === "string") {
         return (
           <StandaloneCheckboxInput
             key={checkboxOption}
@@ -104,17 +135,16 @@ export default function MultiSelectCheckboxInputBase(
   }
 
   return (
-    <InputContainer
-      className={className}
-      fieldName={fieldName}
-    >
+    <div className={className}>
       <InputLabel
         isLoading={isLoading}
         field={field}
         showLabel={showLabel}
-        className={"bold"}
+        className={"bold input-label"}
+        clearDataFunction={clearData}
+        selectAllFunction={selectAllFunction}
       />
-      <div className={"mx-2"}>
+      <div className={"mx-1"}>
         {getCheckboxes()}
       </div>
       <InfoText
@@ -122,7 +152,7 @@ export default function MultiSelectCheckboxInputBase(
         model={model}
         fieldName={fieldName}
       />
-    </InputContainer>
+    </div>
   );
 }
 
@@ -130,6 +160,8 @@ MultiSelectCheckboxInputBase.propTypes = {
   disabled: PropTypes.bool,
   setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
+  clearDataFunction: PropTypes.func,
+  selectAllFunction: PropTypes.func,
   fieldName: PropTypes.string,
   model: PropTypes.object,
   showLabel: PropTypes.func,
@@ -146,4 +178,5 @@ MultiSelectCheckboxInputBase.propTypes = {
 MultiSelectCheckboxInputBase.defaultProps = {
   textField: "text",
   valueField: "value",
+  className: "my-2",
 };
