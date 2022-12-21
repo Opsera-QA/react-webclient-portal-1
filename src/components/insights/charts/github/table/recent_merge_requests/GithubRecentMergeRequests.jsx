@@ -9,7 +9,7 @@ import githubRecentMergeRequestsMetadata from "components/insights/charts/github
 import Model from "core/data_model/model";
 import VanitySetTabViewContainer from "../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import FilterContainer from "../../../../../common/table/FilterContainer";
-import TabAndViewContainer from "../../../../../common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import GithubRecentMergeRequestVerticalTabContainer from "./GithubRecentMergeRequestVerticalTabContainer";
 import CustomTable from "../../../../../common/table/CustomTable";
 import {

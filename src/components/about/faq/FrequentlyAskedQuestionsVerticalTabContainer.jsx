@@ -5,7 +5,7 @@ import { faChartNetwork, faClipboardList, faDraftingCompass, faQuestion } from "
 import PipelinesFrequentlyAskedQuestions from "components/about/faq/PipelinesFrequentlyAskedQuestions";
 import InsightsFrequentlyAskedQuestions from "./InsightsFrequentlyAskedQuestions";
 import ToolRegistryFrequentlyAskedQuestions from "./ToolRegistryFrequentlyAskedQuestions";
-import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
 
 const FAQ_HEIGHT = `calc(${screenContainerHeights.SCREEN_CONTAINER_HEIGHT} - 72px)`;
