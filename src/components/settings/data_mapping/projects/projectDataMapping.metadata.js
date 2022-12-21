@@ -61,6 +61,10 @@ const projectDataMappingMetadata = {
       label: "Custom Tag Fields",
       id: "customTagFields",
     },
+    {
+      label: "Custom Fields Mapping",
+      id: "customMappingFields",
+    },
     {      
       id: "projectKey",
     },
@@ -120,6 +124,7 @@ const projectDataMappingMetadata = {
     value: [],
     tool_prop: "",
     customTagFields: [],
+    customMappingFields: [],
     projectKey: "",
     createdAt: "",
     active : true,

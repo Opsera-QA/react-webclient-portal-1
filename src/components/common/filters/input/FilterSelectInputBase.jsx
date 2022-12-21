@@ -20,6 +20,7 @@ function FilterSelectInputBase(
     inline,
     disabled,
     loadDataFunction,
+    showLabel,
   }) {
   const field = dataObject?.getFieldById(fieldName);
 
@@ -51,9 +52,9 @@ function FilterSelectInputBase(
     <div className={className}>
       <InputLabel
         model={dataObject}
-        showLabel={!inline}
+        showLabel={!inline || showLabel === true}
         field={field}
-        className={inline ? "mt-1 mr-2" : undefined}
+        className={undefined}
         disabled={disabled}
         isLoading={busy}
       />
@@ -90,6 +91,7 @@ FilterSelectInputBase.propTypes = {
   className: PropTypes.string,
   inline: PropTypes.bool,
   disabled: PropTypes.bool,
+  showLabel: PropTypes.bool,
 };
 
 FilterSelectInputBase.defaultProps = {

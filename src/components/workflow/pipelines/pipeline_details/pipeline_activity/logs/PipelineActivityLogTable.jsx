@@ -75,7 +75,7 @@ function PipelineActivityLogTable(
             toastContext.showOverlayPanel(
               <StepApprovalOverlay
                 pipelineId={pipeline?._id}
-                loadPipelineFunction={loadPipelineFunction}
+                setPipelineStarting={loadPipelineFunction}
               />,
             );
             return;
@@ -83,7 +83,7 @@ function PipelineActivityLogTable(
             toastContext.showOverlayPanel(
               <PipelineInstructionsAcknowledgementOverlay
                 pipelineId={pipeline?._id}
-                loadPipelineFunction={loadPipelineFunction}
+                setPipelineStarting={loadPipelineFunction}
                 pipelineActivityLogId={row._id}
               />,
             );

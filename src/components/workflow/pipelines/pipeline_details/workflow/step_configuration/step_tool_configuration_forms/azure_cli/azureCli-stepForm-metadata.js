@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const azureCliStepFormMetadata = {
   type: "Azure Functions Configuration",
   fields: [    
@@ -61,6 +63,7 @@ const azureCliStepFormMetadata = {
     {
       label: "Repository",
       id: "gitRepository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
       isRequiredFunction: (model) => {
         return model?.getData("scriptType") === "package";
       },
@@ -68,13 +71,15 @@ const azureCliStepFormMetadata = {
     {
       label: "Repository",
       id: "gitRepositoryID",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
       isRequiredFunction: (model) => {
         return model?.getData("scriptType") === "package";
       },
     },
     {
       label: "Branch",
-      id: "defaultBranch", 
+      id: "defaultBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequiredFunction: (model) => {
         return model?.getData("scriptType") === "package";
       },

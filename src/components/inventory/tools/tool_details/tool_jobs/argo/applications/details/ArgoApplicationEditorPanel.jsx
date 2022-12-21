@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useState, useRef} from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import { Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
@@ -8,15 +8,15 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ArgoClusterSelectInput from "components/common/list_of_values_input/tools/argo_cd/cluster/ArgoClusterSelectInput";
 import ArgoProjectSelectInput from "components/common/list_of_values_input/tools/argo_cd/projects/ArgoProjectSelectInput";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { AuthContext } from "contexts/AuthContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
-import ArgoApplicationArgoProjectSelectInput
-  from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/inputs/ArgoApplicationArgoProjectSelectInput";
+import ArgoApplicationArgoProjectSelectInput from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/inputs/ArgoApplicationArgoProjectSelectInput";
+import BooleanToggleInput from "../../../../../../../common/inputs/boolean/BooleanToggleInput";
 
-function ArgoApplicationEditorPanel({ argoApplicationData, toolData, applicationId, handleClose }) {
+function ArgoApplicationEditorPanel({ argoApplicationData, toolData, applicationName, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [argoApplicationModel, setArgoApplicationModel] = useState(undefined);
@@ -33,7 +33,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    if(argoApplicationData) {
+    if (argoApplicationData) {
       loadData();
     }
 
@@ -55,21 +55,31 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
   };
 
   const createApplication = async () => {
-    return await argoActions.createArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?.getData("_id"), argoApplicationModel);
+    return await argoActions.createArgoApplicationV2(
+      getAccessToken,
+      cancelTokenSource,
+      toolData?.getData("_id"),
+      argoApplicationModel,
+    );
   };
 
   const updateApplication = async () => {
-    return await argoActions.updateArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?.getData("_id"), applicationId, argoApplicationModel);
+    return await argoActions.updateArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?.getData("_id"), applicationName, argoApplicationModel);
   };
 
   const deleteApplication = async () => {
-    const response = await argoActions.deleteArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?.getData("_id"), applicationId);
+    const response = await argoActions.deleteArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?.getData("_id"), applicationName);
     handleClose();
     return response;
   };
 
   if (isLoading || argoApplicationModel == null) {
-    return <LoadingDialog size="sm" message={"Loading Data"} />;
+    return (
+      <LoadingDialog
+        size="sm"
+        message={"Loading Data"}
+      />
+    );
   }
 
   return (
@@ -94,7 +104,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
             <TextInputBase
               setDataObject={setArgoApplicationModel}
               dataObject={argoApplicationModel}
-              fieldName={"applicationName"}
+              fieldName={"name"}
               disabled={!argoApplicationData?.isNew()}
             />
           </Col>
@@ -103,7 +113,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
               argoToolId={toolData?.getData("_id")}
               setModel={setArgoApplicationModel}
               model={argoApplicationModel}
-              fieldName={"projectName"}
+              fieldName={"project"}
               disabled={!argoApplicationData?.isNew()}
             />
           </Col>
@@ -117,7 +127,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
           </Col>
           <Col lg={12}>
             <ArgoClusterSelectInput
-              fieldName={"cluster"}
+              fieldName={"clusterUrl"}
               argoToolId={toolData?.getData("_id")}
               dataObject={argoApplicationModel}
               setDataObject={setArgoApplicationModel}
@@ -127,7 +137,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
           <Col lg={12}>
             <TextInputBase
               dataObject={argoApplicationModel}
-              fieldName={"gitPath"}
+              fieldName={"path"}
               setDataObject={setArgoApplicationModel}
               disabled={!argoApplicationData?.isNew()}
             />
@@ -135,7 +145,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
           <Col lg={12}>
             <TextInputBase
               dataObject={argoApplicationModel}
-              fieldName={"gitUrl"}
+              fieldName={"repoUrl"}
               setDataObject={setArgoApplicationModel}
               disabled={!argoApplicationData?.isNew()}
             />
@@ -143,16 +153,17 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
           <Col lg={12}>
             <TextInputBase
               dataObject={argoApplicationModel}
-              fieldName={"branchName"}
+              fieldName={"branch"}
               setDataObject={setArgoApplicationModel}
               disabled={!argoApplicationData?.isNew()}
             />
           </Col>
           <Col lg={12}>
-            <ActivityToggleInput
-              setDataObject={setArgoApplicationModel}
-              fieldName={"active"}
+            <BooleanToggleInput
+              fieldName={"autoSync"}
               dataObject={argoApplicationModel}
+              setDataObject={setArgoApplicationModel}
+              disabled={!argoApplicationData?.isNew()}
             />
           </Col>
         </Row>
@@ -165,7 +176,7 @@ ArgoApplicationEditorPanel.propTypes = {
   argoApplicationData: PropTypes.object,
   toolData: PropTypes.object,
   loadData: PropTypes.func,
-  applicationId: PropTypes.string,
+  applicationName: PropTypes.string,
   handleClose: PropTypes.func
 };
 

@@ -55,9 +55,9 @@ regexDefinitions.generalTextWithSpacesSlash = {
 };
 
 regexDefinitions.expandedTextAndSymbolsWithSpaces = {
-  regex: /^[A-Za-z0-9'\-,._&+*()! ]*$/,
-  formText: "Spaces, letters, numbers, underscores, dashes, periods, commas, parentheses, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
-  errorFormText: "Only spaces, letters, numbers, underscores, dashes, periods, commas, parentheses, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
+  regex: /^[A-Za-z0-9'\-,._&+*()/[\]! ]*$/,
+  formText: "Spaces, letters, numbers, underscores, dashes, periods, commas, parentheses, brackets, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
+  errorFormText: "Only spaces, letters, numbers, underscores, dashes, periods, commas, parentheses, brackets, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
 };
 
 regexDefinitions.limitedTextWithSpaces = {
@@ -128,7 +128,7 @@ regexDefinitions.domainNameField = {
 
 regexDefinitions.domainField = {
   regex: /^[a-z0-9](?!.*?[^\na-z0-9-]).*?[a-z0-9]$/,
-  formText: "This field must begin and end with an alphanumeric character. Alphanumeric and Dashes are allowed otherwise.",
+  formText: "This field must begin and end with an alphanumeric character (lowercase only). Alphanumeric and Dashes are allowed otherwise.",
   errorFormText: "This field must begin and end with an alphanumeric character. Alphanumeric and Dashes are allowed otherwise.",
 };
 

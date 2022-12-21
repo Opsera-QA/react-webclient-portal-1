@@ -342,7 +342,7 @@ export class Model {
   };
 
   getLabel = (fieldName, defaultLabel = "No label found in metadata") => {
-    const fields = this.metaData.fields;
+    const fields = DataParsingHelper.parseNestedArray(this.getMetaData(), "fields", []);
     // TODO: Replace with metadata helper call once finished
     const field = fields.find(field => field.id === fieldName);
     return field ? field.label : defaultLabel;

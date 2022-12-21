@@ -14,7 +14,7 @@ import TableCardView from "components/common/table/TableCardView";
 import {useHistory} from "react-router-dom";
 import PipelineVerticalTabContainer from "components/workflow/pipelines/PipelineVerticalTabContainer";
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
-import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 
 function PipelineTableCardView(
   {

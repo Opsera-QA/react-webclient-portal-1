@@ -15,6 +15,8 @@ import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationB
 import pipelineInstructionsMetadata
   from "@opsera/definitions/constants/pipelines/instructions/pipelineInstructions.metadata";
 import {pipelineInstructionsHelper} from "components/workflow/instructions/pipelineInstructions.helper";
+import ViewInstructionsAuditLogsActionBarButton
+  from "components/workflow/instructions/action_bar/ViewInstructionsAuditLogsActionBarButton";
 
 function PipelineInstructionsDetailView() {
   const { pipelineInstructionsId } = useParams();
@@ -41,6 +43,10 @@ function PipelineInstructionsDetailView() {
             ownerId={pipelineInstructionsModel?.getOwnerId()}
             className={"ml-3"}
           />
+          {/*<ViewInstructionsAuditLogsActionBarButton*/}
+          {/*  className={"ml-3"}*/}
+          {/*  instructionsModel={pipelineInstructionsModel}*/}
+          {/*/>*/}
           <ActionBarDeletePipelineInstructionsButton
             pipelineInstructionsModel={pipelineInstructionsModel}
             className={"ml-3"}

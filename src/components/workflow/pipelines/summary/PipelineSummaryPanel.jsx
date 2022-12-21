@@ -48,10 +48,11 @@ function PipelineSummaryPanel(
     pipeline,
     parentWorkflowStatus,
     fetchPlan,
-    setWorkflowStatus,
     setPipeline,
     showActionControls,
     isLoading,
+    isQueued,
+    runCount,
   }) {
   const contextType = useContext(AuthContext);
   const [editTitle, setEditTitle] = useState(false);
@@ -66,7 +67,7 @@ function PipelineSummaryPanel(
     toastContext,
   } = useComponentStateReference();
 
-  useEffect(() => {}, [pipeline]);
+  useEffect(() => {}, [pipeline, parentWorkflowStatus]);
 
   const handleSavePropertyClick = async (pipelineId, value, type) => {
     if (Object.keys(value).length > 0 && type.length > 0) {
@@ -241,8 +242,10 @@ function PipelineSummaryPanel(
             disabledActionState={false}
             fetchData={fetchPlan}
             setPipeline={setPipeline}
-            setParentWorkflowStatus={setWorkflowStatus}
             isLoading={isLoading}
+            isQueued={isQueued}
+            workflowStatus={parentWorkflowStatus}
+            runCount={runCount}
           />
         </div>
       );
@@ -446,10 +449,11 @@ PipelineSummaryPanel.propTypes = {
   pipeline: PropTypes.object,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   fetchPlan: PropTypes.func,
-  setWorkflowStatus: PropTypes.func,
   setPipeline: PropTypes.func,
   showActionControls: PropTypes.bool,
   isLoading: PropTypes.bool,
+  isQueued: PropTypes.bool,
+  runCount: PropTypes.number,
 };
 
 export default PipelineSummaryPanel;

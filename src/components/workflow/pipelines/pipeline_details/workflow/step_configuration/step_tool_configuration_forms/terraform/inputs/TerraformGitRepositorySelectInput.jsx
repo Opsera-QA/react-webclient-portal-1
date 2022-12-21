@@ -11,12 +11,13 @@ function TerraformGitRepositorySelectInput({model, setModel, disabled}) {
     newModel.setData("gitRepositoryID", repoId);
     newModel.setData("sshUrl", selectedOption?.sshUrl || "");
     newModel.setData("gitUrl", gitUrl);
+    newModel.setData("defaultBranch", "");
     setModel({...newModel});
   };
 
   return (
      <RepositorySelectInput
-       fieldName={"gitRepository"}
+       fieldName={"gitRepositoryID"}
        service={model?.getData("type")}
        gitToolId={model?.getData("gitToolId")}
        workspace={model?.getData("bitbucketWorkspace")}

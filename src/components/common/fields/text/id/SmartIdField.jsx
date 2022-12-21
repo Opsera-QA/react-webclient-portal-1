@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
@@ -14,7 +14,7 @@ function SmartIdField(
     showDetailLinkClipboardIcon,
     showLabel,
   }) {
-  const [field] = useState(model?.getFieldById(fieldName));
+  const field = model?.getFieldById(fieldName);
 
   const getClipboardButton = () => {
     if (showClipboardButton !== false) {

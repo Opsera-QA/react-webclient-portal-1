@@ -9,6 +9,7 @@ import aksStepActions from "../aks-step-actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import toolsActions from "components/inventory/tools/tools-actions";
 import IconBase from "components/common/icons/IconBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function AksServiceDeployStepClusterSelectInput(
   {
@@ -22,9 +23,8 @@ function AksServiceDeployStepClusterSelectInput(
   const [isLoading, setIsLoading] = useState(false);
   const [azureRegionList, setAzureRegionList] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Cluster");
-  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
+  const [error, setError] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -33,6 +33,7 @@ function AksServiceDeployStepClusterSelectInput(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
 
+    setError(undefined);
     setAzureRegionList([]);
     if (hasStringValue(applicationId) === true && hasStringValue(azureToolConfigId) === true) {
       loadData(source).catch((error) => {
@@ -43,13 +44,11 @@ function AksServiceDeployStepClusterSelectInput(
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
+      setError(undefined);
       setIsLoading(true);
       await loadAzureRegistries(cancelSource);
     } catch (error) {
-      setPlaceholderText("There was an error pulling Clusters");
-      setErrorMessage("No Clusters available.");
-      toastContext.showErrorDialog(error);
-      console.error(error);
+      setError(error);
     } finally {
       setIsLoading(false);
     }
@@ -62,7 +61,6 @@ function AksServiceDeployStepClusterSelectInput(
     const tool = response?.data?.data;
 
     if (tool == null) {
-      setPlaceholderText("Error Pulling Clusters!");
       setErrorMessage("Could not find Tool to grab Clusters.");
       return;
     }
@@ -71,7 +69,6 @@ function AksServiceDeployStepClusterSelectInput(
     const applicationData = applicationResponse?.data?.data;
 
     if (applicationData == null) {
-      setPlaceholderText("Error Pulling Clusters!");
       setErrorMessage(`
         The selected Application was not found. 
         It may have been deleted, or the Tool's access roles may have been updated.
@@ -87,16 +84,7 @@ function AksServiceDeployStepClusterSelectInput(
       applicationData?.configuration
     );
 
-    const result = azureResponse?.data?.data;
-    if (Array.isArray(result) && result.length > 0) {
-      setErrorMessage("");
-      setAzureRegionList(result);
-    }
-
-    if (result?.length === 0) {
-      setPlaceholderText("No clusters found with this azure configuration");
-      setErrorMessage("No Clusters found");
-    }
+    setAzureRegionList(DataParsingHelper.parseNestedArray(azureResponse, "data.data", []));
   };
 
   const getInfoText = () => {
@@ -119,8 +107,11 @@ function AksServiceDeployStepClusterSelectInput(
         selectOptions={azureRegionList}
         busy={isLoading}
         disabled={isLoading}
-        placeholder={placeholder}
         errorMessage={errorMessage}
+        error={error}
+        loadDataFunction={loadData}
+        pluralTopic={"Clusters"}
+        singularTopic={"Cluster"}
       />
       <div onClick={() => loadData()} className="text-muted ml-3 dropdown-data-fetch">
         {getInfoText()}

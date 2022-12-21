@@ -7,12 +7,56 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 import JsonField from "components/common/fields/json/JsonField";
 import DateTimeField from "components/common/fields/date/DateTimeField";
+import MonacoCodeDiffInput from "components/common/inputs/code/monaco/MonacoCodeDiffInput";
+import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import IdRevisionField from "components/common/fields/text/id/IdRevisionField";
 
 export default function UserActivityAuditLogSummaryPanelBase(
   {
     auditLogModel,
     className,
   }) {
+
+  const getDiffView = () => {
+    const originalData = DataParsingHelper.parseObject(auditLogModel?.getData("originalData"));
+    const newData = DataParsingHelper.parseObject(auditLogModel?.getData("newData"));
+
+    if (originalData && !newData) {
+      return (
+        <JsonField
+          dataObject={auditLogModel}
+          fieldName={"originalData"}
+          customTitle={"Object Reference"}
+        />
+      );
+    }
+
+    if (!originalData && newData) {
+      return (
+        <JsonField
+          dataObject={auditLogModel}
+          fieldName={"newData"}
+          customTitle={"Object Reference"}
+        />
+      );
+    }
+
+
+    if (originalData && newData) {
+      return (
+        <MonacoCodeDiffInput
+          originalContent={JSON.stringify(originalData, null, 2)}
+          modifiedContent={JSON.stringify(newData, null, 2)}
+          disabled={true}
+          height={`max(calc(${screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT} - 215px), 350px)`}
+          model={auditLogModel}
+          fieldName={"changeLog"}
+          hideClipboardButton={true}
+        />
+      );
+    }
+  };
 
   if (auditLogModel == null) {
     return null;
@@ -27,15 +71,20 @@ export default function UserActivityAuditLogSummaryPanelBase(
           />
         </Col>
         <Col xs={6}>
-          <DateTimeField
-            fieldName={"createdAt"}
-            dataObject={auditLogModel}
+          <IdRevisionField
+            model={auditLogModel}
           />
         </Col>
         <Col xs={6}>
           <SsoUserField
             fieldName={"user_id"}
             model={auditLogModel}
+          />
+        </Col>
+        <Col xs={6}>
+          <DateTimeField
+            fieldName={"createdAt"}
+            dataObject={auditLogModel}
           />
         </Col>
         <Col xs={6}>
@@ -68,35 +117,8 @@ export default function UserActivityAuditLogSummaryPanelBase(
             dataObject={auditLogModel}
           />
         </Col>
-        <Col xs={12} md={6}>
-          <JsonField
-            fieldName={"attributes"}
-            dataObject={auditLogModel}
-          />
-        </Col>
-        <Col xs={12} md={6}>
-          <JsonField
-            fieldName={"attributes2"}
-            dataObject={auditLogModel}
-          />
-        </Col>
-        {/*<Col xs={12}>*/}
-        {/*  <JsonField*/}
-        {/*    fieldName={"changeLog"}*/}
-        {/*    dataObject={auditLogModel}*/}
-        {/*  />*/}
-        {/*</Col>*/}
-        <Col xs={12} md={6}>
-          <JsonField
-            fieldName={"originalData"}
-            dataObject={auditLogModel}
-          />
-        </Col>
-        <Col xs={12} md={6}>
-          <JsonField
-            fieldName={"newData"}
-            dataObject={auditLogModel}
-          />
+        <Col xs={12}>
+          {getDiffView()}
         </Col>
       </Row>
     </div>

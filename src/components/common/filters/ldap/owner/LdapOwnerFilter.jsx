@@ -14,6 +14,9 @@ function LdapOwnerFilter(
     visible,
     valueField,
     fieldName,
+    placeholderText,
+    inline,
+    showLabel,
   }) {
   const [isLoading, setIsLoading] = useState(false);
   const [ldapUsers, setLdapUsers] = useState([]);
@@ -42,7 +45,6 @@ function LdapOwnerFilter(
     } catch (error) {
       if (isMounted.current === true) {
         toastContext.showErrorDialog(error,"Could not load users.");
-        console.error(error);
       }
     }
     finally {
@@ -77,18 +79,21 @@ function LdapOwnerFilter(
     return null;
   }
 
+
   return (
     <div className={className}>
       <FilterSelectInputBase
         fieldName={fieldName}
         busy={isLoading}
-        placeholderText={"Filter by Owner"}
+        placeholderText={placeholderText}
         setDataObject={setFilterModel}
         dataObject={filterModel}
         textField={getTextField}
         valueField={valueField}
         selectOptions={ldapUsers}
         setDataFunction={setDataFunction}
+        inline={inline}
+        showLabel={showLabel}
       />
     </div>
   );
@@ -101,12 +106,16 @@ LdapOwnerFilter.propTypes = {
   setDataFunction: PropTypes.func,
   visible: PropTypes.bool,
   valueField: PropTypes.string,
-  fieldName: PropTypes.func,
+  fieldName: PropTypes.string,
+  placeholderText: PropTypes.string,
+  inline: PropTypes.bool,
+  showLabel: PropTypes.bool,
 };
 
 LdapOwnerFilter.defaultProps = {
   valueField: "_id",
   fieldName: "owner",
+  placeholderText: "Filter by Owner",
 };
 
 export default LdapOwnerFilter;

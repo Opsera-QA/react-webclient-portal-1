@@ -5,17 +5,19 @@ import PipelineWorkflowEditor from "./PipelineWorkflowItemEditor";
 import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
 import InformationDialog from "components/common/status_notifications/info";
 
-function PipelineWorkflowView({
-  pipeline,
-  editItem,
-  setEditItem,
-  fetchPlan,
-  setWorkflowStatus,
-  refreshCount,
-  setPipeline,
-  softLoading,
-}) {
-
+function PipelineWorkflowView(
+  {
+    pipeline,
+    editItem,
+    setEditItem,
+    fetchPlan,
+    setPipeline,
+    softLoading,
+    pipelineStatus,
+    isQueued,
+    lastStep,
+    runCount,
+  }) {
   const closeEditorPanel = () => {
     setEditItem(false);
   };
@@ -29,7 +31,6 @@ function PipelineWorkflowView({
             <PipelineWorkflowEditor editItem={editItem} pipeline={pipeline} closeEditorPanel={closeEditorPanel}
                                     fetchPlan={fetchPlan}/>
           </div>
-          <div className="content-block-footer"/>
         </div>
       </>);
     }
@@ -51,27 +52,27 @@ function PipelineWorkflowView({
         {!editItem && <div className="float-right pt-1 mr-2">
           <PipelineActionControls
             pipeline={pipeline}
-            disabledActionState={false}
             fetchData={fetchPlan}
             setPipeline={setPipeline}
-            setParentWorkflowStatus={setWorkflowStatus}
+            workflowStatus={pipelineStatus}
             isLoading={softLoading}
+            isQueued={isQueued}
+            runCount={runCount}
           />
         </div>}
       </div>
       <div style={{minWidth: "740px"}}>
         <PipelineWorkflow
           pipeline={pipeline}
-          editItemId={editItem.step_id}
           fetchPlan={fetchPlan}
-          refreshCount={refreshCount}
+          status={pipelineStatus}
           softLoading={softLoading}
+          lastStep={lastStep}
         />
       </div>
     </div>
   );
 }
-
 
 PipelineWorkflowView.propTypes = {
   pipeline: PropTypes.object,
@@ -79,11 +80,12 @@ PipelineWorkflowView.propTypes = {
   setEditItem: PropTypes.func,
   setActiveTab: PropTypes.func,
   fetchPlan: PropTypes.func,
-  setWorkflowStatus: PropTypes.func,
+  pipelineStatus: PropTypes.string,
   setPipeline: PropTypes.func,
-  refreshCount: PropTypes.number,
-  parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   softLoading: PropTypes.bool,
+  isQueued: PropTypes.bool,
+  lastStep: PropTypes.any,
+  runCount: PipelineWorkflow.number,
 };
 
 export default PipelineWorkflowView;

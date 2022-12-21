@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const SentenialStepFormMetadata = {
   type: "Sentenial Step Configuration",
   fields: [
@@ -14,16 +16,19 @@ const SentenialStepFormMetadata = {
     {
       label: "Repository",
       id: "repository",
-      isRequired: true
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
     },
     {
       label: "Branch",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequired: true
     },
     {
       label: "Repository",
       id: "repoId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
+      isRequired: true
     },
     {
       label: "BitBucket Workspace",

@@ -137,7 +137,7 @@ accountsActions.getLdapUserGroupsWithDomainV2 = async (getAccessToken, cancelTok
 };
 
 accountsActions.getLdapRoleGroupsWithDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
-  const apiUrl = `/users/account/${domain}/role-groups`;
+  const apiUrl = `/account/site-roles/${domain}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

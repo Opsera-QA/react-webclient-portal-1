@@ -3,8 +3,16 @@ import PropTypes from "prop-types";
 import {useHistory} from "react-router-dom";
 import OptionCardBase from "components/common/card/option/OptionCardBase";
 
-function PageLinkCard({link, linkText, icon, visible, className, pageDescription}) {
-  let history = useHistory();
+export default function PageLinkCard(
+  {
+    link,
+    linkText,
+    icon,
+    visible,
+    className,
+    pageDescription,
+  }) {
+  const history = useHistory();
 
   const onClickFunction = () => {
     history.push(link);
@@ -42,5 +50,3 @@ PageLinkCard.propTypes = {
   className: PropTypes.string,
   pageDescription: PropTypes.string,
 };
-
-export default PageLinkCard;

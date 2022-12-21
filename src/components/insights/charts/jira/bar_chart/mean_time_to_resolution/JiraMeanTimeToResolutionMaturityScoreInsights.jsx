@@ -14,7 +14,7 @@ import VanitySetVerticalTab from "../../../../../common/tabs/vertical_tabs/Vanit
 import VanitySetVerticalTabContainer from "../../../../../common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../../../common/tabs/CustomTab";
-import TabAndViewContainer from "../../../../../common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import TabPanelContainer from "../../../../../common/panels/general/TabPanelContainer";
 import { getMaturityScoreText } from "../../../charts-helpers";
 import JiraMeanTimeToResolutionInsightsDataBlock from "./JiraMeanTimeToResolutionInsightsDataBlock";

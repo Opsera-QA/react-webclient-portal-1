@@ -4,7 +4,7 @@ import {faExclamationTriangle, faFileCode, faFileDownload} from "@fortawesome/pr
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import CodeInputBase from "components/common/inputs/code/CodeInputBase";
-import ToggleThemeIcon from "components/common/buttons/toggle/ToggleThemeIcon";
+import ToggleThemeIconButton from "components/common/buttons/toggle/ToggleThemeIconButton";
 import IconBase from "components/common/icons/IconBase";
 import InfoContainer from "components/common/containers/InfoContainer";
 import {hasStringValue} from "components/common/helpers/string-helpers";
@@ -70,7 +70,7 @@ function CodeInput(
           copyString={model?.getData(fieldName)}
           className={"mr-2"}
         />
-        <ToggleThemeIcon
+        <ToggleThemeIconButton
           theme={internalTheme}
           toggleTheme={toggleTheme}
         />

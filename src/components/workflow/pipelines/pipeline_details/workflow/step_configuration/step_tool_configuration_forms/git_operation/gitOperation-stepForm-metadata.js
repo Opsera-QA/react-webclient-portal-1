@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const gitOperationStepFormMetadata = {
   type: "PMD Tool Configuration",
   fields: [
@@ -5,7 +7,7 @@ const gitOperationStepFormMetadata = {
       label: "SCM Type",
       id: "service",
       isRequired: true,
-      maxLength: 10,
+      maxLength: 150,
       lowercase: true,
     },
     {
@@ -14,37 +16,35 @@ const gitOperationStepFormMetadata = {
       isRequired: true,
       maxLength: 24,
       regexDefinitionName: "mongoId",
-      formText:" "
     },
     {
       label: "Repository",
       id: "repository",
       isRequired: true,
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
-      formText:" "
     },
     {
       label: "Repository",
       id: "repoId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
       isRequired: true,
       maxLength: 255,
-      formText:" "
     },
     {
       label: "Workspace/Project",
       id: "workspace",
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
-      formText:" "
     },
     {
       label: "Branch",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequired: true,
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
-      formText:" "
     },
     {
       label: "Target Branch",
@@ -54,7 +54,6 @@ const gitOperationStepFormMetadata = {
       },
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
-      formText:" "
     },
     {
       label: "Description",
@@ -84,14 +83,12 @@ const gitOperationStepFormMetadata = {
     {
       label: "Add Reviewer",
       id: "addReviewers",
-      maxLength: 50,
-      isRequired: true,
-      lowercase: true,
     },
     {
       label: "Select Reviewers",
       id: "prReviewers",
       maxLength: 10,
+      minLength: 1,
       isRequiredFunction: (model) => {
         return model?.getData("action") === "pr-creation" && model?.getData("addReviewers") === true;
       },

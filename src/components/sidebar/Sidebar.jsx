@@ -1,417 +1,93 @@
-import React, { useContext, useState, useEffect } from "react";
-import { AuthContext } from "contexts/AuthContext";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
-import {
-  faClipboardList,
-  faArchive,
-  faColumns,
-  faBox,
-  faHome,
-  faTools,
-  faDraftingCompass,
-  faLayerGroup,
-  faCogs,
-  faChartNetwork,
-  faAnalytics,
-  faEnvelope,
-  faTasks,
-} from "@fortawesome/pro-light-svg-icons";
-import IconBase from "components/common/icons/IconBase";
 import ToolchainSidebarNavigationLink from "components/sidebar/links/ToolchainSidebarNavigationLink";
+import PipelinesSidebarNavigationLink from "components/sidebar/links/PipelinesSidebarNavigationLink";
+import InsightsSidebarNavigationLink from "components/sidebar/links/InsightsSidebarNavigationLink";
+import HomeSidebarNavigationLink from "components/sidebar/links/HomeSidebarNavigationLink";
+import AdminToolsSidebarNavigationLink from "components/sidebar/links/AdminToolsSidebarNavigationLink";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import useLocationReference from "hooks/useLocationReference";
+import ToolRegistrySidebarNavigationLink from "components/sidebar/links/ToolRegistrySidebarNavigationLink";
+import SettingsSidebarNavigationLink from "components/sidebar/links/SettingsSidebarNavigationLink";
+import ReportsSidebarNavigationLink from "components/sidebar/links/ReportsSidebarNavigationLink";
+import NotificationsSidebarNavigationLink from "components/sidebar/links/NotificationsSidebarNavigationLink";
+import BlueprintsSidebarNavigationLink from "components/sidebar/links/BlueprintsSidebarNavigationLink";
+import LogsSidebarNavigationLink from "components/sidebar/links/LogsSidebarNavigationLink";
+import TasksSidebarNavigationLink from "components/sidebar/links/TasksSidebarNavigationLink";
+import ToggleSidebarSizeIcon from "components/sidebar/ToggleSidebarSizeIcon";
+import SidebarSubheaderText from "components/sidebar/SidebarSubheaderText";
+import sessionHelper from "utils/session.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-const hiddenNav = () => {
-  return <></>;
-};
-
-// TODO: This should be reworked into one sidebar
-//  with the tabs using SidebarNavigationLinkBase which can handle visibility based on roles
-function Sidebar({ hideSideBar }) {
-  const { featureFlagHideItemInProd, featureFlagHideItemInTest } = useContext(AuthContext);
+export default function Sidebar({ hideSideBar }) {
   const { userData } = useComponentStateReference();
-  const [renderOutput, setRenderOutput] = useState(hiddenNav);
-  const { isPublicPathState } = useLocationReference();
-  const {
-    accessRoleData,
-  } = useComponentStateReference();
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(DataParsingHelper.parseBooleanV2(sessionHelper.getStoredSessionValueByKey("SIDEBAR_COLLAPSED"), false));
 
-  useEffect(() => {
-    if (hideSideBar === true || isPublicPathState === true) {
-      setRenderOutput(hiddenNav);
-    } else if (userData && accessRoleData) {
-      const renderFn = chooseRenderState(accessRoleData);
-      setRenderOutput(renderFn);
-    }
-  }, [userData, hideSideBar, accessRoleData, isPublicPathState]);
+  if (userData == null || hideSideBar === true) {
+    return null;
+  }
 
-  const chooseRenderState = (accessRole) => {
-    if (accessRole.OpseraAdministrator) {
-      return (<OpseraAdminUserNav accessRole={accessRole}
-                                  featureFlagHideItemInProd={featureFlagHideItemInProd()}
-                                  featureFlagHideItemInTest={featureFlagHideItemInTest()}/>);
+  return (
+    <div
+      className={isSidebarCollapsed === true ? "d-block sidebar-container" : "w-20 d-block sidebar-container"}
+    >
+      <div className={"sticky-top py-5 sidebar-menu"}>
+        <HomeSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
 
-    } else if (accessRole.Type === "sass-user") {
-      return (<SaasUserNav accessRole={accessRole}
-                           featureFlagHideItemInProd={featureFlagHideItemInProd()}
-                           featureFlagHideItemInTest={featureFlagHideItemInTest()}/>);
+        <SidebarSubheaderText
+          isSidebarCollapsed={isSidebarCollapsed}
+          subheaderText={"Products"}
+        />
+        <ToolchainSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <PipelinesSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <InsightsSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
 
-    } else { //drop into LDAP Org roles
-      if (accessRole.Administrator) {
-        return (<AccountAdminUserNav accessRole={accessRole}
-                                     featureFlagHideItemInProd={featureFlagHideItemInProd()}
-                                     featureFlagHideItemInTest={featureFlagHideItemInTest()}/>);
-
-      } else if (accessRole.Role === "power_user") {
-        return (<AccountPowerUserNav accessRole={accessRole}
-                                     featureFlagHideItemInProd={featureFlagHideItemInProd()}
-                                     featureFlagHideItemInTest={featureFlagHideItemInTest()}/>);
-
-      } else {
-        return (<DefaultUserNav accessRole={accessRole}
-                                featureFlagHideItemInProd={featureFlagHideItemInProd()}
-                                featureFlagHideItemInTest={featureFlagHideItemInTest()}/>);
-      }
-    }
-  };
-
-  return renderOutput;
-}
-
-
-function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideItemInTest }) {
-  const [insights, setInsights] = useState(false);
-
-  return (<>
-    <div className="w-20 pt-1 d-block">
-      <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
-        <div className="sidebar-menu pt-4">
-          <NavLink className="nav-link" activeClassName="chosen" exact to="/">
-            <IconBase iconSize={"lg"} icon={faHome} /> <span
-            className="menu-text">Home</span></NavLink>
-
-          <div className="mt-3 mb-2 sub-header">Products</div>
-
-          <ToolchainSidebarNavigationLink />
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
-            <IconBase iconSize={"lg"} icon={faDraftingCompass} /> <span
-            className="menu-text">Pipelines</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/insights">
-            <IconBase iconSize={"lg"} icon={faChartNetwork} /> <span
-            className="menu-text">Insights</span></NavLink>
-
-          <div className="mt-3 mb-2 sub-header">Operations</div>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
-            <IconBase iconSize={"lg"} icon={faClipboardList} /> <span
-            className="menu-text">Tool Registry</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/task">
-            <IconBase iconSize={"lg"} icon={faTasks} /> <span
-            className="menu-text">Tasks</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/logs">
-            <IconBase iconSize={"lg"} icon={faArchive} /> <span
-            className="menu-text">Logs</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/blueprint">
-            <IconBase iconSize={"lg"} icon={faLayerGroup} /> <span
-            className="menu-text">Blueprints</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/reports">
-            <IconBase iconSize={"lg"} icon={faAnalytics} /> <span
-            className="menu-text">Reports</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
-            <IconBase iconSize={"lg"} icon={faEnvelope} /> <span
-            className="menu-text">Notifications</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/settings">
-            <IconBase iconSize={"lg"} icon={faCogs} /> <span
-            className="menu-text">Settings</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/admin">
-            <IconBase iconSize={"lg"} icon={faTools} /> <span
-            className="menu-text">Admin Tools</span></NavLink>
-
-        </div>
+        <SidebarSubheaderText
+          isSidebarCollapsed={isSidebarCollapsed}
+          subheaderText={"Operations"}
+        />
+        <ToolRegistrySidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <TasksSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <LogsSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <BlueprintsSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <ReportsSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <NotificationsSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <SettingsSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <AdminToolsSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <ToggleSidebarSizeIcon
+          isSidebarCollapsed={isSidebarCollapsed === true}
+          setIsSidebarCollapsed={setIsSidebarCollapsed}
+          className={"mt-3 collapse-icon"}
+        />
       </div>
     </div>
-  </>);
+  );
 }
-
-
-function SaasUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideItemInTest }) {
-  const [insights, setInsights] = useState(false);
-
-  return (<>
-    <div className="w-20 pt-1 d-block">
-
-      <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
-        <div className="sidebar-menu pt-4">
-          <NavLink className="nav-link" activeClassName="chosen" exact to="/">
-            <IconBase iconSize={"lg"} icon={faHome} /> <span
-            className="menu-text">Home</span></NavLink>
-
-          <div className="mt-3 mb-2 sub-header">Products</div>
-
-          <ToolchainSidebarNavigationLink />
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
-            <IconBase iconSize={"lg"} icon={faDraftingCompass} /> <span
-            className="menu-text">Pipelines</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/insights">
-            <IconBase iconSize={"lg"} icon={faChartNetwork} /> <span
-            className="menu-text">Insights</span></NavLink>
-
-          <div className="mt-3 mb-2 sub-header">Operations</div>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
-            <IconBase iconSize={"lg"} icon={faClipboardList} /> <span
-            className="menu-text">Tool Registry</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/task">
-            <IconBase iconSize={"lg"} icon={faTasks} /> <span
-            className="menu-text">Tasks</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/logs">
-            <IconBase iconSize={"lg"} icon={faArchive} /> <span
-            className="menu-text">Logs</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/blueprint">
-            <IconBase iconSize={"lg"} icon={faLayerGroup} /> <span
-            className="menu-text">Blueprints</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/reports">
-            <IconBase iconSize={"lg"} icon={faAnalytics} /> <span
-            className="menu-text">Reports</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
-            <IconBase iconSize={"lg"} icon={faEnvelope} /> <span
-            className="menu-text">Notifications</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/settings">
-            <IconBase iconSize={"lg"} icon={faCogs} /> <span
-            className="menu-text">Settings</span></NavLink>
-        </div>
-      </div>
-
-    </div>
-  </>);
-}
-
-
-function AccountAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideItemInTest }) {
-  const [insights, setInsights] = useState(false);
-
-  return (<>
-    <div className="w-20 pt-1 d-block">
-
-      <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
-        <div className="sidebar-menu pt-4">
-          <NavLink className="nav-link" activeClassName="chosen" exact to="/">
-            <IconBase iconSize={"lg"} icon={faHome} /> <span
-            className="menu-text">Home</span></NavLink>
-
-          <div className="mt-3 mb-2 sub-header">Products</div>
-
-          <ToolchainSidebarNavigationLink />
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
-            <IconBase iconSize={"lg"} icon={faDraftingCompass} /> <span
-            className="menu-text">Pipelines</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/insights">
-            <IconBase iconSize={"lg"} icon={faChartNetwork} /> <span
-            className="menu-text">Insights</span></NavLink>
-
-          <div className="mt-3 mb-2 sub-header">Operations</div>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
-            <IconBase iconSize={"lg"} icon={faClipboardList} /> <span
-            className="menu-text">Tool Registry</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/task">
-            <IconBase iconSize={"lg"} icon={faTasks} /> <span
-            className="menu-text">Tasks</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/logs">
-            <IconBase iconSize={"lg"} icon={faArchive} /> <span
-            className="menu-text">Logs</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/blueprint">
-            <IconBase iconSize={"lg"} icon={faLayerGroup} /> <span
-            className="menu-text">Blueprints</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/reports">
-            <IconBase iconSize={"lg"} icon={faAnalytics} /> <span
-            className="menu-text">Reports</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
-            <IconBase iconSize={"lg"} icon={faEnvelope} /> <span
-            className="menu-text">Notifications</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/settings">
-            <IconBase iconSize={"lg"} icon={faCogs} /> <span
-            className="menu-text">Settings</span></NavLink>
-        </div>
-      </div>
-    </div>
-  </>);
-}
-
-
-function AccountPowerUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideItemInTest }) {
-  const [insights, setInsights] = useState(false);
-
-  return (<>
-    <div className="w-20 pt-1 d-block">
-
-      <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
-        <div className="sidebar-menu pt-4">
-          <NavLink className="nav-link" activeClassName="chosen" exact to="/">
-            <IconBase iconSize={"lg"} icon={faHome} /> <span
-            className="menu-text">Home</span></NavLink>
-
-          <div className="mt-3 mb-2 sub-header">Products</div>
-
-          <ToolchainSidebarNavigationLink />
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
-            <IconBase iconSize={"lg"} icon={faDraftingCompass} /> <span
-            className="menu-text">Pipelines</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/insights">
-            <IconBase iconSize={"lg"} icon={faChartNetwork} /> <span
-            className="menu-text">Insights</span></NavLink>
-
-          <div className="mt-3 mb-2 sub-header">Operations</div>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
-            <IconBase iconSize={"lg"} icon={faClipboardList} /> <span
-            className="menu-text">Tool Registry</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/task">
-            <IconBase iconSize={"lg"} icon={faTasks} /> <span
-            className="menu-text">Tasks</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/logs">
-            <IconBase iconSize={"lg"} icon={faArchive} /> <span
-            className="menu-text">Logs</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/blueprint">
-            <IconBase iconSize={"lg"} icon={faLayerGroup} /> <span
-            className="menu-text">Blueprints</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/reports">
-            <IconBase iconSize={"lg"} icon={faAnalytics} /> <span
-            className="menu-text">Reports</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
-            <IconBase iconSize={"lg"} icon={faEnvelope} /> <span
-            className="menu-text">Notifications</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/settings">
-            <IconBase iconSize={"lg"} icon={faCogs} /> <span
-            className="menu-text">Settings</span></NavLink>
-        </div>
-      </div>
-
-    </div>
-  </>);
-}
-
-//basic account users: nonadmin, nonpoweruser
-function DefaultUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideItemInTest }) {
-  const [insights, setInsights] = useState(false);
-
-  return (<>
-    <div className="w-20 pt-1 d-block">
-
-      <div className="sidebar-container sticky-top pb-5 pt-1 pl-1">
-        <div className="sidebar-menu pt-4">
-          <NavLink className="nav-link" activeClassName="chosen" exact to="/">
-            <IconBase iconSize={"lg"} icon={faHome} /> <span
-            className="menu-text">Home</span></NavLink>
-
-          <div className="mt-3 mb-2 sub-header">Products</div>
-
-          <ToolchainSidebarNavigationLink />
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/workflow">
-            <IconBase iconSize={"lg"} icon={faDraftingCompass} /> <span
-            className="menu-text">Pipelines</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/insights">
-            <IconBase iconSize={"lg"} icon={faChartNetwork} /> <span
-            className="menu-text">Insights</span></NavLink>
-
-          <div className="mt-3 mb-2 sub-header">Operations</div>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
-            <IconBase iconSize={"lg"} icon={faClipboardList} /> <span
-            className="menu-text">Tool Registry</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/task">
-            <IconBase iconSize={"lg"} icon={faTasks} /> <span
-            className="menu-text">Tasks</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/logs">
-            <IconBase iconSize={"lg"} icon={faArchive} /> <span
-            className="menu-text">Logs</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/blueprint">
-            <IconBase iconSize={"lg"} icon={faLayerGroup} /> <span
-            className="menu-text">Blueprints</span></NavLink>
-
-          <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
-            <IconBase iconSize={"lg"} icon={faEnvelope} /> <span
-            className="menu-text">Notifications</span></NavLink>
-
-        </div>
-      </div>
-    </div>
-  </>);
-}
-
-
-OpseraAdminUserNav.propTypes = {
-  accessRole: PropTypes.object,
-  featureFlagHideItemInProd: PropTypes.bool,
-  featureFlagHideItemInTest: PropTypes.bool,
-};
-
-SaasUserNav.propTypes = {
-  accessRole: PropTypes.object,
-  featureFlagHideItemInProd: PropTypes.bool,
-  featureFlagHideItemInTest: PropTypes.bool,
-};
-
-AccountAdminUserNav.propTypes = {
-  accessRole: PropTypes.object,
-  featureFlagHideItemInProd: PropTypes.bool,
-  featureFlagHideItemInTest: PropTypes.bool,
-};
-
-AccountPowerUserNav.propTypes = {
-  accessRole: PropTypes.object,
-  featureFlagHideItemInProd: PropTypes.bool,
-  featureFlagHideItemInTest: PropTypes.bool,
-};
-
-DefaultUserNav.propTypes = {
-  accessRole: PropTypes.object,
-  featureFlagHideItemInProd: PropTypes.bool,
-  featureFlagHideItemInTest: PropTypes.bool,
-};
 
 Sidebar.propTypes = {
   userData: PropTypes.object,
   hideSideBar: PropTypes.bool,
 };
-
-export default Sidebar;

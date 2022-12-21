@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
@@ -13,11 +13,19 @@ import axios from "axios";
 import SiteRoleManagementSubNavigationBar from "components/settings/ldap_site_roles/SiteRoleManagementSubNavigationBar";
 import SiteRoleDetailPanel from "components/settings/ldap_site_roles/details/SiteRoleDetailPanel";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
-// TODO: Can we get an API Call to get role group names associated with an organization?
-const roleGroups = ["Administrators", "PowerUsers", "Users"];
+// TODO: Move to know-your-role
+export const roleGroups = [
+  SiteRoleHelper.SITE_ROLE_GROUP_NAMES.ADMINISTRATORS,
+  SiteRoleHelper.SITE_ROLE_GROUP_NAMES.POWER_USERS,
+  SiteRoleHelper.SITE_ROLE_GROUP_NAMES.USERS,
+  SiteRoleHelper.SITE_ROLE_GROUP_NAMES.AUDITORS,
+  SiteRoleHelper.SITE_ROLE_GROUP_NAMES.SECURITY_MANAGERS,
+];
 
 function SiteRoleDetailView() {
+  const history = useHistory();
   const {groupName, orgDomain} = useParams();
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});

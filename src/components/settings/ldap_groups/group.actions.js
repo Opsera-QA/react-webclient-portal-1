@@ -8,7 +8,7 @@ groupActions.getResourcesWithGroupAssigned = async (
   group,
   type,
 ) => {
-  const apiUrl = `/users/account/group/assigned-roles/resources/`;
+  const apiUrl = `/account/groups/assigned-roles/resources/`;
   const queryParameters = {
     group: group,
     type: type,

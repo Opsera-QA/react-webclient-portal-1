@@ -10,17 +10,9 @@ import TerraformScmToolSelectInput from "components/workflow/pipelines/pipeline_
 import TerraformBitbucketWorkspaceSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformBitbucketWorkspaceSelectInput";
 import TerraformGitRepositorySelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformGitRepositorySelectInput";
 import TerraformGitBranchSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformGitBranchSelectInput";
-import TerraformAwsCredentialsSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/aws/TerraformAwsCredentialsSelectInput";
 import terraformStepFormMetadata from "./terraform-stepForm-metadata";
 import TerraformCustomParametersInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCustomParametersInput";
-import TerraformRuntimeArgsInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformRuntimeArgsInput";
-import TerraformIamRolesSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/aws/TerraformIamRolesSelectInput";
-import TerraformIAmRoleFlagToggleInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/aws/TerraformIAmRoleFlagToggleInput";
-import TerraformStoreStateInS3Toggle from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/aws/TerraformStoreStateInS3Toggle";
-import TerraformS3BucketSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/aws/TerraformS3BucketSelectInput";
-import TerraformS3BucketRegionSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/aws/TerraformS3BucketRegionSelectInput";
 import TerraformCloudProviderSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCloudProviderSelectInput";
 import TerraformTagSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformTagSelectInput";
 import TerraformStateSubForm from "./sub_forms/TerraformStateSubForm";
@@ -29,7 +21,6 @@ import CustomScriptSubForm from "./sub_forms/CustomScriptSubForm";
 
 function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [jobType, setJobType] = useState("");
   const [terraformStepConfigurationModel, setTerraformStepConfigurationModel] = useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
@@ -43,17 +34,9 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
   const loadData = () => {
     setIsLoading(true);
 
-    let { threshold, job_type } = stepTool;
+    let { threshold } = stepTool;
     let terraformConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, terraformStepFormMetadata);
-    
-    if (terraformConfigurationData.getData("iamRoleFlag") === true) {
-      terraformConfigurationData.setMetaDataFields(terraformStepFormMetadata.fieldsAlt);
-    }
     setTerraformStepConfigurationModel(terraformConfigurationData);
-    
-    if (job_type) {
-      setJobType(job_type);
-    }
 
     if (threshold) {
       setThresholdType(threshold?.type);
@@ -84,11 +67,11 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
   //     );
   //   }
   // };
- 
+
   if (isLoading || terraformStepConfigurationModel == null) {
     return <DetailPanelLoadingDialog />;
   }
-  
+
   return (
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}

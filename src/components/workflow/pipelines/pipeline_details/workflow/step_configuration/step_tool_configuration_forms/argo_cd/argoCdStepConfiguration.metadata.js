@@ -1,33 +1,29 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 export const ArgoCdStepConfigurationMetadata = {
   type: "Argo CD Step Configuration",
   fields: [
     {
       label: "Source Code Management Tool Type",
       id: "type",
-      isRequiredFunction: (model) => {
-        return model?.getData("kustomizeFlag") === false;
-      },
+      isRequired: true,
     },
     {
       label: "Source Code Management Tool",
       id: "gitToolId",
-      isRequiredFunction: (model) => {
-        return model?.getData("kustomizeFlag") === false;
-      },
+      isRequired: true,
     },
     {
       label: "Repository",
       id: "gitRepository",
-      isRequiredFunction: (model) => {
-        return model?.getData("kustomizeFlag") === false;
-      },
+      isRequired: true,
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
     },
     {
       label: "Branch",
       id: "defaultBranch",
-      isRequiredFunction: (model) => {
-        return model?.getData("kustomizeFlag") === false;
-      },
+      isRequired: true,
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
     },
     {
       label: "Docker/ECR Step",
@@ -63,9 +59,7 @@ export const ArgoCdStepConfigurationMetadata = {
     {
       label: "Git File Path",
       id: "gitFilePath",
-      isRequiredFunction: (model) => {
-        return model?.getData("kustomizeFlag") === false;
-      },
+      // isRequired: true,
     },
     {
       label: "Git Workspace",
@@ -74,6 +68,7 @@ export const ArgoCdStepConfigurationMetadata = {
     {
       label: "Repository",
       id: "gitRepositoryID",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       label: "BitBucket Workspace",
@@ -139,6 +134,13 @@ export const ArgoCdStepConfigurationMetadata = {
     {
       label: "Custom Parameter",
       id: "customParameterId"
+    },
+    {
+      label: "Image Reference Key",
+      id: "imageReference",
+      isRequiredFunction: (model) => {
+        return model?.getData("kustomizeFlag") === true;
+      },
     }
   ],
   newObjectFields: {
@@ -168,6 +170,7 @@ export const ArgoCdStepConfigurationMetadata = {
     imageUrl: "",
     isBlueGreenDeployment: false,
     dockerStepType: "",
-    customParameterId: ""
+    customParameterId: "",
+    imageReference: ""
   },
 };

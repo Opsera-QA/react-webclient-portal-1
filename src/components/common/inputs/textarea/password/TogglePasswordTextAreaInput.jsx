@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import ShowSensitiveDataButton from "components/common/buttons/data/ShowSensitiveDataButton";
-import CopyToClipboardButton from "components/common/buttons/data/CopyToClipboardButton";
+import CopyToClipboardButton from "components/common/buttons/clipboard/CopyToClipboardButton";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 

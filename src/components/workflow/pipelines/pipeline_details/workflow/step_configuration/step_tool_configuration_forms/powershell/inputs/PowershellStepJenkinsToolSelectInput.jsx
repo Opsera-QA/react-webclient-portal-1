@@ -18,9 +18,9 @@ function PowershellStepJenkinsToolSelectInput({model, setModel, disabled}) {
     newModel.setData("gitCredential", "");
     newModel.setData("repository", "");
     newModel.setData("repoId", "");
-    newModel.setData("repoId", "");
     newModel.setData("gitBranch", "");
     newModel.setData("workspace", "");
+    newModel.setData("workspaceName", "");
     newModel.setData("autoScaleEnable", selectedOption?.configuration?.autoScaleEnable || false);
     setModel({...newModel});
   };

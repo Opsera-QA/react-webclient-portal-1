@@ -2,18 +2,24 @@ import React from "react";
 import PropTypes from "prop-types";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/base/ThreeLineDataBlockBase";
-import MetricScoreText from "../../../../../common/metrics/score/MetricScoreText";
+import {getQualityBasedClassName} from "../../../charts-helpers";
+import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 
 function GitlabPipelineStatisticsTrendDataBlock({
   value,
   prevValue,
   trend,
   dataPoint,
+  dataPointValue,
   getTrendIcon,
   topText,
   bottomText,
   onClick
 }) {
+  let qualityLevel;
+  if(dataPoint && dataPointValue) {
+    qualityLevel = dataPointHelpers.evaluateDataPointQualityLevel(dataPoint, dataPointValue);
+  }
   return (
     <DataBlockBoxContainer
       onClickFunction={onClick}
@@ -26,10 +32,7 @@ function GitlabPipelineStatisticsTrendDataBlock({
         icon={getTrendIcon(trend)}
         bottomText={`${bottomText}${prevValue} %`}
         middleText={
-          <MetricScoreText
-            score={`${value} %`}
-            dataPoint={dataPoint}
-          />
+          <span className={`${getQualityBasedClassName(qualityLevel)} metric-block-header-text`}>{`${value} %`}</span>
         }
         dataPoint={dataPoint}
       />
@@ -42,6 +45,7 @@ GitlabPipelineStatisticsTrendDataBlock.propTypes = {
   prevValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   trend: PropTypes.string,
   dataPoint: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+  dataPointValue:  PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   getTrendIcon: PropTypes.func,
   topText: PropTypes.string,
   bottomText: PropTypes.string,

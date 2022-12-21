@@ -22,7 +22,6 @@ function PipelineWorkflowItemList(
     quietSavePlan,
     fetchPlan,
     parentWorkflowStatus,
-    refreshCount,
   }) {
   const [isSaving, setIsSaving] = useState(false);
   const [pipelineSteps, setPipelineSteps] = useState(pipeline.workflow.plan);
@@ -73,7 +72,7 @@ function PipelineWorkflowItemList(
     if (pipeline) {
       setPipelineSteps(pipeline?.workflow?.plan);
     }
-  }, [refreshCount, JSON.stringify(lastStep), JSON.stringify(pipeline.workflow)]);
+  }, [JSON.stringify(lastStep), JSON.stringify(pipeline.workflow)]);
 
 
   const handleAddStep = async (itemId, index) => {
@@ -168,7 +167,7 @@ function PipelineWorkflowItemList(
   };
 
 
-  const setStepStatusClass = (last_step, item) => {
+  const setStepStatusClass = (item) => {
     const item_id = DataParsingHelper.parseMongoDbId(item?._id);
     let classString = "step-" + item_id;
 
@@ -182,8 +181,8 @@ function PipelineWorkflowItemList(
           : "";
 
     //if operations have occurred and the step is still valid
-    if (typeof (last_step) !== "undefined" && isStepValid) {
-      const {success, running, failed} = last_step;
+    if (typeof (lastStep) !== "undefined" && isStepValid) {
+      const {success, running, failed} = lastStep;
 
       if (success && success.step_id === item_id) {
         stepStatusClass = "workflow-step-success";
@@ -295,10 +294,10 @@ function PipelineWorkflowItemList(
           className={isSaving ? "fa-disabled" : ""}
         >
           <div
-            className={"p-1 workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(lastStep, item)}
+            className={"p-1 workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(item)}
             style={{
               boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)",
-              borderRadius: ".2rem",
+              borderRadius: ".22rem",
             }}
           >
             <PipelineWorkflowItem
@@ -311,7 +310,6 @@ function PipelineWorkflowItemList(
               pipelineId={pipelineId}
               parentCallbackEditItem={parentCallbackEditItem}
               deleteStep={deleteStep}
-              refreshCount={refreshCount}
               parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog}
               parentWorkflowStatus={parentWorkflowStatus}
               toolIdentifier={getToolIdentifierForStep(item?.tool?.tool_identifier)}
@@ -342,11 +340,9 @@ PipelineWorkflowItemList.propTypes = {
   pipelineId: PropTypes.string,
   parentCallbackEditItem: PropTypes.func,
   parentHandleViewSourceActivityLog: PropTypes.func,
-  setStateItems: PropTypes.func,
   quietSavePlan: PropTypes.func,
   fetchPlan: PropTypes.func,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  refreshCount: PropTypes.number,
 };
 
 

@@ -9,7 +9,7 @@ import Model from "core/data_model/model";
 import FilterContainer from "../../../../../common/table/FilterContainer";
 import VanitySetTabViewContainer from "../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import GithubPendingMergeRequestVerticalTabContainer from "./GithubPendingMergeRequestVerticalTabContainer";
-import TabAndViewContainer from "../../../../../common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import {
   getLimitedTableTextColumn,
   getTableDateTimeColumn,
