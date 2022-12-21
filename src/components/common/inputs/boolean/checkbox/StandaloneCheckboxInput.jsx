@@ -10,10 +10,12 @@ export default function StandaloneCheckboxInput(
     label,
     setDataFunction,
     disabled,
+    className,
   }) {
   return (
     <Form.Check
       type={"checkbox"}
+      className={className}
       id={id}
       checked={!!value}
       disabled={disabled === true}
@@ -31,6 +33,7 @@ StandaloneCheckboxInput.propTypes = {
   label: PropTypes.string,
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func,
+  className: PropTypes.string,
 };
 
 StandaloneCheckboxInput.defaultProps = {

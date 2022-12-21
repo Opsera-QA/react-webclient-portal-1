@@ -26,6 +26,10 @@ primary analytics font*/
     font-weight: 500;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 .connected-assets-modal-body {
     min-height: 10rem;
     overflow: scroll;

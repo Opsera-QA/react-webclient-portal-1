@@ -41,7 +41,7 @@ export default function PipelineAuditLogsDisplayer(
         userActivityAuditLogFilterModel={pipelineAuditLogFilterModel}
         setUserActivityAuditLogFilterModel={setPipelineAuditLogFilterModel}
         isLoading={isLoading}
-        loadData={loadData}
+        loadDataFunction={loadData}
       />
     );
   };
