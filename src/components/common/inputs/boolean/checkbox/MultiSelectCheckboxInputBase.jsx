@@ -23,6 +23,8 @@ export default function MultiSelectCheckboxInputBase(
     isLoading,
     singularTopic,
     pluralTopic,
+    className,
+    visible,
   }) {
   const field = model?.getFieldById(fieldName);
   const selectedOptions = DataParsingHelper.parseArray(model?.getData(fieldName), []);
@@ -97,18 +99,24 @@ export default function MultiSelectCheckboxInputBase(
     });
   };
 
-  if (field == null || !parsedCheckboxOptions) {
+  if (field == null || !parsedCheckboxOptions || visible === false) {
     return null;
   }
 
   return (
-    <InputContainer fieldName={fieldName}>
+    <InputContainer
+      className={className}
+      fieldName={fieldName}
+    >
       <InputLabel
         isLoading={isLoading}
         field={field}
         showLabel={showLabel}
+        className={"bold"}
       />
-      {getCheckboxes()}
+      <div className={"mx-2"}>
+        {getCheckboxes()}
+      </div>
       <InfoText
         field={field}
         model={model}
@@ -131,6 +139,8 @@ MultiSelectCheckboxInputBase.propTypes = {
   isLoading: PropTypes.bool,
   singularTopic: PropTypes.string,
   pluralTopic: PropTypes.string,
+  className: PropTypes.string,
+  visible: PropTypes.bool,
 };
 
 MultiSelectCheckboxInputBase.defaultProps = {
