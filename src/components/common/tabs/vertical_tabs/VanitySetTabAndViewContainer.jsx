@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import InfoContainer from "components/common/containers/InfoContainer";
-import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 
 export const DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT = "calc(100vh - 264px)";
 

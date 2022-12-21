@@ -15,7 +15,7 @@ import Col from "react-bootstrap/Col";
 import TaskTypeFilter from "components/common/filters/tasks/type/TaskTypeFilter";
 import TaskStatusFilter from "components/common/filters/tasks/status/TaskStatusFilter";
 import TaskVerticalTabContainer from "components/tasks/TaskVerticalTabContainer";
-import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 
 function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, isMounted, taskMetadata}) {
   const toastContext = useContext(DialogToastContext);
