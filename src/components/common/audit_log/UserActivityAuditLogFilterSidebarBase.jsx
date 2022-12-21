@@ -21,16 +21,12 @@ export default function UserActivityAuditLogFilterSidebarBase(
   };
 
   return (
-    <VanitySetVerticalTabContainer>
-      <Row>
-        <Col xs={12}>
-          <InlineUserFilterSelectInput
-            fieldName={"user"}
-            loadDataFunction={loadData}
-            filterModel={userActivityAuditLogFilterModel}
-          />
-        </Col>
-      </Row>
+    <div className={"h-100 w-100 p-2"}>
+      <InlineUserFilterSelectInput
+        fieldName={"user"}
+        loadDataFunction={loadData}
+        filterModel={userActivityAuditLogFilterModel}
+      />
 
       <VanitySetVerticalTab
         tabText={auditLogActionConstants.USER_ACTIVITY_LOG_ACTION_LABELS.CREATE}
@@ -144,7 +140,7 @@ export default function UserActivityAuditLogFilterSidebarBase(
         handleTabClick={handleTabClick}
         activeTab={userActivityAuditLogFilterModel?.getData("action")}
       />
-    </VanitySetVerticalTabContainer>
+    </div>
   );
 }
 

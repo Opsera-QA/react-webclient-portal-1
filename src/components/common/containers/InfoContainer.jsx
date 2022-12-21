@@ -27,9 +27,10 @@ function InfoContainer(
       styling.backgroundColor = backgroundColor;
     }
 
+    styling.minHeight = minimumHeight;
+    styling.maxHeight = maximumHeight;
+
     if (hasStringValue(minimumHeight) === true && hasStringValue(maximumHeight) === true) {
-      styling.minHeight = minimumHeight;
-      styling.maxHeight = maximumHeight;
       styling.overflowY = "auto";
     }
 
