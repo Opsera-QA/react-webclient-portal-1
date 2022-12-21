@@ -23,6 +23,8 @@ import SonarLogSummaryReportPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/sonar/SonarLogSummaryReportPanel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import AnchoreSummaryReportPanel from "./anchore/AnchoreSummaryReportPanel";
+import BlackduckLogSummaryReportPanel 
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/blackduck/BlackduckLogSummaryReportPanel";
 
 function PipelineSummaryReportPanel(
   {
@@ -116,7 +118,11 @@ function PipelineSummaryReportPanel(
       case toolIdentifierConstants.TOOL_IDENTIFIERS.ANCHORE_INTEGRATOR:
         return (
             <AnchoreSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
-        );    
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK:
+        return (
+          <BlackduckLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );        
       default:
         return (
           <PipelineTaskSummaryPanelBase
