@@ -397,14 +397,13 @@ gitlabActions.gitlabMergeRequestStatistics = async (
         dashboardTags = null;
         dashboardOrgs = null;
     }
-
     const postBody = {
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
         tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
         dashboardOrgs: dashboardOrgs,
         deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
-        gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
+        gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration)
     };
 
     return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);

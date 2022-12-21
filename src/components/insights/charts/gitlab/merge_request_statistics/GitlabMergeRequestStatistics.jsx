@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
-import config from "./GithubMergedPullRequestAverageTimeChartConfigs.js";
+import config from "../deployment_frequency/GitlabDeploymentFrequencyLineChartConfig";
 import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
 import axios from "axios";
@@ -23,15 +23,22 @@ import {
 import { DialogToastContext } from "contexts/DialogToastContext.js";
 import { ResponsiveLine } from "@nivo/line";
 import { metricHelpers } from "components/insights/metric.helpers";
-import chartsActions from "components/insights/charts/charts-actions";
-import GithubMergedPullRequestAverageTimeDataBlock from "./GithubMergedPullRequestAverageTimeDataBlock";
 import IconBase from "components/common/icons/IconBase";
 import { faSquare } from "@fortawesome/pro-solid-svg-icons";
 import _ from "lodash";
 import { smartTimeFormatter } from "components/common/helpers/date/date.helpers";
-import GithubMergedPullRequestStatisticsOverlay from "components/insights/charts/github_actions/merged_pull_request_kpi/GithubMergedPullRequestStatisticsOverlay";
 import gitlabAction from "../gitlab.action";
-function GithubMergedPullRequestAverageTime({
+import GitlabPipelineStatisticsTrendDataBlock
+    from "../line_chart/pipeline-statistics/GitlabPipelineStatisticsTrendDataBlock";
+import {getReverseTrend, getReverseTrendIcon, getTrend, getTrendIcon} from "../../charts-helpers";
+import GitlabPipelineStatisticsLineChartContainer
+    from "../line_chart/pipeline-statistics/GitlabPipelineStatisticsLineChartContainer";
+import BadgeBase from "../../../../common/badges/BadgeBase";
+import VanityMetricContainer from "../../../../common/panels/insights/charts/VanityMetricContainer";
+import GitlabMergeRequestLineChartContainer from "./GitlabMergeRequestLineChartContainer";
+import GitlabMergeRequestTrendDataBlock from "./GitlabMergeRequestTrendDataBlock";
+import BoomiActionableTabOverlay from "../../boomi/actionable_insights/BoomiActionableTabOverlay";
+function GitlabMergeRequestStatistics({
                                                 kpiConfiguration,
                                                 setKpiConfiguration,
                                                 dashboardData,
@@ -42,7 +49,10 @@ function GithubMergedPullRequestAverageTime({
     const { getAccessToken } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
     const [error, setError] = useState(undefined);
-    const [metrics, setMetrics] = useState([]);
+    const [openChart, setOpenChart] = useState([]);
+    const [openStats, setOpenStats] = useState([]);
+    const [closeChart, setCloseChart] = useState([]);
+    const [closeStats, setCloseStats] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const isMounted = useRef(false);
@@ -69,21 +79,6 @@ function GithubMergedPullRequestAverageTime({
         };
     }, [JSON.stringify(dashboardData)]);
 
-    const closePanel = () => {
-        toastContext.removeInlineMessage();
-        toastContext.clearOverlayPanel();
-    };
-
-    const onNodeSelect = (node) => {
-        toastContext.showOverlayPanel(
-            <GithubMergedPullRequestStatisticsOverlay
-                data={node}
-                closePanel={closePanel}
-                kpiConfiguration={kpiConfiguration}
-                dashboardData={dashboardData}
-            />,
-        );
-    };
 
     const loadData = async (cancelSource = cancelTokenSource) => {
         try {
@@ -93,6 +88,7 @@ function GithubMergedPullRequestAverageTime({
             );
             let dashboardTags = dashboardMetricFilter?.tags;
             let dashboardOrgs = dashboardMetricFilter?.organizations;
+            console.log("before");
 
             const response = await gitlabAction.gitlabMergeRequestStatistics(
                 getAccessToken,
@@ -101,18 +97,19 @@ function GithubMergedPullRequestAverageTime({
                 dashboardTags,
                 dashboardOrgs,
             );
-            let dataObject =
-                response?.data?.githubPullRequestAverageMergeTime?.data[0]?.chartData;
-            let datablock =
-                response?.data?.githubPullRequestAverageMergeTime?.data[0]
-                    ?.statisticsData;
+            console.log("response", response);
+            const metrics = response?.data?.data?.gitlabMergeRequestStatistics?.data;
+            if (isMounted?.current === true && metrics) {
+                setCloseChart(metrics?.averageMergeTime[0]?.chartData[0]?.data);
+                setCloseStats(metrics?.averageMergeTime[0]?.statisticsData);
+                setOpenStats(metrics?.averageOpenTime[0]?.statisticsData);
+                setOpenChart(metrics?.averageOpenTime[0]?.chartData[0]?.data);
+            } else {
+                setCloseStats({});
+                setCloseChart([]);
+                setOpenStats({});
+                setOpenChart([]);
 
-            assignStandardColors(dataObject, true);
-            spaceOutServiceNowCountBySeverityLegend(dataObject);
-            assignStandardLineColors(dataObject, true);
-            if (isMounted?.current === true && dataObject) {
-                setMetrics(dataObject);
-                setDataBlockValues(datablock);
             }
         } catch (error) {
             if (isMounted?.current === true) {
@@ -126,147 +123,90 @@ function GithubMergedPullRequestAverageTime({
         }
     };
 
-    const getMaxVal = (metrics) => {
-        if (!Array.isArray(metrics) || metrics.length === 0) {
-            return null;
-        }
-        let dataHigh = { x: "", y: 0 };
-        dataHigh = _.maxBy(metrics[0].data, "y");
-        const high = dataHigh?.y > 0 ? dataHigh?.y : 0;
-        return Math.ceil(high);
+    const onRowSelect = () => {
+        toastContext.showOverlayPanel(
+            <BoomiActionableTabOverlay
+                kpiConfiguration={kpiConfiguration}
+                dashboardData={dashboardData}
+            />
+        );
     };
 
-    let maxVal = getMaxVal(metrics);
-
     const getChartBody = () => {
-        if (!Array.isArray(metrics) || metrics.length === 0) {
+        if (
+            !closeStats || !closeChart?.length || !openStats || !openChart?.length) {
             return null;
         }
-
-        const getIcon = (severity) => {
-            switch (severity) {
-                case "up":
-                    return faArrowCircleUp;
-                case "down":
-                    return faArrowCircleDown;
-                case "neutral":
-                    return faMinusCircle;
-                default:
-                    break;
-            }
-        };
-
-        const getIconColor = (severity) => {
-            switch (severity) {
-                case "up":
-                    return "green";
-                case "down":
-                    return "red";
-                case "neutral":
-                    return "light-gray-text-secondary";
-                case "-":
-                    return "black";
-                default:
-                    break;
-            }
-        };
-
-        const getDataBlocks = () => {
-            return (
-                <>
-                    <Row className={"pb-2"}>
-                        <Col>
-                            <GithubMergedPullRequestAverageTimeDataBlock
-                                data={
-                                    smartTimeFormatter(
-                                        dataBlockValues[0]?.meanPullRequestTime,
-                                        "minutes",
-                                    )?.formattedString
-                                }
-                                lastScore={
-                                    smartTimeFormatter(dataBlockValues[0]?.prevData, "minutes")
-                                        ?.formattedString
-                                }
-                                icon={getIcon(dataBlockValues[0]?.repoTrend?.trend)}
-                                className={getIconColor(dataBlockValues[0]?.repoTrend?.trend)}
-                            />
-                        </Col>
-                    </Row>
-                </>
-            );
-        };
-        const getChart = () => {
-            return (
-                <div
-                    className="new-chart p-0"
-                    style={{ height: "150px" }}
-                >
-                    <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
-                        Average Time to Merge{" "}
-                        <IconBase
-                            icon={faSquare}
-                            iconColor={
-                                METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1
-                            }
-                            iconSize={"lg"}
-                        />
-                    </div>
-                    <ResponsiveLine
-                        data={metrics}
-                        {...defaultConfig("", "Date", false, true, "numbers", "monthDate2")}
-                        {...config()}
-                        yScale={{
-                            type: "linear",
-                            min: "0",
-                            max: maxVal,
-                            stacked: false,
-                            reverse: false,
-                        }}
-                        axisLeft={{
-                            tickValues: [0, maxVal],
-                            legend: "Duration (minutes)",
-                            legendOffset: -38,
-                            legendPosition: "middle",
-                        }}
-                        onClick={(node) => onNodeSelect(node)}
-                        tooltip={(node) => (
-                            <ChartTooltip
-                                titles={["Date", "Duration (minutes)"]}
-                                values={[node.point.data.x, node.point.data.y]}
-                            />
-                        )}
-                    />
-                </div>
-            );
-        };
-
         return (
-            <>
-                <div className="new-chart m-3">
-                    <Row>
+            <div
+                className="new-chart m-3 p-0"
+                style={{ minHeight: "450px", display: "flex" }}
+            >
+                 <Row className={"w-100"}>
+                     <Row
+                        xl={4}
+                        lg={4}
+                        md={4}
+                        className={"mb-2 d-flex justify-content-center"}
+                    >
+                         <Col md={12} className={"px-3"}>
+                             <GitlabMergeRequestTrendDataBlock
+                                 value={912}
+                                 prevValue={
+                                     912
+                                 }
+                                 trend={getTrend(912,912) }
+                                 getTrendIcon={getTrendIcon}
+                                 topText={"Total Merge Requests"}
+                                 bottomText={"Prev: "}
+                             />
+                         </Col>
                         <Col
-                            md={3}
-                            sm={6}
-                            lg={3}
+                            md={12}
+                            className={"px-3"}
                         >
-                            {getDataBlocks()}
+                            <GitlabMergeRequestTrendDataBlock
+                                value={openStats[0]?.meanPullRequestTime}
+                                prevValue={
+                                    openStats[0]?.prevData
+                                }
+                                trend={getTrend(openStats[0]?.meanPullRequestTime, openStats[0]?.prevData)}
+                                getTrendIcon={getTrendIcon}
+                                topText={"Average Open Time (days)"}
+                                bottomText={"Prev: "}
+                            />
                         </Col>
-                        <Col
-                            md={9}
-                            sm={6}
-                            lg={9}
-                        >
-                            {getChart()}
+                        <Col md={12} className={"px-3"}>
+                            <GitlabMergeRequestTrendDataBlock
+                                value={closeStats[0]?.meanPullRequestTime}
+                                prevValue={
+                                    closeStats[0]?.prevData
+                                }
+                                trend={getTrend(closeStats[0]?.meanPullRequestTime,closeStats[0]?.prevData) }
+                                getTrendIcon={getTrendIcon}
+                                topText={"Average Merge Time (days)"}
+                                bottomText={"Prev: "}
+                            />
                         </Col>
                     </Row>
-                </div>
-            </>
+                    <Col md={12} className={"my-2 p-0 d-flex flex-column align-items-end"}>
+                        <GitlabMergeRequestLineChartContainer
+                            openChart={openChart}
+                            closeChart={closeChart}
+                        />
+                    </Col>
+                     <Col md={12} className={"my-2 p-0"}>
+                         <BadgeBase className={"mx-2"} badgeText={"Note: Results fetched are based on UTC timezone of selected dates"} />
+                     </Col>
+                 </Row>
+             </div>
         );
     };
 
     return (
-        <>
-            <ChartContainer
+        <div>
+            <VanityMetricContainer
+                title={"Pipeline metrics"}
                 kpiConfiguration={kpiConfiguration}
                 setKpiConfiguration={setKpiConfiguration}
                 chart={getChartBody()}
@@ -276,22 +216,20 @@ function GithubMergedPullRequestAverageTime({
                 error={error}
                 setKpis={setKpis}
                 isLoading={isLoading}
-                showSettingsToggle={showSettingsToggle}
+                isBeta={true}
+                launchActionableInsightsFunction={onRowSelect}
+                // chartHelpComponent={(closeHelpPanel) => (
+                //   <GitlabDeployFrequencyChartHelpDocumentation
+                //     closeHelpPanel={closeHelpPanel}
+                //   />
+                // )}
             />
-            <ModalLogs
-                header="Mean Time to Resolution"
-                size="lg"
-                jsonMessage={metrics}
-                dataType="bar"
-                show={showModal}
-                setParentVisibility={setShowModal}
-                O
-            />
-        </>
+        </div>
+
     );
 }
 
-GithubMergedPullRequestAverageTime.propTypes = {
+GitlabMergeRequestStatistics.propTypes = {
     kpiConfiguration: PropTypes.object,
     dashboardData: PropTypes.object,
     index: PropTypes.number,
@@ -303,4 +241,4 @@ GithubMergedPullRequestAverageTime.propTypes = {
     showSettingsToggle: PropTypes.bool,
 };
 
-export default GithubMergedPullRequestAverageTime;
+export default GitlabMergeRequestStatistics;

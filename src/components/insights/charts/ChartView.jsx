@@ -183,6 +183,7 @@ import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
 
 // Dora KPI
 import DoraJiraGitlabRolledUpChart from "./dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpChart";
+import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/GitlabMergeRequestStatistics";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1033,6 +1034,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col xl={12} md={12} className="p-2">
             <GitlabPendingMergeRequests
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "gitlab-merge-requests-statistics":
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <GitlabMergeRequestStatistics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
