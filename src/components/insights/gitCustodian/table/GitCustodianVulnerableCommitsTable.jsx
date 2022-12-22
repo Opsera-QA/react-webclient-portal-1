@@ -90,6 +90,7 @@ function GitCustodianVulnerableCommitsTable(
       getTableDateTimeColumn(getField(fields, "commitDate")),
       getTableDateTimeColumn(getField(fields, "lastScannedOn")),
       getTableTextColumn(getField(fields, "repository")),
+      getTableTextColumn(getField(fields, "branch")),
       getTableTextColumn(getField(fields, "author")),
       getPathDefinition(getField(fields, "path"), "force-text-wrap"),
       getGitCustodianExternalLinkIconColumnDefinition(getField(fields, "lineNumber")),
