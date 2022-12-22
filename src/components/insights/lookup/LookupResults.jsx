@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import LookupMetricTotalsDataBlocks from "components/insights/lookup/LookupMetricTotalsDataBlocks";
 import InsightsLookupPipelinesTable from "components/insights/lookup/InsightsLookupPipelinesTable";
-import TabTreeAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
@@ -73,7 +73,7 @@ function LookupResults({
 
   const getBody = () => {
     return (
-      <TabTreeAndViewContainer
+      <TabAndViewContainer
         verticalTabContainer={getTabContainer()}
         currentView={getCurrentView()}
         tabColumnSize={3}

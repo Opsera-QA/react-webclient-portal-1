@@ -8,6 +8,7 @@ import HelpInfoOverlayIcon from "components/common/icons/general/HelpInfoOverlay
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 import ReloadDataIcon from "components/common/icons/reload/ReloadDataIcon";
 import EnableEditingIcon from "components/common/icons/enable/EnableEditingIcon";
+import SelectAllIcon from "components/common/icons/field/SelectAllIcon";
 
 function InputLabel(
   {
@@ -32,6 +33,7 @@ function InputLabel(
     disabled,
     isLoading,
     ellipsisOnClickFunction,
+    selectAllFunction,
   }) {
   const getInputHelpIcon = () => {
     if (inputHelpOverlay != null) {
@@ -118,6 +120,11 @@ function InputLabel(
             isLoading={isLoading}
             className={"ml-2 my-auto"}
           />
+          <SelectAllIcon
+            selectAllFunction={selectAllFunction}
+            className={"ml-2 my-auto"}
+            disabled={disabled || isLoading}
+          />
           <ClearDataIcon
             requireConfirmation={requireClearDataConfirmation}
             clearValueFunction={clearDataFunction}
@@ -154,6 +161,7 @@ InputLabel.propTypes = {
   disabled: PropTypes.bool,
   isLoading: PropTypes.bool,
   ellipsisOnClickFunction: PropTypes.func,
+  selectAllFunction: PropTypes.func,
 };
 
 export default InputLabel;

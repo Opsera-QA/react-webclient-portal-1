@@ -10,7 +10,7 @@ import { faCircleInfo, faTable } from "@fortawesome/pro-light-svg-icons";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
-import TabAndViewContainer from "../../../../common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import VanitySetVerticalTabContainer from "../../../../common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import TabPanelContainer from "../../../../common/panels/general/TabPanelContainer";
 import CustomTabContainer from "../../../../common/tabs/CustomTabContainer";

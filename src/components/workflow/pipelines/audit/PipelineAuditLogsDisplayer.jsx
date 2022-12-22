@@ -1,15 +1,13 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import useGetAuditLogsForPipeline from "hooks/audit_logs/pipelines/useGetAuditLogsForPipeline";
-import FilterContainer from "components/common/table/FilterContainer";
 import {faShieldCheck} from "@fortawesome/pro-light-svg-icons";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import UserActivityAuditLogTableBase from "components/common/audit_log/UserActivityAuditLogTableBase";
-import InlineUserFilterSelectInput from "components/common/filters/ldap/owner/InlineUserFilterSelectInput";
-import PipelineAuditLogActionsVerticalTabContainer
-  from "components/workflow/pipelines/audit/PipelineAuditLogActionsVerticalTabContainer";
-import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
 import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
+import UserActivityAuditLogFilterSidebarBase from "components/common/audit_log/UserActivityAuditLogFilterSidebarBase";
+import SideBySideViewBase from "components/common/tabs/SideBySideViewBase";
+import InfoContainer from "components/common/containers/InfoContainer";
 
 export default function PipelineAuditLogsDisplayer(
   {
@@ -23,17 +21,6 @@ export default function PipelineAuditLogsDisplayer(
     isLoading,
     loadData,
   } = useGetAuditLogsForPipeline(pipelineId);
-
-  const getInlineFilters = () => {
-    return (
-      <InlineUserFilterSelectInput
-        fieldName={"user"}
-        loadDataFunction={loadData}
-        filterModel={pipelineAuditLogFilterModel}
-        className={"mr-2"}
-      />
-    );
-  };
 
   const getTable = () => {
     return (
@@ -50,21 +37,24 @@ export default function PipelineAuditLogsDisplayer(
 
   const getVerticalTabContainer = () => {
     return (
-      <PipelineAuditLogActionsVerticalTabContainer
-        pipelineAuditLogFilterModel={pipelineAuditLogFilterModel}
+      <UserActivityAuditLogFilterSidebarBase
+        userActivityAuditLogFilterModel={pipelineAuditLogFilterModel}
+        setUserActivityAuditLogFilterModel={setPipelineAuditLogFilterModel}
         isLoading={isLoading}
-        loadData={loadData}
+        loadDataFunction={loadData}
       />
     );
   };
 
   const getBody = () => {
     return (
-      <TabAndViewContainer
-        minimumHeight={screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT}
-        maximumHeight={screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT}
-        verticalTabContainer={getVerticalTabContainer()}
-        currentView={getTable()}
+      <SideBySideViewBase
+        minimumHeight={`calc(${screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT} - 2px)`}
+        maximumHeight={`calc(${screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT} - 2px)`}
+        leftSideView={getVerticalTabContainer()}
+        leftSideMinimumWidth={"320px"}
+        overflowXBodyStyle={"none"}
+        rightSideView={getTable()}
       />
     );
   };
@@ -74,18 +64,19 @@ export default function PipelineAuditLogsDisplayer(
   }
 
   return (
-    <FilterContainer
+    <InfoContainer
       minimumHeight={screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT}
       maximumHeight={screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT}
+      overflowY={""}
       isLoading={isLoading}
-      title={"Pipeline Audit Logs"}
+      titleText={"Pipeline Audit Logs"}
       titleIcon={faShieldCheck}
-      body={getBody()}
-      loadData={loadData}
+      loadDataFunction={loadData}
       filterDto={pipelineAuditLogFilterModel}
       setFilterDto={setPipelineAuditLogFilterModel}
-      inlineFilters={getInlineFilters()}
-    />
+    >
+      {getBody()}
+    </InfoContainer>
   );
 }
 

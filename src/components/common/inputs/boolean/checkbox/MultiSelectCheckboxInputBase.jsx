@@ -23,6 +23,9 @@ export default function MultiSelectCheckboxInputBase(
     isLoading,
     singularTopic,
     pluralTopic,
+    className,
+    clearDataFunction,
+    visible,
   }) {
   const field = model?.getFieldById(fieldName);
   const selectedOptions = DataParsingHelper.parseArray(model?.getData(fieldName), []);
@@ -41,6 +44,14 @@ export default function MultiSelectCheckboxInputBase(
     }
   };
 
+  const clearData = () => {
+    if (clearDataFunction) {
+      clearDataFunction();
+    } else {
+      updateValue([]);
+    }
+  };
+
   const handleOptionSelection = (value) => {
     const selectedOptions = DataParsingHelper.parseArray(model?.getData(fieldName), []);
     const index = selectedOptions.indexOf(value);
@@ -54,6 +65,28 @@ export default function MultiSelectCheckboxInputBase(
     updateValue(selectedOptions);
   };
 
+  const selectAllFunction = () => {
+    const items = [];
+
+    parsedCheckboxOptions.forEach((checkboxOption) => {
+      if (typeof checkboxOption === "string") {
+        items.push(checkboxOption);
+      }
+
+      const parsedSelectedOption = DataParsingHelper.parseObject(checkboxOption);
+
+      if (parsedSelectedOption) {
+        const value = parsedSelectedOption[valueField];
+
+        if (value) {
+          items.push(value);
+        }
+      }
+    });
+
+    updateValue(items);
+  };
+
   const getCheckboxes = () => {
     if (isLoading === true && !parsedCheckboxOptions) {
       return (
@@ -64,7 +97,7 @@ export default function MultiSelectCheckboxInputBase(
     }
 
     return parsedCheckboxOptions.map((checkboxOption) => {
-      if (checkboxOption === "string") {
+      if (typeof checkboxOption === "string") {
         return (
           <StandaloneCheckboxInput
             key={checkboxOption}
@@ -97,24 +130,29 @@ export default function MultiSelectCheckboxInputBase(
     });
   };
 
-  if (field == null || !parsedCheckboxOptions) {
+  if (field == null || !parsedCheckboxOptions || visible === false) {
     return null;
   }
 
   return (
-    <InputContainer fieldName={fieldName}>
+    <div className={className}>
       <InputLabel
         isLoading={isLoading}
         field={field}
         showLabel={showLabel}
+        className={"bold input-label"}
+        clearDataFunction={clearData}
+        selectAllFunction={selectAllFunction}
       />
-      {getCheckboxes()}
+      <div className={"mx-1"}>
+        {getCheckboxes()}
+      </div>
       <InfoText
         field={field}
         model={model}
         fieldName={fieldName}
       />
-    </InputContainer>
+    </div>
   );
 }
 
@@ -122,6 +160,8 @@ MultiSelectCheckboxInputBase.propTypes = {
   disabled: PropTypes.bool,
   setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
+  clearDataFunction: PropTypes.func,
+  selectAllFunction: PropTypes.func,
   fieldName: PropTypes.string,
   model: PropTypes.object,
   showLabel: PropTypes.func,
@@ -131,9 +171,12 @@ MultiSelectCheckboxInputBase.propTypes = {
   isLoading: PropTypes.bool,
   singularTopic: PropTypes.string,
   pluralTopic: PropTypes.string,
+  className: PropTypes.string,
+  visible: PropTypes.bool,
 };
 
 MultiSelectCheckboxInputBase.defaultProps = {
   textField: "text",
   valueField: "value",
+  className: "my-2",
 };

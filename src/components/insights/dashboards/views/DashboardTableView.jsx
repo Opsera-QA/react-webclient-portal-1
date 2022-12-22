@@ -8,7 +8,7 @@ import InlineDashboardTypeFilter from "components/common/filters/dashboards/dash
 import DashboardsTable from "components/insights/dashboards/views/DashboardsTable";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateNewDashboardOverlay from "components/insights/dashboards/CreateNewDashboardOverlay";
-import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import DashboardVerticalTabContainer from "components/insights/dashboards/views/DashboardVerticalTabContainer";
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 

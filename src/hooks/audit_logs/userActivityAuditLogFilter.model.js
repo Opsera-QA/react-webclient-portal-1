@@ -1,5 +1,7 @@
 import FilterModelBase from "core/data_model/filterModel.base";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import auditLogTypeConstants from "@opsera/definitions/constants/audit-logs/types/auditLogType.constants";
+import auditLogActionConstants from "@opsera/definitions/constants/audit-logs/actions/auditLogAction.constants";
 
 const userActivityAuditLogFilterMetadata = {
   type: "User Audit Log",
@@ -7,6 +9,10 @@ const userActivityAuditLogFilterMetadata = {
     {
       label: "Action",
       id: "action",
+    },
+    {
+      label: "Action",
+      id: "actions",
     },
     {
       label: "Page Size",
@@ -32,20 +38,30 @@ const userActivityAuditLogFilterMetadata = {
       label: "User",
       id: "user",
     },
+    {
+      label: "Date Range",
+      id: "dateRange",
+    },
   ],
   newObjectFields: {
     pageSize: 25,
     currentPage: 1,
     action: "",
+    actions: [],
     search: "",
     user: "",
+    dateRange: undefined,
     activeFilters: [],
   },
 };
 
 export class UserActivityAuditLogFilterModel extends FilterModelBase {
-  constructor() {
+  constructor(type) {
     super(userActivityAuditLogFilterMetadata);
+
+    if (auditLogTypeConstants.isUserActivityLogTypeValid(type) === true) {
+      this.type = type;
+    }
   }
 
   getActiveFilters = () => {
@@ -55,6 +71,12 @@ export class UserActivityAuditLogFilterModel extends FilterModelBase {
     if (action) {
       activeFilters.push({filterId: "action", text: `Action: ${action}`});
     }
+
+    // const actions = DataParsingHelper.parseArray(this.getData("actions"));
+    //
+    // if (actions) {
+    //   activeFilters.push({filterId: "actions", text: `Actions: ${actions}`});
+    // }
 
     const searchText = DataParsingHelper.parseString(this.getData("search"));
 
@@ -70,6 +92,16 @@ export class UserActivityAuditLogFilterModel extends FilterModelBase {
     }
 
     return activeFilters;
+  };
+
+  // TODO: Put the switch statement logic inside the action constants and pass the type through this function
+  getActionSelectOptionsForType = () => {
+    switch (this.type) {
+      case auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.PIPELINE:
+        return auditLogActionConstants.IN_USE_PIPELINE_USER_ACTIVITY_LOG_ACTION_SELECT_OPTIONS;
+      default:
+        return auditLogActionConstants.USER_ACTIVITY_LOG_TYPE_SELECT_OPTIONS;
+    }
   };
 }
 
