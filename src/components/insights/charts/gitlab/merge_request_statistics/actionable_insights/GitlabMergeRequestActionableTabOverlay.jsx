@@ -6,9 +6,9 @@ import TabPanelContainer from "components/common/panels/general/TabPanelContaine
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import BoomiActionableInsightsCreateOverlay from "./BoomiActionableInsightsCreateOverlay";
-import BoomiActionableInsightsDeployOverlay from "./BoomiActionableInsightsDeployOverlay";
-import BoomiActionableInsightsMigrateOverlay from "./BoomiActionableInsightsMigrateOverlay";
+import GitlabMergeRequestActionableRepoTab from "./tabs/GitlabMergeRequestActionableRepoTab";
+import GitlabMergeRequestActionableTagsTab from "./tabs/GitlabMergeRequestActionableTagsTab";
+import GitlabMergeRequestActionableReviewerTab from "./tabs/GitlabMergeRequestActionableReviewerTab";
 
 function GitlabMergeRequestActionableTabOverlay({ kpiConfiguration, dashboardData }) {
     const toastContext = useContext(DialogToastContext);
@@ -22,7 +22,7 @@ function GitlabMergeRequestActionableTabOverlay({ kpiConfiguration, dashboardDat
     const getBody = () => {
         if (activeTab == "repo") {
             return (
-                <BoomiActionableInsightsCreateOverlay
+                <GitlabMergeRequestActionableRepoTab
                     dashboardData={dashboardData}
                     kpiConfiguration={kpiConfiguration}
                     icon={faCodePullRequest}
@@ -30,7 +30,7 @@ function GitlabMergeRequestActionableTabOverlay({ kpiConfiguration, dashboardDat
             );
         } else if (activeTab == "tags") {
             return (
-                <BoomiActionableInsightsDeployOverlay
+                <GitlabMergeRequestActionableTagsTab
                     dashboardData={dashboardData}
                     kpiConfiguration={kpiConfiguration}
                     icon={faCodePullRequestClosed}
@@ -38,7 +38,7 @@ function GitlabMergeRequestActionableTabOverlay({ kpiConfiguration, dashboardDat
             );
         } else if (activeTab == "reviewer") {
             return (
-                <BoomiActionableInsightsMigrateOverlay
+                <GitlabMergeRequestActionableReviewerTab
                     dashboardData={dashboardData}
                     kpiConfiguration={kpiConfiguration}
                     icon={faCodeMerge}
@@ -57,21 +57,21 @@ function GitlabMergeRequestActionableTabOverlay({ kpiConfiguration, dashboardDat
             <CustomTabContainer>
                 <CustomTab
                     activeTab={activeTab}
-                    tabText={"CreatePackage"}
+                    tabText={"Repo"}
                     handleTabClick={handleTabClick}
                     tabName={"repo"}
                     icon={faCodePullRequest}
                 />
                 <CustomTab
                     activeTab={activeTab}
-                    tabText={"Deploy Package"}
+                    tabText={"Tags"}
                     handleTabClick={handleTabClick}
                     tabName={"tags"}
                     icon={faCodeMerge}
                 />
                 <CustomTab
                     activeTab={activeTab}
-                    tabText={"Migrate Package"}
+                    tabText={"Reviewer"}
                     handleTabClick={handleTabClick}
                     tabName={"reviewer"}
                     icon={faUsers}

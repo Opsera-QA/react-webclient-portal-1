@@ -1,43 +1,18 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
-import config from "../deployment_frequency/GitlabDeploymentFrequencyLineChartConfig";
 import "components/analytics/charts/charts.css";
-import ModalLogs from "components/common/modal/modalLogs";
 import axios from "axios";
 import { Col, Row } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
-import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
-import {
-    faArrowCircleDown,
-    faArrowCircleUp,
-    faMinusCircle,
-} from "@fortawesome/free-solid-svg-icons";
-import ChartTooltip from "components/insights/charts/ChartTooltip.jsx";
-import {
-    assignStandardColors,
-    assignStandardLineColors,
-    defaultConfig,
-    spaceOutServiceNowCountBySeverityLegend,
-} from "components/insights/charts/charts-views.js";
 import { DialogToastContext } from "contexts/DialogToastContext.js";
-import { ResponsiveLine } from "@nivo/line";
 import { metricHelpers } from "components/insights/metric.helpers";
-import IconBase from "components/common/icons/IconBase";
-import { faSquare } from "@fortawesome/pro-solid-svg-icons";
-import _ from "lodash";
-import { smartTimeFormatter } from "components/common/helpers/date/date.helpers";
 import gitlabAction from "../gitlab.action";
-import GitlabPipelineStatisticsTrendDataBlock
-    from "../line_chart/pipeline-statistics/GitlabPipelineStatisticsTrendDataBlock";
-import {getReverseTrend, getReverseTrendIcon, getTrend, getTrendIcon} from "../../charts-helpers";
-import GitlabPipelineStatisticsLineChartContainer
-    from "../line_chart/pipeline-statistics/GitlabPipelineStatisticsLineChartContainer";
+import {getTrend, getTrendIcon} from "../../charts-helpers";
 import BadgeBase from "../../../../common/badges/BadgeBase";
 import VanityMetricContainer from "../../../../common/panels/insights/charts/VanityMetricContainer";
 import GitlabMergeRequestLineChartContainer from "./GitlabMergeRequestLineChartContainer";
 import GitlabMergeRequestTrendDataBlock from "./GitlabMergeRequestTrendDataBlock";
-import BoomiActionableTabOverlay from "../../boomi/actionable_insights/BoomiActionableTabOverlay";
+import GitlabMergeRequestActionableTabOverlay from "./actionable_insights/GitlabMergeRequestActionableTabOverlay";
 function GitlabMergeRequestStatistics({
                                                 kpiConfiguration,
                                                 setKpiConfiguration,
@@ -125,7 +100,7 @@ function GitlabMergeRequestStatistics({
 
     const onRowSelect = () => {
         toastContext.showOverlayPanel(
-            <BoomiActionableTabOverlay
+            <GitlabMergeRequestActionableTabOverlay
                 kpiConfiguration={kpiConfiguration}
                 dashboardData={dashboardData}
             />
@@ -151,11 +126,11 @@ function GitlabMergeRequestStatistics({
                     >
                          <Col md={12} className={"px-3"}>
                              <GitlabMergeRequestTrendDataBlock
-                                 value={912}
+                                 value={closeStats[0]?.totalMergeRequests}
                                  prevValue={
-                                     912
+                                     closeStats[0]?.prevTotal
                                  }
-                                 trend={getTrend(912,912) }
+                                 trend={getTrend(closeStats[0]?.totalMergeRequests,closeStats[0]?.prevTotal) }
                                  getTrendIcon={getTrendIcon}
                                  topText={"Total Merge Requests"}
                                  bottomText={"Prev: "}
