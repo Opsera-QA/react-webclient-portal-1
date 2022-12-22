@@ -38,8 +38,6 @@ function GitlabPipelineStatisticsLineChartContainer({ chartData }) {
     },
   ];
 
-    console.log("chartData", dailyDeploymentsChartData);
-
   const getTrendChart = () => {
     return (
       <>
