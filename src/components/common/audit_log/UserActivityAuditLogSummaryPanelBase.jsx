@@ -5,12 +5,13 @@ import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
-import JsonField from "components/common/fields/json/JsonField";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import MonacoCodeDiffInput from "components/common/inputs/code/monaco/MonacoCodeDiffInput";
 import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import IdRevisionField from "components/common/fields/text/id/IdRevisionField";
+import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
+import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
 
 export default function UserActivityAuditLogSummaryPanelBase(
   {
@@ -22,37 +23,43 @@ export default function UserActivityAuditLogSummaryPanelBase(
     const originalData = DataParsingHelper.parseObject(auditLogModel?.getData("originalData"));
     const newData = DataParsingHelper.parseObject(auditLogModel?.getData("newData"));
 
-    if (originalData && !newData) {
-      return (
-        <JsonField
-          dataObject={auditLogModel}
-          fieldName={"originalData"}
-          customTitle={"Object Reference"}
-        />
-      );
-    }
-
-    if (!originalData && newData) {
-      return (
-        <JsonField
-          dataObject={auditLogModel}
-          fieldName={"newData"}
-          customTitle={"Object Reference"}
-        />
-      );
-    }
-
-
     if (originalData && newData) {
+      const sortedOriginalData = ObjectHelper.sortObjectDeeply(originalData);
+      const sortedNewData = ObjectHelper.sortObjectDeeply(newData);
+
       return (
         <MonacoCodeDiffInput
-          originalContent={JSON.stringify(originalData, null, 2)}
-          modifiedContent={JSON.stringify(newData, null, 2)}
+          originalContent={JSON.stringify(sortedOriginalData, null, 2)}
+          modifiedContent={JSON.stringify(sortedNewData, null, 2)}
           disabled={true}
           height={`max(calc(${screenContainerHeights.OVERLAY_PANEL_BODY_HEIGHT} - 215px), 350px)`}
           model={auditLogModel}
           fieldName={"changeLog"}
           hideClipboardButton={true}
+        />
+      );
+    }
+
+    if (originalData) {
+      const sortedOriginalData = ObjectHelper.sortObjectDeeply(originalData);
+
+      return (
+        <StandaloneJsonField
+          className={"my-2"}
+          json={sortedOriginalData}
+          titleText={"Object Reference"}
+        />
+      );
+    }
+
+    if (newData) {
+      const sortedNewData = ObjectHelper.sortObjectDeeply(newData);
+
+      return (
+        <StandaloneJsonField
+          className={"my-2"}
+          json={sortedNewData}
+          titleText={"Object Reference"}
         />
       );
     }
