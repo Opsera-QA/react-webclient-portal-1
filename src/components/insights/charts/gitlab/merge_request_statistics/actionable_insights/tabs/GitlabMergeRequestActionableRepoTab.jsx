@@ -5,28 +5,28 @@ import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/V
 import GitlabMergeRequestActionableRepoOverlay from "../GitlabMergeRequestActionableRepoOverlay";
 
 function GitlabMergeRequestActionableRepoTab({dashboardData, kpiConfiguration,}) {
-    const getTabContentContainer = () => {
-        return (
-            <VanitySetTabViewContainer className={"mb-3"}>
-                <GitlabMergeRequestActionableRepoOverlay
-                    dashboardData={dashboardData}
-                    kpiConfiguration={kpiConfiguration}
-                />
-            </VanitySetTabViewContainer>
-        );
-    };
-
-
+  const getTabContentContainer = () => {
     return (
-        <VanitySetTabContentContainer>
-            {getTabContentContainer()}
-        </VanitySetTabContentContainer>
+      <VanitySetTabViewContainer className={"mb-3"}>
+        <GitlabMergeRequestActionableRepoOverlay
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+        />
+      </VanitySetTabViewContainer>
     );
+  };
+
+
+  return (
+    <VanitySetTabContentContainer>
+      {getTabContentContainer()}
+    </VanitySetTabContentContainer>
+  );
 
 }
 GitlabMergeRequestActionableRepoTab.propTypes = {
-    dashboardData: PropTypes.object,
-    kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  kpiConfiguration: PropTypes.object,
 };
 export default GitlabMergeRequestActionableRepoTab;
 

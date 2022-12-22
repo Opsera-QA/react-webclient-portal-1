@@ -11,114 +11,109 @@ import {DialogToastContext} from "../../../../../../contexts/DialogToastContext"
 import {metricHelpers} from "../../../../metric.helpers";
 import GitlabMergeRequestActionableRepoTable from "./GitlabMergeRequestActionableRepoTable";
 
-function GitlabMergeRequestActionableRepoOverlay({
-                                                     kpiConfiguration,
-                                                     dashboardData, range, icon
-                                                 }) {
-    const { getAccessToken } = useContext(AuthContext);
-    const toastContext = useContext(DialogToastContext);
-    const [error, setError] = useState(undefined);
-    const [metrics, setMetrics] = useState([]);
-    const [totalCount, setTotalCount] = useState([]);
-    const [chartData, setChartData] =
-        useState(undefined);
-    const [isLoading, setIsLoading] = useState(false);
-    const isMounted = useRef(false);
-    const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-    const [filterModel, setFilterModel] = useState(
-        new Model(
-            { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
-            actionableInsightsGenericChartFilterMetadata,
-            false
-        )
-    );
+function GitlabMergeRequestActionableRepoOverlay({ kpiConfiguration, dashboardData, range, icon}) {
+  const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
+  const [error, setError] = useState(undefined);
+  const [metrics, setMetrics] = useState([]);
+  const [totalCount, setTotalCount] = useState([]);
+  const [chartData, setChartData] =
+    useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [filterModel, setFilterModel] = useState(
+    new Model(
+        { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+        actionableInsightsGenericChartFilterMetadata,
+        false
+    )
+  );
 
-    useEffect(() => {
-        if (cancelTokenSource) {
-            cancelTokenSource.cancel();
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
         }
+    });
 
-        const source = axios.CancelToken.source();
-        setCancelTokenSource(source);
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  },[]);
 
-        isMounted.current = true;
-        loadData(source).catch((error) => {
-            if (isMounted?.current === true) {
-                throw error;
-            }
-        });
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
+    try {
+        setIsLoading(true);
+        let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
+        let dashboardTags = dashboardMetricFilter?.tags;
+        let dashboardOrgs = dashboardMetricFilter?.organizations;
 
-        return () => {
-            source.cancel();
-            isMounted.current = false;
-        };
-    },[]);
+        const response = await gitlabAction.getRepoMergeActionable(
+            getAccessToken,
+            cancelSource,
+            kpiConfiguration,
+            dashboardTags,
+            dashboardOrgs,
+            filterDto,
+        );
+        let dataObject = response?.data ? response?.data[0]?.pipelines : [];
 
-    const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
-        try {
-            setIsLoading(true);
-            let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
-            let dashboardTags = dashboardMetricFilter?.tags;
-            let dashboardOrgs = dashboardMetricFilter?.organizations;
+        if (isMounted?.current === true && dataObject) {
+            setMetrics(dataObject);
+            setTotalCount(totalCount);
 
-            const response = await gitlabAction.getRepoMergeActionable(
-                getAccessToken,
-                cancelSource,
-                kpiConfiguration,
-                dashboardTags,
-                dashboardOrgs,
-                filterDto,
-            );
-            console.log("actionable response", response);
-            let dataObject = response?.data ? response?.data[0]?.pipelines : [];
-            let totalCount = response?.data ? response?.data[0]?.count[0]?.count : [];
-
-            if (isMounted?.current === true && dataObject) {
-                setMetrics(dataObject);
-                setTotalCount(totalCount);
-
-                let newFilterDto = filterDto;
-                newFilterDto.setData("totalCount", response?.data[0]?.count[0]?.count);
-                setFilterModel({ ...newFilterDto });
-            }
-        } catch (error) {
-            if (isMounted?.current === true) {
-                console.error(error);
-                setError(error);
-            }
-        } finally {
-            if (isMounted?.current === true) {
-                setIsLoading(false);
-            }
+            let newFilterDto = filterDto;
+            newFilterDto.setData("totalCount", response?.data[0]?.count[0]?.count);
+            setFilterModel({ ...newFilterDto });
         }
+      } catch (error) {
+        if (isMounted?.current === true) {
+            console.error(error);
+            setError(error);
+          }
+      } finally {
+        if (isMounted?.current === true) {
+            setIsLoading(false);
+        }
+      }
     };
 
-    const closePanel = () => {
-        toastContext.removeInlineMessage();
-        toastContext.clearOverlayPanel();
-    };
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
 
-    return (
-        <div className={"p-3"}>
-            <GitlabMergeRequestActionableRepoTable
-                isLoading={isLoading}
-                data={metrics}
-                filterModel={filterModel}
-                setFilterModel={setFilterModel}
-                loadData={loadData}
-                range={range}
-                count={totalCount}
-                tableTitleIcon={icon}
-            />
-        </div>
-    );
+  return (
+    <div className={"p-3"}>
+      <GitlabMergeRequestActionableRepoTable
+        isLoading={isLoading}
+        data={metrics}
+        filterModel={filterModel}
+        setFilterModel={setFilterModel}
+        loadData={loadData}
+        range={range}
+        count={totalCount}
+        tableTitleIcon={icon}
+      />
+    </div>
+  );
 }
 
 GitlabMergeRequestActionableRepoOverlay.propTypes = {
-    kpiConfiguration: PropTypes.object,
-    dashboardData: PropTypes.object,
-    range: PropTypes.string,
-    icon: PropTypes.object,
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  range: PropTypes.string,
+  icon: PropTypes.object,
 };
 
 export default GitlabMergeRequestActionableRepoOverlay;
