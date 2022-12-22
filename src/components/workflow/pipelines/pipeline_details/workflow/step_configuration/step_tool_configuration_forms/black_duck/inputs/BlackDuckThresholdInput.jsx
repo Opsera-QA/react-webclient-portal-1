@@ -4,6 +4,16 @@ import PipelineThresholdInputBase
   from "components/common/inputs/object/pipelines/threshhold/PipelineThresholdInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
+export const THRESHOLD_LEVELS = [
+  {text: "Critical", value: "critical"},
+  {text: "High", value: "high"},
+  {text: "Medium", value: "medium"},
+  {text: "Low", value: "low"},
+  {text: "Ok", value: "ok"},
+  {text: "Unknown", value: "unknown"},
+  {text: "Total", value: "total"},
+];
+
 function BlackDuckThresholdInput(
   {
     fieldName,
@@ -33,6 +43,7 @@ function BlackDuckThresholdInput(
           className={"mb-3"}
           setModel={setModel}
           disabled={disabled}
+          thresholds={THRESHOLD_LEVELS}
         />
         <PipelineThresholdInputBase
           fieldName={"thresholdLicence"}
@@ -40,6 +51,7 @@ function BlackDuckThresholdInput(
           className={"mb-3"}
           setModel={setModel}
           disabled={disabled}
+          thresholds={THRESHOLD_LEVELS}
         />
         <PipelineThresholdInputBase
           fieldName={"thresholdOperational"}
@@ -47,6 +59,7 @@ function BlackDuckThresholdInput(
           className={"mb-3"}
           setModel={setModel}
           disabled={disabled}
+          thresholds={THRESHOLD_LEVELS}
         />
       </>
     );

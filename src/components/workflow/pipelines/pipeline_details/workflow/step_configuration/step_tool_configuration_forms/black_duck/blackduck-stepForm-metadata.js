@@ -82,7 +82,7 @@ const BlackDuckStepFormMetadata = {
       id: "clientSideThreshold",
     },
     {
-      label: "Compliance Threshold",
+      label: "Vulnerability Threshold",
       id: "thresholdCompliance",
     },
     {
