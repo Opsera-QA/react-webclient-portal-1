@@ -71,8 +71,7 @@ function GitlabMergeRequestStatistics({
             dashboardTags,
             dashboardOrgs,
         );
-
-        const metrics = response?.data?.data?.gitlabMergeRequestStatistics?.data;
+        const metrics = response?.data?.data;
         if (isMounted?.current === true && metrics) {
             setCloseChart(metrics?.averageMergeTime[0]?.chartData[0]?.data);
             setCloseStats(metrics?.averageMergeTime[0]?.statisticsData);
