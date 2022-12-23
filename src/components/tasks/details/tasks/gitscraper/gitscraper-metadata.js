@@ -35,6 +35,14 @@ const gitscraperTaskConfigurationMetadata = {
       id: "scanAll",
     },
     {
+      label: "Scan only selected branch",
+      id: "scanOnlyBranch",
+    },
+    {
+      label: "Branch to be Scanned",
+      id: "gitBranch",
+    },    
+    {
       label: "Source Code Management Tool Type",
       id: "service",
       isRequired: true,
@@ -69,6 +77,8 @@ const gitscraperTaskConfigurationMetadata = {
       excludeSecrets: [],
       secretsException: false,
       scanAll: false,
+      scanOnlyBranch: false,
+      gitBranch: "",
       service: "",
       gitToolId: "",
       workspace: "",
