@@ -36,6 +36,7 @@ export default function UserActivityAuditLogSummaryPanelBase(
           model={auditLogModel}
           fieldName={"changeLog"}
           hideClipboardButton={true}
+          initializeViewStacked={true}
         />
       );
     }

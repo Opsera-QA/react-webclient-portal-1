@@ -8,10 +8,6 @@ const userActivityAuditLogFilterMetadata = {
   fields: [
     {
       label: "Action",
-      id: "action",
-    },
-    {
-      label: "Action",
       id: "actions",
     },
     {
@@ -46,7 +42,6 @@ const userActivityAuditLogFilterMetadata = {
   newObjectFields: {
     pageSize: 25,
     currentPage: 1,
-    action: "",
     actions: [],
     search: "",
     user: "",
@@ -66,17 +61,12 @@ export class UserActivityAuditLogFilterModel extends FilterModelBase {
 
   getActiveFilters = () => {
     const activeFilters = [];
-    const action = DataParsingHelper.parseString(this.getData("action"));
 
-    if (action) {
-      activeFilters.push({filterId: "action", text: `Action: ${action}`});
+    const actions = DataParsingHelper.parseArray(this.getData("actions"));
+
+    if (actions) {
+      activeFilters.push({filterId: "actions", text: `Actions: ${actions}`});
     }
-
-    // const actions = DataParsingHelper.parseArray(this.getData("actions"));
-    //
-    // if (actions) {
-    //   activeFilters.push({filterId: "actions", text: `Actions: ${actions}`});
-    // }
 
     const searchText = DataParsingHelper.parseString(this.getData("search"));
 

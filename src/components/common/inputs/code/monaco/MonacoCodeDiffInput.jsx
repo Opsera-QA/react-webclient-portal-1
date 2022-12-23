@@ -40,6 +40,7 @@ function MonacoCodeDiffInput({
   customTitleText,
   theme,
   hideClipboardButton,
+  initializeViewStacked,
 }) {
   const field = model?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
@@ -48,7 +49,7 @@ function MonacoCodeDiffInput({
       ? MONACO_CODE_THEME_TYPES?.DARK
       : MONACO_CODE_THEME_TYPES.LIGHT,
   );
-  const [inlineDiff, setInlineDiff] = useState(false);
+  const [showViewStacked, setShowViewStacked] = useState(initializeViewStacked === true);
 
   const validateAndSetData = (value) => {
     let newModel = model;
@@ -77,8 +78,8 @@ function MonacoCodeDiffInput({
   };
 
   const toggleDiffView = () => {
-    const oldInlineDiff = inlineDiff;
-    setInlineDiff(!oldInlineDiff);
+    const oldInlineDiff = showViewStacked;
+    setShowViewStacked(!oldInlineDiff);
   };
 
   const getTitleBarActionButtons = () => {
@@ -147,7 +148,7 @@ function MonacoCodeDiffInput({
         disabled={isLoading || disabled}
         height={height}
         theme={internalTheme}
-        inlineDiff={inlineDiff}
+        inlineDiff={showViewStacked}
       />
     );
   };
@@ -204,11 +205,13 @@ MonacoCodeDiffInput.propTypes = {
   customTitleText: PropTypes.string,
   theme: PropTypes.string,
   hideClipboardButton: PropTypes.bool,
+  initializeViewStacked: PropTypes.bool,
 };
 
 MonacoCodeDiffInput.defaultProps = {
   height: "500px",
   width: "100%",
+  initializeSideBySide: false,
 };
 
 export default MonacoCodeDiffInput;
