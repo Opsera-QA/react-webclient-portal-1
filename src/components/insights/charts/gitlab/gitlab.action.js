@@ -373,4 +373,193 @@ gitlabActions.gitlabPipelineData = async (
     return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+gitlabActions.gitlabMergeRequestStatistics = async (
+    getAccessToken,
+    cancelTokenSource,
+    kpiConfiguration,
+    dashboardTags,
+    dashboardOrgs
+) => {
+    const apiUrl = gitlabBaseURL + "gitlabMergeRequestStatistics";
+    const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+    let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+    const startDate =  new Date(dateRange?.start);
+    const endDate =  new Date(dateRange?.end);
+
+    // Checking the use kpi tags toggle
+    const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+    const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+    if (!useKpiTags) {
+        tags = null;
+    }
+    if (!useDashboardTags) {
+        dashboardTags = null;
+        dashboardOrgs = null;
+    }
+    const postBody = {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+        dashboardOrgs: dashboardOrgs,
+        deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
+        gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration)
+    };
+
+    return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+gitlabActions.getStatsMergeActionable = async (
+    getAccessToken,
+    cancelTokenSource,
+    kpiConfiguration,
+    dashboardTags,
+    dashboardOrgs
+) => {
+    const apiUrl = gitlabBaseURL + "getStatsMergeActionable";
+    const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+    let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+    const startDate =  new Date(dateRange?.start);
+    const endDate =  new Date(dateRange?.end);
+
+    // Checking the use kpi tags toggle
+    const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+    const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+    if (!useKpiTags) {
+        tags = null;
+    }
+    if (!useDashboardTags) {
+        dashboardTags = null;
+        dashboardOrgs = null;
+    }
+    const postBody = {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+        dashboardOrgs: dashboardOrgs,
+        deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
+        gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration)
+    };
+
+    return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+gitlabActions.getReviewerMergeActionable = async (
+    getAccessToken,
+    cancelTokenSource,
+    kpiConfiguration,
+    dashboardTags,
+    dashboardOrgs,
+    tableFilterDto,
+) => {
+    const apiUrl = gitlabBaseURL + "getReviewerMergeActionable";
+    const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+    let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+    const startDate =  new Date(dateRange?.start);
+    const endDate =  new Date(dateRange?.end);
+
+    // Checking the use kpi tags toggle
+    const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+    const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+    if (!useKpiTags) {
+        tags = null;
+    }
+    if (!useDashboardTags) {
+        dashboardTags = null;
+        dashboardOrgs = null;
+    }
+    const postBody = {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+        dashboardOrgs: dashboardOrgs,
+        deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
+        gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
+        page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
+        size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
+    };
+
+    return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+gitlabActions.getTagsMergeActionable = async (
+    getAccessToken,
+    cancelTokenSource,
+    kpiConfiguration,
+    dashboardTags,
+    dashboardOrgs,
+    tableFilterDto,
+) => {
+    const apiUrl = gitlabBaseURL + "getTagsMergeActionable";
+    const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+    let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+    const startDate =  new Date(dateRange?.start);
+    const endDate =  new Date(dateRange?.end);
+
+    // Checking the use kpi tags toggle
+    const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+    const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+    if (!useKpiTags) {
+        tags = null;
+    }
+    if (!useDashboardTags) {
+        dashboardTags = null;
+        dashboardOrgs = null;
+    }
+    const postBody = {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+        dashboardOrgs: dashboardOrgs,
+        deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
+        gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
+        page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
+        size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
+    };
+
+    return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+gitlabActions.getRepoMergeActionable = async (
+    getAccessToken,
+    cancelTokenSource,
+    kpiConfiguration,
+    dashboardTags,
+    dashboardOrgs,
+    tableFilterDto,
+) => {
+    const apiUrl = gitlabBaseURL + "getRepoMergeActionable";
+    const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+    let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+    const startDate =  new Date(dateRange?.start);
+    const endDate =  new Date(dateRange?.end);
+
+    // Checking the use kpi tags toggle
+    const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+    const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+    if (!useKpiTags) {
+        tags = null;
+    }
+    if (!useDashboardTags) {
+        dashboardTags = null;
+        dashboardOrgs = null;
+    }
+    const postBody = {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+        dashboardOrgs: dashboardOrgs,
+        deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
+        gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
+        page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
+        size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
+    };
+
+    return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default gitlabActions;
