@@ -344,6 +344,15 @@ export class FilterModelBase {
     }
   };
 
+  hasActiveFilterValue = (id) => {
+    return this.getActiveFilterValue(id) != null;
+  };
+
+  getActiveFilterValue = (id) => {
+    const activeFilters = DataParsingHelper.parseArray(this.getData("activeFilters"), []);
+    return activeFilters.find((filter) => filter.filterId === id);
+  };
+
   updateTotalCount = (newTotalCount) => {
     const parsedTotalCount = DataParsingHelper.parseInteger(newTotalCount, 0);
 

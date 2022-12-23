@@ -36,6 +36,7 @@ export default function useGetAuditLogsForPipeline(
     if (isMongoDbId(pipelineId) !== true) {
       return;
     }
+    setAuditLogs([]);
 
     const response = await pipelineAuditLogActions.getAuditLogsForPipeline(
       getAccessToken,
