@@ -13,17 +13,25 @@ export default function StandaloneCheckboxInput(
     className,
   }) {
   return (
-    <Form.Check
-      type={"checkbox"}
-      className={className}
-      id={id}
-      checked={!!value}
-      disabled={disabled === true}
-      label={label}
-      onChange={() => {
-        setDataFunction(!value);
-      }}
-    />
+    <div
+      className={disabled !== true ? "pointer" : "not-allowed"}
+      onClick={disabled !== true ? () => setDataFunction(!value) : undefined}
+    >
+      <div className={"d-flex"}>
+        <Form.Check
+          type={"checkbox"}
+          className={className}
+          id={id}
+          checked={!!value}
+          disabled={disabled === true}
+          label={""}
+          onChange={() => {
+            setDataFunction(!value);
+          }}
+        />
+        <div>{label}</div>
+      </div>
+    </div>
   );
 }
 
