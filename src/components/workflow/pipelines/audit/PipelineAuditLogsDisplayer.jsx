@@ -11,6 +11,7 @@ export default function PipelineAuditLogsDisplayer(
   const {
     pipelineAuditLogFilterModel,
     setPipelineAuditLogFilterModel,
+    pipeline,
     auditLogs,
     isLoading,
     loadData,
@@ -24,7 +25,7 @@ export default function PipelineAuditLogsDisplayer(
       setAuditLogFilterModel={setPipelineAuditLogFilterModel}
       isLoading={isLoading}
       setSelectedAuditLogId={setSelectedAuditLogId}
-      titleText={"Pipeline"}
+      titleText={pipeline?.name || "Pipeline"}
     />
   );
 }

@@ -8,11 +8,13 @@ pipelineAuditLogActions.getAuditLogsForPipeline = async (
   pipelineId,
   userId,
   actions,
+  siteRoles,
   dateRange,
 ) => {
   const apiUrl = `/audit-logs/pipelines/${pipelineId}`;
   const queryParameters = {
     actions: actions,
+    siteRoles: siteRoles,
     userId: userId,
     dateRange: dateRange,
   };

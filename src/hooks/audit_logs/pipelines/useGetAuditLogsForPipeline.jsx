@@ -13,6 +13,7 @@ export default function useGetAuditLogsForPipeline(
 ) {
   const [auditLogs, setAuditLogs] = useState([]);
   const [pipelineAuditLogFilterModel, setPipelineAuditLogFilterModel] = useState(new UserActivityAuditLogFilterModel(auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.PIPELINE));
+  const [pipeline, setPipeline] = useState(undefined);
   const {
     getAccessToken,
     cancelTokenSource,
@@ -44,8 +45,10 @@ export default function useGetAuditLogsForPipeline(
       pipelineId,
       pipelineAuditLogFilterModel?.getData("user"),
       pipelineAuditLogFilterModel?.getData("actions"),
+      pipelineAuditLogFilterModel?.getData("siteRoles"),
       pipelineAuditLogFilterModel?.getData("dateRange"),
     );
+    setPipeline(DataParsingHelper.parseObject(response?.data?.pipeline, {}));
     setAuditLogs(DataParsingHelper.parseArray(response?.data?.data, []));
     newFilterModel.setData("totalCount", response?.data?.count);
     newFilterModel.updateActiveFilters();
@@ -57,6 +60,7 @@ export default function useGetAuditLogsForPipeline(
     setAuditLogs: setAuditLogs,
     pipelineAuditLogFilterModel: pipelineAuditLogFilterModel,
     setPipelineAuditLogFilterModel: setPipelineAuditLogFilterModel,
+    pipeline: pipeline,
     loadData: () => loadData(getAuditLogsForPipeline, handleErrorFunction),
     isLoading: isLoading,
     error: error,

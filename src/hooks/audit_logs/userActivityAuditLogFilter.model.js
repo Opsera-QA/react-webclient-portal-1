@@ -38,6 +38,10 @@ const userActivityAuditLogFilterMetadata = {
       label: "Date Range",
       id: "dateRange",
     },
+    {
+      label: "Site Roles",
+      id: "siteRoles",
+    },
   ],
   newObjectFields: {
     pageSize: 25,
@@ -45,6 +49,7 @@ const userActivityAuditLogFilterMetadata = {
     actions: [],
     search: "",
     user: "",
+    siteRoles: [],
     dateRange: undefined,
     activeFilters: [],
   },
@@ -66,6 +71,12 @@ export class UserActivityAuditLogFilterModel extends FilterModelBase {
 
     if (actions) {
       activeFilters.push({filterId: "actions", text: `Actions: ${actions}`});
+    }
+
+    const siteRoles = DataParsingHelper.parseArray(this.getData("siteRoles"));
+
+    if (siteRoles) {
+      activeFilters.push({filterId: "siteRoles", text: `Site Roles: ${siteRoles}`});
     }
 
     const searchText = DataParsingHelper.parseString(this.getData("search"));
