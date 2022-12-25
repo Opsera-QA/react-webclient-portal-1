@@ -15,7 +15,10 @@ export default function MessageFieldBase(
     <FieldContainer className={className}>
       <H5FieldSubHeader subheaderText={label} />
       <div className={"p-3 text-muted message-field"}>
-        <div className={"px-3 d-flex"}><IconBase icon={icon} className={"mr-2"} />{message}</div>
+        <div className={"px-3 d-flex"}>
+          <IconBase iconSize={"lg"} icon={icon} className={"mr-2"} />
+          {message}
+        </div>
       </div>
     </FieldContainer>
   );
