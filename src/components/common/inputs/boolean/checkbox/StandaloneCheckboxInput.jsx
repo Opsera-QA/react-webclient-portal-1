@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
 import { generateUUID } from "components/common/helpers/string-helpers";
+import {mouseHelper} from "temp-library-components/helpers/mouse/mouse.helper";
 
 export default function StandaloneCheckboxInput(
   {
@@ -12,9 +13,11 @@ export default function StandaloneCheckboxInput(
     disabled,
     className,
   }) {
+  const mouseCursor = mouseHelper.getMouseCursor(setDataFunction, disabled);
+
   return (
     <div
-      className={disabled !== true ? "pointer" : "not-allowed"}
+      className={`${mouseCursor}`}
       onClick={disabled !== true ? () => setDataFunction(!value) : undefined}
     >
       <div className={"d-flex"}>
@@ -25,9 +28,7 @@ export default function StandaloneCheckboxInput(
           checked={!!value}
           disabled={disabled === true}
           label={""}
-          onChange={() => {
-            setDataFunction(!value);
-          }}
+          readOnly={true}
         />
         <div>{label}</div>
       </div>
