@@ -7,21 +7,28 @@ export const accountSettingsTrails = {};
 // LDAP Site Roles Administration
 accountSettingsTrails.ldapSiteRolesManagement = {
   parent: "accountSettings",
-    name: "ldapSiteRolesManagement",
-    path: accountSettingsPaths.ldapSiteRoleManagement,
-    title: "Site Roles Management",
-    linkText: "Site Roles",
-    icon: faServer,
-    pageDescription: "Manage Site Roles in the follow levels: Administrators, Power Users, and Users.",
+  name: "ldapSiteRolesManagement",
+  path: accountSettingsPaths.ldapSiteRoleManagement,
+  title: "Site Roles Management",
+  linkText: "Site Roles",
+  icon: faServer,
+  pageDescription: "Manage Site Roles in the follow levels: Administrators, Power Users, and Users.",
+  // pageDescription: `
+  //     Site Roles determine a user’s level of accessibility.
+  //     Manage Site Roles from this dashboard. By default, Opsera offers tiers for Site Roles:
+  //     Administrators for full site wide access, Power Users for elevated configuration of features access and then Users for all standard users to interact with the site.
+  //     If a user is not a member of any one of these roles they will be treated as a read-only user with very limited access.
+  //     Some additional roles can be enabled here (by Administrators) to add more advanced security features.
+  //   `,
 };
 
 accountSettingsTrails.ldapSiteRoleDetailView = {
   parent: "ldapSiteRolesManagement",
-    name: "ldapSiteRoleDetailView",
-    path: accountSettingsPaths.ldapSiteRoleDetailView,
-    title: "Site Role Details",
-    linkText: "Site Role Details",
-    icon: faServer,
+  name: "ldapSiteRoleDetailView",
+  path: accountSettingsPaths.ldapSiteRoleDetailView,
+  title: "Site Role Details",
+  linkText: "Site Role Details",
+  icon: faServer,
 };
 
 accountSettingsTrails.ldapAdministratorsSiteRoleDetailView = {

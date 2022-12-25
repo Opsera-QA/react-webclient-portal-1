@@ -70,5 +70,14 @@ siteRoleHelper.getSiteRolePermissionText = (siteRole) => {
         They can only run the Pipeline and view the log activity. 
         They cannot make any changes. 
         `);
+    case "SecurityManagers":
+      return (`
+        Security Managers have read access to all Tasks, Pipelines, Tools, and Dashboards. 
+        They also have write and execute access for Security-owned items where applicable and full access to Git Custodian.
+      `);
+    case "Auditors":
+      return (`
+        Auditors have read access to all Tasks, Pipelines, Tools, and Dashboards. 
+      `);
   }
 };
