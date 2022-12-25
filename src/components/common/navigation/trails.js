@@ -61,7 +61,7 @@ import {pipelinesTrails} from "components/workflow/pipelines.trails";
 import {accountSettingsTrails} from "components/settings/accountSettings.trails";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
-const breadcrumbs = {
+export const breadcrumbs = {
   frequentlyAskedQuestions: {
     parent: undefined,
     name: "frequentlyAskedQuestions",

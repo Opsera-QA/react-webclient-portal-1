@@ -1,11 +1,10 @@
 import React from "react";
-import BreadcrumbPageLinkCard from "components/common/card/link/BreadcrumbPageLinkCard";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PropType from "prop-types";
+import BreadcrumbPageLinkSelectionCardBase from "components/common/card/selection/BreadcrumbPageLinkSelectionCardBase";
 
 export default function SiteRoleManagementPageLinkCardBase(
   {
-    siteRole,
     breadcrumbDestination,
   }) {
   const {
@@ -19,9 +18,10 @@ export default function SiteRoleManagementPageLinkCardBase(
   }
 
   return (
-    <BreadcrumbPageLinkCard
+    <BreadcrumbPageLinkSelectionCardBase
       breadcrumbDestination={breadcrumbDestination}
       pathParameter={userData}
+      className={"my-2"}
     />
   );
 }
