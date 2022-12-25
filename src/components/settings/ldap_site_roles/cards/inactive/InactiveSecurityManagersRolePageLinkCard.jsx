@@ -1,9 +1,10 @@
 import React from "react";
-import OptionCardBase from "components/common/card/option/OptionCardBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SiteRoleActivationConfirmationOverlay
   from "components/settings/ldap_site_roles/cards/inactive/SiteRoleActivationConfirmationOverlay";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
+import SelectionCardBase from "components/common/card/selection/SelectionCardBase";
+import {accountSettingsTrails} from "components/settings/accountSettings.trails";
 
 export default function InactiveSecurityManagersRolePageLinkCard() {
   const {
@@ -23,9 +24,11 @@ export default function InactiveSecurityManagersRolePageLinkCard() {
   };
 
   return (
-    <OptionCardBase
-      // className={className}
-      body={getBody()}
+    <SelectionCardBase
+      className={"my-2"}
+      label={accountSettingsTrails.ldapSecurityManagersSiteRoleDetailView.title}
+      inactive={true}
+      description={getBody()}
       onClickFunction={launchActivationConfirmationOverlay}
     />
   );

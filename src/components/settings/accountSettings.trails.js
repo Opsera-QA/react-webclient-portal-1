@@ -35,7 +35,7 @@ accountSettingsTrails.ldapAdministratorsSiteRoleDetailView = {
   name: "ldapAdministratorsSiteRoleDetailView",
   path: accountSettingsPaths.ldapSiteRoleDetailView,
   pathFunction: (userData) => siteRoleHelper.getAdministrationSiteRoleDetailViewLink(userData),
-  title: "Administrators Site Role Details",
+  title: "Administrators",
   linkText: "Administrators",
   pageDescription: siteRoleHelper.getSiteRolePermissionText("Administrators"),
 };
@@ -45,7 +45,7 @@ accountSettingsTrails.ldapPowerUsersSiteRoleDetailView = {
   name: "ldapPowerUsersSiteRoleDetailView",
   path: accountSettingsPaths.ldapSiteRoleDetailView,
   pathFunction: (userData) => siteRoleHelper.getPowerUsersSiteRoleDetailViewLink(userData),
-  title: "Power Users Site Role Details",
+  title: "Power Users",
   linkText: "Power Users",
   pageDescription: siteRoleHelper.getSiteRolePermissionText("PowerUsers"),
 };
@@ -55,7 +55,7 @@ accountSettingsTrails.ldapUsersSiteRoleDetailView = {
   name: "ldapUsersSiteRoleDetailView",
   path: accountSettingsPaths.ldapSiteRoleDetailView,
   pathFunction: (userData) => siteRoleHelper.getUsersSiteRoleDetailViewLink(userData),
-  title: "Users Site Role Details",
+  title: "Users",
   linkText: "Users",
   pageDescription: siteRoleHelper.getSiteRolePermissionText("Users"),
 };
@@ -65,7 +65,7 @@ accountSettingsTrails.ldapSecurityManagersSiteRoleDetailView = {
   name: "ldapSecurityManagersSiteRoleDetailView",
   path: accountSettingsPaths.ldapSiteRoleDetailView,
   pathFunction: (userData) => siteRoleHelper.getSecurityManagersSiteRoleDetailViewLink(userData),
-  title: "Security Managers Site Role Details",
+  title: "Security Managers",
   linkText: "Security Managers",
   pageDescription: siteRoleHelper.getSiteRolePermissionText("SecurityManagers"),
 };
@@ -75,7 +75,7 @@ accountSettingsTrails.ldapAuditorsSiteRoleDetailView = {
   name: "ldapAuditorsSiteRoleDetailView",
   path: accountSettingsPaths.ldapSiteRoleDetailView,
   pathFunction: (userData) => siteRoleHelper.getAuditorsSiteRoleDetailViewLink(userData),
-  title: "Auditors Site Role Details",
+  title: "Auditors",
   linkText: "Auditors",
   pageDescription: siteRoleHelper.getSiteRolePermissionText("Auditors"),
 };

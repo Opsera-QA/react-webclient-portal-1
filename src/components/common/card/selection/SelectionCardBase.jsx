@@ -5,46 +5,31 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 // TODO: At some point we need to combine RadioButtonCard, SelectionIconCardBase, and SelectionCardBase to have a common base
-export default function RadioButtonCard(
+export default function SelectionCardBase(
   {
-    fieldName,
-    model,
-    setModel,
+    selectedOption,
     value,
-    setDataFunction,
+    onClickFunction,
     description,
     label,
     disabled,
     visible,
     style,
+    inactive,
     isLoading,
     highlightedBorderColor,
+    className,
   }) {
   const {themeConstants} = useComponentStateReference();
-  const selectedOption = model?.getData(fieldName);
 
-  const onClickFunction = () => {
+  const handleOnClickFunction = () => {
     if (disabled === true) {
       return;
     }
 
-    if (setDataFunction) {
-      setDataFunction(fieldName, value);
-    } else {
-      model.setData(fieldName, value);
-      setModel({...model});
+    if (onClickFunction) {
+      onClickFunction();
     }
-  };
-
-  const getContentBody = () => {
-    return (
-      <div className={"d-flex"}>
-        <div className={"h-100 w-100"}>
-          {getLabel()}
-          {getDescription()}
-        </div>
-      </div>
-    );
   };
 
   const getStyle = () => {
@@ -68,32 +53,15 @@ export default function RadioButtonCard(
       border: `1px solid ${borderColor}`,
       opacity: selectedOption != null && selectedOption !== value ? ".75" : undefined,
       overflow: "hidden",
-      backgroundColor: disabled === true ? themeConstants.COLOR_PALETTE.BACKGROUND_GRAY : undefined,
-      color: disabled === true ? themeConstants.COLOR_PALETTE.DARK_GRAY : undefined,
+      backgroundColor: disabled === true || inactive === true ? themeConstants.COLOR_PALETTE.BACKGROUND_GRAY : undefined,
+      color: disabled === true || inactive === true ? themeConstants.COLOR_PALETTE.DARK_GRAY : undefined,
     });
-  };
-
-  const getLabel = () => {
-    if (label) {
-      return (
-        <div className={"d-flex"}>
-          <input
-            className={"mr-2"}
-            type={"radio"}
-            value={value}
-            checked={model?.getData(fieldName) === value}
-            disabled={disabled}
-          />
-          <strong>{label}</strong>
-        </div>
-      );
-    }
   };
 
   const getDescription = () => {
     if (description) {
       return (
-        <div className={"mt-2 mx-1"}>
+        <div className={"mt-2"}>
           {description}
         </div>
       );
@@ -101,34 +69,41 @@ export default function RadioButtonCard(
   };
 
 
-  if (model == null || visible === false) {
+  if (onClickFunction == null || visible === false) {
     return null;
   }
 
   return (
-    <div
-      className={"vertical-selection-card-temp h-100 w-100 d-flex"}
-      style={getStyle()}
-      onClick={onClickFunction}
-    >
-      <div className={"p-3"}>
-        {getContentBody()}
+    <div className={className}>
+      <div
+        className={"vertical-selection-card-temp h-100 w-100 d-flex"}
+        style={getStyle()}
+        onClick={handleOnClickFunction}
+      >
+        <div className={"p-3"}>
+          <div className={"d-flex"}>
+            <div className={"h-100 w-100"}>
+              <strong>{label}</strong>
+              {getDescription()}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-RadioButtonCard.propTypes = {
-  setModel: PropTypes.func,
-  fieldName: PropTypes.string,
-  model: PropTypes.object,
-  setDataFunction: PropTypes.func,
+SelectionCardBase.propTypes = {
+  onClickFunction: PropTypes.func,
+  className: PropTypes.string,
   label: PropTypes.any,
   disabled: PropTypes.bool,
+  inactive: PropTypes.bool,
   value: PropTypes.string,
   visible: PropTypes.bool,
   description: PropTypes.any,
   style: PropTypes.object,
   isLoading: PropTypes.bool,
   highlightedBorderColor: PropTypes.string,
+  selectedOption: PropTypes.any,
 };
