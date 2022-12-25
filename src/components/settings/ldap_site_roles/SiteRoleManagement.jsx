@@ -14,6 +14,7 @@ import SiteRoleManagementPageLinkCards from "components/settings/ldap_site_roles
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import MessageField from "components/common/fields/text/message/MessageField";
 import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
+import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 
 export default function SiteRoleManagement() {
   const history = useHistory();
@@ -74,17 +75,28 @@ export default function SiteRoleManagement() {
   };
 
   const getBody = () => {
-    if (isLoading === true) {
-      return (
-        <CenterLoadingIndicator type={"Site Roles"} />
-      );
-    }
-
-    return  (
-      <SiteRoleManagementPageLinkCards
+    return (
+      <SiteRolesTable
+        className={"mx-2"}
+        isMounted={isMounted}
+        isLoading={isLoading}
         siteRoles={siteRoles}
+        loadData={loadData}
+        orgDomain={orgDomain}
       />
     );
+
+    // if (isLoading === true) {
+    //   return (
+    //     <CenterLoadingIndicator type={"Site Roles"} />
+    //   );
+    // }
+    //
+    // return  (
+    //   <SiteRoleManagementPageLinkCards
+    //     siteRoles={siteRoles}
+    //   />
+    // );
   };
 
   if (isSaasUser === true) {
@@ -102,6 +114,7 @@ export default function SiteRoleManagement() {
     >
       <CenteredContentWrapper>
         <MessageFieldBase
+          icon={faExclamationCircle}
           message={`
           If a user is not a member of one of these Site Roles, 
           they will have limited access to items that don't have RBAC applied.
