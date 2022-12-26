@@ -21,6 +21,7 @@ export default function PipelineWorkflowExportWorkflowButton(
     isOpseraAdministrator,
     userData,
     toastContext,
+    isFreeTrial,
   } = useComponentStateReference();
   const tooltip =
     gitExportEnabled === true
@@ -36,15 +37,12 @@ export default function PipelineWorkflowExportWorkflowButton(
     );
   };
 
-  // TODO: Wire up role definitions
-  if (
-    PipelineRoleHelper.canViewPipelineConfiguration(userData, pipeline) !== true
-    || editingWorkflow === true
-  ) {
+  // TODO: Wire up role definitions from a model instead
+  if (PipelineRoleHelper.canViewPipelineConfiguration(userData, pipeline) !== true) {
     return null;
   }
 
-  if (isOpseraAdministrator !== true) {
+  if (isFreeTrial === true && isOpseraAdministrator !== true) {
     return (
       <TooltipWrapper
         innerText={"In the main Opsera offering you can export the current version of the Pipeline's configuration to your Git repository."}
@@ -72,7 +70,7 @@ export default function PipelineWorkflowExportWorkflowButton(
         variant={"outline-secondary"}
         size={"sm"}
         onClick={launchGitExportOverlay}
-        disabled={(workflowStatus && workflowStatus !== "stopped") || gitExportEnabled !== true || sourceRepositoryModel?.isModelValid() !== true}
+        disabled={(workflowStatus && workflowStatus !== "stopped") || gitExportEnabled !== true || sourceRepositoryModel?.isModelValid() !== true || editingWorkflow === true}
       >
         <IconBase icon={faGitAlt} className={"mr-1"} />Export to Git
       </Button>

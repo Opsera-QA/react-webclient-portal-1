@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Modal from "components/common/modal/modal";
 import {
-  faSearchPlus,
   faCog,
   faArchive,
   faFlag,
@@ -29,14 +28,11 @@ import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import PipelineStepEditorOverlay from "components/workflow/plan/step/PipelineStepEditorOverlay";
-import PipelineStepDetailsOverviewOverlay
-  from "components/workflow/pipelines/overview/step/PipelineStepDetailsOverviewOverlay";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PipelineStepWorkflowItemBody
   from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepWorkflowItemBody";
-import OverlayIconBase from "components/common/icons/OverlayIconBase";
 import PipelineStepWorkflowItemViewSettingsButton
   from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowItemViewSettingsButton";
 

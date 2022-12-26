@@ -20,13 +20,15 @@ export default function PipelineWorkflowWorkflowEditingToggleButton(
   const {
     isOpseraAdministrator,
     userData,
+    isFreeTrial,
   } = useComponentStateReference();
 
   if (editingWorkflow === true) {
     return (
       <Button
+        className={"mr-2"}
         variant={"success"}
-        size="sm"
+        size={"sm"}
         onClick={() => {setEditingWorkflow(false);}}
       >
         <IconBase icon={faCheck} className={"mr-1"} />
@@ -40,7 +42,7 @@ export default function PipelineWorkflowWorkflowEditingToggleButton(
     return null;
   }
 
-  if (isOpseraAdministrator !== true) {
+  if (isFreeTrial === true && isOpseraAdministrator !== true) {
     return (
       <TooltipWrapper
         innerText={"In the main Opsera offering you can add, update, or remove Pipeline steps to meet your exact needs."}
