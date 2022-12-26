@@ -10,7 +10,6 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
-import Modal from "components/common/modal/modal";
 import IconBase from "components/common/icons/IconBase";
 import modelHelpers from "components/common/model/modelHelpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
@@ -39,11 +38,9 @@ function PipelineWorkflow({
   const [zoomValue, setZoomValue] = useState(2); //1,2, or 3 with 2 being default zoom
   const [modalMessage, setModalMessage] = useState({});
   const [editWorkflow, setEditWorkflow] = useState(false);
-  const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const gitExportEnabled = pipeline?.workflow?.source?.gitExportEnabled;
   const sourceRepositoryModel = modelHelpers.parseObjectIntoModel(pipeline?.workflow?.source, sourceRepositoryConfigurationMetadata);
   const {
-    userData,
     toastContext,
     getAccessToken,
    } = useComponentStateReference();
@@ -153,7 +150,6 @@ function PipelineWorkflow({
             pipeline={pipeline}
             status={status}
             fetchPlan={fetchPlan}
-            setInfoModal={setInfoModal}
             softLoading={softLoading}
           />
 
@@ -215,9 +211,6 @@ function PipelineWorkflow({
 
       <ModalActivityLogs header={modalHeader} size="lg" jsonData={modalMessage} show={showModal}
                          setParentVisibility={setShowModal}/>
-
-      {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
-                                handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}/>}
     </>
   );
 

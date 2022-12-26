@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import {
@@ -10,6 +10,16 @@ import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineR
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineSourceConfigurationDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/source/PipelineSourceConfigurationDetailsOverviewOverlay";
+import Modal from "components/common/modal/modal";
+import modelHelpers from "components/common/model/modelHelpers";
+import {
+  sourceRepositoryConfigurationMetadata
+} from "components/workflow/plan/source/sourceRepositoryConfiguration.metadata";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import PipelineWorkflowItemFieldBase
+  from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
+import PipelineWorkflowItemField
+  from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemField";
 
 // TODO: Rewrite and separate into more components
 export default function PipelineWorkflowSourceRepositoryItem(
@@ -18,8 +28,11 @@ export default function PipelineWorkflowSourceRepositoryItem(
     softLoading,
     status,
     fetchPlan,
-    setInfoModal,
   }) {
+  const source = DataParsingHelper.parseNestedObject(pipeline, "workflow.source", {});
+  const sourceRepositoryModel = modelHelpers.parseObjectIntoModel(source, sourceRepositoryConfigurationMetadata);
+  // TODO: Make overlay instead or remove use
+  const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const {
     userData,
     toastContext,
@@ -53,57 +66,51 @@ export default function PipelineWorkflowSourceRepositoryItem(
     handleSourceEditClick();
   };
 
+  const getTitle = () => {
+    if (softLoading === true) {
+      return (
+        <div className={"text-muted title-text-6 pt-2 text-center mx-auto green"}>
+          <LoadingIcon className={"mr-1"} /> Processing Workflow...
+        </div>
+      );
+    }
+
+    return (
+      <div className={"text-muted title-text-6 pt-2 text-center mx-auto"}>
+        Start of Workflow
+      </div>
+    );
+  };
+
   return (
-    <div className="source workflow-module-container workflow-module-container-width mt-2 mx-auto">
-      {!softLoading ?
-        <div className="text-muted title-text-6 pt-2 text-center mx-auto">Start of Workflow</div> :
-        <div className="text-muted title-text-6 pt-2 text-center mx-auto green">
-          <LoadingIcon className={"mr-1"} /> Processing Workflow...</div>
-      }
-      {pipeline?.workflow?.source?.repository &&
-        <div className="d-flex">
-          <div className={"pl-2"}>
-                  <span className="text-muted small">
-                    <IconBase icon={faCode} iconSize={"sm"} className={"mr-1"}/>
-                    Repository: {pipeline.workflow.source.repository}
-                  </span>
-          </div>
-        </div>
-      }
-
-      {pipeline?.workflow?.source?.branch &&
-        <div className="d-flex">
-          <div className={"pl-2"}>
-                  <span className="text-muted small my-auto">
-                    <IconBase icon={faCodeBranch} iconSize={"sm"} className={"mr-1"}/>
-                    Primary Branch: {pipeline.workflow.source.branch}
-                  </span>
-          </div>
-        </div>
-      }
-
-      {Array.isArray(pipeline?.workflow?.source?.secondary_branches) && pipeline?.workflow?.source?.secondary_branches?.length > 0 &&
-        <div className="d-flex">
-          <div className={"pl-2"}>
-                  <span className="text-muted small my-auto">
-                    <IconBase icon={faCodeBranch} iconSize={"sm"} className={"mr-1"}/>
-                    Secondary Branches: {pipeline.workflow.source.secondary_branches?.join(", ")}
-                  </span>
-          </div>
-        </div>
-      }
-
-      {pipeline.workflow.source.trigger_active &&
-        <div className="d-flex">
-          <div className="upper-case-first pl-2">
-            <span className="text-muted small">
-            <IconBase icon={faClipboardCheck} iconSize={"sm"} className={"mr-1 green"}/>
-              Pipeline webhook {pipeline.workflow.source.trigger_active ? "Enabled" : "Disabled"}
-            </span>
-          </div>
-        </div>}
-
-
+    <div className={"source workflow-module-container workflow-module-container-width mt-2 mx-auto"}>
+      {getTitle()}
+      <PipelineWorkflowItemField
+        icon={faCode}
+        fieldName={"repository"}
+        model={sourceRepositoryModel}
+        className={"mx-2 my-1"}
+      />
+      <PipelineWorkflowItemField
+        icon={faCodeBranch}
+        fieldName={"branch"}
+        model={sourceRepositoryModel}
+        className={"mx-2 my-1"}
+      />
+      <PipelineWorkflowItemFieldBase
+        icon={faCodeBranch}
+        className={"mx-2 my-1"}
+        label={"Secondary Branches"}
+        value={sourceRepositoryModel.getArrayData("secondary_branches").join(", ")}
+      />
+      <PipelineWorkflowItemFieldBase
+        icon={faClipboardCheck}
+        className={"mx-2 my-1"}
+        label={"Pipeline Webhook"}
+        iconClassName={"green"}
+        value={sourceRepositoryModel.getData("trigger_active") === true ? "Enabled" : undefined}
+        hideColon={true}
+      />
       <div className="d-flex align-items-end flex-row m-2">
         <div className="ml-auto d-flex">
           {PipelineRoleHelper.canViewStepConfiguration(userData, pipeline) && <OverlayTrigger
@@ -150,6 +157,14 @@ export default function PipelineWorkflowSourceRepositoryItem(
           }
         </div>
       </div>
+      {infoModal.show &&
+        <Modal
+          header={infoModal.header}
+          message={infoModal.message}
+          button={infoModal.button}
+          handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}
+        />
+      }
     </div>
   );
 }

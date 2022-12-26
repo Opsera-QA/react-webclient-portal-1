@@ -26,7 +26,7 @@ export default function PipelineWorkflowWorkflowEditingToggleButton(
   if (editingWorkflow === true) {
     return (
       <Button
-        className={"mr-2"}
+        className={"mr-1"}
         variant={"success"}
         size={"sm"}
         onClick={() => {setEditingWorkflow(false);}}
