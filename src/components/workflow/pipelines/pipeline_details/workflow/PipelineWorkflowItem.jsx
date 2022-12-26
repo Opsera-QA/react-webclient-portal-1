@@ -36,6 +36,9 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PipelineStepWorkflowItemBody
   from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepWorkflowItemBody";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import PipelineStepWorkflowItemViewSettingsButton
+  from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowItemViewSettingsButton";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
@@ -138,12 +141,6 @@ const PipelineWorkflowItem = (
       setActivityLogModal({ show: true, header: header, message: data, button: "OK" });
     };*/
 
-  const handleSummaryViewClick = () => {
-    toastContext.showOverlayPanel(
-      <PipelineStepDetailsOverviewOverlay pipelineStepData={item} />
-    );
-  };
-
   const handleViewStepActivityLogClick = async (pipelineId, toolIdentifier, itemId) => {
     setIsLoading(true);
     await parentHandleViewSourceActivityLog(pipelineId, toolIdentifier, itemId);
@@ -238,21 +235,11 @@ const PipelineWorkflowItem = (
       <div className={"ml-auto d-flex"}>
         {!editWorkflow &&
           <>
-            {PipelineRoleHelper.canViewStepConfiguration(userData, pipeline) &&
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip({ message: "View Settings" })}>
-                <div>
-                  <IconBase icon={faSearchPlus} //settings!
-                            className={"text-muted mx-1 pointer"}
-                            onClickFunction={() => {
-                              handleSummaryViewClick();
-                            }} />
-                </div>
-              </OverlayTrigger>
-            }
-
+            <PipelineStepWorkflowItemViewSettingsButton
+              editingWorkflow={editWorkflow}
+              pipeline={pipeline}
+              step={item}
+            />
             {itemState !== "running" ? //if THIS step is running
               <>
                 <OverlayTrigger
