@@ -16,6 +16,7 @@ export default function PipelineWorkflowViewConfigurationButton(
     isOpseraAdministrator,
     userData,
     toastContext,
+    isFreeTrial,
   } = useComponentStateReference();
 
   const launchPipelineConfigurationOverlay = () => {
@@ -26,12 +27,12 @@ export default function PipelineWorkflowViewConfigurationButton(
     );
   };
 
-  // TODO: Wire up role definitions
+  // TODO: Wire up role definitions from a model instead
   if (PipelineRoleHelper.canViewPipelineConfiguration(userData, pipeline) !== true) {
     return null;
   }
 
-  if (isOpseraAdministrator !== true) {
+  if (isFreeTrial === true && isOpseraAdministrator !== true) {
     return (
       <TooltipWrapper
         innerText={"In the main Opsera offering you can get an easy look at all of the configurations for an entire Pipeline."}
