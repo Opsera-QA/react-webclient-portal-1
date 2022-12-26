@@ -1,10 +1,9 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Tooltip } from "react-bootstrap";
 import {
-  faCog, faCode, faCodeBranch, faClipboardCheck, faSearchPlus,
+  faCode, faCodeBranch, faClipboardCheck, faSearchPlus,
 } from "@fortawesome/pro-light-svg-icons";
-import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
@@ -21,6 +20,8 @@ import PipelineWorkflowItemFieldBase
 import PipelineWorkflowItemField
   from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemField";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import EditPipelineWorkflowSourceRepositoryIcon
+  from "components/workflow/pipelines/pipeline_details/workflow/source/EditPipelineWorkflowSourceRepositoryIcon";
 
 // TODO: Rewrite and separate into more components
 export default function PipelineWorkflowSourceRepositoryItem(
@@ -28,7 +29,6 @@ export default function PipelineWorkflowSourceRepositoryItem(
     pipeline,
     softLoading,
     status,
-    fetchPlan,
   }) {
   const source = DataParsingHelper.parseNestedObject(pipeline, "workflow.source", {});
   const sourceRepositoryModel = modelHelpers.parseObjectIntoModel(source, sourceRepositoryConfigurationMetadata);
@@ -45,21 +45,6 @@ export default function PipelineWorkflowSourceRepositoryItem(
         pipeline={pipeline}
       />
     );
-  };
-
-  // TODO: Remove the use of info modal
-  const handleEditSourceSettingsClick = () => {
-    if (PipelineRoleHelper.canUpdatePipelineStepDetails(userData, pipeline) !== true) {
-      setInfoModal({
-        show: true,
-        header: "Permission Denied",
-        message: "Editing pipeline workflow settings allows users to change the behavior of a pipeline step.  This action requires elevated privileges.",
-        button: "OK",
-      });
-      return;
-    }
-
-    fetchPlan({ id: pipeline._id, type: "source", item_id: "" });
   };
 
   const getTitle = () => {
@@ -120,34 +105,10 @@ export default function PipelineWorkflowSourceRepositoryItem(
             />
           }
 
-          {status !== "running" && status !== "paused" ?
-            <>
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip({ message: "Configure pipeline level settings such as source repository and webhook events" })}>
-                <div>
-                  <IconBase icon={faCog}
-                            className={"text-muted pointer ml-2"}
-                            onClickFunction={() => {
-                              handleEditSourceSettingsClick();
-                            }}/>
-                </div>
-              </OverlayTrigger>
-            </>
-            :
-            <>
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
-                <div>
-                  <IconBase icon={faCog}
-                            className={"text-muted ml-2"} />
-                </div>
-              </OverlayTrigger>
-            </>
-          }
+          <EditPipelineWorkflowSourceRepositoryIcon
+            pipeline={pipeline}
+            status={status}
+          />
         </div>
       </div>
       {infoModal.show &&
@@ -162,20 +123,9 @@ export default function PipelineWorkflowSourceRepositoryItem(
   );
 }
 
-
-function renderTooltip(props) {
-  const { message } = props;
-  return (
-    <Tooltip id="button-tooltip" {...props}>
-      {message}
-    </Tooltip>
-  );
-}
-
 PipelineWorkflowSourceRepositoryItem.propTypes = {
   pipeline: PropTypes.object,
   softLoading: PropTypes.bool,
   status: PropTypes.string,
-  fetchPlan: PropTypes.func,
   setInfoModal: PropTypes.func,
 };
