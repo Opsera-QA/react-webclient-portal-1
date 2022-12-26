@@ -20,6 +20,7 @@ import PipelineWorkflowItemFieldBase
   from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
 import PipelineWorkflowItemField
   from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemField";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
 // TODO: Rewrite and separate into more components
 export default function PipelineWorkflowSourceRepositoryItem(
@@ -46,11 +47,6 @@ export default function PipelineWorkflowSourceRepositoryItem(
     );
   };
 
-  // TODO: launch directly in here instead
-  const handleSourceEditClick = () => {
-    fetchPlan({ id: pipeline._id, type: "source", item_id: "" });
-  };
-
   // TODO: Remove the use of info modal
   const handleEditSourceSettingsClick = () => {
     if (PipelineRoleHelper.canUpdatePipelineStepDetails(userData, pipeline) !== true) {
@@ -63,7 +59,7 @@ export default function PipelineWorkflowSourceRepositoryItem(
       return;
     }
 
-    handleSourceEditClick();
+    fetchPlan({ id: pipeline._id, type: "source", item_id: "" });
   };
 
   const getTitle = () => {
@@ -113,18 +109,15 @@ export default function PipelineWorkflowSourceRepositoryItem(
       />
       <div className="d-flex align-items-end flex-row m-2">
         <div className="ml-auto d-flex">
-          {PipelineRoleHelper.canViewStepConfiguration(userData, pipeline) && <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "View Settings" })}>
-            <div>
-              <IconBase icon={faSearchPlus}
-                        className={"text-muted ml-2 pointer"}
-                        onClickFunction={() => {
-                          showWebhookConfigurationSummary();
-                        }}/>
-            </div>
-          </OverlayTrigger>
+          {PipelineRoleHelper.canViewStepConfiguration(userData, pipeline) &&
+            <OverlayIconBase
+              icon={faSearchPlus}
+              className={"text-muted ml-2 pointer"}
+              onClickFunction={() => {
+                showWebhookConfigurationSummary();
+              }}
+              overlayBody={"View Settings"}
+            />
           }
 
           {status !== "running" && status !== "paused" ?

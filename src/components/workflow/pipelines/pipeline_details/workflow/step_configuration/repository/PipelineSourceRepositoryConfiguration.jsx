@@ -1,6 +1,5 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import PipelineSourceRepositoryToolIdentifierSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryToolIdentifierSelectInput";
 import PipelineSourceRepositoryBitbucketWorkspaceSelectInput
@@ -28,14 +27,21 @@ import PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
 import {
   sourceRepositoryConfigurationMetadata
 } from "components/workflow/plan/source/sourceRepositoryConfiguration.metadata";
+import usePipelineSourceRepositoryActions from "components/workflow/plan/source/usePipelineSourceRepositoryActions";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function PipelineSourceRepositoryConfiguration(
   {
     pipeline,
-    parentCallback,
     handleCloseClick,
   }) {
-  const toastContext = useContext(DialogToastContext);
+  const {
+    getAccessToken,
+    cancelTokenSource,
+    toastContext,
+  } = useComponentStateReference();
+  const pipelineSourceRepositoryActions = usePipelineSourceRepositoryActions();
+
   const [isLoading, setIsLoading] = useState(false);
   const [sourceRepositoryModel, setSourceRepositoryModel] = useState(undefined);
 
@@ -83,9 +89,12 @@ function PipelineSourceRepositoryConfiguration(
         gitExportPath: gitExportPath,
         dynamicSettings: dynamicSettings,
       };
-      //console.log("saving config: " + JSON.stringify(item));
+      // console.log("saving config: " + JSON.stringify(item));
       //console.log("saving getPersistData: " + JSON.stringify(sourceRepositoryModel?.getPersistData()));
-      await parentCallback(item);
+      await pipelineSourceRepositoryActions.updatePipelineSourceRepository(
+        pipeline?._id,
+        item,
+      );
       handleCloseClick();
     }
   };
@@ -216,7 +225,6 @@ function PipelineSourceRepositoryConfiguration(
 
 PipelineSourceRepositoryConfiguration.propTypes = {
   pipeline: PropTypes.object,
-  parentCallback: PropTypes.func,
   handleCloseClick: PropTypes.func,
 };
 

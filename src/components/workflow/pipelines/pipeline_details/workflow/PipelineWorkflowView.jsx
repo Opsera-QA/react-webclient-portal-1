@@ -4,6 +4,7 @@ import PipelineWorkflow from "./PipelineWorkflow";
 import PipelineWorkflowEditor from "./PipelineWorkflowItemEditor";
 import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
 import InformationDialog from "components/common/status_notifications/info";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function PipelineWorkflowView(
   {
@@ -18,25 +19,31 @@ function PipelineWorkflowView(
     lastStep,
     runCount,
   }) {
+  const parsedPipeline = DataParsingHelper.parseObject(pipeline);
+
   const closeEditorPanel = () => {
     setEditItem(false);
   };
 
   const getPipelineWorkflowEditor = (editingItem) => {
     if (editingItem) {
-      return (<>
+      return (
         <div className="settings-sidebar d-flex w-100">
           <div className="w-75">&nbsp;</div>
           <div className="step-setting-editor content-card-1">
-            <PipelineWorkflowEditor editItem={editItem} pipeline={pipeline} closeEditorPanel={closeEditorPanel}
-                                    fetchPlan={fetchPlan}/>
+            <PipelineWorkflowEditor
+              editItem={editItem}
+              pipeline={pipeline}
+              closeEditorPanel={closeEditorPanel}
+              fetchPlan={fetchPlan}
+            />
           </div>
         </div>
-      </>);
+      );
     }
   };
 
-  if (!pipeline || Object.keys(pipeline).length <= 0) {
+  if (!parsedPipeline) {
     return (
       <InformationDialog
         message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."

@@ -171,7 +171,7 @@ function LazyLoadMultiSelectInputBase(
           filter="contains"
           groupBy={groupBy}
           onToggleFunction={(test) => {
-            if (useToggle && test === true && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) {
+            if (onToggleFunction && useToggle && test === true && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) {
               onToggleFunction();
             }
           }}
