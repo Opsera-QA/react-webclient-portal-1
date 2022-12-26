@@ -23,7 +23,7 @@ import PipelineWorkflowExportWorkflowButton
 import PipelineWorkflowWorkflowEditingToggleButton
   from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowWorkflowEditingToggleButton";
 import PipelineWorkflowSourceRepositoryItem
-  from "components/workflow/pipelines/pipeline_details/workflow/PipelineWorkflowSourceRepositoryItem";
+  from "components/workflow/pipelines/pipeline_details/workflow/source/PipelineWorkflowSourceRepositoryItem";
 
 // TODO: Clean up and refactor to make separate components. IE the source repository begin workflow box can be its own component
 function PipelineWorkflow({
@@ -149,7 +149,6 @@ function PipelineWorkflow({
           <PipelineWorkflowSourceRepositoryItem
             pipeline={pipeline}
             status={status}
-            fetchPlan={fetchPlan}
             softLoading={softLoading}
           />
 
