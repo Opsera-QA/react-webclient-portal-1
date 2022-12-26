@@ -2,24 +2,17 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { axiosApiService } from "api/apiService";
 import { SteppedLineTo } from "react-lineto";
-import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import ErrorDialog from "components/common/status_notifications/error";
 import {
   faSearchPlus,
-  faCog,
-  faClipboardCheck,
-  faCode,
-  faSearchMinus, faCodeBranch,
+  faSearchMinus,
 } from "@fortawesome/pro-light-svg-icons";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
 import Modal from "components/common/modal/modal";
 import IconBase from "components/common/icons/IconBase";
-import LoadingIcon from "components/common/icons/LoadingIcon";
-import PipelineSourceConfigurationDetailsOverviewOverlay
-  from "components/workflow/pipelines/overview/source/PipelineSourceConfigurationDetailsOverviewOverlay";
 import modelHelpers from "components/common/model/modelHelpers";
-import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {
   sourceRepositoryConfigurationMetadata
@@ -30,6 +23,8 @@ import PipelineWorkflowExportWorkflowButton
   from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowExportWorkflowButton";
 import PipelineWorkflowWorkflowEditingToggleButton
   from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowWorkflowEditingToggleButton";
+import PipelineWorkflowSourceRepositoryItem
+  from "components/workflow/pipelines/pipeline_details/workflow/PipelineWorkflowSourceRepositoryItem";
 
 // TODO: Clean up and refactor to make separate components. IE the source repository begin workflow box can be its own component
 function PipelineWorkflow({
@@ -52,14 +47,6 @@ function PipelineWorkflow({
     toastContext,
     getAccessToken,
    } = useComponentStateReference();
-
-  const showWebhookConfigurationSummary = () => {
-    toastContext.showOverlayPanel(
-      <PipelineSourceConfigurationDetailsOverviewOverlay
-        pipeline={pipeline}
-      />
-    );
-  };
 
   // TODO: Break out into separate actions file, maybe call in a pipeline activity overlay rather than here?
   const fetchPipelineActivityByTool = async (pipelineId, tool, stepId, activityId) => {
@@ -97,10 +84,6 @@ function PipelineWorkflow({
     }
   };
 
-  const handleSourceEditClick = () => {
-    fetchPlan({ id: pipeline._id, type: "source", item_id: "" });
-  };
-
   const quietSavePlan = async (steps) => {
     console.log("saving plan quietly: ", pipeline.workflow.plan);
     if (steps) {
@@ -120,20 +103,6 @@ function PipelineWorkflow({
     }
   };
 
-  const handleEditSourceSettingsClick = () => {
-    if (PipelineRoleHelper.canUpdatePipelineStepDetails(userData, pipeline) !== true) {
-      setInfoModal({
-        show: true,
-        header: "Permission Denied",
-        message: "Editing pipeline workflow settings allows users to change the behavior of a pipeline step.  This action requires elevated privileges.",
-        button: "OK",
-      });
-      return;
-    }
-
-    handleSourceEditClick();
-  };
-
   const setZoomClass = (val) => {
     switch (val) {
     case 1:
@@ -148,109 +117,6 @@ function PipelineWorkflow({
   const handleZoomClick = (val, direction) => {
     //take current value and increment up or down
     setZoomValue(zoomValue => direction === "in" ? zoomValue + 1 : zoomValue - 1);
-  };
-
-  // TODO: Put in separate component and cleanup
-  const getStartOfWorkflowItem = () => {
-    return (
-      <div className="source workflow-module-container workflow-module-container-width mt-2 mx-auto">
-        {!softLoading ?
-          <div className="text-muted title-text-6 pt-2 text-center mx-auto">Start of Workflow</div> :
-          <div className="text-muted title-text-6 pt-2 text-center mx-auto green">
-            <LoadingIcon className={"mr-1"} /> Processing Workflow...</div>
-        }
-        {pipeline?.workflow?.source?.repository &&
-          <div className="d-flex">
-            <div className={"pl-2"}>
-                  <span className="text-muted small">
-                    <IconBase icon={faCode} iconSize={"sm"} className={"mr-1"}/>
-                    Repository: {pipeline.workflow.source.repository}
-                  </span>
-            </div>
-          </div>
-        }
-
-        {pipeline?.workflow?.source?.branch &&
-          <div className="d-flex">
-            <div className={"pl-2"}>
-                  <span className="text-muted small my-auto">
-                    <IconBase icon={faCodeBranch} iconSize={"sm"} className={"mr-1"}/>
-                    Primary Branch: {pipeline.workflow.source.branch}
-                  </span>
-            </div>
-          </div>
-        }
-
-        {Array.isArray(pipeline?.workflow?.source?.secondary_branches) && pipeline?.workflow?.source?.secondary_branches?.length > 0 &&
-          <div className="d-flex">
-            <div className={"pl-2"}>
-                  <span className="text-muted small my-auto">
-                    <IconBase icon={faCodeBranch} iconSize={"sm"} className={"mr-1"}/>
-                    Secondary Branches: {pipeline.workflow.source.secondary_branches?.join(", ")}
-                  </span>
-            </div>
-          </div>
-        }
-
-        {pipeline.workflow.source.trigger_active &&
-          <div className="d-flex">
-            <div className="upper-case-first pl-2">
-            <span className="text-muted small">
-            <IconBase icon={faClipboardCheck} iconSize={"sm"} className={"mr-1 green"}/>
-              Pipeline webhook {pipeline.workflow.source.trigger_active ? "Enabled" : "Disabled"}
-            </span>
-            </div>
-          </div>}
-
-
-        <div className="d-flex align-items-end flex-row m-2">
-          <div className="ml-auto d-flex">
-            {PipelineRoleHelper.canViewStepConfiguration(userData, pipeline) && <OverlayTrigger
-              placement="top"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip({ message: "View Settings" })}>
-              <div>
-                <IconBase icon={faSearchPlus}
-                          className={"text-muted ml-2 pointer"}
-                          onClickFunction={() => {
-                            showWebhookConfigurationSummary();
-                          }}/>
-              </div>
-            </OverlayTrigger>
-            }
-
-            {status !== "running" && status !== "paused" ?
-              <>
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Configure pipeline level settings such as source repository and webhook events" })}>
-                  <div>
-                    <IconBase icon={faCog}
-                              className={"text-muted pointer ml-2"}
-                              onClickFunction={() => {
-                                handleEditSourceSettingsClick();
-                              }}/>
-                  </div>
-                </OverlayTrigger>
-              </>
-              :
-              <>
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
-                  <div>
-                    <IconBase icon={faCog}
-                              className={"text-muted ml-2"} />
-                  </div>
-                </OverlayTrigger>
-              </>
-            }
-          </div>
-        </div>
-      </div>
-    );
   };
 
   if (pipeline == null || pipeline.workflow == null || !Object.prototype.hasOwnProperty.call(pipeline.workflow, "source")) {
@@ -283,7 +149,13 @@ function PipelineWorkflow({
       <div
         className={"workflow-container p-2 dark-grey" + (zoomValue > 2 ? " scale-120-container" : "")}>
         <div className={setZoomClass(zoomValue)}>
-          {getStartOfWorkflowItem()}
+          <PipelineWorkflowSourceRepositoryItem
+            pipeline={pipeline}
+            status={status}
+            fetchPlan={fetchPlan}
+            setInfoModal={setInfoModal}
+            softLoading={softLoading}
+          />
 
           <div style={{ height: "40px" }}>&nbsp;</div>
 
@@ -349,16 +221,6 @@ function PipelineWorkflow({
     </>
   );
 
-}
-
-
-function renderTooltip(props) {
-  const { message } = props;
-  return (
-    <Tooltip id="button-tooltip" {...props}>
-      {message}
-    </Tooltip>
-  );
 }
 
 PipelineWorkflow.propTypes = {
