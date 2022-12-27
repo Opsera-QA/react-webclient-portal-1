@@ -15,6 +15,7 @@ export default function useGetPollingTaskOrchestrationStatusById(
     status,
     runCount,
     restingStepId,
+    updatedAt,
   } = useGetTaskOrchestrationStatusById(id, handleErrorFunction);
 
   usePollingInterval(() => {
@@ -26,7 +27,8 @@ export default function useGetPollingTaskOrchestrationStatusById(
   return ({
     status: status,
     runCount: runCount,
-    restingStepId,
+    restingStepId: restingStepId,
+    updatedAt: updatedAt,
     loadData: loadData,
     isLoading: isLoading,
     error: error,

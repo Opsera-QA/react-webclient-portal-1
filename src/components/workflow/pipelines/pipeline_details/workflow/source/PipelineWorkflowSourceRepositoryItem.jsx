@@ -1,6 +1,5 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { Tooltip } from "react-bootstrap";
 import {
   faCode, faCodeBranch, faClipboardCheck, faSearchPlus,
 } from "@fortawesome/pro-light-svg-icons";
@@ -9,7 +8,6 @@ import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineR
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineSourceConfigurationDetailsOverviewOverlay
   from "components/workflow/pipelines/overview/source/PipelineSourceConfigurationDetailsOverviewOverlay";
-import Modal from "components/common/modal/modal";
 import modelHelpers from "components/common/model/modelHelpers";
 import {
   sourceRepositoryConfigurationMetadata
@@ -32,8 +30,6 @@ export default function PipelineWorkflowSourceRepositoryItem(
   }) {
   const source = DataParsingHelper.parseNestedObject(pipeline, "workflow.source", {});
   const sourceRepositoryModel = modelHelpers.parseObjectIntoModel(source, sourceRepositoryConfigurationMetadata);
-  // TODO: Make overlay instead or remove use
-  const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const {
     userData,
     toastContext,
@@ -111,14 +107,6 @@ export default function PipelineWorkflowSourceRepositoryItem(
           />
         </div>
       </div>
-      {infoModal.show &&
-        <Modal
-          header={infoModal.header}
-          message={infoModal.message}
-          button={infoModal.button}
-          handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}
-        />
-      }
     </div>
   );
 }
