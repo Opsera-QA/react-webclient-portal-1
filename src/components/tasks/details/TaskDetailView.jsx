@@ -54,17 +54,18 @@ function TaskDetailView() {
   const {
     status,
     runCount,
+    updatedAt,
   } = useGetPollingTaskOrchestrationStatusById(id, 15000);
 
   useEffect(() => {
     if (hasStringValue(status) === true && numberHelpers.hasNumberValue(runCount) === true &&
-      (taskModel?.getData("status") !== status || taskModel?.getData("run_count") !== runCount)
+      (taskModel?.getData("status") !== status || taskModel?.getData("run_count") !== runCount || taskModel?.getData("updatedAt") !== updatedAt)
     ) {
-      console.log(`got polling update for Task [${id}] status [${status}] run count [${runCount}]`);
+      console.log(`got polling update for Task [${id}] status [${status}] run count [${runCount}], Last Updated At [${updatedAt}]`);
 
       loadData();
     }
-  }, [status, runCount]);
+  }, [status, runCount, updatedAt]);
 
   const getActionBar = () => {
     return (

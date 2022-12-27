@@ -36,18 +36,19 @@ function PipelineDetailView() {
     runCount,
     lastStep,
     restingStepId,
+    updatedAt,
   } = useGetPollingPipelineOrchestrationStatusById(id, refreshInterval);
 
   // TODO: We probably don't need to refresh the pipeline on resting step changes.
   useEffect(() => {
-    console.log(`Refreshing pipeline with \n   status: [${status}]\n    run count: [${runCount}]\n   Resting Step ID: [${restingStepId}]`);
+    console.log(`Refreshing pipeline with \n   status: [${status}]\n    run count: [${runCount}]\n   Resting Step ID: [${restingStepId}] \n Last Updated At: [${updatedAt}]`);
     evaluatePipelineStatus(pipeline);
     loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-  }, [status, runCount, restingStepId]);
+  }, [status, runCount, restingStepId, updatedAt]);
 
   const loadData = async () => {
     try {
