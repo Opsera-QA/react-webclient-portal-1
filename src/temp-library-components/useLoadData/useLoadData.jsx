@@ -9,6 +9,7 @@ export default function useLoadData() {
   const loadData = useCallback(async (loadDataFunction, handleErrorFunction) => {
     try {
       setIsLoading(true);
+      setError(undefined);
 
       if (loadDataFunction) {
         await loadDataFunction();
