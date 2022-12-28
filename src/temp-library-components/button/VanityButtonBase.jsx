@@ -66,7 +66,7 @@ export default function VanityButtonBase(
             <IconBase
               isLoading={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY}
               icon={getButtonIcon()}
-              className={"mr-2"}
+              className={getLabel() != null ? "mr-2" : undefined}
             />
             {getLabel()}
           </span>

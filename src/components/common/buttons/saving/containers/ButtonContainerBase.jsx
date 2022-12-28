@@ -10,9 +10,9 @@ function ButtonContainerBase(
   }) {
   return (
     <div className={className}>
-      <Row className="mx-0 d-flex">
+      <Row className={"mx-0 d-flex"}>
         {leftSideButtons}
-        <div className="ml-auto d-flex">
+        <div className={"ml-auto d-flex"}>
           {children}
         </div>
       </Row>

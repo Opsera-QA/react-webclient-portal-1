@@ -2,15 +2,9 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { axiosApiService } from "api/apiService";
 import { SteppedLineTo } from "react-lineto";
-import { Button } from "react-bootstrap";
 import ErrorDialog from "components/common/status_notifications/error";
-import {
-  faSearchPlus,
-  faSearchMinus,
-} from "@fortawesome/pro-light-svg-icons";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
-import IconBase from "components/common/icons/IconBase";
 import modelHelpers from "components/common/model/modelHelpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {
@@ -24,6 +18,19 @@ import PipelineWorkflowWorkflowEditingToggleButton
   from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowWorkflowEditingToggleButton";
 import PipelineWorkflowSourceRepositoryItem
   from "components/workflow/pipelines/pipeline_details/workflow/source/PipelineWorkflowSourceRepositoryItem";
+import PipelineWorkflowZoomButtons
+  from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowZoomButtons";
+
+const getZoomClass = (val) => {
+  switch (val) {
+    case 1:
+      return "scale-80"; // .8x zoom
+    case 2:
+      return "scale-100"; //standard 100% zoom
+    case 3:
+      return "scale-120"; // 1.2x zoom
+  }
+};
 
 // TODO: Clean up and refactor to make separate components. IE the source repository begin workflow box can be its own component
 function PipelineWorkflow({
@@ -43,6 +50,7 @@ function PipelineWorkflow({
   const {
     toastContext,
     getAccessToken,
+    cancelTokenSource,
    } = useComponentStateReference();
 
   // TODO: Break out into separate actions file, maybe call in a pipeline activity overlay rather than here?
@@ -100,22 +108,6 @@ function PipelineWorkflow({
     }
   };
 
-  const setZoomClass = (val) => {
-    switch (val) {
-    case 1:
-      return "scale-80"; // .8x zoom
-    case 2:
-      return "scale-100"; //standard 100% zoom
-    case 3:
-      return "scale-120"; // 1.2x zoom
-    }
-  };
-
-  const handleZoomClick = (val, direction) => {
-    //take current value and increment up or down
-    setZoomValue(zoomValue => direction === "in" ? zoomValue + 1 : zoomValue - 1);
-  };
-
   if (pipeline == null || pipeline.workflow == null || !Object.prototype.hasOwnProperty.call(pipeline.workflow, "source")) {
     return <ErrorDialog error={"Pipeline Workflow Details Not Found"} align={"top"}/>;
   }
@@ -145,7 +137,7 @@ function PipelineWorkflow({
 
       <div
         className={"workflow-container p-2 dark-grey" + (zoomValue > 2 ? " scale-120-container" : "")}>
-        <div className={setZoomClass(zoomValue)}>
+        <div className={getZoomClass(zoomValue)}>
           <PipelineWorkflowSourceRepositoryItem
             pipeline={pipeline}
             status={status}
@@ -187,25 +179,10 @@ function PipelineWorkflow({
           </div>
         </div>
 
-        <div className="bottom-zoom-btns mb-1 mr-3">
-          <Button variant="secondary"
-                  className="mr-1"
-                  size="sm"
-                  disabled={zoomValue >= 2}
-                  onClick={() => {
-                    handleZoomClick(zoomValue, "in");
-                  }}>
-            <IconBase icon={faSearchPlus}/></Button>
-
-          <Button variant="secondary"
-                  className="mr-1"
-                  size="sm"
-                  disabled={zoomValue <= 1}
-                  onClick={() => {
-                    handleZoomClick(zoomValue, "out");
-                  }}>
-            <IconBase icon={faSearchMinus} /></Button>
-        </div>
+        <PipelineWorkflowZoomButtons
+          zoomValue={zoomValue}
+          setZoomValue={setZoomValue}
+        />
       </div>
 
       <ModalActivityLogs header={modalHeader} size="lg" jsonData={modalMessage} show={showModal}
