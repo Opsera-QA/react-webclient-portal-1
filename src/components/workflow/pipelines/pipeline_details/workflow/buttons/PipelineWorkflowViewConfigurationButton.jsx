@@ -1,12 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
 import { faFileAlt, } from "@fortawesome/pro-light-svg-icons";
-import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import PipelineDetailsOverviewOverlay from "components/workflow/pipelines/overview/PipelineDetailsOverviewOverlay";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
+import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 
 export default function PipelineWorkflowViewConfigurationButton(
   {
@@ -34,38 +32,28 @@ export default function PipelineWorkflowViewConfigurationButton(
 
   if (isFreeTrial === true && isOpseraAdministrator !== true) {
     return (
-      <TooltipWrapper
-        innerText={"In the main Opsera offering you can get an easy look at all of the configurations for an entire Pipeline."}
-        wrapInDiv={true}
-      >
-        <Button
-          variant={"outline-secondary"}
-          className={"mr-1"}
-          size={"sm"}
-          disabled={true}
-        >
-          <IconBase icon={faFileAlt} className={"mr-1"} />
-          View Configuration
-        </Button>
-      </TooltipWrapper>
+      <VanityButtonBase
+        className={"mr-1"}
+        icon={faFileAlt}
+        buttonSize={"sm"}
+        tooltip={"In the main Opsera offering you can get an easy look at all of the configurations for an entire Pipeline."}
+        variant={"outline-secondary"}
+        normalText={"View Configuration"}
+        disabled={true}
+      />
     );
   }
 
   return (
-    <TooltipWrapper
-      innerText={"View pipeline configuration"}
-      wrapInDiv={true}
-    >
-      <Button
-        variant={"outline-secondary"}
-        className={"mr-1"}
-        size={"sm"}
-        onClick={launchPipelineConfigurationOverlay}
-      >
-        <IconBase icon={faFileAlt} className={"mr-1"} />
-        View Configuration
-      </Button>
-    </TooltipWrapper>
+    <VanityButtonBase
+      className={"mr-1"}
+      icon={faFileAlt}
+      buttonSize={"sm"}
+      tooltip={"View Pipeline Configuration"}
+      variant={"outline-secondary"}
+      normalText={"View Configuration"}
+      onClickFunction={launchPipelineConfigurationOverlay}
+    />
   );
 }
 
