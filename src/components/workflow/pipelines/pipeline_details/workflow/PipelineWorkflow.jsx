@@ -114,25 +114,23 @@ function PipelineWorkflow({
 
   return (
     <>
-      <div>
-        <div className="pb-1">
-          <PipelineWorkflowViewConfigurationButton
-            pipeline={pipeline}
-          />
-          <PipelineWorkflowWorkflowEditingToggleButton
-            pipeline={pipeline}
-            editingWorkflow={editWorkflow}
-            workflowStatus={status}
-            setEditingWorkflow={setEditWorkflow}
-          />
-          <PipelineWorkflowExportWorkflowButton
-            pipeline={pipeline}
-            editingWorkflow={editWorkflow}
-            gitExportEnabled={gitExportEnabled}
-            sourceRepositoryModel={sourceRepositoryModel}
-            workflowStatus={status}
-          />
-        </div>
+      <div className={"pb-1 d-flex"}>
+        <PipelineWorkflowViewConfigurationButton
+          pipeline={pipeline}
+        />
+        <PipelineWorkflowWorkflowEditingToggleButton
+          pipeline={pipeline}
+          editingWorkflow={editWorkflow}
+          workflowStatus={status}
+          setEditingWorkflow={setEditWorkflow}
+        />
+        <PipelineWorkflowExportWorkflowButton
+          pipeline={pipeline}
+          editingWorkflow={editWorkflow}
+          gitExportEnabled={gitExportEnabled}
+          sourceRepositoryModel={sourceRepositoryModel}
+          workflowStatus={status}
+        />
       </div>
 
       <div
