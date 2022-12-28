@@ -3,25 +3,28 @@ import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import useIsMountedStateReference from "hooks/useIsMountedStateReference";
 import useCancelTokenStateReference from "hooks/useCancelTokenStateReference";
+import useAccessRoleData from "hooks/roles/useAccessRoleData";
 
 export default function useComponentStateReference() {
   const isMounted = useIsMountedStateReference();
   const cancelTokenSource = useCancelTokenStateReference();
   const {
     getAccessToken,
-    userAccessRoles,
     themeConstants,
-    isSassUser,
-    isOpseraAdministrator,
     featureFlagHideItemInProd,
     featureFlagHideItemInTest,
-    isSiteAdministrator,
-    isPowerUser,
     userData,
     backgroundColor,
     isAuthenticated,
   } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
+  const {
+    isSiteAdministrator,
+    isSaasUser,
+    isOpseraAdministrator,
+    isPowerUser,
+    accessRoleData,
+  } = useAccessRoleData();
 
   useEffect(() => {}, []);
 
@@ -30,14 +33,14 @@ export default function useComponentStateReference() {
     cancelTokenSource: cancelTokenSource,
     getAccessToken: getAccessToken,
     toastContext: toastContext,
-    accessRoleData: userAccessRoles,
+    accessRoleData: accessRoleData,
     themeConstants: themeConstants,
-    isOpseraAdministrator: isOpseraAdministrator(),
+    isOpseraAdministrator: isOpseraAdministrator,
     isSiteAdministrator: isSiteAdministrator,
     isProductionEnvironment: featureFlagHideItemInProd(),
     isTestEnvironment: featureFlagHideItemInTest(),
-    isSassUser: isSassUser(), // TODO: Remove and replace with the proper spelling
-    isSaasUser: isSassUser(),
+    isSassUser: isSaasUser, // TODO: Remove and replace with the proper spelling
+    isSaasUser: isSaasUser,
     userData: userData,
     isFreeTrial: false,
     backgroundColor: backgroundColor,
