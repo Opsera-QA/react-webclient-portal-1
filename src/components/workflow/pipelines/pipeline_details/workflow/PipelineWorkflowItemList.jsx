@@ -18,7 +18,6 @@ function PipelineWorkflowItemList(
     editWorkflow,
     pipelineId,
     parentCallbackEditItem,
-    parentHandleViewSourceActivityLog,
     quietSavePlan,
     fetchPlan,
     parentWorkflowStatus,
@@ -310,7 +309,6 @@ function PipelineWorkflowItemList(
               pipelineId={pipelineId}
               parentCallbackEditItem={parentCallbackEditItem}
               deleteStep={deleteStep}
-              parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog}
               parentWorkflowStatus={parentWorkflowStatus}
               toolIdentifier={getToolIdentifierForStep(item?.tool?.tool_identifier)}
               loadPipeline={fetchPlan}
@@ -339,7 +337,6 @@ PipelineWorkflowItemList.propTypes = {
   editWorkflow: PropTypes.bool,
   pipelineId: PropTypes.string,
   parentCallbackEditItem: PropTypes.func,
-  parentHandleViewSourceActivityLog: PropTypes.func,
   quietSavePlan: PropTypes.func,
   fetchPlan: PropTypes.func,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),

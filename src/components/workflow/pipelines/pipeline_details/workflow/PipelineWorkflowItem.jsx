@@ -35,6 +35,8 @@ import PipelineStepWorkflowItemBody
   from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepWorkflowItemBody";
 import PipelineStepWorkflowItemViewSettingsButton
   from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowItemViewSettingsButton";
+import PipelineStepActivityLogOverlay
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineStepActivityLogOverlay";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
@@ -49,7 +51,6 @@ const PipelineWorkflowItem = (
     editWorkflow,
     parentCallbackEditItem,
     deleteStep,
-    parentHandleViewSourceActivityLog,
     parentWorkflowStatus,
     toolIdentifier,
     loadPipeline,
@@ -137,9 +138,16 @@ const PipelineWorkflowItem = (
       setActivityLogModal({ show: true, header: header, message: data, button: "OK" });
     };*/
 
-  const handleViewStepActivityLogClick = async (pipelineId, toolIdentifier, itemId) => {
+  const handleViewStepActivityLogClick = async (pipelineId, toolIdentifier, itemId, activityId) => {
     setIsLoading(true);
-    await parentHandleViewSourceActivityLog(pipelineId, toolIdentifier, itemId);
+    toastContext.showOverlayPanel(
+      <PipelineStepActivityLogOverlay
+        pipelineId={pipelineId}
+        stepId={itemId}
+        tool={toolIdentifier}
+        activityId={activityId}
+      />
+    );
     setIsLoading(false);
   };
 
@@ -345,7 +353,7 @@ const PipelineWorkflowItem = (
                   <div>
                     <IconBase icon={faTimesCircle} className={"ml-2 red pointer"}
                               onClickFunction={() => {
-                                parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
+                                handleViewStepActivityLogClick(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
                               }} />
                   </div>
                 </OverlayTrigger>}
@@ -370,7 +378,7 @@ const PipelineWorkflowItem = (
                   <div>
                     <IconBase icon={faCheckCircle} className={"ml-2 green pointer"}
                               onClickFunction={() => {
-                                parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
+                                handleViewStepActivityLogClick(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
                               }} />
                   </div>
                 </OverlayTrigger>}
@@ -384,7 +392,7 @@ const PipelineWorkflowItem = (
                   <IconBase icon={faSpinner} className={"ml-2 green pointer"}
                                    spinIcon={true}
                                    onClickFunction={() => {
-                                     parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
+                                     handleViewStepActivityLogClick(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
                                    }} />
 
                   </div>
@@ -567,7 +575,6 @@ PipelineWorkflowItem.propTypes = {
   parentCallbackEditItem: PropTypes.func,
   deleteStep: PropTypes.func,
   handleViewSourceActivityLog: PropTypes.func,
-  parentHandleViewSourceActivityLog: PropTypes.func,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   toolIdentifier: PropTypes.object,
   loadPipeline: PropTypes.func,

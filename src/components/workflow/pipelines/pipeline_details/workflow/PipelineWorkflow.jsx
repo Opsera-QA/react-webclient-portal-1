@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { axiosApiService } from "api/apiService";
 import { SteppedLineTo } from "react-lineto";
 import ErrorDialog from "components/common/status_notifications/error";
-import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import PipelineWorkflowItemList from "./PipelineWorkflowItemList";
 import modelHelpers from "components/common/model/modelHelpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
@@ -40,37 +39,15 @@ function PipelineWorkflow({
   status,
   lastStep,
 }) {
-  const [modalHeader, setModalHeader] = useState("");
-  const [showModal, setShowModal] = useState(false);
   const [zoomValue, setZoomValue] = useState(2); //1,2, or 3 with 2 being default zoom
-  const [modalMessage, setModalMessage] = useState({});
   const [editWorkflow, setEditWorkflow] = useState(false);
   const gitExportEnabled = pipeline?.workflow?.source?.gitExportEnabled;
   const sourceRepositoryModel = modelHelpers.parseObjectIntoModel(pipeline?.workflow?.source, sourceRepositoryConfigurationMetadata);
   const {
     toastContext,
     getAccessToken,
-    cancelTokenSource,
    } = useComponentStateReference();
 
-  // TODO: Break out into separate actions file, maybe call in a pipeline activity overlay rather than here?
-  const fetchPipelineActivityByTool = async (pipelineId, tool, stepId, activityId) => {
-    const accessToken = await getAccessToken();
-    let apiUrl = `/pipelines/${pipelineId}/activity`;
-    const params = {
-      tool: tool,
-      step_id: stepId,
-      id: activityId,
-    };
-
-    try {
-      const pipelineActivityLog = await axiosApiService(accessToken).get(apiUrl, { params });
-      return pipelineActivityLog;
-    } catch (err) {
-      toastContext.showLoadingErrorDialog(err);
-      return false;
-    }
-  };
 
   const callbackFunctionEditItem = async (item) => {
     window.scrollTo(0, 0);
@@ -95,17 +72,6 @@ function PipelineWorkflow({
       pipeline.workflow.plan = steps;
     }
     await updatePipeline(pipeline);
-  };
-
-  const handleViewSourceActivityLog = async (pipelineId, tool, stepId, activityId) => {
-    if (tool) {
-      const activityData = await fetchPipelineActivityByTool(pipelineId, tool, stepId, activityId);
-      if (activityData && activityData.data) {
-        setModalHeader("Step Activity Log");
-        setModalMessage(activityData.data.pipelineData[0]);
-        setShowModal(true);
-      }
-    }
   };
 
   if (pipeline == null || pipeline.workflow == null || !Object.prototype.hasOwnProperty.call(pipeline.workflow, "source")) {
@@ -153,7 +119,6 @@ function PipelineWorkflow({
               fetchPlan={fetchPlan}
               parentCallbackEditItem={callbackFunctionEditItem}
               quietSavePlan={quietSavePlan}
-              parentHandleViewSourceActivityLog={handleViewSourceActivityLog}
               parentWorkflowStatus={status}
             />
           </div>
@@ -182,9 +147,6 @@ function PipelineWorkflow({
           setZoomValue={setZoomValue}
         />
       </div>
-
-      <ModalActivityLogs header={modalHeader} size="lg" jsonData={modalMessage} show={showModal}
-                         setParentVisibility={setShowModal}/>
     </>
   );
 
