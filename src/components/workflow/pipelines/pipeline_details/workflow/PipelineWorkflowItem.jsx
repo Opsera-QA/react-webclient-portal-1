@@ -37,6 +37,8 @@ import PipelineStepWorkflowItemViewSettingsButton
   from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowItemViewSettingsButton";
 import PipelineStepActivityLogOverlay
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineStepActivityLogOverlay";
+import PipelineStepWorkflowItemEditNotificationSettingsButton
+  from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowItemEditNotificationSettingsButton";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
@@ -134,10 +136,6 @@ const PipelineWorkflowItem = (
     }
   };
 
-  /*  const handleViewClick = (data, header) => {
-      setActivityLogModal({ show: true, header: header, message: data, button: "OK" });
-    };*/
-
   const handleViewStepActivityLogClick = async (pipelineId, toolIdentifier, itemId, activityId) => {
     setIsLoading(true);
     toastContext.showOverlayPanel(
@@ -187,26 +185,6 @@ const PipelineWorkflowItem = (
       await parentCallbackEditItem({ type: type, tool_name: "", step_id: itemId });
     }
     setIsLoading(false);
-  };
-
-  const editStepNotificationConfiguration = async (pipelineStep) => {
-    if (PipelineRoleHelper.canUpdatePipelineStepNotifications(userData, pipeline) !== true) {
-      setInfoModal({
-        show: true,
-        header: "Permission Denied",
-        message: "Editing step notifications is not allowed.  This action requires elevated privileges.",
-        button: "OK",
-      });
-      return;
-    }
-
-    toastContext.showOverlayPanel(
-      <PipelineStepNotificationConfigurationOverlay
-        pipelineId={pipeline?._id}
-        pipelineStep={pipelineStep}
-        loadPipeline={loadPipeline}
-      />
-    );
   };
 
   const handleDeleteStepClick = (index, pipeline, step) => {
@@ -275,21 +253,15 @@ const PipelineWorkflowItem = (
                 </OverlayTrigger>}
               </>}
 
+            <PipelineStepWorkflowItemEditNotificationSettingsButton
+              pipeline={pipeline}
+              step={item}
+              editingWorkflow={editWorkflow}
+              pipelineStatus={parentWorkflowStatus}
+            />
+
             {parentWorkflowStatus !== "running" && parentWorkflowStatus !== "paused" ? //if the overall pipeline is in a running/locked state
               <>
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Configure Step Notification and Approval Rules" })}>
-                  <div>
-                    <IconBase icon={faEnvelope}
-                              className={"pointer text-muted mx-1"}
-                              onClickFunction={() => {
-                                editStepNotificationConfiguration(item);
-                              }} />
-                  </div>
-                </OverlayTrigger>
-
                 <OverlayTrigger
                   placement="top"
                   delay={{ show: 250, hide: 400 }}
@@ -306,16 +278,6 @@ const PipelineWorkflowItem = (
               </>
               :
               <>
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
-                  <div>
-                    <IconBase icon={faEnvelope}
-                              className={"text-muted mx-1"} />
-                  </div>
-                </OverlayTrigger>
-
                 <OverlayTrigger
                   placement="top"
                   delay={{ show: 250, hide: 400 }}

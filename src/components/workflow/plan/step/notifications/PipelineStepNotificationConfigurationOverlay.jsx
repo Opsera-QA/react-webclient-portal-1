@@ -1,27 +1,45 @@
-import React, {useContext} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import {faEnvelope, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import PipelineStepNotificationEditorPanel
   from "components/workflow/plan/step/notifications/PipelineStepNotificationEditorPanel";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 
-function PipelineStepNotificationConfigurationOverlay(
+export default function PipelineStepNotificationConfigurationOverlay(
   {
+    pipeline,
     pipelineStep,
     pipelineId,
-    loadPipeline,
   }) {
-  const toastContext = useContext(DialogToastContext);
+  const {
+    userData,
+    toastContext,
+  } = useComponentStateReference();
 
   const closePanel = () => {
     toastContext.clearOverlayPanel();
-    loadPipeline();
   };
 
   if (pipelineStep == null || isMongoDbId(pipelineId) !== true) {
     return null;
+  }
+
+  if (PipelineRoleHelper.canUpdatePipelineStepNotifications(userData, pipeline) !== true) {
+    return (
+      <ConfirmationOverlay
+        closePanel={closePanel}
+        titleText={"Permission Denied"}
+        titleIcon={faExclamationCircle}
+      >
+        <div className={"p-3"}>
+          Editing step notifications is not allowed.  This action requires elevated privileges.
+        </div>
+      </ConfirmationOverlay>
+    );
   }
 
   return (
@@ -47,7 +65,5 @@ function PipelineStepNotificationConfigurationOverlay(
 PipelineStepNotificationConfigurationOverlay.propTypes = {
   pipelineStep: PropTypes.object,
   pipelineId: PropTypes.string,
-  loadPipeline: PropTypes.func,
+  pipeline: PropTypes.object,
 };
-
-export default PipelineStepNotificationConfigurationOverlay;

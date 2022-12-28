@@ -270,7 +270,7 @@ function PipelineWorkflowItemList(
     return (
       <>
         <SteppedLineTo
-          from={"step-" + item._id}
+          from={`step-${item._id}`}
           to={"step-" + index}
           delay={100}
           orientation={"v"}
