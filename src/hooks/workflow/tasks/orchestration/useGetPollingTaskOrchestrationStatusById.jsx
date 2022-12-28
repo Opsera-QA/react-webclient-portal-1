@@ -19,10 +19,10 @@ export default function useGetPollingTaskOrchestrationStatusById(
   } = useGetTaskOrchestrationStatusById(id, handleErrorFunction);
 
   usePollingInterval(() => {
-    if (loadData && [404, 403].includes(error?.response?.status) !== true) {
+    if (loadData) {
       loadData();
     }
-  }, Math.max(pollingDelayInMs, 5000));
+  }, Math.max(pollingDelayInMs, 5000), error);
 
   return ({
     status: status,
