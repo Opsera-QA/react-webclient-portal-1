@@ -1,20 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {getBreadcrumb} from "components/common/navigation/trails";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import SelectionCardBase from "components/common/card/selection/SelectionCardBase";
 import {useHistory} from "react-router-dom";
-
-const getPathLink = (breadcrumb, pathParameter) => {
-  const parsedBreadcrumb = DataParsingHelper.parseObject(breadcrumb, {});
-
-  if (parsedBreadcrumb?.pathFunction && pathParameter) {
-    return parsedBreadcrumb.pathFunction(pathParameter);
-  }
-
-  return parsedBreadcrumb.path;
-};
+import {breadcrumbsHelper} from "temp-library-components/breadcrumbs/breadcrumbs.helper";
 
 export default function BreadcrumbPageLinkSelectionCardBase(
   {
@@ -26,7 +16,7 @@ export default function BreadcrumbPageLinkSelectionCardBase(
   }) {
   const history = useHistory();
   const breadcrumb = getBreadcrumb(breadcrumbDestination);
-  const breadcrumbPath = getPathLink(breadcrumb, pathParameter);
+  const breadcrumbPath = breadcrumbsHelper.getPathLink(breadcrumb, pathParameter);
 
   const handleOnClickFunction = () => {
     history.push(breadcrumbPath);
@@ -43,8 +33,8 @@ export default function BreadcrumbPageLinkSelectionCardBase(
 
   return (
     <SelectionCardBase
-      label={breadcrumb?.title}
-      description={breadcrumb?.pageDescription}
+      titleText={breadcrumb?.title}
+      body={breadcrumb?.pageDescription}
       icon={breadcrumb?.icon}
       onClickFunction={handleOnClickFunction}
       inactive={inactive}

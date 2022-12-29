@@ -10,8 +10,8 @@ export default function SelectionCardBase(
     selectedOption,
     value,
     onClickFunction,
-    description,
-    label,
+    body,
+    titleText,
     disabled,
     visible,
     style,
@@ -58,11 +58,11 @@ export default function SelectionCardBase(
     });
   };
 
-  const getDescription = () => {
-    if (description) {
+  const getBody = () => {
+    if (body) {
       return (
         <div className={"mt-2"}>
-          {description}
+          {body}
         </div>
       );
     }
@@ -80,11 +80,11 @@ export default function SelectionCardBase(
         style={getStyle()}
         onClick={handleOnClickFunction}
       >
-        <div className={"p-3"}>
+        <div className={"p-3 w-100"}>
           <div className={"d-flex"}>
             <div className={"h-100 w-100"}>
-              <strong>{label}</strong>
-              {getDescription()}
+              <strong>{titleText}</strong>
+              {getBody()}
             </div>
           </div>
         </div>
@@ -96,12 +96,12 @@ export default function SelectionCardBase(
 SelectionCardBase.propTypes = {
   onClickFunction: PropTypes.func,
   className: PropTypes.string,
-  label: PropTypes.any,
+  titleText: PropTypes.any,
   disabled: PropTypes.bool,
   inactive: PropTypes.bool,
   value: PropTypes.string,
   visible: PropTypes.bool,
-  description: PropTypes.any,
+  body: PropTypes.any,
   style: PropTypes.object,
   isLoading: PropTypes.bool,
   highlightedBorderColor: PropTypes.string,

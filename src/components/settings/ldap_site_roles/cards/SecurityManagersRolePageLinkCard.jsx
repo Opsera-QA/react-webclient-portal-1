@@ -11,6 +11,7 @@ export default function SecurityManagersRolePageLinkCard({ securityManagersSiteR
   return (
     <SiteRoleManagementPageLinkCardBase
       breadcrumbDestination={"ldapSecurityManagersSiteRoleDetailView"}
+      siteRole={securityManagersSiteRole}
     />
   );
 }
