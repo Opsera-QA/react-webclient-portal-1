@@ -19,6 +19,7 @@ export default function InactiveAuditorsRolePageLinkCard() {
     toastContext.showOverlayPanel(
       <SiteRoleActivationConfirmationOverlay
         siteRoleName={SiteRoleHelper.SITE_ROLE_GROUP_NAMES.AUDITORS}
+        siteRole={SiteRoleHelper.SITE_ROLES.AUDITOR}
       />
     );
   };

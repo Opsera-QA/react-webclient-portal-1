@@ -3,7 +3,7 @@ import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {
-  faAnalytics,
+  faAnalytics, faShieldCross,
   faTags,
   faTools,
   faUsers
@@ -30,6 +30,9 @@ function ReportsSubNavigationBar({currentTab}) {
         return;
       case "userReports":
         history.push(`/reports/users`);
+        return;
+      case "auditReports":
+        history.push(`/reports/audit`);
         return;
       case "all":
         history.push(`/reports`);
@@ -91,6 +94,21 @@ function ReportsSubNavigationBar({currentTab}) {
   return (
     <NavigationTabContainer>
       <NavigationTab activeTab={currentTab} tabText={"All Reports"} handleTabClick={handleTabClick} tabName={"all"} icon={faAnalytics} />
+      {/*<NavigationTab*/}
+      {/*  activeTab={currentTab}*/}
+      {/*  tabText={"Audit Reports"}*/}
+      {/*  handleTabClick={handleTabClick}*/}
+      {/*  tabName={"auditReports"}*/}
+      {/*  icon={faShieldCross}*/}
+      {/*/>*/}
+      {/*<NavigationTab*/}
+      {/*  icon={faUsers}*/}
+      {/*  tabName={"auditReportViewer"}*/}
+      {/*  handleTabClick={handleTabClick}*/}
+      {/*  activeTab={currentTab}*/}
+      {/*  tabText={"Audit Report Viewer"}*/}
+      {/*  visible={currentTab === "auditReportViewer"}*/}
+      {/*/>*/}
       <NavigationTab activeTab={currentTab} tabText={"Tag Reports"} handleTabClick={handleTabClick} tabName={"tagReports"} icon={faTags} />
       <NavigationTab activeTab={currentTab} tabText={"Tool Reports"} handleTabClick={handleTabClick} tabName={"toolReports"} icon={faTools} />
       {getDynamicUserTab()}

@@ -19,6 +19,7 @@ export default function InactiveSecurityManagersRolePageLinkCard() {
     toastContext.showOverlayPanel(
       <SiteRoleActivationConfirmationOverlay
         siteRoleName={SiteRoleHelper.SITE_ROLE_GROUP_NAMES.SECURITY_MANAGERS}
+        siteRole={SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER}
       />
     );
   };
