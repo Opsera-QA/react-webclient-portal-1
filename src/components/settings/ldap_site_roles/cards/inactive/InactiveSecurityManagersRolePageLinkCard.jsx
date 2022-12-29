@@ -12,7 +12,12 @@ export default function InactiveSecurityManagersRolePageLinkCard() {
   } = useComponentStateReference();
 
   const getBody = () => {
-    return "This Site Role has not been activated yet. Click here to begin the activation process.";
+    return (
+      <div>
+        <div>{accountSettingsTrails.ldapSecurityManagersSiteRoleDetailView.pageDescription}</div>
+        <div className={"mt-2"}>{`This Site Role has not been activated yet. Click here to begin the activation process.`}</div>
+      </div>
+    );
   };
 
   const launchActivationConfirmationOverlay = () => {
@@ -26,10 +31,10 @@ export default function InactiveSecurityManagersRolePageLinkCard() {
 
   return (
     <SelectionCardBase
-      className={"my-2"}
-      label={accountSettingsTrails.ldapSecurityManagersSiteRoleDetailView.title}
+      className={"my-3"}
+      titleText={accountSettingsTrails.ldapSecurityManagersSiteRoleDetailView.title}
       inactive={true}
-      description={getBody()}
+      body={getBody()}
       onClickFunction={launchActivationConfirmationOverlay}
     />
   );
