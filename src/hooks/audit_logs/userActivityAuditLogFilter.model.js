@@ -42,11 +42,16 @@ const userActivityAuditLogFilterMetadata = {
       label: "Site Roles",
       id: "siteRoles",
     },
+    {
+      label: "Type",
+      id: "type",
+    },
   ],
   newObjectFields: {
     pageSize: 25,
     currentPage: 1,
     actions: [],
+    type: "",
     search: "",
     user: "",
     siteRoles: [],
@@ -83,6 +88,12 @@ export class UserActivityAuditLogFilterModel extends FilterModelBase {
 
     if (searchText) {
       activeFilters.push({filterId: "search", text: `Keywords: ${searchText}`});
+    }
+
+    const type = DataParsingHelper.parseString(this.getData("type"));
+
+    if (auditLogTypeConstants.isUserActivityLogTypeValid(type) === true) {
+      activeFilters.push({filterId: "type", text: `Type: ${auditLogTypeConstants.getUserActivityLogTypeLabel(type)}`});
     }
 
     const user = DataParsingHelper.parseMongoDbId(this.getData("user"));
