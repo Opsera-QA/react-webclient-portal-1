@@ -6,16 +6,19 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import SelectionCardBase from "components/common/card/selection/SelectionCardBase";
 import {breadcrumbsHelper} from "temp-library-components/breadcrumbs/breadcrumbs.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function SiteRoleManagementPageLinkCardBase(
   {
     siteRole,
     breadcrumbDestination,
-    pathParameter,
   }) {
+  const {
+    userData,
+  } = useComponentStateReference();
   const history = useHistory();
   const breadcrumb = getBreadcrumb(breadcrumbDestination);
-  const breadcrumbPath = breadcrumbsHelper.getPathLink(breadcrumb, pathParameter);
+  const breadcrumbPath = breadcrumbsHelper.getPathLink(breadcrumb, userData);
 
   const handleOnClickFunction = () => {
     history.push(breadcrumbPath);
@@ -63,5 +66,4 @@ export default function SiteRoleManagementPageLinkCardBase(
 SiteRoleManagementPageLinkCardBase.propTypes = {
   siteRole: PropType.object,
   breadcrumbDestination: PropType.string,
-  pathParameter: PropType.any,
 };
