@@ -1,7 +1,5 @@
 import { modelValidation, validateData, validateField, validatePotentialValue } from "core/data_model/modelValidation";
-import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export const DataState = {
@@ -27,9 +25,9 @@ export default class ModelBase {
     setStateFunction,
     loadDataFunction,
   ) {
-    this.metaData = dataParsingHelper.cloneDeep({...metaData});
+    this.metaData = DataParsingHelper.cloneDeep({...metaData});
     this.data = {...this.getNewObjectFields(), ...data};
-    this.originalData = dataParsingHelper.cloneDeep(this.data);
+    this.originalData = DataParsingHelper.cloneDeep(this.data);
     this.newModel = newModel;
     this.id = data?._id;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
@@ -50,7 +48,7 @@ export default class ModelBase {
       return null;
     }
 
-    return dataParsingHelper.safeObjectPropertyParser(this.data, fieldName);
+    return DataParsingHelper.safeObjectPropertyParser(this.data, fieldName);
   };
 
   removeArrayItem = (fieldName, index) => {
@@ -71,7 +69,7 @@ export default class ModelBase {
       this.propertyChange(fieldName, newValue, oldValue);
     }
 
-    this.data = dataParsingHelper.safeObjectPropertySetter(this.data, fieldName, newValue);
+    this.data = DataParsingHelper.safeObjectPropertySetter(this.data, fieldName, newValue);
     this.updateState();
   };
 
@@ -128,6 +126,15 @@ export default class ModelBase {
 
   setMetaDataFields = (newMetaDataFields) => {
     this.metaData.fields = newMetaDataFields;
+  };
+
+  getStringData = (fieldName) => {
+    if (hasStringValue(fieldName) !== true) {
+      console.error("No field name was given, so returning null");
+      return null;
+    }
+
+    return DataParsingHelper.parseNestedString(this.data, fieldName, "");
   };
 
   setTextData = (fieldName, newValue) => {
@@ -483,7 +490,7 @@ export default class ModelBase {
   };
 
   clone = () => {
-    return dataParsingHelper.cloneDeep(this);
+    return DataParsingHelper.cloneDeep(this);
   };
 
   getNewInstance = (newData = this.getNewObjectFields()) => {

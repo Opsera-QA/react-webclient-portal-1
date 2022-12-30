@@ -19,6 +19,7 @@ import PipelineWorkflowSourceRepositoryItem
   from "components/workflow/pipelines/pipeline_details/workflow/source/PipelineWorkflowSourceRepositoryItem";
 import PipelineWorkflowZoomButtons
   from "components/workflow/pipelines/pipeline_details/workflow/buttons/PipelineWorkflowZoomButtons";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const getZoomClass = (val) => {
   switch (val) {
@@ -40,9 +41,11 @@ function PipelineWorkflow({
   lastStep,
 }) {
   const [zoomValue, setZoomValue] = useState(2); //1,2, or 3 with 2 being default zoom
+  const [updatingWorkflow, setUpdatingWorkflow] = useState(2); //1,2, or 3 with 2 being default zoom
   const [editWorkflow, setEditWorkflow] = useState(false);
-  const gitExportEnabled = pipeline?.workflow?.source?.gitExportEnabled;
-  const sourceRepositoryModel = modelHelpers.parseObjectIntoModel(pipeline?.workflow?.source, sourceRepositoryConfigurationMetadata);
+  const workflowSource = DataParsingHelper.parseNestedObject(pipeline, "workflow.source", {});
+  const gitExportEnabled = DataParsingHelper.parseBooleanV2(workflowSource.gitExportEnabled, false);
+  const sourceRepositoryModel = modelHelpers.parseObjectIntoModel(workflowSource, sourceRepositoryConfigurationMetadata);
   const {
     toastContext,
     getAccessToken,
@@ -57,24 +60,26 @@ function PipelineWorkflow({
   };
 
   const updatePipeline = async (pipeline) => {
+    setUpdatingWorkflow(true);
     const accessToken = await getAccessToken();
     const apiUrl = `/pipelines/${pipeline._id}/update`;
     try {
       await axiosApiService(accessToken).post(apiUrl, pipeline);
     } catch (err) {
       toastContext.showLoadingErrorDialog(err);
+    } finally {
+      setUpdatingWorkflow(false);
     }
   };
 
   const quietSavePlan = async (steps) => {
-    console.log("saving plan quietly: ", pipeline.workflow.plan);
     if (steps) {
       pipeline.workflow.plan = steps;
     }
     await updatePipeline(pipeline);
   };
 
-  if (pipeline == null || pipeline.workflow == null || !Object.prototype.hasOwnProperty.call(pipeline.workflow, "source")) {
+  if (pipeline == null || Object.keys(workflowSource)?.length === 0) {
     return <ErrorDialog error={"Pipeline Workflow Details Not Found"} align={"top"}/>;
   }
 
@@ -105,23 +110,21 @@ function PipelineWorkflow({
           <PipelineWorkflowSourceRepositoryItem
             pipeline={pipeline}
             status={status}
-            softLoading={softLoading}
+            softLoading={softLoading || updatingWorkflow}
           />
 
           <div style={{ height: "40px" }}>&nbsp;</div>
 
-          <div className="step-items workflow-module-container-width mx-auto">
-            <PipelineWorkflowItemList
-              pipeline={pipeline}
-              lastStep={lastStep}
-              editWorkflow={editWorkflow}
-              pipelineId={pipeline._id}
-              fetchPlan={fetchPlan}
-              parentCallbackEditItem={callbackFunctionEditItem}
-              quietSavePlan={quietSavePlan}
-              parentWorkflowStatus={status}
-            />
-          </div>
+          <PipelineWorkflowItemList
+            pipeline={pipeline}
+            lastStep={lastStep}
+            editWorkflow={editWorkflow}
+            pipelineId={pipeline._id}
+            fetchPlan={fetchPlan}
+            parentCallbackEditItem={callbackFunctionEditItem}
+            quietSavePlan={quietSavePlan}
+            parentWorkflowStatus={status}
+          />
 
           <SteppedLineTo
             from={"source"}

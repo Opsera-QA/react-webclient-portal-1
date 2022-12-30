@@ -15,8 +15,8 @@ import {
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PipelineWorkflowItemFieldBase
   from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
-import PipelineWorkflowItemField
-  from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemField";
+import PipelineWorkflowStepTextField
+  from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepTextField";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 import EditPipelineWorkflowSourceRepositoryIcon
   from "components/workflow/pipelines/pipeline_details/workflow/source/EditPipelineWorkflowSourceRepositoryIcon";
@@ -43,6 +43,23 @@ export default function PipelineWorkflowSourceRepositoryItem(
     );
   };
 
+  // TODO: In the long term we should stamp which field in the metadata should correspond to this,
+  //  so we can capture cases where they're saved in different fields
+  const getSecondaryBranchesField = () => {
+    const secondaryBranches = DataParsingHelper.parseNestedArray(source, "secondary_branches");
+
+    if (secondaryBranches) {
+      return (
+        <PipelineWorkflowItemFieldBase
+          icon={faCodeBranch}
+          className={"mx-2 my-1"}
+          label={"Secondary Branches"}
+          value={secondaryBranches?.join(", ")}
+        />
+      );
+    }
+  };
+
   const getTitle = () => {
     if (softLoading === true) {
       return (
@@ -62,24 +79,19 @@ export default function PipelineWorkflowSourceRepositoryItem(
   return (
     <div className={"source workflow-module-container workflow-module-container-width mt-2 mx-auto"}>
       {getTitle()}
-      <PipelineWorkflowItemField
+      <PipelineWorkflowStepTextField
         icon={faCode}
         fieldName={"repository"}
         model={sourceRepositoryModel}
         className={"mx-2 my-1"}
       />
-      <PipelineWorkflowItemField
+      <PipelineWorkflowStepTextField
         icon={faCodeBranch}
         fieldName={"branch"}
         model={sourceRepositoryModel}
         className={"mx-2 my-1"}
       />
-      <PipelineWorkflowItemFieldBase
-        icon={faCodeBranch}
-        className={"mx-2 my-1"}
-        label={"Secondary Branches"}
-        value={sourceRepositoryModel.getArrayData("secondary_branches").join(", ")}
-      />
+      {getSecondaryBranchesField()}
       <PipelineWorkflowItemFieldBase
         icon={faClipboardCheck}
         className={"mx-2 my-1"}

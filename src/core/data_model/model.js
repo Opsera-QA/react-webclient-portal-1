@@ -1,5 +1,4 @@
 import { modelValidation, validateData, validateField, validatePotentialValue } from "core/data_model/modelValidation";
-import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
@@ -13,9 +12,9 @@ export const DataState = {
 export class Model {
 
   constructor(data, metaData, newModel) {
-    this.metaData = dataParsingHelper.cloneDeep(metaData);
+    this.metaData = DataParsingHelper.cloneDeep(metaData);
     this.data = {...this.getNewObjectFields(), ...data};
-    this.originalData = dataParsingHelper.cloneDeep(this.data);
+    this.originalData = DataParsingHelper.cloneDeep(this.data);
     this.newModel = newModel;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
     this.changeMap = new Map();
@@ -27,7 +26,16 @@ export class Model {
       return null;
     }
 
-    return dataParsingHelper.safeObjectPropertyParser(this.data, fieldName);
+    return DataParsingHelper.safeObjectPropertyParser(this.data, fieldName);
+  };
+
+  getStringData = (fieldName) => {
+    if (hasStringValue(fieldName) !== true) {
+      console.error("No field name was given, so returning null");
+      return null;
+    }
+
+    return DataParsingHelper.parseNestedString(this.data, fieldName, "");
   };
 
   getObjectData = (fieldName, defaultValue = {}) => {
@@ -54,7 +62,7 @@ export class Model {
 
   setData = (fieldName, newValue) => {
     this.propertyChange(fieldName, newValue, this.getData(fieldName));
-    this.data = dataParsingHelper.safeObjectPropertySetter(this.data, fieldName, newValue);
+    this.data = DataParsingHelper.safeObjectPropertySetter(this.data, fieldName, newValue);
   };
 
   setDefaultValue = (fieldName) => {
@@ -403,7 +411,7 @@ export class Model {
   };
 
   clone = () => {
-    return dataParsingHelper.cloneDeep(this);
+    return DataParsingHelper.cloneDeep(this);
   };
 
   getNewInstance = (newData = this.getNewObjectFields(), isNew = this.newModel) => {
