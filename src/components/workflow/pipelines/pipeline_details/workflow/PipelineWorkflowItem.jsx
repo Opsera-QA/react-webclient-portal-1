@@ -10,7 +10,6 @@ import {
   faExclamationTriangle,
   faSpinner,
   faCheckCircle,
-  faEnvelope,
   faTimesCircle,
   faTrash,
   faBan,
@@ -22,8 +21,6 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 import { pipelineValidationHelper } from "components/workflow/pipelines/helpers/pipelineValidation.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import PipelineStepNotificationConfigurationOverlay
-  from "components/workflow/plan/step/notifications/PipelineStepNotificationConfigurationOverlay";
 import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
@@ -39,6 +36,9 @@ import PipelineStepActivityLogOverlay
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineStepActivityLogOverlay";
 import PipelineStepWorkflowItemEditNotificationSettingsButton
   from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowItemEditNotificationSettingsButton";
+import AccessDeniedOverlayBase from "components/common/overlays/center/denied/AccessDeniedOverlayBase";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
+import InfoOverlayBase from "components/common/overlays/info/InfoOverlayBase";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
@@ -62,7 +62,6 @@ const PipelineWorkflowItem = (
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [modalDeleteIndex, setModalDeleteIndex] = useState(false);
   const [modalDeleteObj, setModalDeleteObj] = useState(false);
-  const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [activityLogModal, setActivityLogModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [showToolActivity, setShowToolActivity] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -97,11 +96,7 @@ const PipelineWorkflowItem = (
       const lastStepSuccess = DataParsingHelper.parseNestedObject(lastStep, "success");
 
       if (lastStepSuccess) {
-        let stepArrayIndex = plan.findIndex((x) => {
-          if (x._id && x._id.toString() === lastStepSuccess.step_id) {
-            return true;
-          }
-        });
+        const stepArrayIndex = pipelineHelper.getStepIndexFromPlan(plan, lastStepSuccess?.step_id);
         if (index === stepArrayIndex) {  //current step is successful, so it's completed
           setCurrentStatus(lastStepSuccess);
           setItemState("completed");
@@ -111,9 +106,11 @@ const PipelineWorkflowItem = (
       const lastStepRunning = DataParsingHelper.parseNestedObject(lastStep, "running");
 
       if (lastStepRunning) {
-        let stepArrayIndex = plan.findIndex(x => x?._id?.toString() === lastStepRunning.step_id);
-        if (index === stepArrayIndex) {  //current step is successful, so it's completed
+        const stepArrayIndex = pipelineHelper.getStepIndexFromPlan(plan, lastStepRunning?.step_id);
+
+        if (index === stepArrayIndex) {  //current step is running, so it's completed
           setCurrentStatus(lastStepRunning);
+
           if (lastStepRunning.paused) {
             setItemState("paused");
           } else if (lastStepRunning.status === "stopped") {
@@ -127,8 +124,9 @@ const PipelineWorkflowItem = (
       const lastStepFailed = DataParsingHelper.parseNestedObject(lastStep, "failed");
 
       if (lastStepFailed) {
-        let stepArrayIndex = plan.findIndex(x => x?._id?.toString() === lastStepFailed.step_id);
-        if (index === stepArrayIndex) {  //current step is successful, so it's completed
+        const stepArrayIndex = pipelineHelper.getStepIndexFromPlan(plan, lastStepFailed?.step_id);
+
+        if (index === stepArrayIndex) {  //current step is failed, so it's completed
           setCurrentStatus(lastStepFailed);
           setItemState("failed");
         }
@@ -151,16 +149,14 @@ const PipelineWorkflowItem = (
 
   const handleEditClick = async (type, tool, itemId, pipelineStep) => {
     if (PipelineRoleHelper.canUpdatePipelineStepDetails(userData, pipeline) !== true) {
-      setInfoModal({
-        show: true,
-        header: "Permission Denied",
-        message: "Editing step settings is not allowed.  This action requires elevated privileges.",
-        button: "OK",
-      });
+      toastContext.showOverlayPanel(
+        <AccessDeniedOverlayBase>
+          Editing step settings is not allowed. This action requires elevated privileges.
+        </AccessDeniedOverlayBase>
+      );
       return;
     }
 
-    setIsLoading(true);
     const toolIdentifier = tool?.tool_identifier;
 
     if (hasStringValue(toolIdentifier) === true) {
@@ -183,20 +179,16 @@ const PipelineWorkflowItem = (
       }
     } else {
       // TODO: Implement opening tool setter
-      // if (PipelineRoleHelper.canModifyPipelineWorkflowStructure(userData, pipeline) !== true) {
-      //   setInfoModal({
-      //     show: true,
-      //     header: "Permission Denied",
-      //     message: "Editing pipeline workflow structure is not allowed. This action requires elevated privileges. The Pipeline Step needs to have its tool set by someone with sufficient access.",
-      //     button: "OK",
-      //   });
-      //   return;
-      // }
-      // await parentCallbackEditItem({ type: "step", tool_name: "", step_id: itemId });
-      await parentCallbackEditItem({ type: type, tool_name: "", step_id: itemId });
+      if (PipelineRoleHelper.canModifyPipelineWorkflowStructure(userData, pipeline) !== true) {
+        toastContext.showOverlayPanel(
+          <AccessDeniedOverlayBase>
+            Editing pipeline workflow structure is not allowed for this unconfigured step. This action requires elevated privileges. The Pipeline Step needs to have its tool set by someone with sufficient access.
+          </AccessDeniedOverlayBase>
+        );
+        return;
+      }
+      await parentCallbackEditItem({ type: "step", tool_name: "", step_id: itemId });
     }
-
-    setIsLoading(false);
   };
 
   const handleDeleteStepClick = (index, pipeline, step) => {
@@ -386,36 +378,27 @@ const PipelineWorkflowItem = (
                 <OverlayTrigger
                   placement="top"
                   delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Warning: Step configuration settings are incomplete!" })}>
+                  overlay={renderTooltip({message: "Warning: Step configuration settings are incomplete!"})}>
                   <div>
-                  <IconBase icon={faExclamationTriangle} className="ml-2 yellow pointer"
-                                   onClickFunction={() => {
-                                     setInfoModal({
-                                       show: true,
-                                       header: "Step Warning",
-                                       message: "This step is either missing configuration settings or needs to be reviewed.  In its current state, it will not run.  Please view the step settings and ensure the required fields are provided and valid.",
-                                       button: "OK",
-                                     });
-                                   }} />
+                    <IconBase
+                      icon={faExclamationTriangle}
+                      className="ml-2 yellow pointer"
+                      onClickFunction={() => {
+                        toastContext.showOverlayPanel(
+                          <InfoOverlayBase
+                            titleText={"Step Warning"}
+                            titleIcon={faExclamationTriangle}
+                          >
+                            {`
+                              This step is either missing configuration settings or needs to be reviewed. 
+                              In its current state, it will not run properly.  
+                              Please view the step settings and ensure the required fields are provided and valid.
+                            `}
+                          </InfoOverlayBase>
+                        );
+                      }}/>
                   </div>
                 </OverlayTrigger>}
-
-                {/*{(itemState === "pending" && item.active) &&
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "This is the next pending step in the workflow" })}>
-                  <IconBase icon={faHourglassStart} className={"mr-2 yellow pointer"}
-                                   onClickFunction={() => {
-                                     setInfoModal({
-                                       show: true,
-                                       header: "Step Warning",
-                                       message: "This step is the next pending step in the workflow.",
-                                       button: "OK",
-                                     });
-                                   }}/>
-                </OverlayTrigger>
-                }*/}
 
                 {!item.active &&
                 <OverlayTrigger
@@ -427,12 +410,17 @@ const PipelineWorkflowItem = (
                       icon={faBan}
                       className={"ml-2 dark-grey pointer"}
                       onClickFunction={() => {
-                        setInfoModal({
-                          show: true,
-                          header: "Step Disabled",
-                          message: "This step is currently disabled and will be skipped during a pipeline run.  To enable this step, edit the workflow (via the pipeline editor icon at the top) and mark the step as Active.",
-                          button: "OK",
-                        });
+                        toastContext.showOverlayPanel(
+                          <InfoOverlayBase
+                            titleText={"Step Warning"}
+                            titleIcon={faExclamationTriangle}
+                          >
+                            {`
+                              This step is currently disabled and will be skipped during a pipeline run.  
+                              If you have sufficient access, you can enable this step by clicking the edit workflow button at the top and then edit the step's configuration (via the pipeline step editor icon at the top) and mark the step as Active.
+                            `}
+                          </InfoOverlayBase>
+                        );
                       }}
                     />
                   </div>
@@ -507,9 +495,6 @@ const PipelineWorkflowItem = (
         liveStreamObject={activityLogModal.liveData}
         show={activityLogModal.show}
         setParentVisibility={() => setActivityLogModal({ ...activityLogModal, show: false })} />
-
-      {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
-                                handleCancelModal={() => setInfoModal({ ...infoModal, show: false })} />}
 
       {showDeleteModal && <Modal header="Confirm Pipeline Step Delete"
                                  message="Warning! Data about this step cannot be recovered once it is deleted. Do you still want to proceed?"
