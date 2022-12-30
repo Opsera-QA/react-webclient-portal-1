@@ -1,22 +1,19 @@
 import React from "react";
-import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
 import CustomTab from "components/common/tabs/CustomTab";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 
-function PipelineWorkflowTabBar(
+export default function PipelineWorkflowTabBar(
   {
     currentTab,
-    pipelineId,
+    setCurrentTab,
     getPipeline,
   }) {
-  const history = useHistory();
-
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
 
     if (currentTab !== tabSelection) {
-      history.push(`/workflow/details/${pipelineId}/${tabSelection}`);
+      setCurrentTab(tabSelection);
       getPipeline();
     }
   };
@@ -41,9 +38,6 @@ function PipelineWorkflowTabBar(
 
 PipelineWorkflowTabBar.propTypes = {
   currentTab: PropTypes.string,
-  pipelineId: PropTypes.string,
   getPipeline: PropTypes.func,
-  refreshTimer: PropTypes.any,
+  setCurrentTab: PropTypes.func,
 };
-
-export default PipelineWorkflowTabBar;
