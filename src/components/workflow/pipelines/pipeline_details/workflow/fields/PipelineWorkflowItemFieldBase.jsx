@@ -14,7 +14,7 @@ export default function PipelineWorkflowItemFieldBase(
   }) {
   const colon = hideColon !== true ? ":" : "";
 
-  if (hasStringValue(value) !== true) {
+  if (value == null) {
     return null;
   }
 

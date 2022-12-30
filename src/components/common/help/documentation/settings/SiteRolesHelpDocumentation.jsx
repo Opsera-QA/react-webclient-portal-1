@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
 
-
 function SiteRolesHelpDocumentation() {
   const toastContext = useContext(DialogToastContext);
 
@@ -23,7 +22,7 @@ function SiteRolesHelpDocumentation() {
             <li>To <b>remove</b> a member from the Site Role, select user’s name from the column on the right to highlight it, then click the ‘Remove Selected‘ button. The user‘s name will move into the ‘Not Members’ column on the left.</li>
             <li>Click the ‘Save’ button.</li>
           </ol>
-         Note: For any Site Role membership changes go into effect, user must log out then log back into the portal.
+          <div>Note: For any Site Role membership changes go into effect, user must log out then log back into the portal.</div>
         </div>
       </div>
 
@@ -36,8 +35,7 @@ function SiteRolesHelpDocumentation() {
       showPanel={true}
       helpTopic={"Site Roles Management"}
       helpDocumentation={getHelpDocumentation()}
-    >
-    </HelpOverlayBase>
+    />
   );
 }
 

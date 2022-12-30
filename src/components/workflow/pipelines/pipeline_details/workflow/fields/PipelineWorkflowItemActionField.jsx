@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import PipelineWorkflowItemFieldBase
   from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowItemFieldBase";
-import { faBallotCheck, faFileCheck } from "@fortawesome/pro-light-svg-icons";
+import { faFileCheck } from "@fortawesome/pro-light-svg-icons";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PipelineWorkflowItemPipelineInstructionsField

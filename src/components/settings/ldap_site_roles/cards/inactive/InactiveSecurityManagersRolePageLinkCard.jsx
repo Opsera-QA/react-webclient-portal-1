@@ -5,6 +5,9 @@ import SiteRoleActivationConfirmationOverlay
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 import SelectionCardBase from "components/common/card/selection/SelectionCardBase";
 import {accountSettingsTrails} from "components/settings/accountSettings.trails";
+import HelpInfoOverlayIcon from "components/common/icons/general/HelpInfoOverlayIcon";
+import SiteRoleAccessRuleMatrixTable
+  from "components/settings/ldap_site_roles/cards/inactive/SiteRoleAccessRuleMatrixTable";
 
 export default function InactiveSecurityManagersRolePageLinkCard() {
   const {
@@ -20,6 +23,29 @@ export default function InactiveSecurityManagersRolePageLinkCard() {
     );
   };
 
+  const helpOverlayBody = (
+    <div>
+      <div className={"mb-2"}>The {SiteRoleHelper.getLabelForSiteRole(SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER)} Site Role is an optional Site Role that Site Administrators can enable.</div>
+      <div className={"mb-2"}>Users assigned to the {SiteRoleHelper.getLabelForSiteRole(SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER)} Site Role will get these permissions</div>
+      <SiteRoleAccessRuleMatrixTable
+        siteRole={SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER}
+      />
+    </div>
+  );
+
+  const title = (
+    <div className={"d-flex justify-content-between"}>
+      <div>{accountSettingsTrails.ldapSecurityManagersSiteRoleDetailView.title}</div>
+      <div>
+        <HelpInfoOverlayIcon
+          infoOverlay={helpOverlayBody}
+          iconSize={"lg"}
+          title={"Security Manager Site Role"}
+        />
+      </div>
+    </div>
+  );
+
   const launchActivationConfirmationOverlay = () => {
     toastContext.showOverlayPanel(
       <SiteRoleActivationConfirmationOverlay
@@ -32,7 +58,7 @@ export default function InactiveSecurityManagersRolePageLinkCard() {
   return (
     <SelectionCardBase
       className={"my-3"}
-      titleText={accountSettingsTrails.ldapSecurityManagersSiteRoleDetailView.title}
+      titleText={title}
       inactive={true}
       body={getBody()}
       onClickFunction={launchActivationConfirmationOverlay}
