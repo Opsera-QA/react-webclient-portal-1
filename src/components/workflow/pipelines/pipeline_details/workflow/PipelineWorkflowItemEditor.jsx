@@ -55,11 +55,6 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
     return await postData(pipeline, "Pipeline Step Setup");
   };
 
-  const callbackFunctionSource = async (source) => {
-    pipeline.workflow.source = source;
-    return await postData(pipeline, "Source Repository");
-  };
-
   const getTitleBar = (title) => {
     return (
       <div className={"px-2 my-auto content-block-header d-flex"}>
@@ -92,7 +87,6 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
       <div className="p-3 bg-white step-settings-container">
         <PipelineSourceRepositoryConfiguration
           pipeline={pipeline}
-          parentCallback={callbackFunctionSource}
           handleCloseClick={handleCloseClick}/>
       </div>
     </>);
