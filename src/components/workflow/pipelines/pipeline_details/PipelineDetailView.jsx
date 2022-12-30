@@ -19,6 +19,7 @@ const stoppedMessage = "The Pipeline has completed running. Please check the act
 
 function PipelineDetailView() {
   const {tab, id} = useParams();
+  const [currentTab, setCurrentTab] = useState(tab);
   const [pipeline, setPipeline] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [softLoading, setSoftLoading] = useState(false);
@@ -114,7 +115,7 @@ function PipelineDetailView() {
   };
 
   const getCurrentView = () => {
-    if (tab === "model") {
+    if (currentTab === "model") {
       return (
         <PipelineWorkflowView
           pipelineStatus={status}
@@ -187,7 +188,8 @@ function PipelineDetailView() {
           {pipeline?.name}
         </div>
         <PipelineWorkflowTabBar
-          currentTab={tab}
+          currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
           pipelineId={id}
           getPipeline={getPipeline}
         />
