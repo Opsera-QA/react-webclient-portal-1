@@ -120,25 +120,6 @@ function PipelineWorkflowItemList(
     setIsSaving(false);
   };
 
-
-  const deleteStep = async (index) => {
-    const steps = pipelineSteps;
-
-    setIsSaving(true);
-    steps.splice(index, 1);
-
-    if (steps.length === 0) {
-      await handleAddStep("", 0);
-    } else {
-      await quietSavePlan(steps);
-
-      await fetchPlan();
-    }
-
-    setIsSaving(false);
-  };
-
-
   const handleMoveStep = async (itemId, index, direction) => {
     const steps = pipelineSteps;
 
@@ -308,7 +289,6 @@ function PipelineWorkflowItemList(
               editWorkflow={editWorkflow}
               pipelineId={pipelineId}
               parentCallbackEditItem={parentCallbackEditItem}
-              deleteStep={deleteStep}
               parentWorkflowStatus={parentWorkflowStatus}
               toolIdentifier={getToolIdentifierForStep(item?.tool?.tool_identifier)}
               loadPipeline={fetchPlan}

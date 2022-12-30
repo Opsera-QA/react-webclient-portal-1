@@ -39,6 +39,7 @@ import PipelineStepWorkflowItemEditNotificationSettingsButton
 import AccessDeniedOverlayBase from "components/common/overlays/center/denied/AccessDeniedOverlayBase";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import InfoOverlayBase from "components/common/overlays/info/InfoOverlayBase";
+import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
@@ -52,7 +53,6 @@ const PipelineWorkflowItem = (
     pipelineId,
     editWorkflow,
     parentCallbackEditItem,
-    deleteStep,
     parentWorkflowStatus,
     toolIdentifier,
     loadPipeline,
@@ -72,6 +72,7 @@ const PipelineWorkflowItem = (
     getAccessToken,
     userData,
   } = useComponentStateReference();
+  const {deletePipelineStepById} = usePipelineActions();
 
   useEffect(() => {
     loadFormData(item, lastStep, index, plan).catch(error => {
@@ -148,46 +149,52 @@ const PipelineWorkflowItem = (
   };
 
   const handleEditClick = async (type, tool, itemId, pipelineStep) => {
-    if (PipelineRoleHelper.canUpdatePipelineStepDetails(userData, pipeline) !== true) {
-      toastContext.showOverlayPanel(
-        <AccessDeniedOverlayBase>
-          Editing step settings is not allowed. This action requires elevated privileges.
-        </AccessDeniedOverlayBase>
-      );
-      return;
-    }
-
-    const toolIdentifier = tool?.tool_identifier;
-
-    if (hasStringValue(toolIdentifier) === true) {
-      const newOverlayToolIdentifiers = [
-        toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION,
-        toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS,
-        toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION,
-      ];
-      if (newOverlayToolIdentifiers.includes(toolIdentifier) === true && type === "tool") {
-        toastContext.showOverlayPanel(
-          <PipelineStepEditorOverlay
-            pipeline={pipeline}
-            pipelineStep={pipelineStep}
-            loadPipeline={loadPipeline}
-          />
-        );
-      }
-      else {
-        await parentCallbackEditItem({type: type, tool_name: tool.tool_identifier, step_id: itemId});
-      }
-    } else {
-      // TODO: Implement opening tool setter
-      if (PipelineRoleHelper.canModifyPipelineWorkflowStructure(userData, pipeline) !== true) {
+    try {
+      setIsLoading(true);
+      if (PipelineRoleHelper.canUpdatePipelineStepDetails(userData, pipeline) !== true) {
         toastContext.showOverlayPanel(
           <AccessDeniedOverlayBase>
-            Editing pipeline workflow structure is not allowed for this unconfigured step. This action requires elevated privileges. The Pipeline Step needs to have its tool set by someone with sufficient access.
+            Editing step settings is not allowed. This action requires elevated privileges.
           </AccessDeniedOverlayBase>
         );
         return;
       }
-      await parentCallbackEditItem({ type: "step", tool_name: "", step_id: itemId });
+
+      const toolIdentifier = tool?.tool_identifier;
+
+      if (hasStringValue(toolIdentifier) === true) {
+        const newOverlayToolIdentifiers = [
+          toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION,
+          toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS,
+          toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION,
+        ];
+
+        if (newOverlayToolIdentifiers.includes(toolIdentifier) === true && type === "tool") {
+          toastContext.showOverlayPanel(
+            <PipelineStepEditorOverlay
+              pipeline={pipeline}
+              pipelineStep={pipelineStep}
+              loadPipeline={loadPipeline}
+            />
+          );
+        } else {
+          await parentCallbackEditItem({type: type, tool_name: tool.tool_identifier, step_id: itemId});
+        }
+      } else {
+
+        if (PipelineRoleHelper.canModifyPipelineWorkflowStructure(userData, pipeline) !== true) {
+          toastContext.showOverlayPanel(
+            <AccessDeniedOverlayBase>
+              Editing pipeline workflow structure is not allowed for this unconfigured step. This action requires
+              elevated privileges. The Pipeline Step needs to have its tool set by someone with sufficient access.
+            </AccessDeniedOverlayBase>
+          );
+          return;
+        }
+        await parentCallbackEditItem({type: "step", tool_name: "", step_id: itemId});
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -207,12 +214,23 @@ const PipelineWorkflowItem = (
   };
 
   const handleDeleteStepClickConfirm = async (index, deleteObj) => {
-    setShowDeleteModal(false);
-    if (deleteObj.toolIdentifier && jenkinsTools.includes(deleteObj.toolIdentifier)) {
-      // make an kafka call to delete jenkins job
-      await pipelineActions.deleteJenkinsJob(deleteObj, getAccessToken);
+    try {
+      setIsLoading(true);
+      setShowDeleteModal(false);
+      if (item?.toolIdentifier && jenkinsTools.includes(item?.toolIdentifier)) {
+        // make a kafka call to delete jenkins job
+        await pipelineActions.deleteJenkinsJob(deleteObj, getAccessToken);
+      }
+
+      const response = await deletePipelineStepById(
+        pipelineId,
+        item?._id,
+      );
+      console.log("response: " + JSON.stringify(response));
+      return response;
+    } finally {
+      setIsLoading(false);
     }
-    deleteStep(index);
   };
 
   const getBottomActionBarButtons = () => {
@@ -532,7 +550,6 @@ PipelineWorkflowItem.propTypes = {
   pipelineId: PropTypes.string,
   editWorkflow: PropTypes.bool,
   parentCallbackEditItem: PropTypes.func,
-  deleteStep: PropTypes.func,
   handleViewSourceActivityLog: PropTypes.func,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   toolIdentifier: PropTypes.object,
