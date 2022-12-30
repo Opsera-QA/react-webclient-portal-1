@@ -10,8 +10,6 @@ import {
   faSpinner,
   faCheckCircle,
   faTimesCircle,
-  faTrash,
-  faBan,
   faTerminal, faOctagon,
 } from "@fortawesome/pro-light-svg-icons";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
@@ -20,7 +18,6 @@ import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/wor
 import { pipelineValidationHelper } from "components/workflow/pipelines/helpers/pipelineValidation.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
-import LoadingIcon from "components/common/icons/LoadingIcon";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import PipelineStepEditorOverlay from "components/workflow/plan/step/PipelineStepEditorOverlay";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
@@ -40,7 +37,12 @@ import InfoOverlayBase from "components/common/overlays/info/InfoOverlayBase";
 import PipelineStepWorkflowStepDeleteStepButton
   from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowStepDeleteStepButton";
 import PipelineStepWorkflowStepDisabledStepIcon
-  from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowStepDisabledStepIcon";
+  from "components/workflow/pipelines/pipeline_details/workflow/item/icon/PipelineStepWorkflowStepDisabledStepIcon";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import PipelineWorkflowStepIncompleteStepIcon
+  from "components/workflow/pipelines/pipeline_details/workflow/item/icon/PipelineWorkflowStepIncompleteStepIcon";
+import PipelineStepWorkflowStepAwaitingApprovalStepIcon
+  from "components/workflow/pipelines/pipeline_details/workflow/item/icon/PipelineStepWorkflowStepAwaitingApprovalStepIcon";
 
 const PipelineWorkflowItem = (
   {
@@ -61,12 +63,12 @@ const PipelineWorkflowItem = (
   const [activityLogModal, setActivityLogModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [showToolActivity, setShowToolActivity] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isToolSet, setIsToolSet] = useState(false);
   const [runCountState, setRunCountState] = useState(undefined);
   const {
     toastContext,
     userData,
   } = useComponentStateReference();
+  const isToolSet = DataParsingHelper.parseNestedString(item, "tool.tool_identifier", false) !== false;
 
   useEffect(() => {
     loadFormData(item, lastStep, index, plan).catch(error => {
@@ -80,7 +82,6 @@ const PipelineWorkflowItem = (
   const loadFormData = async (item, lastStep, index, plan) => {
     setCurrentStatus({});
     setItemState("");
-    setIsToolSet(DataParsingHelper.parseNestedString(item, "tool.tool_identifier") !== false);
 
     // TOOD: We should make a helper function to handle this
     if (item !== undefined) {
@@ -193,10 +194,10 @@ const PipelineWorkflowItem = (
   };
 
   const getBottomActionBarButtons = () => {
-    if (isToolSet === true) {
+    if (!editWorkflow) {
       return (
       <div className={"ml-auto d-flex"}>
-        {!editWorkflow &&
+        {isToolSet === true &&
           <>
             <PipelineStepWorkflowItemViewSettingsButton
               editingWorkflow={editWorkflow}
@@ -240,35 +241,34 @@ const PipelineWorkflowItem = (
               editingWorkflow={editWorkflow}
               pipelineStatus={parentWorkflowStatus}
             />
-
-            {parentWorkflowStatus !== "running" && parentWorkflowStatus !== "paused" ? //if the overall pipeline is in a running/locked state
-              <>
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Configure Step Settings" })}>
-                  <div>
-                    <IconBase icon={faCog}
-                              className={"text-muted mx-1 pointer"}
-                              onClickFunction={() => {
-                                handleEditClick("tool", item.tool, item._id, item);
-                              }}
-                    />
-                  </div>
-                </OverlayTrigger>
-              </>
-              :
-              <>
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
-                  <div>
-                    <IconBase icon={faCog}
-                              className={"text-muted mx-1"} />
-                  </div>
-                </OverlayTrigger>
-              </>}
+          </>}
+        {parentWorkflowStatus !== "running" && parentWorkflowStatus !== "paused" ? //if the overall pipeline is in a running/locked state
+          <>
+            <OverlayTrigger
+              placement="top"
+              delay={{show: 250, hide: 400}}
+              overlay={renderTooltip({message: "Configure Step Settings"})}>
+              <div>
+                <IconBase icon={faCog}
+                          className={"text-muted mx-1 pointer"}
+                          onClickFunction={() => {
+                            handleEditClick("tool", item.tool, item._id, item);
+                          }}
+                />
+              </div>
+            </OverlayTrigger>
+          </>
+          :
+          <>
+            <OverlayTrigger
+              placement="top"
+              delay={{show: 250, hide: 400}}
+              overlay={renderTooltip({message: "Cannot access settings while pipeline is running"})}>
+              <div>
+                <IconBase icon={faCog}
+                          className={"text-muted mx-1"}/>
+              </div>
+            </OverlayTrigger>
           </>}
       </div>
       );
@@ -283,8 +283,10 @@ const PipelineWorkflowItem = (
 
           <div className={"ml-auto d-flex"}>
             <div className={"ml-auto d-flex mr-1"}>
-
-              {isLoading && <LoadingIcon className={"green"} />}
+              <IconBase
+                isLoading={isLoading}
+                className={"green"}
+              />
 
               {isToolSet && !editWorkflow && !isLoading &&
               <>
@@ -340,48 +342,18 @@ const PipelineWorkflowItem = (
 
                   </div>
                 </OverlayTrigger>}
-
-                {itemState === "paused" && //assumes approval is needed
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Approval of this step is required to proceed. Only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action." })}>
-                  <div>
-                    <IconBase icon={faFlag} className={"ml-2 red"} iconStyling={{ cursor: "help" }} />
-                  </div>
-                </OverlayTrigger>}
-
-                {itemState === "warning" &&
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({message: "Warning: Step configuration settings are incomplete!"})}>
-                  <div>
-                    <IconBase
-                      icon={faExclamationTriangle}
-                      className="ml-2 yellow pointer"
-                      onClickFunction={() => {
-                        toastContext.showOverlayPanel(
-                          <InfoOverlayBase
-                            titleText={"Step Warning"}
-                            titleIcon={faExclamationTriangle}
-                          >
-                            {`
-                              This step is either missing configuration settings or needs to be reviewed. 
-                              In its current state, it will not run properly.  
-                              Please view the step settings and ensure the required fields are provided and valid.
-                            `}
-                          </InfoOverlayBase>
-                        );
-                      }}/>
-                  </div>
-                </OverlayTrigger>}
-
+                <PipelineStepWorkflowStepAwaitingApprovalStepIcon
+                  pipelineStepState={itemState}
+                  className={"ml-2 red"}
+                />
+                <PipelineWorkflowStepIncompleteStepIcon
+                  className={"ml-2 yellow"}
+                  pipelineStep={item}
+                />
                 <PipelineStepWorkflowStepDisabledStepIcon
                   pipelineStep={item}
                   className={"ml-2 dark-grey"}
                 />
-
               </>
               }
 
@@ -393,25 +365,16 @@ const PipelineWorkflowItem = (
                 loadPipelineFunction={loadPipeline}
               />
               {(editWorkflow || !isToolSet) &&
-              <>
-
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "Step Setup" })}>
-                    <div>
-                      <IconBase icon={faPen}
-                                className="text-muted ml-2 pointer"
-                                onClickFunction={() => {
-                                  handleEditClick("step", item.tool, item._id, item);
-                                }} />
-                    </div>
-                  </OverlayTrigger>
-
-              </>}
+                <OverlayIconBase
+                  icon={faPen}
+                  className={"text-muted ml-2"}
+                  overlayBody={"Step Setup"}
+                  onClickFunction={() =>  handleEditClick("step", item.tool, item._id, item)}
+                />
+              }
               <StepToolHelpIcon
                 iconClassName={"mb-1"}
-                className={"mr-0"}
+                className={"ml-2"}
                 tool={item?.tool?.tool_identifier}
               />
             </div>
