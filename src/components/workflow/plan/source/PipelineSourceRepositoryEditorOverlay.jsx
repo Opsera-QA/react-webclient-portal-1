@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faDraftingCompass, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
+import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import PipelineSourceRepositoryConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryConfiguration";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
+import AccessDeniedOverlayBase from "components/common/overlays/center/denied/AccessDeniedOverlayBase";
 
 export default function PipelineSourceRepositoryEditorOverlay(
   {
@@ -28,15 +28,9 @@ export default function PipelineSourceRepositoryEditorOverlay(
 
   if (PipelineRoleHelper.canUpdatePipelineStepDetails(userData, pipeline) !== true) {
     return (
-      <ConfirmationOverlay
-        closePanel={closePanel}
-        titleText={"Permission Denied"}
-        titleIcon={faExclamationCircle}
-      >
-        <div className={"p-3"}>
+      <AccessDeniedOverlayBase>
           Editing pipeline workflow settings allows users to change the behavior of a pipeline step. This action requires elevated privileges.
-        </div>
-      </ConfirmationOverlay>
+      </AccessDeniedOverlayBase>
     );
   }
 

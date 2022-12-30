@@ -8,6 +8,7 @@ import CenterOverlayContainer from "components/common/overlays/center/CenterOver
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
+import AccessDeniedOverlayBase from "components/common/overlays/center/denied/AccessDeniedOverlayBase";
 
 export default function PipelineStepNotificationConfigurationOverlay(
   {
@@ -30,15 +31,9 @@ export default function PipelineStepNotificationConfigurationOverlay(
 
   if (PipelineRoleHelper.canUpdatePipelineStepNotifications(userData, pipeline) !== true) {
     return (
-      <ConfirmationOverlay
-        closePanel={closePanel}
-        titleText={"Permission Denied"}
-        titleIcon={faExclamationCircle}
-      >
-        <div className={"p-3"}>
-          Editing step notifications is not allowed.  This action requires elevated privileges.
-        </div>
-      </ConfirmationOverlay>
+      <AccessDeniedOverlayBase>
+        Editing step notifications is not allowed.  This action requires elevated privileges.
+      </AccessDeniedOverlayBase>
     );
   }
 
