@@ -4,15 +4,12 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import {
   faCog,
   faArchive,
-  faFlag,
   faPen,
-  faExclamationTriangle,
   faSpinner,
   faCheckCircle,
   faTimesCircle,
   faTerminal, faOctagon,
 } from "@fortawesome/pro-light-svg-icons";
-import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import StepToolActivityView from "./step_configuration/StepToolActivityView";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 import { pipelineValidationHelper } from "components/workflow/pipelines/helpers/pipelineValidation.helper";
@@ -33,7 +30,6 @@ import PipelineStepWorkflowItemEditNotificationSettingsButton
   from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowItemEditNotificationSettingsButton";
 import AccessDeniedOverlayBase from "components/common/overlays/center/denied/AccessDeniedOverlayBase";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
-import InfoOverlayBase from "components/common/overlays/info/InfoOverlayBase";
 import PipelineStepWorkflowStepDeleteStepButton
   from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowStepDeleteStepButton";
 import PipelineStepWorkflowStepDisabledStepIcon
@@ -60,7 +56,6 @@ const PipelineWorkflowItem = (
   }) => {
   const [currentStatus, setCurrentStatus] = useState({});
   const [itemState, setItemState] = useState("");
-  const [activityLogModal, setActivityLogModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [showToolActivity, setShowToolActivity] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [runCountState, setRunCountState] = useState(undefined);
@@ -398,15 +393,6 @@ const PipelineWorkflowItem = (
           </div>
         </div>
       </div>
-
-      <ModalActivityLogs
-        header={activityLogModal.header}
-        size="lg"
-        jsonData={activityLogModal.message}
-        liveStreamObject={activityLogModal.liveData}
-        show={activityLogModal.show}
-        setParentVisibility={() => setActivityLogModal({ ...activityLogModal, show: false })} />
-
 
       {showToolActivity && <StepToolActivityView pipelineId={pipelineId}
                                                  stepId={item._id}

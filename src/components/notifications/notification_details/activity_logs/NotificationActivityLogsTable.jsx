@@ -8,12 +8,14 @@ import {
 } from "components/common/table/table-column-helpers";
 import notificationActivityLogMetadata
   from "components/notifications/notification_details/activity_logs/notification-activity-log-metadata";
-import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import NotificationTypeFilter from "components/common/filters/notifications/notification_type/NotificationTypeFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import NotificationActivityLogOverlay
+  from "components/notifications/notification_details/activity_logs/NotificationActivityLogOverlay";
 
 function NotificationActivityLogsTable(
   {
@@ -23,14 +25,17 @@ function NotificationActivityLogsTable(
     isLoading,
     loadData,
   }) {
-  let fields = notificationActivityLogMetadata.fields;
-  const [showModal, setShowModal] = useState(false);
-  // TODO: Use new overlay
-  const [modalData, setModalData] = useState({});
+  const fields = notificationActivityLogMetadata.fields;
+  const {
+    toastContext,
+  } = useComponentStateReference();
 
-  const showActivityLog = (row) => {
-    setModalData(row);
-    setShowModal(true);
+  const onRowClickFunction = (row, data) => {
+    toastContext.showOverlayPanel(
+      <NotificationActivityLogOverlay
+        activityLog={data}
+      />
+    );
   };
 
   const columns = useMemo(
@@ -40,7 +45,7 @@ function NotificationActivityLogsTable(
       getTableTextColumn(fields.find(field => { return field.id === "message";})),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "status";})),
       getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt";})),
-      getTableInfoIconColumn(showActivityLog),
+      getTableInfoIconColumn(),
     ],
     [],
   );
@@ -64,25 +69,24 @@ function NotificationActivityLogsTable(
         paginationDto={notificationActivityFilterDto}
         setPaginationDto={setNotificationActivityFilterDto}
         loadData={loadData}
+        onRowSelect={onRowClickFunction}
       />
     );
   };
 
   return (
-    <div className="px-2 pb-2">
-      <FilterContainer
-        loadData={loadData}
-        isLoading={isLoading}
-        body={getNotificationActivityLogsTable()}
-        filterDto={notificationActivityFilterDto}
-        setFilterDto={setNotificationActivityFilterDto}
-        supportSearch={true}
-        dropdownFilters={getDropdownFilters()}
-        titleIcon={faTable}
-        title={"Policy Activity Logs"}
-      />
-      <ModalActivityLogsDialog size={"lg"} header={"Policy Activity Log"} jsonData={modalData} show={showModal} setParentVisibility={setShowModal} />
-    </div>
+    <FilterContainer
+      loadData={loadData}
+      isLoading={isLoading}
+      body={getNotificationActivityLogsTable()}
+      filterDto={notificationActivityFilterDto}
+      setFilterDto={setNotificationActivityFilterDto}
+      supportSearch={true}
+      dropdownFilters={getDropdownFilters()}
+      titleIcon={faTable}
+      title={"Policy Activity Logs"}
+      className={"px-2 pb-2"}
+    />
   );
 }
 
