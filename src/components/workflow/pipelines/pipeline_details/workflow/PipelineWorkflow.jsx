@@ -65,6 +65,7 @@ function PipelineWorkflow({
     const apiUrl = `/pipelines/${pipeline._id}/update`;
     try {
       await axiosApiService(accessToken).post(apiUrl, pipeline);
+      await fetchPlan();
     } catch (err) {
       toastContext.showLoadingErrorDialog(err);
     } finally {
