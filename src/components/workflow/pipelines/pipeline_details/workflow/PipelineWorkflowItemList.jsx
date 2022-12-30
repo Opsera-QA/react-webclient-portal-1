@@ -88,7 +88,6 @@ function PipelineWorkflowItemList(
     };
     steps.splice(index + 1, 0, newStep);
     await quietSavePlan(steps);
-    await fetchPlan();
 
     setIsSaving(false);
   };
@@ -112,8 +111,6 @@ function PipelineWorkflowItemList(
 
     await quietSavePlan(steps);
 
-    await fetchPlan();
-
     setIsSaving(false);
   };
 
@@ -126,8 +123,6 @@ function PipelineWorkflowItemList(
       steps.splice(index - 1, 0, cutOut);
 
       await quietSavePlan(steps);
-
-      await fetchPlan();
       setIsSaving(false);
 
     } else if (direction === "down" && index < steps.length - 1) {
@@ -137,8 +132,6 @@ function PipelineWorkflowItemList(
       steps.splice(index + 1, 0, cutOut);
 
       await quietSavePlan(steps);
-
-      await fetchPlan();
       setIsSaving(false);
     }
   };
@@ -232,7 +225,7 @@ function PipelineWorkflowItemList(
       <>
         <SteppedLineTo
           from={`step-${item._id}`}
-          to={"step-" + index}
+          to={`step-${index}`}
           delay={100}
           orientation={"v"}
           zIndex={10}

@@ -39,6 +39,8 @@ import {pipelineHelper} from "components/workflow/pipeline.helper";
 import InfoOverlayBase from "components/common/overlays/info/InfoOverlayBase";
 import PipelineStepWorkflowStepDeleteStepButton
   from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowStepDeleteStepButton";
+import PipelineStepWorkflowStepDisabledStepIcon
+  from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowStepDisabledStepIcon";
 
 const PipelineWorkflowItem = (
   {
@@ -375,46 +377,23 @@ const PipelineWorkflowItem = (
                   </div>
                 </OverlayTrigger>}
 
-                {!item.active &&
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "This step is currently disabled" })}>
-                  <div>
-                    <IconBase
-                      icon={faBan}
-                      className={"ml-2 dark-grey pointer"}
-                      onClickFunction={() => {
-                        toastContext.showOverlayPanel(
-                          <InfoOverlayBase
-                            titleText={"Step Warning"}
-                            titleIcon={faExclamationTriangle}
-                          >
-                            {`
-                              This step is currently disabled and will be skipped during a pipeline run.  
-                              If you have sufficient access, you can enable this step by clicking the edit workflow button at the top and then edit the step's configuration (via the pipeline step editor icon at the top) and mark the step as Active.
-                            `}
-                          </InfoOverlayBase>
-                        );
-                      }}
-                    />
-                  </div>
-                </OverlayTrigger>
-                }
+                <PipelineStepWorkflowStepDisabledStepIcon
+                  pipelineStep={item}
+                  className={"ml-2 dark-grey"}
+                />
 
               </>
               }
 
+              <PipelineStepWorkflowStepDeleteStepButton
+                pipeline={pipeline}
+                pipelineStep={item}
+                className={"ml-2"}
+                inWorkflowEditMode={editWorkflow}
+                loadPipelineFunction={loadPipeline}
+              />
               {(editWorkflow || !isToolSet) &&
               <>
-
-                  <PipelineStepWorkflowStepDeleteStepButton
-                    pipeline={pipeline}
-                    pipelineStep={item}
-                    className={"ml-2"}
-                    inWorkflowEditMode={editWorkflow}
-                    loadPipelineFunction={loadPipeline}
-                  />
 
                   <OverlayTrigger
                     placement="top"
