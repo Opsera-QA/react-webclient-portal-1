@@ -226,7 +226,6 @@ const PipelineWorkflowItem = (
         pipelineId,
         item?._id,
       );
-      console.log("response: " + JSON.stringify(response));
       return response;
     } finally {
       setIsLoading(false);
