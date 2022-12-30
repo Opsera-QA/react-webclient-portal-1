@@ -162,8 +162,8 @@ const PipelineWorkflowItem = (
 
     setIsLoading(true);
     const toolIdentifier = tool?.tool_identifier;
-    if (hasStringValue(toolIdentifier) === true) {
 
+    if (hasStringValue(toolIdentifier) === true) {
       const newOverlayToolIdentifiers = [
         toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION,
         toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS,
@@ -182,19 +182,31 @@ const PipelineWorkflowItem = (
         await parentCallbackEditItem({type: type, tool_name: tool.tool_identifier, step_id: itemId});
       }
     } else {
+      // TODO: Implement opening tool setter
+      // if (PipelineRoleHelper.canModifyPipelineWorkflowStructure(userData, pipeline) !== true) {
+      //   setInfoModal({
+      //     show: true,
+      //     header: "Permission Denied",
+      //     message: "Editing pipeline workflow structure is not allowed. This action requires elevated privileges. The Pipeline Step needs to have its tool set by someone with sufficient access.",
+      //     button: "OK",
+      //   });
+      //   return;
+      // }
+      // await parentCallbackEditItem({ type: "step", tool_name: "", step_id: itemId });
       await parentCallbackEditItem({ type: type, tool_name: "", step_id: itemId });
     }
+
     setIsLoading(false);
   };
 
   const handleDeleteStepClick = (index, pipeline, step) => {
     let deleteObj = {
-      "pipelineId": pipeline._id,
-      "stepId": step._id,
-      "toolIdentifier": step?.tool?.tool_identifier,
-      "configuration": {
-        "toolConfigId" : step?.tool?.configuration?.toolConfigId,
-        "jobName" : step?.tool?.configuration?.jobName
+      pipelineId: pipeline._id,
+      stepId: step._id,
+      toolIdentifier: step?.tool?.tool_identifier,
+      configuration: {
+        toolConfigId : step?.tool?.configuration?.toolConfigId,
+        jobName : step?.tool?.configuration?.jobName
       }
     };
     setShowDeleteModal(true);
