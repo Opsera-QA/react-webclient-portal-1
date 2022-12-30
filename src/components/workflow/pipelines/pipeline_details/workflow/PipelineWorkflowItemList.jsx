@@ -87,9 +87,7 @@ function PipelineWorkflowItemList(
       "active": true,
     };
     steps.splice(index + 1, 0, newStep);
-
     await quietSavePlan(steps);
-
     await fetchPlan();
 
     setIsSaving(false);

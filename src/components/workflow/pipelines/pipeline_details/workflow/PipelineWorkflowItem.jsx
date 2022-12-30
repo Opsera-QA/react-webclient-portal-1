@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import Modal from "components/common/modal/modal";
 import {
   faCog,
   faArchive,
@@ -17,7 +16,6 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import StepToolActivityView from "./step_configuration/StepToolActivityView";
-import pipelineActions from "components/workflow/pipeline-actions";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 import { pipelineValidationHelper } from "components/workflow/pipelines/helpers/pipelineValidation.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
@@ -39,9 +37,8 @@ import PipelineStepWorkflowItemEditNotificationSettingsButton
 import AccessDeniedOverlayBase from "components/common/overlays/center/denied/AccessDeniedOverlayBase";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import InfoOverlayBase from "components/common/overlays/info/InfoOverlayBase";
-import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
-
-const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
+import PipelineStepWorkflowStepDeleteStepButton
+  from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowStepDeleteStepButton";
 
 const PipelineWorkflowItem = (
   {
@@ -59,9 +56,6 @@ const PipelineWorkflowItem = (
   }) => {
   const [currentStatus, setCurrentStatus] = useState({});
   const [itemState, setItemState] = useState("");
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [modalDeleteIndex, setModalDeleteIndex] = useState(false);
-  const [modalDeleteObj, setModalDeleteObj] = useState(false);
   const [activityLogModal, setActivityLogModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [showToolActivity, setShowToolActivity] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -69,10 +63,8 @@ const PipelineWorkflowItem = (
   const [runCountState, setRunCountState] = useState(undefined);
   const {
     toastContext,
-    getAccessToken,
     userData,
   } = useComponentStateReference();
-  const {deletePipelineStepById} = usePipelineActions();
 
   useEffect(() => {
     loadFormData(item, lastStep, index, plan).catch(error => {
@@ -193,40 +185,6 @@ const PipelineWorkflowItem = (
         }
         await parentCallbackEditItem({type: "step", tool_name: "", step_id: itemId});
       }
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleDeleteStepClick = (index, pipeline, step) => {
-    let deleteObj = {
-      pipelineId: pipeline._id,
-      stepId: step._id,
-      toolIdentifier: step?.tool?.tool_identifier,
-      configuration: {
-        toolConfigId : step?.tool?.configuration?.toolConfigId,
-        jobName : step?.tool?.configuration?.jobName
-      }
-    };
-    setShowDeleteModal(true);
-    setModalDeleteIndex(index);
-    setModalDeleteObj(deleteObj);
-  };
-
-  const handleDeleteStepClickConfirm = async (index, deleteObj) => {
-    try {
-      setIsLoading(true);
-      setShowDeleteModal(false);
-      if (item?.toolIdentifier && jenkinsTools.includes(item?.toolIdentifier)) {
-        // make a kafka call to delete jenkins job
-        await pipelineActions.deleteJenkinsJob(deleteObj, getAccessToken);
-      }
-
-      const response = await deletePipelineStepById(
-        pipelineId,
-        item?._id,
-      );
-      return response;
     } finally {
       setIsLoading(false);
     }
@@ -450,19 +408,13 @@ const PipelineWorkflowItem = (
               {(editWorkflow || !isToolSet) &&
               <>
 
-                  {editWorkflow &&
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "Delete Step" })}>
-                    <div>
-                      <IconBase icon={faTrash} className="ml-2 red pointer"
-                                onClickFunction={() => {
-                                  handleDeleteStepClick(index, pipeline, item);
-                                }} />
-                    </div>
-                  </OverlayTrigger>
-                  }
+                  <PipelineStepWorkflowStepDeleteStepButton
+                    pipeline={pipeline}
+                    pipelineStep={item}
+                    className={"ml-2"}
+                    inWorkflowEditMode={editWorkflow}
+                    loadPipelineFunction={loadPipeline}
+                  />
 
                   <OverlayTrigger
                     placement="top"
@@ -512,12 +464,6 @@ const PipelineWorkflowItem = (
         liveStreamObject={activityLogModal.liveData}
         show={activityLogModal.show}
         setParentVisibility={() => setActivityLogModal({ ...activityLogModal, show: false })} />
-
-      {showDeleteModal && <Modal header="Confirm Pipeline Step Delete"
-                                 message="Warning! Data about this step cannot be recovered once it is deleted. Do you still want to proceed?"
-                                 button="Confirm"
-                                 handleCancelModal={() => setShowDeleteModal(false)}
-                                 handleConfirmModal={() => handleDeleteStepClickConfirm(modalDeleteIndex, modalDeleteObj)} />}
 
 
       {showToolActivity && <StepToolActivityView pipelineId={pipelineId}
