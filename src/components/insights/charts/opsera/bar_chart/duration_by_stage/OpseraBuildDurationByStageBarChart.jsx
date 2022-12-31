@@ -8,7 +8,8 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColor, assignStageColors, adjustBarWidth } from '../../../charts-views';
+import { defaultConfig, getColor, assignStageColors,
+  adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 import { useHistory } from "react-router-dom";
 
@@ -81,15 +82,16 @@ function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfigurat
       <div className="new-chart mb-3 pointer" style={{height: "300px"}}>
         <ResponsiveBar
           data={metrics}
-          {...defaultConfig("Duration (Minutes)", "Pipeline Run", false, true, "wholeNumbers", "cutoffString")}
+          {...defaultConfig("Duration (Minutes)", "Pipeline Run",
+            false, true, "wholeNumbers", "cutoffString")}
           {...config(getColor)}
           {...adjustBarWidth(metrics)}
           onClick={(data) => onRowSelect(data)}
-          tooltip={({ data, value, color , id}) => <ChartTooltip 
-                    titles={["Pipeline", "Stage", "Duration", "*Click now to view Pipeline Blueprint*"]}
-                    values={[data.pipelineId, id, `${value} minutes`]}
-                    style={false}
-                    color={color} />}
+          tooltip={({ data, value, color , id}) => <ChartTooltip
+            titles={["Pipeline", "Stage", "Duration", "*Click now to view Pipeline Blueprint*"]}
+            values={[data.pipelineId, id, `${value} minutes`]}
+            style={false}
+            color={color} />}
         />
       </div>
     );

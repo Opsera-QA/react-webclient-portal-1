@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import ServiceNowMTTRActionableMetadata from "../actionable_insights/service-now-mttr-actionable-insight-metadata";
 import {
-   getTableDateTimeColumn,
+  getTableDateTimeColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";

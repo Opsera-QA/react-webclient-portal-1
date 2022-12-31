@@ -138,7 +138,7 @@ function GitLabLeadTimeChart({
     const dataPoint = dataPointHelpers.getDataPoint(
       dataPoints,
       constants.SUPPORTED_DATA_POINT_IDENTIFIERS
-        .LEAD_TIME_DATA_POINT,
+        .LEADTIME_DATA_POINT,
     );
     setLeadTimeDataPoint(dataPoint);
     setMedianTimeDataPoint(dataPointHelpers.getDataPoint(

@@ -3,14 +3,14 @@ import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/met
 export default () => ({
   enableGridX: false,
   enableGridY: false,
-  yScale: { 
-    type: 'linear', 
-    min: '0', 
-    max: '100', 
-    stacked: false, 
-    reverse: false 
+  yScale: {
+    type: 'linear',
+    min: '0',
+    max: '100',
+    stacked: false,
+    reverse: false
   },
-  xFormat: "time:%Y-%m-%d",  
+  xFormat: "time:%Y-%m-%d",
   colors:  METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_1,
   axisLeft: {
     tickValues: [0, 50, 100],
@@ -26,5 +26,5 @@ export default () => ({
     legendPosition: 'middle'
   },
   layers: ['grid', 'markers', 'axes', 'areas', 'crosshair', 'lines', 'points', 'slices', 'mesh'],
-  pointSize: 6  
+  pointSize: 6
 });

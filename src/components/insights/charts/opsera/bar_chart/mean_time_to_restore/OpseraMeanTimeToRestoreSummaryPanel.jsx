@@ -33,7 +33,7 @@ function OpseraMeanTimeToRestoreSummaryPanel({ dashboardData, kpiConfiguration, 
   const [tableFilterDto, setTableFilterDto] = useState(
     new Model({ ...genericChartFilterMetadata.newObjectFields }, MeanTimeToRestoreSummaryPanelMetadata, false)
   );
-  
+
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();

@@ -1,7 +1,7 @@
 export const GITLAB_LEADTIME_CONSTANTS = {};
 
 GITLAB_LEADTIME_CONSTANTS.SUPPORTED_DATA_POINT_IDENTIFIERS = {
-    LEAD_TIME_DATA_POINT: "gitlab-lead-time-data-point",
+    LEADTIME_DATA_POINT: "gitlab-lead-time-data-point",
     MEDIAN_TIME_DATA_POINT: "gitlab-median-time-data-point"
 };
 

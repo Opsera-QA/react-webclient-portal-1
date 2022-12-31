@@ -11,12 +11,12 @@ function MTTRActionableInsightsMainSevOneTab({highestMergesMetric, dashboardData
   const getTabContentContainer = () => {
     return (
       <VanitySetTabViewContainer className={"mb-3"}>
-            <MTTRMasterTab
-              priority={1}
-              dashboardData={dashboardData}
-              kpiConfiguration={kpiConfiguration}
-              icon={icon}
-            />
+        <MTTRMasterTab
+          priority={1}
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          icon={icon}
+        />
       </VanitySetTabViewContainer>
     );
   };
@@ -36,4 +36,3 @@ MTTRActionableInsightsMainSevOneTab.propTypes = {
   icon: PropTypes.object
 };
 export default MTTRActionableInsightsMainSevOneTab;
-

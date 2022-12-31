@@ -5,9 +5,9 @@ import config from "./sdlcDurationByStageBarChartConfigs";
 import { defaultConfig } from "components/insights/charts/charts-views";
 import ChartTooltip from "components/insights/charts/ChartTooltip";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import SdlcDurationByStageActionableInsightOverlay from "./actionable_insights/SdlcDurationByStageActionableInsightOverlay";
 import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
 import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
-import SdlcDurationByStageActionableInsightOverlay from "./actionable_insights/SdlcDurationByStageActionableInsightOverlay";
 function SdlcDurationByStageBarChartBase({ metric, kpiConfiguration, dashboardData }) {
   const toastContext = useContext(DialogToastContext);
   const onNodeSelect = (node) => {
@@ -21,8 +21,10 @@ function SdlcDurationByStageBarChartBase({ metric, kpiConfiguration, dashboardDa
       />
     );
   };
+
   const max = metric && metric[0] && metric[0].max;
   const min = metric && metric[0] && metric[0].min;
+  
   return (
     <div style={{ height: "150px" }} >
       <div className="text-right pr-3">

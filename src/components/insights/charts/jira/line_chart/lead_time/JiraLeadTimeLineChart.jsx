@@ -283,7 +283,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
       </>
     );
   };
-  console.log(metrics);
+
   return (
     <div>
       <VanityMetricContainer

@@ -19,9 +19,9 @@ import IconBase from "components/common/icons/IconBase";
 
 function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
-  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
@@ -82,7 +82,7 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
-    
+
     const infoPopover = (item) => {
       return (
         <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
@@ -96,17 +96,17 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
     const onRowSelect = (stat) => {
       const chartModel = new Model({...DeploymentFrequencyInsightsTableMetadata.newObjectFields}, DeploymentFrequencyInsightsTableMetadata, false);
       toastContext.showOverlayPanel(
-      <ChartDetailsOverlay 
-        dashboardData={dashboardData} 
-        kpiConfiguration={kpiConfiguration} 
-        chartModel={chartModel} 
-        kpiIdentifier={"opsera-deployment-frequency-stats" + "-" + stat} />);
+        <ChartDetailsOverlay
+          dashboardData={dashboardData}
+          kpiConfiguration={kpiConfiguration}
+          chartModel={chartModel}
+          kpiIdentifier={"opsera-deployment-frequency-stats" + "-" + stat} />);
     };
 
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <Container>
-        <Row className="p-3">
+          <Row className="p-3">
             <Col><div className="metric-box p-3 text-center">
               <div className="box-metric">
                 <div className="green pointer" onClick={() => onRowSelect("successful")}>{metrics[0].totalSuccess}</div>

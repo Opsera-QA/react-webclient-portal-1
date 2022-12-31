@@ -8,9 +8,6 @@ import actionableInsightsGenericChartFilterMetadata from "components/insights/ch
 import IconBase from "../../../../../../../common/icons/IconBase";
 import { faExternalLink } from "@fortawesome/pro-light-svg-icons";
 import MTTRActionableInsightTable from "../MTTRActionableInsightTable";
-import DataBlock from "../../../../../../../common/data_boxes/DataBlock";
-import CoverityActionableDataBlockContainers
-  from "../../../../../coverity/CoverityIssuesByCategory/actionable_insights/CoverityActionableDataBlockContainers";
 import MTTRActionableDataBlocks from "../MTTRActionableDataBlocks";
 
 function MTTRMasterTab({ priority, dashboardData, kpiConfiguration, icon }) {

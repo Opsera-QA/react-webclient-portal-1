@@ -5,4 +5,5 @@ export default (getColor) => ({
   sliceLabelsSkipAngle: 10,
   sliceLabelsTextColor: "#ffffff",
   colors: ["#ABA4CC", "#696969", "#B1AeA7"]
+
 });

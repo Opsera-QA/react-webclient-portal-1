@@ -1,6 +1,6 @@
 const BuildStatisticsActionableInsightsMetadata = {
     idProperty: "_id",
-    type: "Sonar Pipeline Table Report",
+    type: "Opsera Pipeline Builds Report",
     fields: [
       {
         label: "Pipeline",

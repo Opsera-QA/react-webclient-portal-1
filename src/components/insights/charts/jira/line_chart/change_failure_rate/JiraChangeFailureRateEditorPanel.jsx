@@ -9,7 +9,7 @@ import MetricJiraChangeTypesFilterInput from "../../../../../common/inputs/metri
 import MetricJiraServiceComponentsFilterInput from "../../../../../common/inputs/metric/filters/jira/MetricJiraServiceComponentsFilterInput";
 import MetricJiraResolutionNamesFilterInput from "../../../../../common/inputs/metric/filters/jira/MetricJiraResolutionNamesFilterInput";
 import MetricJiraExcludedResolutionNamesFilterInput from "../../../../../common/inputs/metric/filters/jira/MetricJiraExcludedResolutionNamesFilterInput";
-import MetricJiraTeamNamesFilterInput from "components/common/inputs/metric/filters/jira/MetricJiraTeamNameFilterInput";
+import MetricJiraTeamNamesFilterInput from "components/common/inputs/metric/filters/jira/MetricJiraTeamNamesFilterInput";
 
 function JiraChangeFailureRateEditorPanel({
   metricModel,

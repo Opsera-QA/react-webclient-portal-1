@@ -118,7 +118,7 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
           tooltip={({ node }) => {
             if (node?.data?.type === "deploy") {
               return (
-                <div className={"p-1 bg-white border border-dark"} style={{zIndex: 1000}}>
+                <div className={"p-1 bg-white border border-dark"}>
                   <div className={"py-1"}>
                     Job Id: <strong>{node?.data?.stepId}</strong>
                   </div>
@@ -144,7 +144,7 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
               );
             }
             return (
-              <div className={"p-1 bg-white border border-dark"} style={{zIndex: 1000}}>
+              <div className={"p-1 bg-white border border-dark"}>
                 <div className={"py-1"}>
                   Repository: <strong>{node?.data?.repositoryName}</strong>
                 </div>

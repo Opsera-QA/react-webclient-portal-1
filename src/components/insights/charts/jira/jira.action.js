@@ -2,6 +2,8 @@ import baseActions from "utils/actionsBase";
 
 import {
   getDateObjectFromKpiConfiguration,
+  getJiraPrioritiesFromKpiConfiguration,
+  getJiraProjectsFromKpiConfiguration,
   getResultFromKpiConfiguration,
   getTagsFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration,
@@ -49,14 +51,8 @@ jiraActions.getJiraMTTR = async (
         ? dashboardTags
         : tags,
     dashboardOrgs: dashboardOrgs,
-    jiraProjects: getResultFromKpiConfiguration(
-      kpiConfiguration,
-      "jira-projects",
-    ),
-    jiraPriorities: getResultFromKpiConfiguration(
-      kpiConfiguration,
-      "jira-priorities",
-    ),
+    jiraProjects: getJiraProjectsFromKpiConfiguration(kpiConfiguration),
+    jiraPriorities: getJiraPrioritiesFromKpiConfiguration(kpiConfiguration),
     jiraServiceComponents: getResultFromKpiConfiguration(
       kpiConfiguration,
       "jira-service-components",

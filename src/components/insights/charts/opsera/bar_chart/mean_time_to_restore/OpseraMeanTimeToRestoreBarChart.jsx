@@ -91,40 +91,40 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
       let max = Math.ceil(Math.max(countsMax, mttrMax));
       return max;
     };
-    
+
     let mead = metrics[0].mean;
     // TODO: Do these need to be passed as object props?
     const MeanLineLayer = ({ bars, xScale, yScale }) => {
-        const lineColor = neutralColor;
-        const lineGenerator = line()
-          .x(d => xScale(d.data.data._id))
-          .y(d => yScale(d.data.data.mean));
-        const mean = metrics[0]?.mean;
-        return (
-          <Fragment>
-          <path 
+      const lineColor = neutralColor;
+      const lineGenerator = line()
+        .x(d => xScale(d.data.data._id))
+        .y(d => yScale(d.data.data.mean));
+      const mean = metrics[0]?.mean;
+      return (
+        <Fragment>
+          <path
             d={lineGenerator(bars)}
             fill="none"
             stroke={lineColor}
             strokeWidth="3"
-            style={{ pointerEvents: null }}
+            style={{ pointerEvents: "none" }}
           />
-            
-      {/*{bars.map(bar => {*/}
-      {/*    return <circle*/}
-      {/*      key={bar.key}*/}
-      {/*      cx={xScale(bar.data.data._id)}*/}
-      {/*      cy={yScale(bar.data.data.mttr)}*/}
-      {/*      r={4}*/}
-      {/*      fill={lineColor}*/}
-      {/*      stroke={lineColor}*/}
-      {/*      style={{ pointerEvents: "none" }}*/}
-      {/*    />;*/}
-      {/*  }*/}
-      {/*)}*/}
-          </Fragment>
-        );
-      };
+
+          {/*{bars.map(bar => {*/}
+          {/*    return <circle*/}
+          {/*      key={bar.key}*/}
+          {/*      cx={xScale(bar.data.data._id)}*/}
+          {/*      cy={yScale(bar.data.data.mttr)}*/}
+          {/*      r={4}*/}
+          {/*      fill={lineColor}*/}
+          {/*      stroke={lineColor}*/}
+          {/*      style={{ pointerEvents: "none" }}*/}
+          {/*    />;*/}
+          {/*  }*/}
+          {/*)}*/}
+        </Fragment>
+      );
+    };
 
     const onRowSelect = (data) => {
       const chartModel = new Model({...DeploymentFrequencyInsightsTableMetadata.newObjectFields}, DeploymentFrequencyInsightsTableMetadata, false);
@@ -147,47 +147,47 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
         </div>
         <ResponsiveBar
           data={metrics}
-          {...defaultConfig("Mean Time to Deploy (in minutes)", "Date", 
-                    false, false, "wholeNumbers", "monthDate2")}
+          {...defaultConfig("Mean Time to Deploy (in minutes)", "Date",
+            false, false, "wholeNumbers", "monthDate2")}
           {...config(getColorByData, getMaxValue(metrics), MeanLineLayer)}
           {...adjustBarWidth(metrics)}
           onClick={(data) => onRowSelect(data)}
-          tooltip={({ indexValue, value, data, color }) => <ChartTooltip 
-                    titles={["Date", "Mean Time to Deploy", "Number of Deployments"]}
-                    values={[new Date(indexValue).toDateString(), `${value} minutes`, data.count ]}
-                    style={false}
-                    color={color} />}
+          tooltip={({ indexValue, value, data, color }) => <ChartTooltip
+            titles={["Date", "Mean Time to Deploy", "Number of Deployments"]}
+            values={[new Date(indexValue).toDateString(), `${value} minutes`, data.count ]}
+            style={false}
+            color={color} />}
         />
       </div>
     );
   };
 
-    return (
-      <>
-        <ChartContainer
-          kpiConfiguration={kpiConfiguration}
-          setKpiConfiguration={setKpiConfiguration}
-          chart={getChartBody()}
-          loadChart={loadData}
-          dashboardData={dashboardData}
-          index={index}
-          error={error}
-          setKpis={setKpis}
-          isLoading={isLoading}
-          chartHelpComponent={(closeHelpPanel) => (
-            <MeanTimeToDeployHelpDocumentation closeHelpPanel={closeHelpPanel} />
-          )}
-        />
-        <ModalLogs
-          header="Mean Time to Restore"
-          size="lg"
-          jsonMessage={metrics}
-          dataType="bar"
-          show={showModal}
-          setParentVisibility={setShowModal}
-        />
-      </>
-    );
+  return (
+    <>
+      <ChartContainer
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        chart={getChartBody()}
+        loadChart={loadData}
+        dashboardData={dashboardData}
+        index={index}
+        error={error}
+        setKpis={setKpis}
+        isLoading={isLoading}
+        chartHelpComponent={(closeHelpPanel) => (
+          <MeanTimeToDeployHelpDocumentation closeHelpPanel={closeHelpPanel} />
+        )}
+      />
+      <ModalLogs
+        header="Mean Time to Restore"
+        size="lg"
+        jsonMessage={metrics}
+        dataType="bar"
+        show={showModal}
+        setParentVisibility={setShowModal}
+      />
+    </>
+  );
 }
 
 OpseraMeanTimeToRestoreBarChart.propTypes = {
@@ -198,7 +198,7 @@ OpseraMeanTimeToRestoreBarChart.propTypes = {
   setKpis: PropTypes.func,
   bars: PropTypes.any,
   xScale: PropTypes.any,
-  yScale: PropTypes.any,
+  yScale: PropTypes.any
 };
 
 export default OpseraMeanTimeToRestoreBarChart;

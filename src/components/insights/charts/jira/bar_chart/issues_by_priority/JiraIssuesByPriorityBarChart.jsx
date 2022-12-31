@@ -90,7 +90,6 @@ function JiraIssuesByPriorityBarChart({ kpiConfiguration, setKpiConfiguration, d
                   values={[indexValue, id, data[id + "-Low"] ? data[id + "-Low"] : 0,
                            data[id + "-Medium"] ? data[id + "-Medium"] : 0, data[id + "-High"] ? data[id + "-High"] : 0, 
                            data[id + "-Urgent"] ? data[id + "-Urgent"] : 0, data[id + "-Blocker"] ? data[id + "-Blocker"] : 0]} 
-
                   style={false} />}
             />
         </div>

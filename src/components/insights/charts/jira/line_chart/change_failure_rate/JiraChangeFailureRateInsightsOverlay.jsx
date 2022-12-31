@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { Modal } from "react-bootstrap";
-import {getTableDateColumn, getTableTextColumn} from "../../../../../common/table/table-column-helpers";
+import { getTableDateColumn, getTableTextColumn } from "../../../../../common/table/table-column-helpers";
 import { getField } from "../../../../../common/metadata/metadata-helpers";
 import { jiraChangeFailureRateMetadata } from "./jiraChangeFailureRate.metadata";
 import CustomTable from "../../../../../common/table/CustomTable";
@@ -17,7 +17,7 @@ function JiraChangeFailureRateInsightsOverlay({ data, closePanel }) {
       getTableTextColumn(getField(fields, "resolution")),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableTextColumn(getField(fields, "priority")),
-      getTableTextColumn(getField(fields, "serviceComponent")),      
+      getTableTextColumn(getField(fields, "serviceComponent")),
       getTableTextColumn(getField(fields, "teamName")),
     ],
     [],

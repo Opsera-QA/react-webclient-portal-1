@@ -17,6 +17,9 @@ import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/ba
 import { goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import IconBase from "components/common/icons/IconBase";
+import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";import {
+  OPSERA_BUILD_DATA_AND_DEPLOYMENT_STATISTICS_CONSTANTS as constants
+} from "../OpseraBuildAndDeploymentStatistics_kpi_datapoint_identifiers";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function BuildStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData, dataPoint }) {

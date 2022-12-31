@@ -17,113 +17,117 @@ import ThreeLineDataBlockBase from "../../../../../common/metrics/data_blocks/ba
 import { goalSuccessColor } from "../../../../charts/charts-views";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import IconBase from "components/common/icons/IconBase";
+import {dataPointHelpers} from "../../../../../common/helpers/metrics/data_point/dataPoint.helpers";
+import {
+  OPSERA_BUILD_DATA_AND_DEPLOYMENT_STATISTICS_CONSTANTS as constants
+} from "../OpseraBuildAndDeploymentStatistics_kpi_datapoint_identifiers";
 
 // TODO: Pass in relevant data and don't use hardcoded data
 function DeploymentStatisticsDataBlockContainer({ metricData, chartData, kpiConfiguration, dashboardData, goalsData, dataPoint }) {
-    const toastContext = useContext(DialogToastContext);
+  const toastContext = useContext(DialogToastContext);
 
-    const onRowSelect = () => {
-        toastContext.showOverlayPanel(
-            <FullScreenCenterOverlayContainer
-                closePanel={closePanel}
-                showPanel={true}
-                titleText={`Opsera Deployment Statistics`}
-                showToasts={true}
-                titleIcon={faTable}
-                isLoading={false}
-            >
-                <div className={"p-3"}>
-                    <DeploymentStatisticsActionableInsightsTable kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} />
-                </div>
-            </FullScreenCenterOverlayContainer>
-        );
-    };
+  const onRowSelect = () => {    
+    toastContext.showOverlayPanel(
+      <FullScreenCenterOverlayContainer
+        closePanel={closePanel}
+        showPanel={true}
+        titleText={`Opsera Deployment Statistics`}
+        showToasts={true}
+        titleIcon={faTable}
+        isLoading={false}        
+      >
+        <div className={"p-3"}>
+          <DeploymentStatisticsActionableInsightsTable kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} />
+        </div>        
+      </FullScreenCenterOverlayContainer>
+    );    
+  };
 
-    const closePanel = () => {
-        toastContext.removeInlineMessage();
-        toastContext.clearOverlayPanel();
-    };
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
 
-    let successChartData = [
-        {
-            "id": "success rate",
-            "data": chartData?.deploySuccess
-        }
-    ];
+  let successChartData = [
+    {
+      "id": "success rate",
+      "data": chartData?.deploySuccess
+    }  
+  ];
 
-    const getLeftDataBlock = () => {
-        return (
-            <ThreeLineDataBlockBase
-                className={"build-and-deployment-statistics-kpi"}
-                topText={"Success Rate"}
-                middleText={
-                    <MetricPercentageText
-                        percentage={metricData?.deploy?.successPercent}
-                        dataPoint={dataPoint}
-                        className={"metric-block-content-text"}
-                    />}
-                dataPoint={dataPoint}
-            />
-        );
-    };
-
-    const getSuccessTrendChart = () => {
-        return(
-            <div className="new-chart p-0" style={{height: "150px"}}>
-                <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
-                    Goal<b> ({goalsData} %)</b>{" "}
-                    <IconBase icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"} />
-                    <br></br>
-                    Success Rate{" "}
-                    <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
-                </div>
-                <ResponsiveLine
-                    data={successChartData}
-                    {...defaultConfig("", "Date",
-                        false, true, "wholeNumbers", "monthDate2")}
-                    {...config()}
-                    tooltip={(node) => (
-                        <ChartTooltip
-                            titles={["Date Range", "Number of Deployments", "Success Rate"]}
-                            values={[node.point.data.range, node.point.data.total, String(node.point.data.y) + " %"]}
-                        />
-                    )}
-                    markers={[
-                        {
-                            axis: 'y',
-                            value: goalsData,
-                            lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
-                            legend: '',
-                        }
-                    ]}
-                />
-            </div>
-        );
-    };
-
-    return (
-        <HorizontalDataBlocksContainer title={"Deployment Statistics"} onClick={() => onRowSelect()}>
-            <Container>
-                <Row className="align-items-center">
-                    <Col sm={3} className={"p-2"}>
-                        {getLeftDataBlock()}
-                    </Col>
-                    <Col sm={9} className={"p-2"}>
-                        {getSuccessTrendChart()}
-                    </Col>
-                </Row>
-            </Container>
-        </HorizontalDataBlocksContainer>
+  const getLeftDataBlock = () => {
+    return (  
+      <ThreeLineDataBlockBase
+        className={"build-and-deployment-statistics-kpi"}
+        topText={"Success Rate"}
+        middleText={
+        <MetricPercentageText
+          percentage={metricData?.deploy?.successPercent}
+          dataPoint={dataPoint}
+          className={"metric-block-content-text"}
+        />}
+        dataPoint={dataPoint}
+      />
     );
+  };
+
+  const getSuccessTrendChart = () => {
+    return(
+      <div className="new-chart p-0" style={{height: "150px"}}>
+        <div style={{ float: "right", fontSize: "10px", marginRight: "5px" }}>
+          Goal<b> ({goalsData} %)</b>{" "}
+          <IconBase icon={faMinus} iconColor={goalSuccessColor} iconSize={"lg"} />
+          <br></br>
+          Success Rate{" "}
+          <IconBase icon={faSquare} iconColor={METRIC_THEME_CHART_PALETTE_COLORS?.CHART_PALETTE_COLOR_1} iconSize={"lg"} />
+        </div>
+        <ResponsiveLine
+          data={successChartData}
+          {...defaultConfig("", "Date", 
+                false, true, "wholeNumbers", "monthDate2")}
+          {...config()}
+          tooltip={(node) => (            
+            <ChartTooltip
+              titles={["Date Range", "Number of Deployments", "Success Rate"]}
+              values={[node.point.data.range, node.point.data.total, String(node.point.data.y) + " %"]}
+            />
+          )}
+          markers={[
+            {
+                axis: 'y',
+                value: goalsData,
+                lineStyle: { stroke: goalSuccessColor, strokeWidth: 2 },
+                legend: '',
+            }            
+          ]}
+        />
+      </div>
+    );
+  };
+
+  return (
+    <HorizontalDataBlocksContainer title={"Deployment Statistics"} onClick={() => onRowSelect()}>
+      <Container>
+        <Row className="align-items-center">
+          <Col sm={3} className={"p-2"}>
+            {getLeftDataBlock()}
+          </Col>
+          <Col sm={9} className={"p-2"}>
+            {getSuccessTrendChart()}
+          </Col>
+        </Row>
+      </Container>
+    </HorizontalDataBlocksContainer>
+  );
 }
 
 DeploymentStatisticsDataBlockContainer.propTypes = {
-    metricData: PropTypes.object,
-    chartData: PropTypes.object,
-    kpiConfiguration: PropTypes.object,
-    dashboardData: PropTypes.object,
-    goalsData: PropTypes.number,
-    dataPoint: PropTypes.object
+  metricData: PropTypes.object,
+  chartData: PropTypes.object,
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  goalsData: PropTypes.number,
+  dataPoint: PropTypes.object
 };
 
 export default DeploymentStatisticsDataBlockContainer;

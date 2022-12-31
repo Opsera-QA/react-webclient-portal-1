@@ -3,38 +3,9 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
-import {
-  faCheckCircle,
-  faExclamationTriangle,
-  faFolders,
-  faLockOpenAlt,
-  faShieldCheck,
-  faSirenOn,
-  faExclamation,
-  faLock,
-} from "@fortawesome/pro-light-svg-icons";
 
 function MTTRActionableDataBlocks({ data }) {
   let className = `p-2 dark-gray-text-primary`;
-
-  // const getColor = (metric) => {
-  //   if (metric > 0) {
-  //     return "danger-red";
-  //   }
-  //   return "green";
-  // };
-  //
-  // const getIcon = (level) => {
-  //   if (level == "Low") {
-  //     return faExclamation;
-  //   }
-  //   if (level == "Medium") {
-  //     return faExclamationTriangle;
-  //   }
-  //   if (level == "High") {
-  //     return faSirenOn;
-  //   }
-  // };
 
   return (
     <div>
@@ -52,7 +23,7 @@ function MTTRActionableDataBlocks({ data }) {
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
               className={className}
-              score={data?.resolvedIssues ? data?.totalIssues : 0}
+              score={data?.resolvedIssues ? data?.resolvedIssues : 0}
               subtitle={"Resolved Incidents"}
             />
           </DataBlockBoxContainer>

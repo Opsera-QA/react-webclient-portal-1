@@ -19,7 +19,6 @@ function OpseraBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, das
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [modalData, setModalData] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -72,10 +71,7 @@ function OpseraBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, das
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
-    const onRowSelect = (rowData) => {
-      setModalData(rowData.original);
-      setShowModal(true);
-    };
+
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <ResponsiveBar
@@ -84,7 +80,7 @@ function OpseraBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, das
                       true, false, "cutoffString", "wholeNumbers")}
           {...config(getColorByData)}
           {...adjustBarWidth(metrics, false)}
-          onClick={(data) => onRowSelect(data)}
+          onClick={() => setShowModal(true)}
           tooltip={({ indexValue, value, color }) => <ChartTooltip 
                                         titles = {["User", "Number of Builds"]}
                                         values = {[indexValue, `${value} builds`]}

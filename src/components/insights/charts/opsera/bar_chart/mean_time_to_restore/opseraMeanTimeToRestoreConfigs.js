@@ -3,7 +3,7 @@ export default (getColor, maxValue, MeanLineLayer) => ({
   indexBy: "_id",
   colorBy: "id",
   minValue: 0,
-  layers: ["grid", "axes", "bars", "markers", "mesh",MeanLineLayer],
+  layers: ["grid", "axes", "bars", "markers", "mesh", MeanLineLayer],
   colors: getColor,
   enableLabel: true,
   labelTextColor: "white",

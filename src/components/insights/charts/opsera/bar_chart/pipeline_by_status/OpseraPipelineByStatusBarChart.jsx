@@ -85,6 +85,7 @@ function OpseraPipelineByStatusBarChart({ kpiConfiguration, setKpiConfiguration,
         pipelineName={pipeline} />);
   };
 
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;

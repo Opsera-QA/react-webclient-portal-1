@@ -19,8 +19,8 @@ import ChartTooltip from "../../../ChartTooltip";
 function JiraHealthBySprintBarChart( { kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis } ) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
-  const [keys, setKeys] = useState([]);
   const [metrics, setMetrics] = useState([]);
+  const [keys, setKeys] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);

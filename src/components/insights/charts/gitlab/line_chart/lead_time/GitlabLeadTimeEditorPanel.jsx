@@ -9,56 +9,56 @@ import MetricDeploymentStageFilterInput
 import MetricGitLabProjectFilterInput
     from "components/common/inputs/metric/filters/deployment-frequency/MetricGitLabProjectFilterInput";
 function GitlabLeadTimeEditorPanel(
-  {
-    metricModel,
-    unpackedFilterData,
-    metricFilterModel,
-    setMetricFilterModel,
-  }) {
-  useEffect(() => {
-    setMetricFilterModel(undefined);
+    {
+        metricModel,
+        unpackedFilterData,
+        metricFilterModel,
+        setMetricFilterModel,
+    }) {
+    useEffect(() => {
+        setMetricFilterModel(undefined);
 
-    if (unpackedFilterData) {
-      setMetricFilterModel(modelHelpers.parseObjectIntoModel(unpackedFilterData, gitlabLeadTimeMetadata));
+        if (unpackedFilterData) {
+            setMetricFilterModel(modelHelpers.parseObjectIntoModel(unpackedFilterData, gitlabLeadTimeMetadata));
+        }
+
+    }, [unpackedFilterData]);
+
+    if (metricFilterModel == null) {
+        return null;
     }
 
-  }, [unpackedFilterData]);
-
-  if (metricFilterModel == null) {
-    return null;
-  }
-
-  return (
-    <div>
-      <MetricTagFilterInput
-        metricModel={metricModel}
-        metricFilterModel={metricFilterModel}
-        setMetricFilterModel={setMetricFilterModel}
-      />
-      <MetricDeploymentStageFilterInput
-        metricModel={metricModel}
-        metricFilterModel={metricFilterModel}
-        setMetricFilterModel={setMetricFilterModel}
-      />
-      <MetricGitLabProjectFilterInput
-        metricModel={metricModel}
-        metricFilterModel={metricFilterModel}
-        setMetricFilterModel={setMetricFilterModel}
-      />
-        <MetricDateRangeFilterInput
-        metricModel={metricModel}
-        metricFilterModel={metricFilterModel}
-        setMetricFilterModel={setMetricFilterModel}
-      />
-    </div>
-  );
+    return (
+        <div>
+            <MetricTagFilterInput
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+            />
+            <MetricDeploymentStageFilterInput
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+            />
+            <MetricGitLabProjectFilterInput
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+            />
+            <MetricDateRangeFilterInput
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+            />
+        </div>
+    );
 }
 
 GitlabLeadTimeEditorPanel.propTypes = {
-  metricModel: PropTypes.object,
-  unpackedFilterData: PropTypes.object,
-  metricFilterModel: PropTypes.object,
-  setMetricFilterModel: PropTypes.func,
+    metricModel: PropTypes.object,
+    unpackedFilterData: PropTypes.object,
+    metricFilterModel: PropTypes.object,
+    setMetricFilterModel: PropTypes.func,
 };
 
 export default GitlabLeadTimeEditorPanel;
