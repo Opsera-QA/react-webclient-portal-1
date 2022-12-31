@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function TerraformIAmRoleFlagToggleInput({model, setModel, disabled}) {
-  
+
   const setRoleFlag = (fieldName, selectedValue) => {
     let newModel = {...model};
     newModel.setData(fieldName, selectedValue);

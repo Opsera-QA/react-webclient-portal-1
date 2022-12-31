@@ -50,7 +50,7 @@ function SfdcPipelineWizardSubmitProfileComponentsButton({pipelineWizardModel, s
 
   const generateXml = async () => {
     let generateXMLResponse = await sfdcPipelineActions.generateSfdcProfileMigrationPackageXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
-  
+    
     if(generateXMLResponse?.data?.status !== 200) {
       toastContext.showInlineErrorMessage(generateXMLResponse?.data?.message);
       return;

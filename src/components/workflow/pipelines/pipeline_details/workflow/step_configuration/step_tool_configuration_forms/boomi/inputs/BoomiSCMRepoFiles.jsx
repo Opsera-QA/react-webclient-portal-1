@@ -43,14 +43,14 @@ function BoomiSCMRepoFilesSelectInput({
   const loadFiles = async () => {
     try {
       const res = await BoomiActions.getSCMRepoFiles(dataObject, getAccessToken, cancelTokenSource);
-      if (res && res.status === 200) {
-        if (res.message.length === 0) {
+      if (res?.data && res?.data?.status === 200) {
+        if (res?.data?.message.length === 0) {
           dataObject.setData("fileName", "");
           setPlaceholder("No Files Found");
           return;
         }
         setPlaceholder("Select a File");
-        setBoomiSCMRepoFiles(res.message);
+        setBoomiSCMRepoFiles(res?.data?.message);
         return;
       }
       dataObject.setData("fileName", "");

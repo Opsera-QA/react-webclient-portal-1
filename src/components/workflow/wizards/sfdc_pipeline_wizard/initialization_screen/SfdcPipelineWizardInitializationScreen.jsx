@@ -193,9 +193,11 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       if (moveToNextScreen === true) {
         setCreatingNewRecord(true);
       }
+
       if(translation === true) {
         newPipelineWizardModel.setData("isTranslations", true);
       }
+
       const response = await sfdcPipelineActions.createNewRecordV2(getAccessToken, cancelTokenSource, newPipelineWizardModel);
       const newRecord = response?.data;
 
@@ -332,6 +334,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
                             size={"sm"}/>
             </SaveButtonContainer>
           }
+          
         </div>
       );
     }

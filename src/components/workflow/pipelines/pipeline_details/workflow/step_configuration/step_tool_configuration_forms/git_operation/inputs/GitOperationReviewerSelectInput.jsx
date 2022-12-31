@@ -24,10 +24,10 @@ function GitOperationReviewerSelectInput({
     isMounted.current = true;
 
     if (!repository || (hasStringValue(repository) && repository === "")) {
-        let newDataObject = { ...dataObject };
-        dataObject.setData("prReviewers", []);
-        setDataObject({ ...newDataObject });
-        return;
+      let newDataObject = { ...dataObject };
+      dataObject.setData("prReviewers", []);
+      setDataObject({ ...newDataObject });
+      return;
     }
     return () => {
       source.cancel();

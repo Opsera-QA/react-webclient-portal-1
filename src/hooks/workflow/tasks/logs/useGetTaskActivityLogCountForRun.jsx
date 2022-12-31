@@ -42,8 +42,6 @@ export default function useGetTaskActivityLogCountForRun(
       id,
       runCount,
     );
-    console.log("taskRunCount: " + JSON.stringify(response?.data?.count));
-
     setLogCount(DataParsingHelper.parseNestedInteger(response, "data.count", 0));
   };
 

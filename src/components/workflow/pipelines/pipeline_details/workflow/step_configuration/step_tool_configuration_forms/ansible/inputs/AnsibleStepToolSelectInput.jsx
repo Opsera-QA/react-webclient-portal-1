@@ -8,7 +8,7 @@ function AnsibleStepToolSelectInput({ fieldName, model, setModel, disabled, clas
     const toolName = tool?.name; 
     return (`${toolName} (${hostName})`);
   };
-  
+
   return (
     <RoleRestrictedToolByIdentifierInputBase
       toolIdentifier={"ansible"}

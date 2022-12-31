@@ -32,7 +32,7 @@ function ExternalRestApiIntegrationEndpointSummary({ endpoint, requestType, clas
 
   return (
     <div className={className}>
-      <H5FieldSubHeader subheaderText={`${requestType}`} />
+      <H5FieldSubHeader subheaderText={requestType} />
       <Row>
         <Col xs={6}>
           <EndpointRequestField

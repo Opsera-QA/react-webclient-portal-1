@@ -57,10 +57,11 @@ function SnaplogicProjectSpaceSelectInput({ model, setModel, toolConfigId, disab
   const fetchSnaplogicProjectSpaces = async (cancelSource = cancelTokenSource) => {
 
     const toolId = toolConfigId && toolConfigId.length > 0  ? toolConfigId  : model?.getData("toolConfigId");
+
     const response = await snaplogicStepActions.getProjectSpaces(
       getAccessToken,
       cancelSource,
-      toolId
+        toolId
     );
 
     const result = response?.data?.data;

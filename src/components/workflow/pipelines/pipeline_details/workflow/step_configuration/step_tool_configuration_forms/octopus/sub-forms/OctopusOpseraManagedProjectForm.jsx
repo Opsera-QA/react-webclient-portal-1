@@ -7,6 +7,7 @@ import OctopusFeedSelectInput from "../input/OctopusFeedSelectInput";
 import OctopusVersionSelectInput from "../input/OctopusVersionSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import RollbackToggleInput from "../input/RollbackToggleInput";
+import OctopusDeploymentVariables from "../input/OctopusDeploymentVariables";
 import OctopusSpecifyDepVarsToggle from "../input/OctopusSpecifyDepVarsToggle";
 import OctopusLifecycleSelectInput from "../input/OctopusLifecycleSelectInput";
 import OctopusScriptTypeSelectInput from "../input/OctopusScriptTypeSelectInput";
@@ -231,7 +232,7 @@ function OctopusOpseraManagedProjectForm({
                 fieldName={"customVariableList"}
                 dataObject={dataObject}
                 setDataObject={setDataObject}
-              />              
+              />
               <TextInputBase
                 setDataObject={setDataObject}
                 dataObject={dataObject}

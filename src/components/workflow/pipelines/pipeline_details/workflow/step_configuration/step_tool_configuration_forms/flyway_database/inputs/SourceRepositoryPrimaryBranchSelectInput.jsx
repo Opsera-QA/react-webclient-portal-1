@@ -9,6 +9,7 @@ function SourceRepositoryPrimaryBranchSelectInput({className, fieldName, model, 
     newModel.setData("targetBranch", "");
     setModel({...newModel});
   };
+
   return (
     <GitBranchInput
       repoId={model?.getData("repoId")}

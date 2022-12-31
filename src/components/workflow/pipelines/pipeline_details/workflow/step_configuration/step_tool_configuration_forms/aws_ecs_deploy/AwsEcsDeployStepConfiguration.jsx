@@ -81,7 +81,8 @@ function AwsEcsDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallb
       <DeleteResourceToggle
         dataObject={awsEcsDeployModel}
         setDataObject={setAwsEcsDeployModel}
-        fieldName={"ecsDeleteService"}
+        fieldName={"ecsDeleteResource"}
+        disabled={true}
         pipelineId={pipelineId}
       />
     </PipelineStepEditorPanelContainer>

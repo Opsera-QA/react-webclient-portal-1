@@ -32,11 +32,11 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
     loadFormData(stepTool);
   }, []);
 
-  const loadFormData = async (step) => {    
+  const loadFormData = async (step) => {
     setIsLoading(true);
     let { configuration, threshold } = step;
     if (typeof configuration !== "undefined") {
-      setIsFormUpdate(true);      
+      setIsFormUpdate(true);
       setOctopusStepConfigurationDataDto(new Model(configuration, OctopusStepFormMetadata, false));
       if (typeof threshold !== "undefined") {
         setThresholdType(threshold.type);
@@ -57,7 +57,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
   };
 
   const saveToVault = async (pipelineId, stepId, key, name, value) => {
-    
+
     let octopusConfig = {...octopusStepConfigurationDto};
 
     const keyName = `${pipelineId}-${stepId}-${key}`;
@@ -65,7 +65,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
       "key": keyName,
       "value": value
     };
-    const response = await callbackSaveToVault(body);    
+    const response = await callbackSaveToVault(body);
     if (response.status === 200 ) {
       return { name: name, vaultKey: keyName };
     } else {
@@ -112,7 +112,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
       if(!octopusStepConfigurationDto.getData("projectType") || octopusStepConfigurationDto.getData("projectType") !== "CUSTOM") {
         await createOctopusProject();
         await createOctopusDeploymentProcess();
-      }      
+      }
       await createOctopusVariables();
     }
   };
@@ -124,7 +124,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
         stepId: stepId,
         variableSet: octopusStepConfigurationDto.getData("specifyDepVariables") ? octopusStepConfigurationDto.getData("deploymentVariables") : []
       }, getAccessToken)
-      .then(async (response) => {        
+      .then(async (response) => {
         return response;
       })
       .catch(function (error) {
@@ -139,9 +139,9 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
     await octopusActions
       .createOctopusDeploymentProcess({
         pipelineId: pipelineId,
-        stepId: stepId        
+        stepId: stepId
       }, getAccessToken)
-      .then(async (response) => {        
+      .then(async (response) => {
         return response;
       })
       .catch(function (error) {
@@ -209,12 +209,12 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
 
   const validateDeploymentVariables = async () => {
     if (octopusStepConfigurationDto.getData("specifyDepVariables")) {
-      if (octopusStepConfigurationDto.getData("deploymentVariables").length === 0 && octopusStepConfigurationDto.getData("customVariableList").length === 0 ) {
+      if (octopusStepConfigurationDto.getData("deploymentVariables").length === 0 && octopusStepConfigurationDto.getData("customVariableList").length === 0) {
         let errorMesage = "Please specify deployment variables.";
         toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
         return false;
       }
-    }    
+    }
     return true;
   };
 
@@ -226,18 +226,18 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
           <OctopusCustomProjectForm
             dataObject={octopusStepConfigurationDto}
             setDataObject={setOctopusStepConfigurationDataDto}
-            disabled={false}          
+            disabled={false}
             pipelineId={pipelineId}
             listOfSteps={listOfSteps}
           />
         );
       }
-    
+
     return (
       <OctopusOpseraManagedProjectForm
         dataObject={octopusStepConfigurationDto}
         setDataObject={setOctopusStepConfigurationDataDto}
-        disabled={false}          
+        disabled={false}
         pipelineId={pipelineId}
         stepTool={stepTool}
         listOfSteps={listOfSteps}

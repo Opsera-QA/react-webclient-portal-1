@@ -8,7 +8,7 @@ import CheckboxInputBase from "components/common/inputs/boolean/CheckboxInputBas
 const disallowedJobTypes = [
   "SFDC VALIDATE PACKAGE XML",
   "SFDC UNIT TESTING",
-  "SFDC DEPLOY",
+  "SFDC DEPLOY"
 ];
 
 function JenkinsStepConfigurationBranchEditorPanel(
@@ -46,14 +46,14 @@ function JenkinsStepConfigurationBranchEditorPanel(
     else if (jobType === "SFDC PUSH ARTIFACTS") {
       return (
         <GitUpstreamBranchInput
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        service={service}
-        gitToolId={gitToolId}
-        workspace={workspace}
-        repoId={repoId}
-        clearDataFunction={clearDataFunction}
-      />
+          dataObject={dataObject}
+          setDataObject={setDataObject}
+          service={service}
+          gitToolId={gitToolId}
+          workspace={workspace}
+          repoId={repoId}
+          clearDataFunction={clearDataFunction}
+        />
       );
     }
     else {

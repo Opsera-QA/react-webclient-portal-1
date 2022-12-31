@@ -14,6 +14,7 @@ import TwistlockStepComplianceThresholdInput
 import TwistlockStepVulnerabilityThresholdInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/inputs/TwistlockStepVulnerabilityThresholdInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+
 function TwistlockStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPanel, parentCallback, plan, createJob}) {
   const [isLoading, setIsLoading] = useState(false);
   const [twistlockStepConfigurationDto, setTwistlockStepConfigurationDataDto] = useState(undefined);
@@ -96,7 +97,7 @@ function TwistlockStepConfiguration({ pipelineId, stepTool, stepId, closeEditorP
         plan={plan}
         stepId={stepId}
       />
-     <BooleanToggleInput
+      <BooleanToggleInput
         dataObject={twistlockStepConfigurationDto}
         setDataObject={setTwistlockStepConfigurationDataDto}
         fieldName={"clientSideThreshold"}

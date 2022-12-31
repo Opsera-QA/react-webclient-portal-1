@@ -98,7 +98,7 @@ function SapCpqScripCategoriesMultiSelectInput({
       clearDataFunction={clearDataFunction}
       textField={"name"}
       valueField={"value"}
-      value={[...dataObject.getArrayData(fieldName)]}
+      value={[...dataObject?.getArrayData(fieldName)]}
       busy={isLoading}
       dataObject={dataObject}
       showLabel={showLabel}

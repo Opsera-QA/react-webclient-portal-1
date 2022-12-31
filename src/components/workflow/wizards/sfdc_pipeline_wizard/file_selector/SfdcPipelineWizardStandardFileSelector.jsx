@@ -47,13 +47,10 @@ const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipeli
     try {
       setIsLoading(true);
       await pullSfdcFiles(cancelSource);
-      if (!pipelineWizardModel?.getData("isOrgToOrg")) {
-        pipelineWizardModel.setData("modifiedFilesOrigin", "git");
-      }
     }
     catch (error) {
       if (isMounted?.current === true) {
-        const prependMessage = "Service Error Pulling File List :";
+        const prependMessage = "Service Error Pulling File List from Salesforce:";
         toastContext.showInlineErrorMessage(error, prependMessage);
       }
     }
@@ -113,14 +110,14 @@ const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipeli
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        {/* <CustomTab
+        <CustomTab
           activeTab={pipelineWizardModel.getData("modifiedFilesOrigin")}
           tabText={"Salesforce Files"}
           handleTabClick={handleTabClick}
           tabName={"sfdc"}
           toolTipText={"Salesforce Files"}
           icon={faSalesforce}
-        /> */}
+        />
         <CustomTab
           activeTab={pipelineWizardModel.getData("modifiedFilesOrigin")}
           tabText={"Git Files"}

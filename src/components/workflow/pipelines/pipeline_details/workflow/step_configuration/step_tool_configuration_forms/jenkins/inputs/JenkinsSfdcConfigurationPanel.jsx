@@ -106,7 +106,7 @@ function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
       return (
         <Form.Check
           type="checkbox"
-          label="Deploy from Salesforce Org"
+          label="Compare with destination SFDC Org"
           checked={dataObject.data.isOrgToOrg}
           onChange={(e) => handleSFDCCreatePackageXMLChange(e.target.checked)}
         />

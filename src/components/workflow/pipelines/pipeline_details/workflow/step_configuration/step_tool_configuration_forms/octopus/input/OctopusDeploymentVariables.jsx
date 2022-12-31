@@ -22,6 +22,10 @@ const SAMPLE_DATA = [
 ];
 
 function OctopusDeploymentVariables({ fieldName, dataObject, setDataObject, disabled }) {
+  if (!dataObject?.getData("specifyDepVariables")) {
+    return null;
+  }
+
   return (
     <>
       <OverlayTrigger
@@ -63,7 +67,7 @@ function OctopusDeploymentVariables({ fieldName, dataObject, setDataObject, disa
         <small className="form-text text-muted form-group m-2 text-left">
           Enter deployment variables as a list of JSON Objects
         </small>
-      ) }      
+      ) }
     </>
   );
 }

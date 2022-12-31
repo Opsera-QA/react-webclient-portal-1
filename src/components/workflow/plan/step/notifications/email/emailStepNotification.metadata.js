@@ -1,7 +1,7 @@
 // TODO: put metadata on node server and pull down that way?
 const emailStepNotificationMetadata = {
   idProperty: "name",
-  type: "Email Notification",
+  type: "Email Step Notification",
   fields: [
     {
       label: "Type",

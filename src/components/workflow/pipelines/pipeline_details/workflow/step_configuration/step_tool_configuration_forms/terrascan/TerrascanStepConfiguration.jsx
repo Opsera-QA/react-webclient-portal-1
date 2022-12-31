@@ -32,6 +32,7 @@ function TerrascanStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
 
+
   useEffect(() => {
     loadData();
   }, []);
@@ -51,6 +52,7 @@ function TerrascanStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       setThresholdType(threshold?.type);
       setThresholdValue(threshold?.value);
     }
+
     setIsLoading(false);
   };
 

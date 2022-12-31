@@ -22,7 +22,8 @@ import {
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import PipelineStepNotificationConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/PipelineStepNotificationConfigurationHelpDocumentation";
-import gChatStepNotificationMetadata from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
+import gChatStepNotificationMetadata 
+  from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
 
 function PipelineStepNotificationEditorPanel(
   {

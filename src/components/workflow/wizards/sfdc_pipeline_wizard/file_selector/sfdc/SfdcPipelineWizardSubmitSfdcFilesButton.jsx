@@ -75,7 +75,7 @@ function SfdcPipelineWizardSubmitSfdcFilesButton({pipelineWizardModel, setPipeli
       toastContext.showInlineErrorMessage(generateXMLResponse?.data?.message);
       return;
     }
-    
+
     setPipelineWizardScreen(
       pipelineWizardModel.getData("unitTestSteps").length > 0
         ? PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR

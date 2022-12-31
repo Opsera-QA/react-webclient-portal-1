@@ -85,11 +85,11 @@ function ApigeeRunAssistantListObjectInput(
   }, [model]);
 
   const constructList = () => {
-
+    
     if (Array.isArray(selectOptions) && selectOptions.length > 0) {
       selectOptions.forEach(data => data.id = data[valueField]);
     }
-
+    
     let list = new List(containerRef.current, {
       data: selectOptions || [],
       multiselection: disabled !== true && isLoading !== true,

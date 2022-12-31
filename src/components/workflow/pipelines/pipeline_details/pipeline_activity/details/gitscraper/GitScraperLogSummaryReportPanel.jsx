@@ -1,10 +1,8 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import GitScraperReportSummaryOverview
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/components/GitScraperReportSummaryOverview";
-import gitScraperSummaryLogResultMetaData
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/metadata/gitScraperSummaryLogResult.metadata";
+import GitScraperReportSummaryOverview from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/components/GitScraperReportSummaryOverview";
+import gitScraperSummaryLogResultMetaData from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/metadata/gitScraperSummaryLogResult.metadata";
 import LoadingDialog from "components/common/status_notifications/loading";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
@@ -38,17 +36,19 @@ function GitScraperLogSummaryReportPanel({ pipelineTaskData }) {
   const initializeData = async () => {
     try {
       const jobDetails = pipelineTaskData?.api_response?.summaryReport;
-      const deployObj = Object.keys(jobDetails)?.length > 0 ? jobDetails.report : undefined;
+      const deployObj =
+        Object.keys(jobDetails)?.length > 0 ? jobDetails.report : undefined;
       setGitScraperObj(deployObj);
       if (jobDetails != null) {
-        setGitScraperReportModel(new Model(jobDetails, gitScraperSummaryLogResultMetaData, false));
+        setGitScraperReportModel(
+          new Model(jobDetails, gitScraperSummaryLogResultMetaData, false),
+        );
       }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -78,7 +78,7 @@ function GitScraperLogSummaryReportPanel({ pipelineTaskData }) {
     return (
       <LoadingDialog
         message={"Loading Report"}
-        size={'sm'}
+        size={"sm"}
       />
     );
   }
@@ -86,7 +86,10 @@ function GitScraperLogSummaryReportPanel({ pipelineTaskData }) {
   if (gitScraperReportModel == null) {
     return (
       <div className={"mt-3"}>
-        <IconBase className={"mr-2"} icon={faCheckCircle} />
+        <IconBase
+          className={"mr-2"}
+          icon={faCheckCircle}
+        />
         There was no proper summary log captured with this execution.
       </div>
     );
@@ -103,10 +106,9 @@ function GitScraperLogSummaryReportPanel({ pipelineTaskData }) {
   );
 }
 
-
 GitScraperLogSummaryReportPanel.propTypes = {
   pipelineTaskData: PropTypes.object,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
 };
 
 export default GitScraperLogSummaryReportPanel;

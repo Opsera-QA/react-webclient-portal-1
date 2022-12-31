@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import toolIdentifierConstants from "@opsera/definitions/constants/tool_identifiers/toolIdentifier.constants";
+import {toolIdentifierConstants} from "../../../../../../../../admin/tools/identifiers/toolIdentifier.constants";
 
 export const PACKER_SCM_TOOL_LIST = [
   {

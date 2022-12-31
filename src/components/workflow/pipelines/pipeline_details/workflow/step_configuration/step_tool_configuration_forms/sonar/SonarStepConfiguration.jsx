@@ -272,7 +272,7 @@ function SonarStepConfiguration(
           model={sonarStepModel}
           setModel={setSonarStepModel}
         />
-        {getThresholdInput()}        
+        {getThresholdInput()}
       </div>
     </PipelineStepEditorPanelContainer>
   );

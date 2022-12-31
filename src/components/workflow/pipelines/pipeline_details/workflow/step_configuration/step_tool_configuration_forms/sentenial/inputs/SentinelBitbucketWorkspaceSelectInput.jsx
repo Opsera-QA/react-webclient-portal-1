@@ -15,7 +15,7 @@ function SentenialBitbucketWorkspaceSelectInput({model, setModel, disabled}) {
   if (model?.getData("service") !== "bitbucket") {
     return <></>;
   }
-
+  
   return (
      <BitbucketWorkspaceInput
        fieldName={"bitbucketWorkspaceName"}

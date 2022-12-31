@@ -17,7 +17,8 @@ import ServiceNowStepNotificationEditorPanel
 import EmailStepNotificationEditorPanel
   from "components/workflow/plan/step/notifications/email/EmailStepNotificationEditorPanel";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
-import GChatStepNotificationEditorPanel from "components/workflow/plan/step/notifications/gchat/GChatStepNotificationEditorPanel";
+import GChatStepNotificationEditorPanel 
+  from "components/workflow/plan/step/notifications/gchat/GChatStepNotificationEditorPanel";
 
 function PipelineNotificationTabView(
   {

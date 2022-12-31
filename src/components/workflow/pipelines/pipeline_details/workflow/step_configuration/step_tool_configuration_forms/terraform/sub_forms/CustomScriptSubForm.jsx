@@ -5,6 +5,7 @@ import TextAreaInput from "../../../../../../../../common/inputs/text/TextAreaIn
 import TerraformVariablesFilesInput from "../inputs/TerraformVariablesFilesInput";
 import TerraformVariablesFileToggleInput from "../inputs/TerraformVariablesFileToggleInput";
 import TerraformInputParameters from "../inputs/TerraformInputParameters";
+
 function CustomScriptSubForm({ model, setModel }) {
 
   const getScriptFields = () => {
@@ -44,7 +45,7 @@ function CustomScriptSubForm({ model, setModel }) {
   return (
     <>
       <TerraformCustomScriptSelectInput dataObject={model} setDataObject={setModel} />
-      {getScriptFields()}
+      {getScriptFields()}      
     </>
   );
 }

@@ -31,9 +31,6 @@ function AWSECSDeployPipelineStepConfigurationSummaryPanel({ awsECSDeployPipelin
           <BooleanField dataObject={awsECSDeployPipelineDataObject} fieldName={"dynamicServiceName"}/>
         </Col>
         <Col lg={6}>
-          <BooleanField dataObject={awsECSDeployPipelineDataObject} fieldName={"ecsDeleteService"}/>
-        </Col>
-        <Col lg={6}>
           <TextFieldBase dataObject={awsECSDeployPipelineDataObject} fieldName={"namePretext"}/>
         </Col>
       </Row>

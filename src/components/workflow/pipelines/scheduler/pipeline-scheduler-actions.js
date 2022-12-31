@@ -2,10 +2,15 @@ import baseActions from "utils/actionsBase";
 
 const pipelineSchedulerActions = {};
 
-pipelineSchedulerActions.getScheduledPipelineTasksV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
-  const apiUrl = `/scheduler/pipelines/${pipelineId}`;
+pipelineSchedulerActions.getScheduledTasks = async (getAccessToken, cancelTokenSource, pipelineId) => {
+  const urlParams = {
+    params: {
+      pipelineId: pipelineId,
+    }
+  };
+  const apiUrl = `/scheduler/`;
 
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 pipelineSchedulerActions.createSchedule = async (getAccessToken, cancelTokenSource, scheduledTaskModel) => {

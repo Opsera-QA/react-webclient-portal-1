@@ -9,7 +9,7 @@ import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
 function JFrogMavenPipelineStepConfigurationSummaryPanel({ jFrogPipelineDataObject, pipelineData, setActiveTab }) {
   if (jFrogPipelineDataObject == null) {
-    return <LoadingDialog size="sm" />;
+    return undefined;
   }
 
   return (

@@ -16,13 +16,13 @@ function NexusStepJenkinsToolSelectInput({model, setModel, disabled}) {
   };
 
   return (
-    <RoleRestrictedJenkinsToolSelectInput
-      fieldName={"toolConfigId"}
-      model={model}
-      setModel={setModel}
-      setDataFunction={setDataFunction}
-      disabled={disabled}
-    />
+     <RoleRestrictedJenkinsToolSelectInput
+       fieldName={"toolConfigId"}
+       model={model}
+       setModel={setModel}
+       setDataFunction={setDataFunction}
+       disabled={disabled}
+     />
   );
 }
 

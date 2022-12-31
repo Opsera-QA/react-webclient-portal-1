@@ -27,14 +27,14 @@ const DockerTagTypeSelectionInput = ({dataObject, setDataObject, fieldName, disa
 DockerTagTypeSelectionInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  disabled: PropTypes.bool, 
-  fieldName: PropTypes.string,
+  disabled: PropTypes.bool,
+    fieldName: PropTypes.string,
   listOfSteps: PropTypes.array,
 };
 
 DockerTagTypeSelectionInput.defaultProps = {
   fieldName: "dockerTagType",
-  visible: true
+  visible: true,
 };
 
 export default DockerTagTypeSelectionInput;

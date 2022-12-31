@@ -15,7 +15,7 @@ function PythonFilesInput({ dataObject, setDataObject, disabled, fieldName}) {
       type={"Input File"}
       disabled={disabled}
       regexValidationRequired={false}
-      titleText={"Input File Details"}
+      titleText={"Input File Details"}      
     />
   );
 }

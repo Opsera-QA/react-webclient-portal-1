@@ -36,6 +36,7 @@ const BlackDuckStepFormMetadata = {
       label: "Repository",
       id: "gitRepositoryID",
       dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
+      isRequired: true
     },
     {
       label: "Branch",
@@ -77,22 +78,6 @@ const BlackDuckStepFormMetadata = {
     {
       id: "dependencies",
     },
-    {
-      label: "Enable Client Side thresholds",
-      id: "clientSideThreshold",
-    },
-    {
-      label: "Vulnerability Threshold",
-      id: "thresholdCompliance",
-    },
-    {
-      label: "License Threshold",
-      id: "thresholdLicence",
-    },
-    {
-      label: "Operational Threshold",
-      id: "thresholdOperational",
-    },
   ],
   newObjectFields: {
     blackDuckToolId: "",
@@ -112,10 +97,6 @@ const BlackDuckStepFormMetadata = {
     commands: "",
     dependencies: {},
     dependencyType:"",
-    clientSideThreshold: false,
-    thresholdCompliance: [],
-    thresholdLicence: [],
-    thresholdOperational: [],
   }
 };
 

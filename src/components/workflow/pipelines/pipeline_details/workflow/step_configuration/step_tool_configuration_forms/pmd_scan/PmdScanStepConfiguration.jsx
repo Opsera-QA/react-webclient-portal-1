@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import pmdScanStepFormMetadata from "./pmdScan-stepForm-metadata";
-
 import StepConfigBitbucketWorkspaceInput from "../common/inputs/StepConfigBitbucketWorkspaceInput";
 import StepConfigGitBranchInput from "../common/inputs/StepConfigGitBranchInput";
 import StepConfigGitRepositoryInput from "../common/inputs/StepConfigGitRepositoryInput";

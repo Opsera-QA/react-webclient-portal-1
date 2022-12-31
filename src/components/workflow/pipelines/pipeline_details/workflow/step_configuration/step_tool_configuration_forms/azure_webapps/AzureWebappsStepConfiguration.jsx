@@ -80,7 +80,7 @@ function AzureWebappsStepConfiguration({ stepTool, closeEditorPanel, parentCallb
         </>
       );
     }
-  };  
+  };
 
   return (
     <PipelineStepEditorPanelContainer
@@ -116,7 +116,7 @@ function AzureWebappsStepConfiguration({ stepTool, closeEditorPanel, parentCallb
         applicationId={azureWebappsModel?.getData("azureCredentialId")}
         resourceGroup={azureWebappsModel?.getData("resourceGroupName")}
       />
-      {getDynamicFields()}      
+      {getDynamicFields()}
       <AzureAppSettingsInput 
         model={azureWebappsModel}
         setModel={setAzureWebappsModel}

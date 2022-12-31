@@ -18,6 +18,18 @@ function BuildkiteStepSummary({ buildkiteStepConfigurationData, pipelineData, se
         <Col lg={6}>
           <TextFieldBase dataObject={buildkiteStepConfigurationData} fieldName={"toolConfigId"}/>
         </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={buildkiteStepConfigurationData} fieldName={"pipeline"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={buildkiteStepConfigurationData} fieldName={"branch"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={buildkiteStepConfigurationData} fieldName={"commit"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={buildkiteStepConfigurationData} fieldName={"message"}/>
+        </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
   );

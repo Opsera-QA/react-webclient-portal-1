@@ -31,10 +31,10 @@ function PipelineScheduledTaskTable(
 
   let newData = data;
   newData.forEach(item => {
-      let date = new Date(item.schedule.executionDate);
-      let dateString = date.toLocaleString("en-us");
-      item["executionDate"] = dateString;
-      item["interval"] = frequencyLookup[item?.schedule?.recurring];
+    let date = new Date(item.schedule.executionDate);
+    let dateString = date.toLocaleString("en-us");
+    item["executionDate"] = dateString;
+    item["interval"] = frequencyLookup[item?.schedule?.recurring];
   });
 
   const onRowSelect = (grid, row) => {
@@ -77,7 +77,7 @@ function PipelineScheduledTaskTable(
   const createScheduledTask = () => {
     if (isMounted?.current === true) {
       let newModel = new Model({...pipelineSchedulerMetadata.newObjectFields}, pipelineSchedulerMetadata, true);
-      newModel.setData("task", { taskType: "pipeline-run", pipelineId: pipelineId});
+      newModel.setData("task", { taskType: "RUN", pipelineId: pipelineId}); //task type to be set to "pipeline-run" when tasks can be scheduled 
       setScheduledTaskData({...newModel});
     }
   };

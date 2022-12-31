@@ -88,8 +88,8 @@ function SnaplogicProjectSelectInput({ model, setModel, disabled, toolConfigId, 
       selectOptions={projectsList}
       textField={"name"}
       valueField={"name"}
-      busy={isLoading}
       error={errorMessage}
+      busy={isLoading}
       disabled={disabled || !toolConfigId || !projectSpace}
     />
   );

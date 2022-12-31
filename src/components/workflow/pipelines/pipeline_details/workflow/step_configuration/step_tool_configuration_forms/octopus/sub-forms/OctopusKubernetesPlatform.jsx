@@ -8,6 +8,7 @@ import AzureRepoTagsSelectInput from "../input/AzureRepoTagsSelectInput";
 import TextInputBase from "../../../../../../../../common/inputs/text/TextInputBase";
 import OctopusSpecifyDepVarsToggle from "../input/OctopusSpecifyDepVarsToggle";
 import OctopusCustomParametersInput from "../input/OctopusCustomParametersInput";
+
 function OctopusKubernetesPlatform({ dataObject, setDataObject, isLoading, plan, stepId }) {
 
   return (
@@ -34,6 +35,12 @@ function OctopusKubernetesPlatform({ dataObject, setDataObject, isLoading, plan,
           disabled={dataObject && dataObject.getData("spaceName") ? dataObject.getData("spaceName").length === 0 : true}
           tool_prop={dataObject && dataObject.getData("spaceName") ? dataObject.getData("spaceName") : ""}
         />
+        <TextInputBase
+          setDataObject={setDataObject}
+          dataObject={dataObject}
+          fieldName={"namespace"}
+          disabled={dataObject && dataObject.getData("spaceName").length === 0}
+        />
         <RollbackToggleInput dataObject={dataObject} setDataObject={setDataObject} fieldName={"isRollback"} />
         <AzureRepoTagsSelectInput
           dataObject={dataObject}
@@ -41,23 +48,17 @@ function OctopusKubernetesPlatform({ dataObject, setDataObject, isLoading, plan,
           plan={plan}
           stepId={stepId}
         />
-        <TextInputBase
-          setDataObject={setDataObject}
-          dataObject={dataObject}
-          fieldName={"namespace"}
-          disabled={dataObject && dataObject.getData("spaceName").length === 0}
-        />
         <OctopusSpecifyDepVarsToggle
           dataObject={dataObject}
           setDataObject={setDataObject}
           fieldName={"specifyDepVariables"}
         />
-        {dataObject && dataObject.getData("specifyDepVariables") && (          
+        {dataObject && dataObject.getData("specifyDepVariables") && (
           <OctopusCustomParametersInput
             fieldName={"customVariableList"}
             dataObject={dataObject}
             setDataObject={setDataObject}
-          />          
+          />
         )}
       </>
     </>

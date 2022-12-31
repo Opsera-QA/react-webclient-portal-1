@@ -17,9 +17,12 @@ import CoverityStepCoverityToolSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepCoverityToolSelectInput";
 import CoverityStepJenkinsJobSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/coverity/inputs/CoverityStepJenkinsJobSelectInput";
-import DotNetCliTypeSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliTypeSelectInput";
-import DotNetCliSdkVersionSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliSdkVersionSelectInput";
-import ParameterSelectListInputBase from "components/common/list_of_values_input/parameters/ParameterSelectListInputBase";
+import DotNetCliTypeSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliTypeSelectInput";
+import DotNetCliSdkVersionSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliSdkVersionSelectInput";
+import ParameterSelectListInputBase
+  from "components/common/list_of_values_input/parameters/ParameterSelectListInputBase";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import CoverityStepImpactThresholdInput from "./inputs/CoverityStepImpactThresholdInput";
@@ -101,7 +104,6 @@ function CoverityStepConfiguration({ pipelineId, stepTool, stepId, createJob, cl
       );
     }
   };
-
 
   if (isLoading || coverityStepConfigurationDto == null) {
     return <DetailPanelLoadingDialog />;

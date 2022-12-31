@@ -11,7 +11,7 @@ function TwistlockStepComplianceThresholdInput(
     disabled,
     visible
   }) {
-      
+    
   if (!visible) {
     return null;
   }

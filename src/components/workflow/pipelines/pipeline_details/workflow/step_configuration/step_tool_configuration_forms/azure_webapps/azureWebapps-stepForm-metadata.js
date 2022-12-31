@@ -69,7 +69,7 @@ const azureWebappsStepFormMetadata = {
     {
       label: "Clean Target",
       id: "webappCleanTargetPath",      
-    },
+    },            
   ],
   newObjectFields: {
     deploymentType: "",

@@ -4,8 +4,7 @@ import {
   faCheckCircle,
   faExclamationCircle,
 } from "@fortawesome/pro-light-svg-icons";
-import gitScraperReportMetaData
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/metadata/gitScraperReport.metadata";
+import gitScraperReportMetaData from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/metadata/gitScraperReport.metadata";
 import {
   getTableTextColumn,
   getGitCustodianScmLinkIconColumnDefinition,
@@ -15,10 +14,8 @@ import FilterContainer from "components/common/table/FilterContainer";
 import IconBase from "components/common/icons/IconBase";
 import { pluralize } from "components/common/helpers/string-helpers";
 import CustomTable from "components/common/table/CustomTable";
-import ExportGitCustodianReportButton
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/export/ExportGitCustodianReportButton";
-import ExportGitCustodianReportPanel
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/export/ExportGitCustodianReportPanel";
+import ExportGitCustodianReportButton from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/export/ExportGitCustodianReportButton";
+import ExportGitCustodianReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/gitscraper/export/ExportGitCustodianReportPanel";
 
 function GitScraperLogSummaryTable({ gitScraperObj, isLoading }) {
   const [showExportPanel, setShowExportPanel] = useState(false);

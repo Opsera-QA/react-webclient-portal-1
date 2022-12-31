@@ -17,7 +17,7 @@ function FortifyToolSelectInput({ model, setModel, className, disabled }) {
     newModel.setDefaultValue("entitlementPreferenceType");
     newModel.setDefaultValue("technologyStackId");
     newModel.setDefaultValue("languageLevelId");    
-    newModel.setDefaultValue("auditPreferenceId");    
+    newModel.setDefaultValue("auditPreferenceId");
     setModel({...newModel});
   };
 

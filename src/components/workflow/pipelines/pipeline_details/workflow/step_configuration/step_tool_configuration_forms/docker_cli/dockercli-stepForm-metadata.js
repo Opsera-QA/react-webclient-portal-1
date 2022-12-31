@@ -80,8 +80,10 @@ const dockerCliStepFormMetadata = {
     {
       label: "Docker Name",
       id: "dockerName",
-      isRequired: true,
-      maxLength:256,
+      isRequiredFunction: (model) => {
+        return model?.getData("enableDockerBuild") === true;
+      },
+      maxLength: 256,
       // TODO: This should be the pattern but this is probably fine.
       regexValidator: RegExp("^[a-zA-Z0-9_.-]*$"),
       isLowercase: true,

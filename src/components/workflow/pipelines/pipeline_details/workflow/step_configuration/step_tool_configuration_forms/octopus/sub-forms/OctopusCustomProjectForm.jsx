@@ -28,7 +28,7 @@ function OctopusCustomProjectForm({ dataObject, setDataObject, isLoading, disabl
   };
 
   return (
-    <>      
+    <>
       <OctopusProjectGroupSelectInput
         fieldName={"projectGroupId"}
         dataObject={dataObject}

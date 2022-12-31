@@ -4,11 +4,12 @@ import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import LoadingDialog from "components/common/status_notifications/loading";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
-import LoadingDialog from "../../../../../../../common/status_notifications/loading";
+import JsonField from "components/common/fields/json/JsonField";
 
-function AnsibleStepConfigurationSummaryPanel({ ansiblePipelineDataObject, pipelineData, setActiveTab }) {
-  if (ansiblePipelineDataObject == null) {
+function AnsibleStepConfigurationSummaryPanel({ ansibleDataObject, pipelineData, setActiveTab }) {
+  if (ansibleDataObject == null) {
     return <LoadingDialog size="sm" />;
   }
 
@@ -16,48 +17,52 @@ function AnsibleStepConfigurationSummaryPanel({ ansiblePipelineDataObject, pipel
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <ToolNameField model={ansiblePipelineDataObject} fieldName={"toolConfigId"}/>
+          <ToolNameField model={ansibleDataObject} fieldName={"toolConfigId"}/>
         </Col>
         <Col lg={6}>
-          <ToolNameField model={ansiblePipelineDataObject} fieldName={"gitToolId"}/>
+          <ToolNameField model={ansibleDataObject} fieldName={"gitToolId"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"repoId"}/>
+          <TextFieldBase dataObject={ansibleDataObject} fieldName={"repoId"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"projectId"}/>
+          <TextFieldBase dataObject={ansibleDataObject} fieldName={"projectId"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"service"}/>
+          <TextFieldBase dataObject={ansibleDataObject} fieldName={"service"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"gitUrl"}/>
+          <TextFieldBase dataObject={ansibleDataObject} fieldName={"gitUrl"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"sshUrl"}/>
+          <TextFieldBase dataObject={ansibleDataObject} fieldName={"sshUrl"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"repository"}/>
+          <TextFieldBase dataObject={ansibleDataObject} fieldName={"repository"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"workspace"}/>
+          <TextFieldBase dataObject={ansibleDataObject} fieldName={"workspace"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"workspaceName"}/>
+          <TextFieldBase dataObject={ansibleDataObject} fieldName={"workspaceName"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"defaultBranch"}/>
+          <TextFieldBase dataObject={ansibleDataObject} fieldName={"defaultBranch"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={ansiblePipelineDataObject} fieldName={"playbookFileName"}/>
+          <TextFieldBase dataObject={ansibleDataObject} fieldName={"playbookFileName"}/>
         </Col>
+        {/*Disabling Command Line args as part of OPL 2400*/}
+        {/*<Col lg={6}>*/}
+        {/*  <JsonField dataObject={ansibleDataObject} fieldName={"commandArgs"}/>*/}
+        {/*</Col>        */}
       </Row>
     </PipelineStepSummaryPanelContainer>
   );
 }
 
 AnsibleStepConfigurationSummaryPanel.propTypes = {
-  ansiblePipelineDataObject: PropTypes.object,
+  ansibleDataObject: PropTypes.object,
   pipelineData: PropTypes.object,
   setActiveTab: PropTypes.func
 };
