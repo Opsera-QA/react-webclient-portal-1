@@ -38,18 +38,19 @@ function RunTaskButton(
     actionAllowed,
     taskType,
     status,
+    runCount,
   }) {
   const [isStarting, setIsStarting] = useState(false);
-  const toastContext = useContext(DialogToastContext);
   const {
     isMounted,
+    toastContext,
   } = useComponentStateReference();
 
   useEffect(() => {
     if (status !== "stopped") {
       setIsStarting(false);
     }
-  }, [status]);
+  }, [status, runCount]);
 
   const handleClose = () => {
     toastContext.clearOverlayPanel();
@@ -168,6 +169,7 @@ RunTaskButton.propTypes = {
   actionAllowed: PropTypes.bool,
   taskType: PropTypes.string,
   status: PropTypes.string,
+  runCount: PropTypes.number,
 };
 
 export default RunTaskButton;

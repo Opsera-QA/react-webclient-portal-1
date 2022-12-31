@@ -31,6 +31,7 @@ function TaskSummaryPanel(
     setActiveTab,
     loadData,
     status,
+    runCount,
   }) {
   const {
     cancelTokenSource,
@@ -65,6 +66,7 @@ function TaskSummaryPanel(
           <TaskAksActionButtons
             gitTasksData={gitTasksData}
             status={status}
+            runCount={runCount}
           />
         );
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
@@ -72,6 +74,7 @@ function TaskSummaryPanel(
           <TasksEcsActionButtons
             gitTasksData={gitTasksData}
             status={status}
+            runCount={runCount}
           />
         );
       case TASK_TYPES.GITSCRAPER:
@@ -79,6 +82,7 @@ function TaskSummaryPanel(
           <GitScraperActionButton
             gitTasksData={gitTasksData}
             status={status}
+            runCount={runCount}
           />
         );
       default:
@@ -90,6 +94,7 @@ function TaskSummaryPanel(
             status={status}
             actionAllowed={TaskRoleHelper.canRunTask(userData, gitTasksData?.getPersistData())}
             taskType={gitTasksData?.getData("type")}
+            runCount={runCount}
           />
         );
     }
@@ -192,6 +197,7 @@ TaskSummaryPanel.propTypes = {
   setGitTasksData: PropTypes.func,
   loadData: PropTypes.func,
   status: PropTypes.string,
+  runCount: PropTypes.number,
 };
 
 export default TaskSummaryPanel;
