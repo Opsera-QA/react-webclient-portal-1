@@ -8,121 +8,120 @@ import Model from "../../../../../../core/data_model/model";
 import actionableInsightsGenericChartFilterMetadata
     from "../../../generic_filters/actionableInsightsGenericChartFilterMetadata";
 import GitlabDeploymentActionableDeployTable from "./GitlabDeploymentActionableDeployTable";
-import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import {metricHelpers} from "../../../../metric.helpers";
 
 function GitlabDeploymentActionableDeployOverlay({
-                                                        kpiConfiguration,
-                                                        dashboardData, start, end, range, icon
-                                                    }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [error, setError] = useState(undefined);
-  const [metrics, setMetrics] = useState([]);
-  const [totalCount, setTotalCount] = useState([]);
-  const [chartData, setChartData] =
-     useState(undefined);
-  const [isLoading, setIsLoading] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [filterModel, setFilterModel] = useState(
-    new Model(
-     { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
-      actionableInsightsGenericChartFilterMetadata,
-      false
-    )
-  );
+                                                     kpiConfiguration,
+                                                     dashboardData, start, end, range, icon
+                                                 }) {
+    const { getAccessToken } = useContext(AuthContext);
+    const toastContext = useContext(DialogToastContext);
+    const [error, setError] = useState(undefined);
+    const [metrics, setMetrics] = useState([]);
+    const [totalCount, setTotalCount] = useState([]);
+    const [chartData, setChartData] =
+        useState(undefined);
+    const [isLoading, setIsLoading] = useState(false);
+    const isMounted = useRef(false);
+    const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+    const [filterModel, setFilterModel] = useState(
+        new Model(
+            { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+            actionableInsightsGenericChartFilterMetadata,
+            false
+        )
+    );
 
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
+    useEffect(() => {
+        if (cancelTokenSource) {
+            cancelTokenSource.cancel();
+        }
 
-  const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
+        const source = axios.CancelToken.source();
+        setCancelTokenSource(source);
 
-    isMounted.current = true;
-    loadData(source).catch((error) => {
-     if (isMounted?.current === true) {
-        throw error;
-     }
-   });
+        isMounted.current = true;
+        loadData(source).catch((error) => {
+            if (isMounted?.current === true) {
+                throw error;
+            }
+        });
 
-   return () => {
-     source.cancel();
-     isMounted.current = false;
+        return () => {
+            source.cancel();
+            isMounted.current = false;
+        };
+    },[]);
+
+    const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
+        try {
+            setIsLoading(true);
+            let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
+            let dashboardTags = dashboardMetricFilter?.tags;
+            let dashboardOrgs = dashboardMetricFilter?.organizations;
+
+            const response = await gitlabAction.getActionableDeploymentsChartData(
+                getAccessToken,
+                cancelSource,
+                kpiConfiguration,
+                dashboardTags,
+                dashboardOrgs,
+                filterDto,
+                start,
+                end
+            );
+            let dataObject = response?.data ? response?.data[0]?.deployments : [];
+            let totalCount = response?.data ? response?.data[0]?.count[0]?.count : [];
+
+            if (isMounted?.current === true && dataObject) {
+                setMetrics(dataObject);
+                setTotalCount(totalCount);
+
+                let newFilterDto = filterDto;
+                newFilterDto.setData("totalCount", response?.data[0]?.count[0]?.count);
+                setFilterModel({ ...newFilterDto });
+            }
+        } catch (error) {
+            if (isMounted?.current === true) {
+                console.error(error);
+                setError(error);
+            }
+        } finally {
+            if (isMounted?.current === true) {
+                setIsLoading(false);
+            }
+        }
     };
-   },[]);
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
-    try {
-      setIsLoading(true);
-      let dashboardMetricFilter = metricHelpers.unpackMetricFilterData(dashboardData?.data?.filters);
-      let dashboardTags = dashboardMetricFilter?.tags;
-      let dashboardOrgs = dashboardMetricFilter?.organizations;
+    const closePanel = () => {
+        toastContext.removeInlineMessage();
+        toastContext.clearOverlayPanel();
+    };
 
-      const response = await gitlabAction.getActionableDeploymentsChartData(
-        getAccessToken,
-        cancelSource,
-        kpiConfiguration,
-        dashboardTags,
-        dashboardOrgs,
-        filterDto,
-        start,
-        end
-      );
-      let dataObject = response?.data ? response?.data[0]?.deployments : [];
-      let totalCount = response?.data ? response?.data[0]?.count[0]?.count : [];
-
-      if (isMounted?.current === true && dataObject) {
-        setMetrics(dataObject);
-        setTotalCount(totalCount);
-
-        let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", response?.data[0]?.count[0]?.count);
-        setFilterModel({ ...newFilterDto });
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.error(error);
-        setError(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const closePanel = () => {
-    toastContext.removeInlineMessage();
-    toastContext.clearOverlayPanel();
-  };
-
-  return (
-    <div className={"p-3"}>
-      <GitlabDeploymentActionableDeployTable
-         isLoading={isLoading}
-         data={metrics}
-         filterModel={filterModel}
-         setFilterModel={setFilterModel}
-         loadData={loadData}
-         range={range}
-         count={totalCount}
-         tableTitleIcon={icon}
-      />
-    </div>
-  );
+    return (
+      <div className={"p-3"}>
+        <GitlabDeploymentActionableDeployTable
+            isLoading={isLoading}
+            data={metrics}
+            filterModel={filterModel}
+            setFilterModel={setFilterModel}
+            loadData={loadData}
+            range={range}
+            count={totalCount}
+            tableTitleIcon={icon}
+        />
+      </div>
+    );
 }
 
 GitlabDeploymentActionableDeployOverlay.propTypes = {
- kpiConfiguration: PropTypes.object,
- dashboardData: PropTypes.object,
- start: PropTypes.string,
- end: PropTypes.string,
- range: PropTypes.string,
- icon: PropTypes.object,
+    kpiConfiguration: PropTypes.object,
+    dashboardData: PropTypes.object,
+    start: PropTypes.string,
+    end: PropTypes.string,
+    range: PropTypes.string,
+    icon: PropTypes.object,
 };
 
 export default GitlabDeploymentActionableDeployOverlay;

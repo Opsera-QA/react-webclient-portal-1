@@ -7,7 +7,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 function InsightsSynopsisDataBlock({ title, subTitle, toolTipText, clickAction, statusColor,
                    ellipsesContent, footerText, modal, view, className, disable }) {
   const statusColors = {
-    success: "#00897b",
+    success: "#00897b", 
     danger: "#E57373",
     warning: "#F1AD0F"
   };

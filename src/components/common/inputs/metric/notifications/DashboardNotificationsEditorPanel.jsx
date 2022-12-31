@@ -59,6 +59,7 @@ function DashboardNotificationsEditorPanel(
   };
 
   const loadConfiguration = async () => {
+
     const emailNotification = model?.getArrayData("notification")?.find((notification) => notification.type === "email");
     setEmailNotificationModel(modelHelpers.parseObjectIntoModel(emailNotification, emailNotificationMetadata));
 

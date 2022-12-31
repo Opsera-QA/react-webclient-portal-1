@@ -100,7 +100,7 @@ function GitBranchInput(
           <TextInputBase setDataObject={setDataObject} dataObject={dataObject} fieldName={fieldName} />
       );
     }
-
+    
   return (
     <></>
   );

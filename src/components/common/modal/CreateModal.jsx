@@ -5,7 +5,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {unsavedChanges} from "../tooltip/popover-text";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function CreateModal({ children, objectType, objectMethod,  showModal, handleCancelModal, loadData}) {
+function CreateModal({ children, objectType, objectMethod, showModal, handleCancelModal, loadData}) {
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -25,7 +25,6 @@ function CreateModal({ children, objectType, objectMethod,  showModal, handleCan
       return(<>Update {objectType}</>);
     }
   };
-
 
   return (
     <Modal size="lg" show={showModal} onHide={handleClose} backdrop="static" centered>

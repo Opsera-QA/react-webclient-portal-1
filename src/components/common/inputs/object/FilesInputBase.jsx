@@ -132,7 +132,7 @@ function FilesInputBase({
             />
             <small className="red form-text">
               <div>{inputFileNameError}</div>
-            </small>            
+            </small>
           </Col>
         </Row>
         <Button size="sm" className="my-1 ml-2" variant="success" 

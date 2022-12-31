@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
@@ -69,8 +69,7 @@ function SonarProjectsMultiSelectInput({
     if (isMounted?.current === true && response?.data != null) {
       const sonarProjectList = response?.data?.data[0]?.SonarProjectsList?.data;
 
-      if (Array.isArray(sonarProjectList) && sonarProjectList.length > 0)
-      setSonarProjects(sonarProjectList);
+      if (Array.isArray(sonarProjectList) && sonarProjectList.length > 0) setSonarProjects(sonarProjectList);
     }
   };
 

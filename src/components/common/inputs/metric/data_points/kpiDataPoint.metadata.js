@@ -47,9 +47,10 @@ const kpiDataPointMetadata = {
     type: "",
     identifier: "",
     description: "",
-    customFieldsMapping: {
-      mappedFields: {},
-      enabled: false
+    customFieldsMapping: {      
+      enabled: false,
+      useCustomFields: false,
+      mappedFields: undefined,
     },
     strategic_criteria: {
       data_point_evaluation_rules: {},

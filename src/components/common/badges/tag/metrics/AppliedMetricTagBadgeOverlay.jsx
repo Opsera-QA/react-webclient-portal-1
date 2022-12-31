@@ -70,7 +70,7 @@ function AppliedMetricTagBadgeOverlay(
           <div className={className}>
             <TagBadgeBase
               className={badgeClassName}
-              badgeText={`No Dashboard Tags Applied`}
+              badgeText={`No KPI Tags Applied`}
             />
           </div>
         </>

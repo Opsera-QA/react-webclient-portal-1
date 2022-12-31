@@ -9,73 +9,73 @@ import {
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 
-function GitlabDeploymentActionableDeployTable({ data, isLoading, loadData, filterModel, setFilterModel, priority, tableTitleIcon, count, range }) {
-  const fields = GitlabDeploymentFrequencyActionableMetadata.fields;
-  const tableTitle = "Deployments Report";
-  const noDataMessage = "No report found";
+function GitlabDeploymentActionableDeployTable({ data, isLoading, loadData, filterModel, setFilterModel, tableTitleIcon, count, range }) {
+    const fields = GitlabDeploymentFrequencyActionableMetadata.fields;
+    const tableTitle = "Deployments Report";
+    const noDataMessage = "No report found";
 
-  const columns = useMemo(
-    () => [
-    getTableTextColumn(getField(fields, "stepName"), "stepName"),
-    getTableTextColumn(getField(fields, "stepStatus"), "stepStatus"),
-    getTableDateTimeColumn(getField(fields, "activityDate"), "activityDate"),
-    getTableTextColumn(getField(fields, "duration"), "duration"),
-    getTableTextColumn(getField(fields, "commitId"), "commitId"),
-    getTableTextColumn(getField(fields, "repoUrl"), "repoUrl"),
-    getTableTextColumn(getField(fields, "repoName"), "repoName"),
-    getTableTextColumn(getField(fields, "branch"), "branch"),
-    ],
- []
-  );
-
-  const getTable = () => {
-    return (
-      <CustomTable
-        isLoading={isLoading}
-        loadData={loadData}
-        columns={columns}
-        data={data}
-        noDataMessage={noDataMessage}
-        paginationDto={filterModel}
-        setPaginationDto={setFilterModel}
-      />
+    const columns = useMemo(
+        () => [
+            getTableTextColumn(getField(fields, "stepName"), "stepName"),
+            getTableTextColumn(getField(fields, "stepStatus"), "stepStatus"),
+            getTableDateTimeColumn(getField(fields, "activityDate"), "activityDate"),
+            getTableTextColumn(getField(fields, "duration"), "duration"),
+            getTableTextColumn(getField(fields, "commitId"), "commitId"),
+            getTableTextColumn(getField(fields, "repoUrl"), "repoUrl"),
+            getTableTextColumn(getField(fields, "repoName"), "repoName"),
+            getTableTextColumn(getField(fields, "branch"), "branch"),
+        ],
+        []
     );
-  };
 
-  return (
-    <div>
-      <div className={"d-flex details-title-text"}>
-        <div className={'mr-4'}>
-            <b>Total Deployments:</b> {count}
+    const getTable = () => {
+        return (
+            <CustomTable
+                isLoading={isLoading}
+                loadData={loadData}
+                columns={columns}
+                data={data}
+                noDataMessage={noDataMessage}
+                paginationDto={filterModel}
+                setPaginationDto={setFilterModel}
+            />
+        );
+    };
+
+    return (
+        <div>
+            <div className={"d-flex details-title-text"}>
+                <div className={'mr-4'}>
+                    <b>Total Deployments:</b> {count}
+                </div>
+                <div className={'mr-4'}>
+                    <b>Date Range:</b> {range}
+                </div>
+            </div>
+            <FilterContainer
+                isLoading={isLoading}
+                title={tableTitle}
+                titleIcon={tableTitleIcon}
+                body={getTable()}
+                className={"px-2 pb-2"}
+                loadData={loadData}
+                setFilterDto={setFilterModel}
+                filterDto={filterModel}
+            />
         </div>
-        <div className={'mr-4'}>
-            <b>Date Range:</b> {range}
-        </div>
-      </div>
-      <FilterContainer
-        isLoading={isLoading}
-        title={tableTitle}
-        titleIcon={tableTitleIcon}
-        body={getTable()}
-        className={"px-2 pb-2"}
-        loadData={loadData}
-        setFilterDto={setFilterModel}
-        filterDto={filterModel}
-      />
-    </div>
-  );
+    );
 }
 
 GitlabDeploymentActionableDeployTable.propTypes = {
-  data: PropTypes.array,
-  isLoading: PropTypes.bool,
-  loadData: PropTypes.func,
-  filterModel: PropTypes.object,
-  setFilterModel: PropTypes.func,
-  priority: PropTypes.number,
-  tableTitleIcon: PropTypes.object,
-  count: PropTypes.number,
-  range: PropTypes.string,
+    data: PropTypes.array,
+    isLoading: PropTypes.bool,
+    loadData: PropTypes.func,
+    filterModel: PropTypes.object,
+    setFilterModel: PropTypes.func,
+    priority: PropTypes.number,
+    tableTitleIcon: PropTypes.object,
+    count: PropTypes.number,
+    range: PropTypes.string,
 };
 
 export default GitlabDeploymentActionableDeployTable;

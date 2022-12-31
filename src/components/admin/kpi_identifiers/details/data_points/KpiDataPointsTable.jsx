@@ -16,6 +16,7 @@ import kpiDataPointMetadata from "components/common/inputs/metric/data_points/kp
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetKpiDataPointModel
   from "components/admin/kpi_identifiers/details/data_points/hooks/useGetKpiDataPointModel";
+
 export default function KpiDataPointsTable(
   {
     dataPoints,
@@ -53,7 +54,7 @@ export default function KpiDataPointsTable(
       false,
       );
 
-    setDataPointModel({...newDataPointModel});
+    setDataPointModel(newDataPointModel);
   };
 
   const createDataPoint = () => {

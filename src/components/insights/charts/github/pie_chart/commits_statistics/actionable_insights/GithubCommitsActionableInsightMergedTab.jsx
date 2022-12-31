@@ -30,7 +30,7 @@ function GithubCommitsActionableInsightMergedTab({highestMergesMetric, dashboard
   return (
     <VanitySetTabAndViewContainer
       title={`Github Merged Pull Requests`}
-      defaultActiveKey={highestMergesMetric && Array.isArray(highestMergesMetric) && highestMergesMetric[0]?.id && highestMergesMetric[0]?.id}
+      defaultActiveKey={highestMergesMetric && Array.isArray(highestMergesMetric) && highestMergesMetric[0].id && highestMergesMetric[0].id}
       verticalTabContainer={<GithubCommitsVerticalTabContainer highestMergesMetric={highestMergesMetric} />}
       currentView={getTabContentContainer()}
     />

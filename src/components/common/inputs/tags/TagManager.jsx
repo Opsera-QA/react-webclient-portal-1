@@ -27,8 +27,6 @@ function TagManager(
     excludeTypes,
     getDisabledTags,
     placeholderText,
-    showClearValueButton,
-    clearDataFunction,
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -114,7 +112,7 @@ function TagManager(
       } else {
         if (!dataObject.getArrayData(fieldName).some(item => item.type === tagOption.type && item.value === tagOption.value)) {
           currentOptions.push(tagOption);
-        }
+        }     
       }
     });
 
@@ -183,26 +181,6 @@ function TagManager(
     }
   };
 
-  const clearValue = () => {
-    if (!setDataFunction) {
-      validateAndSetData(field.id, []);
-    } else if (clearDataFunction) {
-      clearDataFunction();
-    }
-  };
-
-  const getClearDataFunction = () => {
-    if (
-         dataObject?.getArrayData(fieldName).length !== 0
-      && disabled !== true
-      && showClearValueButton !== false
-      && (setDataFunction == null || clearDataFunction)
-    )
-    {
-      return (clearValue);
-    }
-  };
-
   if (type == null) {
     return (<div className="danger-red">Error for tag manager input: You forgot to wire up type!</div>);
   }
@@ -217,7 +195,6 @@ function TagManager(
         showLabel={inline !== true}
         model={dataObject}
         field={field}
-        clearDataFunction={getClearDataFunction()}
         hasError={hasStringValue(errorMessage) === true}
         disabled={disabled}
         isLoading={isLoading}
@@ -233,7 +210,7 @@ function TagManager(
           busy={isLoading}
           manualEntry={true}
           createOptionFunction={(value) => handleCreate(value)}
-          value={[...dataObject.getArrayData(fieldName)]}
+          value={[...dataObject?.getArrayData(fieldName)]}
           placeholderText={errorMessage ? errorMessage : placeholderText}
           disabled={disabled || isLoading || (getDisabledTags && getDisabledTags(tagOptions))}
           setDataFunction={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
@@ -261,8 +238,6 @@ TagManager.propTypes = {
   allowedTypes: PropTypes.array,
   getDisabledTags: PropTypes.func,
   placeholderText: PropTypes.string,
-  showClearValueButton: PropTypes.bool,
-  clearDataFunction: PropTypes.func,
   excludeTypes: PropTypes.array,
 };
 
@@ -270,8 +245,7 @@ TagManager.defaultProps = {
   allowCreate: "onFilter",
   fieldName: "tags",
   inline: false,
-  placeholderText: "Select Tags",
-  showClearValueButton: true
+  placeholderText: "Select Tags"
 };
 
 export default TagManager;

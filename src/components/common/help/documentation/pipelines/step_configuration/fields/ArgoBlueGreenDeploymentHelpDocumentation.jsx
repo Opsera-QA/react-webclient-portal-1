@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
 
 function ArgoBlueGreenDeploymentHelpDocumentation() {

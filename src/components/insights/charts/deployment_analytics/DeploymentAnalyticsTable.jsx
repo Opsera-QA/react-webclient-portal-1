@@ -8,7 +8,6 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {
   getLimitedTableTextColumn,
   getTableTextColumn,
-  getTableDateTimeColumn
 } from "components/common/table/table-column-helpers";
 import DeploymentAnalyticsMetadata from "./deployment-analytics-metadata";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -36,7 +35,7 @@ function DeploymentAnalyticsTable({ kpiConfiguration, metadataName, dashboardDat
       getLimitedTableTextColumn(getField(fields,"artifactoryName"), 20),
       getTableTextColumn(getField(fields,"pipelineName")),
       getTableTextColumn(getField(fields,"runCount")),
-      getTableDateTimeColumn(getField(fields,"timeStamp")),
+      getTableTextColumn(getField(fields,"timeStamp")),
       getTableTextColumn(getField(fields,"status")),
       getTableTextColumn(getField(fields,"version")),
       getLimitedTableTextColumn(getField(fields,"destination"),30),
@@ -90,6 +89,7 @@ function DeploymentAnalyticsTable({ kpiConfiguration, metadataName, dashboardDat
         dashboardOrgs
       );
       let dataObject = response?.data?.data[0]?.data;
+        console.log(response?.data?.data[0]?.data,'***Test table');
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;

@@ -8,7 +8,6 @@ import { Col, Row } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
-import MetricBadgeBase from "components/common/badges/metric/MetricBadgeBase";
 import { BOOMI_CONSTANTS as dataPointConstants } from "./Boomi_datapoint_identifiers";
 import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers.js";
@@ -21,13 +20,15 @@ import {
   spaceOutServiceNowCountBySeverityLegend,
 } from "../../charts-views.js";
 import BoomiSuccessPercentageDataBlock from "../data_blocks/BoomiSuccessPercentageDataBlock.jsx";
-import BoomiAverageDurationDataBlock from "../data_blocks/BoomiAverageDurationDataBlock.jsx";
 import BoomiFrequencyDataBlock from "../data_blocks/BoomiFrequencyDataBlock.jsx";
 import { DialogToastContext } from "contexts/DialogToastContext.js";
 import { ResponsiveLine } from "@nivo/line";
 import chartsActions from "../../charts-actions";
 import BoomiActionableTabOverlay from "../actionable_insights/BoomiActionableTabOverlay";
-import BoomiChartHelpDocumentation from "components/common/help/documentation/insights/charts/BoomiChartHelpDocumentation";
+import AutomationPercentageChartHelpDocumentation
+  from "../../../../common/help/documentation/insights/charts/AutomationPercentageChartHelpDocumentation";
+import BoomiChartHelpDocumentation
+  from "../../../../common/help/documentation/insights/charts/BoomiChartHelpDocumentation";
 
 function BoomiBarChart({
   kpiConfiguration,
@@ -38,7 +39,6 @@ function BoomiBarChart({
   showSettingsToggle,
 }) {
   const { getAccessToken } = useContext(AuthContext);
-  // const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -88,9 +88,10 @@ function BoomiBarChart({
           ]?.value;
       setGoalsData(goals);
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "boomiChartandBlocksData", kpiConfiguration, dashboardTags);
+      console.log("response", response);
         let dataObject = response?.data?.data[0]?.ChartData?.boomiDeploymentLineChartFrequency?.data,
         datablock = response?.data?.data[0]?.DataBlockStats?.boomiTrendBlockStatistics?.data[0]?.statisticsData;
-
+      console.log("datablock1", datablock);
 
       setGoalsData(goals);
       assignStandardColors(dataObject, true);
@@ -113,6 +114,7 @@ function BoomiBarChart({
     }
   };
 
+
   const onRowSelect = () => {
     toastContext.showOverlayPanel(
         <BoomiActionableTabOverlay
@@ -121,6 +123,7 @@ function BoomiBarChart({
         />
     );
   };
+ 
 
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {

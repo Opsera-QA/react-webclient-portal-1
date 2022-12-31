@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase
   from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
-function VaultToolSelectInput({ fieldName, model, setModel, setDataFunction, disabled, className, toolIdentifier }) {
+function VaultToolSelectInput({ fieldName, model, setModel, setDataFunction, disabled, className }) {
   return (
     <RoleRestrictedToolByIdentifierInputBase
-      toolIdentifier={toolIdentifier}
+      toolIdentifier={"hashicorp_vault"}
       toolFriendlyName={"Vault"}
       fieldName={fieldName}
       placeholderText={"Opsera Default Hashicorp Vault"}
@@ -28,7 +28,6 @@ VaultToolSelectInput.propTypes = {
   valueField: PropTypes.string,
   setDataFunction: PropTypes.func,
   className: PropTypes.string,
-  toolIdentifier: PropTypes.string,
 };
 
 VaultToolSelectInput.defaultProps = {

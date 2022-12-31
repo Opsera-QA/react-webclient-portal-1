@@ -6,7 +6,6 @@ import EmailNotificationToggle
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import MultiEmailListInput from "components/common/inputs/list/text/email/MultiEmailListInput";
-import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function EmailNotificationEditorPanel(
   {

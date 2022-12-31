@@ -175,6 +175,32 @@ export function getServiceNowPrioritiesFromKpiConfiguration(kpiConfiguration) {
   return getResultFromKpiConfiguration( kpiConfiguration, "servicenow-priorities");
 }
 
+export function getJiraPrioritiesFromKpiConfiguration(kpiConfiguration) {
+  if (
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-priorities")]
+          ?.value &&
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-priorities")]?.value
+          .length > 0
+  ) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-priorities")]
+        .value;
+  }
+  return null;
+}
+
+export function getJiraProjectsFromKpiConfiguration(kpiConfiguration) {
+  if (
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-projects")]
+          ?.value &&
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-projects")]?.value
+          .length > 0
+  ) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-projects")]
+        .value;
+  }
+  return null;
+}
+
 export function getServiceNowToolsFromKpiConfiguration(kpiConfiguration) {
   return getResultFromKpiConfiguration( kpiConfiguration, "servicenow-tools");
 }
@@ -206,6 +232,33 @@ export function getHierarchyFiltersFromKpiConfiguration(kpiConfiguration) {
   }
   return null;
 }
+
+export function getChartIconFromKpiConfiguration(kpiConfiguration) {
+  return faChartBar;
+}
+
+export function getJiraChangeTypesFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[
+      kpiConfiguration.filters.findIndex(
+        (obj) => obj.type === "jira-change-types",
+      )
+    ]?.value &&
+    kpiConfiguration?.filters[
+      kpiConfiguration.filters.findIndex(
+        (obj) => obj.type === "jira-change-types",
+      )
+    ]?.value.length > 0
+  ) {
+    return kpiConfiguration.filters[
+      kpiConfiguration.filters.findIndex(
+        (obj) => obj.type === "jira-change-types",
+      )
+    ].value;
+  }
+  return null;
+}
+
 /*
 * This method is to calculate the trend and decide the color of the icon.
 * @param currentValue Value of selected date range
@@ -389,10 +442,6 @@ export const convertMStoDays = (milliseconds) => {
 export const convertMStoHours = (milliseconds) => {
   return milliseconds/(1000*3600);
 };
-
-export function getChartIconFromKpiConfiguration(kpiConfiguration) {
-  return faChartBar;
-}
 
 export function getCustomMappingFields(kpiConfiguration) {
   if (kpiConfiguration?.dataPoints && kpiConfiguration?.dataPoints?.length > 0 && kpiConfiguration?.dataPoints.filter((point) => point?.customFieldsMapping?.enabled && point?.customFieldsMapping?.mappedFields).length > 0) {

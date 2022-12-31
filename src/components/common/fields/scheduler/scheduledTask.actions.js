@@ -34,7 +34,7 @@ scheduledTaskActions.updateScheduledTaskV2 = async (getAccessToken, cancelTokenS
 
 scheduledTaskActions.getScheduledLogPush = async (getAccessToken, cancelTokenSource, s3ToolId) => {
   const apiUrl = `/scheduler/s3-push/${s3ToolId}`;
-
+  
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

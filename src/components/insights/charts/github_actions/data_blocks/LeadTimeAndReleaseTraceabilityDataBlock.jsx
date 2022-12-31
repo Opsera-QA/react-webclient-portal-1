@@ -10,7 +10,8 @@ import ModalLogs from "../../../../common/modal/modalLogs";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import { getTimeDisplay } from "../github_actions-utility";
-import ThreeLineNumberDataBlock from "../../../../common/metrics/number/ThreeLineNumberDataBlock";
+import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
+import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import LeadTimeAndReleaseDurationActionableInsightOverlay from "../actionable_insights/LeadTimeAndReleaseDurationActionableInsightOverlay";
 import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
 
@@ -190,10 +191,9 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
               <div>
                 <DataBlockBoxContainer showBorder={true}>
                   <div className={"p-3"}>
-                    <ThreeLineNumberDataBlock
+                    <ThreeLineDataBlockBase
                       dataPoint={durationDataPoint}
-                      numberData={getTimeDisplay(metrics?.avgLeadTime)}
-                      supportingText={"minutes"}
+                      middleText={<MetricScoreText score={getTimeDisplay(metrics?.avgLeadTime)}/>}
                       className={`${getIconColor(metrics?.trend)}`}
                       topText={"Lead Time"}
                       bottomText={applicationLeadTimeMetrics?.previousResult ? "Previous result: " + applicationLeadTimeMetrics?.previousResult : "No previous result"}
@@ -209,11 +209,10 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
               <div>
                 <DataBlockBoxContainer showBorder={true}>
                   <div className={"p-3"}>
-                    <ThreeLineNumberDataBlock
+                    <ThreeLineDataBlockBase
                       dataPoint={frequencyDataPoint}
                       className={`${getIconColor(deploymentMetrics?.trend)}`}
-                      numberData={deploymentMetrics?.deploymentFrequency}
-                      supportingText={deploymentMetrics?.deploymentFrequency === 1 ? "deployment/day" : "deployments/day"}
+                      middleText={<MetricScoreText score={deploymentMetrics?.deploymentFrequency}/>}
                       topText={"Frequency"}
                       bottomText={deploymentMetrics?.previousResult ? "Previous result: " + deploymentMetrics?.previousResult : "No previous result"}
                       icon={getIcon(deploymentMetrics?.trend)}
@@ -228,11 +227,10 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
               <div>
                 <DataBlockBoxContainer showBorder={true}>
                   <div className={"p-3"}>
-                    <ThreeLineNumberDataBlock
+                    <ThreeLineDataBlockBase
                       dataPoint={timeToFirstCommitDataPoint}
                       className={`${getIconColor(metrics?.trend)}`}
-                      numberData={getTimeDisplay(metrics?.timeToCommit)}
-                      supportingText={"minutes"}
+                      middleText={<MetricScoreText score={getTimeDisplay(metrics?.timeToCommit)}/>}
                       topText={"Average Time to First Commit"}
                       bottomText={metrics?.previousResult ? "Previous result: " + metrics?.previousResult : "No previous result"}
                       icon={getIcon(metrics?.trend)}

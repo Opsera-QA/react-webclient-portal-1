@@ -14,7 +14,7 @@ import { metricHelpers } from "components/insights/metric.helpers";
 function ApprovalGatesActionableInsightOverlay({ kpiConfiguration, dashboardData, request }) {
   const { getAccessToken } = useContext(AuthContext);
   const [filterModel, setFilterModel] = useState(
-    new Model({ ...genericChartFilterMetadata.newObjectFields, pageSize:25 }, genericChartFilterMetadata, false)
+    new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
   );
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +62,6 @@ function ApprovalGatesActionableInsightOverlay({ kpiConfiguration, dashboardData
       let newFilterDto = filterDto;
 
       newFilterDto.setData("totalCount", dataObject?.count[0]?.count);
-      
       setFilterModel({ ...newFilterDto });
 
       if (isMounted?.current === true && dataObject) {

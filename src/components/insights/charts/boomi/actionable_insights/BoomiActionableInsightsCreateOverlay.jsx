@@ -114,39 +114,39 @@ function BoomiActionableInsightCreateOverlay({ kpiConfiguration, dashboardData }
         return (<Row className="px-2">
             <Col xl={4} lg={4} sm={6} className={"my-3"}>
                 <BoomiActionableTotalExecutionsDataBlock
-                        className={'p-2 dark-gray-text-primary'}
-                        data={blockData?.totalExecutions}
-                    />
+                    className={'p-2 dark-gray-text-primary'}
+                    data={blockData?.totalExecutions}
+                />
             </Col>
             <Col xl={4} lg={4} sm={6} className={"my-3"}>
                 <BoomiActionableFreqDataBlock
-                        className={'p-2 dark-gray-text-primary'}
-                        data={blockData?.freq}
-                        subtitle={"Frequency"}
-                    />
+                    className={'p-2 dark-gray-text-primary'}
+                    data={blockData?.freq}
+                    subtitle={"Frequency"}
+                />
             </Col>
             <Col xl={4} lg={4} sm={6} className={"my-3"}>
                 <BoomiActionableSuccessPercentageDataBlock
-                        className={'p-2 dark-gray-text-primary'}
-                        data={blockData?.successPercentage}
-                        subtitle={"Success Percentage"}
-                    />
+                    className={'p-2 dark-gray-text-primary'}
+                    data={blockData?.successPercentage}
+                    subtitle={"Success Percentage"}
+                />
             </Col>
         </Row>);
     };
 
     return (
-            <div className={"p-3"}>
-                <div className={"mb-4"} >{getDateBadge()}</div>
-                {getDataBlocks()}
-                <BoomiActionableInsightsCreateTable
-                    isLoading={isLoading}
-                    data={actionableData}
-                    filterModel={filterModel}
-                    setFilterModel={setFilterModel}
-                    loadData={loadData}
-                />
-            </div>
+        <div className={"p-3"}>
+            <div className={"mb-4"} >{getDateBadge()}</div>
+            {getDataBlocks()}
+            <BoomiActionableInsightsCreateTable
+                isLoading={isLoading}
+                data={actionableData}
+                filterModel={filterModel}
+                setFilterModel={setFilterModel}
+                loadData={loadData}
+            />
+        </div>
     );
 }
 

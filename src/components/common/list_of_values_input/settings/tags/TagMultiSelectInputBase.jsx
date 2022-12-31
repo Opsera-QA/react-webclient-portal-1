@@ -106,7 +106,7 @@ function TagMultiSelectInputBase({ fieldName, dataObject, setDataObject, disable
           filter={"contains"}
           groupBy={"type"}
           busy={isLoading}
-          value={[...dataObject.getArrayData(fieldName)]}
+          value={[...dataObject?.getArrayData(fieldName)]}
           placeholderText={getPlaceholderText()}
           disabled={disabled || isLoading}
           setDataFunction={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}

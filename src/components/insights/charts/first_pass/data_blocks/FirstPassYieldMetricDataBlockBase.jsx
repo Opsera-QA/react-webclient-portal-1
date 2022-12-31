@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
-import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
+import TwoLineDataBlockBase from "components/common/metrics/data_blocks/base/TwoLineDataBlockBase";
+import TwoLineScoreDataBlock from "../../../../common/metrics/score/TwoLineScoreDataBlock";
 
 function FirstPassYieldMetricDataBlockBase({ score, subtitle, onClickFunction, dataPoint }) {
   return (

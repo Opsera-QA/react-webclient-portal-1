@@ -9,7 +9,6 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import {
   defaultConfig,
-  getColorByData,
   assignStandardColors,
   adjustBarWidth,
   spaceOutMergeRequestTimeTakenLegend,

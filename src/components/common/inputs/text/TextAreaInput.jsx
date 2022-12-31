@@ -5,6 +5,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
+// TODO: Note, use TextAreaInputBase instead
 function TextAreaInput({ fieldName, dataObject, setDataObject, disabled }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");

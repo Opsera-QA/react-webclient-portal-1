@@ -8,7 +8,6 @@ import modelHelpers from "components/common/model/modelHelpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import FiltersDateSelectOverlay from "../../inputs/tags/inline/modal/FiltersDateSelectOverlay";
 import {metricHelpers} from "../../../insights/metric.helpers";
-import {addDays} from "date-fns";
 
 function EditDashboardDateIcon({ dashboardModel, setDashboardModel, loadData, className }) {
   const {

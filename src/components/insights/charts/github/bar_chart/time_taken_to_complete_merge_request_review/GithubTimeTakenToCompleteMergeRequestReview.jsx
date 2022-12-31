@@ -13,9 +13,8 @@ import {
   adjustBarWidth,
   spaceOutMergeRequestTimeTakenLegend,
 } from "../../../charts-views";
-import ChartTooltip from "../../../ChartTooltip";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
-
+import ChartTooltip from "../../../ChartTooltip";
 function GithubTimeTakenToCompleteMergeRequestReview({
   kpiConfiguration,
   setKpiConfiguration,

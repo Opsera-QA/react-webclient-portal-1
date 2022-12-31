@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import jsPDF from "jspdf";
-import ExportDataPanel from "components/common/modal/export_data/ExportDataPanel";
+import ExportDataPanel from "../../../../common/modal/export_data/ExportDataPanel";
 
 export default function ExportAnchoreSecurityReportPanel({
   showExportPanel,

@@ -42,8 +42,6 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   GITHUB_RECENT_MERGE_REQUESTS: "github-recent-merge-requests",
   GITHUB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW: "github-time-taken-to-complete-merge-request-review",
   GITHUB_TOTAL_COMMITS_BY_PROJECT: "github-total-commits-by-project",
-  LEAD_TIME_AND_RELEASE_TRACEABILITY: "lead-time-and-release-traceability-data-block",
-  GITHUB_ACTIONS_WORKFLOW: "github-actions-workflow",
 
   // Gitlab
   GITLAB_COMMITS_BY_AUTHOR: "gitlab-commits-by-author",
@@ -109,10 +107,12 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   OPSERA_STATUS_BY_PIPELINE: "opsera-status-by-pipeline",
 
   QA_MANUAL_TEST: "qa-manual-test",
-  QUICK_DEPLOY_STATISTICS: "quick-deploy-statistics",
 
   SALESFORCE_DURATION_BY_STAGE: "salesforce-duration-by-stage",
   SDLC_DURATION_STATISTICS: "sdlc-duration-statistics",
+
+  //Quick Deploy
+  QUICK_DEPLOY_STATISTICS: "quick-deploy-statistics",
 
   // Selenium
   SELENIUM_TEST_RESULTS: "selenium-test-results",
@@ -153,8 +153,8 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   // XUnit
   XUNIT_TEST_RESULTS: "xunit-test-results",
 
-  // GitScrapper
-  GIT_SCRAPER_METRICS: "git-scraper",
+   // GitScrapper
+   GIT_SCRAPER_METRICS: "git-scraper",
 
   //Boomi
   BOOMI_PIPELINE_EXECUTIONS:"boomi-pipeline-executions",

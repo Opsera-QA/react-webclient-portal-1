@@ -41,7 +41,7 @@ function LazyLoadSelectInputBase(
     error,
     pluralTopic,
     singularTopic,
-  }) {
+}) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
   const [internalErrorMessage, setInternalErrorMessage] = useState("");
@@ -60,13 +60,14 @@ function LazyLoadSelectInputBase(
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
     newDataObject?.setData(fieldName, value);
-    setDataObject({ ...newDataObject });
+    setDataObject({...newDataObject});
   };
 
   const updateValue = (newValue) => {
     if (setDataFunction) {
       setDataFunction(field?.id, newValue);
-    } else {
+    }
+    else {
       const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
       validateAndSetData(field?.id, parsedValue);
     }
@@ -75,14 +76,15 @@ function LazyLoadSelectInputBase(
   const clearValue = () => {
     if (!setDataFunction && !clearDataFunction) {
       validateAndSetData(field?.id, "");
-    } else if (clearDataFunction) {
+    }
+    else if (clearDataFunction) {
       clearDataFunction();
     }
   };
 
   const getClearDataFunction = () => {
     if (
-      dataObject?.getData(field?.id) !== ""
+         dataObject?.getData(field?.id) !== ""
       && (disabled === false || lenientClearValueButton === true)
       && showClearValueButton !== false
       && (setDataFunction == null || clearDataFunction)
@@ -182,13 +184,13 @@ LazyLoadSelectInputBase.propTypes = {
   fieldName: PropTypes.string,
   groupBy: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.func,
+    PropTypes.func
   ]),
   dataObject: PropTypes.object,
   valueField: PropTypes.string,
   textField: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.func,
+    PropTypes.func
   ]),
   placeholderText: PropTypes.string,
   setDataFunction: PropTypes.func,
@@ -196,7 +198,7 @@ LazyLoadSelectInputBase.propTypes = {
   busy: PropTypes.bool,
   disabled: PropTypes.oneOfType([
     PropTypes.bool,
-    PropTypes.array,
+    PropTypes.array
   ]),
   showClearValueButton: PropTypes.bool,
   errorMessage: PropTypes.string,
@@ -223,7 +225,7 @@ LazyLoadSelectInputBase.propTypes = {
 LazyLoadSelectInputBase.defaultProps = {
   showClearValueButton: true,
   className: "custom-select-input my-2",
-  placeholderText: "Select One",
+  placeholderText: "Select One"
 };
 
 export default LazyLoadSelectInputBase;

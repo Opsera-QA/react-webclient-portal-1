@@ -34,15 +34,15 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
   const noDataMessage = "No Data is available for this chart at this time";
 
   const columns = useMemo(
-      () => [
-        getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
-        getTableTextColumn(getField(fields, "AssigneeName")),
-        getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
-        getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
-        getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
-        getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
-      ],
-      []
+    () => [
+      getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
+      getTableTextColumn(getField(fields, "AssigneeName")),
+      getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
+      getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
+      getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
+      getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
+    ],
+    []
   );
 
   useEffect(() => {
@@ -90,14 +90,14 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
         filterDto,
         null,
         dashboardOrgs,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          projectName,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        projectName,
       );
       let dataObject = response?.data?.data[0]?.githubPendingMergeRequests?.data;
 
@@ -128,7 +128,7 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
         handleTabClick={handleTabClick}
         activeTab={activeTab}/>;
   };
-  
+
   const getTabContentContainer = () => {
     return (
         <VanitySetTabViewContainer className={"mb-3"}>
@@ -154,7 +154,7 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
         loadData={loadData}
         scrollOnLoad={false}
       />
-  );
+    );
   };
 
   const handleTabClick = async (projectName) => {

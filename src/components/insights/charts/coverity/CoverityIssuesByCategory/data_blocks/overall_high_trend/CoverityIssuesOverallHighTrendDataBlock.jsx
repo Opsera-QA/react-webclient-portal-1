@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import ThreeLineScoreDataBlock from "../../../../../../common/metrics/score/ThreeLineScoreDataBlock";
 
-function CoverityIssuesOverallHighTrendDataBlock({ score, icon, className, onSelect, lastScore, iconOverlayBody}) {
+function CoverityIssuesOverallHighTrendDataBlock({ score, icon, className, onSelect, lastScore, iconOverlayBody }) {
   return (
     <DataBlockBoxContainer showBorder={true} onClickFunction={onSelect}>
       <ThreeLineScoreDataBlock

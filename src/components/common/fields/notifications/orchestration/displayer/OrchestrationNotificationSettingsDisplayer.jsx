@@ -38,7 +38,7 @@ function OrchestrationNotificationSettingsDisplayer({notifications, className, n
             break;
           case ORCHESTRATION_NOTIFICATION_TYPES.GCHAT:
             setGChatSettings({...notificationConfiguration});
-            break;            
+            break;
         }
       });
     }

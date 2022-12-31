@@ -57,6 +57,7 @@ export const scheduledTaskMetadata = {
       label: "Last Run",
       id: "lastRun"
     },
+
     {
       label: "S3 Tool",
       id: "s3ToolId"      
@@ -88,18 +89,7 @@ export const scheduledTaskMetadata = {
     notes: "",
     active: true,
     roles: [],
-    task: {
-      taskType: "pipeline-log-s3-push",
-      s3ToolId: "",
-      pushToS3Interval: "",
-      awsBucketName: "",
-      s3FileName: "",
-      region: "",
-      pushToS3Path: ""
-    },
-    schedule: {
-      recurring: "NONE",
-      executionDate: new Date()
-    },
+    task: {},
+    schedule: { recurring: "NONE", executionDate: new Date() },
   }
 };

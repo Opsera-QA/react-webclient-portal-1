@@ -6,7 +6,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import jenkinsToolAccountActions
+import jenkinsAccountActions
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/accounts/jenkinsToolAccounts.actions";
 
 function RotateJenkinsKeyButton ({toolId}){
@@ -34,7 +34,7 @@ function RotateJenkinsKeyButton ({toolId}){
   const rotateKey = async () => {
     try {
       setIsRotatingKey(true);
-      await jenkinsToolAccountActions.rotateJenkinsKey(getAccessToken, cancelTokenSource, toolId);
+      await jenkinsAccountActions.rotateJenkinsKey(getAccessToken, cancelTokenSource, toolId);
       toastContext.showUpdateSuccessResultDialog("Jenkins Token");
     } 
     catch (error) {

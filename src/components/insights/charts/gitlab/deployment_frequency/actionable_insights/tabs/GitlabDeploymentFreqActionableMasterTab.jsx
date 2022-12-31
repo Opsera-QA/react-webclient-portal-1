@@ -10,90 +10,90 @@ import GitlabDeploymentFreqActionablePipelinesTab from "./GitlabDeploymentFreqAc
 import GitlabDeploymentFreqActionableDeployTab from "./GitlabDeploymentFreqActionableDeployTab";
 
 function MTTRActionableInsightOverlay({ kpiConfiguration, dashboardData, start, end, range, type }) {
-  const toastContext = useContext(DialogToastContext);
-  const [activeTab, setActiveTab] = useState(type);
+    const toastContext = useContext(DialogToastContext);
+    const [activeTab, setActiveTab] = useState(type);
 
-  const closePanel = () => {
-    toastContext.removeInlineMessage();
-    toastContext.clearOverlayPanel();
-  };
+    const closePanel = () => {
+        toastContext.removeInlineMessage();
+        toastContext.clearOverlayPanel();
+    };
 
-  const getBody = () => {
-    if (activeTab == "Pipeline") {
-      return (
-        <GitlabDeploymentFreqActionablePipelinesTab
-          dashboardData={dashboardData}
-          kpiConfiguration={kpiConfiguration}
-          start={start}
-          end={end}
-          range={range}
-          icon={faCodeCommit}
-        />
-      );
-    } else if (activeTab == "Deployment") {
-      return (
-        <GitlabDeploymentFreqActionableDeployTab
-          dashboardData={dashboardData}
-          kpiConfiguration={kpiConfiguration}
-          start={start}
-          end={end}
-          range={range}
-          icon={faCodeMerge}
-        />
-      );
-    }
-  };
+    const getBody = () => {
+        if (activeTab == "Pipeline") {
+            return (
+                <GitlabDeploymentFreqActionablePipelinesTab
+                    dashboardData={dashboardData}
+                    kpiConfiguration={kpiConfiguration}
+                    start={start}
+                    end={end}
+                    range={range}
+                    icon={faCodeCommit}
+                />
+            );
+        } else if (activeTab == "Deployment") {
+            return (
+                <GitlabDeploymentFreqActionableDeployTab
+                    dashboardData={dashboardData}
+                    kpiConfiguration={kpiConfiguration}
+                    start={start}
+                    end={end}
+                    range={range}
+                    icon={faCodeMerge}
+                />
+            );
+        }
+    };
 
-  const handleTabClick = (tabSelection) => (e) => {
-    e.preventDefault();
-    setActiveTab(tabSelection);
-  };
+    const handleTabClick = (tabSelection) => (e) => {
+        e.preventDefault();
+        setActiveTab(tabSelection);
+    };
 
-  const getTabContainer = () => {
+    const getTabContainer = () => {
+        return (
+            <CustomTabContainer>
+                <CustomTab
+                    activeTab={activeTab}
+                    tabText={"Pipelines"}
+                    handleTabClick={handleTabClick}
+                    tabName={"Pipeline"}
+                    icon={faTable}
+                />
+                <CustomTab
+                    activeTab={activeTab}
+                    tabText={"Deployments"}
+                    handleTabClick={handleTabClick}
+                    tabName={"Deployment"}
+                    icon={faTable}
+                />
+            </CustomTabContainer>
+        );
+    };
+
     return (
-      <CustomTabContainer>
-        <CustomTab
-          activeTab={activeTab}
-          tabText={"Pipelines"}
-          handleTabClick={handleTabClick}
-          tabName={"Pipeline"}
-          icon={faTable}
-        />
-        <CustomTab
-          activeTab={activeTab}
-          tabText={"Deployments"}
-          handleTabClick={handleTabClick}
-          tabName={"Deployment"}
-          icon={faTable}
-        />
-      </CustomTabContainer>
-    );
-  };
-
-  return (
-    <FullScreenCenterOverlayContainer
-        closePanel={closePanel}
-        showPanel={true}
-        titleText={"Gitlab Deployments Actionable Report"}
-        showToasts={true}
-        titleIcon={faTable}
-        // isLoading={isLoading}
-        linkTooltipText={"View Full Blueprint"}
-    >
-    <div className={"p-3"}>
-      <TabPanelContainer currentView={getBody()} tabContainer={getTabContainer()} />
-    </div>
-  </FullScreenCenterOverlayContainer>
+        <FullScreenCenterOverlayContainer
+            closePanel={closePanel}
+            showPanel={true}
+            titleText={"Gitlab Deployments Actionable Report"}
+            showToasts={true}
+            titleIcon={faTable}
+            // isLoading={isLoading}
+            linkTooltipText={"View Full Blueprint"}
+        >
+            <div className={"p-3"}>
+                <TabPanelContainer currentView={getBody()} tabContainer={getTabContainer()} />
+            </div>
+        </FullScreenCenterOverlayContainer>
     );
 }
 
 MTTRActionableInsightOverlay.propTypes = {
-  kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
-  start: PropTypes.string,
-  end: PropTypes.string,
-  range: PropTypes.string,
-  type: PropTypes.string,
+    kpiConfiguration: PropTypes.object,
+    dashboardData: PropTypes.object,
+    start: PropTypes.string,
+    end: PropTypes.string,
+    range: PropTypes.string,
+    type: PropTypes.string,
 };
 
 export default MTTRActionableInsightOverlay;

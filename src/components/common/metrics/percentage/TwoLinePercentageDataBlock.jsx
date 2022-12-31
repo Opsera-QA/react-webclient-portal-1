@@ -9,9 +9,6 @@ function TwoLinePercentageDataBlock(
     dataPoint,
     subtitle,
     className,
-    icon,
-    iconOverlayTitle,
-    iconOverlayBody
   }) {
   return (
     <TwoLineDataBlockBase
@@ -24,9 +21,6 @@ function TwoLinePercentageDataBlock(
         />
       }
       subtitle={subtitle}
-      iconOverlayTitle={iconOverlayTitle}
-      iconOverlayBody={iconOverlayBody}
-      icon={icon}
     />
   );
 }
@@ -36,9 +30,6 @@ TwoLinePercentageDataBlock.propTypes = {
   dataPoint: PropTypes.object,
   subtitle: PropTypes.any,
   className: PropTypes.string,
-  icon: PropTypes.object,
-  iconOverlayTitle: PropTypes.string,
-  iconOverlayBody: PropTypes.any,
 };
 
 export default TwoLinePercentageDataBlock;

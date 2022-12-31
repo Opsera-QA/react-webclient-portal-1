@@ -30,5 +30,3 @@ InlineToolTypeFilter.propTypes = {
 };
 
 export default InlineToolTypeFilter;
-
-

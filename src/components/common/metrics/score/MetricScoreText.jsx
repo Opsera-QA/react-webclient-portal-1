@@ -35,7 +35,7 @@ function MetricScoreText(
 }
 
 MetricScoreText.propTypes = {
-  score: PropTypes.any,
+  score: PropTypes.number,
   qualityLevel: PropTypes.string,
   dataPoint: PropTypes.object,
 };

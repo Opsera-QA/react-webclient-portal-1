@@ -1,17 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import "jspdf-autotable";
-import Button from "react-bootstrap/Button";
-import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import ExportTaskActivityLogDataOverlay from "components/tasks/activity_logs/ExportTaskActivityLogDataOverlay";
-import IconBase from "components/common/icons/IconBase";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import ExportDataButtonBase from "components/common/modal/export_data/ExportDataButtonBase";
 
 function ExportTaskActivityLogButton({isLoading, activityLogData, className}) {
   const toastContext = useContext(DialogToastContext);
 
-  const launchOverlay = () => {
+  const launchOverlayFunction = () => {
     toastContext.showOverlayPanel(
       <ExportTaskActivityLogDataOverlay
         isLoading={isLoading}
@@ -20,22 +16,13 @@ function ExportTaskActivityLogButton({isLoading, activityLogData, className}) {
     );
   };
 
-
-  // TODO: Refine when more is complete
   return (
-    <>
-      <TooltipWrapper innerText={"Export as PDF"}>
-        <div className={className}>
-          <Button
-            variant={"outline-primary"}
-            size={"sm"}
-            disabled={isLoading}
-            onClick={launchOverlay}>
-            <span><IconBase icon={faFileDownload}/></span>
-          </Button>
-        </div>
-      </TooltipWrapper>
-    </>
+    <ExportDataButtonBase
+      launchOverlayFunction={launchOverlayFunction}
+      isLoading={isLoading}
+      className={className}
+      disabled={!Array.isArray(activityLogData) || activityLogData.length === 0}
+    />
   );
 }
 

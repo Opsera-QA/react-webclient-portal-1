@@ -30,19 +30,19 @@ function CoverityActionableInsightTable({ data, isLoading, loadData, filterModel
       Cell: function parseText(row) {
         let classNm = "dark-gray-text-primary";
         const value = row?.value;
-          switch (block) {
-            case "total_issues":
-              classNm = value <= 0 ? 'green' : "danger-red";
-              break;
-            case "quality_issues":
-              classNm = value <= 0 ? 'green' : "danger-red";
-              break;
-            case "security_issues":
-              classNm = value <= 0 ? 'green' : "danger-red";
-              break;
-            default:
-              classNm = "dark-gray-text-primary";
-          }
+        switch (block) {
+          case "total_issues":
+            classNm = value <= 0 ? 'green' : "danger-red";
+            break;
+          case "quality_issues":
+            classNm = value <= 0 ? 'green' : "danger-red";
+            break;
+          case "security_issues":
+            classNm = value <= 0 ? 'green' : "danger-red";
+            break;
+          default:
+            classNm = "dark-gray-text-primary";
+        }
 
         return (<div className={`${classNm}`}>
           {value}
@@ -65,15 +65,6 @@ function CoverityActionableInsightTable({ data, isLoading, loadData, filterModel
     ],
     []
   );
-
-  // const onRowSelect = (rowData) => {
-  //   toastContext.showOverlayPanel(
-  //     <BlueprintLogOverlay
-  //       pipelineId={rowData?.original?.pipeline}
-  //       runCount={rowData?.original?.run}
-  //     />
-  //   );
-  // };
 
   const onRowSelect = (rowData) => {
     const row = rowData?.original;

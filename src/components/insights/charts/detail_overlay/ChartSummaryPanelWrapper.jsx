@@ -7,10 +7,10 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import BitbucketRejectedMergeRequestsSummaryPanel from "components/insights/charts/bitbucket/table/bitbucket-rejected-merge-requests/BitbucketRejectedMergeRequestsSummaryPanel";
 
 // Opsera pipeline
-import OpseraDeploymentFreqStatsSuccessSummaryPanel from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsSuccessSummaryPanel";
-import OpseraDeploymentFreqStatsFailureSummaryPanel from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsFailureSummaryPanel";
 import SFDCPipelinesSummaryPanel from "components/insights/charts/sfdc/SFDCPipelinesOverlayPanel";
 import OpseraMeanTimeToRestoreSummaryPanel from "../opsera/bar_chart/mean_time_to_restore/OpseraMeanTimeToRestoreSummaryPanel";
+import OpseraDeploymentFreqStatsSuccessSummaryPanel from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsSuccessSummaryPanel";
+import OpseraDeploymentFreqStatsFailureSummaryPanel from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsFailureSummaryPanel";
 import PipelineByStatusSuccessfulTable from "../opsera/bar_chart/pipeline_by_status/PipelineByStatusSuccessfulTable";
 import PipelineByStatusFailedTable from "../opsera/bar_chart/pipeline_by_status/PipelineByStatusFailedTable";
 
@@ -25,10 +25,10 @@ import CoverityMediumIssuesSummaryPanel from "../coverity/CoverityIssuesByCatego
 import CoverityLowIssuesSummaryPanel from "../coverity/CoverityIssuesByCategory/CoverityLowIssuesSummaryPanel";
 
 function ChartSummaryPanelWrapper({
-  chartModel,
-  kpiIdentifier,
   dashboardData,
   kpiConfiguration,
+  chartModel,
+  kpiIdentifier,
   pipelineName,
   currentDate,
   setActiveTab,
@@ -37,18 +37,6 @@ function ChartSummaryPanelWrapper({
     switch (kpiIdentifier) {
       case "bitbucket-rejected-merge-requests":
         return <BitbucketRejectedMergeRequestsSummaryPanel chartModel={chartModel} setActiveTab={setActiveTab} />;
-      case "opsera-deployment-frequency-stats-successful":
-        return ( <OpseraDeploymentFreqStatsSuccessSummaryPanel 
-          dashboardData={dashboardData}
-          kpiConfiguration={kpiConfiguration} 
-          setActiveTab={setActiveTab} />
-      );
-      case "opsera-deployment-frequency-stats-failed":
-        return ( <OpseraDeploymentFreqStatsFailureSummaryPanel
-            dashboardData={dashboardData}
-            kpiConfiguration={kpiConfiguration}
-            setActiveTab={setActiveTab} />
-        );
       case "sfdc-backups-successful":
         return (
           <SFDCPipelinesSummaryPanel
@@ -140,6 +128,18 @@ function ChartSummaryPanelWrapper({
             setActiveTab={setActiveTab}
             currentDate={currentDate}
           />
+        );
+      case "opsera-deployment-frequency-stats-successful":
+        return ( <OpseraDeploymentFreqStatsSuccessSummaryPanel
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            setActiveTab={setActiveTab} />
+      );
+      case "opsera-deployment-frequency-stats-failed":
+        return ( <OpseraDeploymentFreqStatsFailureSummaryPanel
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            setActiveTab={setActiveTab} />
         );
       case "status-by-pipeline-successful":
         return (

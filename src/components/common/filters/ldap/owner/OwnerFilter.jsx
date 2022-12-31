@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilter";
-import sessionHelper from "utils/session.helper";
-import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 
 export default function OwnerFilter(
   { 

@@ -6,36 +6,35 @@ import GitlabDeploymentActionablePipelinesOverlay from "../GitlabDeploymentActio
 
 function GitlabDeploymentFreqPipelinesTab({dashboardData, kpiConfiguration, start, end, range, icon}) {
 
-  const getTabContentContainer = () => {
+    const getTabContentContainer = () => {
+        return (
+            <VanitySetTabViewContainer className={"mb-3"}>
+                <GitlabDeploymentActionablePipelinesOverlay
+                    dashboardData={dashboardData}
+                    kpiConfiguration={kpiConfiguration}
+                    start={start}
+                    end={end}
+                    range={range}
+                    icon={icon}
+                />
+            </VanitySetTabViewContainer>
+        );
+    };
+
+
     return (
-      <VanitySetTabViewContainer className={"mb-3"}>
-        <GitlabDeploymentActionablePipelinesOverlay
-            dashboardData={dashboardData}
-            kpiConfiguration={kpiConfiguration}
-            start={start}
-            end={end}
-            range={range}
-            icon={icon}
-        />
-      </VanitySetTabViewContainer>
+        <VanitySetTabContentContainer>
+            {getTabContentContainer()}
+        </VanitySetTabContentContainer>
     );
-  };
-
-
-  return (
-    <VanitySetTabContentContainer>
-      {getTabContentContainer()}
-    </VanitySetTabContentContainer>
-  );
 
 }
 GitlabDeploymentFreqPipelinesTab.propTypes = {
-  dashboardData: PropTypes.object,
-  kpiConfiguration: PropTypes.object,
-  icon: PropTypes.object,
-  start: PropTypes.string,
-  end: PropTypes.string,
-  range: PropTypes.string,
+    dashboardData: PropTypes.object,
+    kpiConfiguration: PropTypes.object,
+    icon: PropTypes.object,
+    start: PropTypes.string,
+    end: PropTypes.string,
+    range: PropTypes.string,
 };
 export default GitlabDeploymentFreqPipelinesTab;
-

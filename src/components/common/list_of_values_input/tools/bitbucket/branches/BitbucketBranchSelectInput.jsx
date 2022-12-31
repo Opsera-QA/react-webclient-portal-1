@@ -18,17 +18,17 @@ import _ from "lodash";
 import LazyLoadMultiSelectInputBase from "../../../../inputs/select/LazyLoadMultiSelectInputBase";
 
 function BitbucketRepositorySelectInput({
-                                          fieldName,
-                                          model,
-                                          setModel,
-                                          toolId,
-                                          disabled,
-                                          setDataFunction,
-                                          clearDataFunction,
-                                          workspace,
-                                          repositoryId,
-                                          multi,
-                                        }) {
+  fieldName,
+  model,
+  setModel,
+  toolId,
+  disabled,
+  setDataFunction,
+  clearDataFunction,
+  workspace,
+  repositoryId,
+  multi,
+}) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [bitbucketBranches, setBitbucketBranches] = useState([]);

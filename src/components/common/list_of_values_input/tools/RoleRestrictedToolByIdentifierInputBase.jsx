@@ -124,7 +124,7 @@ function RoleRestrictedToolByIdentifierInputBase(
 
   const getEllipsisTooltipText = () => {
     if (model?.getData(fieldName) != null && model?.getData(fieldName) !== "") {
-      return (`View selected${toolFriendlyName ? " " + capitalizeFirstLetter(toolFriendlyName) : ""} tool's details`);
+      return (`View selected ${capitalizeFirstLetter(toolFriendlyName)} tool's details`);
     }
 
     return (`View ${capitalizeFirstLetter(toolFriendlyName)} tools`);

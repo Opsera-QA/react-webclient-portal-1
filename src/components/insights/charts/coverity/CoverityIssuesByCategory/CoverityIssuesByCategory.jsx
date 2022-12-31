@@ -305,7 +305,7 @@ function CoverityIssuesByCategory({
         style={{ minHeight: "300px" }}
       >
         <Container>
-         <Row className="p-1 gray">
+          <Row className="p-1 gray">
             <Col>
               <CoverityIssuesOverallLowTrendDataBlock
                 score={

@@ -96,7 +96,6 @@ const getNodeAnalyticsAxiosInstance = (token, cancelToken) => {
     If this issue persists for an extended period of time, please report it to Opsera for further investigation.
   `;
 
-
   if (token) {
     axiosInstance.defaults.headers.common['authorization'] = `Bearer ${token}`;
   }

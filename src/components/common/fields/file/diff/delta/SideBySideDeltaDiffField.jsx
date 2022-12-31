@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { VISIBLE_CODE_OPTIONS } from "components/common/fields/file/diff/StandaloneDiffField";
 import InfoContainer from "components/common/containers/InfoContainer";
 import { faCode } from "@fortawesome/pro-light-svg-icons";
 import StandaloneDeltaDiffField from "components/common/fields/file/diff/delta/StandaloneDeltaDiffField";

@@ -45,5 +45,3 @@ ToolTypeFilter.defaultProps = {
 };
 
 export default ToolTypeFilter;
-
-

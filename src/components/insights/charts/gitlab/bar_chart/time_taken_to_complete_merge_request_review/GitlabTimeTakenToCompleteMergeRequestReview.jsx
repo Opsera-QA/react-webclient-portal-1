@@ -97,7 +97,7 @@ function GitlabTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiC
                     titles={["Reviewer", "Merge Request Time Taken"]}
                     values={[indexValue, value ]}
                     style={false}
-                  />}
+                     />}
           />
       </div>
   );

@@ -20,7 +20,6 @@ import GitHubCommitsTotalPullRequestsDataBlock from "./data_blocks/GitHubCommits
 import { DialogToastContext } from "contexts/DialogToastContext";
 import GithubCommitsActionableInsightOverlay from "./actionable_insights/GithubCommitsActionableInsightOverlay";
 import GithubDeclinedPullRequestActionableInsightOverlay from "./actionable_insights/GithubDeclinedPullRequestActionableInsightOverlay";
-import GithubApprovedPullRequestActionableInsightOverlay from "./actionable_insights/GithubApprovedPullRequestActionableInsightOverlay";
 
 function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -130,17 +129,6 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
     );
   };
 
-  const showGithubApprovedPullRequestModal = (node) => {
-    toastContext.showOverlayPanel(
-      <GithubApprovedPullRequestActionableInsightOverlay
-        kpiConfiguration={kpiConfiguration}
-        dashboardData={dashboardData}
-        highestMergesMetric={highestMergesMetric}
-        repository={node?.id}
-      />
-    );
-  };
-
   const getHorizontalDataBlocks =() => {
     return (
       <Row className="px-4 justify-content-between">
@@ -190,7 +178,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
                 data={highestMergesMetric}
                 {...defaultConfig("", "", false, false, "", "", true)}
                 {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={(node) => showGithubApprovedPullRequestModal(node)}
+                onClick={() => setShowModal(true)}
               />
             </div>
           </Col>
@@ -241,7 +229,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
                 data={highestMergesMetric}
                 {...defaultConfig("", "", false, false, "", "", true)}
                 {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={(node) => showGithubApprovedPullRequestModal(node)}
+                onClick={() => setShowModal(true)}
               />
             </div>
             <div className="text-center col-12">

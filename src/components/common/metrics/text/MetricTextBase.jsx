@@ -32,7 +32,7 @@ function MetricTextBase(
 }
 
 MetricTextBase.propTypes = {
-  formattedText: PropTypes.any,
+  formattedText: PropTypes.string,
   qualityLevel: PropTypes.string,
   className: PropTypes.string,
 };

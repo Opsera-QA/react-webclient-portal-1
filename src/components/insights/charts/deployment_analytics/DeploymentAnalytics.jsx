@@ -72,6 +72,7 @@ function DeploymentAnalytics({
           )
           ]?.value;
 
+
     const response = await chartsActions.getMetadataInfo(
       kpiConfiguration,
       getAccessToken,
@@ -80,9 +81,7 @@ function DeploymentAnalytics({
       dashboardOrgs
     );
     setMetadataInfo(response?.data?.data);
-    if(response?.data?.data && response?.data?.data.length>0){
-      setActiveTab(response?.data?.data[0].metadataName);
-    }
+    setActiveTab(response?.data?.data[0].metadataName);
   };
 
   const loadData = async (

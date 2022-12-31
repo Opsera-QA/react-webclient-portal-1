@@ -132,9 +132,6 @@ function CodeInput(
         titleIcon={faFileCode}
         titleText={getTitleText()}
         titleRightSideButton={getTitleBarActionButtons()}
-        // TODO: Use this height instead
-        // maximumHeight={height}
-        // minimumHeight={height}
       >
         <div style={{height: height}}>
           {getBody()}

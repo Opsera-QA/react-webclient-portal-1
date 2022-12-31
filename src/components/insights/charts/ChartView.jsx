@@ -75,6 +75,7 @@ import GitlabMergeRequestsPushesAndComments from "./gitlab/calendar_chart/merge_
 import GitlabTotalCommitsByProjectChart from "./gitlab/pie_chart/total_commits_by_project/GitlabTotalCommitsByProjectChart";
 import GitlabRecentMergeRequests from "./gitlab/table/recent_merge_requests/GitlabRecentMergeRequests";
 import GitlabPendingMergeRequests from "./gitlab/table/pending_merge_requests/GitlabPendingMergeRequests.jsx";
+import GitlabDeploymentFrequency from "./gitlab/deployment_frequency/GitlabDeploymentFrequencyMetric";
 import GitLabLeadTimeChart from "./gitlab/line_chart/lead_time/GitLabLeadTimeChart";
 import GitlabPipelineStatistics from "./gitlab/line_chart/pipeline-statistics/GitlabPipelineStatistics";
 
@@ -90,14 +91,11 @@ import GithubRecentMergeRequests from "./github/table/recent_merge_requests/Gith
 import GithubTimeTakenToCompleteMergeRequestReview from "./github/bar_chart/time_taken_to_complete_merge_request_review/GithubTimeTakenToCompleteMergeRequestReview";
 import GithubMergeRequestByMaximumTimeChart from "./github/bar_chart/merge_request_by_maximum_time/GithubMergeRequestByMaximumTimeChart";
 import GithubCommitsByAuthor from "./github/calendar_chart/commits_by_author/GithubCommitsByAuthor";
-import GithubPendingMergeRequests from "./github/table/pending_merge_requests/GithubPendingMergeRequests";
 import AllGithubActionsDataBlock from "./github_actions/data_blocks/AllGithubActions/AllGithubActionsDataBlock";
 import LeadTimeAndReleaseTraceabilityDataBlock
     from "./github_actions/data_blocks/LeadTimeAndReleaseTraceabilityDataBlock";
-import GithubCommitsStatistics from "./github/pie_chart/commits_statistics/GithubCommitsStatistics";
-import GithubConnectedAssets from "./github/data_blocks/GithubConnectedAssets";
-import GithubSecurityCompliance from "./github/pie_chart/security_compliance/GithubSecurityCompliance";
-import GithubActionsWorkflowChart from "./github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowChart";
+
+import GithubPendingMergeRequests from "./github/table/pending_merge_requests/GithubPendingMergeRequests";
 
 // Bitbucket KPIs
 import BitbucketMostActiveContributors from "./bitbucket/table/bitbucket_most_active_contributors/BitbucketMostActiveContributors";
@@ -133,63 +131,67 @@ import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/
 //QA Testing
 import CumulativeOpenDefectsMetric from "./cumulative_open_defects/CumulativeOpenDefectsMetric";
 import ManualQaTestPieChart from "components/insights/charts/qa_metrics/ManualQaTestPieChart";
+import FirstPassYieldMetrics from "components/insights/charts/first_pass/FirstPassYieldMetrics";
 import AutomationPercentageMetric from "./automation_percentage/AutomationPercentageMetric";
 import AdoptionTestPercentageMetricV1 from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AdoptionTestPercentageMetricV1";
 import AutomatedTestResultsPieChart from "./qa_metrics/AutomatedTestResultsPieChart";
 import SFDCManualTestResultsPieChart from "./qa_metrics/SFDCManualTestResultsPieChart";
-// import DefectRemovalEfficiencyPieChart from "./qa_metrics/DefectRemovalEfficiencyPieChart";
-import DefectRemovalEfficiencyMetrics from "./defect_removal_efficiency/DefectRemovalEfficiencyMetrics";
-
+import DefectRemovalEfficiencyMetrics from "components/insights/charts/defect_removal_efficiency/DefectRemovalEfficiencyMetrics";
 // SFDC KPIs
-import SalesforceBackupsAndRollbacksMetrics from "components/insights/charts/sfdc/salesforce_backups_and_rollbacks/SalesforceBackupsAndRollbacksMetrics";
+import SalesforceBackupAndRollbackMetrics from "components/insights/charts/sfdc/salesforce_backups_and_rollbacks/SalesforceBackupAndRollbackMetrics";
 import SFDCProfileMigrationsBarChart from "components/insights/charts/sfdc/bar_chart/profile_migrations/SFDCProfileMigrationsBarChart";
 import SFDCUnitTestingPieChart from "components/insights/charts/sfdc/pie_chart/unit_testing/SFDCUnitTestingPieChart";
 import SalesforceDurationByStageMetrics from "components/insights/charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageMetrics";
-import SalesforceComponentsDataBlockChart
-  from "./sfdc/data_block_chart/Salesforce_components/salesforceComponentsDataBlockChart";
 
 // Service Now KPIs
 import ServiceNowMeanTimeToResolutionBarChart from "./servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionBarChart";
 import ServiceNowMeanTimeToAcknowledgeBarChart from "./servicenow/bar_chart/mean_time_to_acknowledge/ServiceNowMeanTimeToAcknowledgeBarChart";
-
-// Coverity KPIs
-import CoverityIssuesByCategory from "./coverity/CoverityIssuesByCategory/CoverityIssuesByCategory";
+import ServiceNowMeanTimeBetweenFailuresBarChart from "./servicenow/bar_chart/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresBarChart";
 
 //SDLC KPIs
 import SdlcDurationByStageMetrics from "components/insights/charts/sdlc/bar_chart/duration_by_stage/SdlcDurationByStageMetrics";
 
-import { getDateObjectFromKpiConfiguration } from "components/insights/charts/charts-helpers";
+
+// Coverity KPIs
+import CoverityIssuesByCategory from "./coverity/CoverityIssuesByCategory/CoverityIssuesByCategory";
+
+// Boomi KPIs
+import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
+
+import {
+  getDateObjectFromKpiConfiguration,
+  getTagsFromKpiConfiguration,
+} from "components/insights/charts/charts-helpers";
 import { Col } from "react-bootstrap";
 import LegacySonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings_legacy/LegacySonarRatingMetrics";
 import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics";
 import AutomatedTestAdoptionRateMetric
   from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AutomatedTestAdoptionRateMetric";
-import FirstPassYieldMetrics from "./first_pass/FirstPassYieldMetrics";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 import SonarRatingsLeadershipMetrics from "components/insights/charts/sonar/sonar_leadership/SonarRatingsLeadershipMetrics";
 import GitSrapperMetrics from "components/insights/charts/gitscrapper/GitScrapperMetrics";
+import SalesforceComponentsDataBlockChart
+  from "./sfdc/data_block_chart/Salesforce_components/salesforceComponentsDataBlockChart";
+import GithubCommitsStatistics from "./github/pie_chart/commits_statistics/GithubCommitsStatistics";
 import DeploymentAnalytics from "./deployment_analytics/DeploymentAnalytics";
-import GitlabDeploymentFrequency from "./gitlab/deployment_frequency/GitlabDeploymentFrequencyMetric";
-import QuickDeployStatistics from "./opsera/quick_deploy_statistics/QuickDeployStatistics";
+import QuickDeployStatistics from "./quick-deploy-statistics/QuickDeployStatistics";
 
 //APIGEE KPIs
 import ApigeeReportsChartTab from "./apigee/reports/ApigeeReportsChartTab";
 import ApigeeSummaryChart from "./apigee/summary/ApigeeSummaryChart";
 
-//Boomi KPI
-import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
+// Approval Gates KPI
 import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
 
 // Dora KPI
 import DoraJiraGitlabRolledUpChart from "./dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpChart";
-import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/GitlabMergeRequestStatistics";
+
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
   const [kpiConfig, setKpiConfig] = useState(undefined);
   const isMounted = useRef(false);
-
 
   useEffect(() => {
     isMounted.current = true;
@@ -361,6 +363,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.BUILD_DEPLOYMENT_STATISTICS:
+        return (
+          <Col md={12} className="p-2">
+            <OpseraBuildAndDeploymentStatistics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
 
       // Jenkins KPIs
       case "jenkins-builds-by-user":
@@ -419,18 +433,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
 
       // Jira KPIs
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
-        return (
-          <Col xl={12} md={12} className="p-2">
-            <JiraChangeFailureRate
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        );
       case "jira-tickets-assigned-by-user":
         return (
           <Col xl={6} md={12} className="p-2">
@@ -527,6 +529,19 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <JiraChangeFailureRate
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );   
         case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_MEAN_TIME_TO_RESOLUTION:
         return (
           <Col md={12} className="p-2">
@@ -898,18 +913,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
 
       // Gitlab KPIs
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY:
-        return (
-          <Col xl={12} md={12} className="p-2">
-            <GitlabDeploymentFrequency
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_PIPELINE_STATISTICS:
         return (
           <Col xl={12} md={12} className="p-2">
@@ -921,18 +924,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               index={index}
             />
           </Col>
-      );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
-        return (
-        <Col md={12} className="p-2">
-          <GitLabLeadTimeChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
-        </Col>
       );
       case "gitlab-most-active-contributors":
         return (
@@ -1008,7 +999,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "gitlab-total-commits-by-project":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col xl={12} md={12} className="p-2">
             <GitlabTotalCommitsByProjectChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1042,19 +1033,31 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "gitlab-merge-requests-statistics":
-        return (
-          <Col xl={12} md={12} className="p-2">
-            <GitlabMergeRequestStatistics
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        );
 
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY:
+        return (
+            <Col xl={12} md={12} className="p-2">
+              <GitlabDeploymentFrequency
+                kpiConfiguration={kpiConfig}
+                setKpiConfiguration={setKpiConfig}
+                dashboardData={dashboardData}
+                setKpis={setKpis}
+                index={index}
+              />
+            </Col>
+          );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
+        return (
+            <Col md={12} className="p-2">
+              <GitLabLeadTimeChart
+                kpiConfiguration={kpiConfig}
+                setKpiConfiguration={setKpiConfig}
+                dashboardData={dashboardData}
+                setKpis={setKpis}
+                index={index}
+              />
+            </Col>
+        );
       //APIGEE KPIs
       case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_REPORT:
         return (
@@ -1099,7 +1102,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Selenium KPIs
       case "selenium-test-results":
         return (
-          <Col md={12} className="p-2">
+          <Col xl={6} md={12} className="p-2">
             <SeleniumTestResultsTable
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1293,54 +1296,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-        case "lead-time-and-release-traceability-data-block":
-          return(
-            <Col md={12} className="p-2">
-              <LeadTimeAndReleaseTraceabilityDataBlock
-                kpiConfiguration={kpiConfig}
-                setKpiConfiguration={setKpiConfig}
-                dashboardData={dashboardData}
-                setKpis={setKpis}
-                index={index}
-                showViewDetailsToggle={true}
-              />
-            </Col>
-          );
-      case "github-security-compliance":
-        return (
-            <Col md={12} className="p-2">
-                <GithubSecurityCompliance
-                    kpiConfiguration={kpiConfig}
-                    setKpiConfiguration={setKpiConfig}
-                    dashboardData={dashboardData}
-                    setKpis={setKpis}
-                    index={index}
-                />
-            </Col>
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_ACTIONS_WORKFLOW:
-        return (
+      case "lead-time-and-release-traceability-data-block":
+        return(
           <Col md={12} className="p-2">
-            <GithubActionsWorkflowChart
+            <LeadTimeAndReleaseTraceabilityDataBlock
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
               setKpis={setKpis}
               index={index}
+              showViewDetailsToggle={true}
             />
           </Col>
-        );
-      case "github-connected-assets":
-        return (
-            <Col xl={6} md={12} className="p-2">
-                <GithubConnectedAssets
-                    kpiConfiguration={kpiConfig}
-                    setKpiConfiguration={setKpiConfig}
-                    dashboardData={dashboardData}
-                    setKpis={setKpis}
-                    index={index}
-                />
-            </Col>
         );
       case "sonar-unit-testing":
         return (
@@ -1582,7 +1549,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "sfdc-backups":
         return (
           <Col xl={6} md={12} className="p-2">
-            <SalesforceBackupsAndRollbacksMetrics
+            <SalesforceBackupAndRollbackMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1639,18 +1606,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-        case "deployment-analytics":
-          return(
-            <Col md={12} className="p-2">
-              <DeploymentAnalytics
-                kpiConfiguration={kpiConfig}
-                setKpiConfiguration={setKpiConfig}
-                dashboardData={dashboardData}
-                setKpis={setKpis}
-                index={index}
-              />
-            </Col>
-          );
+      case "deployment-analytics":
+        return(
+          <Col md={12} className="p-2">
+            <DeploymentAnalytics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       // Service Now
       case "servicenow-mean-time-to-resolution":
         return (
@@ -1713,18 +1680,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.BUILD_DEPLOYMENT_STATISTICS:
-        return (
-          <Col md={12} className="p-2">
-            <OpseraBuildAndDeploymentStatistics
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        );
         case kpiIdentifierConstants.KPI_IDENTIFIERS.QUICK_DEPLOY_STATISTICS:
             return (
                 <Col md={12} className="p-2">
@@ -1750,7 +1705,9 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
+
+
+      case  kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
         return (
           <Col md={12} className="p-2">
             <BoomiBarChart
@@ -1762,18 +1719,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-        case kpiIdentifierConstants.KPI_IDENTIFIERS.DORA_JIRA_GITLAB_ROLLED_UP:
-            return (
-                <Col md={12} className="p-2">
-                    <DoraJiraGitlabRolledUpChart
-                        kpiConfiguration={kpiConfig}
-                        setKpiConfiguration={setKpiConfig}
-                        dashboardData={dashboardData}
-                        setKpis={setKpis}
-                        index={index}
-                    />
-                </Col>
-            );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.DORA_JIRA_GITLAB_ROLLED_UP:
+        return (
+          <Col md={12} className="p-2">
+            <DoraJiraGitlabRolledUpChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       case "approval-gates":
         return (
           <Col md={12} className="p-2">
@@ -1786,6 +1743,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+
       default:
         return null;
     }

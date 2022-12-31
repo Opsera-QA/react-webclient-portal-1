@@ -4,7 +4,6 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import PropTypes from "prop-types";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-
 import githubRecentMergeRequestsMetadata from "components/insights/charts/github/table/recent_merge_requests/github-recent-merge-requests-metadata.js";
 import Model from "core/data_model/model";
 import VanitySetTabViewContainer from "../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
@@ -87,16 +86,16 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         kpiConfiguration,
         dashboardTags,
         filterDto,
-          null,
-          dashboardOrgs,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          projectName,
+        null,
+        dashboardOrgs,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        projectName,
       );
       let dataObject = response?.data?.data[0]?.githubTimeTakenToCompleteMergeRequestReviewAndPushTime?.data;
 
@@ -121,30 +120,29 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
     }
   };
 
-
   const getVerticalTabContainer = () => {
     return <GithubRecentMergeRequestVerticalTabContainer
-        kpiConfiguration={kpiConfiguration}
-        setKpiConfiguration={setKpiConfiguration}
-        dashboardData={dashboardData}
-        setKpis={setKpis}
-        metric={metrics}
-        handleTabClick={handleTabClick}
-        activeTab={activeTab}/>;
+      kpiConfiguration={kpiConfiguration}
+      setKpiConfiguration={setKpiConfiguration}
+      dashboardData={dashboardData}
+      setKpis={setKpis}
+      metric={metrics}
+      handleTabClick={handleTabClick}
+      activeTab={activeTab}/>;
   };
 
   const getTabContentContainer = () => {
     return (
-        <VanitySetTabViewContainer className={"mb-3"}>
-          <FilterContainer
-              filterDto={tableFilterDto}
-              setFilterDto={setTableFilterDto}
-              body={getBody()}
-              isLoading={isLoading}
-              loadData={loadData}
-              supportSearch={true}
-          />
-        </VanitySetTabViewContainer>
+      <VanitySetTabViewContainer className={"mb-3"}>
+        <FilterContainer
+          filterDto={tableFilterDto}
+          setFilterDto={setTableFilterDto}
+          body={getBody()}
+          isLoading={isLoading}
+          loadData={loadData}
+          supportSearch={true}
+        />
+      </VanitySetTabViewContainer>
     );
   };
   const getBody = () => {

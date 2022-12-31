@@ -5,7 +5,7 @@ import IconBase from "components/common/icons/IconBase";
 
 function NoTrendMetricIcon() {
   return (
-    <TooltipWrapper innerText={"No Trend"}>
+    <TooltipWrapper innerText={"Success"}>
       <div>
         <IconBase
           icon={faMinusCircle}

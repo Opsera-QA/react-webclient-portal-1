@@ -89,7 +89,7 @@ function OrganizationMultiSelectInput({
       setDataObject={setDataObject}
       clearDataFunction={clearDataFunction}
       textField={"name"}
-      value={[...dataObject.getArrayData(fieldName)]}
+      value={[...dataObject?.getArrayData(fieldName)]}
       busy={isLoading}
       dataObject={dataObject}
       showLabel={showLabel}

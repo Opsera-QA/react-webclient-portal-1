@@ -1,16 +1,16 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import axios from "axios";
-import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import {jiraActions} from "components/common/list_of_values_input/tools/jira/jira.actions";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { jiraActions } from "components/common/list_of_values_input/tools/jira/jira.actions";
 
 function JiraCustomFieldMappingSelectInput(
   {
     fieldName,
     jiraToolId,
-    projectKey,    
+    projectKey,
     model,
     setModel,
     disabled,
@@ -77,9 +77,9 @@ function JiraCustomFieldMappingSelectInput(
   };
 
   const setDataFunction = (fieldName, selectedOption) => {
-    const newModel = {...model};
-    newModel?.setData(fieldName, selectedOption);    
-    setModel({...newModel});
+    const newModel = { ...model };
+    newModel?.setData(fieldName, selectedOption);
+    setModel({ ...newModel });
   };
 
   return (

@@ -1,22 +1,24 @@
-import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import LazyLoadMultiSelectInputBase from "components/common/inputs/select/LazyLoadMultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
-import axios from "axios";
-import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
+import pipelineStepNotificationActions
+  from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import _ from "lodash";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
-function ServiceNowAssignmentGroupSelectInput({
-  valueField,
-  textField,
-  fieldName,
-  dataObject,
-  setDataObject,
-  disabled,
-  serviceNowToolId,
-}) {
+
+function ServiceNowAssignmentGroupSelectInput(
+  {
+    valueField,
+    textField,
+    fieldName,
+    dataObject,
+    setDataObject,
+    disabled,
+    serviceNowToolId,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const { getAccessToken } = useContext(AuthContext);
@@ -75,37 +77,37 @@ function ServiceNowAssignmentGroupSelectInput({
 
   const loadGroups = async (searchTerm, serviceNowToolId) => {
     // if (searchTerm) {
-      try {
-        setIsLoading(true);
+    try {
+      setIsLoading(true);
 
-        // setToggleSelected(true);
-        const response = await pipelineStepNotificationActions.getServiceNowGroupsByNamev2(
-          serviceNowToolId,
-          searchTerm,
-          getAccessToken,
-          cancelTokenSource
-        );
+      // setToggleSelected(true);
+      const response = await pipelineStepNotificationActions.getServiceNowGroupsByNamev2(
+        serviceNowToolId,
+        searchTerm,
+        getAccessToken,
+        cancelTokenSource
+      );
 
-        console.log(response);
-        // TODO: Faseeh, when updating the node end can you please make sure to return this in data as usual (would come as response?.data?.data).
-        const results = response.data.message.result;
+      console.log(response);
+      // TODO: Faseeh, when updating the node end can you please make sure to return this in data as usual (would come as response?.data?.data).
+      const results = response.data.message.result;
 
-        if (
-          Array.isArray(results)
-        ) {
-          setGroups(response.data.message.result);
-        } else {
-          setGroups([]);
-        }
-      } catch (error) {
-        if (isMounted?.current === true) {
-          setError(error);
-        }
-      } finally {
-        if (isMounted?.current === true) {
-          setIsLoading(false);
-        }
+      if (
+        Array.isArray(results)
+      ) {
+        setGroups(response.data.message.result);
+      } else {
+        setGroups([]);
       }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        setError(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
     // }
   };
 

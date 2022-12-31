@@ -100,7 +100,7 @@ function JenkinsRegistryToolJobSelectInput(
               "Preselected job is no longer available. It may have been deleted. Please select another job from the list or recreate the job in Tool Registry."
             );
           }
-        } 
+        }
       }
     }
   };

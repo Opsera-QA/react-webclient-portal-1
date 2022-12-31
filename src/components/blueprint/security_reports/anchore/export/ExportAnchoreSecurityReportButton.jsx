@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import ExportDataButtonBase from "components/common/modal/export_data/ExportDataButtonBase";
+import ExportDataButtonBase from "../../../../common/modal/export_data/ExportDataButtonBase";
 
 export default function ExportAnchoreSecurityReportButton({
   isLoading,

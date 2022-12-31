@@ -8,13 +8,9 @@ import config from "./GitlabDeploymentFrequencyLineChartConfig";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import IconBase from "components/common/icons/IconBase";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import GitlabDeploymentActionablePipelinesOverlay
-    from "./actionable_insights/GitlabDeploymentActionablePipelinesOverlay";
-import GitlabDeploymentActionableDeployOverlay from "./actionable_insights/GitlabDeploymentActionableDeployOverlay";
 import ChartTooltip from "../../ChartTooltip";
 import GitlabDeploymentFreqActionableMasterTab
     from "./actionable_insights/tabs/GitlabDeploymentFreqActionableMasterTab";
-
 
 function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfiguration, dashboardData }) {
   const [maxCharVal, setMaxChartVal] = useState(0);
@@ -39,11 +35,6 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfigurati
     },
   ];
 
-    const closePanel = () => {
-        toastContext.removeInlineMessage();
-        toastContext.clearOverlayPanel();
-    };
-
     const onNodeSelect = (node) => {
         toastContext.showOverlayPanel(
             <GitlabDeploymentFreqActionableMasterTab
@@ -57,7 +48,7 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfigurati
         );
     };
 
-    const getTrendChart = () => {
+  const getTrendChart = () => {
     return (
       <>
         <div
@@ -100,39 +91,10 @@ function GitlabDeploymentFrequencyLineChartContainer({ chartData, kpiConfigurati
           onClick={(node) => onNodeSelect(node)}
           tooltip={(node) => (
               <ChartTooltip
-              titles={["Type","Date Range", "Total Runs", "Average"]}
-              values={[ node.point.data.type, node.point.data.range, node.point.data.total, node.point.data.y]}
+                  titles={["Type", "Date Range", "Total Runs", "Average"]}
+                  values={[node.point.data.type, node.point.data.range, node.point.data.total, node.point.data.y]}
               />
           )}
-          // sliceTooltip={({ slice }) => {
-          //     return (
-          //         <div className={"p-1 bg-white border border-dark"}>
-          //             <div>Date: {slice?.points[0]?.data?.range}</div>
-          //             <div className={'py-1'}
-          //                  style={{
-          //                      color: slice?.points[0]?.serieColor,
-          //                  }}
-          //             >
-          //                 Total Deployments:
-          //                 <strong>{slice?.points[0]?.data?.total}</strong>
-          //             </div>
-          //             <div className={'py-1'}
-          //                  style={{
-          //                      color: slice?.points[0]?.serieColor,
-          //                  }}
-          //             >
-          //                 Average Deployments: <strong>{slice?.points[0]?.data?.y}</strong>
-          //             </div>
-          //             <div className={'py-1'}
-          //                  style={{
-          //                      color: slice?.points[1]?.serieColor,
-          //                  }}
-          //             >
-          //                 Total Pipelines: <strong>{slice?.points[1]?.data?.total}</strong>
-          //             </div>
-          //         </div>
-          //     );
-          // }}
         />
       </>
     );

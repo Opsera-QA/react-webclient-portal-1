@@ -76,7 +76,7 @@ function GithubRecentMergeRequestVerticalTabContainer ({ handleTabClick, dashboa
             }
         }
     };
-    
+
     const tabs = [];
     if(responseData && responseData.length){
         for(let i = 0; i <= responseData.length - 1; i++) {

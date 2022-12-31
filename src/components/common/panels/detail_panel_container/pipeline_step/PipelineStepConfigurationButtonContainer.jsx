@@ -40,7 +40,7 @@ function PipelineStepConfigurationButtonContainer(
   return (
     <PipelineStepConfigurationSaveButtonContainer>
       {getSaveButton()}
-      <CloseButton recordDto={recordDto} closeEditorCallback={handleClose} className={"mx-1"}  />
+      <CloseButton className={"mx-1"} recordDto={recordDto} closeEditorCallback={handleClose}  />
     </PipelineStepConfigurationSaveButtonContainer>
   );
 }

@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
+import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {AuthContext} from "contexts/AuthContext";
@@ -8,6 +9,7 @@ import SpinnakerStepActions
 
 function SpinnakerApplicationNameSelectInput({className, spinnakerToolId, fieldName, model, setModel, setDataFunction, disabled, clearDataFunction}) {
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [spinnakerApplications, setSpinnakerApplications] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");

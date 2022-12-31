@@ -77,7 +77,7 @@
 .chart svg > g > g:last-child > g:nth-child(10),
 .new-chart svg > g > g:last-child > g:nth-child(10) {
   transform: translate(-24rem);
-} 
+}
 
 /* -------------------------- */
 
@@ -177,6 +177,10 @@
   line-height: 1.2;
   display: inline-block;
   vertical-align: middle;
+}
+
+.icon-box {
+  margin-left: -19.19px;
 }
 
 /*  End dashboard box modules */

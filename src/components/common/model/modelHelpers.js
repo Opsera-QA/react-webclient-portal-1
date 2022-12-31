@@ -4,7 +4,6 @@ import {kpiSettingsMetadata} from "components/insights/marketplace/charts/kpi-co
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import _ from "lodash";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import {pipelineStepMetadataConstants} from "components/workflow/pipelines/pipelineStepMetadata.constants";
 
 const modelHelpers = {};
 
@@ -76,17 +75,6 @@ modelHelpers.getPipelineStepConfigurationModel = (pipelineStepConfiguration, pip
     return new Model({...pipelineStepMetadata.newObjectFields}, pipelineStepMetadata, true);
   }
   return new Model({...configuration}, pipelineStepMetadata, false);
-};
-
-modelHelpers.getPipelineStepModelForToolIdentifier = (toolIdentifier, pipelineStep) => {
-  const metadata = pipelineStepMetadataConstants.getMetadataForIdentifier(toolIdentifier);
-  const configuration = DataParsingHelper.parseNestedObject(pipelineStep, "tool.configuration");
-
-  if (!metadata) {
-    return undefined;
-  }
-
-  return modelHelpers.parseObjectIntoModel(configuration, metadata);
 };
 
 // TODO: Migrate to using modelHelpers.parseObjectIntoModel and remove OR hardcode threshold metadata

@@ -267,7 +267,7 @@ export const getTableDateTimeColumnWithTimeZone = (field, className, width = 175
   let header = getColumnHeader(field);
 
   if (showFilter) {
-    header.push({ content: "inputFilter" });
+    header.push({ content: "inputFilter" }); 
   }
 
   return {

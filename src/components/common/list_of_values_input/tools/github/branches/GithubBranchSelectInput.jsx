@@ -1,35 +1,42 @@
-import React, {useContext, useEffect, useRef, useState, useCallback} from "react";
+import React, {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+} from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
-import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import {hasStringValue} from "components/common/helpers/string-helpers";
-import {githubActions} from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import { githubActions } from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
 import MultiSelectInputBase from "../../../../inputs/multi_select/MultiSelectInputBase";
 import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
 import _ from "lodash";
 import LazyLoadMultiSelectInputBase from "../../../../inputs/select/LazyLoadMultiSelectInputBase";
 
-function GithubBranchSelectInput(
-  {
-    fieldName,
-    model,
-    setModel,
-    toolId,
-    disabled,
-    setDataFunction,
-    clearDataFunction,
-    repositoryId,
-    multi
-  }) {
+function GithubBranchSelectInput({
+  fieldName,
+  model,
+  setModel,
+  toolId,
+  disabled,
+  setDataFunction,
+  clearDataFunction,
+  repositoryId,
+  multi,
+}) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [githubBranches, setGithubBranches] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [placeholderText, setPlaceholderText] = useState("Select Github Branch");
+  const [placeholderText, setPlaceholderText] = useState(
+    "Select Github Branch",
+  );
   const isMounted = useRef(false);
-  const {getAccessToken} = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -68,8 +75,19 @@ function GithubBranchSelectInput(
     }
   };
 
-  const loadGithubBranches = async (searchTerm, toolId, repositoryId, cancelSource = cancelTokenSource) => {
-    const response = await githubActions.getBranchesFromGithubInstanceV3(getAccessToken, cancelSource, toolId, repositoryId, searchTerm);
+  const loadGithubBranches = async (
+    searchTerm,
+    toolId,
+    repositoryId,
+    cancelSource = cancelTokenSource,
+  ) => {
+    const response = await githubActions.getBranchesFromGithubInstanceV3(
+      getAccessToken,
+      cancelSource,
+      toolId,
+      repositoryId,
+      searchTerm,
+    );
     const branches = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(branches)) {
@@ -79,30 +97,36 @@ function GithubBranchSelectInput(
   };
 
   const delayedSearchQuery = useCallback(
-    _.debounce((searchTerm, repositoryId, toolId) => loadGithubBranches(searchTerm, toolId, repositoryId), 600),
+    _.debounce(
+      (searchTerm, repositoryId, toolId) =>
+        loadGithubBranches(searchTerm, toolId, repositoryId),
+      600,
+    ),
     [],
   );
 
   if (multi) {
     return (
-    <LazyLoadMultiSelectInputBase
-      fieldName={fieldName}
-      dataObject={model}
-      setDataObject={setModel}
-      selectOptions={githubBranches}
-      busy={isLoading}
-      setDataFunction={setDataFunction}
-      clearDataFunction={clearDataFunction}
-      valueField={"name"}
-      textField={"name"}
-      disabled={disabled}
-      placeholderText={placeholderText}
-      error={errorMessage}
-      pluralTopic={"Github Branches"}
-      singularTopic={"Github Branch"}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, repositoryId, toolId)}
-      useToggle={true}
-    />
+      <LazyLoadMultiSelectInputBase
+        fieldName={fieldName}
+        dataObject={model}
+        setDataObject={setModel}
+        selectOptions={githubBranches}
+        busy={isLoading}
+        setDataFunction={setDataFunction}
+        clearDataFunction={clearDataFunction}
+        valueField={"name"}
+        textField={"name"}
+        disabled={disabled}
+        placeholderText={placeholderText}
+        error={errorMessage}
+        pluralTopic={"Github Branches"}
+        singularTopic={"Github Branch"}
+        onSearchFunction={(searchTerm) =>
+          delayedSearchQuery(searchTerm, repositoryId, toolId)
+        }
+        useToggle={true}
+      />
     );
   }
 
@@ -122,7 +146,9 @@ function GithubBranchSelectInput(
       error={errorMessage}
       pluralTopic={"Github Branches"}
       singularTopic={"Github Branch"}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, repositoryId, toolId)}
+      onSearchFunction={(searchTerm) =>
+        delayedSearchQuery(searchTerm, repositoryId, toolId)
+      }
       useToggle={true}
     />
   );
@@ -133,14 +159,11 @@ GithubBranchSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   toolId: PropTypes.string,
-  disabled: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.array
-  ]),
+  disabled: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
   repositoryId: PropTypes.string,
-  multi: PropTypes.bool
+  multi: PropTypes.bool,
 };
 
 export default GithubBranchSelectInput;

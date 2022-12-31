@@ -24,7 +24,7 @@ function TextHighlighter(
     if (firstIndex === -1) {
       return text;
     }
-
+    
     const matchTextLength = textToHighlight.length;
     let currentIndex = firstIndex;
     const instances = [];

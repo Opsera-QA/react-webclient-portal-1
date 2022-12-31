@@ -15,6 +15,7 @@ import {hierarchyFiltersMetadata} from "components/insights/dashboards/hierarchy
 import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata.js";
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
 import OrganizationMultiSelectInput from "components/common/list_of_values_input/settings/organizations/OrganizationMultiSelectInput";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFunction, type}) {
   const toastContext = useContext(DialogToastContext);
@@ -38,6 +39,10 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
     new Model({ ...dashboardFiltersMetadata.newObjectFields }, dashboardFiltersMetadata, false)
   );
   const featureFlaggedOrgs = ["org-128"];
+  const {
+    userData,
+  } = useComponentStateReference();
+
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -127,42 +132,42 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
         setDataObject={setDashboardFiltersDto}
         fieldName={"tags"}
       />
-     <MultiSelectInputBase
+     {featureFlaggedOrgs.includes(userData?.ldap?.organization) && <MultiSelectInputBase
         dataObject={hierarchyFiltersDto}
         setDataObject={setHierarchyFiltersDto}
         fieldName={"filter1"}
         selectOptions={filter1Options}
-      />
-      <MultiSelectInputBase
+      />}
+      {featureFlaggedOrgs.includes(userData?.ldap?.organization) && <MultiSelectInputBase
         dataObject={hierarchyFiltersDto}
         setDataObject={setHierarchyFiltersDto}
         fieldName={"filter2"}
         selectOptions={filter2Options}
-      />
-      <MultiSelectInputBase
+      />}
+      {featureFlaggedOrgs.includes(userData?.ldap?.organization) && <MultiSelectInputBase
         dataObject={hierarchyFiltersDto}
         setDataObject={setHierarchyFiltersDto}
         fieldName={"filter3"}
         selectOptions={filter3Options}
-      />
-      <MultiSelectInputBase
+      />}
+      {featureFlaggedOrgs.includes(userData?.ldap?.organization) && <MultiSelectInputBase
         dataObject={hierarchyFiltersDto}
         setDataObject={setHierarchyFiltersDto}
         fieldName={"filter4"}
         selectOptions={filter4Options}
-      />
-      <MultiSelectInputBase
+      />}
+      {featureFlaggedOrgs.includes(userData?.ldap?.organization) && <MultiSelectInputBase
         dataObject={hierarchyFiltersDto}
         setDataObject={setHierarchyFiltersDto}
         fieldName={"filter5"}
         selectOptions={filter5Options}
-      />
-      <MultiSelectInputBase
+      />}
+     {featureFlaggedOrgs.includes(userData?.ldap?.organization) &&  <MultiSelectInputBase
         dataObject={hierarchyFiltersDto}
         setDataObject={setHierarchyFiltersDto}
         fieldName={"filter6"}
         selectOptions={filter6Options}
-      />
+      />}
       </div>
     );
   };
