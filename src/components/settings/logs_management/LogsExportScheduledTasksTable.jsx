@@ -1,6 +1,6 @@
 import React, { useContext, useMemo } from "react";
 import PropTypes from "prop-types";
-import { scheduledTaskMetadata } from "components/settings/logs_backup/LogsBackupScheduledTask.metadata";
+import { logsExportScheduledTaskMetadata } from "components/settings/logs_management/LogsExportScheduledTask.metadata";
 import {
   getTableActiveBooleanIconColumn,
   getTableTextColumn,
@@ -15,12 +15,12 @@ import {
   getSchedulerFrequencyLabel
 } from "components/common/fields/scheduler/frequencies/schedulerFrequency.constants";
 import modelHelpers from "components/common/model/modelHelpers";
-import CreateLogsBackupScheduleOverlay from "components/settings/logs_backup/CreateLogsBackupScheduleOverlay";
+import CreateLogsExportScheduleOverlay from "components/settings/logs_management/CreateLogsExportScheduleOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import UpdateLogsBackupScheduleOverlay from "components/settings/logs_backup/UpdateLogsBackupScheduleOverlay";
+import UpdateLogsExportScheduleOverlay from "components/settings/logs_management/UpdateLogsExportScheduleOverlay";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
-function LogsBackupScheduledTasksTable(
+function LogsExportScheduledTasksTable(
   {
     scheduledTasks,
     isLoading,
@@ -31,14 +31,14 @@ function LogsBackupScheduledTasksTable(
     s3ToolId
   }) {
   const toastContext = useContext(DialogToastContext);
-  const fields = scheduledTaskMetadata.fields;
+  const fields = logsExportScheduledTaskMetadata.fields;
 
   const onRowSelect = (grid, row) => {
-    const scheduledTaskModel = modelHelpers.parseObjectIntoModel(row, scheduledTaskMetadata);
+    const scheduledTaskModel = modelHelpers.parseObjectIntoModel(row, logsExportScheduledTaskMetadata);
     console.log("row: " + JSON.stringify(row));
 
     toastContext.showOverlayPanel(
-      <UpdateLogsBackupScheduleOverlay
+      <UpdateLogsExportScheduleOverlay
         loadData={loadDataFunction}
         isMounted={isMounted}
         scheduledTaskModel={scheduledTaskModel}
@@ -94,7 +94,7 @@ function LogsBackupScheduledTasksTable(
 
   const createScheduledTask = () => {
     toastContext.showOverlayPanel(
-      <CreateLogsBackupScheduleOverlay
+      <CreateLogsExportScheduleOverlay
         loadData={loadDataFunction}
         isMounted={isMounted}
         scheduledTasks={scheduledTasks}
@@ -129,7 +129,7 @@ function LogsBackupScheduledTasksTable(
       titleIcon={faCalendarAlt}
       type={"Scheduled Task"}
       title={"Scheduled Tasks"}
-      metadata={scheduledTaskMetadata}
+      metadata={logsExportScheduledTaskMetadata}
       addRecordFunction={isMongoDbId(s3ToolId) === true ? createScheduledTask : undefined}
       body={getScheduledTaskTable()}
       className={"mt-3 mx-3"}
@@ -137,7 +137,7 @@ function LogsBackupScheduledTasksTable(
   );
 }
 
-LogsBackupScheduledTasksTable.propTypes = {
+LogsExportScheduledTasksTable.propTypes = {
   scheduledTasks: PropTypes.array,
   isLoading: PropTypes.bool,
   setPaginationModel: PropTypes.func,
@@ -147,4 +147,4 @@ LogsBackupScheduledTasksTable.propTypes = {
   s3ToolId: PropTypes.string,
 };
 
-export default LogsBackupScheduledTasksTable;
+export default LogsExportScheduledTasksTable;

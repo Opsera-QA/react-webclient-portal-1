@@ -256,11 +256,11 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
             )}
             {octopusApplicationDataDto &&
             octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
-              <Col lg={12}>                
+              <Col lg={12}>
                 <RoleRestrictedAwsAccountToolSelectInput
                   fieldName={"awsToolConfigId"}
                   model={octopusApplicationDataDto}
-                  setModel={setOctopusApplicationDataDto} 
+                  setModel={setOctopusApplicationDataDto}
                   valueField={"_id"}
                   textField={"name"}
                   disabled={
@@ -347,7 +347,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
             </Col>
             {octopusApplicationDataDto &&
             octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
-              <Col lg={12}>                
+              <Col lg={12}>
                 <RoleRestrictedAwsAccountToolSelectInput
                   fieldName={"awsToolConfigId"}
                   model={octopusApplicationDataDto}
@@ -360,6 +360,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                       ? true
                       : false
                   }
+                  tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("cloudType") : ""}
                 />
               </Col>
             )}

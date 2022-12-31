@@ -41,9 +41,9 @@ function GitscraperLogSummaryReportPanel({ pipelineTaskData }) {
       let reportObject = pipelineTaskData?.api_response?.summaryReportList;
       let report = [];
       if (Array.isArray(reportObject) && reportObject?.length > 0) {
-        setIsNewReport(false);
         for (let scan in reportObject) {
           if (reportObject[scan]?.report && Array.isArray(reportObject[scan]?.report) && reportObject[scan]?.report?.length > 0) {
+            setIsNewReport(false);
             for (let alert in reportObject[scan]?.report) {
               report.push({...reportObject[scan]?.report[alert], repository: reportObject[scan]?.repository, scannedOn: reportObject[scan]?.scannedOn, branch: reportObject[scan]?.branch});
             }

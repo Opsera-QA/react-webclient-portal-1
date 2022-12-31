@@ -101,10 +101,10 @@ function SlackToolConfiguration({ toolData }) {
 
     return (
       <img alt="Add to Slack" className="pointer"
-        height="40"
-        width="139"
-        src="/img/btn-add-to-slack.svg"
-        onClick={() => addSlackCredentials()}
+         height="40"
+         width="139"
+         src="/img/btn-add-to-slack.svg"
+         onClick={() => addSlackCredentials()}
       />
     );
   };

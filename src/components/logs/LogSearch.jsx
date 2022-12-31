@@ -102,6 +102,7 @@ function LogSearch({ tools, sideBySide }) {
         endDate = 0;
       }
     }
+
     await getSearchResults(startDate, endDate, newTab);
     await getAllResultsForExport(
       startDate,

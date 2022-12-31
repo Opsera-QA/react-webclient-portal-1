@@ -9,6 +9,7 @@ const JenkinsSfdcJobMetadata = {
     {
       label: "Agent Label",
       id: "agentLabels",
+      formText: "Currently, the only supported Agent Label is Ubuntu Agent",
     },
   ],
   newObjectFields: {

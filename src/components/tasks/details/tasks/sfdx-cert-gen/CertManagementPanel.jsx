@@ -98,7 +98,7 @@ function CertManagementPanel({gitTasksData, setGitTasksData, loadData, handleClo
     return (
         <div className="text-muted p-3">
             <div className="h6">Opsera Managed Cert Creation</div>
-            <div className="mb-3">Opsera enables you to generate a certificate which can be used on custome connected app on salesforce org. You can upload this file when you create the connected app required by the JWT bearer flow. </div>
+            {/* <div className="mb-3">Opsera enables you to generate a certificate which can be used on custome connected app on salesforce org. You can upload this file when you create the connected app required by the JWT bearer flow. </div> */}
             <div className="pt-2">
                 <Table className="m-0">
                 <tbody>

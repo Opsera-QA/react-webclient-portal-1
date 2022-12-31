@@ -9,6 +9,7 @@ gitlabActions.getRepositoriesFromGitlabInstanceV2 = async (getAccessToken, cance
 
 gitlabActions.getRepositoriesFromGitlabInstanceV3 = async (getAccessToken, cancelTokenSource, searchTerm, toolId, pageSize = 100, currentPage) => {
   const apiUrl = `/tools/${toolId}/gitlab/v2/repositories`;
+
   const urlParams = {
     params: {
       searchTerm: searchTerm,
@@ -16,7 +17,8 @@ gitlabActions.getRepositoriesFromGitlabInstanceV3 = async (getAccessToken, cance
       currentPage: currentPage,
     }
   };
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams); 
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 gitlabActions.getBranchesFromGitlabInstanceV2 = async (getAccessToken, cancelTokenSource, toolId, repositoryId) => {

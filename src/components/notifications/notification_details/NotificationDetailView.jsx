@@ -117,7 +117,7 @@ function NotificationDetailView() {
       dataObject={notificationData}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      helpComponent={getHelpComponent()}
+      // helpComponent={getHelpComponent()}
       detailPanel={
         <NotificationDetailPanel
           notificationData={notificationData}

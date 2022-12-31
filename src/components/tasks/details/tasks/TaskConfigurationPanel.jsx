@@ -12,14 +12,14 @@ import SalesforceOrganizationSyncTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/sfdc-org-sync/SalesforceOrganizationSyncTaskConfigurationEditorPanel";
 import SalesforceBulkMigrationTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/sfdc-bulk-migration/SalesforceBulkMigrationTaskConfigurationEditorPanel";
-import SalesforceQuickDeployTaskConfigurationEditorPanel
-  from "components/tasks/details/tasks/sfdc-quick-deploy/SalesforceQuickDeployTaskConfigurationEditorPanel";
-import SalesforceToGitMergeSyncTaskConfigurationEditorPanel
-  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/SalesforceToGitMergeSyncTaskConfigurationEditorPanel";
 import GitToGitMergeSyncTaskConfigurationEditorPanel
   from "components/tasks/details/tasks/merge_sync_task/git_to_git/GitToGitMergeSyncTaskConfigurationEditorPanel";
-import GitScraperConfigurationPanel from "./gitscraper/GitScraperConfigurationPanel";
+import SalesforceToGitMergeSyncTaskConfigurationEditorPanel
+  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/SalesforceToGitMergeSyncTaskConfigurationEditorPanel";
+import SalesforceQuickDeployTaskConfigurationEditorPanel
+  from "components/tasks/details/tasks/sfdc-quick-deploy/SalesforceQuickDeployTaskConfigurationEditorPanel";
 import SnaplogicTaskConfigurationEditorPanel from "./snaplogic/SnaplogicTaskConfigurationEditorPanel";
+import GitScraperConfigurationPanel from "./gitscraper/GitScraperConfigurationPanel";
 
 function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationModel, setTaskConfigurationModel, taskType }) {
   const getConfigurationPanel = () => {
@@ -56,14 +56,6 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
             gitTasksConfigurationData={taskConfigurationModel}
           />
         );
-      case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
-        return (
-            <SalesforceQuickDeployTaskConfigurationEditorPanel
-                taskModel={taskModel}
-                setTaskConfigurationModel={setTaskConfigurationModel}
-                taskConfigurationModel={taskConfigurationModel}
-            />
-        );
       case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
         return (
           <SalesforceToGitMergeSyncTaskConfigurationEditorPanel
@@ -71,6 +63,14 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
             setTaskConfigurationModel={setTaskConfigurationModel}
             taskModel={taskModel}
           />
+        );
+      case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
+        return (
+            <SalesforceQuickDeployTaskConfigurationEditorPanel
+                taskModel={taskModel}
+                setTaskConfigurationModel={setTaskConfigurationModel}
+                taskConfigurationModel={taskConfigurationModel}
+            />
         );
       case TASK_TYPES.SYNC_GIT_BRANCHES:
         return (
@@ -120,20 +120,20 @@ function TaskConfigurationPanel({ taskModel, setTaskModel, taskConfigurationMode
             gitTasksDataDto={taskModel}
             />
         );
-      case TASK_TYPES.GITSCRAPER:
-        return (
-          <GitScraperConfigurationPanel
-            gitTasksConfigurationData={taskConfigurationModel}
-            setGitTasksConfigurationData={setTaskConfigurationModel}
-            gitTasksDataDto={taskModel}
-          />
-        );
       case TASK_TYPES.SNAPLOGIC_TASK:
         return (
           <SnaplogicTaskConfigurationEditorPanel
             taskConfigurationModel={taskConfigurationModel}
             setTaskConfigurationModel={setTaskConfigurationModel}
             taskModel={taskModel}
+          />
+        );
+      case TASK_TYPES.GITSCRAPER:
+        return (
+          <GitScraperConfigurationPanel
+            gitTasksConfigurationData={taskConfigurationModel}
+            setGitTasksConfigurationData={setTaskConfigurationModel}
+            gitTasksDataDto={taskModel}
           />
         );
       default:

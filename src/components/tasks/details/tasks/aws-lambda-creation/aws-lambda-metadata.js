@@ -1,3 +1,4 @@
+
 const awsLambdaFunctionTaskConfigurationMetadata = {
   type: "AWS Lambda Function Configuration",
   fields: [

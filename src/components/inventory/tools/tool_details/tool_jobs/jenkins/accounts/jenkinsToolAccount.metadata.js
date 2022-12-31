@@ -30,24 +30,23 @@ export const jenkinsToolAccountMetadata = {
       id: "credentialsToolId",
     },
     {
-      label: "Repository Id",
-      id: "repositoryId"
-    },
-    {
       label: "Credential Name",
       id: "gitCredential"
     },
+    {
+      label: "Repository Id",
+      id: "repositoryId"
+    }
   ],
   newObjectFields: {
     credentialsId: "",
-    credentialsToolId: "",
-    repositoryId: "",
     credentialsDescription: "",
     toolId: "",
     gitUserName: "",
     service: "",
-    credentailsToolId: "",
+    credentialsToolId: "",
     gitCredential: "",
+    repositoryId: ""
   },
 };
 

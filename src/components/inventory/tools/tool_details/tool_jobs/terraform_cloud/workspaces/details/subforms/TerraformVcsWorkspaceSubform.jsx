@@ -19,7 +19,7 @@ const TerraformVcsWorkspaceSubform = ({terraformCloudWorkspacesModel, setTerrafo
             setDataObject={setTerraformCloudWorkspacesModel}
             toolId={toolId}
           />
-          {getRepositoryTextInput()}
+          {getRepositoryTextInput()}      
           <TextInputBase
             dataObject={terraformCloudWorkspacesModel}
             setDataObject={setTerraformCloudWorkspacesModel}

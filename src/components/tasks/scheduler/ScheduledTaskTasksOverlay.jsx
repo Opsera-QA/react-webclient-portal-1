@@ -80,7 +80,7 @@ function ScheduledTaskTasksOverlay(
 
     if (loadDataFunction) {
       loadDataFunction();
-      
+
       setTimeout(async () => {
         loadDataFunction();
       }, 5000);

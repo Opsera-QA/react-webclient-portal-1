@@ -42,7 +42,7 @@ const LiquibaseMetadata = {
   ],
   newObjectFields:
   {
-    buildType: "",
+    buildType: "",    
     url: "",
     port: "",
     accountUsername: "",

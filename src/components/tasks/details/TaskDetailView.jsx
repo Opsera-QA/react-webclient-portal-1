@@ -75,24 +75,24 @@ function TaskDetailView() {
     }
   }, [status, runCount, updatedAt]);
 
-  useEffect(() => {
-    if (status === "paused") {
-      toastContext.showSystemWarningToast(pausedMessage, 20);
-      setIsTaskRunning(false);
-    } else if (isTaskRunning === true && status === "stopped") {
-      toastContext.showSystemInformationToast(stoppedMessage, 20);
-      setIsTaskRunning(false);
-    } else if (isTaskRunning === true && status === "failed") {
-      toastContext.showSystemErrorToast(failedMessage, undefined, 20);
-      setIsTaskRunning(false);
-    } else if (isTaskRunning === true && status === "success") {
-      toastContext.showSystemSuccessToast(successMessage, 20);
-      setIsTaskRunning(false);
-    } else if (isTaskRunning !== true && status === "running") {
-      toastContext.showSystemInformationToast(runningMessage, 20);
-      setIsTaskRunning(true);
-    }
-  }, [status]);
+  // useEffect(() => {
+  //   if (status === "paused") {
+  //     toastContext.showSystemWarningToast(pausedMessage, 20);
+  //     setIsTaskRunning(false);
+  //   } else if (isTaskRunning === true && status === "stopped") {
+  //     toastContext.showSystemInformationToast(stoppedMessage, 20);
+  //     setIsTaskRunning(false);
+  //   } else if (isTaskRunning === true && status === "failed") {
+  //     toastContext.showSystemErrorToast(failedMessage, undefined, 20);
+  //     setIsTaskRunning(false);
+  //   } else if (isTaskRunning === true && status === "success") {
+  //     toastContext.showSystemSuccessToast(successMessage, 20);
+  //     setIsTaskRunning(false);
+  //   } else if (isTaskRunning !== true && status === "running") {
+  //     toastContext.showSystemInformationToast(runningMessage, 20);
+  //     setIsTaskRunning(true);
+  //   }
+  // }, [status]);
 
   const getActionBar = () => {
     return (

@@ -52,7 +52,7 @@ const automationPercentageMetadata = {
       isRequired: true
     },
     {
-      label: "No of Regression Test Cases Automated ",
+      label: "No of Regression Test Cases Automated",
       id: "total_automated",
       maxLength: 5,
       isRequired: true

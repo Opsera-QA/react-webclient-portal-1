@@ -14,7 +14,7 @@ import {usersMetadata} from "components/settings/users/users.metadata";
 function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
   const { generateJwtServiceTokenWithValue, getUserRecord } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [userModel, setUserModel] = useState(undefined);
+  const [userData, setUserData] = useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [invalidHost, setInvalidHost] = useState(false);
   const [domain, setDomain] = useState(undefined);
@@ -62,7 +62,7 @@ function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
       newUserModel.setData("localAuth", accountResponse?.data?.localAuth === "TRUE");
     }
 
-    setUserModel({...newUserModel});
+    setUserData({...newUserModel});
   };
 
   const handleClose = () => {
@@ -75,7 +75,7 @@ function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
   };
 
   const getBody = () => {
-    if (userModel == null) {
+    if (userData == null) {
       return (<LoadingDialog size={"sm"} message={"Loading User Creation Form"} />);
     }
 
@@ -83,7 +83,7 @@ function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
       <UserEditorPanel
         orgDomain={domain}
         organization={organization}
-        userData={userModel}
+        userData={userData}
         handleClose={handleClose}
       />
     );

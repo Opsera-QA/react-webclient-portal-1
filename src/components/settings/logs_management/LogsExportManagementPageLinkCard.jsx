@@ -21,7 +21,7 @@ export default function LogsExportManagementPageLinkCard() {
 
   return (
     <BreadcrumbPageLinkCard
-      breadcrumbDestination={"logsBackupManagement"}
+      breadcrumbDestination={"logsExportManagement"}
     />
   );
 }

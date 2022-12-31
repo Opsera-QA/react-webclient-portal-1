@@ -1,4 +1,4 @@
-export const scheduledTaskMetadata = {
+export const logsExportScheduledTaskMetadata = {
   idProperty: "_id",
   type: "Scheduled Task",
   fields: [

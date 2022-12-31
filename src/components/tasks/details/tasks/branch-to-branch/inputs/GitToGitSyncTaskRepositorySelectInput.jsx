@@ -24,7 +24,6 @@ function GitToGitSyncTaskRepositorySelectInput({model, setModel, disabled}) {
     newDataObject.setData("repository", "");
     newDataObject.setData("projectId", "");
     newDataObject.setData("repoId", "");
-    newDataObject.setData("projectId", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("branch", "");

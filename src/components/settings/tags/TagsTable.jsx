@@ -17,7 +17,7 @@ import InlineTagTypeFilter from "components/common/filters/tags/tag_type/InlineT
 import {DialogToastContext} from "contexts/DialogToastContext";
 import TagTypeFilter from "components/common/filters/tags/tag_type/TagTypeFilter";
 
-function TagsTable({ tagListModel, loadData, isLoading, tagFilterDto, setTagFilterDto, isMounted }) {
+function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, isMounted }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   let fields = tagMetadata.fields;
@@ -64,7 +64,7 @@ function TagsTable({ tagListModel, loadData, isLoading, tagFilterDto, setTagFilt
     return (
       <CustomTable
         onRowSelect={onRowSelect}
-        data={tagListModel?.getDataArray()}
+        data={data}
         rowStyling={rowStyling}
         columns={columns}
         isLoading={isLoading}
@@ -95,7 +95,7 @@ function TagsTable({ tagListModel, loadData, isLoading, tagFilterDto, setTagFilt
 }
 
 TagsTable.propTypes = {
-  tagListModel: PropTypes.object,
+  data: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   tagFilterDto: PropTypes.object,

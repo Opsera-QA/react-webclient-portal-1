@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 import SpaceNameSelectInput from "../input/SpaceNameSelectInput";
@@ -12,7 +12,6 @@ import RoleRestrictedNexusToolSelectInput
   from "components/common/list_of_values_input/tools/nexus/RoleRestrictedNexusToolSelectInput";
 
 const OctopusFeedEditorForm = ({ dataObject, setDataObject, appID }) => {
-
   return (
     <Row>
       <Col lg={12}>
@@ -116,7 +115,7 @@ const OctopusFeedEditorForm = ({ dataObject, setDataObject, appID }) => {
             />
           </Col>
         </>
-      )}
+      )}            
     </Row>
   );
 };

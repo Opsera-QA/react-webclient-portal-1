@@ -75,17 +75,28 @@ export default function SiteRoleManagement() {
   };
 
   const getBody = () => {
-    if (isLoading === true) {
-      return (
-        <CenterLoadingIndicator type={"Site Roles"} />
-      );
-    }
-
-    return  (
-      <SiteRoleManagementPageLinkCards
+    return (
+      <SiteRolesTable
+        className={"mx-2"}
+        isMounted={isMounted}
+        isLoading={isLoading}
         siteRoles={siteRoles}
+        loadData={loadData}
+        orgDomain={orgDomain}
       />
     );
+
+    // if (isLoading === true) {
+    //   return (
+    //     <CenterLoadingIndicator type={"Site Roles"} />
+    //   );
+    // }
+    //
+    // return  (
+    //   <SiteRoleManagementPageLinkCards
+    //     siteRoles={siteRoles}
+    //   />
+    // );
   };
 
   if (isSaasUser === true) {

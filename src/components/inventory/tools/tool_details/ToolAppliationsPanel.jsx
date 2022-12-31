@@ -1,8 +1,8 @@
 import React from "react";
 import ArgoToolApplicationsPanel from "components/inventory/tools/tool_details/tool_jobs/argo/applications/ArgoToolApplicationsPanel";
 import OctopusToolApplicationsPanel from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/OctopusToolApplicationsPanel";
-import PropTypes from "prop-types";
 import AzureApplications from "./tool_jobs/azureV2/applications/AzureApplications";
+import PropTypes from "prop-types";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 function ToolApplicationsPanel({ toolData, setToolData, loadData, isLoading }) {
@@ -43,7 +43,7 @@ function ToolApplicationsPanel({ toolData, setToolData, loadData, isLoading }) {
       return null;
     }
 
-    return getPanel(toolData.getData("tool_identifier")?.toLowerCase(), loadData);
+    return getPanel(toolData?.getData("tool_identifier")?.toLowerCase(), loadData);
   };
 
   return (
@@ -65,8 +65,8 @@ function ToolApplicationsPanel({ toolData, setToolData, loadData, isLoading }) {
 
 ToolApplicationsPanel.propTypes = {
   toolData: PropTypes.object,
-  setToolData: PropTypes.func,
   loadData: PropTypes.func,
+  setToolData: PropTypes.func,
   isLoading: PropTypes.bool,
 };
 

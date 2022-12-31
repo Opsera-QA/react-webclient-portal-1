@@ -24,8 +24,7 @@ function ToolServiceTypeMappingPanel({ toolData, loadData, isLoading }) {
             toolData={toolData}
             loadData={loadData}
           />
-        );      
-  
+        );
       default:
         return (
           <div className="text-center p-5 text-muted mt-5">
@@ -39,14 +38,15 @@ function ToolServiceTypeMappingPanel({ toolData, loadData, isLoading }) {
     if (toolData == null) {
       return null;
     }
-    return getPanel(toolData.getData("tool_identifier")?.toLowerCase(), loadData);
+
+    return getPanel(toolData?.getData("tool_identifier")?.toLowerCase(), loadData);
   };
 
   return (
     <>
       <div className="text-muted p-3">
         <div className="h6">Manage Rule Validation</div>
-        {/* <div className="mb-3">Use this feature to add Rule validations on individual Informatica type.</div> */}
+        {/*<div className="mb-3">Use this feature to add Rule validations on individual Informatica type.</div>*/}
         {getBody()}
       </div>
     </>

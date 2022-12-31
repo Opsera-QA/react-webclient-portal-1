@@ -26,6 +26,7 @@ function TasksEcsActionButtons(
   } = useComponentStateReference();
 
   useEffect(() => {
+    console.log("got new status: " + JSON.stringify(status));
     if (status !== "stopped") {
       setIsStarting(false);
     }

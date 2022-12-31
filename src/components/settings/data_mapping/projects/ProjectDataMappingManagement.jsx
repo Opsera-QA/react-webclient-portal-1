@@ -6,7 +6,6 @@ import ProjectDataMappingsTable from "components/settings/data_mapping/projects/
 import {projectDataMappingActions} from "components/settings/data_mapping/projects/projectDataMapping.actions";
 import Model from "../../../../core/data_model/model";
 import projectMappingMetadata from "./projectDataMapping.metadata.js";
-import tagFilterMetadata from "../../tags/tag-filter-metadata";
 
 function ProjectDataMappingManagement() {
   const toastContext = useContext(DialogToastContext);
@@ -16,10 +15,7 @@ function ProjectDataMappingManagement() {
   const [projectDataMappings, setProjectDataMappings] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [toolListModel, setToolListModel] = useState(undefined);
-  const authContext = useContext(AuthContext);
   const [toolFilterDto, setToolFilterDto] = useState(new Model({...projectMappingMetadata.newObjectFields}, projectMappingMetadata, false));
-  const [projectDataMappingModel, setProjectDataMappingModel] = useState(undefined);
 
 
   useEffect(() => {
@@ -78,17 +74,17 @@ function ProjectDataMappingManagement() {
 
 
   return (
-    <div className={"mt-2"}>
-      <ProjectDataMappingsTable
-        loadData={loadData}
-        isLoading={isLoading}
-        projectDataMappings={projectDataMappings}
-        isMounted={isMounted}
-        projectDataMappingMetadata={projectDataMappingMetadata}
-        toolFilterDto={toolFilterDto}
-        setToolFilterDto={setToolFilterDto}
-      />
-    </div>
+      <div className={"mt-2"}>
+        <ProjectDataMappingsTable
+            loadData={loadData}
+            isLoading={isLoading}
+            projectDataMappings={projectDataMappings}
+            isMounted={isMounted}
+            projectDataMappingMetadata={projectDataMappingMetadata}
+            toolFilterDto={toolFilterDto}
+            setToolFilterDto={setToolFilterDto}
+        />
+      </div>
   );
 }
 

@@ -147,18 +147,19 @@ pipelineActions.runPipelineV2 = async (getAccessToken, cancelTokenSource, pipeli
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-pipelineActions.triggerPipelineNewStartV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
-  const apiUrl = `/pipelines/${pipelineId}/new-start/`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-pipelineActions.stop = async (pipelineId, getAccessToken) => {
+//new-start which first resets the pipeline and then triggers a fresh run all in a single API call
+pipelineActions.newStart = async (pipelineId, getAccessToken) => {
   const accessToken = await getAccessToken();
-  const apiUrl = `/pipelines/${pipelineId}/stop/`;
+  const apiUrl = `/pipelines/${pipelineId}/new-start/`;
   const response = await axiosApiService(accessToken).get(apiUrl)
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
   return response;
+};
+
+pipelineActions.triggerPipelineNewStartV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
+  const apiUrl = `/pipelines/${pipelineId}/new-start/`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 pipelineActions.resumePipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
@@ -270,7 +271,7 @@ pipelineActions.saveToolRegistryRecordToVault = async (postBody, getAccessToken)
   return response;
 };
 
-pipelineActions.saveToolRegistryRecordToVaultV2 = async (getAccessToken, cancelTokenSource, postBody) => {
+pipelineActions.saveToolRegistryRecordToVaultV2 = async (postBody, getAccessToken, cancelTokenSource) => {
   const apiUrl = "/vault/tool/";   
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };

@@ -7,11 +7,11 @@ import taskScheduleMetadata from "components/workflow/pipelines/scheduler/schedu
 import ScheduleCalendarInput from "components/workflow/pipelines/scheduler/schedule/ScheduleCalendarInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import ScheduleTimeInput from "components/workflow/pipelines/scheduler/schedule/ScheduleTimeInput";
-import LogsBackupScheduleFrequencyRadioInput
-  from "components/settings/logs_backup/inputs/LogsBackupScheduleFrequencyRadioInput";
+import LogsExportManagementScheduleFrequencyRadioInput
+  from "components/settings/logs_management/inputs/LogsExportManagementScheduleFrequencyRadioInput";
 
 // TODO: Jim, when this is all done and working, I will probably make a component out of the schedule component and hook it up here.
-function LogsBackupScheduleEditorPanel(
+function LogsExportScheduleEditorPanel(
   {
     scheduledTaskData,
     scheduleModel,
@@ -82,7 +82,7 @@ function LogsBackupScheduleEditorPanel(
         />
       </Col>
       <Col lg={4}>
-        <LogsBackupScheduleFrequencyRadioInput
+        <LogsExportManagementScheduleFrequencyRadioInput
           setModel={updateModel}
           setSchedulerTaskModel={setSchedulerTaskModel}
           scheduledTaskData={scheduledTaskData}
@@ -93,11 +93,11 @@ function LogsBackupScheduleEditorPanel(
   );
 }
 
-LogsBackupScheduleEditorPanel.propTypes = {
+LogsExportScheduleEditorPanel.propTypes = {
   scheduledTaskData: PropTypes.object,
   scheduleModel: PropTypes.object,
   setScheduleModel: PropTypes.func,
   setSchedulerTaskModel: PropTypes.func,
 };
 
-export default LogsBackupScheduleEditorPanel;
+export default LogsExportScheduleEditorPanel;

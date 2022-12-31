@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -16,29 +16,32 @@ import sfdcGitBranchTaskConfigurationMetadata from "components/tasks/details/tas
 import ec2ServiceCreationTaskConfigurationMetadata from "components/tasks/details/tasks/ecs-service-creation/ecs-service-creation-git-task-configuration";
 import SalesforceOrganizationSyncTaskGitBranchTextInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchTextInput";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import { TASK_TYPES } from "components/tasks/task.types";
-import SfdcOrgSyncPrerunHelpDocumentation from "components/common/help/documentation/tasks/SfdcOrgSyncPrerunHelpDocumentation";
-import SfdcBulkMigrationPrerunHelpDocumentation from "../../common/help/documentation/tasks/SfdcBulkMigrationPrerunHelpDocumentation";
-import azureAksClusterTaskConfigurationMetadata from "components/tasks/details/tasks/azure-cluster-creation/azure-cluster-metadata";
-import SalesforceOrganizationSyncTaskGitBranchSelectInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
-import { faQuestionCircle } from "@fortawesome/pro-light-svg-icons";
-import { salesforceBulkMigrationTaskConfigurationMetadata } from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
+import {TASK_TYPES} from "components/tasks/task.types";
+import SfdcOrgSyncPrerunHelpDocumentation
+  from "components/common/help/documentation/tasks/SfdcOrgSyncPrerunHelpDocumentation";
+import SfdcBulkMigrationPrerunHelpDocumentation
+  from "../../common/help/documentation/tasks/SfdcBulkMigrationPrerunHelpDocumentation";
+import azureAksClusterTaskConfigurationMetadata
+  from "components/tasks/details/tasks/azure-cluster-creation/azure-cluster-metadata";
+import SalesforceOrganizationSyncTaskGitBranchSelectInput
+  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
+import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
+import {salesforceBulkMigrationTaskConfigurationMetadata} from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
+import {
+  mergeSyncTaskConfigurationMetadata
+} from "components/tasks/details/tasks/merge_sync_task/mergeSyncTaskConfiguration.metadata";
+import salesforceQuickDeployTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-quick-deploy/salesforceQuickDeployTaskConfigurationMetadata";
 import SalesforceQuickDeployTaskSalesforceToolSelectInput from "./tasks/sfdc-quick-deploy/inputs/SalesforceQuickDeployTaskSalesforceToolSelectInput";
 import TextInputBase from "../../common/inputs/text/TextInputBase";
 import TestDeployIdButton from "../../common/buttons/task/quick_deploy/TestDeployIdButton";
 import SalesforceLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/salesforce/summary/SalesforceLogSummaryReportPanel";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import {
-  mergeSyncTaskConfigurationMetadata
-} from "components/tasks/details/tasks/merge_sync_task/mergeSyncTaskConfiguration.metadata";
-import gitscraperTaskConfigurationMetadata from "./tasks/gitscraper/gitscraper-metadata";
 import snaplogicTaskConfigurationMetadata from "./tasks/snaplogic/snaplogicTaskConfigurationMetadata";
 import SnaplogicProjectSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/inputs/SnaplogicProjectSelectInput";
 import SnaplogicScmBranchSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/inputs/SnaplogicScmBranchSelectInput";
-import useComponentStateReference from "hooks/useComponentStateReference";
+import gitscraperTaskConfigurationMetadata from "./tasks/gitscraper/gitscraper-metadata";
 import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
-import salesforceQuickDeployTaskConfigurationMetadata
-  from "components/tasks/details/tasks/sfdc-quick-deploy/salesforceQuickDeployTaskConfigurationMetadata";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 
 function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
@@ -131,11 +134,11 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
           azureAksClusterTaskConfigurationMetadata,
         );
         break;
-      case TASK_TYPES.GITSCRAPER:
-        configurationData = modelHelpers.parseObjectIntoModel(configuration, gitscraperTaskConfigurationMetadata);
-        break;
       case TASK_TYPES.SNAPLOGIC_TASK:
         configurationData = modelHelpers.parseObjectIntoModel(configuration, snaplogicTaskConfigurationMetadata);
+        break;
+      case TASK_TYPES.GITSCRAPER:
+        configurationData = modelHelpers.parseObjectIntoModel(configuration, gitscraperTaskConfigurationMetadata);
         break;
       default:
         setTaskConfigurationModel(null);

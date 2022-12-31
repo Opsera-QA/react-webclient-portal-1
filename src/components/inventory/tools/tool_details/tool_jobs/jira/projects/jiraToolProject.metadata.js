@@ -3,7 +3,7 @@ export const jiraToolProjectMetadata = {
   type: "Jira Project Configuration",
   activeField: "active",
   detailView: function (record) {
-    return `/inventory/tools/details/${record.getData("_id")}`;
+    return `/inventory/tools/details/${record.getData("_id")}`; 
   },
   detailViewTitle: function (record) {
     return `${record.getOriginalValue("name")} Jira Project Details]`;

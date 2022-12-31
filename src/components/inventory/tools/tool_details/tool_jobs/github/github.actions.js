@@ -36,7 +36,13 @@ githubActions.getBranchesFromGithubInstanceV2 = async (getAccessToken, cancelTok
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
 };
 
-githubActions.getBranchesFromGithubInstanceV3 = async (getAccessToken, cancelTokenSource, toolId, repositoryId, searchTerm) => {
+githubActions.getBranchesFromGithubInstanceV3 = async (
+  getAccessToken,
+  cancelTokenSource,
+  toolId,
+  repositoryId,
+  searchTerm,
+) => {
   const apiUrl = `/tools/${toolId}/github/v2/branches`;
   const queryParams = {
     params: {
@@ -44,7 +50,13 @@ githubActions.getBranchesFromGithubInstanceV3 = async (getAccessToken, cancelTok
       searchTerm: searchTerm ? searchTerm : "",
     },
   };
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
+
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    queryParams,
+  );
 };
 
 githubActions.getReviewers = async (getAccessToken, cancelTokenSource, toolId, repositoryId) => {
@@ -57,3 +69,4 @@ githubActions.getReviewers = async (getAccessToken, cancelTokenSource, toolId, r
 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
 };
+

@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import teamsNotificationMetadata from "components/notifications/notification_details/notification_method_forms/teams/teamsNotificationMetadata";
-import TeamsStepNotificationTeamsToolSelectInput from "components/workflow/plan/step/notifications/teams/TeamsStepNotificationTeamsToolSelectInput";
 import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
+import TeamsStepNotificationTeamsToolSelectInput
+  from "components/workflow/plan/step/notifications/teams/TeamsStepNotificationTeamsToolSelectInput";
 
 function TeamsNotificationMethodConfigurationPanel({ notificationDataDto, notificationMethodDataDto, setNotificationMethodDataDto }) {
   useEffect(() => {loadData();}, []);

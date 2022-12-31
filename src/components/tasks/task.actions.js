@@ -79,14 +79,6 @@ taskActions.deleteGitTaskV2 = async (getAccessToken, cancelTokenSource, dataObje
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-taskActions.stopTask = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
-  const postBody = {
-    ...gitTasksDataDto.getPersistData()
-  };
-  const apiUrl = `/tools/git/${gitTasksDataDto.getData("_id")}/stop`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
 taskActions.deleteTask = async (getAccessToken, cancelTokenSource, taskId) => {
   const apiUrl = `/tasks/${taskId}`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
@@ -175,6 +167,16 @@ taskActions.createEcsClusterWithTaskIdV2 = async (getAccessToken, cancelTokenSou
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+taskActions.createECSServoce = async (postBody, getAccessToken) => {
+  const apiUrl = `/tools/aws/v2/create/ecs/service`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+taskActions.checkECSStatus = async (postBody, getAccessToken) => {
+  const apiUrl = `/tools/aws/v2/ecs/status`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
 taskActions.generateCert = async (getAccessToken, id) => {
   const postBody= {"taskId" : id};
   const apiUrl = `/tasks/generatecert`;
@@ -199,21 +201,6 @@ taskActions.syncCertToJenkins = async (getAccessToken, gitTasksDataDto, cancelTo
   return await baseActions.apiPostCall(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-taskActions.createECSCluster = async (postBody, getAccessToken) => {
-  const apiUrl = `/tools/aws/v2/create/ecs`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
-taskActions.createECSServoce = async (postBody, getAccessToken) => {
-  const apiUrl = `/tools/aws/v2/create/ecs/service`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
-taskActions.checkECSStatus = async (postBody, getAccessToken) => {
-  const apiUrl = `/tools/aws/v2/ecs/status`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
 taskActions.logClusterCancellation = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
   const apiUrl = `/tools/aws/v2/cancel/ecs`;
   let postBody = {
@@ -233,37 +220,17 @@ taskActions.createAksClusterWithTaskIdV2 = async (getAccessToken, cancelTokenSou
 
 taskActions.logAksClusterCancellation = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
   const apiUrl = `/tools/azure/cancel/aks`;
-
   let postBody = {
     taskId: gitTasksDataDto.getData("_id"),
   };
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-taskActions.startGitscraperScan = async (getAccessToken, cancelTokenSource, taskId) => {
-  const apiUrl = `/tasks/${taskId}/run`;
-
-  let postBody = {
-    taskId: taskId
+taskActions.stopTask = async (getAccessToken, cancelTokenSource, taskModel) => {
+  const postBody = {
+    ...taskModel.getPersistData()
   };
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-taskActions.cancelGitscraperScan = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
-  const apiUrl = `/tasks/${gitTasksDataDto.getData("_id")}/stop`;
-
-  let postBody = {
-    taskId: gitTasksDataDto.getData("_id"),
-  };
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-
-taskActions.logClusterCancellation = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
-  const apiUrl = `/tools/aws/v2/cancel/ecs`;
-  let postBody = {
-    taskId: gitTasksDataDto.getData("_id"),
-  };
+  const apiUrl = `/tools/git/${taskModel.getData("_id")}/stop`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
@@ -298,6 +265,24 @@ taskActions.getTaskAuditLogsByTaskId = async (
     cancelTokenSource,
     apiUrl,
   );
+};
+
+taskActions.startGitscraperScan = async (getAccessToken, cancelTokenSource, taskId) => {
+  const apiUrl = `/tasks/${taskId}/run`;
+
+  let postBody = {
+    taskId: taskId
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+taskActions.cancelGitscraperScan = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
+  const apiUrl = `/tasks/${gitTasksDataDto.getData("_id")}/stop`;
+
+  let postBody = {
+    taskId: gitTasksDataDto.getData("_id"),
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 taskActions.saveRecordToVault = async (getAccessToken, cancelTokenSource, key, value, taskId) => {

@@ -105,7 +105,7 @@ function TaskNotificationEditorPanel(
         slackNotificationModel.getPersistData(),
         // jiraNotificationModel.getPersistData(),
         teamsNotificationModel.getPersistData(),
-        // serviceNowNotificationModel.getPersistData()
+        // serviceNowNotificationModel.getPersistData(),
         gChatNotificationModel.getPersistData()
       ];
       await taskActions.updateTaskNotificationConfiguration(

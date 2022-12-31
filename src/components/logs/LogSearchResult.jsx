@@ -13,6 +13,15 @@ function LogSearchResult({ searchResults, submittedSearchTerm, getPaginator }) {
   const [modalMessage, setModalMessage] = useState({});
 
   const handleClick = (param) => {
+    // ONLY FOR DEMO PURPOSES - REMOVE AFTER DEMO - START HERE
+    // if (param._source && param._source.data && param._source.data.tool_output) {
+    //   try {
+    //     param._source.data.tool_output = param._source.data.tool_output.join("\n");
+    //   } catch {
+    //     console.log("Ignoring Parser");
+    //   }
+    // }
+    // ONLY FOR DEMO PURPOSES - REMOVE AFTER DEMO - END HERE
     setModalMessage(param);
     setShowModal(true);
   };

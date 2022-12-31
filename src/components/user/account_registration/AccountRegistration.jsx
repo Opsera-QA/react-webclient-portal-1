@@ -49,7 +49,7 @@ function AccountRegistration() {
           setInvalidHost(true);
           toastContext.showSystemErrorBanner("Warning!  You are attempting to create an account on the wrong Opsera Portal tenant.  Please check with your account owner or contact Opsera to get the proper URL register accounts.");
         }
-
+      
         setCompanyName(accountResponse.data?.orgName);
         newAccountDto.setData("company", accountResponse.data?.orgName);
         newAccountDto.setData("ldapOrgAccount", accountResponse.data?.name);

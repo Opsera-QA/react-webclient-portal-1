@@ -56,16 +56,16 @@ const sfdcConnectionMetadata = {
     }
   ],
   newObjectFields:
-    {
-      authType: "basic",
-      toolURL: "https://login.salesforce.com",
-      accountUsername : "",
-      sfdc_client_id: "",
-      sfdc_client_secret: "",
-      sfdc_token: "",
-      sfdc_password: "",
-      buildType: "ant",
-    }
+  {
+    authType: "basic",
+    toolURL: "https://login.salesforce.com",
+    accountUsername: "",
+    sfdc_client_id: "",
+    sfdc_client_secret: "",
+    sfdc_token: "",
+    sfdc_password: "",
+    buildType: "ant",
+  }
 };
 
 export default sfdcConnectionMetadata;

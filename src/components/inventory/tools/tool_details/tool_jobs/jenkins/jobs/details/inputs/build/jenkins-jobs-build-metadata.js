@@ -17,11 +17,11 @@ const JenkinsBuildJobMetadata = {
     {
       label: "Agent Label",
       id: "agentLabels",
-      formText: "Currently, only .Net and Coverity Scan supports windows agent",
     },
     {
       label: "Command Line Arguments",
       id: "commandLineArgs",
+      formText: "Currently, only .Net and Coverity Scan supports windows agent",
     },
     {
       label: "Build Step",

@@ -5,7 +5,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import {faSync} from "@fortawesome/pro-light-svg-icons";
 
-function LogsBackupScheduleFrequencyRadioInput({ fieldName, model, setModel, scheduledTaskData, setSchedulerTaskModel, disabled }) {
+function LogsExportManagementScheduleFrequencyRadioInput({ fieldName, model, setModel, scheduledTaskData, setSchedulerTaskModel, disabled }) {
   const setDataFunction = (fieldName, value) => {
     model.setData(fieldName, value);
     if (value === "HOUR") { value = 1; }
@@ -79,7 +79,7 @@ function LogsBackupScheduleFrequencyRadioInput({ fieldName, model, setModel, sch
   );
 }
 
-LogsBackupScheduleFrequencyRadioInput.propTypes = {
+LogsExportManagementScheduleFrequencyRadioInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -88,8 +88,8 @@ LogsBackupScheduleFrequencyRadioInput.propTypes = {
   disabled: PropTypes.bool,
 };
 
-LogsBackupScheduleFrequencyRadioInput.defaultProps = {
+LogsExportManagementScheduleFrequencyRadioInput.defaultProps = {
   fieldName: "recurring",
 };
 
-export default LogsBackupScheduleFrequencyRadioInput;
+export default LogsExportManagementScheduleFrequencyRadioInput;

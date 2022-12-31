@@ -5,10 +5,10 @@ import axios from "axios";
 import { scheduledTaskActions } from "components/common/fields/scheduler/scheduledTask.actions";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import PropTypes from "prop-types";
-import LogsBackupScheduledTasksTable from "components/settings/logs_backup/LogsBackupScheduledTasksTable";
+import LogsExportScheduledTasksTable from "components/settings/logs_management/LogsExportScheduledTasksTable";
 import awsActions from "components/inventory/tools/tool_details/tool_jobs/aws/aws-actions";
 
-function LogsBackupManagementTableLoader({ s3ToolId }) {
+function LogsExportManagementTableLoader({ s3ToolId }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [scheduledTasks, setScheduledTasks] = useState([]);
@@ -65,7 +65,7 @@ function LogsBackupManagementTableLoader({ s3ToolId }) {
   };
 
   return (
-    <LogsBackupScheduledTasksTable
+    <LogsExportScheduledTasksTable
       isLoading={isLoading}
       scheduledTasks={scheduledTasks}
       loadDataFunction={loadData}
@@ -75,8 +75,8 @@ function LogsBackupManagementTableLoader({ s3ToolId }) {
   );
 }
 
-LogsBackupManagementTableLoader.propTypes = {
+LogsExportManagementTableLoader.propTypes = {
   s3ToolId: PropTypes.string,
 };
 
-export default LogsBackupManagementTableLoader;
+export default LogsExportManagementTableLoader;

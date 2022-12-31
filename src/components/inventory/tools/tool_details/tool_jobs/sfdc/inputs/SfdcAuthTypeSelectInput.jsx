@@ -10,13 +10,9 @@ const AUTH_TYPES = [
 function SfdcAuthTypeSelectInput({ fieldName, model, setModel, disabled }) {
 
   const setDataFunction = (fieldName, selectedOption) => {
-    let newModel = {...model};
-    newModel.setData(fieldName, selectedOption?.value);
-    newModel.setDefaultValue("sfdc_client_id");
-    newModel.setDefaultValue("sfdc_client_secret");
-    newModel.setDefaultValue("sfdc_token");
-    newModel.setDefaultValue("sfdc_password");
-    setModel({...newModel});
+    let newModel = { ...model };
+    newModel.setData(fieldName, selectedOption?.value);    
+    setModel({ ...newModel });
   };
 
   return (

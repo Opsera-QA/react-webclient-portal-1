@@ -21,7 +21,7 @@ const gitScraperReposMetadata = {
       id: "repoId",
     },
     {
-      label: "Repository",
+      label: "Git Project ID",
       id: "projectId",
     },
     {

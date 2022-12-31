@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import RoleRestrictedAwsAccountToolSelectInput
   from "components/common/list_of_values_input/tools/aws/tool/RoleRestrictedAwsAccountToolSelectInput";
 
-function LogsBackupManagementAwsAccountToolSelectInput(
+function LogsExportManagementAwsAccountToolSelectInput(
   {
     fieldName,
     model,
@@ -30,7 +30,7 @@ function LogsBackupManagementAwsAccountToolSelectInput(
   );
 }
 
-LogsBackupManagementAwsAccountToolSelectInput.propTypes = {
+LogsExportManagementAwsAccountToolSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -39,10 +39,10 @@ LogsBackupManagementAwsAccountToolSelectInput.propTypes = {
   valueField: PropTypes.string,
 };
 
-LogsBackupManagementAwsAccountToolSelectInput.defaultProps = {
+LogsExportManagementAwsAccountToolSelectInput.defaultProps = {
   valueField: "_id",
   textField: "name",
   fieldName: "s3ToolId",
 };
 
-export default LogsBackupManagementAwsAccountToolSelectInput;
+export default LogsExportManagementAwsAccountToolSelectInput;

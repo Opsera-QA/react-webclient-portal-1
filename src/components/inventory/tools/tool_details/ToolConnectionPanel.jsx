@@ -39,15 +39,15 @@ import FlywayDatabaseToolConnectionEditorPanel
 import GithubDeploykeysToolConfigurationPanel from "components/inventory/tools/tool_details/tool_jobs/github_deploykeys/GithubDeploykeysToolConfigurationPanel";
 import ApigeeToolConnectionEditorPanel
   from "components/inventory/tools/details/identifiers/apigee/ApigeeToolConnectionEditorPanel";
-import SnaplogicToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/snaplogic/SnaplogicToolConfiguration";
-import BlackduckToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/black_duck/BlackduckToolConfiguration";
+import SnaplogicToolConfiguration
+  from "components/inventory/tools/tool_details/tool_jobs/snaplogic/SnaplogicToolConfiguration";
 import SapCpqToolConfiguration from "./tool_jobs/sap/SapCpqToolConfiguration";
 import BoomiToolConfiguration from "./tool_jobs/boomi/BoomiToolConfiguration";
 import InformaticaIdqToolConfiguration from "./tool_jobs/informatica_idq/InformaticaIdqToolConfiguration";
 import LiquibaseToolConfiguration from "./tool_jobs/liquibase/LiquibaseToolConfiguration";
+import BlackduckToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/black_duck/BlackduckToolConfiguration";
 import GChatToolConfiguration from "./tool_jobs/gchat/GChatToolConfiguration";
 import FortifyToolConfiguration from "./tool_jobs/fortify/FortifyToolConfiguration";
-import ThycoticVaultToolConfiguration from "./tool_jobs/thycotic_vault/ThycoticVaultToolConfiguration";
 
 //TODO: Use constants, alphabetize
 export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
@@ -91,12 +91,11 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC,
   toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ,
   toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI,
-  toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ,
+  "informatica-idq",
   toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE,
   toolIdentifierConstants.TOOL_IDENTIFIERS.GCHAT,
   toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK,
   toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY,
-  toolIdentifierConstants.TOOL_IDENTIFIERS.THYCOTIC_VAULT,
 ];
 
 function ToolConnectionPanel({ toolData, setToolData }) {
@@ -178,32 +177,30 @@ function ToolConnectionPanel({ toolData, setToolData }) {
         return <InformaticaToolConfiguration toolData={toolData} />;
       case "terraform-cloud":
         return <TerraformCloudToolConfiguration toolData={toolData} />;
-      case "gcp_account":
-        return <GcpToolConfiguration toolData={toolData} />;
       case "buildkite":
         return <BuildkiteToolConfiguration toolData={toolData} />;
+      case "gcp_account":
+        return <GcpToolConfiguration toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB_DEPLOY_KEY:
         return <GithubDeploykeysToolConfigurationPanel toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE:
         return <ApigeeToolConnectionEditorPanel toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC:
         return <SnaplogicToolConfiguration toolData={toolData} />;
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK:
-        return <BlackduckToolConfiguration toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ:
         return <SapCpqToolConfiguration toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI:
         return <BoomiToolConfiguration toolData={toolData} />;
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ:
+      case "informatica-idq":
         return <InformaticaIdqToolConfiguration toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE:
         return <LiquibaseToolConfiguration toolData={toolData} />;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK:
+        return <BlackduckToolConfiguration toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GCHAT:
         return <GChatToolConfiguration toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
         return <FortifyToolConfiguration toolData={toolData} />;
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.THYCOTIC_VAULT:
-        return <ThycoticVaultToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Connection configuration is not currently available for this tool.</div>;
     }

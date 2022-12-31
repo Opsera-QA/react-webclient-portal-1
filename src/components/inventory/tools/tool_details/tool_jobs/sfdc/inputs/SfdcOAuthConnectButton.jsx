@@ -1,9 +1,9 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import sfdcActions from "../sfdc-actions";
 import axios from "axios";
-import {AuthContext} from "contexts/AuthContext";
-import {Col, Button} from "react-bootstrap";
+import { AuthContext } from "contexts/AuthContext";
+import { Col, Button } from "react-bootstrap";
 import { NODE_API_ORCHESTRATOR_SERVER_URL } from "config";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import LoadingIcon from "components/common/icons/LoadingIcon";
@@ -38,8 +38,8 @@ function SfdcOAuthConnectButton({ model, authType, toolId, visible }) {
     };
   }, []);
 
-  const loadData = async () => {    
-    try { 
+  const loadData = async () => {
+    try {
       const user = await getUserRecord();
       setUserId(user._id);
     } catch (error) {
@@ -50,7 +50,7 @@ function SfdcOAuthConnectButton({ model, authType, toolId, visible }) {
     }
   };
 
-  const connectToSfdcOauth = async () => {    
+  const connectToSfdcOauth = async () => {
     const toolUrl = model.getData("toolURL");
     const userName = model.getData("accountUsername");
     const redirectUri = `${NODE_API_ORCHESTRATOR_SERVER_URL}/auth/sfdc`;
@@ -60,7 +60,7 @@ function SfdcOAuthConnectButton({ model, authType, toolId, visible }) {
         getAccessToken,
         cancelTokenSource
       );
-  
+
       const url = `${toolUrl}/services/oauth2/authorize?client_id=${response?.data?.clientId}&redirect_uri=${redirectUri}&response_type=code&login_hint=${userName}&code_challenge=${response?.data?.challenge}&state=${userId}|${toolId}|${toolUrl}|${userName}|${redirectUri}|${response?.data?.token}&display=popup&prompt=login%20consent`;
       window.open(url);
     } catch (error) {
@@ -70,7 +70,7 @@ function SfdcOAuthConnectButton({ model, authType, toolId, visible }) {
       }
     } finally {
       setIsLoading(false);
-    }  
+    }
   };
 
   if (authType === "basic" || !visible) {

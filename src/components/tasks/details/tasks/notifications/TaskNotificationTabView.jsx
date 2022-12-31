@@ -17,7 +17,8 @@ import VanitySetTabAndViewContainer, {
 } from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import TaskNotificationVerticalTabContainer
   from "components/tasks/details/tasks/notifications/TaskNotificationVerticalTabContainer";
-import GChatStepNotificationEditorPanel from "components/workflow/plan/step/notifications/gchat/GChatStepNotificationEditorPanel";
+import GChatStepNotificationEditorPanel 
+  from "components/workflow/plan/step/notifications/gchat/GChatStepNotificationEditorPanel";
 
 const tabAndViewContainerHeight =`calc(${DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT} - 50px)`;
 

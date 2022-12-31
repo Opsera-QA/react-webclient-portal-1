@@ -58,7 +58,7 @@ function ProjectDataMappingEditorPanel(
   };
 
   const setJiraDataHandler = (fieldName, selectedOption) => {
-    const newProjectDataMappingModel = {...projectDataMappingModel};
+    const newProjectDataMappingModel = { ...projectDataMappingModel };
     newProjectDataMappingModel.setData('key', selectedOption?.name);
     newProjectDataMappingModel.setData('projectKey', selectedOption?.key);
     newProjectDataMappingModel.setDefaultValue("value");
@@ -94,20 +94,20 @@ function ProjectDataMappingEditorPanel(
     if (projectDataMappingModel?.getData("tool_identifier") === "bitbucket") {
       return (
         <>
-        <Col lg={12}>
-          <ProjectMappingWorkspaceSelectInput
-            dataObject={projectDataMappingModel}
-            setDataObject={setProjectDataMappingModel}
-            toolId={projectDataMappingModel.getData("tool_id")}
-          />
-        </Col>
-      <Col lg={12}>
-        <ProjectRepositorySelectInput
-          model={projectDataMappingModel}
-          setModel={setProjectDataMappingModel}
-        />
-      </Col>
-          </>
+          <Col lg={12}>
+            <ProjectMappingWorkspaceSelectInput
+              dataObject={projectDataMappingModel}
+              setDataObject={setProjectDataMappingModel}
+              toolId={projectDataMappingModel.getData("tool_id")}
+            />
+          </Col>
+          <Col lg={12}>
+            <ProjectRepositorySelectInput
+              model={projectDataMappingModel}
+              setModel={setProjectDataMappingModel}
+            />
+          </Col>
+        </>
       );
     }
     if (projectDataMappingModel?.getData("tool_identifier") === "gitlab") {
@@ -124,12 +124,12 @@ function ProjectDataMappingEditorPanel(
     }
     if (projectDataMappingModel?.getData("tool_identifier") === "github") {
       return (
-          <Col lg={12}>
-            <ProjectRepositorySelectInput
-              model={projectDataMappingModel}
-              setModel={setProjectDataMappingModel}
-            />
-          </Col>
+        <Col lg={12}>
+          <ProjectRepositorySelectInput
+            model={projectDataMappingModel}
+            setModel={setProjectDataMappingModel}
+          />
+        </Col>
       );
     }
     if (projectDataMappingModel?.getData("tool_identifier") === "jira") {
@@ -170,7 +170,7 @@ function ProjectDataMappingEditorPanel(
               fieldName={"customMappingFields"}
             />
           </Col>
-        </>        
+        </>
       );
     }
   };
@@ -180,7 +180,7 @@ function ProjectDataMappingEditorPanel(
       return (
         <div className="m-2">
           <Card>
-            <Card.Text className={"mt-3 mb-3"} style={{display: "flex", justifyContent: "center"}}>
+            <Card.Text className={"mt-3 mb-3"} style={{ display: "flex", justifyContent: "center" }}>
               <strong>WARNING: </strong> Editing an active Analytics Data Mapping will result in loss of filtering
               functionality from data previously mapped with this information
             </Card.Text>

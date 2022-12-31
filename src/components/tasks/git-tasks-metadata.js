@@ -106,7 +106,6 @@ const gitTasksMetadata = {
     tags: [],
     roles: [],
     account: "",
-    jenkinsIds: []
   }
 };
 

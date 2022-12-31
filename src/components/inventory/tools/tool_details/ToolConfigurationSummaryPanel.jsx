@@ -114,11 +114,8 @@ import GChatToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/gchat/GChatToolConfigurationSummaryPanel";
 import FortifyToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/fortify/FortifyToolConfigurationSummaryPanel";
-import FortifyMetadata from "components/inventory/tools/tool_details/tool_jobs/fortify/fortify-tool-metadata";
-import ThycoticVaultToolConfigurationSummaryPanel 
-  from "components/inventory/tools/tool_details/tool_jobs/thycotic_vault/ThycoticVaultToolConfigurationSummaryPanel";
-import ThycoticVaultMetadata 
-  from "components/inventory/tools/tool_details/tool_jobs/thycotic_vault/thycoticVault-tool-metadata";
+import FortifyMetadata 
+  from "components/inventory/tools/tool_details/tool_jobs/fortify/fortify-tool-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -326,12 +323,6 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
             fortifyToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, FortifyMetadata)}
           />
         );
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.THYCOTIC_VAULT:
-        return (
-          <ThycoticVaultToolConfigurationSummaryPanel
-            thycoticVaultToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, ThycoticVaultMetadata)}
-          />
-        );        
       default:
         return <div className="text-center p-5 text-muted mt-5">Summary Panel is not currently available for this tool configuration.</div>;
     }

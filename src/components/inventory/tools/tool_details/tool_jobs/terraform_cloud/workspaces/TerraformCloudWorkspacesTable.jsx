@@ -73,7 +73,7 @@ function TerraformCloudWorkspacesTable({
       <CreateTerraformCloudWorkspaceOverlay 
         toolId={toolId} 
         loadData={loadData} 
-        isMounted={isMounted}
+        isMounted={isMounted} 
         organizationName={organizationName}
       />);
   };

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import StepApprovalOverlay from "components/workflow/StepApprovalOverlay";
 import PipelineInstructionsAcknowledgementOverlay
   from "components/workflow/pipelines/pipeline_details/workflow/acknowledgement/PipelineInstructionsAcknowledgementOverlay";

@@ -8,11 +8,11 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
 import { scheduledTaskActions } from "components/common/fields/scheduler/scheduledTask.actions";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
-import LogsBackupScheduleEditorPanel from "components/settings/logs_backup/LogsBackupScheduleEditorPanel";
+import LogsExportScheduleEditorPanel from "components/settings/logs_management/LogsExportScheduleEditorPanel";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import LogsBackupManagementAwsStorageAccountSelectInput from "./inputs/LogsBackupManagementAwsStorageAccountSelectInput";
+import LogsExportManagementAwsStorageAccountSelectInput from "./inputs/LogsExportManagementAwsStorageAccountSelectInput";
 
-function LogsBackupScheduledTaskEditorPanel({ scheduledTaskData, handleClose, taskList, s3ToolId }) {
+function LogsExportScheduledTaskEditorPanel({ scheduledTaskData, handleClose, taskList, s3ToolId }) {
   const { getAccessToken } = useContext(AuthContext);
   const [schedulerTaskModel, setSchedulerTaskModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -96,7 +96,7 @@ function LogsBackupScheduledTaskEditorPanel({ scheduledTaskData, handleClose, ta
       }
     >
       <Row>
-        <LogsBackupScheduleEditorPanel
+        <LogsExportScheduleEditorPanel
           scheduledTaskData={scheduledTaskData}
           setScheduleModel={setScheduleModel}
           scheduleModel={scheduleModel}
@@ -116,7 +116,7 @@ function LogsBackupScheduledTaskEditorPanel({ scheduledTaskData, handleClose, ta
           <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"task.s3FileName"}/>
         </Col>
         <Col lg={12}>
-          <LogsBackupManagementAwsStorageAccountSelectInput
+          <LogsExportManagementAwsStorageAccountSelectInput
             s3ToolId={s3ToolId}
             setModel={setSchedulerTaskModel}
             model={schedulerTaskModel}
@@ -133,13 +133,13 @@ function LogsBackupScheduledTaskEditorPanel({ scheduledTaskData, handleClose, ta
   );
 }
 
-LogsBackupScheduledTaskEditorPanel.propTypes = {
+LogsExportScheduledTaskEditorPanel.propTypes = {
   scheduledTaskData: PropTypes.object,
   handleClose: PropTypes.func,
   taskList: PropTypes.any,
   s3ToolId: PropTypes.string
 };
 
-export default LogsBackupScheduledTaskEditorPanel;
+export default LogsExportScheduledTaskEditorPanel;
 
 

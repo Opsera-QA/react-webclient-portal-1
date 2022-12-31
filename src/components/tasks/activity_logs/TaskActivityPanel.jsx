@@ -36,7 +36,6 @@ function TaskActivityPanel(
   );
 
   useEffect(() => {
-    console.log("logCount: " + logCount);
     pullLogs().catch((error) => {
       if (isMounted?.current === true) {
         throw error;

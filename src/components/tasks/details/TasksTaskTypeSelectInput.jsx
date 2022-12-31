@@ -53,6 +53,16 @@ function TasksTaskTypeSelectInput({ fieldName, model, setModel, setTaskConfigura
     }
   };
 
+
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newModel = model;
+    newModel.setData("type", selectedOption?.value);
+    newModel.setDefaultValue("configuration");
+    setTaskConfigurationModel(undefined);
+    setModel({...newModel});
+  };
+
+
   const checkDisabledTaskType = () => {
     if (disabled === true) {
       return true;
@@ -63,29 +73,12 @@ function TasksTaskTypeSelectInput({ fieldName, model, setModel, setTaskConfigura
     }
   };
 
-  const setDataFunction = (fieldName, selectedOption) => {
-    let newModel = model;
-    newModel.setData("type", selectedOption?.value);
-    newModel.setDefaultValue("configuration");
-    setTaskConfigurationModel(undefined);
-    setModel({...newModel});
-  };
-
-  const clearDataFunction = () => {
-    let newModel = model;
-    newModel.setDefaultValue("type");
-    newModel.setDefaultValue("configuration");
-    setTaskConfigurationModel(undefined);
-    setModel({...newModel});
-  };
-
   return (
     <TaskTypeSelectInputBase
       fieldName={fieldName}
       model={model}
       setModel={setModel}
       setDataFunction={setDataFunction}
-      clearDataFunction={clearDataFunction}
       placeholderText={placeholderText}
       valueField={"value"}
       textField={"text"}
@@ -102,7 +95,6 @@ TasksTaskTypeSelectInput.propTypes = {
   placeholderText: PropTypes.string,
   setTaskConfigurationModel: PropTypes.func,
   disabled: PropTypes.bool,
-  setGitTasksConfigurationDataDto: PropTypes.func,
 };
 
 TasksTaskTypeSelectInput.defaultProps = {

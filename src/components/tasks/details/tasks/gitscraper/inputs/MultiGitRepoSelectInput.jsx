@@ -316,7 +316,7 @@ function MultiGitRepoSelectInput({
 
             <Popover.Content>
               <div className="text-muted mb-2">
-                This functionality helps users map Opsera Global Parameters to output data from a script. Select a created parameter from the dropdown list and enter the exact name of the output key from your terraform script in order to set up a mapping.<br/><br/>
+                This functionality helps users map Opsera Global Parameters to output data from a script. Select a created parameter from the dropdown list and enter the exact name of the output key from your script in order to set up a mapping.<br/><br/>
                 For instance for the following sample output that displays a list of subnet ID&apos;s the Output Key would be <strong>subnet_list</strong>. Upon execution of the script, the data from the Output Key would be stored in the Vault under the specified parameter.
                 {
                   <div className={"mt-2"}>

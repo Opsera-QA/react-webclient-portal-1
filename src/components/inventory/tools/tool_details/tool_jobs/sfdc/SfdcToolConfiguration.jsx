@@ -1,16 +1,16 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
-import {Row} from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import modelHelpers from "components/common/model/modelHelpers";
 import sfdcConnectionMetadata from "./sfdc-connection-metadata";
 import ToolConfigurationEditorPanelContainer
   from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Col from "react-bootstrap/Col";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
-import SFDCBuildTypeSelectInput  from  "components/common/list_of_values_input/workflow/pipelines/SFDCBuildTypeSelectInput";
+import SFDCBuildTypeSelectInput from "components/common/list_of_values_input/workflow/pipelines/SFDCBuildTypeSelectInput";
 import SfdcAuthTypeSelectInput from "./inputs/SfdcAuthTypeSelectInput";
 import SfdcOAuthConnectButton from "./inputs/SfdcOAuthConnectButton";
 import axios from "axios";
@@ -57,7 +57,7 @@ function SfdcToolConfiguration({ toolData }) {
       const tokenVaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}-token`;
       newConfiguration.sfdc_token = await toolsActions.saveKeyPasswordToVault(sfdcConfigurationDto, "sfdc_token", newConfiguration.sfdc_token, tokenVaultKey, getAccessToken, toolData.getData("_id"));
     }
-    if (sfdcConfigurationDto?.getData("authType") === "oauth") {      
+    if (sfdcConfigurationDto?.getData("authType") === "oauth") {
       const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelTokenSource, toolData.id);
       const tool = response?.data?.data;
       newConfiguration.sfdc_refresh_token = tool?.configuration?.sfdc_refresh_token;
@@ -66,8 +66,8 @@ function SfdcToolConfiguration({ toolData }) {
       newConfiguration.sfdc_password = {};
       newConfiguration.sfdc_token = {};
     }
-    
-    const item = {configuration: newConfiguration};
+
+    const item = { configuration: newConfiguration };
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };
 
@@ -99,11 +99,11 @@ function SfdcToolConfiguration({ toolData }) {
           <TextInputBase dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"accountUsername"} />
           {getDynamicFields()}
           <SFDCBuildTypeSelectInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"buildType"} />
-          <SfdcOAuthConnectButton 
-            model={sfdcConfigurationDto} 
-            authType={sfdcConfigurationDto?.getData("authType")} 
-            toolId={toolData.id} 
-            visible={sfdcConfigurationDto?.checkCurrentValidity() === true && !sfdcConfigurationDto?.isChanged()} 
+          <SfdcOAuthConnectButton
+            model={sfdcConfigurationDto}
+            authType={sfdcConfigurationDto?.getData("authType")}
+            toolId={toolData.id}
+            visible={sfdcConfigurationDto?.checkCurrentValidity() === true && !sfdcConfigurationDto?.isChanged()}
           />
         </Col>
       </Row>

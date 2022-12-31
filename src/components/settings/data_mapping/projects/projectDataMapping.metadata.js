@@ -117,13 +117,14 @@ const projectDataMappingMetadata = {
     return activeFilters;
   },
   newObjectFields: {
-    type: "project",
+    type: "",
     tool_identifier: "",
     tool_id: "",
     key: "",
     value: [],
     tool_prop: "",
     customTagFields: [],
+    customMappingFields: [],
     projectKey: "",
     createdAt: "",
     active : true,

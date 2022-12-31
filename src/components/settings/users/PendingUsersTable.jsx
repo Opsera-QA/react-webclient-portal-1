@@ -30,7 +30,7 @@ function PendingUsersTable({ pendingUserData, isLoading, loadData }) {
         isLoading={isLoading}
         data={pendingUserData}
         columns={columns}
-        // onRowSelect={onRowSelect}
+        onRowSelect={onRowSelect}
         noDataMessage={"There are no pending users."}
       />
     );

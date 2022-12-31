@@ -1,38 +1,37 @@
 import baseActions from "utils/actionsBase";
 
-const jenkinsToolAccountActions = {};
+const jenkinsAccountActions = {};
 
-jenkinsToolAccountActions.getJenkinsAccountsV2 = async (getAccessToken, cancelTokenSource, toolId) => {
+jenkinsAccountActions.getJenkinsAccountsV2 = async (getAccessToken, cancelTokenSource, toolId) => {
   const apiUrl = `/tools/${toolId}/accounts/jenkins`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-jenkinsToolAccountActions.getAccountCredentialsFromJenkinsInstanceV2 = async (getAccessToken, cancelTokenSource, toolId) => {
+jenkinsAccountActions.getAccountCredentialsFromJenkinsInstanceV2 = async (getAccessToken, cancelTokenSource, toolId) => {
   const apiUrl = `/tool/jenkins/${toolId}/credentials`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-jenkinsToolAccountActions.createJenkinsAccountV2 = async (getAccessToken, cancelTokenSource, toolId, data) => {
+jenkinsAccountActions.createJenkinsAccountV2 = async (getAccessToken, cancelTokenSource, toolId, data) => {
   const apiUrl = `/tools/${toolId}/accounts/jenkins/create`;
   const postBody = {...data?.getPersistData()};
 
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-jenkinsToolAccountActions.deleteJenkinsAccountV2 = async (getAccessToken, cancelTokenSource, toolId, accountCredential) => {
+jenkinsAccountActions.deleteJenkinsAccountV2 = async (getAccessToken, cancelTokenSource, toolId, accountCredential) => {
   const apiUrl = `/tools/${toolId}/accounts/jenkins/delete`;
   const postBody = {
     ...accountCredential?.getPersistData(),
     id: toolId
   };
-
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-jenkinsToolAccountActions.rotateJenkinsKey = async (getAccessToken, cancelTokenSource, toolId) => {
+jenkinsAccountActions.rotateJenkinsKey = async (getAccessToken, cancelTokenSource, toolId) => {
   const apiUrl = `tools/${toolId}/accounts/jenkins/rotate-key`;
 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-export default jenkinsToolAccountActions;
+export default jenkinsAccountActions;

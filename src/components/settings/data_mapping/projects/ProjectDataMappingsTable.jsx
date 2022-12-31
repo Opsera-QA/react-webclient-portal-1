@@ -11,26 +11,20 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTags} from "@fortawesome/pro-light-svg-icons";
 import {getField} from "components/common/metadata/metadata-helpers";
-import TagTypeFilter from "../../../common/filters/tags/tag_type/TagTypeFilter";
-import ActiveFilter from "../../../common/filters/status/ActiveFilter";
-import InlineTagTypeFilter from "../../../common/filters/tags/tag_type/InlineTagTypeFilter";
-import ProjectMappingToolIdentifierSelectInput
-  from "../../../common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolIdentifierSelectInput";
-import tagMetadata from "../../tags/tag.metadata";
 import InLineToolTypeFilter from "../../../common/filters/data_mapping/InLineToolTypeFilter";
 import ToolTypeFilter from "../../../common/filters/data_mapping/ToolTypeFilter";
 import ProjectDataMappingActiveFilter from "../../../common/filters/status/ProjectDataMappingActiveFilter";
 
 function ProjectDataMappingsTable(
-  {
-    projectDataMappings,
-    loadData,
-    isLoading,
-    isMounted,
-    projectDataMappingMetadata,
+    {
+      projectDataMappings,
+      loadData,
+      isLoading,
+      isMounted,
+      projectDataMappingMetadata,
       toolFilterDto,
       setToolFilterDto
-  }) {
+    }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   const [columns, setColumns] = useState([]);
@@ -45,11 +39,11 @@ function ProjectDataMappingsTable(
       const fields = projectDataMappingMetadata.fields;
 
       setColumns(
-        [
-          getTableTextColumn(getField(fields,"tool_identifier")),
-          getTableTextColumn(getField(fields,"key")),
-          getTableBooleanIconColumn(getField(fields,"active")),
-        ]
+          [
+            getTableTextColumn(getField(fields,"tool_identifier")),
+            getTableTextColumn(getField(fields,"key")),
+            getTableBooleanIconColumn(getField(fields,"active")),
+          ]
       );
     }
   };
@@ -66,11 +60,11 @@ function ProjectDataMappingsTable(
 
   const createProjectTag = () => {
     toastContext.showOverlayPanel(
-      <NewProjectDataMappingOverlay
-        loadData={loadData}
-        isMounted={isMounted}
-        projectDataMappingMetadata={projectDataMappingMetadata}
-      />
+        <NewProjectDataMappingOverlay
+            loadData={loadData}
+            isMounted={isMounted}
+            projectDataMappingMetadata={projectDataMappingMetadata}
+        />
     );
   };
 
@@ -91,35 +85,35 @@ function ProjectDataMappingsTable(
 
   const getProjectTagsTable = () => {
     return (
-      <CustomTable
-        columns={columns}
-        data={projectDataMappings}
-        rowStyling={rowStyling}
-        noDataMessage={noDataMessage}
-        onRowSelect={selectedRow}
-        isLoading={isLoading}
-      />
+        <CustomTable
+            columns={columns}
+            data={projectDataMappings}
+            rowStyling={rowStyling}
+            noDataMessage={noDataMessage}
+            onRowSelect={selectedRow}
+            isLoading={isLoading}
+        />
     );
   };
 
   return (
-    <FilterContainer
-      loadData={loadData}
-      filterDto={toolFilterDto}
-      setFilterDto={setToolFilterDto}
-      addRecordFunction={createProjectTag}
-      supportSearch={true}
-      isLoading={isLoading}
-      showBorder={false}
-      body={getProjectTagsTable()}
-      inlineFilters={getInlineFilters()}
-      dropdownFilters={getDropdownFilters()}
-      metadata={projectDataMappingMetadata}
-      titleIcon={faTags}
-      title={"Project Data Mapping Tags"}
-      type={"Project Data Mapping Tags"}
-      className={"pb-2"}
-    />
+      <FilterContainer
+          loadData={loadData}
+          filterDto={toolFilterDto}
+          setFilterDto={setToolFilterDto}
+          addRecordFunction={createProjectTag}
+          supportSearch={true}
+          isLoading={isLoading}
+          showBorder={false}
+          body={getProjectTagsTable()}
+          inlineFilters={getInlineFilters()}
+          dropdownFilters={getDropdownFilters()}
+          metadata={projectDataMappingMetadata}
+          titleIcon={faTags}
+          title={"Project Data Mapping Tags"}
+          type={"Project Data Mapping Tags"}
+          className={"pb-2"}
+      />
   );
 }
 

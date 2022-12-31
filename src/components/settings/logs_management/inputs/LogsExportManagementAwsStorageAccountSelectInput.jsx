@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import AwsBucketSelectInput from "components/common/list_of_values_input/tools/aws/bucket/AwsBucketSelectInput";
 
-function LogsBackupManagementAwsStorageAccountSelectInput(
+function LogsExportManagementAwsStorageAccountSelectInput(
   {
     fieldName,
     model,
@@ -32,7 +32,7 @@ function LogsBackupManagementAwsStorageAccountSelectInput(
   );
 }
 
-LogsBackupManagementAwsStorageAccountSelectInput.propTypes = {
+LogsExportManagementAwsStorageAccountSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -42,8 +42,8 @@ LogsBackupManagementAwsStorageAccountSelectInput.propTypes = {
   s3ToolId: PropTypes.string,
 };
 
-LogsBackupManagementAwsStorageAccountSelectInput.defaultProps = {
+LogsExportManagementAwsStorageAccountSelectInput.defaultProps = {
   fieldName: "task.awsBucketName",
 };
 
-export default LogsBackupManagementAwsStorageAccountSelectInput;
+export default LogsExportManagementAwsStorageAccountSelectInput;
