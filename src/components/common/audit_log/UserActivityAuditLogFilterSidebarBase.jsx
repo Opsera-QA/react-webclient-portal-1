@@ -24,6 +24,7 @@ export default function UserActivityAuditLogFilterSidebarBase(
         setModel={setUserActivityAuditLogFilterModel}
         loadDataFunction={loadDataFunction}
         fieldName={"siteRoles"}
+        className={"mb-2"}
       />
       <InlineUserFilterSelectInput
         fieldName={"user"}

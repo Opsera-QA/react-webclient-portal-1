@@ -123,6 +123,7 @@ export default function MultiSelectCheckboxInputBase(
               disabled={disabled}
               label={text}
               setDataFunction={() => handleOptionSelection(value)}
+              className={"px-1"}
             />
           );
         }
@@ -144,7 +145,7 @@ export default function MultiSelectCheckboxInputBase(
         clearDataFunction={clearData}
         selectAllFunction={selectAllFunction}
       />
-      <div className={"mx-1"}>
+      <div>
         {getCheckboxes()}
       </div>
       <InfoText

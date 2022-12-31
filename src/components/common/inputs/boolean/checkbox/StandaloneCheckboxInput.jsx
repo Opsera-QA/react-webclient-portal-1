@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Form } from "react-bootstrap";
-import { generateUUID } from "components/common/helpers/string-helpers";
+import {Form} from "react-bootstrap";
+import {generateUUID, hasStringValue} from "components/common/helpers/string-helpers";
 import {mouseHelper} from "temp-library-components/helpers/mouse/mouse.helper";
 
 export default function StandaloneCheckboxInput(
@@ -14,23 +14,26 @@ export default function StandaloneCheckboxInput(
     className,
   }) {
   const mouseCursor = mouseHelper.getMouseCursor(setDataFunction, disabled);
+  const classNames = hasStringValue(className) ? `${className} d-flex` : "d-flex";
 
   return (
     <div
-      className={`${mouseCursor}`}
+      className={`${mouseCursor} standalone-checkbox-input`}
       onClick={disabled !== true ? () => setDataFunction(!value) : undefined}
+      style={{
+        height: "22px"
+      }}
     >
-      <div className={"d-flex"}>
-        <Form.Check
+      <div className={classNames}>
+        <input
           type={"checkbox"}
-          className={className}
-          id={id}
           checked={!!value}
           disabled={disabled === true}
-          label={""}
+          id={id}
           readOnly={true}
+          className={"my-auto mr-2"}
         />
-        <div>{label}</div>
+        <div className={"mb-auto"}>{label}</div>
       </div>
     </div>
   );
