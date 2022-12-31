@@ -30,7 +30,7 @@ function FortifyToolConfigurationSummaryPanel({ fortifyToolConfigurationModel })
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={fortifyToolConfigurationModel} fieldName={"userName"} />
-        </Col>
+        </Col>        
       </Row>
     </SummaryPanelContainer>
   );

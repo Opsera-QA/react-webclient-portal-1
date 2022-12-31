@@ -232,6 +232,7 @@ function ToolDetailPanelTabContainer({ toolModel, handleTabClick, activeTab }) {
         activeTab={activeTab}
         handleTabClick={handleTabClick}
       />
+
       <ToolLicenseTab
         handleTabClick={handleTabClick}
         activeTab={activeTab}

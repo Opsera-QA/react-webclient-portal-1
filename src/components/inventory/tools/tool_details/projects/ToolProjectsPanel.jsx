@@ -7,6 +7,7 @@ import JiraToolProjectsPanel from "components/inventory/tools/tool_details/tool_
 import ArgoToolProjectsPanel from "../tool_jobs/argo/projects/ArgoToolProjectsPanel";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import SnaplogicProjectsPanel from "../tool_jobs/snaplogic/projects/SnaplogicProjectsPanel";
+
 function ToolProjectsPanel({ toolData, loadData, isLoading }) {
   const getToolProjectsPanel = () => {
     switch (toolData?.getData("tool_identifier")) {

@@ -30,10 +30,6 @@ const BuildDetailsMetadata = {
         label: "Timestamp",
         id: "timestamp",
       },
-      {
-        label: "Duration (in minutes)",
-        id: "duration",
-      },
     ],
     newObjectFields: {},
   };

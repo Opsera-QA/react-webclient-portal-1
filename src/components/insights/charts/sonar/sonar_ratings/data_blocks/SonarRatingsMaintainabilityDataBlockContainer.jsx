@@ -3,11 +3,9 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { LETTER_GRADES } from "components/common/metrics/grade/MetricLetterGradeText";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-import TwoLinePercentageDataBlock from "components/common/metrics/percentage/TwoLinePercentageDataBlock";
 import TwoLineGradeDataBlock from "components/common/metrics/grade/TwoLineGradeDataBlock";
 import SonarRatingsMaintainabilityActionableInsightOverlay from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityActionableInsightOverlay";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import StandardTwoGoalDataBlock from "components/common/metrics/goals/double/StandardTwoGoalDataBlock";
 import ThreeLinePercentageBlockBase from "../../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
 
@@ -17,10 +15,10 @@ function SonarRatingsMaintainabilityDataBlockContainer({
   kpiConfiguration,
   dashboardData,
   dataPoint,
-   className,
-   lastScore,
-   icon,
-   iconOverlayBody,
+ className,
+ lastScore,
+ icon,
+ iconOverlayBody,
 }) {
   const toastContext = useContext(DialogToastContext);
 

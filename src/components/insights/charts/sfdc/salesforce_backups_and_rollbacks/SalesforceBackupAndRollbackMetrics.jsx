@@ -4,13 +4,16 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import Model from "core/data_model/model";
+import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
+
 import { Row, Col } from "react-bootstrap";
 import SfdcBackupSuccessDataBlock from "./data_block/success/SfdcBackupSuccessDataBlock";
 import SfdcBackupFailureDataBlock from "./data_block/failure/SfdcBackupFailureDataBlock";
-import SalesforceBackupsAndRollbacksActionableInsightOverlay from "./actionable_insights/SalesforceBackupsAndRollbacksActionableInsightOverlay";
+import SfdcPipelinesInsightsTableMetadata from "../sfdc-pipelines-actionable-metadata";
 
-function SalesforceBackupsAndRollbacksMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function SalesforceBackupAndRollbackMetrics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(undefined);
@@ -78,12 +81,20 @@ function SalesforceBackupsAndRollbacksMetrics({ kpiConfiguration, setKpiConfigur
     }
   };
 
-  const onRowSelect = (request) => {
+  
+
+  const onRowSelect = (kpiName) => {
+    const chartModel = new Model(
+      { ...SfdcPipelinesInsightsTableMetadata.newObjectFields },
+      SfdcPipelinesInsightsTableMetadata,
+      false
+    );
     toastContext.showOverlayPanel(
-      <SalesforceBackupsAndRollbacksActionableInsightOverlay
-        kpiConfiguration={kpiConfiguration}
+      <ChartDetailsOverlay
         dashboardData={dashboardData}
-        request={request}
+        kpiConfiguration={kpiConfiguration}
+        chartModel={chartModel}
+        kpiIdentifier={kpiName}
       />
     );
   };
@@ -99,28 +110,28 @@ function SalesforceBackupsAndRollbacksMetrics({ kpiConfiguration, setKpiConfigur
           <SfdcBackupSuccessDataBlock
             score={metrics[0].success.toString()}
             subtitle="Successful Backups"
-            onClickFunction={() => onRowSelect("pipelinesSFDCBackupsSuccess")}
+            onClickFunction={() => onRowSelect("sfdc-backups-successful")}
           />
         </Col>
         <Col xl={6} lg={6} sm={6} className={"my-3"}>
           <SfdcBackupFailureDataBlock
             score={metrics[0].failure.toString()}
             subtitle="Failed Backups"
-            onClickFunction={() => onRowSelect("pipelinesSFDCBackupsFailure")}
+            onClickFunction={() => onRowSelect("sfdc-backups-failure")}
           />
         </Col>
         <Col xl={6} lg={6} sm={6} className={"my-3"}>
           <SfdcBackupSuccessDataBlock
             score={rollbacks && rollbacks.length > 0 ? rollbacks[0].success.toString() : "0"}
             subtitle="Successful Rollbacks"
-            onClickFunction={() => onRowSelect("pipelinesSFDCRollbacksSuccess")}
+            onClickFunction={() => onRowSelect("sfdc-rollbacks-successful")}
           />
         </Col>
         <Col xl={6} lg={6} sm={6} className={"my-3"}>
           <SfdcBackupFailureDataBlock
             score={rollbacks && rollbacks.length > 0 ? rollbacks[0].failure.toString() : "0"}
-            subtitle="Failed Rollbacks"
-            onClickFunction={() => onRowSelect("pipelinesSFDCRollbacksFailure")}
+            subtitle="Failed Backups"
+            onClickFunction={() => onRowSelect("sfdc-rollbacks-failure")}
           />
         </Col>
       </Row>
@@ -143,7 +154,7 @@ function SalesforceBackupsAndRollbacksMetrics({ kpiConfiguration, setKpiConfigur
     </>
   );
 }
-SalesforceBackupsAndRollbacksMetrics.propTypes = {
+SalesforceBackupAndRollbackMetrics.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -154,4 +165,4 @@ SalesforceBackupsAndRollbacksMetrics.propTypes = {
   yScale: PropTypes.any,
 };
 
-export default SalesforceBackupsAndRollbacksMetrics;
+export default SalesforceBackupAndRollbackMetrics;

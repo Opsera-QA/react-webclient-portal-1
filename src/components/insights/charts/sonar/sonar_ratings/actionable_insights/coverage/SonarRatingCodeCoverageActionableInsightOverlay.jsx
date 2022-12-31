@@ -3,22 +3,16 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import Model from "core/data_model/model";
 import PropTypes from "prop-types";
-import { Row, Col } from "react-bootstrap";
 import { faExternalLink, faTable } from "@fortawesome/pro-light-svg-icons";
 import chartsActions from "components/insights/charts/charts-actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import { getTimeDisplay } from "components/insights/charts/sonar/sonar_ratings/data_blocks/sonar-ratings-pipeline-utility";
-import SonarRatingsMaintainabilityOverviewDataBlockContainer from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityOverviewDataBlockContainer";
-import SonarRatingsMaintainabilityActionableInsightTable from "components/insights/charts/sonar/sonar_ratings/actionable_insights/maintainability/SonarRatingsMaintainabilityActionableInsightTable";
 import actionableInsightsGenericChartFilterMetadata from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import SonarRatingCodeCoverageActionableInsightTable from "./SonarRatingCodeCoverageActionableInsightTable";
 
-function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
+function SonarRatingCodeCoverageActionableInsightOverlay({ kpiConfiguration, dashboardData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [filterModel, setFilterModel] = useState(
     new Model(
@@ -67,6 +61,8 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
     }
   };
 
+  console.log("help");
+
   const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     try {
       setIsLoading(true);
@@ -92,6 +88,8 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
 
       const metrics = response?.data.data[0].sonarCodeCoverageActionableInsights.data[0].data;
 
+      console.log("metrics", metrics);
+
       if (isMounted?.current === true && Array.isArray(metrics)) {
         setCoverageData(metrics);
 
@@ -110,7 +108,7 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
       }
     }
   };
-  
+
 
   const getDateBadge = () => {
     const date = getMetricFilterValue(kpiConfiguration?.filters, "date");
@@ -121,6 +119,8 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
   };
+
+  console.log("coverageData", coverageData);
 
   return (
     <FullScreenCenterOverlayContainer
@@ -146,9 +146,9 @@ function SonarRatingsMaintainabilityActionableInsightOverlay({ kpiConfiguration,
   );
 }
 
-SonarRatingsMaintainabilityActionableInsightOverlay.propTypes = {
+SonarRatingCodeCoverageActionableInsightOverlay.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
 };
 
-export default SonarRatingsMaintainabilityActionableInsightOverlay;
+export default SonarRatingCodeCoverageActionableInsightOverlay;

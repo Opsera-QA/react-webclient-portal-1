@@ -45,5 +45,4 @@ awsActions.getS3BucketVersions = async (getAccessToken, cancelTokenSource) => {
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-
 export default awsActions;

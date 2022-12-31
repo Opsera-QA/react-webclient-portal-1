@@ -7,7 +7,7 @@ import {
   getGitCustodianOriginColumn,
   getPathDefinition,
   getGitCustodianExternalLinkIconColumnDefinition,
-  getTableInfoIconColumn, getCustomTableAccessor, getTableArrayFirstValueAndCountColumn,
+  getTableInfoIconColumn, getCustomTableAccessor,
 } from "../../../common/table/table-column-helpers";
 import { getDurationInDaysHours } from "components/common/table/table-column-helpers-v2";
 import {getField} from "../../../common/metadata/metadata-helpers";
@@ -90,7 +90,6 @@ function GitCustodianVulnerableCommitsTable(
       getTableDateTimeColumn(getField(fields, "commitDate")),
       getTableDateTimeColumn(getField(fields, "lastScannedOn")),
       getTableTextColumn(getField(fields, "repository")),
-      getTableArrayFirstValueAndCountColumn(getField(fields, "branch")),
       getTableTextColumn(getField(fields, "author")),
       getPathDefinition(getField(fields, "path"), "force-text-wrap"),
       getGitCustodianExternalLinkIconColumnDefinition(getField(fields, "lineNumber")),

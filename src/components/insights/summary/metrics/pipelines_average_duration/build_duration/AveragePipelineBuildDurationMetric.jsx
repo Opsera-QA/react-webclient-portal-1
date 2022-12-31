@@ -70,7 +70,7 @@ function AveragePipelineBuildDurationMetric({ dashboardData, toggleDynamicPanel,
         dateRange
       );
       let dataObject = response?.data?.data[0]?.opseraBuildDuration?.data || [];
-      
+
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;

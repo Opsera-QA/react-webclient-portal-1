@@ -103,7 +103,7 @@ function SFDCUnitTestingPieChart({ kpiConfiguration, setKpiConfiguration, dashbo
           sliceLabelsSkipAngle={10}
           sliceLabelsTextColor={"#ffffff"}
           colors={["#ABA4CC", "#696969", "#B1AeA7"]}
-          onClick={(data) => onRowSelect(data)}
+          // onClick={(data) => onRowSelect(data)}
         />
       </div>
     );

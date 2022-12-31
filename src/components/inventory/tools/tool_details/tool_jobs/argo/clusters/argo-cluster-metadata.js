@@ -74,7 +74,7 @@ const argoClusterMetadata = {
     roleArn: "",
     roleSessionName: "",
     clusterType: "",
-    argoRolloutsEnabled: false
+    argoRolloutsEnabled: false,
   }
 };
 

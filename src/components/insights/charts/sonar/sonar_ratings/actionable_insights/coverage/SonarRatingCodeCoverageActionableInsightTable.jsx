@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import SonarCoverageTableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-rating-coverage-actionable-metadata";
 import {
-  getChartTrendStatusColumn,
   getTableTextColumnWithoutField,
   getCustomTableHeader, getCustomTableAccessor,
 } from "components/common/table/table-column-helpers";

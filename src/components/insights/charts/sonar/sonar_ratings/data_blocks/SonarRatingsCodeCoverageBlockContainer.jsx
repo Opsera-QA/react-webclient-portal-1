@@ -8,7 +8,6 @@ import SonarRatingCodeCoverageActionableInsightOverlay
   from "../actionable_insights/coverage/SonarRatingCodeCoverageActionableInsightOverlay";
 import TwoLinePercentageDataBlock from "../../../../../common/metrics/percentage/TwoLinePercentageDataBlock";
 import ThreeLinePercentageBlockBase from "../../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
-
 function SonarRatingsCodeCoverageBlockContainer({ tests, lineCoverage, duplicate, kpiConfiguration, dashboardData, dataPoint, className,
                                                   lastScore,
                                                   icon,

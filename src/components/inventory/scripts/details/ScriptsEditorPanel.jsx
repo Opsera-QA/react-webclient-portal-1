@@ -8,7 +8,6 @@ import VanityEditorPanelContainer from "components/common/panels/detail_panel_co
 import ScriptLanguageSelectInput
   from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
 import ScriptValueInput from "components/inventory/scripts/details/ScriptValueInput";
-import DataValidatorInput from "components/common/inputs/object/data_validator/DataValidatorInput";
 
 export default function ScriptsEditorPanel(
   {

@@ -32,4 +32,3 @@ ToolLicenseTab.propTypes = {
 
 export default ToolLicenseTab;
 
-

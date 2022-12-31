@@ -169,8 +169,8 @@ function SalesforceComponentsDataBlockChart({ kpiConfiguration, setKpiConfigurat
 
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
-     return null;
-   }
+      return null;
+    }
 
     return (
       <div className="new-chart mb-3" style={{ minHeight: "300px" }}>

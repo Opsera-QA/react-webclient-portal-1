@@ -1,19 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SdlcDurationStatisticsGoals from "components/insights/marketplace/charts/goals/sdlc_duration_statistics/SdlcDurationStatisticsGoals";
 import SalesforceDurationByStageGoals from "components/insights/marketplace/charts/goals/salesforce_duration_by_stage/SalesforceDurationByStageGoals";
+import SdlcDurationStatisticsGoals from "components/insights/marketplace/charts/goals/sdlc_duration_statistics/SdlcDurationStatisticsGoals";
 import BuildAndDeployGoals from "components/insights/marketplace/charts/goals/build_and_deploy_statistics/BuildAndDeployGoals";
 import ServicenowMeanTimeToResolutionGoals from "./servicenow_mean_time_to_resolution/ServicenowMeanTimeToResolutionGoals";
 import ServicenowMeanTimeToAcknowledgementGoals from "./servicenow_mean_time_to_acknowledge/ServicenowMeanTimeToAcknowledgementGoals";
 import DeploymentFrequencyGoals from "./gitlab_deployment_freqnency_statistics/DeploymentFrequencyGoals";
-
 function GoalsInputBase({ dataObject, setDataObject, kpiName }) {
   switch (kpiName) {
     case "salesforce-duration-by-stage":
-      return (
-        <SalesforceDurationByStageGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />
-      );
-    case "opsera-duration-by-stage":
       return (
         <SalesforceDurationByStageGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />
       );
@@ -21,9 +16,7 @@ function GoalsInputBase({ dataObject, setDataObject, kpiName }) {
       return <SdlcDurationStatisticsGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
     case "build-deployment-statistics":
       return <BuildAndDeployGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
-    case "gitlab-deployment-frequency":
-      return <DeploymentFrequencyGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
-      case "servicenow-mean-time-to-resolution":
+    case "servicenow-mean-time-to-resolution":
       return (
         <ServicenowMeanTimeToResolutionGoals
           kpiConfigurationData={dataObject}
@@ -37,6 +30,8 @@ function GoalsInputBase({ dataObject, setDataObject, kpiName }) {
           setKpiConfigurationData={setDataObject}
         />
       );
+      case "gitlab-deployment-frequency":
+        return <DeploymentFrequencyGoals kpiConfigurationData={dataObject} setKpiConfigurationData={setDataObject} />;
   }
 }
 

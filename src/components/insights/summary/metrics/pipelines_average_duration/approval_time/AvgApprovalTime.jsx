@@ -12,7 +12,7 @@ import LoadingIcon from "components/common/icons/LoadingIcon";
 function AvgApprovalTimeDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style, disable }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
-  const [metrics, setMetrics] = useState([]);
+  const [metrics, setMetrics] = useState([]); 
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);

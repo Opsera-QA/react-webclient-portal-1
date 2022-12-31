@@ -8,15 +8,8 @@ import ToolAttributesPanel from "components/inventory/tools/tool_details/ToolAtt
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {
-  faAbacus,
   faClipboardList,
   faList,
-  faTable,
-  faUsers,
-  faBrowser,
-  faProjectDiagram,
-  faDraftingCompass,
-  faKey
 } from "@fortawesome/pro-light-svg-icons";
 import ToolApplicationsPanel from "components/inventory/tools/tool_details/ToolAppliationsPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
@@ -86,7 +79,7 @@ function ToolReadOnlyDetailPanel({ toolModel, loadData, isLoading, tab }) {
       case "projects":
         return <ToolProjectsPanel toolData={toolModel} isLoading={isLoading} loadData={loadData} />;
       case "usage":
-        return <ToolUsagePanel closePanelFunction={closePanelFunction} toolData={toolModel} />;
+        return <ToolUsagePanel toolData={toolModel} closePanelFunction={closePanelFunction} />;
       case "vault":
         return <ToolVaultSummaryPanel toolModel={toolModel} />;
       case "repositories":

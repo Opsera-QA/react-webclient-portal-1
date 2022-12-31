@@ -11,45 +11,44 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import PropTypes from "prop-types";
 
-
 function CoverityScanReport({ kpiConfiguration, dashboardData }) {
   const { pipelineId, projectName, runCount, coveritySeverity } = useParams();
-const history = useHistory();
-const { getAccessToken } = useContext(AuthContext);
-const [error, setError] = useState(undefined);
-const [metrics, setMetrics] = useState([]);
-const [allCoverityIssues, setAllCoverityIssues] = useState([]);
-const [isLoading, setIsLoading] = useState(false);
-const isMounted = useRef(false);
-const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-const [filterModel, setFilterModel] = useState(
-  new Model(
-    { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
-    actionableInsightsGenericChartFilterMetadata,
-    false
-  )
-);
+  const history = useHistory();
+  const { getAccessToken } = useContext(AuthContext);
+  const [error, setError] = useState(undefined);
+  const [metrics, setMetrics] = useState([]);
+  const [allCoverityIssues, setAllCoverityIssues] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [filterModel, setFilterModel] = useState(
+    new Model(
+      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+      actionableInsightsGenericChartFilterMetadata,
+      false
+    )
+  );
 
-useEffect(() => {
-  if (cancelTokenSource) {
-    cancelTokenSource.cancel();
-  }
-
-  const source = axios.CancelToken.source();
-  setCancelTokenSource(source);
-
-  isMounted.current = true;
-  loadData(source).catch((error) => {
-    if (isMounted?.current === true) {
-      throw error;
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
     }
-  });
 
-  return () => {
-    source.cancel();
-    isMounted.current = false;
-  };
-}, [JSON.stringify(dashboardData)]);
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     try {

@@ -62,7 +62,6 @@ function PipelineFailedDeployment({ dashboardData, toggleDynamicPanel, selectedD
             (obj) => obj.type === "organizations"
           )
         ]?.value;
-
       let dateRange = dashboardData?.data?.filters[
         dashboardData?.data?.filters.findIndex(
           (obj) => obj.type === "date"

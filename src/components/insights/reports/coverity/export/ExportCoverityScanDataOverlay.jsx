@@ -3,20 +3,20 @@ import PropTypes from "prop-types";
 import jsPDF from "jspdf";
 import ExportDataOverlay from "components/common/modal/export_data/ExportDataOverlay";
 
-function ExportCoverityScanDataOverlay({ formattedData, rawData, isLoading}) {
+function ExportCoverityScanDataOverlay({ formattedData, rawData, isLoading }) {
   const getRawData = () => {
-    return new Blob([rawData], {type : 'text/plain'});
+    return new Blob([rawData], { type: 'text/plain' });
   };
 
   const getPdfExporter = () => {
-    const pdfExporter = new jsPDF({orientation: "landscape"});
+    const pdfExporter = new jsPDF({ orientation: "landscape" });
     pdfExporter.autoTable({
       startY: 2,
-      styles: {fontSize: 8, minCellWidth: 24, minCellHeight: 12, valign: 'middle'},
+      styles: { fontSize: 8, minCellWidth: 24, minCellHeight: 12, valign: 'middle' },
       showHead: "firstPage",
-      headStyles:{fontSize: 8, minCellWidth: 24, fillColor: [54, 46, 84]},
+      headStyles: { fontSize: 8, minCellWidth: 24, fillColor: [54, 46, 84] },
       margin: { left: 2, right: 2 },
-      head:[["Project", "Severity", "Owner", "Issue Category", "Issue Type","Action", "Status", "Date", "File"]],
+      head: [["Project", "Severity", "Owner", "Issue Category", "Issue Type", "Action", "Status", "Date", "File"]],
       body: formattedData.map(item => [item.project, item.severity, item.owner, item.issue_category, item.issue_type, item.action, item.status, item.date, item.file])
     });
 
@@ -24,20 +24,20 @@ function ExportCoverityScanDataOverlay({ formattedData, rawData, isLoading}) {
   };
 
   const getCsvData = () => {
-    return [["Project", "Severity", "Owner", "Issue Category", "Issue Type","Action", "Status", "Date", "File"],
-      ...formattedData.map(item =>
-        [
-          item.project, 
-          item.severity, 
-          item.owner, 
-          item.issue_category, 
-          item.issue_type, 
-          item.action, 
-          item.status, 
-          item.date, 
-          item.file
-        ]
-      )];
+    return [["Project", "Severity", "Owner", "Issue Category", "Issue Type", "Action", "Status", "Date", "File"],
+    ...formattedData.map(item =>
+      [
+        item.project,
+        item.severity,
+        item.owner,
+        item.issue_category,
+        item.issue_type,
+        item.action,
+        item.status,
+        item.date,
+        item.file
+      ]
+    )];
   };
 
   return (
@@ -59,5 +59,3 @@ ExportCoverityScanDataOverlay.propTypes = {
 };
 
 export default ExportCoverityScanDataOverlay;
-
-

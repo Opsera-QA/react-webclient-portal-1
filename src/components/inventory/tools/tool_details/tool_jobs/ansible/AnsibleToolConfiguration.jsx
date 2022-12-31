@@ -28,10 +28,7 @@ function AnsibleToolConfiguration({ toolData }) {
   const saveAnsibleToolConfiguration = async () => {
     let newConfiguration = ansibleConfigurationDto.getPersistData();
     newConfiguration.secretKey = await toolsActions.savePasswordToVault(toolData, ansibleConfigurationDto,"accountPassword", newConfiguration.accountPassword, getAccessToken);
-    newConfiguration.secretPrivateKey = await toolsActions.savePasswordToVault(toolData, ansibleConfigurationDto,"secretPrivateKey", newConfiguration.secretPrivateKey, getAccessToken);
-    newConfiguration.publicKey = await toolsActions.savePasswordToVault(toolData, ansibleConfigurationDto, "publicKey", newConfiguration.publicKey, getAccessToken, toolData.getData("_id"));
-    newConfiguration.secretPrivateKey = await toolsActions.savePasswordToVault(toolData, ansibleConfigurationDto,"secretPrivateKey", newConfiguration.secretPrivateKey, getAccessToken);
-    newConfiguration.publicKey = await toolsActions.savePasswordToVault(toolData, ansibleConfigurationDto, "publicKey", newConfiguration.publicKey, getAccessToken, toolData.getData("_id"));
+    newConfiguration.secretPrivateKey = await toolsActions.savePasswordToVault(toolData, ansibleConfigurationDto,"secretPrivateKey", newConfiguration.secretPrivateKey, getAccessToken);    newConfiguration.publicKey = await toolsActions.savePasswordToVault(toolData, ansibleConfigurationDto, "publicKey", newConfiguration.publicKey, getAccessToken, toolData.getData("_id"));
     const item = { configuration: newConfiguration };
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };

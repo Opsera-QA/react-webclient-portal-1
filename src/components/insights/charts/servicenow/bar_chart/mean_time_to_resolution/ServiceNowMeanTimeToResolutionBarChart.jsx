@@ -38,13 +38,13 @@ import DataPointVisibilityWrapper from "../../../../../common/metrics/data_point
 // import { DialogToastContext } from "contexts/DialogToastContext";
 
 function ServiceNowMeanTimeToResolutionBarChart({
-  kpiConfiguration,
-  setKpiConfiguration,
-  dashboardData,
-  index,
-  setKpis,
-  showSettingsToggle,
-}) {
+                                                  kpiConfiguration,
+                                                  setKpiConfiguration,
+                                                  dashboardData,
+                                                  index,
+                                                  setKpis,
+                                                  showSettingsToggle,
+                                                }) {
   const { getAccessToken } = useContext(AuthContext);
   // const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(undefined);

@@ -1,6 +1,6 @@
 const argoConnectionMetadata = {
   type: "Argo Tool Configuration",
-    fields: [
+  fields: [
     {
       label: "Argo Container URL",
       id: "toolURL",
@@ -11,28 +11,28 @@ const argoConnectionMetadata = {
       label: "Argo User ID",
       id: "userName",
       isRequiredFunction: (model) => {
-        return !model?.getData("secretAccessTokenEnabled");        
+        return !model?.getData("secretAccessTokenEnabled");
       }
     },
     {
       label: "Argo Password",
       id: "accountPassword",
       isRequiredFunction: (model) => {
-        return !model?.getData("secretAccessTokenEnabled");        
+        return !model?.getData("secretAccessTokenEnabled");
       }
     },
     {
       label: "Use Secret Access Token",
-      id: "secretAccessTokenEnabled",      
+      id: "secretAccessTokenEnabled",
     },
     {
       label: "Secret Access Token",
       id: "secretAccessTokenKey",
       isRequiredFunction: (model) => {
-        return model?.getData("secretAccessTokenEnabled");        
+        return model?.getData("secretAccessTokenEnabled");
       }
     }
-],
+  ],
   newObjectFields: {
     toolURL: "",
     userName: "",

@@ -45,11 +45,11 @@ function ServiceNowMeanTimeBetweenFailuresDataBlock({ dashboardData, toggleDynam
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
-      let dateRange = dashboardData?.data?.filters[
-        dashboardData?.data?.filters.findIndex(
-          (obj) => obj.type === "date"
-        )
-      ]?.value;
+        let dateRange = dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "date"
+          )
+        ]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,

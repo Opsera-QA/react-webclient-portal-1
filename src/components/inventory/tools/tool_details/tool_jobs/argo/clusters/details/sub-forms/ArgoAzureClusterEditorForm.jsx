@@ -39,7 +39,7 @@ const ArgoAzureClusterEditorForm = ({ model, setModel, disabled, clusterData }) 
           model={model}
           setModel={setModel}
         />
-      </Col>      
+      </Col>
       <Col lg={12}>
         <ArgoAzureResourceGroupSelectInput 
           model={model}

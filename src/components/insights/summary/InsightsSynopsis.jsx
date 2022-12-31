@@ -11,11 +11,11 @@ import DashboardFiltersInput from "components/insights/dashboards/DashboardFilte
 import DashboardFilterOrganizationInput from "components/insights/dashboards/DashboardFilterOrganizationInput";
 import dashboardMetadata, {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
+import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import { Button, Popover, Overlay } from "react-bootstrap";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
 import { format, addDays } from "date-fns";
 import { DateRangePicker } from "react-date-range";
-import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import IconBase from "components/common/icons/IconBase";
 
 function InsightsSynopsis() {
@@ -47,7 +47,7 @@ function InsightsSynopsis() {
       cancelTokenSource.cancel();
     }
     let newDataObject = new Model({...dashboardMetadata.newObjectFields}, dashboardMetadata, true);
-    newDataObject.setData("filters", []);
+    newDataObject.setData("filters", []); 
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
 
@@ -141,14 +141,14 @@ function InsightsSynopsis() {
   };
 
   const validate = (startDate,endDate)=>{
-    let sDate = startDate ? new Date(startDate).toISOString() : undefined;
-    let eDate = endDate ? new Date(endDate).toISOString() : undefined;
-    let newDashboardFilterTagsModel = dashboardFilterTagsModel;
-    newDashboardFilterTagsModel.setData( "date" , { startDate: sDate , endDate: eDate, key: "selection" } );
-    setDashboardFilterTagsModel({...newDashboardFilterTagsModel});
-
-    let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardData, "date", { startDate: sDate , endDate: eDate, key: "selection" });
-    loadData(newDataModel);
+      let sDate = startDate ? new Date(startDate).toISOString() : undefined;
+      let eDate = endDate ? new Date(endDate).toISOString() : undefined;
+      let newDashboardFilterTagsModel = dashboardFilterTagsModel;
+      newDashboardFilterTagsModel.setData( "date" , { startDate: sDate , endDate: eDate, key: "selection" } );
+      setDashboardFilterTagsModel({...newDashboardFilterTagsModel});
+  
+      let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardData, "date", { startDate: sDate , endDate: eDate, key: "selection" });
+      loadData(newDataModel);
   };
 
   const clearCalendar = () => {
@@ -214,9 +214,8 @@ function InsightsSynopsis() {
     );
   };
 
-  const getSynopsisActionBar = () => {
-    return (
-      <div>
+  const getSynopsisActionBarContainer = () => {
+      return (
         <ActionBarContainer>
           <div className="d-flex">
             <DashboardFiltersInput
@@ -243,8 +242,7 @@ function InsightsSynopsis() {
             {/* <DateRangeInput dataObject={dashboardFilterTagsModel} setDataObject={setDashboardFilterTagsModel} fieldName={"date"} />  */}
           </div>
         </ActionBarContainer>
-      </div>
-    );
+      );
   };
 
   if (!accessRoleData) {
@@ -253,7 +251,7 @@ function InsightsSynopsis() {
 
   return (
     <ScreenContainer
-      navigationTabContainer={<InsightsSubNavigationBar currentTab={"synopsis"}/>}
+      navigationTabContainer={<InsightsSubNavigationBar currentTab={"synopsis"} />}
       pageDescription={`
         Opsera provides users with access to a vast repository of logging and analytics. Access all available
         logging, reports and configurations around the Opsera Analytics Platform or search your currently
@@ -261,7 +259,7 @@ function InsightsSynopsis() {
       `}
       breadcrumbDestination={"insightsSummary"}
     >
-      {getSynopsisActionBar()}
+      {getSynopsisActionBarContainer()}
       <InsightsSynopsisDetails dashboardData={dashboardData} setDashboardData={setDashboardData}/>
     </ScreenContainer>
   );

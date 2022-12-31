@@ -42,7 +42,7 @@ function ArgoApplicationsTable(
       getTableBooleanIconColumn(getField(fields, "autoSync")),
       getTableDateTimeColumn(getField(fields, "creationTimestamp")),
     ],
-    []
+    [],
   );
 
   const onRowSelect = (grid, row) => {

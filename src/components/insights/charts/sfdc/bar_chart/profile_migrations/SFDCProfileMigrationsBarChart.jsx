@@ -98,7 +98,7 @@ function SFDCProfileMigrationsBarChart({ kpiConfiguration, setKpiConfiguration, 
                       true, false, "cutoffString", "wholeNumbers")}
           {...config(getColorById)}
           {...adjustBarWidth(metrics, false)}
-          onClick={(data) => onRowSelect(data)}
+          // onClick={(data) => onRowSelect(data)}
           tooltip={({indexValue, color, value, id}) => <ChartTooltip 
                                         titles = {["Pipeline", `${id} Profile Migrations`]}
                                         values = {[indexValue, value]}

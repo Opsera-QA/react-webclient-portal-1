@@ -54,7 +54,7 @@ function ArgoAwsClusterSelectInput({
       await loadAwsClusters(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
-        setError(error);        
+        setError(error);
       }
     } finally {
       if (isMounted?.current === true) {

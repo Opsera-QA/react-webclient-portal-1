@@ -12,7 +12,7 @@ const AzureDevopsConnectionMetadata = {
       id: "organization",
       isRequired: true,
       maxLength: 128,
-      regexDefinitionName: "generalText"
+      regexDefinitionName: "generalText",
     }
   ],
   newObjectFields:

@@ -21,11 +21,11 @@ import TabPanelContainer from "../../../../../../common/panels/general/TabPanelC
 import SalesforceDurationByStageTasksActionableTable from "./SalesforceDurationByStageTasksActionableTable";
 
 function SalesforceDurationByStageActionableInsightsOverlay({
-                                                              title,
-                                                              actionableInsightsQueryData,
-                                                              kpiConfiguration,
-                                                              dashboardData,
-                                                            }) {
+  title,
+  actionableInsightsQueryData,
+  kpiConfiguration,
+  dashboardData,
+}) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   const [activeTab, setActiveTab] = useState("pipelines");
@@ -40,11 +40,11 @@ function SalesforceDurationByStageActionableInsightsOverlay({
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [filterModel, setFilterModel] = useState(
-      new Model(
-          { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
-          actionableInsightsGenericChartFilterMetadata,
-          false
-      )
+    new Model(
+      { ...actionableInsightsGenericChartFilterMetadata.newObjectFields },
+      actionableInsightsGenericChartFilterMetadata,
+      false
+    )
   );
   const [filterModel2, setFilterModel2] = useState(
       new Model(
@@ -78,29 +78,29 @@ function SalesforceDurationByStageActionableInsightsOverlay({
     try {
       setIsLoading(true);
       let dashboardTags =
-          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardOrgs =
-          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-              ?.value;
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+          ?.value;
       let request = "salesforceDurationByStageByMonth";
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-          getAccessToken,
-          cancelSource,
-          request,
-          kpiConfiguration,
-          dashboardTags,
-          filterDto,
-          null,
-          dashboardOrgs,
-          null,
-          null,
-          null,
-          actionableInsightsQueryData
+        getAccessToken,
+        cancelSource,
+        request,
+        kpiConfiguration,
+        dashboardTags,
+        filterDto,
+        null,
+        dashboardOrgs,
+        null,
+        null,
+        null,
+        actionableInsightsQueryData
       );
       let dataObject = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data?.metrics[0]?.data : [];
       let dataCount = response?.data
-          ? response?.data?.data[0]?.salesforceDurationByStage?.data?.metrics[0]?.count[0]?.count
-          : [];
+        ? response?.data?.data[0]?.salesforceDurationByStage?.data?.metrics[0]?.count[0]?.count
+        : [];
       let summary = response?.data ? response?.data?.data[0]?.salesforceDurationByStage?.data?.summary : [];
       dataObject = dataObject.map((bd, index) => ({
         ...bd,
@@ -151,17 +151,17 @@ function SalesforceDurationByStageActionableInsightsOverlay({
     const total_duration_display = getTimeDisplay(total_duration);
     const total_time_to_resolve_display = getTimeDisplay(total_time_to_resolve);
     return (
-        <Row className="px-2">
-          <Col className="footer-records text-right">
-            Total time spent to execute builds :{" "}
-            {!total_duration_display || total_duration_display === 0 ? " 0 minutes" : total_duration_display}
-            <br></br>
-            Total time spent to resolve failed builds:{" "}
-            {!total_time_to_resolve_display || total_time_to_resolve_display === 0
-                ? " 0 minutes"
-                : total_time_to_resolve_display}
-          </Col>
-        </Row>
+      <Row className="px-2">
+        <Col className="footer-records text-right">
+          Total time spent to execute builds :{" "}
+          {!total_duration_display || total_duration_display === 0 ? " 0 minutes" : total_duration_display}
+          <br></br>
+          Total time spent to resolve failed builds:{" "}
+          {!total_time_to_resolve_display || total_time_to_resolve_display === 0
+            ? " 0 minutes"
+            : total_time_to_resolve_display}
+        </Col>
+      </Row>
     );
   };
 
@@ -217,7 +217,7 @@ function SalesforceDurationByStageActionableInsightsOverlay({
 
   const getTabContainer = () => {
     return (
-        <CustomTabContainer styling={"metric-detail-tabs"}>
+        <CustomTabContainer>
           <CustomTab
               activeTab={activeTab}
               tabText={"Pipelines"}
@@ -255,31 +255,31 @@ function SalesforceDurationByStageActionableInsightsOverlay({
         </FullScreenCenterOverlayContainer>
     );
   }
-  return (
-      <FullScreenCenterOverlayContainer
-          closePanel={closePanel}
-          showPanel={true}
-          titleText={title}
-          showToasts={true}
-          titleIcon={faTable}
-          isLoading={isLoading}
-          linkTooltipText={"View Full Blueprint"}
-      >
-        <div className={"p-3"}>
-          {getDateBadge()}
-          <SalesforceDurationByStageOverviewDataBlockContainer data={dataBlockValues}/>
-          <SalesforceDurationByStageActionableInsightsTable
-              data={metrics}
-              isLoading={isLoading}
-              loadData={loadData}
-              filterModel={filterModel}
-              setFilterModel={setFilterModel}
-              title={title}
-          />
-          {/* {getFooterDetails()} */}
-        </div>
-      </FullScreenCenterOverlayContainer>
-  );
+    return (
+        <FullScreenCenterOverlayContainer
+            closePanel={closePanel}
+            showPanel={true}
+            titleText={title}
+            showToasts={true}
+            titleIcon={faTable}
+            isLoading={isLoading}
+            linkTooltipText={"View Full Blueprint"}
+        >
+          <div className={"p-3"}>
+            {getDateBadge()}
+            <SalesforceDurationByStageOverviewDataBlockContainer data={dataBlockValues}/>
+            <SalesforceDurationByStageActionableInsightsTable
+                data={metrics}
+                isLoading={isLoading}
+                loadData={loadData}
+                filterModel={filterModel}
+                setFilterModel={setFilterModel}
+                title={title}
+            />
+            {/* {getFooterDetails()} */}
+          </div>
+        </FullScreenCenterOverlayContainer>
+    );
 
 }
 

@@ -18,10 +18,6 @@ const SonarCoverageTableMetadata = {
       label: "Timestamp",
       id: "timestamp",
     },
-    // {
-    //   label: "Trend",
-    //   id: "status",
-    // },
     {
       label: "Code Coverage %",
       id: "coverage",

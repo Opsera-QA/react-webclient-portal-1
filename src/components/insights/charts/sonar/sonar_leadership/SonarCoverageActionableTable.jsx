@@ -91,15 +91,15 @@ function SonarCoverageActionableTable({ kpiConfiguration, dashboardData }) {
   };
 
   return (
-      <div className={"p-3"}>
-        <SonarRatingCodeCoverageActionableInsightTable
-          isLoading={isLoading}
-          coverageData={coverageData}
-          filterModel={filterModel}
-          setFilterModel={setFilterModel}
-          loadData={loadData}
-        />
-      </div>
+    <div className={"p-3"}>
+      <SonarRatingCodeCoverageActionableInsightTable
+        isLoading={isLoading}
+        coverageData={coverageData}
+        filterModel={filterModel}
+        setFilterModel={setFilterModel}
+        loadData={loadData}
+      />
+    </div>
   );
 }
 

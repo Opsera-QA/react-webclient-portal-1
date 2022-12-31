@@ -18,29 +18,21 @@ import SdlcDurationByStageMetricsEditorPanel
   from "components/insights/charts/sdlc/bar_chart/duration_by_stage/SdlcDurationByStageMetricsEditorPanel";
 import SalesforceDurationByStageMetricsEditorPanel
   from "../../charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageMetricsEditorPanel";
-import OpseraBuildAndDeploymentStatisticsEditorPanel
-  from "../../charts/opsera/build_and_deploy_statistics/OpseraBuildAndDeploymentStatisticsEditorPanel";
 import FirstPassYieldMetricsEditorPanel from "../../charts/first_pass/FirstPassYieldMetricsEditorPanel";
 import AutomationPercentageMetricEditorPanel
   from "../../charts/automation_percentage/AutomationPercentageMetricEditorPanel";
 import SonarRatingMetricsEditorPanel from "../../charts/sonar/sonar_ratings/SonarRatingMetricsEditorPanel";
-import AllGithubActionsDataBlockEditorPanel from "../../charts/github_actions/data_blocks/AllGithubActions/AllGithubActionsDataBlockEditorPanel";
 import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
-import LeadTimeAndReleaseTracebilityEditorPanel
-  from "../../charts/github_actions/data_blocks/LeadTimeAndReleaseTracebilityEditorPanel";
 import ServiceNowMeanTimeToResolutionEditorPanel
   from "../../charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionEditorPanel";
-import GitlabDeploymentFrequencyEditorPanel from "components/insights/charts/gitlab/deployment_frequency/GitlabDeploymentFrequencyEditorPanel";
-import QuickDeployStatisticsEditorPanel
-  from "../../charts/opsera/quick_deploy_statistics/QuickDeployStatisticsEditorPanel";
+import QuickDeployStatisticsEditorPanel from "../../charts/quick-deploy-statistics/QuickDeployStatisticsEditorPanel";
 import SalesforceComponentsEditorPanel
   from "../../charts/sfdc/data_block_chart/Salesforce_components/SalesforceComponentsEditorPanel";
 import ApigeeReportsEditorPanel from "../../charts/apigee/reports/ApigeeReportsEditorPanel";
+import GitlabDeploymentFrequencyEditorPanel from "components/insights/charts/gitlab/deployment_frequency/GitlabDeploymentFrequencyEditorPanel";
 import ApigeeSummaryEditorPanel from "../../charts/apigee/summary/ApigeeSummaryEditorPanel";
 import BoomiBarChartEditorPanel from "components/insights/charts/boomi/bar_chart/BoomiBarChartEditorPanel";
 import GitlabLeadTimeEditorPanel from "../../charts/gitlab/line_chart/lead_time/GitlabLeadTimeEditorPanel";
-import GithubActionsWorkflowEditorPanel
-  from "../../charts/github_actions/data_blocks/GithubActionsWorkflow/GithubActionsWorkflowEditorPanel";
 import JiraMeanTimeToResolutionEditorPanel
   from "../../charts/jira/bar_chart/mean_time_to_resolution/JiraMeanTimeToResolutionEditorPanel";
 import JiraChangeFailureRateEditorPanel from "components/insights/charts/jira/line_chart/change_failure_rate/JiraChangeFailureRateEditorPanel";
@@ -51,7 +43,7 @@ import DoraJiraGitlabRolledUpEditorPanel
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
-  {
+    {
     kpiConfiguration,
     setKpiConfiguration,
     dashboardData,
@@ -143,7 +135,7 @@ function DashboardMetricOverlayContainer(
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.BUILD_DEPLOYMENT_STATISTICS:
         return (
-          <OpseraBuildAndDeploymentStatisticsEditorPanel
+          <SalesforceDurationByStageMetricsEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}
@@ -177,47 +169,9 @@ function DashboardMetricOverlayContainer(
             unpackedFilterData={unpackedFilterData}
           />
         );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.ALL_GITHUB_ACTIONS_DATA_BLOCK:
-        return (
-          <AllGithubActionsDataBlockEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.LEAD_TIME_AND_RELEASE_TRACEABILITY:
-        return (
-          <LeadTimeAndReleaseTracebilityEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-          />
-        );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.SERVICE_NOW_MEAN_TIME_TO_RESOLUTION:
         return (
           <ServiceNowMeanTimeToResolutionEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY:
-        return (
-          <GitlabDeploymentFrequencyEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
-        return (
-          <GitlabLeadTimeEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}
@@ -275,6 +229,26 @@ function DashboardMetricOverlayContainer(
             kpiConfiguration={kpiConfiguration}
           />
         );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY:
+        return (
+          <GitlabDeploymentFrequencyEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
+        return (
+          <GitlabLeadTimeEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_SUMMARY:
         return (
           <ApigeeSummaryEditorPanel
@@ -308,16 +282,6 @@ function DashboardMetricOverlayContainer(
       case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
         return(
           <JiraChangeFailureRateEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_ACTIONS_WORKFLOW:
-        return(
-          <GithubActionsWorkflowEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}
@@ -364,7 +328,7 @@ function DashboardMetricOverlayContainer(
       />
     );
   }
-  
+
   return (
     <OverlayPanelBodyContainer
       getHelpComponentFunction={getHelpComponentFunction}

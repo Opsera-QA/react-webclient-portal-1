@@ -6,7 +6,7 @@ import ThreeLinePercentageBlockBase from "components/common/metrics/percentage/T
 import TwoLineScoreDataBlock from "components/common/metrics/score/TwoLineScoreDataBlock";
 import TwoLinePercentageDataBlock from "components/common/metrics/percentage/TwoLinePercentageDataBlock";
 
-function SonarRatingsLeadershipCodeCoverageDataBlockContainer(
+function SonarRatingsLeadershipCodeCoverageBlockContainer(
   {
     tests,
     lineCoverage,
@@ -56,7 +56,7 @@ function SonarRatingsLeadershipCodeCoverageDataBlockContainer(
   );
 }
 
-SonarRatingsLeadershipCodeCoverageDataBlockContainer.propTypes = {
+SonarRatingsLeadershipCodeCoverageBlockContainer.propTypes = {
   tests: PropTypes.number,
   lineCoverage: PropTypes.number,
   duplicate: PropTypes.number,
@@ -68,4 +68,4 @@ SonarRatingsLeadershipCodeCoverageDataBlockContainer.propTypes = {
   iconOverlayBody: PropTypes.any,
 };
 
-export default SonarRatingsLeadershipCodeCoverageDataBlockContainer;
+export default SonarRatingsLeadershipCodeCoverageBlockContainer;

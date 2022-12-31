@@ -81,9 +81,9 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
           pipelineRunCount={unitTestMetricScorecardDto.getData('runCount')}
           pipelineDuration={getDuration()}
         />
-        <Row className="d-flex align-items-center">
-          <Col sm={12} md={6} lg={6}> 
-            <div className="data-block-box ml-5 mr-5">
+        <Row className="align-items-center">
+          <Col sm={12} md={4} lg={4}> 
+            <div className="data-block-box ml-2" >
               <InsightHighlightFieldWithTrendIcon
                   dataObject={unitTestMetricScorecardDto}
                   fieldName="tests"
@@ -91,7 +91,7 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
               />
             </div>
           </Col>
-          <Col sm={12} md={6} lg={6} >
+          <Col sm={12} md={8} lg={8}>
             <div style={{ height: '180px' }}>      
               <ResponsivePie
                 data={chartData}
@@ -101,7 +101,7 @@ function ProjectWiseUnitTestResultSummaryCard({ mergeRequestData, loadData }) {
               />
             </div>
           </Col>
-          </Row>         
+        </Row>         
         </div>
     </InsightsCardContainerBase>
   );

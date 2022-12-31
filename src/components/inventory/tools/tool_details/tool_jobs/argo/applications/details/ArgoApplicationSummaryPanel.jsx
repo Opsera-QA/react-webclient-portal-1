@@ -34,4 +34,5 @@ ArgoApplicationSummaryPanel.propTypes = {
   argoApplicationData: PropTypes.object,
 };
 
+
 export default ArgoApplicationSummaryPanel;

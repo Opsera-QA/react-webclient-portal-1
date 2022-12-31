@@ -37,5 +37,5 @@ const CoverityConnectionMetadata = {
         fileName: ""
       }
   };
-
+  
   export default CoverityConnectionMetadata;

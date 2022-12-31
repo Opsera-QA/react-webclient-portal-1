@@ -2,22 +2,22 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import LookupMetricTotalsDataBlocks from "components/insights/lookup/LookupMetricTotalsDataBlocks";
 import InsightsLookupPipelinesTable from "components/insights/lookup/InsightsLookupPipelinesTable";
-import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
+import TabTreeAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import VanitySetVerticalTab from "components/common/tabs/vertical_tabs/VanitySetVerticalTab";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
 import LookupMultiSelectInput from "components/insights/lookup/LookupMultiSelectInput";
 
 function LookupResults({
-  isLoading,
-  loadData,
-  filterModel,
-  searchResults,
-  salesforceComponentNames,
-  selectedComponentName,
-  setSelectedComponentName,
-  noDataMessage,
-}) {
+                         isLoading,
+                         loadData,
+                         filterModel,
+                         searchResults,
+                         salesforceComponentNames,
+                         selectedComponentName,
+                         setSelectedComponentName,
+                         noDataMessage,
+                       }) {
   const handleTabClick = async (componentName) => {
     setSelectedComponentName(componentName);
     loadData(filterModel, componentName);
@@ -73,7 +73,7 @@ function LookupResults({
 
   const getBody = () => {
     return (
-      <TabAndViewContainer
+      <TabTreeAndViewContainer
         verticalTabContainer={getTabContainer()}
         currentView={getCurrentView()}
         tabColumnSize={3}

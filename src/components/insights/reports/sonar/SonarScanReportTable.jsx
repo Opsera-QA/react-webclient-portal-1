@@ -53,7 +53,14 @@ function SonarScanReportTable(
       titleIcon={faTally}
       title={"SonarQube Scan"}
       className={"px-2 pb-2"}
-      exportButton={<ExportSonarQubeScanDetailsButton className={"ml-2"} isLoading={isLoading} scanData={data} allSonarIssues={allSonarIssues} />}
+      exportButton={
+        <ExportSonarQubeScanDetailsButton
+          className={"ml-2"}
+          isLoading={isLoading}
+          scanData={data}
+          allSonarIssues={allSonarIssues}
+        />
+      }
     />
   );
 }

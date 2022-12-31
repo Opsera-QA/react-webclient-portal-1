@@ -42,8 +42,16 @@ bitbucketActions.getBranchesFromBitbucketInstanceV2 = async (getAccessToken, can
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
 };
 
-bitbucketActions.getBranchesFromBitbucketInstanceV3 = async (getAccessToken, cancelTokenSource, toolId, workspace, repositoryId, searchTerm) => {
+bitbucketActions.getBranchesFromBitbucketInstanceV3 = async (
+  getAccessToken,
+  cancelTokenSource,
+  toolId,
+  workspace,
+  repositoryId,
+  searchTerm,
+) => {
   const apiUrl = `/tools/${toolId}/bitbucket/v2/branches`;
+
   const queryParams = {
     params: {
       workspace: workspace,
@@ -51,9 +59,15 @@ bitbucketActions.getBranchesFromBitbucketInstanceV3 = async (getAccessToken, can
       searchTerm: searchTerm ? searchTerm : "",
     },
   };
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
+
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    queryParams,
+  );
 };
- 
+
 bitbucketActions.getReviewers = async (getAccessToken, cancelTokenSource, toolId, workspace, repository) => {
   const apiUrl = `/tools/${toolId}/bitbucket/reviewers`;
   const queryParams = {
@@ -62,5 +76,6 @@ bitbucketActions.getReviewers = async (getAccessToken, cancelTokenSource, toolId
       repository: repository,
     },
   };
+
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
 };

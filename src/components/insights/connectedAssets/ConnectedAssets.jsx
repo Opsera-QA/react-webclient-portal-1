@@ -6,7 +6,7 @@ import ConnectedAssetsDetails from "./ConnectedAssetsDetails";
 import modelHelpers from "components/common/model/modelHelpers";
 import { Button, Popover, Overlay } from "react-bootstrap";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
-import {format, addDays, isSameDay} from "date-fns";
+import {format, addDays} from "date-fns";
 import { DateRangePicker } from "react-date-range";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import IconBase from "components/common/icons/IconBase";

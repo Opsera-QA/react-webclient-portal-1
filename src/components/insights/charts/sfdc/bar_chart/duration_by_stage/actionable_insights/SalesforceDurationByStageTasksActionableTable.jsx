@@ -9,19 +9,19 @@ import {
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
-import { faDraftingCompass, faTasks } from "@fortawesome/pro-light-svg-icons";
+import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 
 // TODO: Convert to cards
 function SalesforceDurationByStageTasksActionableTable({
-                                                           data,
-                                                           isLoading,
-                                                           loadData,
-                                                           filterModel,
-                                                           setFilterModel,
-                                                           title,
-                                                       }) {
+                                                             data,
+                                                             isLoading,
+                                                             loadData,
+                                                             filterModel,
+                                                             setFilterModel,
+                                                             title,
+                                                         }) {
     const toastContext = useContext(DialogToastContext);
     const fields = SalesforcePipelineTableMetadata.fields;
     const tableTitle = "Tasks Deployments Report";
@@ -58,7 +58,7 @@ function SalesforceDurationByStageTasksActionableTable({
         <FilterContainer
             isLoading={isLoading}
             title={tableTitle}
-            titleIcon={faTasks}
+            titleIcon={faDraftingCompass}
             body={getTable()}
             className={"px-2 pb-2"}
             loadData={loadData}

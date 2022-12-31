@@ -8,6 +8,7 @@ import MetricScoreText from "components/common/metrics/score/MetricScoreText";
 import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
 import MetricPercentageText from "components/common/metrics/percentage/MetricPercentageText";
 import {METRIC_QUALITY_LEVELS} from "components/common/metrics/text/MetricTextBase";
+import {faAbacus} from "@fortawesome/pro-light-svg-icons";
 
 function OverallReleaseDurationMetrics() {
   const toastContext = useContext(DialogToastContext);
@@ -78,6 +79,7 @@ function OverallReleaseDurationMetrics() {
       <div className={"d-flex"}>
         <DataBlockBoxContainer className={"mr-2"}>
           <ThreeLineDataBlockBase
+            icon={faAbacus}
             className={"p-2"}
             topText={"Successful Builds"}
             middleText={<MetricScoreText score={120} qualityLevel={METRIC_QUALITY_LEVELS.DANGER} />}

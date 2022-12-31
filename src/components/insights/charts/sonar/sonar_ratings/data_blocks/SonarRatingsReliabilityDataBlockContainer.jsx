@@ -10,13 +10,12 @@ import Col from "react-bootstrap/Col";
 import OneLineGoalDataBlockBase from "components/common/metrics/goals/single/OneLineGoalDataBlockBase";
 import Row from "react-bootstrap/Row";
 import StandardTwoGoalDataBlock from "components/common/metrics/goals/double/StandardTwoGoalDataBlock";
-import ThreeLinePercentageBlockBase from "../../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
 import ThreeLineScoreDataBlock from "../../../../../common/metrics/score/ThreeLineScoreDataBlock";
 
 function SonarRatingsReliabilityDataBlockContainer({ reliabilityRating, bugCount, kpiConfiguration, dashboardData, dataPoint, className,
                                                      lastScore,
                                                      icon,
-                                                     iconOverlayBody, }) {
+                                                     iconOverlayBody,  }) {
   const toastContext = useContext(DialogToastContext);
 
   const onRowSelect = () => {
