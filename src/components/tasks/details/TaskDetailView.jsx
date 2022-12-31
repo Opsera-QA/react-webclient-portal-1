@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { useLocation, useParams } from "react-router-dom";
 import TaskDetailPanel from "components/tasks/details/TaskDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
@@ -39,11 +39,19 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import {numberHelpers} from "components/common/helpers/number/number.helpers";
 import ViewTaskAuditLogsActionBarButton from "components/tasks/buttons/ViewTaskAuditLogsActionBarButton";
 
+const pausedMessage = "This Task has been paused. Please check the activity logs for details.";
+const stoppedMessage = "This Task has completed running. Please check the activity logs for details.";
+const failedMessage = "This Task has completed running with a failed status. Please check the activity logs for details.";
+const successMessage = "This Task has completed running with a successful status. Please check the activity logs for details.";
+const runningMessage = "This Task is currently running. Please check the activity logs for details.";
+
 function TaskDetailView() {
   const location = useLocation();
   const { id } = useParams();
+  const [isTaskRunning, setIsTaskRunning] = useState(false);
   const {
     accessRoleData,
+    toastContext
   } = useComponentStateReference();
   const {
     taskModel,
@@ -66,6 +74,25 @@ function TaskDetailView() {
       loadData();
     }
   }, [status, runCount, updatedAt]);
+
+  // useEffect(() => {
+  //   if (status === "paused") {
+  //     toastContext.showSystemWarningToast(pausedMessage, 20);
+  //     setIsTaskRunning(false);
+  //   } else if (isTaskRunning === true && status === "stopped") {
+  //     toastContext.showSystemInformationToast(stoppedMessage, 20);
+  //     setIsTaskRunning(false);
+  //   } else if (isTaskRunning === true && status === "failed") {
+  //     toastContext.showSystemErrorToast(failedMessage, undefined, 20);
+  //     setIsTaskRunning(false);
+  //   } else if (isTaskRunning === true && status === "success") {
+  //     toastContext.showSystemSuccessToast(successMessage, 20);
+  //     setIsTaskRunning(false);
+  //   } else if (isTaskRunning !== true && status === "running") {
+  //     toastContext.showSystemInformationToast(runningMessage, 20);
+  //     setIsTaskRunning(true);
+  //   }
+  // }, [status]);
 
   const getActionBar = () => {
     return (
