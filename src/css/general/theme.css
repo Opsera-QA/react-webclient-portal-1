@@ -518,7 +518,7 @@ a.text-primary:hover, a.text-primary:focus {
     color: #fff;
 }
 
-.custom-table .table-row:hover {
+.custom-table .table-row:hover, .standalone-checkbox-input:hover {
     background: rgb(230, 229, 227);
     color: black;
 }
