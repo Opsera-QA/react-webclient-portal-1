@@ -95,6 +95,7 @@ function TaskDetailPanel(
             setGitTasksData={setGitTasksData}
             loadData={loadData}
             status={status}
+            runCount={runCount}
           />
         );
       case "settings":
@@ -135,7 +136,12 @@ function TaskDetailPanel(
     }
   };
 
-  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
+  return (
+    <DetailTabPanelContainer
+      detailView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
+  );
 }
 
 TaskDetailPanel.propTypes = {

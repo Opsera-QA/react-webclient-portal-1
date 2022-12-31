@@ -7,21 +7,28 @@ export const accountSettingsTrails = {};
 // LDAP Site Roles Administration
 accountSettingsTrails.ldapSiteRolesManagement = {
   parent: "accountSettings",
-    name: "ldapSiteRolesManagement",
-    path: accountSettingsPaths.ldapSiteRoleManagement,
-    title: "Site Roles Management",
-    linkText: "Site Roles",
-    icon: faServer,
-    pageDescription: "Manage Site Roles in the follow levels: Administrators, Power Users, and Users.",
+  name: "ldapSiteRolesManagement",
+  path: accountSettingsPaths.ldapSiteRoleManagement,
+  title: "Site Roles Management",
+  linkText: "Site Roles",
+  icon: faServer,
+  pageDescription: "Manage Site Roles in the follow levels: Administrators, Power Users, and Users.",
+  // pageDescription: `
+  //     Site Roles determine a user’s level of accessibility.
+  //     Manage Site Roles from this dashboard. By default, Opsera offers tiers for Site Roles:
+  //     Administrators for full site wide access, Power Users for elevated configuration of features access and then Users for all standard users to interact with the site.
+  //     If a user is not a member of any one of these roles they will be treated as a read-only user with very limited access.
+  //     Some additional roles can be enabled here (by Administrators) to add more advanced security features.
+  //   `,
 };
 
 accountSettingsTrails.ldapSiteRoleDetailView = {
   parent: "ldapSiteRolesManagement",
-    name: "ldapSiteRoleDetailView",
-    path: accountSettingsPaths.ldapSiteRoleDetailView,
-    title: "Site Role Details",
-    linkText: "Site Role Details",
-    icon: faServer,
+  name: "ldapSiteRoleDetailView",
+  path: accountSettingsPaths.ldapSiteRoleDetailView,
+  title: "Site Role Details",
+  linkText: "Site Role Details",
+  icon: faServer,
 };
 
 accountSettingsTrails.ldapAdministratorsSiteRoleDetailView = {
@@ -29,7 +36,7 @@ accountSettingsTrails.ldapAdministratorsSiteRoleDetailView = {
   name: "ldapAdministratorsSiteRoleDetailView",
   path: accountSettingsPaths.ldapSiteRoleDetailView,
   pathFunction: (userData) => siteRoleHelper.getAdministrationSiteRoleDetailViewLink(userData),
-  title: "Administrators Site Role Details",
+  title: "Administrators",
   linkText: "Administrators",
   pageDescription: siteRoleHelper.getSiteRolePermissionText("Administrators"),
 };
@@ -39,7 +46,7 @@ accountSettingsTrails.ldapPowerUsersSiteRoleDetailView = {
   name: "ldapPowerUsersSiteRoleDetailView",
   path: accountSettingsPaths.ldapSiteRoleDetailView,
   pathFunction: (userData) => siteRoleHelper.getPowerUsersSiteRoleDetailViewLink(userData),
-  title: "Power Users Site Role Details",
+  title: "Power Users",
   linkText: "Power Users",
   pageDescription: siteRoleHelper.getSiteRolePermissionText("PowerUsers"),
 };
@@ -49,7 +56,7 @@ accountSettingsTrails.ldapUsersSiteRoleDetailView = {
   name: "ldapUsersSiteRoleDetailView",
   path: accountSettingsPaths.ldapSiteRoleDetailView,
   pathFunction: (userData) => siteRoleHelper.getUsersSiteRoleDetailViewLink(userData),
-  title: "Users Site Role Details",
+  title: "Users",
   linkText: "Users",
   pageDescription: siteRoleHelper.getSiteRolePermissionText("Users"),
 };
@@ -59,7 +66,7 @@ accountSettingsTrails.ldapSecurityManagersSiteRoleDetailView = {
   name: "ldapSecurityManagersSiteRoleDetailView",
   path: accountSettingsPaths.ldapSiteRoleDetailView,
   pathFunction: (userData) => siteRoleHelper.getSecurityManagersSiteRoleDetailViewLink(userData),
-  title: "Security Managers Site Role Details",
+  title: "Security Managers",
   linkText: "Security Managers",
   pageDescription: siteRoleHelper.getSiteRolePermissionText("SecurityManagers"),
 };
@@ -69,7 +76,7 @@ accountSettingsTrails.ldapAuditorsSiteRoleDetailView = {
   name: "ldapAuditorsSiteRoleDetailView",
   path: accountSettingsPaths.ldapSiteRoleDetailView,
   pathFunction: (userData) => siteRoleHelper.getAuditorsSiteRoleDetailViewLink(userData),
-  title: "Auditors Site Role Details",
+  title: "Auditors",
   linkText: "Auditors",
   pageDescription: siteRoleHelper.getSiteRolePermissionText("Auditors"),
 };

@@ -15,18 +15,20 @@ export default function useGetPollingTaskOrchestrationStatusById(
     status,
     runCount,
     restingStepId,
+    updatedAt,
   } = useGetTaskOrchestrationStatusById(id, handleErrorFunction);
 
   usePollingInterval(() => {
     if (loadData) {
       loadData();
     }
-  }, Math.max(pollingDelayInMs, 5000));
+  }, Math.max(pollingDelayInMs, 5000), error);
 
   return ({
     status: status,
     runCount: runCount,
-    restingStepId,
+    restingStepId: restingStepId,
+    updatedAt: updatedAt,
     loadData: loadData,
     isLoading: isLoading,
     error: error,

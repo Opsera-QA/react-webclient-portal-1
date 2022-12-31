@@ -1,43 +1,44 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import Modal from "components/common/modal/modal";
 import {
-  faSearchPlus,
   faCog,
   faArchive,
-  faFlag,
   faPen,
-  faExclamationTriangle,
   faSpinner,
   faCheckCircle,
-  faEnvelope,
   faTimesCircle,
-  faTrash,
-  faBan,
   faTerminal, faOctagon,
 } from "@fortawesome/pro-light-svg-icons";
-import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import StepToolActivityView from "./step_configuration/StepToolActivityView";
-import pipelineActions from "components/workflow/pipeline-actions";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 import { pipelineValidationHelper } from "components/workflow/pipelines/helpers/pipelineValidation.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import PipelineStepNotificationConfigurationOverlay
-  from "components/workflow/plan/step/notifications/PipelineStepNotificationConfigurationOverlay";
 import IconBase from "components/common/icons/IconBase";
-import LoadingIcon from "components/common/icons/LoadingIcon";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import PipelineStepEditorOverlay from "components/workflow/plan/step/PipelineStepEditorOverlay";
-import PipelineStepDetailsOverviewOverlay
-  from "components/workflow/pipelines/overview/step/PipelineStepDetailsOverviewOverlay";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import PipelineStepWorkflowItemBody
   from "components/workflow/pipelines/pipeline_details/workflow/item/PipelineStepWorkflowItemBody";
-
-const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
+import PipelineStepWorkflowItemViewSettingsButton
+  from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowItemViewSettingsButton";
+import PipelineStepActivityLogOverlay
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineStepActivityLogOverlay";
+import PipelineStepWorkflowItemEditNotificationSettingsButton
+  from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowItemEditNotificationSettingsButton";
+import AccessDeniedOverlayBase from "components/common/overlays/center/denied/AccessDeniedOverlayBase";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
+import PipelineStepWorkflowStepDeleteStepButton
+  from "components/workflow/pipelines/pipeline_details/workflow/item/button/PipelineStepWorkflowStepDeleteStepButton";
+import PipelineStepWorkflowStepDisabledStepIcon
+  from "components/workflow/pipelines/pipeline_details/workflow/item/icon/PipelineStepWorkflowStepDisabledStepIcon";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import PipelineWorkflowStepIncompleteStepIcon
+  from "components/workflow/pipelines/pipeline_details/workflow/item/icon/PipelineWorkflowStepIncompleteStepIcon";
+import PipelineStepWorkflowStepAwaitingApprovalStepIcon
+  from "components/workflow/pipelines/pipeline_details/workflow/item/icon/PipelineStepWorkflowStepAwaitingApprovalStepIcon";
 
 const PipelineWorkflowItem = (
   {
@@ -49,28 +50,20 @@ const PipelineWorkflowItem = (
     pipelineId,
     editWorkflow,
     parentCallbackEditItem,
-    deleteStep,
-    parentHandleViewSourceActivityLog,
     parentWorkflowStatus,
     toolIdentifier,
     loadPipeline,
   }) => {
   const [currentStatus, setCurrentStatus] = useState({});
   const [itemState, setItemState] = useState("");
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [modalDeleteIndex, setModalDeleteIndex] = useState(false);
-  const [modalDeleteObj, setModalDeleteObj] = useState(false);
-  const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
-  const [activityLogModal, setActivityLogModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [showToolActivity, setShowToolActivity] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isToolSet, setIsToolSet] = useState(false);
   const [runCountState, setRunCountState] = useState(undefined);
   const {
     toastContext,
-    getAccessToken,
     userData,
   } = useComponentStateReference();
+  const isToolSet = DataParsingHelper.parseNestedString(item, "tool.tool_identifier", false) !== false;
 
   useEffect(() => {
     loadFormData(item, lastStep, index, plan).catch(error => {
@@ -84,7 +77,6 @@ const PipelineWorkflowItem = (
   const loadFormData = async (item, lastStep, index, plan) => {
     setCurrentStatus({});
     setItemState("");
-    setIsToolSet(DataParsingHelper.parseNestedString(item, "tool.tool_identifier") !== false);
 
     // TOOD: We should make a helper function to handle this
     if (item !== undefined) {
@@ -95,11 +87,7 @@ const PipelineWorkflowItem = (
       const lastStepSuccess = DataParsingHelper.parseNestedObject(lastStep, "success");
 
       if (lastStepSuccess) {
-        let stepArrayIndex = plan.findIndex((x) => {
-          if (x._id && x._id.toString() === lastStepSuccess.step_id) {
-            return true;
-          }
-        });
+        const stepArrayIndex = pipelineHelper.getStepIndexFromPlan(plan, lastStepSuccess?.step_id);
         if (index === stepArrayIndex) {  //current step is successful, so it's completed
           setCurrentStatus(lastStepSuccess);
           setItemState("completed");
@@ -109,9 +97,11 @@ const PipelineWorkflowItem = (
       const lastStepRunning = DataParsingHelper.parseNestedObject(lastStep, "running");
 
       if (lastStepRunning) {
-        let stepArrayIndex = plan.findIndex(x => x?._id?.toString() === lastStepRunning.step_id);
-        if (index === stepArrayIndex) {  //current step is successful, so it's completed
+        const stepArrayIndex = pipelineHelper.getStepIndexFromPlan(plan, lastStepRunning?.step_id);
+
+        if (index === stepArrayIndex) {  //current step is running, so it's completed
           setCurrentStatus(lastStepRunning);
+
           if (lastStepRunning.paused) {
             setItemState("paused");
           } else if (lastStepRunning.status === "stopped") {
@@ -125,8 +115,9 @@ const PipelineWorkflowItem = (
       const lastStepFailed = DataParsingHelper.parseNestedObject(lastStep, "failed");
 
       if (lastStepFailed) {
-        let stepArrayIndex = plan.findIndex(x => x?._id?.toString() === lastStepFailed.step_id);
-        if (index === stepArrayIndex) {  //current step is successful, so it's completed
+        const stepArrayIndex = pipelineHelper.getStepIndexFromPlan(plan, lastStepFailed?.step_id);
+
+        if (index === stepArrayIndex) {  //current step is failed, so it's completed
           setCurrentStatus(lastStepFailed);
           setItemState("failed");
         }
@@ -134,125 +125,80 @@ const PipelineWorkflowItem = (
     }
   };
 
-  /*  const handleViewClick = (data, header) => {
-      setActivityLogModal({ show: true, header: header, message: data, button: "OK" });
-    };*/
-
-  const handleSummaryViewClick = () => {
-    toastContext.showOverlayPanel(
-      <PipelineStepDetailsOverviewOverlay pipelineStepData={item} />
-    );
-  };
-
-  const handleViewStepActivityLogClick = async (pipelineId, toolIdentifier, itemId) => {
+  const handleViewStepActivityLogClick = async (pipelineId, toolIdentifier, itemId, activityId) => {
     setIsLoading(true);
-    await parentHandleViewSourceActivityLog(pipelineId, toolIdentifier, itemId);
+    toastContext.showOverlayPanel(
+      <PipelineStepActivityLogOverlay
+        pipelineId={pipelineId}
+        stepId={itemId}
+        tool={toolIdentifier}
+        activityId={activityId}
+      />
+    );
     setIsLoading(false);
   };
 
   const handleEditClick = async (type, tool, itemId, pipelineStep) => {
-    if (PipelineRoleHelper.canUpdatePipelineStepDetails(userData, pipeline) !== true) {
-      setInfoModal({
-        show: true,
-        header: "Permission Denied",
-        message: "Editing step settings is not allowed.  This action requires elevated privileges.",
-        button: "OK",
-      });
-      return;
-    }
-
-    setIsLoading(true);
-    const toolIdentifier = tool?.tool_identifier;
-    if (hasStringValue(toolIdentifier) === true) {
-
-      const newOverlayToolIdentifiers = [
-        toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION,
-        toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS,
-        toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION,
-      ];
-      if (newOverlayToolIdentifiers.includes(toolIdentifier) === true && type === "tool") {
+    try {
+      setIsLoading(true);
+      if (PipelineRoleHelper.canUpdatePipelineStepDetails(userData, pipeline) !== true) {
         toastContext.showOverlayPanel(
-          <PipelineStepEditorOverlay
-            pipeline={pipeline}
-            pipelineStep={pipelineStep}
-            loadPipeline={loadPipeline}
-          />
+          <AccessDeniedOverlayBase>
+            Editing step settings is not allowed. This action requires elevated privileges.
+          </AccessDeniedOverlayBase>
         );
+        return;
       }
-      else {
-        await parentCallbackEditItem({type: type, tool_name: tool.tool_identifier, step_id: itemId});
+
+      const toolIdentifier = tool?.tool_identifier;
+
+      if (hasStringValue(toolIdentifier) === true) {
+        const newOverlayToolIdentifiers = [
+          toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION,
+          toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS,
+          toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION,
+        ];
+
+        if (newOverlayToolIdentifiers.includes(toolIdentifier) === true && type === "tool") {
+          toastContext.showOverlayPanel(
+            <PipelineStepEditorOverlay
+              pipeline={pipeline}
+              pipelineStep={pipelineStep}
+              loadPipeline={loadPipeline}
+            />
+          );
+        } else {
+          await parentCallbackEditItem({type: type, tool_name: tool.tool_identifier, step_id: itemId});
+        }
+      } else {
+
+        if (PipelineRoleHelper.canModifyPipelineWorkflowStructure(userData, pipeline) !== true) {
+          toastContext.showOverlayPanel(
+            <AccessDeniedOverlayBase>
+              Editing pipeline workflow structure is not allowed for this unconfigured step. This action requires
+              elevated privileges. The Pipeline Step needs to have its tool set by someone with sufficient access.
+            </AccessDeniedOverlayBase>
+          );
+          return;
+        }
+        await parentCallbackEditItem({type: "step", tool_name: "", step_id: itemId});
       }
-    } else {
-      await parentCallbackEditItem({ type: type, tool_name: "", step_id: itemId });
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
-  };
-
-  const editStepNotificationConfiguration = async (pipelineStep) => {
-    if (PipelineRoleHelper.canUpdatePipelineStepNotifications(userData, pipeline) !== true) {
-      setInfoModal({
-        show: true,
-        header: "Permission Denied",
-        message: "Editing step notifications is not allowed.  This action requires elevated privileges.",
-        button: "OK",
-      });
-      return;
-    }
-
-    toastContext.showOverlayPanel(
-      <PipelineStepNotificationConfigurationOverlay
-        pipelineId={pipeline?._id}
-        pipelineStep={pipelineStep}
-        loadPipeline={loadPipeline}
-      />
-    );
-  };
-
-  const handleDeleteStepClick = (index, pipeline, step) => {
-    let deleteObj = {
-      "pipelineId": pipeline._id,
-      "stepId": step._id,
-      "toolIdentifier": step?.tool?.tool_identifier,
-      "configuration": {
-        "toolConfigId" : step?.tool?.configuration?.toolConfigId,
-        "jobName" : step?.tool?.configuration?.jobName
-      }
-    };
-    setShowDeleteModal(true);
-    setModalDeleteIndex(index);
-    setModalDeleteObj(deleteObj);
-  };
-
-  const handleDeleteStepClickConfirm = async (index, deleteObj) => {
-    setShowDeleteModal(false);
-    if (deleteObj.toolIdentifier && jenkinsTools.includes(deleteObj.toolIdentifier)) {
-      // make an kafka call to delete jenkins job
-      await pipelineActions.deleteJenkinsJob(deleteObj, getAccessToken);
-    }
-    deleteStep(index);
   };
 
   const getBottomActionBarButtons = () => {
-    if (isToolSet === true) {
+    if (!editWorkflow) {
       return (
       <div className={"ml-auto d-flex"}>
-        {!editWorkflow &&
+        {isToolSet === true &&
           <>
-            {PipelineRoleHelper.canViewStepConfiguration(userData, pipeline) &&
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 400 }}
-                overlay={renderTooltip({ message: "View Settings" })}>
-                <div>
-                  <IconBase icon={faSearchPlus} //settings!
-                            className={"text-muted mx-1 pointer"}
-                            onClickFunction={() => {
-                              handleSummaryViewClick();
-                            }} />
-                </div>
-              </OverlayTrigger>
-            }
-
+            <PipelineStepWorkflowItemViewSettingsButton
+              editingWorkflow={editWorkflow}
+              pipeline={pipeline}
+              step={item}
+            />
             {itemState !== "running" ? //if THIS step is running
               <>
                 <OverlayTrigger
@@ -284,57 +230,40 @@ const PipelineWorkflowItem = (
                 </OverlayTrigger>}
               </>}
 
-            {parentWorkflowStatus !== "running" && parentWorkflowStatus !== "paused" ? //if the overall pipeline is in a running/locked state
-              <>
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Configure Step Notification and Approval Rules" })}>
-                  <div>
-                    <IconBase icon={faEnvelope}
-                              className={"pointer text-muted mx-1"}
-                              onClickFunction={() => {
-                                editStepNotificationConfiguration(item);
-                              }} />
-                  </div>
-                </OverlayTrigger>
-
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Configure Step Settings" })}>
-                  <div>
-                    <IconBase icon={faCog}
-                              className={"text-muted mx-1 pointer"}
-                              onClickFunction={() => {
-                                handleEditClick("tool", item.tool, item._id, item);
-                              }}
-                    />
-                  </div>
-                </OverlayTrigger>
-              </>
-              :
-              <>
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
-                  <div>
-                    <IconBase icon={faEnvelope}
-                              className={"text-muted mx-1"} />
-                  </div>
-                </OverlayTrigger>
-
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Cannot access settings while pipeline is running" })}>
-                  <div>
-                    <IconBase icon={faCog}
-                              className={"text-muted mx-1"} />
-                  </div>
-                </OverlayTrigger>
-              </>}
+            <PipelineStepWorkflowItemEditNotificationSettingsButton
+              pipeline={pipeline}
+              step={item}
+              editingWorkflow={editWorkflow}
+              pipelineStatus={parentWorkflowStatus}
+            />
+          </>}
+        {parentWorkflowStatus !== "running" && parentWorkflowStatus !== "paused" ? //if the overall pipeline is in a running/locked state
+          <>
+            <OverlayTrigger
+              placement="top"
+              delay={{show: 250, hide: 400}}
+              overlay={renderTooltip({message: "Configure Step Settings"})}>
+              <div>
+                <IconBase icon={faCog}
+                          className={"text-muted mx-1 pointer"}
+                          onClickFunction={() => {
+                            handleEditClick("tool", item.tool, item._id, item);
+                          }}
+                />
+              </div>
+            </OverlayTrigger>
+          </>
+          :
+          <>
+            <OverlayTrigger
+              placement="top"
+              delay={{show: 250, hide: 400}}
+              overlay={renderTooltip({message: "Cannot access settings while pipeline is running"})}>
+              <div>
+                <IconBase icon={faCog}
+                          className={"text-muted mx-1"}/>
+              </div>
+            </OverlayTrigger>
           </>}
       </div>
       );
@@ -349,8 +278,10 @@ const PipelineWorkflowItem = (
 
           <div className={"ml-auto d-flex"}>
             <div className={"ml-auto d-flex mr-1"}>
-
-              {isLoading && <LoadingIcon className={"green"} />}
+              <IconBase
+                isLoading={isLoading}
+                className={"green"}
+              />
 
               {isToolSet && !editWorkflow && !isLoading &&
               <>
@@ -362,7 +293,7 @@ const PipelineWorkflowItem = (
                   <div>
                     <IconBase icon={faTimesCircle} className={"ml-2 red pointer"}
                               onClickFunction={() => {
-                                parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
+                                handleViewStepActivityLogClick(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
                               }} />
                   </div>
                 </OverlayTrigger>}
@@ -387,7 +318,7 @@ const PipelineWorkflowItem = (
                   <div>
                     <IconBase icon={faCheckCircle} className={"ml-2 green pointer"}
                               onClickFunction={() => {
-                                parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
+                                handleViewStepActivityLogClick(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
                               }} />
                   </div>
                 </OverlayTrigger>}
@@ -401,116 +332,44 @@ const PipelineWorkflowItem = (
                   <IconBase icon={faSpinner} className={"ml-2 green pointer"}
                                    spinIcon={true}
                                    onClickFunction={() => {
-                                     parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
+                                     handleViewStepActivityLogClick(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
                                    }} />
 
                   </div>
                 </OverlayTrigger>}
-
-                {itemState === "paused" && //assumes approval is needed
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Approval of this step is required to proceed. Only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action." })}>
-                  <div>
-                    <IconBase icon={faFlag} className={"ml-2 red"} iconStyling={{ cursor: "help" }} />
-                  </div>
-                </OverlayTrigger>}
-
-                {itemState === "warning" &&
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "Warning: Step configuration settings are incomplete!" })}>
-                  <div>
-                  <IconBase icon={faExclamationTriangle} className="ml-2 yellow pointer"
-                                   onClickFunction={() => {
-                                     setInfoModal({
-                                       show: true,
-                                       header: "Step Warning",
-                                       message: "This step is either missing configuration settings or needs to be reviewed.  In its current state, it will not run.  Please view the step settings and ensure the required fields are provided and valid.",
-                                       button: "OK",
-                                     });
-                                   }} />
-                  </div>
-                </OverlayTrigger>}
-
-                {/*{(itemState === "pending" && item.active) &&
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "This is the next pending step in the workflow" })}>
-                  <IconBase icon={faHourglassStart} className={"mr-2 yellow pointer"}
-                                   onClickFunction={() => {
-                                     setInfoModal({
-                                       show: true,
-                                       header: "Step Warning",
-                                       message: "This step is the next pending step in the workflow.",
-                                       button: "OK",
-                                     });
-                                   }}/>
-                </OverlayTrigger>
-                }*/}
-
-                {!item.active &&
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip({ message: "This step is currently disabled" })}>
-                  <div>
-                    <IconBase
-                      icon={faBan}
-                      className={"ml-2 dark-grey pointer"}
-                      onClickFunction={() => {
-                        setInfoModal({
-                          show: true,
-                          header: "Step Disabled",
-                          message: "This step is currently disabled and will be skipped during a pipeline run.  To enable this step, edit the workflow (via the pipeline editor icon at the top) and mark the step as Active.",
-                          button: "OK",
-                        });
-                      }}
-                    />
-                  </div>
-                </OverlayTrigger>
-                }
-
+                <PipelineStepWorkflowStepAwaitingApprovalStepIcon
+                  pipelineStepState={itemState}
+                  className={"ml-2 red"}
+                />
+                <PipelineWorkflowStepIncompleteStepIcon
+                  className={"ml-2 yellow"}
+                  pipelineStep={item}
+                />
+                <PipelineStepWorkflowStepDisabledStepIcon
+                  pipelineStep={item}
+                  className={"ml-2 dark-grey"}
+                />
               </>
               }
 
+              <PipelineStepWorkflowStepDeleteStepButton
+                pipeline={pipeline}
+                pipelineStep={item}
+                className={"ml-2"}
+                inWorkflowEditMode={editWorkflow}
+                loadPipelineFunction={loadPipeline}
+              />
               {(editWorkflow || !isToolSet) &&
-              <>
-
-                  {editWorkflow &&
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "Delete Step" })}>
-                    <div>
-                      <IconBase icon={faTrash} className="ml-2 red pointer"
-                                onClickFunction={() => {
-                                  handleDeleteStepClick(index, pipeline, item);
-                                }} />
-                    </div>
-                  </OverlayTrigger>
-                  }
-
-                  <OverlayTrigger
-                    placement="top"
-                    delay={{ show: 250, hide: 400 }}
-                    overlay={renderTooltip({ message: "Step Setup" })}>
-                    <div>
-                      <IconBase icon={faPen}
-                                className="text-muted ml-2 pointer"
-                                onClickFunction={() => {
-                                  handleEditClick("step", item.tool, item._id, item);
-                                }} />
-                    </div>
-                  </OverlayTrigger>
-
-              </>}
+                <OverlayIconBase
+                  icon={faPen}
+                  className={"text-muted ml-2"}
+                  overlayBody={"Step Setup"}
+                  onClickFunction={() =>  handleEditClick("step", item.tool, item._id, item)}
+                />
+              }
               <StepToolHelpIcon
                 iconClassName={"mb-1"}
-                className={"mr-0"}
+                className={"ml-2"}
                 tool={item?.tool?.tool_identifier}
               />
             </div>
@@ -534,24 +393,6 @@ const PipelineWorkflowItem = (
           </div>
         </div>
       </div>
-
-      <ModalActivityLogs
-        header={activityLogModal.header}
-        size="lg"
-        jsonData={activityLogModal.message}
-        liveStreamObject={activityLogModal.liveData}
-        show={activityLogModal.show}
-        setParentVisibility={() => setActivityLogModal({ ...activityLogModal, show: false })} />
-
-      {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
-                                handleCancelModal={() => setInfoModal({ ...infoModal, show: false })} />}
-
-      {showDeleteModal && <Modal header="Confirm Pipeline Step Delete"
-                                 message="Warning! Data about this step cannot be recovered once it is deleted. Do you still want to proceed?"
-                                 button="Confirm"
-                                 handleCancelModal={() => setShowDeleteModal(false)}
-                                 handleConfirmModal={() => handleDeleteStepClickConfirm(modalDeleteIndex, modalDeleteObj)} />}
-
 
       {showToolActivity && <StepToolActivityView pipelineId={pipelineId}
                                                  stepId={item._id}
@@ -582,9 +423,7 @@ PipelineWorkflowItem.propTypes = {
   pipelineId: PropTypes.string,
   editWorkflow: PropTypes.bool,
   parentCallbackEditItem: PropTypes.func,
-  deleteStep: PropTypes.func,
   handleViewSourceActivityLog: PropTypes.func,
-  parentHandleViewSourceActivityLog: PropTypes.func,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   toolIdentifier: PropTypes.object,
   loadPipeline: PropTypes.func,

@@ -13,6 +13,7 @@ function GitScraperActionButton(
   {
     gitTasksData,
     status,
+    runCount,
   }) {
   const [isStarting, setIsStarting] = useState(false);
   const [isCanceling, setIsCanceling] = useState(false);
@@ -30,7 +31,7 @@ function GitScraperActionButton(
     if (status !== "running") {
       setIsCanceling(false);
     }
-  }, [status]);
+  }, [status, runCount]);
 
   const handleRunTask = async () => {
     try {
@@ -159,6 +160,7 @@ function GitScraperActionButton(
 GitScraperActionButton.propTypes = {
   gitTasksData: PropTypes.object,
   status: PropTypes.string,
+  runCount: PropTypes.number,
 };
 
 export default GitScraperActionButton;

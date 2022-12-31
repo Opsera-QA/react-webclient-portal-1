@@ -47,3 +47,14 @@ pipelineHelper.getPipelineStatus = (pipeline) => {
 
   return status;
 };
+
+pipelineHelper.getStepIndexFromPlan = (plan, stepId) => {
+  const parsedStepId = DataParsingHelper.parseMongoDbId(stepId);
+  const parsedPlan = DataParsingHelper.parseArray(plan);
+
+  if (!parsedStepId || !parsedPlan) {
+    return -1;
+  }
+
+  return parsedPlan.findIndex((pipelineStep) => pipelineStep?._id === stepId);
+};

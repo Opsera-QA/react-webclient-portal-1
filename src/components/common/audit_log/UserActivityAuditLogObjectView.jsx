@@ -28,13 +28,13 @@ export default function UserActivityAuditLogObjectView(
             dataObject={auditLogModel}
           />
         </Col>
-        <Col xs={12} md={6}>
+        <Col xs={12}>
           <JsonField
             fieldName={"attributes"}
             dataObject={auditLogModel}
           />
         </Col>
-        <Col xs={12} md={6}>
+        <Col xs={12}>
           <JsonField
             fieldName={"attributes2"}
             dataObject={auditLogModel}

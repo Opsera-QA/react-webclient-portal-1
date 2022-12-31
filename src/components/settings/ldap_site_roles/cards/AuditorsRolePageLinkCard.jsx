@@ -15,6 +15,7 @@ export default function AuditorsRolePageLinkCard({ auditorsSiteRole }) {
   return (
     <SiteRoleManagementPageLinkCardBase
       breadcrumbDestination={"ldapAuditorsSiteRoleDetailView"}
+      siteRole={auditorsSiteRole}
     />
   );
 }

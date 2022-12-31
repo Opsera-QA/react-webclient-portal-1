@@ -11,7 +11,7 @@ siteRoleHelper.getAdministrationSiteRoleDetailViewLink = (userData) => {
   const ldapDomain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
 
   if (ldapDomain) {
-    return `settings/${ldapDomain}/site-roles/details/Administrators`;
+    return `/settings/${ldapDomain}/site-roles/details/Administrators`;
   }
 };
 
@@ -19,7 +19,7 @@ siteRoleHelper.getPowerUsersSiteRoleDetailViewLink = (userData) => {
   const ldapDomain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
 
   if (ldapDomain) {
-    return `settings/${ldapDomain}/site-roles/details/PowerUsers`;
+    return `/settings/${ldapDomain}/site-roles/details/PowerUsers`;
   }
 };
 
@@ -27,7 +27,7 @@ siteRoleHelper.getUsersSiteRoleDetailViewLink = (userData) => {
   const ldapDomain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
 
   if (ldapDomain) {
-    return `settings/${ldapDomain}/site-roles/details/Users`;
+    return `/settings/${ldapDomain}/site-roles/details/Users`;
   }
 };
 
@@ -35,7 +35,7 @@ siteRoleHelper.getSecurityManagersSiteRoleDetailViewLink = (userData) => {
   const ldapDomain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
 
   if (ldapDomain) {
-    return `settings/${ldapDomain}/site-roles/details/SecurityManagers`;
+    return `/settings/${ldapDomain}/site-roles/details/SecurityManagers`;
   }
 };
 
@@ -43,7 +43,7 @@ siteRoleHelper.getAuditorsSiteRoleDetailViewLink = (userData) => {
   const ldapDomain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
 
   if (ldapDomain) {
-    return `settings/${ldapDomain}/site-roles/details/Auditors`;
+    return `/settings/${ldapDomain}/site-roles/details/Auditors`;
   }
 };
 
@@ -70,5 +70,14 @@ siteRoleHelper.getSiteRolePermissionText = (siteRole) => {
         They can only run the Pipeline and view the log activity. 
         They cannot make any changes. 
         `);
+    case "SecurityManagers":
+      return (`
+        Security Managers have read access to all Tasks, Pipelines, Tools, and Dashboards. 
+        They also have write and execute access for Security-owned items where applicable and full access to Git Custodian.
+      `);
+    case "Auditors":
+      return (`
+        Auditors have read access to all Tasks, Pipelines, Tools, and Dashboards. 
+      `);
   }
 };

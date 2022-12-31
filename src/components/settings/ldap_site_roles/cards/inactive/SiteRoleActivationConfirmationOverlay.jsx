@@ -7,8 +7,12 @@ import Row from "react-bootstrap/Row";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CancelButtonBase from "components/common/buttons/cancel/CancelButtonBase";
 import ActivateSiteRoleButton from "components/settings/ldap_site_roles/cards/inactive/ActivateSiteRoleButton";
+import SiteRoleAccessRuleMatrixTable
+  from "components/settings/ldap_site_roles/cards/inactive/SiteRoleAccessRuleMatrixTable";
+import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-export default function SiteRoleActivationConfirmationOverlay({ siteRoleName }) {
+export default function SiteRoleActivationConfirmationOverlay({ siteRoleName, siteRole }) {
   const {
     toastContext,
   } = useComponentStateReference();
@@ -30,6 +34,16 @@ export default function SiteRoleActivationConfirmationOverlay({ siteRoleName }) 
     );
   };
 
+  const getFormattedRoleLabel = () => {
+    const label = DataParsingHelper.parseString(SiteRoleHelper.getLabelForSiteRole(siteRole));
+
+    if (label) {
+      return (
+        <b>{label}</b>
+      );
+    }
+  };
+
   const closeOverlayFunction = () => {
     toastContext.clearOverlayPanel();
   };
@@ -47,8 +61,14 @@ export default function SiteRoleActivationConfirmationOverlay({ siteRoleName }) 
       <OverlayPanelBodyContainer
         hideCloseButton={true}
       >
-        <div className={"m-3"}>
-          <div>Are you sure you would like to activate this Site Role? This operation cannot be undone.</div>
+        <div className={"mx-3 mb-3 mt-2"}>
+          <div>Are you sure you would like to activate the {getFormattedRoleLabel()} Site Role? This operation cannot be undone.</div>
+          <div className={"my-2"}>Users assigned to the {getFormattedRoleLabel()} Site Role will get these permissions</div>
+          <div>
+            <SiteRoleAccessRuleMatrixTable
+              siteRole={siteRole}
+            />
+          </div>
         </div>
       </OverlayPanelBodyContainer>
     </ConfirmationOverlay>
@@ -57,4 +77,5 @@ export default function SiteRoleActivationConfirmationOverlay({ siteRoleName }) 
 
 SiteRoleActivationConfirmationOverlay.propTypes = {
   siteRoleName: PropTypes.string,
+  siteRole: PropTypes.string
 };

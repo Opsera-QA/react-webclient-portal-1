@@ -11,48 +11,34 @@ export default function SideBySideViewBase(
     maximumHeight,
     overflowYBodyStyle,
     overflowXBodyStyle,
-    overflowYContainerStyle,
   }) {
-  const getContainerStylingObject = () => {
-    return ({
-      minHeight: minimumHeight,
-      maxHeight: maximumHeight,
-      overflowY: overflowYContainerStyle,
-    });
+  const getRightSideStylingObject = {
+    minWidth: rightSideMinimumWidth,
+    minHeight: minimumHeight,
+    maxHeight: maximumHeight,
+    overflowY: overflowYBodyStyle,
+    overflowX: overflowXBodyStyle,
   };
 
-  const getRightSideStylingObject = () => {
-    return ({
-      minWidth: rightSideMinimumWidth,
-      minHeight: minimumHeight,
-      maxHeight: maximumHeight,
-      overflowY: overflowYBodyStyle,
-      overflowX: overflowXBodyStyle,
-    });
-  };
-
-  const getLeftSideStylingObject = () => {
-    return ({
-      minWidth: leftSideMinimumWidth,
-      minHeight: minimumHeight,
-      maxHeight: maximumHeight,
-      overflowY: overflowYBodyStyle,
-      overflowX: overflowXBodyStyle,
-    });
+  const getLeftSideStylingObject = {
+    minWidth: leftSideMinimumWidth,
+    minHeight: minimumHeight,
+    maxHeight: maximumHeight,
+    overflowY: overflowYBodyStyle,
+    overflowX: overflowXBodyStyle,
   };
 
   return (
     <div
       className={"d-flex w-100 h-100"}
-      style={getContainerStylingObject()}
     >
-      <div className={"px-0 makeup-tree-container"}>
-        <div style={getLeftSideStylingObject()} className={"h-100"}>
+      <div className={"makeup-tree-container"}>
+        <div style={getLeftSideStylingObject} className={"h-100 w-100"}>
           {leftSideView}
         </div>
       </div>
-      <div>
-        <div style={getRightSideStylingObject()}>
+      <div className={"flex-fill h-100 w-100"}>
+        <div style={getRightSideStylingObject}>
           {rightSideView}
         </div>
       </div>
@@ -70,9 +56,9 @@ SideBySideViewBase.propTypes = {
   maximumHeight: PropTypes.string,
   overflowYBodyStyle: PropTypes.string,
   overflowXBodyStyle: PropTypes.string,
-  overflowYContainerStyle: PropTypes.string,
 };
 
 SideBySideViewBase.defaultProps = {
   bodyClassName: "mx-0",
+  overflowYBodyStyle: "auto",
 };

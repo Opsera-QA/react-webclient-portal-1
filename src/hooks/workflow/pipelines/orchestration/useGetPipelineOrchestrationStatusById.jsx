@@ -48,6 +48,7 @@ export default function useGetPipelineOrchestrationStatusById(
     lastStep: DataParsingHelper.parseObject(orchestrationStatus.lastStep, {}),
     runCount: DataParsingHelper.parseInteger(orchestrationStatus.runCount, 0),
     restingStepId: DataParsingHelper.parseNestedString(orchestrationStatus.lastStep, "step_id", ""),
+    updatedAt: orchestrationStatus.updatedAt,
     loadData: () => loadData(getOrchestrationStatus, handleErrorFunction),
     isLoading: isLoading,
     error: error,

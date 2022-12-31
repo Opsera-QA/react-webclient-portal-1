@@ -5,13 +5,15 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import {pipelineAuditLogActions} from "hooks/audit_logs/pipelines/pipelineAuditLog.actions";
 import {UserActivityAuditLogFilterModel} from "hooks/audit_logs/userActivityAuditLogFilter.model";
+import auditLogTypeConstants from "@opsera/definitions/constants/audit-logs/types/auditLogType.constants";
 
 export default function useGetAuditLogsForPipeline(
   pipelineId,
   handleErrorFunction,
 ) {
   const [auditLogs, setAuditLogs] = useState([]);
-  const [pipelineAuditLogFilterModel, setPipelineAuditLogFilterModel] = useState(new UserActivityAuditLogFilterModel());
+  const [pipelineAuditLogFilterModel, setPipelineAuditLogFilterModel] = useState(new UserActivityAuditLogFilterModel(auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.PIPELINE));
+  const [pipeline, setPipeline] = useState(undefined);
   const {
     getAccessToken,
     cancelTokenSource,
@@ -35,14 +37,18 @@ export default function useGetAuditLogsForPipeline(
     if (isMongoDbId(pipelineId) !== true) {
       return;
     }
+    setAuditLogs([]);
 
     const response = await pipelineAuditLogActions.getAuditLogsForPipeline(
       getAccessToken,
       cancelTokenSource,
       pipelineId,
       pipelineAuditLogFilterModel?.getData("user"),
-      pipelineAuditLogFilterModel?.getData("action"),
+      pipelineAuditLogFilterModel?.getData("actions"),
+      pipelineAuditLogFilterModel?.getData("siteRoles"),
+      pipelineAuditLogFilterModel?.getData("dateRange"),
     );
+    setPipeline(DataParsingHelper.parseObject(response?.data?.pipeline, {}));
     setAuditLogs(DataParsingHelper.parseArray(response?.data?.data, []));
     newFilterModel.setData("totalCount", response?.data?.count);
     newFilterModel.updateActiveFilters();
@@ -54,6 +60,7 @@ export default function useGetAuditLogsForPipeline(
     setAuditLogs: setAuditLogs,
     pipelineAuditLogFilterModel: pipelineAuditLogFilterModel,
     setPipelineAuditLogFilterModel: setPipelineAuditLogFilterModel,
+    pipeline: pipeline,
     loadData: () => loadData(getAuditLogsForPipeline, handleErrorFunction),
     isLoading: isLoading,
     error: error,

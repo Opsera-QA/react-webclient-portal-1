@@ -10,20 +10,29 @@ import SecurityManagersRolePageLinkCard
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
-export default function SiteRoleManagementPageLinkCards({ siteRoles, }) {
+export default function SiteRoleManagementPageLinkCards({siteRoles}) {
   const parsedSiteRoles = DataParsingHelper.parseArray(siteRoles, []);
   const securityManagersSiteRole = parsedSiteRoles.find((siteRole) => siteRole.name === SiteRoleHelper.SITE_ROLE_GROUP_NAMES.SECURITY_MANAGERS);
   const auditorsSiteRole = parsedSiteRoles.find((siteRole) => siteRole.name === SiteRoleHelper.SITE_ROLE_GROUP_NAMES.AUDITORS);
+  const administratorsSiteRole = parsedSiteRoles.find((siteRole) => siteRole.name === SiteRoleHelper.SITE_ROLE_GROUP_NAMES.ADMINISTRATORS);
+  const usersSiteRole = parsedSiteRoles.find((siteRole) => siteRole.name === SiteRoleHelper.SITE_ROLE_GROUP_NAMES.USERS);
+  const powerUsersSiteRole = parsedSiteRoles.find((siteRole) => siteRole.name === SiteRoleHelper.SITE_ROLE_GROUP_NAMES.POWER_USERS);
 
-    if (!parsedSiteRoles) {
-      return null;
-    }
+  if (!parsedSiteRoles) {
+    return null;
+  }
 
   return (
-    <div className={"mx-2"}>
-      <AdministratorsSiteRolePageLinkCard />
-      <PowerUsersSiteRolePageLinkCard />
-      <UsersSiteRolePageLinkCard />
+    <div className={"mx-3"}>
+      <AdministratorsSiteRolePageLinkCard
+        administratorsSiteRole={administratorsSiteRole}
+      />
+      <PowerUsersSiteRolePageLinkCard
+        powerUsersSiteRole={powerUsersSiteRole}
+      />
+      <UsersSiteRolePageLinkCard
+        usersSiteRole={usersSiteRole}
+      />
       <SecurityManagersRolePageLinkCard
         securityManagersSiteRole={securityManagersSiteRole}
       />

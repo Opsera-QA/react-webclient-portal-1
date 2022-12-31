@@ -33,7 +33,7 @@ function ClearDataIcon(
       <TooltipWrapper innerText={"Clear this Value"}>
         <div className={className}>
           <div onClick={() => handleClearData()} className={"badge badge-danger pointer d-flex"}>
-            <div className={"my-auto"}>
+            <div className={"my-auto mr-1"}>
               <IconBase
                 icon={faTimes}
                 className={"mr-1 my-auto"}
