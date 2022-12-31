@@ -14,6 +14,7 @@ function TasksEcsActionButtons(
     gitTasksData,
     disable,
     status,
+    runCount,
   }) {
   const [isStarting, setIsStarting] = useState(false);
   const [isCanceling, setIsCanceling] = useState(false);
@@ -32,7 +33,7 @@ function TasksEcsActionButtons(
     if (status !== "running") {
       setIsCanceling(false);
     }
-  }, [status]);
+  }, [status, runCount]);
 
   const handleRunTask = async () => {
     try {
@@ -227,6 +228,7 @@ TasksEcsActionButtons.propTypes = {
   gitTasksData: PropTypes.object,
   disable: PropTypes.bool,
   status: PropTypes.string,
+  runCount: PropTypes.number,
 };
 
 export default TasksEcsActionButtons;
