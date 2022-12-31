@@ -14,8 +14,11 @@ import useGetPollingPipelineOrchestrationStatusById
   from "hooks/workflow/pipelines/orchestration/useGetPollingPipelineOrchestrationStatusById";
 
 const refreshInterval = 15000;
-const pausedMessage = "The Pipeline has been paused. Please check the activity logs for details.";
-const stoppedMessage = "The Pipeline has completed running. Please check the activity logs for details.";
+const pausedMessage = "This Pipeline has been paused. Please check the activity logs for details.";
+const stoppedMessage = "This Pipeline has completed running. Please check the activity logs for details.";
+const failedMessage = "This Pipeline has completed running with a failed status. Please check the activity logs for details.";
+const successMessage = "This Pipeline has completed running with a successful status. Please check the activity logs for details.";
+const runningMessage = "This Pipeline is currently running. Please check the activity logs for details.";
 
 function PipelineDetailView() {
   const {tab, id} = useParams();
@@ -105,11 +108,15 @@ function PipelineDetailView() {
 
   const evaluatePipelineStatus = () => {
     if (status === "paused") {
-      toastContext.showInformationToast(pausedMessage, 20);
+      toastContext.showSystemInformationToast(pausedMessage, 20);
     } else if (isPipelineRunning === true && status === "stopped") {
-      toastContext.showInformationToast(stoppedMessage, 20);
+      toastContext.showSystemInformationToast(stoppedMessage, 20);
+    } else if (isPipelineRunning === true && status === "success") {
+      toastContext.showSystemSuccessToast(successMessage, 20);
+    } else if (isPipelineRunning === true && status === "failed") {
+      toastContext.showSystemErrorToast(failedMessage, undefined,20);
     } else if (isPipelineRunning !== true && status === "running") {
-      toastContext.showInformationToast("The Pipeline is currently running. Please check the activity logs for details.", 20);
+      toastContext.showSystemInformationToast(runningMessage, 20);
       setIsPipelineRunning(true);
     }
   };
