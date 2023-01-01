@@ -8,7 +8,6 @@ import CustomerPipelineTemplateCardView from "components/workflow/catalog/privat
 import useGetCustomerPipelineTemplates from "hooks/workflow/catalog/customer/useGetCustomerPipelineTemplates";
 
 export default function CustomerPipelineTemplateCatalog({activeTemplates}) {
-
   const {
     pipelineTemplates,
     pipelineTemplateFilterModel,

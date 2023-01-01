@@ -111,14 +111,8 @@ export class UserActivityAuditLogFilterModel extends FilterModelBase {
     return activeFilters;
   };
 
-  // TODO: Put the switch statement logic inside the action constants and pass the type through this function
   getActionSelectOptionsForType = () => {
-    switch (this.type) {
-      case auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.PIPELINE:
-        return auditLogActionConstants.IN_USE_PIPELINE_USER_ACTIVITY_LOG_ACTION_SELECT_OPTIONS;
-      default:
-        return auditLogActionConstants.USER_ACTIVITY_LOG_TYPE_SELECT_OPTIONS;
-    }
+    return auditLogActionConstants.getSelectOptionForUserActivityLogAction(this.type);
   };
 }
 
