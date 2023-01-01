@@ -17,6 +17,7 @@ import ToggleSidebarSizeIcon from "components/sidebar/ToggleSidebarSizeIcon";
 import SidebarSubheaderText from "components/sidebar/SidebarSubheaderText";
 import sessionHelper from "utils/session.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import GitCustodianSidebarNavigationLink from "components/sidebar/links/GitCustodianSidebarNavigationLink";
 
 export default function Sidebar({ hideSideBar }) {
   const { userData } = useComponentStateReference();
@@ -57,6 +58,9 @@ export default function Sidebar({ hideSideBar }) {
           isSidebarCollapsed={isSidebarCollapsed}
         />
         <TasksSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+        <GitCustodianSidebarNavigationLink
           isSidebarCollapsed={isSidebarCollapsed}
         />
         <LogsSidebarNavigationLink

@@ -24,6 +24,8 @@ export default function useComponentStateReference() {
     isOpseraAdministrator,
     isPowerUser,
     accessRoleData,
+    isSecurityManager,
+    isAuditor,
   } = useAccessRoleData();
 
   useEffect(() => {}, []);
@@ -37,6 +39,8 @@ export default function useComponentStateReference() {
     themeConstants: themeConstants,
     isOpseraAdministrator: isOpseraAdministrator,
     isSiteAdministrator: isSiteAdministrator,
+    isSecurityManager: isSecurityManager,
+    isAuditor: isAuditor,
     isProductionEnvironment: featureFlagHideItemInProd(),
     isTestEnvironment: featureFlagHideItemInTest(),
     isSassUser: isSaasUser, // TODO: Remove and replace with the proper spelling

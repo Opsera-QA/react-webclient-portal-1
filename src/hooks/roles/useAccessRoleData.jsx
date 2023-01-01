@@ -13,5 +13,7 @@ export default function useAccessRoleData() {
     isSiteAdministrator: SiteRoleHelper.isSiteAdministrator(userData),
     isPowerUser: SiteRoleHelper.isPowerUser(userData),
     isSaasUser: SiteRoleHelper.isSaaSUser(userData),
+    isSecurityManager: SiteRoleHelper.isSecurityManager(userData),
+    isAuditor: SiteRoleHelper.isAuditor(userData),
   });
 }
