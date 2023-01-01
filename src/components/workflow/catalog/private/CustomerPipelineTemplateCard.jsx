@@ -36,9 +36,9 @@ export default function CustomerPipelineTemplateCard(
           customerPipelineTemplateModel={modelHelpers.parseObjectIntoModel(template, pipelineTemplateMetadata)}
           className={"mr-2"}
         />
-        {/*<ViewCustomerPipelineTemplateDetailsButton*/}
-        {/*  templateId={template?._id}*/}
-        {/*/>*/}
+        <ViewCustomerPipelineTemplateDetailsButton
+          templateId={template?._id}
+        />
       </Col>
     );
   };
