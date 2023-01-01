@@ -26,6 +26,7 @@ function ScreenContainer(
     titleActionBar,
     helpComponent,
     bodyClassName,
+    auditLogType,
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const toastContext = useContext(DialogToastContext);
@@ -156,6 +157,7 @@ function ScreenContainer(
               isLoading={isLoading}
               titleActionBar={titleActionBar}
               helpComponent={helpComponent}
+              auditLogType={auditLogType}
             />
           </div>
         </div>
@@ -183,6 +185,7 @@ ScreenContainer.propTypes = {
   roleRequirement: PropTypes.string,
   helpComponent: PropTypes.object,
   bodyClassName: PropTypes.string,
+  auditLogType: PropTypes.string,
 };
 
 ScreenContainer.defaultProps = {

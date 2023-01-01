@@ -24,6 +24,7 @@ export default function InsightsRoutes() {
       <SecureRoute path="/insights/synopsis" component={InsightsSynopsis} />
       <SecureRoute path="/insights/connected-assets" component={ConnectedAssets} />
       <SecureRoute path="/insights/git-custodian" component={GitCustodian} />
+      <SecureRoute path={"/git-custodian"} component={GitCustodian} />
 
       {/* Reports */}
       <SecureRoute path="/insights/reports/scans/sonar/:pipelineId/:stepId/:runCount/:issueType"
