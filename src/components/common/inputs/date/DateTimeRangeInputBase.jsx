@@ -8,6 +8,7 @@ import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 export default function DateTimeRangeInputBase(
   {
     setDataFunction,
+    clearDataFunction,
     fromFieldName,
     toFieldName,
     model,
@@ -23,6 +24,8 @@ export default function DateTimeRangeInputBase(
     <Row className={className}>
       <Col sm={12} md={stacked !== true ? 6 : undefined}>
         <DateTimeInput
+          className={stacked === true ? "" : undefined}
+          inputLabelClassName={stacked === true ? "bold" : undefined}
           fieldName={fromFieldName}
           dataObject={model}
           disabled={disabled}
@@ -31,11 +34,13 @@ export default function DateTimeRangeInputBase(
           defaultToNull={defaultToNull}
           showTime={showTime}
           addTimezoneDifference={addTimezoneDifference}
+          clearDataFunction={clearDataFunction}
         />
       </Col>
       <Col sm={12} md={stacked !== true ? 6 : undefined}>
         <DateTimeInput
           className={stacked === true ? "mb-2" : undefined}
+          inputLabelClassName={stacked === true ? "bold" : undefined}
           fieldName={toFieldName}
           dataObject={model}
           disabled={disabled}
@@ -44,6 +49,7 @@ export default function DateTimeRangeInputBase(
           defaultToNull={defaultToNull}
           showTime={showTime}
           addTimezoneDifference={addTimezoneDifference}
+          clearDataFunction={clearDataFunction}
         />
       </Col>
     </Row>
@@ -58,6 +64,7 @@ DateTimeRangeInputBase.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
+  clearDataFunction: PropTypes.func,
   stacked: PropTypes.bool,
   defaultToNull: PropTypes.bool,
   showTime: PropTypes.bool,
