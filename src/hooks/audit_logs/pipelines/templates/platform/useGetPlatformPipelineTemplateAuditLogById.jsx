@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
-import useCustomerPipelineTemplateAuditLogActions
-  from "hooks/audit_logs/pipelines/templates/customer/useCustomerPipelineTemplateAuditLogActions";
+import usePlatformPipelineTemplateAuditLogActions
+  from "hooks/audit_logs/pipelines/templates/platform/usePlatformPipelineTemplateAuditLogActions";
 
-export default function useGetCustomerPipelineTemplateAuditLogById(
+export default function useGetPlatformPipelineTemplateAuditLogById(
   templateId,
   auditLogId,
   handleErrorFunction,
 ) {
   const [auditLog, setAuditLog] = useState(undefined);
-  const customerPipelineTemplateAuditLogActions = useCustomerPipelineTemplateAuditLogActions();
+  const platformPipelineTemplateAuditLogActions = usePlatformPipelineTemplateAuditLogActions();
   const {
     isLoading,
     error,
@@ -23,16 +23,16 @@ export default function useGetCustomerPipelineTemplateAuditLogById(
     setAuditLog(undefined);
 
     if (isMongoDbId(templateId) === true && isMongoDbId(auditLogId) === true && loadData) {
-      loadData(getAuditLogsForCustomerPipelineTemplate, handleErrorFunction).catch(() => {});
+      loadData(getAuditLogsForPlatformPipelineTemplate, handleErrorFunction).catch(() => {});
     }
   }, [templateId, auditLogId]);
 
-  const getAuditLogsForCustomerPipelineTemplate = async () => {
+  const getAuditLogsForPlatformPipelineTemplate = async () => {
     if (isMongoDbId(templateId) !== true || isMongoDbId(auditLogId) !== true) {
       return;
     }
 
-    const response = await customerPipelineTemplateAuditLogActions.getCustomerPipelineTemplateAuditLogById(
+    const response = await platformPipelineTemplateAuditLogActions.getAuditLogsForPlatformPipelineTemplate(
       templateId,
       auditLogId,
     );
@@ -42,7 +42,7 @@ export default function useGetCustomerPipelineTemplateAuditLogById(
   return ({
     auditLog: auditLog,
     setAuditLog: setAuditLog,
-    loadData: () => loadData(getAuditLogsForCustomerPipelineTemplate, handleErrorFunction),
+    loadData: () => loadData(getAuditLogsForPlatformPipelineTemplate, handleErrorFunction),
     isLoading: isLoading,
     error: error,
     setError: setError,
