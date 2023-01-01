@@ -46,7 +46,7 @@ export default function useGetAuditLogsForPipeline(
       pipelineAuditLogFilterModel?.getData("user"),
       pipelineAuditLogFilterModel?.getData("actions"),
       pipelineAuditLogFilterModel?.getData("siteRoles"),
-      pipelineAuditLogFilterModel?.getData("dateRange"),
+      pipelineAuditLogFilterModel?.getDateRangeFilterObject(),
     );
     setPipeline(DataParsingHelper.parseObject(response?.data?.pipeline, {}));
     setAuditLogs(DataParsingHelper.parseArray(response?.data?.data, []));

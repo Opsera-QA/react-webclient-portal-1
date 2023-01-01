@@ -26,6 +26,7 @@ function DateTimeInputBase(
     inputHelpOverlay,
     infoOverlay,
     helpTooltipText,
+    addTimezoneDifference,
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
@@ -55,6 +56,14 @@ function DateTimeInputBase(
   const parseAndSetValue = (value) => {
     if (showTime === false) {
       const dateWithoutTime = new Date(value).toISOString().split('T')[0];
+
+      if (addTimezoneDifference === true) {
+        const timezoneDifference = new Date().getTimezoneOffset() * 60 * 1000;
+        const dateWithTimeOffset = new Date(new Date(dateWithoutTime).getTime() + timezoneDifference);
+        validateAndSetData(dateWithTimeOffset.toISOString());
+        return;
+      }
+
       validateAndSetData(dateWithoutTime);
     } else {
       validateAndSetData(value);
@@ -135,6 +144,7 @@ DateTimeInputBase.propTypes = {
   inputHelpOverlay: PropTypes.any,
   infoOverlay: PropTypes.any,
   helpTooltipText: PropTypes.string,
+  addTimezoneDifference: PropTypes.bool,
 };
 
 DateTimeInputBase.defaultProps = {

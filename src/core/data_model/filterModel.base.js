@@ -41,6 +41,44 @@ export class FilterModelBase {
     return currentValue;
   };
 
+  getDateRangeFilterObject = (
+    syncDates = true,
+    startDateFieldName = "startDate",
+    endDateFieldName = "endDate",
+  ) => {
+    const startDate = this.getData(startDateFieldName);
+    const endDate = this.getData(endDateFieldName);
+    const hasNoDatesSet = !startDate && !endDate;
+    const incompleteDates = !startDate || !endDate;
+
+    if (hasNoDatesSet || (incompleteDates && syncDates !== true)) {
+      return undefined;
+    }
+
+    if (!startDate) {
+      this.setData(startDateFieldName, endDate);
+
+      return {
+        startDate: endDate,
+        endDate: endDate,
+      };
+    }
+
+    if (!endDate && syncDates === true) {
+      this.setData(endDateFieldName, startDate);
+
+      return {
+        startDate: startDate,
+        endDate: startDate,
+      };
+    }
+
+    return {
+      startDate: startDate,
+      endDate: endDate,
+    };
+  };
+
   removeArrayItem = (fieldName, index) => {
     const array = DataParsingHelper.parseArray(this.getData(fieldName));
 
@@ -467,6 +505,14 @@ export class FilterModelBase {
   clone = () => {
     return DataParsingHelper.cloneDeep(this);
   };
+
+  isNew = () => {
+    return true;
+  }
+
+  isChanged = () => {
+    return false;
+  }
 }
 
 export default FilterModelBase;
