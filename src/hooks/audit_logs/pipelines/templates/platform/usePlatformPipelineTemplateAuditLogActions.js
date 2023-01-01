@@ -1,17 +1,17 @@
 import useApiService from "hooks/api/service/useApiService";
 
-export default function useCustomerPipelineTemplateAuditLogActions() {
+export default function usePlatformPipelineTemplateAuditLogActions() {
   const apiService = useApiService();
-  const customerPipelineTemplateAuditLogActions = {};
+  const platformPipelineTemplateAuditLogActions = {};
 
-  customerPipelineTemplateAuditLogActions.getAuditLogsForCustomerPipelineTemplate = async (
+  platformPipelineTemplateAuditLogActions.getAuditLogsForPlatformPipelineTemplate = async (
     templateId,
     userId,
     actions,
     siteRoles,
     dateRange,
   ) => {
-    const apiUrl = `/audit-logs/pipelines/templates/customer/${templateId}`;
+    const apiUrl = `/audit-logs/pipelines/templates/platform/${templateId}`;
     const queryParameters = {
       actions: actions,
       siteRoles: siteRoles,
@@ -25,15 +25,15 @@ export default function useCustomerPipelineTemplateAuditLogActions() {
     );
   };
 
-  customerPipelineTemplateAuditLogActions.getCustomerPipelineTemplateAuditLogById = async (
+  platformPipelineTemplateAuditLogActions.getPlatformPipelineTemplateAuditLogById = async (
     templateId,
     auditLogId,
   ) => {
-    const apiUrl = `/audit-logs/pipelines/templates/customer/${templateId}/log/${auditLogId}`;
+    const apiUrl = `/audit-logs/pipelines/templates/platform/${templateId}/log/${auditLogId}`;
     return await apiService.handleApiGetRequest(
       apiUrl,
     );
   };
 
-  return customerPipelineTemplateAuditLogActions;
+  return platformPipelineTemplateAuditLogActions;
 }

@@ -12,8 +12,6 @@ import ActionBarShowPipelineSummaryOverlayButton
   from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarShowPipelineSummaryOverlayButton";
 import ActionBarPublishPipelineToCustomerCatalogButton
   from "components/workflow/pipelines/summary/action_bar/buttons/publish/ActionBarPublishPipelineToCustomerCatalogButton";
-import ActionBarPublishPipelineButton
-  from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarPublishPipelineButton";
 import ActionBarViewPipelineAuditLogsButton
   from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarViewPipelineAuditLogsButton";
 
@@ -38,13 +36,10 @@ function PipelineSummaryActionBar({pipelineModel, pipeline, loadPipeline}) {
       <ActionBarShowPipelineSummaryOverlayButton
         pipeline={pipeline}
       />
-      <ActionBarPublishPipelineButton
-        pipeline={pipeline}
+      <ActionBarPublishPipelineToCustomerCatalogButton
+        pipelineModel={pipelineModel}
+        className={"ml-3"}
       />
-      {/*<ActionBarPublishPipelineToCustomerCatalogButton*/}
-      {/*  pipelineModel={pipelineModel}*/}
-      {/*  className={"ml-3"}*/}
-      {/*/>*/}
       <ActionBarDuplicatePipelineButton
         pipeline={pipeline}
       />
