@@ -12,16 +12,17 @@ export default function InlineDateTimeRangeFilterInput(
     stacked,
     startDateFieldName,
     endDateFieldName,
-    syncDates,
   }) {
   const setDataFunction = (fieldName, newValue) => {
     model?.setData(fieldName, newValue);
+    model.syncIncompleteDateRange();
+    loadDataFunction(model);
+  };
 
-    const dateRange = model.getDateRangeFilterObject(syncDates);
-
-    if (dateRange) {
-      loadDataFunction(model);
-    }
+  const clearDataFunction = () => {
+    model?.setData(startDateFieldName, null);
+    model?.setData(endDateFieldName, null);
+    loadDataFunction(model);
   };
 
   return (
@@ -34,6 +35,7 @@ export default function InlineDateTimeRangeFilterInput(
       className={className}
       startDateFieldName={startDateFieldName}
       endDateFieldName={endDateFieldName}
+      clearDataFunction={clearDataFunction}
     />
   );
 }
@@ -47,5 +49,10 @@ InlineDateTimeRangeFilterInput.propTypes = {
   stacked: PropTypes.bool,
   startDateFieldName: PropTypes.string,
   endDateFieldName: PropTypes.string,
-  syncDates: PropTypes.bool,
+  syncIncompleteDateRange: PropTypes.bool,
+};
+
+InlineDateTimeRangeFilterInput.defaultProps = {
+  startDateFieldName: "startDate",
+  endDateFieldName: "endDate",
 };

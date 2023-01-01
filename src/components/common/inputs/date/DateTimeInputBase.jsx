@@ -27,6 +27,7 @@ function DateTimeInputBase(
     infoOverlay,
     helpTooltipText,
     addTimezoneDifference,
+    inputLabelClassName,
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
@@ -98,6 +99,7 @@ function DateTimeInputBase(
   return (
     <InputContainer className={className} fieldName={fieldName}>
       <InputLabel
+        className={inputLabelClassName}
         field={field}
         model={dataObject}
         clearDataFunction={getClearDataFunction()}
@@ -145,6 +147,7 @@ DateTimeInputBase.propTypes = {
   infoOverlay: PropTypes.any,
   helpTooltipText: PropTypes.string,
   addTimezoneDifference: PropTypes.bool,
+  inputLabelClassName: PropTypes.string,
 };
 
 DateTimeInputBase.defaultProps = {

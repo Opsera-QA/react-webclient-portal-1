@@ -17,6 +17,7 @@ function DateTimeInput(
     className,
     showTime,
     addTimezoneDifference,
+    inputLabelClassName,
   }) {
   return (
     <DateTimeInputBase
@@ -33,6 +34,7 @@ function DateTimeInput(
       className={className}
       showTime={showTime}
       addTimezoneDifference={addTimezoneDifference}
+      inputLabelClassName={inputLabelClassName}
     />
   );
 }
@@ -51,6 +53,7 @@ DateTimeInput.propTypes = {
   className: PropTypes.string,
   showTime: PropTypes.bool,
   addTimezoneDifference: PropTypes.bool,
+  inputLabelClassName: PropTypes.string,
 };
 
 export default DateTimeInput;

@@ -5,6 +5,7 @@ import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeI
 export default function DateTimeRangeFilterInput(
   {
     setDataFunction,
+    clearDataFunction,
     model,
     setModel,
     disabled,
@@ -26,6 +27,7 @@ export default function DateTimeRangeFilterInput(
       defaultToNull={true}
       showTime={false}
       addTimezoneDifference={true}
+      clearDataFunction={clearDataFunction}
     />
   );
 }
@@ -38,6 +40,7 @@ DateTimeRangeFilterInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
+  clearDataFunction: PropTypes.func,
   stacked: PropTypes.bool,
   defaultToNull: PropTypes.bool,
 };

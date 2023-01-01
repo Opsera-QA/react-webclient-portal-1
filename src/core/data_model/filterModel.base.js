@@ -42,7 +42,7 @@ export class FilterModelBase {
   };
 
   getDateRangeFilterObject = (
-    syncDates = true,
+    syncIncompleteDateRange,
     startDateFieldName = "startDate",
     endDateFieldName = "endDate",
   ) => {
@@ -51,7 +51,7 @@ export class FilterModelBase {
     const hasNoDatesSet = !startDate && !endDate;
     const incompleteDates = !startDate || !endDate;
 
-    if (hasNoDatesSet || (incompleteDates && syncDates !== true)) {
+    if (hasNoDatesSet || (incompleteDates && syncIncompleteDateRange !== true)) {
       return undefined;
     }
 
@@ -64,7 +64,7 @@ export class FilterModelBase {
       };
     }
 
-    if (!endDate && syncDates === true) {
+    if (!endDate && syncIncompleteDateRange === true) {
       this.setData(endDateFieldName, startDate);
 
       return {
@@ -77,6 +77,27 @@ export class FilterModelBase {
       startDate: startDate,
       endDate: endDate,
     };
+  };
+
+  syncIncompleteDateRange = (
+    startDateFieldName = "startDate",
+    endDateFieldName = "endDate",
+  ) => {
+    const startDate = this.getData(startDateFieldName);
+    const endDate = this.getData(endDateFieldName);
+    const hasNoDatesSet = !startDate && !endDate;
+
+    if (hasNoDatesSet) {
+      return;
+    }
+
+    if (!startDate) {
+      this.setData(startDateFieldName, endDate);
+    }
+
+    if (!endDate) {
+      this.setData(endDateFieldName, startDate);
+    }
   };
 
   removeArrayItem = (fieldName, index) => {
