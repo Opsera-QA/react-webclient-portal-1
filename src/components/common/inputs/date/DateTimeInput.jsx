@@ -15,6 +15,8 @@ function DateTimeInput(
     defaultToNull,
     clearDataFunction,
     className,
+    showTime,
+    addTimezoneDifference,
   }) {
   return (
     <DateTimeInputBase
@@ -29,6 +31,8 @@ function DateTimeInput(
       dropUp={dropUp}
       clearDataFunction={clearDataFunction}
       className={className}
+      showTime={showTime}
+      addTimezoneDifference={addTimezoneDifference}
     />
   );
 }
@@ -45,6 +49,8 @@ DateTimeInput.propTypes = {
   defaultToNull: PropTypes.bool,
   clearDataFunction: PropTypes.func,
   className: PropTypes.string,
+  showTime: PropTypes.bool,
+  addTimezoneDifference: PropTypes.bool,
 };
 
 export default DateTimeInput;

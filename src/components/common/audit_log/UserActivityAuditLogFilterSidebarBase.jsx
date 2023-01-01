@@ -6,6 +6,8 @@ import InlineAuditLogActionsMutiSelectCheckboxFilter
 import NewInlineDateRangeFilter from "components/common/inputs/date/range/NewInlineDateRangeFilter";
 import InlineSiteRoleMultiSelectCheckboxFilterInput
   from "components/common/list_of_values_input/ldap/site_roles/InlineSiteRoleMultiSelectCheckboxFilterInput";
+import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeInputBase";
+import DateTimeRangeFilterInput from "components/common/inputs/date/range/pickers/InlineDateTimeRangeFilterInput";
 
 export default function UserActivityAuditLogFilterSidebarBase(
   {
@@ -37,11 +39,11 @@ export default function UserActivityAuditLogFilterSidebarBase(
         loadDataFunction={loadDataFunction}
         fieldName={"actions"}
       />
-      <NewInlineDateRangeFilter
+      <DateTimeRangeFilterInput
         model={userActivityAuditLogFilterModel}
         setModel={setUserActivityAuditLogFilterModel}
         loadDataFunction={loadDataFunction}
-        fieldName={"dateRange"}
+        stacked={true}
       />
     </div>
   );

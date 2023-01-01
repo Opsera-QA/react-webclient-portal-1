@@ -35,8 +35,12 @@ const userActivityAuditLogFilterMetadata = {
       id: "user",
     },
     {
-      label: "Date Range",
-      id: "dateRange",
+      label: "From",
+      id: "startDate",
+    },
+    {
+      label: "To",
+      id: "endDate",
     },
     {
       label: "Site Roles",
@@ -55,7 +59,8 @@ const userActivityAuditLogFilterMetadata = {
     search: "",
     user: "",
     siteRoles: [],
-    dateRange: undefined,
+    startDate: undefined,
+    endDate: undefined,
     activeFilters: [],
   },
 };
