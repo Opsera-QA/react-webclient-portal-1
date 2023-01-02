@@ -15,6 +15,8 @@ import {useHistory} from "react-router-dom";
 import PipelineVerticalTabContainer from "components/workflow/pipelines/PipelineVerticalTabContainer";
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 
 function PipelineTableCardView(
   {
@@ -26,6 +28,9 @@ function PipelineTableCardView(
     subscribedPipelineIds,
   }) {
   const history = useHistory();
+  const {
+    userData,
+  } = useComponentStateReference();
 
   const getDropdownFilters = () => {
     return (
@@ -150,7 +155,7 @@ function PipelineTableCardView(
         loadData={loadData}
         filterDto={pipelineFilterModel}
         setFilterDto={setPipelineFilterModel}
-        addRecordFunction={addPipeline}
+        addRecordFunction={PipelineRoleHelper.canCreatePipeline(userData) === true ? addPipeline : undefined}
         supportSearch={true}
         supportViewToggle={true}
         isLoading={isLoading}
