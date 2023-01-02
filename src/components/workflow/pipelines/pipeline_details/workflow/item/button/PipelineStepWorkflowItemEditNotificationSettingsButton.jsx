@@ -19,12 +19,12 @@ export default function PipelineStepWorkflowItemEditNotificationSettingsButton(
     userData,
   } = useComponentStateReference();
 
-  const editStepNotificationConfiguration = async (pipelineStep) => {
+  const editStepNotificationConfiguration = async () => {
     toastContext.showOverlayPanel(
       <PipelineStepNotificationConfigurationOverlay
         pipeline={pipeline}
         pipelineId={pipeline?._id}
-        pipelineStep={pipelineStep}
+        pipelineStep={step}
       />
     );
   };
