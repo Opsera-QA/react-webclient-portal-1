@@ -70,7 +70,10 @@ function TaskDetailPanel(
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SummaryToggleTab
+          handleTabClick={gitTasksData?.canUpdate() === true ? handleTabClick : undefined}
+          activeTab={activeTab}
+        />
         {getDynamicTabs()}
         <CustomTab
           icon={faTable}
@@ -79,7 +82,7 @@ function TaskDetailPanel(
           activeTab={activeTab}
           tabText={"Activity Logs"}
         />
-        {getFeatureFlaggedTab()}
+        {/*{getFeatureFlaggedTab()}*/}
       </CustomTabContainer>
     );
   };
@@ -125,12 +128,12 @@ function TaskDetailPanel(
             loadData={loadData}
           />
         );
-      case "audit-logs":
-        return (
-          <TaskAuditLogPanel
-            taskId={gitTasksData?.getMongoDbId()}
-          />
-        );
+      // case "audit-logs":
+      //   return (
+      //     <TaskAuditLogPanel
+      //       taskId={gitTasksData?.getMongoDbId()}
+      //     />
+      //   );
       default:
         return null;
     }
