@@ -1,17 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
 import BreadcrumbPageLinkCard from "components/common/card/link/BreadcrumbPageLinkCard";
 
-function TagsUsedInToolsPageLinkCard() {
+export default function TagsUsedInToolsPageLinkCard() {
   return (
     <BreadcrumbPageLinkCard
       breadcrumbDestination={"tagsUsedInToolsReport"}
     />
   );
 }
-
-TagsUsedInToolsPageLinkCard.propTypes = {
-  accessRoleData: PropTypes.object,
-};
-
-export default TagsUsedInToolsPageLinkCard;

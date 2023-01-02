@@ -1,23 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
 import ToolsUsedByPipelinesPageLinkCard from "./pipelines/ToolsUsedByPipelinesPageLinkCard";
 import ToolsCountsPageLinkCard from "./counts/ToolsCountsPageLinkCard";
 
-function ToolReportPageLinkCards({accessRoleData}) {
+export default function ToolReportPageLinkCards() {
   return (
     <div className={"mx-2"}>
-      <ToolsUsedByPipelinesPageLinkCard
-        accessRoleData={accessRoleData}
-      />
-      <ToolsCountsPageLinkCard
-        accessRoleData={accessRoleData}
-      />
+      <ToolsUsedByPipelinesPageLinkCard />
+      <ToolsCountsPageLinkCard />
     </div>
   );
 }
-
-ToolReportPageLinkCards.propTypes = {
-  accessRoleData: PropTypes.object,
-};
-export default ToolReportPageLinkCards;
 
