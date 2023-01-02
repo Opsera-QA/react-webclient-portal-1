@@ -98,7 +98,7 @@ export const isPowerUserOrSass = (accessRoleData) => {
 };
 
 export const isUser = (accessRoleData) => {
-  return accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator || accessRoleData?.User;
+  return accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator || accessRoleData?.User || accessRoleData?.SecurityManager || accessRoleData?.Auditor;
 };
 
 export const isUserOrSassUser = (accessRoleData) => {
@@ -109,6 +109,8 @@ export const ACCESS_ROLE_PERMISSION_MESSAGES = {
   ADMINISTRATOR: "Site Administrator User Role: Your account has full access to the Opsera platform and its settings.",
   POWER_USER: "Power User Role: Your account has elevated privileges to the Opsera platform.",
   USER: "Standard User Role: Your account has standard user access to the Opsera platform and inherits access based on individual item access roles.",
+  SECURITY_MANAGER: "Security Manager User Role: Your account has read access to Tools, Tasks, and Pipelines in the Opsera platform and write access to security-owned items.",
+  AUDITOR: "Auditor User Role: Your account has full read access to Tools, Tasks, and Pipelines im the Opsera platform.",
   GUEST: "Guest User Role: Your account does not have any privileges associated with the Opsera platform and can only view and edit some data.",
 };
 
@@ -116,6 +118,8 @@ export const ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE = {
   ADMINISTRATOR: "Your account has full access to the Opsera platform and its settings.",
   POWER_USER: "Your account has elevated privileges to the Opsera platform.",
   USER: "Your account has standard user access to the Opsera platform and inherits access based on individual item access roles.",
+  SECURITY_MANAGER: "Your account has full read access to the Opsera platform and write access to security-owned items.",
+  AUDITOR: "Your account has full read access to the Opsera platform.",
   GUEST: "Your account does not have any privileges associated with the Opsera platform and can only view and edit some data.",
 };
 
@@ -127,6 +131,10 @@ export const getAccessRolePermissionMessage = (accessRole) => {
       return ACCESS_ROLE_PERMISSION_MESSAGES.POWER_USER;
     case "user":
       return ACCESS_ROLE_PERMISSION_MESSAGES.USER;
+    case "security_manager":
+      return ACCESS_ROLE_PERMISSION_MESSAGES.SECURITY_MANAGER;
+    case "auditor":
+      return ACCESS_ROLE_PERMISSION_MESSAGES.AUDITOR;
     case "guest":
     default:
       return ACCESS_ROLE_PERMISSION_MESSAGES.GUEST;
@@ -141,6 +149,10 @@ export const getAccessRolePermissionMessageWithoutRole = (accessRole) => {
       return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.POWER_USER;
     case "user":
       return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.USER;
+    case "security_manager":
+      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.SECURITY_MANAGER;
+    case "auditor":
+      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.AUDITOR;
     case "guest":
     default:
       return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.GUEST;
@@ -286,10 +298,6 @@ export const parseRoleDefinitionsIntoSiteRoleTableRows =  (roleDefinitions) => {
   }
 
   return accessRoleRows;
-};
-
-export const isAnLdapUser = (user, accessRole) => {
-  return accessRole?.Type !== "sass-user" && user?.ldap?.domain != null;
 };
 
 export const calculateRoleLevel = (customerAccessRules, objectRoles, dataModel) => {
