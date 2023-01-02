@@ -403,7 +403,6 @@ function DependencyMultiSelectInput({
       dataObject.getData(fieldName),
       [],
     );
-    console.log(currentData);
     const selectedDependencyTypes = currentData.map(
       (dependency) => dependency.dependencyType,
     );

@@ -195,6 +195,12 @@ regexDefinitions.customParameterNameRegex = {
   errorFormText: "Name must begin with \"opsera-\" and can contain lowercase letters, numbers, and dashes",
 };
 
+regexDefinitions.localVariableName = {
+  regex: /^opsera\.local\.[a-z0-9-_.]*$/,
+  formText: "Name must begin with \"opsera.local.\" and can contain lowercase letters, numbers, underscores, periods, and dashes",
+  errorFormText: "Name must begin with \"opsera.local.\" and can contain lowercase letters, numbers, underscores, periods, and dashes",
+};
+
 regexDefinitions.dockerName = {
   regex: /^[a-z0-9_.-]*$/,
   formText: "Accepts lowercase alphanumeric characters, periods, dashes, and underscores without spaces.",
