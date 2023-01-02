@@ -174,6 +174,11 @@ const commandLineStepFormMetadata = {
       maxItems: 15,
     },
     {
+      label: "Local Input Parameters",
+      id: "stepParameters",
+      maxItems: 15,
+    },
+    {
       label: "Use Terraform Output",
       id: "useTerraformOutput"
     },
@@ -406,6 +411,11 @@ const commandLineStepFormMetadata = {
       maxItems: 15,
     },
     {
+      label: "Local Input Parameters",
+      id: "stepParameters",
+      maxItems: 15,
+    },
+    {
       label: "Sonar Tool Id",
       id: "sonarToolConfigId",
       isRequiredFunction: (model) => {
@@ -477,6 +487,7 @@ const commandLineStepFormMetadata = {
     terraformStepId: "",
     customParameters: [],
     outputCustomParameters: [],
+    stepParameters: [],
     useTerraformOutput : false,
     sonarScanFlag: false,
     saveSonarParameters: false,

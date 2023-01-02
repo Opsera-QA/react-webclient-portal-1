@@ -21,11 +21,11 @@ metricHelpers.unpackSupportedFilterTypes = (supportedFilters) => {
 };
 
 metricHelpers.unpackMetricFilterData = (metricFilters) => {
-  if (!Array.isArray(metricFilters) || metricFilters.length === 0) {
-    return undefined;
-  }
-
   const unpackedFilterData = {};
+
+  if (!Array.isArray(metricFilters) || metricFilters.length === 0) {
+    return unpackedFilterData;
+  }
 
   metricFilters.forEach((filter) => {
     const type = filter?.type;
