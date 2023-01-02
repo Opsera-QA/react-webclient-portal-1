@@ -11,6 +11,8 @@ import axios from "axios";
 import InfoText from "../../inputs/info_text/InfoText";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import IconBase from "components/common/icons/IconBase";
+import InfoContainer from "components/common/containers/InfoContainer";
+import InputContainer from "components/common/inputs/InputContainer";
 
 function ParameterSelectListInputBase({
   dataObject,
@@ -315,15 +317,9 @@ function ParameterSelectListInputBase({
 
   const getTitleBar = () => {
     return (
-      <div className="pl-2 pt-2 d-flex justify-content-between">
-        <div>
-          <IconBase icon={titleIcon} className={"mr-2"} />
-          {titleText}
-        </div>
-        <span>
+      <div className={"d-flex"}>
         {getRefreshButton()}
         {showHelp && getHelpText()}
-        </span>
       </div>
     );
   };
@@ -375,21 +371,24 @@ function ParameterSelectListInputBase({
   }
 
   return (
-    <div className="object-properties-input">
-      <div className="content-container">
-        <div className="property-header">
-          <h6>{getTitleBar()}</h6>
-        </div>
+    <InputContainer>
+      <InfoContainer
+        titleIcon={titleIcon}
+        titleText={titleText}
+        titleRightSideButton={getTitleBar()}
+        isLoading={isLoading}
+        // loadDataFunction={loadData}
+      >
         <div>{properties.length > 0 ? getHeaderBar() : null}</div>
-        <div className="properties-body-alt">{getFieldBody()}</div>
-      </div>
+        <div className={"properties-body-alt"}>{getFieldBody()}</div>
+      </InfoContainer>
       <InfoText
         model={dataObject}
         fieldName={fieldName}
         field={field}
         errorMessage={errorMessage}
       />
-    </div>
+    </InputContainer>
   );
 }
 
