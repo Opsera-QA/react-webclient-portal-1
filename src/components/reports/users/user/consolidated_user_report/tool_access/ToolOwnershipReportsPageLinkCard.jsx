@@ -7,7 +7,9 @@ export default function ToolOwnershipReportsPageLinkCard() {
     isSiteAdministrator,
     isSaasUser,
     isPowerUser,
-    isOpseraAdministrator
+    isOpseraAdministrator,
+    isAuditor,
+    isSecurityManager,
   } = useComponentStateReference();
 
   if (
@@ -15,6 +17,8 @@ export default function ToolOwnershipReportsPageLinkCard() {
     && isSaasUser !== true
     && isPowerUser !== true
     && isOpseraAdministrator !== true
+    && isAuditor !== true
+    && isSecurityManager !== true
   ) {
     return null;
   }

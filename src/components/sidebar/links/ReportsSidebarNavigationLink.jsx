@@ -1,26 +1,27 @@
-import React, { useContext } from "react";
-import { AuthContext } from "contexts/AuthContext";
+import React from "react";
 import SidebarNavigationLinkBase from "components/common/links/sidebar/SidebarNavigationLinkBase";
 import {faAnalytics} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-export default function ReportsSidebarNavigationLink({ isSidebarCollapsed, }) {
+export default function ReportsSidebarNavigationLink({isSidebarCollapsed,}) {
   const {
-    userAccessRoles,
-    isSassUser,
-    isOpseraAdministrator,
-    isPowerUser,
     isSiteAdministrator,
-  } = useContext(AuthContext);
+    isOpseraAdministrator,
+    isSaasUser,
+    isPowerUser,
+    isSecurityManager,
+    isAuditor,
+  } = useComponentStateReference();
 
   if (
-    userAccessRoles == null
-    || (
-      isSassUser() !== true
-      && isOpseraAdministrator() !== true
-      && isPowerUser !== true
-      && isSiteAdministrator !== true
-    )) {
+    isSaasUser !== true
+    && isOpseraAdministrator !== true
+    && isPowerUser !== true
+    && isSiteAdministrator !== true
+    && isSecurityManager !== true
+    && isAuditor !== true
+  ) {
     return null;
   }
 

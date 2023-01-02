@@ -7,9 +7,10 @@ import ToolReportPageLinkCards from "components/reports/tools/ToolReportPageLink
 import UserReportPageLinkCards from "components/reports/users/UserReportPageLinkCards";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-function ReportsPageLinkCards({accessRoleData}) {
+function ReportsPageLinkCards() {
   const {
     isSaasUser,
+    accessRoleData,
   } = useComponentStateReference();
 
   const getUserReports = () => {
@@ -17,7 +18,7 @@ function ReportsPageLinkCards({accessRoleData}) {
       return (
         <div className={"mt-3"}>
           <H5FieldSubHeader className={"ml-3"} subheaderText={"User Reports"} />
-          <UserReportPageLinkCards accessRoleData={accessRoleData} />
+          <UserReportPageLinkCards />
         </div>
       );
     }
@@ -28,11 +29,11 @@ function ReportsPageLinkCards({accessRoleData}) {
       <div>
         <div>
           <H5FieldSubHeader className={"ml-3"} subheaderText={"Tag Reports"} />
-          <TagReportPageLinkCards accessRoleData={accessRoleData} />
+          <TagReportPageLinkCards />
         </div>
         <div className={"mt-3"}>
           <H5FieldSubHeader className={"ml-3"} subheaderText={"Tool Reports"} />
-          <ToolReportPageLinkCards accessRoleData={accessRoleData} />
+          <ToolReportPageLinkCards />
         </div>
         {getUserReports()}
 

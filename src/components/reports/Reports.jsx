@@ -38,12 +38,8 @@ export default function Reports() {
       breadcrumbDestination={"reports"}
       pageDescription={"View all Tag, Tool, and User reports from this dashboard."}
       helpComponent={getHelpComponent()}
-      accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
     >
-      <ReportsPageLinkCards
-        accessRoleData={accessRoleData}
-      />
+      <ReportsPageLinkCards />
     </ScreenContainer>
   );
 }

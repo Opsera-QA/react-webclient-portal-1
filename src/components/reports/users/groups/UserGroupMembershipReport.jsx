@@ -1,72 +1,50 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
-import LoadingDialog from "components/common/status_notifications/loading";
+import React, {useState, useEffect} from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faAnalytics, faTags, faTools, faUsers} from "@fortawesome/pro-light-svg-icons";
-import {useHistory} from "react-router-dom";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import userReportsMetadata from "components/reports/users/user-reports-metadata";
 import accountsActions from "components/admin/accounts/accounts-actions";
-import axios from "axios";
 import UserGroupMembershipReportTable from "components/reports/users/groups/UserGroupMembershipReportTable";
-import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import LdapUserByDomainSelectInput from "components/common/list_of_values_input/users/LdapUserByDomainSelectInput";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function UserGroupMembershipReport() {
-  const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [groupMembershipModel, setGroupMembershipModel] = useState(new Model({...userReportsMetadata}, userReportsMetadata, false));
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [groupList, setGroupList] = useState([]);
-  const [domain, setDomain] = useState("");
+  const {
+    isSiteAdministrator,
+    isOpseraAdministrator,
+    isAuditor,
+    isSecurityManager,
+    cancelTokenSource,
+    getAccessToken,
+    isMounted,
+    toastContext,
+    userData,
+    isSaasUser,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+    if (isSaasUser === false) {
+      loadData().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
     }
+  }, [isSaasUser]);
 
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
-      const user = await getUserRecord();
-      const {ldap} = user;
-      const userRoleAccess = await setAccessRoles(user);
-      
-      if (isMounted?.current === true && userRoleAccess) {
+      if (isMounted?.current === true) {
         setIsLoading(true);
-        setAccessRoleData(userRoleAccess);
-        setDomain(ldap?.domain);
-  
-        if (ldap.domain != null) {
-          const groupResponse = await accountsActions.getLdapGroupsWithDomainV2(getAccessToken, cancelSource, ldap.domain);
+        const groupResponse = await accountsActions.getLdapGroupsWithDomainV2(getAccessToken, cancelTokenSource, userData?.ldap?.domain);
 
-          if (Array.isArray(groupResponse?.data)){
-            setGroupList(groupResponse?.data);
-          }
+        if (Array.isArray(groupResponse?.data)) {
+          setGroupList(groupResponse?.data);
         }
       }
     } catch (error) {
@@ -99,16 +77,19 @@ function UserGroupMembershipReport() {
     setGroupMembershipModel({...newDataObject});
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
+  if (
+    isSiteAdministrator !== true
+    && isOpseraAdministrator !== true
+    && isAuditor !== true
+    && isSecurityManager !== true
+  ) {
+    return null;
   }
 
   return (
     <ScreenContainer
       breadcrumbDestination={"groupMembershipReport"}
-      accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
-      navigationTabContainer={<ReportsSubNavigationBar currentTab={"userReportViewer"} />}
+      navigationTabContainer={<ReportsSubNavigationBar currentTab={"userReportViewer"}/>}
       pageDescription={"View the Group Membership of a selected User"}
     >
       <Row className={"mb-3 mx-0"}>
@@ -125,7 +106,7 @@ function UserGroupMembershipReport() {
         groups={groupList}
         isLoading={isLoading}
         loadData={loadData}
-        domain={domain}
+        domain={userData?.ldap?.domain}
         userDistinguishedName={groupMembershipModel?.getData("dn")}
       />
     </ScreenContainer>

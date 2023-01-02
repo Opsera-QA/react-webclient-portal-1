@@ -6,20 +6,20 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function GitCustodianSidebarNavigationLink({ isSidebarCollapsed, }) {
   const {
-    isSassUser,
+    isSiteAdministrator,
     isOpseraAdministrator,
+    isSaasUser,
     isSecurityManager,
     isAuditor,
-    isSiteAdministrator,
   } = useComponentStateReference();
 
   if (
-      isSassUser !== true
-      && isOpseraAdministrator !== true
-      && isSiteAdministrator !== true
-      && isSecurityManager !== true
-      && isAuditor !== true
-    ) {
+    isSaasUser !== true
+    && isOpseraAdministrator !== true
+    && isSiteAdministrator !== true
+    && isSecurityManager !== true
+    && isAuditor !== true
+  ) {
     return null;
   }
 
