@@ -7,7 +7,9 @@ export default function TaskOwnershipReportsPageLinkCard() {
     isSiteAdministrator,
     isSaasUser,
     isPowerUser,
-    isOpseraAdministrator
+    isOpseraAdministrator,
+    isAuditor,
+    isSecurityManager,
   } = useComponentStateReference();
 
   if (
@@ -15,6 +17,8 @@ export default function TaskOwnershipReportsPageLinkCard() {
     && isSaasUser !== true
     && isPowerUser !== true
     && isOpseraAdministrator !== true
+    && isAuditor !== true
+    && isSecurityManager !== true
   ) {
     return null;
   }

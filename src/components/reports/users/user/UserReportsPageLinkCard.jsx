@@ -5,19 +5,22 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 export default function UserReportsPageLinkCard() {
   const {
     isSiteAdministrator,
-    isSaasUser,
     isPowerUser,
-    isOpseraAdministrator
+    isOpseraAdministrator,
+    isAuditor,
+    isSecurityManager,
   } = useComponentStateReference();
 
   if (
     isSiteAdministrator !== true
-    && isSaasUser !== true
     && isPowerUser !== true
     && isOpseraAdministrator !== true
+    && isAuditor !== true
+    && isSecurityManager !== true
   ) {
     return null;
   }
+
   return (
     <BreadcrumbPageLinkCard
       breadcrumbDestination={"consolidatedUserReport"}
