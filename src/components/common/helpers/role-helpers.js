@@ -98,7 +98,7 @@ export const isPowerUserOrSass = (accessRoleData) => {
 };
 
 export const isUser = (accessRoleData) => {
-  return accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator || accessRoleData?.User || accessRoleData?.SecurityManager || accessRoleData?.Auditor;
+  return accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator || accessRoleData?.User || accessRoleData?.SecurityManager || accessRoleData?.Auditor || accessRoleData?.Role === "readonly";
 };
 
 export const isUserOrSassUser = (accessRoleData) => {
