@@ -71,7 +71,7 @@ function TaskDetailPanel(
     return (
       <CustomTabContainer>
         <SummaryToggleTab
-          handleTabClick={gitTasksData?.canUpdate() === true ? handleTabClick : undefined}
+          handleTabClick={handleTabClick}
           activeTab={activeTab}
         />
         {getDynamicTabs()}

@@ -128,7 +128,10 @@ function TaskSummaryPanel(
   };
 
   return (
-    <SummaryPanelContainer setActiveTab={setActiveTab} editingAllowed={TaskRoleHelper.canUpdateTask(userData, gitTasksData?.getPersistData())}>
+    <SummaryPanelContainer
+      setActiveTab={setActiveTab}
+      editingAllowed={TaskRoleHelper.canUpdateTask(userData, gitTasksData?.getPersistData())}
+    >
       <Row>
         <Col md={6}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"name"} />
