@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import {siteRoleActions} from "components/settings/ldap_site_roles/siteRole.actions";
 import useButtonState from "hooks/general/buttons/useButtonState";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
+import {useHistory} from "react-router-dom";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function ActivateSiteRoleButton(
   {
@@ -11,10 +13,12 @@ export default function ActivateSiteRoleButton(
     closeOverlayFunction,
     className,
   }) {
+  const history = useHistory();
   const {
     toastContext,
     cancelTokenSource,
     getAccessToken,
+    userData,
   } = useComponentStateReference();
   const {
     buttonState,
@@ -23,13 +27,14 @@ export default function ActivateSiteRoleButton(
 
   const activateSiteRole = async () => {
     try {
+      const orgDomain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
       buttonStateFunctions.setBusyState();
       await siteRoleActions.activateSiteRole(getAccessToken, cancelTokenSource, siteRoleName);
       closeOverlayFunction();
       toastContext.showInformationToast("The Site Role has been successfully activated.");
       buttonStateFunctions.setSuccessState();
-    }
-    catch (error) {
+      history.push(`/settings/${orgDomain}/site-roles/details/${siteRoleName}`);
+    } catch (error) {
       toastContext.showFormErrorToast(error, `Error activating Site Role:`);
       buttonStateFunctions.setErrorState();
     }
