@@ -1,24 +1,26 @@
-import React, {useContext} from "react";
+import React from "react";
 import TableCardView from "components/common/table/TableCardView";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTasks} from "@fortawesome/pro-light-svg-icons";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import InlineTaskTypeFilter from "components/common/filters/tasks/type/InlineTaskTypeFilter";
 import TaskTable from "components/tasks/TaskTable";
 import NewTaskOverlay from "components/tasks/NewTaskOverlay";
 import TaskCardView from "components/tasks/TaskCardView";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import TaskTypeFilter from "components/common/filters/tasks/type/TaskTypeFilter";
 import TaskStatusFilter from "components/common/filters/tasks/status/TaskStatusFilter";
 import TaskVerticalTabContainer from "components/tasks/TaskVerticalTabContainer";
 import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
+import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, isMounted, taskMetadata}) {
-  const toastContext = useContext(DialogToastContext);
+  const {
+    toastContext,
+    userData,
+  } = useComponentStateReference();
 
   const createNewTask = () => {
     toastContext.showOverlayPanel(
@@ -122,7 +124,7 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
         loadData={loadData}
         filterDto={taskFilterModel}
         setFilterDto={setTaskFilterModel}
-        addRecordFunction={createNewTask}
+        addRecordFunction={TaskRoleHelper.canCreateTask(userData) === true ? createNewTask : undefined}
         supportSearch={true}
         supportViewToggle={true}
         isLoading={isLoading}
