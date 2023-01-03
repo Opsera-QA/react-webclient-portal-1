@@ -21,7 +21,7 @@ export default function usePipelineActions() {
     activityLogId,
   ) => {
     const apiUrl = `/pipelines/${pipelineId}/activity`;
-    const params = {
+    const urlParameters = {
       tool: tool,
       step_id: pipelineStepId,
       id: activityLogId,
@@ -29,6 +29,7 @@ export default function usePipelineActions() {
 
     return await apiService.handleApiGetRequest(
       apiUrl,
+      urlParameters,
     );
   };
 
