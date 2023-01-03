@@ -14,5 +14,23 @@ export default function usePipelineActions() {
     );
   };
 
+  pipelineActions.getPipelineStepActivityLog = async (
+    pipelineId,
+    pipelineStepId,
+    tool,
+    activityLogId,
+  ) => {
+    const apiUrl = `/pipelines/${pipelineId}/activity`;
+    const params = {
+      tool: tool,
+      step_id: pipelineStepId,
+      id: activityLogId,
+    };
+
+    return await apiService.handleApiGetRequest(
+      apiUrl,
+    );
+  };
+
   return pipelineActions;
 }
