@@ -92,7 +92,7 @@ function GitlabOpenMergeActionableTabOverlay({ kpiConfiguration, dashboardData }
         <FullScreenCenterOverlayContainer
             closePanel={closePanel}
             showPanel={true}
-            titleText={"Gitlab Merge Request Insights"}
+            titleText={"Gitlab Open Pull Requests Insights"}
             showToasts={true}
             titleIcon={faTable}
             // isLoading={isLoading}
