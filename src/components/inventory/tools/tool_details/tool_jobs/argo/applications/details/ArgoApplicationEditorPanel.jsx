@@ -15,6 +15,10 @@ import axios from "axios";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import ArgoApplicationArgoProjectSelectInput from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/inputs/ArgoApplicationArgoProjectSelectInput";
 import BooleanToggleInput from "../../../../../../../common/inputs/boolean/BooleanToggleInput";
+import MultiTextInputBase from "../../../../../../../common/inputs/text/MultiTextInputBase";
+import SelectInputBase from "../../../../../../../common/inputs/select/SelectInputBase";
+import {ARGO_APPLICATION_TYPE_CONSTANTS} from "../argo-application-type-constants";
+import TextAreaInput from "../../../../../../../common/inputs/text/TextAreaInput";
 
 function ArgoApplicationEditorPanel({ argoApplicationData, toolData, applicationName, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -81,6 +85,78 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
       />
     );
   }
+
+  const setTypeDataFunction = (fieldName, selectedOption) => {
+    let newDataObject = {...argoApplicationModel};
+    // when type is changed, all the fields are reset
+    newDataObject.setData('recursive',false);
+    newDataObject.setData('valueFiles',[]);
+    newDataObject.setData('values','');
+    newDataObject.setData('namePrefix','');
+    newDataObject.setData('nameSuffix','');
+    newDataObject.setData(fieldName, selectedOption);
+    setArgoApplicationModel({...newDataObject});
+  };
+
+  const getDynamicFieldsForType = (type) => {
+    switch (type) {
+      case "Directory":
+        return (
+          <Col lg={12}>
+            <BooleanToggleInput
+              dataObject={argoApplicationModel}
+              fieldName={"recursive"}
+              setDataObject={setArgoApplicationModel}
+              disabled={!argoApplicationData?.isNew()}
+            />
+          </Col>
+        );
+      case "Helm":
+        return (
+          <>
+            <Col lg={12}>
+              <MultiTextInputBase
+                dataObject={argoApplicationModel}
+                fieldName={"valueFiles"}
+                setDataObject={setArgoApplicationModel}
+                disabled={!argoApplicationData?.isNew()}
+              />
+            </Col>
+            <Col lg={12}>
+              <TextAreaInput
+                dataObject={argoApplicationModel}
+                fieldName={"values"}
+                setDataObject={setArgoApplicationModel}
+                disabled={!argoApplicationData?.isNew()}
+              />
+            </Col>
+          </>
+        );
+      case "Kustomize":
+        return (
+          <>
+            <Col lg={12}>
+              <TextInputBase
+                dataObject={argoApplicationModel}
+                fieldName={"namePrefix"}
+                setDataObject={setArgoApplicationModel}
+                disabled={!argoApplicationData?.isNew()}
+              />
+            </Col>
+            <Col lg={12}>
+              <TextInputBase
+                dataObject={argoApplicationModel}
+                fieldName={"nameSuffix"}
+                setDataObject={setArgoApplicationModel}
+                disabled={!argoApplicationData?.isNew()}
+              />
+            </Col>
+          </>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <EditorPanelContainer
@@ -158,6 +234,17 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
               disabled={!argoApplicationData?.isNew()}
             />
           </Col>
+          <Col lg={12}>
+            <SelectInputBase
+              dataObject={argoApplicationModel}
+              fieldName={"type"}
+              setDataObject={setArgoApplicationModel}
+              setDataFunction={setTypeDataFunction}
+              disabled={!argoApplicationData?.isNew()}
+              selectOptions={ARGO_APPLICATION_TYPE_CONSTANTS.LIST}
+            />
+          </Col>
+          {getDynamicFieldsForType(argoApplicationModel.getData("type"))}
           <Col lg={12}>
             <BooleanToggleInput
               fieldName={"autoSync"}
