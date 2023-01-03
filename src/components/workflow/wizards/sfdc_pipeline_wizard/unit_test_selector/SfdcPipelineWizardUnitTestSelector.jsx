@@ -33,7 +33,10 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
   const [selectedUnitTestClassesList, setSelectedUnitTestClassesList] = useState([]);
   const [testClassFilterDto, setTestClassFilterDto] = useState(new Model({...filterMetadata.newObjectFields}, filterMetadata, false));
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [filePullCompleted, setFilePullCompleted] = useState(false);
   const isMounted = useRef(false);
+
+  let timerIds = [];
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -49,8 +52,30 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
     return () => {
       source.cancel();
       isMounted.current = false;
+      // stopPolling();
     };
   }, []);
+
+
+  const stopPolling = () => {
+    if (Array.isArray(timerIds) && timerIds.length > 0) {
+      timerIds?.forEach(timerId => clearTimeout(timerId));
+    }
+  };
+
+  const unitTestPolling = async (testClassFilterDto, unitClassStep, count = 1) => {
+    if (isMounted?.current !== true) {
+      return;
+    }
+
+    const testClasses = await getUnitTestList(testClassFilterDto, unitClassStep, selectedStep);
+
+    if (!Array.isArray(testClasses) && count <= 5 && filePullCompleted === false) {
+      console.log("new promis ", count);
+      await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
+      return await unitTestPolling(testClassFilterDto, unitClassStep,count + 1);
+    }
+  };
 
   const getUnitTestList = async (filterDto = testClassFilterDto, step = selectedStep) => {
     setUnitTestListLoading(true);
@@ -63,24 +88,22 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
       const response = await sfdcPipelineActions.getUnitTestClassesListV2(getAccessToken, cancelTokenSource, pipelineWizardModel, step);
       const testClasses = response?.data?.testClasses?.data;
       const selectedTestClasses = response?.data?.selectedTestClasses?.data;
-
-      if(!Array.isArray(testClasses) || !Array.isArray(selectedTestClasses)) {
-        toastContext.showInlineErrorMessage("Error getting Unit Test API Data.");
+      if (isMounted?.current === true && Array.isArray(testClasses) && Array.isArray(selectedTestClasses)) {
+        // save the mongo record id so that we can update it when saving selected data
+        setUnitTestRecordId(response?.data?._id);
+        if (Array.isArray(selectedTestClasses) && selectedTestClasses.length > 0) {
+          setSelectedUnitTestClassesList(testClasses?.filter((testClasses)=> selectedTestClasses.includes(testClasses)));
+        }
+        setUnitTestClassesList(testClasses);
+        console.log("files pull completed");
+        setFilePullCompleted(true);
+        setUnitTestListLoading(false);
       }
 
-      // save the mongo record id so that we can update it when saving selected data
-      setUnitTestRecordId(response?.data?._id);
-
-      if (Array.isArray(selectedTestClasses) && selectedTestClasses.length > 0) {
-        setSelectedUnitTestClassesList(testClasses?.filter((testClasses)=> selectedTestClasses.includes(testClasses)));
-      }
-
-      setUnitTestClassesList(testClasses);
+      return testClasses;
     } catch (error) {
       console.error("Error getting API Data: ", error);
       toastContext.showLoadingErrorDialog(error);
-    } finally {
-      setUnitTestListLoading(false);
     }
   };
 
@@ -91,6 +114,8 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
   const getTestClasses = async (unitClassStep) => {
     try {
       setIsLoading(true);
+      stopPolling();
+      setFilePullCompleted(false);
       const response = await sfdcPipelineActions.triggerUnitTestClassesPull(getAccessToken, cancelTokenSource, pipelineWizardModel, unitClassStep);
 
       // TODO: Is this check necessary?
@@ -104,7 +129,9 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
         if(Object.keys(unitClassStep).length > 0){
           setSelectedUnitTestClassesList([]);
           setUnitTestClassesList([]);
-          await getUnitTestList(testClassFilterDto, unitClassStep);
+          // start polling
+          await unitTestPolling(testClassFilterDto, unitClassStep);
+          // await getUnitTestList(testClassFilterDto, unitClassStep);
         }
       }
     } catch (error) {
