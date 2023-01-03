@@ -1,6 +1,3 @@
-import {
-  SONAR_JOB_TYPES
-} from "../../../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepJobTypeSelectInput";
 import {ARGO_APPLICATION_TYPE_CONSTANTS} from "./argo-application-type-constants";
 
 const argoApplicationsMetadata = {
