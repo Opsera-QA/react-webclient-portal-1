@@ -36,7 +36,7 @@ function CommandLineInputParametersInput({ model, setModel, disabled, fieldName,
         allowIncompleteItems={true}
         type={"Parameter"}
         regexValidationRequired={false}
-        titleText={"Input Parameter Selection"}
+        titleText={"Input Parameters"}
         plan={plan}
         tool_prop={model?.getData("terraformStepId") && model?.getData("terraformStepId").length > 0 ? model?.getData("terraformStepId") : ""}
       />

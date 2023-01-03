@@ -33,20 +33,18 @@ function PipelineStepEditorPanelContainer(
   }
 
   return (
-    <>
-      <div>
-        <div>{children}</div>
-        <PipelineStepConfigurationButtonContainer
-          showIncompleteDataMessage={showIncompleteDataMessage}
-          persistRecord={persistRecord}
-          recordDto={recordDto}
-          handleClose={handleClose}
-          isStrict={isStrict}
-          disableSaveButton={disableSaveButton}
-        />
-        {getRequiredFieldsMessage()}
-      </div>
-    </>
+    <div>
+      <div>{children}</div>
+      <PipelineStepConfigurationButtonContainer
+        showIncompleteDataMessage={showIncompleteDataMessage}
+        persistRecord={persistRecord}
+        recordDto={recordDto}
+        handleClose={handleClose}
+        isStrict={isStrict}
+        disableSaveButton={disableSaveButton}
+      />
+      {getRequiredFieldsMessage()}
+    </div>
   );
 }
 
