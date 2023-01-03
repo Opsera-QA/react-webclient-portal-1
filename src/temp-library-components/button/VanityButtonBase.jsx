@@ -10,6 +10,7 @@ export default function VanityButtonBase(
     buttonState,
     onClickFunction,
     icon,
+    iconClassName,
     variant,
     disabled,
     className,
@@ -67,6 +68,7 @@ export default function VanityButtonBase(
               isLoading={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY}
               icon={getButtonIcon()}
               className={getLabel() != null ? "mr-2" : undefined}
+              iconClassName={iconClassName}
             />
             {getLabel()}
           </span>
@@ -79,6 +81,7 @@ export default function VanityButtonBase(
 VanityButtonBase.propTypes = {
   buttonState: PropTypes.string,
   icon: PropTypes.object,
+  iconClassName: PropTypes.string,
   onClickFunction: PropTypes.func,
   variant: PropTypes.string,
   disabled: PropTypes.bool,

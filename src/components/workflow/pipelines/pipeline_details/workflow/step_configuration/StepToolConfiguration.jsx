@@ -586,7 +586,7 @@ function StepToolConfiguration({
             handleCloseFunction={closeEditorPanel}
           />
         );
-      case "command-line":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.COMMAND_LINE:
         return (
           <CommandLineStepConfiguration
             pipelineId={pipeline._id}

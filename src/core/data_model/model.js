@@ -139,7 +139,7 @@ export class Model {
     }
 
     if (!Array.isArray(currentValue)) {
-      console.error(`Value was not saved as array. Returning in array.`);
+      console.error(`Value for field name [${fieldName}] was not saved as array. Returning in array.`);
       console.error(`Value: ${JSON.stringify(currentValue)}`);
       return [currentValue];
     }
