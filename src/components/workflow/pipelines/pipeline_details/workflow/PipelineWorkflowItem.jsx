@@ -157,6 +157,7 @@ const PipelineWorkflowItem = (
           toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION,
           toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS,
           toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION,
+          toolIdentifierConstants.TOOL_IDENTIFIERS.COMMAND_LINE,
         ];
 
         if (newOverlayToolIdentifiers.includes(toolIdentifier) === true && type === "tool") {
