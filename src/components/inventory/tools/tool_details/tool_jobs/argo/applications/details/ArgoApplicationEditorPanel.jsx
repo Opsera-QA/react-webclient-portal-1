@@ -97,8 +97,30 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
     newDataObject.setData(fieldName, selectedOption);
     setArgoApplicationModel({...newDataObject});
   };
+  const getTypeField = () => {
+    // TODO THIS CHECK IS TEMPORARY NOT TO SHOW TYPE IN EDIT SINCE API GET SERVICE IS NOT COMPLETED
+    if(!argoApplicationData?.isNew()) {
+      return null;
+    }
+    return (
+      <Col lg={12}>
+        <SelectInputBase
+          dataObject={argoApplicationModel}
+          fieldName={"type"}
+          setDataObject={setArgoApplicationModel}
+          setDataFunction={setTypeDataFunction}
+          disabled={!argoApplicationData?.isNew()}
+          selectOptions={ARGO_APPLICATION_TYPE_CONSTANTS.LIST}
+        />
+      </Col>
+    );
+  };
 
   const getDynamicFieldsForType = (type) => {
+    // TODO THIS CHECK IS TEMPORARY NOT TO SHOW TYPE IN EDIT SINCE API GET SERVICE IS NOT COMPLETED
+    if(!argoApplicationData?.isNew()) {
+      return null;
+    }
     switch (type) {
       case "Directory":
         return (
@@ -234,16 +256,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
               disabled={!argoApplicationData?.isNew()}
             />
           </Col>
-          <Col lg={12}>
-            <SelectInputBase
-              dataObject={argoApplicationModel}
-              fieldName={"type"}
-              setDataObject={setArgoApplicationModel}
-              setDataFunction={setTypeDataFunction}
-              disabled={!argoApplicationData?.isNew()}
-              selectOptions={ARGO_APPLICATION_TYPE_CONSTANTS.LIST}
-            />
-          </Col>
+          {getTypeField()}
           {getDynamicFieldsForType(argoApplicationModel.getData("type"))}
           <Col lg={12}>
             <BooleanToggleInput
