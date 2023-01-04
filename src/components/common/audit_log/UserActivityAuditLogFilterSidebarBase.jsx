@@ -19,6 +19,12 @@ export default function UserActivityAuditLogFilterSidebarBase(
       className={"h-100 w-100 px-2"}
       style={{overflowX: "hidden"}}
     >
+      <InlineDateTimeRangeFilterInput
+        model={userActivityAuditLogFilterModel}
+        setModel={setUserActivityAuditLogFilterModel}
+        loadDataFunction={loadDataFunction}
+        stacked={true}
+      />
       <InlineSiteRoleMultiSelectCheckboxFilterInput
         model={userActivityAuditLogFilterModel}
         setModel={setUserActivityAuditLogFilterModel}
@@ -36,12 +42,6 @@ export default function UserActivityAuditLogFilterSidebarBase(
         setModel={setUserActivityAuditLogFilterModel}
         loadDataFunction={loadDataFunction}
         fieldName={"actions"}
-      />
-      <InlineDateTimeRangeFilterInput
-        model={userActivityAuditLogFilterModel}
-        setModel={setUserActivityAuditLogFilterModel}
-        loadDataFunction={loadDataFunction}
-        stacked={true}
       />
     </div>
   );

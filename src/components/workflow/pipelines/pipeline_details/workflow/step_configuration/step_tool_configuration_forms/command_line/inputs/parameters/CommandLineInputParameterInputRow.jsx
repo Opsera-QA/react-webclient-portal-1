@@ -11,21 +11,28 @@ import {
 } from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/commandLineInputParameter.metadata";
 import CommandLineInputParameterTypeSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParameterTypeSelectInput";
+import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 export default function CommandLineInputParameterInputRow(
   {
     addPropertyFunction,
+    error,
     className,
     disabled,
     saveEnvironmentVariables,
+    addLocalParameterFunction,
   }) {
   const [commandLineInputParameterModel, setCommandLineInputParameterModel] = useState(modelHelpers.parseObjectIntoModel({}, commandLineInputParameterMetadata));
 
   const handleAddPropertyFunction = () => {
-    const newParameter = {
-      ...commandLineInputParameterModel?.getPersistData()
-    };
-    const successfulAdd = addPropertyFunction(newParameter);
+    let successfulAdd = false;
+
+    if (commandLineInputParameterModel?.getData("type") === "local") {
+      successfulAdd = addLocalParameterFunction(commandLineInputParameterModel?.getPersistData());
+    }
+    // else {
+    // }
 
     if (successfulAdd === true) {
       commandLineInputParameterModel.resetData();
@@ -33,14 +40,47 @@ export default function CommandLineInputParameterInputRow(
     }
   };
 
+  // TODO: Make separate input
+  const setParameterFunction = (fieldName, selectedOption) => {
+    commandLineInputParameterModel.setData("parameterId", selectedOption?._id);
+    commandLineInputParameterModel.setData("parameterName", selectedOption?.name);
+    setCommandLineInputParameterModel({...commandLineInputParameterModel});
+  };
+
   const getInputFields = () => {
     if (commandLineInputParameterModel?.getData("type") === "global") {
       if (saveEnvironmentVariables === true) {
-        return "Save environment variables";
+        return (
+          <>
+            <Col xs={5}>
+              <CustomParameterSelectInput
+                model={commandLineInputParameterModel}
+                fieldName={"parameterId"}
+                disabled={disabled}
+                setDataFunction={setParameterFunction}
+              />
+            </Col>
+            <Col xs={5}>
+              <TextInputBase
+                fieldName={"outputKey"}
+                dataObject={commandLineInputParameterModel}
+                setDataObject={setCommandLineInputParameterModel}
+                disabled={disabled}
+              />
+            </Col>
+          </>
+        );
       }
 
       return (
-        "don't save environment variables"
+        <Col xs={10}>
+          <CustomParameterSelectInput
+            model={commandLineInputParameterModel}
+            fieldName={"parameterId"}
+            disabled={disabled}
+            setDataFunction={setParameterFunction}
+          />
+        </Col>
       );
     }
 
@@ -89,6 +129,11 @@ export default function CommandLineInputParameterInputRow(
             />
           </div>
         </Col>
+        <Col xs={12}>
+          <InfoText
+            errorMessage={error}
+          />
+        </Col>
       </Row>
     </div>
   );
@@ -96,7 +141,9 @@ export default function CommandLineInputParameterInputRow(
 
 CommandLineInputParameterInputRow.propTypes = {
   addPropertyFunction: PropTypes.func,
+  addLocalParameterFunction: PropTypes.func,
   className: PropTypes.string,
   disabled: PropTypes.bool,
   saveEnvironmentVariables: PropTypes.bool,
+  error: PropTypes.any,
 };
