@@ -78,6 +78,7 @@ import GitlabPendingMergeRequests from "./gitlab/table/pending_merge_requests/Gi
 import GitlabDeploymentFrequency from "./gitlab/deployment_frequency/GitlabDeploymentFrequencyMetric";
 import GitLabLeadTimeChart from "./gitlab/line_chart/lead_time/GitLabLeadTimeChart";
 import GitlabPipelineStatistics from "./gitlab/line_chart/pipeline-statistics/GitlabPipelineStatistics";
+import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/GitlabMergeRequestStatistics";
 
 //new
 import ProjectWiseUnitTestResults from './unit_tests/project_wise_results/ProjectWiseUnitTestResults';
@@ -1056,6 +1057,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
                 setKpis={setKpis}
                 index={index}
               />
+            </Col>
+        );
+      case "gitlab-merge-requests-statistics":
+        return (
+            <Col xl={12} md={12} className="p-2">
+                <GitlabMergeRequestStatistics
+                    kpiConfiguration={kpiConfig}
+                    setKpiConfiguration={setKpiConfig}
+                    dashboardData={dashboardData}
+                    setKpis={setKpis}
+                    index={index}
+                />
             </Col>
         );
       //APIGEE KPIs
