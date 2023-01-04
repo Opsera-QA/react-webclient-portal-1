@@ -113,6 +113,12 @@ export default class ModelBase {
     console.error("No deleteModel function was wired up");
   };
 
+  reloadData = async () => {
+    if (this.loadDataFunction) {
+      this.loadDataFunction();
+    }
+  };
+
   getDetailViewLink = () => {
     // console.error("No getDetailViewLink function was wired up");
     return null;

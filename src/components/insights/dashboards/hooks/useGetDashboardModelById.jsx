@@ -25,9 +25,14 @@ export default function useGetDashboardModelById(
     }
   }, [id]);
 
-  const loadData = async () => {
+  const loadData = async (hardRefresh) => {
     try {
       setIsLoading(true);
+
+      if (hardRefresh === true) {
+        setDashboardModel(undefined);
+      }
+
       await getDashboard();
     } catch (error) {
       if (!error?.error?.message?.includes(404)) {
@@ -48,7 +53,7 @@ export default function useGetDashboardModelById(
     const dashboard = response?.data?.data;
 
     if (dashboard) {
-      const newModel = getNewDashboardModel(dashboard, false);
+      const newModel = getNewDashboardModel(dashboard, false, async () => loadData(true),);
       setDashboardModel({...newModel});
     }
   };
