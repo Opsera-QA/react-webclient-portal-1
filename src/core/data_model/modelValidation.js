@@ -78,6 +78,7 @@ export const fieldValidation = (value, model, field) => {
       || value === {}
     ) {
       errorMessages.push(field.label + " is required.");
+
     }
   }
 
@@ -188,6 +189,12 @@ export const fieldValidation = (value, model, field) => {
         }
       }
     }
+  }
+
+  if (value && typeof field.isValidFunction === "function" && field.isValidFunction(value) !== true) {
+    errorMessages.push(
+        `${model.getLabel(field.id)} is invalid.`
+    );
   }
 
   if (Array.isArray(value) && field?.minItems != null && value?.length < field?.minItems) {
