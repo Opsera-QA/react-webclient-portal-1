@@ -124,8 +124,7 @@ function BooleanToggleInput(
   }
 
   return (
-    <div className={className}>
-      <InputContainer fieldName={fieldName}>
+      <InputContainer fieldName={fieldName} className={className}>
         <div className={"d-flex"}>
           <Form.Check
             type={"switch"}
@@ -155,7 +154,6 @@ function BooleanToggleInput(
           customMessage={customInfoText}
         />
       </InputContainer>
-    </div>
   );
 }
 
