@@ -19,8 +19,9 @@ function OverlayIconBase(
     overlayTitle,
     overlayBody,
     overlayPlacement,
+    visible,
   }) {
-  if (icon == null) {
+  if (icon == null || visible === false) {
     return null;
   }
 
@@ -65,6 +66,7 @@ OverlayIconBase.propTypes = {
   overlayTitle: PropTypes.string,
   overlayBody: PropTypes.any,
   overlayPlacement: PropTypes.string,
+  visible: PropTypes.bool,
 };
 
 export default React.memo(OverlayIconBase);
