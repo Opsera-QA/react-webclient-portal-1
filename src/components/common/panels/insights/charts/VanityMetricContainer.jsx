@@ -13,10 +13,8 @@ import AppliedMetricTagBadge from "components/common/badges/tag/metrics/AppliedM
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import SpyglassIcon from "components/common/icons/general/SpyglassIcon";
 import BetaBadge from "components/common/badges/BetaBadge";
-import BadgeBase from "../../../badges/BadgeBase";
 import MetricBadgeBase from "../../../badges/metric/MetricBadgeBase";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
-import {useHistory} from "react-router-dom";
 
 function VanityMetricContainer(
   {
@@ -36,12 +34,13 @@ function VanityMetricContainer(
     isBeta,
   }) {
   const toastContext = useContext(DialogToastContext);
-  const history = useHistory();
   const [view, setView] = useState("chart");
+  const [isMovingKpi, setIsMovingKpi] = useState(false);
   const [helpIsShown, setHelpIsShown] = useState(false);
   const isMounted = useRef(false);
 
   useEffect(() => {
+    setIsMovingKpi(false);
     isMounted.current = true;
 
     if (loadChart) {
@@ -119,6 +118,7 @@ function VanityMetricContainer(
       return;
     }
 
+    setIsMovingKpi(true);
     const newIndex = index - 1;
     const currentItem = configuration[index];
     const item = configuration[newIndex];
@@ -126,7 +126,7 @@ function VanityMetricContainer(
     configuration[newIndex] = currentItem;
     dashboardData.setData("configuration", configuration);
     await dashboardData.saveModel();
-    history.go(0);
+    await dashboardData.reloadData();
   };
 
   const moveItemDown = async () => {
@@ -137,6 +137,7 @@ function VanityMetricContainer(
       return;
     }
 
+    setIsMovingKpi(true);
     const newIndex = index + 1;
     const currentItem = configuration[index];
     const item = configuration[newIndex];
@@ -144,7 +145,7 @@ function VanityMetricContainer(
     configuration[newIndex] = currentItem;
     dashboardData.setData("configuration", configuration);
     await dashboardData.saveModel();
-    history.go(0);
+    await dashboardData.reloadData();
   };
 
 
@@ -182,6 +183,23 @@ function VanityMetricContainer(
             <span className={"my-auto"}>
             <IconBase isLoading={true} className={"mr-2"} />
             Loading Chart
+          </span>
+          </div>
+        </div>
+      );
+    }
+
+    if (isMovingKpi === true) {
+      return (
+        <div className={"h-100 d-flex justify-content-between"}>
+          <div className={"d-flex"}>
+            <BetaBadge
+              isBeta={isBeta}
+              className={"mr-2 my-auto"}
+            />
+            <span className={"my-auto"}>
+            <IconBase isLoading={true} className={"mr-2"} />
+            Moving Chart
           </span>
           </div>
         </div>
