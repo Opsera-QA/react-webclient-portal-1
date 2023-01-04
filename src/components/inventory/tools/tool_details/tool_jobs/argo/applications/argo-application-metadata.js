@@ -79,6 +79,14 @@ const argoApplicationsMetadata = {
     {
       label: "Values",
       id: "values",
+      isValidFunction: (value) => {
+        try {
+          const json = JSON.parse(value);
+          return (typeof json === 'object');
+        } catch (e) {
+          return false;
+        }
+      },
       isRequiredFunction: (model) => {
         return (
           model?.getData("type") === ARGO_APPLICATION_TYPE_CONSTANTS.TYPE.HELM)
