@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import jsPDF from "jspdf";
 import ExportDataPanel from "components/common/modal/export_data/ExportDataPanel";
+import { format } from "date-fns";
 
 export default function ExportInsightsLookupDetailsPanel({
   showExportPanel,
@@ -44,8 +45,8 @@ export default function ExportInsightsLookupDetailsPanel({
         item.pipelineName,
         item.jobType,
         item.createdByName,
-        item.startTimestamp,
-        item.endTimestamp,
+        format(new Date(item.startTimestamp), "yyyy-MM-dd', 'hh:mm a"),
+    format(new Date(item.endTimestamp), "yyyy-MM-dd', 'hh:mm a"),
       ]),
     });
 
@@ -67,8 +68,8 @@ export default function ExportInsightsLookupDetailsPanel({
         item.pipelineName,
         item.jobType,
         item.createdByName,
-        item.startTimestamp,
-        item.endTimestamp,
+        format(new Date(item.startTimestamp), "yyyy-MM-dd', 'hh:mm a"),
+        format(new Date(item.endTimestamp), "yyyy-MM-dd', 'hh:mm a"),
       ]),
     ];
   };
