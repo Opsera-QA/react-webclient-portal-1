@@ -1,8 +1,6 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {faBracketsCurly, faTimes} from "@fortawesome/pro-light-svg-icons";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
@@ -10,7 +8,10 @@ import LocalInputParametersInputRow
   from "components/common/list_of_values_input/parameters/local/LocalInputParametersInputRow";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
+import LocalInputParameterInlineField
+  from "components/common/list_of_values_input/parameters/local/LocalInputParameterInlineField";
+import LocalInputParameterHeaderField
+  from "components/common/list_of_values_input/parameters/local/LocalInputParameterHeaderField";
 
 export default function LocalInputParametersInputBase(
   {
@@ -76,61 +77,23 @@ export default function LocalInputParametersInputBase(
     validateAndSetData(currentData);
   };
 
-  const getPropertyRow = (property, index) => {
-    return (
-      <div
-        className={`d-flex align-items-center justify-content-between ${index % 2 === 0 ? "even-row" : "odd-row"}`}
-        key={index}
-      >
-        <Col sm={11}>
-          <Row>
-            <Col sm={6} className={"pl-2 pr-0"}>
-              {property?.name}
-            </Col>
-            <Col sm={6} className={"pl-2 pr-0"}>
-              {property?.value}
-            </Col>
-          </Row>
-        </Col>
-        <Col sm={1} className={"pr-3 pl-0 delete-button"}>
-          <VanityButtonBase
-            variant={"link"}
-            onClickFunction={() => deletePropertyFunction(index)}
-            icon={faTimes}
-            iconClassName={"danger-red"}
-          />
-        </Col>
-      </div>
-    );
-  };
-
   const getFieldBody = () => {
     const data = DataParsingHelper.parseArray(model?.getArrayData(fieldName), []);
-    return (
-      <>
-        <div className="flex-fill">
-          {data.map((property, index) => {
-              return getPropertyRow(property, index);
-            }
-          )}
-        </div>
-      </>
-    );
-  };
 
-  const getHeaderBar = () => {
     return (
-      <div className={"page-description"}>
-        <Col sm={11}>
-          <Row>
-            <Col sm={6} className={"pl-2 pr-0 py-2"}>
-              <span className="text-muted">Local Parameter Name</span>
-            </Col>
-            <Col sm={6} className={"pl-2 pr-0 py-2"}>
-              <span className="text-muted">Value</span>
-            </Col>
-          </Row>
-        </Col>
+      <div className="flex-fill">
+        {data.map((parameter, index) => {
+            return (
+              <LocalInputParameterInlineField
+                disabled={disabled}
+                deleteParameterFunction={deletePropertyFunction}
+                parameter={parameter}
+                index={index}
+                key={index}
+              />
+            );
+          }
+        )}
       </div>
     );
   };
@@ -145,7 +108,7 @@ export default function LocalInputParametersInputBase(
         titleIcon={titleIcon}
         titleText={titleText}
       >
-        {getHeaderBar()}
+        <LocalInputParameterHeaderField />
         <div className={"properties-body-alt"}>
           {getFieldBody()}
         </div>

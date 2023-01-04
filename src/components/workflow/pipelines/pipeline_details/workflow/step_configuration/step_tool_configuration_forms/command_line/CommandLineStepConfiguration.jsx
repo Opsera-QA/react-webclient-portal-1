@@ -90,7 +90,7 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
         <div>
           <RoleRestrictedSonarToolSelectInput fieldName={"sonarToolConfigId"} model={commandLineStepConfigurationDto} setModel={setCommandLineStepConfigurationDataDto} />
           <TextInputBase fieldName={"projectKey"} dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
-          <CommandLineSonarCustomParametersToggle 
+          <CommandLineSonarCustomParametersToggle
             model={commandLineStepConfigurationDto}
             setModel={setCommandLineStepConfigurationDataDto}
           />
@@ -170,7 +170,7 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
       <CommandLineSourceScriptToggleInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"sourceScript"}/>
       <StepConfigUseTerraformOutput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
       {getTerraformSelect()}
-      {getDynamicFields()}      
+      {getDynamicFields()}
       <CommandLineInputParametersInput
         model={commandLineStepConfigurationDto}
         setModel={setCommandLineStepConfigurationDataDto}
