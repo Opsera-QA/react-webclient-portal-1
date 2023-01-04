@@ -13,26 +13,32 @@ import CommandLineInputParameterTypeSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParameterTypeSelectInput";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 export default function CommandLineInputParameterInputRow(
   {
-    addPropertyFunction,
     error,
     className,
     disabled,
     saveEnvironmentVariables,
     addLocalParameterFunction,
+    addEnvironmentParameterFunction,
+    addGlobalCustomParameterFunction,
   }) {
   const [commandLineInputParameterModel, setCommandLineInputParameterModel] = useState(modelHelpers.parseObjectIntoModel({}, commandLineInputParameterMetadata));
 
   const handleAddPropertyFunction = () => {
     let successfulAdd = false;
+    const newParameter = commandLineInputParameterModel?.getPersistData();
+    const type = commandLineInputParameterModel?.getData("type");
 
-    if (commandLineInputParameterModel?.getData("type") === "local") {
-      successfulAdd = addLocalParameterFunction(commandLineInputParameterModel?.getPersistData());
+    if (type === "local") {
+      successfulAdd = addLocalParameterFunction(newParameter);
+    } else if (type === "global" && saveEnvironmentVariables !== true) {
+      successfulAdd = addGlobalCustomParameterFunction(newParameter);
+    } else if (type === "global" && saveEnvironmentVariables === true) {
+      successfulAdd = addEnvironmentParameterFunction(newParameter);
     }
-    // else {
-    // }
 
     if (successfulAdd === true) {
       commandLineInputParameterModel.resetData();
@@ -123,7 +129,11 @@ export default function CommandLineInputParameterInputRow(
               className={"ml-auto"}
               variant={"success"}
               icon={faPlus}
-              disabled={commandLineInputParameterModel?.checkCurrentValidity() !== true || disabled}
+              disabled={
+                commandLineInputParameterModel?.checkCurrentValidity() !== true
+                || disabled
+                || (saveEnvironmentVariables === true && hasStringValue(commandLineInputParameterModel?.getData("outputKey")) !== true)
+              }
               onClickFunction={handleAddPropertyFunction}
               normalText={"Add Parameter"}
             />
@@ -140,8 +150,9 @@ export default function CommandLineInputParameterInputRow(
 }
 
 CommandLineInputParameterInputRow.propTypes = {
-  addPropertyFunction: PropTypes.func,
+  addGlobalCustomParameterFunction: PropTypes.func,
   addLocalParameterFunction: PropTypes.func,
+  addEnvironmentParameterFunction: PropTypes.func,
   className: PropTypes.string,
   disabled: PropTypes.bool,
   saveEnvironmentVariables: PropTypes.bool,
