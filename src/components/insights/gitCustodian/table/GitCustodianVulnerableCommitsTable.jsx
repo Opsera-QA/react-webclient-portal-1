@@ -20,6 +20,7 @@ import GitCustodianVulnerabilityDetailsOverlay from "../GitCustodianVulnerabilit
 import StandaloneCheckboxInput from "components/common/inputs/boolean/checkbox/StandaloneCheckboxInput";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import modelHelpers from "components/common/model/modelHelpers";
+import UpdateGitCustodianVulnerabilityStatusButton from "./UpdateGitCustodianVulnerabilityStatusButton";
 
 // TODO: Leave here for now. If we reuse this concept in the future, I will make a generic version --Noah
 //  Anything context specific and not generic should be left in the context.
@@ -31,7 +32,7 @@ const getGitCustodianExternalLinkIconOrCheckboxColumnDefinition = (selectedIssue
       const issueId = issue?.issueId;
       const index = selectedIssues.findIndex((selectedIssue) => selectedIssue?.issueId === issueId);
 
-      if (issue.status === 'Commit Removed') {
+      if (issue.status !== 'Open') {
         return null;
       }
 
@@ -135,6 +136,17 @@ function GitCustodianVulnerableCommitsTable(
     );
   };
 
+  const getInlineFilters = () => {
+    return (
+      <UpdateGitCustodianVulnerabilityStatusButton
+        className={"mx-2"}
+        selectedIssues={selectedIssues}
+        setSelectedIssues={setSelectedIssues}
+        disabled={!(selectedIssues.length > 0)}
+      />
+    );
+  };
+
   return (
     <FilterContainer
       isLoading={isLoading}
@@ -149,6 +161,7 @@ function GitCustodianVulnerableCommitsTable(
       className={"px-2 pb-2"}
       disableNewRecordButton={selectedIssues?.length === 0} // TODO: Remove this
       exportButton={getExportButton()}
+      inlineFilters={getInlineFilters()}
     />
   );
 }

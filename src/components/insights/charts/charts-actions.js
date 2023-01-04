@@ -568,6 +568,10 @@ chartsActions.getGithubListOfRepositories = async(getAccessToken, cancelTokenSou
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-
+chartsActions.updateGitCustodianVulnerabilityStatus = async(getAccessToken, cancelTokenSource, postBody)=>{
+  delete postBody.issuesList;  
+  const apiUrl = "/analytics/gitscraper/v1/dashboard/table/updateStatus";
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
 
 export default chartsActions;
