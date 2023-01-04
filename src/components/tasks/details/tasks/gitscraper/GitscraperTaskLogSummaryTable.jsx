@@ -9,6 +9,7 @@ import {
     getTableTextColumn,
     getTableDateTimeColumn,
     getGitCustodianScmLinkIconColumnDefinition,
+    getPathDefinition,
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -24,7 +25,7 @@ function GitscraperTaskLogSummaryTable({ isNewReport, gitScraperObj }) {
       getTableTextColumn(getField(fields, "author")),
       getTableTextColumn(getField(fields, "commit")),
       getTableTextColumn(getField(fields, "commitHash")),
-      getTableTextColumn(getField(fields, "path")),
+      getPathDefinition(getField(fields, "path"), "force-text-wrap"),
       getTableTextColumn(getField(fields, "lineNumber")),
       getGitCustodianScmLinkIconColumnDefinition(
         getField(fields, "linkToSecret"),
