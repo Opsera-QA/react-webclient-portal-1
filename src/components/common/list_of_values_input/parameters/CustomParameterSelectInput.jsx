@@ -1,11 +1,11 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import axios from "axios";
+import useComponentStateReference from "hooks/useComponentStateReference";
 import parametersActions from "components/inventory/parameters/parameters-actions";
-import {AuthContext} from "contexts/AuthContext";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function CustomParameterSelectInput(
+export default function CustomParameterSelectInput(
   {
     fieldName,
     model,
@@ -19,49 +19,36 @@ function CustomParameterSelectInput(
     requireInsensitiveParameters,
     setDataFunction,
   }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const [customParameters, setCustomParameters] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [parameters, setParameters] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const {
+    isMounted,
+    cancelTokenSource,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+    if (disabled !== true) {
+      loadData().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
     }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
-      setIsLoading(true);
       setError(undefined);
-      await loadParameters(cancelSource);
-    }
-    catch (error) {
-      if (isMounted.current === true) {
+      setIsLoading(true);
+      await loadParameters();
+    } catch (error) {
+      if (isMounted?.current === true) {
         setError(error);
       }
-    }
-    finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -73,10 +60,10 @@ function CustomParameterSelectInput(
       requireVaultSavedParameters,
       requireInsensitiveParameters,
     );
-    const regions = response?.data?.data;
+    const parameters = DataParsingHelper.parseNestedArray(response, "data.data");
 
-    if (isMounted?.current === true && Array.isArray(regions)) {
-      setCustomParameters(regions);
+    if (isMounted?.current === true) {
+      setParameters(parameters);
     }
   };
 
@@ -86,7 +73,7 @@ function CustomParameterSelectInput(
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={customParameters}
+      selectOptions={parameters}
       busy={isLoading}
       valueField={valueField}
       textField={textField}
@@ -117,5 +104,3 @@ CustomParameterSelectInput.defaultProps = {
   valueField: "_id",
   textField: "name",
 };
-
-export default CustomParameterSelectInput;

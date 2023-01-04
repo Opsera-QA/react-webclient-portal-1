@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {faBracketsCurly, faInfoCircle} from "@fortawesome/pro-light-svg-icons";
+import {faBracketsCurly, faInfoCircle, faSync} from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
 import CommandLineInputParameterInputRow
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParameterInputRow";
@@ -9,6 +9,8 @@ import CommandLineStepSaveEnvironmentVariablesBooleanToggle
 import InputContainer from "components/common/inputs/InputContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 
 export default function CommandLineInputParameterInputBase(
   {
@@ -17,6 +19,8 @@ export default function CommandLineInputParameterInputBase(
     disabled,
     plan,
   }) {
+  const [error, setError] = useState(undefined);
+
   const getRightSideButtons = () => {
     return (
       <CenteredContentWrapper>
@@ -26,6 +30,7 @@ export default function CommandLineInputParameterInputBase(
           disabled={disabled}
           className={"my-auto"}
         />
+        {getTerraformStepParameterSyncButton()}
         {getHelpText()}
       </CenteredContentWrapper>
     );
@@ -36,7 +41,7 @@ export default function CommandLineInputParameterInputBase(
       <OverlayIconBase
         overlayTitle={"ParameterSelection"}
         icon={faInfoCircle}
-        className={"fa-pull-right pointer pr-2 mt-1 pl-0"}
+        className={"ml-2 my-auto"}
         overlayWidth={"500px"}
         overlayPlacement={"left"}
         overlayBody={
@@ -61,8 +66,64 @@ export default function CommandLineInputParameterInputBase(
     );
   };
 
-  // const getFields = () => {
-  // };
+  const syncTerraformStepCustomParameters = () => {
+    const terraformStep = plan.find((step) => step._id === model?.getData("terraformStepId"));
+    const terraformStepCustomParameters = DataParsingHelper.parseNestedArray(terraformStep, "tool.configuration.customParameters", []);
+    const currentParameters = model?.getArrayData("customParameters");
+    const filtered = [];
+
+    for (let index in currentParameters) {
+
+      if (!currentParameters[index]?.outputKey) {
+        filtered.push(currentParameters[index]);
+      }
+    }
+
+    model.setData("customParameters", [...terraformStepCustomParameters, ...filtered]);
+    setModel({...model});
+  };
+
+  const getTerraformStepParameterSyncButton = () => {
+    if (isMongoDbId(model?.getData("terraformStepId")) === true && model.getData("saveEnvironmentVariables") !== true) {
+      return (
+        <OverlayIconBase
+          overlayBody={"Sync Terraform Output Parameters"}
+          icon={faSync}
+          className={"ml-2 my-auto"}
+          onClickFunction={() => syncTerraformStepCustomParameters()}
+        />
+      );
+    }
+  };
+
+  const addLocalParameter = (newParameter) => {
+    const newArray = [];
+    const parsedUpdatedData = DataParsingHelper.parseArray(model?.getData("stepParameters"), []);
+    const field = model?.getFieldById("stepParameters");
+
+    if (parsedUpdatedData.length > field.maxItems) {
+      setError(`You have reached the maximum allowed number of Local Input Parameters. Please remove one to add another.`);
+      return false;
+    }
+
+    parsedUpdatedData.forEach((parameter) => {
+      if (parameter?.name !== "" && parameter?.value !== "") {
+        newArray.push({
+          name: parameter?.name,
+          value: parameter?.value,
+        });
+      }
+    });
+
+    newArray.push({
+      name: newParameter?.name,
+      value: newParameter?.value,
+    });
+
+    model.setData("stepParameters", newArray);
+    setModel({...model});
+    return true;
+  };
 
   return (
     <InputContainer>
@@ -78,6 +139,8 @@ export default function CommandLineInputParameterInputBase(
             disabled={disabled}
             saveEnvironmentVariables={model.getData("saveEnvironmentVariables") === true}
             plan={plan}
+            error={error}
+            addLocalParameterFunction={addLocalParameterFunction}
           />
         </div>
       </InfoContainer>
