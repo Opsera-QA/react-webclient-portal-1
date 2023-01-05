@@ -13,9 +13,8 @@ import { DATE_FN_TIME_SCALES, handleDateAdditionForTimeScale } from "components/
 import MainViewContainer from "components/common/containers/MainViewContainer";
 import useIsMountedStateReference from "hooks/useIsMountedStateReference";
 import useCancelTokenStateReference from "hooks/useCancelTokenStateReference";
+import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
-const jwt = require("jsonwebtoken");
-const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
 const websocketClient = new ClientWebsocket();
 
 const AuthContextProvider = (
@@ -32,7 +31,6 @@ const AuthContextProvider = (
   const [theme, setTheme] = useState(THEMES.LIGHT);
   const [backgroundColor, setBackgroundColor] = useState(lightThemeConstants.COLOR_PALETTE.WHITE);
   const isMounted = useIsMountedStateReference();
-  const cancelTokenSource = useCancelTokenStateReference();
   const [headerNavigationBar, setHeaderNavigationBar] = useState(undefined);
 
   useEffect(() => {
@@ -123,19 +121,6 @@ const AuthContextProvider = (
     return userData;
   };
 
-  const getIsPreviewRole = async (restrictProd) => {
-    if (restrictProd && process.env.REACT_APP_ENVIRONMENT === "production") {
-      return false;
-    } else {
-      return userData.groups.includes("Preview");
-    }
-  };
-
-  const getFeatureFlags = async () => {
-    const response = await commonActions.getFeatureFlagsV2(getAccessToken, cancelTokenSource);
-    return response?.data?.featureFlags;
-  };
-
   const getFreeTrialUserExpirationDate = () => {
     if (!userData) {
       return null;
@@ -143,16 +128,6 @@ const AuthContextProvider = (
 
     const userCreatedAt = userData?.createdAt;
     return handleDateAdditionForTimeScale(userCreatedAt, DATE_FN_TIME_SCALES.DAYS, 15);
-  };
-
-  const isOrganizationOwner = async () => {
-    const user = await getUserRecord();
-
-    if (user) {
-      const response = await accountsActions.getOrganizationOwnerEmailWithNameV2(getAccessToken, cancelTokenSource, user?.ldap?.organization);
-      const organizationOwnerEmail = response?.data?.orgOwnerEmail;
-      return organizationOwnerEmail === user?.email;
-    }
   };
 
   const featureFlagHideItemInProd = () => {
@@ -163,52 +138,9 @@ const AuthContextProvider = (
     return String(process.env.REACT_APP_ENVIRONMENT) === "test";
   };
 
+  // TODO: Remove and just use the helper function
   const setAccessRoles = async (user) => {
-    if (user) {
-      let customerAccessRules = {};
-      const ldap = user?.ldap;
-      const groups = user?.groups;
-
-      if (Array.isArray(groups)) {
-        let role = "guest";
-
-        if (groups.includes("Administrators")) {
-          role = "administrator";
-        } else if (groups.includes("Free Trial")) {
-          role = "free_trial";
-        } else if (groups.includes("PowerUsers")) {
-          role = "power_user";
-        } else if (groups.includes("Users")) {
-          role = "user";
-        } else if (groups.includes("NonLDAPEndUser") || ldap.type === "sass-user") {
-          //setting Saas Based Access
-          role = "power_user";
-        }
-
-        customerAccessRules = {
-          ...customerAccessRules,
-          OrganizationOwner: ldap?.organizationOwnerEmail === user?.email,
-          OrganizationAccountOwner: ldap?.orgAccountOwnerEmail === user?.email,
-          Administrator: groups.includes("Administrators"),
-          PowerUser: groups.includes("PowerUsers"),
-          SassPowerUser: ldap.type === "sass-user",
-          FreeTrialUser: role === "free_trial",
-          User: groups.includes("Users"),
-          UserId: user._id,
-          Email: user.email,
-          Role: role,
-          Type: ldap ? ldap.type : "sass-user",
-          Groups: groups,
-        };
-
-        if (ldap?.domain === "opsera.io") { //checking for OpsERA account domain
-          customerAccessRules.OpseraAdministrator = groups.includes("Administrators");
-        }
-      }
-
-      //console.table(customerAccessRules);
-      return customerAccessRules;
-    }
+    return SiteRoleHelper.getAccessRoles(user);
   };
 
   const getAccessRoleData = () => {
@@ -270,7 +202,6 @@ const AuthContextProvider = (
       loginUserContext: loginUserContext,
       renewUserToken: renewUserToken,
       getAccessToken: getAccessToken,
-      getIsPreviewRole: getIsPreviewRole,
       featureFlagHideItemInProd: featureFlagHideItemInProd,
       featureFlagHideItemInTest: featureFlagHideItemInTest,
       getUserRecord: getUserRecord,
@@ -281,8 +212,6 @@ const AuthContextProvider = (
       isPowerUser: isPowerUser(),
       isSiteAdministrator: isSiteAdministrator(),
       isSassUser: isSassUser,
-      isOrganizationOwner: isOrganizationOwner,
-      getFeatureFlags: getFeatureFlags,
       isOpseraAdministrator: isOpseraAdministrator,
       viewMode: viewMode,
       setViewMode: setViewMode,
