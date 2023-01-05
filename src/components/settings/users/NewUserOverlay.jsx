@@ -10,9 +10,10 @@ import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {usersMetadata} from "components/settings/users/users.metadata";
+import {apiTokenHelper} from "temp-library-components/helpers/api/token/apiToken.helper";
 
 function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
-  const { generateJwtServiceTokenWithValue, getUserRecord } = useContext(AuthContext);
+  const { getUserRecord } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [userData, setUserData] = useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -44,7 +45,7 @@ function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
     const orgDomain = user?.ldap?.domain;
     setOrganization(user?.ldap?.organization);
     setDomain(orgDomain);
-    const token = await generateJwtServiceTokenWithValue({ id: "orgRegistrationForm" });
+    const token = apiTokenHelper.generateApiCallToken("orgRegistrationForm");
     const accountResponse = await userActions.getAccountInformationV2(cancelSource, orgDomain, token);
     const newUserModel = (new Model(usersMetadata.newObjectFields, usersMetadata, true));
 
