@@ -13,9 +13,9 @@ import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import OktaSignIn from '@okta/okta-signin-widget';
 import LoginWelcomeMessage from "components/login/LoginWelcomeMessage";
+import {apiTokenHelper} from "temp-library-components/helpers/api/token/apiToken.helper";
 
 const LoginForm = ({ authClient }) => {
-  const { generateJwtServiceTokenWithValue } = useContext(AuthContext);
   const { oktaAuth } = useOktaAuth();
   const history = useHistory();
   const [username, setUsername] = useState("");
@@ -248,7 +248,7 @@ const LoginForm = ({ authClient }) => {
 
         /*START NEW FEDERATION CODE*/
         if (accountType === "ldap-organization") {
-          const token = await generateJwtServiceTokenWithValue({ id: "orgRegistrationForm" });
+          const token = apiTokenHelper.generateApiCallToken("orgRegistrationForm");
 
           if (token) {
             const accountResponse = await userActions.getAccountInformationWithEmailAddress(lookupAccountEmail, token);

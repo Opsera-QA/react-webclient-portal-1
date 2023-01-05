@@ -211,15 +211,6 @@ const AuthContextProvider = (
     }
   };
 
-  const generateJwtServiceTokenWithValue = (object = {}, expirationDuration = "1h") => {
-    return jwt.sign(
-      object,
-      ACCESS_TOKEN_SECRET,
-      {expiresIn: expirationDuration},
-      undefined,
-    );
-  };
-
   const getAccessRoleData = () => {
     return userAccessRoles;
   };
@@ -285,7 +276,6 @@ const AuthContextProvider = (
       getUserRecord: getUserRecord,
       setAccessRoles: setAccessRoles,
       getIsAuthenticated: getIsAuthenticated,
-      generateJwtServiceTokenWithValue: generateJwtServiceTokenWithValue,
       getAccessRoleData: getAccessRoleData,
       userAccessRoles: userAccessRoles,
       isPowerUser: isPowerUser(),
