@@ -18,12 +18,14 @@ import SidebarSubheaderText from "components/sidebar/SidebarSubheaderText";
 import sessionHelper from "utils/session.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import GitCustodianSidebarNavigationLink from "components/sidebar/links/GitCustodianSidebarNavigationLink";
+import useLocationReference from "hooks/useLocationReference";
 
 export default function Sidebar({ hideSideBar }) {
   const { userData } = useComponentStateReference();
+  const { isPublicPathState } = useLocationReference();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(DataParsingHelper.parseBooleanV2(sessionHelper.getStoredSessionValueByKey("SIDEBAR_COLLAPSED"), false));
 
-  if (userData == null || hideSideBar === true) {
+  if (userData == null || hideSideBar === true || isPublicPathState === true) {
     return null;
   }
 
@@ -92,6 +94,5 @@ export default function Sidebar({ hideSideBar }) {
 }
 
 Sidebar.propTypes = {
-  userData: PropTypes.object,
   hideSideBar: PropTypes.bool,
 };
