@@ -12,22 +12,17 @@ export const JENKINS_JOBS_GENERIC_AGENT_TYPES = [
     "name": "Windows Agent",
     "env" : "windows",
     "value": "generic-windows",
-  },
-  {
-    "name": "CentOS Agent",
-    "env" : "linux",
-    "value": "generic-centos",
   }
 ];
 
-function JenkinsJobsGenericAgentTypeSelectInput({ fieldName, model, setModel, setDataFunction }) {
+function JenkinsJobsGenericAgentTypeSelectInput({ fieldName, model, setModel, setDataFunction, agentList }) {
   return (
     <SelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
       setDataFunction={setDataFunction}
-      selectOptions={JENKINS_JOBS_GENERIC_AGENT_TYPES}
+      selectOptions={agentList ? agentList :JENKINS_JOBS_GENERIC_AGENT_TYPES}
       valueField="value"
       textField="name"
     />
@@ -39,6 +34,7 @@ JenkinsJobsGenericAgentTypeSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
+  agentList: PropTypes.array,
 };
 
 JenkinsJobsGenericAgentTypeSelectInput.defaultProps = {
