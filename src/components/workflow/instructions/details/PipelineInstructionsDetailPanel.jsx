@@ -48,6 +48,7 @@ export default function PipelineInstructionsDetailPanel(
         <SettingsTab
           handleTabClick={handleTabClick}
           activeTab={activeTab}
+          accessRestricted={pipelineInstructionsModel?.canUpdate() !== true}
         />
       </CustomTabContainer>
     );
