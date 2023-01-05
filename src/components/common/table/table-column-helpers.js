@@ -860,13 +860,20 @@ export const getGitCustodianScmLinkIconColumnDefinition = (field, className) => 
   };
 };
 
-export const getPathDefinition = (field, className) => {
+export const getPathDefinition = (field, className, maxLength = 50, overlayWidth) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function getPath(row){
       const path = row?.value;
-      return (<TooltipWrapper innerText={path}><span>{truncateString(path, 50, true)}</span></TooltipWrapper>);
+      return (
+        <TooltipWrapper
+          innerText={path}
+          overlayWidth={overlayWidth}
+        >
+          <span>{truncateString(path, maxLength, true)}</span>
+        </TooltipWrapper>
+      );
     },
     class: className ? className : undefined
   };
