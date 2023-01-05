@@ -44,7 +44,7 @@ export const commandLineInputParameterMetadata = {
   ],
   newObjectFields: {
     type: "local",
-    name: "opsera.local.",
+    name: "opsera-local-",
     parameterId: "",
     parameterName: "",
     outputKey: "",
