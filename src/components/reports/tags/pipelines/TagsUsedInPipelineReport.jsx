@@ -39,17 +39,31 @@ function TagsUsedInPipelineReport() {
   return (
     <ScreenContainer
       breadcrumbDestination={"tagsUsedInPipelineReport"}
-      navigationTabContainer={<ReportsSubNavigationBar currentTab={"tagReportViewer"} />}
-      pageDescription={"View which Pipelines are in use by a specific Tag combination"}
+      navigationTabContainer={
+        <ReportsSubNavigationBar currentTab={"tagReportViewer"} />
+      }
+      pageDescription={
+        "View which Pipelines are in use by a specific Tag combination"
+      }
     >
       <Row className={"mb-3 mx-0"}>
         <Col className={"mx-0"}>
-          <TagManager type={"tags"} allowCreate={false} fieldName={"tags"} dataObject={tagsUsedInPipelineDto} setDataObject={setTagsUsedInPipelineDto}/>
+          <TagManager
+            type={"tags"}
+            allowCreate={false}
+            fieldName={"tags"}
+            dataObject={tagsUsedInPipelineDto}
+            setDataObject={setTagsUsedInPipelineDto}
+          />
         </Col>
       </Row>
       <Row className={"px-2"}>
         <Col>
-          <TagArrayUsedInPipelinesField tags={tagsUsedInPipelineDto?.getData("tags")} showTable={true}/>
+          <TagArrayUsedInPipelinesField
+            tags={tagsUsedInPipelineDto?.getData("tags")}
+            selectedTags={tagsUsedInPipelineDto?.getData("selectedTags")}
+            showTable={true}
+          />
         </Col>
       </Row>
     </ScreenContainer>

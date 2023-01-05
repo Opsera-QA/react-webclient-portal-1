@@ -13,11 +13,14 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import ExportTagReportButton from 'components/common/buttons/export/reports/ExportTagReportButton';
+import TagsUsedInPipelinesVerticalTabContainer from "./TagsUsedInPipelinesVerticleTabContainer";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
-function TagsUsedInPipelineTable({ data, loadData, isLoading}) {
+function TagsUsedInPipelineTable({ data, loadData, isLoading, pipelineFilterModel }) {
   const history = useHistory();
   let fields = pipelineSummaryMetadata.fields;
-
+console.log(data);
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
@@ -26,7 +29,7 @@ function TagsUsedInPipelineTable({ data, loadData, isLoading}) {
       getTableDateColumn(getField(fields, "createdAt")),
       getTableBooleanIconColumn(getField(fields, "active")),
     ],
-    []
+    [],
   );
 
   const onRowSelect = (rowData) => {
@@ -39,14 +42,32 @@ function TagsUsedInPipelineTable({ data, loadData, isLoading}) {
 
   const getTagsTable = () => {
     return (
-      <CustomTable
-        onRowSelect={onRowSelect}
-        data={data}
-        rowStyling={rowStyling}
-        columns={columns}
-        isLoading={isLoading}
-        loadData={loadData}
-      />
+      <Row className={"mx-0"}>
+        <Col
+          sm={2}
+          className={"px-0 makeup-tree-container"}
+        >
+          <TagsUsedInPipelinesVerticalTabContainer
+            pipelineFilterModel={pipelineFilterModel}
+            isLoading={isLoading}
+            loadData={loadData}
+            tags={data}
+          />
+        </Col>
+        <Col
+          sm={10}
+          className={"px-0"}
+        >
+          <CustomTable
+            onRowSelect={onRowSelect}
+            data={data}
+            rowStyling={rowStyling}
+            columns={columns}
+            isLoading={isLoading}
+            loadData={loadData}
+          />
+        </Col>
+      </Row>
     );
   };
 
@@ -60,7 +81,13 @@ function TagsUsedInPipelineTable({ data, loadData, isLoading}) {
       titleIcon={faDraftingCompass}
       title={"Pipelines"}
       className={"px-2 pb-2"}
-      exportButton={<ExportTagReportButton className={"ml-2"} isLoading={isLoading} tagData={data} />}
+      exportButton={
+        <ExportTagReportButton
+          className={"ml-2"}
+          isLoading={isLoading}
+          tagData={data}
+        />
+      }
     />
   );
 }
@@ -72,7 +99,8 @@ TagsUsedInPipelineTable.propTypes = {
   tagFilterDto: PropTypes.object,
   activeTagFilterDto: PropTypes.object,
   setTagFilterDto: PropTypes.func,
-  isMounted: PropTypes.object
+  isMounted: PropTypes.object,
+  pipelineFilterModel: PropTypes.any
 };
 
 export default TagsUsedInPipelineTable;
