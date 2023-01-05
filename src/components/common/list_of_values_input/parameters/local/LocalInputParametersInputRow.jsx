@@ -16,7 +16,7 @@ export default function LocalInputParametersInputRow(
     localInputParameters,
   }) {
   const [localInputVariableModel, setLocalInputVariableModel] = useState(modelHelpers.parseObjectIntoModel({}, localParameterMetadata));
-  const hasDuplicateName = localInputParameters?.includes(localInputVariableModel?.getData("name"));
+  const hasDuplicateName = localInputParameters?.find((parameter) => parameter?.name === localInputVariableModel?.getData("name"));
 
   const handleAddPropertyFunction = () => {
     const newParameter = {
