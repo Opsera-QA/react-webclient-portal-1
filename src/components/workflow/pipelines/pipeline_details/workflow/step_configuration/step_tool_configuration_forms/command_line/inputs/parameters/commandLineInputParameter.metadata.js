@@ -13,7 +13,6 @@ export const commandLineInputParameterMetadata = {
       },
       regexDefinitionName: "localVariableName",
       maxLength: 50,
-      minLength: 13,
     },
     {
       label: "Value",
