@@ -21,6 +21,10 @@ import ParameterSelectListHeaderField
   from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListHeaderField";
 import ParameterSelectListInlineField
   from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInlineField";
+import EditableParameterMappingHeaderField
+  from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingHeaderField";
+import EditableParameterMappingInlineField
+  from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingInlineField";
 
 export default function CommandLineInputParameterInputBase(
   {
@@ -230,7 +234,7 @@ export default function CommandLineInputParameterInputBase(
 
     if (customParameters.length > 0) {
       return (
-        <div>
+        <div className={"mb-3"}>
           <H5FieldSubHeader
             subheaderText={"Global Parameters"}
           />
@@ -240,7 +244,7 @@ export default function CommandLineInputParameterInputBase(
               overflowY: "hidden",
             }}
           >
-            <ParameterSelectListHeaderField />
+            <ParameterSelectListHeaderField/>
 
             {customParameters.map((parameter, index) => {
               return (
@@ -262,7 +266,7 @@ export default function CommandLineInputParameterInputBase(
 
     if (environmentVariables.length > 0) {
       return (
-        <div>
+        <div className={"mb-3"}>
           <H5FieldSubHeader
             subheaderText={"Global Parameters"}
           />
@@ -272,11 +276,16 @@ export default function CommandLineInputParameterInputBase(
               overflowY: "hidden",
             }}
           >
+            <EditableParameterMappingHeaderField/>
             {environmentVariables.map((parameter, index) => {
               return (
-                <div key={index}>
-                  {JSON.stringify(parameter)}
-                </div>
+                <EditableParameterMappingInlineField
+                  disabled={disabled}
+                  parameter={parameter}
+                  deleteParameterFunction={deleteEnvironmentParameter}
+                  index={index}
+                  key={index}
+                />
               );
             })}
           </div>

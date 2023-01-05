@@ -14,6 +14,8 @@ import axios from "axios";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import IconBase from "components/common/icons/IconBase";
 import parametersActions from "components/inventory/parameters/parameters-actions";
+import EditableParameterMappingHeaderField
+  from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingHeaderField";
 
 function EditableParameterMappingInput({ fieldName, model, setModel, helpComponent, disabled, nameMaxLength, titleText, type }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -231,24 +233,6 @@ function EditableParameterMappingInput({ fieldName, model, setModel, helpCompone
     );
   };
 
-  const getHeaderBar = () => {
-    return (
-      <div className="d-flex py-1">
-        <Col sm={11}>
-          <Row>            
-            <Col sm={6} className={"mx-auto"}>
-              <span className="text-muted">Parameter</span>
-            </Col>
-            <Col sm={6} className={"mx-auto"}>
-              <span className="text-muted">Key</span>
-            </Col>
-          </Row>
-        </Col>
-        <Col sm={1} className={"pr-3 pl-0 delete-button"} />
-      </div>
-    );
-  };
-
   const getIncompleteRoleMessage = () => {
     if (!lastMappingComplete()) {
       return (`Incomplete Mappings Will Be Removed Upon Saving`);
@@ -280,7 +264,7 @@ function EditableParameterMappingInput({ fieldName, model, setModel, helpCompone
       >
         <div>
           <div className={"filter-bg-white"}>
-            {getHeaderBar()}
+            <EditableParameterMappingHeaderField />
           </div>
           <div className="rules-input">
             {getFieldBody()}
