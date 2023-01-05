@@ -13,10 +13,15 @@ const tagsUsedInPipelineMetadata = {
       label: "Selected Tags",
       id: "selectedTags",
     },
+    {
+      label: "",
+      id: "activeTab",
+    },
   ],
   newObjectFields: {
     tags: [],
     selectedTags: [],
+    activeTab: "all tags",
   },
 };
 

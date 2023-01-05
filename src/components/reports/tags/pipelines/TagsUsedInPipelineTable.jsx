@@ -17,7 +17,13 @@ import TagsUsedInPipelinesVerticalTabContainer from "./TagsUsedInPipelinesVertic
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-function TagsUsedInPipelineTable({ data, loadData, isLoading, tags }) {
+function TagsUsedInPipelineTable({
+  data,
+  loadData,
+  isLoading,
+  tags,
+  tagsUsedInPipelineDto,
+}) {
   const history = useHistory();
   let fields = pipelineSummaryMetadata.fields;
 
@@ -51,6 +57,7 @@ function TagsUsedInPipelineTable({ data, loadData, isLoading, tags }) {
             isLoading={isLoading}
             loadData={loadData}
             tags={tags}
+            tagsUsedInPipelineDto={tagsUsedInPipelineDto}
           />
         </Col>
         <Col
@@ -95,7 +102,7 @@ TagsUsedInPipelineTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  tagFilterDto: PropTypes.object,
+  tagsUsedInPipelineDto: PropTypes.object,
   activeTagFilterDto: PropTypes.object,
   setTagFilterDto: PropTypes.func,
   isMounted: PropTypes.object,

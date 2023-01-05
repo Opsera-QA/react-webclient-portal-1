@@ -63,6 +63,7 @@ function TagsUsedInPipelineReport() {
             tags={tagsUsedInPipelineDto?.getData("tags")}
             selectedTags={tagsUsedInPipelineDto?.getData("selectedTags")}
             showTable={true}
+            tagsUsedInPipelineDto={tagsUsedInPipelineDto}
           />
         </Col>
       </Row>

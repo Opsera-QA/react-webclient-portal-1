@@ -15,7 +15,11 @@ import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
 
 
-function TagArrayUsedInPipelinesField({ tags, showTable }) {
+function TagArrayUsedInPipelinesField({
+  tags,
+  showTable,
+  tagsUsedInPipelineDto,
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -47,13 +51,11 @@ function TagArrayUsedInPipelinesField({ tags, showTable }) {
     try {
       setIsLoading(true);
       await loadPipelines(cancelSource);
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -62,7 +64,11 @@ function TagArrayUsedInPipelinesField({ tags, showTable }) {
 
   const loadPipelines = async (cancelSource = cancelTokenSource) => {
     if (Array.isArray(tags) && tags.length > 0) {
-      const response = await adminTagsActions.getRelevantPipelinesV2(getAccessToken, cancelSource, tags);
+      const response = await adminTagsActions.getRelevantPipelinesV2(
+        getAccessToken,
+        cancelSource,
+        tags,
+      );
 
       if (response?.data != null) {
         setPipelines(response?.data?.data);
@@ -75,9 +81,14 @@ function TagArrayUsedInPipelinesField({ tags, showTable }) {
       <Row>
         {pipelines.map((pipeline) => {
           return (
-            <Col md={6} key={pipeline._id}>
+            <Col
+              md={6}
+              key={pipeline._id}
+            >
               <PipelineSummaryCard
-                pipelineData={new Model(pipeline, pipelineSummaryMetadata, false)}
+                pipelineData={
+                  new Model(pipeline, pipelineSummaryMetadata, false)
+                }
                 loadPipelineInNewWindow={false}
               />
             </Col>
@@ -96,16 +107,21 @@ function TagArrayUsedInPipelinesField({ tags, showTable }) {
           loadData={loadData}
           isLoading={isLoading}
           isMounted={isMounted}
+          tagsUsedInPipelineDto={tagsUsedInPipelineDto}
         />
       );
     }
 
-    return (getPipelineCards());
+    return getPipelineCards();
   };
 
-
   if (isLoading) {
-    return <LoadingDialog message={"Loading Pipelines"} size={"sm"} />;
+    return (
+      <LoadingDialog
+        message={"Loading Pipelines"}
+        size={"sm"}
+      />
+    );
   }
 
   if (!isLoading && (tags == null || tags.length === 0)) {
@@ -116,8 +132,13 @@ function TagArrayUsedInPipelinesField({ tags, showTable }) {
     return (
       <div className="form-text text-muted ml-3">
         <div>
-          <span><IconBase icon={faExclamationCircle} className={"text-muted mr-1"}/>
-          This tag combination is not currently used in any pipeline</span>
+          <span>
+            <IconBase
+              icon={faExclamationCircle}
+              className={"text-muted mr-1"}
+            />
+            This tag combination is not currently used in any pipeline
+          </span>
         </div>
       </div>
     );
@@ -126,7 +147,9 @@ function TagArrayUsedInPipelinesField({ tags, showTable }) {
   return (
     <div>
       <div className="form-text text-muted mb-2  ml-2">
-        <span>This tag combination is used in {pipelines.length} pipelines</span>
+        <span>
+          This tag combination is used in {pipelines.length} pipelines
+        </span>
       </div>
       {getDisplay()}
     </div>
@@ -135,7 +158,8 @@ function TagArrayUsedInPipelinesField({ tags, showTable }) {
 
 TagArrayUsedInPipelinesField.propTypes = {
   tags: PropTypes.array,
-  showTable: PropTypes.bool
+  showTable: PropTypes.bool,
+  tagsUsedInPipelineDto: PropTypes.object,
 };
 
 export default TagArrayUsedInPipelinesField;
