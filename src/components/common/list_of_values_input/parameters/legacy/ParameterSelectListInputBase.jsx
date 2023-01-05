@@ -4,17 +4,17 @@ import { Button, OverlayTrigger, Popover } from "react-bootstrap";
 import { faBracketsCurly, faInfoCircle, faSync, faTimes } from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { DialogToastContext } from "../../../../contexts/DialogToastContext";
-import { AuthContext } from "../../../../contexts/AuthContext";
-import parametersActions from "../../../inventory/parameters/parameters-actions";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import { AuthContext } from "contexts/AuthContext";
+import parametersActions from "components/inventory/parameters/parameters-actions";
 import axios from "axios";
-import InfoText from "../../inputs/info_text/InfoText";
+import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import IconBase from "components/common/icons/IconBase";
 import InfoContainer from "components/common/containers/InfoContainer";
 import InputContainer from "components/common/inputs/InputContainer";
 import ParameterSelectListHeaderField
-  from "components/common/list_of_values_input/parameters/list/ParameterSelectListHeaderField";
+  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListHeaderField";
 
 function ParameterSelectListInputBase({
   dataObject,

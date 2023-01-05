@@ -22,7 +22,7 @@ import DotNetCliTypeSelectInput
 import DotNetCliSdkVersionSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetCliSdkVersionSelectInput";
 import ParameterSelectListInputBase
-  from "components/common/list_of_values_input/parameters/ParameterSelectListInputBase";
+  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import CoverityStepImpactThresholdInput from "./inputs/CoverityStepImpactThresholdInput";

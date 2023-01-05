@@ -18,9 +18,9 @@ import LocalInputParameterInlineField
 import LocalInputParameterHeaderField
   from "components/common/list_of_values_input/parameters/local/LocalInputParameterHeaderField";
 import ParameterSelectListHeaderField
-  from "components/common/list_of_values_input/parameters/list/ParameterSelectListHeaderField";
+  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListHeaderField";
 import ParameterSelectListInlineField
-  from "components/common/list_of_values_input/parameters/list/ParameterSelectListInlineField";
+  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInlineField";
 
 export default function CommandLineInputParameterInputBase(
   {
@@ -259,7 +259,6 @@ export default function CommandLineInputParameterInputBase(
     }
 
     const environmentVariables = DataParsingHelper.parseArray(model?.getData("environmentVariables"), []);
-    console.log("environmentVariables: " + JSON.stringify(environmentVariables));
 
     if (environmentVariables.length > 0) {
       return (
