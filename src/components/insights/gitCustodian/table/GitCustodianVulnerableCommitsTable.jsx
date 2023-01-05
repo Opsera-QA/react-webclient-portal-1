@@ -143,6 +143,7 @@ function GitCustodianVulnerableCommitsTable(
         selectedIssues={selectedIssues}
         setSelectedIssues={setSelectedIssues}
         disabled={!(selectedIssues.length > 0)}
+        loadData={loadData}
       />
     );
   };
@@ -162,6 +163,7 @@ function GitCustodianVulnerableCommitsTable(
       disableNewRecordButton={selectedIssues?.length === 0} // TODO: Remove this
       exportButton={getExportButton()}
       inlineFilters={getInlineFilters()}
+      loadData={loadData}
     />
   );
 }

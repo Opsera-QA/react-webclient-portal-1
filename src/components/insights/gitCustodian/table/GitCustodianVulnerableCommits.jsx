@@ -24,7 +24,7 @@ function GitCustodianVulnerableCommits({ gitCustodianData, gitCustodianFilterMod
         throw error;
       }
     });
-  }, []);
+  }, [gitCustodianData]);
 
   const loadData = async (filterModel = tableFilterModel) => {
     try {

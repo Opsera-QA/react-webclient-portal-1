@@ -7,7 +7,8 @@ import { CENTER_OVERLAY_SIZES } from "components/common/overlays/center/CenterOv
 
 function GitCustodianUpdateStatusOverlay ({
   selectedIssues,
-  setSelectedIssues
+  setSelectedIssues,
+  loadData,
 }) {
   
   const toastContext = useContext(DialogToastContext);
@@ -15,6 +16,7 @@ function GitCustodianUpdateStatusOverlay ({
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
+    loadData();
   };
 
   return (
@@ -34,7 +36,8 @@ function GitCustodianUpdateStatusOverlay ({
 
 GitCustodianUpdateStatusOverlay.propTypes = {
   selectedIssues: PropTypes.array,
-  setSelectedIssues: PropTypes.func
+  setSelectedIssues: PropTypes.func,
+  loadData: PropTypes.func,
 };
 
 export default GitCustodianUpdateStatusOverlay;
