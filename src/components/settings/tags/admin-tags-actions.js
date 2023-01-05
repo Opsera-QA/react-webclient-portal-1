@@ -128,6 +128,11 @@ adminTagsActions.getRelevantPipelinesV2 = async (getAccessToken, cancelTokenSour
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, tags);
 };
 
+adminTagsActions.getAllPipelinesWithTags = async (getAccessToken, cancelTokenSource, tags) => {
+  const apiUrl = `/reports/pipelines/all-tags`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, tags);
+};
+
 adminTagsActions.getRelevantToolsV2 = async (getAccessToken, cancelTokenSource, tags) => {
   const apiUrl = `/reports/tools/tags`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, tags);
