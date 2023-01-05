@@ -13,11 +13,6 @@ export const JENKINS_JOBS_GENERIC_AGENT_TYPES = [
     "env" : "windows",
     "value": "generic-windows",
   },
-  {
-    "name": "CentOS Agent",
-    "env" : "linux",
-    "value": "generic-centos",
-  }
 ];
 
 function JenkinsJobsGenericAgentTypeSelectInput({ fieldName, model, setModel, setDataFunction, agentList }) {
