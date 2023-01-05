@@ -184,7 +184,6 @@ const AppWithRouterAccess = () => {
       <AppRoutes
         authenticatedState={authenticatedState}
         authClient={authClient}
-        isPublicPathState={isPublicPathState}
         userData={userData}
       />
     );
