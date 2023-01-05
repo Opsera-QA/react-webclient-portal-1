@@ -13,6 +13,7 @@ import OverlayIconBase from "components/common/icons/OverlayIconBase";
 function PipelineWorkflowItemList(
   {
     pipeline,
+    plan,
     lastStep,
     editWorkflow,
     pipelineId,
@@ -22,7 +23,6 @@ function PipelineWorkflowItemList(
     parentWorkflowStatus,
   }) {
   const [isSaving, setIsSaving] = useState(false);
-  const [pipelineSteps, setPipelineSteps] = useState(pipeline.workflow.plan);
   const [isLoading, setIsLoading] = useState(false);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
   const {
@@ -66,15 +66,8 @@ function PipelineWorkflowItemList(
     }
   };
 
-  useEffect(() => {
-    if (pipeline) {
-      setPipelineSteps(pipeline?.workflow?.plan);
-    }
-  }, [JSON.stringify(lastStep), JSON.stringify(pipeline.workflow)]);
-
-
   const handleAddStep = async (itemId, index) => {
-    const steps = pipelineSteps;
+    const steps = plan;
 
     setIsSaving(true);
 
@@ -94,7 +87,7 @@ function PipelineWorkflowItemList(
 
 
   const handleCopyStep = async (item, index) => {
-    const steps = pipelineSteps;
+    const steps = plan;
 
     setIsSaving(true);
 
@@ -115,7 +108,7 @@ function PipelineWorkflowItemList(
   };
 
   const handleMoveStep = async (itemId, index, direction) => {
-    const steps = pipelineSteps;
+    const steps = plan;
 
     if (direction === "up" && index > 0) {
       setIsSaving(true);
@@ -212,7 +205,7 @@ function PipelineWorkflowItemList(
             <OverlayIconBase
               icon={faCaretSquareDown}
               iconSize={"lg"}
-              className={index === pipelineSteps.length - 1 ? "fa-disabled" : "pointer dark-grey"}
+              className={index === plan.length - 1 ? "fa-disabled" : "pointer dark-grey"}
               onClickFunction={() => handleMoveStep(item._id, index, "down")}
               overlayBody={"Move upper step down one position"}
             />
@@ -241,7 +234,7 @@ function PipelineWorkflowItemList(
 
   return (
     <div className="step-items workflow-module-container-width mx-auto">
-      {pipelineSteps && pipelineSteps.map((item, index) => (
+      {Array.isArray(plan) && plan.map((item, index) => (
         <div
           key={index}
           className={isSaving ? "fa-disabled" : ""}
@@ -255,7 +248,7 @@ function PipelineWorkflowItemList(
           >
             <PipelineWorkflowItem
               pipeline={pipeline}
-              plan={pipelineSteps}
+              plan={plan}
               item={item}
               index={index}
               lastStep={lastStep}
@@ -284,6 +277,7 @@ PipelineWorkflowItemList.propTypes = {
   quietSavePlan: PropTypes.func,
   fetchPlan: PropTypes.func,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  plan: PropTypes.array,
 };
 
 export default PipelineWorkflowItemList;

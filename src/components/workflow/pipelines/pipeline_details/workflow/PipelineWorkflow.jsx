@@ -118,6 +118,7 @@ function PipelineWorkflow({
 
           <PipelineWorkflowItemList
             pipeline={pipeline}
+            plan={DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", [])}
             lastStep={lastStep}
             editWorkflow={editWorkflow}
             pipelineId={pipeline._id}
