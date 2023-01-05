@@ -1,20 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faTimes} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
+import {faTimes} from "@fortawesome/pro-light-svg-icons";
 
-export default function LocalInputParameterInlineField(
+export default function ParameterSelectListInlineField(
   {
     parameter,
-    disabled,
     index,
+    disabled,
     deleteParameterFunction,
   }) {
-  const parsedParameter = DataParsingHelper.parseObject(parameter, {});
-
   return (
     <div
       className={`d-flex align-items-center justify-content-between ${index % 2 === 0 ? "even-row" : "odd-row"}`}
@@ -22,11 +19,11 @@ export default function LocalInputParameterInlineField(
     >
       <Col sm={11}>
         <Row>
-          <Col sm={6} className={"pl-2 pr-0"}>
-            {parsedParameter?.name}
+          <Col sm={6} className={"pl-2 pr-0 force-text-wrap"}>
+            {parameter?.parameterName}
           </Col>
-          <Col sm={6} className={"pl-2 pr-0"}>
-            {parsedParameter?.value}
+          <Col sm={6} className={"pl-2 pr-0 force-text-wrap"}>
+            {parameter?.outputKey ? "Terraform Output" : "User defined parameter"}
           </Col>
         </Row>
       </Col>
@@ -42,9 +39,10 @@ export default function LocalInputParameterInlineField(
   );
 }
 
-LocalInputParameterInlineField.propTypes = {
+ParameterSelectListInlineField.propTypes = {
+  parameter: PropTypes.object,
   index: PropTypes.number,
   deleteParameterFunction: PropTypes.func,
   disabled: PropTypes.bool,
-  parameter: PropTypes.object,
 };
+

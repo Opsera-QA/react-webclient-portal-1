@@ -4,7 +4,7 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import CommandLineDependencyTypeInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineDependencyTypeInput";
-import EditableParameterMappingInput from "components/common/list_of_values_input/parameters/EditableParameterMappingInput";
+import EditableParameterMappingInput from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingInput";
 
 function DockerCliDependenciesInputForm({ model, setModel, plan }) {
 

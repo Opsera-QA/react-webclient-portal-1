@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { faHandshake } from "@fortawesome/pro-light-svg-icons";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import ParameterSelectListInputBase
-  from "components/common/list_of_values_input/parameters/ParameterSelectListInputBase";
-import EditableParameterMappingInput from "components/common/list_of_values_input/parameters/EditableParameterMappingInput";
+  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
+import EditableParameterMappingInput from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingInput";
 
 function CommandLineInputParametersInput({ model, setModel, disabled, fieldName, plan }) {    
   const setDataFunction = () => {
