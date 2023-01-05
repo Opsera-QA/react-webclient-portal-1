@@ -12,6 +12,15 @@ import OverlayIconBase from "components/common/icons/OverlayIconBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import LocalInputParameterInlineField
+  from "components/common/list_of_values_input/parameters/local/LocalInputParameterInlineField";
+import LocalInputParameterHeaderField
+  from "components/common/list_of_values_input/parameters/local/LocalInputParameterHeaderField";
+import ParameterSelectListHeaderField
+  from "components/common/list_of_values_input/parameters/list/ParameterSelectListHeaderField";
+import ParameterSelectListInlineField
+  from "components/common/list_of_values_input/parameters/list/ParameterSelectListInlineField";
 
 export default function CommandLineInputParameterInputBase(
   {
@@ -110,8 +119,8 @@ export default function CommandLineInputParameterInputBase(
 
   const addEnvironmentParameterFunction = (newParameter) => {
     const newArray = [];
-    const parsedUpdatedData = DataParsingHelper.parseArray(model?.getData("customParameters"), []);
-    const field = model?.getFieldById("customParameters");
+    const parsedUpdatedData = DataParsingHelper.parseArray(model?.getData("environmentVariables"), []);
+    const field = model?.getFieldById("environmentVariables");
 
     if (parsedUpdatedData.length > field.maxItems) {
       setError(`You have reached the maximum allowed number of Global Parameters. Please remove one to add another.`);
@@ -138,7 +147,7 @@ export default function CommandLineInputParameterInputBase(
       }
     });
 
-    model.setData("customParameters", newArray);
+    model.setData("environmentVariables", newArray);
     setModel({...model});
     return true;
   };
@@ -202,6 +211,147 @@ export default function CommandLineInputParameterInputBase(
     return true;
   };
 
+  const deleteCustomParameter = (index) => {
+    const currentData = model?.getArrayData("customParameters");
+    currentData.splice(index, 1);
+    model.setData("customParameters", currentData);
+    setModel({...model});
+  };
+
+  const deleteEnvironmentParameter = (index) => {
+    const currentData = model?.getArrayData("environmentVariables");
+    currentData.splice(index, 1);
+    model.setData("environmentVariables", currentData);
+    setModel({...model});
+  };
+
+  const getCustomParameterFields = () => {
+    const customParameters = DataParsingHelper.parseArray(model?.getData("customParameters"), []);
+
+    if (customParameters.length > 0) {
+      return (
+        <div>
+          <H5FieldSubHeader
+            subheaderText={"Global Parameters"}
+          />
+          <div
+            className={"content-container-border"}
+            style={{
+              overflowY: "hidden",
+            }}
+          >
+            <ParameterSelectListHeaderField />
+
+            {customParameters.map((parameter, index) => {
+              return (
+                <ParameterSelectListInlineField
+                  disabled={disabled}
+                  parameter={parameter}
+                  deleteParameterFunction={deleteCustomParameter}
+                  index={index}
+                  key={index}
+                />
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+
+    const environmentVariables = DataParsingHelper.parseArray(model?.getData("environmentVariables"), []);
+    console.log("environmentVariables: " + JSON.stringify(environmentVariables));
+
+    if (environmentVariables.length > 0) {
+      return (
+        <div>
+          <H5FieldSubHeader
+            subheaderText={"Global Parameters"}
+          />
+          <div
+            className={"content-container-border"}
+            style={{
+              overflowY: "hidden",
+            }}
+          >
+            {environmentVariables.map((parameter, index) => {
+              return (
+                <div key={index}>
+                  {JSON.stringify(parameter)}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+  };
+
+  const deleteLocalParameter = (index) => {
+    const currentData = model?.getArrayData("stepParameters");
+    currentData.splice(index, 1);
+    model.setData("stepParameters", currentData);
+    setModel({...model});
+  };
+
+  const getLocalParameterFields = () => {
+    const stepParameters = DataParsingHelper.parseArray(model?.getData("stepParameters"), []);
+
+    if (stepParameters.length > 0) {
+      return (
+        <div className={"mb-2"}>
+          <H5FieldSubHeader
+            subheaderText={"Local Parameters"}
+          />
+          <div
+            className={"content-container-border"}
+            style={{
+              overflowY: "hidden",
+            }}
+          >
+            <LocalInputParameterHeaderField/>
+            {stepParameters.map((parameter, index) => {
+              return (
+                <LocalInputParameterInlineField
+                  disabled={disabled}
+                  parameter={parameter}
+                  deleteParameterFunction={deleteLocalParameter}
+                  index={index}
+                  key={index}
+                />
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+
+    const environmentVariables = DataParsingHelper.parseArray(model?.getData("environmentVariables"), []);
+
+    if (environmentVariables.length > 0) {
+      return (
+        <div className={"mb-2"}>
+          <H5FieldSubHeader
+            subheaderText={"Global Parameters"}
+          />
+          <div
+            className={"content-container-border"}
+            style={{
+              overflowY: "hidden",
+            }}
+          >
+            {environmentVariables.map((parameter, index) => {
+              return (
+                <div key={index}>
+                  {JSON.stringify(parameter)}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+  };
+
   return (
     <InputContainer>
       <InfoContainer
@@ -210,7 +360,8 @@ export default function CommandLineInputParameterInputBase(
         titleRightSideButton={getRightSideButtons()}
       >
         <div className={"m-3"}>
-          <div>Show items inside</div>
+          {getCustomParameterFields()}
+          {getLocalParameterFields()}
           <hr/>
           <CommandLineInputParameterInputRow
             disabled={disabled}

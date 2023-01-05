@@ -13,6 +13,8 @@ import StandaloneSelectInput from "components/common/inputs/select/StandaloneSel
 import IconBase from "components/common/icons/IconBase";
 import InfoContainer from "components/common/containers/InfoContainer";
 import InputContainer from "components/common/inputs/InputContainer";
+import ParameterSelectListHeaderField
+  from "components/common/list_of_values_input/parameters/list/ParameterSelectListHeaderField";
 
 function ParameterSelectListInputBase({
   dataObject,
@@ -260,23 +262,6 @@ function ParameterSelectListInputBase({
     );
   };
 
-  const getHeaderBar = () => {
-    return (
-      <div className="d-flex justify-content-between page-description">
-        <Col sm={11}>
-          <Row>
-            <Col sm={6} className={"pl-2 pr-0 py-2"}>
-              <span className="text-muted">Parameter</span>
-            </Col>
-            <Col sm={6} className={"pl-2 pr-0 py-2"}>
-              <span className="text-muted">Parameter Origin</span>
-            </Col>
-          </Row>
-        </Col>
-      </div>
-    );
-  };
-
   const getHelpText = () => {
     return (
       <OverlayTrigger
@@ -379,7 +364,7 @@ function ParameterSelectListInputBase({
         isLoading={isLoading}
         // loadDataFunction={loadData}
       >
-        <div>{properties.length > 0 ? getHeaderBar() : null}</div>
+        <div>{properties.length > 0 ? <ParameterSelectListHeaderField /> : null}</div>
         <div className={"properties-body-alt"}>{getFieldBody()}</div>
       </InfoContainer>
       <InfoText
