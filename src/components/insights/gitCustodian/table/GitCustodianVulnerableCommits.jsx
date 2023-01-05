@@ -8,7 +8,7 @@ import GitCustodianVulnerableCommitsTable
   from "components/insights/gitCustodian/table/GitCustodianVulnerableCommitsTable";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function GitCustodianVulnerableCommits({ gitCustodianData, gitCustodianFilterModel }) {
+function GitCustodianVulnerableCommits({ gitCustodianData, gitCustodianFilterModel, setGitCustodianFilterModel }) {
   const [isLoading, setIsLoading] = useState(false);
   const [vulnerableCommits, setVulnerableCommits] = useState([]);
   const [tableFilterModel, setTableFilterModel] = useState(modelHelpers.parseObjectIntoModel(undefined, GitCustodianFilterMetadata));

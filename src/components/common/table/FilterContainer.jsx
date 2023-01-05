@@ -10,36 +10,36 @@ const screenContainerMargin = "30px";
 export const FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER = `calc(${screenContainerHeights.TABLE_MINIMUM_HEIGHT} - ${screenContainerMargin} - ${TITLE_BAR_HEIGHT})`;
 export const FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION = `calc(${FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER} - ${screenContainerHeights.PAGE_DESCRIPTION_HEIGHT})`;
 
-function FilterContainer(
-  {
-    filterDto,
-    setFilterDto,
-    titleIcon,
-    title,
-    dropdownFilters,
-    inlineFilters,
-    loadData,
-    isLoading,
-    isPolling,
-    body,
-    addRecordFunction,
-    supportSearch,
-    supportViewToggle,
-    className,
-    metadata,
-    exportButton,
-    supportClientSideSearching,
-    bodyClassName,
-    handleExportFunction,
-    handleImportFunction,
-    minimumHeight,
-    maximumHeight,
-    showRefreshButton,
-    disableNewRecordButton,
-    filterSelectionOverlayPanel,
-    // TODO: Remove after filters are used everywhere
-    type
-  }) {
+function FilterContainer({
+  filterDto,
+  setFilterDto,
+  titleIcon,
+  title,
+  dropdownFilters,
+  inlineFilters,
+  loadData,
+  isLoading,
+  isPolling,
+  body,
+  addRecordFunction,
+  supportSearch,
+  supportViewToggle,
+  className,
+  metadata,
+  exportButton,
+  supportClientSideSearching,
+  bodyClassName,
+  handleExportFunction,
+  handleImportFunction,
+  minimumHeight,
+  maximumHeight,
+  showRefreshButton,
+  disableNewRecordButton,
+  filterSelectionOverlayPanel,
+  activeFilterDisplayer,
+  // TODO: Remove after filters are used everywhere
+  type,
+}) {
   const getFilterBar = () => {
     return (
       <FilterBar
@@ -66,27 +66,25 @@ function FilterContainer(
   };
 
   const getContainerStylingObject = () => {
-    return ({
+    return {
       minHeight: minimumHeight,
       maxHeight: maximumHeight,
       overflowY: "hidden",
-    });
+    };
   };
 
   const getBodyStylingObject = () => {
-    return ({
+    return {
       minHeight: minimumHeight,
       maxHeight: maximumHeight,
       overflowY: "auto",
       overflowX: "hidden",
-    });
+    };
   };
 
   return (
     <div className={className}>
-      <div
-        className={"filter-container container-border"}
-      >
+      <div className={"filter-container container-border"}>
         <div className={"filter-title-bar w-100"}>
           <div className={"px-2 d-flex content-block-header"}>
             <FilterTitleBar
@@ -103,6 +101,7 @@ function FilterContainer(
           <ActiveFilterDisplayer
             filterModel={filterDto}
             loadData={loadData}
+            activeFilterDisplayer={activeFilterDisplayer}
           />
         </div>
         <div
@@ -123,7 +122,7 @@ FilterContainer.propTypes = {
   isLoading: PropTypes.bool,
   supportSearch: PropTypes.bool,
   titleIcon: PropTypes.object,
-  title:PropTypes.string,
+  title: PropTypes.string,
   body: PropTypes.object,
   loadData: PropTypes.func,
   addRecordFunction: PropTypes.func,
@@ -144,11 +143,13 @@ FilterContainer.propTypes = {
   disableNewRecordButton: PropTypes.bool,
   filterSelectionOverlayPanel: PropTypes.any,
   isPolling: PropTypes.bool,
+  activeFilterDisplayer: PropTypes.bool,
 };
 
 FilterContainer.defaultProps = {
   showRefreshButton: true,
-  disableNewRecordButton: false
+  activeFilterDisplayer: true,
+  disableNewRecordButton: false,
 };
 
 export default FilterContainer;
