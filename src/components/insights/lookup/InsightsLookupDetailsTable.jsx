@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import {
   getTableTextColumn,
@@ -10,6 +10,8 @@ import { insightsLookupDetailsMetadata } from "./insightsLookupDetails.metadata"
 import FilterContainer from "../../common/table/FilterContainer";
 import { faCalendarAlt } from "@fortawesome/pro-light-svg-icons";
 import { screenContainerHeights } from "../../common/panels/general/screenContainer.heights";
+import ExportInsightsLookupDetailsPanel from "./export/ExportInsightsLookupDetailsPanel";
+import ExportInsightsLookupDetailsButton from "./export/ExportInsightsLookupDetailsButton";
 
 function InsightsLookupDetailsTable({
   lookupDetails,
@@ -19,6 +21,7 @@ function InsightsLookupDetailsTable({
   loadDataFunction,
   tableHeight,
 }) {
+  const [showExportPanel, setShowExportPanel] = useState(false);
   const fields = insightsLookupDetailsMetadata.fields;
 
   const columns = useMemo(
@@ -64,6 +67,16 @@ function InsightsLookupDetailsTable({
   );
 
   const getInsightsLookupDetailsTable = () => {
+    if (showExportPanel === true) {
+      return (
+        <ExportInsightsLookupDetailsPanel
+          showExportPanel={showExportPanel}
+          setShowExportPanel={setShowExportPanel}
+          LookupDetailsData={lookupDetails}
+        />
+      );
+    }
+
     return (
       <VanityTable
         columns={columns}
@@ -87,6 +100,13 @@ function InsightsLookupDetailsTable({
       metadata={insightsLookupDetailsMetadata}
       body={getInsightsLookupDetailsTable()}
       className={"mt-3 mx-3"}
+      exportButton={
+        <ExportInsightsLookupDetailsButton
+          className={"ml-2"}
+          setShowExportPanel={setShowExportPanel}
+          showExportPanel={showExportPanel}
+        />
+      }
     />
   );
 }
