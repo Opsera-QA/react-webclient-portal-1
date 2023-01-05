@@ -2,19 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import useGetPlatformTags from "hooks/settings/tags/useGetPlatformTags";
+import useGetCustomerTags from "hooks/settings/tags/useGetCustomerTags";
 
-export default function PlatformTagFilter(
+export default function CustomerTagFilter(
   {
     filterModel,
     setFilterModel,
+    fieldName,
     className,
   }) {
   const {
     isLoading,
-    platformTags,
+    customerTags,
     error,
-  } = useGetPlatformTags();
+  } = useGetCustomerTags();
 
   const getTextFieldString = (tag) => {
     if (tag == null) {
@@ -32,7 +33,7 @@ export default function PlatformTagFilter(
   return (
     <div className={className}>
       <FilterSelectInputBase
-        fieldName={"tag"}
+        fieldName={fieldName}
         busy={isLoading}
         placeholderText={"Filter by Tag"}
         groupBy={"type"}
@@ -40,16 +41,20 @@ export default function PlatformTagFilter(
         setDataFunction={setDataFunction}
         dataObject={filterModel}
         textField={getTextFieldString}
-        selectOptions={platformTags}
+        selectOptions={customerTags}
         error={error}
       />
     </div>
   );
 }
 
-PlatformTagFilter.propTypes = {
+CustomerTagFilter.propTypes = {
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
+  fieldName: PropTypes.string,
   className: PropTypes.string,
 };
 
+CustomerTagFilter.defaultProps = {
+  fieldName: "tag",
+};

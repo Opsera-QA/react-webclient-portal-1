@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import InfoContainer from "components/common/containers/InfoContainer";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 function FilterSelectInputBase(
   {
@@ -21,6 +23,7 @@ function FilterSelectInputBase(
     disabled,
     loadDataFunction,
     showLabel,
+    error,
   }) {
   const field = dataObject?.getFieldById(fieldName);
 
@@ -71,6 +74,9 @@ function FilterSelectInputBase(
         placeholderText={placeholderText}
         setDataFunction={(data) => updateValue(data)}
       />
+      <InfoText
+        errorMessage={inline !== true ? error : undefined}
+      />
     </div>
   );
 }
@@ -92,6 +98,7 @@ FilterSelectInputBase.propTypes = {
   inline: PropTypes.bool,
   disabled: PropTypes.bool,
   showLabel: PropTypes.bool,
+  error: PropTypes.any,
 };
 
 FilterSelectInputBase.defaultProps = {
