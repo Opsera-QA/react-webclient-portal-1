@@ -136,6 +136,10 @@ pre {
     z-index: 1600 !important;
 }
 
+.bold-label label {
+    font-weight: bold;
+}
+
 .rw-multiselect .rw-popup, .rw-dropdown-list .rw-popup {
     /* 31px per row item + top padding */
     max-height: calc((30px * 6) + 1rem) !important;
@@ -399,16 +403,7 @@ input[disabled] {
     border-radius: 5px;
 }
 
-.custom-select-input {
-    padding-bottom: 10px;
-}
-
-.object-properties-input {
-    padding-bottom: 10px;
-}
-
 .input-container {
-    padding-bottom: 10px;
 }
 
 .input-label label {

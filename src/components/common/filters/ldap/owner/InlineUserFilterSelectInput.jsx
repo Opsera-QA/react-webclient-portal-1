@@ -8,6 +8,7 @@ export default function InlineUserFilterSelectInput(
     className,
     visible,
     fieldName,
+    inline,
   }) {
   const setDataFunction = (fieldName, selectedOption) => {
     filterModel.setData(fieldName, selectedOption?._id);
@@ -15,15 +16,22 @@ export default function InlineUserFilterSelectInput(
     loadDataFunction({...filterModel});
   };
 
+  const clearDataFunction = () => {
+    filterModel.setDefaultValue(fieldName);
+    filterModel.setDefaultValue("ownerName");
+    loadDataFunction({...filterModel});
+  };
+
   return (
     <LdapOwnerFilter
       filterModel={filterModel}
       setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
       className={className}
       visible={visible}
       fieldName={fieldName}
       placeholderText={"Filter by User"}
-      inline={true}
+      inline={inline}
     />
   );
 }
@@ -34,6 +42,9 @@ InlineUserFilterSelectInput.propTypes = {
   className: PropTypes.string,
   visible: PropTypes.bool,
   fieldName: PropTypes.string,
+  inline: PropTypes.bool,
 };
 
-
+InlineUserFilterSelectInput.defaultProps = {
+  inline: true,
+};

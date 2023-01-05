@@ -24,7 +24,7 @@ export default function DateTimeRangeInputBase(
     <Row className={className}>
       <Col sm={12} md={stacked !== true ? 6 : undefined}>
         <DateTimeInput
-          className={stacked === true ? "" : undefined}
+          className={stacked === true ? "input-container mt-2" : undefined}
           inputLabelClassName={stacked === true ? "bold" : undefined}
           fieldName={fromFieldName}
           dataObject={model}
@@ -39,7 +39,7 @@ export default function DateTimeRangeInputBase(
       </Col>
       <Col sm={12} md={stacked !== true ? 6 : undefined}>
         <DateTimeInput
-          className={stacked === true ? "mb-2" : undefined}
+          className={stacked === true ? "input-container my-2" : undefined}
           inputLabelClassName={stacked === true ? "bold" : undefined}
           fieldName={toFieldName}
           dataObject={model}

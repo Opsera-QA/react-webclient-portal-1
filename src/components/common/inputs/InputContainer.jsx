@@ -9,7 +9,7 @@ function InputContainer(
     className,
   }) {
   const getClassNames = () => {
-    let classNames = hasStringValue(className) === true ? className : "my-2 input-container";
+    let classNames = hasStringValue(className) === true ? className : "mt-2 mb-3 input-container";
 
     if (hasStringValue(fieldName) === true) {
       classNames += ` input-for-${fieldName}`;
