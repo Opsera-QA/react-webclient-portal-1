@@ -7,101 +7,51 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 
 export const itemArray = [
   {
-    name: "Java openJDK Version 7",
-    dependencyType: "java",
-    version: "7",
-  },
-  {
-    name: "Java openJDK Version 8",
-    dependencyType: "java",
-    version: "8",
-  },
-  {
-    name: "Java openJDK Version 9",
-    dependencyType: "java",
-    version: "9",
-  },
-  {
-    name: "Java openJDK Version 10",
-    dependencyType: "java",
+    name: "Node Version 10",
+    dependencyType: "node",
     version: "10",
   },
   {
-    name: "Java openJDK Version 11",
-    dependencyType: "java",
-    version: "11",
+    name: "Node Version 12",
+    dependencyType: "node",
+    version: "12",
   },
   {
-    name: "Maven Version 3.0.5",
-    dependencyType: "maven",
-    version: "3.0.5",
+    name: "Node Version 14",
+    dependencyType: "node",
+    version: "14",
   },
   {
-    name: "Maven Version 3.1.1",
-    dependencyType: "maven",
-    version: "3.1.1",
+    name: "Node Version 15",
+    dependencyType: "node",
+    version: "15",
   },
   {
-    name: "Maven Version 3.2.5",
-    dependencyType: "maven",
-    version: "3.2.5",
+    name: "Node Version 16",
+    dependencyType: "node",
+    version: "16",
   },
   {
-    name: "Maven Version 3.3.9",
-    dependencyType: "maven",
-    version: "3.3.9",
+    name: "Node Version 17",
+    dependencyType: "node",
+    version: "17",
   },
   {
-    name: "Maven Version 3.5.0",
-    dependencyType: "maven",
-    version: "3.5.0",
+    name: "Node Version 18",
+    dependencyType: "node",
+    version: "18",
   },
   {
-    name: "Maven Version 3.5.2",
-    dependencyType: "maven",
-    version: "3.5.2",
-  },
-  {
-    name: "Maven Version 3.5.3",
-    dependencyType: "maven",
-    version: "3.5.3",
-  },
-  {
-    name: "Maven Version 3.5.4",
-    dependencyType: "maven",
-    version: "3.5.4",
-  },
-  {
-    name: "Maven Version 3.6.0",
-    dependencyType: "maven",
-    version: "3.6.0",
-  },
-  {
-    name: "Maven Version 3.6.1",
-    dependencyType: "maven",
-    version: "3.6.1",
-  },
-  {
-    name: "Maven Version 3.6.2",
-    dependencyType: "maven",
-    version: "3.6.2",
-  },
-  {
-    name: "Maven Version 3.6.3",
-    dependencyType: "maven",
-    version: "3.6.3",
-  },
-  {
-    name: "Maven Version 3.8.2",
-    dependencyType: "maven",
-    version: "3.8.2",
+    name: "Node Version 19",
+    dependencyType: "node",
+    version: "19",
   },
 ];
 
 // TODO: This code should be cleaned up.
 //  If we need to support having dependencyType and version with a dash, make that an object property.
 //  Stop constructing and deconstructing static objects-- these don't change so we can just make a constant out of it.
-function JenkinsDependencyMultiSelectInput({
+function JenkinsNativeNodeDependencyMultiSelectInput({
   fieldName,
   model,
   setModel,
@@ -214,7 +164,7 @@ function JenkinsDependencyMultiSelectInput({
   );
 }
 
-JenkinsDependencyMultiSelectInput.propTypes = {
+JenkinsNativeNodeDependencyMultiSelectInput.propTypes = {
   currentPipelineId: PropTypes.string,
   fieldName: PropTypes.string,
   model: PropTypes.object,
@@ -223,4 +173,4 @@ JenkinsDependencyMultiSelectInput.propTypes = {
   clearDataFunction: PropTypes.func,
 };
 
-export default JenkinsDependencyMultiSelectInput;
+export default JenkinsNativeNodeDependencyMultiSelectInput;
