@@ -24,6 +24,7 @@ export default function UserActivityAuditLogFilterSidebarBase(
         setModel={setUserActivityAuditLogFilterModel}
         loadDataFunction={loadDataFunction}
         stacked={true}
+        className={"mb-2"}
       />
       <InlineSiteRoleMultiSelectCheckboxFilterInput
         model={userActivityAuditLogFilterModel}
@@ -36,6 +37,8 @@ export default function UserActivityAuditLogFilterSidebarBase(
         fieldName={"user"}
         loadDataFunction={loadDataFunction}
         filterModel={userActivityAuditLogFilterModel}
+        className={"input-container bold-label"}
+        inline={false}
       />
       <InlineAuditLogActionsMutiSelectCheckboxFilter
         model={userActivityAuditLogFilterModel}

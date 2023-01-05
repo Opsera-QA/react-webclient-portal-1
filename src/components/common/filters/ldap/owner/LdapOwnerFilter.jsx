@@ -9,7 +9,8 @@ function LdapOwnerFilter(
   { 
     filterModel, 
     setFilterModel, 
-    setDataFunction, 
+    setDataFunction,
+    clearDataFunction,
     className,
     visible,
     valueField,
@@ -86,6 +87,7 @@ function LdapOwnerFilter(
         fieldName={fieldName}
         busy={isLoading}
         placeholderText={placeholderText}
+        clearDataFunction={clearDataFunction}
         setDataObject={setFilterModel}
         dataObject={filterModel}
         textField={getTextField}
@@ -110,6 +112,7 @@ LdapOwnerFilter.propTypes = {
   placeholderText: PropTypes.string,
   inline: PropTypes.bool,
   showLabel: PropTypes.bool,
+  clearDataFunction: PropTypes.func,
 };
 
 LdapOwnerFilter.defaultProps = {
