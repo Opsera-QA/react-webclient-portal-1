@@ -220,7 +220,7 @@ function VanityMetricContainer(
             </div>
           </div>
           <div className={"d-flex my-auto"}>
-            {/*{getMoveIcons()}*/}
+            {getMoveIcons()}
             {getHelpToggle()}
             {getSettingsToggle()}
           </div>
@@ -240,7 +240,7 @@ function VanityMetricContainer(
           </div>
         </div>
         <div className={"d-flex my-auto"}>
-          {/*{getMoveIcons()}*/}
+          {getMoveIcons()}
           {getHelpToggle()}
           {getActionableInsightOverlayToggle()}
           {getSettingsToggle()}
