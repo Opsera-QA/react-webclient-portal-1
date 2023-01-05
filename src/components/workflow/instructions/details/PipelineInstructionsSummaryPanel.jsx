@@ -25,7 +25,9 @@ export default function PipelineInstructionsSummaryPanel(
   }
 
   return (
-    <SummaryPanelContainer setActiveTab={setActiveTab}>
+    <SummaryPanelContainer
+      setActiveTab={pipelineInstructionsModel?.canUpdate() ? setActiveTab : undefined}
+    >
       <Row>
         <Col lg={6}>
           <TextFieldBase
