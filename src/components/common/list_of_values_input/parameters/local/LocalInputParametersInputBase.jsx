@@ -116,6 +116,7 @@ export default function LocalInputParametersInputBase(
           disabled={disabled}
           addPropertyFunction={addPropertyFunction}
           className={"m-3"}
+          localInputParameters={model?.getArrayData(fieldName)}
         />
       </InfoContainer>
       <InfoText

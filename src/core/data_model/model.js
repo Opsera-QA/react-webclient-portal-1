@@ -157,10 +157,8 @@ export class Model {
     return isValid === true;
   };
 
-  // This is a validity check without trimming
   checkCurrentValidity = () => {
-    let isValid = validateData(this);
-    return isValid === true;
+    return validateData(this) === true;
   };
 
   getPotentialFieldValidationError = (potentialValue, fieldName) => {
