@@ -24,6 +24,7 @@ export default function CommandLineInputParameterInputRow(
     addLocalParameterFunction,
     addEnvironmentParameterFunction,
     addGlobalCustomParameterFunction,
+    commandLineStepModel,
   }) {
   const [commandLineInputParameterModel, setCommandLineInputParameterModel] = useState(modelHelpers.parseObjectIntoModel({}, commandLineInputParameterMetadata));
 
@@ -34,15 +35,31 @@ export default function CommandLineInputParameterInputRow(
 
     if (type === "local") {
       successfulAdd = addLocalParameterFunction(newParameter);
-    } else if (type === "global" && saveEnvironmentVariables !== true) {
-      successfulAdd = addGlobalCustomParameterFunction(newParameter);
-    } else if (type === "global" && saveEnvironmentVariables === true) {
-      successfulAdd = addEnvironmentParameterFunction(newParameter);
+    } else if (type === "global") {
+      successfulAdd = saveEnvironmentVariables !== true
+        ? addGlobalCustomParameterFunction(newParameter)
+        : addEnvironmentParameterFunction(newParameter);
     }
 
     if (successfulAdd === true) {
       commandLineInputParameterModel.resetData();
       setCommandLineInputParameterModel({...commandLineInputParameterModel});
+    }
+  };
+
+  const hasDuplicateName = () => {
+    const type = commandLineStepModel?.getData("type");
+
+    if (type === "local") {
+      const stepParameters = commandLineStepModel?.getArrayData("stepParameters");
+      return stepParameters.includes(commandLineInputParameterModel?.getData("name"));
+    } else if (type === "global") {
+      const customParameters = commandLineStepModel?.getArrayData("customParameters");
+      const environmentVariables = commandLineStepModel?.getArrayData("environmentVariables");
+
+      return saveEnvironmentVariables !== true
+        ? customParameters.includes(commandLineInputParameterModel?.getData("parameterName"))
+        : environmentVariables.includes(commandLineInputParameterModel?.getData("parameterName"));
     }
   };
 
@@ -52,6 +69,12 @@ export default function CommandLineInputParameterInputRow(
     commandLineInputParameterModel.setData("parameterName", selectedOption?.name);
     setCommandLineInputParameterModel({...commandLineInputParameterModel});
   };
+
+  const isValid = commandLineInputParameterModel?.checkCurrentValidity();
+  const missingOutputKey = saveEnvironmentVariables === true
+    && commandLineInputParameterModel?.getData("type") === "global"
+    && hasStringValue(commandLineInputParameterModel?.getData("outputKey")) !== true;
+  const isDuplicate = hasDuplicateName();
 
   const getInputFields = () => {
     if (commandLineInputParameterModel?.getData("type") === "global") {
@@ -98,6 +121,7 @@ export default function CommandLineInputParameterInputRow(
             dataObject={commandLineInputParameterModel}
             setDataObject={setCommandLineInputParameterModel}
             disabled={disabled}
+            error={isDuplicate === true ? "Local Parameter Names must be unique." : undefined}
           />
         </Col>
         <Col xs={5}>
@@ -129,11 +153,7 @@ export default function CommandLineInputParameterInputRow(
               className={"ml-auto"}
               variant={"success"}
               icon={faPlus}
-              disabled={
-                commandLineInputParameterModel?.checkCurrentValidity() !== true
-                || disabled
-                || (saveEnvironmentVariables === true && hasStringValue(commandLineInputParameterModel?.getData("outputKey")) !== true)
-              }
+              disabled={ isValid !== true || disabled === true || missingOutputKey === true || isDuplicate === true}
               onClickFunction={handleAddPropertyFunction}
               normalText={"Add Parameter"}
             />
@@ -153,6 +173,7 @@ CommandLineInputParameterInputRow.propTypes = {
   addGlobalCustomParameterFunction: PropTypes.func,
   addLocalParameterFunction: PropTypes.func,
   addEnvironmentParameterFunction: PropTypes.func,
+  commandLineStepModel: PropTypes.object,
   className: PropTypes.string,
   disabled: PropTypes.bool,
   saveEnvironmentVariables: PropTypes.bool,

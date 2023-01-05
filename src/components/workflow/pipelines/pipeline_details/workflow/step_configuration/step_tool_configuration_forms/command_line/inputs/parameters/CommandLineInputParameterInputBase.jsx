@@ -26,6 +26,7 @@ import EditableParameterMappingHeaderField
 import EditableParameterMappingInlineField
   from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingInlineField";
 
+// TODO: This needs to be majorly cleaned up.
 export default function CommandLineInputParameterInputBase(
   {
     model,
@@ -374,6 +375,7 @@ export default function CommandLineInputParameterInputBase(
           <CommandLineInputParameterInputRow
             disabled={disabled}
             saveEnvironmentVariables={model.getData("saveEnvironmentVariables") === true}
+            commandLineStepModel={model}
             plan={plan}
             error={error}
             addLocalParameterFunction={addLocalParameterFunction}

@@ -13,8 +13,10 @@ export default function LocalInputParametersInputRow(
     addPropertyFunction,
     className,
     disabled,
+    localInputParameters,
   }) {
   const [localInputVariableModel, setLocalInputVariableModel] = useState(modelHelpers.parseObjectIntoModel({}, localParameterMetadata));
+  const hasDuplicateName = localInputParameters?.includes(localInputVariableModel?.getData("name"));
 
   const handleAddPropertyFunction = () => {
     const newParameter = {
@@ -37,6 +39,7 @@ export default function LocalInputParametersInputRow(
             dataObject={localInputVariableModel}
             setDataObject={setLocalInputVariableModel}
             disabled={disabled}
+            error={hasDuplicateName === true ? "Local Parameter Names must be unique." : undefined}
           />
         </Col>
         <Col xs={6}>
@@ -53,7 +56,7 @@ export default function LocalInputParametersInputRow(
               className={"ml-auto"}
               variant={"success"}
               icon={faPlus}
-              disabled={localInputVariableModel?.checkCurrentValidity() !== true || disabled}
+              disabled={localInputVariableModel?.checkCurrentValidity() !== true || hasDuplicateName === true || disabled}
               onClickFunction={handleAddPropertyFunction}
               normalText={"Add Parameter"}
             />
@@ -68,4 +71,5 @@ LocalInputParametersInputRow.propTypes = {
   addPropertyFunction: PropTypes.func,
   className: PropTypes.string,
   disabled: PropTypes.bool,
+  localInputParameters: PropTypes.array,
 };
