@@ -51,15 +51,17 @@ export default function CommandLineInputParameterInputRow(
     const type = commandLineStepModel?.getData("type");
 
     if (type === "local") {
+      const parameterName = commandLineInputParameterModel?.getData("name");
       const stepParameters = commandLineStepModel?.getArrayData("stepParameters");
-      return stepParameters.includes(commandLineInputParameterModel?.getData("name"));
+      return stepParameters.find((parameter) => parameter?.name === parameterName) != null;
     } else if (type === "global") {
       const customParameters = commandLineStepModel?.getArrayData("customParameters");
       const environmentVariables = commandLineStepModel?.getArrayData("environmentVariables");
+      const parameterName = commandLineInputParameterModel?.getData("parameterName");
 
       return saveEnvironmentVariables !== true
-        ? customParameters.includes(commandLineInputParameterModel?.getData("parameterName"))
-        : environmentVariables.includes(commandLineInputParameterModel?.getData("parameterName"));
+        ? customParameters.find((parameter) => parameter?.parameterName === parameterName) != null
+        : environmentVariables.find((parameter) => parameter?.parameterName === parameterName) != null;
     }
   };
 
