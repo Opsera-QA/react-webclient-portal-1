@@ -48,7 +48,7 @@ export default function CommandLineInputParameterInputRow(
   };
 
   const hasDuplicateName = () => {
-    const type = commandLineStepModel?.getData("type");
+    const type = commandLineInputParameterModel?.getData("type");
 
     if (type === "local") {
       const parameterName = commandLineInputParameterModel?.getData("name");

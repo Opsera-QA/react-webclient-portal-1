@@ -25,6 +25,8 @@ import EditableParameterMappingHeaderField
   from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingHeaderField";
 import EditableParameterMappingInlineField
   from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingInlineField";
+import CommandLineInputParameterInputBaseHelpText
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParameterInputBaseHelpText";
 
 // TODO: This needs to be majorly cleaned up.
 export default function CommandLineInputParameterInputBase(
@@ -46,49 +48,10 @@ export default function CommandLineInputParameterInputBase(
           className={"my-auto"}
         />
         {getTerraformStepParameterSyncButton()}
-        {getHelpText()}
+        <CommandLineInputParameterInputBaseHelpText
+          showTerraformHelpText={isMongoDbId(model?.getData("terraformStepId"))}
+        />
       </CenteredContentWrapper>
-    );
-  };
-
-  const getDynamicHelpText = () => {
-    if (isMongoDbId(model?.getData("terraformStepId")) === true && model.getData("saveEnvironmentVariables") !== true) {
-      return (
-        <div className={"mb-2"}>
-          <div><strong>Pipelines with Terraform Steps</strong></div>
-          If the <strong>Use Terraform Output</strong> checkbox has
-          been selected, the available parameters will
-          appear in the Parameter selection option with <strong>Terraform Output</strong> as the Parameter Origin.
-          They use the same syntax mentioned above in order to be used in the commands.
-        </div>
-      );
-    }
-  };
-
-  const getHelpText = () => {
-    return (
-      <OverlayIconBase
-        overlayTitle={"ParameterSelection"}
-        icon={faInfoCircle}
-        className={"ml-2 my-auto"}
-        overlayWidth={"500px"}
-        overlayPlacement={"left"}
-        overlayBody={
-          <div className="text-muted mb-2">
-            <div className={"mb-2"}>
-              This functionality helps users use Opsera Parameters that are defined under the Parameters tab in Tool
-              Registry. In order to use any of these parameters in the step - enter them in the commands with the
-              following syntax: <strong>{"${parameter_name}"}</strong>, where the parameter_name is the one of the
-              names derived from this list of available parameters.
-            </div>
-            <div className={"mb-2"}>
-              You must select all parameters that you pass in the commands in the parameter selection view as well in
-              order for the details to be fetched during runtime.
-            </div>
-            {getDynamicHelpText()}
-          </div>
-        }
-      />
     );
   };
 
@@ -99,7 +62,6 @@ export default function CommandLineInputParameterInputBase(
     const filtered = [];
 
     for (let index in currentParameters) {
-
       if (!currentParameters[index]?.outputKey) {
         filtered.push(currentParameters[index]);
       }
@@ -129,6 +91,11 @@ export default function CommandLineInputParameterInputBase(
 
     if (parsedUpdatedData.length > field.maxItems) {
       setError(`You have reached the maximum allowed number of Global Parameters. Please remove one to add another.`);
+      return false;
+    }
+
+    if (parsedUpdatedData.find((parameter) => parameter?.parameterNamee === newParameter?.parameterNamee) != null) {
+      setError(`You have already added ${newParameter?.parameterNamee}.`);
       return false;
     }
 
@@ -168,6 +135,11 @@ export default function CommandLineInputParameterInputBase(
       return false;
     }
 
+    if (parsedUpdatedData.find((parameter) => parameter?.parameterNamee === newParameter?.parameterNamee) != null) {
+      setError(`You have already added ${newParameter?.parameterNamee}.`);
+      return false;
+    }
+
     newArray.push({
       parameterId: newParameter?.parameterId,
       parameterName: newParameter?.parameterName,
@@ -194,6 +166,11 @@ export default function CommandLineInputParameterInputBase(
 
     if (parsedUpdatedData.length > field.maxItems) {
       setError(`You have reached the maximum allowed number of Local Input Parameters. Please remove one to add another.`);
+      return false;
+    }
+
+    if (parsedUpdatedData.find((parameter) => parameter?.name === newParameter?.name) != null) {
+      setError(`You have already added ${newParameter?.name}.`);
       return false;
     }
 
@@ -327,32 +304,6 @@ export default function CommandLineInputParameterInputBase(
                   index={index}
                   key={index}
                 />
-              );
-            })}
-          </div>
-        </div>
-      );
-    }
-
-    const environmentVariables = DataParsingHelper.parseArray(model?.getData("environmentVariables"), []);
-
-    if (environmentVariables.length > 0) {
-      return (
-        <div className={"mb-2"}>
-          <H5FieldSubHeader
-            subheaderText={"Global Parameters"}
-          />
-          <div
-            className={"content-container-border"}
-            style={{
-              overflowY: "hidden",
-            }}
-          >
-            {environmentVariables.map((parameter, index) => {
-              return (
-                <div key={index}>
-                  {JSON.stringify(parameter)}
-                </div>
               );
             })}
           </div>
