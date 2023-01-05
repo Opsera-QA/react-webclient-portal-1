@@ -1,10 +1,11 @@
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 
-export default () => ({
+export default (maxDate) => ({
   margin: { top: 20, right: 100, bottom: 50, left: 120 },
   xScale: {
     type: "time",
     precision: "second",
+    max: maxDate ? maxDate : 'auto'
   },
   axisBottom: {
     format: "%b %d",
