@@ -7,7 +7,8 @@ import pipelineSummaryMetadata
 import {
   getTableBooleanIconColumn,
   getTableDateColumn,
-  getTableTextColumn
+  getTableTextColumn,
+  getTagColumn,
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -25,8 +26,9 @@ function TagsUsedInPipelineTable({ data, loadData, isLoading}) {
       getTableTextColumn(getField(fields, "description")),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableBooleanIconColumn(getField(fields, "active")),
+      getTagColumn(getField(fields, "tags")),
     ],
-    []
+    [],
   );
 
   const onRowSelect = (rowData) => {
