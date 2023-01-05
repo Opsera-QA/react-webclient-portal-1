@@ -1,3 +1,5 @@
+import {ARGO_APPLICATION_TYPE_CONSTANTS} from "./argo-application-type-constants";
+
 const argoApplicationsMetadata = {
   type: "Argo Application",
   fields: [
@@ -55,6 +57,49 @@ const argoApplicationsMetadata = {
       id: "repoUrl",
       isRequired: true,
       maxLength: 256,
+    },
+    {
+      label: "Type",
+      id: "type",
+      isRequired: true,
+    },
+    {
+      label: "Recursive Directory",
+      id: "recursive",
+    },
+    {
+      label: "Value Files",
+      id: "valueFiles",
+      isRequiredFunction: (model) => {
+        return (
+          model?.getData("type") === ARGO_APPLICATION_TYPE_CONSTANTS.TYPE.HELM)
+            && (!model?.getData("values"));
+      },
+    },
+    {
+      label: "Values",
+      id: "values",
+      isValidFunction: (value) => {
+        try {
+          const json = JSON.parse(value);
+          return (typeof json === 'object');
+        } catch (e) {
+          return false;
+        }
+      },
+      isRequiredFunction: (model) => {
+        return (
+          model?.getData("type") === ARGO_APPLICATION_TYPE_CONSTANTS.TYPE.HELM)
+            && (!model?.getData("valueFiles"));
+      },
+    },
+    {
+      label: "Prefix Name",
+      id: "namePrefix",
+    },
+    {
+      label: "Suffix Name",
+      id: "nameSuffix",
     },
     // NEWLY ADDED FIELDS ARE ABOVE.. TODO TO BE REVISITED AND REMOVE UNUSED
     // {
