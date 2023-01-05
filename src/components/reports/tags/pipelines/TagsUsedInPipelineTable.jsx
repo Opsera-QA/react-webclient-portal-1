@@ -17,10 +17,10 @@ import TagsUsedInPipelinesVerticalTabContainer from "./TagsUsedInPipelinesVertic
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-function TagsUsedInPipelineTable({ data, loadData, isLoading, pipelineFilterModel }) {
+function TagsUsedInPipelineTable({ data, loadData, isLoading, tags }) {
   const history = useHistory();
   let fields = pipelineSummaryMetadata.fields;
-console.log(data);
+
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
@@ -48,10 +48,9 @@ console.log(data);
           className={"px-0 makeup-tree-container"}
         >
           <TagsUsedInPipelinesVerticalTabContainer
-            pipelineFilterModel={pipelineFilterModel}
             isLoading={isLoading}
             loadData={loadData}
-            tags={data}
+            tags={tags}
           />
         </Col>
         <Col
@@ -100,7 +99,7 @@ TagsUsedInPipelineTable.propTypes = {
   activeTagFilterDto: PropTypes.object,
   setTagFilterDto: PropTypes.func,
   isMounted: PropTypes.object,
-  pipelineFilterModel: PropTypes.any
+  tags: PropTypes.array,
 };
 
 export default TagsUsedInPipelineTable;

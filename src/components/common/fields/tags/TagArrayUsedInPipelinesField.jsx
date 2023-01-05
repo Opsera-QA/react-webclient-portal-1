@@ -90,8 +90,14 @@ function TagArrayUsedInPipelinesField({ tags, showTable }) {
   const getDisplay = () => {
     if (showTable) {
       return (
-        <TagsUsedInPipelineTable data={pipelines} loadData={loadData} isLoading={isLoading} isMounted={isMounted}/>
-        );
+        <TagsUsedInPipelineTable
+          tags={tags}
+          data={pipelines}
+          loadData={loadData}
+          isLoading={isLoading}
+          isMounted={isMounted}
+        />
+      );
     }
 
     return (getPipelineCards());

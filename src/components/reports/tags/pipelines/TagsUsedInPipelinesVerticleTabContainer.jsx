@@ -17,40 +17,41 @@ function TagsUsedInPipelinesVerticalTabContainer({
   tags,
 }) {
   const handleTabClick = (tab) => {
+    console.log(tab);
     // pipelineFilterModel?.setData("type", tab);
     // pipelineFilterModel?.setData("currentPage", 1);
     // loadData({ ...pipelineFilterModel });
   };
-
-  return (
-    <VanitySetVerticalTabContainer>
-      <VanitySetVerticalTab
-        icon={faDraftingCompass}
-        tabText={"All Tags Applied"}
-        tabName={""}
-        disabled={isLoading}
-        handleTabClick={handleTabClick}
-        // activeTab={pipelineFilterModel?.getData("type")}
-        tooltipText={"Look up pipelines where all tags are applied"}
-      />
-      {tags.length > 1
-        ? tags.map((tag) => {
-            return (
-              <VanitySetVerticalTab
-                icon={faUser}
-                tabText={tag.name}
-                tabName={tag.name}
-                disabled={isLoading}
-                handleTabClick={handleTabClick}
-                // activeTab={pipelineFilterModel?.getData("type")}
-                tooltipText={"Find any pipeline with a selected tag"}
-                key={tag._id}
-              />
-            );
-          })
-        : null}
-    </VanitySetVerticalTabContainer>
-  );
+console.log(tags);
+return (
+  <VanitySetVerticalTabContainer>
+    <VanitySetVerticalTab
+      icon={faDraftingCompass}
+      tabText={"All Tags Applied"}
+      tabName={"all tags"}
+      disabled={isLoading}
+      handleTabClick={handleTabClick}
+      // activeTab={pipelineFilterModel?.getData("type")}
+      tooltipText={"Look up pipelines where all tags are applied"}
+    />
+    {tags.length > 1
+      ? tags.map((tag) => {
+          return (
+            <VanitySetVerticalTab
+              icon={faUser}
+              tabText={`${tag.type}: ${tag.value}`}
+              tabName={tag.value}
+              disabled={isLoading}
+              handleTabClick={handleTabClick}
+              // activeTab={pipelineFilterModel?.getData("type")}
+              tooltipText={"Find any pipeline with a selected tag"}
+              key={tag._id}
+            />
+          );
+        })
+      : null}
+  </VanitySetVerticalTabContainer>
+);
 }
 
 TagsUsedInPipelinesVerticalTabContainer.propTypes = {
