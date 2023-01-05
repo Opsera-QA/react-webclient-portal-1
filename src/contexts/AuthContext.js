@@ -2,8 +2,6 @@ import React, {createContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import {useHistory} from "react-router-dom";
-import commonActions from "components/common/common.actions";
-import accountsActions from "components/admin/accounts/accounts-actions";
 import {SITE_VIEW_MODES} from "components/header/view_modes/siteViewMode.constants";
 import { THEMES } from "temp-library-components/theme/theme.constants";
 import { lightThemeConstants } from "temp-library-components/theme/light.theme.constants";
@@ -12,7 +10,6 @@ import ClientWebsocket from "core/websocket/client.websocket";
 import { DATE_FN_TIME_SCALES, handleDateAdditionForTimeScale } from "components/common/helpers/date/date.helpers";
 import MainViewContainer from "components/common/containers/MainViewContainer";
 import useIsMountedStateReference from "hooks/useIsMountedStateReference";
-import useCancelTokenStateReference from "hooks/useCancelTokenStateReference";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
 const websocketClient = new ClientWebsocket();
