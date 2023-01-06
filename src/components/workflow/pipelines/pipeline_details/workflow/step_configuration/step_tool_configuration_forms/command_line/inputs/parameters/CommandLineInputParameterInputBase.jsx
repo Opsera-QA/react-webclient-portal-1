@@ -263,7 +263,7 @@ export default function CommandLineInputParameterInputBase(
                 setModel={setModel}
                 model={model}
                 disabled={disabled}
-                className={"my-auto"}
+                className={"my-auto mr-2"}
               />
               {getTerraformStepParameterSyncButton()}
             </div>
