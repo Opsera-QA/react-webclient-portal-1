@@ -106,12 +106,6 @@ function TextAreaInputBase(
             hasError={hasStringValue(errorMessage) === true}
           />
           {getInput()}
-          <InfoText
-            field={field}
-            errorMessage={errorMessage}
-            model={model}
-            fieldName={fieldName}
-          />
         </>
       );
     }
