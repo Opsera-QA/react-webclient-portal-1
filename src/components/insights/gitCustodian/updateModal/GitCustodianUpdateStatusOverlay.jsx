@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import GitCustodianUpdateStatusEditorPanel from "./GitCustodianUpdateStatusEditorPanel";
 import { CENTER_OVERLAY_SIZES } from "components/common/overlays/center/CenterOverlayContainer";
+import UpdateCenterPanelOverlayBase from "components/common/overlays/center/UpdateCenterPanelOverlayBase";
 
 function GitCustodianUpdateStatusOverlay ({
   selectedIssues,
@@ -20,17 +20,17 @@ function GitCustodianUpdateStatusOverlay ({
   };
 
   return (
-    <CreateCenterPanel
-      closePanel={closePanel}
+    <UpdateCenterPanelOverlayBase
       objectType={'Vulnerability Status'}
-      size={CENTER_OVERLAY_SIZES.FULL_WIDTH}
+      loadData={loadData}
+      size={CENTER_OVERLAY_SIZES.STANDARD}
     >
       <GitCustodianUpdateStatusEditorPanel
         handleClose={closePanel}
         selectedIssues={selectedIssues}
         setSelectedIssues={setSelectedIssues}
       />
-    </CreateCenterPanel>
+    </UpdateCenterPanelOverlayBase>
   );
 }
 
