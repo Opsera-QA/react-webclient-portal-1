@@ -77,6 +77,22 @@ export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInpu
     );
   };
 
+  const getDynamicInputs = () => {
+    if (model?.getData("dynamicSettings") === true) {
+      return (
+        <BooleanToggleInput
+          dataObject={model}
+          setDataObject={setModel}
+          fieldName={"allowDynamicSettingsInUi"}
+          disabled={
+            pipelineType !== pipelineTypeConstants.PIPELINE_TYPES.SOFTWARE_DEVELOPMENT
+            || hasStringValue(model?.getData("repoId")) !== true
+          }
+        />
+      );
+    }
+  };
+
   if (enabledServices?.dynamicSettings !== true) {
     return null;
   }
@@ -98,6 +114,7 @@ export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInpu
           || hasStringValue(model?.getData("repoId")) !== true
         }
       />
+      {getDynamicInputs()}
     </div>
   );
 }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const STATUS = [
+  "Open",
   "Resolved",
   "False Positive",
 ];

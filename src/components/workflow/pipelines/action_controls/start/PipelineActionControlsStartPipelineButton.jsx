@@ -27,7 +27,12 @@ export default function PipelineActionControlsStartPipelineButton(
 
   const handlePipelineStartClick = () => {
     // TODO: Allow middle of the pipeline to configure if they start over
-    if (dynamicSettingsEnabled === true && pipelineOrientation === "start" && pipelineValidationHelper.isPipelineSourceRepositoryValidForDynamicSettings(pipeline) === true) {
+    if (
+      dynamicSettingsEnabled === true
+      && pipelineOrientation === "start"
+      && pipelineValidationHelper.isPipelineSourceRepositoryValidForDynamicSettings(pipeline) === true
+      && PipelineRoleHelper.canUpdatePipelineStepDetails(userData, pipeline) === true
+    ) {
       toastContext.showOverlayPanel(
         <PipelineActionRuntimeSettingsSelectionOverlay
           pipeline={pipeline}

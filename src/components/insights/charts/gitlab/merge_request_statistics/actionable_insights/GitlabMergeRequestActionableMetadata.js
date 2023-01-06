@@ -23,7 +23,7 @@ const GitlabMergeRequestActionableMetadata = {
             id: "pipelineId",
         },
         {
-            label: "Average Time to Merge (mins)",
+            label: "Average Time to Merge (days)",
             id: "avgTimeToMerge",
         },
         {
