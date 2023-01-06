@@ -21,6 +21,8 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {buttonLabelHelper} from "temp-library-components/helpers/label/button/buttonLabel.helper";
+import PipelineRuntimeSettingsPipelineStepDynamicSettingsPanel
+  from "components/workflow/pipelines/action_controls/start/step/PipelineRuntimeSettingsPipelineStepDynamicSettingsPanel";
 
 export default function PipelineActionRuntimeSettingsSelectionOverlay(
   {
@@ -34,13 +36,32 @@ export default function PipelineActionRuntimeSettingsSelectionOverlay(
   } = useComponentStateReference();
 
   useEffect(() => {
+    const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
+    const localParameterSteps = [];
+
+    // TODO: We need to build a better way to determine if a step has dynamic settings.
+    plan.forEach((pipelineStep) => {
+      const configuration = DataParsingHelper.parseNestedObject(pipelineStep, "tool.configuration");
+      const name = DataParsingHelper.parseString(pipelineStep.name);
+      const stepParameters = DataParsingHelper.parseNestedArray(configuration, "stepParameters", []);
+
+      if (stepParameters.length > 0) {
+        localParameterSteps.push({
+          name: name,
+          stepParameters: stepParameters,
+        });
+      }
+    });
+
     const runtimeSettings = {
       repository: DataParsingHelper.parseNestedString(pipeline, "workflow.source.repoId"),
       branch: DataParsingHelper.parseNestedString(pipeline, "workflow.source.branch"),
       toolId: DataParsingHelper.parseNestedString(pipeline, "workflow.source.accountId"),
       workspace: DataParsingHelper.parseNestedString(pipeline, "workflow.source.workspace"),
       service: DataParsingHelper.parseNestedString(pipeline, "workflow.source.service"),
+      steps: localParameterSteps,
     };
+
     setRuntimeSettingsModel({...modelHelpers.parseObjectIntoModel(runtimeSettings, pipelineRuntimeSettingsMetadata)});
   }, [pipeline]);
 
@@ -72,6 +93,35 @@ export default function PipelineActionRuntimeSettingsSelectionOverlay(
       closePanel();
     } catch (error) {
       setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);
+    }
+  };
+
+  const setStepDataFunction = (index, updatedStep) => {
+    const parsedSteps = runtimeSettingsModel?.getArrayData("steps");
+    parsedSteps[index] = updatedStep;
+    runtimeSettingsModel?.setData("steps", parsedSteps);
+    setRuntimeSettingsModel({...parsedSteps});
+  };
+
+  const getStepParametersInput = () => {
+    const stepParameterSteps = runtimeSettingsModel?.getArrayData(("steps"));
+
+    if (stepParameterSteps.length > 0) {
+      return (
+        <>
+          {stepParameterSteps.map((pipelineStep, index) => {
+            return (
+              <Col key={index} xs={12}>
+                <PipelineRuntimeSettingsPipelineStepDynamicSettingsPanel
+                  pipelineStep={pipelineStep}
+                  updateStepSettingsFunction={(updatedStep) => setStepDataFunction(index, updatedStep)}
+                />
+              </Col>
+            );
+          })
+          }
+        </>
+      );
     }
   };
 
@@ -137,6 +187,7 @@ export default function PipelineActionRuntimeSettingsSelectionOverlay(
               setDataObject={setRuntimeSettingsModel}
             />
           </Col>
+          {/*{getStepParametersInput()}*/}
         </Row>
       </div>
     </CenterOverlayContainer>
