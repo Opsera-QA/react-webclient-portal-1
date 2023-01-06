@@ -5,6 +5,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import {parseError} from "components/common/helpers/error-helpers";
 import InfoContainer from "components/common/containers/InfoContainer";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import InputLabel from "components/common/inputs/info_text/InputLabel";
 
 function TextAreaInputBase(
   {
@@ -18,6 +19,7 @@ function TextAreaInputBase(
     className,
     customTitleText,
     titleIcon,
+    useInfoContainer,
   }) {
   const [field, setField] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -49,10 +51,27 @@ function TextAreaInputBase(
       if (newDataObject) {
         setErrorMessage(newDataObject?.getFieldError(fieldName));
       }
-    }
-    else {
+    } else {
       validateAndSetData(newValue);
     }
+  };
+
+  const getInputClasses = () => {
+    let classes = `form-control`;
+
+    if (hasStringValue(errorMessage) === true) {
+      classes += ` border border-danger error-text-alt`;
+    }
+
+    return classes;
+  };
+
+  const getErrorStyling = () => {
+    if (hasStringValue(errorMessage) === true) {
+      return ` error-text-alt`;
+    }
+
+    return "";
   };
 
   const getTitleText = () => {
@@ -63,26 +82,62 @@ function TextAreaInputBase(
     return field?.label;
   };
 
-  if (field == null) {
-    return null;
-  }
+  const getInput = () => {
+    return (
+      <div className={"d-flex" + getErrorStyling()}>
+          <textarea
+            disabled={disabled}
+            value={model?.getData(fieldName)}
+            onChange={(event) => updateValue(event.target.value)}
+            className={getInputClasses()}
+            rows={rowCount}
+          />
+      </div>
+    );
+  };
 
-  return (
-    <InputContainer className={className} fieldName={fieldName}>
+  const getBody = () => {
+    if (useInfoContainer === false) {
+      return (
+        <>
+          <InputLabel
+            model={model}
+            field={field}
+            hasError={hasStringValue(errorMessage) === true}
+          />
+          {getInput()}
+          <InfoText
+            field={field}
+            errorMessage={errorMessage}
+            model={model}
+            fieldName={fieldName}
+          />
+        </>
+      );
+    }
+
+    return (
       <InfoContainer
         titleText={getTitleText()}
         titleIcon={titleIcon}
       >
         <div className={"m-2"}>
-          <textarea
-            disabled={disabled}
-            value={model?.getData(fieldName)}
-            onChange={(event) => updateValue(event.target.value)}
-            className={"form-control"}
-            rows={rowCount}
-          />
+          {getInput()}
         </div>
       </InfoContainer>
+    );
+  };
+
+  if (field == null) {
+    return null;
+  }
+
+  return (
+    <InputContainer
+      className={className}
+      fieldName={fieldName}
+    >
+      {getBody()}
       <InfoText
         field={field}
         errorMessage={errorMessage}
@@ -107,6 +162,7 @@ TextAreaInputBase.propTypes = {
   className: PropTypes.string,
   customTitleText: PropTypes.string,
   titleIcon: PropTypes.object,
+  useInfoContainer: PropTypes.bool,
 };
 
 TextAreaInputBase.defaultProps = {
