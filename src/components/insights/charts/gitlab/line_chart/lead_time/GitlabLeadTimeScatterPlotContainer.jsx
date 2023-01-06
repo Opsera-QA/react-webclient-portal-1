@@ -7,12 +7,13 @@ import IconBase from "../../../../../common/icons/IconBase";
 import { faSquare } from "@fortawesome/pro-solid-svg-icons";
 import config from "./GitlabLeadTimeChartConfig";
 import GitlabLeadTimeInsightsModal from "./GitlabLeadTimeInsightsModal";
-import {getTimeDisplay} from "../../../charts-helpers";
-function GitlabLeadTimeScatterPlotContainer({ chartData }) {
+import {getDateObjectFromKpiConfiguration, getTimeDisplay} from "../../../charts-helpers";
+function GitlabLeadTimeScatterPlotContainer({ chartData, kpiConfiguration }) {
 
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState([]);
-
+  const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const maxDate = new Date(dateRange?.end);
   const getScatterPlotsFromTimeStamp = (commit) => {
     const timestamp = commit["commitTimeStamp"];
     const hoursFraction = (timestamp.substr(11, 5).split(":")[1] / 60) * 100;
@@ -112,7 +113,7 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
         </div>
         <ResponsiveScatterPlot
           data={commitsData}
-          {...config()}
+          {...config(maxDate)}
           yScale={{ type: "linear", min: 0, max: 24 }}
           onClick={(node) => onNodeSelect(node)}
           tooltip={({ node }) => {
@@ -179,6 +180,7 @@ function GitlabLeadTimeScatterPlotContainer({ chartData }) {
 
 GitlabLeadTimeScatterPlotContainer.propTypes = {
   chartData: PropTypes.object,
+  kpiConfiguration: PropTypes.object
 };
 
 export default GitlabLeadTimeScatterPlotContainer;
