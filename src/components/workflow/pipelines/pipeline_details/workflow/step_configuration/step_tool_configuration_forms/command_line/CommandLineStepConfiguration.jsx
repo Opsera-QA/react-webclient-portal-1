@@ -32,9 +32,6 @@ import CommandLineSonarScannerToggleInput from "components/workflow/pipelines/pi
 import RoleRestrictedSonarToolSelectInput
   from "components/common/list_of_values_input/tools/sonar/tool/RoleRestrictedSonarToolSelectInput";
 import CommandLineSonarCustomParametersToggle from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineSonarCustomParametersToggle";
-import CommandLineInputParametersInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParametersInput";
-import LocalInputParametersInputBase
-  from "components/common/list_of_values_input/parameters/local/LocalInputParametersInputBase";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import CommandLineInputParameterInputBase
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParameterInputBase";
@@ -173,21 +170,21 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
       <StepConfigUseTerraformOutput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
       {getTerraformSelect()}
       {getDynamicFields()}
-      <CommandLineInputParametersInput
-        model={commandLineStepConfigurationDto}
-        setModel={setCommandLineStepConfigurationDataDto}
-        plan={plan}
-      />
+      {/*<CommandLineInputParametersInput*/}
+      {/*  model={commandLineStepConfigurationDto}*/}
+      {/*  setModel={setCommandLineStepConfigurationDataDto}*/}
+      {/*  plan={plan}*/}
+      {/*/>*/}
       {/*<LocalInputParametersInputBase*/}
       {/*  model={commandLineStepConfigurationDto}*/}
       {/*  setModel={setCommandLineStepConfigurationDataDto}*/}
       {/*  fieldName={"stepParameters"}*/}
       {/*/>*/}
-      {/*<CommandLineInputParameterInputBase*/}
-      {/*  model={commandLineStepConfigurationDto}*/}
-      {/*  setModel={setCommandLineStepConfigurationDataDto}*/}
-      {/*  plan={plan}*/}
-      {/*/>*/}
+      <CommandLineInputParameterInputBase
+        model={commandLineStepConfigurationDto}
+        setModel={setCommandLineStepConfigurationDataDto}
+        plan={plan}
+      />
       <ParameterSelectListInputBase
         titleIcon={faHandshake}
         dataObject={commandLineStepConfigurationDto}
