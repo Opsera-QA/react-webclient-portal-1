@@ -41,13 +41,6 @@ export default function CommandLineInputParameterInputBase(
   const getRightSideButtons = () => {
     return (
       <CenteredContentWrapper>
-        <CommandLineStepSaveEnvironmentVariablesBooleanToggle
-          setModel={setModel}
-          model={model}
-          disabled={disabled}
-          className={"my-auto"}
-        />
-        {getTerraformStepParameterSyncButton()}
         <CommandLineInputParameterInputBaseHelpText
           showTerraformHelpText={isMongoDbId(model?.getData("terraformStepId"))}
         />
@@ -213,9 +206,22 @@ export default function CommandLineInputParameterInputBase(
     if (customParameters.length > 0) {
       return (
         <div className={"mb-3"}>
-          <H5FieldSubHeader
-            subheaderText={"Global Parameters"}
-          />
+          <div className={"d-flex justify-content-between"}>
+            <div>
+              <H5FieldSubHeader
+                subheaderText={"Global Parameters"}
+              />
+            </div>
+            <div className={"d-flex"}>
+              <CommandLineStepSaveEnvironmentVariablesBooleanToggle
+                setModel={setModel}
+                model={model}
+                disabled={disabled}
+                className={"my-auto"}
+              />
+              {getTerraformStepParameterSyncButton()}
+            </div>
+          </div>
           <div
             className={"content-container-border"}
             style={{
@@ -236,6 +242,7 @@ export default function CommandLineInputParameterInputBase(
               );
             })}
           </div>
+          <hr/>
         </div>
       );
     }
@@ -245,9 +252,22 @@ export default function CommandLineInputParameterInputBase(
     if (environmentVariables.length > 0) {
       return (
         <div className={"mb-3"}>
-          <H5FieldSubHeader
-            subheaderText={"Global Parameters"}
-          />
+          <div className={"d-flex justify-content-between"}>
+            <div>
+              <H5FieldSubHeader
+                subheaderText={"Global Parameters"}
+              />
+            </div>
+            <div className={"d-flex"}>
+              <CommandLineStepSaveEnvironmentVariablesBooleanToggle
+                setModel={setModel}
+                model={model}
+                disabled={disabled}
+                className={"my-auto"}
+              />
+              {getTerraformStepParameterSyncButton()}
+            </div>
+          </div>
           <div
             className={"content-container-border"}
             style={{
@@ -267,9 +287,31 @@ export default function CommandLineInputParameterInputBase(
               );
             })}
           </div>
+          <hr/>
         </div>
       );
     }
+
+    return (
+      <div className={"mb-3"}>
+        <div>
+          <H5FieldSubHeader
+            subheaderText={"Global Parameters"}
+          />
+        </div>
+        <div
+          className={"content-container-border mb-3"}
+          style={{
+            overflowY: "hidden",
+          }}
+        >
+          <CenteredContentWrapper minHeight={"50px"}>
+            <div>No Global Parameters have been added yet</div>
+          </CenteredContentWrapper>
+        </div>
+        <hr/>
+      </div>
+    );
   };
 
   const deleteLocalParameter = (index) => {
@@ -284,12 +326,12 @@ export default function CommandLineInputParameterInputBase(
 
     if (stepParameters.length > 0) {
       return (
-        <div className={"mb-2"}>
+        <div className={"mb-1"}>
           <H5FieldSubHeader
             subheaderText={"Local Parameters"}
           />
           <div
-            className={"content-container-border"}
+            className={"content-container-border mb-3"}
             style={{
               overflowY: "hidden",
             }}
@@ -307,9 +349,31 @@ export default function CommandLineInputParameterInputBase(
               );
             })}
           </div>
+          <hr/>
         </div>
       );
     }
+
+    return (
+      <div className={"mb-3"}>
+        <div>
+          <H5FieldSubHeader
+            subheaderText={"Local Parameters"}
+          />
+        </div>
+        <div
+          className={"content-container-border mb-3"}
+          style={{
+            overflowY: "hidden",
+          }}
+        >
+          <CenteredContentWrapper minHeight={"50px"}>
+            <div>No Local Parameters have been added yet</div>
+          </CenteredContentWrapper>
+        </div>
+        <hr/>
+      </div>
+    );
   };
 
   return (
@@ -322,7 +386,6 @@ export default function CommandLineInputParameterInputBase(
         <div className={"m-3"}>
           {getCustomParameterFields()}
           {getLocalParameterFields()}
-          <hr/>
           <CommandLineInputParameterInputRow
             disabled={disabled}
             saveEnvironmentVariables={model.getData("saveEnvironmentVariables") === true}
