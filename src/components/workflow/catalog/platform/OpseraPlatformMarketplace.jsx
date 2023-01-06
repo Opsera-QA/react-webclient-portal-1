@@ -66,7 +66,7 @@ export default function OpseraPipelineMarketplace({activeTemplates}) {
         supportSearch={true}
         isLoading={isLoading}
         body={getPipelineCardView()}
-        dropdownFilters={getDropdownFilters()}
+        // dropdownFilters={getDropdownFilters()}
         inlineFilters={getInlineFilters()}
         titleIcon={faOctagon}
         title={"Pipeline Templates"}
