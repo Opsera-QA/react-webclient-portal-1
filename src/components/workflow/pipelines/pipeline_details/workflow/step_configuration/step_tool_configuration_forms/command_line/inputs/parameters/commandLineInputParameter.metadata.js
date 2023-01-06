@@ -18,9 +18,6 @@ export const commandLineInputParameterMetadata = {
       label: "Value",
       id: "value",
       regexDefinitionName: "localVariableValue",
-      isRequiredFunction: (model) => {
-        return model?.getData("type") === "local";
-      },
       maxLength: 8000,
     },
     {

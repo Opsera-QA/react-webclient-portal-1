@@ -48,7 +48,7 @@ export default function CommandLineInputParameterInputRow(
   };
 
   const hasDuplicateName = () => {
-    const type = commandLineStepModel?.getData("type");
+    const type = commandLineInputParameterModel?.getData("type");
 
     if (type === "local") {
       const parameterName = commandLineInputParameterModel?.getData("name");
@@ -163,7 +163,7 @@ export default function CommandLineInputParameterInputRow(
         </Col>
         <Col xs={12}>
           <InfoText
-            errorMessage={error}
+            errorMessage={error ? error : isDuplicate === true ? "You have already added this Parameter." : undefined}
           />
         </Col>
       </Row>
