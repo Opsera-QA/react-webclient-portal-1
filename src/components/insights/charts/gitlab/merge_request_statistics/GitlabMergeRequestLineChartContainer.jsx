@@ -13,7 +13,7 @@ function GitlabMergeRequestLineChartContainer({ openChart,closeChart }) {
     useEffect(() => {
         const dataFailedHigh = _.maxBy(openChart, "y");
         setMaxChartVal(dataFailedHigh.y);
-    }, [closeChart]);
+    }, [openChart]);
 
     let dailyDeploymentsChartData = [
         {
@@ -76,14 +76,14 @@ function GitlabMergeRequestLineChartContainer({ openChart,closeChart }) {
                                          color: slice?.points[0]?.serieColor,
                                      }}
                                 >
-                                    Average Open Time: <strong>{slice?.points[0]?.data?.y}</strong>
+                                    Average Merge Time: <strong>{slice?.points[0]?.data?.y}</strong>
                                 </div>
                                 <div className={'py-1'}
                                      style={{
                                          color: slice?.points[1]?.serieColor,
                                      }}
                                 >
-                                    Average Merge time: <strong>{slice?.points[1]?.data?.y}</strong>
+                                    Average Open time: <strong>{slice?.points[1]?.data?.y}</strong>
                                 </div>
                             </div>
                         );

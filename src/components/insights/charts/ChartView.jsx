@@ -1059,7 +1059,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               />
             </Col>
         );
-      case "gitlab-merge-requests-statistics":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_MERGE_STATISTICS:
         return (
             <Col xl={12} md={12} className="p-2">
                 <GitlabMergeRequestStatistics
