@@ -40,6 +40,8 @@ import GitlabPipelineStatisticsEditorPanel
   from "../../charts/gitlab/line_chart/pipeline-statistics/GitlabPipelineStatisticsEditorPanel";
 import DoraJiraGitlabRolledUpEditorPanel
   from "../../charts/dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpEditorPanel";
+import GitlabMergeRequestStatisticsEditorPanel
+  from "../../charts/gitlab/merge_request_statistics/GitlabMergeRequestStatisticsEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
@@ -288,6 +290,16 @@ function DashboardMetricOverlayContainer(
             unpackedFilterData={unpackedFilterData}
             kpiConfiguration={kpiConfiguration}
           />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_MERGE_STATISTICS:
+        return (
+            <GitlabMergeRequestStatisticsEditorPanel
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+                unpackedFilterData={unpackedFilterData}
+                kpiConfiguration={kpiConfiguration}
+            />
         );
     }
   };
