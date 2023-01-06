@@ -238,9 +238,15 @@ export default function RoleAccessInput(
     if (roles.length > 0) {
       const disabledUsers = [];
 
-      roles.map((property) => {
-        if (property.user != null && property.user !== "") {
-          disabledUsers.push(property.user);
+      roles.forEach((role) => {
+        const emailAddress = DataParsingHelper.parseEmailAddress(role?.user);
+
+        if (emailAddress) {
+          const foundUser = userList?.find((user) => user?.emailAddress === emailAddress);
+
+          if (foundUser) {
+            disabledUsers.push(foundUser);
+          }
         }
       });
 
@@ -252,9 +258,15 @@ export default function RoleAccessInput(
     if (roles.length > 0) {
       const disabledGroups = [];
 
-      roles.map((property) => {
-        if (property.group != null && property.group !== "") {
-          disabledGroups.push(property.group);
+      roles.forEach((role) => {
+        const groupName = DataParsingHelper.parseString(role?.group);
+
+        if (groupName) {
+          const foundGroup = groupList?.find((group) => group?.name === groupName);
+
+          if (foundGroup) {
+            disabledGroups.push(foundGroup);
+          }
         }
       });
 
@@ -312,11 +324,11 @@ export default function RoleAccessInput(
           selectOptions={userList}
           valueField={"emailAddress"}
           textField={(item) => item != null && typeof item === "object" ? `${item.name} (${item.emailAddress})` : item}
-          value={role["user"]}
+          value={role?.user}
           busy={loadingUsers}
           disabled={disabled || getDisabledUsers()}
           placeholderText={"Select A User"}
-          setDataFunction={(value) => updateProperty(role, "user", value["emailAddress"])}
+          setDataFunction={(value) => updateProperty(role, "user", value?.emailAddress)}
         />
       );
     }
@@ -330,7 +342,7 @@ export default function RoleAccessInput(
         busy={loadingGroups}
         disabled={disabled || getDisabledGroups()}
         placeholderText={"Select A Group"}
-        setDataFunction={(value) => updateProperty(role, "group", value["name"])}
+        setDataFunction={(value) => updateProperty(role, "group", value?.name)}
       />
     );
   };
@@ -383,10 +395,10 @@ export default function RoleAccessInput(
 
     return (
       <div className="flex-fill">
-        {roles.map((property, index) => {
+        {roles.map((role, index) => {
           return (
             <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
-              {getPropertyRow(property, index)}
+              {getPropertyRow(role, index)}
             </div>
           );
         })}
