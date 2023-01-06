@@ -156,27 +156,37 @@ export default function CommandLineInputParameterInputBase(
     const newArray = [];
     const parsedUpdatedData = DataParsingHelper.parseArray(model?.getData("stepParameters"), []);
     const field = model?.getFieldById("stepParameters");
+    const newParameterName = DataParsingHelper.parseString(newParameter?.name, "");
+    const newParameterValue = DataParsingHelper.parseString(newParameter?.value, "");
+
+    if (hasStringValue(newParameterName) !== true) {
+      setError(`A Local Parameter must have a name.`);
+      return false;
+    }
 
     if (parsedUpdatedData.length > field.maxItems) {
       setError(`You have reached the maximum allowed number of Local Input Parameters. Please remove one to add another.`);
       return false;
     }
 
-    if (parsedUpdatedData.find((parameter) => parameter?.name === newParameter?.name) != null) {
-      setError(`You have already added ${newParameter?.name}.`);
+    if (parsedUpdatedData.find((parameter) => parameter?.name === newParameterName) != null) {
+      setError(`You have already added ${newParameterName}.`);
       return false;
     }
 
     parsedUpdatedData.push({
-      name: newParameter?.name,
-      value: newParameter?.value,
+      name: newParameterName,
+      value: newParameterValue,
     });
 
     parsedUpdatedData.forEach((parameter) => {
-      if (hasStringValue(parameter?.name) === true && hasStringValue(parameter?.value) === true) {
+      const parsedParameterName = DataParsingHelper.parseString(parameter?.name, "");
+      const parsedParameterValue = DataParsingHelper.parseString(parameter?.value, "");
+
+      if (hasStringValue(parsedParameterName) === true) {
         newArray.push({
-          name: parameter?.name,
-          value: parameter?.value,
+          name: parsedParameterName,
+          value: parsedParameterValue,
         });
       }
     });
