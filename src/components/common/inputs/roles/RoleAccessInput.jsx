@@ -2,21 +2,24 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {
+  faExclamationTriangle,
   faIdCard,
-  faTimes,
+  faTimes, faTrash,
 } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
-import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import StandaloneRoleAccessTypeInput from "components/common/inputs/roles/StandaloneRoleAccessTypeInput";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import { hasStringValue } from "components/common/helpers/string-helpers";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import RoleAccessInputHeaderField from "components/common/inputs/roles/RoleAccessInputHeaderField";
+import InfoContainer from "components/common/containers/InfoContainer";
+import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 
 // TODO: Create RoleAccessInputRow that holds the actual inputs to clean this up.
 export default function RoleAccessInput(
@@ -61,8 +64,8 @@ export default function RoleAccessInput(
     const ldap = userData?.ldap;
     if (accessRoleData) {
       if (ldap.domain != null) {
-        await getGroupsByDomain(ldap.domain);
-        await getLdapUsers(ldap.domain);
+        getGroupsByDomain(ldap.domain);
+        getLdapUsers(ldap.domain);
       }
     }
   };
@@ -98,7 +101,6 @@ export default function RoleAccessInput(
         setUserList(response.data);
       }
     } catch (error) {
-      console.error("error: " + JSON.stringify(error));
       toastContext.showLoadingErrorDialog(error);
     } finally {
       setLoadingUsers(false);
@@ -109,24 +111,38 @@ export default function RoleAccessInput(
     const currentData = model?.getData(fieldName);
     const unpackedRoles = [];
 
-    if (Array.isArray(currentData) && currentData.length > 0)
-    {
+    if (Array.isArray(currentData) && currentData.length > 0) {
       currentData.map((item) => {
-        unpackedRoles.push(
-          {
-            _id: item["_id"],
-            role: item["role"],
-            user: item["user"],
-            group: item["group"],
-            createdAt: item["createdAt"],
-            updatedAt: item["updatedAt"],
-            roleAccessType: hasStringValue(item["user"]) === true ?  "user" : "group"
-          }
-        );
+        const hasUserRule = hasStringValue(item?.user) === true;
+        const hasGroupRule = hasStringValue(item?.group) === true;
+        const hasSiteRoleRule = hasStringValue(item?.site_role) === true;
+        const type =
+          hasUserRule ? "user" :
+            hasGroupRule ? "group" :
+              hasSiteRoleRule ? "site_role" : undefined;
+
+        if (type) {
+          unpackedRoles.push(
+            {
+              role: item?.role,
+              user: item?.user,
+              group: item?.group,
+              site_role: item?.site_role,
+              createdAt: item?.createdAt,
+              updatedAt: item?.updatedAt,
+              roleAccessType: type
+            }
+          );
+        }
       });
-    }
-    else {
-      unpackedRoles.push({role: "", user: "", group: "", roleAccessType: "group"});
+    } else {
+      unpackedRoles.push({
+        role: "",
+        site_role: "",
+        user: "",
+        group: "",
+        roleAccessType: "group",
+      });
     }
 
     setRoles([...unpackedRoles]);
@@ -145,18 +161,19 @@ export default function RoleAccessInput(
 
     if (newRoleList && newRoleList.length > 0) {
       newRoleList.map((item) => {
-        if (item["role"] === "" || (item["user"] === "" && item["group"] === "")) {
+        if (item?.role === "" || (item?.user === "" && item?.group === "" && item?.site_role === "")) {
           return;
         }
 
         newArray.push(
           {
-            _id: item["_id"],
-            role: item["role"],
-            user: item["user"] !== "" ? item["user"] : null,
-            group: item["group"] !== "" ? item["group"] : null,
-            createdAt: item["createdAt"],
-            updatedAt: item["updatedAt"],
+            _id: item?._id,
+            role: item?.role,
+            user: item?.user !== "" ? item?.user : null,
+            group: item?.group !== "" ? item?.group : null,
+            site_role: item?.site_role !== "" ? item?.site_role : null,
+            createdAt: item?.createdAt,
+            updatedAt: item?.updatedAt,
           }
         );
       });
@@ -185,7 +202,7 @@ export default function RoleAccessInput(
     let newRoleList = roles;
 
     if (lastRoleComplete()) {
-      let newRow = {role: "", user: "", group: "", roleAccessType: "group"};
+      let newRow = {role: "", user: "", group: "", site_role: "", roleAccessType: "group"};
       newRoleList.push(newRow);
       validateAndSetData(newRoleList);
     }
@@ -205,6 +222,7 @@ export default function RoleAccessInput(
       if (innerField === "roleAccessType") {
         newPropertyList[index]["group"] = "";
         newPropertyList[index]["user"] = "";
+        newPropertyList[index]["site_role"] = "";
       }
 
       newPropertyList[index][innerField] = newValue;
@@ -249,8 +267,8 @@ export default function RoleAccessInput(
       <div className="mt-2 d-inline-flex">
         <div className="m-auto mr-2">
           <input
-            className="mr-2"
-            type="radio"
+            className={"mr-2"}
+            type={"radio"}
             name={`roleAccessType-${index}`}
             value={"group"}
             checked={role["roleAccessType"] === "group"}
@@ -259,7 +277,7 @@ export default function RoleAccessInput(
           />
           <span className={"mr-2"}>Group</span>
         </div>
-        <div className="m-auto ml-2">
+        <div className="m-auto mx-2">
           <input
             className="mr-2"
             type="radio"
@@ -271,33 +289,21 @@ export default function RoleAccessInput(
           />
           <span>User</span>
         </div>
+        {/*<div className="m-auto ml-2">*/}
+        {/*  <input*/}
+        {/*    className={"mr-2"}*/}
+        {/*    type={"radio"}*/}
+        {/*    name={`roleAccessType-${index}`}*/}
+        {/*    disabled={disabled}*/}
+        {/*    value={"role"}*/}
+        {/*    checked={role["roleAccessType"] === "role"}*/}
+        {/*    onChange={() => updateProperty(role, "roleAccessType", "role")}*/}
+        {/*  />*/}
+        {/*  <span>Role</span>*/}
+        {/*</div>*/}
       </div>
     );
   };
-
-  // TODO: For V2
-  // const getButtonTypeInput = (role, index) => {
-  //   return (
-  //     <div className="d-flex mt-1 justify-content-between">
-  //       <Button
-  //         name={`roleAccessType-${index}-group`}
-  //         variant={role["roleAccessType"] === "group" ? "success" : "outline-secondary"}
-  //         size="sm"
-  //         onClick={() => updateProperty(role, "roleAccessType", "group")}
-  //       >
-  //         <FontAwesomeIcon icon={faUserFriends} fixedWidth className={"mr-1"}/>Group
-  //       </Button>
-  //       <Button
-  //         variant={role["roleAccessType"] === "user" ? "success" : "outline-secondary"}
-  //         size="sm"
-  //         name={`roleAccessType-${index}-user`}
-  //         onClick={() => updateProperty(role, "roleAccessType", "user")}
-  //       >
-  //         <FontAwesomeIcon icon={faUser} fixedWidth className={"mr-1"}/>User
-  //       </Button>
-  //     </div>
-  //   );
-  // };
 
   const getAssigneeInput = (role) => {
     if (role["roleAccessType"] === "user") {
@@ -388,39 +394,6 @@ export default function RoleAccessInput(
     );
   };
 
-  const getHeaderBar = () => {
-    return (
-      <div className="d-flex py-1">
-        <Col sm={11}>
-          <Row>
-            <Col sm={4}>
-              {/*<span className="text-muted ml-5">Type</span>*/}
-            </Col>
-            <Col sm={4} className={"mx-auto"}>
-              <span className="text-muted">Assignee</span>
-            </Col>
-            <Col sm={4} className={"mx-auto"}>
-              <span className="text-muted">Access Type</span>
-            </Col>
-          </Row>
-        </Col>
-        <Col sm={1} className={"pr-3 pl-0 delete-button"} />
-      </div>
-    );
-  };
-
-  const getIncompleteRoleMessage = () => {
-    if (!lastRoleComplete()) {
-      return (`Incomplete Roles Will Be Removed Upon Saving`);
-    }
-  };
-
-  const getHelpComponent = () => {
-    if (helpComponent) {
-      return (helpComponent);
-    }
-  };
-
   const getRolesMessage = () => {
     if (!Array.isArray(roles) || roles.length === 0 || (roles.length === 1 && lastRoleComplete() === false)) {
       return (`
@@ -432,7 +405,8 @@ export default function RoleAccessInput(
     }
 
     return (`
-      Only the listed users, all members assigned to the listed groups, and site administrators have access.
+      Only the listed users, all members assigned to the listed groups, and Site Administrators have access. 
+      In addition, Security Managers and Auditors will have read access if those Site Roles are enabled.
     `);
   };
 
@@ -443,6 +417,47 @@ export default function RoleAccessInput(
     `);
   };
 
+  const getClearDataButton = () => {
+    if (disabled !== true) {
+      return (
+        <VanityButtonBase
+          onClickFunction={clearRolesArray}
+          normalText={"Remove All Roles"}
+          buttonSize={"sm"}
+          className={"mr-2"}
+          variant={"danger"}
+          disabled={disabled}
+          icon={faTrash}
+        />
+      );
+    }
+  };
+
+  const getAddPropertyButton = () => {
+    return (
+      <VanityButtonBase
+        onClickFunction={clearRolesArray}
+        normalText={"Add Role"}
+        buttonSize={"sm"}
+        className={"mr-2"}
+        variant={"secondary"}
+        disabled={disabled || lastRoleComplete() !== true}
+        icon={faTrash}
+      />
+    );
+  };
+
+  const getIncompleteRowBlock = () => {
+    if (!lastRoleComplete()) {
+      return (
+        <div className="w-100 m-2 text-muted small">
+          <IconBase className={"text-warning mr-1"} icon={faExclamationTriangle}/>
+          <span className="mt-1">{`Incomplete Roles Will Be Removed Upon Saving`}</span>
+        </div>
+      );
+    }
+  };
+
   if (field == null || isSaasUser === true || visible === false) {
     return <></>;
   }
@@ -450,31 +465,33 @@ export default function RoleAccessInput(
   return (
     <div className={"bg-white"} style={{minWidth: "575px"}}>
       <div className={"mx-2 mb-2"}>
-        <InfoText customMessage={getRolesMessage()} />
+        <InfoText customMessage={getRolesMessage()}/>
       </div>
-      <PropertyInputContainer
+      <InfoContainer
         titleIcon={faIdCard}
-        field={field}
         addProperty={addRole}
         titleText={"Roles"}
         errorMessage={errorMessage}
-        type={"Role"}
-        addAllowed={lastRoleComplete() && disabled !== true}
-        helpComponent={getHelpComponent()}
-        incompleteRowMessage={getIncompleteRoleMessage()}
-        clearDataFunction={disabled !== true ? clearRolesArray : undefined}
+        helpComponent={helpComponent}
       >
         <div>
-          <div className={"filter-bg-white"}>
-            {getHeaderBar()}
-          </div>
+          <RoleAccessInputHeaderField/>
           <div className="rules-input">
             {getFieldBody()}
           </div>
         </div>
-      </PropertyInputContainer>
+        <Row className={"d-flex justify-content-between mx-0"}>
+          <div className={"mt-auto"}>
+            {getIncompleteRowBlock()}
+          </div>
+          <div className={"ml-auto m-2 d-flex"}>
+            {getClearDataButton()}
+            {getAddPropertyButton()}
+          </div>
+        </Row>
+      </InfoContainer>
       <div className={"mx-2"}>
-        <InfoText customMessage={getRolesSubMessage()} />
+        <InfoText customMessage={getRolesSubMessage()}/>
       </div>
     </div>
   );
