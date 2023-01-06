@@ -41,6 +41,10 @@ export const GitCustodianFilterMetadata = {
       id: "repository",
     },
     {
+      label: "Branch",
+      id: "branch",
+    },
+    {
       label: "Main Branch",
       id: "mainBranch",
     },

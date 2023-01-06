@@ -196,7 +196,8 @@ chartsActions.getGitCustodianTableData = async(getAccessToken, cancelTokenSource
         repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories') : [],
         authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors') : [],
         service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service') : [],
-        status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status') : [],
+        // status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status') : [],
+        status: tableFilterDto.getFilterValue('status') ? tableFilterDto.getFilterValue('status') : [],
         email: filterModel.getFilterValue('email') ? filterModel.getFilterValue('email') : [],
         type: filterModel.getFilterValue('type') ? filterModel.getFilterValue('type') : [],
       },
@@ -568,6 +569,10 @@ chartsActions.getGithubListOfRepositories = async(getAccessToken, cancelTokenSou
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-
+chartsActions.updateGitCustodianVulnerabilityStatus = async(getAccessToken, cancelTokenSource, postBody)=>{
+  delete postBody.issuesList;  
+  const apiUrl = "/analytics/gitscraper/v1/dashboard/table/updateStatus";
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
 
 export default chartsActions;

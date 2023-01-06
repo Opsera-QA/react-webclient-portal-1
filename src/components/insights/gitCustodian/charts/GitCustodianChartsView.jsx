@@ -43,7 +43,7 @@ function GitCustodianChartsView({ gitCustodianData }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [gitCustodianData]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {

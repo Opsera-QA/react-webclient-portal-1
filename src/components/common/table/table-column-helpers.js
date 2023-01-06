@@ -680,6 +680,21 @@ export const getTableArrayCountColumn = (field, className) => {
   };
 };
 
+// This just takes the data field and returns the first element and count inside the array
+export const getTableArrayFirstValueAndCountColumn = (field, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: function getCount(row) {      
+      return Array.isArray(row?.value) && row?.value.length > 0 ? 
+        <TooltipWrapper innerText={row?.value.reduce((acc, cur) => acc += `, ${cur}`)}>
+          <span>{row?.value.length > 1 ? `${row?.value[0]} + ${row?.value.length - 1}` : row?.value[0]}</span>
+        </TooltipWrapper> : "";
+    },
+    class: className ? className :  "no-wrap-inline"
+  };
+};
+
 export const getCountColumnWithoutField = (header, accessor, className) => {
   return {
     Header: header,
