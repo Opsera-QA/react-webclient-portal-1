@@ -87,8 +87,8 @@ export default function CommandLineInputParameterInputBase(
       return false;
     }
 
-    if (parsedUpdatedData.find((parameter) => parameter?.parameterNamee === newParameter?.parameterNamee) != null) {
-      setError(`You have already added ${newParameter?.parameterNamee}.`);
+    if (parsedUpdatedData.find((parameter) => parameter?.parameterName === newParameter?.parameterName) != null) {
+      setError(`You have already added ${newParameter?.parameterName}.`);
       return false;
     }
 
@@ -128,8 +128,8 @@ export default function CommandLineInputParameterInputBase(
       return false;
     }
 
-    if (parsedUpdatedData.find((parameter) => parameter?.parameterNamee === newParameter?.parameterNamee) != null) {
-      setError(`You have already added ${newParameter?.parameterNamee}.`);
+    if (parsedUpdatedData.find((parameter) => parameter?.parameterName === newParameter?.parameterName) != null) {
+      setError(`You have already added ${newParameter?.parameterName}.`);
       return false;
     }
 
