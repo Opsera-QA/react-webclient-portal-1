@@ -332,7 +332,8 @@ function KpiSettingsForm({
     "git-scraper",
     "salesforce-components-chart",
     "github-commit-statistics",
-    "deployment-analytics"
+    "deployment-analytics",
+    "gitlab-merge-requests-statistics"
   ];
 
   const getKpiFilters = (filter) => {

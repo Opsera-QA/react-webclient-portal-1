@@ -7,7 +7,7 @@ import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext.js";
 import { metricHelpers } from "components/insights/metric.helpers";
 import gitlabAction from "../gitlab.action";
-import {getTrend, getTrendIcon} from "../../charts-helpers";
+import {getReverseTrend, getReverseTrendIcon, getTrend, getTrendIcon} from "../../charts-helpers";
 import BadgeBase from "../../../../common/badges/BadgeBase";
 import VanityMetricContainer from "../../../../common/panels/insights/charts/VanityMetricContainer";
 import GitlabMergeRequestLineChartContainer from "./GitlabMergeRequestLineChartContainer";
@@ -25,10 +25,10 @@ function GitlabMergeRequestStatistics({
     const { getAccessToken } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
     const [error, setError] = useState(undefined);
-    const [openChart, setOpenChart] = useState([]);
-    const [openStats, setOpenStats] = useState([]);
-    const [closeChart, setCloseChart] = useState([]);
-    const [closeStats, setCloseStats] = useState([]);
+    const [openChart, setOpenChart] = useState(undefined);
+    const [openStats, setOpenStats] = useState(undefined);
+    const [closeChart, setCloseChart] = useState(undefined);
+    const [closeStats, setCloseStats] = useState(undefined);
     const [isLoading, setIsLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const isMounted = useRef(false);
@@ -73,11 +73,18 @@ function GitlabMergeRequestStatistics({
                 dashboardOrgs,
             );
             const metrics = response?.data?.data;
-            if (isMounted?.current === true && metrics) {
+            console.log("metrics, metrics", metrics);
+            if (isMounted?.current === true && metrics?.averageMergeTime[0]?.statisticsData?.length && metrics?.averageOpenTime[0]?.statisticsData?.length) {
                 setCloseChart(metrics?.averageMergeTime[0]?.chartData[0]?.data);
                 setCloseStats(metrics?.averageMergeTime[0]?.statisticsData);
                 setOpenStats(metrics?.averageOpenTime[0]?.statisticsData);
                 setOpenChart(metrics?.averageOpenTime[0]?.chartData[0]?.data);
+            }
+            else {
+                setCloseStats({});
+                setCloseChart([]);
+                setOpenStats({});
+                setOpenChart([]);
             }
         } catch (error) {
             if (isMounted?.current === true) {
@@ -149,8 +156,8 @@ function GitlabMergeRequestStatistics({
                                 prevValue={
                                     openStats[0]?.prevData
                                 }
-                                trend={getTrend(openStats[0]?.meanPullRequestTime, openStats[0]?.prevData)}
-                                getTrendIcon={getTrendIcon}
+                                trend={getReverseTrend(openStats[0]?.meanPullRequestTime, openStats[0]?.prevData)}
+                                getTrendIcon={getReverseTrendIcon}
                                 topText={"Average Open Time (days)"}
                                 bottomText={"Prev: "}
                             />
@@ -162,8 +169,8 @@ function GitlabMergeRequestStatistics({
                                 prevValue={
                                     closeStats[0]?.prevData
                                 }
-                                trend={getTrend(closeStats[0]?.meanPullRequestTime,closeStats[0]?.prevData) }
-                                getTrendIcon={getTrendIcon}
+                                trend={getReverseTrend(closeStats[0]?.meanPullRequestTime,closeStats[0]?.prevData) }
+                                getTrendIcon={getReverseTrendIcon}
                                 topText={"Average Merge Time (days)"}
                                 bottomText={"Prev: "}
                             />
@@ -199,7 +206,6 @@ function GitlabMergeRequestStatistics({
                 setKpis={setKpis}
                 isLoading={isLoading}
                 isBeta={true}
-                launchActionableInsightsFunction={onRowSelect}
                 // chartHelpComponent={(closeHelpPanel) => (
                 //   <GitlabDeployFrequencyChartHelpDocumentation
                 //     closeHelpPanel={closeHelpPanel}

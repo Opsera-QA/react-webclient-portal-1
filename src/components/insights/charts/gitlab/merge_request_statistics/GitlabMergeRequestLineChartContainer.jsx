@@ -13,7 +13,7 @@ function GitlabMergeRequestLineChartContainer({ openChart,closeChart }) {
     useEffect(() => {
         const dataFailedHigh = _.maxBy(openChart, "y");
         setMaxChartVal(dataFailedHigh.y);
-    }, [closeChart]);
+    }, [openChart]);
 
     let dailyDeploymentsChartData = [
         {
