@@ -269,7 +269,7 @@ function GitCustodianVulnerableCommitsTable({
       exportButton={getExportButton()}
       inlineFilters={getInlineFilters()}
       loadData={loadData}
-      activeFilterDisplayer={false}
+      hideActiveFilterDisplayer={true}
     />
   );
 }
