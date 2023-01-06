@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {
   faExclamationTriangle,
-  faIdCard,
+  faIdCard, faPlus,
   faTimes, faTrash,
 } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
@@ -436,13 +436,13 @@ export default function RoleAccessInput(
   const getAddPropertyButton = () => {
     return (
       <VanityButtonBase
-        onClickFunction={clearRolesArray}
+        onClickFunction={addRole}
         normalText={"Add Role"}
         buttonSize={"sm"}
         className={"mr-2"}
         variant={"secondary"}
         disabled={disabled || lastRoleComplete() !== true}
-        icon={faTrash}
+        icon={faPlus}
       />
     );
   };
