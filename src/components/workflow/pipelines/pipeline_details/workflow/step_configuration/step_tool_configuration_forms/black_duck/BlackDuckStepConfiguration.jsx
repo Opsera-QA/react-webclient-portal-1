@@ -19,6 +19,7 @@ import ParameterMappingInputBase
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import BlackDuckDependencyMultiSelectInput from "./inputs/BlackDuckDependencyMultiSelectInput";
+import BlackDuckThresholdInput from "./inputs/BlackDuckThresholdInput";
 
 function BlackDuckStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -134,6 +135,10 @@ function BlackDuckStepConfiguration({ pipelineId, stepTool, plan, stepId, closeE
         titleText={"Runtime Variables"}
       />
       <BlackDuckDependencyMultiSelectInput 
+        model={blackDuckStepConfigurationDto}
+        setModel={setBlackDuckStepConfigurationDataDto}
+      />
+      <BlackDuckThresholdInput 
         model={blackDuckStepConfigurationDto}
         setModel={setBlackDuckStepConfigurationDataDto}
       />

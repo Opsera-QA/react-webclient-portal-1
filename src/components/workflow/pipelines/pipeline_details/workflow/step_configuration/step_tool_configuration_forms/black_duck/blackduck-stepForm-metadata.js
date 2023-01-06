@@ -78,6 +78,22 @@ const BlackDuckStepFormMetadata = {
     {
       id: "dependencies",
     },
+    {
+      label: "Enable Client Side thresholds",
+      id: "clientSideThreshold",
+    },
+    {
+      label: "Vulnerability Threshold",
+      id: "thresholdVulnerability",
+    },
+    {
+      label: "License Threshold",
+      id: "thresholdLicence",
+    },
+    {
+      label: "Operational Threshold",
+      id: "thresholdOperational",
+    },
   ],
   newObjectFields: {
     blackDuckToolId: "",
@@ -97,6 +113,10 @@ const BlackDuckStepFormMetadata = {
     commands: "",
     dependencies: {},
     dependencyType:"",
+    clientSideThreshold: false,
+    thresholdVulnerability: [],
+    thresholdLicence: [],
+    thresholdOperational: [],
   }
 };
 
