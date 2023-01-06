@@ -62,9 +62,9 @@ export default function Sidebar({ hideSideBar }) {
         <TasksSidebarNavigationLink
           isSidebarCollapsed={isSidebarCollapsed}
         />
-        {/*<GitCustodianSidebarNavigationLink*/}
-        {/*  isSidebarCollapsed={isSidebarCollapsed}*/}
-        {/*/>*/}
+        <GitCustodianSidebarNavigationLink
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
         <LogsSidebarNavigationLink
           isSidebarCollapsed={isSidebarCollapsed}
         />
