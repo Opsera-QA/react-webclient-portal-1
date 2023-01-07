@@ -19,7 +19,7 @@ function GitCustodianBranchSelectInput({ model, setModel, disabled, fieldName })
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={BRANCH_OPTIONS}      
+      selectOptions={BRANCH_OPTIONS}
       disabled={disabled}
     />
   );

@@ -5,11 +5,11 @@ import MetricDateRangeFilterInput from "components/common/inputs/metric/filters/
 import modelHelpers from "components/common/model/modelHelpers";
 import { gitlabMergeStatisticsMetadata } from "./gitlabMergeStatistics.metadata";
 function GitlabMergeRequestStatisticsEditorPanel({
-                                                 metricModel,
-                                                 unpackedFilterData,
-                                                 metricFilterModel,
-                                                 setMetricFilterModel,
-                                             }) {
+                                                     metricModel,
+                                                     unpackedFilterData,
+                                                     metricFilterModel,
+                                                     setMetricFilterModel,
+                                                 }) {
     useEffect(() => {
         setMetricFilterModel(undefined);
 

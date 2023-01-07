@@ -6,15 +6,11 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import FilterContainer from "../table/FilterContainer";
 
-function ActiveFilterDisplayer(
+export default function ActiveFilterDisplayer(
   {
     filterModel,
     loadData,
-    activeFilterDisplayer
   }) {
-  if(!activeFilterDisplayer) {
-    return null;
-  }
   const getFilterCloseButton = (filterId) => {
     if (filterModel?.areFilterBadgesReadOnly == null || filterModel?.areFilterBadgesReadOnly() !== true) {
       return (
@@ -79,10 +75,5 @@ function ActiveFilterDisplayer(
 ActiveFilterDisplayer.propTypes = {
   filterModel: PropTypes.object,
   loadData: PropTypes.func,
-  activeFilterDisplayer: PropTypes.bool,
 };
 
-ActiveFilterDisplayer.defaultProps = {
-  activeFilterDisplayer: true,
-};
-export default ActiveFilterDisplayer;

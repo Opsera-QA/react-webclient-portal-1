@@ -7,6 +7,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import {faPlus} from "@fortawesome/pro-light-svg-icons";
 import localParameterMetadata from "@opsera/definitions/constants/registry/local_parameter/localParameter.metadata";
+import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 
 export default function LocalInputParametersInputRow(
   {
@@ -43,11 +44,13 @@ export default function LocalInputParametersInputRow(
           />
         </Col>
         <Col xs={6}>
-          <TextInputBase
+          <TextAreaInputBase
             fieldName={"value"}
-            dataObject={localInputVariableModel}
-            setDataObject={setLocalInputVariableModel}
+            model={localInputVariableModel}
+            setModel={setLocalInputVariableModel}
+            rowCount={1}
             disabled={disabled}
+            useInfoContainer={false}
           />
         </Col>
         <Col xs={12}>

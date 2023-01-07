@@ -70,7 +70,7 @@ function GitlabMergeRequestLineChartContainer({ openChart,closeChart }) {
                     sliceTooltip={({ slice }) => {
                         return (
                             <div className={"p-1 bg-white border border-dark"}>
-                                <div>Date: {slice?.points[0]?.data?._id}</div>
+                                <div>Date: {slice?.points[1]?.data?._id}</div>
                                 <div className={'py-1'}
                                      style={{
                                          color: slice?.points[0]?.serieColor,
