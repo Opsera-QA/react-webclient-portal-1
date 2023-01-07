@@ -89,7 +89,7 @@ export default function PipelineActionRuntimeSettingsSelectionOverlay(
   const handlePipelineRun = async () => {
     try {
       setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
-      await handleRunPipelineFunction(runtimeSettingsModel?.getData("branch"));
+      await handleRunPipelineFunction(runtimeSettingsModel);
       closePanel();
     } catch (error) {
       setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);
