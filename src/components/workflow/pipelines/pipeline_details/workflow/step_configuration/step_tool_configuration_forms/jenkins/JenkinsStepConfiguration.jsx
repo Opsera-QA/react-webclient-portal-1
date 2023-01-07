@@ -26,6 +26,7 @@ import JenkinsStepJobTypeSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepJobTypeSelectInput";
 import JenkinsSfdcDataTransformerRulesSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsSfdcDataTransformerRulesSelectInput";
+import JenkinsNodeBuildTypePanel from "./inputs/JenkinsNodeBuildTypePanel";
 
 // TODO: This should probably be moved to some helper function so we only need to update it in one spot
 //  and also use ENUMs to make it easier to ensure spelling it is correct and consistent everywhere.
@@ -267,6 +268,13 @@ function JenkinsStepConfiguration({
           setDataObject={setJenkinsStepConfigurationDto}
           buildType={jenkinsStepConfigurationDto?.getData("buildType")}
         />
+        <JenkinsNodeBuildTypePanel
+            plan={plan}
+            stepId={stepId}
+            dataObject={jenkinsStepConfigurationDto}
+            setDataObject={setJenkinsStepConfigurationDto}
+            buildType={jenkinsStepConfigurationDto?.getData("buildType")}
+        />
       </div>
     );
   };
@@ -291,6 +299,7 @@ function JenkinsStepConfiguration({
       <JenkinsStepDependencyTypeInput
         model={jenkinsStepConfigurationDto}
         setModel={setJenkinsStepConfigurationDto}
+        buildType={jenkinsStepConfigurationDto?.getData("buildType")}
       />
     </PipelineStepEditorPanelContainer>
   );
