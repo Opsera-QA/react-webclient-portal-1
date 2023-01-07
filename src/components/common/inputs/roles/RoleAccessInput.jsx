@@ -283,7 +283,7 @@ export default function RoleAccessInput(
             type={"radio"}
             name={`roleAccessType-${index}`}
             value={"group"}
-            checked={role["roleAccessType"] === "group"}
+            checked={role?.roleAccessType === "group"}
             disabled={disabled}
             onChange={() => updateProperty(role, "roleAccessType", "group")}
           />
@@ -296,7 +296,7 @@ export default function RoleAccessInput(
             name={`roleAccessType-${index}`}
             disabled={disabled}
             value={"user"}
-            checked={role["roleAccessType"] === "user"}
+            checked={role?.roleAccessType === "user"}
             onChange={() => updateProperty(role, "roleAccessType", "user")}
           />
           <span>User</span>
@@ -308,7 +308,7 @@ export default function RoleAccessInput(
         {/*    name={`roleAccessType-${index}`}*/}
         {/*    disabled={disabled}*/}
         {/*    value={"role"}*/}
-        {/*    checked={role["roleAccessType"] === "role"}*/}
+        {/*    checked={role?.roleAccessType === "role"}*/}
         {/*    onChange={() => updateProperty(role, "roleAccessType", "role")}*/}
         {/*  />*/}
         {/*  <span>Role</span>*/}
@@ -318,7 +318,7 @@ export default function RoleAccessInput(
   };
 
   const getAssigneeInput = (role) => {
-    if (role["roleAccessType"] === "user") {
+    if (role?.roleAccessType === "user") {
       return (
         <StandaloneSelectInput
           selectOptions={userList}
@@ -333,18 +333,20 @@ export default function RoleAccessInput(
       );
     }
 
-    return (
-      <StandaloneSelectInput
-        selectOptions={groupList}
-        valueField={"name"}
-        textField={"name"}
-        value={role["group"]}
-        busy={loadingGroups}
-        disabled={disabled || getDisabledGroups()}
-        placeholderText={"Select A Group"}
-        setDataFunction={(value) => updateProperty(role, "group", value?.name)}
-      />
-    );
+    if (role?.roleAccessType === "group") {
+      return (
+        <StandaloneSelectInput
+          selectOptions={groupList}
+          valueField={"name"}
+          textField={"name"}
+          value={role["group"]}
+          busy={loadingGroups}
+          disabled={disabled || getDisabledGroups()}
+          placeholderText={"Select A Group"}
+          setDataFunction={(value) => updateProperty(role, "group", value?.name)}
+        />
+      );
+    }
   };
 
   const getDeletePropertyButton = (index) => {
