@@ -100,7 +100,7 @@ export default function PipelineActionRuntimeSettingsSelectionOverlay(
     const parsedSteps = runtimeSettingsModel?.getArrayData("steps");
     parsedSteps[index] = updatedStep;
     runtimeSettingsModel?.setData("steps", parsedSteps);
-    setRuntimeSettingsModel({...parsedSteps});
+    setRuntimeSettingsModel({...runtimeSettingsModel});
   };
 
   const getStepParametersInput = () => {

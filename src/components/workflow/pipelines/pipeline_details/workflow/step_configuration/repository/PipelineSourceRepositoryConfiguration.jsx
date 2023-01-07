@@ -52,7 +52,7 @@ function PipelineSourceRepositoryConfiguration(
       const parsedModel = modelHelpers.parseObjectIntoModel(pipeline?.workflow?.source, sourceRepositoryConfigurationMetadata);
       setSourceRepositoryModel(parsedModel);
     }
-  }, [JSON.stringify(pipeline)]);
+  }, []);
 
   // TODO: Make Node route that just accepts the source object and updates it
   const callbackFunction = async () => {
