@@ -187,7 +187,7 @@ export default function PipelineActionRuntimeSettingsSelectionOverlay(
               setDataObject={setRuntimeSettingsModel}
             />
           </Col>
-          {/*{getStepParametersInput()}*/}
+          {getStepParametersInput()}
         </Row>
       </div>
     </CenterOverlayContainer>
