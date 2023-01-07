@@ -27,10 +27,13 @@ export default function LocalInputParametersValueInputBase(
     const parsedUpdatedData = DataParsingHelper.parseArray(updatedData, []);
 
     parsedUpdatedData.forEach((parameter) => {
-      if (parameter?.name !== "" && parameter?.value !== "") {
+      const parsedParameterName = DataParsingHelper.parseString(parameter?.name);
+      const parsedParameterValue = DataParsingHelper.parseString(parameter?.value, "");
+
+      if (parsedParameterName) {
         newArray.push({
-          name: parameter?.name,
-          value: parameter?.value,
+          name: parsedParameterName,
+          value: parsedParameterValue,
         });
       }
     });

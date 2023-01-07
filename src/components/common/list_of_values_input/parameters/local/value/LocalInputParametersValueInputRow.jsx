@@ -24,7 +24,7 @@ export default function LocalInputParametersValueInputRow(
     const fieldError = DataParsingHelper.parseString(localInputVariableModel?.getFieldError("value"));
 
     if (!fieldError) {
-      setDataFunction(index, localInputVariableModel?.getData("value"));
+      setDataFunction(index, localInputVariableModel?.getPersistData());
     }
   };
 
