@@ -37,7 +37,6 @@ export default function LocalInputParametersValueInputBase(
 
     model.setData(fieldName, newArray);
     setModel({...model});
-    return true;
   };
 
   const updateParameterFunction = (index, newValue) => {
@@ -59,6 +58,7 @@ export default function LocalInputParametersValueInputBase(
                 setDataFunction={updateParameterFunction}
                 index={index}
                 key={index}
+                localParameter={parameter}
               />
             );
           }

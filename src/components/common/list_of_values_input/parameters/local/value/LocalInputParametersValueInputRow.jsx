@@ -6,6 +6,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import localParameterMetadata from "@opsera/definitions/constants/registry/local_parameter/localParameter.metadata";
 import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function LocalInputParametersValueInputRow(
   {
@@ -20,8 +21,9 @@ export default function LocalInputParametersValueInputRow(
   const handleValueSetFunction = (fieldName, value) => {
     localInputVariableModel?.setData(fieldName, value);
     setLocalInputVariableModel({...localInputVariableModel});
+    const fieldError = DataParsingHelper.parseString(localInputVariableModel?.getFieldError("value"));
 
-    if (localInputVariableModel?.isFieldValid("value") === true) {
+    if (!fieldError) {
       setDataFunction(index, localInputVariableModel?.getData("value"));
     }
   };
