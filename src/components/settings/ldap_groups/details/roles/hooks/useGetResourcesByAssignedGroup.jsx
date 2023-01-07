@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import AssignedGroupRoleFilterModel from "components/settings/ldap_groups/details/roles/assignedGroupRole.filter.model";
-import { groupActions } from "components/settings/ldap_groups/group.actions";
+import useLdapGroupActions from "hooks/ldap/groups/useLdapGroupActions";
 
 export default function useGetResourcesByAssignedGroup(
   group,
@@ -13,10 +12,7 @@ export default function useGetResourcesByAssignedGroup(
   const [assignedGroupResourcesFilterModel, setAssignedGroupRoleFilterModel] = useState(new AssignedGroupRoleFilterModel());
   const [assignedResources, setAssignedResources] = useState([]);
   const [error, setError] = useState(undefined);
-  const {
-    getAccessToken,
-    cancelTokenSource,
-  } = useComponentStateReference();
+  const ldapGroupActions = useLdapGroupActions();
 
   useEffect(() => {
     setAssignedResources([]);
@@ -43,9 +39,7 @@ export default function useGetResourcesByAssignedGroup(
   };
 
   const getGroupRoleAssignedTools = async (newFilterModel = assignedGroupResourcesFilterModel) => {
-    const response = await groupActions.getResourcesWithGroupAssigned(
-      getAccessToken,
-      cancelTokenSource,
+    const response = await ldapGroupActions.getResourcesWithGroupAssigned(
       group,
       newFilterModel?.getData("type"),
     );
