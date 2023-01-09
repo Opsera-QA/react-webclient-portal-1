@@ -2,7 +2,7 @@ import React from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import IconBase from "components/common/icons/IconBase";
-import {faTimes} from "@fortawesome/pro-light-svg-icons";
+import {faPencil, faTimes} from "@fortawesome/pro-light-svg-icons";
 import {Button} from "react-bootstrap";
 import PropTypes from "prop-types";
 import AccessRuleModel from "components/common/inputs/roles/model/accessRule.model";
@@ -10,13 +10,14 @@ import AccessRuleModel from "components/common/inputs/roles/model/accessRule.mod
 export default function RoleAccessInputInlineField(
   {
     deleteAccessRuleFunction,
+    editAccessRoleFunction,
     accessRule,
   }) {
   const accessRuleTypeModel = new AccessRuleModel(accessRule, false);
 
   return (
-    <div className={"d-flex py-1 filter-bg-white"}>
-      <Col sm={11}>
+    <div className={"d-flex"}>
+      <Col sm={11} className={"my-auto"}>
         <Row>
           <Col sm={4}>
             <span className="text-muted ml-5">{accessRuleTypeModel?.getType()}</span>
@@ -29,9 +30,12 @@ export default function RoleAccessInputInlineField(
           </Col>
         </Row>
       </Col>
-      <Col sm={1} className={"px-0 mr-auto delete-button"}>
-        <Button variant="link" onClick={deleteAccessRuleFunction}>
-          <span><IconBase className="danger-red" icon={faTimes}/></span>
+      <Col sm={1} className={"px-0 mr-auto delete-button d-flex"}>
+        <Button variant={"link"} onClick={deleteAccessRuleFunction}>
+          <span><IconBase className={"danger-red"} icon={faTimes}/></span>
+        </Button>
+        <Button variant={"link"} onClick={editAccessRoleFunction}>
+          <span><IconBase className={"text-muted"} icon={faPencil}/></span>
         </Button>
       </Col>
     </div>
@@ -41,4 +45,5 @@ export default function RoleAccessInputInlineField(
 RoleAccessInputInlineField.propTypes = {
   deleteAccessRuleFunction: PropTypes.func,
   accessRule: PropTypes.object,
+  editAccessRoleFunction: PropTypes.func,
 };
