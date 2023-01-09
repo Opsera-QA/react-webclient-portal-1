@@ -304,6 +304,8 @@ export const KPI_FILTER_SELECT_OPTIONS = [
       filter4: [],
       filter5: [],
       filter6: [],
+      filter7: [],
+      filter8: [],
     },
   },
   {

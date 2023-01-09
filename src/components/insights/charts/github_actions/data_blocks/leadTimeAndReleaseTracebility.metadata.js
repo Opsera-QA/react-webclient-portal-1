@@ -24,6 +24,8 @@ export const leadTimeAndReleaseTraceabilityMetadata = {
       filter4: [],
       filter5: [],
       filter6: [],
+      filter7: [],
+      filter8: [],
     },
   },
 };

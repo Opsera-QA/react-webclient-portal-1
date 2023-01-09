@@ -1,6 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import {faArrowDown, faArrowUp, faCalendar, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
+import {
+  faArrowDown,
+  faArrowUp,
+  faCalendar,
+  faExclamationCircle,
+} from "@fortawesome/pro-light-svg-icons";
 import InfoDialog from "components/common/status_notifications/info";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
@@ -16,23 +21,22 @@ import BetaBadge from "components/common/badges/BetaBadge";
 import MetricBadgeBase from "../../../badges/metric/MetricBadgeBase";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
-function VanityMetricContainer(
-  {
-    kpiConfiguration,
-    setKpiConfiguration,
-    dashboardData,
-    index,
-    chart,
-    isLoading,
-    error,
-    loadChart,
-    setKpis,
-    chartHelpComponent,
-    settingsHelpComponent,
-    showSettingsToggle,
-    launchActionableInsightsFunction,
-    isBeta,
-  }) {
+function VanityMetricContainer({
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  chart,
+  isLoading,
+  error,
+  loadChart,
+  setKpis,
+  chartHelpComponent,
+  settingsHelpComponent,
+  showSettingsToggle,
+  launchActionableInsightsFunction,
+  isBeta,
+}) {
   const toastContext = useContext(DialogToastContext);
   const [view, setView] = useState("chart");
   const [isMovingKpi, setIsMovingKpi] = useState(false);
@@ -103,7 +107,9 @@ function VanityMetricContainer(
       return (
         <ToggleSettingsIcon
           className={"ml-3 my-auto"}
-          visible={!helpIsShown && dashboardData?.canUpdateDashboardMetric() === true}
+          visible={
+            !helpIsShown && dashboardData?.canUpdateDashboardMetric() === true
+          }
           activeTab={view}
           setActiveTab={() => showSettingsPanel()}
         />
@@ -148,7 +154,6 @@ function VanityMetricContainer(
     await dashboardData.reloadData();
   };
 
-
   const getMoveIcons = () => {
     const count = dashboardData?.getData("configuration")?.length;
     return (
@@ -156,14 +161,19 @@ function VanityMetricContainer(
         <OverlayIconBase
           className={"my-auto"}
           icon={faArrowUp}
-          visible={dashboardData?.canUpdateDashboardMetric() === true && index > 0}
+          visible={
+            dashboardData?.canUpdateDashboardMetric() === true && index > 0
+          }
           onClickFunction={moveItemUp}
           overlayBody={"Move KPI up"}
         />
         <OverlayIconBase
           className={"ml-2 my-auto"}
           icon={faArrowDown}
-          visible={dashboardData?.canUpdateDashboardMetric() === true && index < count - 1}
+          visible={
+            dashboardData?.canUpdateDashboardMetric() === true &&
+            index < count - 1
+          }
           onClickFunction={moveItemDown}
           overlayBody={"Move KPI down"}
         />
@@ -181,9 +191,12 @@ function VanityMetricContainer(
               className={"mr-2 my-auto"}
             />
             <span className={"my-auto"}>
-            <IconBase isLoading={true} className={"mr-2"} />
-            Loading Chart
-          </span>
+              <IconBase
+                isLoading={true}
+                className={"mr-2"}
+              />
+              Loading Chart
+            </span>
           </div>
         </div>
       );
@@ -198,9 +211,12 @@ function VanityMetricContainer(
               className={"mr-2 my-auto"}
             />
             <span className={"my-auto"}>
-            <IconBase isLoading={true} className={"mr-2"} />
-            Moving Chart
-          </span>
+              <IconBase
+                isLoading={true}
+                className={"mr-2"}
+              />
+              Moving Chart
+            </span>
           </div>
         </div>
       );
@@ -215,7 +231,11 @@ function VanityMetricContainer(
               className={"mr-2 my-auto"}
             />
             <div className={"my-auto"}>
-              <IconBase icon={faExclamationCircle} fixedWidth className={"mr-2"} />
+              <IconBase
+                icon={faExclamationCircle}
+                fixedWidth
+                className={"mr-2"}
+              />
               Error Loading Chart!
             </div>
           </div>
@@ -235,9 +255,7 @@ function VanityMetricContainer(
             isBeta={isBeta}
             className={"mr-2 my-auto"}
           />
-          <div className={"my-auto"}>
-            {kpiConfiguration?.kpi_name}
-          </div>
+          <div className={"my-auto"}>{kpiConfiguration?.kpi_name}</div>
         </div>
         <div className={"d-flex my-auto"}>
           {getMoveIcons()}
@@ -253,29 +271,47 @@ function VanityMetricContainer(
   const getChartBody = () => {
     if (error) {
       return (
-        <div className="new-chart mb-3" style={{ height: "300px" }}>
-          <div className="max-content-width p-5 mt-5"
-               style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <span className={"-5"}>There was an error loading this chart: {parseError(error?.message)}. Please check logs for more details.</span>
+        <div
+          className="new-chart mb-3"
+          style={{ height: "300px" }}
+        >
+          <div
+            className="max-content-width p-5 mt-5"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <span className={"-5"}>
+              There was an error loading this chart:{" "}
+              {parseError(error?.message)}. Please check logs for more details.
+            </span>
           </div>
         </div>
       );
     }
 
     if (helpIsShown) {
-      return (
-        <div className={"m-2"}>
-          {chartHelpComponent(closeHelpPanel)}
-        </div>
-      );
+      return <div className={"m-2"}>{chartHelpComponent(closeHelpPanel)}</div>;
     }
-
+    console.log(chart);
+    console.log(isLoading);
     // TODO: Rework when all are updated
     if (chart === null && !isLoading) {
       return (
-        <div className="new-chart mb-3" style={{ height: "300px" }}>
-          <div className="max-content-width p-5 mt-5"
-               style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <div
+          className="new-chart mb-3"
+          style={{ height: "300px" }}
+        >
+          <div
+            className="max-content-width p-5 mt-5"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <InfoDialog message="No Data is available for this chart at this time." />
           </div>
         </div>
@@ -286,18 +322,21 @@ function VanityMetricContainer(
       return <div className="m-3" />;
     }
 
-    return (
-      <div>
-        {chart}
-      </div>
-    );
+    return <div>{chart}</div>;
   };
 
   const getAllTags = () => {
-    const useDashboardTags = kpiConfiguration?.settings?.useDashboardTags !== false;
-    const kpiConfigDashboardTags = getMetricFilterValue(dashboardData?.getData("filters"), "tags");
+    const useDashboardTags =
+      kpiConfiguration?.settings?.useDashboardTags !== false;
+    const kpiConfigDashboardTags = getMetricFilterValue(
+      dashboardData?.getData("filters"),
+      "tags",
+    );
     const useKpiTags = kpiConfiguration?.settings?.useKpiTags !== false;
-    const kpiConfigTags = getMetricFilterValue(kpiConfiguration?.filters, "tags");
+    const kpiConfigTags = getMetricFilterValue(
+      kpiConfiguration?.filters,
+      "tags",
+    );
 
     return (
       <AppliedMetricTagBadge
@@ -326,7 +365,6 @@ function VanityMetricContainer(
         />
       );
     }
-
   };
 
   return (
@@ -334,16 +372,10 @@ function VanityMetricContainer(
       <div className="px-3 metric-title-bar title-text-header-1 chart-header-name-text">
         {getTitleBar()}
       </div>
-      <div>
-        {getChartBody()}
-      </div>
+      <div>{getChartBody()}</div>
       <div className={"d-flex p-2 justify-content-between chart-footer-text"}>
-        <div>
-          {getDateBadge()}
-        </div>
-        <div className={"d-flex"}>
-          {getAllTags()}
-        </div>
+        <div>{getDateBadge()}</div>
+        <div className={"d-flex"}>{getAllTags()}</div>
       </div>
     </div>
   );

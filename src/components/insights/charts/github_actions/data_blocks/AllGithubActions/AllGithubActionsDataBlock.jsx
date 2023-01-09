@@ -16,6 +16,8 @@ import SuccessExecutionsActionableInsights from "./SuccessExecutions/SuccessExec
 import FailedExecutionsActionableInsights from "./FailedExecutions/FailedExecutionsActionableInsights";
 import ThreeLinePercentageBlockBase from "../../../../../common/metrics/percentage/ThreeLinePercentageBlockBase";
 import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
+import GithubActionsChartHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/github/GithubActionsChartHelpDocumentation";
 
 function AllGithubActionsDataBlock({
   kpiConfiguration,
@@ -59,7 +61,6 @@ function AllGithubActionsDataBlock({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      // await loadDataPoints(cancelSource);
       let dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardOrgs =
@@ -200,11 +201,11 @@ function AllGithubActionsDataBlock({
   const getDescription = (severity) => {
     switch (severity) {
       case "Up":
-        return "This project is trending upward.";
+        return "The percentage of successful workflow executions has increased since the last time range";
       case "Down":
-        return "This project is trending downward.";
+        return "The percentage of successful workflow executions has decreased since the last time range";
       case "Neutral":
-        return "Neutral: This project has experienced no change";
+        return "The percentage of successful workflow executions has stayed the same since the last time range";
     }
   };
 
@@ -230,7 +231,9 @@ function AllGithubActionsDataBlock({
   };
 
   const getChartBody = () => {
-    const successPercent = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints, "all-github-actions-success-data-point");
+    const successPercent = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints, "workflow-success-percentage");
+    const successfulWorkflows = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints, "number-of-successful-workflows");
+    const failedWorkflows = dataPointHelpers.getDataPoint(kpiConfiguration?.dataPoints, "number-of-failed-workflows");
     return (
       <>
         <div className="new-chart m-3 p-0 all-github-actions-data-block">
@@ -255,6 +258,7 @@ function AllGithubActionsDataBlock({
               <DataBlockBoxContainer showBorder={true} onClickFunction={() => onSuccessExecutionsRowSelect()}>
                 <TwoLineScoreDataBlock
                   className="p-3 m-1"
+                  dataPoint={successfulWorkflows}
                   score={metrics?.successCount}
                   subtitle={"Total Successful Executions"}
                 />
@@ -264,6 +268,7 @@ function AllGithubActionsDataBlock({
               <DataBlockBoxContainer showBorder={true} onClickFunction={() => onFailedExecutionsRowSelect()}>
                 <TwoLineScoreDataBlock
                   className="p-3 m-1"
+                  dataPoint={failedWorkflows}
                   score={metrics?.failureCount}
                   subtitle={"Total Failed Executions"}
                 />
@@ -327,6 +332,7 @@ function AllGithubActionsDataBlock({
         setKpis={setKpis}
         isLoading={isLoading}
         showSettingsToggle={showSettingsToggle}
+        chartHelpComponent={(closeHelpPanel) => <GithubActionsChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
       <ModalLogs
         header="Github Actions Statistics"

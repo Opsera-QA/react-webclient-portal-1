@@ -26,6 +26,8 @@ function AllGithubActionsDataBlockEditorPanel(
   const [filter4Options, setFilter4Options] = useState([]);
   const [filter5Options, setFilter5Options] = useState([]);
   const [filter6Options, setFilter6Options] = useState([]);
+  const [filter7Options, setFilter7Options] = useState([]);
+  const [filter8Options, setFilter8Options] = useState([]);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
   const [hierarchyFiltersDto, setHierarchyFiltersDto] = useState(
@@ -97,6 +99,8 @@ function AllGithubActionsDataBlockEditorPanel(
       setFilter4Options(filters["Director"]);
       setFilter5Options(filters["Application"]);
       setFilter6Options(filters["Action"]);
+      setFilter7Options(filters["Repository"]);
+      setFilter8Options(filters["Branch"]);
     }
   };
 
@@ -151,6 +155,18 @@ function AllGithubActionsDataBlockEditorPanel(
         setDataObject={setHierarchyFiltersDto}
         fieldName={"filter6"}
         selectOptions={filter6Options}
+      />
+      <MultiSelectInputBase
+        dataObject={hierarchyFiltersDto}
+        setDataObject={setHierarchyFiltersDto}
+        fieldName={"filter7"}
+        selectOptions={filter7Options}
+      />
+      <MultiSelectInputBase
+        dataObject={hierarchyFiltersDto}
+        setDataObject={setHierarchyFiltersDto}
+        fieldName={"filter8"}
+        selectOptions={filter8Options}
       />
     </div>
   );

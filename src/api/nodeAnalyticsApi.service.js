@@ -5,13 +5,20 @@ const config = require("../config");
 
 export const nodeAnalyticsApiService = {};
 
-nodeAnalyticsApiService.handleNodeAnalyticsApiGetCall = async (getAccessToken, cancelTokenSource, apiUrl, urlParams) => {
+nodeAnalyticsApiService.handleNodeAnalyticsApiGetCall = async (
+  getAccessToken,
+  cancelTokenSource,
+  apiUrl,
+  urlParams,
+) => {
   const accessToken = await getAccessToken();
 
   try {
-    return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).get(apiUrl, urlParams);
-  }
-  catch (error) {
+    return await getNodeAnalyticsAxiosInstance(
+      accessToken,
+      cancelTokenSource?.token,
+    ).get(apiUrl, urlParams);
+  } catch (error) {
     const parsedError = parseAxiosError(error);
 
     if (parsedError) {
@@ -20,13 +27,20 @@ nodeAnalyticsApiService.handleNodeAnalyticsApiGetCall = async (getAccessToken, c
   }
 };
 
-nodeAnalyticsApiService.handleNodeAnalyticsApiPostCall = async (getAccessToken, cancelTokenSource, apiUrl, postBody) => {
+nodeAnalyticsApiService.handleNodeAnalyticsApiPostCall = async (
+  getAccessToken,
+  cancelTokenSource,
+  apiUrl,
+  postBody,
+) => {
   const accessToken = await getAccessToken();
 
   try {
-    return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).post(apiUrl, postBody);
-  }
-  catch (error) {
+    return await getNodeAnalyticsAxiosInstance(
+      accessToken,
+      cancelTokenSource?.token,
+    ).post(apiUrl, postBody);
+  } catch (error) {
     const parsedError = parseAxiosError(error);
 
     if (parsedError) {
@@ -35,13 +49,20 @@ nodeAnalyticsApiService.handleNodeAnalyticsApiPostCall = async (getAccessToken, 
   }
 };
 
-nodeAnalyticsApiService.handleNodeAnalyticsApiPutCall = async (getAccessToken, cancelTokenSource, apiUrl, postBody) => {
+nodeAnalyticsApiService.handleNodeAnalyticsApiPutCall = async (
+  getAccessToken,
+  cancelTokenSource,
+  apiUrl,
+  postBody,
+) => {
   const accessToken = await getAccessToken();
 
   try {
-    return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).put(apiUrl, postBody);
-  }
-  catch (error) {
+    return await getNodeAnalyticsAxiosInstance(
+      accessToken,
+      cancelTokenSource?.token,
+    ).put(apiUrl, postBody);
+  } catch (error) {
     const parsedError = parseAxiosError(error);
 
     if (parsedError) {
@@ -50,13 +71,20 @@ nodeAnalyticsApiService.handleNodeAnalyticsApiPutCall = async (getAccessToken, c
   }
 };
 
-nodeAnalyticsApiService.handleNodeAnalyticsApiPatchCall = async (getAccessToken, cancelTokenSource, apiUrl, postBody) => {
+nodeAnalyticsApiService.handleNodeAnalyticsApiPatchCall = async (
+  getAccessToken,
+  cancelTokenSource,
+  apiUrl,
+  postBody,
+) => {
   const accessToken = await getAccessToken();
 
   try {
-    return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).patch(apiUrl, postBody);
-  }
-  catch (error) {
+    return await getNodeAnalyticsAxiosInstance(
+      accessToken,
+      cancelTokenSource?.token,
+    ).patch(apiUrl, postBody);
+  } catch (error) {
     const parsedError = parseAxiosError(error);
 
     if (parsedError) {
@@ -65,14 +93,19 @@ nodeAnalyticsApiService.handleNodeAnalyticsApiPatchCall = async (getAccessToken,
   }
 };
 
-nodeAnalyticsApiService.handleNodeAnalyticsApiDeleteRequest = async (getAccessToken, cancelTokenSource, apiUrl) => {
+nodeAnalyticsApiService.handleNodeAnalyticsApiDeleteRequest = async (
+  getAccessToken,
+  cancelTokenSource,
+  apiUrl,
+) => {
   const accessToken = await getAccessToken();
 
-
   try {
-    return await getNodeAnalyticsAxiosInstance(accessToken, cancelTokenSource?.token).delete(apiUrl);
-  }
-  catch (error) {
+    return await getNodeAnalyticsAxiosInstance(
+      accessToken,
+      cancelTokenSource?.token,
+    ).delete(apiUrl);
+  } catch (error) {
     const parsedError = parseAxiosError(error);
 
     if (parsedError) {
@@ -84,8 +117,8 @@ nodeAnalyticsApiService.handleNodeAnalyticsApiDeleteRequest = async (getAccessTo
 const getNodeAnalyticsAxiosInstance = (token, cancelToken) => {
   const axiosConfig = {
     baseURL: config.NODE_ANALYTICS_API_SERVER_URL,
-    timeout: 50000,
-    cancelToken: cancelToken
+    timeout: 150000,
+    cancelToken: cancelToken,
   };
 
   const axiosInstance = axios.create(axiosConfig);
@@ -97,7 +130,7 @@ const getNodeAnalyticsAxiosInstance = (token, cancelToken) => {
   `;
 
   if (token) {
-    axiosInstance.defaults.headers.common['authorization'] = `Bearer ${token}`;
+    axiosInstance.defaults.headers.common["authorization"] = `Bearer ${token}`;
   }
 
   return axiosInstance;

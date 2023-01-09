@@ -20,6 +20,9 @@ import GitHubCommitsTotalPullRequestsDataBlock from "./data_blocks/GitHubCommits
 import { DialogToastContext } from "contexts/DialogToastContext";
 import GithubCommitsActionableInsightOverlay from "./actionable_insights/GithubCommitsActionableInsightOverlay";
 import GithubDeclinedPullRequestActionableInsightOverlay from "./actionable_insights/GithubDeclinedPullRequestActionableInsightOverlay";
+import GithubApprovedPullRequestActionableInsightOverlay from "./actionable_insights/GithubApprovedPullRequestActionableInsightOverlay";
+import GithubCommitStatisticsHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/github/GithubCommitStatisticsHelpDocumentation";
 
 function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -65,11 +68,15 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
+      let dashboardFilters =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
+          ?.value;
       const response = await chartsActions.getGithubTotalCommitsMetrics(
         kpiConfiguration,
         getAccessToken,
         cancelSource,
         dashboardTags,
+        dashboardFilters,
         dashboardOrgs
       );
       let dataObject = response?.data ? response?.data?.data?.most_active_users : [];
@@ -118,6 +125,17 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
     );
   };
 
+  const showGithubApprovedPullRequestModal = (node) => {
+    toastContext.showOverlayPanel(
+      <GithubApprovedPullRequestActionableInsightOverlay
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+        highestMergesMetric={highestMergesMetric}
+        repository={node?.id}
+      />
+    );
+  };
+
   const showGithubDeclinedPullRequestModal = (node) => {
     toastContext.showOverlayPanel(
       <GithubDeclinedPullRequestActionableInsightOverlay
@@ -152,10 +170,10 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
           <GitHubCommitsTotalCommitsDataBlock data={totalCommits} />
         </Col>
         <Col md={12} className={"my-1"}>
-          <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
+          <GitHubCommitsTotalPullRequestsDataBlock data={totalPullRequest} />
         </Col>
         <Col md={12} className={"my-1"}>
-          <GitHubCommitsTotalPullRequestsDataBlock data={totalPullRequest} />
+          <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
         </Col>
       </Row>
     );
@@ -178,7 +196,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
                 data={highestMergesMetric}
                 {...defaultConfig("", "", false, false, "", "", true)}
                 {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => setShowModal(true)}
+                onClick={(node) => showGithubApprovedPullRequestModal(node)}
               />
             </div>
           </Col>
@@ -229,7 +247,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
                 data={highestMergesMetric}
                 {...defaultConfig("", "", false, false, "", "", true)}
                 {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => setShowModal(true)}
+                onClick={(node) => showGithubApprovedPullRequestModal(node)}
               />
             </div>
             <div className="text-center col-12">
@@ -264,7 +282,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
             </div>
             <div className="text-center col-12">
               <div className="text-center font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
-                Declined Pull Requests
+              Declined Pull Requests
               </div>
             </div>
           </Col>
@@ -301,6 +319,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
         setKpis={setKpis}
         isLoading={isLoading}
         launchActionableInsightsFunction={onRowSelect}
+        chartHelpComponent={(closeHelpPanel) => <GithubCommitStatisticsHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
       <ModalLogs
         header="Github Commits Statistics"

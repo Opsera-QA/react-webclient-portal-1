@@ -18,7 +18,7 @@ function SonarScanReportTable(
     setFilterModel,
   }) {
   const fields = sonarPipelineScanReportMetadata.fields;
-
+    console.log(data);
   const columns = useMemo(
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "project";})),

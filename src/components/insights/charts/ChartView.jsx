@@ -84,6 +84,7 @@ import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/Gitl
 import ProjectWiseUnitTestResults from './unit_tests/project_wise_results/ProjectWiseUnitTestResults';
 
 // Github KPIs
+import GithubCommitFrequency from "./github/line_chart/commits_frequency/GithubCommitFrequency";
 import GithubMergeRequestsByUser from "./github/bar_chart/merge_requests_by_user/GithubMergeRequestsByUserChart";
 import GithubMergeRequestsPushesAndComments from "./github/calendar_chart/merge_requests_pushes_and_comments/GithubMergeRequestsPushesAndComments";
 import GithubTotalCommitsByProjectChart from "./github/pie_chart/total_commits_by_project/GithubTotalCommitsByProjectChart";
@@ -95,8 +96,10 @@ import GithubCommitsByAuthor from "./github/calendar_chart/commits_by_author/Git
 import AllGithubActionsDataBlock from "./github_actions/data_blocks/AllGithubActions/AllGithubActionsDataBlock";
 import LeadTimeAndReleaseTraceabilityDataBlock
     from "./github_actions/data_blocks/LeadTimeAndReleaseTraceabilityDataBlock";
-
+import GithubActionsWorkflowChart from "./github_actions/workflows/GithubActionsWorkflowChart";
 import GithubPendingMergeRequests from "./github/table/pending_merge_requests/GithubPendingMergeRequests";
+import GithubMergedPullRequestAverageTime from "./github/line_chart/merged_pull_request_average_time/GithubMergedPullRequestAverageTime";
+import GithubOpenPullRequestAverageTime from "./github/line_chart/open_pull_request_average_time/GithubOpenPullRequestAverageTime";
 
 // Bitbucket KPIs
 import BitbucketMostActiveContributors from "./bitbucket/table/bitbucket_most_active_contributors/BitbucketMostActiveContributors";
@@ -175,8 +178,11 @@ import GitSrapperMetrics from "components/insights/charts/gitscrapper/GitScrappe
 import SalesforceComponentsDataBlockChart
   from "./sfdc/data_block_chart/Salesforce_components/salesforceComponentsDataBlockChart";
 import GithubCommitsStatistics from "./github/pie_chart/commits_statistics/GithubCommitsStatistics";
+import GithubConnectedAssets from "./github/data_blocks/GithubConnectedAssets";
+import GithubSecurityCompliance from "./github/pie_chart/security_compliance/GithubSecurityCompliance";
 import DeploymentAnalytics from "./deployment_analytics/DeploymentAnalytics";
 import QuickDeployStatistics from "./quick-deploy-statistics/QuickDeployStatistics";
+import IntermediateEnvironmentsLeadTimeChart from "./intermediate_environments/data_block_chart/IntermediateEnvironmentsLeadTimeChart";
 
 //APIGEE KPIs
 import ApigeeReportsChartTab from "./apigee/reports/ApigeeReportsChartTab";
@@ -184,6 +190,9 @@ import ApigeeSummaryChart from "./apigee/summary/ApigeeSummaryChart";
 
 // Approval Gates KPI
 import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
+import GithubRepositoryStatistics from "./github_actions/repo_kpi/GithubRepositoryStatistics";
+import GithubMergedPullRequestStatistics
+    from "./github_actions/merged_pull_request_kpi/GithubMergedPullRequestStatistics";
 
 // Dora KPI
 import DoraJiraGitlabRolledUpChart from "./dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpChart";
@@ -1177,6 +1186,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return <MetricbeatOutNetworkTrafficByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)} />;
 
       // Github KPIs
+      case "github-commit-frequency":
+        return (
+          <Col md={12} className="p-2">
+            <GithubCommitFrequency
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       case "github-merge-requests-by-user":
         return (
           <Col xl={6} md={12} className="p-2">
@@ -1309,6 +1330,19 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+      case "all-environments-lead-time":
+        return (
+          <Col md={12} className="p-2">
+            <IntermediateEnvironmentsLeadTimeChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+              showViewDetailsToggle={true}
+            />
+          </Col>
+        );
       case "lead-time-and-release-traceability-data-block":
         return(
           <Col md={12} className="p-2">
@@ -1322,6 +1356,91 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+      case "github-security-compliance":
+        return (
+          <Col md={12} className="p-2">
+              <GithubSecurityCompliance
+                  kpiConfiguration={kpiConfig}
+                  setKpiConfiguration={setKpiConfig}
+                  dashboardData={dashboardData}
+                  setKpis={setKpis}
+                  index={index}
+              />
+          </Col>
+          );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_MERGED_PULL_REQUEST_AVERAGE_TIME:
+        return (
+          <Col md={12} className="p-2">
+            <GithubMergedPullRequestAverageTime
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+              showViewDetailsToggle={true}
+            />
+          </Col>
+          );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_ACTIONS_WORKFLOW:
+        return (
+          <Col md={12} className="p-2">
+            <GithubActionsWorkflowChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_REPO_STATISTICS:
+            return (
+                <Col md={12} className="p-2">
+                    <GithubRepositoryStatistics
+                        kpiConfiguration={kpiConfig}
+                        setKpiConfiguration={setKpiConfig}
+                        dashboardData={dashboardData}
+                        setKpis={setKpis}
+                        index={index}
+                    />
+                </Col>
+            );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_MERGED_PULL_REQUEST:
+          return (
+              <Col md={12} className="p-2">
+                  <GithubMergedPullRequestStatistics
+                      kpiConfiguration={kpiConfig}
+                      setKpiConfiguration={setKpiConfig}
+                      dashboardData={dashboardData}
+                      setKpis={setKpis}
+                      index={index}
+                  />
+              </Col>
+          );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_OPEN_PULL_REQUEST_AVERAGE_TIME:
+          return (
+              <Col md={12} className="p-2">
+                  <GithubOpenPullRequestAverageTime
+                      kpiConfiguration={kpiConfig}
+                      setKpiConfiguration={setKpiConfig}
+                      dashboardData={dashboardData}
+                      setKpis={setKpis}
+                      index={index}
+                  />
+              </Col>
+      );
+      case "github-connected-assets":
+        return (
+          <Col md={12} className="p-2">
+              <GithubConnectedAssets
+                  kpiConfiguration={kpiConfig}
+                  setKpiConfiguration={setKpiConfig}
+                  dashboardData={dashboardData}
+                  setKpis={setKpis}
+                  index={index}
+              />
+          </Col>
+          );
       case "sonar-unit-testing":
         return (
           <Col xl={6} md={12} className="p-2">

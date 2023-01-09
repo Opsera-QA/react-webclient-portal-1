@@ -79,6 +79,9 @@ function LeadTimeAndReleaseDurationActionableInsightOverlay({
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
+      let dashboardFilters =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
+          ?.value;
       let goals = kpiConfiguration?.filters[kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")]?.value;
 
         let summary = {
@@ -98,7 +101,7 @@ function LeadTimeAndReleaseDurationActionableInsightOverlay({
         kpiConfiguration,
         dashboardTags,
         filterDto,
-        null,
+        dashboardFilters,
         dashboardOrgs,
         null,
         null,
@@ -113,7 +116,7 @@ function LeadTimeAndReleaseDurationActionableInsightOverlay({
         kpiConfiguration,
         dashboardTags,
         filterDto,
-        null,
+        dashboardFilters,
         dashboardOrgs,
         null,
         null,
@@ -128,7 +131,7 @@ function LeadTimeAndReleaseDurationActionableInsightOverlay({
         kpiConfiguration,
         dashboardTags,
         filterDto,
-        null,
+        dashboardFilters,
         dashboardOrgs,
         null,
         null,
@@ -143,7 +146,7 @@ function LeadTimeAndReleaseDurationActionableInsightOverlay({
         kpiConfiguration,
         dashboardTags,
         filterDto,
-        null,
+        dashboardFilters,
         dashboardOrgs,
         null,
         null,
@@ -158,7 +161,7 @@ function LeadTimeAndReleaseDurationActionableInsightOverlay({
         kpiConfiguration,
         dashboardTags,
         filterDto,
-        null,
+        dashboardFilters,
         dashboardOrgs,
         null,
         null,
@@ -166,6 +169,21 @@ function LeadTimeAndReleaseDurationActionableInsightOverlay({
         actionableInsightsQueryData
       );
       summary["mean_time_to_build"] = averageTimeToBuildResponse?.data?.data[0];
+      let averageTimeToMergeResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "githubActionsAverageTimeToMerge",
+        kpiConfiguration,
+        dashboardTags,
+        filterDto,
+        dashboardFilters,
+        dashboardOrgs,
+        null,
+        null,
+        null,
+        actionableInsightsQueryData
+      );
+      summary["mean_time_to_merge"] = averageTimeToMergeResponse?.data?.data[0];
       let averageTimeToDeployResponse = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -173,7 +191,7 @@ function LeadTimeAndReleaseDurationActionableInsightOverlay({
         kpiConfiguration,
         dashboardTags,
         filterDto,
-        null,
+        dashboardFilters,
         dashboardOrgs,
         null,
         null,

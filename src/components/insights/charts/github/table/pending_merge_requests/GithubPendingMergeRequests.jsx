@@ -17,6 +17,8 @@ import {
 } from "components/common/table/table-column-helpers";
 import CustomTable from "../../../../../common/table/CustomTable";
 import { getField } from "components/common/metadata/metadata-helpers";
+import GithubPendingMergeRequestHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/github/GithubPendingMergeRequestHelpDocumentation";
 
 function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = githubPendingMergeRequestsMetadata.fields;
@@ -36,11 +38,13 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
+      // getTableTextColumn(getField(fields, "_id")),
       getTableTextColumn(getField(fields, "AssigneeName")),
       getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
       getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
       getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
       getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
+      getTableTextColumn(getField(fields, "mergeRequestUrl")),
     ],
     []
   );
@@ -76,6 +80,9 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
+      let dashboardFilters =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
+          ?.value;
       let projectName;
       if(!filterDto.getData('search')){
         projectName =filterDto.getData('projectName') ;
@@ -88,7 +95,7 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
         kpiConfiguration,
         dashboardTags,
         filterDto,
-        null,
+        dashboardFilters,
         dashboardOrgs,
         undefined,
         undefined,
@@ -196,6 +203,7 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        chartHelpComponent={(closeHelpPanel) => <GithubPendingMergeRequestHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
     </div>
   );

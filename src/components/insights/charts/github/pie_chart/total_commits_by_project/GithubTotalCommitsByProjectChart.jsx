@@ -9,6 +9,8 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 import { defaultConfig, assignStandardColors, shortenPieChartLegend } from "../../../charts-views";
+import GithubTotalCommitsByProjectHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/github/GithubTotalCommitsByProjectHelpDocumentation";
 function GithubTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -47,6 +49,9 @@ function GithubTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
+      let dashboardFilters =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -54,7 +59,7 @@ function GithubTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
         kpiConfiguration,
         dashboardTags,
         null,
-        null,
+        dashboardFilters,
         dashboardOrgs
       );
       let dataObject = response?.data ? response?.data?.data[0]?.githubTotalCommitsChart?.data : [];
@@ -106,6 +111,7 @@ function GithubTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        chartHelpComponent={(closeHelpPanel) => <GithubTotalCommitsByProjectHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
       <ModalLogs
         header="Commits By Project"

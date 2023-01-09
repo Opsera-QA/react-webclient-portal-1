@@ -9,6 +9,7 @@ function MetricScoreText(
     score,
     qualityLevel, // TODO: Remove after strategic criteria is wired up everywhere
     dataPoint,
+    supportingText
   }) {
   const getQualityLevel = () => {
     let evaluation = qualityLevel;
@@ -29,6 +30,7 @@ function MetricScoreText(
       formattedText={score}
       qualityLevel={getQualityLevel()}
       dataPoint={dataPoint}
+      supportingText={supportingText}
       className={"metric-block-content-text"}
     />
   );
@@ -38,6 +40,7 @@ MetricScoreText.propTypes = {
   score: PropTypes.number,
   qualityLevel: PropTypes.string,
   dataPoint: PropTypes.object,
+  supportingText: PropTypes.string
 };
 
 export default MetricScoreText;

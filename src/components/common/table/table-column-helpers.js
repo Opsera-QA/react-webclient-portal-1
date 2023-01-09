@@ -12,7 +12,13 @@ import {
   faTimesCircle,
   faTrash,
 } from "@fortawesome/pro-light-svg-icons";
-import { faBitbucket, faGithub, faGitlab, faJira, faSlack } from "@fortawesome/free-brands-svg-icons";
+import {
+  faBitbucket,
+  faGithub,
+  faGitlab,
+  faJira,
+  faSlack,
+} from "@fortawesome/free-brands-svg-icons";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import WarningIcon from "../../common/icons/table/WarningIcon";
 import FailIcon from "../../common/icons/table/FailIcon";
@@ -22,7 +28,10 @@ import React from "react";
 import DashboardFavoritesIcon from "components/common/icons/dashboards/DashboardFavoritesIcon";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import { Button } from "react-bootstrap";
-import { capitalizeFirstLetter, truncateString } from "components/common/helpers/string-helpers";
+import {
+  capitalizeFirstLetter,
+  truncateString,
+} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { ACCESS_ROLES_FORMATTED_LABELS } from "components/common/helpers/role-helpers";
 import AppliedTagBadge from "components/common/badges/tag/AppliedTagBadge";
@@ -31,8 +40,7 @@ import IconBase from "components/common/icons/IconBase";
 import PageLinkIcon from "components/common/icons/general/PageLinkIcon";
 import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
 import PipelineTypeIconBase from "components/common/fields/pipelines/types/PipelineTypeIconBase";
-import OrchestrationStateFieldBase
-  from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
+import OrchestrationStateFieldBase from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
@@ -41,7 +49,7 @@ import CountdownUntilDateFieldBase from "components/common/fields/date/countdown
 export const getDataObjectFromTableRow = (row) => {
   try {
     return DataParsingHelper.parseObject(row?.data[row?.row?.index], {});
-  }catch (error) {
+  } catch (error) {
     return {};
   }
 };
@@ -58,7 +66,7 @@ export const getTableTextColumnWithoutField = (header, accessor, className) => {
   return {
     Header: header,
     accessor: accessor,
-    class: className ? className : undefined
+    class: className ? className : undefined,
   };
 };
 
@@ -67,14 +75,14 @@ export const getTableTextColumn = (field, className) => {
     return {
       Header: getCustomTableHeader(field),
       accessor: getCustomTableAccessor(field),
-      class: className
+      class: className,
     };
   }
 
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
-    class: className ? className : undefined
+    class: className ? className : undefined,
   };
 };
 
@@ -87,7 +95,7 @@ export const getTableDurationTextColumn = (field, className) => {
       Cell: function parseText(row) {
         const value = row?.value;
         return getTimeDisplay(value);
-      }
+      },
     };
   }
 
@@ -98,7 +106,7 @@ export const getTableDurationTextColumn = (field, className) => {
     Cell: function parseText(row) {
       const value = row?.value;
       return getTimeDisplay(value);
-    }
+    },
   };
 };
 
@@ -117,7 +125,10 @@ export const getSsoUserNameField = (
     Header: headerText,
     accessor: "name",
     Cell: function getRoleAccessLevel(row) {
-      const dataObject = DataParsingHelper.parseObject(row?.data[row?.row?.index], {});
+      const dataObject = DataParsingHelper.parseObject(
+        row?.data[row?.row?.index],
+        {},
+      );
       return `${dataObject?.firstName} ${dataObject?.lastName}`;
     },
     class: className,
@@ -136,7 +147,11 @@ export const getLimitedTableTextColumn = (field, maxLength, className) => {
         const truncatedString = truncateString(value, maxLength);
 
         if (truncatedString !== value) {
-          return (<TooltipWrapper innerText={value}><span>{truncatedString}</span></TooltipWrapper>);
+          return (
+            <TooltipWrapper innerText={value}>
+              <span>{truncatedString}</span>
+            </TooltipWrapper>
+          );
         }
 
         return value;
@@ -147,7 +162,12 @@ export const getLimitedTableTextColumn = (field, maxLength, className) => {
   };
 };
 
-export const getFormattedLabelWithFunctionColumnDefinition = (field, formatFunction, className, sendWholeObject) => {
+export const getFormattedLabelWithFunctionColumnDefinition = (
+  field,
+  formatFunction,
+  className,
+  sendWholeObject,
+) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
@@ -160,10 +180,12 @@ export const getFormattedLabelWithFunctionColumnDefinition = (field, formatFunct
         return formatFunction(row?.value);
       }
 
-      console.error("No valid format function passed into the column definition!");
+      console.error(
+        "No valid format function passed into the column definition!",
+      );
       return row?.value;
     },
-    class: className ? className : "no-wrap-inline"
+    class: className ? className : "no-wrap-inline",
   };
 };
 
@@ -190,7 +212,7 @@ export const getTaskStatusColumn = (field, className) => {
         </div>
       );
     },
-    class: className ? className : undefined
+    class: className ? className : undefined,
   };
 };
 
@@ -208,7 +230,7 @@ export const getTagColumn = (field, className) => {
         />
       );
     },
-    class: className ? className : "no-wrap-inline"
+    class: className ? className : "no-wrap-inline",
   };
 };
 
@@ -219,7 +241,7 @@ export const getTableLeaderColumn = (field, className) => {
     Cell: function parseLeader(row) {
       return row.value ? `${row.value.name} (${row.value.email})` : "";
     },
-    class: className ? className : "no-wrap-inline"
+    class: className ? className : "no-wrap-inline",
   };
 };
 
@@ -230,31 +252,39 @@ export const getTableDateColumn = (field, className) => {
     Cell: function parseDate(row) {
       return row.value ? format(new Date(row.value), "yyyy-MM-dd") : "";
     },
-    class: className ? className : "no-wrap-inline"
+    class: className ? className : "no-wrap-inline",
   };
 };
 
-export const getTableDateTimeColumn = (field, className, emptyValuePlaceholder = '') => {
+export const getTableDateTimeColumn = (
+  field,
+  className,
+  emptyValuePlaceholder = "",
+) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function parseDateTime(row) {
-      return row.value ? format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a") : emptyValuePlaceholder;
+      return row.value
+        ? format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a")
+        : emptyValuePlaceholder;
     },
-    class: className ? className : "no-wrap-inline"
+    class: className ? className : "no-wrap-inline",
   };
 };
 
 export const getTableCreatedAtColumn = (
   header = "Created",
   className = "no-wrap-inline",
-  emptyValuePlaceholder = '',
+  emptyValuePlaceholder = "",
 ) => {
   return {
     Header: header,
     accessor: "createdAt",
     Cell: function parseDateTime(row) {
-      return row.value ? format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a") : emptyValuePlaceholder;
+      return row.value
+        ? format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a")
+        : emptyValuePlaceholder;
     },
     class: className,
   };
@@ -275,11 +305,13 @@ export const getTableDateAndTimeUntilValueColumn = (
 
       if (parsedDate) {
         return (
-          <div style={{
-            minWidth: "275px",
-            width: "275px",
-            maxWidth: "275px",
-          }}>
+          <div
+            style={{
+              minWidth: "275px",
+              width: "275px",
+              maxWidth: "275px",
+            }}
+          >
             <CountdownUntilDateFieldBase date={parsedDate} />
           </div>
         );
@@ -295,24 +327,64 @@ export const getPipelineStatusIcon = (row) => {
   switch (row.value) {
     case "failure":
     case "failed":
-      return (<IconBase icon={faTimesCircle} className={"cell-icon red my-auto"}/>);
+      return (
+        <IconBase
+          icon={faTimesCircle}
+          className={"cell-icon red my-auto"}
+        />
+      );
     case "error":
-      return (<IconBase icon={faExclamationCircle} className={"cell-icon red my-auto"}/>);
+      return (
+        <IconBase
+          icon={faExclamationCircle}
+          className={"cell-icon red my-auto"}
+        />
+      );
     case "unknown":
-      return (<IconBase icon={faCircle} className={"cell-icon yellow my-auto"}/>);
+      return (
+        <IconBase
+          icon={faCircle}
+          className={"cell-icon yellow my-auto"}
+        />
+      );
     case "rejected":
-      return (<IconBase icon={faStopCircle} className={"cell-icon red my-auto"}/>);
+      return (
+        <IconBase
+          icon={faStopCircle}
+          className={"cell-icon red my-auto"}
+        />
+      );
     case "running":
     case "processing event":
-      return (<IconBase icon={faPlayCircle} className={"cell-icon green my-auto"}/>);
+      return (
+        <IconBase
+          icon={faPlayCircle}
+          className={"cell-icon green my-auto"}
+        />
+      );
     case "queued":
-      return (<IconBase icon={faPauseCircle} className={"cell-icon green my-auto"}/>);
+      return (
+        <IconBase
+          icon={faPauseCircle}
+          className={"cell-icon green my-auto"}
+        />
+      );
     case "stopped":
     case "halted":
-      return (<IconBase icon={faOctagon} className={"cell-icon red my-auto"}/>);
+      return (
+        <IconBase
+          icon={faOctagon}
+          className={"cell-icon red my-auto"}
+        />
+      );
     case "created":
     default:
-      return (<IconBase icon={faCheckCircle} className={"cell-icon green my-auto"}/>);
+      return (
+        <IconBase
+          icon={faCheckCircle}
+          className={"cell-icon green my-auto"}
+        />
+      );
   }
 };
 
@@ -320,24 +392,64 @@ export const getAssociatedPipelineStatusIcon = (pipelineStatus) => {
   switch (pipelineStatus) {
     case "failure":
     case "failed":
-      return (<IconBase icon={faTimesCircle} className={"red"} />);
+      return (
+        <IconBase
+          icon={faTimesCircle}
+          className={"red"}
+        />
+      );
     case "error":
-      return (<IconBase icon={faExclamationCircle} className={"red"} />);
+      return (
+        <IconBase
+          icon={faExclamationCircle}
+          className={"red"}
+        />
+      );
     case "unknown":
-      return (<IconBase icon={faCircle} className={"yellow"}/>);
+      return (
+        <IconBase
+          icon={faCircle}
+          className={"yellow"}
+        />
+      );
     case "rejected":
-      return (<IconBase icon={faStopCircle} className={"red"}/>);
+      return (
+        <IconBase
+          icon={faStopCircle}
+          className={"red"}
+        />
+      );
     case "running":
     case "processing event":
-      return (<IconBase icon={faPlayCircle} className={"green"}/>);
+      return (
+        <IconBase
+          icon={faPlayCircle}
+          className={"green"}
+        />
+      );
     case "queued":
     case "pending":
-      return (<IconBase icon={faPauseCircle} className={"yellow"}/>);
+      return (
+        <IconBase
+          icon={faPauseCircle}
+          className={"yellow"}
+        />
+      );
     case "stopped":
     case "halted":
-      return (<IconBase icon={faOctagon} className={"red"}/>);
+      return (
+        <IconBase
+          icon={faOctagon}
+          className={"red"}
+        />
+      );
     default:
-      return (<IconBase icon={faCheckCircle} className={"green"}/>);
+      return (
+        <IconBase
+          icon={faCheckCircle}
+          className={"green"}
+        />
+      );
   }
 };
 
@@ -355,11 +467,14 @@ export const getPipelineTypeColumn = (field, className) => {
 
       return <PipelineTypeIconBase type={type} />;
     },
-    class: className ? className : "cell-center"
+    class: className ? className : "cell-center",
   };
 };
 
-export const getCustomTablePipelineStateColumnDefinition = (field, className) => {
+export const getCustomTablePipelineStateColumnDefinition = (
+  field,
+  className,
+) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
@@ -373,7 +488,7 @@ export const getCustomTablePipelineStateColumnDefinition = (field, className) =>
         />
       );
     },
-    class: className
+    class: className,
   };
 };
 
@@ -382,22 +497,23 @@ export const getChartPipelineStatusColumn = (field, className) => {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function parseStatus(row) {
-      let status = typeof row?.value === "string" ? row.value.toLowerCase() : status;
+      let status =
+        typeof row?.value === "string" ? row.value.toLowerCase() : status;
       switch (status) {
         case "failure":
         case "failed":
-          return (<FailIcon />);
+          return <FailIcon />;
         case "unknown":
-          return (<WarningIcon/>);
+          return <WarningIcon />;
         case "passed":
         case "success":
         case "successful":
-          return (<SuccessIcon/>);
+          return <SuccessIcon />;
         default:
           return status;
       }
     },
-    class: className ? className :  undefined
+    class: className ? className : undefined,
   };
 };
 
@@ -406,22 +522,23 @@ export const getChartTrendStatusColumn = (field, className) => {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function parseStatus(row) {
-      let status = typeof row?.value === "string" ? row.value.toLowerCase() : "";
+      let status =
+        typeof row?.value === "string" ? row.value.toLowerCase() : "";
 
       switch (status) {
         case "red":
-          return (<DangerMetricIcon />);
+          return <DangerMetricIcon />;
         case "neutral":
           return null;
         case "green":
-        return (<SuccessMetricIcon />);
+          return <SuccessMetricIcon />;
         case "-":
-          return (<NoTrendMetricIcon />);
+          return <NoTrendMetricIcon />;
         default:
           return status;
       }
     },
-    class: className ? className :  undefined
+    class: className ? className : undefined,
   };
 };
 
@@ -429,14 +546,14 @@ export const getStaticIconColumn = (icon, accessor = "row", className) => {
   return {
     Header: "",
     accessor: accessor,
-    Cell: function StaticIcon(){
+    Cell: function StaticIcon() {
       if (icon) {
         return <IconBase icon={icon} />;
       }
 
       return "";
     },
-    class: className ? className : undefined
+    class: className ? className : undefined,
   };
 };
 
@@ -445,69 +562,74 @@ export const getGitCustodianOriginColumn = (field, className) => {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function parseStatus(row) {
-      let status = typeof row?.value === "string" ? row.value.toLowerCase() : "";
+      let status =
+        typeof row?.value === "string" ? row.value.toLowerCase() : "";
 
-        switch (status) {
-          case "gitlab":
-            return (
-              <TooltipWrapper innerText={"Gitlab"}>
-                <div style={{ marginLeft: '15%' }}>
-                  <IconBase
-                    icon={faGitlab}
-                    iconClassName={"opsera-yellow cell-icon vertical-align-item"}
-                  />
-                </div>
-              </TooltipWrapper>
-            );
-          case "github":
-             return (
-               <TooltipWrapper innerText={"GitHub"}>
-                 <div style={{ marginLeft: '15%' }}>
-                   <IconBase
-                     icon={faGithub}
-                     iconClassName={"black cell-icon vertical-align-item"}
-                   />
-                 </div>
-               </TooltipWrapper>
-             );
-          case "bitbucket":
-            return (
-               <TooltipWrapper innerText={"Bitbucket"}>
-                 <div style={{ marginLeft: '15%' }}>
-                   <IconBase
-                     icon={faBitbucket}
-                     iconClassName={"bitbucket-color cell-icon vertical-align-item"}
-                   />
-                 </div>
-               </TooltipWrapper>
-             );
-          case "jira":
-            return (
-               <TooltipWrapper innerText={"Jira"}>
-                 <div style={{ marginLeft: '15%' }}>
-                   <IconBase
-                     icon={faJira}
-                     iconClassName={"bitbucket-color cell-icon vertical-align-item"}
-                   />
-                 </div>
-               </TooltipWrapper>
-            );
-            case "slack":
-                return (
-                   <TooltipWrapper innerText={"Slack"}>
-                     <div style={{ marginLeft: '15%' }}>
-                       <IconBase
-                         icon={faSlack}
-                         iconClassName={"opsera-yellow cell-icon vertical-align-item"}
-                       />
-                     </div>
-                   </TooltipWrapper>
-                );
-          default:
-            return status;
-          }
-        },
-    class: className ? className :  undefined
+      switch (status) {
+        case "gitlab":
+          return (
+            <TooltipWrapper innerText={"Gitlab"}>
+              <div style={{ marginLeft: "15%" }}>
+                <IconBase
+                  icon={faGitlab}
+                  iconClassName={"opsera-yellow cell-icon vertical-align-item"}
+                />
+              </div>
+            </TooltipWrapper>
+          );
+        case "github":
+          return (
+            <TooltipWrapper innerText={"GitHub"}>
+              <div style={{ marginLeft: "15%" }}>
+                <IconBase
+                  icon={faGithub}
+                  iconClassName={"black cell-icon vertical-align-item"}
+                />
+              </div>
+            </TooltipWrapper>
+          );
+        case "bitbucket":
+          return (
+            <TooltipWrapper innerText={"Bitbucket"}>
+              <div style={{ marginLeft: "15%" }}>
+                <IconBase
+                  icon={faBitbucket}
+                  iconClassName={
+                    "bitbucket-color cell-icon vertical-align-item"
+                  }
+                />
+              </div>
+            </TooltipWrapper>
+          );
+        case "jira":
+          return (
+            <TooltipWrapper innerText={"Jira"}>
+              <div style={{ marginLeft: "15%" }}>
+                <IconBase
+                  icon={faJira}
+                  iconClassName={
+                    "bitbucket-color cell-icon vertical-align-item"
+                  }
+                />
+              </div>
+            </TooltipWrapper>
+          );
+        case "slack":
+          return (
+            <TooltipWrapper innerText={"Slack"}>
+              <div style={{ marginLeft: "15%" }}>
+                <IconBase
+                  icon={faSlack}
+                  iconClassName={"opsera-yellow cell-icon vertical-align-item"}
+                />
+              </div>
+            </TooltipWrapper>
+          );
+        default:
+          return status;
+      }
+    },
+    class: className ? className : undefined,
   };
 };
 
@@ -516,9 +638,15 @@ export const getTableFavoriteColumn = (field, className) => {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function getFavoritesIcon(row) {
-      return <DashboardFavoritesIcon key={row.row.original._id} dashboard={row.row.original} dashboardsActions={dashboardsActions} />;
+      return (
+        <DashboardFavoritesIcon
+          key={row.row.original._id}
+          dashboard={row.row.original}
+          dashboardsActions={dashboardsActions}
+        />
+      );
     },
-    class: className ? className :  "no-wrap-inline"
+    class: className ? className : "no-wrap-inline",
   };
 };
 
@@ -530,53 +658,117 @@ export const getTableDeleteColumn = (headerText, deleteFunction, className) => {
         <IconBase
           icon={faTrash}
           className={"pointer danger-red"}
-          onClick={() => {deleteFunction(row?.data[row?.row?.index]); }}
+          onClick={() => {
+            deleteFunction(row?.data[row?.row?.index]);
+          }}
         />
       );
     },
-    class: className ? className :  "no-wrap-inline"
+    class: className ? className : "no-wrap-inline",
   };
 };
 
-export const getTableButtonColumn = (accessor = "row", headerText, variant, buttonText, buttonFunction, className, buttonClassName) => {
+export const getTableButtonColumn = (
+  accessor = "row",
+  headerText,
+  variant,
+  buttonText,
+  buttonFunction,
+  className,
+  buttonClassName,
+) => {
   return {
     Header: headerText,
     accessor: accessor,
     Cell: function getTableButton(row) {
-      return <Button size={"sm"} variant={variant} className={buttonClassName} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}}>{buttonText}</Button>;
+      return (
+        <Button
+          size={"sm"}
+          variant={variant}
+          className={buttonClassName}
+          onClick={() => {
+            buttonFunction(row?.data[row?.row?.index]);
+          }}
+        >
+          {buttonText}
+        </Button>
+      );
     },
-    class: className ? className :  "no-wrap-inline py-1"
+    class: className ? className : "no-wrap-inline py-1",
   };
 };
 
-export const getGitTaskTableRunButtonColumn = (accessor = "row", headerText, variant, buttonText, buttonFunction, className) => {
+export const getGitTaskTableRunButtonColumn = (
+  accessor = "row",
+  headerText,
+  variant,
+  buttonText,
+  buttonFunction,
+  className,
+) => {
   return {
     Header: headerText,
     accessor: accessor,
     Cell: function getRunButton(row) {
       return (
-        <Button size={"sm"} variant={variant} disabled={row?.data[row?.row?.index].status === "running"} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}} >
-        {row?.data[row?.row?.index].status === "running"
-          ? (<span><IconBase isLoading={true} className={"mr-1"} />Running</span>)
-          : (<span><IconBase icon={faPlay} className={"mr-1"}/>{buttonText}</span>)
-        }
+        <Button
+          size={"sm"}
+          variant={variant}
+          disabled={row?.data[row?.row?.index].status === "running"}
+          onClick={() => {
+            buttonFunction(row?.data[row?.row?.index]);
+          }}
+        >
+          {row?.data[row?.row?.index].status === "running" ? (
+            <span>
+              <IconBase
+                isLoading={true}
+                className={"mr-1"}
+              />
+              Running
+            </span>
+          ) : (
+            <span>
+              <IconBase
+                icon={faPlay}
+                className={"mr-1"}
+              />
+              {buttonText}
+            </span>
+          )}
         </Button>
       );
     },
-    class: className ? className :  "no-wrap-inline py-1"
+    class: className ? className : "no-wrap-inline py-1",
   };
 };
 
-export const getDeletePlatformToolTableButtonColumn = (accessor = "row", headerText, variant, buttonText, buttonFunction, className) => {
+export const getDeletePlatformToolTableButtonColumn = (
+  accessor = "row",
+  headerText,
+  variant,
+  buttonText,
+  buttonFunction,
+  className,
+) => {
   return {
     Header: headerText,
     accessor: accessor,
     Cell: function getDeleteButton(row) {
-      return <Button size={"sm"} variant={variant} disabled={row?.data[row?.row?.index].toolStatus !== "ACTIVE"} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}} >
-                {buttonText}
-            </Button>;
+      return (
+        <Button
+          size={"sm"}
+          variant={variant}
+          disabled={row?.data[row?.row?.index].toolStatus !== "ACTIVE"}
+          onClick={() => {
+            buttonFunction(row?.data[row?.row?.index]);
+          }}
+        >
+          {buttonText}
+        </Button>
+      );
     },
-    class: className ? className :  "no-wrap-inline py-1"
+    class: className ? className : "no-wrap-inline py-1",
   };
 };
 
@@ -589,9 +781,11 @@ export const getPipelineActivityStatusColumn = (field, className) => {
       if (!parsedText) {
         return (
           <span>
-          <i className={"fal fa-question-circle cell-icon vertical-align-item"} />
-          <span className={"ml-1"}>Unknown</span>
-        </span>
+            <i
+              className={"fal fa-question-circle cell-icon vertical-align-item"}
+            />
+            <span className={"ml-1"}>Unknown</span>
+          </span>
         );
       }
 
@@ -602,11 +796,15 @@ export const getPipelineActivityStatusColumn = (field, className) => {
         </span>
       );
     },
-    class: className ? className : undefined
+    class: className ? className : undefined,
   };
 };
 
-export const getUppercaseTableTextColumn = (field, className, maxWidth = undefined ) => {
+export const getUppercaseTableTextColumn = (
+  field,
+  className,
+  maxWidth = undefined,
+) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
@@ -614,10 +812,9 @@ export const getUppercaseTableTextColumn = (field, className, maxWidth = undefin
       return capitalizeFirstLetter(row?.value);
     },
     class: className,
-    maxWidth: maxWidth
+    maxWidth: maxWidth,
   };
 };
-
 
 // TODO: Should we show nothing if not === false?
 export const getTableBooleanIconColumn = (field, className) => {
@@ -628,43 +825,51 @@ export const getTableBooleanIconColumn = (field, className) => {
       if (row?.value === true) {
         return (
           <div>
-            <IconBase icon={faCheckCircle} className={"green ml-2"} />
+            <IconBase
+              icon={faCheckCircle}
+              className={"green ml-2"}
+            />
           </div>
         );
       }
 
       return (
         <div>
-          <IconBase icon={faTimesCircle} className={"red ml-2"} />
+          <IconBase
+            icon={faTimesCircle}
+            className={"red ml-2"}
+          />
         </div>
       );
     },
-    class: className ? className : "text-left"
+    class: className ? className : "text-left",
   };
 };
 
-export const getTableInfoIconColumn = (showInformationFunction, accessor = "row", className) => {
+export const getTableInfoIconColumn = (
+  showInformationFunction,
+  accessor = "row",
+  className,
+) => {
   return {
     Header: "Info",
     accessor: accessor,
     Cell: function getInfoIcon(row) {
       if (typeof showInformationFunction !== "function") {
-        return (
-          <IconBase
-            icon={faSearchPlus}
-          />
-        );
+        return <IconBase icon={faSearchPlus} />;
       }
 
       return (
         <IconBase
           icon={faSearchPlus}
           className={"pointer"}
-          onClickFunction={() => {showInformationFunction(row?.data[row?.row?.index]); }}
+          onClickFunction={() => {
+            showInformationFunction(row?.data[row?.row?.index]);
+          }}
         />
       );
     },
-    class: className ? className : undefined
+    class: className ? className : undefined,
   };
 };
 
@@ -676,7 +881,7 @@ export const getTableArrayCountColumn = (field, className) => {
     Cell: function getCount(row) {
       return Array.isArray(row?.value) ? row.value.length : "";
     },
-    class: className ? className :  "no-wrap-inline"
+    class: className ? className : "no-wrap-inline",
   };
 };
 
@@ -685,13 +890,22 @@ export const getTableArrayFirstValueAndCountColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
-    Cell: function getCount(row) {      
-      return Array.isArray(row?.value) && row?.value.length > 0 ? 
-        <TooltipWrapper innerText={row?.value.reduce((acc, cur) => acc += `, ${cur}`)}>
-          <span>{row?.value.length > 1 ? `${row?.value[0]} + ${row?.value.length - 1}` : row?.value[0]}</span>
-        </TooltipWrapper> : "";
+    Cell: function getCount(row) {
+      return Array.isArray(row?.value) && row?.value.length > 0 ? (
+        <TooltipWrapper
+          innerText={row?.value.reduce((acc, cur) => (acc += `, ${cur}`))}
+        >
+          <span>
+            {row?.value.length > 1
+              ? `${row?.value[0]} + ${row?.value.length - 1}`
+              : row?.value[0]}
+          </span>
+        </TooltipWrapper>
+      ) : (
+        ""
+      );
     },
-    class: className ? className :  "no-wrap-inline"
+    class: className ? className : "no-wrap-inline",
   };
 };
 
@@ -702,7 +916,7 @@ export const getCountColumnWithoutField = (header, accessor, className) => {
     Cell: function getCount(row) {
       return row.value.length;
     },
-    class: className ? className :  "no-wrap-inline"
+    class: className ? className : "no-wrap-inline",
   };
 };
 
@@ -731,7 +945,7 @@ export const getRoleAccessLevelColumn = (field, className) => {
 
       return "ROLE ACCESS LEVEL UNKNOWN";
     },
-    class: className ? className :  "no-wrap-inline"
+    class: className ? className : "no-wrap-inline",
   };
 };
 
@@ -764,18 +978,22 @@ export const getStaticInfoColumn = (icon, accessor = "row", className) => {
   return {
     Header: "",
     accessor: accessor,
-    Cell: function StaticIcon(){
+    Cell: function StaticIcon() {
       return <IconBase icon={faSearchPlus} />;
     },
-    class: className ? className : undefined
+    class: className ? className : undefined,
   };
 };
 
-export const getExternalLinkIconColumnDefinition = (field, linkText, className) => {
+export const getExternalLinkIconColumnDefinition = (
+  field,
+  linkText,
+  className,
+) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
-    Cell: function getPageLink(row){
+    Cell: function getPageLink(row) {
       return (
         <PageLinkIcon
           pageLink={row?.value}
@@ -784,51 +1002,65 @@ export const getExternalLinkIconColumnDefinition = (field, linkText, className) 
         />
       );
     },
-    class: className ? className : undefined
+    class: className ? className : undefined,
   };
 };
 
-export const getGitCustodianExternalLinkIconColumnDefinition = (field, className) => {
+export const getGitCustodianExternalLinkIconColumnDefinition = (
+  field,
+  className,
+) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
-    Cell: function getPageLink(row){
-      return row?.value?.url ?
-      (
+    Cell: function getPageLink(row) {
+      return row?.value?.url ? (
         <PageLinkIcon
           pageLink={row?.value?.url}
           externalLink={true}
           pageLinkText={row?.value?.key}
         />
-      ) : (row?.value?.key || "");
+      ) : (
+        row?.value?.key || ""
+      );
     },
-    class: className ? className : undefined
+    class: className ? className : undefined,
   };
 };
 
-export const getUserObjectRoleLevelColumnDefinition = (userObject, className) => {
+export const getUserObjectRoleLevelColumnDefinition = (
+  userObject,
+  className,
+) => {
   return {
     Header: "Assigned Role",
     accessor: "row",
-    Cell: function getPageLink(row){
+    Cell: function getPageLink(row) {
       const parsedUserObject = DataParsingHelper.parseObject(userObject);
 
       if (!parsedUserObject) {
         return "";
       }
 
-      const parsedEmail = DataParsingHelper.parseEmailAddress(parsedUserObject.email);
-      const parsedUserGroups = DataParsingHelper.parseArray(parsedUserObject.groups);
+      const parsedEmail = DataParsingHelper.parseEmailAddress(
+        parsedUserObject.email,
+      );
+      const parsedUserGroups = DataParsingHelper.parseArray(
+        parsedUserObject.groups,
+      );
 
       const object = getDataObjectFromTableRow(row);
       const objectRoles = DataParsingHelper.parseArray(object?.roles, []);
       const parsedRole = ObjectAccessRoleHelper.calculateUserObjectRole(
         parsedEmail,
         parsedUserGroups,
-        objectRoles
+        objectRoles,
       );
 
-      return (DataParsingHelper.parseString(ObjectAccessRoleHelper.getLabelForAccessRole(parsedRole), ""));
+      return DataParsingHelper.parseString(
+        ObjectAccessRoleHelper.getLabelForAccessRole(parsedRole),
+        "",
+      );
     },
     class: className,
   };
@@ -838,7 +1070,7 @@ export const getGroupRoleLevelColumnDefinition = (group, className) => {
   return {
     Header: "Assigned Role",
     accessor: "row",
-    Cell: function getPageLink(row){
+    Cell: function getPageLink(row) {
       const parsedGroup = DataParsingHelper.parseString(group);
 
       if (!parsedGroup) {
@@ -851,35 +1083,45 @@ export const getGroupRoleLevelColumnDefinition = (group, className) => {
         object,
       );
 
-      return (DataParsingHelper.parseString(ObjectAccessRoleHelper.getLabelForAccessRole(parsedRole), ""));
+      return DataParsingHelper.parseString(
+        ObjectAccessRoleHelper.getLabelForAccessRole(parsedRole),
+        "",
+      );
     },
     class: className,
   };
 };
 
-export const getGitCustodianScmLinkIconColumnDefinition = (field, className) => {
+export const getGitCustodianScmLinkIconColumnDefinition = (
+  field,
+  className,
+) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
-    Cell: function getPageLink(row){
-
+    Cell: function getPageLink(row) {
       return (
-          <PageLinkIcon
-              pageLink={row?.value}
-              externalLink={true}
-              pageLinkText={""}
-          />
+        <PageLinkIcon
+          pageLink={row?.value}
+          externalLink={true}
+          pageLinkText={""}
+        />
       );
     },
-    class: className ? className : undefined
+    class: className ? className : undefined,
   };
 };
 
-export const getPathDefinition = (field, className, maxLength = 50, overlayWidth) => {
+export const getPathDefinition = (
+  field,
+  className,
+  maxLength = 50,
+  overlayWidth,
+) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
-    Cell: function getPath(row){
+    Cell: function getPath(row) {
       const path = row?.value;
       return (
         <TooltipWrapper
@@ -890,6 +1132,6 @@ export const getPathDefinition = (field, className, maxLength = 50, overlayWidth
         </TooltipWrapper>
       );
     },
-    class: className ? className : undefined
+    class: className ? className : undefined,
   };
 };

@@ -12,6 +12,8 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import IconBase from "components/common/icons/IconBase";
+import GithubMostActiveContributorsHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/github/GithubMostActiveContributorsHelpDocumentation";
 
 function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = githubMostActiveContributorsMetadata.fields;
@@ -78,6 +80,9 @@ function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
+      let dashboardFilters =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
+          ?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -85,7 +90,7 @@ function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
         kpiConfiguration,
         dashboardTags,
         filterDto,
-        null,
+        dashboardFilters,
         dashboardOrgs
       );
       let dataObject = response?.data?.data[0]?.githubMostActiveUsers?.data;
@@ -135,6 +140,7 @@ function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        chartHelpComponent={(closeHelpPanel) => <GithubMostActiveContributorsHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
     </div>
   );

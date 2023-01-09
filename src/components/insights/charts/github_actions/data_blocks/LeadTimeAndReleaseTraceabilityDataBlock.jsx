@@ -10,10 +10,11 @@ import ModalLogs from "../../../../common/modal/modalLogs";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import {dataPointHelpers} from "../../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import { getTimeDisplay } from "../github_actions-utility";
-import ThreeLineDataBlockBase from "components/common/metrics/data_blocks/base/ThreeLineDataBlockBase";
-import MetricScoreText from "components/common/metrics/score/MetricScoreText";
+import ThreeLineScoreDataBlock from "components/common/metrics/score/ThreeLineScoreDataBlock";
 import LeadTimeAndReleaseDurationActionableInsightOverlay from "../actionable_insights/LeadTimeAndReleaseDurationActionableInsightOverlay";
 import {faArrowCircleDown, faArrowCircleUp, faMinusCircle} from "@fortawesome/free-solid-svg-icons";
+import LeadTimeAndReleaseTraceabilityHelpDocumentation
+  from "../../../../common/help/documentation/insights/charts/github/LeadTimeAndReleaseTraceabilityHelpDocumentation";
 
 function LeadTimeAndReleaseTraceabilityDataBlock({
   kpiConfiguration,
@@ -104,12 +105,12 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
         dashboardFilters,
         dashboardOrgs
       );
-      const timeToCommitMetrics = timeToCommitResponse?.data?.data[0]?.timeToCommit?.data;
+      const timeToCommitMetrics = timeToCommitResponse?.data?.data[0]?.branchCreationToFirstCommit?.data;
 
       if (isMounted?.current === true && Array.isArray(metrics)) {
         setMetrics(metrics[0]);
         setDeploymentMetrics(deploymentMetrics[0]);
-        // setTimeToCommitMetrics(timeToCommitMetrics[0]);
+        setTimeToCommitMetrics(timeToCommitMetrics[0]);
         // setApplicationDeploymentMetrics(applicationDeploymentMetrics);
         // setApplicationLeadTimeMetrics(applicationLeadTimeMetrics);
       }
@@ -167,11 +168,63 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
   const getDescription = (severity) => {
     switch (severity) {
       case "Up":
-        return "This project is trending upward.";
+        return "The number of deployments per day has increased";
       case "Down":
-        return "This project is trending downward.";
+        return "The number of deployments per day has decreased";
       case "Neutral":
-        return "Neutral: This project has experienced no change.";
+        return "The number of deployments per day has stayed the same";
+    }
+  };
+
+  const getLeadTimeIconColor = (severity) => {
+    switch (severity) {
+      case "Down":
+        return "green";
+      case "Up":
+        return "red";
+      case "Neutral":
+        return "light-gray-text-secondary";
+      case "-":
+        return "black";
+      default:
+        break;
+    }
+  };
+
+  const getLeadTimeDescription = (severity) => {
+    switch (severity) {
+      case "Up":
+        return "The lead time has increased from the previous time range";
+      case "Down":
+        return "The lead time has decreased from the previous time range";
+      case "Neutral":
+        return "The lead time is the same as the previous time range";
+    }
+  };
+
+  const getTimeToCommitIconColor = (severity) => {
+    switch (severity) {
+      case "Down":
+        return "green";
+      case "Up":
+        return "red";
+      case "Neutral":
+        return "light-gray-text-secondary";
+      case "-":
+        return "black";
+      default:
+        break;
+    }
+  };
+
+  const getTimeToCommitDescription = (severity) => {
+    switch (severity) {
+      case "Up":
+        return "The time for a developer to push their first commit has increased.";
+      case "Down":
+        return "The time for a developer to push their first commit has decreased.";
+      case "Neutral":
+        return "The time for a developer to push their first commit has stayed the same";
     }
   };
 
@@ -191,14 +244,14 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
               <div>
                 <DataBlockBoxContainer showBorder={true}>
                   <div className={"p-3"}>
-                    <ThreeLineDataBlockBase
+                    <ThreeLineScoreDataBlock
                       dataPoint={durationDataPoint}
-                      middleText={<MetricScoreText score={getTimeDisplay(metrics?.avgLeadTime)}/>}
-                      className={`${getIconColor(metrics?.trend)}`}
+                      score={getTimeDisplay(metrics?.avgLeadTime)}
+                      className={`${getLeadTimeIconColor(metrics?.trend)}`}
                       topText={"Lead Time"}
-                      bottomText={applicationLeadTimeMetrics?.previousResult ? "Previous result: " + applicationLeadTimeMetrics?.previousResult : "No previous result"}
+                      bottomText={metrics?.trendAvgLeadTime ? "Previous result: " + getTimeDisplay(metrics?.trendAvgLeadTime) : "No previous result"}
                       icon={getIcon(metrics?.trend)}
-                      iconOverlayBody={getDescription(metrics?.trend)}
+                      iconOverlayBody={getLeadTimeDescription(metrics?.trend)}
                     />
                   </div>
                 </DataBlockBoxContainer>
@@ -209,14 +262,15 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
               <div>
                 <DataBlockBoxContainer showBorder={true}>
                   <div className={"p-3"}>
-                    <ThreeLineDataBlockBase
+                    <ThreeLineScoreDataBlock
                       dataPoint={frequencyDataPoint}
                       className={`${getIconColor(deploymentMetrics?.trend)}`}
-                      middleText={<MetricScoreText score={deploymentMetrics?.deploymentFrequency}/>}
-                      topText={"Frequency"}
-                      bottomText={deploymentMetrics?.previousResult ? "Previous result: " + deploymentMetrics?.previousResult : "No previous result"}
+                      score={deploymentMetrics?.deploymentFrequency}
+                      topText={"Deployment Frequency"}
+                      bottomText={deploymentMetrics?.trendDeploymentFrequency ? "Previous result: " + deploymentMetrics?.trendDeploymentFrequency + " deployments/day" : "No previous result"}
                       icon={getIcon(deploymentMetrics?.trend)}
                       iconOverlayBody={getDescription(deploymentMetrics?.trend)}
+                      supportingText={" deployments/day"}
                     />
                   </div>
                 </DataBlockBoxContainer>
@@ -227,14 +281,14 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
               <div>
                 <DataBlockBoxContainer showBorder={true}>
                   <div className={"p-3"}>
-                    <ThreeLineDataBlockBase
+                    <ThreeLineScoreDataBlock
                       dataPoint={timeToFirstCommitDataPoint}
-                      className={`${getIconColor(metrics?.trend)}`}
-                      middleText={<MetricScoreText score={getTimeDisplay(metrics?.timeToCommit)}/>}
+                      className={`${getTimeToCommitIconColor(timeToCommitMetrics?.trend)}`}
+                      score={getTimeDisplay(timeToCommitMetrics?.avgTimeToFirstCommit)}
                       topText={"Average Time to First Commit"}
-                      bottomText={metrics?.previousResult ? "Previous result: " + metrics?.previousResult : "No previous result"}
-                      icon={getIcon(metrics?.trend)}
-                      iconOverlayBody={getDescription(metrics?.trend)}
+                      bottomText={timeToCommitMetrics?.trendAvgTimeToFirstCommit ? "Previous result: " + getTimeDisplay(timeToCommitMetrics?.trendAvgTimeToFirstCommit) : "No previous result"}
+                      icon={getIcon(timeToCommitMetrics?.trend)}
+                      iconOverlayBody={getTimeToCommitDescription(timeToCommitMetrics?.trend)}
                     />
                   </div>
                 </DataBlockBoxContainer>
@@ -259,6 +313,7 @@ function LeadTimeAndReleaseTraceabilityDataBlock({
         showSettingsToggle={showSettingsToggle}
         showViewDetailsToggle={showViewDetailsToggle}
         launchActionableInsightsFunction={viewDetailsComponent}
+        chartHelpComponent={(closeHelpPanel) => <LeadTimeAndReleaseTraceabilityHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
       <ModalLogs
         header="Lead Time And Release Traceability"

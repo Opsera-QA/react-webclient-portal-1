@@ -15,8 +15,11 @@ import {
   getLimitedTableTextColumn,
   getTableDateTimeColumn,
   getTableTextColumn,
+  getTableDurationTextColumn
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
+import GithubRecentMergeRequestHelpDocumentation
+  from "../../../../../common/help/documentation/insights/charts/github/GithubRecentMergeRequestHelpDocumentation";
 
 function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = githubRecentMergeRequestsMetadata.fields;
@@ -36,11 +39,14 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
   const columns = useMemo(
       () => [
         getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
+        // getTableTextColumn(getField(fields, "_id")),
         getTableTextColumn(getField(fields, "AssigneeName")),
         getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
         getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
         getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
         getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
+        getTableDurationTextColumn(getField(fields, "MergeRequestTimeTaken")),
+        getTableTextColumn(getField(fields, "mergeRequestUrl")),
       ],
       []
   );
@@ -75,6 +81,9 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
+      let dashboardFilters =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
+          ?.value;
       let projectName;
       if(!filterDto.getData('search')){
         projectName =filterDto.getData('projectName') ;
@@ -86,7 +95,7 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         kpiConfiguration,
         dashboardTags,
         filterDto,
-        null,
+        dashboardFilters,
         dashboardOrgs,
         undefined,
         undefined,
@@ -198,6 +207,7 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         setKpis={setKpis}
         isLoading={isLoading}
         tableChart={true}
+        chartHelpComponent={(closeHelpPanel) => <GithubRecentMergeRequestHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
     </div>
   );

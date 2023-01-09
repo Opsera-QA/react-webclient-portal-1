@@ -1,60 +1,54 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import KpiSettingsForm from "components/insights/marketplace/charts/KpiSettingsForm";
 import Model from "core/data_model/model";
 import kpiConfigurationMetadata from "components/insights/marketplace/charts/kpi-configuration-metadata";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import LoadingDialog from "components/common/status_notifications/loading";
-import {metricHelpers} from "components/insights/metric.helpers";
-import GenericChartSettingsHelpDocumentation
-  from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
+import { metricHelpers } from "components/insights/metric.helpers";
+import GenericChartSettingsHelpDocumentation from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import {dashboardMetricActions} from "components/insights/dashboards/metrics/dashboardMetric.actions";
-import DashboardMetricEditorPanelContainer
-  from "components/common/panels/detail_panel_container/dashboard_metrics/DashboardMetricEditorPanelContainer";
+import { dashboardMetricActions } from "components/insights/dashboards/metrics/dashboardMetric.actions";
+import DashboardMetricEditorPanelContainer from "components/common/panels/detail_panel_container/dashboard_metrics/DashboardMetricEditorPanelContainer";
 import DashboardMetricTabPanel from "components/insights/dashboards/metrics/DashboardMetricTabPanel";
-import SdlcDurationByStageMetricsEditorPanel
-  from "components/insights/charts/sdlc/bar_chart/duration_by_stage/SdlcDurationByStageMetricsEditorPanel";
-import SalesforceDurationByStageMetricsEditorPanel
-  from "../../charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageMetricsEditorPanel";
+import SdlcDurationByStageMetricsEditorPanel from "components/insights/charts/sdlc/bar_chart/duration_by_stage/SdlcDurationByStageMetricsEditorPanel";
+import SalesforceDurationByStageMetricsEditorPanel from "../../charts/sfdc/bar_chart/duration_by_stage/SalesforceDurationByStageMetricsEditorPanel";
 import FirstPassYieldMetricsEditorPanel from "../../charts/first_pass/FirstPassYieldMetricsEditorPanel";
-import AutomationPercentageMetricEditorPanel
-  from "../../charts/automation_percentage/AutomationPercentageMetricEditorPanel";
+import AutomationPercentageMetricEditorPanel from "../../charts/automation_percentage/AutomationPercentageMetricEditorPanel";
 import SonarRatingMetricsEditorPanel from "../../charts/sonar/sonar_ratings/SonarRatingMetricsEditorPanel";
-import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
-import ServiceNowMeanTimeToResolutionEditorPanel
-  from "../../charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionEditorPanel";
+import { kpiIdentifierConstants } from "components/admin/kpi_identifiers/kpiIdentifier.constants";
+import ServiceNowMeanTimeToResolutionEditorPanel from "../../charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionEditorPanel";
 import QuickDeployStatisticsEditorPanel from "../../charts/quick-deploy-statistics/QuickDeployStatisticsEditorPanel";
-import SalesforceComponentsEditorPanel
-  from "../../charts/sfdc/data_block_chart/Salesforce_components/SalesforceComponentsEditorPanel";
+import AllGithubActionsDataBlockEditorPanel from "../../charts/github_actions/data_blocks/AllGithubActions/AllGithubActionsDataBlockEditorPanel";
+import LeadTimeAndReleaseTracebilityEditorPanel from "../../charts/github_actions/data_blocks/LeadTimeAndReleaseTracebilityEditorPanel";
+import SalesforceComponentsEditorPanel from "../../charts/sfdc/data_block_chart/Salesforce_components/SalesforceComponentsEditorPanel";
 import ApigeeReportsEditorPanel from "../../charts/apigee/reports/ApigeeReportsEditorPanel";
 import GitlabDeploymentFrequencyEditorPanel from "components/insights/charts/gitlab/deployment_frequency/GitlabDeploymentFrequencyEditorPanel";
 import ApigeeSummaryEditorPanel from "../../charts/apigee/summary/ApigeeSummaryEditorPanel";
 import BoomiBarChartEditorPanel from "components/insights/charts/boomi/bar_chart/BoomiBarChartEditorPanel";
 import GitlabLeadTimeEditorPanel from "../../charts/gitlab/line_chart/lead_time/GitlabLeadTimeEditorPanel";
-import JiraMeanTimeToResolutionEditorPanel
-  from "../../charts/jira/bar_chart/mean_time_to_resolution/JiraMeanTimeToResolutionEditorPanel";
+import GithubActionsWorkflowEditorPanel from "../../charts/github_actions/workflows/GithubActionsWorkflowEditorPanel";
+import JiraMeanTimeToResolutionEditorPanel from "../../charts/jira/bar_chart/mean_time_to_resolution/JiraMeanTimeToResolutionEditorPanel";
 import JiraChangeFailureRateEditorPanel from "components/insights/charts/jira/line_chart/change_failure_rate/JiraChangeFailureRateEditorPanel";
-import GitlabPipelineStatisticsEditorPanel
-  from "../../charts/gitlab/line_chart/pipeline-statistics/GitlabPipelineStatisticsEditorPanel";
-import DoraJiraGitlabRolledUpEditorPanel
-  from "../../charts/dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpEditorPanel";
-import GitlabMergeRequestStatisticsEditorPanel
-  from "../../charts/gitlab/merge_request_statistics/GitlabMergeRequestStatisticsEditorPanel";
+import GitlabPipelineStatisticsEditorPanel from "../../charts/gitlab/line_chart/pipeline-statistics/GitlabPipelineStatisticsEditorPanel";
+import DoraJiraGitlabRolledUpEditorPanel from "../../charts/dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpEditorPanel";
+import GitlabMergeRequestStatisticsEditorPanel from "../../charts/gitlab/merge_request_statistics/GitlabMergeRequestStatisticsEditorPanel";
+import GithubCommitFrequencyEditorPanel from "../../charts/github/line_chart/commits_frequency/GithubCommitFrequencyEditorPanel";
+import GithubRepoEditorPanel from "../../charts/github_actions/repo_kpi/GithubRepoEditorPanel";
+import GithubMergedPullRequestEditorPanel from "../../charts/github_actions/merged_pull_request_kpi/GithubMergedPullRequestEditorPanel";
 
 // TODO: combine with chart settings overlay?
-function DashboardMetricOverlayContainer(
-    {
-    kpiConfiguration,
-    setKpiConfiguration,
-    dashboardData,
-    index,
-    closePanel,
-    loadData,
-    setKpis,
-    settingsHelpComponent,
-  }) {
+function DashboardMetricOverlayContainer({
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  closePanel,
+  loadData,
+  setKpis,
+  settingsHelpComponent,
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const [metricModel, setMetricModel] = useState(undefined);
   const [metricFilterModel, setMetricFilterModel] = useState(undefined);
@@ -88,8 +82,12 @@ function DashboardMetricOverlayContainer(
   }, [kpiConfiguration]);
 
   const initializeData = async () => {
-    setMetricModel({...new Model(kpiConfiguration, kpiConfigurationMetadata, false)});
-    setUnpackedFilterData(metricHelpers.unpackMetricFilterData(kpiConfiguration?.filters));
+    setMetricModel({
+      ...new Model(kpiConfiguration, kpiConfigurationMetadata, false),
+    });
+    setUnpackedFilterData(
+      metricHelpers.unpackMetricFilterData(kpiConfiguration?.filters),
+    );
   };
 
   const closeSettingsPanel = () => {
@@ -100,7 +98,9 @@ function DashboardMetricOverlayContainer(
 
   // TODO: Once legacy KPI Settings panel is removed, this can be moved into the Dashboard Metric Button Container
   const saveKpiSettings = async () => {
-    const packedFilters = metricHelpers.packFilterData(metricFilterModel?.getPersistData());
+    const packedFilters = metricHelpers.packFilterData(
+      metricFilterModel?.getPersistData(),
+    );
     metricModel?.setData("filters", packedFilters);
     await dashboardMetricActions.updateDashboardKpiV2(
       getAccessToken,
@@ -111,7 +111,8 @@ function DashboardMetricOverlayContainer(
 
     // TODO: This is not very ideal, we need to resolve the refresh issues
     setKpiConfiguration({ ...metricModel?.getPersistData() });
-    dashboardData.getData("configuration")[index] = metricModel?.getPersistData();
+    dashboardData.getData("configuration")[index] =
+      metricModel?.getPersistData();
   };
 
   // TODO: Move this into a separate component after we can remove KpiSettingsForm
@@ -171,7 +172,8 @@ function DashboardMetricOverlayContainer(
             unpackedFilterData={unpackedFilterData}
           />
         );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.SERVICE_NOW_MEAN_TIME_TO_RESOLUTION:
+      case kpiIdentifierConstants.KPI_IDENTIFIERS
+        .SERVICE_NOW_MEAN_TIME_TO_RESOLUTION:
         return (
           <ServiceNowMeanTimeToResolutionEditorPanel
             metricModel={metricModel}
@@ -203,23 +205,44 @@ function DashboardMetricOverlayContainer(
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.QUICK_DEPLOY_STATISTICS:
         return (
-            <QuickDeployStatisticsEditorPanel
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-                unpackedFilterData={unpackedFilterData}
-                kpiConfiguration={kpiConfiguration}
-            />
+          <QuickDeployStatisticsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.ALL_GITHUB_ACTIONS_DATA_BLOCK:
+        return (
+          <AllGithubActionsDataBlockEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS
+        .LEAD_TIME_AND_RELEASE_TRACEABILITY:
+        return (
+          <LeadTimeAndReleaseTracebilityEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_COMPONENTS_CHART:
         return (
-            <SalesforceComponentsEditorPanel
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-                unpackedFilterData={unpackedFilterData}
-                kpiConfiguration={kpiConfiguration}
-            />
+          <SalesforceComponentsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_REPORT:
         return (
@@ -262,7 +285,7 @@ function DashboardMetricOverlayContainer(
           />
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
-        return(
+        return (
           <BoomiBarChartEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
@@ -271,8 +294,18 @@ function DashboardMetricOverlayContainer(
             kpiConfiguration={kpiConfiguration}
           />
         );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_ACTIONS_WORKFLOW:
+        return (
+          <GithubActionsWorkflowEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_MEAN_TIME_TO_RESOLUTION:
-        return(
+        return (
           <JiraMeanTimeToResolutionEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
@@ -282,7 +315,7 @@ function DashboardMetricOverlayContainer(
           />
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
-        return(
+        return (
           <JiraChangeFailureRateEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
@@ -291,15 +324,35 @@ function DashboardMetricOverlayContainer(
             kpiConfiguration={kpiConfiguration}
           />
         );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_MERGE_STATISTICS:
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_COMMIT_FREQUENCY:
         return (
-            <GitlabMergeRequestStatisticsEditorPanel
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-                unpackedFilterData={unpackedFilterData}
-                kpiConfiguration={kpiConfiguration}
-            />
+          <GithubCommitFrequencyEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_REPO_STATISTICS:
+        return (
+          <GithubRepoEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_MERGED_PULL_REQUEST:
+        return (
+          <GithubMergedPullRequestEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
         );
     }
   };
