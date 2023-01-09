@@ -101,8 +101,8 @@ function JenkinsNativeNodeDependencyMultiSelectInput({
       (dependency) => dependency.dependencyType,
     );
     const filteredArr = itemArray.filter(
-        (dependency) =>
-            !selectedDependencyTypes.includes(dependency.dependencyType),
+      (dependency) =>
+        !selectedDependencyTypes.includes(dependency.dependencyType),
     );
     return [...filteredArr, ...currentData];
   };
