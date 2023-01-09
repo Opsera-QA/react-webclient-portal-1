@@ -34,9 +34,6 @@ import JiraChangeFailureRateEditorPanel from "components/insights/charts/jira/li
 import GitlabPipelineStatisticsEditorPanel from "../../charts/gitlab/line_chart/pipeline-statistics/GitlabPipelineStatisticsEditorPanel";
 import DoraJiraGitlabRolledUpEditorPanel from "../../charts/dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpEditorPanel";
 import GitlabMergeRequestStatisticsEditorPanel from "../../charts/gitlab/merge_request_statistics/GitlabMergeRequestStatisticsEditorPanel";
-import GithubCommitFrequencyEditorPanel from "../../charts/github/line_chart/commits_frequency/GithubCommitFrequencyEditorPanel";
-import GithubRepoEditorPanel from "../../charts/github_actions/repo_kpi/GithubRepoEditorPanel";
-import GithubMergedPullRequestEditorPanel from "../../charts/github_actions/merged_pull_request_kpi/GithubMergedPullRequestEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer({
@@ -324,29 +321,9 @@ function DashboardMetricOverlayContainer({
             kpiConfiguration={kpiConfiguration}
           />
         );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_COMMIT_FREQUENCY:
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_MERGE_STATISTICS:
         return (
-          <GithubCommitFrequencyEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_REPO_STATISTICS:
-        return (
-          <GithubRepoEditorPanel
-            metricModel={metricModel}
-            metricFilterModel={metricFilterModel}
-            setMetricFilterModel={setMetricFilterModel}
-            unpackedFilterData={unpackedFilterData}
-            kpiConfiguration={kpiConfiguration}
-          />
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_MERGED_PULL_REQUEST:
-        return (
-          <GithubMergedPullRequestEditorPanel
+          <GitlabMergeRequestStatisticsEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}

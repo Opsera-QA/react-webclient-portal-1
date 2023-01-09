@@ -132,16 +132,29 @@ function PipelineActionControls(
     }
   };
 
-  const runPipeline = async (pipelineId, dynamicBranch) => {
+  const runPipeline = async (pipelineId, pipelineRunSettingsModel) => {
     try {
       const postBody = {};
 
-      const parsedDynamicBranch = DataParsingHelper.parseString(dynamicBranch);
+      if (pipelineRunSettingsModel && enabledServices?.dynamicSettings === true) {
+        const settings = {};
+        const parsedDynamicBranch = DataParsingHelper.parseString(pipelineRunSettingsModel?.getData("branch"));
 
-      if (enabledServices?.dynamicSettings === true && parsedDynamicBranch) {
-        postBody.settings = {
-          branch: parsedDynamicBranch,
-        };
+        if (parsedDynamicBranch) {
+          settings.branch = parsedDynamicBranch;
+        }
+
+        const parsedSteps = DataParsingHelper.parseArray(pipelineRunSettingsModel?.getData("steps"));
+
+        if (parsedSteps) {
+          settings.steps = parsedSteps;
+        }
+
+        const parsedSettings = DataParsingHelper.parseObject(settings);
+
+        if (parsedSettings) {
+          postBody.settings = parsedSettings;
+        }
       }
 
       setStartPipeline(true);
@@ -292,7 +305,7 @@ function PipelineActionControls(
   };
 
   // TODO: Put into a separate run button
-  const handleRunPipelineClick = async (dynamicBranch) => {
+  const handleRunPipelineClick = async (pipelineRunSettingsModel) => {
     const pipelineId = pipeline?._id;
     //check type of pipeline to determine if pre-flight wizard is required
     //for now type is just the first entry
@@ -330,11 +343,11 @@ function PipelineActionControls(
       } else { //this is starting from beginning:
         if (pipelineOrientation === "start") {
           console.log("starting pipeline from scratch");
-          await runPipeline(pipelineId, dynamicBranch);
+          await runPipeline(pipelineId, pipelineRunSettingsModel);
         } else {
           console.log("clearing pipeline activity and then starting over");
           await resetPipelineState();
-          await runPipeline(pipelineId, dynamicBranch);
+          await runPipeline(pipelineId, pipelineRunSettingsModel);
         }
       }
     }

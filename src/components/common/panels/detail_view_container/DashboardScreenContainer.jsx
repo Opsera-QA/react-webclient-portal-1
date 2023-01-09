@@ -137,7 +137,7 @@ function DashboardScreenContainer({
         isLoading={isLoading}
         parentBreadcrumb={parentBreadcrumb}
         titleIcon={breadcrumb?.icon}
-        title={dashboardModel?.getData("name")}
+        title={dashboardModel?.getDetailViewTitle()}
         inactive={
           activeField ? dashboardModel?.getData(activeField) === false : false
         }

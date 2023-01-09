@@ -406,10 +406,11 @@ function DependencyMultiSelectInput({
     const selectedDependencyTypes = currentData.map(
       (dependency) => dependency.dependencyType,
     );
-    return itemArray.filter(
-      (dependency) =>
-        !selectedDependencyTypes.includes(dependency.dependencyType),
+    const filteredArr = itemArray.filter(
+        (dependency) =>
+            !selectedDependencyTypes.includes(dependency.dependencyType),
     );
+    return [...filteredArr, ...currentData];
   };
 
   const setFormatDataFunction = (fieldName, selectedOption) => {

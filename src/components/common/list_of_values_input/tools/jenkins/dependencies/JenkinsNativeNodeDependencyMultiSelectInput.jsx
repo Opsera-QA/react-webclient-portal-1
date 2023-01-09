@@ -8,22 +8,22 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 export const itemArray = [
   {
     name: "Node Version 16.19",
-    dependencyType: "node",
+    dependencyType: "nodejs",
     version: "16.19",
   },
   {
     name: "Node Version 17.1",
-    dependencyType: "node",
+    dependencyType: "nodejs",
     version: "17.1",
   },
   {
     name: "Node Version 18.12",
-    dependencyType: "node",
+    dependencyType: "nodejs",
     version: "18.12",
   },
   {
     name: "Node Version 19.3",
-    dependencyType: "node",
+    dependencyType: "nodejs",
     version: "19.3",
   },
 ];
@@ -100,10 +100,11 @@ function JenkinsNativeNodeDependencyMultiSelectInput({
     const selectedDependencyTypes = currentData.map(
       (dependency) => dependency.dependencyType,
     );
-    return itemArray.filter(
+    const filteredArr = itemArray.filter(
       (dependency) =>
         !selectedDependencyTypes.includes(dependency.dependencyType),
     );
+    return [...filteredArr, ...currentData];
   };
 
   const setFormatDataFunction = (fieldName, selectedOption) => {

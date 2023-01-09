@@ -27,17 +27,19 @@ export default function LocalInputParametersValueInputBase(
     const parsedUpdatedData = DataParsingHelper.parseArray(updatedData, []);
 
     parsedUpdatedData.forEach((parameter) => {
-      if (parameter?.name !== "" && parameter?.value !== "") {
+      const parsedParameterName = DataParsingHelper.parseString(parameter?.name);
+      const parsedParameterValue = DataParsingHelper.parseString(parameter?.value, "");
+
+      if (parsedParameterName) {
         newArray.push({
-          name: parameter?.name,
-          value: parameter?.value,
+          name: parsedParameterName,
+          value: parsedParameterValue,
         });
       }
     });
 
     model.setData(fieldName, newArray);
     setModel({...model});
-    return true;
   };
 
   const updateParameterFunction = (index, newValue) => {
@@ -59,6 +61,7 @@ export default function LocalInputParametersValueInputBase(
                 setDataFunction={updateParameterFunction}
                 index={index}
                 key={index}
+                localParameter={parameter}
               />
             );
           }

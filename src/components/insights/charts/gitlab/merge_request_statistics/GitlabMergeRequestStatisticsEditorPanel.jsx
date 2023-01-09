@@ -5,49 +5,49 @@ import MetricDateRangeFilterInput from "components/common/inputs/metric/filters/
 import modelHelpers from "components/common/model/modelHelpers";
 import { gitlabMergeStatisticsMetadata } from "./gitlabMergeStatistics.metadata";
 function GitlabMergeRequestStatisticsEditorPanel({
-                                                 metricModel,
-                                                 unpackedFilterData,
-                                                 metricFilterModel,
-                                                 setMetricFilterModel,
-                                             }) {
-    useEffect(() => {
-        setMetricFilterModel(undefined);
+  metricModel,
+  unpackedFilterData,
+  metricFilterModel,
+  setMetricFilterModel,
+}) {
+  useEffect(() => {
+    setMetricFilterModel(undefined);
 
-        if (unpackedFilterData) {
-            setMetricFilterModel(
-                modelHelpers.parseObjectIntoModel(
-                    unpackedFilterData,
-                    gitlabMergeStatisticsMetadata,
-                ),
-            );
-        }
-    }, [unpackedFilterData]);
-
-    if (metricFilterModel == null) {
-        return null;
+    if (unpackedFilterData) {
+      setMetricFilterModel(
+        modelHelpers.parseObjectIntoModel(
+          unpackedFilterData,
+          gitlabMergeStatisticsMetadata,
+        ),
+      );
     }
+  }, [unpackedFilterData]);
 
-    return (
-        <div>
-            <MetricTagFilterInput
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-            />
-            <MetricDateRangeFilterInput
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-            />
-        </div>
-    );
+  if (metricFilterModel == null) {
+    return null;
+  }
+
+  return (
+    <div>
+      <MetricTagFilterInput
+        metricModel={metricModel}
+        metricFilterModel={metricFilterModel}
+        setMetricFilterModel={setMetricFilterModel}
+      />
+      <MetricDateRangeFilterInput
+        metricModel={metricModel}
+        metricFilterModel={metricFilterModel}
+        setMetricFilterModel={setMetricFilterModel}
+      />
+    </div>
+  );
 }
 
 GitlabMergeRequestStatisticsEditorPanel.propTypes = {
-    metricModel: PropTypes.object,
-    unpackedFilterData: PropTypes.object,
-    metricFilterModel: PropTypes.object,
-    setMetricFilterModel: PropTypes.func,
+  metricModel: PropTypes.object,
+  unpackedFilterData: PropTypes.object,
+  metricFilterModel: PropTypes.object,
+  setMetricFilterModel: PropTypes.func,
 };
 
 export default GitlabMergeRequestStatisticsEditorPanel;

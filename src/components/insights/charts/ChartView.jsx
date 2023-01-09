@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 
@@ -81,7 +81,7 @@ import GitlabPipelineStatistics from "./gitlab/line_chart/pipeline-statistics/Gi
 import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/GitlabMergeRequestStatistics";
 
 //new
-import ProjectWiseUnitTestResults from './unit_tests/project_wise_results/ProjectWiseUnitTestResults';
+import ProjectWiseUnitTestResults from "./unit_tests/project_wise_results/ProjectWiseUnitTestResults";
 
 // Github KPIs
 import GithubCommitFrequency from "./github/line_chart/commits_frequency/GithubCommitFrequency";
@@ -94,8 +94,7 @@ import GithubTimeTakenToCompleteMergeRequestReview from "./github/bar_chart/time
 import GithubMergeRequestByMaximumTimeChart from "./github/bar_chart/merge_request_by_maximum_time/GithubMergeRequestByMaximumTimeChart";
 import GithubCommitsByAuthor from "./github/calendar_chart/commits_by_author/GithubCommitsByAuthor";
 import AllGithubActionsDataBlock from "./github_actions/data_blocks/AllGithubActions/AllGithubActionsDataBlock";
-import LeadTimeAndReleaseTraceabilityDataBlock
-    from "./github_actions/data_blocks/LeadTimeAndReleaseTraceabilityDataBlock";
+import LeadTimeAndReleaseTraceabilityDataBlock from "./github_actions/data_blocks/LeadTimeAndReleaseTraceabilityDataBlock";
 import GithubActionsWorkflowChart from "./github_actions/workflows/GithubActionsWorkflowChart";
 import GithubPendingMergeRequests from "./github/table/pending_merge_requests/GithubPendingMergeRequests";
 import GithubMergedPullRequestAverageTime from "./github/line_chart/merged_pull_request_average_time/GithubMergedPullRequestAverageTime";
@@ -155,7 +154,6 @@ import ServiceNowMeanTimeBetweenFailuresBarChart from "./servicenow/bar_chart/me
 //SDLC KPIs
 import SdlcDurationByStageMetrics from "components/insights/charts/sdlc/bar_chart/duration_by_stage/SdlcDurationByStageMetrics";
 
-
 // Coverity KPIs
 import CoverityIssuesByCategory from "./coverity/CoverityIssuesByCategory/CoverityIssuesByCategory";
 
@@ -169,14 +167,12 @@ import {
 import { Col } from "react-bootstrap";
 import LegacySonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings_legacy/LegacySonarRatingMetrics";
 import SonarRatingMetrics from "components/insights/charts/sonar/sonar_ratings/SonarRatingMetrics";
-import AutomatedTestAdoptionRateMetric
-  from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AutomatedTestAdoptionRateMetric";
+import AutomatedTestAdoptionRateMetric from "components/insights/charts/qa_metrics/automation_test_adoption_rate/AutomatedTestAdoptionRateMetric";
 import LoadingDialog from "components/common/status_notifications/loading";
-import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
+import { kpiIdentifierConstants } from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 import SonarRatingsLeadershipMetrics from "components/insights/charts/sonar/sonar_leadership/SonarRatingsLeadershipMetrics";
 import GitSrapperMetrics from "components/insights/charts/gitscrapper/GitScrapperMetrics";
-import SalesforceComponentsDataBlockChart
-  from "./sfdc/data_block_chart/Salesforce_components/salesforceComponentsDataBlockChart";
+import SalesforceComponentsDataBlockChart from "./sfdc/data_block_chart/Salesforce_components/salesforceComponentsDataBlockChart";
 import GithubCommitsStatistics from "./github/pie_chart/commits_statistics/GithubCommitsStatistics";
 import GithubConnectedAssets from "./github/data_blocks/GithubConnectedAssets";
 import GithubSecurityCompliance from "./github/pie_chart/security_compliance/GithubSecurityCompliance";
@@ -191,22 +187,27 @@ import ApigeeSummaryChart from "./apigee/summary/ApigeeSummaryChart";
 // Approval Gates KPI
 import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
 import GithubRepositoryStatistics from "./github_actions/repo_kpi/GithubRepositoryStatistics";
-import GithubMergedPullRequestStatistics
-    from "./github_actions/merged_pull_request_kpi/GithubMergedPullRequestStatistics";
+import GithubMergedPullRequestStatistics from "./github_actions/merged_pull_request_kpi/GithubMergedPullRequestStatistics";
 
 // Dora KPI
 import DoraJiraGitlabRolledUpChart from "./dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpChart";
-
+import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/GitlabMergeRequestStatistics";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
-function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
+function ChartView({
+  kpiConfiguration,
+  dashboardData,
+  index,
+  loadChart,
+  setKpis,
+}) {
   const [kpiConfig, setKpiConfig] = useState(undefined);
   const isMounted = useRef(false);
 
   useEffect(() => {
     isMounted.current = true;
 
-    setKpiConfig({...kpiConfiguration});
+    setKpiConfig({ ...kpiConfiguration });
 
     return () => {
       isMounted.current = false;
@@ -230,7 +231,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
     }
 
     return (
-      <Col xl={6} md={12} className="p-2">
+      <Col
+        xl={6}
+        md={12}
+        className="p-2"
+      >
         <ChartContainer
           title={kpiConfig?.kpi_name}
           chart={getChart()}
@@ -255,7 +260,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Opsera KPIs
       case "opsera-status-by-pipeline":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <OpseraPipelineByStatusBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -267,7 +276,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "opsera-pipeline-duration":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <OpseraBuildDurationBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -279,7 +292,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "opsera-pipelines-by-user":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <OpseraBuildsByUserBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -291,7 +308,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "opsera-deployment-frequency":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <OpseraDeploymentFrequencyLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -303,7 +324,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "opsera-recent-pipeline-status":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <OpseraRecentPipelineStatus
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -315,7 +340,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "opsera-recent-cd-status":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <OpseraRecentCDStatusTable
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -327,7 +356,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "opsera-duration-by-stage":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <OpseraBuildDurationByStageBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -339,7 +372,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "opsera-deployment-frequency-stats":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <OpseraPipelineDeploymentFrequencyStats
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -351,7 +388,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "opsera-mean-time-to-restore":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <OpseraMeanTimeToRestoreBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -363,7 +404,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "opsera-nexus-pipeline-step-info":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <OpseraNexusPipelineStepInfo
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -375,7 +420,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.BUILD_DEPLOYMENT_STATISTICS:
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <OpseraBuildAndDeploymentStatistics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -389,7 +437,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Jenkins KPIs
       case "jenkins-builds-by-user":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <JenkinsBuildsByUserBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -401,7 +453,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "jenkins-build-duration":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <JenkinsBuildDurationBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -413,7 +469,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "jenkins-status-by-job-name":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <JenkinsStatusByJobNameBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -424,14 +484,33 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
       case "jenkins-deployment-frequency":
-        return <JenkinsDeploymentFrequencyLineChart persona={"developer"} date={getDateObject(kpiConfig)} />;
+        return (
+          <JenkinsDeploymentFrequencyLineChart
+            persona={"developer"}
+            date={getDateObject(kpiConfig)}
+          />
+        );
       case "jenkins-change-failure-rate":
-        return <JenkinsChangeFailureRate persona={"developer"} date={getDateObject(kpiConfig)} />;
+        return (
+          <JenkinsChangeFailureRate
+            persona={"developer"}
+            date={getDateObject(kpiConfig)}
+          />
+        );
       case "jenkins-deployments-counts":
-        return <JenkinsDeploymentsCountsBarChart persona={"developer"} date={getDateObject(kpiConfig)} />;
+        return (
+          <JenkinsDeploymentsCountsBarChart
+            persona={"developer"}
+            date={getDateObject(kpiConfig)}
+          />
+        );
       case "jenkins-recent-build-status":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <JenkinsRecentPipelineStatus
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -445,7 +524,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Jira KPIs
       case "jira-tickets-assigned-by-user":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <JiraTicketsAssignedByUserBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -457,7 +540,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "jira-issues-by-priority":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <JiraIssuesByPriorityBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -469,7 +556,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "jira-health-by-sprint":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <JiraHealthBySprintBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -481,7 +572,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "jira-velocity-report":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <JiraVelocityReportBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -493,7 +588,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "jira-issues-created-vs-resolved":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <JiraIssuesCreatedVsResolvedLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -505,7 +604,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "jira-sprint-burndown":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <JiraSprintBurndownLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -517,7 +620,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "jira-issues-assigned-to-me":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <JiraIssuesAssignedToMe
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -529,7 +636,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "jira-lead-time":
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <JiraLeadTimeLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -542,7 +652,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
 
       case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
         return (
-          <Col xl={12} md={12} className="p-2">
+          <Col
+            xl={12}
+            md={12}
+            className="p-2"
+          >
             <JiraChangeFailureRate
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -551,10 +665,13 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               index={index}
             />
           </Col>
-        );   
-        case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_MEAN_TIME_TO_RESOLUTION:
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_MEAN_TIME_TO_RESOLUTION:
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <JiraMeanTimeToResolution
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -567,7 +684,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Anchore KPIs
       case "anchore-vulnerability-severity-by-package":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <AnchoreVulnerabilitySeverityByPackageBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -579,7 +700,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "anchore-vulnerabilities-by-date":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <AnchoreVulnerabilitiesByDateLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -593,7 +718,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Sonar KPIs
       case "sonar-code-smells":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarCodeSmellsLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -605,7 +734,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-maintainability-rating":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarMaintainabilityRatingLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -617,7 +750,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-bugs":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarBugsCountLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -629,7 +766,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-new-bugs":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarNewBugsCountLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -641,7 +782,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-reliability-rating":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarReliabilityRatingLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -653,7 +798,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-reliability-remediation-effort":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarReliabilityRemediationEffortLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -665,7 +814,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-reliability-remediation-effort-by-project":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarReliabilityRemediationEffortByProjectLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -677,7 +830,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-reliability-remediation-agg-by-time":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarReliabilityRemediationEffortAggByTimetLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -689,7 +846,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-reliability-remediation-agg-trend":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarReliabilityRemediationEffortAggTrendLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -701,7 +862,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-vulnerabilities-by-project":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarMetricByProjectLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -714,7 +879,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-new-vulnerabilities-by-project":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarMetricByProjectLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -727,7 +896,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-new-technical-debt-by-project":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarMetricByProjectLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -740,7 +913,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-code-smells-by-project":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarMetricByProjectLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -753,7 +930,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-code-coverage":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarCodeCoverageBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -765,7 +946,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-lines-to-cover":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarLinesToCoverBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -777,7 +962,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-ratings":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <LegacySonarRatingMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -789,7 +978,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.SONAR_RATINGS:
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <SonarRatingMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -801,7 +993,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-ratings-leadership":
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <SonarRatingsLeadershipMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -825,7 +1020,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       //   );
       case "sonar-bugs-metric-scorecard":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarBugsMetricScorecard
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -837,7 +1036,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-codesmells-metric-scorecard":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarCodeSmellsMetricScorecard
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -849,7 +1052,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-vulnerabilities-metric-scorecard":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SonarVulnerabilitiesMetricScorecard
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -863,7 +1070,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Jmeter KPIs
       case "jmeter-hits":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <JmeterHitsLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -875,7 +1086,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "jmeter-errors":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <JmeterErrorsLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -887,7 +1102,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "jmeter-throughput":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <JmeterThroughputLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -899,7 +1118,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "jmeter-response-time":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <JmeterResponseTimeLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -911,7 +1134,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "jmeter-connect-time":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <JmeterConnectTimeTable
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -925,7 +1152,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Gitlab KPIs
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_PIPELINE_STATISTICS:
         return (
-          <Col xl={12} md={12} className="p-2">
+          <Col
+            xl={12}
+            md={12}
+            className="p-2"
+          >
             <GitlabPipelineStatistics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -934,10 +1165,14 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               index={index}
             />
           </Col>
-      );
+        );
       case "gitlab-most-active-contributors":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <GitlabMostActiveContributors
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -949,7 +1184,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "gitlab-merge-request-by-maximum-time":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <GitlabMergeRequestByMaximumTimeChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -961,7 +1200,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "gitlab-merge-requests-by-user":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <GitlabMergeRequestsByUserChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -973,7 +1216,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "gitlab-time-taken-to-complete-merge-request-review":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <GitlabTimeTakenToCompleteMergeRequestReview
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -985,7 +1232,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "gitlab-commits-by-author":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <GitlabCommitsByAuthor
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -997,7 +1248,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "gitlab-merge-requests-pushes-and-comments":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <GitlabMergeRequestsPushesAndComments
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1009,7 +1264,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "gitlab-total-commits-by-project":
         return (
-          <Col xl={12} md={12} className="p-2">
+          <Col
+            xl={12}
+            md={12}
+            className="p-2"
+          >
             <GitlabTotalCommitsByProjectChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1021,7 +1280,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "gitlab-recent-merge-requests":
         return (
-          <Col xl={12} md={12} className="p-2">
+          <Col
+            xl={12}
+            md={12}
+            className="p-2"
+          >
             <GitlabRecentMergeRequests
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1033,7 +1296,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "gitlab-pending-merge-requests":
         return (
-          <Col xl={12} md={12} className="p-2">
+          <Col
+            xl={12}
+            md={12}
+            className="p-2"
+          >
             <GitlabPendingMergeRequests
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1046,44 +1313,59 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
 
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY:
         return (
-            <Col xl={12} md={12} className="p-2">
-              <GitlabDeploymentFrequency
-                kpiConfiguration={kpiConfig}
-                setKpiConfiguration={setKpiConfig}
-                dashboardData={dashboardData}
-                setKpis={setKpis}
-                index={index}
-              />
-            </Col>
-          );
+          <Col
+            xl={12}
+            md={12}
+            className="p-2"
+          >
+            <GitlabDeploymentFrequency
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
         return (
-            <Col md={12} className="p-2">
-              <GitLabLeadTimeChart
-                kpiConfiguration={kpiConfig}
-                setKpiConfiguration={setKpiConfig}
-                dashboardData={dashboardData}
-                setKpis={setKpis}
-                index={index}
-              />
-            </Col>
+          <Col
+            md={12}
+            className="p-2"
+          >
+            <GitLabLeadTimeChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_MERGE_STATISTICS:
         return (
-            <Col xl={12} md={12} className="p-2">
-                <GitlabMergeRequestStatistics
-                    kpiConfiguration={kpiConfig}
-                    setKpiConfiguration={setKpiConfig}
-                    dashboardData={dashboardData}
-                    setKpis={setKpis}
-                    index={index}
-                />
-            </Col>
+          <Col
+            xl={12}
+            md={12}
+            className="p-2"
+          >
+            <GitlabMergeRequestStatistics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       //APIGEE KPIs
       case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_REPORT:
         return (
-          <Col xl={12} md={12} className="p-2">
+          <Col
+            xl={12}
+            md={12}
+            className="p-2"
+          >
             <ApigeeReportsChartTab
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1096,7 +1378,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
 
       case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_SUMMARY:
         return (
-          <Col xl={12} md={12} className="p-2">
+          <Col
+            xl={12}
+            md={12}
+            className="p-2"
+          >
             <ApigeeSummaryChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1110,7 +1396,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Cypress KPIs
       case "cypress-test-results":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <CypressTestResultsTable
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1124,7 +1414,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Selenium KPIs
       case "selenium-test-results":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SeleniumTestResultsTable
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1136,7 +1430,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "selenium-test-summary-percentages":
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <SeleniumTestSummaryPercentages
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1150,7 +1447,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Junit KPIs
       case "junit-test-results":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <JunitTestResultsTable
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1164,7 +1465,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Xunit KPIs
       case "xunit-test-results":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <XunitTestResultsTable
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1177,18 +1482,41 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
 
       // Metricbeat KPIs
       case "metricbeat-kubernetes-cpu-usage":
-        return <MetricbeatCpuUsageByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)} />;
+        return (
+          <MetricbeatCpuUsageByTimeLineChart
+            persona={"developer"}
+            date={getDateObject(kpiConfig)}
+          />
+        );
       case "metricbeat-kubernetes-memory-usage":
-        return <MetricbeatMemoryUsageByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)} />;
+        return (
+          <MetricbeatMemoryUsageByTimeLineChart
+            persona={"developer"}
+            date={getDateObject(kpiConfig)}
+          />
+        );
       case "metricbeat-kubernetes-in-network-usage":
-        return <MetricbeatInNetworkTrafficByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)} />;
+        return (
+          <MetricbeatInNetworkTrafficByTimeLineChart
+            persona={"developer"}
+            date={getDateObject(kpiConfig)}
+          />
+        );
       case "metricbeat-kubernetes-out-network-usage":
-        return <MetricbeatOutNetworkTrafficByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)} />;
+        return (
+          <MetricbeatOutNetworkTrafficByTimeLineChart
+            persona={"developer"}
+            date={getDateObject(kpiConfig)}
+          />
+        );
 
       // Github KPIs
       case "github-commit-frequency":
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <GithubCommitFrequency
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1200,7 +1528,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "github-merge-requests-by-user":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <GithubMergeRequestsByUser
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1212,7 +1544,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "github-merge-requests-pushes-and-comments":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <GithubMergeRequestsPushesAndComments
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1224,7 +1560,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "github-total-commits-by-project":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <GithubTotalCommitsByProjectChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1236,7 +1576,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "github-most-active-contributors":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <GithubMostActiveContributors
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1248,7 +1592,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "github-recent-merge-requests":
         return (
-          <Col xl={12} md={12} className="p-2">
+          <Col
+            xl={12}
+            md={12}
+            className="p-2"
+          >
             <GithubRecentMergeRequests
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1260,7 +1608,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "github-time-taken-to-complete-merge-request-review":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <GithubTimeTakenToCompleteMergeRequestReview
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1272,7 +1624,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "github-merge-request-by-maximum-time":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <GithubMergeRequestByMaximumTimeChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1284,7 +1640,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "github-commits-by-author":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <GithubCommitsByAuthor
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1296,7 +1656,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "github-pending-merge-requests":
         return (
-          <Col xl={12} md={12} className="p-2">
+          <Col
+            xl={12}
+            md={12}
+            className="p-2"
+          >
             <GithubPendingMergeRequests
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1307,8 +1671,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
       case "all-github-actions-data-block":
-        return(
-          <Col md={12} className="p-2">
+        return (
+          <Col
+            md={12}
+            className="p-2"
+          >
             <AllGithubActionsDataBlock
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1320,7 +1687,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "github-commit-statistics":
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <GithubCommitsStatistics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1332,7 +1702,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "all-environments-lead-time":
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <IntermediateEnvironmentsLeadTimeChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1344,8 +1717,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
       case "lead-time-and-release-traceability-data-block":
-        return(
-          <Col md={12} className="p-2">
+        return (
+          <Col
+            md={12}
+            className="p-2"
+          >
             <LeadTimeAndReleaseTraceabilityDataBlock
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1358,19 +1734,26 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "github-security-compliance":
         return (
-          <Col md={12} className="p-2">
-              <GithubSecurityCompliance
-                  kpiConfiguration={kpiConfig}
-                  setKpiConfiguration={setKpiConfig}
-                  dashboardData={dashboardData}
-                  setKpis={setKpis}
-                  index={index}
-              />
+          <Col
+            md={12}
+            className="p-2"
+          >
+            <GithubSecurityCompliance
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
           </Col>
-          );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_MERGED_PULL_REQUEST_AVERAGE_TIME:
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS
+        .GITHUB_MERGED_PULL_REQUEST_AVERAGE_TIME:
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <GithubMergedPullRequestAverageTime
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1380,10 +1763,13 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               showViewDetailsToggle={true}
             />
           </Col>
-          );
+        );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_ACTIONS_WORKFLOW:
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <GithubActionsWorkflowChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1393,57 +1779,74 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-        case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_REPO_STATISTICS:
-            return (
-                <Col md={12} className="p-2">
-                    <GithubRepositoryStatistics
-                        kpiConfiguration={kpiConfig}
-                        setKpiConfiguration={setKpiConfig}
-                        dashboardData={dashboardData}
-                        setKpis={setKpis}
-                        index={index}
-                    />
-                </Col>
-            );
-        case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_MERGED_PULL_REQUEST:
-          return (
-              <Col md={12} className="p-2">
-                  <GithubMergedPullRequestStatistics
-                      kpiConfiguration={kpiConfig}
-                      setKpiConfiguration={setKpiConfig}
-                      dashboardData={dashboardData}
-                      setKpis={setKpis}
-                      index={index}
-                  />
-              </Col>
-          );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_OPEN_PULL_REQUEST_AVERAGE_TIME:
-          return (
-              <Col md={12} className="p-2">
-                  <GithubOpenPullRequestAverageTime
-                      kpiConfiguration={kpiConfig}
-                      setKpiConfiguration={setKpiConfig}
-                      dashboardData={dashboardData}
-                      setKpis={setKpis}
-                      index={index}
-                  />
-              </Col>
-      );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_REPO_STATISTICS:
+        return (
+          <Col
+            md={12}
+            className="p-2"
+          >
+            <GithubRepositoryStatistics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_MERGED_PULL_REQUEST:
+        return (
+          <Col
+            md={12}
+            className="p-2"
+          >
+            <GithubMergedPullRequestStatistics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS
+        .GITHUB_OPEN_PULL_REQUEST_AVERAGE_TIME:
+        return (
+          <Col
+            md={12}
+            className="p-2"
+          >
+            <GithubOpenPullRequestAverageTime
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       case "github-connected-assets":
         return (
-          <Col md={12} className="p-2">
-              <GithubConnectedAssets
-                  kpiConfiguration={kpiConfig}
-                  setKpiConfiguration={setKpiConfig}
-                  dashboardData={dashboardData}
-                  setKpis={setKpis}
-                  index={index}
-              />
+          <Col
+            md={12}
+            className="p-2"
+          >
+            <GithubConnectedAssets
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
           </Col>
-          );
+        );
       case "sonar-unit-testing":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <ProjectWiseUnitTestResults
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1456,7 +1859,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Bitbucket KPIs
       case "bitbucket-most-active-contributors":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <BitbucketMostActiveContributors
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1468,7 +1875,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "bitbucket-merge-request-by-maximum-time":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <BitbucketMergeRequestByMaximumTimeChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1480,7 +1891,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "bitbucket-merge-requests-by-user":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <BitbucketMergeRequestsByUserChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1492,7 +1907,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "bitbucket-time-taken-to-complete-merge-request-review":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <BitbucketTimeTakenToCompleteMergeRequestReview
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1504,7 +1923,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "bitbucket-commits-by-author":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <BitbucketCommitsByAuthor
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1516,7 +1939,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "bitbucket-merge-requests-pushes-and-comments":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <BitbucketMergeRequestsPushesAndComments
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1528,7 +1955,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "bitbucket-total-commits-by-project":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <BitbucketTotalCommitsByProjectChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1540,7 +1971,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "bitbucket-recent-merge-requests":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <BitbucketRecentMergeRequests
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1552,7 +1987,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "bitbucket-pending-merge-requests":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <BitbucketPendingMergeRequests
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1564,7 +2003,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "bitbucket-rejected-merge-requests":
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <BitbucketRejectedMergeRequestsTable
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1577,7 +2019,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // QA Testing
       case "qa-manual-test":
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <ManualQaTestPieChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1589,7 +2034,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.FIRST_PASS_YIELD:
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <FirstPassYieldMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1601,7 +2049,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "cumulative-open-defects":
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <CumulativeOpenDefectsMetric
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1613,7 +2064,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATION_PERCENTAGE:
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <AutomationPercentageMetric
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1625,7 +2079,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "adoption-percentage":
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             {/*<AdoptionTestPercentageMetricV1*/}
             {/*  kpiConfiguration={kpiConfig}*/}
             {/*  setKpiConfiguration={setKpiConfig}*/}
@@ -1644,7 +2101,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "automated-test-results":
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <AutomatedTestResultsPieChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1656,7 +2116,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_DURATION_BY_STAGE:
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <SalesforceDurationByStageMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1668,7 +2131,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sfdc-manual-test":
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <SFDCManualTestResultsPieChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1680,7 +2146,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sfdc-backups":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SalesforceBackupAndRollbackMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1692,7 +2162,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sfdc-profile-migrations":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SFDCProfileMigrationsBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1704,7 +2178,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sfdc-unit-testing":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <SFDCUnitTestingPieChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1716,7 +2194,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.SDLC_DURATION_STATISTICS:
         return (
-          <Col xl={12} md={12} className="p-2">
+          <Col
+            xl={12}
+            md={12}
+            className="p-2"
+          >
             <SdlcDurationByStageMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1728,7 +2210,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_COMPONENTS_CHART:
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <SalesforceComponentsDataBlockChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1739,8 +2224,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
       case "deployment-analytics":
-        return(
-          <Col md={12} className="p-2">
+        return (
+          <Col
+            md={12}
+            className="p-2"
+          >
             <DeploymentAnalytics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1753,7 +2241,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Service Now
       case "servicenow-mean-time-to-resolution":
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <ServiceNowMeanTimeToResolutionBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1765,7 +2256,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "servicenow-mean-time-to-acknowledge":
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <ServiceNowMeanTimeToAcknowledgeBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1789,7 +2283,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       //   );
       case "defect-removal-efficiency":
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <DefectRemovalEfficiencyMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1802,7 +2299,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Coverity
       case "coverity-issues-by-category-trend":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <CoverityIssuesByCategory
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1812,22 +2313,29 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-        case kpiIdentifierConstants.KPI_IDENTIFIERS.QUICK_DEPLOY_STATISTICS:
-            return (
-                <Col md={12} className="p-2">
-                    <QuickDeployStatistics
-                        kpiConfiguration={kpiConfig}
-                        setKpiConfiguration={setKpiConfig}
-                        dashboardData={dashboardData}
-                        setKpis={setKpis}
-                        index={index}
-                    />
-                </Col>
-            );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.QUICK_DEPLOY_STATISTICS:
+        return (
+          <Col
+            md={12}
+            className="p-2"
+          >
+            <QuickDeployStatistics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       // GitSrapperMetrics
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_SCRAPER_METRICS:
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col
+            xl={6}
+            md={12}
+            className="p-2"
+          >
             <GitSrapperMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1838,10 +2346,12 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
 
-
-      case  kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <BoomiBarChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1853,7 +2363,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.DORA_JIRA_GITLAB_ROLLED_UP:
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <DoraJiraGitlabRolledUpChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1865,7 +2378,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "approval-gates":
         return (
-          <Col md={12} className="p-2">
+          <Col
+            md={12}
+            className="p-2"
+          >
             <ApprovalGatesMetrics
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1882,7 +2398,12 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
   };
 
   if (kpiConfig == null) {
-    return (<LoadingDialog size={"sm"} message={"Loading Insights"} />);
+    return (
+      <LoadingDialog
+        size={"sm"}
+        message={"Loading Insights"}
+      />
+    );
   }
 
   // TODO: Chart container should be inside each chart component

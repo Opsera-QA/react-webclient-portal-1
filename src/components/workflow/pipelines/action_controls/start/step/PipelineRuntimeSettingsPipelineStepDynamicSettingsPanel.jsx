@@ -13,25 +13,25 @@ export default function PipelineRuntimeSettingsPipelineStepDynamicSettingsPanel(
     pipelineStep,
     updateStepSettingsFunction,
   }) {
-  const [runtimeSettingsModel, setRuntimeSettingsModel] = useState(modelHelpers.parseObjectIntoModel(pipelineStep, pipelineStepRuntimeSettingsMetadata));
+  const [pipelineStepRuntimeSettingsModel, setPipelineStepRuntimeSettingsModel] = useState(modelHelpers.parseObjectIntoModel(pipelineStep, pipelineStepRuntimeSettingsMetadata));
 
   const updateModelFunction = (newModel) => {
-    setRuntimeSettingsModel({...newModel});
-    updateStepSettingsFunction(newModel?.getPersistData());
+    setPipelineStepRuntimeSettingsModel({...newModel});
+    updateStepSettingsFunction({...newModel?.getPersistData()});
   };
 
-  if (pipelineStep == null || runtimeSettingsModel == null) {
+  if (pipelineStep == null || pipelineStepRuntimeSettingsModel == null) {
     return null;
   }
 
   return (
     <div className={"mt-2"}>
       <H5FieldSubHeader
-        subheaderText={`${runtimeSettingsModel?.getData("name")}: Runtime Settings`}
+        subheaderText={`${pipelineStepRuntimeSettingsModel?.getData("name")}: Runtime Settings`}
       />
-      <div className={"m-3"}>
+      <div>
         <LocalInputParametersValueInputBase
-          model={runtimeSettingsModel}
+          model={pipelineStepRuntimeSettingsModel}
           fieldName={"stepParameters"}
           setModel={updateModelFunction}
         />
