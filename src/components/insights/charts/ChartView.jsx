@@ -191,7 +191,6 @@ import GithubMergedPullRequestStatistics from "./github_actions/merged_pull_requ
 
 // Dora KPI
 import DoraJiraGitlabRolledUpChart from "./dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpChart";
-import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/GitlabMergeRequestStatistics";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({
