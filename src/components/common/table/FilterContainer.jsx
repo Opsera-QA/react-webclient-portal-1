@@ -36,7 +36,7 @@ function FilterContainer({
   showRefreshButton,
   disableNewRecordButton,
   filterSelectionOverlayPanel,
-  activeFilterDisplayer,
+  hideActiveFilterDisplayer,
   // TODO: Remove after filters are used everywhere
   type,
 }) {
@@ -82,6 +82,17 @@ function FilterContainer({
     };
   };
 
+  const getActiveFilterDisplayer = () => {
+    if (hideActiveFilterDisplayer !== true) {
+      return (
+        <ActiveFilterDisplayer
+          filterModel={filterDto}
+          loadData={loadData}
+        />
+      );
+    }
+  };
+
   return (
     <div className={className}>
       <div className={"filter-container container-border"}>
@@ -98,11 +109,7 @@ function FilterContainer({
               addRecordFunction={addRecordFunction}
             />
           </div>
-          <ActiveFilterDisplayer
-            filterModel={filterDto}
-            loadData={loadData}
-            activeFilterDisplayer={activeFilterDisplayer}
-          />
+          {getActiveFilterDisplayer()}
         </div>
         <div
           className={bodyClassName}
@@ -143,12 +150,11 @@ FilterContainer.propTypes = {
   disableNewRecordButton: PropTypes.bool,
   filterSelectionOverlayPanel: PropTypes.any,
   isPolling: PropTypes.bool,
-  activeFilterDisplayer: PropTypes.bool,
+  hideActiveFilterDisplayer: PropTypes.bool,
 };
 
 FilterContainer.defaultProps = {
   showRefreshButton: true,
-  activeFilterDisplayer: true,
   disableNewRecordButton: false,
 };
 

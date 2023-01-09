@@ -14,6 +14,9 @@ import CommandLineInputParameterTypeSelectInput
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
+import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 
 export default function CommandLineInputParameterInputRow(
   {
@@ -73,10 +76,13 @@ export default function CommandLineInputParameterInputRow(
   };
 
   const isValid = commandLineInputParameterModel?.checkCurrentValidity();
+  const name = DataParsingHelper.parseString(commandLineInputParameterModel?.getData("name"), "");
   const missingOutputKey = saveEnvironmentVariables === true
     && commandLineInputParameterModel?.getData("type") === "global"
     && hasStringValue(commandLineInputParameterModel?.getData("outputKey")) !== true;
   const isDuplicate = hasDuplicateName();
+  const invalidLocalParameter = commandLineInputParameterModel?.getData("type") === "local"
+    &&  (name.startsWith("opsera-local-") !== true || name === "opsera-local-");
 
   const getInputFields = () => {
     if (commandLineInputParameterModel?.getData("type") === "global") {
@@ -127,11 +133,13 @@ export default function CommandLineInputParameterInputRow(
           />
         </Col>
         <Col xs={5}>
-          <TextInputBase
+          <TextAreaInputBase
             fieldName={"value"}
-            dataObject={commandLineInputParameterModel}
-            setDataObject={setCommandLineInputParameterModel}
+            model={commandLineInputParameterModel}
+            setModel={setCommandLineInputParameterModel}
+            rowCount={1}
             disabled={disabled}
+            useInfoContainer={false}
           />
         </Col>
       </>
@@ -155,7 +163,7 @@ export default function CommandLineInputParameterInputRow(
               className={"ml-auto"}
               variant={"success"}
               icon={faPlus}
-              disabled={ isValid !== true || disabled === true || missingOutputKey === true || isDuplicate === true}
+              disabled={ isValid !== true || disabled === true || missingOutputKey === true || isDuplicate === true || invalidLocalParameter === true}
               onClickFunction={handleAddPropertyFunction}
               normalText={"Add Parameter"}
             />

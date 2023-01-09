@@ -73,19 +73,18 @@ function GitlabMergeRequestStatistics({
                 dashboardOrgs,
             );
             const metrics = response?.data?.data;
-            console.log("metrics, metrics", metrics);
             if (isMounted?.current === true && metrics?.averageMergeTime[0]?.statisticsData.length && metrics?.averageOpenTime[0]?.statisticsData.length) {
                 setCloseChart(metrics?.averageMergeTime[0]?.chartData[0]?.data);
                 setCloseStats(metrics?.averageMergeTime[0]?.statisticsData);
                 setOpenStats(metrics?.averageOpenTime[0]?.statisticsData);
                 setOpenChart(metrics?.averageOpenTime[0]?.chartData[0]?.data);
             }
-            // else {
-            //     setCloseStats({});
-            //     setCloseChart([]);
-            //     setOpenStats({});
-            //     setOpenChart([]);
-            // }
+            else {
+                setCloseStats({});
+                setCloseChart([]);
+                setOpenStats({});
+                setOpenChart([]);
+            }
         } catch (error) {
             if (isMounted?.current === true) {
                 console.error(error);
@@ -116,9 +115,6 @@ function GitlabMergeRequestStatistics({
             );
         }
     };
-
-    console.log("closeStats", closeStats);
-    console.log("closeChart", closeChart);
 
     const getChartBody = () => {
         if (

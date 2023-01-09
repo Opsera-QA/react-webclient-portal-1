@@ -1059,18 +1059,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               />
             </Col>
         );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_MERGE_STATISTICS:
-        return (
-            <Col xl={12} md={12} className="p-2">
-                <GitlabMergeRequestStatistics
-                    kpiConfiguration={kpiConfig}
-                    setKpiConfiguration={setKpiConfig}
-                    dashboardData={dashboardData}
-                    setKpis={setKpis}
-                    index={index}
-                />
-            </Col>
-        );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_MERGE_STATISTICS:
+            return (
+                <Col xl={12} md={12} className="p-2">
+                    <GitlabMergeRequestStatistics
+                        kpiConfiguration={kpiConfig}
+                        setKpiConfiguration={setKpiConfig}
+                        dashboardData={dashboardData}
+                        setKpis={setKpis}
+                        index={index}
+                    />
+                </Col>
+            );
       //APIGEE KPIs
       case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_REPORT:
         return (

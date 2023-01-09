@@ -9,6 +9,7 @@ import {
   getGitCustodianExternalLinkIconColumnDefinition,
   getTableInfoIconColumn,
   getCustomTableAccessor,
+  getTableArrayFirstValueAndCountColumn,
 } from "../../../common/table/table-column-helpers";
 import { getDurationInDaysHours } from "components/common/table/table-column-helpers-v2";
 import { getField } from "../../../common/metadata/metadata-helpers";
@@ -43,7 +44,7 @@ const getGitCustodianExternalLinkIconOrCheckboxColumnDefinition = (
         (selectedIssue) => selectedIssue?.issueId === issueId,
       );
 
-      if (issue.status !== "Open") {
+      if (issue.status === 'Commit Removed') {
         return null;
       }
 
@@ -108,6 +109,7 @@ function GitCustodianVulnerableCommitsTable({
       getTableDateTimeColumn(getField(fields, "commitDate")),
       getTableDateTimeColumn(getField(fields, "lastScannedOn")),
       getTableTextColumn(getField(fields, "repository")),
+      getTableArrayFirstValueAndCountColumn(getField(fields, "branch")),
       getTableTextColumn(getField(fields, "author")),
       getPathDefinition(getField(fields, "path"), "force-text-wrap"),
       getGitCustodianExternalLinkIconColumnDefinition(
@@ -223,6 +225,7 @@ function GitCustodianVulnerableCommitsTable({
         loadData={loadData}
         paginationDto={tableFilterModel}
         setPaginationDto={setTableFilterModel}
+        isLoading={isLoading}
       />
     );
   };
@@ -266,7 +269,7 @@ function GitCustodianVulnerableCommitsTable({
       exportButton={getExportButton()}
       inlineFilters={getInlineFilters()}
       loadData={loadData}
-      activeFilterDisplayer={false}
+      hideActiveFilterDisplayer={true}
     />
   );
 }

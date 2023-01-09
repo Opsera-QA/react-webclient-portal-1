@@ -52,7 +52,7 @@ function PipelineSourceRepositoryConfiguration(
       const parsedModel = modelHelpers.parseObjectIntoModel(pipeline?.workflow?.source, sourceRepositoryConfigurationMetadata);
       setSourceRepositoryModel(parsedModel);
     }
-  }, [JSON.stringify(pipeline)]);
+  }, []);
 
   // TODO: Make Node route that just accepts the source object and updates it
   const callbackFunction = async () => {
@@ -64,7 +64,32 @@ function PipelineSourceRepositoryConfiguration(
       }
 
       // TODO: Don't deconstruct like this.
-      let { name, dynamicSettings, service, accountId, username, password, repository, branch, key, trigger_active, repoId, sshUrl, gitUrl, workspace, workspaceName, secondary_branches, gitExportEnabled, gitExportPath, isPushEvent, isPrEvent, prCreatedEvent, prApprovedEvent  } = persistData;
+      let {
+        name,
+        dynamicSettings,
+        service,
+        accountId,
+        username,
+        password,
+        repository,
+        branch,
+        key,
+        trigger_active,
+        repoId,
+        sshUrl,
+        gitUrl,
+        workspace,
+        workspaceName,
+        secondary_branches,
+        gitExportEnabled,
+        gitExportPath,
+        isPushEvent,
+        isPrEvent,
+        prCreatedEvent,
+        prApprovedEvent,
+        allowDynamicSettingsInUi,
+      } = persistData;
+
       const item = {
         name: name,
         service: service,
@@ -88,6 +113,7 @@ function PipelineSourceRepositoryConfiguration(
         gitExportEnabled: gitExportEnabled, 
         gitExportPath: gitExportPath,
         dynamicSettings: dynamicSettings,
+        allowDynamicSettingsInUi: allowDynamicSettingsInUi,
       };
       // console.log("saving config: " + JSON.stringify(item));
       //console.log("saving getPersistData: " + JSON.stringify(sourceRepositoryModel?.getPersistData()));
