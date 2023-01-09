@@ -245,7 +245,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
         <MessageFieldBase
           message={` 
             Manage ${type} membership below by adding items from the left column into the right or removing members from the right column.  
-            Changes must be saved before being complete. ${type} membership changes take effect after the User logs back in.
+            Changes must be saved before being complete. ${type} membership changes take effect after the User logs back in or upon profile Re-sync.
           `} />
       </Row>
       <Row>
