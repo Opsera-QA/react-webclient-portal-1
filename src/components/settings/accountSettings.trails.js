@@ -12,7 +12,7 @@ accountSettingsTrails.ldapSiteRolesManagement = {
   title: "Site Roles Management",
   linkText: "Site Roles",
   icon: faServer,
-  pageDescription: "Manage Site Roles in the follow levels: Administrators, Power Users, and Users.",
+  pageDescription: "Manage Site Roles in the follow levels: Administrators, Power Users, Users, Security Managers and Auditors.",
   // pageDescription: `
   //     Site Roles determine a user’s level of accessibility.
   //     Manage Site Roles from this dashboard. By default, Opsera offers tiers for Site Roles:
