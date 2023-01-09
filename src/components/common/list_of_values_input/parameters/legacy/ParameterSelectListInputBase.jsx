@@ -15,6 +15,9 @@ import InfoContainer from "components/common/containers/InfoContainer";
 import InputContainer from "components/common/inputs/InputContainer";
 import ParameterSelectListHeaderField
   from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListHeaderField";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import ParameterSelectListInputBaseHelpIcon
+  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBaseHelpIcon";
 
 function ParameterSelectListInputBase({
   dataObject,
@@ -262,49 +265,13 @@ function ParameterSelectListInputBase({
     );
   };
 
-  const getHelpText = () => {
-    return (
-      <OverlayTrigger
-        trigger="click"
-        rootClose
-        placement="left"
-        overlay={
-          <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
-            <Popover.Title as="h3">Parameter Selection</Popover.Title>
-            <Popover.Content>
-              <div className="text-muted mb-2">
-                This functionality helps users use Opsera Parameters that are defined under the Parameters tab in Tool
-                Registry. In order to use any of these parameters in the step - enter them in the commands with the
-                following syntax: <strong>{"${parameter_name}"}</strong>, where the parameter_name is the one of the
-                names derived from this list of available parameters.
-                <br />
-                <br />
-                You must select all parameters that you pass in the commands in the parameter selection view as well in
-                order for the details to be fetched during runtime.
-                <br />
-                <br />
-                <strong>Pipelines with Terraform Steps: </strong> If the <strong>Use Terraform Output</strong> checkbox has been selected, the available parameters will
-                appear in the Parameter selection option with <strong>Terraform Output</strong> as the Parameter Origin.
-                They use the same syntax mentioned above in order to be used in the commands.
-              </div>
-            </Popover.Content>
-          </Popover>
-        }
-      >
-        <IconBase
-          icon={faInfoCircle}
-          className={"fa-pull-right pointer pr-2 mt-1 pl-0"}
-          onClickFunction={() => document.body.click()}
-        />
-      </OverlayTrigger>
-    );
-  };
-
   const getTitleBar = () => {
     return (
       <div className={"d-flex"}>
         {getRefreshButton()}
-        {showHelp && getHelpText()}
+        <ParameterSelectListInputBaseHelpIcon
+          visible={showHelp}
+        />
       </div>
     );
   };
@@ -345,7 +312,13 @@ function ParameterSelectListInputBase({
             </Popover>
           }
         >
-          <IconBase icon={faSync} className={"fa-pull-right pointer pr-2 mt-1 pl-0"} onClickFunction={() => refreshParameters()}/>
+          <div>
+            <IconBase
+              icon={faSync}
+              className={"fa-pull-right pointer pr-2 mt-1 pl-0"}
+              onClickFunction={() => refreshParameters()}
+            />
+          </div>
         </OverlayTrigger>
       );
     }
@@ -401,7 +374,7 @@ ParameterSelectListInputBase.defaultProps = {
   allowIncompleteItems: false,
   disabled: false,
   nameMaxLength: 50,
-  showHelp: true
+  showHelp: true,
 };
 
 export default ParameterSelectListInputBase;
