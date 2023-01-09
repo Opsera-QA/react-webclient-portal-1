@@ -29,6 +29,7 @@ import AutomationPercentageChartHelpDocumentation
   from "../../../../common/help/documentation/insights/charts/AutomationPercentageChartHelpDocumentation";
 import BoomiChartHelpDocumentation
   from "../../../../common/help/documentation/insights/charts/BoomiChartHelpDocumentation";
+import BoomiAverageDurationDataBlock from "../data_blocks/BoomiAverageDurationDataBlock";
 
 function BoomiBarChart({
   kpiConfiguration,
@@ -171,7 +172,7 @@ function BoomiBarChart({
     };
 
     const getDataBlocks = () =>{
-      return (<><Row className={'pb-2'}>
+      return (<><Row className={'pb-1'}>
         <Col>
           <DataPointVisibilityWrapper dataPoint={boomiSuccessPercentageDataPoint} >
             <BoomiSuccessPercentageDataBlock
@@ -183,7 +184,7 @@ function BoomiBarChart({
             />
           </DataPointVisibilityWrapper>
         </Col>
-        </Row><Row className={'pb-2 pt-2'}>
+        </Row><Row className={'pb-1 pt-1'}>
         <Col>
           <DataPointVisibilityWrapper dataPoint={boomiFrequencyPercentageDataPoint} >
             <BoomiFrequencyDataBlock
@@ -195,12 +196,24 @@ function BoomiBarChart({
             />
           </DataPointVisibilityWrapper>
         </Col>
+      </Row><Row className={'pb-1 pt-1'}>
+        <Col>
+          <DataPointVisibilityWrapper dataPoint={boomiFrequencyPercentageDataPoint} >
+            <BoomiAverageDurationDataBlock
+                data={dataBlockValues?.totalDeployments}
+                dataPoint={boomiFrequencyPercentageDataPoint}
+                lastScore={ dataBlockValues?.prevDeployments}
+                icon={getIcon(dataBlockValues?.deploymentsTrend?.trend)}
+                className={getIconColor(dataBlockValues?.deploymentsTrend?.trend)}
+            />
+          </DataPointVisibilityWrapper>
+        </Col>
       </Row></>);
     };
     const getChart = () =>{
       return(<Row>
         <Col md={12} sm={12} lg={12} >
-          <div className="chart" style={{ height: "276px" }} >
+          <div className="chart" style={{ height: "354px" }} >
             <ResponsiveLine
               data={metrics}
               {...defaultConfig(
