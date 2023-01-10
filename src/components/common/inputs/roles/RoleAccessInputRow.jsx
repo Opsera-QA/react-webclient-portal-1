@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {
-  faExclamationTriangle,
   faPlus,
 } from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
@@ -13,7 +12,6 @@ import RoleAccessInputLdapUserSelectInput
   from "components/common/inputs/roles/users/RoleAccessInputLdapUserSelectInput";
 import RoleAccessInputLdapGroupSelectInput
   from "components/common/inputs/roles/groups/RoleAccessInputLdapGroupSelectInput";
-import AccessRuleModel from "components/common/inputs/roles/model/accessRule.model";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import RoleAccessInputSiteRoleSelectInput
@@ -24,8 +22,9 @@ export default function RoleAccessInputRow(
     disabled,
     roles,
     addRoleFunction,
+    accessRuleModel,
+    setAccessRuleModel,
   }) {
-  const [accessRuleModel, setAccessRuleModel] = useState(new AccessRuleModel({}, false));
   const [errorMessage, setErrorMessage] = useState("");
 
   const getTypeInput = () => {
@@ -173,15 +172,6 @@ export default function RoleAccessInputRow(
     }
   };
 
-  const handleAddRoleFunction = () => {
-    const successfulAdd = addRoleFunction(accessRuleModel?.getPersistData());
-
-    if (successfulAdd === true) {
-      accessRuleModel?.resetData();
-      setAccessRuleModel({...accessRuleModel});
-    }
-  };
-
   if (accessRuleModel == null) {
     return null;
   }
@@ -210,7 +200,7 @@ export default function RoleAccessInputRow(
       </Row>
       <ButtonContainerBase>
         <VanityButtonBase
-          onClickFunction={handleAddRoleFunction}
+          onClickFunction={addRoleFunction}
           normalText={"Add Role"}
           buttonSize={"sm"}
           variant={"secondary"}
@@ -223,6 +213,8 @@ export default function RoleAccessInputRow(
 }
 
 RoleAccessInputRow.propTypes = {
+  accessRuleModel: PropTypes.object,
+  setAccessRuleModel: PropTypes.func,
   disabled: PropTypes.bool,
   addRoleFunction: PropTypes.func,
   roles: PropTypes.array,
