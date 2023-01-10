@@ -8,9 +8,10 @@ import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/t
 import CustomTable from "components/common/table/CustomTable";
 import {accessRoleDefinitionMetadata} from "components/common/fields/access/table/accessRoleDefinition.metadata";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function AssignedRoleAccessTable({ roleAccessDefinitions, isLoading }) {
-  const [accessRoles, setAccessRoles] = useState(undefined);
+  const [accessRoles, setAccessRoles] = useState([]);
   const fields = accessRoleDefinitionMetadata?.fields;
   const {
     accessRoleData,
@@ -18,11 +19,12 @@ function AssignedRoleAccessTable({ roleAccessDefinitions, isLoading }) {
   } = useComponentStateReference();
 
   useEffect(() => {
-    setAccessRoles(undefined);
-    if (roleAccessDefinitions && accessRoleData) {
-      setAccessRoles([...parseRoleDefinitionsIntoRbacTableRows(roleAccessDefinitions, accessRoleData)]);
+    setAccessRoles([]);
+    if (isSaasUser === false && roleAccessDefinitions && accessRoleData) {
+      const tableRows = DataParsingHelper.parseArray(parseRoleDefinitionsIntoRbacTableRows(roleAccessDefinitions, accessRoleData), []);
+      setAccessRoles([...tableRows]);
     }
-  }, [roleAccessDefinitions, accessRoleData]);
+  }, [roleAccessDefinitions]);
 
   const columns = useMemo(
     () => [
