@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import UserBadge from "components/common/badges/user/UserBadge";
 import GroupBadge from "components/common/badges/group/GroupBadge";
-import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import SiteRoleBadge from "components/common/badges/site_role/SiteRoleBadge";
 
-function RoleDisplayer({ accessRoles, type, className }) {
+function RoleDisplayer({accessRoles, type, className}) {
   const getRoleBadges = () => {
     if (!Array.isArray(accessRoles) || accessRoles.length === 0) {
       return (
@@ -13,14 +13,25 @@ function RoleDisplayer({ accessRoles, type, className }) {
     }
 
     return (
-      accessRoles.map((item, i) => {
-        const user = item["user"];
-        const group = item["group"];
+      accessRoles.map((accessRole, i) => {
+        const user = accessRole?.user;
+        const group = accessRole?.group;
+        const siteRole = accessRole?.site_role;
 
         if (user) {
           return (
             <UserBadge
               badgeText={`${user}`}
+              className={"mr-1 mb-1"}
+              key={i}
+            />
+          );
+        }
+
+        if (siteRole) {
+          return (
+            <SiteRoleBadge
+              siteRole={siteRole}
               className={"mr-1 mb-1"}
               key={i}
             />
@@ -43,9 +54,9 @@ function RoleDisplayer({ accessRoles, type, className }) {
       <div className={"text-muted mb-1"}>
         {`${type}s`}
       </div>
-      <span className="item-field role-access">
-          {getRoleBadges()}
-        </span>
+      <span className="accessRole-field role-access">
+        {getRoleBadges()}
+      </span>
     </div>
   );
 }

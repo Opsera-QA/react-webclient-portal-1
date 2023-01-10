@@ -78,6 +78,7 @@ import GitlabPendingMergeRequests from "./gitlab/table/pending_merge_requests/Gi
 import GitlabDeploymentFrequency from "./gitlab/deployment_frequency/GitlabDeploymentFrequencyMetric";
 import GitLabLeadTimeChart from "./gitlab/line_chart/lead_time/GitLabLeadTimeChart";
 import GitlabPipelineStatistics from "./gitlab/line_chart/pipeline-statistics/GitlabPipelineStatistics";
+import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/GitlabMergeRequestStatistics";
 
 //new
 import ProjectWiseUnitTestResults from './unit_tests/project_wise_results/ProjectWiseUnitTestResults';
@@ -186,7 +187,6 @@ import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
 
 // Dora KPI
 import DoraJiraGitlabRolledUpChart from "./dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpChart";
-import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/GitlabMergeRequestStatistics";
 
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..

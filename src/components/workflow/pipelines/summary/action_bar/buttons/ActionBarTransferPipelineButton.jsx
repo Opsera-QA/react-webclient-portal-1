@@ -130,7 +130,7 @@ function ActionBarTransferPipelineButton(
     >
       <div>
         <ActionBarPopoverButton
-          className={"ml-3"}
+          className={"ml-3 pointer"}
           disabled={isLoading}
           icon={faShareAlt}
           popoverText={`Transfer Pipeline to new Owner`}
