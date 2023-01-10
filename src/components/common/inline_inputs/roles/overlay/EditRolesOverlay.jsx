@@ -37,18 +37,6 @@ function EditRolesOverlay(
     toastContext.clearOverlayPanel();
   };
 
-  const getButtonContainer = () => {
-    return (
-      <div className={"px-3 pb-3"}>
-        <PersistAndCloseButtonContainer
-          recordDto={temporaryDataObject}
-          updateRecord={handleSave}
-          handleClose={closePanelFunction}
-        />
-      </div>
-    );
-  };
-
   if (model == null || temporaryDataObject == null) {
     return null;
   }
@@ -61,7 +49,6 @@ function EditRolesOverlay(
       titleIcon={faEdit}
       showToasts={true}
       showCloseButton={false}
-      buttonContainer={getButtonContainer()}
     >
       <div className={"mx-3 mb-3 mt-2"}>
         <div className="text-color mb-2">Access Rules define who has privileges to interact with a resource.
@@ -76,6 +63,11 @@ function EditRolesOverlay(
             fieldName={fieldName}
           />
         </div>
+        <PersistAndCloseButtonContainer
+          recordDto={temporaryDataObject}
+          updateRecord={handleSave}
+          handleClose={closePanelFunction}
+        />
       </div>
     </CenterOverlayContainer>
   );
