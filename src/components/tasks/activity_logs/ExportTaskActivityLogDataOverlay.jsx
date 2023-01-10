@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import jsPDF from "jspdf";
 import { getTaskTypeLabel } from "components/tasks/task.types";
-import { format } from "date-fns";
+import {DATE_FORMATS, getFormattedDate} from "components/common/fields/date/DateFieldBase";
 import ExportDataOverlay from "components/common/modal/export_data/ExportDataOverlay";
 
 function ExportTaskActivityLogDataOverlay({activityLogData, isLoading}) {
@@ -24,7 +24,7 @@ function ExportTaskActivityLogDataOverlay({activityLogData, isLoading}) {
         activityLog.log_type,
         activityLog.message,
         activityLog.status,
-        format(new Date(activityLog.createdAt), "yyyy-MM-dd', 'hh:mm a"),
+        getFormattedDate(activityLog.createdAt, DATE_FORMATS.TIMESTAMP_WITHOUT_SECONDS),
       ]);
     });
   };
