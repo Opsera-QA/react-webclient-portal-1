@@ -63,9 +63,8 @@ function EditRolesOverlay(
       showCloseButton={false}
       buttonContainer={getButtonContainer()}
     >
-      <div className={"m-3"}>
-        {toastContext.getInlineBanner()}
-        <div className="text-color mb-4">Access Rules define who has privileges to interact with a resource.
+      <div className={"mx-3 mb-3 mt-2"}>
+        <div className="text-color mb-2">Access Rules define who has privileges to interact with a resource.
           Individual users or groups can be used to grant the access. Owners and Administrators have full access,
           Managers and SecOps roles have
           limited editing access while users can only run or use resources.
@@ -77,7 +76,6 @@ function EditRolesOverlay(
             fieldName={fieldName}
           />
         </div>
-        <div style={{minHeight: "250px"}} />
       </div>
     </CenterOverlayContainer>
   );
