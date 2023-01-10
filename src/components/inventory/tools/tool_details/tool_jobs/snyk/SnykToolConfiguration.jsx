@@ -6,21 +6,12 @@ import snykConnectionMetadata from "./snyk-connection-metadata";
 import Col from "react-bootstrap/Col";
 import { AuthContext } from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
-
-const snykConnectivityTypeArray = [
-  {
-    name: "Snyk CLI",
-    value: "Snyk CLI",
-  },
-];
+import SnykConnectivityTypeSelectInput from "components/inventory/tools/tool_details/tool_jobs/snyk/inputs/SnykConnectivityTypeSelectInput";
 
 function SnykToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [snykConfigurationDto, setSnykConfigurationDto] = useState(undefined);
+  const [snykConfigurationModel, setSnykConfigurationModel] = useState(undefined);
 
   useEffect(() => {
     loadData();
@@ -32,17 +23,17 @@ function SnykToolConfiguration({ toolData }) {
       snykConnectionMetadata,
     );
 
-    setSnykConfigurationDto(snykConfigurationData);
+    setSnykConfigurationModel(snykConfigurationData);
   };
 
   const saveSnykToolConfiguration = async () => {
-    let newConfiguration = snykConfigurationDto.getPersistData();
+    let newConfiguration = snykConfigurationModel.getPersistData();
 
     const authTokenVaultKey = `${toolData.getData("_id")}-${toolData.getData(
       "tool_identifier",
     )}-token`;
     newConfiguration.token = await toolsActions.saveKeyPasswordToVault(
-      snykConfigurationDto,
+      snykConfigurationModel,
       "token",
       newConfiguration.token,
       authTokenVaultKey,
@@ -54,7 +45,7 @@ function SnykToolConfiguration({ toolData }) {
       "tool_identifier",
     )}-organization`;
     newConfiguration.organization = await toolsActions.saveKeyPasswordToVault(
-      snykConfigurationDto,
+      snykConfigurationModel,
       "organization",
       newConfiguration.organization,
       organizationVaultKey,
@@ -70,41 +61,38 @@ function SnykToolConfiguration({ toolData }) {
     );
   };
 
-  if (snykConfigurationDto == null) {
+  if (snykConfigurationModel == null) {
     return <></>;
   }
 
   return (
     <ToolConfigurationEditorPanelContainer
-      model={snykConfigurationDto}
-      setModel={setSnykConfigurationDto}
+      model={snykConfigurationModel}
+      setModel={setSnykConfigurationModel}
       persistRecord={saveSnykToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"Snyk"}
     >
       <Col sm={12}>
-        <SelectInputBase
+        <SnykConnectivityTypeSelectInput
           fieldName={"connectivityType"}
-          dataObject={snykConfigurationDto}
-          setDataObject={snykConfigurationDto}
-          selectOptions={snykConnectivityTypeArray}
-          valueField="value"
-          textField="name"
+          model={snykConfigurationModel}
+          setmodel={setSnykConfigurationModel}
+          disabled={true}
         />
       </Col>
       <Col sm={12}>
         <VaultTextInput
           type={"password"}
-          dataObject={snykConfigurationDto}
-          setDataObject={setSnykConfigurationDto}
+          dataObject={snykConfigurationModel}
+          setDataObject={setSnykConfigurationModel}
           fieldName={"token"}
         />
       </Col>
       <Col sm={12}>
         <VaultTextInput
           type={"password"}
-          dataObject={snykConfigurationDto}
-          setDataObject={setSnykConfigurationDto}
+          dataObject={snykConfigurationModel}
+          setDataObject={setSnykConfigurationModel}
           fieldName={"organization"}
         />
       </Col>
