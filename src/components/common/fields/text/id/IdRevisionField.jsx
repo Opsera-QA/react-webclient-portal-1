@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboardIconBase";
 import FieldLabelBase from "components/common/fields/FieldLabelBase";
-import {DATE_FORMATS, getFormattedDate} from "components/common/fields/date/DateFieldBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 export const getFormattedRevisionFromId = (id) => {
   const parsedId = DataParsingHelper.parseMongoDbId(id);
@@ -15,7 +15,7 @@ export const getFormattedRevisionFromId = (id) => {
 
   const revisionDate = DataParsingHelper.parseObjectIdIntoDate(parsedId);
 
-  return `REV_${getFormattedDate(revisionDate, DATE_FORMATS.REVISION)}`;
+  return `REV_${DateFormatHelper.formatDate(revisionDate, DateFormatHelper.DATE_FORMATS.REVISION)}`;
 };
 
 export default function IdRevisionField(

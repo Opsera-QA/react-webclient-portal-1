@@ -4,9 +4,9 @@ import { AuthContext } from "contexts/AuthContext";
 import { faTimes, faSync } from "@fortawesome/free-solid-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
-import {getFormattedTimestamp} from "components/common/fields/date/DateFieldBase";
 import axios from "axios";
 import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 function TaskLiveLogsOverlay({ runCount, taskId }) {
   const toastContext = useContext(DialogToastContext);
@@ -113,7 +113,7 @@ function TaskLiveLogsOverlay({ runCount, taskId }) {
 
   const getLastTimestamp = () => {
     if (lastCheckTimestamp != null) {
-      return (`\n\nLast log pull on ${getFormattedTimestamp(lastCheckTimestamp)}`);
+      return (`\n\nLast log pull on ${DateFormatHelper.formatDateAsTimestamp(lastCheckTimestamp)}`);
     }
   };
 
