@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ExportDataOverlay from "../../common/modal/export_data/ExportDataOverlay";
 import jsPDF from "jspdf";
-import {getFormattedDate} from "components/common/fields/date/DateFieldBase";
+import {DATE_FORMATS, getFormattedDate} from "components/common/fields/date/DateFieldBase";
 
 
 
@@ -25,7 +25,7 @@ function ExportPipelineActivityLogDataOverlay({ activityLogData, isLoading}) {
         item.action,
         item.message,
         item.status,
-        getFormattedDate(new Date(item.createdAt)),
+        getFormattedDate(item.createdAt, DATE_FORMATS.TIMESTAMP_WITHOUT_SECONDS),
       ]);
     });
   };
