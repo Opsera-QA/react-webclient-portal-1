@@ -48,6 +48,7 @@ import LiquibaseToolConfiguration from "./tool_jobs/liquibase/LiquibaseToolConfi
 import BlackduckToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/black_duck/BlackduckToolConfiguration";
 import GChatToolConfiguration from "./tool_jobs/gchat/GChatToolConfiguration";
 import FortifyToolConfiguration from "./tool_jobs/fortify/FortifyToolConfiguration";
+import SnykToolConfiguration from "./tool_jobs/snyk/SnykToolConfiguration";
 
 //TODO: Use constants, alphabetize
 export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
@@ -96,6 +97,7 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.GCHAT,
   toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK,
   toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK,
 ];
 
 function ToolConnectionPanel({ toolData, setToolData }) {
@@ -201,6 +203,8 @@ function ToolConnectionPanel({ toolData, setToolData }) {
         return <GChatToolConfiguration toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
         return <FortifyToolConfiguration toolData={toolData} />;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK:
+        return <SnykToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Connection configuration is not currently available for this tool.</div>;
     }
