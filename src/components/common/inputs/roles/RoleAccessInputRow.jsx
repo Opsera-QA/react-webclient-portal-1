@@ -16,6 +16,7 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import RoleAccessInputSiteRoleSelectInput
   from "components/common/inputs/roles/site_roles/RoleAccessInputSiteRoleSelectInput";
+import accessControlRuleTypeConstants from "@opsera/know-your-role/constants/accessControlRuleType.constants";
 
 export default function RoleAccessInputRow(
   {
@@ -27,112 +28,48 @@ export default function RoleAccessInputRow(
   }) {
   const [errorMessage, setErrorMessage] = useState("");
 
-  const getTypeInput = () => {
+  const getButtonTypeInput = () => {
     return (
-      <div className="mt-2 d-inline-flex">
-        <div className="m-auto mr-2">
-          <input
+      <div className={"my-3"}>
+        <InputLabel
+          field={accessRuleModel?.getFieldById("type")}
+        />
+        <div className={"d-flex h-100 w-100"}>
+          <VanityButtonBase
             className={"mr-2"}
-            type={"radio"}
-            name={`type`}
-            value={"group"}
-            checked={accessRuleModel?.getType() === "group"}
-            disabled={disabled}
-            onChange={() => {
-              accessRuleModel?.setData("type", "group");
+            variant={accessRuleModel?.getType() === accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.GROUP ? "primary" : "outline-primary"}
+            onClickFunction={() => {
+              accessRuleModel?.setData("type", accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.GROUP);
               accessRuleModel?.setDefaultValue("user");
               accessRuleModel?.setDefaultValue("site_role");
               setAccessRuleModel({...accessRuleModel});
             }}
+            normalText={"Group"}
           />
-          <span className={"mr-2"}>Group</span>
-        </div>
-        <div className="m-auto mx-2">
-          <input
+          <VanityButtonBase
+            variant={accessRuleModel?.getType() === accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.USER ? "primary" : "outline-primary"}
+            name={`type-user`}
             className={"mr-2"}
-            type={"radio"}
-            name={`type`}
-            disabled={disabled}
-            value={"user"}
-            checked={accessRuleModel?.getType() === "user"}
-            onChange={() => {
+            onClickFunction={() => {
               accessRuleModel?.setData("type", "user");
               accessRuleModel?.setDefaultValue("group");
               accessRuleModel?.setDefaultValue("site_role");
               setAccessRuleModel({...accessRuleModel});
             }}
+            normalText={"User"}
           />
-          <span>User</span>
-        </div>
-        <div className="m-auto mx-2">
-          <input
+          <VanityButtonBase
+            variant={accessRuleModel?.getType() === accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.SITE_ROLE ? "primary" : "outline-primary"}
+            name={`type-site_role`}
             className={"mr-2"}
-            type={"radio"}
-            name={`type`}
-            disabled={disabled}
-            value={"role"}
-            checked={accessRuleModel?.getType() === "role"}
-            onChange={() => {
+            onClickFunction={() => {
               accessRuleModel?.setData("type", "site_role");
               accessRuleModel?.setDefaultValue("group");
               accessRuleModel?.setDefaultValue("user");
               setAccessRuleModel({...accessRuleModel});
             }}
+            normalText={"Site Role"}
           />
-          <span>Role</span>
-        </div>
-      </div>
-    );
-  };
-
-  const getButtonTypeInput = () => {
-    return (
-      <div className={"my-2"}>
-        <InputLabel
-          field={accessRuleModel?.getFieldById("type")}
-        />
-        <div className={"d-flex h-100"}>
-          <div className={"d-flex"}>
-            <Button
-              name={`type-group`}
-              className={"mr-2"}
-              variant={accessRuleModel?.getType() === "group" ? "primary" : "outline-primary"}
-              onClick={() => {
-                accessRuleModel?.setData("type", "group");
-                accessRuleModel?.setDefaultValue("user");
-                accessRuleModel?.setDefaultValue("site_role");
-                setAccessRuleModel({...accessRuleModel});
-              }}
-            >
-              Group
-            </Button>
-            <Button
-              variant={accessRuleModel?.getType() === "user" ? "primary" : "outline-primary"}
-              name={`type-user`}
-              className={"mr-2"}
-              onClick={() => {
-                accessRuleModel?.setData("type", "user");
-                accessRuleModel?.setDefaultValue("group");
-                accessRuleModel?.setDefaultValue("site_role");
-                setAccessRuleModel({...accessRuleModel});
-              }}
-            >
-              User
-            </Button>
-            <Button
-              variant={accessRuleModel?.getType() === "site_role" ? "primary" : "outline-primary"}
-              name={`type-site_role`}
-              className={"mr-2"}
-              onClick={() => {
-                accessRuleModel?.setData("type", "site_role");
-                accessRuleModel?.setDefaultValue("group");
-                accessRuleModel?.setDefaultValue("user");
-                setAccessRuleModel({...accessRuleModel});
-              }}
-            >
-              Role
-            </Button>
-          </div>
         </div>
       </div>
     );
@@ -142,7 +79,7 @@ export default function RoleAccessInputRow(
     const type = accessRuleModel?.getType();
 
     switch (type) {
-      case "user":
+      case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.USER:
         return (
           <RoleAccessInputLdapUserSelectInput
             model={accessRuleModel}
@@ -151,7 +88,7 @@ export default function RoleAccessInputRow(
             disabled={disabled}
           />
         );
-      case "group":
+      case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.GROUP:
         return (
           <RoleAccessInputLdapGroupSelectInput
             model={accessRuleModel}
@@ -160,7 +97,7 @@ export default function RoleAccessInputRow(
             disabled={disabled}
           />
         );
-      case "site_role":
+      case accessControlRuleTypeConstants.ACCESS_CONTROL_RULE_TYPES.SITE_ROLE:
         return (
           <RoleAccessInputSiteRoleSelectInput
             model={accessRuleModel}
@@ -177,35 +114,25 @@ export default function RoleAccessInputRow(
   }
 
   return (
-    <div className={"mx-3 mb-3"}>
-      <Row>
-        <Col sm={11}>
-          <Row>
-            <Col sm={4}>
-              {getButtonTypeInput()}
-            </Col>
-            <Col sm={4}>
-              {getAssigneeInput()}
-            </Col>
-            <Col sm={4}>
-              <AccessControlRoleSelectInput
-                model={accessRuleModel}
-                setModel={setAccessRuleModel}
-                disabled={disabled}
-                fieldName={"role"}
-              />
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-      <ButtonContainerBase>
+    <div className={"mx-3 mb-2"}>
+      <div>{getButtonTypeInput()}</div>
+      <div>{getAssigneeInput()}</div>
+      <div>
+        <AccessControlRoleSelectInput
+          model={accessRuleModel}
+          setModel={setAccessRuleModel}
+          disabled={disabled}
+          fieldName={"role"}
+        />
+      </div>
+      <ButtonContainerBase className={"my-3"}>
         <VanityButtonBase
           onClickFunction={addRoleFunction}
           normalText={"Add Role"}
-          buttonSize={"sm"}
           variant={"secondary"}
           disabled={disabled || accessRuleModel?.checkCurrentValidity() !== true}
           icon={faPlus}
+          buttonSize={"sm"}
         />
       </ButtonContainerBase>
     </div>
