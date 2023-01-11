@@ -4,6 +4,7 @@ import jsPDF from "jspdf";
 import { getTaskTypeLabel } from "components/tasks/task.types";
 import {DATE_FORMATS, getFormattedDate} from "components/common/fields/date/DateFieldBase";
 import ExportDataOverlay from "components/common/modal/export_data/ExportDataOverlay";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 function ExportTaskActivityLogDataOverlay({activityLogData, isLoading}) {
   const getRawData = () => {
@@ -24,7 +25,7 @@ function ExportTaskActivityLogDataOverlay({activityLogData, isLoading}) {
         activityLog.log_type,
         activityLog.message,
         activityLog.status,
-        getFormattedDate(activityLog.createdAt, DATE_FORMATS.TIMESTAMP_WITHOUT_SECONDS),
+        DateFormatHelper.formatDateAsTimestampWithoutSeconds(activityLog.createdAt),
       ]);
     });
   };
