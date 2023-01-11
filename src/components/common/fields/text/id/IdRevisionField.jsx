@@ -3,20 +3,7 @@ import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboardIconBase";
 import FieldLabelBase from "components/common/fields/FieldLabelBase";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
-
-export const getFormattedRevisionFromId = (id) => {
-  const parsedId = DataParsingHelper.parseMongoDbId(id);
-
-  if (parsedId == null) {
-    return undefined;
-  }
-
-  const revisionDate = DataParsingHelper.parseObjectIdIntoDate(parsedId);
-
-  return `REV_${DateFormatHelper.formatDate(revisionDate, DateFormatHelper.DATE_FORMATS.REVISION)}`;
-};
 
 export default function IdRevisionField(
   {
@@ -25,7 +12,7 @@ export default function IdRevisionField(
     className,
     showLabel,
   }) {
-  const revision = getFormattedRevisionFromId(model?.getData(fieldName));
+  const revision = DateFormatHelper.formatDateAsRevisionId(model?.getData(fieldName), "");
 
   const getClipboardButton = () => {
     return (
