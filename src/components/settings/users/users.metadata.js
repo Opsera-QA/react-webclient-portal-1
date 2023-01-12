@@ -22,13 +22,13 @@ export const usersMetadata = {
       label: "First Name",
       id: "firstName",
       isRequired: true,
-      regexDefinitionName: "nameField",
+      regexDefinitionName: "humanNameField",
     },
     {
       label: "Last Name",
       id: "lastName",
       isRequired: true,
-      regexDefinitionName: "nameField",
+      regexDefinitionName: "humanNameField",
     },
     {
       label: "Email Address",
