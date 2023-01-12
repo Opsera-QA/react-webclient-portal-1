@@ -6,14 +6,14 @@ const accountRegistrationMetadata = {
       label: "First Name",
       id: "firstName",
       isRequired: true,
-      regexDefinitionName: "nameField",
+      regexDefinitionName: "humanNameField",
       maxLength: 50
     },
     {
       label: "Last Name",
       id: "lastName",
       isRequired: true,
-      regexDefinitionName: "nameField",
+      regexDefinitionName: "humanNameField",
       maxLength: 50
     },
     {

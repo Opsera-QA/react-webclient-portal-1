@@ -2,9 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ExportDataOverlay from "../../common/modal/export_data/ExportDataOverlay";
 import jsPDF from "jspdf";
-import {getFormattedDate} from "components/common/fields/date/DateFieldBase";
-
-
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 // TODO: Should we be just sending in data and formatting in here?
 function ExportPipelineActivityLogDataOverlay({ activityLogData, isLoading}) {
@@ -25,7 +23,7 @@ function ExportPipelineActivityLogDataOverlay({ activityLogData, isLoading}) {
         item.action,
         item.message,
         item.status,
-        getFormattedDate(new Date(item.createdAt)),
+        DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(item.createdAt)),
       ]);
     });
   };

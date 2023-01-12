@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ExportDataOverlay from "../../common/modal/export_data/ExportDataOverlay";
 import jsPDF from "jspdf";
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 // TODO: Should we be just sending in data and formatting in here?
 function ExportReportsDataOverlay({ formattedData, rawData, isLoading}) {
@@ -23,7 +23,7 @@ function ExportReportsDataOverlay({ formattedData, rawData, isLoading}) {
         item.name,
         item.description,
         item._id,
-        format(new Date(item.createdAt), "yyyy-MM-dd', 'hh:mm a"),
+        DateFormatHelper.formatDateAsTimestampWithoutSeconds(item.createdAt),
         item.active ? "active" : "inactive"])
     });
 
@@ -37,7 +37,7 @@ function ExportReportsDataOverlay({ formattedData, rawData, isLoading}) {
           item.name,
           item.description,
           item._id,
-          format(new Date(item.createdAt), "yyyy-MM-dd', 'hh:mm a"),
+          DateFormatHelper.formatDateAsTimestampWithoutSeconds(item.createdAt),
           item.active ? "active" : "inactive"
         ]
       )];

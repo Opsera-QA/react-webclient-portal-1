@@ -35,6 +35,12 @@ regexDefinitions.nameField = {
   errorFormText: "Only letters, numbers, dashes, underscores, and periods are allowed",
 };
 
+regexDefinitions.humanNameField = {
+  regex: /^[a-zA-Z-. ]*$/,
+  formText: "Letters, dashes, spaces, and periods are allowed",
+  errorFormText: "Only letters, dashes, spaces, and periods are allowed",
+};
+
 // TODO: Validate
 regexDefinitions.imagePathField = {
   regex: /^\w+\.(jpg|jpeg|gif|png|tiff|bmp)$/gi,

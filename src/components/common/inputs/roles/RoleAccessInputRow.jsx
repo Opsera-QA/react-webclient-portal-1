@@ -132,6 +132,7 @@ export default function RoleAccessInputRow(
           variant={"secondary"}
           disabled={disabled || accessRuleModel?.checkCurrentValidity() !== true}
           icon={faPlus}
+          buttonSize={"sm"}
         />
       </ButtonContainerBase>
     </div>
