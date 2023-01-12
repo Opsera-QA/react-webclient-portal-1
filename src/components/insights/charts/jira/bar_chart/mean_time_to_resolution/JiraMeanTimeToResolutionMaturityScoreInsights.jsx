@@ -110,7 +110,7 @@ function JiraMeanTimeToResolutionMaturityScoreInsights({
         <FilterContainer
           title={"Maturity Score by Projects"}
           body={getTableContainer(projectColumns, maturityScoreByProject)}
-          className={"px-2 pb-2"}
+          className={"pt-2"}
         />
       );
     } else if (activeHorizontalTab == "teams") {
@@ -118,7 +118,7 @@ function JiraMeanTimeToResolutionMaturityScoreInsights({
         <FilterContainer
           title={"Maturity Score by Teams"}
           body={getTableContainer(teamNameColumns, maturityScoreByTeam)}
-          className={"px-2 pb-2"}
+          className={"pt-2"}
         />
       );
     } else if (activeHorizontalTab == "serviceComponents") {
@@ -126,7 +126,7 @@ function JiraMeanTimeToResolutionMaturityScoreInsights({
         <FilterContainer
           title={"Maturity Score by Service Components"}
           body={getTableContainer(serviceComponentColumns, maturityScoreByServiceComponent)}
-          className={"px-2 pb-2"}
+          className={"pt-2"}
         />
       );
     } else if (activeHorizontalTab == "tags") {
@@ -143,7 +143,7 @@ function JiraMeanTimeToResolutionMaturityScoreInsights({
         <FilterContainer
           title={"Maturity Score by Tags"}
           body={getTableContainer(tagColumns, data[0]?.values || [])}
-          className={"px-2 pb-2"}
+          className={"pt-2"}
         />
       );
     }
