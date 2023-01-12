@@ -37,8 +37,8 @@ regexDefinitions.nameField = {
 
 regexDefinitions.humanNameField = {
   regex: /^[a-zA-Z-. ]*$/,
-  formText: "Letters, numbers, dashes, spaces, and periods are allowed",
-  errorFormText: "Only letters, numbers, dashes, spaces, and periods are allowed",
+  formText: "Letters, dashes, spaces, and periods are allowed",
+  errorFormText: "Only letters, dashes, spaces, and periods are allowed",
 };
 
 // TODO: Validate
