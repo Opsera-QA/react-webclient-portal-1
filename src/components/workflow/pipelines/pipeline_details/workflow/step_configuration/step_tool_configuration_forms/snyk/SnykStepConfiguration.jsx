@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
 import SnykToolSelectInput from "./inputs/SnykToolSelectInput";
 import snykStepFormMetadata from "./snyk-stepForm-metadata";
-import SnykProductsMultiSelectInput from "./inputs/SnykProductsSelectInput";
+import SnykProductsMultiSelectInput from "./inputs/SnykProductsMultiSelectInput";
 import SnykLanguageSelectInput from "./inputs/SnykLanguageSelectInput";
 import SnykLanguageVersionSelectInput from "./inputs/SnykLanguageVersionSelectInput";
 
