@@ -21,12 +21,14 @@ export const usersMetadata = {
     {
       label: "First Name",
       id: "firstName",
-      isRequired: true
+      isRequired: true,
+      regexDefinitionName: "nameField",
     },
     {
       label: "Last Name",
       id: "lastName",
-      isRequired: true
+      isRequired: true,
+      regexDefinitionName: "nameField",
     },
     {
       label: "Email Address",
