@@ -11,9 +11,11 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { format } from "date-fns";
 import { defaultConfig, getColor, assignStandardColors } from '../../../charts-views';
 import ChartTooltip from "../../../ChartTooltip";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
+
+
 function ReliabilityRemediationEffortLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -84,7 +86,7 @@ function ReliabilityRemediationEffortLineChart({ kpiConfiguration, setKpiConfigu
               onClick={() => setShowModal(true)}
               tooltip={({ point, color }) => <ChartTooltip 
                 titles = {["Timestamp", "Time", "Project Key"]}
-                values = {[format(new Date(point.data.x), "yyyy-MM-dd', 'hh:mm a"),
+                values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(point.data.x)),
                           point.data.y, point.data.key]}
                 color = {color} />}
             />

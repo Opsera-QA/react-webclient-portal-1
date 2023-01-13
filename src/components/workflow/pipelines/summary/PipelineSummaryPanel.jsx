@@ -1,7 +1,6 @@
 import React, {useContext, useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import { Row, Col, Form } from "react-bootstrap";
-import { format } from "date-fns";
 import {
   faPencilAlt,
   faSave, faTag,
@@ -34,6 +33,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import OwnerNameField from "components/common/fields/text/general/OwnerNameField";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -350,7 +350,7 @@ function PipelineSummaryPanel(
         <Col sm={12} className="py-2">
           <span className="text-muted mr-1">Summary:</span>
           Last complete run of pipeline finished on {
-          format(new Date(completed), "yyyy-MM-dd', 'hh:mm a")} with a status
+          DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(completed))} with a status
           of {status}.
         </Col>
       );

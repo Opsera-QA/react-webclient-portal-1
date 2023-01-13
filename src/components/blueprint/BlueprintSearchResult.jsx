@@ -17,7 +17,8 @@ import {useHistory} from "react-router-dom";
 import ShowSecurityReportButton from "components/blueprint/security_reports/ShowSecurityReportButton";
 import ShowPackageXmlButton from "components/blueprint/ShowPackageXmlButton";
 import IconBase from "components/common/icons/IconBase";
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
+
 
 function BlueprintSearchResult({ logData, closeModal }) {
   const history = useHistory();
@@ -96,10 +97,10 @@ function BlueprintSearchResult({ logData, closeModal }) {
             <hr style={{ margin: " 0.5em auto" }} />
             {getRow("Step Name", makeUpper(item?.start?.step_name))}
             {item?.start?.step_name === "approval" ? (
-              <>{getRow("Requested At", format(new Date(item?.start?.timestamp), "yyyy-MM-dd', 'hh:mm:ss a"))}</>
+              <>{getRow("Requested At", DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(item?.start?.timestamp)))}</>
             ) : (
               <>
-                {getRow("Requested At", format(new Date(item?.current?.timestamp), "yyyy-MM-dd', 'hh:mm:ss a"))}
+                {getRow("Requested At", DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(item?.current?.timestamp)))}
                 {getRow("Response Message", makeUpper(item?.current?.message))}
                 <div className={"py-1"}>
                   <div className="text-muted mb-2">API Response</div>
@@ -109,7 +110,7 @@ function BlueprintSearchResult({ logData, closeModal }) {
             )}
             {item?.start?.step_name === "approval" && item?.current?.status === "success" && (
               <>
-                {getRow("Approved At", format(new Date(item?.current?.timestamp), "yyyy-MM-dd', 'hh:mm:ss a"))}
+                {getRow("Approved At", DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(item?.current?.timestamp)))}
                 {getRow("Approval Message", item?.current?.message)}
                 {getRow("Duration", `${item?.current?.duration}`)}
               </>
