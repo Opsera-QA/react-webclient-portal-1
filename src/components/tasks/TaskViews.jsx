@@ -15,8 +15,9 @@ import TaskVerticalTabContainer from "components/tasks/TaskVerticalTabContainer"
 import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 
-function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, isMounted, taskMetadata}) {
+function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, isMounted}) {
   const {
     toastContext,
     userData,
@@ -27,7 +28,6 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
       <NewTaskOverlay
         loadData={loadData}
         isMounted={isMounted}
-        taskMetadata={taskMetadata}
       />
     );
   };
@@ -73,7 +73,6 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
   const getCardView = () => {
     return (
       <TaskCardView
-        taskMetadata={taskMetadata}
         isLoading={isLoading}
         loadData={loadData}
         taskData={taskData}
@@ -88,7 +87,6 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
         isLoading={isLoading}
         loadData={loadData}
         taskData={taskData}
-        taskMetadata={taskMetadata}
         taskFilterModel={taskFilterModel}
         setTaskFilterModel={setTaskFilterModel}
       />
@@ -128,7 +126,7 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
         supportSearch={true}
         supportViewToggle={true}
         isLoading={isLoading}
-        metadata={taskMetadata}
+        metadata={tasksMetadata}
         body={getTableCardView()}
         dropdownFilters={getDropdownFilters()}
         inlineFilters={getInlineFilters()}
@@ -147,7 +145,6 @@ TaskViews.propTypes = {
   setTaskFilterModel: PropTypes.func,
   loadData: PropTypes.func,
   isMounted: PropTypes.object,
-  taskMetadata: PropTypes.object,
 };
 
 export default TaskViews;

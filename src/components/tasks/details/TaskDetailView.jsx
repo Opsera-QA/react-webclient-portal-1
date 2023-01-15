@@ -37,7 +37,6 @@ import useGetPollingTaskOrchestrationStatusById
   from "hooks/workflow/tasks/orchestration/useGetPollingTaskOrchestrationStatusById";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {numberHelpers} from "components/common/helpers/number/number.helpers";
-import ViewTaskAuditLogsActionBarButton from "components/tasks/buttons/ViewTaskAuditLogsActionBarButton";
 
 const pausedMessage = "This Task has been paused. Please check the activity logs for details.";
 const stoppedMessage = "This Task has completed running. Please check the activity logs for details.";
