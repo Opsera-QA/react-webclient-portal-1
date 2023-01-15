@@ -20,6 +20,8 @@ function TaskVerticalTabContainer({ isLoading, taskFilterModel, loadData }) {
 
     if (category === "owner") {
       taskFilterModel?.setData("owner", userData?._id);
+    } else if (taskFilterModel?.getData("category") === "owner") {
+      taskFilterModel?.setData("owner", undefined);
     }
 
     if (
