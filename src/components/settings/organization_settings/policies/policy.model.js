@@ -1,6 +1,7 @@
 import ModelBase from "core/data_model/model.base";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import policyMetadata from "@opsera/definitions/constants/settings/organization-settings/policies/policy.metadata";
+import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 
 export default class PolicyModel extends ModelBase {
   constructor(
@@ -15,7 +16,7 @@ export default class PolicyModel extends ModelBase {
   }
 
   getDetailViewTitle = () => {
-    return this.getData("name");
+    return policyConstants.getPolicyNameLabel(this.getData("name"));
   };
 
   clone = () => {
