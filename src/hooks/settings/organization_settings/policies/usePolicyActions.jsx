@@ -18,6 +18,14 @@ export default function usePolicyActions() {
     );
   };
 
+  policyActions.getPolicyByName = async (policyName) => {
+    const apiUrl = `/settings/organization-settings/policies/name/${policyName}`;
+    return await apiService.handleApiGetRequest(
+      apiUrl,
+    );
+  };
+
+
   policyActions.activatePolicy = async (policy) => {
     const apiUrl = `/settings/organization-settings/policies`;
     return await apiService.handleApiPostRequest(
