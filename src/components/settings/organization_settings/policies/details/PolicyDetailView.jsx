@@ -10,6 +10,8 @@ import PolicyManagementSubNavigationBar
   from "components/settings/organization_settings/policies/PolicyManagementSubNavigationBar";
 import policyMetadata from "@opsera/definitions/constants/settings/organization-settings/policies/policy.metadata";
 import PolicyDetailPanel from "components/settings/organization_settings/policies/details/PolicyDetailPanel";
+import DeletePolicyActionBarButton
+  from "components/settings/organization_settings/policies/action_bar/DeletePolicyActionBarButton";
 
 export default function PolicyDetailView() {
   const { policyId } = useParams();
@@ -28,6 +30,11 @@ export default function PolicyDetailView() {
       <ActionBarContainer>
         <div>
           <ActionBarBackButton path={policyHelper.getManagementScreenLink()} />
+        </div>
+        <div>
+          <DeletePolicyActionBarButton
+            policyModel={policyModel}
+          />
         </div>
       </ActionBarContainer>
     );
