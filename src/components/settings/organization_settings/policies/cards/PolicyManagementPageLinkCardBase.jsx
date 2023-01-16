@@ -5,11 +5,16 @@ import SelectionCardBase from "components/common/card/selection/SelectionCardBas
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {policyHelper} from "components/settings/organization_settings/policies/policy.helper";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
+import useGetPolicyModel from "hooks/settings/organization_settings/policies/useGetPolicyModel";
+import PolicyParametersSummaryPanel
+  from "components/settings/organization_settings/policies/details/PolicyParametersSummaryPanel";
 
 export default function PolicyManagementPageLinkCardBase(
   {
     policy,
   }) {
+  const getPolicyModel = useGetPolicyModel();
+  const policyModel = getPolicyModel(policy);
   const {
     userData,
   } = useComponentStateReference();
@@ -24,7 +29,9 @@ export default function PolicyManagementPageLinkCardBase(
       <div className={"w-100 d-flex justify-content-between"}>
         <div>{policyConstants.getPolicyNameLabel(policy?.name)}</div>
         <div>
-          {/*<div className={"ml-auto"}><b>{DataParsingHelper.parseNumber(siteRole.memberCount, 0)}</b> Users</div>*/}
+          <PolicyParametersSummaryPanel
+            policyModel={policyModel}
+          />
         </div>
       </div>
     );

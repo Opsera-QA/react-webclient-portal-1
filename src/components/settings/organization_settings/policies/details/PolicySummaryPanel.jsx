@@ -5,6 +5,8 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import JsonField from "components/common/fields/json/JsonField";
 import PolicyNameField from "components/common/fields/settings/organization_settings/policies/PolicyNameField";
+import PolicyParametersSummaryPanel
+  from "components/settings/organization_settings/policies/details/PolicyParametersSummaryPanel";
 
 export default function PolicySummaryPanel(
   {
@@ -36,11 +38,9 @@ export default function PolicySummaryPanel(
           />
         </Col>
         <Col lg={12}>
-          {/*// TODO: Make field*/}
-          {/*<JsonField*/}
-          {/*  fieldName={"parameters"}*/}
-          {/*  dataObject={policyModel}*/}
-          {/*/>*/}
+          <PolicyParametersSummaryPanel
+            policyModel={policyModel}
+          />
         </Col>
       </Row>
     </SummaryPanelContainer>

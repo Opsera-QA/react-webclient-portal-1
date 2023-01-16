@@ -18,7 +18,6 @@ export default function SiteRoleAccessMultiCheckboxSelectInput(
   }) {
   const field = model?.getFieldById(fieldName);
   const siteRoles = DataParsingHelper.parseArray(model?.getData(fieldName), []);
-  console.log("siteRoles: " + JSON.stringify(siteRoles));
   const {
     isSaasUser,
   } = useComponentStateReference();
