@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import JsonField from "components/common/fields/json/JsonField";
+import PolicyNameField from "components/common/fields/settings/organization_settings/policies/PolicyNameField";
 
 export default function PolicySummaryPanel(
   {
@@ -21,10 +22,10 @@ export default function PolicySummaryPanel(
     >
       <Row>
         <Col lg={6}>
-          <TextFieldBase
+          <PolicyNameField
             className={"mb-2"}
             fieldName={"name"}
-            dataObject={policyModel}
+            model={policyModel}
           />
         </Col>
         <Col lg={6}>
@@ -36,10 +37,10 @@ export default function PolicySummaryPanel(
         </Col>
         <Col lg={12}>
           {/*// TODO: Make field*/}
-          <JsonField
-            fieldName={"parameters"}
-            dataObject={setPolicyModel}
-          />
+          {/*<JsonField*/}
+          {/*  fieldName={"parameters"}*/}
+          {/*  dataObject={policyModel}*/}
+          {/*/>*/}
         </Col>
       </Row>
     </SummaryPanelContainer>

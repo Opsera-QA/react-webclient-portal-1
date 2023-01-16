@@ -42,7 +42,7 @@ export default function PolicyDetailView() {
       isLoading={isLoading}
       actionBar={getActionBar()}
       navigationTabContainer={
-        <PolicyManagementSubNavigationBar currentTab={"policyDetailView"} />
+        <PolicyManagementSubNavigationBar activeTab={"policyDetailView"} />
       }
       detailPanel={
         <PolicyDetailPanel

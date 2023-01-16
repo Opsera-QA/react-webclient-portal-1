@@ -4,8 +4,6 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
-import CustomTab from "components/common/tabs/CustomTab";
-import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import PolicyEditorPanel from "components/settings/organization_settings/policies/details/PolicyEditorPanel";
 import PolicySummaryPanel from "components/settings/organization_settings/policies/details/PolicySummaryPanel";
 
@@ -24,10 +22,6 @@ export default function PolicyDetailPanel(
     }
   };
 
-  const toggleSummaryPanel = () => {
-    setActiveTab("summary");
-  };
-
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
@@ -35,17 +29,9 @@ export default function PolicyDetailPanel(
           handleTabClick={handleTabClick}
           activeTab={activeTab}
         />
-        <CustomTab
-          tabText={"Usage"}
-          tabName={"usage"}
-          icon={faDraftingCompass}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-        />
         <SettingsTab
           handleTabClick={handleTabClick}
           activeTab={activeTab}
-          accessRestricted={policyModel?.canUpdate() !== true}
         />
       </CustomTabContainer>
     );

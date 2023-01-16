@@ -14,18 +14,11 @@ export default function InactivePipelinePublishingPolicyPageLinkCard() {
   const getBody = () => {
     return (
       <div>
-        <div>{accountSettingsTrails.ldapSecurityManagersSiteRoleDetailView.pageDescription}</div>
-        <div className={"mt-2"}>{`This Site Role has not been activated yet. Click here to begin the activation process.`}</div>
+        <div className={"mb-2"}>The {policyConstants.POLICY_NAME_LABELS.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS} Policy is an optional Policy that Site Administrators can enable.</div>
+        <div className={"mb-2"}>By activating this Policy, you can restrict publishing pipelines to specific Site Roles.</div>
       </div>
     );
   };
-
-  const helpOverlayBody = (
-    <div>
-      <div className={"mb-2"}>The {policyConstants.POLICY_NAME_LABELS.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS} Policy is an optional Policy that Site Administrators can enable.</div>
-      <div className={"mb-2"}>Restrict publishing pipelines to specific Site Roles</div>
-    </div>
-  );
 
   const title = (
     <div className={"d-flex justify-content-between"}>

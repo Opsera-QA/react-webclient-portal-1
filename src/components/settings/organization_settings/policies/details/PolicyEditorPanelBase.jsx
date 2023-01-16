@@ -7,6 +7,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import PolicyParametersInput
   from "components/settings/organization_settings/policies/details/inputs/PolicyParametersInput";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
+import PolicyNameField from "components/common/fields/settings/organization_settings/policies/PolicyNameField";
 
 export default function PolicyEditorPanelBase(
   {
@@ -24,11 +25,9 @@ export default function PolicyEditorPanelBase(
   return (
     <Row>
       <Col xs={12}>
-        <TextInputBase
+        <PolicyNameField
           fieldName={"name"}
-          dataObject={policyModel}
-          setDataObject={setPolicyModel}
-          disabled={true}
+          model={policyModel}
         />
       </Col>
       <Col xs={12}>
