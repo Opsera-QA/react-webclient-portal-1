@@ -1,4 +1,4 @@
-import {faServer} from "@fortawesome/pro-light-svg-icons";
+import {faIdBadge, faServer} from "@fortawesome/pro-light-svg-icons";
 import {accountSettingsPaths} from "components/settings/accountSettings.paths";
 import {siteRoleHelper} from "components/settings/ldap_site_roles/siteRole.helper";
 
@@ -12,14 +12,13 @@ accountSettingsTrails.ldapSiteRolesManagement = {
   title: "Site Roles Management",
   linkText: "Site Roles",
   icon: faServer,
-  pageDescription: "Manage Site Roles in the follow levels: Administrators, Power Users, Users, Security Managers and Auditors.",
-  // pageDescription: `
-  //     Site Roles determine a user’s level of accessibility.
-  //     Manage Site Roles from this dashboard. By default, Opsera offers tiers for Site Roles:
-  //     Administrators for full site wide access, Power Users for elevated configuration of features access and then Users for all standard users to interact with the site.
-  //     If a user is not a member of any one of these roles they will be treated as a read-only user with very limited access.
-  //     Some additional roles can be enabled here (by Administrators) to add more advanced security features.
-  //   `,
+  pageDescription: `
+      Site Roles determine a user’s level of accessibility.
+      Manage Site Roles from this dashboard. By default, Opsera offers tiers for Site Roles:
+      Administrators for full site wide access, Power Users for elevated configuration of features access and then Users for all standard users to interact with the site.
+      If a user is not a member of any one of these roles they will be treated as a read-only user with very limited access.
+      Some additional roles can be enabled here (by Administrators) to add more advanced security features.
+    `,
 };
 
 accountSettingsTrails.ldapSiteRoleDetailView = {
@@ -79,4 +78,23 @@ accountSettingsTrails.ldapAuditorsSiteRoleDetailView = {
   title: "Auditors",
   linkText: "Auditors",
   pageDescription: siteRoleHelper.getSiteRolePermissionText("Auditors"),
+};
+
+accountSettingsTrails.policyManagement = {
+  parent: "accountSettings",
+  name: "policyManagement",
+  path: accountSettingsPaths.policyManagement,
+  title: "Policy Management",
+  linkText: "Policies",
+  icon: faIdBadge,
+  pageDescription: "Manage Organization Policies to tailor Opsera to your needs.",
+};
+
+accountSettingsTrails.policyDetailView = {
+  parent: "policyManagement",
+  name: "policyDetailView",
+  path: accountSettingsPaths.policyDetailView,
+  title: "Policy Details",
+  linkText: "Policy Details",
+  icon: faIdBadge,
 };
