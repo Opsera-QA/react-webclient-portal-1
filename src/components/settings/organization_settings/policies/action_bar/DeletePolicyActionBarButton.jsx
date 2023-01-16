@@ -44,7 +44,6 @@ export default function DeletePolicyActionBarButton(
   return (
     <ActionBarButton
       action={showOverlayFunction}
-      size={""}
       icon={faTrash}
       iconClasses={"danger-red"}
       popoverText={`Delete this Pipeline Step`}

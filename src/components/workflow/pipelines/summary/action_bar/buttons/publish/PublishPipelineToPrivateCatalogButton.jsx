@@ -4,10 +4,13 @@ import {faShareAll} from "@fortawesome/pro-light-svg-icons";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
-import pipelineActions from "components/workflow/pipeline-actions";
 import {
   customerPipelineTemplateCatalogActions
 } from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
+import useGetPolicyModelByName from "hooks/settings/organization_settings/policies/useGetPolicyModelByName";
+import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
 export default function PublishPipelineToPrivateCatalogButton(
   {
@@ -18,6 +21,11 @@ export default function PublishPipelineToPrivateCatalogButton(
     roles,
   }) {
   const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
+  const {
+    isLoading,
+    policyModel,
+  } = useGetPolicyModelByName(policyConstants.POLICY_NAMES.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS);
+  const allowedRoles = DataParsingHelper.parseArray(policyModel?.getData("parameters.allowed_roles"), []);
   const {
     cancelTokenSource,
     toastContext,
@@ -45,11 +53,15 @@ export default function PublishPipelineToPrivateCatalogButton(
     }
   };
 
+  if (isLoading === true || SiteRoleHelper.isMemberOfAllowedSiteRoles(allowedRoles) !== true) {
+    return null;
+  }
+
   return (
     <VanityButtonBase
       className={className}
       icon={faShareAll}
-      disabled={disabled}
+      disabled={disabled || isLoading}
       onClickFunction={handlePublishPipelineFunction}
       buttonSize={buttonSize}
       buttonState={buttonState}

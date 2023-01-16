@@ -17,7 +17,6 @@ export default function PolicyParametersInput(
 
   const setModelFunction = (updatedModel) => {
     policyModel?.setData("parameters", updatedModel?.getPersistData());
-    console.log("parameters: " + JSON.stringify(policyModel?.getData("parameters")));
     setPolicyModel({...policyModel});
     setParametersModel({...updatedModel});
   };
