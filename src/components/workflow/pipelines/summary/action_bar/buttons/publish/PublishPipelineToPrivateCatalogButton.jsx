@@ -53,15 +53,11 @@ export default function PublishPipelineToPrivateCatalogButton(
     }
   };
 
-  if (isLoading === true || SiteRoleHelper.isMemberOfAllowedSiteRoles(allowedRoles) !== true) {
-    return null;
-  }
-
   return (
     <VanityButtonBase
       className={className}
       icon={faShareAll}
-      disabled={disabled || isLoading}
+      disabled={disabled || isLoading || SiteRoleHelper.isMemberOfAllowedSiteRoles(allowedRoles) !== true}
       onClickFunction={handlePublishPipelineFunction}
       buttonSize={buttonSize}
       buttonState={buttonState}
