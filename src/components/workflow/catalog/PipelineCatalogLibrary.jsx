@@ -10,17 +10,26 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import CustomTab from "components/common/tabs/CustomTab";
 import CustomerPipelineTemplateCatalog from "components/workflow/catalog/private/CustomerPipelineTemplateCatalog";
 import OpseraPipelineMarketplace from "components/workflow/catalog/platform/OpseraPlatformMarketplace";
+import useGetPolicyModelByName from "hooks/settings/organization_settings/policies/useGetPolicyModelByName";
+import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
+import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 function PipelineCatalogLibrary() {
   const [activeTemplates, setActiveTemplates] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
   const {
     isMounted,
     cancelTokenSource,
     getAccessToken,
     toastContext,
+    userData,
   } = useComponentStateReference();
+  const {
+    policyModel,
+    isLoading,
+  } = useGetPolicyModelByName(policyConstants.POLICY_NAMES.PLATFORM_PIPELINE_CATALOG_VISIBILITY);
+  const allowedRoles = DataParsingHelper.parseArray(policyModel?.getData("parameters.allowed_roles"), []);
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
@@ -37,18 +46,11 @@ function PipelineCatalogLibrary() {
 
   const loadData = async () => {
     try {
-      setIsLoading(true);
       await loadInUseIds();
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
         toastContext.showLoadingErrorDialog(error);
-      }
-    }
-    finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
       }
     }
   };
@@ -85,6 +87,7 @@ function PipelineCatalogLibrary() {
           tabText={"Pipeline Marketplace"}
           handleTabClick={handleTabClick}
           tabName={"all"}
+          visible={SiteRoleHelper.isMemberOfAllowedSiteRoles(userData, allowedRoles) === true}
         />
         <CustomTab
           activeTab={activeTab}
@@ -96,15 +99,29 @@ function PipelineCatalogLibrary() {
     );
   };
 
+  const getBody = () => {
+    if (isLoading === true) {
+      return (
+        <CenterLoadingIndicator
+          type={"Catalog"}
+        />
+      );
+    }
+
+    return (
+      <div className={"px-3"}>
+        <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
+      </div>
+    );
+  };
+
   return (
     <ScreenContainer
       breadcrumbDestination={"catalog"}
       navigationTabContainer={<WorkflowSubNavigationBar currentTab={"catalog"} />}
       helpComponent={<CatalogHelpDocumentation/>}
     >
-      <div className={"px-3"}>
-        <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
-      </div>
+      {getBody()}
     </ScreenContainer>
   );
 }
