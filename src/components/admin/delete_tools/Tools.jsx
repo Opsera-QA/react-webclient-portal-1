@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
 import ErrorDialog from "../../common/status_notifications/error";
@@ -122,7 +122,7 @@ class ToolTable extends React.PureComponent {
         <div className="p-2 mt-2">
           <div className="row mt-1">
             <div className="col-md col-header-text">{name}</div>
-            <div className="col-md"><span className="text-muted">Installed On:</span> {format(new Date(installationDate), "yyyy-MM-dd', 'hh:mm a")}</div>
+            <div className="col-md"><span className="text-muted">Installed On:</span> {DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(installationDate))}</div>
             <div className="col-md" style={{ textAlign: "right" }}><Button disabled={this.isDisabled(tool.toolStatus)} variant="danger" onClick={this.handleDeletePress}>Delete</Button></div>
           </div>
           <div className="row">
