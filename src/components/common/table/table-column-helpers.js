@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import {
   faCheckCircle,
   faCircle,
@@ -228,7 +228,7 @@ export const getTableDateColumn = (field, className) => {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function parseDate(row) {
-      return row.value ? format(new Date(row.value), "yyyy-MM-dd") : "";
+      return row.value ? DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(row.value)) : "";
     },
     class: className ? className : "no-wrap-inline"
   };
@@ -239,7 +239,7 @@ export const getTableDateTimeColumn = (field, className, emptyValuePlaceholder =
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function parseDateTime(row) {
-      return row.value ? format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a") : emptyValuePlaceholder;
+      return row.value ? DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(row.value)) : emptyValuePlaceholder;
     },
     class: className ? className : "no-wrap-inline"
   };
@@ -254,7 +254,7 @@ export const getTableCreatedAtColumn = (
     Header: header,
     accessor: "createdAt",
     Cell: function parseDateTime(row) {
-      return row.value ? format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a") : emptyValuePlaceholder;
+      return row.value ? DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(row.value)) : emptyValuePlaceholder;
     },
     class: className,
   };

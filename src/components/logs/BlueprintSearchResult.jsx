@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ModalLogs from "components/common/modal/modalLogs";
 import { faSearchPlus } from "@fortawesome/pro-light-svg-icons";
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import InfoDialog from "components/common/status_notifications/info";
 import IconBase from "components/common/icons/IconBase";
 
@@ -35,7 +35,7 @@ function BlueprintSearchResult({ searchResults }) {
               }}/>
           </div>
           <h3>Build: {item["full_name"]}</h3>
-          <b>Timestamp: {format(new Date(item["build_timestamp"]), "yyyy-MM-dd', 'hh:mm a")}</b>
+          <b>Timestamp: {DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(item["build_timestamp"]))}</b>
           <br />
           {item["log"]}
         </div>

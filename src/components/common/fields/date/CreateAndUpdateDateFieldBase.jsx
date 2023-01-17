@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import FieldLabel from "components/common/fields/FieldLabel";
 import FieldContainer from "components/common/fields/FieldContainer";
 
@@ -10,7 +10,7 @@ function CreateAndUpdateDateFieldBase({createdAtFieldName, updatedAtFieldName, m
 
   const getDate = (field) => {
     const date = model.getData(field?.id);
-    return date != null && dateFormat != null ? format(new Date(date), dateFormat) : null;
+    return date != null && dateFormat != null ? DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(date), dateFormat) : null;
   };
 
   return (
