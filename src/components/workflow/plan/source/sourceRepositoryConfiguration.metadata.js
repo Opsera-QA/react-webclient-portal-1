@@ -43,6 +43,10 @@ export const sourceRepositoryConfigurationMetadata = {
       isRequired: true,
     },
     {
+      label: "Project Id",
+      id: "projectId",
+    },
+    {
       label: "Primary Branch",
       id: "branch",
       isRequired: true,
@@ -129,6 +133,7 @@ export const sourceRepositoryConfigurationMetadata = {
     "workspaceName",
     "repository",
     "repoId",
+    "projectId",
     "gitUrl",
     "sshUrl",
     "branch",
@@ -151,6 +156,7 @@ export const sourceRepositoryConfigurationMetadata = {
     username: "",
     password: "",
     repoId: "",
+    projectId: "",
     gitUrl: "",
     sshUrl: "",
     repository: "",
