@@ -31,6 +31,8 @@ import InsightsSettings from "components/settings/insights/InsightsSettings";
 import RoleRestrictedRoute from "temp-library-components/routes/RoleRestrictedRoute";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import PipelinesSettingsRoutes from "components/settings/pipelines/PipelinesSettingsRoutes";
+import PolicyManagement from "components/settings/organization_settings/policies/PolicyManagement";
+import PolicyDetailView from "components/settings/organization_settings/policies/details/PolicyDetailView";
 
 export default function SettingsRoutes() {
   const {
@@ -94,6 +96,19 @@ export default function SettingsRoutes() {
         path="/settings/:orgDomain/site-roles/details/:groupName"
         exact={true}
         component={SiteRoleDetailView}
+        roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
+      />
+
+      <RoleRestrictedRoute
+        path={"/settings/organization-settings/policies/"}
+        exact={true}
+        component={PolicyManagement}
+        roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
+      />
+      <RoleRestrictedRoute
+        path={"/settings/organization-settings/policies/:policyId"}
+        exact={true}
+        component={PolicyDetailView}
         roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
       />
 
