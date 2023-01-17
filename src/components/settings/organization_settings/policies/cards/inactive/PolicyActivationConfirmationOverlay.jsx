@@ -1,17 +1,14 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
-import Row from "react-bootstrap/Row";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import CancelButtonBase from "components/common/buttons/cancel/CancelButtonBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import ActivatePolicyButton
   from "components/settings/organization_settings/policies/cards/inactive/ActivatePolicyButton";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 import useGetNewPolicyModel from "hooks/settings/organization_settings/policies/useGetNewPolicyModel";
-import PolicyEditorPanel from "components/settings/organization_settings/policies/details/PolicyEditorPanel";
 import PolicyEditorPanelBase from "components/settings/organization_settings/policies/details/PolicyEditorPanelBase";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 
@@ -60,7 +57,7 @@ export default function PolicyActivationConfirmationOverlay({ policyName }) {
           <ButtonContainerBase>
             <ActivatePolicyButton
               policyModel={policyModel}
-              className={closeOverlayFunction}
+              closeOverlayFunction={closeOverlayFunction}
             />
           </ButtonContainerBase>
         </div>
