@@ -11,7 +11,7 @@ function SnykToolSelectInput({ fieldName, model, setModel, disabled }) {
     newDataObject.setData("languageLevelId", "");
     newDataObject.setData("version", "");
     newDataObject.setData("packagerNameOrBuildTool", "");
-    newDataObject.setData("multiModuleProject", "docker");
+    newDataObject.setData("multiModuleProject", "");
     newDataObject.setData("thresholdVulnerability", "");
     newDataObject.setData("gitToolId", "");
     newDataObject.setData("repoId", "");

@@ -9,10 +9,15 @@ import snykStepFormMetadata from "./snyk-stepForm-metadata";
 import SnykProductsMultiSelectInput from "./inputs/SnykProductsMultiSelectInput";
 import SnykLanguageSelectInput from "./inputs/SnykLanguageSelectInput";
 import SnykLanguageVersionSelectInput from "./inputs/SnykLanguageVersionSelectInput";
+import SnykPackagerSelectInput from "./inputs/SnykPackagerSelectInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import SnykVulnerabilityThresholdInput from "./inputs/SnykVulnerabilityThresholdInput";
+import SourceRepositoryToolIdentifierSelectInput from "components/common/list_of_values_input/workflow/pipelines/source_repository/SourceRepositoryToolIdentifierSelectInput";
+import SnykScmToolSelectInput from "./inputs/SnykScmToolSelectInput";
+import RepositorySelectInput from "components/common/list_of_values_input/tools/repositories/RepositorySelectInput";
 
 function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [azureDevopsModel, setAzureDevopsModel] = useState(undefined);
   const [snykModel, setSnykModel] = useState(undefined);
   const [threshold, setThreshold] = useState(undefined);
 
@@ -73,8 +78,41 @@ function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
         fieldName={"version"}
         model={snykModel}
         setModel={setSnykModel}
-        toolConfigId={snykModel.getData("toolConfigId")}
+        language={snykModel.getData("languageLevelId")}
       />
+      <SnykPackagerSelectInput
+        fieldName={"packagerNameOrBuildTool"}
+        model={snykModel}
+        setModel={setSnykModel}
+        version={snykModel.getData("version")}
+      />
+      <BooleanToggleInput
+        fieldName={"multiModuleProject"}
+        dataObject={snykModel}
+        setDataObject={setSnykModel}
+      />
+      <SnykVulnerabilityThresholdInput 
+        fieldName={"thresholdVulnerability"}
+        model={snykModel}
+        setModel={setSnykModel}
+      />
+      <SourceRepositoryToolIdentifierSelectInput 
+        fieldName={"service"}
+        model={snykModel}
+        setModel={setSnykModel}
+      />
+      <SnykScmToolSelectInput 
+        model={snykModel}
+        setModel={setSnykModel}
+        service={snykModel.getData("service")}
+      />
+      <RepositorySelectInput 
+        model={snykModel}
+        setModel={setSnykModel}
+        service={snykModel.getData("service")}
+        gitToolId={snykModel.getData("gitToolId")}
+        visable={true}
+      /> 
     </PipelineStepEditorPanelContainer>
   );
 }

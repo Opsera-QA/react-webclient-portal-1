@@ -36,19 +36,33 @@ const snykStepFormMetadata = {
       isRequired: true,
     },
     {
-      label: "Git Account",
+      label: "Git Tool ID",
       id: "gitToolId",
       isRequired: true,
     },
     {
-      label: "Git Repository",
+      label: "Git Service",
+      id: "service",
+      isRequired: true,
+    },
+    {
+      label: "Repository",
       id: "repoId",
       isRequired: true
     },
     {
-      label: "Git Branch Name",
-      id: "gitBranch",
+      label: "SSH URL",
+      id: "sshUrl",
       isRequired: true
+    },
+    {
+      label: "Git URL",
+      id: "gitUrl"
+    },
+    {
+      label: "Git Branch",
+      id: "gitBranch",
+      isRequired: true,
     }
   ],
   newObjectFields: {
@@ -57,11 +71,14 @@ const snykStepFormMetadata = {
     version: "",
     packagerNameOrBuildTool: "",
     toolConfigId: "",
-    multiModuleProject: "",
-    thresholdVulnerability: "",
+    multiModuleProject: false,
+    thresholdVulnerability: [],
     gitToolId: "",
     repoId: "",
-    gitBranch: ""
+    gitBranch: "",
+    service: "",
+    sshUrl: "",
+    gitUrl:"",
   }
 };
 

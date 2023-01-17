@@ -5,20 +5,20 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import snykStepActions from "../snyk-step-actions";
 
-function SnykLanguageVersionSelectInput({
+function SnykPackagerSelectInput({
   fieldName,
   model,
   setModel,
   disabled,
   setDataFunction,
   clearDataFunction,
-  language,
+  version,
 }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [snykVersionList, setSnykVersionList] = useState([]);
+  const [snykPackagerList, setSnykPackagerList] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Language Version");
+  const [placeholder, setPlaceholderText] = useState("Select Packager or Build Tool");
   const isMounted = useRef(false);
   const { getAccessToken } = useContext(AuthContext);
 
@@ -30,7 +30,7 @@ function SnykLanguageVersionSelectInput({
     isMounted.current = true;
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-    setSnykVersionList([]);
+    setSnykPackagerList([]);
 
     loadData(source).catch((error) => {
       throw error;
@@ -40,32 +40,31 @@ function SnykLanguageVersionSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [language]);
+  }, [version]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadSnykLanguageVersions(getAccessToken, cancelSource);
+      await loadSnykPackagers(getAccessToken, cancelSource);
     } catch (error) {
-      setPlaceholderText("Language Selection not Available");
-      setErrorMessage("There was an error pulling Snyk language versions");
+      setPlaceholderText("Packager or build tool not Available");
+      setErrorMessage("There was an error pulling available build tools");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const loadSnykLanguageVersions = async (cancelSource = cancelTokenSource) => {
-    const response = await snykStepActions.getLanguageVersions(
+  const loadSnykPackagers = async (cancelSource = cancelTokenSource) => {
+    const response = await snykStepActions.getPackagers(
       getAccessToken,
       cancelSource,
       model.getData("languageLevelId")
     );
-    console.log(response);
-    const versions = response?.data;
-    setSnykVersionList(versions);
+    const packagers = response?.data;
+    setSnykPackagerList(packagers);
   };
 
-  if (snykVersionList.length === 0){
+  if (snykPackagerList.length === 0){
     return null;
   }
 
@@ -74,7 +73,7 @@ function SnykLanguageVersionSelectInput({
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={snykVersionList}
+      selectOptions={snykPackagerList}
       busy={isLoading}
       valueField={"name"}
       textField={""}
@@ -87,14 +86,14 @@ function SnykLanguageVersionSelectInput({
   );
 }
 
-SnykLanguageVersionSelectInput.propTypes = {
+SnykPackagerSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
-  language: PropTypes.any,
+  version: PropTypes.any,
 };
 
-export default SnykLanguageVersionSelectInput;
+export default SnykPackagerSelectInput;
