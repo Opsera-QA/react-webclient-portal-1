@@ -2,7 +2,6 @@ import React from "react";
 import PropType from "prop-types";
 import {useHistory} from "react-router-dom";
 import SelectionCardBase from "components/common/card/selection/SelectionCardBase";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import {policyHelper} from "components/settings/organization_settings/policies/policy.helper";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 import useGetPolicyModel from "hooks/settings/organization_settings/policies/useGetPolicyModel";
@@ -12,12 +11,11 @@ import PolicyParametersSummaryPanel
 export default function PolicyManagementPageLinkCardBase(
   {
     policy,
+    description,
+    icon,
   }) {
   const { getPolicyModel } = useGetPolicyModel();
   const policyModel = getPolicyModel(policy);
-  const {
-    userData,
-  } = useComponentStateReference();
   const history = useHistory();
 
   const handleOnClickFunction = () => {
@@ -40,7 +38,7 @@ export default function PolicyManagementPageLinkCardBase(
   const getBody = () => {
     return (
       <div>
-        {/*{breadcrumb?.pageDescription}*/}
+        {description}
       </div>
     );
   };
@@ -49,7 +47,7 @@ export default function PolicyManagementPageLinkCardBase(
     <SelectionCardBase
       titleText={getTitle()}
       body={getBody()}
-      // icon={breadcrumb?.icon}
+      icon={icon}
       onClickFunction={handleOnClickFunction}
       className={"my-3"}
     />
@@ -58,4 +56,6 @@ export default function PolicyManagementPageLinkCardBase(
 
 PolicyManagementPageLinkCardBase.propTypes = {
   policy: PropType.object,
+  description: PropType.any,
+  icon: PropType.object,
 };

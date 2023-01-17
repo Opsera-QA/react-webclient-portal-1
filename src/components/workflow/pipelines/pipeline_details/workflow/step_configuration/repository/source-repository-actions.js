@@ -5,7 +5,6 @@ const SourceRepositoryActions = {};
 SourceRepositoryActions.registerHook = async (getAccessToken, cancelTokenSource, pipelineOwner, pipelineId, sourceRepositoryModel) => {
   const nodeUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
   const hookUrl = encodeURIComponent(`${nodeUrl}/hooks/${pipelineOwner}/${pipelineId}/source`);
-  console.log(sourceRepositoryModel.getPersistData());
   const apiUrl = `/connectors/${sourceRepositoryModel?.getData("service")}/${sourceRepositoryModel?.getData("accountId")}/hook/create`;
   const queryParams = {
     params: {

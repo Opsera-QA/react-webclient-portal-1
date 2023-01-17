@@ -12,7 +12,6 @@ import CustomerPipelineTemplateCatalog from "components/workflow/catalog/private
 import OpseraPipelineMarketplace from "components/workflow/catalog/platform/OpseraPlatformMarketplace";
 import useGetPolicyModelByName from "hooks/settings/organization_settings/policies/useGetPolicyModelByName";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
-import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 function PipelineCatalogLibrary() {
@@ -29,7 +28,6 @@ function PipelineCatalogLibrary() {
     policyModel,
     isLoading,
   } = useGetPolicyModelByName(policyConstants.POLICY_NAMES.PLATFORM_PIPELINE_CATALOG_VISIBILITY);
-  const allowedRoles = DataParsingHelper.parseArray(policyModel?.getData("parameters.allowed_roles"), []);
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
@@ -61,21 +59,22 @@ function PipelineCatalogLibrary() {
   };
 
   const getCurrentView = () => {
+    if (policyModel == null && activeTab == "all") {
+      return (
+        <OpseraPipelineMarketplace
+          activeTemplates={activeTemplates}
+        />
+      );
+    }
+
     switch (activeTab) {
-      case "all":
-        return (
-          <OpseraPipelineMarketplace
-            activeTemplates={activeTemplates}
-          />
-        );
       case "customer":
+      default:
         return (
           <CustomerPipelineTemplateCatalog
             activeTemplates={activeTemplates}
           />
         );
-      default:
-        return null;
     }
   };
 
@@ -87,10 +86,10 @@ function PipelineCatalogLibrary() {
           tabText={"Pipeline Marketplace"}
           handleTabClick={handleTabClick}
           tabName={"all"}
-          visible={SiteRoleHelper.isMemberOfAllowedSiteRoles(userData, allowedRoles) === true}
+          visible={policyModel == null}
         />
         <CustomTab
-          activeTab={activeTab}
+          activeTab={policyModel == null ? activeTab : "customer"}
           tabText={"Shared Templates"}
           handleTabClick={handleTabClick}
           tabName={"customer"}
