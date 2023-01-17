@@ -13,7 +13,7 @@ export default function PolicyManagementPageLinkCardBase(
   {
     policy,
   }) {
-  const getPolicyModel = useGetPolicyModel();
+  const { getPolicyModel } = useGetPolicyModel();
   const policyModel = getPolicyModel(policy);
   const {
     userData,
@@ -26,7 +26,7 @@ export default function PolicyManagementPageLinkCardBase(
 
   const getTitle = () => {
     return (
-      <div className={"w-100 d-flex justify-content-between"}>
+      <div className={"w-100"}>
         <div>{policyConstants.getPolicyNameLabel(policy?.name)}</div>
         <div>
           <PolicyParametersSummaryPanel
