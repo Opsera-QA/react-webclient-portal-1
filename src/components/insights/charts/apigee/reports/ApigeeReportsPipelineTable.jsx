@@ -19,6 +19,7 @@ import FullScreenCenterOverlayContainer from "../../../../common/overlays/center
 import SuccessPercentActionableInsights
   from "../../github_actions/data_blocks/AllGithubActions/SuccessPercent/SuccessPercentActionableInsights";
 import ApigeeDetailedReportsTable from "./ApigeeDetailedReportsTable";
+import ExportApigeeDetailsButton from "./export/ExportApigeeDetailsButton";
 
 function ApigeeReportsPipelineTable({ pipeline, dashboardData, kpiConfiguration }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -166,6 +167,16 @@ function ApigeeReportsPipelineTable({ pipeline, dashboardData, kpiConfiguration 
         filterDto={filterModel}
         showRefreshButton={false}
         supportSearch={true}
+        exportButton={
+          <ExportApigeeDetailsButton 
+            className={"ml-2"}
+            isLoading={isLoading} 
+            kpiConfiguration={kpiConfiguration} 
+            dashboardTags={dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value} 
+            filterDto={filterModel} 
+            pipelineId={pipeline?.pipelineId} 
+          />
+        }
       />
     </div>
   );

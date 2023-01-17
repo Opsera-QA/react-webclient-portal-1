@@ -107,4 +107,27 @@ apigeeActions.getSummaryChartDetails = async (
 
 };
 
+apigeeActions.downloadReport = async (
+  getAccessToken,
+  cancelTokenSource,
+  kpiConfiguration,
+  dashboardTags,
+  tableFilterDto,
+  pipelineId,
+) => {
+  const apiUrl = apigeeBaseURL + "report/download";
+  const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+
+  const postBody = {
+    startDate: dateRange?.start,
+    endDate: dateRange?.end,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    pipelineId: pipelineId,    
+    search: tableFilterDto?.getData("search"),
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default apigeeActions;
