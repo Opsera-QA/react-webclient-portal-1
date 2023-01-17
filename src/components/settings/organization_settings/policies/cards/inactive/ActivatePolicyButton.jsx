@@ -6,6 +6,7 @@ import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import {useHistory} from "react-router-dom";
 import usePolicyActions from "hooks/settings/organization_settings/policies/usePolicyActions";
 import {policyHelper} from "components/settings/organization_settings/policies/policy.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function ActivatePolicyButton(
   {
@@ -27,12 +28,14 @@ export default function ActivatePolicyButton(
     try {
       buttonStateFunctions.setBusyState();
       const response = await policyActions.activatePolicy(policyModel?.getPersistData());
-      const policy = response?.data;
+      const policy = DataParsingHelper.parseNestedObject(response, "data.data");
 
-      closeOverlayFunction();
-      toastContext.showInformationToast("The Policy has been successfully activated.");
-      buttonStateFunctions.setSuccessState();
-      history.push(policyHelper.getDetailViewLink(policy?._id));
+      if (policy) {
+        toastContext.showInformationToast("The Policy has been successfully activated.");
+        buttonStateFunctions.setSuccessState();
+        history.push(policyHelper.getDetailViewLink(policy?._id));
+        closeOverlayFunction();
+      }
     } catch (error) {
       toastContext.showFormErrorToast(error, `Error activating Policy:`);
       buttonStateFunctions.setErrorState();
