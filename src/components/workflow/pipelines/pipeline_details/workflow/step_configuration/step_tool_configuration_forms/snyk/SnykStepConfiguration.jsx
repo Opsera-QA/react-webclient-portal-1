@@ -14,7 +14,9 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import SnykVulnerabilityThresholdInput from "./inputs/SnykVulnerabilityThresholdInput";
 import SourceRepositoryToolIdentifierSelectInput from "components/common/list_of_values_input/workflow/pipelines/source_repository/SourceRepositoryToolIdentifierSelectInput";
 import SnykScmToolSelectInput from "./inputs/SnykScmToolSelectInput";
-import RepositorySelectInput from "components/common/list_of_values_input/tools/repositories/RepositorySelectInput";
+import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
+import SnykScmRepositorySelectInput from "./inputs/SnykScmRepositorySelectInput";
+import SnykBitbucketWorkspaceInput from "./inputs/SnykBitbucketWorkspaceInput";
 
 function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -74,18 +76,20 @@ function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
         setModel={setSnykModel}
         toolConfigId={snykModel.getData("toolConfigId")}
       />
+      { snykModel.getData("languageLevelId") ?
       <SnykLanguageVersionSelectInput 
         fieldName={"version"}
         model={snykModel}
         setModel={setSnykModel}
         language={snykModel.getData("languageLevelId")}
-      />
+      /> : null }
+      { snykModel.getData("version") ? 
       <SnykPackagerSelectInput
         fieldName={"packagerNameOrBuildTool"}
         model={snykModel}
         setModel={setSnykModel}
         version={snykModel.getData("version")}
-      />
+      /> : null }
       <BooleanToggleInput
         fieldName={"multiModuleProject"}
         dataObject={snykModel}
@@ -106,13 +110,23 @@ function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
         setModel={setSnykModel}
         service={snykModel.getData("service")}
       />
-      <RepositorySelectInput 
-        model={snykModel}
-        setModel={setSnykModel}
+      <SnykBitbucketWorkspaceInput 
+        dataObject={snykModel}
+        setDataObject={setSnykModel}
+      />
+      <SnykScmRepositorySelectInput 
+        dataObject={snykModel}
+        setDataObject={setSnykModel}
+      /> 
+      <GitBranchInput 
+        fieldName={"gitBranch"}
         service={snykModel.getData("service")}
         gitToolId={snykModel.getData("gitToolId")}
-        visable={true}
-      /> 
+        workspace={snykModel.getData("workspace")}
+        dataObject={snykModel}
+        setDataObject={setSnykModel}
+        repoId={snykModel.getData("repoId")}
+      />
     </PipelineStepEditorPanelContainer>
   );
 }

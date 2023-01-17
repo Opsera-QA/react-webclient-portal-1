@@ -57,12 +57,29 @@ const snykStepFormMetadata = {
     },
     {
       label: "Git URL",
-      id: "gitUrl"
+      id: "gitUrl",
+      isRequired: true
     },
     {
       label: "Git Branch",
       id: "gitBranch",
       isRequired: true,
+    },
+    {
+      label: "Repository",
+      id: "projectId",
+    },
+    {
+      label: "Repository Name",
+      id: "repositoryName",
+    },
+    {
+      label: "Workspace",
+      id: "workspace",
+    },
+    {
+      label: "Workspace Name",
+      id: "workspaceName",
     }
   ],
   newObjectFields: {

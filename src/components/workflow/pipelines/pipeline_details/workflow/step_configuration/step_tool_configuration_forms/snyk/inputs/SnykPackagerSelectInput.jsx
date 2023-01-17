@@ -64,10 +64,6 @@ function SnykPackagerSelectInput({
     setSnykPackagerList(packagers);
   };
 
-  if (snykPackagerList.length === 0){
-    return null;
-  }
-
   return (
     <SelectInputBase
       fieldName={fieldName}
