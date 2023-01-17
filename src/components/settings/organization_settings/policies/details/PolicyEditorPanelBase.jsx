@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PolicyParametersInput
   from "components/settings/organization_settings/policies/details/inputs/PolicyParametersInput";
-import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 import PolicyNameField from "components/common/fields/settings/organization_settings/policies/PolicyNameField";
+import PolicyValueTextInput
+  from "components/settings/organization_settings/policies/details/inputs/PolicyValueTextInput";
 
 export default function PolicyEditorPanelBase(
   {
@@ -31,11 +31,9 @@ export default function PolicyEditorPanelBase(
         />
       </Col>
       <Col xs={12}>
-        <TextInputBase
-          fieldName={"value"}
-          dataObject={policyModel}
-          setDataObject={setPolicyModel}
-          visible={policyModel?.getData("name") !== policyConstants.POLICY_NAMES.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS}
+        <PolicyValueTextInput
+          policyModel={policyModel}
+          setPolicyModel={setPolicyModel}
         />
       </Col>
       <Col xs={12}>
