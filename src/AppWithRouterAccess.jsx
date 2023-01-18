@@ -130,7 +130,7 @@ const AppWithRouterAccess = () => {
 
   const refreshToken = async () => {
     const tokens = await authClient.tokenManager.getTokens();
-    await loadUsersData(tokens?.accessToken?.value);
+    await loadUsersData(tokens?.accessToken?.accessToken);
   };
 
   const getError = () => {

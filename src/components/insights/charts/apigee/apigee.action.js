@@ -53,6 +53,7 @@ apigeeActions.getReport = async (
     page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
     size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
     search: tableFilterDto?.getData("search"),
+    assetType: tableFilterDto?.getData("assetType"),
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
@@ -105,6 +106,30 @@ apigeeActions.getSummaryChartDetails = async (
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 
+};
+
+apigeeActions.downloadReport = async (
+  getAccessToken,
+  cancelTokenSource,
+  kpiConfiguration,
+  dashboardTags,
+  tableFilterDto,
+  pipelineId,
+) => {
+  const apiUrl = apigeeBaseURL + "report/download";
+  const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+
+  const postBody = {
+    startDate: dateRange?.start,
+    endDate: dateRange?.end,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    pipelineId: pipelineId,    
+    search: tableFilterDto?.getData("search"),
+    assetType: tableFilterDto?.getData("assetType"),
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 export default apigeeActions;

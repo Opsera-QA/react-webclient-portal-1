@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import jsPDF from "jspdf";
 import { getTaskTypeLabel } from "components/tasks/task.types";
-import {DATE_FORMATS, getFormattedDate} from "components/common/fields/date/DateFieldBase";
 import ExportDataOverlay from "components/common/modal/export_data/ExportDataOverlay";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 

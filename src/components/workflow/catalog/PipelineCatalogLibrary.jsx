@@ -10,17 +10,24 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import CustomTab from "components/common/tabs/CustomTab";
 import CustomerPipelineTemplateCatalog from "components/workflow/catalog/private/CustomerPipelineTemplateCatalog";
 import OpseraPipelineMarketplace from "components/workflow/catalog/platform/OpseraPlatformMarketplace";
+import useGetPolicyModelByName from "hooks/settings/organization_settings/policies/useGetPolicyModelByName";
+import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 function PipelineCatalogLibrary() {
   const [activeTemplates, setActiveTemplates] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("all");
   const {
     isMounted,
     cancelTokenSource,
     getAccessToken,
     toastContext,
+    userData,
   } = useComponentStateReference();
+  const {
+    policyModel,
+    isLoading,
+  } = useGetPolicyModelByName(policyConstants.POLICY_NAMES.PLATFORM_PIPELINE_CATALOG_VISIBILITY);
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
@@ -37,18 +44,11 @@ function PipelineCatalogLibrary() {
 
   const loadData = async () => {
     try {
-      setIsLoading(true);
       await loadInUseIds();
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
         toastContext.showLoadingErrorDialog(error);
-      }
-    }
-    finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
       }
     }
   };
@@ -59,21 +59,22 @@ function PipelineCatalogLibrary() {
   };
 
   const getCurrentView = () => {
+    if (policyModel == null && activeTab == "all") {
+      return (
+        <OpseraPipelineMarketplace
+          activeTemplates={activeTemplates}
+        />
+      );
+    }
+
     switch (activeTab) {
-      case "all":
-        return (
-          <OpseraPipelineMarketplace
-            activeTemplates={activeTemplates}
-          />
-        );
       case "customer":
+      default:
         return (
           <CustomerPipelineTemplateCatalog
             activeTemplates={activeTemplates}
           />
         );
-      default:
-        return null;
     }
   };
 
@@ -85,14 +86,31 @@ function PipelineCatalogLibrary() {
           tabText={"Pipeline Marketplace"}
           handleTabClick={handleTabClick}
           tabName={"all"}
+          visible={policyModel == null}
         />
         <CustomTab
-          activeTab={activeTab}
+          activeTab={policyModel == null ? activeTab : "customer"}
           tabText={"Shared Templates"}
           handleTabClick={handleTabClick}
           tabName={"customer"}
         />
       </CustomTabContainer>
+    );
+  };
+
+  const getBody = () => {
+    if (isLoading === true) {
+      return (
+        <CenterLoadingIndicator
+          type={"Catalog"}
+        />
+      );
+    }
+
+    return (
+      <div className={"px-3"}>
+        <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
+      </div>
     );
   };
 
@@ -102,9 +120,7 @@ function PipelineCatalogLibrary() {
       navigationTabContainer={<WorkflowSubNavigationBar currentTab={"catalog"} />}
       helpComponent={<CatalogHelpDocumentation/>}
     >
-      <div className={"px-3"}>
-        <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
-      </div>
+      {getBody()}
     </ScreenContainer>
   );
 }

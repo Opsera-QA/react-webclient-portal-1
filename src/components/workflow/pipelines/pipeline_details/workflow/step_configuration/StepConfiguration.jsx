@@ -125,7 +125,10 @@ function StepConfiguration({ plan, stepId, parentCallback, closeEditorPanel }) {
           setModel={setStepConfigurationModel}
           model={stepConfigurationModel}
         />
-        <StepConfigurationTagsInput setStepConfigurationModel={setStepConfigurationModel} stepConfigurationModel={stepConfigurationModel} />
+        <StepConfigurationTagsInput
+          setStepConfigurationModel={setStepConfigurationModel}
+          stepConfigurationModel={stepConfigurationModel}
+        />
       </div>
     </PipelineStepEditorPanelContainer>
   );

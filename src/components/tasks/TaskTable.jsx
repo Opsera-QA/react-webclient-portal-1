@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
@@ -9,28 +9,22 @@ import {
   getTaskStatusColumn,
   getFormattedLabelWithFunctionColumnDefinition,
   getRoleAccessColumn,
-  getLimitedTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import { useHistory } from "react-router-dom";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { getTaskTypeLabel } from "components/tasks/task.types";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 
-function TaskTable({ taskData, taskFilterModel, setTaskFilterModel, loadData, isLoading, taskMetadata }) {
+function TaskTable({ taskData, taskFilterModel, setTaskFilterModel, loadData, isLoading }) {
   const history = useHistory();
-  const [columns, setColumns] = useState([]);
+  const fields = tasksMetadata.fields;
   const {
     isSaasUser,
   } = useComponentStateReference();
 
-  useEffect(() => {
-    setColumns([]);
-    loadColumnMetadata(taskMetadata);
-  }, [JSON.stringify(taskMetadata)]);
-
-  const loadColumnMetadata = (newActivityMetadata) => {
-    if (newActivityMetadata?.fields) {
-      const fields = newActivityMetadata?.fields;
+  const columns = useMemo(
+    () => {
 
       const columnsArray = [
         getTableTextColumn(getField(fields, "name"), "force-text-wrap"),
@@ -47,17 +41,14 @@ function TaskTable({ taskData, taskFilterModel, setTaskFilterModel, loadData, is
         columnsArray.push(getRoleAccessColumn("Task"));
       }
 
-      setColumns([...columnsArray]);
-    }
-  };
+      return columnsArray;
+    },
+    [fields, isSaasUser]
+  );
 
   const onRowSelect = (rowData) => {
     history.push({ pathname: `/task/details/${rowData?.original?._id}` });
   };
-
-  if (taskMetadata == null) {
-    return null;
-  }
 
   return (
     <CustomTable
@@ -80,7 +71,6 @@ TaskTable.propTypes = {
   isLoading: PropTypes.bool,
   taskFilterModel: PropTypes.object,
   setTaskFilterModel: PropTypes.func,
-  taskMetadata: PropTypes.object,
 };
 
 export default TaskTable;

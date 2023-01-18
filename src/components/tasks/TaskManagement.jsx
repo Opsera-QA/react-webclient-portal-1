@@ -17,7 +17,6 @@ function TaskManagement() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [tasks, setTasks] = useState([]);
   const [taskFilterModel, setTaskFilterModel] = useState(undefined);
-  const [taskMetadata, setTaskMetadata] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -73,11 +72,9 @@ function TaskManagement() {
     const tableFields = ["name", "description", "type", "tags", "createdAt", "updatedAt", "active", "status", "run_count"];
     const response = await taskActions.getTasksListV2(getAccessToken, cancelSource, newFilterModel, tableFields);
     const taskList = response?.data?.data;
-    const taskMetadata = response?.data?.metadata;
 
     if (isMounted.current === true && Array.isArray(taskList)) {
       setTasks(taskList);
-      setTaskMetadata(taskMetadata);
       newFilterModel.updateTotalCount(response?.data?.count);
       newFilterModel.updateActiveFilters();
       setTaskFilterModel({...newFilterModel});
@@ -103,7 +100,6 @@ function TaskManagement() {
         loadData={loadData}
         isLoading={isLoading}
         isMounted={isMounted}
-        taskMetadata={taskMetadata}
         taskFilterModel={taskFilterModel}
         setTaskFilterModel={setTaskFilterModel}
       />

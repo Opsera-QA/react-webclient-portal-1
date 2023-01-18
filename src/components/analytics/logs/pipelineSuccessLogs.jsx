@@ -5,7 +5,7 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
 import { Alert } from "react-bootstrap";
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import Modal from "../../common/modal/modal";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
@@ -99,7 +99,7 @@ const MapActivityData = (props) => {
               </div>
             </div>
             <div className="row mt-1">
-              <div className="col">{format(new Date(item["timestamp"]), "yyyy-MM-dd', 'hh:mm a")}</div>
+              <div className="col">{DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(item["timestamp"]))}</div>
             </div>
             <div className="row mt-2">
               {/* <div className="col">Version: {item["version"]}</div> */}

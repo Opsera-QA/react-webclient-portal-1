@@ -5,6 +5,7 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import CopyToClipboardButton from "components/common/buttons/clipboard/CopyToClipboardButton";
 import CheckboxInputBase from "../../../../../../common/inputs/boolean/CheckboxInputBase";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 // TODO: Refactor
 function EventBasedTriggerDetails({
@@ -71,7 +72,7 @@ function EventBasedTriggerDetails({
                           model={model}
                           setModel={setModel}
                           setDataFunction={setDataFunction}
-                          // disabled={disabled}
+                          disabled={model.getData("service") === toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS}
                       />
                   </div>
               </div>

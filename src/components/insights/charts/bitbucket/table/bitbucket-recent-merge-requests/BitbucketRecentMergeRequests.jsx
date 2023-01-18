@@ -9,7 +9,7 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { getLimitedTableTextColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import bitbucketRecentMergeRequestsMetadata from "components/insights/charts/bitbucket/table/bitbucket-recent-merge-requests/bitbucket-recent-merge-requests-metadata";
 import { getField } from "components/common/metadata/metadata-helpers";
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import ModalLogs from "components/common/modal/modalLogs";
@@ -98,7 +98,7 @@ function BitbucketRecentMergeRequestsTable({ kpiConfiguration, setKpiConfigurati
         Header: "Time",
         accessor: "mrCompletionTimeTimeStamp",
         Cell: (row) => {
-          return format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a");
+          return DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(row.value));
         },
       },
     ],

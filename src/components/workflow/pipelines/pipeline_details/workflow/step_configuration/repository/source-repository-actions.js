@@ -9,6 +9,7 @@ SourceRepositoryActions.registerHook = async (getAccessToken, cancelTokenSource,
   const queryParams = {
     params: {
       repo: sourceRepositoryModel?.getData("repoId"),
+      projectId: sourceRepositoryModel?.getData("projectId"),
       hook: hookUrl,
       branch: sourceRepositoryModel?.getData("branch"),
       workspace: sourceRepositoryModel?.getData("workspace"),

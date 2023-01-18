@@ -4,7 +4,6 @@
 // Persona - All
 
 import PropTypes from "prop-types";
-import { format } from "date-fns";
 import { ResponsiveLine } from "@nivo/line";
 import ErrorDialog from "../../common/status_notifications/error";
 import "./charts.css";
@@ -16,6 +15,7 @@ import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
 import { defaultConfig, getColor, assignStandardColors } from "../../insights/charts/charts-views";
 import ChartTooltip from "../../insights/charts/ChartTooltip";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 function BugsCountLineChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -113,7 +113,7 @@ function BugsCountLineChart({ persona, date }) {
               onClick={() => setShowModal(true)}
               tooltip={({ point, color }) => <ChartTooltip 
                 titles = {["Timestamp", "Bugs", "Project Key"]}
-                values = {[format(new Date(point.data.x), "yyyy-MM-dd', 'hh:mm a"), 
+                values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(point.data.x)),
                            point.data.y, point.data.key]}
                 color = {color} />}
             />
