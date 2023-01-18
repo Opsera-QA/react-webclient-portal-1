@@ -32,9 +32,9 @@ function SnykLanguageVersionSelectInput({
     setCancelTokenSource(source);
     setSnykVersionList([]);
 
-    loadData(source).catch((error) => {
+    language ? loadData(source).catch((error) => {
       throw error;
-    });
+    }) : null;
 
     return () => {
       source.cancel();
@@ -64,10 +64,6 @@ function SnykLanguageVersionSelectInput({
     const versions = response?.data;
     setSnykVersionList(versions);
   };
-
-  if (snykVersionList.length === 0){
-    return null;
-  }
 
   return (
     <SelectInputBase

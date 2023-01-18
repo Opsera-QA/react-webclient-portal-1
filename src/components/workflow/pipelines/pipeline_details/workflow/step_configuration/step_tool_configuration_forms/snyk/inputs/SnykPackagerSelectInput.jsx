@@ -12,7 +12,7 @@ function SnykPackagerSelectInput({
   disabled,
   setDataFunction,
   clearDataFunction,
-  version,
+  language
 }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,20 +32,20 @@ function SnykPackagerSelectInput({
     setCancelTokenSource(source);
     setSnykPackagerList([]);
 
-    loadData(source).catch((error) => {
+    language ? loadData(source).catch((error) => {
       throw error;
-    });
+    }) : null; 
 
     return () => {
       source.cancel();
       isMounted.current = false;
     };
-  }, [version]);
+  }, [language]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadSnykPackagers(getAccessToken, cancelSource);
+      await loadSnykPackagers(getAccessToken, cancelSource); 
     } catch (error) {
       setPlaceholderText("Packager or build tool not Available");
       setErrorMessage("There was an error pulling available build tools");
@@ -63,10 +63,6 @@ function SnykPackagerSelectInput({
     const packagers = response?.data;
     setSnykPackagerList(packagers);
   };
-
-  if (snykPackagerList.length === 0) {
-    return null;
-  }
 
   return (
     <SelectInputBase
@@ -93,7 +89,7 @@ SnykPackagerSelectInput.propTypes = {
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
-  version: PropTypes.any,
+  language: PropTypes.string,
 };
 
 export default SnykPackagerSelectInput;
