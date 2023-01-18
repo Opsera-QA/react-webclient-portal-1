@@ -76,9 +76,9 @@ function ApigeeReportsChartTab({ kpiConfiguration, setKpiConfiguration, dashboar
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataCount);
       setFilterModel({ ...newFilterDto });
-      if(Array.isArray(responseData1?.data)) {
-        setResponseData(responseData1?.data);
-        setActiveTab(responseData1?.data?.[0]?.pipelineId);
+      if(Array.isArray(responseData1?.data) && responseData1?.data.length > 0) {
+        setResponseData([{ pipelineId: "all", pipelineName: "All" }, ...responseData1?.data]);
+        setActiveTab("all");
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -98,7 +98,7 @@ function ApigeeReportsChartTab({ kpiConfiguration, setKpiConfiguration, dashboar
     }
   };
 
-  const getTabContentContainer = () => {
+  const getTabContentContainer = () => {    
     if(responseData.length > 0) {
       const pipeline = responseData.filter(item => {
         return item.pipelineId == activeTab;
