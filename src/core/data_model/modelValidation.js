@@ -284,7 +284,7 @@ modelValidation.getFieldWarning = (fieldName, model) => {
   const field = model?.getFieldById(fieldName);
   const value = model?.getData(fieldName);
 
-  if (hasStringValue(value) === true && field.isUrl === true && value.startsWith("https") !== true) {
+  if (hasStringValue(value) === true && field?.isUrl === true && value.startsWith("https") !== true) {
     return "Warning, an unsecure HTTP URL detected. Please ensure the external resource supports HTTP or switch to HTTPS before saving.";
   }
 
