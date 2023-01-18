@@ -77,9 +77,14 @@ function PackageXmlFieldBase({model, fieldName, className, isLoading}) {
     }
 
     return (
-      <SyntaxHighlighter language="xml" style={docco}>
-        {formattedXml}
-      </SyntaxHighlighter>
+      <div style={{ padding: "10px" }}>
+        <SyntaxHighlighter
+          language="xml"
+          style={docco}
+        >
+          {formattedXml}
+        </SyntaxHighlighter>
+      </div>
     );
   };
 
