@@ -44,6 +44,8 @@ import PlatformSystemParameterDetailView
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PlatformSettingsManagement from "components/admin/platform_settings/PlatformSettingsManagement";
 import PlatformSettingsDetailView from "components/admin/platform_settings/details/PlatformSettingsDetailView";
+import RemoteApplicationManagement from "../components/admin/remote_applications/RemoteApplicationManagement";
+import RemoteApplicationDetailView from "../components/admin/remote_applications/details/RemoteApplicationDetailView";
 
 export default function AdminToolsRoutes() {
   const {
@@ -103,6 +105,8 @@ export default function AdminToolsRoutes() {
       <SecureRoute path="/admin/platform/system-parameters/details/:systemParameterId" exact
                    component={PlatformSystemParameterDetailView} />
       <SecureRoute path="/admin/demo/api" component={ApiConnectionTest} />
+      <SecureRoute path="/admin/remote-applications" exact component={RemoteApplicationManagement} />
+      <SecureRoute path="/admin/remote-applications/details/:id" exact component={RemoteApplicationDetailView} />
     </>
   );
 }

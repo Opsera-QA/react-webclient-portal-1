@@ -59,6 +59,9 @@ paths.apiConnectionTest = paths.admin + "/demo/api";
 paths.kpiManagement = paths.admin + "/kpis";
 paths.kpiDetailView = paths.kpiManagement;
 
+paths.remoteApplications = paths.admin + "/remote-applications";
+paths.remoteApplicationDetailView = paths.remoteApplications + "/details/";
+
 // Insights Paths
 paths.insights = "insights/dashboards";
 paths.dashboardDetails = paths.insights;

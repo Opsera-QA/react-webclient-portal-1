@@ -22,6 +22,7 @@ import PlatformSystemParameterManagementPageLinkCard
   from "components/admin/system_parameters/PlatformSystemParameterManagementPageLinkCard";
 import PlatformSettingsManagementPageLinkCard
   from "components/admin/platform_settings/PlatformSettingsManagementPageLinkCard";
+import RemoteApplicationManagementPageLinkCard from "./remote_applications/RemoteApplicationManagementPageLinkCard";
 
 function AdminToolsPageLinkCards({accessRoleData}) {
   return (
@@ -57,6 +58,9 @@ function AdminToolsPageLinkCards({accessRoleData}) {
       <PlatformSystemParameterManagementPageLinkCard />
       <TaskTemplateManagementPageLinkCard />
       <ToolManagementPageLinkCard
+        accessRoleData={accessRoleData}
+      />
+      <RemoteApplicationManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
 
