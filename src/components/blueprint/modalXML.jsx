@@ -4,11 +4,7 @@ import { Button, Modal } from "react-bootstrap";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import docco from "react-syntax-highlighter/dist/esm/styles/hljs/docco";
 import xml from "react-syntax-highlighter/dist/esm/languages/hljs/xml";
-import CloseButton from "components/common/buttons/CloseButton";
-import {faFileCode} from "@fortawesome/pro-light-svg-icons";
 import CopyToClipboardIcon from "../common/icons/CopyToClipboardIcon";
-import FieldTitleBar from "../common/fields/FieldTitleBar";
-import IconBase from "../common/icons/IconBase";
 
 SyntaxHighlighter.registerLanguage("xml", xml);
 
