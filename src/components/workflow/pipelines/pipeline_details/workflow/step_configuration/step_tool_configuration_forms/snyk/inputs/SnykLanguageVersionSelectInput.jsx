@@ -4,6 +4,8 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import snykStepActions from "../snyk-step-actions";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function SnykLanguageVersionSelectInput({
   fieldName,
@@ -17,8 +19,7 @@ function SnykLanguageVersionSelectInput({
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [snykVersionList, setSnykVersionList] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Language Version");
+  const [error, setError] = useState("");
   const isMounted = useRef(false);
   const { getAccessToken } = useContext(AuthContext);
 
@@ -30,11 +31,12 @@ function SnykLanguageVersionSelectInput({
     isMounted.current = true;
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-    setSnykVersionList([]);
 
-    loadData(source).catch((error) => {
-      throw error;
-    });
+    if (hasStringValue(language) === true) {
+      loadData(source).catch((error) => {
+        throw error;
+      });
+    }
 
     return () => {
       source.cancel();
@@ -45,10 +47,10 @@ function SnykLanguageVersionSelectInput({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadSnykLanguageVersions(getAccessToken, cancelSource);
+      setSnykVersionList([]);
+      await loadSnykLanguageVersions(cancelSource);
     } catch (error) {
-      setPlaceholderText("Language Selection not Available");
-      setErrorMessage("There was an error pulling Snyk language versions");
+      setError(error);
     } finally {
       setIsLoading(false);
     }
@@ -58,16 +60,11 @@ function SnykLanguageVersionSelectInput({
     const response = await snykStepActions.getLanguageVersions(
       getAccessToken,
       cancelSource,
-      model.getData("languageLevelId")
+      language,
     );
-    console.log(response);
-    const versions = response?.data;
+    const versions = DataParsingHelper.parseArray(response?.data, []);
     setSnykVersionList(versions);
   };
-
-  if (snykVersionList.length === 0){
-    return null;
-  }
 
   return (
     <SelectInputBase
@@ -77,12 +74,13 @@ function SnykLanguageVersionSelectInput({
       selectOptions={snykVersionList}
       busy={isLoading}
       valueField={"name"}
-      textField={""}
+      textField={"name"}
       disabled={disabled}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
-      placeholder={placeholder}
-      errorMessage={errorMessage}
+      singularTopic={"Language Version"}
+      pluralTopic={"Language Versions"}
+      error={error}
     />
   );
 }

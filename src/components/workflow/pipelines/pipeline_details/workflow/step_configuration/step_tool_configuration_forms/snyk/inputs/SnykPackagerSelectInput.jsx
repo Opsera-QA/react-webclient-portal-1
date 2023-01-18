@@ -1,26 +1,28 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
-import { AuthContext } from "contexts/AuthContext";
+import {AuthContext} from "contexts/AuthContext";
 import snykStepActions from "../snyk-step-actions";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function SnykPackagerSelectInput({
-  fieldName,
-  model,
-  setModel,
-  disabled,
-  setDataFunction,
-  clearDataFunction,
-  version,
-}) {
+function SnykPackagerSelectInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    disabled,
+    setDataFunction,
+    clearDataFunction,
+    language,
+  }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [snykPackagerList, setSnykPackagerList] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Packager or Build Tool");
+  const [error, setError] = useState("");
   const isMounted = useRef(false);
-  const { getAccessToken } = useContext(AuthContext);
+  const {getAccessToken} = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -32,23 +34,24 @@ function SnykPackagerSelectInput({
     setCancelTokenSource(source);
     setSnykPackagerList([]);
 
-    loadData(source).catch((error) => {
-      throw error;
-    });
+    if (hasStringValue(language)) {
+      loadData(source).catch((error) => {
+        throw error;
+      });
+    }
 
     return () => {
       source.cancel();
       isMounted.current = false;
     };
-  }, [version]);
+  }, [language]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadSnykPackagers(getAccessToken, cancelSource);
+      await loadSnykPackagers(cancelSource);
     } catch (error) {
-      setPlaceholderText("Packager or build tool not Available");
-      setErrorMessage("There was an error pulling available build tools");
+      setError(error);
     } finally {
       setIsLoading(false);
     }
@@ -58,15 +61,11 @@ function SnykPackagerSelectInput({
     const response = await snykStepActions.getPackagers(
       getAccessToken,
       cancelSource,
-      model.getData("languageLevelId")
+      language,
     );
-    const packagers = response?.data;
+    const packagers = DataParsingHelper.parseArray(response?.data, []);
     setSnykPackagerList(packagers);
   };
-
-  if (snykPackagerList.length === 0) {
-    return null;
-  }
 
   return (
     <SelectInputBase
@@ -76,12 +75,13 @@ function SnykPackagerSelectInput({
       selectOptions={snykPackagerList}
       busy={isLoading}
       valueField={"name"}
-      textField={""}
+      textField={"name"}
       disabled={disabled}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
-      placeholder={placeholder}
-      errorMessage={errorMessage}
+      singularTopic={"Package Manager or Build Tool"}
+      pluralTopic={"Package Managers or Build Tools"}
+      error={error}
     />
   );
 }
@@ -94,6 +94,7 @@ SnykPackagerSelectInput.propTypes = {
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
   version: PropTypes.any,
+  language: PropTypes.string,
 };
 
 export default SnykPackagerSelectInput;
