@@ -5,12 +5,14 @@ import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import usePolicyActions from "hooks/settings/organization_settings/policies/usePolicyActions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function useGetPolicyModelByName(
   policyName,
 ) {
   const [policyModel, setPolicyModel] = useState(undefined);
   const { getPolicyModel } = useGetPolicyModel();
+  const { isSaasUser } = useComponentStateReference();
   const {
     isLoading,
     error,
@@ -22,7 +24,7 @@ export default function useGetPolicyModelByName(
   useEffect(() => {
     setPolicyModel(undefined);
 
-    if (policyConstants.isPolicyNameValid(policyName) === true) {
+    if (policyConstants.isPolicyNameValid(policyName) === true && isSaasUser === false) {
       loadData(getPolicy).catch(() => {
       });
     }
