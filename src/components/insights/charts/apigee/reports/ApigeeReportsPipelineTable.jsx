@@ -89,6 +89,7 @@ function ApigeeReportsPipelineTable({ pipeline, dashboardData, kpiConfiguration 
 
   const loadPipelineData = async (filterDto, cancelSource) => {
     setIsLoading(true);
+    setMetrics([]);
     let dashboardTags =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
     const response = await apigeeActions.getReport(

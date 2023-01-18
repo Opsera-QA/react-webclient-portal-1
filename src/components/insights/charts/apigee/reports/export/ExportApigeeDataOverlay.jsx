@@ -11,8 +11,8 @@ function ExportApigeeDataOverlay({ kpiConfiguration, dashboardTags, filterDto, p
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [rawData, setRawData] = useState(undefined);
-  const [formattedData, setFormattedData] = useState(undefined);
+  const [rawData, setRawData] = useState([]);
+  const [formattedData, setFormattedData] = useState([]);
   const [error, setError] = useState(undefined);
   const { getAccessToken } = useContext(AuthContext);
 
@@ -101,10 +101,6 @@ function ExportApigeeDataOverlay({ kpiConfiguration, dashboardTags, filterDto, p
       ]
     )];
   };
-
-  if (rawData == undefined) {
-    return null;
-  }
 
   return (
     <ExportDataOverlay
