@@ -4,7 +4,7 @@ const RemoteApplicationActions = {};
 const defaultFields = ["pipelineId", "stepId", "customerId", "runCount", "dataType", "createdAt"];
 
 RemoteApplicationActions.getRemoteApplicationTelemetryRecordsV2 = async (getAccessToken, cancelTokenSource, kpiFilterDto, fields = defaultFields) => {
-  const apiUrl = "/reports/applications/telemetry";
+  const apiUrl = "/remote/telemetry";
   const urlParams = {
     params: {
       sort: kpiFilterDto?.getFilterValue("sortOption"),
@@ -17,7 +17,7 @@ RemoteApplicationActions.getRemoteApplicationTelemetryRecordsV2 = async (getAcce
 };
 
 RemoteApplicationActions.getRemoteApplicationTelemetryRecordByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
-  const apiUrl = `/reports/applications/telemetry/${id}/`;
+  const apiUrl = `/remote/telemetry/${id}/`;
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
