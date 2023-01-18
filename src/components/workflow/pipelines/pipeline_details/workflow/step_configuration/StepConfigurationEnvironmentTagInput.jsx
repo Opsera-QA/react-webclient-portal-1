@@ -1,53 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TagSelectInput from "components/common/list_of_values_input/settings/tags/TagSelectInput";
+import TagManager from "components/common/inputs/tags/TagManager";
 
-function StepConfigurationEnvironmentTagInput({ dataObject, setDataObject, className, fieldName}) {
-  const validateAndSetData = (fieldName, value) => {
-    let newDataObject = dataObject;
-    const tags = [value];
-    newDataObject.setData(fieldName, tags);
-    setDataObject({...newDataObject});
-  };
-
-  const getCurrentValue = () => {
-    const tags = dataObject.getArrayData("tags");
-
-    if (Array.isArray(tags) && tags.length > 0) {
-      const tag = tags[0];
-
-      if (tag.type === "environment") {
-        return tag;
-      }
-    }
-
-    return null;
-  };
-
+export default function StepConfigurationEnvironmentTagInput(
+  { 
+    model,
+    setModel, 
+  }) {
   return (
-    <TagSelectInput
-      className={className}
+    <TagManager
+      setDataObject={setModel}
+      dataObject={model}
       allowedTypes={["environment"]}
-      fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
-      getCurrentValue={getCurrentValue}
-      setDataFunction={validateAndSetData}
+      allowCreate={false}
+      disabled={model?.getData("active") !== true}
     />
   );
 }
 
 StepConfigurationEnvironmentTagInput.propTypes = {
-  className: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
-  fieldName: PropTypes.string
+  model: PropTypes.object,
+  setModel: PropTypes.func,
 };
-
-StepConfigurationEnvironmentTagInput.defaultProps = {
-  fieldName: "tags"
-};
-
-export default StepConfigurationEnvironmentTagInput;
-
-
