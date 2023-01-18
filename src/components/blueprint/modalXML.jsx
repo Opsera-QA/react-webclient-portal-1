@@ -38,22 +38,6 @@ function ModalXML({ header, size, jsonMessage, dataType, show, setParentVisibili
               {jsonMessage && jsonMessage.xml ? jsonMessage.xml : jsonMessage ? jsonMessage : "N/A"}
              </SyntaxHighlighter>
         </div>
-        {/*<div style={{*/}
-        {/*  minHeight: "49px",*/}
-        {/*  fontSize: "1.1rem"*/}
-        {/*}} className={"px-2 d-flex justify-content-between"}>*/}
-        {/*  <div className={"my-auto"}></div>*/}
-        {/*  <div className={"my-auto"}>*/}
-        {/*    <CopyToClipboardIcon copyString={jsonMessage && jsonMessage.xml ? jsonMessage.xml : jsonMessage ? jsonMessage : "N/A"} />*/}
-        {/*  </div>*/}
-        {/*</div>*/}
-        {/*<div className="pre">*/}
-        {/*  <div className="p-3">*/}
-        {/*    <SyntaxHighlighter language="xml" style={docco}>*/}
-        {/*      {jsonMessage && jsonMessage.xml ? jsonMessage.xml : jsonMessage ? jsonMessage : "N/A"}*/}
-        {/*    </SyntaxHighlighter>*/}
-        {/*  </div>*/}
-        {/*</div>*/}
       </Modal.Body>
     </Modal>
   );
