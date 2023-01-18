@@ -227,7 +227,7 @@ function BoomiBarChart({
               {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
               {...adjustBarWidth(metrics)}
               tooltip={({point, color}) => <ChartTooltip
-                  titles = {["Date", "Number of Deployments"]}
+                  titles = {["Date", "Deployments"]}
                   values = {[String(point.data.xFormatted), point.data.y]}
                   color = {color} />}
             />

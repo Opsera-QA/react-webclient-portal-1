@@ -331,6 +331,24 @@ export const breadcrumbs = {
     icon: faFileArchive
   },
 
+  remoteApplications: {
+    parent: "admin",
+    name: "remoteApplications",
+    path: paths.remoteApplications,
+    title: "Remote Application Management",
+    linkText: "Remote Application Management",
+    icon: faServer,
+    pageDescription: "View/Manage version and telemetry information generation from remote applications.",
+  },
+  remoteApplicationsDetailView: {
+    parent: "remoteApplications",
+    name: "remoteApplicationsDetailView",
+    path: paths.remoteApplicationDetailView,
+    title: "Remote Application Telemetry Record Details",
+    linkText: "Remote Application Telemetry Record Details",
+    icon: faServer
+  },
+
 
   toolManagement: {
     parent: "admin",

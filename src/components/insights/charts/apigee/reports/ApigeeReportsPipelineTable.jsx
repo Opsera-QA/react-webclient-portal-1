@@ -16,9 +16,9 @@ import {parseError} from "../../../../common/helpers/error-helpers";
 import apigeeActions from "../apigee.action";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import FullScreenCenterOverlayContainer from "../../../../common/overlays/center/FullScreenCenterOverlayContainer";
-import SuccessPercentActionableInsights
-  from "../../github_actions/data_blocks/AllGithubActions/SuccessPercent/SuccessPercentActionableInsights";
 import ApigeeDetailedReportsTable from "./ApigeeDetailedReportsTable";
+import ExportApigeeDetailsButton from "./export/ExportApigeeDetailsButton";
+import ApigeeAssetTypesFilter from "./filters/ApigeeAssetTypesFilter";
 
 function ApigeeReportsPipelineTable({ pipeline, dashboardData, kpiConfiguration }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -57,7 +57,7 @@ function ApigeeReportsPipelineTable({ pipeline, dashboardData, kpiConfiguration 
     setCancelTokenSource(source);
 
     isMounted.current = true;
-    loadData(source).catch((error) => {
+    loadData(filterModel, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -69,11 +69,11 @@ function ApigeeReportsPipelineTable({ pipeline, dashboardData, kpiConfiguration 
     };
   }, [pipeline]);
 
-  const loadData = async () => {
+  const loadData = async (filterDto = filterModel, cancelSource = cancelTokenSource ) => {
     try {
       setIsLoading(true);
       if(pipeline) {
-        await loadPipelineData();
+        await loadPipelineData(filterDto, cancelSource);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -87,8 +87,9 @@ function ApigeeReportsPipelineTable({ pipeline, dashboardData, kpiConfiguration 
     }
   };
 
-  const loadPipelineData = async ( cancelSource = cancelTokenSource, filterDto = filterModel) => {
+  const loadPipelineData = async (filterDto, cancelSource) => {
     setIsLoading(true);
+    setMetrics([]);
     let dashboardTags =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
     const response = await apigeeActions.getReport(
@@ -101,8 +102,9 @@ function ApigeeReportsPipelineTable({ pipeline, dashboardData, kpiConfiguration 
     );
     let dataObject = response?.data?.data?.data?.[0];
     let dataCount = dataObject?.count ? dataObject?.count : 0;
-    let newFilterDto = filterDto;
+    let newFilterDto = {...filterDto};
     newFilterDto.setData("totalCount", dataCount);
+    newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());    
     setFilterModel({ ...newFilterDto });
     if (isMounted?.current === true && dataObject && Array.isArray(dataObject?.report)) {
       setMetrics(dataObject?.report);
@@ -154,6 +156,16 @@ function ApigeeReportsPipelineTable({ pipeline, dashboardData, kpiConfiguration 
     );
   };
 
+  const getDropdownFilters = () => {
+    return (
+      <ApigeeAssetTypesFilter
+        className={"px-2"}        
+        filterDto={filterModel}
+        setFilterDto={setFilterModel}
+      />
+    );
+  };
+
   return (
     <div className={"p-2"}>
       <div className={"px-2 pb-2"} style={{textAlign: 'end'}}><IconBase icon={faCircleInfo} className={'m-1'}/>On click of each row, detailed information of the report will be displayed.</div>
@@ -164,15 +176,28 @@ function ApigeeReportsPipelineTable({ pipeline, dashboardData, kpiConfiguration 
         loadData={loadData}
         setFilterDto={setFilterModel}
         filterDto={filterModel}
-        showRefreshButton={false}
+        showRefreshButton={true}
         supportSearch={true}
+        dropdownFilters={getDropdownFilters()}
+        exportButton={
+          <ExportApigeeDetailsButton 
+            className={"ml-2"}
+            isLoading={isLoading} 
+            kpiConfiguration={kpiConfiguration} 
+            dashboardTags={dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value} 
+            filterDto={filterModel} 
+            pipelineId={pipeline?.pipelineId} 
+          />
+        }
       />
     </div>
   );
 }
+
 ApigeeReportsPipelineTable.propTypes = {
   pipeline: PropTypes.object,
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object
 };
+
 export default ApigeeReportsPipelineTable;
