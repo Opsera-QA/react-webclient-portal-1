@@ -4,7 +4,8 @@ import { Button, Modal } from "react-bootstrap";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import docco from "react-syntax-highlighter/dist/esm/styles/hljs/docco";
 import xml from "react-syntax-highlighter/dist/esm/languages/hljs/xml";
-import CloseButton from "components/common/buttons/CloseButton";
+import CopyToClipboardIcon from "../common/icons/CopyToClipboardIcon";
+import CloseButton from "../common/buttons/CloseButton";
 
 SyntaxHighlighter.registerLanguage("xml", xml);
 
@@ -26,12 +27,13 @@ function ModalXML({ header, size, jsonMessage, dataType, show, setParentVisibili
         <Modal.Title>Package XML</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="pre">
-          <div className="p-3">
+        <div style={{padding: "20px", position: "relative"}}>
+          <div style={{position: "absolute", fontSize: "1.1rem", top: "20px", right: "30px"}}>
+            <CopyToClipboardIcon copyString={jsonMessage && jsonMessage.xml ? jsonMessage.xml : jsonMessage ? jsonMessage : "N/A"} />
+          </div>
             <SyntaxHighlighter language="xml" style={docco}>
               {jsonMessage && jsonMessage.xml ? jsonMessage.xml : jsonMessage ? jsonMessage : "N/A"}
-            </SyntaxHighlighter>
-          </div>
+             </SyntaxHighlighter>
         </div>
       </Modal.Body>
       <Modal.Footer>
