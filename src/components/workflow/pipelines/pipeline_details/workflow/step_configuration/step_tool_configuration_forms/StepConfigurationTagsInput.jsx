@@ -3,10 +3,15 @@ import PropTypes from "prop-types";
 import StepConfigurationEnvironmentTagInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/StepConfigurationEnvironmentTagInput";
 import TagManager from "components/common/inputs/tags/TagManager";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
-function StepConfigurationTagsInput({ fieldName, stepConfigurationModel, setStepConfigurationModel }) {
+export default function StepConfigurationTagsInput(
+  {
+    stepConfigurationModel,
+    setStepConfigurationModel,
+  }) {
   const getDisabledTags = (tagOptions) => {
-    const currentTags = stepConfigurationModel?.getArrayData(fieldName);
+    const currentTags = stepConfigurationModel?.getArrayData("tags");
     const environmentTag = currentTags.find((tag) => tag.type === "environment");
 
     if (environmentTag != null) {
@@ -25,8 +30,8 @@ function StepConfigurationTagsInput({ fieldName, stepConfigurationModel, setStep
   if (stepConfigurationModel.getData("type") === "deploy") {
     return (
       <StepConfigurationEnvironmentTagInput
-        setDataObject={setStepConfigurationModel}
-        dataObject={stepConfigurationModel}
+        setModel={setStepConfigurationModel}
+        model={stepConfigurationModel}
       />
     );
   }
@@ -37,19 +42,12 @@ function StepConfigurationTagsInput({ fieldName, stepConfigurationModel, setStep
       dataObject={stepConfigurationModel}
       getDisabledTags={getDisabledTags}
       type={"pipeline"}
-      disabled={stepConfigurationModel.getData("active") !== true || stepConfigurationModel.getData("type") === null}
+      disabled={stepConfigurationModel.getData("active") !== true || hasStringValue(stepConfigurationModel.getData("type")) !== true}
     />
   );
 }
 
 StepConfigurationTagsInput.propTypes = {
   setStepConfigurationModel: PropTypes.func,
-  fieldName: PropTypes.string,
   stepConfigurationModel: PropTypes.object,
 };
-
-StepConfigurationTagsInput.defaultProps = {
-  fieldName: "tags"
-};
-
-export default StepConfigurationTagsInput;

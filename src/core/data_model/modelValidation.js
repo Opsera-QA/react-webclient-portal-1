@@ -287,6 +287,14 @@ modelValidation.getFieldWarning = (fieldName, model) => {
   if (hasStringValue(value) === true && field.isUrl === true && value.startsWith("https") !== true) {
     return "Warning, an unsecure HTTP URL detected. Please ensure the external resource supports HTTP or switch to HTTPS before saving.";
   }
+
+  if (field?.noItemsWarning === true) {
+    const parsedArray = DataParsingHelper.parseArray(value, []);
+
+    if (parsedArray.length === 0) {
+      return field?.formText;
+    }
+  }
 };
 
 // TODO: THis probably doesn't work with boolean values,

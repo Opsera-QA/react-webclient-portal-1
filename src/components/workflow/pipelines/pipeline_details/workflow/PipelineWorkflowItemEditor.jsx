@@ -95,12 +95,13 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
   if (editItem.type === "step") {
     return (<>
       {getTitleBar("Step Definition")}
-      <div className="p-3 bg-white step-settings-container">
+      <div className="px-3 pb-3 pt-2 bg-white step-settings-container">
         <StepConfiguration
           plan={pipeline?.workflow?.plan}
           stepId={editItem?.step_id}
           parentCallback={callbackConfigureStep}
-          closeEditorPanel={handleCloseClick} />
+          closeEditorPanel={handleCloseClick}
+        />
       </div>
     </>);
   }
