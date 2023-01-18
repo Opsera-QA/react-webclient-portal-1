@@ -5,6 +5,10 @@ import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import docco from "react-syntax-highlighter/dist/esm/styles/hljs/docco";
 import xml from "react-syntax-highlighter/dist/esm/languages/hljs/xml";
 import CloseButton from "components/common/buttons/CloseButton";
+import {faFileCode} from "@fortawesome/pro-light-svg-icons";
+import CopyToClipboardIcon from "../common/icons/CopyToClipboardIcon";
+import FieldTitleBar from "../common/fields/FieldTitleBar";
+import IconBase from "../common/icons/IconBase";
 
 SyntaxHighlighter.registerLanguage("xml", xml);
 
@@ -26,6 +30,15 @@ function ModalXML({ header, size, jsonMessage, dataType, show, setParentVisibili
         <Modal.Title>Package XML</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <div style={{
+          minHeight: "49px",
+          fontSize: "1.1rem"
+        }} className={"px-2 d-flex justify-content-between"}>
+          <div className={"my-auto"}></div>
+          <div className={"my-auto"}>
+            <CopyToClipboardIcon copyString={jsonMessage && jsonMessage.xml ? jsonMessage.xml : jsonMessage ? jsonMessage : "N/A"} />
+          </div>
+        </div>
         <div className="pre">
           <div className="p-3">
             <SyntaxHighlighter language="xml" style={docco}>
