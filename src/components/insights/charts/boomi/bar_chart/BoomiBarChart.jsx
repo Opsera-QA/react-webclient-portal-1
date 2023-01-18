@@ -212,7 +212,7 @@ function BoomiBarChart({
     };
     const getChart = () =>{
       return(<Row>
-        <Col md={12} sm={12} lg={11} >
+        <Col md={12} sm={12} lg={12} >
           <div className="chart" style={{ height: "354px" }} >
             <ResponsiveLine
               data={metrics}
