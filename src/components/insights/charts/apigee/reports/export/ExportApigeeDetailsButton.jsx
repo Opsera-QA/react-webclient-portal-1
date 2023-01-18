@@ -22,7 +22,7 @@ function ExportApigeeDetailsButton({ className, isLoading, kpiConfiguration, das
 
   return (
     <ExportDataButtonBase
-      clasName={className}
+      className={className}
       isLoading={isLoading}
       launchOverlayFunction={launchOverlayFunction}
     />

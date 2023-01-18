@@ -53,6 +53,7 @@ apigeeActions.getReport = async (
     page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
     size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
     search: tableFilterDto?.getData("search"),
+    assetType: tableFilterDto?.getData("assetType"),
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
@@ -125,6 +126,7 @@ apigeeActions.downloadReport = async (
     tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
     pipelineId: pipelineId,    
     search: tableFilterDto?.getData("search"),
+    assetType: tableFilterDto?.getData("assetType"),
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
