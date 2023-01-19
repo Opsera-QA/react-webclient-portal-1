@@ -26,8 +26,8 @@ function StepConfigurationToolIdentifierSelectInput(
   return (
     <PipelineUsageToolSelectInput
       fieldName={fieldName}
-      model={model}
-      setModel={setModel}
+      dataObject={model}
+      setDataObject={setModel}
       setDataFunction={setDataFunction}
       valueField={valueField}
       textField={textField}
