@@ -56,6 +56,7 @@ function AzureDevopsToolConfiguration({ toolData }) {
       setModel={setAzureDevOpsConfigurationModel}
       persistRecord={saveAzureDevopsToolConfiguration}
       toolData={toolData}
+      toolConnectionCheckName={"azure"}
     >
       <Row>
         <Col sm={12}>
