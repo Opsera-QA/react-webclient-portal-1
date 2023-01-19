@@ -3,10 +3,12 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import JsonField from "components/common/fields/json/JsonField";
 import PolicyNameField from "components/common/fields/settings/organization_settings/policies/PolicyNameField";
 import PolicyParametersSummaryPanel
   from "components/settings/organization_settings/policies/details/PolicyParametersSummaryPanel";
+import {
+  VALUE_SUPPORTED_POLICIES
+} from "components/settings/organization_settings/policies/details/inputs/PolicyValueTextInput";
 
 export default function PolicySummaryPanel(
   {
@@ -23,18 +25,19 @@ export default function PolicySummaryPanel(
       setActiveTab={setActiveTab}
     >
       <Row>
-        <Col lg={6}>
+        <Col lg={12}>
           <PolicyNameField
             className={"mb-2"}
             fieldName={"name"}
             model={policyModel}
           />
         </Col>
-        <Col lg={6}>
+        <Col lg={12}>
           <TextFieldBase
             className={"mb-2"}
             fieldName={"value"}
             dataObject={policyModel}
+            visible={VALUE_SUPPORTED_POLICIES.includes(policyModel?.getData("name"))}
           />
         </Col>
         <Col lg={12}>

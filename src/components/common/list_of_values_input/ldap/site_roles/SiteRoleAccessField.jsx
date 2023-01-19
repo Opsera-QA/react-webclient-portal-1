@@ -6,6 +6,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 import BooleanFieldBase from "components/common/fields/boolean/BooleanFieldBase";
+import BooleanIconFieldBase from "components/common/fields/boolean/BooleanIconFieldBase";
 
 export default function SiteRoleAccessField(
   {
@@ -28,27 +29,27 @@ export default function SiteRoleAccessField(
       <FieldLabel
         field={field}
       />
-      <BooleanFieldBase
+      <BooleanIconFieldBase
         label={siteRoleConstants.SITE_ROLE_LABELS.ADMINISTRATOR}
         value={siteRoles?.includes(siteRoleConstants.SITE_ROLES.ADMINISTRATOR)}
       />
-      <BooleanFieldBase
+      <BooleanIconFieldBase
         label={siteRoleConstants.SITE_ROLE_LABELS.POWER_USER}
         value={siteRoles?.includes(siteRoleConstants.SITE_ROLES.POWER_USER)}
       />
-      <BooleanFieldBase
+      <BooleanIconFieldBase
         label={siteRoleConstants.SITE_ROLE_LABELS.USER}
         value={siteRoles?.includes(siteRoleConstants.SITE_ROLES.USER)}
       />
-      <BooleanFieldBase
+      <BooleanIconFieldBase
         label={siteRoleConstants.SITE_ROLE_LABELS.SECURITY_MANAGER}
         value={siteRoles?.includes(siteRoleConstants.SITE_ROLES.SECURITY_MANAGER)}
       />
-      <BooleanFieldBase
+      <BooleanIconFieldBase
         label={siteRoleConstants.SITE_ROLE_LABELS.AUDITOR}
         value={siteRoles?.includes(siteRoleConstants.SITE_ROLES.AUDITOR)}
       />
-      <BooleanFieldBase
+      <BooleanIconFieldBase
         label={siteRoleConstants.SITE_ROLE_LABELS.GUEST}
         value={siteRoles?.includes(siteRoleConstants.SITE_ROLES.GUEST)}
       />
