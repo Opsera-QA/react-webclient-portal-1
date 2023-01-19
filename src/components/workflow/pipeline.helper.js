@@ -9,12 +9,12 @@ pipelineHelper.getManagementScreenLink = () => {
   return `/workflow`;
 };
 
-pipelineHelper.getDetailViewLink = (pipelineId) => {
+pipelineHelper.getDetailViewLink = (pipelineId, activeTab = "summary") => {
   if (isMongoDbId(pipelineId) !== true) {
     return null;
   }
 
-  return `/workflow/details/${pipelineId}/summary`;
+  return `/workflow/details/${pipelineId}/${activeTab}`;
 };
 
 pipelineHelper.getPipelineOrientation = (pipeline) => {

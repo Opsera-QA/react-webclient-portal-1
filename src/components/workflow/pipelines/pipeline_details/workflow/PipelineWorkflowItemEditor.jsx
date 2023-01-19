@@ -5,7 +5,7 @@ import { axiosApiService } from "api/apiService";
 import LoadingDialog from "components/common/status_notifications/loading";
 import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import StepToolConfiguration from "./step_configuration/StepToolConfiguration";
-import StepConfiguration from "./step_configuration/StepConfiguration";
+import PipelineStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepConfiguration";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 import PipelineSourceRepositoryConfiguration
@@ -96,8 +96,8 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
     return (<>
       {getTitleBar("Step Definition")}
       <div className="px-3 pb-3 pt-2 bg-white step-settings-container">
-        <StepConfiguration
-          plan={pipeline?.workflow?.plan}
+        <PipelineStepConfiguration
+          step={editItem}
           stepId={editItem?.step_id}
           parentCallback={callbackConfigureStep}
           closeEditorPanel={handleCloseClick}

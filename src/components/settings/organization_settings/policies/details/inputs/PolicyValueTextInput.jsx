@@ -8,9 +8,8 @@ import policyParametersMetadata
   from "@opsera/definitions/constants/settings/organization-settings/policies/parameters/policyParameters.metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
-const VALUE_SUPPORTED_POLICIES = [
+export const VALUE_SUPPORTED_POLICIES = [];
 
-];
 export default function PolicyValueTextInput(
   {
     policyModel,

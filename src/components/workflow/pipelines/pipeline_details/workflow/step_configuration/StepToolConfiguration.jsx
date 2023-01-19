@@ -106,6 +106,7 @@ import SnykStepConfiguration from "./step_tool_configuration_forms/snyk/SnykStep
 import UserActionsPipelineStepEditorPanel
   from "components/workflow/plan/step/user_actions/UserActionsPipelineStepEditorPanel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -117,32 +118,16 @@ function StepToolConfiguration({
   setToast,
   setShowToast
 }) {
-  const contextType = useContext(AuthContext);
   const { plan } = pipeline.workflow;
   const [pipelineStep, setPipelineStep] = useState(undefined);
   const [stepTool, setStepTool] = useState(undefined);
   const [stepName, setStepName] = useState(undefined);
   const [stepId, setStepId] = useState(undefined);
-  const { getAccessToken } = contextType;
-  const toastContext = useContext(DialogToastContext);
-
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;    
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
+  const {
+    cancelTokenSource,
+    toastContext,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
     if (isMongoDbId(pipelineStepId) === true) {
