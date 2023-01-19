@@ -37,6 +37,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
 import CountdownUntilDateFieldBase from "components/common/fields/date/countdown/CountdownUntilDateFieldBase";
+import { smartTimeFormatter, SUPPORTED_SMART_TIME_FORMATS } from "../helpers/date/date.helpers";
 
 export const getDataObjectFromTableRow = (row) => {
   try {
@@ -75,6 +76,17 @@ export const getTableTextColumn = (field, className) => {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     class: className ? className : undefined
+  };
+};
+
+export const getTableSmartTimeDurationTextColumn = (field, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    class: className || undefined,
+    Cell: function parseText(row) {
+      return smartTimeFormatter(row?.value, SUPPORTED_SMART_TIME_FORMATS.HOURS).formattedString;
+    }
   };
 };
 
