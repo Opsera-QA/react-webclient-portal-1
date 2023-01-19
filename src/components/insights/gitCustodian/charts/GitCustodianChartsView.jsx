@@ -87,10 +87,10 @@ function GitCustodianChartsView({ gitCustodianData }) {
     "data": chartData?.resolvedTrend,
     "color": "#00a8e8"
   } : {
-  "id": "No of Issues Resolved",
-  "data": [],
-  "color": "#00a8e8"
-};
+    "id": "No of Issues Resolved",
+    "data": [],
+    "color": "#00a8e8"
+  };
 
   const getCharts = () => {
     return (
