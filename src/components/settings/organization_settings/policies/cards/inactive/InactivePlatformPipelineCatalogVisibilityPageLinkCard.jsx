@@ -14,7 +14,7 @@ export default function InactivePlatformPipelineCatalogVisibilityPageLinkCard() 
     return (
       <div>
         <div className={"mb-2"}>The {policyConstants.POLICY_NAME_LABELS.PLATFORM_PIPELINE_CATALOG_VISIBILITY} Policy is an optional Policy that Site Administrators can enable.</div>
-        <div className={"mb-2"}>{`By activating this Policy, you can remove visibility of the Opsera's Pipeline Marketplace.`}</div>
+        <div className={"mb-2"}>{`By activating this Policy, you can remove visibility of Opsera's Pipeline Marketplace.`}</div>
       </div>
     );
   };
