@@ -76,7 +76,7 @@ function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
         setModel={setSnykModel}
         toolConfigId={snykModel.getData("toolConfigId")}
       />
-      <SnykLanguageVersionSelectInput
+      <SnykLanguageVersionSelectInput 
         fieldName={"version"}
         model={snykModel}
         setModel={setSnykModel}
@@ -86,8 +86,8 @@ function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
         fieldName={"packagerNameOrBuildTool"}
         model={snykModel}
         setModel={setSnykModel}
-        language={snykModel.getData("languageLevelId")}
         version={snykModel.getData("version")}
+        language={snykModel.getData("languageLevelId")}
       />
       <BooleanToggleInput
         fieldName={"multiModuleProject"}

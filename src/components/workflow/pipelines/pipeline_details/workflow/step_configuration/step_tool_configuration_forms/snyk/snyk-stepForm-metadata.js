@@ -28,7 +28,6 @@ const snykStepFormMetadata = {
     {
       label: "Multi Module Project",
       id: "multiModuleProject",
-      isRequired: true,
     },
     {
       label: "Vulnerability Threshold",
