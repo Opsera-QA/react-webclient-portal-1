@@ -112,8 +112,9 @@ function PipelineStepConfiguration({ plan, stepId, parentCallback, closeEditorPa
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
       recordDto={stepConfigurationModel}
-      persistRecord={handleTagsCheck}
-      showSuccessToasts={stepConfigurationModel?.getArrayData("tags").length > 0}
+      persistRecord={savePipelineStepConfiguration}
+      // persistRecord={handleTagsCheck}
+      // showSuccessToasts={stepConfigurationModel?.getArrayData("tags").length > 0}
       isLoading={isLoading}
       isStrict={true}
     >
