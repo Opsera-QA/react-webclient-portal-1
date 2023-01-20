@@ -18,7 +18,7 @@ function InlineClientSideSearchFilter(
   const {
     isFreeTrial,
   } = useComponentStateReference();
-  
+
   const validateAndSetData = (value) => {
     filterModel.setData(fieldName, value);
     setFilterModel({...filterModel});
