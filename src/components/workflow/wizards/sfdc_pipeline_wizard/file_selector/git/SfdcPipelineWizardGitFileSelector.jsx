@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
-import {faStepBackward} from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import Model from "core/data_model/model";
 import sfdcComponentFilterMetadata
@@ -135,7 +135,7 @@ const SfdcPipelineWizardGitFileSelector = ({ pipelineWizardModel, setPipelineWiz
       <InlineWarning warningMessage={gitWarningMessage} className="pl-3" />
       <SaveButtonContainer>
         <Button variant="secondary" size="sm" className="mr-2" onClick={() => {setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR);}}>
-          <IconBase icon={faStepBackward} className={"mr-1"}/>Back
+          <IconBase icon={faArrowLeft} className={"mr-1"}/>Back
         </Button>
         <SfdcPipelineWizardGitRollbackModeButton
           className={"mr-2"}
