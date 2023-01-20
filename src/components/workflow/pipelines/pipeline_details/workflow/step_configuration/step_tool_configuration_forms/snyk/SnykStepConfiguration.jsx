@@ -6,10 +6,9 @@ import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
 import SnykToolSelectInput from "./inputs/SnykToolSelectInput";
 import snykStepFormMetadata from "./snyk-stepForm-metadata";
-import SnykProductsMultiSelectInput from "./inputs/SnykProductsMultiSelectInput";
-import SnykLanguageSelectInput from "./inputs/SnykLanguageSelectInput";
-import SnykLanguageVersionSelectInput from "./inputs/SnykLanguageVersionSelectInput";
-import SnykPackagerSelectInput from "./inputs/SnykPackagerSelectInput";
+import SnykProductsMultiSelectInput from "components/common/list_of_values_input/tools/snyk/products/SnykProductsMultiSelectInput";
+import SnykLanguageVersionSelectInput from "components/common/list_of_values_input/tools/snyk/languages/version/SnykLanguageVersionSelectInput";
+import SnykPackageManagerSelectInput from "components/common/list_of_values_input/tools/snyk/package_manager/SnykPackageManagerSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import SnykVulnerabilityThresholdInput from "./inputs/SnykVulnerabilityThresholdInput";
 import SourceRepositoryToolIdentifierSelectInput from "components/common/list_of_values_input/workflow/pipelines/source_repository/SourceRepositoryToolIdentifierSelectInput";
@@ -17,6 +16,8 @@ import SnykScmToolSelectInput from "./inputs/SnykScmToolSelectInput";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 import SnykScmRepositorySelectInput from "./inputs/SnykScmRepositorySelectInput";
 import SnykBitbucketWorkspaceInput from "./inputs/SnykBitbucketWorkspaceInput";
+import SnykPipelineStepLanguageSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snyk/inputs/SnykPipelineStepLanguageSelectInput";
 
 function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -68,13 +69,11 @@ function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
         fieldName={"snykProducts"}
         model={snykModel}
         setModel={setSnykModel}
-        toolConfigId={snykModel.getData("toolConfigId")}
       />
-      <SnykLanguageSelectInput 
+      <SnykPipelineStepLanguageSelectInput
         fieldName={"languageLevelId"}
         model={snykModel}
         setModel={setSnykModel}
-        toolConfigId={snykModel.getData("toolConfigId")}
       />
       <SnykLanguageVersionSelectInput 
         fieldName={"version"}
@@ -82,11 +81,10 @@ function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
         setModel={setSnykModel}
         language={snykModel.getData("languageLevelId")}
       />
-      <SnykPackagerSelectInput
+      <SnykPackageManagerSelectInput
         fieldName={"packagerNameOrBuildTool"}
         model={snykModel}
         setModel={setSnykModel}
-        version={snykModel.getData("version")}
         language={snykModel.getData("languageLevelId")}
       />
       <BooleanToggleInput
