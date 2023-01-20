@@ -1141,7 +1141,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Junit KPIs
       case "junit-test-results":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col md={12} className="p-2">
             <JunitTestResultsTable
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
