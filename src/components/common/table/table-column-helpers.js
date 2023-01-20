@@ -37,7 +37,6 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
 import CountdownUntilDateFieldBase from "components/common/fields/date/countdown/CountdownUntilDateFieldBase";
-import { smartTimeFormatter, SUPPORTED_SMART_TIME_FORMATS } from "../helpers/date/date.helpers";
 
 export const getDataObjectFromTableRow = (row) => {
   try {
@@ -79,17 +78,29 @@ export const getTableTextColumn = (field, className) => {
   };
 };
 
-export const getTableSmartTimeDurationTextColumn = (field, className) => {
+/**
+ * given a value in hours, display the time duration in format such as "37 min" or "2 hr, 17 min, 1 sec", see getTimeDisplay for more details
+ * @param {String} field 
+ * @param {String} className 
+ * @returns table column definition
+ */
+export const getTableHourDurationTextColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
-    class: className || undefined,
+    class: className ? className : undefined,
     Cell: function parseText(row) {
-      return smartTimeFormatter(row?.value, SUPPORTED_SMART_TIME_FORMATS.HOURS).formattedString;
+      return getTimeDisplay(row?.value / 60);
     }
   };
 };
 
+/**
+ * given a value in minutes, display the time duration in format such as "25 sec" or "45 min, 17 sec", see getTimeDisplay for more details
+ * @param {String} field 
+ * @param {String} className 
+ * @returns table column definition
+ */
 export const getTableDurationTextColumn = (field, className) => {
   if (className) {
     return {
