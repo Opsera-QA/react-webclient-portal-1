@@ -24,19 +24,21 @@ import DashboardSubscriptionIcon from "components/common/icons/subscription/Dash
 import useComponentStateReference from "hooks/useComponentStateReference";
 import EditDashboardDateIcon from "../../icons/metrics/EditDashboardDateIcon";
 
-function DashboardScreenContainer({
-  tab,
-  dashboardModel,
-  setDashboardModel,
-  isLoading,
-  loadData,
-}) {
+function DashboardScreenContainer(
+  {
+    tab,
+    dashboardModel,
+    setDashboardModel,
+    isLoading,
+    loadData,
+  }) {
   const [breadcrumb] = useState(getBreadcrumb("dashboardDetails"));
   const [parentBreadcrumb] = useState(getParentBreadcrumb("dashboardDetails"));
-  const [activeTab, setActiveTab] = useState(
-    tab === "settings" ? tab : "viewer",
-  );
-  const { cancelTokenSource, getAccessToken } = useComponentStateReference();
+  const [activeTab, setActiveTab] = useState(tab  === "settings" ? tab : "viewer");
+  const {
+    cancelTokenSource,
+    getAccessToken,
+  } = useComponentStateReference();
 
   const handleClose = async () => {
     loadData();
@@ -138,19 +140,17 @@ function DashboardScreenContainer({
         parentBreadcrumb={parentBreadcrumb}
         titleIcon={breadcrumb?.icon}
         title={dashboardModel?.getDetailViewTitle()}
-        inactive={
-          activeField ? dashboardModel?.getData(activeField) === false : false
-        }
-        titleActionBar={
-          activeTab !== "settings" ? getTitleActionBar() : undefined
-        }
+        inactive={activeField ? dashboardModel?.getData(activeField) === false : false}
+        titleActionBar={activeTab !== "settings" ? getTitleActionBar() : undefined}
       />
     );
   };
 
   const getBody = () => {
     if (isLoading) {
-      return <ScreenContainerBodyLoadingDialog />;
+      return (
+        <ScreenContainerBodyLoadingDialog />
+      );
     }
 
     if (activeTab === "settings") {
@@ -189,9 +189,7 @@ function DashboardScreenContainer({
   if (!isLoading && dashboardModel == null) {
     return (
       <AccessDeniedContainer
-        navigationTabContainer={
-          <InsightsSubNavigationBar currentTab={"dashboardViewer"} />
-        }
+        navigationTabContainer={<InsightsSubNavigationBar currentTab={"dashboardViewer"} />}
       />
     );
   }
@@ -205,20 +203,12 @@ function DashboardScreenContainer({
         <InsightsSubNavigationBar currentTab={"dashboardViewer"} />
       </div>
       <div>
-        <div
-          className={
-            "px-2 dashboard-container-header chart-header-name-text title-text-header-1 d-flex"
-          }
-        >
-          <div className={"w-100 my-auto"}>{getTitleBar()}</div>
+        <div className={"px-2 dashboard-container-header chart-header-name-text title-text-header-1 d-flex"}>
+          <div className={"w-100 my-auto"}>
+            {getTitleBar()}
+          </div>
         </div>
-        <div
-          className={
-            tab === "settings"
-              ? `detail-container-body`
-              : `detail-container-body dashboard-screen-container-body mb-2`
-          }
-        >
+        <div className={tab === "settings" ? `detail-container-body` : `detail-container-body dashboard-screen-container-body mb-2`}>
           {getBody()}
         </div>
       </div>
