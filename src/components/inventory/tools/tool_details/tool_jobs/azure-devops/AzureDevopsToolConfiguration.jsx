@@ -11,7 +11,7 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
-import {toolIdentifierConstants} from "../../../../../admin/tools/identifiers/toolIdentifier.constants";
+import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
 function AzureDevopsToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
