@@ -25,7 +25,11 @@ function TextAreaClipboardField({textAreaValue, description, className, rows, al
       />
       <div className="d-flex justify-content-between mt-2">
         {getDescription()}
-        <CopyToClipboardButton copyString={textAreaValue} />
+        <CopyToClipboardButton
+          size={"md"}
+          showLabel={true}
+          copyString={textAreaValue}
+        />
       </div>
     </FieldContainer>
   );

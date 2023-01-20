@@ -60,7 +60,7 @@ function SchedulerFieldBase(
         icon={faPencilAlt}
         className={"ml-2 text-muted pointer"}
         iconSize={iconSize}
-        iconTransformProperties={iconSize === "xs" ? "shrink-6" : undefined}
+        iconTransformProperties={"shrink-5"}
         onClickFunction={showSchedulerOverlayFunction}
       />
     );

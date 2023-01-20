@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
-import PropTypes from "prop-types";
 import AssignedRoleAccessTable from "components/common/fields/access/table/AssignedRoleAccessTable";
 import SiteRoleAccessTable from "components/common/fields/access/table/SiteRoleAccessTable";
+import registryToolRoles from "@opsera/know-your-role/roles/registry/tools/registryTool.roles";
 
-function ToolRegistryHelpDocumentation({registryToolRoleDefinitions}) {
+function ToolRegistryHelpDocumentation() {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -15,7 +15,7 @@ function ToolRegistryHelpDocumentation({registryToolRoleDefinitions}) {
   const getHelpDocumentation = () => {
     return (
       <div className={"ml-2"}>
-        <div>The Opsera Tool Registry allows you to register, track and configure all of the tools in your organization in one centralized location so you can integrate them into Opsera pipelines. To view in depth documentation on the Tool Registry view the <a href="https://opsera.atlassian.net/l/c/xpBk71F0" target="_blank" rel="noreferrer"><b>Opsera Tool Registry Help Documentation</b>.</a> </div>
+        <div>The Opsera Tool Registry allows you to register, track and configure all of the tools in your organization in one centralized location so you can integrate them into Opsera pipelines. To view in depth documentation on the Tool Registry view the <a href="https://docs.opsera.io/tool-registry" target="_blank" rel="noreferrer"><b>Opsera Tool Registry Help Documentation</b>.</a> </div>
         <div className={"mt-2 ml-2"}><h5>Manage or configure an existing tool:</h5>
           <ol>
             <li>Easily locate your tool with the <b>Filter by Tool</b> dropdown, search bar, or by using the filter icon: filter by <b>Active Status</b>, <b>Tool Owner</b>, or <b>Tag</b>.</li>
@@ -42,20 +42,16 @@ function ToolRegistryHelpDocumentation({registryToolRoleDefinitions}) {
     >
       <div className={"my-2"}>
         <AssignedRoleAccessTable
-          roleAccessDefinitions={registryToolRoleDefinitions}
+          roleAccessDefinitions={registryToolRoles}
         />
       </div>
       <div className={"my-2"}>
         <SiteRoleAccessTable
-          roleAccessDefinitions={registryToolRoleDefinitions}
+          roleAccessDefinitions={registryToolRoles}
         />
       </div>
     </HelpOverlayBase>
   );
 }
-
-ToolRegistryHelpDocumentation.propTypes = {
-  registryToolRoleDefinitions: PropTypes.object,
-};
 
 export default React.memo(ToolRegistryHelpDocumentation);

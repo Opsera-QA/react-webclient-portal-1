@@ -11,7 +11,14 @@ import modelHelpers from "components/common/model/modelHelpers";
 import AwsS3BucketEditorPanel from "./details/AwsS3BucketEditorPanel";
 import VanityTable from "components/common/table/VanityTable";
 
-function AwsS3BucketsTable({ toolData, awsS3Buckets, loadData, isLoading }) {
+function AwsS3BucketsTable(
+  {
+    toolData,
+    awsS3Buckets,
+    loadData,
+    isLoading,
+    error,
+  }) {
   const toastContext = useContext(DialogToastContext);  
   const [selectedBucket, setSelectedBucket] = useState(undefined);
   
@@ -44,6 +51,7 @@ function AwsS3BucketsTable({ toolData, awsS3Buckets, loadData, isLoading }) {
         columns={columns}
         data={awsS3Buckets}
         onRowSelect={onRowSelect}
+        error={error}
         isLoading={isLoading}
       />
     );
@@ -80,7 +88,8 @@ AwsS3BucketsTable.propTypes = {
   toolData: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  awsS3Buckets: PropTypes.array
+  awsS3Buckets: PropTypes.array,
+  error: PropTypes.any,
 };
 
 export default AwsS3BucketsTable;

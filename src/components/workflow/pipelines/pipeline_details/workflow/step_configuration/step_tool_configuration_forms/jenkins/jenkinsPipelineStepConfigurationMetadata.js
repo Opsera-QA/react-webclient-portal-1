@@ -1,69 +1,79 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const jenkinsPipelineStepConfigurationMetadata = {
   type: "Jenkins Pipeline Step Configuration",
   fields: [
     {
       label: "Jenkins Tool",
       id: "toolConfigId",
-      isRequired: true
+      isRequired: true,
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.MONGO_DB_ID,
     },
     {
       label: "Job Type",
       id: "jobType",
-      isRequired: true
+      isRequired: true,
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
       label: "Job Name",
       id: "jobName",
-      isRequired: true,
-      maxLength:150
+      // isRequired: true,
+      maxLength: 150,
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
       label: "Tool Job",
       id: "toolJobId",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Account",
       id: "gitCredential",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Workspace",
       id: "workspace",
-      isRequired: true
+      // isRequired: true
+    },
+    {
+      label: "Repository",
+      id: "repoId",
+      // isRequired: true
     },
     {
       label: "Repository",
       id: "repository",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Branch",
       id: "branch",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Rollback Branch Name",
       id: "rollbackBranchName",
-      isRequired: true,
+      // isRequired: true,
       formText:"An Orphan branch will be created with only the back up specific files.",
       maxLength:50,
     },
     {
       label: "Branch Name",
       id: "gitBranch",
-      isRequired: true,
+      // isRequired: true,
       maxLength:50,
     },
     {
       label: "Build/Xml Step Info",
       id: "stepIdXML",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Docker Name",
       id: "dockerName",
-      isRequired: true,
+      // isRequired: true,
       maxLength:256,
       // TODO: This should be the pattern but this is probably fine.
       regexValidator: RegExp("^[a-zA-Z0-9_.-]*$"),
@@ -88,7 +98,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Docker Dynamic Tag",
       id: "dockerDynamicTagName",
-      formText: "date, timestamp, run_count text can be used to make it dynamic",
+      formText: "date, timestamp, run_count, commit_sha text can be used to make it dynamic",
       regexDefinitionName: "dockerName",
       maxLength: 50,
       lowercase: true,
@@ -141,13 +151,9 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "inputDetails",
     },
     {
-      label: "Commands",
-      id: "commands",
-    },
-    {
       label:"Specify Salesforce Credentials",
       id:"sfdcToolId",
-      isRequired: true,
+      // isRequired: true,
     },
     {
       label:"Unit Test Type",
@@ -157,12 +163,12 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label:"Destination Salesforce Credentials",
       id:"sfdcDestToolId",
-      isRequired: true
+      // isRequired: true
     },
     {
       id:"upstreamBranch",
       label:"Specify Upstream Branch",
-      isRequired: true
+      // isRequired: true
     },
     {
       id:"terraformStepId",
@@ -184,7 +190,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label:"Jenkins Job Type",
       id:"job_type",
-      isRequired: true,
+      // isRequired: true,
     },
     {
       label: "Dependency",
@@ -218,6 +224,41 @@ const jenkinsPipelineStepConfigurationMetadata = {
       regexDefinitionName: "argumentList",
       formText: "A newline-separated list of Runtime Arguments",
       maxLength: 500
+    },
+    {
+      label: "MetaData Transformer Rule",
+      id: "ruleIds",
+      isRequiredFunction: (model) => {
+        return model?.getData("jobType") === "SFDC DATA TRANSFORM";
+      },
+    },
+    {
+      label: "Use build step resource",
+      id: "useBuildStepResource"
+    },
+    {
+      label: "Build Step Info",
+      id: "buildStepId",
+      isRequiredFunction: (model) => {
+        return model?.getData("useBuildStepResource") === true;
+      },
+    },
+    {
+      label: "Commands",
+      id: "commands",        
+      formText: "A platform-specific script, which will be executed as .cmd file on Windows or as a shellscript in Unix-like environments. Multiple commands are supported (each line indicates a new command). Please use the parameters ${BUILD_WORKSPACE} & ${WORKSPACE} to refer the previous and current workspace respectively.",
+      isRequiredFunction: (model) => {
+        return model?.getData("useBuildStepResource") === true;
+      },
+    },
+    {
+      label: "Dynamic Parameters",
+      id: "environmentVariables",
+      maxItems: 15
+    },
+    {
+      label: "Enable Quick Deploy",
+      id: "enableQuickDeploy",
     }
   ],
   newObjectFields: {
@@ -272,6 +313,12 @@ const jenkinsPipelineStepConfigurationMetadata = {
     runtimeArguments: "",
     dependencies: {},
     dependencyType:"",
+    ruleIds: [],
+    useBuildStepResource: false,
+    buildStepId: "",
+    commands: "",
+    environmentVariables: [],
+    enableQuickDeploy: false
   }
 };
 

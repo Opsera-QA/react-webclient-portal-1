@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ToolJobsPanel from "components/inventory/tools/tool_details/ToolJobsPanel";
 import ToolLogsPanel from "components/inventory/tools/tool_details/logs/ToolLogsPanel";
@@ -11,7 +11,6 @@ import DetailTabPanelContainer from "components/common/panels/detail_view/Detail
 import ToolSummaryPanel from "components/inventory/tools/tool_details/ToolSummaryPanel";
 import ToolUsagePanel from "components/inventory/tools/tool_details/ToolUsagePanel";
 import ToolProjectsPanel from "components/inventory/tools/tool_details/projects/ToolProjectsPanel";
-import { AuthContext } from "contexts/AuthContext";
 import ToolAttributeEditorPanel from "components/inventory/tools/tool_details/ToolAttributeEditorPanel";
 import ToolVaultPanel from "components/inventory/tools/tool_details/vault/ToolVaultPanel";
 import ToolRepositoriesPanel from "components/inventory/tools/tool_details/ToolRepositoriesPanel";
@@ -25,23 +24,19 @@ import ToolOrganizationsPanel from "components/inventory/tools/tool_details/Tool
 import ToolWorkspacesPanel from "components/inventory/tools/tool_details/ToolWorkspacesPanel";
 import ToolEndpointsPanel from "components/inventory/tools/details/endpoints/ToolEndpointsPanel";
 import ToolProvidersPanel from "components/inventory/tools/tool_details/ToolProvidersPanel";
+import ToolLicensePanel from "../../tool_details/ToolLicensePanel";
+import ToolDataTransformerRulesMappingPanel 
+  from "components/inventory/tools/tool_details/ToolDataTransformerRulesMappingPanel";
 
-function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
+function ToolDetailPanel(
+  { 
+    toolModel,
+    setToolModel,
+    loadData,
+    isLoading,
+    tab,
+  }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
-  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
-  const [customerAccessRules, setCustomerAccessRules] = useState({});
-
-  useEffect(() => {
-    initRoleAccess().catch(error => {
-      throw { error };
-    });
-  }, [isLoading]);
-
-  const initRoleAccess = async () => {
-    const userRecord = await getUserRecord(); //RBAC Logic
-    const rules = await setAccessRoles(userRecord);
-    setCustomerAccessRules(rules);
-  };
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
@@ -59,7 +54,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const getTabContainer = () => {
     return (
       <ToolDetailPanelTabContainer
-        toolModel={toolData}
+        toolModel={toolModel}
         activeTab={activeTab}
         handleTabClick={handleTabClick}
       />
@@ -72,14 +67,14 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return (
           <ToolAccountsPanel
             isLoading={isLoading}
-            toolData={toolData}
+            toolData={toolModel}
             loadData={loadData}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.APPLICATIONS:
         return (
           <ToolApplicationsPanel
-            toolData={toolData}
+            toolData={toolModel}
             loadData={loadData}
             isLoading={isLoading}
           />
@@ -87,16 +82,15 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case TOOL_DETAIL_PANEL_TABS.ATTRIBUTES:
         return (
           <ToolAttributesPanel
-            toolData={toolData}
+            toolData={toolModel}
             setActiveTab={setActiveTab}
-            customerAccessRules={customerAccessRules}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.ATTRIBUTE_SETTINGS:
         return (
           <ToolAttributeEditorPanel
-            toolData={toolData}
-            setToolData={setToolData}
+            toolData={toolModel}
+            setToolData={setToolModel}
             loadData={loadData}
             handleClose={toggleAttributesPanel}
           />
@@ -104,39 +98,39 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case TOOL_DETAIL_PANEL_TABS.CONNECTION:
         return (
           <ToolConnectionPanel
-            toolData={toolData}
-            setToolData={setToolData}
+            toolData={toolModel}
+            setToolData={setToolModel}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.ENDPOINTS:
         return (
           <ToolEndpointsPanel
-            toolModel={toolData}
+            toolModel={toolModel}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.JOBS:
         return (
           <ToolJobsPanel
-            toolData={toolData}
-            toolIdentifier={toolData?.tool_identifier}
+            toolData={toolModel}
+            toolIdentifier={toolModel?.getData("tool_identifier")}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.LOGS:
         return (
           <ToolLogsPanel
-            toolData={toolData}
+            toolData={toolModel}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.PATHS:
         return (
           <ToolPathsPanel
-            toolModel={toolData}
+            toolModel={toolModel}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.PROJECTS:
         return (
           <ToolProjectsPanel
-            toolData={toolData}
+            toolData={toolModel}
             isLoading={isLoading}
             loadData={loadData}
           />
@@ -144,8 +138,8 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case TOOL_DETAIL_PANEL_TABS.REPOSITORIES:
         return (
           <ToolRepositoriesPanel
-            toolData={toolData}
-            setToolData={setToolData}
+            toolData={toolModel}
+            setToolData={setToolModel}
             loadData={loadData}
             isLoading={isLoading}
           />
@@ -153,8 +147,8 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case TOOL_DETAIL_PANEL_TABS.SETTINGS:
         return (
           <ToolEditorPanel
-            toolData={toolData}
-            setToolData={setToolData}
+            toolData={toolModel}
+            setToolData={setToolModel}
             loadData={loadData}
             handleClose={toggleSummaryPanel}
           />
@@ -162,69 +156,83 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case TOOL_DETAIL_PANEL_TABS.STORAGE:
         return (
           <ToolStoragePanel
-            toolData={toolData}
-            setToolData={setToolData}
+            toolData={toolModel}
+            setToolData={setToolModel}
             loadData={loadData}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.ORGANIZATIONS:
         return (
           <ToolOrganizationsPanel
-            toolData={toolData}
-            setToolData={setToolData}
+            toolData={toolModel}
+            setToolData={setToolModel}
             loadData={loadData}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.WORKSPACES:
         return (
           <ToolWorkspacesPanel
-            toolData={toolData}
-            setToolData={setToolData}
+            toolData={toolModel}
+            setToolData={setToolModel}
             loadData={loadData}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.PROVIDERS:
         return (
           <ToolProvidersPanel
-            toolData={toolData}
-            setToolData={setToolData}
+            toolData={toolModel}
+            setToolData={setToolModel}
             loadData={loadData}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.SUMMARY:
         return (
           <ToolSummaryPanel
-            toolData={toolData}
-            setToolData={setToolData}
+            toolData={toolModel}
+            setToolData={setToolModel}
             setActiveTab={setActiveTab}
-            customerAccessRules={customerAccessRules}
+            loadToolFunction={loadData}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.USAGE:
         return (
           <ToolUsagePanel
-            toolData={toolData}
+            toolData={toolModel}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.VAULT:
         return (
           <ToolVaultPanel
-            toolData={toolData}
-            setToolData={setToolData}
+            toolData={toolModel}
+            setToolData={setToolModel}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.MAPPING:
         return (
-          <ToolServiceTypeMappingPanel 
-            toolData={toolData}
-            setToolData={setToolData}
+          <ToolServiceTypeMappingPanel
+            toolData={toolModel}
+            setToolData={setToolModel}
             loadData={loadData}
           />
         );
       case TOOL_DETAIL_PANEL_TABS.CLUSTERS:
         return (
           <ToolClustersPanel
-            toolModel={toolData}
+            toolModel={toolModel}
+          />
+        );
+      case TOOL_DETAIL_PANEL_TABS.LICENSES:
+        return (
+            <ToolLicensePanel
+                toolData={toolModel}
+            />
+        );
+      case TOOL_DETAIL_PANEL_TABS.DATA_TRANSFORMER:
+        return (
+          <ToolDataTransformerRulesMappingPanel
+            toolData={toolModel}
+            setToolData={setToolModel}
+            loadData={loadData}
           />
         );
       default:
@@ -236,14 +244,13 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
     <DetailTabPanelContainer
       detailView={getCurrentView()}
       tabContainer={getTabContainer()}
-      customerAccessRules={customerAccessRules}
     />
   );
 }
 
 ToolDetailPanel.propTypes = {
-  toolData: PropTypes.object,
-  setToolData: PropTypes.func,
+  toolModel: PropTypes.object,
+  setToolModel: PropTypes.func,
   loadData: PropTypes.func,
   tab: PropTypes.string,
   isLoading: PropTypes.bool,

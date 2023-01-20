@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AWSBucketNameSelectionInput from "components/common/list_of_values_input/tools/aws/AWSBucketNameSelectionInput";
+import AwsS3BucketNameSelectInput from "components/common/list_of_values_input/tools/aws/AwsS3BucketNameSelectInput";
 
 function EBSBucketInput({dataObject, setDataObject, disabled}) {
   const setBucketName = (fieldName, selectedOption) => {
@@ -14,12 +14,12 @@ function EBSBucketInput({dataObject, setDataObject, disabled}) {
     setDataObject({...newDataObject});
   };
   return (
-     <AWSBucketNameSelectionInput
+     <AwsS3BucketNameSelectInput
        fieldName={"bucketName"}
        awsToolId={dataObject.getData("awsToolConfigId")}
-       dataObject={dataObject}
+       model={dataObject}
        setDataFunction={setBucketName}
-       setDataObject={setDataObject}
+       setModel={setDataObject}
        clearDataFunction={clearDataFunction}
        disabled={disabled}
      />

@@ -5,7 +5,7 @@ import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {TaskActivityLogFilterModel} from "components/tasks/activity_logs/taskActivityLog.filter.model";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import UserActivityAuditLogTable from "components/common/audit_log/UserActivityAuditLogTable";
+import UserActivityAuditLogTableBase from "components/common/audit_log/UserActivityAuditLogTableBase";
 import taskActions from "components/tasks/task.actions";
 
 function TaskAuditLogPanel({ taskId }) {
@@ -79,10 +79,10 @@ function TaskAuditLogPanel({ taskId }) {
   }
 
   return (
-    <UserActivityAuditLogTable
-      taskAuditLogs={taskAuditLogs}
+    <UserActivityAuditLogTableBase
+      auditLogs={taskAuditLogs}
       isLoading={isLoading}
-      loadData={loadData}
+      loadDataFunction={loadData}
       filterModel={taskAuditLogFilterModel}
       setFilterModel={setTaskAuditLogFilterModel}
     />

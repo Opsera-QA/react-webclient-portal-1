@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Col, Row} from "react-bootstrap";
+import {Badge, Col, Row} from "react-bootstrap";
 import MetricDataPointEvaluationSuccessRuleInput
   from "components/common/inputs/metric/data_points/strategic_criteria/data_point_evaluation/row/MetricDataPointEvaluationSuccessRuleInput";
 import MetricDataPointEvaluationWarningRuleInput
@@ -10,6 +10,7 @@ import MetricDataPointEvaluationFailureRuleInput
 import MetricDataPointStrategicCriteriaUserEditabilityBooleanToggle
   from "components/common/inputs/metric/data_points/admin/strategic_criteria/MetricDataPointStrategicCriteriaUserEditabilityBooleanToggle";
 import H4MetricSubHeader from "components/common/fields/subheader/metric/H4MetricSubHeader";
+import {getDataPointTypeLabel} from "../../../../../list_of_values_input/insights/data_points/type/dataPoint.types";
 
 function MetricDataPointEvaluationRulesInput(
   {
@@ -51,18 +52,21 @@ function MetricDataPointEvaluationRulesInput(
           <MetricDataPointEvaluationSuccessRuleInput
             dataPointEvaluationRules={strategicCriteria?.data_point_evaluation_rules}
             updateRuleFunction={updateRuleFunction}
+            dataPointType={model?.getData('type')}
           />
         </Col>
         <Col xs={12} className={"my-1"}>
           <MetricDataPointEvaluationWarningRuleInput
             dataPointEvaluationRules={strategicCriteria?.data_point_evaluation_rules}
             updateRuleFunction={updateRuleFunction}
+            dataPointType={model?.getData('type')}
           />
         </Col>
         <Col xs={12} className={"mt-1"}>
           <MetricDataPointEvaluationFailureRuleInput
             dataPointEvaluationRules={strategicCriteria?.data_point_evaluation_rules}
             updateRuleFunction={updateRuleFunction}
+            dataPointType={model?.getData('type')}
           />
         </Col>
       </Row>

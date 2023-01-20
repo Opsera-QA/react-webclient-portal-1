@@ -1,32 +1,27 @@
 import ModelBase from "core/data_model/model.base";
-import toolsActions from "components/inventory/tools/tools-actions";
-import {isActionAllowed} from "components/common/helpers/role-helpers";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
+import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
+import DashboardRoleHelper from "@opsera/know-your-role/roles/analytics/dashboards/dashboardRole.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-export class DashboardModel extends ModelBase {
+export default class DashboardModel extends ModelBase {
   constructor(
     data,
-    metaData,
     newModel,
-    getAccessToken,
-    cancelTokenSource,
-    loadData,
-    customerAccessRules,
-    roleDefinitions,
-    setStateFunction,
   ) {
-    super(data, metaData, newModel);
-    this.getAccessToken = getAccessToken;
-    this.cancelTokenSource = cancelTokenSource;
-    this.loadData = loadData;
-    this.setStateFunction = setStateFunction;
-    this.customerAccessRules = customerAccessRules;
-    this.roleDefinitions = roleDefinitions;
-    this.updateAllowed = this.canPerformAction("update_dashboard") || newModel === true;
-    this.deleteAllowed = this.canPerformAction("delete_dashboard");
-    this.editAccessRolesAllowed = this.canPerformAction("edit_access_roles") || newModel === true;
+    super(
+      data,
+      dashboardMetadata,
+      newModel,
+    );
   }
+
+  canCreate = () => {
+    return DashboardRoleHelper.canCreateDashboard(
+      this.userData,
+    );
+  };
 
   createModel = async () => {
     return await dashboardsActions.createDashboardV2(
@@ -36,11 +31,25 @@ export class DashboardModel extends ModelBase {
     );
   };
 
+  canUpdate = () => {
+    return DashboardRoleHelper.canUpdateDashboard(
+      this.userData,
+      this.data
+    );
+  };
+
   saveModel = async () => {
     return await dashboardsActions.updateDashboardV2(
       this.getAccessToken,
       this.cancelTokenSource,
       this,
+    );
+  };
+
+  canDelete = () => {
+    return DashboardRoleHelper.canDeleteDashboard(
+      this.userData,
+      this.data
     );
   };
 
@@ -54,60 +63,64 @@ export class DashboardModel extends ModelBase {
   };
 
   getDetailViewTitle = () => {
-    return `${capitalizeFirstLetter(this?.getOriginalValue("name"))}`;
-  };
-
-  getNewInstance = (newData = this.getNewObjectFields()) => {
-    return new DashboardModel(
-      { ...newData },
-      this.metaData,
-      this.newModel,
-      this.getAccessToken,
-      this.cancelTokenSource,
-      this.loadData,
-      this.customerAccessRules,
-      this.roleDefinitions,
-      this.setStateFunction,
-    );
+    return `${capitalizeFirstLetter(this.getOriginalValue("name"))}`;
   };
 
   canAddDashboardMetric = () => {
-    return this.canPerformAction("add_dashboard_metric");
-  }
+    return DashboardRoleHelper.canAddMetricToDashboard(
+      this.userData,
+      this.data,
+    );
+  };
 
   canDeleteDashboardMetric = () => {
-    return this.canPerformAction("delete_dashboard_metric");
-  }
+    return DashboardRoleHelper.canDeleteDashboardMetric(
+      this.userData,
+      this.data,
+    );
+  };
 
   canUpdateDashboardMetric = () => {
-    return this.canPerformAction("update_dashboard_metric");
-  }
+    return DashboardRoleHelper.canUpdateDashboardMetric(
+      this.userData,
+      this.data,
+    );
+  };
 
   canUpdateDashboardFilters = () => {
-    return this.canPerformAction("update_dashboard_filters");
-  }
+    return DashboardRoleHelper.canUpdateDashboardFilters(
+      this.userData,
+      this.data,
+    );
+  };
 
   canPublishDashboardToPrivateCatalog = () => {
-    return this.canPerformAction("publish_dashboard_to_private_catalog");
-  }
+    return DashboardRoleHelper.canPublishDashboardToPrivateCatalog(
+      this.userData,
+      this.data,
+    );
+  };
 
   canTransferDashboardOwnershipToNewUser = () => {
-    return this.canPerformAction("transfer_dashboard_ownership_to_new_user");
-  }
+    return DashboardRoleHelper.canTransferDashboardOwnership(
+      this.userData,
+      this.data,
+    );
+  };
 
+  canEditAccessRoles = () => {
+    return DashboardRoleHelper.canEditAccessRoles(
+      this.userData,
+      this.data,
+    );
+  };
 
-  canPerformAction = (action) => {
-    return isActionAllowed(
-      this.customerAccessRules,
-      action,
-      this.getData("owner"),
-      this.getData("roles"),
-      this.roleDefinitions,
-      true,
+  clone = () => {
+    return new DashboardModel(DataParsingHelper.cloneDeep(
+        { ...this.data }),
+      this.isNew(),
     );
   };
 }
-
-export default DashboardModel;
 
 

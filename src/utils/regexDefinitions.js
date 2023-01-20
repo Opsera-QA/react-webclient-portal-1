@@ -7,13 +7,19 @@ regexDefinitions.generalText = {
   errorFormText: "Only letters, numbers, dashes, colons, underscores, and periods are allowed"
 };
 
+regexDefinitions.descriptionField = {
+  regex: /^[A-Za-z0-9'\-_.:,! ]*$/,
+  formText: "Spaces, letters, numbers dashes, colons, underscores, commas, exclamation points, and periods are allowed",
+  errorFormText: "Only spaces, letters, numbers dashes, colons, commas, exclamation points, underscores, and periods are allowed"
+};
+
 regexDefinitions.portField = {
   regex:/^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/,
   errorFormText: "Only numbers allowed and should not be greater than 65,535"
 };
 
 regexDefinitions.urlField = {
-  regex:/^[A-Za-z0-9-_.:~/]*$/,
+  regex:/^((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
   errorFormText: "Letters, numbers, dashes, colons, forward slashes, underscores, tildes, and periods are allowed"
 };
 
@@ -29,11 +35,23 @@ regexDefinitions.nameField = {
   errorFormText: "Only letters, numbers, dashes, underscores, and periods are allowed",
 };
 
+regexDefinitions.humanNameField = {
+  regex: /^[a-zA-Z-. ]*$/,
+  formText: "Letters, dashes, spaces, and periods are allowed",
+  errorFormText: "Only letters, dashes, spaces, and periods are allowed",
+};
+
 // TODO: Validate
 regexDefinitions.imagePathField = {
   regex: /^\w+\.(jpg|jpeg|gif|png|tiff|bmp)$/gi,
   formText: "Only links with valid image file extensions allowed",
   errorFormText: "Only links with valid image file extensions allowed",
+};
+
+regexDefinitions.uniqueIdentifier = {
+  regex: /^[a-z0-9-_]*$/,
+  formText: "Letters, numbers, dashes, and underscores are allowed",
+  errorFormText: "Only letters, numbers, dashes, and underscores are allowed"
 };
 
 regexDefinitions.generalTextWithSpacesSlash = {
@@ -43,9 +61,9 @@ regexDefinitions.generalTextWithSpacesSlash = {
 };
 
 regexDefinitions.expandedTextAndSymbolsWithSpaces = {
-  regex: /^[A-Za-z0-9'\-,._&+*()! ]*$/,
-  formText: "Spaces, letters, numbers, underscores, dashes, periods, commas, parentheses, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
-  errorFormText: "Only spaces, letters, numbers, underscores, dashes, periods, commas, parentheses, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
+  regex: /^[A-Za-z0-9'\-,._&+*()/[\]! ]*$/,
+  formText: "Spaces, letters, numbers, underscores, dashes, periods, commas, parentheses, brackets, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
+  errorFormText: "Only spaces, letters, numbers, underscores, dashes, periods, commas, parentheses, brackets, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
 };
 
 regexDefinitions.limitedTextWithSpaces = {
@@ -97,6 +115,12 @@ regexDefinitions.gitBranchName = {
 };
 
 regexDefinitions.pathField = {
+  regex: /^[A-Za-z0-9\-_:./\\"]*$/,
+  formText: "Letters, numbers, dashes, slashes, colons, underscores, quotes, and periods are allowed",
+  errorFormText: "Only letters, numbers, dashes, slashes, colons, underscores, quotes, and periods are allowed"
+};
+
+regexDefinitions.pathFieldWithoutQuotes = {
   regex: /^[A-Za-z0-9\-_:./\\]*$/,
   formText: "Letters, numbers, dashes, slashes, colons, underscores, and periods are allowed",
   errorFormText: "Only letters, numbers, dashes, slashes, colons, underscores, and periods are allowed"
@@ -110,7 +134,7 @@ regexDefinitions.domainNameField = {
 
 regexDefinitions.domainField = {
   regex: /^[a-z0-9](?!.*?[^\na-z0-9-]).*?[a-z0-9]$/,
-  formText: "This field must begin and end with an alphanumeric character. Alphanumeric and Dashes are allowed otherwise.",
+  formText: "This field must begin and end with an alphanumeric character (lowercase only). Alphanumeric and Dashes are allowed otherwise.",
   errorFormText: "This field must begin and end with an alphanumeric character. Alphanumeric and Dashes are allowed otherwise.",
 };
 
@@ -122,8 +146,8 @@ regexDefinitions.mongoId = {
 
 regexDefinitions.generalTextWithoutSpacesPeriod = {
   regex: /^[A-Za-z0-9\-_,]*$/,
-  formText: "Letters, numbers, dashes, and commas are allowed",
-  errorFormText: "Only letters, numbers, dashes, and commas are allowed",
+  formText: "Letters, numbers, dashes, underscores and commas are allowed",
+  errorFormText: "Only letters, numbers, dashes, underscores and commas are allowed",
 };
 
 regexDefinitions.ecrRepoField = {
@@ -145,7 +169,7 @@ regexDefinitions.decimalField = {
 };
 
 regexDefinitions.hostnameRegex = {
-  regex: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/,
+  regex: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9-]*[A-Za-z0-9])$/,
   formText: "Host names must follow the RFC 1123 standard",
   errorFormText: "Host names must follow the RFC 1123 standard",
 };
@@ -177,6 +201,18 @@ regexDefinitions.customParameterNameRegex = {
   errorFormText: "Name must begin with \"opsera-\" and can contain lowercase letters, numbers, and dashes",
 };
 
+regexDefinitions.localVariableName = {
+  regex: /^opsera-local-[a-z0-9-]*$/,
+  formText: "Name must begin with \"opsera-local-\" and can contain lowercase letters, numbers, underscores, and dashes",
+  errorFormText: "Name must begin with \"opsera-local-\" and can contain lowercase letters, numbers, underscores, and dashes",
+};
+
+regexDefinitions.localVariableValue = {
+  regex: /^[a-zA-Z0-9-+|!.$@&:_; [\]\\/]*$/,
+  formText: "Values can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : ; |",
+  errorFormText: "Values can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : ; |",
+};
+
 regexDefinitions.dockerName = {
   regex: /^[a-z0-9_.-]*$/,
   formText: "Accepts lowercase alphanumeric characters, periods, dashes, and underscores without spaces.",
@@ -190,7 +226,7 @@ regexDefinitions.jsonFile = {
 };
 
 regexDefinitions.collectionName = {
-  regex: /^[a-zA-Z0-9_-]*(?:\.[a-zA-Z0-9_-]+)$/,
+  regex: /^[a-zA-Z0-9_-]*\.[a-zA-Z0-9_-]+$/,
   formText: "Accepts input in [DatabaseName].[CollectionName] format",
   errorFormText: "Input should be in [DatabaseName].[CollectionName] format. Only letters, numbers, dashes, underscores and periods are allowed",
 };
@@ -205,6 +241,13 @@ regexDefinitions.azureFunctionsLabel = {
   regex: /^[a-z0-9]*$/,
   formText: "Accepts lowercase alphanumeric characters without spaces.",
   errorFormText: "The name must consist of lowercase alphanumeric characters (e.g. 'name', or 'abc123')"
+};
+
+regexDefinitions.azureContainerName = {
+  regex: /^[a-z0-9](?!.*--)[a-z0-9-]{1,61}[a-z0-9]$/,
+  formText: "This name may only contain lowercase letters, numbers, and hyphens, and must begin with a letter or a number. Each hyphen must be preceded and followed by a non-hyphen character. The name must also be between 3 and 63 characters long.",
+  errorFormText:
+    "This name may only contain lowercase letters, numbers, and hyphens, and must begin with a letter or a number. Each hyphen must be preceded and followed by a non-hyphen character. The name must also be between 3 and 63 characters long.",
 };
 
 regexDefinitions.argumentList = {

@@ -2,6 +2,8 @@ import FilterModelBase from "core/data_model/filterModel.base";
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
 import { getTaskTypeLabel } from "components/tasks/task.types";
 import sessionHelper from "utils/session.helper";
+import { toolHelper } from "components/inventory/tools/tool.helper";
+import { taskHelper } from "components/tasks/task.helper";
 
 const taskFilterMetadata = {
   type: "Task",
@@ -66,7 +68,7 @@ export class TaskFilterModel extends FilterModelBase {
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;
-    this.sessionDataKey = "task-filter-model-data";
+    this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.TASK_FILTER_MODEL_DATA;
     this.enableUrlUpdatesWithQueryParameters();
     this.unpackUrlParameters();
   }
@@ -135,9 +137,10 @@ export class TaskFilterModel extends FilterModelBase {
       [
         {text: "Oldest Tasks", value: "oldest"},
         {text: "Newest Tasks", value: "newest"},
-        {text: "Task Name (A-Za-z)", value: "name"},
-        {text: "Task Name (z-aZ-A)", value: "name-descending"},
-        {text: "Last Updated", value: "last-updated"},
+        {text: "Task Name (A-Z a-z)", value: "name"},
+        {text: "Task Name (z-a Z-A)", value: "name-descending"},
+        {text: "Updated (Latest)", value: "last-updated"},
+        {text: "Updated (Earliest)", value: "earliest-updated"},
       ]
     );
   };
@@ -197,6 +200,10 @@ export class TaskFilterModel extends FilterModelBase {
         this.setData("type", type);
       }
     }
+  };
+
+  getDetailViewLink = (taskId) => {
+    return taskHelper.getDetailViewLink(taskId);
   };
 }
 

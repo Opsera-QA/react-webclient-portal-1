@@ -1,42 +1,137 @@
-import ModelBase, {DataState} from "core/data_model/model.base";
+import ModelBase, { DataState } from "core/data_model/model.base";
+import ScriptLibraryRoleHelper from "@opsera/know-your-role/roles/registry/script_library/scriptLibraryRole.helper";
+import scriptsLibraryMetadata from "@opsera/definitions/constants/registry/script_library/scriptsLibrary.metadata";
 import scriptsActions from "components/inventory/scripts/scripts-actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-export class ScriptModel extends ModelBase {
-  constructor(data, metaData, newModel, getAccessToken, cancelTokenSource, loadData, canUpdate = false, canDelete = false, canEditAccessRoles, setStateFunction) {
-    super(data, metaData, newModel);
-    this.getAccessToken = getAccessToken;
-    this.cancelTokenSource = cancelTokenSource;
-    this.loadData = loadData;
+export default class ScriptModel extends ModelBase {
+  constructor(
+    data,
+    newModel,
+    setStateFunction,
+    loadDataFunction,
+  ) {
+    super(
+      data,
+      scriptsLibraryMetadata,
+      newModel,
+      setStateFunction,
+      loadDataFunction,
+    );
     this.scriptPulled = false;
-    this.updateAllowed = canUpdate;
-    this.deleteAllowed = canDelete;
-    this.editAccessRolesAllowed = canEditAccessRoles;
-    this.setStateFunction = setStateFunction;
   }
 
+  canCreate = () => {
+    return ScriptLibraryRoleHelper.canCreateScript(
+      this.userData,
+    );
+  };
+
   createModel = async () => {
-    return await scriptsActions.createScriptV2(this.getAccessToken, this.cancelTokenSource, this);
+    const canCreate = this.canCreate();
+
+    if (canCreate !== true) {
+      throw "Access Denied";
+    }
+
+    const response = await scriptsActions.createScriptV2(
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this,
+    );
+
+    const script = response?.data;
+
+    if (script) {
+      this.data = script;
+      this.updateState();
+    }
+
+    return response;
+  };
+
+  canUpdate = () => {
+    return ScriptLibraryRoleHelper.canUpdateScript(
+      this.userData,
+      this.data,
+    );
   };
 
   saveModel = async () => {
-    return await scriptsActions.updateScriptV2(this.getAccessToken, this.cancelTokenSource, this);
+    const canUpdate = this.canUpdate();
+
+    if (canUpdate !== true) {
+      throw "Access Denied";
+    }
+
+    const response = await scriptsActions.updateScriptV2(
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this,
+    );
+    this.updateState();
+
+    return response;
+  };
+
+  canDelete = () => {
+    return ScriptLibraryRoleHelper.canDeleteScript(
+      this.userData,
+      this.data,
+    );
+  };
+
+  canEditAccessRoles = () => {
+    return ScriptLibraryRoleHelper.canEditAccessRoles(
+      this.userData,
+      this.data,
+    );
   };
 
   deleteModel = async () => {
-    const response = await scriptsActions.deleteScriptV2(this.getAccessToken, this.cancelTokenSource, this);
+    const canDelete = this.canDelete();
+
+    if (canDelete !== true) {
+      throw "Access Denied";
+    }
+
+    const response = await scriptsActions.deleteScriptV2(
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this,
+    );
     this.dataState = DataState.DELETED;
+
+    if (this.loadDataFunction) {
+      await this.loadDataFunction();
+    }
+
     this.unselectModel();
-    await this.loadData();
+
     return response;
   };
 
   pullScriptFromDb = async () => {
-    const response = await scriptsActions.getScriptValue(this.getAccessToken, this.cancelTokenSource, this.getData("_id"));
+    const canPullScriptFromDb = ScriptLibraryRoleHelper.canGetEncryptedScriptValue(
+      this.userData,
+      this.data,
+    );
+
+    // if (canPullScriptFromDb !== true) {
+    //   throw "Access Denied";
+    // }
+
+    const response = await scriptsActions.getScriptValue(
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this.getMongoDbId(),
+    );
     const value = response?.data?.data;
     this.scriptPulled = true;
 
     if (value) {
       this.setData("value", value, false);
+      this.updateState();
     }
 
     return value;
@@ -44,13 +139,22 @@ export class ScriptModel extends ModelBase {
 
   hasScriptBeenPulled = () => {
     return this.scriptPulled === true;
-  }
+  };
 
-  getNewInstance = (newData = this.getNewObjectFields()) => {
-    return new ScriptModel({...newData}, this.metaData, this.newModel, this.getAccessToken, this.cancelTokenSource, this.loadData, this.updateAllowed, this.deleteAllowed);
+  clone = () => {
+    const newScript = new ScriptModel(
+      DataParsingHelper.cloneDeep(this.data),
+      this.isNew(),
+      this.setStateFunction,
+      this.loadDataFunction,
+    );
+
+    newScript.getAccessToken = this.getAccessToken;
+    newScript.cancelTokenSource = this.cancelTokenSource;
+    newScript.userData = this.userData;
+
+    return newScript;
   };
 }
-
-export default ScriptModel;
 
 

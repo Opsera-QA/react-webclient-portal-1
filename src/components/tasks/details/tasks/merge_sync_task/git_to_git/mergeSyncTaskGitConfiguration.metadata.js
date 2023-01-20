@@ -10,7 +10,7 @@ export const mergeSyncTaskGitConfigurationMetadata = {
       lowercase: true,
     },
     {
-      label: "Account",
+      label: "Git Account",
       id: "toolId",
       isRequired: true,
       maxLength: 24,
@@ -26,6 +26,11 @@ export const mergeSyncTaskGitConfigurationMetadata = {
       isRequired: true,
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
+    },
+    {
+      label: "Repository",
+      id: "repoId",
+      isRequired: true,
     },
     {
       label: "Workspace",

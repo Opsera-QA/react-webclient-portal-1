@@ -9,7 +9,7 @@ function ToolJobsPanel({ toolData, toolIdentifier }) {
       return (
         <JenkinsJobsPanel
           toolData={toolData}
-          toolId={toolData?._id}
+          toolId={toolData?.getData("_id")}
         />
       );
     default:

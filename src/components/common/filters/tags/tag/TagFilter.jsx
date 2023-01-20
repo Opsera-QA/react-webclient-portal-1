@@ -6,8 +6,16 @@ import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import axios from "axios";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function TagFilter({ filterDto, setFilterDto, className }) {
+// TODO: Use CustomerTagFilter instead. This is left in for legacy support
+function TagFilter(
+  {
+    filterDto,
+    setFilterDto,
+    valueField,
+    className,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -55,19 +63,36 @@ function TagFilter({ filterDto, setFilterDto, className }) {
   };
 
   const getTags = async (cancelSource = cancelTokenSource) => {
-    const response = await adminTagsActions.getAllTagsV2(getAccessToken, cancelSource, "active");
-    let tags = response?.data?.data;
-    let tagOptions = [];
+    const response = await adminTagsActions.getAllTagsV2(getAccessToken, cancelSource, false);
+    const tags = DataParsingHelper.parseNestedArray(response, "data.data", []);
+    const tagOptions = [];
 
     if (Array.isArray(tags) && tags.length > 0) {
       tags.map((tag, index) => {
-        tagOptions.push({text: `${tag["value"]}`, value: `${tag["type"]}:${tag["value"]}`, type: `${capitalizeFirstLetter(tag["type"])}`});
+        tagOptions.push({
+          text: `${tag["value"]}`,
+          value: `${tag["type"]}:${tag["value"]}`,
+          value2: {type: tag.type, value: tag.value},
+          type: `${capitalizeFirstLetter(tag["type"])}`
+        });
       });
     }
 
     if (isMounted?.current === true) {
       setTagOptions(tagOptions);
     }
+  };
+
+  const getTextFieldString = (tag) => {
+    if (tag == null) {
+      return "Select Tag";
+    }
+
+    if (valueField === "value2") {
+      return `${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`;
+    }
+
+    return tag?.text;
   };
 
   return (
@@ -79,6 +104,8 @@ function TagFilter({ filterDto, setFilterDto, className }) {
         groupBy={"type"}
         setDataObject={setFilterDto}
         dataObject={filterDto}
+        valueField={valueField}
+        textField={getTextFieldString}
         selectOptions={tagOptions}
       />
     </div>
@@ -89,7 +116,12 @@ function TagFilter({ filterDto, setFilterDto, className }) {
 TagFilter.propTypes = {
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  valueField: PropTypes.string,
+};
+
+TagFilter.defaultProps = {
+  valueField: "value",
 };
 
 export default TagFilter;

@@ -12,12 +12,13 @@ function GitScraperGitRepositorySelectInput({model, setModel, disabled}) {
     newModel.setData("projectId", repoId);
     newModel.setData("sshUrl", selectedOption?.sshUrl || "");
     newModel.setData("gitUrl", gitUrl);
+    newModel.setData("gitBranch", "");
     setModel({...newModel});
   };
 
   return (
      <RepositorySelectInput
-       fieldName={"repository"}
+       fieldName={"repoId"}
        service={model?.getData("service")}
        gitToolId={model?.getData("gitToolId")}
        workspace={model?.getData("workspace")}

@@ -9,6 +9,7 @@ function EllipsisIcon(
   {
     overlay,
     className,
+    onClickFunction,
     size,
     tooltipText,
   }) {
@@ -21,7 +22,7 @@ function EllipsisIcon(
     setTarget(event.target);
   };
 
-  if (overlay == null) {
+  if (overlay == null && onClickFunction == null) {
     return null;
   }
 
@@ -32,7 +33,7 @@ function EllipsisIcon(
           icon={faEllipsisHAlt}
           className={"pointer"}
           iconSize={size}
-          onClickFunction={handleClick}
+          onClickFunction={onClickFunction ? onClickFunction : handleClick}
         />
       </span>
     </TooltipWrapper>
@@ -42,6 +43,7 @@ function EllipsisIcon(
 EllipsisIcon.propTypes = {
   className: PropTypes.string,
   overlay: PropTypes.any,
+  onClickFunction: PropTypes.func,
   size: PropTypes.string,
   tooltipText: PropTypes.string,
 };

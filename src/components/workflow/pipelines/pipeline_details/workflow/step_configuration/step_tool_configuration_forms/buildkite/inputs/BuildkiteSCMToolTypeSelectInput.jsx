@@ -9,12 +9,14 @@ function BuildkiteSCMToolTypeSelectInput({dataObject, setDataObject, isLoading, 
     await newDataObject.setData(fieldName, selectedOption.value);
     newDataObject.setData("gitToolId", "");
     newDataObject.setData("repoId", "");
+    newDataObject.setData("projectId", "");
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("gitBranch", "");
+    newDataObject.setData("branch", "");
     setDataObject({...newDataObject});
     return;
   };

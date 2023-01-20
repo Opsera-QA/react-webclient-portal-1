@@ -1,94 +1,99 @@
-import React, {useState, useContext, useEffect, useRef} from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import { AuthContext } from "contexts/AuthContext";
 import { Col, Row } from "react-bootstrap";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import DashboardTypeSelectInput
-  from "components/common/list_of_values_input/insights/dashboards/types/DashboardTypeSelectInput";
-import DashboardAccessSelectInput
-  from "components/common/list_of_values_input/insights/dashboards/DashboardAccessSelectInput";
-import DashboardPersonaSelectInput
-  from "components/common/list_of_values_input/insights/dashboards/DashboardPersonaSelectInput";
+import DashboardTypeSelectInput from "components/common/list_of_values_input/insights/dashboards/types/DashboardTypeSelectInput";
+import DashboardPersonaSelectInput from "components/common/list_of_values_input/insights/dashboards/DashboardPersonaSelectInput";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
-import ObjectJsonModal from "components/common/modal/ObjectJsonModal";
-import {dashboardAttributesMetadata} from "components/insights/dashboards/dashboard-metadata";
+import { dashboardAttributesMetadata } from "components/insights/dashboards/dashboard-metadata";
 import TagManager from "components/common/inputs/tags/TagManager";
-import axios from "axios";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) {
-  const { getAccessToken, isSassUser } = useContext(AuthContext);
+function DashboardEditorPanel({
+  dashboardData,
+  setDashboardData,
+  handleClose,
+}) {
   const [dashboardDataDto, setDashboardDataDto] = useState(undefined);
-  const [dashboardAttributesDataDto, setDashboardAttributesDataDto] = useState(new Model({...dashboardAttributesMetadata.newObjectFields}, dashboardAttributesMetadata, false));
+  const [dashboardAttributesDataDto, setDashboardAttributesDataDto] = useState(
+    new Model(
+      { ...dashboardAttributesMetadata.newObjectFields },
+      dashboardAttributesMetadata,
+      false,
+    ),
+  );
   const [isLoading, setIsLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const { getAccessToken, isSaasUser, isMounted, cancelTokenSource } =
+    useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
+    setIsLoading(true);
+    setDashboardDataDto(dashboardData?.clone());
+    setDashboardAttributesDataDto(
+      new Model(
+        dashboardData.getData("attributes"),
+        dashboardAttributesMetadata,
+        false,
+      ),
+    );
+    setIsLoading(false);
   }, []);
 
-  const loadData = async () => {
-    setIsLoading(true);
-    setDashboardDataDto(dashboardData);
-    setDashboardAttributesDataDto(new Model(dashboardData.getData("attributes"), dashboardAttributesMetadata, false));
-    setIsLoading(false);
-  };
-
   const createDashboard = async () => {
-    const attributes = dashboardAttributesDataDto ? dashboardAttributesDataDto.getPersistData() : {};
+    const attributes = dashboardAttributesDataDto
+      ? dashboardAttributesDataDto.getPersistData()
+      : {};
     dashboardDataDto.setData("attributes", attributes);
-    return await dashboardsActions.createDashboardV2(getAccessToken, cancelTokenSource, dashboardDataDto);
+    return await dashboardsActions.createDashboardV2(
+      getAccessToken,
+      cancelTokenSource,
+      dashboardDataDto,
+    );
   };
 
   const updateDashboard = async () => {
-    const attributes = dashboardAttributesDataDto ? dashboardAttributesDataDto.getPersistData() : {};
+    const attributes = dashboardAttributesDataDto
+      ? dashboardAttributesDataDto.getPersistData()
+      : {};
     dashboardDataDto.setData("attributes", attributes);
-    return await dashboardsActions.updateDashboardV2(getAccessToken, cancelTokenSource, dashboardDataDto);
+    return await dashboardsActions.updateDashboardV2(
+      getAccessToken,
+      cancelTokenSource,
+      dashboardDataDto,
+    );
   };
 
   const getActivityToggleInput = () => {
     if (dashboardDataDto?.isNew() === false) {
       return (
         <Col md={6}>
-          <ActivityToggleInput fieldName={"active"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
+          <ActivityToggleInput
+            fieldName={"active"}
+            setDataObject={setDashboardDataDto}
+            dataObject={dashboardDataDto}
+          />
         </Col>
       );
     }
   };
 
   const getRolesInput = () => {
-    if (isSassUser() === false) {
+    if (isSaasUser === false) {
       return (
         <Col md={12}>
-          <div className={"bg-white"} style={{borderRadius: "6px"}}>
+          <div
+            className={"bg-white"}
+            style={{ borderRadius: "6px" }}
+          >
             <div>
               <RoleAccessInput
-                fieldName={"roles"}
-                setDataObject={setDashboardDataDto}
-                dataObject={dashboardDataDto}
-                disabled={dashboardDataDto?.canEditAccessRoles() !== true}
+                setModel={setDashboardDataDto}
+                model={dashboardDataDto}
+                disabled={dashboardData?.canEditAccessRoles() !== true}
               />
             </div>
           </div>
@@ -97,7 +102,11 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
     }
   };
 
-  if (dashboardData == null || dashboardDataDto == null || dashboardData?.canUpdate() !== true) {
+  if (
+    dashboardData == null ||
+    dashboardDataDto == null ||
+    (dashboardData?.isNew() !== true && dashboardData?.canUpdate() !== true)
+  ) {
     return null;
   }
 
@@ -114,28 +123,41 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
       <div className={"px-2"}>
         <Row>
           <Col md={6}>
-            <TextInputBase fieldName={"name"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
+            <TextInputBase
+              fieldName={"name"}
+              setDataObject={setDashboardDataDto}
+              dataObject={dashboardDataDto}
+            />
           </Col>
           <Col md={6}>
-            <DashboardTypeSelectInput dataObject={dashboardDataDto} setDataObject={setDashboardDataDto}/>
+            <DashboardTypeSelectInput
+              dataObject={dashboardDataDto}
+              setDataObject={setDashboardDataDto}
+            />
           </Col>
           <Col md={6}>
-            <DashboardPersonaSelectInput dataObject={dashboardAttributesDataDto} setDataObject={setDashboardAttributesDataDto}/>
+            <DashboardPersonaSelectInput
+              dataObject={dashboardAttributesDataDto}
+              setDataObject={setDashboardAttributesDataDto}
+            />
           </Col>
-          <Col md={6}>
-            <DashboardAccessSelectInput dataObject={dashboardDataDto} setDataObject={setDashboardDataDto} disabled={["public"]}/>
-          </Col>
+          {/*<Col md={6}>*/}
+          {/*  <DashboardAccessSelectInput dataObject={dashboardDataDto} setDataObject={setDashboardDataDto} disabled={["public"]}/>*/}
+          {/*</Col>*/}
           {getRolesInput()}
           <Col md={12}>
-            <TextInputBase fieldName={"description"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
+            <TextInputBase
+              fieldName={"description"}
+              setDataObject={setDashboardDataDto}
+              dataObject={dashboardDataDto}
+            />
           </Col>
-          <Col md={6}>
+          {/* <Col md={6}>
             <TagManager type={"dashboard"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
-          </Col>
+          </Col> */}
           {getActivityToggleInput()}
         </Row>
       </div>
-      <ObjectJsonModal header={`Viewing ${dashboardData.getData("name")} Details`} size="lg" show={showModal} jsonData={dashboardData.data} setParentVisibility={setShowModal}/>
     </EditorPanelContainer>
   );
 }
@@ -143,9 +165,7 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
 DashboardEditorPanel.propTypes = {
   dashboardData: PropTypes.object,
   setDashboardData: PropTypes.func,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
 };
 
 export default DashboardEditorPanel;
-
-

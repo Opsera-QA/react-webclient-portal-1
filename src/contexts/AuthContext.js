@@ -1,42 +1,54 @@
-import React, {createContext, useEffect, useRef, useState} from "react";
+import React, {createContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import {useHistory} from "react-router-dom";
-import commonActions from "components/common/common.actions";
-import axios from "axios";
-import accountsActions from "components/admin/accounts/accounts-actions";
+import {SITE_VIEW_MODES} from "components/header/view_modes/siteViewMode.constants";
+import { THEMES } from "temp-library-components/theme/theme.constants";
+import { lightThemeConstants } from "temp-library-components/theme/light.theme.constants";
+import { darkThemeConstants } from "temp-library-components/theme/dark.theme.constants";
+import ClientWebsocket from "core/websocket/client.websocket";
+import { DATE_FN_TIME_SCALES, handleDateAdditionForTimeScale } from "components/common/helpers/date/date.helpers";
+import MainViewContainer from "components/common/containers/MainViewContainer";
+import useIsMountedStateReference from "hooks/useIsMountedStateReference";
+import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
-const jwt = require("jsonwebtoken");
-const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
+const websocketClient = new ClientWebsocket();
 
-const AuthContextProvider = ({ userData, refreshToken, authClient, children }) => {
+const AuthContextProvider = (
+  {
+    userData,
+    refreshToken,
+    authClient,
+    children,
+    isAuthenticated,
+  }) => {
   const history = useHistory();
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  // const [websocketClient, setWebsocketClient] = useState(new ClientWebsocket());
+  const [userAccessRoles, setUserAccessRoles] = useState(undefined);
+  const [viewMode, setViewMode] = useState(SITE_VIEW_MODES.BUSINESS);
+  const [theme, setTheme] = useState(THEMES.LIGHT);
+  const [backgroundColor, setBackgroundColor] = useState(lightThemeConstants.COLOR_PALETTE.WHITE);
+  const isMounted = useIsMountedStateReference();
+  const [headerNavigationBar, setHeaderNavigationBar] = useState(undefined);
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+    setUserAccessRoles(undefined);
+
+    if (userData) {
+      // websocketClient?.initializeWebsocket(userData);
+      setAccessRoles(userData).then((newUserAccessRoles) => {
+        setUserAccessRoles(newUserAccessRoles);
+      }).catch((error) => {
+        if (isMounted?.current === true) {
+          console.error("Could not set User access roles: " + JSON.stringify(error));
+          setUserAccessRoles({});
+          throw error;
+        }
+      });
     }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-
-      // if (websocketClient) {
-      //   websocketClient.close();
-      // }
-    };
-  }, []);
-
-  // const getWebsocketClient = () => {
-  //   return websocketClient;
-  // };
+    // else {
+    //   websocketClient?.closeWebsocket();
+    // }
+  }, [userData]);
 
   const logoutUserContext = async () => {
     authClient.tokenManager.clear();
@@ -55,7 +67,6 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
   };
 
   const loginUserContext = () => {
-    //window.location = "/login";
     history.push("/login");
   };
 
@@ -107,27 +118,13 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     return userData;
   };
 
-  const getIsPreviewRole = async (restrictProd) => {
-    if (restrictProd && process.env.REACT_APP_ENVIRONMENT === "production") {
-      return false;
-    } else {
-      return userData.groups.includes("Preview");
+  const getFreeTrialUserExpirationDate = () => {
+    if (!userData) {
+      return null;
     }
-  };
 
-  const getFeatureFlags = async () => {
-    const response = await commonActions.getFeatureFlagsV2(getAccessToken, cancelTokenSource);
-    return response?.data?.featureFlags;
-  };
-
-  const isOrganizationOwner = async () => {
-    const user = await getUserRecord();
-
-    if (user) {
-      const response = await accountsActions.getOrganizationOwnerEmailWithNameV2(getAccessToken, cancelTokenSource, user?.ldap?.organization);
-      const organizationOwnerEmail = response?.data?.orgOwnerEmail;
-      return organizationOwnerEmail === user?.email;
-    }
+    const userCreatedAt = userData?.createdAt;
+    return handleDateAdditionForTimeScale(userCreatedAt, DATE_FN_TIME_SCALES.DAYS, 15);
   };
 
   const featureFlagHideItemInProd = () => {
@@ -138,65 +135,24 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     return String(process.env.REACT_APP_ENVIRONMENT) === "test";
   };
 
+  // TODO: Remove and just use the helper function
   const setAccessRoles = async (user) => {
-    if (user) {
-      let customerAccessRules = {};
-      const ldap = user?.ldap;
-      const groups = user?.groups;
-
-      if (Array.isArray(groups)) {
-        let role = "guest";
-
-        if (groups.includes("Administrators")) {
-          role = "administrator";
-        } else if (groups.includes("Free Trial")) {
-          role = "free_trial";
-        } else if (groups.includes("PowerUsers")) {
-          role = "power_user";
-        } else if (groups.includes("Users")) {
-          role = "user";
-        } else if (groups.includes("NonLDAPEndUser") || ldap.type === "sass-user") {
-          //setting Saas Based Access
-          role = "power_user";
-        }
-
-        customerAccessRules = {
-          ...customerAccessRules,
-          OrganizationOwner: ldap?.organizationOwnerEmail === user?.email,
-          OrganizationAccountOwner: ldap?.orgAccountOwnerEmail === user?.email,
-          Administrator: groups.includes("Administrators"),
-          PowerUser: groups.includes("PowerUsers"),
-          SassPowerUser: ldap.type === "sass-user",
-          FreeTrialUser: role === "free_trial",
-          User: groups.includes("Users"),
-          UserId: user._id,
-          Email: user.email,
-          Role: role,
-          Type: ldap ? ldap.type : "sass-user",
-          Groups: groups,
-        };
-
-        if (ldap?.domain === "opsera.io") { //checking for OpsERA account domain
-          customerAccessRules.OpseraAdministrator = groups.includes("Administrators");
-        }
-      }
-
-      //console.table(customerAccessRules);
-      return customerAccessRules;
-    } else {
-      console.info("Unable to set user access rules: " + JSON.stringify(user));
-    }
+    return SiteRoleHelper.getAccessRoles(user);
   };
 
-  const generateJwtServiceTokenWithValue = (object = {}, expirationDuration = "1h") => {
-    return jwt.sign(object, ACCESS_TOKEN_SECRET, {expiresIn: expirationDuration});
+  const getAccessRoleData = () => {
+    return userAccessRoles;
   };
 
-  const getAccessRoleData = async () => {
-    const user = await getUserRecord();
-    return await setAccessRoles(user);
+  const subscribeToTopic = (topic, model) => {
+    websocketClient?.subscribeToTopic(topic, model);
   };
 
+  const unsubscribeFromTopic = (topic, model) => {
+    websocketClient?.unsubscribeFromTopic(topic, model);
+  };
+
+  // TODO: Don't return as function, just return true/false when pulling from auth context
   const isSassUser = () => {
     if (userData == null) {
       return false;
@@ -207,6 +163,15 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     return ldap?.type === "sass-user" || (Array.isArray(groups) && groups?.includes("NonLDAPEndUser"));
   };
 
+  const isPowerUser = () => {
+    return userAccessRoles?.PowerUser === true;
+  };
+
+  const isSiteAdministrator = () => {
+    return userAccessRoles?.Administrator === true;
+  };
+
+  // TODO: Don't return as function, just return true/false when pulling from auth context
   const isOpseraAdministrator = () => {
     if (userData == null) {
       return false;
@@ -217,27 +182,57 @@ const AuthContextProvider = ({ userData, refreshToken, authClient, children }) =
     return ldap?.domain === "opsera.io" && Array.isArray(groups) && groups?.includes("Administrators");
   };
 
+  const getThemeConstants = () => {
+    switch (theme) {
+      case THEMES.LIGHT:
+        return lightThemeConstants;
+      case THEMES.NIGHT:
+        return darkThemeConstants;
+      default:
+        return lightThemeConstants;
+    }
+  };
+
   return (
     <AuthContext.Provider value={{
       logoutUserContext: logoutUserContext,
       loginUserContext: loginUserContext,
       renewUserToken: renewUserToken,
       getAccessToken: getAccessToken,
-      getIsPreviewRole: getIsPreviewRole,
       featureFlagHideItemInProd: featureFlagHideItemInProd,
       featureFlagHideItemInTest: featureFlagHideItemInTest,
       getUserRecord: getUserRecord,
       setAccessRoles: setAccessRoles,
       getIsAuthenticated: getIsAuthenticated,
-      generateJwtServiceTokenWithValue: generateJwtServiceTokenWithValue,
       getAccessRoleData: getAccessRoleData,
+      userAccessRoles: userAccessRoles,
+      isPowerUser: isPowerUser(),
+      isSiteAdministrator: isSiteAdministrator(),
       isSassUser: isSassUser,
-      isOrganizationOwner: isOrganizationOwner,
-      getFeatureFlags: getFeatureFlags,
       isOpseraAdministrator: isOpseraAdministrator,
+      viewMode: viewMode,
+      setViewMode: setViewMode,
+      theme: theme,
+      setTheme: setTheme,
+      themeConstants: getThemeConstants(),
       // getWebsocketClient: getWebSocketClient,
+      websocketClient: websocketClient,
+      subscribeToTopic: subscribeToTopic,
+      unsubscribeFromTopic: unsubscribeFromTopic,
+      userData: userData,
+      userExpiration: getFreeTrialUserExpirationDate(),
+      headerNavigationBar: headerNavigationBar,
+      setHeaderNavigationBar: setHeaderNavigationBar,
+      backgroundColor: backgroundColor,
+      setBackgroundColor: setBackgroundColor,
     }}>
-      {children}
+      <MainViewContainer
+        isAuthenticated={isAuthenticated}
+        backgroundColor={backgroundColor}
+        userData={userData}
+      >
+        {children}
+      </MainViewContainer>
     </AuthContext.Provider>
   );
 };
@@ -247,6 +242,7 @@ AuthContextProvider.propTypes = {
   refreshToken: PropTypes.func,
   authClient: PropTypes.object,
   children: PropTypes.any,
+  isAuthenticated: PropTypes.bool,
 };
 
 export const AuthContext = createContext();

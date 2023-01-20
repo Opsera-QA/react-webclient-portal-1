@@ -4,14 +4,14 @@ import { faChartNetwork } from "@fortawesome/pro-light-svg-icons";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import FilterContainer from "components/common/table/FilterContainer";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
-import FavoritesFilter from "components/common/filters/dashboards/favorites/FavoritesFilter";
 import InlineDashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/InlineDashboardTypeFilter";
 import DashboardsTable from "components/insights/dashboards/views/DashboardsTable";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import NewDashboardModal from "components/insights/dashboards/NewDashboardModal";
-import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
+import CreateNewDashboardOverlay from "components/insights/dashboards/CreateNewDashboardOverlay";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import DashboardVerticalTabContainer from "components/insights/dashboards/views/DashboardVerticalTabContainer";
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import DashboardRoleHelper from "@opsera/know-your-role/roles/analytics/dashboards/dashboardRole.helper";
 
 function DashboardTableView(
   {
@@ -22,7 +22,10 @@ function DashboardTableView(
     isLoading,
     isMounted,
   }) {
-  const toastContext = useContext(DialogToastContext);
+  const {
+    toastContext,
+    userData,
+  } = useComponentStateReference();
 
   const getVerticalTabContainer = () => {
     return (
@@ -40,7 +43,7 @@ function DashboardTableView(
         <OwnerFilter
           filterModel={dashboardFilterModel}
           setFilterModel={setDashboardFilterModel}
-          className={"mt-2"}
+          className={"mb-2"}
         />
       );
     }
@@ -55,17 +58,13 @@ function DashboardTableView(
           setFilterDto={setDashboardFilterModel}
           className={"mb-2"}
         />
-        <FavoritesFilter
-          filterModel={dashboardFilterModel}
-          setFilterModel={setDashboardFilterModel}
-        />
       </>
     );
   };
 
   const createNewDashboard = () => {
     toastContext.showOverlayPanel(
-      <NewDashboardModal
+      <CreateNewDashboardOverlay
         loadData={loadData}
         isMounted={isMounted}
       />
@@ -107,7 +106,7 @@ function DashboardTableView(
   return (
     <FilterContainer
       loadData={loadData}
-      addRecordFunction={createNewDashboard}
+      addRecordFunction={DashboardRoleHelper.canCreateDashboard(userData) ? createNewDashboard : undefined}
       isLoading={isLoading}
       body={getBody()}
       titleIcon={faChartNetwork}

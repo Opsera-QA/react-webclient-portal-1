@@ -12,12 +12,13 @@ function DotNetGitRepositoryInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("repoId", repoId);
     newDataObject.setData("sshUrl", sshUrl);
     newDataObject.setData("gitUrl", gitUrl);
+    newDataObject.setData("gitBranch", "");
     setDataObject({...newDataObject});
   };
 
   return (
      <RepositorySelectInput
-       fieldName={"repository"}
+       fieldName={"repoId"}
        service={dataObject.getData("service")}
        gitToolId={dataObject.getData("gitToolId")}
        workspace={dataObject.getData("workspace")}

@@ -1,30 +1,17 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import TagField from "components/common/fields/multiple_items/tags/TagField";
-import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import NameValueFieldBase from "components/common/fields/multiple_items/NameValueFieldBase";
 import {faBrowser, faBuilding, faClipboardCheck, faIdCard} from "@fortawesome/pro-light-svg-icons";
 import ContactField from "components/common/fields/multiple_items/ContactField";
 import OrganizationsField from "components/common/fields/multiple_items/OrganizationsField";
 
-function ToolAttributesPanel({ toolData, setActiveTab, customerAccessRules }) {
-  useEffect(() => {
-  }, [JSON.stringify(customerAccessRules)]);
-
-  const authorizedAction = (action, dataObject) => {
-    const owner = dataObject.owner;
-    const objectRoles = dataObject.roles;
-    return workflowAuthorizedActions.toolRegistryItems(customerAccessRules, action, owner, objectRoles);
-  };
-
+function ToolAttributesPanel({ toolData, setActiveTab }) {
   return (
     <SummaryPanelContainer
       setActiveTab={setActiveTab}
-      editingAllowed={authorizedAction("edit_tool_settings", toolData?.data)}
+      editingAllowed={toolData?.canUpdate()}
       settingsTab="attribute_settings"
     >
       <Row>
@@ -54,7 +41,6 @@ function ToolAttributesPanel({ toolData, setActiveTab, customerAccessRules }) {
 ToolAttributesPanel.propTypes = {
   toolData: PropTypes.object,
   setActiveTab: PropTypes.func,
-  customerAccessRules: PropTypes.object,
 };
 
 export default ToolAttributesPanel;

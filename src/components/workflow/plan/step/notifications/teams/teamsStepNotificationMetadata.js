@@ -20,12 +20,17 @@ const teamsStepNotificationMetadata = {
       label: "Teams Notifications",
       id: "enabled",
     },
+    {
+      label: "Include last 10 lines of log (limited to 1000 characters)",
+      id: "logEnabled",
+    },
   ],
   newObjectFields: {
     type: "teams",
     event: "all",
     toolId: "",
     enabled: false,
+    logEnabled: false,
   }
 };
 

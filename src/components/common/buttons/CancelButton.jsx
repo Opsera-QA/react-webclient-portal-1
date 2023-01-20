@@ -11,7 +11,12 @@ function CancelButton({
   size,
   className,
   buttonText,
+  disabled,
 }) {
+  if (cancelFunction == null && disabled !== true) {
+    return null;
+  }
+
   return (
     <div className={className}>
       <Button
@@ -24,6 +29,7 @@ function CancelButton({
         <span>
           <IconBase
             icon={faTimes}
+            isLoading={isLoading}
             className="mr-1"
           />
           {buttonText}
@@ -39,6 +45,7 @@ CancelButton.propTypes = {
   isLoading: PropTypes.bool,
   size: PropTypes.string,
   buttonText: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 CancelButton.defaultProps = {

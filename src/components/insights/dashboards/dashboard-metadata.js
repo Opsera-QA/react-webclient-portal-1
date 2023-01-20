@@ -5,7 +5,7 @@ const dashboardMetadata = {
   type: "Dashboard",
   activeField: "active",
   detailView: function (record) {
-    return `/insights/dashboards/${record?.getData("_id")}/viewer`;
+    return `/insights/dashboards/${record?.getMongoDbId()}/viewer`;
   },
   detailViewTitle: function (record) {
     return ` ${capitalizeFirstLetter(record?.getOriginalValue("name"))}`;
@@ -38,6 +38,10 @@ const dashboardMetadata = {
     {
       label: "Organizations",
       id: "organizations",
+    },
+    {
+      label: "Filters",
+      id: "hierarchyFilters",
     },
     {
       label: "Attributes",
@@ -125,11 +129,15 @@ export const dashboardFiltersMetadata = {
   fields: [
     {
       label: "Tags",
-      id: "value"
+      id: "tags"
     },
     {
       label: "Organizations",
       id: "organizations"
+    },
+    {
+      label: "Filters",
+      id: "hierarchyFilters",
     },
     {
       label: "Date",
@@ -137,8 +145,9 @@ export const dashboardFiltersMetadata = {
     }
   ],
   newObjectFields: {
-    value: [],
+    tags: [],
     organizations: [],
+    hierarchyFilters: {},
     date: {
       startDate: null,
       endDate: null,

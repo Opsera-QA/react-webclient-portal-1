@@ -21,7 +21,7 @@ function ToolRepositoriesTab({ toolModel, handleTabClick, activeTab }) {
       handleTabClick={handleTabClick}
       activeTab={activeTab}
       tabText={"Repositories"}
-      accessRestricted={!toolModel.canPerformAction("update_tool_repositories")}
+      accessRestricted={toolModel.canUpdateRegistryToolRepositories() !== true}
     />
   );
 }

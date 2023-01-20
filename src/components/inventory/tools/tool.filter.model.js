@@ -1,6 +1,7 @@
 import FilterModelBase from "core/data_model/filterModel.base";
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
 import sessionHelper from "utils/session.helper";
+import { toolHelper } from "components/inventory/tools/tool.helper";
 
 const toolFilterMetadata = {
   idProperty: "_id",
@@ -71,7 +72,7 @@ const toolFilterMetadata = {
 export class ToolFilterModel extends FilterModelBase {
   constructor() {
     super(toolFilterMetadata);
-    this.sessionDataKey = "tool-filter-model-data";
+    this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.TOOL_FILTER_MODEL_DATA;
     this.enableUrlUpdatesWithQueryParameters();
     this.unpackUrlParameters();
   }
@@ -134,19 +135,19 @@ export class ToolFilterModel extends FilterModelBase {
     return true;
   }
 
-  // TODO: This probably shouldn't be here
   getDetailViewLink = (toolId) => {
-    return `/inventory/tools/details/${toolId}`;
+    return toolHelper.getDetailViewLink(toolId);
   };
 
   getSortOptions = () => {
     return (
       [
-        {text: "Oldest", value: "oldest"},
-        {text: "Newest", value: "newest"},
-        {text: "Tool Name (A-Za-z)", value: "name"},
-        {text: "Tool Name (z-aZ-A)", value: "name-descending"},
-        {text: "Last Updated", value: "last-updated"},
+        {text: "Oldest Tools", value: "oldest"},
+        {text: "Newest Tools", value: "newest"},
+        {text: "Tool Name (A-Z a-z)", value: "name"},
+        {text: "Tool Name (z-a Z-A)", value: "name-descending"},
+        {text: "Updated (Latest)", value: "last-updated"},
+        {text: "Updated (Earliest)", value: "earliest-updated"},
       ]
     );
   };

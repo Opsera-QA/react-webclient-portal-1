@@ -5,10 +5,18 @@ import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import JsonTab from "components/common/tabs/detail_view/JsonTab";
 import PipelineTaskJsonPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskJsonPanel";
 import PipelineTaskSummaryPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskSummaryPanel";
-import ModalTabPanelContainer from "components/common/panels/detail_view/ModalTabPanelContainer";
 import PipelineTaskConsoleLogPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskConsoleLogPanel";
 import ConsoleLogTab from "components/common/tabs/detail_view/ConsoleLogTab";
 import OverlayTabPanelContainer from "components/common/panels/general/OverlayTabPanelContainer";
+import PipelineTaskRunConfigurationSummaryPanel, {
+  RUN_CONFIGURATION_SUMMARY_SUPPORTED_TOOL_IDENTIFIERS
+} from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskRunConfigurationSummaryPanel";
+import CustomTab from "components/common/tabs/CustomTab";
+import {faFile, faShield} from "@fortawesome/pro-light-svg-icons";
+import PipelineTaskAuditLogSummaryPanel, {
+  AUDIT_LOG_SUMMARY_SUPPORTED_TOOL_IDENTIFIERS
+} from "components/workflow/pipelines/activity/PipelineTaskAuditLogSummaryPanel";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function PipelineTaskTabPanel({ pipelineTaskData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -30,10 +38,44 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
     }
   };
 
+  const getIdentifierSpecificTabs = () => {
+    const apiResponseStepIdentifier = pipelineTaskData?.api_response?.stepIdentifier;
+
+    if (
+      RUN_CONFIGURATION_SUMMARY_SUPPORTED_TOOL_IDENTIFIERS.includes(pipelineTaskData?.tool_identifier)
+      || RUN_CONFIGURATION_SUMMARY_SUPPORTED_TOOL_IDENTIFIERS.includes(apiResponseStepIdentifier,
+      )) {
+      return (
+        <CustomTab
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Run Configuration"}
+          tabName={"configuration"}
+          icon={faFile}
+        />
+      );
+    }
+
+    // const auditLogRecordId = DataParsingHelper.parseNestedMongoDbId(pipelineTaskData, "api_response.auditRecordId");
+    //
+    // if (auditLogRecordId) {
+    //   return (
+    //     <CustomTab
+    //       handleTabClick={handleTabClick}
+    //       activeTab={activeTab}
+    //       tabText={"Runtime Settings Audit Log"}
+    //       tabName={"audit"}
+    //       icon={faShield}
+    //     />
+    //   );
+    // }
+  };
+
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        {getIdentifierSpecificTabs()}
         {getActionSpecificTab()}
         <JsonTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>
@@ -45,6 +87,19 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
       case "summary":
         return (
           <PipelineTaskSummaryPanel
+            pipelineTaskData={pipelineTaskData}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case "configuration":
+        return (
+          <PipelineTaskRunConfigurationSummaryPanel
+            pipelineTaskData={pipelineTaskData}
+          />
+        );
+      case "audit":
+        return (
+          <PipelineTaskAuditLogSummaryPanel
             pipelineTaskData={pipelineTaskData}
           />
         );

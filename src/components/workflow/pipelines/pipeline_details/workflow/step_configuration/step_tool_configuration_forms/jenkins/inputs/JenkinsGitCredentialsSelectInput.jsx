@@ -5,7 +5,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 
-const excludeArr = ["SFDC VALIDATE PACKAGE XML", "SFDC UNIT TESTING", "SFDC DEPLOY"];
+const excludeArr = ["SFDC VALIDATE PACKAGE XML", "SFDC UNIT TESTING", "SFDC DEPLOY", "SFDC DATA TRANSFORM"];
 
 // TODO: Make JenkinsToolAccountSelectInput
 function JenkinsGitCredentialsSelectInput({
@@ -38,6 +38,7 @@ function JenkinsGitCredentialsSelectInput({
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");
+    newDataObject.setData("repoId", "");
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("branch", "");
@@ -57,6 +58,7 @@ function JenkinsGitCredentialsSelectInput({
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");
+    newDataObject.setData("repoId", "");
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("branch", "");
@@ -113,6 +115,7 @@ function JenkinsGitCredentialsSelectInput({
         selectOptions={accountsList}
         valueField={"gitCredential"}
         textField={"gitCredential"}
+        helpTooltipText={"Account must be configured in the Accounts tab of the selected Jenkins tool."}
         clearDataFunction={clearDataFunction}
         disabled={disabled || accountsList.length===0}
       />

@@ -1,6 +1,6 @@
 :root {
     --height: calc(100% + 100px);
-    --font-family-sans-serif: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-family-sans-serif: 'Inter', "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
@@ -11,27 +11,28 @@
 /* Site Typography
 primary analytics font*/
 .font-inter-light-100 {
-    font-family: 'Inter', sans-serif;
     font-weight: 100;
 }
 
 .font-inter-light-300 {
-    font-family: 'Inter', sans-serif;
     font-weight: 300;
 }
 
 .font-inter-light-400 {
-    font-family: 'Inter', sans-serif;
     font-weight: 400;
 }
 
-.analytics-font {
-    font-family: 'Inter', sans-serif;
+.font-inter-light-500 {
+    font-weight: 500;
 }
 
-.font-inter-light-500 {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
+.bold {
+    font-weight: bold;
+}
+
+.connected-assets-modal-body {
+    min-height: 10rem;
+    overflow: scroll;
 }
 
 .metric-sub-header-text-spacing {
@@ -55,7 +56,6 @@ primary analytics font*/
 }
 
 .chart-header-name-text {
-    font-family: 'Inter', sans-serif;
     font-weight: 100;
     text-transform: capitalize;
     /*color: #8798ad;*/
@@ -63,27 +63,10 @@ primary analytics font*/
 }
 
 .chart-footer-text, .metric-subheader-text {
-    font-family: 'Inter', sans-serif;
     font-weight: 100;
     font-size: small;
     text-transform: capitalize;
     color: #8798ad;
-}
-
-/*primary product font*/
-.font-lato-100 {
-    font-family: 'Lato', sans-serif;
-    font-weight: 100;
-}
-
-.font-lato-300 {
-    font-family: 'Lato', sans-serif;
-    font-weight: 300;
-}
-
-.font-lato-400 {
-    font-family: 'Lato', sans-serif;
-    font-weight: 400;
 }
 
 .failure-text {
@@ -145,6 +128,16 @@ primary analytics font*/
 
 .opsera-secondary {
     color: #46415C;
+}
+
+.selected-row {
+    color: #46415C !important;
+    font-weight: bold;
+    background: #e4e4e4 !important;
+}
+
+.selected-row > td:first-child::before {
+    border-left: 5px solid #46415C;
 }
 
 .opsera-banner-text-on-purple-background {
@@ -227,6 +220,7 @@ primary analytics font*/
 
 .small-label-text {
     font-size:.8rem;
+    padding: .5rem .5rem;
 }
 
 .pointer {
@@ -246,8 +240,6 @@ primary analytics font*/
 }
 
 html {
-    font-family: sans-serif;
-    line-height: 1.15;
     margin: 0;
 }
 
@@ -255,15 +247,12 @@ body {
     background-color: #fff;
     color: #334152;
     margin: 0;
-    font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-size: 0.9rem;
     font-weight: 400;
-    line-height: 1.5;
     min-height: 100vh;
 }
 
 .main-text, .vanity-table {
-    font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     font-size: 0.9rem;
     font-weight: 400;
     line-height: 1.5;
@@ -281,7 +270,7 @@ a:hover, .active, .link-text:hover {
 
 .title-text-header-1 {
     font-size: 1.25rem;
-    letter-spacing: .8px;
+    letter-spacing: .05rem;
 }
 
 .title-text-header-2 {
@@ -368,7 +357,6 @@ a:hover, .active, .link-text:hover {
 
 .border-bottom {
     border-width: 2px;
-    border-bottom-width: 2px;
     border-bottom-color: #343a40;
     border-bottom-style: solid;
 }
@@ -727,19 +715,32 @@ a:hover, .active, .link-text:hover {
 }
 
 .error-text {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-    color: #dc3545;
     padding: 5px;
+}
+
+.error-text, .error-text-alt, .error-text-alt .form-control:focus {
+    color: #dc3545;
+}
+
+.error-text-alt .form-control:focus {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0.3rem 0 0 rgba(220, 53, 69, .5) !important;
 }
 
 .info-text {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-    color: #3D3B36;
     padding: 5px;
 }
 
+.info-text-alt, .info-text {
+    color: #3D3B36;
+}
+
+.details-title-text {
+    color: #3D3B36;
+    padding: 0.5rem;
+}
+
 .success-text {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     color: green;
     padding: 5px;
 }
@@ -753,37 +754,41 @@ a:hover, .active, .link-text:hover {
 }
 
 .warning-text {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     color: #CF940C;
     padding: 5px;
 }
 
+.warning-text-alt, .warning-text-alt .form-control:focus {
+    color: #CF940C;
+}
+
+.warning-text-alt .form-control:focus {
+    border-color: #CF940C !important;
+    box-shadow: 0 0.3rem 0 0 rgba(207, 148, 12, .5) !important;
+}
+
+
 .success-block {
     background-color: green;
     color: #fff;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .error-block {
     background-color: #dc3545;
     color: #fff;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .info-block {
     background-color: #1989F9;
     color: #fff;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .warning-block {
     background-color: #CF940C;
     color: #FFF;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 .text-block {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     padding: 5px;
     margin: 3px;
 }
@@ -837,7 +842,6 @@ a:hover, .active, .link-text:hover {
 
 .pipeline-summary-dialog-block {
     background-color: #FFF;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     padding: 10px;
     margin: 10px 0 5px 0;
     z-index: 3000;
@@ -987,6 +991,7 @@ a:hover, .active, .link-text:hover {
     transform-origin: top;
 }
 
+.underline-text,
 .dropdown-data-fetch:hover {
     text-decoration: underline;
 }
@@ -998,6 +1003,10 @@ a:hover, .active, .link-text:hover {
 
 .stepForm-data-display {
     background-color: #FFF;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     z-index: 3000;
+}
+
+/*Tooltip z-index fix for overlays*/
+.bs-tooltip-top {
+    z-index: 10000;
 }

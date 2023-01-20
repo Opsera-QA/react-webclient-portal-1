@@ -6,12 +6,17 @@ import "@fortawesome/fontawesome-pro/css/all.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@opsera/dhx-suite-package/codebase/suite.css";
 import "react-widgets/styles.css";
+import "css/general/navbar.css";
 import "css/general/theme.css";
 import "css/general/field.css";
 import "css/general/container.css";
 import "css/general/index.css";
+import "css/general/freetrial.css";
 import "css/analytics/analytics.css";
 import "css/pipelines/workflows.css";
+import "css/general/sidebar.css";
+import "css/table/table.css";
+import "css/inputs/rich-text-input.css";
 import * as serviceWorker from "./serviceWorker";
 
 if (typeof window["TextEncoder"] !== "function") {
@@ -33,6 +38,11 @@ const browserNotSupported = (function (agent) {
   default: return false;
   }
 })(window.navigator.userAgent.toLowerCase());
+
+if (window.location.hostname.toLowerCase() === "freetrial.opsera.io") {
+  console.log("Directing user to proper URL for Free Trial App");
+  window.location.replace("https://portal.freetrial.opsera.io");
+}
 
 if (browserNotSupported) {
   let uiMessage = "<div style='margin:25px; top: 150px; position: absolute;'>This portal is designed to use the latest, \

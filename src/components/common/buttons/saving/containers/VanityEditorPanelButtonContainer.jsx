@@ -3,17 +3,29 @@ import PropTypes from "prop-types";
 import CloseEditorButton from "components/common/buttons/cancel/CloseEditorButton";
 import VanityCreateButton from "components/common/buttons/saving/VanityCreateButton";
 import VanitySaveButtonBase from "components/common/buttons/saving/VanitySaveButtonBase";
-import DeleteModelButtonWithConfirmation from "components/common/buttons/delete/DeleteModelButtonWithConfirmationModal";
+import DeleteModelButtonWithConfirmationOverlay from "components/common/buttons/delete/DeleteModelButtonWithConfirmationOverlay";
 import Row from "react-bootstrap/Row";
 
-function VanityEditorPanelButtonContainer({ model, setModel, handleClose, disable, extraButtons }) {
+function VanityEditorPanelButtonContainer(
+  {
+    model,
+    setModel,
+    handleClose,
+    showDeleteButton,
+    disable,
+    extraButtons,
+    viewDetailsUponCreate,
+  }) {
   const getDeleteButton = () => {
-    return (
-      <DeleteModelButtonWithConfirmation
-        model={model}
-        afterDeleteFunction={handleClose}
-      />
-    );
+    if (showDeleteButton !== false) {
+      return (
+        <DeleteModelButtonWithConfirmationOverlay
+          model={model}
+          setModel={setModel}
+          afterDeleteFunction={handleClose}
+        />
+      );
+    }
   };
 
   const getSaveButton = () => {
@@ -24,6 +36,7 @@ function VanityEditorPanelButtonContainer({ model, setModel, handleClose, disabl
           model={model}
           setModel={setModel}
           disable={disable}
+          viewDetailsUponCreate={viewDetailsUponCreate}
         />
       );
     }
@@ -67,7 +80,9 @@ VanityEditorPanelButtonContainer.propTypes = {
   setModel: PropTypes.func,
   handleClose: PropTypes.func,
   disable: PropTypes.bool,
-  extraButtons: PropTypes.any
+  extraButtons: PropTypes.any,
+  showDeleteButton: PropTypes.bool,
+  viewDetailsUponCreate: PropTypes.bool,
 };
 
 export default VanityEditorPanelButtonContainer;

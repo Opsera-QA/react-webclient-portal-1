@@ -1,5 +1,6 @@
-import {validateData, validateField, validatePotentialValue} from "core/data_model/modelValidation";
-import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import { modelValidation, validateData, validateField, validatePotentialValue } from "core/data_model/modelValidation";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export const DataState = {
   LOADED: 0,
@@ -15,14 +16,23 @@ export const temporaryObjectProperties = [
   "__v"
 ];
 
-export class ModelBase {
-  constructor(data, metaData, newModel, setStateFunction) {
-    this.metaData = dataParsingHelper.cloneDeep({...metaData});
+// TODO: Investigate making this a hook
+export default class ModelBase {
+  constructor(
+    data,
+    metaData,
+    newModel,
+    setStateFunction,
+    loadDataFunction,
+  ) {
+    this.metaData = DataParsingHelper.cloneDeep({...metaData});
     this.data = {...this.getNewObjectFields(), ...data};
+    this.originalData = DataParsingHelper.cloneDeep(this.data);
     this.newModel = newModel;
     this.id = data?._id;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
     this.setStateFunction = setStateFunction;
+    this.loadDataFunction = loadDataFunction;
     this.changeMap = new Map();
     this.initializeObjectProperties({...metaData});
     this.isLoading = false;
@@ -30,8 +40,10 @@ export class ModelBase {
     this.deleteAllowed = false;
     this.editAccessRolesAllowed = false;
     this.roleDefinitions = {};
+    this.userData = undefined;
   }
 
+  // TODO: This causes numerous problems and should be removed asap
   initializeObjectProperties = (metaData) => {
     const fields = metaData?.fields;
     if (Array.isArray(fields)) {
@@ -52,37 +64,24 @@ export class ModelBase {
     }
   };
 
-  /**
-   * Retrieve nested item from object/array
-   * @param {String} fieldName dot separated
-   * @returns {*}
-   */
-  getNestedData = (fieldName) => {
-    let index;
-    const fieldNameArray = fieldName.split('.');
-    const length = fieldNameArray.length;
-    let nestedObject = {...this.data};
-
-    for (index = 0; index < length; index++) {
-      if(nestedObject == null) {
-        return null;
-      }
-
-    let nextFieldName = fieldNameArray[index];
-      nestedObject = nestedObject[nextFieldName];
-    }
-
-    return nestedObject !== undefined ? nestedObject : null;
-  };
-
-
   getData = (fieldName) => {
-    if (fieldName == null) {
+    if (hasStringValue(fieldName) !== true) {
       console.error("No field name was given, so returning null");
       return null;
     }
 
-    return fieldName && fieldName.includes('.') ? this.getNestedData(fieldName) : this.data[fieldName];
+    return DataParsingHelper.safeObjectPropertyParser(this.data, fieldName);
+  };
+
+  removeArrayItem = (fieldName, index) => {
+    const array = DataParsingHelper.parseArray(this.getData(fieldName));
+
+    if (!array || array.length <= index) {
+      return;
+    }
+
+    array.splice(index, 1);
+    this.setData(fieldName, array);
   };
 
   setData = (fieldName, newValue, addToChangeMap = true, refreshState = false) => {
@@ -92,14 +91,14 @@ export class ModelBase {
       this.propertyChange(fieldName, newValue, oldValue);
     }
 
-    this.data[fieldName] = newValue;
+    this.data = DataParsingHelper.safeObjectPropertySetter(this.data, fieldName, newValue);
     this.updateState();
   };
 
   setDefaultValue = (fieldName) => {
     const defaultValue = this.metaData?.newObjectFields?.[fieldName];
     this.propertyChange(fieldName, defaultValue, this.getData(fieldName));
-    this.data[fieldName] = defaultValue;
+    this.setData(fieldName, defaultValue);
   };
 
   createModel = async () => {
@@ -114,13 +113,19 @@ export class ModelBase {
     console.error("No deleteModel function was wired up");
   };
 
+  reloadData = async () => {
+    if (this.loadDataFunction) {
+      this.loadDataFunction();
+    }
+  };
+
   getDetailViewLink = () => {
     // console.error("No getDetailViewLink function was wired up");
     return null;
   };
 
   getDetailViewTitle = () => {
-    console.error("No getDetailViewTitle function was wired up");
+    return null;
   };
 
   getManagementScreenLink = () => {
@@ -149,6 +154,15 @@ export class ModelBase {
 
   setMetaDataFields = (newMetaDataFields) => {
     this.metaData.fields = newMetaDataFields;
+  };
+
+  getStringData = (fieldName) => {
+    if (hasStringValue(fieldName) !== true) {
+      console.error("No field name was given, so returning null");
+      return null;
+    }
+
+    return DataParsingHelper.parseNestedString(this.data, fieldName, "");
   };
 
   setTextData = (fieldName, newValue) => {
@@ -240,6 +254,10 @@ export class ModelBase {
     return errors != null ? errors[0] : "";
   };
 
+  getFieldWarning = (fieldName) => {
+    return modelValidation.getFieldWarning(fieldName, this);
+  };
+
   propertyChange = (id, newValue, oldValue) => {
     let newChangeMap = new Map(this.changeMap);
     if (!newChangeMap.has(id)) {
@@ -273,6 +291,14 @@ export class ModelBase {
   getPersistData = () => {
     this.removeTemporaryObjectProperties();
     return this.trimStrings();
+  };
+
+  getOriginalData = () => {
+    return this.originalData;
+  };
+
+  getCurrentData = () => {
+    return this.data;
   };
 
   trimStrings = () => {
@@ -330,10 +356,12 @@ export class ModelBase {
   };
 
   resetData = () => {
-    this.changeMap.forEach((value, key) => {
-      this.data[key] = value;
-    });
+    this.data = DataParsingHelper.cloneDeep(this.originalData);
     this.clearChangeMap();
+  };
+
+  replaceData = (newData) => {
+    this.data = DataParsingHelper.parseObject(newData, {});
   };
 
   updateState = () => {
@@ -398,9 +426,13 @@ export class ModelBase {
     return field?.uppercase === true;
   };
 
-  isWebsite = (fieldName) => {
+  getOwnerId = () => {
+    return this.getData("owner");
+  };
+
+  isUrlField = (fieldName) => {
     const field = this.getFieldById(fieldName);
-    return field != null ? field.isWebsite === true : false;
+    return field != null ? field.isUrl === true : false;
   };
 
   getInputMaskRegex = (fieldName) => {
@@ -437,11 +469,6 @@ export class ModelBase {
   getMaxItems = (fieldName) => {
     const field = this.getFieldById(fieldName);
     return field?.maxItems;
-  };
-
-  getId = (fieldName) => {
-    const field = this.getFieldById(fieldName);
-    return field?.id;
   };
 
   getMongoDbId = () => {
@@ -486,15 +513,19 @@ export class ModelBase {
 
   // TODO: Should we make view definitions?
   getNewObjectFields = () => {
-    return this?.metaData?.newObjectFields != null ? this.metaData.newObjectFields : {};
+    const newObjectFields = DataParsingHelper.parseObject(this.metaData?.newObjectFields, {});
+    return {...DataParsingHelper.cloneDeep(newObjectFields)};
   };
 
   clone = () => {
-    return dataParsingHelper.cloneDeep(this);
+    return DataParsingHelper.cloneDeep(this);
   };
 
-  getNewInstance = (newData = this.getNewObjectFields(), isNew = this.newModel) => {
-    return new ModelBase({...newData}, this.metaData, isNew);
+  getNewInstance = (newData = this.getNewObjectFields()) => {
+    const parsedData = DataParsingHelper.parseObject(newData, this.getNewObjectFields());
+    const newInstance = this;
+    newInstance.data = { ...parsedData };
+    return newInstance;
   };
 
   canUpdate = () => {
@@ -505,16 +536,11 @@ export class ModelBase {
     return this.deleteAllowed === true;
   };
 
-  // TODO: Implement
-  // isOwner = () => {
-  //
-  // };
-
   canEditAccessRoles = () => {
-    return this.canUpdate() === true && this.editAccessRolesAllowed === true;
+    return this.canUpdate() === true;
   };
 
-  canPerformAction = () => {
+  canTransferOwnership = () => {
     return false;
   };
 
@@ -522,7 +548,5 @@ export class ModelBase {
     throw "This action is not supported yet";
   };
 }
-
-export default ModelBase;
 
 

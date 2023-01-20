@@ -9,6 +9,9 @@ import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import {
+  SALESFORCE_WIZARD_CONFIGURATION_CONTAINER_HEIGHTS
+} from "../../../../tasks/details/tasks/merge_sync_task/wizard/screens/configuration_screen/SalesforceWizardConfigurationContainer.heights";
 
 const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -69,8 +72,8 @@ const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel })
   };
 
   const getSelectedOptions = () => {
-    let selectedArray = [];
-    let selectedOptions = pipelineWizardModel.getData("selectedComponentTypes");
+    const selectedArray = [];
+    const selectedOptions = pipelineWizardModel.getArrayData("selectedComponentTypes");
 
     if (Array.isArray(selectedOptions) && selectedOptions.length > 0) {
       selectedOptions.forEach((selectedOptionName) => {
@@ -107,9 +110,8 @@ const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel })
 
   // TODO: This is a workaround for the refresh issue.
   const handleRemoveFromSelected = (fieldName, valueArray) => {
-    let newModel = pipelineWizardModel;
     pipelineWizardModel.setData(fieldName, valueArray);
-    setPipelineWizardModel({...newModel});
+    setPipelineWizardModel({...pipelineWizardModel});
     setComponentTypes([...componentTypes]);
   };
 
@@ -119,7 +121,7 @@ const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel })
 
   // TODO: Should I make this generic for reuse?
   return (
-    <Row>
+    <Row style={{height: SALESFORCE_WIZARD_CONFIGURATION_CONTAINER_HEIGHTS.COMPONENT_TYPE_LIST}}>
       <Col lg={6}>
         <ListInputBase
           fieldName={"selectedComponentTypes"}
@@ -136,6 +138,7 @@ const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel })
           disabled={isLoading}
           customTemplate={customTemplate}
           noDataMessage={"No Component Types Found"}
+          height={SALESFORCE_WIZARD_CONFIGURATION_CONTAINER_HEIGHTS.COMPONENT_TYPE_LIST_CONTAINER_HEIGHT}
         />
       </Col>
       <Col lg={6}>
@@ -155,6 +158,7 @@ const SfdcComponentListInput = ({ pipelineWizardModel, setPipelineWizardModel })
           icon={faSalesforce}
           disabled={isLoading || getSelectedOptions().length === 0}
           customTemplate={customTemplate}
+          height={SALESFORCE_WIZARD_CONFIGURATION_CONTAINER_HEIGHTS.COMPONENT_TYPE_LIST_CONTAINER_HEIGHT}
         />
       </Col>
     </Row>

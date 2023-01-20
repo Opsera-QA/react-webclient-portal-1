@@ -48,7 +48,7 @@ function SnaplogicProjectSelectInput({ model, setModel, disabled, toolConfigId, 
     } catch (error) {
       if (isMounted?.current === true) {
         setPlaceholderText("Could not pull Snaplogic Projects");
-        setErrorMessage(`An Error Occurred Pulling Snaplogic Projects: ${error}`);
+        setErrorMessage(error);
         console.error(error);
       }
     } finally {
@@ -88,6 +88,7 @@ function SnaplogicProjectSelectInput({ model, setModel, disabled, toolConfigId, 
       selectOptions={projectsList}
       textField={"name"}
       valueField={"name"}
+      error={errorMessage}
       busy={isLoading}
       disabled={disabled || !toolConfigId || !projectSpace}
     />

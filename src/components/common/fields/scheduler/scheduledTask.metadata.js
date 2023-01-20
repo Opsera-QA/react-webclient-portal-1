@@ -56,6 +56,31 @@ export const scheduledTaskMetadata = {
     {
       label: "Last Run",
       id: "lastRun"
+    },
+
+    {
+      label: "S3 Tool",
+      id: "s3ToolId"      
+    },
+    {
+      label: "Backup Interval",
+      id: "task.pushToS3Interval"
+    },
+    {
+      label: "File Name",
+      id: "task.s3FileName"
+    },
+    {
+      label: "Path",
+      id: "task.pushToS3Path"
+    },
+    {
+      label: "Region",
+      id: "task.region"
+    },
+    {
+      label: "AWS Bucket Name",
+      id: "task.awsBucketName"
     }
   ],
   newObjectFields: {

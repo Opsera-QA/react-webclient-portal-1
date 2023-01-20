@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const kafkaConnectStepFormMetadata = {
   type: "Kafka Connect Tool Configuration",
   fields: [
@@ -11,12 +13,14 @@ const kafkaConnectStepFormMetadata = {
       id: "gitToolId",
     },
     {
-      label: "Repository ID",
+      label: "Repository",
       id: "repoId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       label: "Project ID",
       id: "projectId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       label: "SCM Service Type",
@@ -33,6 +37,7 @@ const kafkaConnectStepFormMetadata = {
     {
       label: "Repository",
       id: "repository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
     },
     {
       label: "Workspace",
@@ -45,6 +50,7 @@ const kafkaConnectStepFormMetadata = {
     {
       label: "Branch",
       id: "defaultBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
     },
     {
       label: "Connector File Name",

@@ -1,4 +1,5 @@
 import {SONAR_JOB_TYPES} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepJobTypeSelectInput";
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
 
 const sonarPipelineStepMetadata = {
   type: "Sonar Pipeline Step Configuration",
@@ -95,6 +96,7 @@ const sonarPipelineStepMetadata = {
     {
       label: "Repository",
       id: "repository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
       isRequiredFunction: (model) => {
         return (
           model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB
@@ -103,8 +105,20 @@ const sonarPipelineStepMetadata = {
       },
     },
     {
+      label: "Repository",
+      id: "repoId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
+      isRequiredFunction: (model) => {
+        return (
+            model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB
+            && model?.getData("isScanArtifact") !== true
+        );
+      },
+    },
+    {
       label: "Branch",
       id: "branch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequiredFunction: (model) => {
         return (
           model?.getData("job_type") === SONAR_JOB_TYPES.OPSERA_MANAGED_JOB
@@ -138,6 +152,18 @@ const sonarPipelineStepMetadata = {
     {
       label: "Commands",
       id: "commands"
+    },
+    {
+      label: "Enable Client Side thresholds",
+      id: "clientSideThreshold"
+    },
+    {
+      label: "Compliance Threshold",
+      id: "thresholdCompliance",
+    },
+    {
+      label: "Rating Threshold",
+      id: "thresholdRating",
     },
   ],
   newObjectFields: {
@@ -179,6 +205,9 @@ const sonarPipelineStepMetadata = {
     isScanArtifact: false,
     stepIdXml: "",
     commands: "",
+    clientSideThreshold: false,
+    thresholdCompliance: [],
+    thresholdRating: [],
   }
 };
 

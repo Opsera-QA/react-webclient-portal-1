@@ -34,7 +34,7 @@ function AutomatedTestResultsConfigPanel({ analyticsDataEntryModel, kpiConfigura
         <ManualKpiMultiSelectInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"application"} type={"application"} />
       </Col>
       <Col lg={12}>
-        <DateTimeRangeInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fromFieldName={"from"} toFieldName={"to"} />
+        <DateTimeRangeInputBase model={kpiConfigurationData} setModel={setKpiConfigurationData} fromFieldName={"from"} toFieldName={"to"} />
       </Col>
       <Col lg={6}>
         <PipelineSelectInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"pipeline_id"} />

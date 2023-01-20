@@ -20,7 +20,7 @@ const gitscraperTaskConfigurationMetadata = {
     {
       label: "Maximum Allows Secrets Threshold",
       id: "threshold",
-      regexDefinitionName: "numbersOnly"
+      regexDefinitionName: "numbersOnly",
     },
     {
       label: "Permitted Secret Keys",
@@ -29,6 +29,18 @@ const gitscraperTaskConfigurationMetadata = {
     {
       label: "Exclude Certain Secrets from Scan",
       id: "secretsException",
+    },
+    {
+      label: "Scan all Repositories",
+      id: "scanAll",
+    },
+    {
+      label: "Scan only selected branch",
+      id: "scanOnlyBranch",
+    },
+    {
+      label: "Branch to be Scanned",
+      id: "gitBranch",
     },
     {
       label: "Source Code Management Tool Type",
@@ -57,18 +69,21 @@ const gitscraperTaskConfigurationMetadata = {
   ],
   newObjectFields:
     {
-      repositories:[],
-      reposToScan:[],
-      type:"git_custodian",
-      commits:"",
-      threshold:0,
-      excludeSecrets:[],
-      secretsException:false,
+      repositories: [],
+      reposToScan: [],
+      type: "git_custodian",
+      commits: "",
+      threshold: 0,
+      excludeSecrets: [],
+      secretsException: false,
+      scanAll: false,
+      scanOnlyBranch: false,
+      gitBranch: "",
       service: "",
       gitToolId: "",
       workspace: "",
-      bitbucketWorkspaceName: ""
-    }
+      bitbucketWorkspaceName: "",
+    },
 };
 
 export default gitscraperTaskConfigurationMetadata;

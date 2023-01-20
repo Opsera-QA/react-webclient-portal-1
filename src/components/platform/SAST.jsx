@@ -63,7 +63,6 @@ function SAST(props) {
             onClick={() => selectCard("SonarQube")}
           >
             <input type="checkbox"
-              inline
               disabled={tools.includes("SonarQube") ? true : false}
               checked={isChecked.SonarQube && data["SonarQube"]}
               className="newApp__checkbox"

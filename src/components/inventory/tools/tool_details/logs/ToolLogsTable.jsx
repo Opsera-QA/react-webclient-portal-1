@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import {
   getTableDateTimeColumn,
   getTableTextColumn,
-  getOwnerNameField
+  getOwnerNameField,
+  getColumnHeader,
+  getColumnId,
 } from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import toolLogsMetadata from "components/inventory/tools/tool_details/tool-logs-metadata";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
-import {getColumnHeader, getColumnId} from "components/common/table/table-column-helpers-v2";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import VanityTable from "components/common/table/VanityTable";
 import {DialogToastContext} from "contexts/DialogToastContext";

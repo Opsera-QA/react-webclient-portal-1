@@ -4,7 +4,8 @@ const nexusConnectionMetadata = {
   {
     label: "Nexus Container URL",
     id: "toolURL",
-    isRequired: true
+    isRequired: true,
+    isSecureUrl: true,
   },
     {
       label: "Nexus User ID",

@@ -20,6 +20,8 @@ import emailStepNotificationMetadata
 import { ORCHESTRATION_NOTIFICATION_TYPES } from "components/common/fields/notifications/notificationTypes.constants";
 import TaskNotificationConfigurationHelpDocumentation
   from "../../../../common/help/documentation/tasks/TaskNotificationConfigurationHelpDocumentation";
+import { getTaskTypeLabel } from "components/tasks/task.types";
+import gChatStepNotificationMetadata from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
 
 function TaskNotificationEditorPanel(
   {
@@ -34,6 +36,7 @@ function TaskNotificationEditorPanel(
   const [slackNotificationModel, setSlackNotificationModel] = useState(undefined);
   const [emailNotificationModel, setEmailNotificationModel] = useState(undefined);
   const [serviceNowNotificationModel, setServiceNowNotificationModel] = useState(undefined);
+  const [gChatNotificationModel, setGChatNotificationModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -90,6 +93,9 @@ function TaskNotificationEditorPanel(
 
     // const serviceNowNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW);
     // setServiceNowNotificationModel(modelHelpers.parseObjectIntoModel(serviceNowNotification, serviceNowStepNotificationMetadata));
+
+    const gChatNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.GCHAT);
+    setGChatNotificationModel(modelHelpers.parseObjectIntoModel(gChatNotification, gChatStepNotificationMetadata));
   };
 
   const updateStepNotificationConfiguration = async () => {
@@ -99,7 +105,8 @@ function TaskNotificationEditorPanel(
         slackNotificationModel.getPersistData(),
         // jiraNotificationModel.getPersistData(),
         teamsNotificationModel.getPersistData(),
-        // serviceNowNotificationModel.getPersistData()
+        // serviceNowNotificationModel.getPersistData(),
+        gChatNotificationModel.getPersistData()
       ];
       await taskActions.updateTaskNotificationConfiguration(
         getAccessToken,
@@ -137,16 +144,21 @@ function TaskNotificationEditorPanel(
     //   return false;
     // }
 
+    if (gChatNotificationModel.getData("enabled") === true && !gChatNotificationModel.isModelValid()) {
+      toastContext.showInlineErrorMessage("Error: Cannot enable GChat notification without tool selected.");
+      return false;
+    }
+
     return true;
   };
 
   const getTitleBar = () => {
-    const toolIdentifier = task?.tool?.tool_identifier;
-    const titleText = hasStringValue(task?.name) === true ? `${task?.name}: ${toolIdentifier}` : toolIdentifier;
+    const taskType = getTaskTypeLabel(task?.type);
+    const titleText = hasStringValue(task?.name) === true ? `${task?.name}: ${taskType}` : taskType;
     return (
       <div>
         <h6 className="upper-case-first">{titleText}</h6>
-        <div className="text-muted mt-2 mb-3">Each step in the workflow can be configured with notifications that trigger upon
+        <div className="text-muted mt-2 mb-3">Each Task can be configured with notifications that trigger upon
           completion, failure, or all scenarios.
         </div>
       </div>
@@ -182,6 +194,8 @@ function TaskNotificationEditorPanel(
         setServiceNowNotificationModel={setJiraNotificationModel}
         emailNotificationModel={emailNotificationModel}
         setEmailNotificationModel={setEmailNotificationModel}
+        gChatNotificationModel={gChatNotificationModel}
+        setGChatNotificationModel={setGChatNotificationModel}
       />
       <SaveButtonContainer>
         <StandaloneSaveButton

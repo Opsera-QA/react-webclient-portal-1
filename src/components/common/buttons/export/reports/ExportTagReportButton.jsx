@@ -1,17 +1,25 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
-import Button from "react-bootstrap/Button";
-import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import ExportReportsDataModal from "components/common/modal/export_data/ExportReportsDataModal";
-import IconBase from "components/common/icons/IconBase";
+import ExportReportsDataOverlay from "components/reports/export/ExportReportsDataOverlay";
+import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
+import ExportDataButtonBase from "../../../modal/export_data/ExportDataButtonBase";
 
 function ExportTagReportButton({isLoading, tagData, className}) {
   const [showExportModal, setShowExportModal] = useState(false);
 
-  const closeModal = () => {
-    setShowExportModal(false);
+  const toastContext = useContext(DialogToastContext);
+
+  const launchOverlayFunction = () => {
+    toastContext.showOverlayPanel(
+        <ExportReportsDataOverlay
+            showModal={showExportModal}
+            setParentVisibility={setShowExportModal}
+            isLoading={isLoading}
+            formattedData={formatTagData()}
+            rawData={rawDataResults()}
+        />
+    );
   };
 
   const rawDataResults = () =>{
@@ -28,27 +36,11 @@ function ExportTagReportButton({isLoading, tagData, className}) {
 
   // TODO: Refine when more is complete
   return (
-    <>
-      <TooltipWrapper innerText={"Export"}>
-        <div className={className}>
-          <Button
-            variant={"outline-primary"}
-            size={"sm"}
-            disabled={isLoading}
-            onClick={() => setShowExportModal(true)}>
-            <span><IconBase icon={faFileDownload}/></span>
-          </Button>
-        </div>
-      </TooltipWrapper>
-      <ExportReportsDataModal
-        showModal={showExportModal}
-        closeModal={closeModal}
-        setParentVisibility={setShowExportModal}
-        isLoading={isLoading}
-        formattedData={formatTagData()}
-        rawData={rawDataResults()}
-       />
-    </>
+      <ExportDataButtonBase
+          isLoading={isLoading}
+          className={className}
+          launchOverlayFunction={launchOverlayFunction}
+      />
   );
 }
 

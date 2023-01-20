@@ -1,51 +1,48 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {faStop} from "@fortawesome/pro-light-svg-icons";
-import {useHistory} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
-import {AuthContext} from "contexts/AuthContext";
-import axios from "axios";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import taskActions from "components/tasks/task.actions";
 import {TASK_TYPES} from "components/tasks/task.types";
 import ViewTaskLiveLogsButton from "components/tasks/buttons/ViewTaskLiveLogsButton";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_GIT_BRANCHES,
   TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE,
   TASK_TYPES.SYNC_SALESFORCE_REPO,
   TASK_TYPES.SALESFORCE_BULK_MIGRATION,
-  TASK_TYPES.SALESFORCE_QUICK_DEPLOY,
   TASK_TYPES.GIT_TO_GIT_MERGE_SYNC,
   TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC,
   TASK_TYPES.SNAPLOGIC_TASK,
 ];
 
 // TODO: This should be broken into two buttons, one for cancel and one for logs
-function CancelTaskButton({taskModel, disable, className, actionAllowed, taskType }) {
+function CancelTaskButton(
+  {
+    taskModel,
+    disable,
+    className,
+    actionAllowed,
+    taskType,
+    status,
+  }) {
   const [isCanceling, setIsCanceling] = useState(false);
-  const {getAccessToken} = useContext(AuthContext);
-  const history = useHistory();
   const toastContext = useContext(DialogToastContext);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    cancelTokenSource,
+    getAccessToken,
+    isMounted,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+    if (status === "stopped") {
+      setIsCanceling(false);
     }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
+  }, [status]);
 
   // TODO: Add confirmation Dialog
   const handleCancelRunTask = async () => {
@@ -56,17 +53,12 @@ function CancelTaskButton({taskModel, disable, className, actionAllowed, taskTyp
         cancelTokenSource,
         taskModel?.getMongoDbId(),
       );
-      toastContext.showInformationToast("Task has been stopped", 10);
-      history.push(`/task`);
+      toastContext.showInformationToast("A request to cancel this Task has been submitted", 10);
     }
     catch (error) {
+      setIsCanceling(false);
       if (isMounted?.current === true) {
         toastContext.showSystemErrorToast(error, "There was an issue canceling this Task:");
-      }
-    }
-    finally {
-      if (isMounted?.current === true) {
-        setIsCanceling(false);
       }
     }
   };
@@ -116,6 +108,7 @@ CancelTaskButton.propTypes = {
   className: PropTypes.string,
   actionAllowed: PropTypes.bool,
   taskType: PropTypes.string,
+  status: PropTypes.string,
 };
 
 export default CancelTaskButton;

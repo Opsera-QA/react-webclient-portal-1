@@ -1,11 +1,12 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
 import Button from "react-bootstrap/Button";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import ExportBlueprintDataModal from "components/common/modal/export_data/ExportBlueprintDataModal";
+import ExportBlueprintDataOverlay from "components/blueprint/export/ExportBlueprintDataOverlay";
 import IconBase from "components/common/icons/IconBase";
+import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 
 //check if item can be parsed to JSON
 function isJson(item) {
@@ -23,56 +24,70 @@ function isJson(item) {
 }
 
 function ExportBlueprintLogButton({isLoading, blueprintLog, pipelineId, runCount, blueprintName, numberOfSteps, logData}) {
-  const [showExportModal, setShowExportModal] = useState(false);
+  const toastContext = useContext(DialogToastContext);
   let summaryData = {pipelineId, runCount, blueprintName, numberOfSteps};
-
-  const closeModal = () => {
-    setShowExportModal(false);
-  };
 
   const formatBlueprintLogData = () => {
     let formattedData = [...blueprintLog];
 
     //check each item in the completeInput array and format to match search results
     for (let i = 0; i < formattedData.length; i++) {
-        let stepName = logData[i]?.api_response?.start?.step_name ? logData[i]?.api_response?.start?.step_name : logData[i]?.step_name;
-        let requestedAt =  logData[i]?.updatedAt;
-        let responseMessage = logData[i]?.message;
-        let api = logData[i]?.api_response?.current?.data?.API;
-        let body = JSON.stringify(logData[i]?.api_response?.current?.data?.body, null, 4);
-        let apiResponse = logData[i]?.api_response?.current?.data?.apiResponse ? JSON.stringify(logData[i]?.api_response?.current?.data?.apiResponse, null, 4) : "ERROR: API response is unavailable";
-        let status = logData[i]?.status;
+      let stepName = logData[i]?.api_response?.start?.step_name ? logData[i]?.api_response?.start?.step_name : logData[i]?.step_name;
+      let requestedAt = logData[i]?.updatedAt;
+      let responseMessage = logData[i]?.message;
+      let api = logData[i]?.api_response?.current?.data?.API;
+      let body = JSON.stringify(logData[i]?.api_response?.current?.data?.body, null, 4);
+      let apiResponse = logData[i]?.api_response?.current?.data?.apiResponse ? JSON.stringify(logData[i]?.api_response?.current?.data?.apiResponse, null, 4) : "ERROR: API response is unavailable";
+      let status = logData[i]?.status;
 
-    //code formatting necessary to format literals
-    if(isJson(formattedData[i]) && !api){
-      formattedData[i] = {
-        step:`Step Name: ${stepName}\n
+      //code formatting necessary to format literals
+      if (isJson(formattedData[i]) && !api) {
+        formattedData[i] = {
+          step: `Step Name: ${stepName}\n
 Requested At: ${requestedAt}\n
 Response Message: ${responseMessage}\n
 API Response: ${apiResponse}\n
 Status: ${status}`,
-name: stepName};
+          name: stepName
+        };
       } else {
-      if (isJson(formattedData[i])) {
-  formattedData[i] = {
-  step:`  Step Name: ${stepName}\n
+        if (isJson(formattedData[i])) {
+          formattedData[i] = {
+            step: `  Step Name: ${stepName}\n
   Requested At: ${requestedAt}\n
   Response Message: ${responseMessage}\n
   API: ${api}\n
   Body: ${body}\n
   API Response: ${apiResponse}\n
   Status: ${status}`,
-  name: stepName};
-      } else {
-        formattedData[i] = {step: formattedData[i], name:logData[i]?.step_configuration?.configuration?.jobType ? logData[i]?.step_configuration?.configuration?.jobType : logData[i]?.step_name};
+            name: stepName
+          };
+        } else {
+          formattedData[i] = {
+            step: formattedData[i],
+            name: logData[i]?.step_configuration?.configuration?.jobType ? logData[i]?.step_configuration?.configuration?.jobType : logData[i]?.step_name
+          };
+        }
       }
     }
-  }
 
     return formattedData;
   };
 
   // TODO: Refine when more is complete
+
+  const launchOverlay = () => {
+    toastContext.showOverlayPanel(
+      <ExportBlueprintDataOverlay
+        isLoading={isLoading}
+        formattedData={formatBlueprintLogData()}
+        rawData={blueprintLog}
+        summaryData={summaryData}
+        logData={logData}
+      />
+    );
+  };
+
   return (
     <>
       <TooltipWrapper innerText={"Export as PDF"}>
@@ -82,23 +97,15 @@ name: stepName};
             size={"sm"}
             disabled={isLoading}
             className={"ml-2"}
-            onClick={() => setShowExportModal(true)}>
-            <span><IconBase icon={faFileDownload} /></span>
+            onClick={launchOverlay}>
+            <span><IconBase icon={faFileDownload}/></span>
           </Button>
         </div>
       </TooltipWrapper>
-      <ExportBlueprintDataModal
-        showModal={showExportModal}
-        closeModal={closeModal}
-        isLoading={isLoading}
-        formattedData={formatBlueprintLogData()}
-        rawData={blueprintLog}
-        summaryData={summaryData}
-        logData={logData}
-      />
     </>
   );
 }
+
 
 ExportBlueprintLogButton.propTypes = {
   blueprintLog: PropTypes.array,

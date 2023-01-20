@@ -12,16 +12,16 @@ function AzureAcrPushPipelineStepConfigurationHelpDocumentation() {
   const getHelpDocumentation = () => {
     return (
       <div>
-        <div className={"mb-1 ml-4"}>To set up an Azure Service Deployment pipeline, the following 3 pipeline steps are required in the workflow:</div>
-        <div className={"ml-4"}>
-          <ol>
+        <div className={"ml-2 mb-2"}>To set up an Azure Service Deployment pipeline, the following 3 pipeline steps are required in the workflow:</div>
+        <div>
+          <ul style={{listStyleType: "none"}}>
             <li>Build - Step configured with Jenkins tool.</li>
             <li><b>ACR Push - Step configured with Azure ACR Push tool.</b></li>
             <li>AKS Deploy - Step configured with Azure AKS Deploy tool. </li>
-          </ol>
+          </ul>
         </div>
-        <div className={"my-3 ml-4"}>The prerequisites for setting up an Azure Service Deployment pipeline also include task creation in Tasks (in order for the Azure AKS Deploy step to deploy docker images to the Azure Cluster). There must also be a successfully configured Jenkins tool containing an Azure Docker Push job. In order for this step to run successfully, there must also be a Build step using Jenkins and an Azure AKS Deploy step in the pipeline workflow as outlined above. To view in depth documentation on task and pipeline setup, view the <b><a href="https://opsera.atlassian.net/l/c/iCgHTCUY" target="_blank" rel="noreferrer">Azure AKS Functionality documentation</a></b>.</div>
-        <div className={"ml-4"}>
+        <div className={"ml-2 mb-2"}>The prerequisites for setting up an Azure Service Deployment pipeline also include task creation in Tasks (in order for the Azure AKS Deploy step to deploy docker images to the Azure Cluster). There must also be a successfully configured Jenkins tool containing an Azure Docker Push job. In order for this step to run successfully, there must also be a Build step using Jenkins and an Azure AKS Deploy step in the pipeline workflow as outlined above. To view in depth documentation on task and pipeline setup, view the <b><a href="https://docs.opsera.io/azure-native-support/azure-aks-cluster-creation-tasks-documentation#azureaksclustercreationtasksdocumentation-azureacrpushstepconfiguration" target="_blank" rel="noreferrer">Azure AKS Functionality documentation</a></b>.</div>
+        <div className={"ml-2"}>
           <ol>
             <li>Once the initial Step Setup is configured with the Azure ACR Push tool, set the following values:
               <ul style={{listStyleType: "none"}}>

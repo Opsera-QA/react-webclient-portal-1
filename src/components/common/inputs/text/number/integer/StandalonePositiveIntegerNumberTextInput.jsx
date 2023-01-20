@@ -40,7 +40,7 @@ function StandalonePositiveIntegerNumberTextInput({ value, disabled, setDataFunc
     let classes = `form-control`;
 
     // if (errorMessage !== "") {
-    //   classes += ` border border-danger error-text`;
+    //   classes += ` border border-danger error-text-alt`;
     // }
 
     if (className) {
@@ -48,6 +48,12 @@ function StandalonePositiveIntegerNumberTextInput({ value, disabled, setDataFunc
     }
 
     return classes;
+  };
+
+  const blockInvalidCharacters = (event) => {
+    if (['e', 'E', '+', '-'].includes(event.key)) {
+      event.preventDefault();
+    }
   };
 
   return (
@@ -58,6 +64,7 @@ function StandalonePositiveIntegerNumberTextInput({ value, disabled, setDataFunc
       className={getInputClasses()}
       onChange={(event) => validateAndSetData(event)}
       autoComplete="off"
+      onKeyDown={blockInvalidCharacters}
     />
   );
 }

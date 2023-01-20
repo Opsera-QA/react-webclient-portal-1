@@ -1,15 +1,18 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import FieldContainer from "components/common/fields/FieldContainer";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
-function JsonField(
+export default function JsonField(
   {
     dataObject,
     fieldName,
     className,
+    customTitle,
   }) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
+  const titleText = hasStringValue(customTitle) === true ? customTitle : field?.label;
 
   if (field == null) {
     return null;
@@ -19,7 +22,7 @@ function JsonField(
     <FieldContainer>
       <StandaloneJsonField
         json={dataObject?.getData(fieldName)}
-        titleText={field?.label}
+        titleText={titleText}
         collapsed={field?.isCollapsed}
         className={className}
       />
@@ -30,7 +33,6 @@ function JsonField(
 JsonField.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
-  className: PropTypes.string
+  className: PropTypes.string,
+  customTitle: PropTypes.string,
 };
-
-export default JsonField;

@@ -4,6 +4,7 @@ import DtoTopPagination from "components/common/pagination/DtoTopPagination";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import LoadingDialog from "components/common/status_notifications/loading";
 import VanityPaginationContainer from "components/common/pagination/v2/VanityPaginationContainer";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 function PaginationContainer(
   {
@@ -16,6 +17,9 @@ function PaginationContainer(
     nextGeneration,
     data,
     loadingMessage,
+    paginationStyle,
+    topPaginationStyle,
+    bodyClassName
   }) {
   const getTopPaginator = () => {
     return (
@@ -24,6 +28,7 @@ function PaginationContainer(
         setPaginationDto={setFilterDto}
         isLoading={isLoading}
         loadData={loadData}
+        topPaginationStyle={topPaginationStyle}
       />
     );
   };
@@ -36,6 +41,7 @@ function PaginationContainer(
         setPaginationDto={setFilterDto}
         isLoading={isLoading}
         loadData={loadData}
+        paginationStyle={paginationStyle}
       />
     );
   };
@@ -43,14 +49,14 @@ function PaginationContainer(
   const getBody = () => {
     if (isLoading && (!Array.isArray(data) || data.length === 0)) {
       return (
-        <LoadingDialog
+        <CenterLoadingIndicator
           message={loadingMessage}
           size={"sm"}
         />
       );
     }
 
-    return (children);
+    return (<div className={`h-100 ${bodyClassName}`}>{children}</div>);
   };
 
   if (filterDto == null) {
@@ -67,7 +73,7 @@ function PaginationContainer(
   }
 
   return (
-    <div className="pagination-container">
+    <div className="pagination-container h-100" style={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
       {getTopPaginator()}
       {getBody()}
       {getBottomPaginator()}
@@ -85,10 +91,14 @@ PaginationContainer.propTypes = {
   nextGeneration: PropTypes.bool,
   data: PropTypes.array,
   loadingMessage: PropTypes.string,
+  paginationStyle: PropTypes.string,
+  topPaginationStyle: PropTypes.string,
+  bodyClassName: PropTypes.string
 };
 
 PaginationContainer.defaultProps = {
   loadingMessage: "Loading Data",
+  bodyClassName: ""
 };
 
 export default PaginationContainer;

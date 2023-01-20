@@ -1,24 +1,22 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
-import ArgoProjectTable from "./ArgoProjectTable";
+import React, {useEffect, useState} from "react";
+import ArgoToolProjectsTable from "components/inventory/tools/tool_details/tool_jobs/argo/projects/ArgoToolProjectsTable";
 import PropTypes from "prop-types";
-import CreateArgoProjectOverlay
-  from "components/inventory/tools/tool_details/tool_jobs/argo/projects/CreateArgoProjectOverlay";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import ArgoProjectEditorPanel
   from "components/inventory/tools/tool_details/tool_jobs/argo/projects/details/ArgoProjectEditorPanel";
 import modelHelpers from "components/common/model/modelHelpers";
 import argoProjectMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/argo-project-metadata";
 
-// TODO: This needs to be rewritten
+// TODO: This whole section is very old and needs to be updated to current standards.
 function ArgoToolProjectsPanel({ toolData, loadData, isLoading, toolActions }) {
   const [argoProjects, setArgoProjects] = useState([]);
   const [argoModel, setArgoModel] = useState(undefined);
 
   useEffect(() => {
-    unpackProjs(toolActions);
+    unpackProjs();
   }, [toolActions]);
 
-  const unpackProjs = (toolActions) => {
+  // TODO: Don't do this.
+  const unpackProjs = () => {
     const newProjList = [];
 
     if (Array.isArray(toolActions)) {
@@ -34,8 +32,9 @@ function ArgoToolProjectsPanel({ toolData, loadData, isLoading, toolActions }) {
   };
 
   const onRowSelect = (grid, row) => {
-    const argoProject = toolData?.getArrayData("projects")[row?.index];
-    setArgoModel({...modelHelpers.parseObjectIntoModel(argoProject, argoProjectMetadata)});
+    const argoToolProject = argoProjects[row?.index];
+    const argoToolProjectModel = modelHelpers.parseObjectIntoModel(argoToolProject, argoProjectMetadata);
+    setArgoModel({...argoToolProjectModel});
   };
 
   const closePanel = () => {
@@ -47,18 +46,18 @@ function ArgoToolProjectsPanel({ toolData, loadData, isLoading, toolActions }) {
     return (
       <ArgoProjectEditorPanel
         argoProjectData={argoModel}
-        toolData={toolData}
+        toolId={toolData?.getMongoDbId()}
         loadData={loadData}
         handleClose={closePanel}
-        projId={argoModel?.getMongoDbId()}
       />
     );
   }
 
   return (
-    <ArgoProjectTable
+    <ArgoToolProjectsTable
       isLoading={isLoading}
-      toolData={toolData}
+      toolId={toolData?.getMongoDbId()}
+      hasConfigurationDetails={toolData?.hasConfigurationDetailsSet()}
       loadData={loadData}
       onRowSelect={onRowSelect}
       argoProjects={argoProjects}

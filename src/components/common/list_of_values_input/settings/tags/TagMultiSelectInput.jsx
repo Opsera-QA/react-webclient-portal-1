@@ -15,6 +15,7 @@ function TagMultiSelectInput(
     className,
     infoOverlay,
     inputHelpOverlay,
+    helpTooltipText,
   }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
@@ -30,6 +31,8 @@ function TagMultiSelectInput(
         model={dataObject}
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
+        helpTooltipText={helpTooltipText}
+        disabled={disabled}
       />
       <TagMultiSelectInputBase
         fieldName={fieldName}
@@ -52,6 +55,7 @@ TagMultiSelectInput.propTypes = {
   className: PropTypes.string,
   infoOverlay: PropTypes.any,
   inputHelpOverlay: PropTypes.any,
+  helpTooltipText: PropTypes.string,
 };
 
 TagMultiSelectInput.defaultProps = {

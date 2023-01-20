@@ -1,18 +1,9 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
-import { useLocation } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import { useLocation, useParams } from "react-router-dom";
 import TaskDetailPanel from "components/tasks/details/TaskDetailPanel";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
-import {AuthContext} from "contexts/AuthContext";
-import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
-import axios from "axios";
-import taskActions from "components/tasks/task.actions";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import TasksSubNavigationBar from "components/tasks/TasksSubNavigationBar";
-import TaskModel from "components/tasks/task.model";
 import VanitySetDetailScreenContainer
   from "components/common/panels/detail_view_container/VanitySetDetailScreenContainer";
 import {TASK_TYPES} from "components/tasks/task.types";
@@ -34,86 +25,73 @@ import GitToGitMergeSyncTaskDetailsHelpDocumentation
   from "../../common/help/documentation/tasks/details/GitToGitMergeSyncTaskDetailsHelpDocumentation";
 import SalesforceToGitMergeSyncTaskDetailsHelpDocumentation
   from "../../common/help/documentation/tasks/details/SalesforceToGitMergeSyncTaskDetailsHelpDocumentation";
+import SfdxQuickDeployTaskDetailsHelpDocumentation
+  from "../../common/help/documentation/tasks/details/SfdxQuickDeployTaskDetailsHelpDocumentation";
+import GitCustodianTaskDetailsHelpDocumentation
+  from "../../common/help/documentation/tasks/details/GitCustodianTaskDetailsHelpDocumentation";
+import ActionBarDeleteTaskButton from "components/tasks/buttons/ActionBarDeleteTaskButton";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import useGetTaskModelById from "components/tasks/hooks/useGetTaskModelById";
+import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
+import useGetPollingTaskOrchestrationStatusById
+  from "hooks/workflow/tasks/orchestration/useGetPollingTaskOrchestrationStatusById";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import {numberHelpers} from "components/common/helpers/number/number.helpers";
+
+const pausedMessage = "This Task has been paused. Please check the activity logs for details.";
+const stoppedMessage = "This Task has completed running. Please check the activity logs for details.";
+const failedMessage = "This Task has completed running with a failed status. Please check the activity logs for details.";
+const successMessage = "This Task has completed running with a successful status. Please check the activity logs for details.";
+const runningMessage = "This Task is currently running. Please check the activity logs for details.";
 
 function TaskDetailView() {
   const location = useLocation();
   const { id } = useParams();
-  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [taskData, setTaskData] = useState(undefined);
-  const [taskMetadata, setTaskMetadata] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [canDelete, setCanDelete] = useState(false);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
+  const [isTaskRunning, setIsTaskRunning] = useState(false);
+  const {
+    accessRoleData,
+    toastContext
+  } = useComponentStateReference();
+  const {
+    taskModel,
+    setTaskModel,
+    loadData,
+    isLoading,
+  } = useGetTaskModelById(id);
+  const {
+    status,
+    runCount,
+    updatedAt,
+  } = useGetPollingTaskOrchestrationStatusById(id, 15000);
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+    if (hasStringValue(status) === true && numberHelpers.hasNumberValue(runCount) === true &&
+      (taskModel?.getData("status") !== status || taskModel?.getData("run_count") !== runCount || taskModel?.getData("updatedAt") !== updatedAt)
+    ) {
+      console.log(`got polling update for Task [${id}] status [${status}] run count [${runCount}], Last Updated At [${updatedAt}]`);
+
+      loadData();
     }
+  }, [status, runCount, updatedAt]);
 
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      await getTaskData(cancelSource);
+  useEffect(() => {
+    if (status === "paused") {
+      toastContext.showSystemWarningToast(pausedMessage, 20);
+      setIsTaskRunning(false);
+    } else if (isTaskRunning === true && status === "stopped") {
+      toastContext.showSystemInformationToast(stoppedMessage, 20);
+      setIsTaskRunning(false);
+    } else if (isTaskRunning === true && status === "failed") {
+      toastContext.showSystemErrorToast(failedMessage, undefined, 20);
+      setIsTaskRunning(false);
+    } else if (isTaskRunning === true && status === "success") {
+      toastContext.showSystemSuccessToast(successMessage, 20);
+      setIsTaskRunning(false);
+    } else if (isTaskRunning !== true && status === "running") {
+      toastContext.showSystemInformationToast(runningMessage, 20);
+      setIsTaskRunning(true);
     }
-    catch (error) {
-      if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
-      }
-    }
-    finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getTaskData = async (cancelSource = cancelTokenSource) => {
-    const response = await taskActions.getTaskByIdV2(getAccessToken, cancelSource, id);
-    const task = response?.data?.data;
-    const taskMetadata = response?.data?.metadata;
-
-    let action = "delete_task";
-    if (isMounted.current === true && task != null) {
-      setTaskMetadata(taskMetadata);
-
-      // const canDelete = workflowAuthorizedActions.gitItems(customerAccessRules, action, task?.owner, task?.roles);
-      // const canUpdate
-      // setTaskData(new Model(task, taskMetadata, false, getAccessToken, cancelSource, loadData, false, false, setTaskData));
-      setTaskData(new TaskModel(task, taskMetadata, false, getAccessToken, cancelSource, loadData, false, false, setTaskData));
-
-      if (task?.type === "sfdc-cert-gen") {
-        action = "delete_admin_task";
-      }
-
-      const customerAccessRules = await getAccessRoleData();
-      setAccessRoleData(customerAccessRules);
-      setCanDelete(workflowAuthorizedActions.gitItems(customerAccessRules, action, task?.owner, task?.roles));
-    }
-  };
-
-  const deleteGitTask = async () => {
-    return await taskActions.deleteGitTaskV2(getAccessToken, cancelTokenSource, taskData);
-  };
+  }, [status]);
 
   const getActionBar = () => {
     return (
@@ -121,15 +99,22 @@ function TaskDetailView() {
         <div>
           <ActionBarBackButton path={"/task"} />
         </div>
-        <div>
-          {canDelete && <ActionBarDeleteButton2 relocationPath={"/task/"} handleDelete={deleteGitTask} dataObject={taskData} />}
+        <div className={"d-flex"}>
+          {/*<ViewTaskAuditLogsActionBarButton*/}
+          {/*  className={"ml-3"}*/}
+          {/*  taskModel={taskModel}*/}
+          {/*/>*/}
+          <ActionBarDeleteTaskButton
+            taskModel={taskModel}
+            className={"ml-3"}
+          />
         </div>
       </ActionBarContainer>
     );
   };
 
   const getHelpComponent = () => {
-    switch (taskData?.getData("type")) {
+    switch (taskModel?.getData("type")) {
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
         return <AwsEcsClusterCreationTaskDetailsHelpDocumentation/>;
       case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
@@ -138,6 +123,8 @@ function TaskDetailView() {
         return <AwsLambdaFunctionCreationTaskDetailsHelpDocumentation/>;
       case TASK_TYPES.AZURE_CLUSTER_CREATION:
         return <AzureAKSClusterCreationTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.GITSCRAPER:
+        return <GitCustodianTaskDetailsHelpDocumentation/>;
       case TASK_TYPES.SYNC_GIT_BRANCHES:
         return <GitToGitSyncTaskDetailsHelpDocumentation/>;
       case TASK_TYPES.GIT_TO_GIT_MERGE_SYNC:
@@ -148,6 +135,8 @@ function TaskDetailView() {
         return <SfdcOrgSyncTaskDetailsHelpDocumentation/>;
       case TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC:
         return <SalesforceToGitMergeSyncTaskDetailsHelpDocumentation/>;
+      case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
+        return <SfdxQuickDeployTaskDetailsHelpDocumentation/>;
       case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
       case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
       default:
@@ -158,22 +147,24 @@ function TaskDetailView() {
   return (
     <VanitySetDetailScreenContainer
       breadcrumbDestination={"taskManagementDetailView"}
-      metadata={taskMetadata}
-      model={taskData}
-      isLoading={isLoading}
+      metadata={tasksMetadata}
+      isLoading={isLoading && taskModel == null}
+      model={taskModel}
       accessRoleData={accessRoleData}
       navigationTabContainer={<TasksSubNavigationBar currentTab={"taskViewer"} />}
-      objectRoles={taskData?.getData("roles")}
+      objectRoles={taskModel?.getData("roles")}
       actionBar={getActionBar()}
       helpComponent={getHelpComponent()}
       detailPanel={
         <TaskDetailPanel
-          gitTasksData={taskData}
+          gitTasksData={taskModel}
           isLoading={isLoading}
-          setGitTasksData={setTaskData}
+          setGitTasksData={setTaskModel}
           accessRoleData={accessRoleData}
           loadData={loadData}
           runTask={location?.state?.runTask}
+          status={status}
+          runCount={runCount}
         />
       }
     />

@@ -14,6 +14,9 @@ import DataPointEvaluationTriggerValuesInput
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InfoContainer from "components/common/containers/InfoContainer";
 import StandaloneBooleanToggleInput from "components/common/inputs/boolean/StandaloneBooleanToggleInput";
+import {
+  getDataPointTypeHelpText,
+} from "../../../../../../list_of_values_input/insights/data_points/type/dataPoint.types";
 
 function MetricDataPointEvaluationRuleInputBase(
   {
@@ -24,6 +27,7 @@ function MetricDataPointEvaluationRuleInputBase(
     title,
     errorMessage,
     headerClassName,
+    dataPointType
   }) {
   const [ruleModel, setRuleModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -36,7 +40,7 @@ function MetricDataPointEvaluationRuleInputBase(
     return () => {
       isMounted.current = false;
     };
-  }, [ruleData]);
+  }, [ruleData, dataPointType]);
 
   const loadData = () => {
     const parsedRuleData = {
@@ -55,6 +59,11 @@ function MetricDataPointEvaluationRuleInputBase(
 
   const toggleRule = (fieldName, newValue) => {
     ruleModel?.setData("enabled", newValue);
+    updateRuleFunctionRow(ruleModel);
+  };
+
+  const toggleNotifications = (fieldName, newValue) => {
+    ruleModel?.setData("notificationEnabled", newValue);
     updateRuleFunctionRow(ruleModel);
   };
 
@@ -83,14 +92,23 @@ function MetricDataPointEvaluationRuleInputBase(
             setModel={setRuleModel}
             updateRuleFunction={updateRuleFunctionRow}
             triggerFilter={ruleModel?.getData("trigger_filter")}
+            helpTooltipText={getDataPointTypeHelpText(dataPointType)}
           />
         </Col>
-        <Col sm={6}>
+        <Col sm={12}>
           <StandaloneBooleanToggleInput
             checkedValue={ruleModel?.getData("enabled")}
             fieldLabel={ruleModel?.getLabel("enabled")}
             setDataFunction={toggleRule}
             fieldId={`${fieldName}-enabled`}
+          />
+        </Col>
+        <Col sm={12}>
+          <StandaloneBooleanToggleInput
+            checkedValue={ruleModel?.getData("notificationEnabled")}
+            fieldLabel={ruleModel?.getLabel("notificationEnabled")}
+            setDataFunction={toggleNotifications}
+            fieldId={`${fieldName}-notification-enabled`}
           />
         </Col>
       </Row>
@@ -114,6 +132,7 @@ MetricDataPointEvaluationRuleInputBase.propTypes = {
   title: PropTypes.string,
   errorMessage: PropTypes.string,
   headerClassName: PropTypes.string,
+  dataPointType: PropTypes.string
 };
 
 export default MetricDataPointEvaluationRuleInputBase;

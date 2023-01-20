@@ -1,28 +1,35 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import LazyLoadMultiSelectInputBase from "components/common/inputs/select/LazyLoadMultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
-import axios from "axios";
-import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
+import pipelineStepNotificationActions
+  from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import _ from "lodash";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function ServiceNowAssignmentGroupSelectInput({
-  valueField,
-  textField,
-  fieldName,
-  dataObject,
-  setDataObject,
-  disabled,
-  serviceNowToolId,
-}) {
+function ServiceNowAssignmentGroupSelectInput(
+  {
+    valueField,
+    textField,
+    fieldName,
+    dataObject,
+    setDataObject,
+    disabled,
+    serviceNowToolId,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   // const [toggleSelected, setToggleSelected] = useState(false);
   const [groups, setGroups] = useState([]);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [error, setError] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
@@ -57,61 +64,51 @@ function ServiceNowAssignmentGroupSelectInput({
   };
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
     setGroups([]);
-    // if (serviceNowToolId !== "" && serviceNowToolId != null) {
-    //   loadGroups(serviceNowToolId, source).catch((error) => {
-    //     if (isMounted?.current === true) {
-    //       throw error;
-    //     }
-    //   });
-    // }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
+    setError("");
+    if (isMongoDbId(serviceNowToolId) === true) {
+      loadGroups("", serviceNowToolId).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
   }, [serviceNowToolId]);
 
-  const loadGroups = async (searchTerm) => {
-    if (searchTerm && searchTerm.length >= 3) {
-      try {
-        setIsLoading(true);
-        // setToggleSelected(true);
-        const response = await pipelineStepNotificationActions.getServiceNowGroupsByName(
-          serviceNowToolId,
-          searchTerm,
-          getAccessToken,
-          cancelTokenSource
-        );
+  const loadGroups = async (searchTerm, serviceNowToolId) => {
+    // if (searchTerm) {
+    try {
+      setIsLoading(true);
 
-        if (
-          response?.data !== null &&
-          response?.data?.message?.result !== null &&
-          Array.isArray(response.data.message.result)
-        ) {
-          setGroups(response.data.message.result);
-        }
-      } catch (error) {
-        if (isMounted?.current === true) {
-          toastContext.showErrorDialog(
-            "Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry."
-          );
-        }
-        console.error(error);
-      } finally {
-        if (isMounted?.current === true) {
-          setIsLoading(false);
-        }
+      // setToggleSelected(true);
+      const response = await pipelineStepNotificationActions.getServiceNowGroupsByNamev2(
+        serviceNowToolId,
+        searchTerm,
+        getAccessToken,
+        cancelTokenSource
+      );
+
+      console.log(response);
+      // TODO: Faseeh, when updating the node end can you please make sure to return this in data as usual (would come as response?.data?.data).
+      const results = response.data.message.result;
+
+      if (
+        Array.isArray(results)
+      ) {
+        setGroups(response.data.message.result);
+      } else {
+        setGroups([]);
+      }
+    } catch (error) {
+      if (isMounted?.current === true) {
+        setError(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
       }
     }
+    // }
   };
 
   const getPlaceholderText = () => {
@@ -136,6 +133,11 @@ function ServiceNowAssignmentGroupSelectInput({
     }
   };
 
+  const delayedSearchQuery = useCallback(
+    _.debounce((searchTerm, toolId) => loadGroups(searchTerm, toolId), 600),
+    [],
+  );
+
   return (
     <LazyLoadMultiSelectInputBase
       fieldName={fieldName}
@@ -150,8 +152,9 @@ function ServiceNowAssignmentGroupSelectInput({
       // onToggleFunction={loadBusinessServices}
       disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
-      onSearchFunction={(searchTerm) => loadGroups(searchTerm)}
+      onSearchFunction={(searchTerm) => {console.log(searchTerm); delayedSearchQuery(searchTerm, serviceNowToolId);}}
       useToggle={false}
+      error={error}
     />
   );
 }

@@ -5,10 +5,9 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabView";
-import { faClipboardListCheck } from "@fortawesome/pro-light-svg-icons";
+import { faClipboardListCheck, faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import SfdxScanSummaryLogVerticalTabContainer from "./SfdxScanSummaryLogVerticalTabContainer";
 import SfdxScanReportSummaryOverview from "./components/SfdxScanReportSummaryOverview";
 import sfdxScanSummaryLogResultMetadata from "./metadata/SfdxScanSummaryLogResult.metadata";
@@ -104,7 +103,7 @@ function SfdxScanLogSummaryReportPanel({ pipelineTaskData }) {
   return (
     <VanitySetTabAndViewContainer
       icon={faClipboardListCheck}
-      title={`Informatica Execution Summary`}
+      title={`Code Analyser Execution Details`}
       defaultActiveKey={"summary"}
       verticalTabContainer={<SfdxScanSummaryLogVerticalTabContainer />}
       currentView={getTabContentContainer()}

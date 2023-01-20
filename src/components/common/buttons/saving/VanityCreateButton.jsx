@@ -1,31 +1,39 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
-import {faSave} from "@fortawesome/pro-light-svg-icons";
+import { Button } from "react-bootstrap";
+import { faSave } from "@fortawesome/pro-light-svg-icons";
 import {
   persistNewRecord,
   persistNewRecordAndAddAnother,
   persistNewRecordAndClose,
-  persistNewRecordAndViewDetails
+  persistNewRecordAndViewDetails,
 } from "./saving-helpers-v2";
-import {useHistory} from "react-router-dom";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { useHistory } from "react-router-dom";
 import IconBase from "components/common/icons/IconBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
-function VanityCreateButton({model, setModel, disable, showSuccessToasts, handleClose, size, icon, className, showTypeOnLabel, customLabel}) {
+function VanityCreateButton(
+  {
+    model,
+    setModel,
+    disable,
+    showSuccessToasts,
+    handleClose,
+    size,
+    icon,
+    className,
+    showTypeOnLabel,
+    customLabel,
+    viewDetailsUponCreate,
+  }) {
   const [isSaving, setIsSaving] = useState(false);
   const [addAnother, setAddAnother] = useState(false);
   const history = useHistory();
-  let toastContext = useContext(DialogToastContext);
-  const isMounted = useRef(false);
-
-  useEffect(() => {
-    isMounted.current = true;
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
+  const {
+    isMounted,
+    toastContext,
+  } = useComponentStateReference();
 
   const persistRecord = async () => {
     setIsSaving(true);
@@ -33,7 +41,7 @@ function VanityCreateButton({model, setModel, disable, showSuccessToasts, handle
     if (addAnother) {
       await persistNewRecordAndAddAnother(model, toastContext, showSuccessToasts, setModel);
     }
-    else if (model.getDetailViewLink() != null) {
+    else if (viewDetailsUponCreate !== false && model.getDetailViewLink != null && hasStringValue(model.getDetailViewLink()) === true) {
       await persistNewRecordAndViewDetails(model, toastContext, showSuccessToasts, history);
     }
     else if (handleClose != null) {
@@ -79,7 +87,11 @@ function VanityCreateButton({model, setModel, disable, showSuccessToasts, handle
     <div className={className}>
       <div className={"d-flex"}>
         {getAddAnotherCheckbox()}
-        <Button size={size} variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
+        <Button
+          size={size}
+          disabled={isSaving || disable || (model?.checkCurrentValidity() !== true && model?.isLenient() !== true)}
+          onClick={() => persistRecord()}
+        >
           <span><IconBase isLoading={isSaving} icon={icon} fixedWidth className="mr-2"/>{getLabel()}</span>
         </Button>
       </div>
@@ -97,13 +109,14 @@ VanityCreateButton.propTypes = {
   icon: PropTypes.object,
   className: PropTypes.string,
   customLabel: PropTypes.string,
-  showTypeOnLabel: PropTypes.bool
+  showTypeOnLabel: PropTypes.bool,
+  viewDetailsUponCreate: PropTypes.bool,
 };
 
 VanityCreateButton.defaultProps = {
   showSuccessToasts: true,
   size: "md",
-  icon: faSave
+  icon: faSave,
 };
 
 export default VanityCreateButton;

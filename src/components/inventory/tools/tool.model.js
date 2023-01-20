@@ -1,51 +1,77 @@
 import ModelBase from "core/data_model/model.base";
-import toolsActions from "components/inventory/tools/tools-actions";
-import {isActionAllowed} from "components/common/helpers/role-helpers";
-import vaultActions from "components/vault/vault.actions";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
-import { hasStringValue } from "components/common/helpers/string-helpers";
+import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
+import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
+import { toolHelper } from "components/inventory/tools/tool.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import toolsActions from "components/inventory/tools/tools-actions";
+import vaultActions from "components/vault/vault.actions";
 
-export class ToolModel extends ModelBase {
+// TODO: We should move this to an external library in Node
+export default class ToolModel extends ModelBase {
   constructor(
-    data,
-    metaData,
+    tool,
     newModel,
-    getAccessToken,
-    cancelTokenSource,
-    loadData,
-    customerAccessRules,
-    roleDefinitions,
-    setStateFunction
   ) {
-    super(data, metaData, newModel);
-    this.getAccessToken = getAccessToken;
-    this.cancelTokenSource = cancelTokenSource;
-    this.loadData = loadData;
-    this.setStateFunction = setStateFunction;
-    this.customerAccessRules = customerAccessRules;
-    this.roleDefinitions = roleDefinitions;
-    this.updateAllowed = this.canPerformAction("update_tool");
-    this.deleteAllowed = this.canPerformAction("delete_tool");
-    this.editAccessRolesAllowed = this.canPerformAction("edit_access_roles");
+    super(
+      tool,
+      registryToolMetadata,
+      newModel,
+    );
   }
 
   createModel = async () => {
-    return await toolsActions.createToolV2(this.getAccessToken, this.cancelTokenSource, this);
+    const canCreate = this.canCreate();
+
+    if (canCreate !== true) {
+      throw "Access Denied";
+    }
+
+    return await toolsActions.createToolV2(
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this,
+    );
   };
 
   saveModel = async () => {
-    return await toolsActions.updateToolV2(this.getAccessToken, this.cancelTokenSource, this);
+    const canUpdate = this.canUpdate();
+
+    if (canUpdate !== true) {
+      throw "Access Denied";
+    }
+
+    return await toolsActions.updateToolV2(
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this,
+    );
   };
 
   // TODO: Not used yet
   deleteModel = async () => {
-    const vaultDeleteResponse = await vaultActions.deleteOwnerVaultRecordsForToolIdV2(this.getAccessToken, this.cancelTokenSource, this);
+    const canDelete = this.canDelete();
+
+    if (canDelete !== true) {
+      throw "Access Denied";
+    }
+
+    const vaultDeleteResponse = await vaultActions.deleteToolVaultKeys(
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this.getMongoDbId(),
+    );
     if (vaultDeleteResponse?.status !== 200) {
       const errorMsg = `Error reported by services while deleting tool information from Vault. Please try again`;
       // toastContext.showErrorDialog(errorMsg);
       return;
     }
-    await toolsActions.deleteToolV2(this.getAccessToken, this.cancelTokenSource, this);
+
+    await toolsActions.deleteToolV2(
+      this.getAccessToken,
+      this.cancelTokenSource,
+      this,
+    );
     // toastContext.showDeleteSuccessResultDialog("Tool");
     // setShowDeleteModal(false);
     history.push("/inventory/tools");
@@ -54,7 +80,7 @@ export class ToolModel extends ModelBase {
   canRotateToken = () => {
     const data = this.data;
     const toolIdentifier = data?.tool_identifier;
-    const canRotateToken = this.canPerformAction("rotate_token");
+    const canRotateToken = RegistryToolRoleHelper.canRotateRegistryToolToken(this.userData, this.data);
 
     switch (toolIdentifier) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS:
@@ -64,33 +90,130 @@ export class ToolModel extends ModelBase {
     }
   };
 
+  canCreate = () => {
+    return RegistryToolRoleHelper.canCreateRegistryTool(
+      this.userData,
+    );
+  };
+
+  canUpdate = () => {
+    return RegistryToolRoleHelper.canUpdateRegistryTool(
+      this.userData,
+      this.data,
+    );
+  };
+
+  canDelete = () => {
+    return RegistryToolRoleHelper.canDeleteRegistryTool(
+      this.userData,
+      this.data,
+    );
+  };
+
+  canUpdateToolConnectionDetails = () => {
+    return RegistryToolRoleHelper.canUpdateRegistryToolConnectionSettings(
+      this.userData,
+      this.data,
+    );
+  };
+
+  canUpdateRegistryToolVaultSettings = () => {
+    return RegistryToolRoleHelper.canUpdateRegistryToolVaultSettings(
+      this.userData,
+      this.data,
+    );
+  };
+
+  canTransferRegistryToolOwnership = () => {
+    return RegistryToolRoleHelper.canTransferRegistryToolOwnership(
+      this.userData,
+      this.data,
+    );
+  };
+
   getDetailViewLink = () => {
-    return `/inventory/tools/details/${this.getData("_id")}`;
+    return toolHelper.getModelDetailViewLink(this);
   };
 
   getDetailViewTitle = () => {
     return `${this?.getOriginalValue("name")} Tool Details`;
   };
 
-  getNewInstance = (newData = this.getNewObjectFields()) => {
-    return new ToolModel(
-      {...newData},
-      this.metaData,
-      this.newModel,
-      this.getAccessToken,
-      this.cancelTokenSource,
-      this.loadData,
-      this.customerAccessRules,
-      this.roleDefinitions,
-      this.setStateFunction
+  hasConfigurationDetailsSet = () => {
+    const configuration = DataParsingHelper.parseObject(this.getData("configuration"), null);
+    return configuration != null;
+  };
+
+  canEditAccessRoles = () => {
+    return RegistryToolRoleHelper.canEditAccessRoles(
+      this.userData,
+      this.data,
     );
   };
 
-  canPerformAction = (action) => {
-    return isActionAllowed(this.customerAccessRules, action, this.getData("owner"), this.getData("roles"), this.roleDefinitions, true);
-  }
-}
+  canUpdateRegistryToolAccounts = () => {
+    return RegistryToolRoleHelper.canUpdateRegistryToolAccounts(
+      this.userData,
+      this.data,
+    );
+  };
 
-export default ToolModel;
+  canUpdateRegistryToolApplications = () => {
+    return RegistryToolRoleHelper.canUpdateRegistryToolApplications(
+      this.userData,
+      this.data,
+    );
+  };
+
+  canUpdateRegistryToolEndpoints = () => {
+    return RegistryToolRoleHelper.canUpdateRegistryToolEndpoints(
+      this.userData,
+      this.data,
+    );
+  };
+
+  canUpdateRegistryToolJobs = () => {
+    return RegistryToolRoleHelper.canUpdateRegistryToolJobs(
+      this.userData,
+      this.data,
+    );
+  };
+
+  canUpdateRegistryToolProjects = () => {
+    return RegistryToolRoleHelper.canUpdateRegistryToolProjects(
+      this.userData,
+      this.data,
+    );
+  };
+
+  canUpdateRegistryToolPathSettings = () => {
+    return RegistryToolRoleHelper.canUpdateRegistryToolPathSettings(
+      this.userData,
+      this.data,
+    );
+  };
+
+  canUpdateRegistryToolRepositories = () => {
+    return RegistryToolRoleHelper.canUpdateRegistryToolRepositories(
+      this.userData,
+      this.data,
+    );
+  };
+
+  // TODO: Make role definition for this, it currently doesn't exist even though it was in use
+  canUpdateRegistryToolLicense = () => {
+    return RegistryToolRoleHelper.canUpdateRegistryTool(
+      this.userData,
+      this.data,
+    );
+  };
+
+  clone = () => {
+    return new ToolModel(DataParsingHelper.cloneDeep(
+        { ...this.data }),
+      this.isNew(),
+    );
+  };
+}
 
 

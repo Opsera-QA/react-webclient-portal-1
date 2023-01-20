@@ -67,7 +67,6 @@ function ToastContextProvider({children, navBar}) {
   const addOverlayPanel = useCallback((overlayPanel) => {
       if (overlayPanel != null) {
         document.body.style.overflow = 'hidden';
-        window.scrollTo(0, 0);
       }
 
       setOverlayPanel(overlayPanel);
@@ -77,7 +76,6 @@ function ToastContextProvider({children, navBar}) {
   const addInfoOverlayPanel = useCallback((infoOverlayPanel) => {
       if (infoOverlayPanel != null) {
         document.body.style.overflow = 'hidden';
-        window.scrollTo(0, 0);
       }
 
       setInfoOverlayPanel(infoOverlayPanel);
@@ -91,6 +89,7 @@ function ToastContextProvider({children, navBar}) {
   );
 
   const clearInfoOverlayPanel = useCallback(() => {
+      document.body.style.overflow = 'unset';
       setInfoOverlayPanel(undefined);
     }, [setInfoOverlayPanel]
   );
@@ -391,7 +390,7 @@ function ToastContextProvider({children, navBar}) {
 
   const showSavingIncompleteObjectSuccessResultToast = () => {
     let id = generateUUID();
-    let informationToast = getInformationToast(`WARNING! An incomplete configuration is being saved. This must be fully configured in order to use this feature.`, id);
+    let informationToast = getInformationToast(`WARNING! The configuration was successfully saved, but it is incomplete. It must be fully configured in order to use this feature.`, id);
     addToast(informationToast, id, notificationTypes.FORM);
   };
 

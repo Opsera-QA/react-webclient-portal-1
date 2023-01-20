@@ -90,6 +90,22 @@ import SalesforceScanStepConfiguration
 import GitOperationStepConfiguration from "./step_tool_configuration_forms/git_operation/GitOperationStepConfiguration";
 import ApigeeStepConfiguration from "./step_tool_configuration_forms/apigee/ApigeeStepConfiguration";
 import SnaplogicStepConfiguration from "./step_tool_configuration_forms/snaplogic/SnaplogicStepConfiguration";
+import SapCpqStepConfiguration from "./step_tool_configuration_forms/sap_cpq/SapCpqStepConfiguration";
+import ProvarStepToolConfiguration from "./step_tool_configuration_forms/provar/ProvarStepToolConfiguration";
+import AzureWebappsStepConfiguration from "./step_tool_configuration_forms/azure_webapps/AzureWebappsStepConfiguration";
+import AzureCliStepConfiguration from "./step_tool_configuration_forms/azure_cli/AzureCliStepConfiguration";
+import BoomiStepConfiguration from "./step_tool_configuration_forms/boomi/BoomiStepConfiguration";
+import InformaticaIdqStepConfiguration
+  from "./step_tool_configuration_forms/informatica_idq/InformaticaIdqStepConfiguration";
+import LiquibaseStepConfiguration
+  from "./step_tool_configuration_forms/liquibase/LiquibaseStepConfiguration";
+import BlackDuckStepConfiguration from "./step_tool_configuration_forms/black_duck/BlackDuckStepConfiguration";
+import FortifyStepConfiguration from "./step_tool_configuration_forms/fortify/FortifyStepConfiguration";
+import DockerCliStepConfiguration from "./step_tool_configuration_forms/docker_cli/DockerCliStepConfiguration";
+import UserActionsPipelineStepEditorPanel
+  from "components/workflow/plan/step/user_actions/UserActionsPipelineStepEditorPanel";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -101,32 +117,16 @@ function StepToolConfiguration({
   setToast,
   setShowToast
 }) {
-  const contextType = useContext(AuthContext);
   const { plan } = pipeline.workflow;
   const [pipelineStep, setPipelineStep] = useState(undefined);
   const [stepTool, setStepTool] = useState(undefined);
   const [stepName, setStepName] = useState(undefined);
   const [stepId, setStepId] = useState(undefined);
-  const { getAccessToken } = contextType;
-  const toastContext = useContext(DialogToastContext);
-
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;    
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
+  const {
+    cancelTokenSource,
+    toastContext,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
     if (isMongoDbId(pipelineStepId) === true) {
@@ -155,7 +155,14 @@ function StepToolConfiguration({
     plan[stepArrayIndex].tool.job_type = tool.job_type;
     // console.log("configuration: " + JSON.stringify(tool.configuration));
     // console.log("plan: " + JSON.stringify(plan));
-    return await parentCallback(plan);
+    const response = await parentCallback(plan);
+
+    // TODO: I don't think this is necessary but added for safety
+    if (response?.status === 200) {
+      closeEditorPanel();
+    }
+
+    return response;
     // setStepTool({});
   };
 
@@ -484,8 +491,14 @@ function StepToolConfiguration({
   //  just pass pipeline and pull id and plan inside instead of passing them individually,
   //  remove deprecated toasts and use toast contexts, wire up latest buttons,
   //  instead of passing in get tools list, use pipeline tool input etc..
-  const getConfigurationTool = (toolName) => {
-    switch (toolName) {
+  const getConfigurationTool = () => {
+    const parsedToolIdentifier = DataParsingHelper.parseString(stepTool?.tool_identifier);
+
+    if (!parsedToolIdentifier) {
+      return null;
+    }
+
+    switch (parsedToolIdentifier) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
         return (
           <ExternalRestApiIntegrationStepEditorPanel
@@ -497,6 +510,14 @@ function StepToolConfiguration({
       case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS:
         return (
           <AzureScriptsStepEditorPanel
+            pipelineId={pipeline._id}
+            pipelineStep={pipelineStep}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
+        return (
+          <UserActionsPipelineStepEditorPanel
             pipelineId={pipeline._id}
             pipelineStep={pipelineStep}
             closeEditorPanel={closeEditorPanel}
@@ -550,7 +571,7 @@ function StepToolConfiguration({
             handleCloseFunction={closeEditorPanel}
           />
         );
-      case "command-line":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.COMMAND_LINE:
         return (
           <CommandLineStepConfiguration
             pipelineId={pipeline._id}
@@ -726,18 +747,15 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
           />
         );
-      case "docker-push":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.DOCKER_PUSH:
         return (
           <DockerPushStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}
             stepTool={stepTool}
-            parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
             createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
@@ -1305,28 +1323,141 @@ function StepToolConfiguration({
             parentCallback={callbackFunction}
             closeEditorPanel={closeEditorPanel}
           />
+        );   
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.PROVAR:
+        return (
+            <ProvarStepToolConfiguration
+                pipelineId={pipeline._id}
+                plan={pipeline.workflow.plan}
+                stepId={stepId}
+                stepTool={stepTool}
+                parentCallback={callbackFunction}
+                closeEditorPanel={closeEditorPanel}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ:
+        return (
+            <SapCpqStepConfiguration
+                pipelineId={pipeline._id}
+                plan={pipeline.workflow.plan}
+                stepId={stepId}
+                stepTool={stepTool}
+                parentCallback={callbackFunction}
+                closeEditorPanel={closeEditorPanel}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_WEBAPPS:
+        return (
+          <AzureWebappsStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );      
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_CLI:
+        return (
+          <AzureCliStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );  
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI:
+        return (
+            <BoomiStepConfiguration
+                pipelineId={pipeline._id}
+                plan={pipeline.workflow.plan}
+                stepId={stepId}
+                stepTool={stepTool}
+                parentCallback={callbackFunction}
+                closeEditorPanel={closeEditorPanel}
+              />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.INFORMATICA_IDQ:
+        return (
+            <InformaticaIdqStepConfiguration
+                pipelineId={pipeline._id}
+                plan={pipeline.workflow.plan}
+                stepId={stepId}
+                stepTool={stepTool}
+                parentCallback={callbackFunction}
+                closeEditorPanel={closeEditorPanel}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE:
+        return (
+            <LiquibaseStepConfiguration
+              pipelineId={pipeline._id}
+              plan={pipeline.workflow.plan}
+              stepId={stepId}
+              stepTool={stepTool}
+              parentCallback={callbackFunction}
+              closeEditorPanel={closeEditorPanel}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK:
+        return (
+          <BlackDuckStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
+        return (
+            <FortifyStepConfiguration
+              pipelineId={pipeline._id}
+              plan={pipeline.workflow.plan}
+              stepId={stepId}
+              stepTool={stepTool}
+              parentCallback={callbackFunction}
+              closeEditorPanel={closeEditorPanel}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.DOCKER_CLI:
+        return (
+            <DockerCliStepConfiguration
+              pipelineId={pipeline._id}
+              plan={pipeline.workflow.plan}
+              stepId={stepId}
+              stepTool={stepTool}
+              parentCallback={callbackFunction}
+              closeEditorPanel={closeEditorPanel}
+            />
         );
     }
   };
 
   const getTitleText = () => {
-    let titleText = "";
-
     if (hasStringValue(stepName) === true) {
-      titleText += `${stepName}: `;
+      return stepName;
     }
 
-    if (hasStringValue(stepTool?.tool_identifier)) {
-      titleText += stepTool.tool_identifier;
-    }
-
-    return titleText;
+    return "Pipeline Step Settings";
   };
 
   const getToolsAndAccountText = () => {
     const newOverlayToolIdentifiers = [
       toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION,
       toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS,
+      toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION,
     ];
 
     if (newOverlayToolIdentifiers.includes(stepTool?.tool_identifier) === false) {
@@ -1340,14 +1471,10 @@ function StepToolConfiguration({
 
   return (
     <div>
-      <div className="title-text-5 upper-case-first mb-3">
+      <div className="title-text-5 upper-case-first mb-2">
         {getTitleText()}
       </div>
-
-      {typeof stepTool !== "undefined" ? (
-        getConfigurationTool(stepTool?.tool_identifier?.toLowerCase())
-      ) : null}
-
+      {getConfigurationTool()}
       {getToolsAndAccountText()}
     </div>
   );

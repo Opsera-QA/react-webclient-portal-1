@@ -1,7 +1,6 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import ActionBarTransferPipelineButton from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarTransferPipelineButton";
-import ActionBarPublishPipelineButton from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarPublishPipelineButton";
 import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -11,8 +10,12 @@ import ActionBarDuplicatePipelineButton
 import ActionBarDeletePipelineButton from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarDeletePipelineButton";
 import ActionBarShowPipelineSummaryOverlayButton
   from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarShowPipelineSummaryOverlayButton";
+import ActionBarPublishPipelineToCustomerCatalogButton
+  from "components/workflow/pipelines/summary/action_bar/buttons/publish/ActionBarPublishPipelineToCustomerCatalogButton";
+import ActionBarViewPipelineAuditLogsButton
+  from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarViewPipelineAuditLogsButton";
 
-function PipelineSummaryActionBar({pipelineModel, isActionAllowedFunction, pipeline, loadPipeline}) {
+function PipelineSummaryActionBar({pipelineModel, pipeline, loadPipeline}) {
   const toastContext = useContext(DialogToastContext);
 
   const toggleHelp = () => {
@@ -27,37 +30,36 @@ function PipelineSummaryActionBar({pipelineModel, isActionAllowedFunction, pipel
         pullSubscriptionStatus={true}
         className={"ml-3"}
       />
+      <ActionBarViewPipelineAuditLogsButton
+        pipeline={pipeline}
+      />
       <ActionBarShowPipelineSummaryOverlayButton
         pipeline={pipeline}
-        isActionAllowedFunction={isActionAllowedFunction}
       />
-      <ActionBarPublishPipelineButton
-        isActionAllowedFunction={isActionAllowedFunction}
-        pipeline={pipeline}
+      <ActionBarPublishPipelineToCustomerCatalogButton
+        pipelineModel={pipelineModel}
+        className={"ml-3"}
       />
       <ActionBarDuplicatePipelineButton
         pipeline={pipeline}
-        isActionAllowedFunction={isActionAllowedFunction}
       />
       <ActionBarTransferPipelineButton
         loadPipeline={loadPipeline}
         pipeline={pipeline}
-        isActionAllowedFunction={isActionAllowedFunction}
       />
       <ActionBarToggleHelpButton
         className={"ml-3 action-bar-icon pointer"}
         toggleHelp={toggleHelp}
       />
       <ActionBarDeletePipelineButton
+        className={"ml-3"}
         pipeline={pipeline}
-        isActionAllowedFunction={isActionAllowedFunction}
       />
     </div>
   );
 }
 
 PipelineSummaryActionBar.propTypes = {
-  isActionAllowedFunction: PropTypes.func,
   loadPipeline: PropTypes.func,
   pipeline: PropTypes.object,
   pipelineModel: PropTypes.object

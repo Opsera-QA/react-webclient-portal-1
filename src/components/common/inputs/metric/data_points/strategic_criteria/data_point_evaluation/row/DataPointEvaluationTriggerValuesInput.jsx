@@ -13,6 +13,7 @@ function DataPointEvaluationTriggerValuesInput(
     triggerFilter,
     disabled,
     updateRuleFunction,
+    helpTooltipText,
   }) {
   const getInputs = () => {
     if (triggerFilter === DATA_POINT_EVALUATION_TRIGGER_FILTER_TYPES.BETWEEN_INCLUSIVE) {
@@ -25,6 +26,7 @@ function DataPointEvaluationTriggerValuesInput(
               setDataObject={setModel}
               setDataFunction={setDataFunction}
               disabled={disabled}
+              helpTooltipText={helpTooltipText}
             />
           </Col>
           <Col sm={12} md={2} className={"w-100"}>
@@ -39,6 +41,7 @@ function DataPointEvaluationTriggerValuesInput(
               setDataObject={setModel}
               setDataFunction={setDataFunction}
               disabled={disabled}
+              helpTooltipText={helpTooltipText}
             />
           </Col>
         </>
@@ -53,6 +56,7 @@ function DataPointEvaluationTriggerValuesInput(
           setDataObject={setModel}
           setDataFunction={setDataFunction}
           disabled={disabled}
+          helpTooltipText={helpTooltipText}
         />
       </Col>
     );
@@ -82,6 +86,7 @@ DataPointEvaluationTriggerValuesInput.propTypes = {
   updateRuleFunction: PropTypes.func,
   disabled: PropTypes.bool,
   triggerFilter: PropTypes.string,
+  helpTooltipText: PropTypes.string
 };
 
 export default DataPointEvaluationTriggerValuesInput;

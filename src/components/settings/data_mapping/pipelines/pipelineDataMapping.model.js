@@ -55,20 +55,6 @@ export class PipelineDataMappingModel extends ModelBase {
   getDetailViewTitle = () => {
     return `Pipeline Data Mapping`;
   };
-
-  getNewInstance = (newData = this.getNewObjectFields()) => {
-    return new PipelineDataMappingModel(
-      {...newData},
-      this.metaData,
-      this.newModel,
-      this.getAccessToken,
-      this.cancelTokenSource,
-      this.loadData,
-      this.customerAccessRules,
-      this.roleDefinitions,
-      this.setStateFunction
-    );
-  };
 }
 
 export default PipelineDataMappingModel;

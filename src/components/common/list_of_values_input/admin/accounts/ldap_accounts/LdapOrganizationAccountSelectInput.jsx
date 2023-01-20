@@ -1,18 +1,32 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
-import {getOrganizationAccountDropdownList} from "components/admin/accounts/ldap/organizations/organization-functions";
+import { AuthContext } from "contexts/AuthContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import accountsActions from "components/admin/accounts/accounts-actions";
 
-function LdapOrganizationAccountSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
-  const toastContext = useContext(DialogToastContext);
+function LdapOrganizationAccountSelectInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    setDataFunction,
+    disabled,
+    textField,
+    valueField,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
+  const [error, setError] = useState(undefined);
   const [ldapOrganizationAccountList, setLdapOrganizationAccountList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { isMounted, cancelTokenSource } = useComponentStateReference();
 
   useEffect(() => {
-    loadData();
+    loadData().catch((error) => {
+      if (isMounted === true) {
+        throw error;
+      }
+    });
   }, []);
 
   const loadData = async () => {
@@ -21,47 +35,73 @@ function LdapOrganizationAccountSelectInput({ fieldName, dataObject, setDataObje
       await getLdapOrganizationAccounts();
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        setError(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
   const getLdapOrganizationAccounts = async () => {
-    let ldapOrganizationAccountList = await getOrganizationAccountDropdownList("name", getAccessToken);
-    setLdapOrganizationAccountList(ldapOrganizationAccountList);
+    const response = await accountsActions.getOrganizationsV2(getAccessToken, cancelTokenSource);
+    const organizations = response?.data;
+
+    if (isMounted?.current === true && Array.isArray(organizations)) {
+      const organizationAccounts = [];
+
+      organizations.map(organization => {
+        const orgAccounts = organization?.orgAccounts;
+        const organizationName = organization?.name;
+
+        if (Array.isArray(orgAccounts) && orgAccounts.length > 0) {
+          orgAccounts.map(orgAccount => {
+            organizationAccounts.push({
+              text: `${orgAccount?.name}: ${orgAccount?.orgDomain}`,
+              groupId: organizationName,
+              value: orgAccount[valueField]
+            });
+          });
+        }
+
+        setLdapOrganizationAccountList(organizationAccounts);
+      });
+    }
   };
 
   return (
-    <div>
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        selectOptions={ldapOrganizationAccountList}
-        busy={isLoading}
-        valueField={valueField}
-        groupBy={"groupId"}
-        textField={textField}
-        disabled={disabled || isLoading}
-      />
-    </div>
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
+      selectOptions={ldapOrganizationAccountList}
+      busy={isLoading}
+      valueField={valueField}
+      error={error}
+      groupBy={"groupId"}
+      textField={textField}
+      disabled={disabled || isLoading}
+    />
   );
 }
 
 LdapOrganizationAccountSelectInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
+  setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string
 };
 
 LdapOrganizationAccountSelectInput.defaultProps = {
-  valueField: "id",
-  textField: "text"
+  valueField: "value",
+  textField: "text",
 };
 
 export default LdapOrganizationAccountSelectInput;

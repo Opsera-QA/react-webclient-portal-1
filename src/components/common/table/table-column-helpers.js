@@ -1,43 +1,50 @@
 import { format } from "date-fns";
 import {
   faCheckCircle,
-  faCircle, faOctagon,
-  faPauseCircle, faPlayCircle, faSearchPlus,
-  faSpinner,
+  faCircle,
+  faExclamationCircle,
+  faOctagon,
+  faPauseCircle,
+  faPlay,
+  faPlayCircle,
+  faSearchPlus,
   faStopCircle,
-  faTimesCircle, faTrash, faPlay, faExclamationCircle
+  faTimesCircle,
+  faTrash,
 } from "@fortawesome/pro-light-svg-icons";
-import {
-  faGithub,
-  faGitlab,
-  faBitbucket,
-  faJira,
-  faSlack
-} from "@fortawesome/free-brands-svg-icons";
+import { faBitbucket, faGithub, faGitlab, faJira, faSlack } from "@fortawesome/free-brands-svg-icons";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import WarningIcon from "../../common/icons/table/WarningIcon";
 import FailIcon from "../../common/icons/table/FailIcon";
 import SuccessMetricIcon from "components/common/icons/metric/success/SuccessMetricIcon";
 import DangerMetricIcon from "components/common/icons/metric/danger/DangerMetricIcon";
 import React from "react";
-import Model from "core/data_model/model";
-import PipelineTypeIcon from "components/common/fields/pipelines/types/PipelineTypeIcon";
 import DashboardFavoritesIcon from "components/common/icons/dashboards/DashboardFavoritesIcon";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
-import {Button} from "react-bootstrap";
-import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
-import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date/date.helpers";
-import {capitalizeFirstLetter, hasStringValue, truncateString} from "components/common/helpers/string-helpers";
+import { Button } from "react-bootstrap";
+import { capitalizeFirstLetter, truncateString } from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
-import { getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
+import { ACCESS_ROLES_FORMATTED_LABELS } from "components/common/helpers/role-helpers";
 import AppliedTagBadge from "components/common/badges/tag/AppliedTagBadge";
-import UnchangedMetricIcon from "components/common/icons/metric/unchanged/UnchangedMetricIcon";
 import NoTrendMetricIcon from "components/common/icons/metric/trend/NoTrendMetricIcon";
 import IconBase from "components/common/icons/IconBase";
 import PageLinkIcon from "components/common/icons/general/PageLinkIcon";
 import { getTimeDisplay } from "components/insights/charts/sdlc/sdlc-duration-by-stage-utility";
 import PipelineTypeIconBase from "components/common/fields/pipelines/types/PipelineTypeIconBase";
+import OrchestrationStateFieldBase
+  from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
+import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
+import CountdownUntilDateFieldBase from "components/common/fields/date/countdown/CountdownUntilDateFieldBase";
+
+export const getDataObjectFromTableRow = (row) => {
+  try {
+    return DataParsingHelper.parseObject(row?.data[row?.row?.index], {});
+  }catch (error) {
+    return {};
+  }
+};
 
 export const getCustomTableHeader = (field) => {
   return field ? field.label : "";
@@ -102,6 +109,21 @@ export const getOwnerNameField = (headerText = "Owner Name") => {
   };
 };
 
+export const getSsoUserNameField = (
+  headerText = "Name",
+  className = "no-wrap-inline",
+) => {
+  return {
+    Header: headerText,
+    accessor: "name",
+    Cell: function getRoleAccessLevel(row) {
+      const dataObject = DataParsingHelper.parseObject(row?.data[row?.row?.index], {});
+      return `${dataObject?.firstName} ${dataObject?.lastName}`;
+    },
+    class: className,
+  };
+};
+
 export const getLimitedTableTextColumn = (field, maxLength, className) => {
   return {
     Header: getCustomTableHeader(field),
@@ -125,12 +147,16 @@ export const getLimitedTableTextColumn = (field, maxLength, className) => {
   };
 };
 
-export const getFormattedLabelWithFunctionColumnDefinition = (field, formatFunction, className) => {
+export const getFormattedLabelWithFunctionColumnDefinition = (field, formatFunction, className, sendWholeObject) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function formatValue(row) {
       if (formatFunction) {
+        if (sendWholeObject === true) {
+          return formatFunction(row?.row?.original);
+        }
+
         return formatFunction(row?.value);
       }
 
@@ -208,26 +234,60 @@ export const getTableDateColumn = (field, className) => {
   };
 };
 
-export const getTableDateTimeColumn = (field, className) => {
+export const getTableDateTimeColumn = (field, className, emptyValuePlaceholder = '') => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function parseDateTime(row) {
-      return row.value ? format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a") : "";
+      return row.value ? format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a") : emptyValuePlaceholder;
     },
     class: className ? className : "no-wrap-inline"
   };
 };
 
-export const getTableDateAndTimeUntilValueColumn = (header, id, fakeColumn = "fakeColumn", className) => {
+export const getTableCreatedAtColumn = (
+  header = "Created",
+  className = "no-wrap-inline",
+  emptyValuePlaceholder = '',
+) => {
+  return {
+    Header: header,
+    accessor: "createdAt",
+    Cell: function parseDateTime(row) {
+      return row.value ? format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a") : emptyValuePlaceholder;
+    },
+    class: className,
+  };
+};
+
+export const getTableDateAndTimeUntilValueColumn = (
+  header,
+  id,
+  fakeColumn = "fakeColumn",
+  className = "no-wrap-inline",
+) => {
   return {
     Header: header,
     accessor: fakeColumn,
     Cell: function parseDate(row) {
-      const originalRow = row.row.original;
-      return originalRow[id] ? convertFutureDateToDhmsFromNowString(new Date(originalRow[id])) : "";
+      const dataObject = getDataObjectFromTableRow(row);
+      const parsedDate = DataParsingHelper.parseNestedDate(dataObject, id);
+
+      if (parsedDate) {
+        return (
+          <div style={{
+            minWidth: "275px",
+            width: "275px",
+            maxWidth: "275px",
+          }}>
+            <CountdownUntilDateFieldBase date={parsedDate} />
+          </div>
+        );
+      }
+
+      return "";
     },
-    class: className ? className : "no-wrap-inline"
+    class: className,
   };
 };
 
@@ -272,7 +332,7 @@ export const getAssociatedPipelineStatusIcon = (pipelineStatus) => {
       return (<IconBase icon={faPlayCircle} className={"green"}/>);
     case "queued":
     case "pending":
-      return (<IconBase icon={faPauseCircle} className={"green"}/>);
+      return (<IconBase icon={faPauseCircle} className={"yellow"}/>);
     case "stopped":
     case "halted":
       return (<IconBase icon={faOctagon} className={"red"}/>);
@@ -292,7 +352,7 @@ export const getPipelineTypeColumn = (field, className) => {
       if (Array.isArray(types) && types.length > 0) {
         type = types[0];
       }
-      
+
       return <PipelineTypeIconBase type={type} />;
     },
     class: className ? className : "cell-center"
@@ -304,9 +364,14 @@ export const getCustomTablePipelineStateColumnDefinition = (field, className) =>
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function parseStatus(tableRow) {
-      const pipelineState = tableRow.row.original[field?.id];
+      const pipelineState = tableRow?.row?.original[field?.id];
 
-      return (getPipelineStateFieldBase(pipelineState));
+      return (
+        <OrchestrationStateFieldBase
+          orchestrationState={pipelineState}
+          type={"Pipeline"}
+        />
+      );
     },
     class: className
   };
@@ -357,6 +422,21 @@ export const getChartTrendStatusColumn = (field, className) => {
       }
     },
     class: className ? className :  undefined
+  };
+};
+
+export const getStaticIconColumn = (icon, accessor = "row", className) => {
+  return {
+    Header: "",
+    accessor: accessor,
+    Cell: function StaticIcon(){
+      if (icon) {
+        return <IconBase icon={icon} />;
+      }
+
+      return "";
+    },
+    class: className ? className : undefined
   };
 };
 
@@ -431,7 +511,6 @@ export const getGitCustodianOriginColumn = (field, className) => {
   };
 };
 
-
 export const getTableFavoriteColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
@@ -501,6 +580,45 @@ export const getDeletePlatformToolTableButtonColumn = (accessor = "row", headerT
   };
 };
 
+export const getPipelineActivityStatusColumn = (field, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: (text) => {
+      const parsedText = DataParsingHelper.parseString(text);
+      if (!parsedText) {
+        return (
+          <span>
+          <i className={"fal fa-question-circle cell-icon vertical-align-item"} />
+          <span className={"ml-1"}>Unknown</span>
+        </span>
+        );
+      }
+
+      return (
+        <span>
+          <i className="fal ${getPipelineStatusIconCss(text)} cell-icon vertical-align-item" />
+          <span className={"ml-1"}>${capitalizeFirstLetter(text)}</span>
+        </span>
+      );
+    },
+    class: className ? className : undefined
+  };
+};
+
+export const getUppercaseTableTextColumn = (field, className, maxWidth = undefined ) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: (row) => {
+      return capitalizeFirstLetter(row?.value);
+    },
+    class: className,
+    maxWidth: maxWidth
+  };
+};
+
+
 // TODO: Should we show nothing if not === false?
 export const getTableBooleanIconColumn = (field, className) => {
   return {
@@ -530,11 +648,19 @@ export const getTableInfoIconColumn = (showInformationFunction, accessor = "row"
     Header: "Info",
     accessor: accessor,
     Cell: function getInfoIcon(row) {
+      if (typeof showInformationFunction !== "function") {
+        return (
+          <IconBase
+            icon={faSearchPlus}
+          />
+        );
+      }
+
       return (
         <IconBase
           icon={faSearchPlus}
           className={"pointer"}
-          onClick={() => {showInformationFunction(row?.data[row?.row?.index]); }}
+          onClickFunction={() => {showInformationFunction(row?.data[row?.row?.index]); }}
         />
       );
     },
@@ -554,6 +680,21 @@ export const getTableArrayCountColumn = (field, className) => {
   };
 };
 
+// This just takes the data field and returns the first element and count inside the array
+export const getTableArrayFirstValueAndCountColumn = (field, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: function getCount(row) {      
+      return Array.isArray(row?.value) && row?.value.length > 0 ? 
+        <TooltipWrapper innerText={row?.value.reduce((acc, cur) => acc += `, ${cur}`)}>
+          <span>{row?.value.length > 1 ? `${row?.value[0]} + ${row?.value.length - 1}` : row?.value[0]}</span>
+        </TooltipWrapper> : "";
+    },
+    class: className ? className :  "no-wrap-inline"
+  };
+};
+
 export const getCountColumnWithoutField = (header, accessor, className) => {
   return {
     Header: header,
@@ -565,6 +706,7 @@ export const getCountColumnWithoutField = (header, accessor, className) => {
   };
 };
 
+// TODO: Combine with the below
 export const getRoleAccessLevelColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),
@@ -590,6 +732,31 @@ export const getRoleAccessLevelColumn = (field, className) => {
       return "ROLE ACCESS LEVEL UNKNOWN";
     },
     class: className ? className :  "no-wrap-inline"
+  };
+};
+
+export const getRoleAccessColumn = (
+  type,
+  headerText = "Access",
+  rolesField = "roles",
+  className = "no-wrap-inline",
+) => {
+  return {
+    Header: headerText,
+    accessor: rolesField,
+    Cell: function getRoleAccessLevel(row) {
+      const roles = DataParsingHelper.parseArray(row?.value, []);
+      const owner = row?.data[row?.row?.index]?.owner;
+
+      return (
+        <AccessRoleIconBase
+          roles={roles}
+          owner={owner}
+          type={type}
+        />
+      );
+    },
+    class: className,
   };
 };
 
@@ -626,25 +793,102 @@ export const getGitCustodianExternalLinkIconColumnDefinition = (field, className
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function getPageLink(row){
-      return (
+      return row?.value?.url ?
+      (
         <PageLinkIcon
           pageLink={row?.value?.url}
           externalLink={true}
           pageLinkText={row?.value?.key}
         />
+      ) : (row?.value?.key || "");
+    },
+    class: className ? className : undefined
+  };
+};
+
+export const getUserObjectRoleLevelColumnDefinition = (userObject, className) => {
+  return {
+    Header: "Assigned Role",
+    accessor: "row",
+    Cell: function getPageLink(row){
+      const parsedUserObject = DataParsingHelper.parseObject(userObject);
+
+      if (!parsedUserObject) {
+        return "";
+      }
+
+      const parsedEmail = DataParsingHelper.parseEmailAddress(parsedUserObject.email);
+      const parsedUserGroups = DataParsingHelper.parseArray(parsedUserObject.groups);
+
+      const object = getDataObjectFromTableRow(row);
+      const objectRoles = DataParsingHelper.parseArray(object?.roles, []);
+      const parsedRole = ObjectAccessRoleHelper.calculateUserObjectRole(
+        parsedEmail,
+        parsedUserGroups,
+        objectRoles
+      );
+
+      return (DataParsingHelper.parseString(ObjectAccessRoleHelper.getLabelForAccessRole(parsedRole), ""));
+    },
+    class: className,
+  };
+};
+
+export const getGroupRoleLevelColumnDefinition = (group, className) => {
+  return {
+    Header: "Assigned Role",
+    accessor: "row",
+    Cell: function getPageLink(row){
+      const parsedGroup = DataParsingHelper.parseString(group);
+
+      if (!parsedGroup) {
+        return "";
+      }
+
+      const object = getDataObjectFromTableRow(row);
+      const parsedRole = ObjectAccessRoleHelper.getGroupRoleLevel(
+        parsedGroup,
+        object,
+      );
+
+      return (DataParsingHelper.parseString(ObjectAccessRoleHelper.getLabelForAccessRole(parsedRole), ""));
+    },
+    class: className,
+  };
+};
+
+export const getGitCustodianScmLinkIconColumnDefinition = (field, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    Cell: function getPageLink(row){
+
+      return (
+          <PageLinkIcon
+              pageLink={row?.value}
+              externalLink={true}
+              pageLinkText={""}
+          />
       );
     },
     class: className ? className : undefined
   };
 };
 
-export const getPathDefinition = (field, className) => {
+export const getPathDefinition = (field, className, maxLength = 50, overlayWidth) => {
   return {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function getPath(row){
       const path = row?.value;
-      return (<TooltipWrapper innerText={path}><span>{truncateString(path, 50, true)}</span></TooltipWrapper>);
+      return (
+        <TooltipWrapper
+          innerText={path}
+          overlayWidth={overlayWidth}
+        >
+          <span>{truncateString(path, maxLength, true)}</span>
+        </TooltipWrapper>
+      );
     },
     class: className ? className : undefined
   };

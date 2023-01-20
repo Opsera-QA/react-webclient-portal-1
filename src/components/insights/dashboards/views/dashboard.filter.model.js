@@ -37,10 +37,6 @@ const dashboardFilterMetadata = {
       label: "Active Filters",
       id: "activeFilters",
     },
-    {
-      label: "Favorites",
-      id: "isFavorite",
-    },
   ],
   newObjectFields: {
     pageSize: 50,
@@ -50,7 +46,6 @@ const dashboardFilterMetadata = {
     status: "",
     owner: "",
     type: "",
-    isFavorite: "",
     activeFilters: []
   },
 };
@@ -59,7 +54,7 @@ export class DashboardFilterModel extends FilterModelBase {
   constructor(getAccessToken) {
     super(dashboardFilterMetadata);
     this.getAccessToken = getAccessToken;
-    this.sessionDataKey = "dashboard-filter-model-data";
+    this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.DASHBOARD_FILTER_MODEL_DATA;
     this.enableUrlUpdatesWithQueryParameters();
     this.unpackUrlParameters();
   }
@@ -103,12 +98,6 @@ export class DashboardFilterModel extends FilterModelBase {
       activeFilters.push({filterId: "owner", text: `Owner: ${ownerName}`});
     }
 
-    const isFavorite = this.getData("isFavorite");
-
-    if (hasStringValue(isFavorite) === true) {
-      activeFilters.push({filterId: "isFavorite", text: `Only Show Favorites`});
-    }
-
     return activeFilters;
   };
 
@@ -117,9 +106,10 @@ export class DashboardFilterModel extends FilterModelBase {
       [
         {text: "Oldest Dashboards", value: "oldest"},
         {text: "Newest Dashboards", value: "newest"},
-        {text: "Dashboard Name (A-Za-z)", value: "name"},
-        {text: "Dashboard Name (z-aZ-A)", value: "name-descending"},
-        {text: "Last Updated", value: "last-updated"},
+        {text: "Dashboard Name (A-Z a-z)", value: "name"},
+        {text: "Dashboard Name (z-a Z-A)", value: "name-descending"},
+        {text: "Updated (Latest)", value: "last-updated"},
+        {text: "Updated (Earliest)", value: "earliest-updated"},
       ]
     );
   };

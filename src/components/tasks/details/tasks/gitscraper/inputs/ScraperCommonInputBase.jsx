@@ -201,7 +201,7 @@ ScraperCommonInputBase.defaultProps = {
   titleIcon: faBracketsCurly,
   disabledFields: [],
   allowIncompleteItems: false,
-  nameMaxLength: 50,
+  nameMaxLength: 1024,
 };
 
 export default ScraperCommonInputBase;

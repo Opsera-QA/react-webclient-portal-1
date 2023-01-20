@@ -38,7 +38,7 @@ function TextInputWithButtonAWSLambda({
     let classes = `form-control`;
 
     if (errorMessage !== "" || errorMsg !== "") {
-      classes += ` border border-danger error-text`;
+      classes += ` border border-danger error-text-alt`;
     }
 
     if (inputClasses) {
@@ -84,6 +84,7 @@ function TextInputWithButtonAWSLambda({
         extraActionButtons={extraActionButtons}
         model={dataObject}
         hasError={hasStringValue(errorMessage) === true}
+        disabled={disabled}
       />
       <Row>
         <div className="input-group mb-3 ml-3 mr-3">

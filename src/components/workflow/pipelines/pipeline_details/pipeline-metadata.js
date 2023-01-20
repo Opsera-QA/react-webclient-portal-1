@@ -1,5 +1,6 @@
 const pipelineMetadata = {
   idProperty: "_id",
+  type: "Pipeline",
   fields: [
     {
       label: "ID",
@@ -8,7 +9,10 @@ const pipelineMetadata = {
     {
       label: "Name",
       id: "name",
-      isRequired: true
+      minLength: 3,
+      maxLength: 50,
+      isRequired: true,
+      regexDefinitionName: "expandedTextAndSymbolsWithSpaces"
     },
     {
       label: "Run Count",
@@ -113,7 +117,7 @@ const pipelineMetadata = {
       id: "tags",
     },
     {
-      label: "Created",
+      label: "Created On",
       id: "createdAt",
     },
     {
@@ -125,10 +129,17 @@ const pipelineMetadata = {
       id: "workflow.last_run",
     },
     {
+      label: "Last Run",
+      id: "workflow.last_run.completed",
+    },
+    {
       label: "Schedule",
       id: "schedule"
-    }
+    },
   ],
+  // newObjectFields: {
+  //   "workflow.run_count": 0,
+  // }
 };
 
 export default pipelineMetadata;

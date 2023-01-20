@@ -1,18 +1,20 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const commandLineStepFormMetadata = {
   type: "Command Line Tool Configuration",
   fields: [
     {
-      label: "Jenkins Tool",
+      label: "Tool",
       id: "toolConfigId",
       isRequired: true
     },
     {
-      label: "Jenkins Tool Name",
+      label: "Tool Name",
       id: "toolName",
       isRequired: true
     },
     {
-      label: "Jenkins Job",
+      label: "Job Name",
       id: "toolJobName",
       isRequired: true
     },
@@ -21,7 +23,7 @@ const commandLineStepFormMetadata = {
       id: "jobName",
     },
     {
-      label: "Jenkins Job",
+      label: "Job",
       id: "toolJobId",
       isRequired: true
     },
@@ -36,13 +38,13 @@ const commandLineStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Select SCM Type",
+      label: "SCM Type",
       id: "type",
       isRequired: true
     },
     
     {
-      label: "Select Account",
+      label: "Account",
       id: "gitCredential",
       isRequired: true
     },
@@ -52,7 +54,10 @@ const commandLineStepFormMetadata = {
       isRequired: true
     },
     {
+      label: "Repository",
       id: "repoId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
+      isRequired: true
     },
     
     {
@@ -63,6 +68,7 @@ const commandLineStepFormMetadata = {
     
     {
       id: "projectId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       id: "gitUrl",
@@ -77,6 +83,7 @@ const commandLineStepFormMetadata = {
     {
       label: "Repository",
       id: "repository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
       isRequired: true
     },
     
@@ -94,11 +101,12 @@ const commandLineStepFormMetadata = {
     {
       label: "Branch",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequired: true
     },
     
     {
-      label: "Want to specify the path for a script file?",
+      label: "Specify Script File Path",
       id: "sourceScript",
     },
     {
@@ -166,6 +174,11 @@ const commandLineStepFormMetadata = {
       maxItems: 15,
     },
     {
+      label: "Local Input Parameters",
+      id: "stepParameters",
+      maxItems: 15,
+    },
+    {
       label: "Use Terraform Output",
       id: "useTerraformOutput"
     },
@@ -174,7 +187,7 @@ const commandLineStepFormMetadata = {
       id: "sonarScanFlag"
     },
     {
-      label: "Sonar Custom Params Mapping",
+      label: "Sonar Custom Parameters Mapping",
       id: "saveSonarParameters"
     },
     {
@@ -183,7 +196,7 @@ const commandLineStepFormMetadata = {
       maxItems: 15,
     },
     {
-      label: "Sonar Tool Id",
+      label: "Sonar Tool",
       id: "sonarToolConfigId",
       isRequiredFunction: (model) => {
         return model?.getData("sonarScanFlag") === true;
@@ -197,7 +210,19 @@ const commandLineStepFormMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("sonarScanFlag") === true;
       },
-    }
+    },
+    {
+      label: "Input Parameters with Variable Mapping",
+      id: "saveEnvironmentVariables"
+    },
+    {
+      label: "Dynamic Parameters",
+      id: "environmentVariables",
+      maxItems: 15,
+      isRequiredFunction: (model) => {
+        return model?.getData("saveEnvironmentVariables") === true;
+      },
+    },
   ],
   fieldsAlt: [
     {
@@ -242,7 +267,7 @@ const commandLineStepFormMetadata = {
     },
     
     {
-      label: "Select Account",
+      label: "Account",
       id: "gitCredential",
       isRequired: true
     },
@@ -256,7 +281,9 @@ const commandLineStepFormMetadata = {
       id: "workspaceDeleteFlag",
     },
     {
+      label: "Repository",
       id: "repoId",
+      isRequired: true
     },
     
     {
@@ -384,6 +411,11 @@ const commandLineStepFormMetadata = {
       maxItems: 15,
     },
     {
+      label: "Local Input Parameters",
+      id: "stepParameters",
+      maxItems: 15,
+    },
+    {
       label: "Sonar Tool Id",
       id: "sonarToolConfigId",
       isRequiredFunction: (model) => {
@@ -398,7 +430,19 @@ const commandLineStepFormMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("sonarScanFlag") === true;
       },
-    }
+    },
+    {
+      label: "Save Dynamic Parameters",
+      id: "saveEnvironmentVariables"
+    },
+    {
+      label: "Dynamic Parameters",
+      id: "environmentVariables",
+      maxItems: 15,
+      isRequiredFunction: (model) => {
+        return model?.getData("saveEnvironmentVariables") === true;
+      },
+    },
   ],
   newObjectFields: {
 
@@ -443,12 +487,15 @@ const commandLineStepFormMetadata = {
     terraformStepId: "",
     customParameters: [],
     outputCustomParameters: [],
+    stepParameters: [],
     useTerraformOutput : false,
     sonarScanFlag: false,
     saveSonarParameters: false,
     sonarCustomParameters: [],
     sonarToolConfigId: "",
     projectKey: "",
+    saveEnvironmentVariables: false,
+    environmentVariables: [],
   }
 };
 

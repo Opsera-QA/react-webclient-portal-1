@@ -49,16 +49,28 @@ adminTagsActions.getAllTagsV2 = async (getAccessToken, cancelTokenSource, status
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-adminTagsActions.getTags = async (getAccessToken, cancelTokenSource, tagFilterDto) => {
+adminTagsActions.getPlatformTags = async (
+  getAccessToken,
+  cancelTokenSource,
+) => {
+  const apiUrl = "/tags/platform";
+  return await baseActions.apiGetCallV3(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+adminTagsActions.getTags = async (getAccessToken, cancelTokenSource, tagFilterModel) => {
   const apiUrl = "/tags";
   const urlParams = {
     params: {
-      sort: tagFilterDto.getFilterValue("sortOption"),
-      size: tagFilterDto.getFilterValue("pageSize"),
-      page: tagFilterDto.getFilterValue("currentPage"),
-      type: tagFilterDto.getFilterValue("type"),
-      status: tagFilterDto.getFilterValue("status"),
-      search: tagFilterDto.getData("search")
+      sort: tagFilterModel?.getFilterValue("sortOption"),
+      size: tagFilterModel?.getFilterValue("pageSize"),
+      page: tagFilterModel?.getFilterValue("currentPage"),
+      type: tagFilterModel?.getFilterValue("type"),
+      status: tagFilterModel?.getFilterValue("status"),
+      search: tagFilterModel?.getFilterValue("search")
     },
   };
 
@@ -113,6 +125,11 @@ adminTagsActions.createTagV2 = async (getAccessToken, cancelTokenSource, tagData
 
 adminTagsActions.getRelevantPipelinesV2 = async (getAccessToken, cancelTokenSource, tags) => {
   const apiUrl = `/reports/pipelines/tags`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, tags);
+};
+
+adminTagsActions.getAllPipelinesWithTags = async (getAccessToken, cancelTokenSource, tags) => {
+  const apiUrl = `/reports/pipelines/all-tags`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, tags);
 };
 

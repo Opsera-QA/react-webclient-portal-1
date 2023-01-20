@@ -12,6 +12,8 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import GitOperationActionSelectInput from "./inputs/GitOperationActionSelectInput";
 import GitOperationDestinationBranchSelectInput from "./inputs/GitOperationDestinationBranchSelectInput";
 import GitOperationSourceBranchSelectInput from "./inputs/GitOperationSourceBranchSelectInput";
+import BooleanToggleInput from "../../../../../../../common/inputs/boolean/BooleanToggleInput";
+import GitOperationReviewerSelectInput from "./inputs/GitOperationReviewerSelectInput";
 
 function GitOperationStepConfiguration({
   pipelineId,
@@ -64,6 +66,14 @@ function GitOperationStepConfiguration({
     parentCallback(item);
   };
 
+  const setAddReviewerFlag = (fieldName, newValue) => {
+    console.log(fieldName, newValue);
+    const newModel = {...gitOperationModel};
+    newModel?.setData(fieldName, newValue);
+    newModel?.setData("prReviewers", []);
+    setGitOperationModel({...newModel});
+  };
+
   const getSourceSelection = () => {
     return (
       <div>
@@ -114,16 +124,30 @@ function GitOperationStepConfiguration({
         return (
           <>
             <GitOperationDestinationBranchSelectInput
-                model={gitOperationModel}
-                setModel={setGitOperationModel}
-                fieldName={"targetBranch"}
-                sourceBranch={gitOperationModel?.getData("gitBranch")}
+              model={gitOperationModel}
+              setModel={setGitOperationModel}
+              fieldName={"targetBranch"}
+              sourceBranch={gitOperationModel?.getData("gitBranch")}
             />
             <TextInputBase
               dataObject={gitOperationModel}
               setDataObject={setGitOperationModel}
               fieldName={"description"}
             />
+            <BooleanToggleInput
+              dataObject={gitOperationModel}
+              setDataObject={setGitOperationModel}
+              setDataFunction={setAddReviewerFlag}
+              fieldName={"addReviewers"}
+            />
+            {gitOperationModel.getData("addReviewers") && (
+              <GitOperationReviewerSelectInput
+                setDataObject={setGitOperationModel}
+                dataObject={gitOperationModel}
+                source={gitOperationModel?.getData("source")}
+                repository={gitOperationModel?.getData("repository")}
+              />
+            )}
           </>
         );
       case "tag-creation":

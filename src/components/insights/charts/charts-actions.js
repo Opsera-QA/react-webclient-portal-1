@@ -24,8 +24,11 @@ import {
   getServiceNowServiceOfferingsFromKpiConfiguration,
   getServiceNowConfigurationItemsFromKpiConfiguration,
   getServiceNowBusinessServicesFromKpiConfiguration,
+  getHierarchyFiltersFromKpiConfiguration,
   getUseKpiTagsFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration,
+  getDeploymentStageFromKpiConfiguration,
+  getGitlabProjectFromKpiConfiguration
 } from "components/insights/charts/charts-helpers";
 import { addDays } from "date-fns";
 
@@ -41,20 +44,14 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
     tags: tags,
   };
 
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, undefined, apiUrl, postBody);
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, apiUrl, postBody);
 };
 
-chartsActions.getSonarUnitTestsMetrics = async (
-  kpiConfiguration,
-  dashboardTags,
-  getAccessToken,
-  cancelTokenSource,
-  tableFilterDto,
-  dashboardOrgs
-) => {
+chartsActions.getSonarUnitTestsMetrics = async(kpiConfiguration, dashboardTags, getAccessToken, cancelTokenSource, tableFilterDto, dashboardOrgs)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/sonar/v1/sonarUnitTestsMetrics";
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
@@ -69,6 +66,7 @@ chartsActions.getSonarUnitTestsMetrics = async (
     startDate: date.start,
     endDate: date.end,
     tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
   };
@@ -76,13 +74,26 @@ chartsActions.getSonarUnitTestsMetrics = async (
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-chartsActions.getGithubPullRequestsMetrics = async(kpiConfiguration, getAccessToken, cancelTokenSource, tags, dashboardOrgs, tableFilterDto, type, repository)=>{
+chartsActions.getGithubPullRequestsMetrics = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs, tableFilterDto, type, repository)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/github/v1/actionable/githubcommits";
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
+
   const postBody = {
     startDate: date.start,
     endDate: date.end,
-    tags: tags,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
     dashboardOrgs: dashboardOrgs,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
@@ -118,20 +129,106 @@ chartsActions.getGithubTotalCommitsPerContributorsAndRepositories = async(kpiCon
     size: tableFilterDto?.getData("pageSize"),
     repository,
   };
-  
+
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-chartsActions.getGithubTotalCommitsMetrics = async(kpiConfiguration, getAccessToken, cancelTokenSource, tags, dashboardOrgs)=>{
+chartsActions.getGithubTotalCommitsMetrics = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/github/v1/githubTotalCommits";
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
+
   const postBody = {
     startDate: date.start,
     endDate: date.end,
-    tags: tags,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
     dashboardOrgs: dashboardOrgs
   };
 
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+chartsActions.getGitCustodianFilters = async(getAccessToken, cancelTokenSource, filters) => {
+  const apiUrl = "/analytics/gitscraper/v1/dashboard/filters";
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, filters);
+};
+
+chartsActions.getGitCustodianChartsData = async(getAccessToken, cancelTokenSource, filterModel)=>{
+  const apiUrl = "/analytics/gitscraper/v1/dashboard/charts";
+
+  const postBody = {
+      startDate: filterModel.getFilterValue('date').startDate,
+      endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
+      tags: filterModel.getFilterValue('tags') ? filterModel.getFilterValue('tags') : [],
+      filters: {
+        repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories') : [],
+        authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors') : [],
+        service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service') : [],
+        status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status') : [],
+        email: filterModel.getFilterValue('email') ? filterModel.getFilterValue('email') : [],
+        type: filterModel.getFilterValue('type') ? filterModel.getFilterValue('type') : [],
+      }
+    };
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+chartsActions.getGitCustodianTableData = async(getAccessToken, cancelTokenSource, filterModel, tableFilterDto)=>{
+  const apiUrl = "/analytics/gitscraper/v1/dashboard/table";
+
+  const postBody = {
+      startDate: filterModel.getFilterValue('date').startDate,
+      endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
+      sortOption: tableFilterDto?.getData("sortOption")?.value,
+      search: tableFilterDto?.getData("search"),
+      tags: filterModel.getFilterValue('tags') ? filterModel.getFilterValue('tags') : [],
+      filters: {
+        repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories') : [],
+        authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors') : [],
+        service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service') : [],
+        // status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status') : [],
+        status: tableFilterDto.getFilterValue('status') ? tableFilterDto.getFilterValue('status') : [],
+        email: filterModel.getFilterValue('email') ? filterModel.getFilterValue('email') : [],
+        type: filterModel.getFilterValue('type') ? filterModel.getFilterValue('type') : [],
+      },
+      page: tableFilterDto?.getData("currentPage"),
+      size: tableFilterDto?.getData("pageSize"),
+    };
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+chartsActions.exportGitCustodianData = async(getAccessToken, cancelTokenSource, filterModel)=>{
+  const apiUrl = "/analytics/gitscraper/v1/dashboard/download";
+
+  const postBody = {
+    startDate: filterModel.getFilterValue('date').startDate,
+    endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
+    tags: filterModel.getFilterValue('tags') ? filterModel.getFilterValue('tags') : [],
+    filters: {
+      repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories') : [],
+      authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors') : [],
+      service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service') : [],
+      status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status') : [],
+      email: filterModel.getFilterValue('email') ? filterModel.getFilterValue('email') : [],
+      type: filterModel.getFilterValue('type') ? filterModel.getFilterValue('type') : [],
+    }
+  };
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+chartsActions.createGitCustodianJiraTicket = async(getAccessToken, cancelTokenSource, postBody)=>{
+  delete postBody.issuesList;
+  const apiUrl = "/analytics/actions/v1/jira/ticket/createDefault";
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
@@ -162,67 +259,6 @@ chartsActions.getGitScraperMetrics = async(kpiConfiguration, getAccessToken, can
     repository,
   };
 
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-chartsActions.getGitCustodianFilters = async(getAccessToken, cancelTokenSource)=>{
-  const apiUrl = "/analytics/gitscraper/v1/dashboard/filters";
-  return await baseActions.handleNodeAnalyticsApiGetRequest(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-chartsActions.getGitCustodianChartsData = async(getAccessToken, cancelTokenSource, filterModel)=>{
-  const apiUrl = "/analytics/gitscraper/v1/dashboard/charts";
-
-  const postBody = {
-      startDate: filterModel.getFilterValue('date').startDate,
-      endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
-      filters: {
-        repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories').map(el => el.value) : [],
-        authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors').map(el => el.value) : [],
-        service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service').map(el => el.value) : [],
-        status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status').map(el => el.value) : []
-      }
-    };
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-chartsActions.getGitCustodianTableData = async(getAccessToken, cancelTokenSource, filterModel, tableFilterDto)=>{
-  const apiUrl = "/analytics/gitscraper/v1/dashboard/table";
-
-  const postBody = {
-      startDate: filterModel.getFilterValue('date').startDate,
-      endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
-      filters: {
-        repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories').map(el => el.value) : [],
-        authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors').map(el => el.value) : [],
-        service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service').map(el => el.value) : [],
-        status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status').map(el => el.value) : []
-      },
-      page: tableFilterDto?.getData("currentPage"),
-      size: tableFilterDto?.getData("pageSize"),
-    };
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-chartsActions.exportGitCustodianData = async(getAccessToken, cancelTokenSource, filterModel)=>{
-  const apiUrl = "/analytics/gitscraper/v1/dashboard/download";
-
-  const postBody = {
-    startDate: filterModel.getFilterValue('date').startDate,
-    endDate: addDays(new Date(filterModel.getFilterValue('date').endDate), 1),
-    filters: {
-      repositories: filterModel.getFilterValue('repositories') ? filterModel.getFilterValue('repositories').map(el => el.value) : [],
-      authors: filterModel.getFilterValue('authors') ? filterModel.getFilterValue('authors').map(el => el.value) : [],
-      service: filterModel.getFilterValue('service') ? filterModel.getFilterValue('service').map(el => el.value) : [],
-      status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status').map(el => el.value) : []
-    }
-  };
-  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-chartsActions.createGitCustodianJiraTicket = async(getAccessToken, cancelTokenSource, postBody)=>{
-  delete postBody.issuesList;
-  const apiUrl = "/analytics/actions/v1/jira/ticket/createDefault";
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
@@ -287,10 +323,10 @@ chartsActions.getGitScraperCleanRepos = async(kpiConfiguration, getAccessToken, 
 };
 
 chartsActions.getGitScraperIssuesActionableInsights = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs, tableFilterDto, repository, branch)=>{
-  
+
   const apiUrl = "/analytics/gitscraper/v1/gitScraperIssuesActionableInsights";
-  
-  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);  
+
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
@@ -321,7 +357,6 @@ chartsActions.getGitScraperIssuesActionableInsights = async(kpiConfiguration, ge
 chartsActions.getMetadataInfo = async(kpiConfiguration, getAccessToken, cancelTokenSource, dashboardTags, dashboardOrgs)=>{
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const apiUrl = "/analytics/opserapipelines/v1/deploymentAnalyticsPipelines";
-  
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
@@ -332,7 +367,6 @@ chartsActions.getMetadataInfo = async(kpiConfiguration, getAccessToken, cancelTo
     dashboardTags = null;
     dashboardOrgs = null;
   }
-
   const postBody = {
     startDate: date.start,
     endDate: date.end,
@@ -409,6 +443,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   actionableInsightsQueryData,
   coveritySeverity,
   priorityMTTR,
+  headCommitSha,
   projectName,
   runCount,
   pipelineId
@@ -436,9 +471,11 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     serviceNowAssignmentGroups = getServiceNowAssignmentGroupsFromKpiConfiguration(kpiConfiguration),
     serviceNowServiceOfferings = getServiceNowServiceOfferingsFromKpiConfiguration(kpiConfiguration),
     serviceNowConfigurationItems = getServiceNowConfigurationItemsFromKpiConfiguration(kpiConfiguration),
-    serviceNowBusinessServices = getServiceNowBusinessServicesFromKpiConfiguration(kpiConfiguration);
+    serviceNowBusinessServices = getServiceNowBusinessServicesFromKpiConfiguration(kpiConfiguration),
+    deploymentStages = getDeploymentStageFromKpiConfiguration(kpiConfiguration),
+    gitlabProjects = getGitlabProjectFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-
+  let hierarchyFilters = getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
   const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
   const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
@@ -489,11 +526,52 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     actionableInsightsQueryData: actionableInsightsQueryData,
     coveritySeverity: coveritySeverity,
     priorityMTTR: priorityMTTR,
+    headCommitSha: headCommitSha,
+    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
     projectName: projectName,
     runCount: runCount,
     pipelineId: pipelineId,
+    deploymentStages:deploymentStages,
+    gitlabProjects: gitlabProjects
   };
 
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+chartsActions.getGithubListOfRepositories = async(getAccessToken, cancelTokenSource,kpiConfiguration, dashboardTags, dashboardOrgs, tableFilterDto)=>{
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const apiUrl = "/analytics/github/v1/githubListOfRepositories";
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+  const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+  if (!useDashboardTags) {
+    dashboardTags = null;
+    dashboardOrgs = null;
+  }
+
+  const postBody = {
+    startDate: date.start,
+    endDate: date.end,
+    tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+    dashboardOrgs: dashboardOrgs,
+    page: tableFilterDto?.getData("currentPage"),
+    size: tableFilterDto?.getData("pageSize"),
+    search: tableFilterDto?.getData("search"),
+    type: tableFilterDto?.getData("type"),
+    sortOption: tableFilterDto?.getData("sortOption")?.value,
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+chartsActions.updateGitCustodianVulnerabilityStatus = async(getAccessToken, cancelTokenSource, postBody)=>{
+  delete postBody.issuesList;  
+  const apiUrl = "/analytics/gitscraper/v1/dashboard/table/updateStatus";
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 

@@ -29,7 +29,8 @@ function FilterBar(
     handleExportFunction,
     handleImportFunction,
     showRefreshButton,
-    disableNewRecordButton
+    disableNewRecordButton,
+    filterSelectionOverlayPanel,
   }) {
   const getType = () => {
     if (hasStringValue(type) === true) {
@@ -64,6 +65,7 @@ function FilterBar(
         <SearchFilter
           isLoading={isLoading}
           paginationModel={filterModel}
+          searchText={filterModel?.getData("search")}
           loadData={loadData}
           className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
           metadata={metadata}
@@ -113,20 +115,21 @@ function FilterBar(
             filterModel={filterModel}
             setFilterModel={setFilterModel}
             isLoading={isLoading}
-            className={dropdownFilters != null || loadData != null ? "mr-2" : null}
+            className={dropdownFilters != null || filterSelectionOverlayPanel != null || loadData != null ? "mr-2" : null}
           />
           {showRefreshButton &&
             <RefreshButton
               isLoading={isLoading}
               loadDataFunction={loadData}
-              className={dropdownFilters != null ? "mr-2" : null}
+              className={dropdownFilters != null || filterSelectionOverlayPanel != null ? "mr-2" : null}
             />
-          }          
+          }
           <FilterButtons
             isLoading={isLoading}
             loadData={loadData}
             dropdownFilters={dropdownFilters}
             filterDto={filterModel}
+            filterSelectionOverlayPanel={filterSelectionOverlayPanel}
           />
           {exportButton}
         </div>
@@ -155,11 +158,12 @@ FilterBar.propTypes = {
   handleImportFunction: PropTypes.func,
   showRefreshButton: PropTypes.bool,
   disableNewRecordButton: PropTypes.bool,
+  filterSelectionOverlayPanel: PropTypes.object,
 };
 
 FilterBar.defaultProps = {
   showRefreshButton: true,
-  disableNewRecordButton: false
+  disableNewRecordButton: false,
 };
 
 export default FilterBar;

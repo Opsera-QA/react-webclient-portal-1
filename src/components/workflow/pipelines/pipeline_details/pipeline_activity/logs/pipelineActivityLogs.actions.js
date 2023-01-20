@@ -2,12 +2,31 @@ import baseActions from "utils/actionsBase";
 
 const pipelineActivityLogsActions = {};
 
+pipelineActivityLogsActions.getPipelineActivityLogCountForRun = async (
+  getAccessToken,
+  cancelTokenSource,
+  pipelineId,
+  runCount,
+) => {
+  const apiUrl = `/pipelines/${pipelineId}/activity/count`;
+  const queryParameters = {
+    runCount: runCount,
+  };
+
+  return await baseActions.apiGetCallV3(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    queryParameters,
+  );
+};
+
 pipelineActivityLogsActions.getPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterModel, currentRunNumber) => {
   const urlParams = {
     params: {
       search:   pipelineActivityFilterModel?.getData("search"),
       runCount: currentRunNumber,
-      fields: ["run_count", "step_name", "action", "message", "status", "createdAt", "step_index"],
+      fields: ["run_count", "step_name", "action", "message", "status", "createdAt", "step_index", "step_id", "user_id"],
       status: pipelineActivityFilterModel?.getFilterValue("status"),
     },
   };
@@ -20,7 +39,7 @@ pipelineActivityLogsActions.getLatestPipelineActivityLogsV3 = async (getAccessTo
   const urlParams = {
     params: {
       search: pipelineActivityFilterDto?.getData("search"),
-      fields: ["run_count", "step_name", "action", "message", "status", "createdAt"],
+      fields: ["run_count", "step_name", "action", "message", "status", "createdAt", "step_id"],
       status: pipelineActivityFilterDto?.getFilterValue("status"),
     },
   };
@@ -33,7 +52,7 @@ pipelineActivityLogsActions.getSecondaryPipelineActivityLogsV3 = async (getAcces
   const urlParams = {
     params: {
       search: pipelineActivityFilterDto?.getData("search"),
-      fields: ["run_count", "step_name", "action", "message", "status", "createdAt"],
+      fields: ["run_count", "step_name", "action", "message", "status", "createdAt", "step_id"],
       status: pipelineActivityFilterDto?.getFilterValue("status"),
     },
   };

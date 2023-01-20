@@ -6,68 +6,38 @@ import argoActions from "../../argo-actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
-import axios from "axios";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import ArgoClusterNamespaceInput from "./inputs/ArgoClusterNamespaceInput";
 import ArgoGroupKindInput from "./inputs/ArgoGroupKindInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import ArgoRepositorySelectInput
   from "components/common/list_of_values_input/tools/argo_cd/repositories/ArgoRepositorySelectInput";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function ArgoProjectEditorPanel({ argoProjectData, toolData, projId, handleClose }) {
+function ArgoProjectEditorPanel({ argoProjectData, toolId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [argoProjectModel, setArgoProjectModel] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const { cancelTokenSource} = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    if(argoProjectData) {
-      loadData();
-    }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
+    setArgoProjectModel(argoProjectData);
   }, [argoProjectData]);
 
-  const loadData = () => {
-    try {
-      setIsLoading(true);
-      setArgoProjectModel(argoProjectData);
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const createProject = async () => {
-    return await argoActions.createArgoProject(getAccessToken, cancelTokenSource, toolData?._id, argoProjectModel);
+    return await argoActions.createArgoProject(getAccessToken, cancelTokenSource, toolId, argoProjectModel);
   };
 
   const updateProject = async () => {
-    return await argoActions.updateArgoProject(getAccessToken, cancelTokenSource, toolData?._id, projId, argoProjectModel);
+    return await argoActions.updateArgoProject(getAccessToken, cancelTokenSource, toolId, argoProjectModel);
   };
 
   const deleteProject = async () => {
-    await argoActions.deleteArgoProject(getAccessToken, cancelTokenSource, toolData?._id, projId);
+    await argoActions.deleteArgoProject(getAccessToken, cancelTokenSource, toolId, argoProjectModel?.getData("projId"));
     handleClose();
   };
 
-  if (isLoading || argoProjectModel == null) {
+  if (argoProjectModel == null) {
     return <LoadingDialog size="sm" message={"Loading Data"} />;
   }
 
@@ -77,7 +47,6 @@ function ArgoProjectEditorPanel({ argoProjectData, toolData, projId, handleClose
       createRecord={createProject}
       updateRecord={updateProject}
       setRecordDto={setArgoProjectModel}
-      isLoading={isLoading}
       extraButtons={
         <DeleteButtonWithInlineConfirmation
           dataObject={argoProjectModel}
@@ -109,7 +78,7 @@ function ArgoProjectEditorPanel({ argoProjectData, toolData, projId, handleClose
               fieldName={"sourceRepos"}
               model={argoProjectModel}
               setModel={setArgoProjectModel}
-              argoToolId={toolData?._id}
+              argoToolId={toolId}
               disabled={!argoProjectData?.isNew()}
             />
           </Col>
@@ -155,9 +124,9 @@ function ArgoProjectEditorPanel({ argoProjectData, toolData, projId, handleClose
 
 ArgoProjectEditorPanel.propTypes = {
   argoProjectData: PropTypes.object,
-  toolData: PropTypes.object,
+  toolId: PropTypes.string,
   loadData: PropTypes.func,
-  projId: PropTypes.string,
+  projectId: PropTypes.string,
   handleClose: PropTypes.func
 };
 

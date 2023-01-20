@@ -12,6 +12,7 @@ function PipelineSourceRepositoryToolSelectInput({className, fieldName, model, s
     newModel.setData("workspace", "");
     newModel.setData("workspaceName", "");
     newModel.setData("repository", "");
+    newModel.setData("repoId", "");
     newModel.setData("branch", "");
     setModel({...newModel});
   };
@@ -20,7 +21,7 @@ function PipelineSourceRepositoryToolSelectInput({className, fieldName, model, s
     const accountName = tool?.configuration?.accountUsername || "No Account Assigned";
     const toolName = tool?.name;
 
-    return (`${accountName} (${toolName})`);
+    return (`${toolName} (${accountName})`);
   };
 
   return (

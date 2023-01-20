@@ -1,80 +1,37 @@
-import React, {useContext, useState, useEffect, useRef} from "react";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
+import React from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import LoadingDialog from "components/common/status_notifications/loading";
 import AccountSettingsSubNavigationBar from "components/settings/AccountSettingsSubNavigationBar";
 import AccountSettingsPageLinkCards from "components/settings/AccountSettingsPageLinkCards";
 import AccountSettingsHelpDocumentation from "../common/help/documentation/settings/AccountSettingsHelpDocumentation";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import FreeTrialAccountSettingsPageLinkCards from "components/settings/FreeTrialAccountSettingsPageLinkCards";
 
-function AccountSettings() {
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const { getAccessRoleData } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [isLoading, setIsLoading] = useState(true);
-  const isMounted = useRef(false);
+export default function AccountSettings() {
+  const {
+      isSiteAdministrator,
+      isSaasUser,
+      isPowerUser,
+      isOpseraAdministrator,
+    } = useComponentStateReference();
 
-  useEffect(() => {
-    isMounted.current = true;
-
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-      await getRoles();
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.error(error);
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getRoles = async () => {
-    const userRoleAccess = await getAccessRoleData();
-
-    if (isMounted?.current === true && userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-    }
-  };
-
-  if (accessRoleData == null) {
-    return (<LoadingDialog size="sm"/>);
+    if (
+    isSiteAdministrator !== true
+    && isSaasUser !== true
+    && isPowerUser !== true
+    && isOpseraAdministrator !== true
+  ) {
+    return null;
   }
-
-  const getHelpComponent = () => {
-    if (!isLoading) {
-      return (<AccountSettingsHelpDocumentation/>);
-    }
-  };
 
   return (
     <ScreenContainer
       breadcrumbDestination={"accountSettings"}
-      pageDescription={"Manage account settings from this dashboard."}
-      helpComponent={getHelpComponent()}
-      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator && !accessRoleData?.SassPowerUser}
-      isLoading={isLoading}
+      helpComponent={<AccountSettingsHelpDocumentation/>}
       navigationTabContainer={<AccountSettingsSubNavigationBar activeTab={"accountSettings"} />}
     >
-      <AccountSettingsPageLinkCards accessRoleData={accessRoleData} />
+      <AccountSettingsPageLinkCards />
+      <FreeTrialAccountSettingsPageLinkCards />
     </ScreenContainer>
   );
 }
-
-export default AccountSettings;
 

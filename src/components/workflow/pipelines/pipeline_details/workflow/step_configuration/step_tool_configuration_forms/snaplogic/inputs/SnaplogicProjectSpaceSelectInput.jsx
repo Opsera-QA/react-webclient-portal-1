@@ -6,7 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import snaplogicStepActions from "../snaplogic-step-actions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 
-function SnaplogicProjectSpaceSelectInput({ model, setModel, disabled }) {
+function SnaplogicProjectSpaceSelectInput({ model, setModel, toolConfigId, disabled }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -46,7 +46,7 @@ function SnaplogicProjectSpaceSelectInput({ model, setModel, disabled }) {
     } catch (error) {
       if (isMounted?.current === true) {
         setPlaceholderText("Could not pull Snaplogic Project Spaces");
-        setErrorMessage(`An Error Occurred Pulling Snaplogic Project Spaces: ${error}`);
+        setErrorMessage(error);
         console.error(error);
       }
     } finally {
@@ -56,12 +56,12 @@ function SnaplogicProjectSpaceSelectInput({ model, setModel, disabled }) {
 
   const fetchSnaplogicProjectSpaces = async (cancelSource = cancelTokenSource) => {
 
-    const {toolConfigId} = model.getPersistData();
+    const toolId = toolConfigId && toolConfigId.length > 0  ? toolConfigId  : model?.getData("toolConfigId");
 
     const response = await snaplogicStepActions.getProjectSpaces(
       getAccessToken,
       cancelSource,
-      toolConfigId
+        toolId
     );
 
     const result = response?.data?.data;
@@ -103,6 +103,7 @@ function SnaplogicProjectSpaceSelectInput({ model, setModel, disabled }) {
       valueField={"name"}
       busy={isLoading}
       disabled={disabled}
+      error={errorMessage}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
     />

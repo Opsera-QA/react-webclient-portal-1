@@ -7,9 +7,15 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors,
+import { defaultConfig, assignStandardColors,
          adjustBarWidth, spaceOutMergeRequestTimeTakenLegend } from '../../../charts-views';
 import ChartTooltip from "../../../ChartTooltip";
+import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
+import GitlabTimeTakenToCompleteMergeRequestReviewActionableOverlay
+  from "./GitlabTimeTakenToCompleteMergeRequestReviewActionableOverlay";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+
+
 function GitlabTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -18,6 +24,7 @@ function GitlabTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiC
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -66,25 +73,31 @@ function GitlabTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiC
     }
   };
 
+  const onChartClick = () => {
+    toastContext.showInfoOverlayPanel(
+      <GitlabTimeTakenToCompleteMergeRequestReviewActionableOverlay metrics={metrics}/>
+    );
+  };
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
 
   return (
-    <div className="new-chart mb-3" style={{height: "300px"}}>
+    <div className="new-chart mb-3" style={{height: METRIC_CHART_STANDARD_HEIGHT}}>
           <ResponsiveBar
             data={metrics}
             {...defaultConfig("Reviewer", "Time (Hours)", 
                   true, false, "cutoffString", "wholeNumbers")}
-            {...config(getColorByData)}
+            {...config()}
             {...adjustBarWidth(metrics, false)}
-            onClick={() => setShowModal(true)}
+            onClick={onChartClick}
             tooltip={({ indexValue, color, value }) => <ChartTooltip 
                     titles={["Reviewer", "Merge Request Time Taken"]}
                     values={[indexValue, value ]}
                     style={false}
-                    color={color} />}
+                     />}
           />
       </div>
   );

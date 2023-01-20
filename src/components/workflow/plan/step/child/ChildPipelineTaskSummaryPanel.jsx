@@ -14,10 +14,10 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 
 function ChildPipelineTaskSummaryPanel({ pipelineTaskData }) {
   return (
-    <SummaryPanelContainer>
+    <SummaryPanelContainer className={"mt-2"}>
       <Row>
         <Col md={12}>
-          <H5FieldSubHeader subheaderText={"Step Activity Log Summary:"} />
+          <H5FieldSubHeader subheaderText={"Step Activity Log Summary"} />
         </Col>
         <Col md={12}>
           <UserNameField model={pipelineTaskData} fieldName={"user_id"} />
@@ -41,7 +41,10 @@ function ChildPipelineTaskSummaryPanel({ pipelineTaskData }) {
           <PipelineTaskStateField dataObject={pipelineTaskData} fieldName={"status"}/>
         </Col>
         <Col md={12}>
-          <PipelineTaskSummaryMessageField fieldName={"api_response.apiResponse.message.message"} dataObject={pipelineTaskData} />
+          <PipelineTaskSummaryMessageField
+            fieldName={"api_response.apiResponse.message.message"}
+            model={pipelineTaskData}
+          />
         </Col>
         <Col md={12} className={"py-2"}>
           <H5FieldSubHeader subheaderText={"Child Pipeline Orchestrated by this Step:"} />

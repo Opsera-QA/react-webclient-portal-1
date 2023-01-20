@@ -21,7 +21,7 @@ function ToolEndpointsTab({ toolModel, handleTabClick, activeTab }) {
       handleTabClick={handleTabClick}
       activeTab={activeTab}
       tabText={"Endpoints"}
-      accessRestricted={!toolModel?.canPerformAction("update_tool_endpoints")}
+      accessRestricted={toolModel?.canUpdateRegistryToolEndpoints() !== true}
     />
   );
 }

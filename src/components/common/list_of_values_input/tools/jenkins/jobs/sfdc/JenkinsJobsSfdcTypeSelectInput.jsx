@@ -31,6 +31,10 @@ const JENKINS_JOBS_SFDC_OPTIONS = [
     name: "Salesforce Push Artifacts",
     value: "SFDC PUSH ARTIFACTS",
   },
+  {
+    name: "Salesforce MetaData Transformer",
+    value: "SFDC DATA TRANSFORM",
+  },
 ];
 
 function JenkinsJobsSfdcTypeSelectInput({ fieldName, model, setModel }) {

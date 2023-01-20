@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const buildkiteMetadata = {
   type: "Buildkite Tool Configuration",
   fields: [
@@ -17,13 +19,15 @@ const buildkiteMetadata = {
       formText: "Selected SCM info must match the data configured in the buildkite pipeline"
     },
     {
-      label: "Repository ID",
+      label: "Repository",
       id: "repoId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
       formText: "Selected SCM info must match the data configured in the buildkite pipeline"
     },
     {
       label: "Project ID",
       id: "projectId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
       formText: "Selected SCM info must match the data configured in the buildkite pipeline"
     },
     {
@@ -44,6 +48,7 @@ const buildkiteMetadata = {
     {
       label: "Repository",
       id: "repository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
       formText: "Selected SCM info must match the data configured in the buildkite pipeline"
     },
     {
@@ -59,6 +64,7 @@ const buildkiteMetadata = {
     {
       label: "Branch",
       id: "branch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
     },
     {
       label: "Commit",

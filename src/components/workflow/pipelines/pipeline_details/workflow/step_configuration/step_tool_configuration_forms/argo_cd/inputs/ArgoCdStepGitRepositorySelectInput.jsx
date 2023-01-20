@@ -22,6 +22,7 @@ function ArgoCdStepGitRepositorySelectInput({className, fieldName, model, setMod
     newModel.setData("gitRepositoryID", repoId);
     newModel.setData("gitUrl", gitUrl);
     newModel.setData("sshUrl", selectedOption?.sshUrl || "");
+    newModel.setData("defaultBranch", "");
     setModel({ ...newModel });
   };
 
@@ -50,7 +51,7 @@ ArgoCdStepGitRepositorySelectInput.propTypes = {
 };
 
 ArgoCdStepGitRepositorySelectInput.defaultProps = {
-  fieldName: "gitRepository",
+  fieldName: "gitRepositoryID",
 };
 
 export default ArgoCdStepGitRepositorySelectInput;

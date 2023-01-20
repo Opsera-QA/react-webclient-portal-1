@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import InfoContainer from "components/common/containers/InfoContainer";
+import InfoText from "components/common/inputs/info_text/InfoText";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function FilterSelectInputBase(
   {
     fieldName,
     dataObject,
     setDataObject,
+    clearDataFunction,
     groupBy,
     selectOptions,
     setDataFunction,
@@ -19,17 +23,23 @@ function FilterSelectInputBase(
     className,
     inline,
     disabled,
+    loadDataFunction,
+    showLabel,
+    error,
+    showClearValueButton,
   }) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
 
   const validateAndSetData = (fieldName, selectedOption) => {
-    const newFilterModel = dataObject;
-    newFilterModel?.setData(fieldName, selectedOption);
-    setDataObject({...newFilterModel});
+    dataObject?.setData(fieldName, selectedOption);
+    setDataObject({...dataObject});
   };
 
   const updateValue = (newValue) => {
-    if (setDataFunction) {
+    if (inline === true && loadDataFunction) {
+      dataObject.setData(fieldName, newValue);
+      loadDataFunction(dataObject);
+    } if (setDataFunction) {
       setDataFunction(field?.id, newValue);
     }
     else {
@@ -38,6 +48,26 @@ function FilterSelectInputBase(
     }
   };
 
+  const clearValue = () => {
+    if (!setDataFunction && !clearDataFunction) {
+      validateAndSetData(field?.id, "");
+    }
+    else if (clearDataFunction) {
+      clearDataFunction(field?.id);
+    }
+  };
+
+  const getClearDataFunction = () => {
+    if (
+      hasStringValue(dataObject.getData(field.id)) === true
+      && inline !== true
+      && disabled !== true
+      && showClearValueButton !== false
+      && (setDataFunction == null || clearDataFunction != null)
+    ) {
+      return clearValue;
+    }
+  };
 
   if (field == null) {
     console.error(`No Field was Found for ${fieldName}. Please add to the metadata if you would like it to be shown.`);
@@ -48,9 +78,12 @@ function FilterSelectInputBase(
     <div className={className}>
       <InputLabel
         model={dataObject}
-        showLabel={!inline}
+        showLabel={!inline || showLabel === true}
         field={field}
-        className={inline ? "mt-1 mr-2" : undefined}
+        className={undefined}
+        disabled={disabled}
+        isLoading={busy}
+        clearDataFunction={getClearDataFunction()}
       />
       <StandaloneSelectInput
         selectOptions={selectOptions}
@@ -65,6 +98,9 @@ function FilterSelectInputBase(
         placeholderText={placeholderText}
         setDataFunction={(data) => updateValue(data)}
       />
+      <InfoText
+        errorMessage={inline !== true ? error : undefined}
+      />
     </div>
   );
 }
@@ -73,6 +109,7 @@ FilterSelectInputBase.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
+  loadDataFunction: PropTypes.func,
   selectOptions: PropTypes.array.isRequired,
   groupBy: PropTypes.string,
   valueField: PropTypes.string,
@@ -83,7 +120,11 @@ FilterSelectInputBase.propTypes = {
   busy: PropTypes.bool,
   className: PropTypes.string,
   inline: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  showLabel: PropTypes.bool,
+  error: PropTypes.any,
+  clearDataFunction: PropTypes.func,
+  showClearValueButton: PropTypes.bool,
 };
 
 FilterSelectInputBase.defaultProps = {

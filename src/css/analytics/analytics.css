@@ -89,3 +89,66 @@
     }
 }
 /* Show element when not large device - End */
+
+/* Maturity Score Card Styling */
+.maturity-card-content-bg {
+    background: white;
+}
+
+.maturity-card-elite-color {
+    background: rgba(128, 0, 128, .15);
+    border-color: rgba(128, 0, 128, .15) !important;
+}
+
+.maturity-card-default-color {
+    background: grey;
+    border-color: grey;
+}
+
+.maturity-card-high-color {
+    background: rgba(0, 128, 0, .15);
+    border-color: rgba(0, 128, 0, .15) !important;
+}
+
+.maturity-card-medium-color {
+    background: rgba(207, 148, 12, .15);
+    border-color: rgba(207, 148, 12, .15) !important;
+}
+
+.maturity-card-low-color {
+    background: rgba(220, 53, 69, .15);
+    border-color: rgba(220, 53, 69, .15) !important;
+}
+
+.maturity-card-block-content-text {
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding-right: 20px !important;
+    padding-top: 5px;
+}
+
+.maturity-info-icon {
+    padding-top: 5px !important;
+    padding-right: 6px !important;
+}
+
+.maturity-border {
+    border-radius: 0px 6px 6px 6px !important
+}
+
+.maturity-top-border {
+    border-radius: 6px 6px 0px 0px !important
+}
+
+.maturity-rolled-up-border {
+    border-radius: 0px 6px 6px 6px !important;
+    border: 5px solid ;
+    background: none;
+}
+
+.maturity-rolled-up-text {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    text-align: left;
+}
+

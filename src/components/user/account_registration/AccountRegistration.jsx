@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { Form, Row, Col, Card } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import "components/user/user.css";
@@ -10,15 +10,12 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import RegisterButton from "components/common/buttons/saving/RegisterButton";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import accountRegistrationMetadata from "components/user/account_registration/account-registration-metadata";
-import { AuthContext } from "contexts/AuthContext";
 import TempTextInput from "components/common/inputs/text/TempTextInput";
 import {validateEmail} from "utils/helpers";
-import axios from "axios";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function AccountRegistration() {
   const { domain } = useParams();
-  const { generateJwtServiceTokenWithValue, getUserRecord, setAccessRoles } = useContext(AuthContext);
-  const [serviceToken, setServiceToken] = useState(undefined);
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -26,44 +23,25 @@ function AccountRegistration() {
   const [registrationDataDto, setRegistrationDataDto] = useState(undefined);
   const [companyName, setCompanyName] = useState("Opsera");
   const [invalidHost, setInvalidHost] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    cancelTokenSource,
+    isMounted,
+    accessRoleData,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
     loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-
-
-  useEffect(() => {
-    loadData();
   }, []);
 
   const loadData = async () => {
     try {
       setIsLoading(true);
       setInvalidHost(false);
-      const token = await generateJwtServiceTokenWithValue({ id: "orgRegistrationForm" });
-      setServiceToken(token);
-
-      const accountResponse = await userActions.getAccountInformationWithDomain(domain, token);
+      const accountResponse = await userActions.getAccountInformationWithDomain(cancelTokenSource, domain);
       let newAccountDto = (new Model(accountRegistrationMetadata.newObjectFields, accountRegistrationMetadata, true));
 
       if (accountResponse?.data) {
@@ -82,10 +60,7 @@ function AccountRegistration() {
         newAccountDto.setData("idpIdentifier", accountResponse?.data?.idpIdentifier);
 
         if (accountResponse?.data?.localAuth === "FALSE" && accountResponse?.data?.idpIdentifier !== "0") {
-          const userRecord = await getUserRecord();
-          const rules = userRecord ? await setAccessRoles(userRecord) : null;
-
-          if (rules?.Administrator || rules?.OpseraAdministrator || rules?.PowerUser) {
+          if (accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator || accessRoleData?.PowerUser) {
             history.push(`/settings/user-management`);
             history.go(0);
           }
@@ -118,16 +93,20 @@ function AccountRegistration() {
 
   // TODO: This check should be moved to register button when updating free trial/standard sign up forms next
   const createAccount = async () => {
-    const isEmailAvailable = await userActions.isEmailAvailable(registrationDataDto.getData("email"));
+    const response = await userActions.isEmailAvailable(
+      cancelTokenSource,
+      registrationDataDto?.getData("email")
+    );
+    const isEmailAvailable = response?.data?.emailExists === false;
 
-    if (!isEmailAvailable) {
+    if (isEmailAvailable !== true) {
       toastContext.showEmailAlreadyExistsErrorDialog();
       return;
     }
 
     if (registrationDataDto.isModelValid()) {
       try {
-        const response = await userActions.createOpseraAccount(registrationDataDto);
+        const response = await userActions.createOpseraAccount(cancelTokenSource, registrationDataDto);
         // toastContext.showCreateSuccessResultDialog("Opsera Account")
         loadRegistrationResponse();
       } catch (error) {

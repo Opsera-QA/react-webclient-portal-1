@@ -19,6 +19,13 @@ import JenkinsRegistryToolJobSelectInput
   from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import JiraProjectSelectInput from "components/common/list_of_values_input/tools/jira/projects/JiraProjectSelectInput";
+import JiraCustomTagFieldSelectInput from "components/common/list_of_values_input/tools/jira/custom_fields/JiraCustomTagFieldSelectInput";
+import JiraCustomFieldMappingSelectInput from "components/common/list_of_values_input/tools/jira/custom_fields/JiraCustomFieldMappingSelectInput";
+
+const determineKeyFromFullPath = keyPath => {
+  const splitPath = keyPath.split('/');
+  return splitPath[splitPath.length - 1];
+};
 
 function ProjectDataMappingEditorPanel(
   {
@@ -43,6 +50,21 @@ function ProjectDataMappingEditorPanel(
       isMounted.current = false;
     };
   }, []);
+
+  const setDataHandler = (id, selectedOption) => {
+    projectDataMappingModel.setData('key', determineKeyFromFullPath(selectedOption?.nameSpacedPath));
+    projectDataMappingModel.setData('keyPath', selectedOption?.nameSpacedPath);
+    setProjectDataMappingModel({ ...projectDataMappingModel });
+  };
+
+  const setJiraDataHandler = (fieldName, selectedOption) => {
+    const newProjectDataMappingModel = { ...projectDataMappingModel };
+    newProjectDataMappingModel.setData('key', selectedOption?.name);
+    newProjectDataMappingModel.setData('projectKey', selectedOption?.key);
+    newProjectDataMappingModel.setDefaultValue("value");
+    newProjectDataMappingModel.setDefaultValue("customTagFields");
+    setProjectDataMappingModel({ ...newProjectDataMappingModel });
+  };
 
   // TODO: Rewrite into switch statement or sub panels
   const getDynamicFields = () => {
@@ -72,23 +94,35 @@ function ProjectDataMappingEditorPanel(
     if (projectDataMappingModel?.getData("tool_identifier") === "bitbucket") {
       return (
         <>
-        <Col lg={12}>
-          <ProjectMappingWorkspaceSelectInput
-            dataObject={projectDataMappingModel}
-            setDataObject={setProjectDataMappingModel}
-            toolId={projectDataMappingModel.getData("tool_id")}
-          />
-        </Col>
-      <Col lg={12}>
-        <ProjectRepositorySelectInput
-          model={projectDataMappingModel}
-          setModel={setProjectDataMappingModel}
-        />
-      </Col>
-          </>
+          <Col lg={12}>
+            <ProjectMappingWorkspaceSelectInput
+              dataObject={projectDataMappingModel}
+              setDataObject={setProjectDataMappingModel}
+              toolId={projectDataMappingModel.getData("tool_id")}
+            />
+          </Col>
+          <Col lg={12}>
+            <ProjectRepositorySelectInput
+              model={projectDataMappingModel}
+              setModel={setProjectDataMappingModel}
+            />
+          </Col>
+        </>
       );
     }
-    if (projectDataMappingModel?.getData("tool_identifier") === "gitlab" || projectDataMappingModel?.getData("tool_identifier") === "github") {
+    if (projectDataMappingModel?.getData("tool_identifier") === "gitlab") {
+      return (
+        <Col lg={12}>
+          <ProjectRepositorySelectInput
+            model={projectDataMappingModel}
+            setModel={setProjectDataMappingModel}
+            setDataFunction={setDataHandler}
+            valueField="nameSpacedPath"
+          />
+        </Col>
+      );
+    }
+    if (projectDataMappingModel?.getData("tool_identifier") === "github") {
       return (
         <Col lg={12}>
           <ProjectRepositorySelectInput
@@ -107,8 +141,36 @@ function ProjectDataMappingEditorPanel(
             jiraToolId={projectDataMappingModel.getData("tool_id")}
             valueField={"name"}
             fieldName={"key"}
+            setDataFunction={setJiraDataHandler}
           />
         </Col>
+      );
+    }
+  };
+
+  const getCustomTagFieldInput = () => {
+    if (projectDataMappingModel?.getData("tool_identifier") === "jira" && projectDataMappingModel?.getData("projectKey") && projectDataMappingModel?.getData("projectKey") !== "") {
+      return (
+        <>
+          <Col lg={12}>
+            <JiraCustomTagFieldSelectInput
+              model={projectDataMappingModel}
+              setModel={setProjectDataMappingModel}
+              jiraToolId={projectDataMappingModel.getData("tool_id")}
+              projectKey={projectDataMappingModel?.getData("projectKey")}
+              fieldName={"customTagFields"}
+            />
+          </Col>
+          <Col lg={12}>
+            <JiraCustomFieldMappingSelectInput
+              model={projectDataMappingModel}
+              setModel={setProjectDataMappingModel}
+              jiraToolId={projectDataMappingModel.getData("tool_id")}
+              projectKey={projectDataMappingModel?.getData("projectKey")}
+              fieldName={"customMappingFields"}
+            />
+          </Col>
+        </>
       );
     }
   };
@@ -118,7 +180,7 @@ function ProjectDataMappingEditorPanel(
       return (
         <div className="m-2">
           <Card>
-            <Card.Text className={"mt-3 mb-3"} style={{display: "flex", justifyContent: "center"}}>
+            <Card.Text className={"mt-3 mb-3"} style={{ display: "flex", justifyContent: "center" }}>
               <strong>WARNING: </strong> Editing an active Analytics Data Mapping will result in loss of filtering
               functionality from data previously mapped with this information
             </Card.Text>
@@ -161,8 +223,10 @@ function ProjectDataMappingEditorPanel(
             fieldName={"value"}
             setDataObject={setProjectDataMappingModel}
             disabled={projectDataMappingModel && projectDataMappingModel.getData("tool_id").length === 0}
+            excludeTypes={["custom"]}
           />
         </Col>
+        {getCustomTagFieldInput()}
         <Col lg={12}>
           <ActivityToggleInput
             dataObject={projectDataMappingModel}

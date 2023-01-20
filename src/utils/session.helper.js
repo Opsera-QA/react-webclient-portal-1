@@ -47,7 +47,7 @@ sessionHelper.replaceStoredUrlParameter = (queryParameter, value) => {
     url.searchParams.set(queryParameter, value);
   }
 
-  return sessionHelper.updateUrlWithQueryParameters(url);
+  sessionHelper.updateUrlWithQueryParameters(url);
 };
 
 sessionHelper.addStoredUrlParameter = (queryParameter, value) => {
@@ -81,6 +81,27 @@ sessionHelper.setStoredSessionValue = (sessionKey, value) => {
   }
 
   return sessionStorage.setItem(sessionKey, typeof value === "object" ? JSON.stringify(value) : value);
+};
+
+sessionHelper.deleteStoredSessionValue = (sessionKey) => {
+  if (hasStringValue(sessionKey) !== true) {
+    console.error("No session key was included");
+    return;
+  }
+
+  return sessionStorage.removeItem(sessionKey);
+};
+
+sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS = {
+  WORKSPACE_FILTER_MODEL_DATA: "workspace-filter-model-data",
+  TASK_FILTER_MODEL_DATA: "task-filter-model-data",
+  TOOL_FILTER_MODEL_DATA: "tool-filter-model-data",
+  PIPELINE_FILTER_MODEL_DATA: "pipeline-filter-model-data",
+  DASHBOARD_FILTER_MODEL_DATA: "dashboard-filter-model-data",
+};
+
+sessionHelper.clearOutSessionStorage = () => {
+  return sessionStorage.clear();
 };
 
 // TODO: Make get/set/delete cookie functions

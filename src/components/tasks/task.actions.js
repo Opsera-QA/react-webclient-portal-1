@@ -24,6 +24,19 @@ taskActions.getTasksListV2 = async (getAccessToken, cancelTokenSource, taskFilte
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+taskActions.getWorkspaceTasksList = async (getAccessToken, cancelTokenSource, fields) => {
+  const apiUrl = `/tasks`;
+  const urlParams = {
+    params: {
+      page: 1,
+      size: 100,
+      fields: fields,
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 taskActions.getTaskByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/tasks/${id}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
@@ -47,6 +60,11 @@ taskActions.updateGitTaskV2 = async (getAccessToken, cancelTokenSource, taskMode
   return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+taskActions.updateTaskV2 = async (getAccessToken, cancelTokenSource, task) => {
+  const apiUrl = `/tasks/${task?._id}/update`;
+  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, task);
+};
+
 taskActions.updateTaskNotificationConfiguration = async (getAccessToken, cancelTokenSource, taskId, notificationConfiguration) => {
   const apiUrl = `/tasks/${taskId}/notifications/update/`;
   const postBody = {
@@ -60,6 +78,25 @@ taskActions.deleteGitTaskV2 = async (getAccessToken, cancelTokenSource, dataObje
   const apiUrl = `/tasks/${dataObject.getData("_id")}`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
+
+taskActions.deleteTask = async (getAccessToken, cancelTokenSource, taskId) => {
+  const apiUrl = `/tasks/${taskId}`;
+  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+taskActions.getTaskOrchestrationStatus = async (
+  getAccessToken,
+  cancelTokenSource,
+  taskId,
+  ) => {
+  const apiUrl = `/tasks/${taskId}/status`;
+  return await baseActions.apiGetCallV3(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
 
 taskActions.runTaskV3 = async (getAccessToken, cancelTokenSource, taskId, postBody) => {
   const apiUrl = `/tasks/${taskId}/run`;
@@ -222,7 +259,7 @@ taskActions.getTaskAuditLogsByTaskId = async (
   cancelTokenSource,
   taskId,
 ) => {
-  const apiUrl = `/audit-logs/task/${taskId}`;
+  const apiUrl = `/audit-logs/tasks/${taskId}`;
   return await baseActions.apiGetCallV2(
     getAccessToken,
     cancelTokenSource,
@@ -245,6 +282,17 @@ taskActions.cancelGitscraperScan = async (getAccessToken, cancelTokenSource, git
   let postBody = {
     taskId: gitTasksDataDto.getData("_id"),
   };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+taskActions.saveRecordToVault = async (getAccessToken, cancelTokenSource, key, value, taskId) => {
+  const apiUrl = `/tasks/vault/write`;
+  const postBody = {
+    key: key,
+    value: value,
+    taskId: taskId
+  };
+
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 

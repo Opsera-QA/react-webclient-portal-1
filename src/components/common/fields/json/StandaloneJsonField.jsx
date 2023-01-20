@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import InfoContainer from "components/common/containers/InfoContainer";
-import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
+import { faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
 import JsonFieldBase from "components/common/fields/json/JsonFieldBase";
+import CopyToClipboardButton from "components/common/buttons/clipboard/CopyToClipboardButton";
+import ExportJsonButton from "temp-library-components/button/export/ExportJsonButton";
 
 function StandaloneJsonField(
   {
@@ -10,12 +12,33 @@ function StandaloneJsonField(
     titleText,
     className,
     collapsed,
+    exportFileName,
     enableClipboard,
     displayDataTypes,
     isLoading,
     minimumHeight,
     maximumHeight,
   }) {
+  const rightSideButtons = () => {
+    if (enableClipboard !== false && json !== null) {
+      return (
+        <div className={"d-flex"}>
+          <CopyToClipboardButton
+            copyString={JSON.stringify(json)}
+            size={"sm"}
+            className={"ml-3"}
+          />
+          <ExportJsonButton
+            json={json}
+            fileName={exportFileName}
+            buttonSize={"sm"}
+            className={"ml-3"}
+          />
+        </div>
+      );
+    }
+  };
+
   return (
     <InfoContainer
       titleIcon={faBracketsCurly}
@@ -24,6 +47,7 @@ function StandaloneJsonField(
       isLoading={isLoading}
       minimumHeight={minimumHeight}
       maximumHeight={maximumHeight}
+      titleRightSideButton={rightSideButtons()}
     >
       <JsonFieldBase
         className={"m-3"}
@@ -38,7 +62,7 @@ function StandaloneJsonField(
 
 StandaloneJsonField.propTypes = {
   titleText: PropTypes.string,
-  json: PropTypes.object,
+  json: PropTypes.any,
   className: PropTypes.string,
   collapsed: PropTypes.bool,
   enableClipboard: PropTypes.bool,
@@ -46,10 +70,11 @@ StandaloneJsonField.propTypes = {
   isLoading: PropTypes.bool,
   minimumHeight: PropTypes.string,
   maximumHeight: PropTypes.string,
+  exportFileName: PropTypes.string,
 };
 
 StandaloneJsonField.defaultProps = {
-  enableClipboard: false,
+  enableClipboard: true,
   displayDataTypes: false,
 };
 

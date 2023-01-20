@@ -7,8 +7,11 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, gradationalColors } from "../../../charts-views";
+import { defaultConfig } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
+import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import GitlabMergeRequestsPushesAndCommentsActionableOverlay from "./GitlabMergeRequestsPushesAndCommentsActionableOverlay";
 
 function GitlabMergeRequestsPushesAndComments({
   kpiConfiguration,
@@ -24,6 +27,7 @@ function GitlabMergeRequestsPushesAndComments({
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -77,18 +81,24 @@ function GitlabMergeRequestsPushesAndComments({
     }
   };
 
+  const onChartClick = () => {
+    toastContext.showInfoOverlayPanel(
+      <GitlabMergeRequestsPushesAndCommentsActionableOverlay metrics={metrics}/>
+    );
+  };
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
 
     return (
-      <div className="new-chart mb-3" style={{ height: "300px" }}>
+      <div className="new-chart mb-3" style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
         <ResponsiveCalendar
           data={metrics}
-          {...defaultConfig("", "", false, false, "", "", true)}
-          {...config(gradationalColors, new Date())}
-          onClick={() => setShowModal(true)}
+          {...defaultConfig("Date", "", false, false, "", "", true)}
+          {...config(new Date())}
+          onClick={onChartClick}
           tooltip={({ day, value, color }) => (
             <ChartTooltip
               titles={[day]}

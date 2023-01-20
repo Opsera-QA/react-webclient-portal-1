@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const coverityStepFormMetadata = {
   type: "Coverity Tool Configuration",
   fields: [
@@ -31,8 +33,10 @@ const coverityStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Repository ID",
+      label: "Repository",
       id: "repoId",
+      isRequired: true,
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
 
     {
@@ -44,6 +48,7 @@ const coverityStepFormMetadata = {
     {
       label: "Project ID",
       id: "projectId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       label: "GIT URL",
@@ -56,6 +61,7 @@ const coverityStepFormMetadata = {
     {
       label: "Repository",
       id: "repository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
       isRequired: true
     },
     {
@@ -69,6 +75,7 @@ const coverityStepFormMetadata = {
     {
       label: "Branch",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequired: true
     },
     {
@@ -102,6 +109,23 @@ const coverityStepFormMetadata = {
       label: ".Net SDK Version",
       id: "dotnetSdkVersion",      
     },
+    {
+      label: "Command Line Arguments",
+      id: "commandLineArguments"
+    },
+    {
+      label: "Parameters",
+      id: "customParameters",
+      maxItems: 15,
+    },
+    {
+      label: "Enable Client Side thresholds",
+      id: "clientSideThreshold",
+    },
+    {
+      label: "Vulnerability Threshold",
+      id: "displayImpactThreshold",
+    },
   ],
   newObjectFields: {
     coverityToolId: "",
@@ -127,6 +151,10 @@ const coverityStepFormMetadata = {
     coverityCredntialId :"",
     dotnetType: "",
     dotnetSdkVersion : "",
+    commandLineArguments: "",
+    customParameters: [],
+    clientSideThreshold: false,
+    displayImpactThreshold: [],
   }
 };
 

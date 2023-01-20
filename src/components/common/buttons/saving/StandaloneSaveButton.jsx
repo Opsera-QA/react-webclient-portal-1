@@ -5,6 +5,7 @@ import {faSave} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 import axios from "axios";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 // Note: this should only be used in special cases where Model-Wrapped objects don't make sense
 function StandaloneSaveButton(
@@ -16,25 +17,12 @@ function StandaloneSaveButton(
     className,
     showToasts,
   }) {
-  let toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
+  const {
+    cancelTokenSource,
+    isMounted,
+    toastContext,
+  } = useComponentStateReference();
 
   const persistRecord = async () => {
     try {

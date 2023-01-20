@@ -4,60 +4,58 @@ import {Button, InputGroup} from "react-bootstrap";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";
 import Model from "core/data_model/model";
 import {useHistory} from "react-router-dom";
-import regexDefinitions from "utils/regexDefinitions";
 import IconBase from "components/common/icons/IconBase";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
 function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, fieldName, supportSearch, className, isLoading, metadata}) {
   let history = useHistory();
   const [isSearching, setIsSearching] = useState(false);
 
   const validateAndSetData = (value) => {
-    let newFilterDto = {...filterDto};
-    newFilterDto.setData(fieldName, value);
+    filterDto.setData(fieldName, value);
 
     // TODO: Setting state on filter model should only be handled in the load data function and this should be removed.
     //  Leaving here for now to prevent unintended side effects
     if (setFilterDto) {
-      setFilterDto({...newFilterDto});
+      setFilterDto({...filterDto});
     }
   };
 
   const handleSearch = async () => {
     try {
-      let newFilterDto = {...filterDto};
-      const searchString = newFilterDto.getData(fieldName);
-      const mongoIdRegex = regexDefinitions.mongoId?.regex;
+      const searchString = filterDto.getData(fieldName);
 
-      if (metadata?.detailView != null && searchString.match(mongoIdRegex)) {
+      if (metadata?.detailView != null && isMongoDbId(searchString)) {
         const model = new Model({_id: searchString}, metadata, true);
-        const link = model.getDetailViewLink();
+        const link = model.getDetailViewLink(searchString);
 
-        if (link !== null) {
+        if (hasStringValue(link) === true) {
           history.push(link);
           return;
         }
       }
 
       // TODO: Replace top detail view link check with this once everywhere is updated
-      if (searchString.match(mongoIdRegex) && filterDto?.getDetailViewLink && filterDto?.getDetailViewLink() != null) {
+      if (isMongoDbId(searchString) && filterDto?.getDetailViewLink && filterDto?.getDetailViewLink(searchString) != null) {
         const link = filterDto?.getDetailViewLink(searchString);
 
-        if (link !== null) {
+        if (hasStringValue(link) === true) {
           history.push(link);
           return;
         }
       }
 
       setIsSearching(true);
-      newFilterDto.setData("currentPage", 1);
+      filterDto.setData("currentPage", 1);
 
       // TODO: Setting state on filter model should only be handled in the load data function and this should be removed.
       //  Leaving here for now to prevent unintended side effects
       if (setFilterDto) {
-        setFilterDto({...newFilterDto});
+        setFilterDto({...filterDto});
       }
 
-      await loadData(newFilterDto);
+      await loadData(filterDto);
     }
     finally {
       setIsSearching(false);

@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { ApiService } from "../../../api/apiService";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
 import { Alert, Button } from "react-bootstrap";
 // import { format } from "date-fns";
 import Modal from "../../common/modal/modal";
-import "./logs.css";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
 // import { faCalendar, faDraftingCompass, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";

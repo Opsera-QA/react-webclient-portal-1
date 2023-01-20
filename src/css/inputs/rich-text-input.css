@@ -1,0 +1,37 @@
+.ce-block__content, .ce-toolbar__content {
+    max-width: calc(100% - 120px) !important;
+}
+
+.read-only-rich-text .ce-block__content, .ce-toolbar__content {
+    max-width: 100% !important;
+}
+
+/*.ce-block {*/
+/*    background: #F7F7F7;*/
+/*}*/
+
+/*.ce-block__content {*/
+/*    padding: 5px;*/
+/*    background: #FFFFFF;*/
+/*}*/
+
+.cdx-block {
+    max-width: 100% !important;
+}
+
+.ce-toolbar__actions {
+    left:.25rem;
+}
+
+.ce-toolbar--opened,
+.ce-settings--opened,
+.ce-toolbar__content,
+.ce-settings__plugin-zone,
+.cdx-settings-button
+{
+    z-index: 5000;
+}
+
+.tc-wrap {
+    border-left: 1px solid #E6E5E3;
+}

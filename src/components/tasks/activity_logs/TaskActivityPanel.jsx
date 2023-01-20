@@ -1,49 +1,55 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
-import {AuthContext} from "contexts/AuthContext";
+import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import taskActivityLogHelpers
   from "components/tasks/activity_logs/taskActivityLog.helpers";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import TaskActivityLogTreeTable from "components/tasks/details/TaskActivityLogTreeTable";
 import {TaskActivityLogFilterModel} from "components/tasks/activity_logs/taskActivityLog.filter.model";
 import {taskActivityLogActions} from "components/tasks/activity_logs/taskActivityLog.actions";
-import CustomTable from "components/common/table/CustomTable";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import useGetPollingTaskActivityLogCountForRun from "hooks/workflow/tasks/logs/useGetPollingTaskActivityLogCountForRun";
 
-function TaskActivityPanel({ taskModel }) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const [taskActivityFilterModel, setTaskActivityFilterModel] = useState(undefined);
-  const [taskActivityMetadata, setTaskActivityMetadata] = useState(undefined);
+function TaskActivityPanel(
+  {
+    taskModel,
+    taskRunCount,
+    taskId,
+    showFilterContainerIcon,
+    status,
+  }) {
   const [activityData, setActivityData] = useState([]);
   const taskLogsTree = useRef([]);
   const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [taskActivityFilterModel, setTaskActivityFilterModel] = useState(new TaskActivityLogFilterModel());
+  const [loadingActivityLogs, setLoadingActivityLogs] = useState(false);
+  const {
+    isMounted,
+    cancelTokenSource,
+    getAccessToken,
+    toastContext,
+  } = useComponentStateReference();
+  const {
+    logCount,
+    isLoading,
+  } = useGetPollingTaskActivityLogCountForRun(
+    taskId,
+    currentRunNumber === taskRunCount ? currentRunNumber : undefined
+  );
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-    let newFilterModel = new TaskActivityLogFilterModel(getAccessToken, source, loadData);
-    setTaskActivityFilterModel(newFilterModel);
-
-    loadData().catch((error) => {
+    pullLogs().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
+  }, [logCount]);
 
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, [taskModel]);
+  useEffect(() => {
+    const taskTree = taskActivityLogHelpers.constructRunCountTreeWithRunCountAndTaskId(taskRunCount, taskId);
+
+    if (Array.isArray(taskTree)) {
+      taskLogsTree.current = taskTree;
+    }
+  }, [taskRunCount, taskId]);
 
   useEffect(() => {
     setActivityData([]);
@@ -57,36 +63,16 @@ function TaskActivityPanel({ taskModel }) {
     }
   }, [currentRunNumber]);
 
-  const loadData = async () => {
+  const pullLogs = async (newFilterModel = taskActivityFilterModel) => {
     try {
-      setIsLoading(true);
-      setActivityData([]);
-      const taskTree = taskActivityLogHelpers.constructRunCountTree(taskModel?.getPersistData());
-
-      if (Array.isArray(taskTree)) {
-        taskLogsTree.current = taskTree;
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const pullLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
+      setLoadingActivityLogs(true);
 
       if (currentRunNumber === "latest") {
-        await getLatestActivityLogs(newFilterModel, cancelSource);
+        await getLatestActivityLogs(newFilterModel);
       } else if (currentRunNumber === "secondary") {
-        await getSecondaryActivityLogs(newFilterModel, cancelSource);
+        await getSecondaryActivityLogs(newFilterModel);
       } else if (currentRunNumber) {
-        await getSingleRunLogs(newFilterModel, cancelSource);
+        await getSingleRunLogs(newFilterModel);
       }
 
     } catch (error) {
@@ -95,20 +81,19 @@ function TaskActivityPanel({ taskModel }) {
       }
     } finally {
       if (isMounted.current === true) {
-        setIsLoading(false);
+        setLoadingActivityLogs(false);
       }
     }
   };
 
-  const getSecondaryActivityLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
+  const getSecondaryActivityLogs = async (newFilterModel = taskActivityFilterModel) => {
     try {
-      setIsLoading(true);
-      const response = await taskActivityLogActions.getSecondaryTaskActivityLogs(getAccessToken, cancelSource, newFilterModel, taskModel?.getData("_id"));
+      setLoadingActivityLogs(true);
+      const response = await taskActivityLogActions.getSecondaryTaskActivityLogs(getAccessToken, cancelTokenSource, newFilterModel, taskModel?.getData("_id"));
       const taskActivityData = response?.data?.data;
 
       if (Array.isArray(taskActivityData)) {
         setActivityData([...taskActivityData]);
-        setTaskActivityMetadata(response?.data?.metadata);
         newFilterModel?.setData("totalCount", response?.data?.count);
         newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
         setTaskActivityFilterModel({...newFilterModel});
@@ -119,20 +104,19 @@ function TaskActivityPanel({ taskModel }) {
       }
     } finally {
       if (isMounted?.current === true) {
-        setIsLoading(false);
+        setLoadingActivityLogs(false);
       }
     }
   };
 
-  const getLatestActivityLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
+  const getLatestActivityLogs = async (newFilterModel = taskActivityFilterModel) => {
     try {
-      setIsLoading(true);
-      const response = await taskActivityLogActions.getLatestTaskActivityLogs(getAccessToken, cancelSource, newFilterModel, taskModel?.getData("_id"));
+      setLoadingActivityLogs(true);
+      const response = await taskActivityLogActions.getLatestTaskActivityLogs(getAccessToken, cancelTokenSource, newFilterModel, taskModel?.getData("_id"));
       const taskActivityData = response?.data?.data;
 
       if (Array.isArray(taskActivityData)) {
         setActivityData([...taskActivityData]);
-        setTaskActivityMetadata(response?.data?.metadata);
         newFilterModel?.setData("totalCount", response?.data?.count);
         newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
         setTaskActivityFilterModel({...newFilterModel});
@@ -143,20 +127,19 @@ function TaskActivityPanel({ taskModel }) {
       }
     } finally {
       if (isMounted?.current === true) {
-        setIsLoading(false);
+        setLoadingActivityLogs(false);
       }
     }
   };
 
-  const getSingleRunLogs = async (newFilterModel = taskActivityFilterModel, cancelSource = cancelTokenSource) => {
+  const getSingleRunLogs = async (newFilterModel = taskActivityFilterModel) => {
     try {
-      setIsLoading(true);
-      const response = await taskActivityLogActions.getTaskActivityLogsByIdAndRunCount(getAccessToken, cancelSource, taskModel?.getData("_id"), currentRunNumber, newFilterModel);
+      setLoadingActivityLogs(true);
+      const response = await taskActivityLogActions.getTaskActivityLogsByIdAndRunCount(getAccessToken, cancelTokenSource, taskModel?.getData("_id"), currentRunNumber, newFilterModel);
       const taskActivityData = response?.data?.data;
 
       if (Array.isArray(taskActivityData)) {
         setActivityData([...taskActivityData]);
-        setTaskActivityMetadata(response?.data?.metadata);
         newFilterModel?.setData("totalCount", response?.data?.count);
         newFilterModel?.setData("activeFilters", newFilterModel?.getActiveFilters());
         setTaskActivityFilterModel({...newFilterModel});
@@ -168,7 +151,7 @@ function TaskActivityPanel({ taskModel }) {
     }
     finally {
       if (isMounted?.current === true) {
-        setIsLoading(false);
+        setLoadingActivityLogs(false);
       }
     }
   };
@@ -180,21 +163,26 @@ function TaskActivityPanel({ taskModel }) {
   return (
     <TaskActivityLogTreeTable
       taskLogData={activityData}
-      isLoading={isLoading}
+      isLoading={loadingActivityLogs}
+      isPolling={isLoading}
       loadData={pullLogs}
       taskActivityFilterModel={taskActivityFilterModel}
       setTaskActivityFilterModel={setTaskActivityFilterModel}
-      taskActivityMetadata={taskActivityMetadata}
       taskActivityTreeData={taskLogsTree?.current}
       setCurrentRunNumber={setCurrentRunNumber}
       currentRunNumber={currentRunNumber}
-      taskRunCount={taskModel?.getData("run_count")}
+      taskRunCount={taskRunCount}
+      showFilterContainerIcon={showFilterContainerIcon}
     />
   );
 }
 
 TaskActivityPanel.propTypes = {
   taskModel: PropTypes.object,
+  showFilterContainerIcon: PropTypes.bool,
+  taskRunCount: PropTypes.number,
+  taskId: PropTypes.string,
+  status: PropTypes.string,
 };
 
 export default TaskActivityPanel;

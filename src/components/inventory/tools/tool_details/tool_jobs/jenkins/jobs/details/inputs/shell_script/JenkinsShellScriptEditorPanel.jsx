@@ -12,6 +12,24 @@ import JenkinsJobsShellScriptBuildTypeSelectInput
 import JenkinsJobsPythonAgentLabelSelectInput
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/JenkinsJobsPythonAgentLabelSelectInput";
 
+const JENKINS_JOBS_GENERIC_AGENT_TYPES = [
+  {
+    "name": "Ubuntu Agent",
+    "env" : "linux",
+    "value": "generic-linux",
+  },
+  {
+    "name": "Windows Agent",
+    "env" : "windows",
+    "value": "generic-windows",
+  },
+  {
+    "name": "CentOS Agent",
+    "env" : "linux",
+    "value": "generic-centos",
+  }
+];
+
 function JenkinsShellScriptEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
   useEffect(() => {
     unpackJobConfiguration();
@@ -40,6 +58,7 @@ function JenkinsShellScriptEditorPanel({ jenkinsJobConfiguration, model, setMode
           <JenkinsJobsGenericAgentTypeSelectInput
             model={model}
             setModel={setModel}
+            agentList={JENKINS_JOBS_GENERIC_AGENT_TYPES}
           />
         </Col>
       );

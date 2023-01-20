@@ -1,64 +1,75 @@
-import React, {useContext, useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import {useHistory, useParams} from "react-router-dom";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
-import {AuthContext} from "contexts/AuthContext";
 import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
 import accountsActions from "components/admin/accounts/accounts-actions";
-import LoadingDialog from "components/common/status_notifications/loading";
 import LdapGroupDetailPanel from "components/settings/ldap_groups/details/LdapGroupDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import axios from "axios";
 import GroupManagementSubNavigationBar from "components/settings/ldap_groups/GroupManagementSubNavigationBar";
-
-// TODO: Can we get an API Call to get role group names associated with an organization?
-const roleGroups = ["Administrators", "PowerUsers", "Users"];
+import useComponentStateReference from "hooks/useComponentStateReference";
+import {roleGroups} from "components/settings/ldap_site_roles/details/SiteRoleDetailView";
 
 function LdapGroupDetailView() {
   const history = useHistory();
   const {groupName, orgDomain} = useParams();
-  const toastContext = useContext(DialogToastContext);
-  const [accessRoleData, setAccessRoleData] = useState({});
-  const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const [ldapGroupData, setLdapGroupData] = useState(undefined);
-  const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [canDelete, setCanDelete] = useState(false);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    accessRoleData,
+    getAccessToken,
+    toastContext,
+    cancelTokenSource,
+    userData,
+    isMounted,
+    isOpseraAdministrator,
+    isSiteAdministrator,
+    isPowerUser,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+
+    const userDomain = userData?.ldap?.domain;
+    if (isOpseraAdministrator !== true && orgDomain !== userDomain) {
+      history.push(`/settings/${orgDomain}/groups/details/${groupName}`);
+      return;
     }
 
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
+    if (roleGroups.includes(groupName)) {
+      history.push(`/settings/${orgDomain}/site-roles/details/${groupName}`);
+      return;
+    }
 
-    loadData(source).catch((error) => {
+    if (groupName.startsWith("_dept")) {
+      history.push(`/settings/${orgDomain}/departments/details/${groupName}`);
+      return;
+    }
+
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
+  }, [userData]);
 
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setIsLoading(true);
-      await getRoles(cancelSource);
+      if (
+        accessRoleData?.OpseraAdministrator
+        || accessRoleData?.Administrator
+        || accessRoleData?.PowerUser
+        || accessRoleData?.OrganizationOwner
+        || accessRoleData?.OrganizationAccountOwner
+      ) {
+        await getGroup();
+      }
     }
     catch (error) {
       if (isMounted.current === true && !error?.error?.message?.includes(404)) {
-        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     }
@@ -69,49 +80,12 @@ function LdapGroupDetailView() {
     }
   };
 
-  const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userDomain = user?.ldap?.domain;
-    setCurrentUserEmail(user.email);
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-
-      if (userRoleAccess?.OpseraAdministrator !== true && orgDomain !== userDomain) {
-        history.push(`/settings/${orgDomain}/groups/details/${groupName}`);
-      }
-
-      if (roleGroups.includes(groupName)) {
-        history.push(`/settings/${orgDomain}/site-roles/details/${groupName}`);
-        return;
-      }
-
-      if (groupName.startsWith("_dept")) {
-        history.push(`/settings/${orgDomain}/departments/details/${groupName}`);
-        return;
-      }
-
-      if (
-           userRoleAccess?.OpseraAdministrator
-        || userRoleAccess?.Administrator
-        || userRoleAccess?.PowerUser
-        || userRoleAccess?.OrganizationOwner
-        || userRoleAccess?.OrganizationAccountOwner
-      ) {
-        await getGroup(cancelSource, userRoleAccess);
-      }
-    }
-  };
-
   const getGroup = async (cancelSource = cancelTokenSource, userRoleAccess) => {
-    // TODO: Remove duplicate pull
-    const user = await getUserRecord();
-    const response = await accountsActions.getGroupV2(getAccessToken, cancelSource, orgDomain, groupName);
+    const response = await accountsActions.getGroupV2(getAccessToken, cancelTokenSource, orgDomain, groupName);
 
     if (isMounted.current === true && response?.data) {
       setLdapGroupData(new Model(response.data, ldapGroupMetaData, false));
-      let isOwner = user.email === response.data["ownerEmail"];
+      let isOwner = userData?.email === response.data["ownerEmail"];
 
       if (
         userRoleAccess?.OpseraAdministrator
@@ -124,10 +98,6 @@ function LdapGroupDetailView() {
       }
     }
   };
-
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
 
   const getActionBar = () => {
     if (ldapGroupData != null) {
@@ -148,6 +118,14 @@ function LdapGroupDetailView() {
     return accountsActions.deleteGroup(orgDomain, ldapGroupData, getAccessToken);
   };
 
+  if (
+    isSiteAdministrator !== true
+    && isOpseraAdministrator !== true
+    && isPowerUser !== true
+  ) {
+    return null;
+  }
+
   return (
     <DetailScreenContainer
       breadcrumbDestination={"ldapGroupDetailView"}
@@ -160,9 +138,9 @@ function LdapGroupDetailView() {
         <LdapGroupDetailPanel
           orgDomain={orgDomain}
           ldapGroupData={ldapGroupData}
-          currentUserEmail={currentUserEmail}
+          currentUserEmail={userData?.email}
           setLdapGroupData={setLdapGroupData}
-          loadData={getRoles}
+          loadData={loadData}
         />
       }
     />

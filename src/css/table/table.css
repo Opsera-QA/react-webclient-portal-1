@@ -1,0 +1,11 @@
+.failed-activity-row {
+    background-color: rgba(220, 53, 69, .15);
+}
+
+.pending-activity-row {
+    background-color: rgba(207, 148, 12, .15);
+}
+
+.success-activity-row {
+    background-color: rgba(0, 128, 0, .15);
+}

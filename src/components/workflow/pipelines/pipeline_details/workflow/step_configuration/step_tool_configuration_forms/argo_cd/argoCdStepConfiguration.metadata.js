@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 export const ArgoCdStepConfigurationMetadata = {
   type: "Argo CD Step Configuration",
   fields: [
@@ -15,11 +17,13 @@ export const ArgoCdStepConfigurationMetadata = {
       label: "Repository",
       id: "gitRepository",
       isRequired: true,
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
     },
     {
       label: "Branch",
       id: "defaultBranch",
       isRequired: true,
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
     },
     {
       label: "Docker/ECR Step",
@@ -55,15 +59,16 @@ export const ArgoCdStepConfigurationMetadata = {
     {
       label: "Git File Path",
       id: "gitFilePath",
-      isRequired: true,
+      // isRequired: true,
     },
     {
       label: "Git Workspace",
       id: "gitWorkspace",
     },
     {
-      label: "Git Repository ID",
+      label: "Repository",
       id: "gitRepositoryID",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       label: "BitBucket Workspace",
@@ -95,8 +100,47 @@ export const ArgoCdStepConfigurationMetadata = {
       // isRequired: true,
     },
     {
+      label: "App Variables",
+      id: "dynamicVariables",
+      helpTooltipText: "App varibales can be used to change the Application properties."
+    },
+    {
+      label: "Application Cluster",
+      id: "applicationCluster",
+      isRequiredFunction: (model) => {
+        return model?.getData("dynamicVariables") === true;
+      },
+    },
+    {
+      label: "Application YAML Path",
+      id: "yamlPath",
+      isRequiredFunction: (model) => {
+        return model?.getData("dynamicVariables") === true;
+      },
+    },
+    {
       label: "Blue Green Deployment",
       id: "isBlueGreenDeployment"
+    },
+    {
+      label: "Kustomization",
+      id: "kustomizeFlag",
+      helpTooltipText: "ArgoCD supports Kustomize and has the ability to read a kustomization. yaml file to enable deployment with Kustomize and allow ArgoCD to manage the state of the YAML files."
+    },
+    {
+      label: "dockerStepType",
+      id: "dockerStepType"
+    },
+    {
+      label: "Custom Parameter",
+      id: "customParameterId"
+    },
+    {
+      label: "Image Reference Key",
+      id: "imageReference",
+      isRequiredFunction: (model) => {
+        return model?.getData("kustomizeFlag") === true;
+      },
     }
   ],
   newObjectFields: {
@@ -119,6 +163,14 @@ export const ArgoCdStepConfigurationMetadata = {
     bitbucketWorkspaceName: "",
     rollbackEnabled: false,
     repositoryTag: "",
+    dynamicVariables: false,
+    applicationCluster: "",
+    yamlPath: "",
+    kustomizeFlag: false,
+    imageUrl: "",
     isBlueGreenDeployment: false,
+    dockerStepType: "",
+    customParameterId: "",
+    imageReference: ""
   },
 };

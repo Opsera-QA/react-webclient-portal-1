@@ -85,7 +85,6 @@ function ConfigurationManagement(props) {
                 // onClick={() => selectCard("Ansible")}
                 >
                 <input type="checkbox"
-                  inline
                   disabled={tools.includes("Ansible") ? true : false}
                   checked={isChecked.Ansible && data["Ansible"]}
                   className="newApp__checkbox"
@@ -110,7 +109,6 @@ function ConfigurationManagement(props) {
               className="newApp__service-logo newApp__service-logo--disabledButAvailable"
             >
               <input type="checkbox"
-                inline
                 disabled={tools.includes("Chef") ? true : false}
                 checked={isChecked.Chef && data["Chef"]}
                 className="newApp__checkbox"
@@ -134,7 +132,6 @@ function ConfigurationManagement(props) {
               className="newApp__service-logo newApp__service-logo--disabledButAvailable"
             >
               <input type="checkbox"
-                inline
                 disabled={tools.includes("Puppet") ? true : false}
                 checked={isChecked.Puppet && data["Puppet"]}
                 className="newApp__checkbox"

@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const dotnetCliStepFormMetadata = {
   type: "DotNet Tool Configuration",
   fields: [
@@ -58,8 +60,9 @@ const dotnetCliStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Repository ID",
+      label: "Repository",
       id: "repoId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     
     {
@@ -71,6 +74,7 @@ const dotnetCliStepFormMetadata = {
     {
       label: "Project ID",
       id: "projectId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       id: "gitUrl",
@@ -85,6 +89,7 @@ const dotnetCliStepFormMetadata = {
     {
       label: "Repository",
       id: "repository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
       isRequired: true
     },
     
@@ -97,6 +102,7 @@ const dotnetCliStepFormMetadata = {
     {
       label: "Branch",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequired: true
     },
     {

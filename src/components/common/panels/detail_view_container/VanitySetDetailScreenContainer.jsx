@@ -1,12 +1,11 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
-import TitleBar from "components/common/fields/TitleBar";
+import ScreenContainerTitleBar from "components/common/fields/ScreenContainerTitleBar";
 import {getBreadcrumb} from "components/common/navigation/trails";
 import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
 import {meetsRequirements} from "components/common/helpers/role-helpers";
 import AccessRoleLevelField from "components/common/fields/access/AccessRoleLevelField";
-import InlineLoadingDialog from "components/common/status_notifications/loading/InlineLoadingDialog";
 import ScreenContainerBodyLoadingDialog
   from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 
@@ -30,24 +29,24 @@ function VanitySetDetailScreenContainer(
   const getTopNavigation = () => {
     if (navigationTabContainer) {
       return (
-        <div className="mb-3">
+        <div className={"mb-2"}>
           {navigationTabContainer}
         </div>
       );
     }
 
     return (
-      <div className="mb-3">
-        <div className="sub-navigation-block" />
+      <div className={"mb-2"}>
+        <div className={"sub-navigation-block"} />
       </div>
     );
   };
 
   const getTitleBar = () => {
     return (
-      <TitleBar
+      <ScreenContainerTitleBar
         isLoading={isLoading}
-        titleIcon={breadcrumb?.icon}
+        titleIcon={breadcrumb?.dynamicIconFunction ? breadcrumb?.dynamicIconFunction(model) : breadcrumb?.icon}
         title={model?.getDetailViewTitle()}
         inactive={model?.isInactive()}
         titleActionBar={titleActionBar}
@@ -68,7 +67,7 @@ function VanitySetDetailScreenContainer(
         {getActionBar()}
         <div>
           {detailPanel}
-         </div>
+        </div>
       </div>
     );
   };
@@ -132,17 +131,18 @@ function VanitySetDetailScreenContainer(
   }
 
   return (
-    <div className="max-content-width ml-2 max-content-height scroll-y hide-x-overflow">
+    <div className={"max-content-width"}>
       {getTopNavigation()}
-      <div className="content-container content-card-1">
-        <div className="px-2 content-block-header title-text-header-1">
-          {getTitleBar()}
+      <div className={"screen-container content-container content-card-1"}>
+        <div className={"px-2 content-block-header title-text-header-1 d-flex"}>
+          <div className={"my-auto w-100"}>
+            {getTitleBar()}
+          </div>
         </div>
         <div className="detail-container-body">
           {getBody()}
         </div>
         {getAccessBasedField()}
-        <div className="content-block-footer"/>
       </div>
     </div>
   );

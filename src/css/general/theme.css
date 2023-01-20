@@ -298,9 +298,9 @@
     background-color: #352F54;
 }
 
-.clear-value-badge {
+.badge {
     font-weight: normal;
-    height: 18px;
+    padding: 4px;
 }
 
 .clear-selection-badge-icon {
@@ -334,6 +334,10 @@ button.bg-primary:focus {
     text-decoration: none;
 }
 
+.nav-pills .nav-link {
+    border-radius: 0.25rem;
+}
+
 .list-group-item-primary {
     color: #010913;
     background-color: #46415C;
@@ -343,7 +347,6 @@ button.bg-primary:focus {
     background-color: #46415C !important;
     color: white;
     text-decoration: none;
-    border-color: #010913;
     border: none;
 }
 
@@ -477,9 +480,9 @@ a.text-primary:hover, a.text-primary:focus {
 .custom-table th, .dhx_grid-header-cell-text_content {
     background-color: #f7f7f7; /*#2588ec;*/
     border-bottom: 1px solid #E6E5E3; /*#3598fc;*/
+    font-family: Inter, sans-serif;
+    letter-spacing: .025rem;
     color: #3D3B36;
-    line-height: 2.4em;
-    vertical-align: middle;
     white-space: nowrap;
 }
 
@@ -515,9 +518,9 @@ a.text-primary:hover, a.text-primary:focus {
     color: #fff;
 }
 
-.custom-table .table-row:hover {
-    background-color: #E6E5E3;
-    color: #3D3B36;
+.custom-table .table-row:hover, .standalone-checkbox-input:hover {
+    background: rgb(230, 229, 227);
+    color: black;
 }
 
 .custom-table .table-footer {
@@ -541,8 +544,9 @@ a.text-primary:hover, a.text-primary:focus {
 /* End Table Styling */
 /* End custom table styling */
 
-.message-field {
+.message-field, .pipeline-task-message {
     background-color: #f2f4f8;
+    border-radius: .75rem;
 }
 
 /* Custom modal styling */
@@ -780,10 +784,12 @@ a.nav-link {
 }
 
 .sub-navigation .nav-tabs .nav-link {
+    border-bottom: none;
+
+    /*If we want to use the folder tab-style tabs commented out below, these lines need to be removed*/
+    border-radius: 0;
     border-left: none;
     border-right: none;
-    border-bottom: none;
-    border-radius: 0;
 }
 
 .sub-navigation li {
@@ -799,6 +805,9 @@ a.nav-link {
 .sub-navigation .nav-tabs > li a.active, .sub-navigation .nav-tabs > li a.active:focus {
     color: #CF940C;
     border-top: 5px solid #CF940C;
+    /*border-left: 1px solid #CF940C;*/
+    /*border-right: 1px solid #CF940C;*/
+    /*border-radius: .75rem .75rem 0 0;*/
     text-decoration: none;
 }
 
@@ -815,6 +824,9 @@ a.nav-link {
 
 .sub-navigation .nav-tabs > li a {
     border-top: 5px solid #E6E5E3;
+    /*border-left: 1px solid #E6E5E3;*/
+    /*border-right: 1px solid #E6E5E3;*/
+    /*border-radius: .75rem .75rem 0 0;*/
 }
 
 .sub-navigation li a:hover {
@@ -839,8 +851,6 @@ a.nav-link {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: -1.5rem;
-    margin-bottom: -1.5rem;
 }
 
 .new-user-signup-form form {
@@ -948,14 +958,15 @@ a.nav-link {
     min-height: 150px;
 }
 
-.content-container {
+.content-container, .content-container-border {
     border: 1px solid #E6E5E3;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
+    border-radius: 0 0 1rem 1rem;
 }
 
-.content-container-border {
+.content-container-hide-overflow {
     border: 1px solid #E6E5E3;
+    border-radius: 0 0 1rem 1rem;
+    overflow: hidden;
 }
 
 .content-container-shadow {
@@ -978,13 +989,25 @@ a.nav-link {
 .content-card-analytics .content-block-header {
     background-color: #3D3B36;
     color: #fef7fd;
-    line-height: 2.4em;
 }
 
 .content-card-1 > .content-block-header {
     background-color: #3D3B36;
     color: #fef7fd;
-    line-height: 2.4em;
+    min-height: 49px;
+}
+
+.content-block-header-inverse {
+    background-color: #3D3B36;
+    /*border-bottom: 1px solid #E6E5E3;*/
+    color: #fef7fd;
+}
+
+.filter-container-content-block-header {
+    background-color: #fff;
+    border-bottom: 1px solid #E6E5E3;
+    letter-spacing: .025rem;
+    color: #3D3B36;
 }
 
 .dashboard-container-header {
@@ -993,13 +1016,7 @@ a.nav-link {
     /*background-color: #a24600;*/
     /*background-color: #e76500;*/
     color: #fef7fd;
-    line-height: 2.4em;
-}
-
-.content-card-1 > .content-block-header-inverse {
-    background-color: #E6E5E3;
-    color: #3D3B36;
-    line-height: 2.4em;
+    min-height: 49px;
 }
 
 .content-card-1 .content-block-body {
@@ -1070,63 +1087,6 @@ a.nav-link {
     padding-top: 1em;
     height: 2em;
 }
-
-/* Content Card 2 Styling */
-
-.content-card-2 {
-}
-
-.content-card-2 .content-block-header {
-    background-color: #28a745;
-    color: #fff;
-    line-height: 2.4em;
-    border-bottom: 5px solid #0f3e84;
-}
-
-.content-card-2 .content-block-body {
-    background-color: #E6E5E3;
-    min-height: 150px;
-}
-
-.content-card-2 .content-block-footer {
-    border-top: 5px solid #E6E5E3;
-    background-color: #3D3B36;
-    padding-top: 1em;
-    height: 1.5em;
-}
-
-.content-card-2 .content-block-body .content-image {
-    height: 125px;
-}
-
-/* Content Card 3 Styling */
-
-.content-card-3 {
-}
-
-.content-card-3 .content-block-header {
-    background-color: #3D3B36;
-    color: #fff;
-    line-height: 2.4em;
-    border-bottom: 5px solid #3D3B36;
-}
-
-.content-card-3 .content-block-body {
-    background-color: #E6E5E3;
-    min-height: 150px;
-}
-
-.content-card-3 .content-block-footer {
-    border-top: 5px solid #E6E5E3;
-    background-color: #3D3B36;
-    padding-top: 1em;
-    height: 1.5em;
-}
-
-.content-card-3 .content-block-body .content-image {
-    height: 125px;
-}
-
 /* End Content Block Styling */
 
 /* Data Blocks Card Styling */
@@ -1235,7 +1195,6 @@ div.data-blocks-ellipses {
 
 .max-content-height {
     height: 100%;
-    max-height: 100%;
 }
 
 /* Detail View Styling */
@@ -1366,6 +1325,8 @@ div.data-blocks-ellipses {
 
 .filter-title-text {
     font-size: 1.1rem;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: .05rem;
 }
 
 .filter-body {
@@ -1416,12 +1377,16 @@ div.data-blocks-ellipses {
 /* End filter bar styling */
 
 /* Filter Container Styling */
-.filter-container {
+.filter-container, .screen-container {
+    border-radius: 0.5rem;
+    overflow-x: hidden;
+    letter-spacing: .01rem;
 }
 
 .container-border {
     border: 1px solid #DFDFDF;
     border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 
 .filter-container-no-border {
@@ -1500,7 +1465,6 @@ div.data-blocks-ellipses {
 .success-toast {
     background-color: #FFF;
     color: #000000;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     border: 2px solid green;
     border-left: 8px solid green;
     padding: 2px;
@@ -1511,7 +1475,6 @@ div.data-blocks-ellipses {
 .error-toast {
     background-color: #FFF;
     color: #000000;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     border: 2px solid #dc3545;
     border-left: 8px solid #dc3545;
     font-size: 15px;
@@ -1522,7 +1485,6 @@ div.data-blocks-ellipses {
 .information-toast {
     background-color: #FFF;
     color: #000000;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     border: 2px solid #1989F9;
     border-left: 8px solid #1989F9;
     padding: 1px;
@@ -1536,7 +1498,6 @@ div.data-blocks-ellipses {
 
 .warning-toast {
     background-color: #FFF;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
     border: 2px solid #f9c116;
     border-left: 8px solid #f9c116;
     padding: 1px;
@@ -1576,10 +1537,6 @@ div.data-blocks-ellipses {
     padding: 5px;
 }
 
-.pipeline-task-message {
-    background-color: #f2f4f8;
-}
-
 /* End Pipeline Summary Card styling */
 
 .no-resize {
@@ -1592,6 +1549,14 @@ div.data-blocks-ellipses {
         min-width: 150px;
     }
 
+    .vertical-tab-container-search .inline-search-filter {
+        min-width: 55px;
+    }
+
+    .stacked-vertical-tab .inline-select-filter {
+        min-width: 80px;
+    }
+
     .inline-select-filter {
         min-width: 100px;
     }
@@ -1602,12 +1567,23 @@ div.data-blocks-ellipses {
         min-width: 150px;
     }
 
+    .vertical-tab-container-search .inline-search-filter {
+        min-width: 107px;
+    }
+
     .inline-search-filter {
         min-width: 350px;
     }
 
+    .stacked-vertical-tab .inline-select-filter {
+        min-width: 110px;
+    }
+
     .inline-select-filter {
         min-width: 250px;
+    }
+    .overlay-panel-body {
+        overflow-x: hidden;        
     }
 }
 
@@ -1650,8 +1626,22 @@ div.data-blocks-ellipses {
 }
 
 .full-screen-center-overlay {
-    /* full-height of container - button panel height */
-    height: calc(100vh - 100px);
+    /*
+      full-height - button panel height
+      - top + bottom margins
+      - opsera footer
+     */
+    height: calc(100vh - 20px - 21px);
+}
+
+.full-screen-center-overlay-with-buttons {
+    /*
+      full-height - button panel height
+      - top + bottom margins
+      - opsera footer
+      - button container size (with margins)
+     */
+    min-height: calc(100vh - 20px - 48px - 40px - 45px);
 }
 
 .full-screen-overlay-panel-body {
@@ -1662,35 +1652,25 @@ div.data-blocks-ellipses {
 }
 
 .full-screen-overlay-panel-body-with-buttons {
-    overflow-y: auto;
-    /* full-height - (10px x 2 top + bottom margins - title height - button panel height) */
-    height: calc(100vh - 20px - 48px - 63px);
-    max-height: calc(100vh - 20px - 48px - 63px);
-}
-
-.full-screen-overlay-selection-container {
-    overflow-y: auto;
-    /* full-height - (10px x 2 top + bottom margins - title height - button panel height - filter container taken space) */
-    height: calc(100vh - 20px - 48px - 63px - 85px);
-    max-height: calc(100vh - 20px - 48px - 63px - 85px);
+    /*
+      full-height
+      - top + bottom margins
+      - title height
+      - button panel height (with margins)
+      - footer height
+    */
+    min-height: calc(100vh - 20px - 48px - 40px - 45px);
 }
 
 .full-screen-overlay-tab-panel-body-with-buttons {
-    overflow-y: hidden;
-    height: calc(100vh - 20px - 48px - 63px - 32px);
-    max-height: calc(100vh - 20px - 48px - 63px - 32px);
     border-bottom: 1px solid #dee2e6;
 }
 
 .full-screen-overlay-tab-panel-inner-body-with-buttons {
-    overflow-y: auto;
-    height: calc(100vh - 20px - 48px - 63px - 68px);
-    max-height: calc(100vh - 20px - 48px - 63px - 68px);
+    min-height: calc(100vh - 20px - 48px - 63px - 68px);
 }
 
 .overlay-margin {
-    /* height is 100% - 10px x2 top and bottom margins */
-    height: calc(100% - 20px);
     margin: 10px;
 }
 
@@ -1709,8 +1689,8 @@ div.data-blocks-ellipses {
     z-index: 1500;
 
     /* full-height - (10px x 2 top + bottom margins) */
-    height: calc(100% - 20px);
-    max-height: calc(100% - 20px);
+    height: calc(100vh - 20px);
+    max-height: calc(100vh - 20px);
 }
 
 .overlay-panel-body {
@@ -1732,7 +1712,6 @@ div.data-blocks-ellipses {
 }
 
 .confirmation-overlay-panel-body {
-    min-height: 500px;
     max-height: calc(100% - 48px);
     min-width: 750px;
     max-width: 750px;
@@ -1777,6 +1756,10 @@ div.data-blocks-ellipses {
     color: #000000;
     padding: 2px 2px 2px 10px;
     min-height: 50px;
+
+    /*TODO: Enable when adjusting UI*/
+    /*padding: 2px 2px 2px 9px;*/
+    /*border-radius: 1rem;*/
 }
 
 .page-link-card-icon {
@@ -1797,6 +1780,10 @@ div.data-blocks-ellipses {
 
 .page-link-card-divider {
 
+}
+
+.widget-data-block-base:hover {
+    border-color: #7F74B9 !important;
 }
 
 /* End Page Link Card Styling */

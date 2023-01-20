@@ -15,7 +15,8 @@ const TwistlockConnectionMetadata = {
     {
       label: "Twistlock URL",
       id: "toolURL",
-      isRequired: true
+      isRequired: true,
+      isSecureUrl: true,
     }
   ],
   newObjectFields:

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { faClipboardList } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
-import ExportPipelineActivityLogButton from "components/common/buttons/export/pipelines/ExportPipelineActivityLogButton";
+import ExportTaskActivityLogButton from "../../common/buttons/export/tasks/ExportTaskActivityLogButton";
 import TreeAndTableBase from "components/common/table/TreeAndTableBase";
 import TaskActivityLogsTable from "components/tasks/activity_logs/TaskActivityLogTable";
 import TaskActivityLogTree from "components/tasks/activity_logs/TaskActivityLogTree";
@@ -12,9 +12,9 @@ import CustomTable from "components/common/table/CustomTable";
 function TaskActivityLogTreeTable(
   {
     taskLogData,
-    taskActivityMetadata,
     loadData,
     isLoading,
+    isPolling,
     taskActivityFilterModel,
     setTaskActivityFilterModel,
     taskActivityTreeData,
@@ -22,6 +22,7 @@ function TaskActivityLogTreeTable(
     setCurrentRunNumber,
     setCurrentTaskId,
     taskRunCount,
+    showFilterContainerIcon,
   }) {
   const getNoDataMessage = () => {
     const activeFilters = taskActivityFilterModel?.getActiveFilters();
@@ -37,7 +38,7 @@ function TaskActivityLogTreeTable(
       return ("There are no secondary logs.");
     }
 
-    if (currentRunNumber === 0) {
+    if (currentRunNumber === 0 || taskRunCount === 0 || taskRunCount == null) {
       return ("Task activity data has not been generated yet. Once this Task begins running, it will publish details here.");
     }
 
@@ -47,12 +48,12 @@ function TaskActivityLogTreeTable(
 
     return (`Task activity data has not been generated yet for Run ${currentRunNumber}`);
   };
+
   const getTable = () => {
     return (
       <TaskActivityLogsTable
         isLoading={isLoading}
         taskLogData={taskLogData}
-        taskActivityMetadata={taskActivityMetadata}
       />
     );
   };
@@ -70,7 +71,7 @@ function TaskActivityLogTreeTable(
   };
 
   const getTaskActivityTable = () => {
-    if (taskRunCount === 0) {
+    if (taskRunCount === 0 || taskRunCount == null) {
       return (
         <CustomTable
           isLoading={isLoading}
@@ -109,12 +110,13 @@ function TaskActivityLogTreeTable(
       filterDto={taskActivityFilterModel}
       setFilterDto={setTaskActivityFilterModel}
       isLoading={isLoading}
+      isPolling={isPolling}
       title={"Activity Logs"}
-      titleIcon={faClipboardList}
+      titleIcon={showFilterContainerIcon !== false ? faClipboardList : undefined}
       dropdownFilters={getDropdownFilters()}
       body={getTaskActivityTable()}
       supportSearch={true}
-      exportButton={<ExportPipelineActivityLogButton className={"ml-2"} isLoading={isLoading} activityLogData={taskLogData}/>}
+      exportButton={<ExportTaskActivityLogButton className={"ml-2"} isLoading={isLoading} activityLogData={taskLogData}/>}
     />
   );
 }
@@ -125,7 +127,6 @@ TaskActivityLogTreeTable.propTypes = {
   taskActivityFilterModel: PropTypes.object,
   setTaskActivityFilterModel: PropTypes.func,
   loadData: PropTypes.func,
-  taskActivityMetadata: PropTypes.object,
   taskActivityTreeData: PropTypes.array,
   setCurrentRunNumber: PropTypes.func,
   currentRunNumber: PropTypes.oneOfType([
@@ -134,6 +135,8 @@ TaskActivityLogTreeTable.propTypes = {
   ]),
   setCurrentTaskId: PropTypes.func,
   taskRunCount: PropTypes.number,
+  showFilterContainerIcon: PropTypes.bool,
+  isPolling: PropTypes.bool,
 };
 
 export default TaskActivityLogTreeTable;

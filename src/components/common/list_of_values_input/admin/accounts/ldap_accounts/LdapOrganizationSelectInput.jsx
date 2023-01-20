@@ -1,84 +1,89 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
-import {getOrganizationList} from "components/admin/accounts/ldap/organizations/organization-functions";
-import {useHistory} from "react-router-dom";
-import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import { AuthContext } from "contexts/AuthContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import accountsActions from "components/admin/accounts/accounts-actions";
 
-// TODO: Refactor if ever used
-function LdapOrganizationSelectInput({ currentOrganizationDomain, location}) {
-  const history = useHistory();
-  const toastContext = useContext(DialogToastContext);
-  const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [organizationList, setOrganizationList] = useState([]);
+function LdapOrganizationSelectInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    setDataFunction,
+    disabled,
+    textField,
+    valueField,
+  }) {
+  const { getAccessToken } = useContext(AuthContext);
+  const [error, setError] = useState(undefined);
+  const [organizations, setOrganizations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { isMounted, cancelTokenSource } = useComponentStateReference();
 
   useEffect(() => {
-    loadData();
+    loadData().catch((error) => {
+      if (isMounted === true) {
+        throw error;
+      }
+    });
   }, []);
 
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await getRoles();
+      await getLdapOrganizations();
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        setError(error);
+      }
     }
     finally {
-      setIsLoading(false);
-    }
-  };
-
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    const {ldap, groups} = user;
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-
-      if (userRoleAccess.OpseraAdministrator) {
-        try {
-          let organizationList = await getOrganizationList(getAccessToken);
-          setOrganizationList(organizationList);
-        } catch (error) {
-          toastContext.showLoadingErrorDialog(error.message);
-          console.error(error.message);
-        }
+      if (isMounted?.current === true) {
+        setIsLoading(false);
       }
     }
   };
 
-  const handleOrganizationChange = async (selectedOption) => {
-    history.push(`/settings/${selectedOption.id}/${location}`);
+  const getLdapOrganizations = async () => {
+    const response = await accountsActions.getOrganizationsV2(getAccessToken, cancelTokenSource);
+    const organizationList = response?.data;
+
+    if (isMounted?.current === true && Array.isArray(organizationList)) {
+      setOrganizations(organizationList);
+    }
   };
 
-  if (!accessRoleData || !accessRoleData.OpseraAdministrator) {
-    return <></>;
-  }
-
   return (
-    <div className="custom-select-input">
-      <StandaloneSelectInput
-        selectOptions={organizationList}
-        value={currentOrganizationDomain}
-        busy={isLoading}
-        valueField={'id'}
-        textField={'text'}
-        placeholderText={"Select an Organization Account"}
-        groupBy={org => org["groupId"]}
-        setDataFunction={handleOrganizationChange}
-      />
-    </div>
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={model}
+      setDataObject={setModel}
+      setDataFunction={setDataFunction}
+      selectOptions={organizations}
+      busy={isLoading}
+      valueField={valueField}
+      error={error}
+      textField={textField}
+      disabled={disabled || isLoading}
+    />
   );
 }
 
 LdapOrganizationSelectInput.propTypes = {
-  currentOrganizationDomain: PropTypes.string,
-  location: PropTypes.string
+  fieldName: PropTypes.string,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
+  setDataFunction: PropTypes.func,
+  disabled: PropTypes.bool,
+  textField: PropTypes.string,
+  valueField: PropTypes.string
+};
+
+LdapOrganizationSelectInput.defaultProps = {
+  valueField: "name",
+  textField: "name",
 };
 
 export default LdapOrganizationSelectInput;

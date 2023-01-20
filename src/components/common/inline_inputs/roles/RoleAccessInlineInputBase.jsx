@@ -1,10 +1,12 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import EditRolesOverlay from "components/common/inline_inputs/roles/overlay/EditRolesOverlay";
-import RoleAccessField from "components/common/fields/multiple_items/roles/RoleAccessField";
+import RoleAccessFieldBase from "components/common/fields/multiple_items/roles/RoleAccessFieldBase";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 import EditIcon from "components/common/icons/field/EditIcon";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import FieldContainer from "components/common/fields/FieldContainer";
 
 function RoleAccessInlineInputBase(
   {
@@ -13,10 +15,15 @@ function RoleAccessInlineInputBase(
     disabled,
     saveData,
     visible,
-    noDataMessage,
     helpComponent,
+    className,
   }) {
   const toastContext = useContext(DialogToastContext);
+  const {
+    isFreeTrial,
+    isOpseraAdministrator,
+    isSassUser,
+  } = useComponentStateReference();
 
   const showEditor = () => {
     if (!disabled) {
@@ -30,35 +37,39 @@ function RoleAccessInlineInputBase(
     }
   };
 
-  if (visible === false) {
+  if (visible === false || isSassUser === true || (isFreeTrial === true && isOpseraAdministrator !== true)) {
     return null;
   }
 
   return (
-    <div className="role-access">
-      <div className="d-flex">
-        <div>
-          <RoleAccessField
-            model={model}
-            fieldName={fieldName}
-            noDataMessage={noDataMessage}
-          />
-        </div>
-        <div className="edit-button d-flex">
-          <EditIcon
-            className={"ml-2 mt-2 text-muted"}
-            handleEditFunction={showEditor}
-            disabled={disabled}
-            tooltipBody={"Edit Access Rules"}
-          />
-          <LaunchHelpIcon
-            visible={disabled !== true}
-            helpComponent={helpComponent}
-            className={"mt-2 ml-2 text-muted"}
-          />
+    <FieldContainer
+      className={className}
+    >
+      <div className="role-access">
+        <div className="d-flex">
+          <div>
+            <RoleAccessFieldBase
+              model={model}
+              fieldName={fieldName}
+            />
+          </div>
+          <div className={"edit-button d-flex"}>
+            <EditIcon
+              className={"ml-2 text-muted"}
+              handleEditFunction={showEditor}
+              disabled={disabled}
+              tooltipBody={"Edit Access Rules"}
+              iconTransformProperties={"shrink-5"}
+            />
+            <LaunchHelpIcon
+              visible={disabled !== true}
+              helpComponent={helpComponent}
+              className={"ml-2 text-muted"}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </FieldContainer>
   );
 }
 
@@ -69,7 +80,11 @@ RoleAccessInlineInputBase.propTypes = {
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   saveData: PropTypes.func,
-  noDataMessage: PropTypes.any
+  className: PropTypes.string,
+};
+
+RoleAccessInlineInputBase.defaultProps = {
+  fieldName: "roles",
 };
 
 export default RoleAccessInlineInputBase;

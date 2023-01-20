@@ -1,16 +1,20 @@
-import React, {useContext} from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import BreadcrumbPageLinkCard from "components/common/card/link/BreadcrumbPageLinkCard";
-import {AuthContext} from "contexts/AuthContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function LdapGroupManagementPageLinkCard({accessRoleData}) {
-  const { isSassUser } = useContext(AuthContext);
+export default function LdapGroupManagementPageLinkCard() {
+  const {
+    isSiteAdministrator,
+    isOpseraAdministrator,
+    isPowerUser,
+    isSaasUser,
+  } = useComponentStateReference();
 
-  if (isSassUser() !== false ||
-    (accessRoleData.Administrator !== true
-      && accessRoleData.OpseraAdministrator !== true
-      && accessRoleData.PowerUser !== true
-      && accessRoleData.SassPowerUser !== true)
+  if (
+    (isSiteAdministrator !== true
+    && isOpseraAdministrator !== true
+    && isPowerUser !== true)
+    || isSaasUser !== false
   ) {
     return null;
   }
@@ -21,9 +25,3 @@ function LdapGroupManagementPageLinkCard({accessRoleData}) {
     />
   );
 }
-
-LdapGroupManagementPageLinkCard.propTypes = {
-  accessRoleData: PropTypes.object,
-};
-
-export default LdapGroupManagementPageLinkCard;

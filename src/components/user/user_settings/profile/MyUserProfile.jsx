@@ -1,160 +1,105 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
-import { Button, Table } from "react-bootstrap";
-import { faSync, faSpinner } from "@fortawesome/pro-light-svg-icons";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import userActions from "components/user/user-actions";
-import LoadingDialog from "components/common/status_notifications/loading";
+import React, {useEffect, useState} from "react";
+import { Row } from "react-bootstrap";
 import LdapSettingsPanel
   from "components/admin/registered_users/details/ldap_settings/LdapSettingsPanel";
 import Model from "core/data_model/model";
 import registeredUsersMetadata from "components/admin/registered_users/registeredUsers.metadata";
 import RegisteredUserSummary from "components/admin/registered_users/details/RegisteredUserSummary";
-import AccessRoleField from "components/common/fields/access/AccessRoleField";
-import axios from "axios";
-import IconBase from "components/common/icons/IconBase";
+import SiteRoleField from "components/common/fields/access/SiteRoleField";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import SyncProfileButton from "components/user/user_settings/profile/SyncProfileButton";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import Col from "react-bootstrap/Col";
+import UserSettingsSubNavigationBar from "components/user/user_settings/UserSettingsSubNavigationBar";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import {USER_SETTINGS_PAGES} from "components/user/user_settings/userSettings.paths";
 
-function MyUserProfile() {
-  const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [user, setUser] = useState(undefined);
+export default function MyUserProfile() {
   const [userModel, setUserModel] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSyncing, setIsSyncing] = useState(false);
-  const [accessRole, setAccessRole] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    userData,
+    accessRoleData,
+    isSaasUser,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+    setUserModel(undefined);
+
+    if (userData) {
+      setUserModel(new Model({ ...userData }, registeredUsersMetadata, false));
     }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-      await loadUserRecord();
-    } catch (error) {
-      if (isMounted.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
-      }
-    } finally {
-      if (isMounted.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const loadUserRecord = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (isMounted.current === true && userRoleAccess) {
-      setAccessRole(userRoleAccess);
-      setUser(user);
-      setUserModel(new Model({...user}, registeredUsersMetadata, false));
-    }
-  };
-
-  const syncUserData = async (cancelSource = cancelTokenSource) => {
-    try {
-      setIsSyncing(true);
-      await userActions.syncUser(getAccessToken, cancelSource);
-    } catch (error) {
-      if (isMounted.current === true) {
-        toastContext.showErrorDialog(error);
-        console.error(error);
-      }
-    } finally {
-      if (isMounted.current === true) {
-        setIsSyncing(false);
-      }
-    }
-  };
+  }, [userData]);
 
   const getOpseraUserInfo = () => {
     return (
-      <tr>
-        <td>Opsera User Information</td>
-        <td>
-          <RegisteredUserSummary userData={userModel} userAccess={accessRole} />
-        </td>
-      </tr>
+      <Row>
+        <Col xs={12}>
+          <H5FieldSubHeader subheaderText={"Opsera User Information"} />
+        </Col>
+        <Col xs={12}>
+          <RegisteredUserSummary
+            userData={userModel}
+            userAccess={accessRoleData}
+          />
+        </Col>
+      </Row>
     );
   };
 
   const getLdapUserInfo = () => {
-    if (user?.ldap) {
+    if (isSaasUser === false) {
       return (
-        <tr>
-          <td>Organization & Account</td>
-          <td>
-            <LdapSettingsPanel userData={userModel} ldapData={user?.ldap} />
-          </td>
-        </tr>
+        <Row>
+          <Col xs={12}>
+            <H5FieldSubHeader subheaderText={"Organization & Account"} />
+          </Col>
+          <Col xs={12}>
+            <LdapSettingsPanel userData={userModel} ldapData={userData?.ldap} />
+          </Col>
+        </Row>
       );
     }
   };
 
   // TODO: Style better
   const getUserInfo = () => {
-    if (user == null) {
+    if (userData == null) {
       return <></>;
     }
 
     return (
-      <div className="pt-2">
-        <Table className="m-0">
-          <tbody>
-          {getOpseraUserInfo()}
-          {getLdapUserInfo()}
-          </tbody>
-        </Table>
+      <div>
+        {getOpseraUserInfo()}
+        <hr />
+        {getLdapUserInfo()}
+        <hr />
       </div>
     );
   };
 
   const getSyncButton = () => {
     return (
-      <div className="justify-content-between d-flex px-3">
-        <div className="mt-1">
-          <AccessRoleField accessRole={accessRole} />
-        </div>
-        <Button variant="primary" size="sm" disabled={isSyncing} onClick={() => syncUserData()}>
-          <IconBase isLoading={isSyncing} icon={faSync} className="mr-2"/>
-          {isSyncing ? "Syncing" : "Re-Sync Profile"}
-        </Button>
+      <div className={"justify-content-between d-flex"}>
+        <SiteRoleField className={"mt-auto"} showDescription={true} />
+        <SyncProfileButton />
       </div>
     );
   };
 
-  if (isLoading) {
-    return (<LoadingDialog size={"sm"} message="Loading User Profile" />);
-  }
-
   return (
-    <div>
-      {getSyncButton()}
-      {getUserInfo()}
-    </div>
+    <ScreenContainer
+      navigationTabContainer={<UserSettingsSubNavigationBar activeTab={USER_SETTINGS_PAGES.MY_USER_PROFILE} />}
+      breadcrumbDestination={USER_SETTINGS_PAGES.MY_USER_PROFILE}
+      roleRequirement={ROLE_LEVELS.USERS_AND_SASS}
+      accessRoleData={accessRoleData}
+      isLoading={userModel == null}
+    >
+      <div className={"mx-3"}>
+        {getSyncButton()}
+        <hr />
+        {getUserInfo()}
+      </div>
+    </ScreenContainer>
   );
 }
-
-export default MyUserProfile;

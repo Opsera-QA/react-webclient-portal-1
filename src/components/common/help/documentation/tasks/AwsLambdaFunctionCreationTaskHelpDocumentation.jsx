@@ -7,7 +7,7 @@ import { getTaskTypeLabel, TASK_TYPES } from "../../../../tasks/task.types";
 function AwsLambdaFunctionCreationTaskHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer helpTopic={getTaskTypeLabel(TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION)} closeHelpPanel={closeHelpPanel}>
-      <div>This workflow requires setup in both Tasks and Opsera Pipelines. The workflow is separated into two parts where the user enters certain static information in the Tasks page and then links the task to the respective step in the pipeline. For more detailed information on the AWS Create Lambda Function workflow including pipeline setup, view the <a href="https://opsera.atlassian.net/l/c/Pcv3z811" target="_blank" rel="noreferrer"><b>AWS Lambda Functions Documentation</b>.</a></div>
+      <div>This workflow requires setup in both Tasks and Opsera Pipelines. The workflow is separated into two parts where the user enters certain static information in the Tasks page and then links the task to the respective step in the pipeline. For more detailed information on the AWS Create Lambda Function workflow including pipeline setup, view the <a href="https://docs.opsera.io/aws-native-support/aws-lambda-functions" target="_blank" rel="noreferrer"><b>AWS Lambda Functions Documentation</b>.</a></div>
       <div className={"mt-2"}><h5>Task Setup Instructions:</h5></div>
       <ol>
         <li>Select <b>{getTaskTypeLabel(TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION)}</b> from the Type drop down. Once this has been selected, the following values will be fetched for selection:

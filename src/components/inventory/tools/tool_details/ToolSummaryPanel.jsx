@@ -5,27 +5,23 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import RegistryToolRoleAccessInput from "components/inventory/tools/tool_details/input/RegistryToolRoleAccessInput";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
 import ToolVaultField from "components/common/fields/inventory/tools/vault/ToolVaultField";
+import SmartIdField from "components/common/fields/text/id/SmartIdField";
 
-function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessRules }) {
-  useEffect(() => {
-  }, [JSON.stringify(customerAccessRules)]);
-
-  const authorizedAction = (action, dataObject) => {
-    const owner = dataObject?.owner;
-    const objectRoles = dataObject?.roles;
-    return workflowAuthorizedActions.toolRegistryItems(customerAccessRules, action, owner, objectRoles);
-  };
-
+export default function ToolSummaryPanel(
+  {
+    toolData,
+    setToolData,
+    setActiveTab,
+    loadToolFunction,
+  }) {
   if (toolData == null) {
     return null;
   }
 
   return (
-    <SummaryPanelContainer setActiveTab={setActiveTab} editingAllowed={authorizedAction("edit_tool_settings", toolData?.data)}>
+    <SummaryPanelContainer setActiveTab={setActiveTab} editingAllowed={toolData?.canUpdate()}>
       <Row>
         <Col lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"name"} />
@@ -33,11 +29,18 @@ function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessR
         <Col lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"owner_name"} />
         </Col>
-        <Col sm={12} lg={6}>
-          <TextFieldBase dataObject={toolData} fieldName={"costCenter"}/>
+        <Col lg={12}>
+          <RegistryToolRoleAccessInput
+            toolModel={toolData}
+            setToolModel={setToolData}
+            loadToolFunction={loadToolFunction}
+          />
         </Col>
         <Col sm={12} lg={6}>
-          <TagField dataObject={toolData} fieldName={"tags"}/>
+          <TextFieldBase dataObject={toolData} fieldName={"costCenter"} />
+        </Col>
+        <Col sm={12} lg={6}>
+          <TagField dataObject={toolData} fieldName={"tags"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"classification"} />
@@ -46,16 +49,15 @@ function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessR
           <TextFieldBase dataObject={toolData} fieldName={"tool_type_identifier"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={toolData} fieldName={"_id"} />
+          <SmartIdField
+            model={toolData}
+          />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"account"} />
         </Col>
         <Col lg={6}>
           <DateFieldBase dataObject={toolData} fieldName={"createdAt"} />
-        </Col>
-        <Col lg={6}>
-          <RegistryToolRoleAccessInput dataObject={toolData} setDataObject={setToolData} disabled={!authorizedAction("edit_access_roles", toolData?.data)} />
         </Col>
         <Col lg={6}>
           <ToolVaultField model={toolData} fieldName={"vault"} />
@@ -72,7 +74,5 @@ ToolSummaryPanel.propTypes = {
   toolData: PropTypes.object,
   setToolData: PropTypes.func,
   setActiveTab: PropTypes.func,
-  customerAccessRules: PropTypes.object,
+  loadToolFunction: PropTypes.func,
 };
-
-export default ToolSummaryPanel;

@@ -12,18 +12,18 @@ function AzureAksDeployPipelineStepConfigurationHelpDocumentation() {
   const getHelpDocumentation = () => {
     return (
       <div>
-        <div className={"mb-1 ml-4"}>To set up an Azure Service Deployment pipeline, there are 3 steps required in the workflow including this step:</div>
-        <div className={"ml-4"}>
-          <ol>
+        <div className={"ml-2 mb-2"}>To set up an Azure Service Deployment pipeline, there are 3 steps required in the workflow including this step:</div>
+        <div>
+          <ul style={{listStyleType: "none"}}>
             <li>Build - Step configured with Jenkins tool.</li>
             <li>ACR Push - Step configured with Azure ACR Push tool.</li>
             <li><b>AKS Deploy - Step configured with Azure AKS Deploy tool. </b></li>
-          </ol>
+          </ul>
         </div>
-        <div className={"my-3 ml-4"}>The prerequisites for setting up an Azure Service Deployment pipeline also include task creation in Tasks (in order for the Azure AKS Deploy step to deploy docker images to the Azure Cluster). In order for this step to run successfully, there must also be a Build step using Jenkins and an Azure AKS Deploy step in the pipeline workflow as outlined above. To view in depth documentation on task and pipeline setup, view the <b><a href="https://opsera.atlassian.net/l/c/iCgHTCUY" target="_blank" rel="noreferrer">Azure AKS Functionality documentation</a></b>. </div>
-        <div className={"ml-4"}>
+        <div className={"ml-2 mb-2"}>The prerequisites for setting up an Azure Service Deployment pipeline also include task creation in Tasks (in order for the Azure AKS Deploy step to deploy docker images to the Azure Cluster). In order for this step to run successfully, there must also be a Build step using Jenkins and an Azure AKS Deploy step in the pipeline workflow as outlined above. To view in depth documentation on task and pipeline setup, view the <b><a href="https://docs.opsera.io/azure-native-support/azure-aks-cluster-creation-tasks-documentation" target="_blank" rel="noreferrer">Azure AKS Functionality documentation</a></b>. </div>
+        <div className={"ml-2"}>
           <ol>
-            <li>Once the step is configured with Azure AKS set as the tool, set the following values:
+            <li>Once the initial Step Setup is configured with the Azure AKS tool, set the following values:
               <ul style={{listStyleType: "none"}}>
                 <li><b>Azure Tool</b> - Select the tool that was used to create the Azure cluster.</li>
                 <li><b>Azure Credential</b> - Drop down values will include Applications configured in the selected tool. </li>

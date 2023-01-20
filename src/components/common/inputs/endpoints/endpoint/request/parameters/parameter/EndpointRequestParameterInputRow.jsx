@@ -13,9 +13,6 @@ import {faCode} from "@fortawesome/pro-light-svg-icons";
 import MultiTextListInputBase from "components/common/inputs/list/text/MultiTextListInputBase";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 import VanitySetTabContentContainer from "components/common/tabs/vertical_tabs/VanitySetTabContentContainer";
-import {
-  EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS
-} from "components/workflow/plan/step/external_rest_api_integration/externalRestApiIntegrationStep.heights";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import BooleanSelectInput from "components/common/list_of_values_input/boolean/BooleanSelectInput";
 
@@ -24,6 +21,8 @@ function EndpointRequestParameterInputRow(
     disabled,
     updateParameterFunction,
     endpointBodyField,
+    endpointParameterArrayInputHeight,
+    endpointParameterInputHeight,
   }) {
   const [endpointFieldModel, setEndpointFieldModel] = useState(undefined);
 
@@ -77,7 +76,7 @@ function EndpointRequestParameterInputRow(
       case "string":
         if (isSensitiveData === true) {
           return (
-            <div className={"mx-3 mt-2"} style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_INPUT_HEIGHT}}>
+            <div className={"mx-3 mt-2"} style={{minHeight: endpointParameterInputHeight}}>
               <CustomParameterSelectInput
                 model={endpointFieldModel}
                 fieldName={"value"}
@@ -94,7 +93,7 @@ function EndpointRequestParameterInputRow(
         }
 
         return (
-          <div className={"mx-3 mt-2"} style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_INPUT_HEIGHT}}>
+          <div className={"mx-3 mt-2"} style={{minHeight: endpointParameterInputHeight}}>
             <CustomParameterComboBoxInput
               model={endpointFieldModel}
               fieldName={"value"}
@@ -120,14 +119,14 @@ function EndpointRequestParameterInputRow(
               singularTopic={"Value"}
               pluralTopic={"Values"}
               allowDuplicates={true}
-              minimumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_PARAMETER_ARRAY_INPUT_HEIGHT}
-              maximumHeight={EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_PARAMETER_ARRAY_INPUT_HEIGHT}
+              minimumHeight={endpointParameterArrayInputHeight}
+              maximumHeight={endpointParameterArrayInputHeight}
             />
           </div>
         );
       case "date":
         return (
-          <div className={"mx-3 mt-2"} style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_INPUT_HEIGHT}}>
+          <div className={"mx-3 mt-2"} style={{minHeight: endpointParameterInputHeight}}>
             <DateTimeInput
               dataObject={endpointFieldModel}
               setDataObject={setEndpointFieldModel}
@@ -141,7 +140,7 @@ function EndpointRequestParameterInputRow(
         );
       case "boolean":
         return (
-          <div className={"mx-3 mt-2"} style={{minHeight: EXTERNAL_REST_API_INTEGRATION_STEP_HEIGHTS.ENDPOINT_REQUEST_PARAMETER_INPUT_HEIGHT}}>
+          <div className={"mx-3 mt-2"} style={{minHeight: endpointParameterInputHeight}}>
             <BooleanSelectInput
               model={endpointFieldModel}
               setModel={setEndpointFieldModel}
@@ -181,6 +180,8 @@ EndpointRequestParameterInputRow.propTypes = {
   updateParameterFunction: PropTypes.func,
   disabled: PropTypes.bool,
   endpointBodyField: PropTypes.object,
+  endpointParameterArrayInputHeight: PropTypes.string,
+  endpointParameterInputHeight: PropTypes.string,
 };
 
 export default EndpointRequestParameterInputRow;

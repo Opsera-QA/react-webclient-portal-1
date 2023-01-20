@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import InfoDialog from "components/common/status_notifications/info";
 import PipelineWelcomeView from "./PipelineWelcomeView";
-import PipelinesTable from "./pipeline_details/PipelinesTable";
+import PipelinesTableBase from "components/workflow/pipelines/pipeline_details/PipelinesTableBase";
 import InformationDialog from "components/common/status_notifications/info";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import PipelineCardView from "components/workflow/pipelines/PipelineCardView";
@@ -11,12 +10,13 @@ import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import pipelineSummaryMetadata
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import PipelineStatusFilter from "components/common/filters/pipelines/status/PipelineStatusFilter";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import TableCardView from "components/common/table/TableCardView";
 import {useHistory} from "react-router-dom";
 import PipelineVerticalTabContainer from "components/workflow/pipelines/PipelineVerticalTabContainer";
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 
 function PipelineTableCardView(
   {
@@ -28,19 +28,28 @@ function PipelineTableCardView(
     subscribedPipelineIds,
   }) {
   const history = useHistory();
-
-  const getDynamicFilter = () => {
-    if (pipelineFilterModel?.getData("type") !== "owner") {
-      return (<OwnerFilter filterModel={pipelineFilterModel} setFilterModel={setPipelineFilterModel} className={"mt-2"}/>);
-    }
-  };
+  const {
+    userData,
+  } = useComponentStateReference();
 
   const getDropdownFilters = () => {
     return (
       <>
-        <PipelineStatusFilter filterModel={pipelineFilterModel} setFilterModel={setPipelineFilterModel} className={"mb-2"} />
-        <TagFilter filterDto={pipelineFilterModel} setFilterDto={setPipelineFilterModel}/>
-        {getDynamicFilter()}
+        <PipelineStatusFilter
+          filterModel={pipelineFilterModel}
+          setFilterModel={setPipelineFilterModel}
+          className={"mb-2"}
+        />
+        <TagFilter
+          filterDto={pipelineFilterModel}
+          setFilterDto={setPipelineFilterModel}
+        />
+        <OwnerFilter
+          filterModel={pipelineFilterModel}
+          setFilterModel={setPipelineFilterModel}
+          className={"mt-2"}
+          visible={pipelineFilterModel?.getData("type") !== "owner"}
+        />
       </>
     );
   };
@@ -49,12 +58,16 @@ function PipelineTableCardView(
     history.push(`/workflow/catalog/library`);
   };
 
+  const onRowSelect = (rowData) => {
+    history.push(`/workflow/details/${rowData.original._id}/summary`);
+  };
+
   const getCardView = () => {
     return (
       <PipelineCardView
         isLoading={isLoading}
         loadData={loadData}
-        data={pipelines}
+        pipelines={pipelines}
         pipelineFilterModel={pipelineFilterModel}
         subscribedPipelineIds={subscribedPipelineIds}
       />
@@ -63,18 +76,19 @@ function PipelineTableCardView(
 
   const getTableView = () => {
     return (
-      <PipelinesTable
+      <PipelinesTableBase
         isLoading={isLoading}
         paginationModel={pipelineFilterModel}
         setPaginationModel={setPipelineFilterModel}
-        data={pipelines}
+        pipelines={pipelines}
         loadData={loadData}
+        onRowClickFunction={onRowSelect}
       />
     );
   };
 
   const getTableCardView = () => {
-    if (Array.isArray(pipelines) && pipelines.count === 0 && pipelineFilterModel?.getData("type") === "owner" && (pipelineFilterModel?.getActiveFilters() == null || pipelineFilterModel?.getActiveFilters()?.length === 0) ) {
+    if (Array.isArray(pipelines) && pipelines.count === 0 && pipelineFilterModel?.getData("type") === "owner" && (pipelineFilterModel?.getActiveFilters() == null || pipelineFilterModel?.getActiveFilters()?.length === 0)) {
       return (
         <div className={"p-3"}>
           <PipelineWelcomeView />
@@ -83,15 +97,15 @@ function PipelineTableCardView(
     }
 
     return (
-      <Row className={"mx-0"}>
-        <Col sm={2} className={"px-0 makeup-tree-container"}>
+      <TabAndViewContainer
+        verticalTabContainer={
           <PipelineVerticalTabContainer
             pipelineFilterModel={pipelineFilterModel}
             isLoading={isLoading}
             loadData={loadData}
           />
-        </Col>
-        <Col sm={10} className={"px-0"}>
+        }
+        currentView={
           <TableCardView
             filterModel={pipelineFilterModel}
             data={pipelines}
@@ -99,8 +113,8 @@ function PipelineTableCardView(
             cardView={getCardView()}
             tableView={getTableView()}
           />
-        </Col>
-      </Row>
+        }
+      />
     );
   };
 
@@ -110,14 +124,14 @@ function PipelineTableCardView(
       if (activeFilters && activeFilters.length > 0) {
         return (
           <div className="px-2 max-content-width mx-auto" style={{ minWidth: "505px" }}>
-            <div className="my-5"><InfoDialog message="No pipelines meeting the filter requirements were found."/></div>
+            <div className="my-5"><InformationDialog message="No pipelines meeting the filter requirements were found."/></div>
           </div>
         );
       }
 
       return (
         <div className="px-2 max-content-width" style={{ minWidth: "505px" }}>
-          <div className="my-5"><InfoDialog message="No pipelines are available for this view at this time."/></div>
+          <div className="my-5"><InformationDialog message="No pipelines are available for this view at this time."/></div>
         </div>
       );
     }
@@ -141,7 +155,7 @@ function PipelineTableCardView(
         loadData={loadData}
         filterDto={pipelineFilterModel}
         setFilterDto={setPipelineFilterModel}
-        addRecordFunction={addPipeline}
+        addRecordFunction={PipelineRoleHelper.canCreatePipeline(userData) === true ? addPipeline : undefined}
         supportSearch={true}
         supportViewToggle={true}
         isLoading={isLoading}
@@ -163,7 +177,6 @@ PipelineTableCardView.propTypes = {
   pipelineFilterModel: PropTypes.object,
   setPipelineFilterModel: PropTypes.func,
   loadData: PropTypes.func,
-  saveCookies: PropTypes.func,
   subscribedPipelineIds: PropTypes.array,
 };
 

@@ -1,14 +1,13 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 import {List} from "@opsera/dhx-suite-package";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingWrapper";
-import StandaloneDatePickerInput from "components/common/inputs/date/StandaloneDateTimeInput";
-import IconBase from "components/common/icons/IconBase";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import SelectAllIcon from "components/common/icons/field/SelectAllIcon";
+import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
 
 // TODO: Make an actual base version and rename this VanityListInput
 // TODO: Refactor
@@ -35,7 +34,8 @@ function ListInputBase(
     noDataMessage,
     customTitle,
     loadDataFunction,
-    callbackFunction
+    lazyLoadSearchFunction,
+    disableSearch,
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [list, setList] = useState(undefined);
@@ -56,14 +56,19 @@ function ListInputBase(
   }, [selectOptions, isLoading]);
 
   useEffect(() => {
-    if (list && searchFunction) {
-      if (searchTerm !== "") {
-        list.data.filter((item) => {
-          return searchFunction(item, searchTerm);
-        });
+    if (list) {
+      if (searchFunction) {
+        if (hasStringValue(searchTerm) === true) {
+          list.data.filter((item) => {
+            return searchFunction(item, searchTerm);
+          });
+        } else {
+          list.data.filter();
+        }
       }
-      else {
-        list.data.filter();
+
+      if (lazyLoadSearchFunction) {
+        lazyLoadSearchFunction(searchTerm);
       }
     }
   }, [searchTerm]);
@@ -155,9 +160,6 @@ function ListInputBase(
     else {
       validateAndSetData(field?.id, newArray);
     }
-    if (callbackFunction) {
-      callbackFunction();
-    }
   };
 
   const addItem = (item) => {
@@ -202,13 +204,12 @@ function ListInputBase(
 
   // TODO: Make clearDataButton Component
   const getClearDataIcon = () => {
-    if (!disabled && dataObject?.getArrayData(field?.id)?.length > 0 && showClearValueButton !== false && (setDataFunction == null || clearDataFunction)) {
+    if (!disabled && dataObject?.getArrayData(field?.id)?.length > 0 && showClearValueButton !== false) {
       return (
-        <TooltipWrapper innerText={"Clear this Value"}>
-          <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer ml-2">
-            <IconBase icon={faTimes} fixedWidth className="mr-1"/>Clear Selection
-          </span>
-        </TooltipWrapper>
+        <ClearDataIcon
+          className={"ml-2 my-auto"}
+          clearValueFunction={clearValue}
+        />
       );
     }
   };
@@ -239,9 +240,10 @@ function ListInputBase(
   const getSelectAllIcon = () => {
     if (!disabled && selectOptions.length > 0 && showSelectAllButton === true) {
       return (
-        <span onClick={() => selectAllOptions()} className="my-auto badge badge-success clear-value-badge pointer">
-          <IconBase icon={faPlus} fixedWidth className="mr-1"/>Select All
-        </span>
+        <SelectAllIcon
+          selectAllFunction={selectAllOptions}
+          className={"ml-2 my-auto"}
+        />
       );
     }
   };
@@ -264,7 +266,7 @@ function ListInputBase(
     return (
       <div className={"px-2 py-1 title-bar-selection-row d-flex justify-content-between"}>
         <div className={"text-muted"}>{getItemCount()} selected</div>
-        <div className={"mb-1"}>{getSelectAllIcon()}{getClearDataIcon()}</div>
+        <div className={"d-flex"}>{getSelectAllIcon()}{getClearDataIcon()}</div>
       </div>
     );
   };
@@ -308,8 +310,9 @@ function ListInputBase(
           field={field}
           setSearchTerm={setSearchTerm}
           searchTerm={searchTerm}
-          showSearchBar={searchFunction != null}
+          showSearchBar={searchFunction != null || lazyLoadSearchFunction != null}
           loadDataFunction={loadDataFunction}
+          disableSearch={disableSearch}
         />
         {getExtraRow()}
         {getBody()}
@@ -357,7 +360,8 @@ ListInputBase.propTypes = {
   noDataMessage: PropTypes.string,
   customTitle: PropTypes.string,
   loadDataFunction: PropTypes.func,
-  callbackFunction: PropTypes.func,
+  lazyLoadSearchFunction: PropTypes.func,
+  disableSearch: PropTypes.bool,
 };
 
 ListInputBase.defaultProps = {

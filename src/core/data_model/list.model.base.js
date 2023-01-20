@@ -1,7 +1,7 @@
-import {LIVE_MESSAGE_TOPICS, LIVE_MESSAGE_TYPES} from "core/websocket/constants/liveMessage.constants";
+import {LIVE_MESSAGE_TYPES} from "core/websocket/constants/liveMessage.constants";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import { hasStringValue } from "components/common/helpers/string-helpers";
 
-// TODO: Should we handle RBAC for adding in here?
 export class ListModelBase {
   constructor(authContext, setStateFunction) {
     // this.metadata = _.cloneDeep({...metadata});
@@ -11,7 +11,7 @@ export class ListModelBase {
     this.addAllowed = false;
     this.setStateFunction = setStateFunction;
     this.roleDefinitions = {};
-    this.topicName = LIVE_MESSAGE_TOPICS.TAGS;
+    this.topicName = "";
   }
 
   getRoleDefinitions = () => {
@@ -134,24 +134,32 @@ export class ListModelBase {
     const newData = [...this.dataArray];
     const deletedRecordId = liveMessage.message.data;
 
-    console.log("newDataLength: " + JSON.stringify(newData.length));
+    console.log("before delete length: " + JSON.stringify(newData.length));
     if (isMongoDbId(deletedRecordId) === true) {
       const index = newData.findIndex((item) => item._id === deletedRecordId);
 
       if (index !== -1) {
         newData.splice(index, 1);
+        console.log("after delete length: " + JSON.stringify(newData.length));
+        this.setDataArray(newData);
       }
     }
-
-    console.log("newDataLength: " + JSON.stringify(newData.length));
-    this.setDataArray(newData);
   };
 
   subscribe = () => {
+    if (hasStringValue(this.topicName) !== true) {
+      console.error("No Topic Name was given so cannot subscribe");
+      return;
+    }
+
     this.authContext.subscribeToTopic(this.topicName, this);
   };
 
   unsubscribe = () => {
+    if (hasStringValue(this.topicName) !== true) {
+      return;
+    }
+
     this.authContext.unsubscribeFromTopic(this.topicName);
   };
 

@@ -2,8 +2,9 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faArrowLeft, faTimes} from "@fortawesome/pro-light-svg-icons";
+import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import AccountSettingsSubNavigationBarBase from "components/settings/AccountSettingsSubNavigationBarBase";
 
 function DeleteToolsSubNavigationBar({activeTab}) {
   const history = useHistory();
@@ -11,10 +12,11 @@ function DeleteToolsSubNavigationBar({activeTab}) {
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
 
+    if (activeTab === tabSelection) {
+      return;
+    }
+
     switch (tabSelection) {
-      case "accountSettings":
-        history.push(`/settings`);
-        return;
       case "deleteTools":
         history.push(`/settings/delete`);
         return;
@@ -23,12 +25,8 @@ function DeleteToolsSubNavigationBar({activeTab}) {
 
   return (
     <NavigationTabContainer>
-      <NavigationTab
-        icon={faArrowLeft}
-        tabName={"accountSettings"}
-        handleTabClick={handleTabClick}
+      <AccountSettingsSubNavigationBarBase
         activeTab={activeTab}
-        tabText={"Back to Account Settings"}
       />
       <NavigationTab
         icon={faTimes}

@@ -3,14 +3,15 @@ import PropTypes from "prop-types";
 import ActionBarButton from "./ActionBarButton";
 import {faFileAlt} from "@fortawesome/pro-light-svg-icons";
 
-function ActionBarViewDetailsButtonBase(
+export default function ActionBarViewDetailsButtonBase(
   {
     showDetailsFunction,
     tooltipText,
     className,
+    disabled,
   }) {
 
-  if (showDetailsFunction == null) {
+  if (showDetailsFunction == null && disabled !== true) {
     return null;
   }
 
@@ -28,6 +29,5 @@ ActionBarViewDetailsButtonBase.propTypes = {
   showDetailsFunction: PropTypes.func,
   tooltipText: PropTypes.string,
   className: PropTypes.string,
+  disabled: PropTypes.bool,
 };
-
-export default ActionBarViewDetailsButtonBase;

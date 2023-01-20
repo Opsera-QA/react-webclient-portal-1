@@ -14,7 +14,16 @@ import {TASK_TYPES} from "components/tasks/task.types";
 import TaskAuditLogPanel from "components/tasks/details/audit/TaskAuditLogPanel";
 import { AuthContext } from "contexts/AuthContext";
 
-function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleData, runTask }) {
+function TaskDetailPanel(
+  {
+    gitTasksData,
+    setGitTasksData,
+    loadData,
+    accessRoleData,
+    runTask,
+    status,
+    runCount,
+  }) {
   const {featureFlagHideItemInProd} = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState(runTask ? "settings" : "summary");
 
@@ -61,7 +70,10 @@ function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleDa
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SummaryToggleTab
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+        />
         {getDynamicTabs()}
         <CustomTab
           icon={faTable}
@@ -70,7 +82,7 @@ function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleDa
           activeTab={activeTab}
           tabText={"Activity Logs"}
         />
-        {getFeatureFlaggedTab()}
+        {/*{getFeatureFlaggedTab()}*/}
       </CustomTabContainer>
     );
   };
@@ -85,6 +97,8 @@ function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleDa
             accessRoleData={accessRoleData}
             setGitTasksData={setGitTasksData}
             loadData={loadData}
+            status={status}
+            runCount={runCount}
           />
         );
       case "settings":
@@ -101,7 +115,10 @@ function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleDa
         return (
           <TaskActivityPanel
             taskModel={gitTasksData}
-            />
+            taskId={gitTasksData?.getMongoDbId()}
+            taskRunCount={runCount}
+            status={status}
+          />
         );
       case "cert":
         return (
@@ -111,18 +128,23 @@ function TaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleDa
             loadData={loadData}
           />
         );
-      case "audit-logs":
-        return (
-          <TaskAuditLogPanel
-            taskId={gitTasksData?.getMongoDbId()}
-          />
-        );
+      // case "audit-logs":
+      //   return (
+      //     <TaskAuditLogPanel
+      //       taskId={gitTasksData?.getMongoDbId()}
+      //     />
+      //   );
       default:
         return null;
     }
   };
 
-  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
+  return (
+    <DetailTabPanelContainer
+      detailView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
+  );
 }
 
 TaskDetailPanel.propTypes = {
@@ -131,6 +153,8 @@ TaskDetailPanel.propTypes = {
   loadData: PropTypes.func,
   accessRoleData: PropTypes.object,
   runTask: PropTypes.bool,
+  status: PropTypes.string,
+  runCount: PropTypes.number,
 };
 
 export default TaskDetailPanel;

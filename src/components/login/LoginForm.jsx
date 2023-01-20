@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button, Row, Col } from "react-bootstrap";
-import { faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { axiosApiService } from "../../api/apiService";
 import { useHistory } from "react-router-dom";
 import { faArrowLeft } from "@fortawesome/pro-solid-svg-icons";
@@ -8,16 +7,15 @@ import { AuthContext } from "../../contexts/AuthContext";
 import "@okta/okta-signin-widget/dist/css/okta-sign-in.min.css";
 import { useOktaAuth } from "@okta/okta-react";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import RegisterAccountButton from "components/login/RegisterAccountButton";
 import PropTypes from "prop-types";
 import userActions from "../user/user-actions";
 import IconBase from "components/common/icons/IconBase";
 import LoadingIcon from "components/common/icons/LoadingIcon";
-
-const OktaSignIn = require("@okta/okta-signin-widget");
+import OktaSignIn from '@okta/okta-signin-widget';
+import LoginWelcomeMessage from "components/login/LoginWelcomeMessage";
+import {apiTokenHelper} from "temp-library-components/helpers/api/token/apiToken.helper";
 
 const LoginForm = ({ authClient }) => {
-  const { generateJwtServiceTokenWithValue } = useContext(AuthContext);
   const { oktaAuth } = useOktaAuth();
   const history = useHistory();
   const [username, setUsername] = useState("");
@@ -128,13 +126,16 @@ const LoginForm = ({ authClient }) => {
     //console.log("IdP ID: ", federatedIdpIdentifier);
 
     let idpValues = [];
+    let signInToolTip = "Sign in using your email address.";
     if (federatedIdpIdentifier && federatedIdpIdentifier !== "0") {
       idpValues = [
-        { text: ldapOrgName + " SSO", id: federatedIdpIdentifier },//IDP of LDAP object
+        { text: "Click here to sign in!", id: federatedIdpIdentifier },//IDP of LDAP object
         //{ text: "Opsera DEV DEMO", id: "0oa10wlxrgdHnKvOJ0h8" }, //IDP of our PROD Okta Federated for use via DEV/LOCALHOST for developerment
         //{ text: "Opsera Inc", id: "0oa44bjfqlK7gTwnz4x7" }, //IDP of our DEV Okta Federated for use via PROD for Smoke Testing
         //{ type: "GOOGLE", id: "0oa1njfc0lFlSp0mM4x7" }, //IDP of our GSuite as opposed to pure google
       ];
+
+      signInToolTip = ldapOrgName + " Users: click the above button to sign in.";
     }
 
     const signIn = new OktaSignIn({
@@ -157,13 +158,16 @@ const LoginForm = ({ authClient }) => {
       },
       logoText: ldapOrgName + " Sign in",
       logo: '/img/logos/opsera_bird_infinity_171_126.png',
+      colors: {
+        brand: '#352F54',
+      },
       language: 'en',
       username: lookupAccountEmail,
       i18n: {
         en: {
-          'primaryauth.title': ldapOrgName + " Account Activation",
+          'primaryauth.title': ldapOrgName + " User Access",
           'primaryauth.username.placeholder': "Email Address",
-          'primaryauth.username.tooltip': "The login form below follows your organizations defined sign in flow once your account is activated."
+          'primaryauth.username.tooltip': signInToolTip
         }
       },
     });
@@ -244,7 +248,7 @@ const LoginForm = ({ authClient }) => {
 
         /*START NEW FEDERATION CODE*/
         if (accountType === "ldap-organization") {
-          const token = await generateJwtServiceTokenWithValue({ id: "orgRegistrationForm" });
+          const token = apiTokenHelper.generateApiCallToken("orgRegistrationForm");
 
           if (token) {
             const accountResponse = await userActions.getAccountInformationWithEmailAddress(lookupAccountEmail, token);
@@ -292,7 +296,7 @@ const LoginForm = ({ authClient }) => {
   if (viewType === "login") {
     return (
       <Row className="mt-4">
-        <Col md={5} className="p-4"><WelcomeMessage /></Col>
+        <Col md={5} className="p-4"><LoginWelcomeMessage /></Col>
         <Col>
           <div className="d-flex align-items-center justify-content-center">
             <div className="auth-box-w">
@@ -367,7 +371,7 @@ const LoginForm = ({ authClient }) => {
   if (viewType === "federated-login") {
     return (
       <Row className="mt-4">
-        <Col md={5} className="p-4"><WelcomeMessage /></Col>
+        <Col md={5} className="p-4"><LoginWelcomeMessage /></Col>
         <Col>
           <div className="d-flex align-items-center justify-content-center">
             <div className="auth-box-w">
@@ -440,7 +444,7 @@ const LoginForm = ({ authClient }) => {
   if (viewType === "domain") {
     return (
       <Row className="mt-4">
-        <Col md={5} className="p-4"><WelcomeMessage /></Col>
+        <Col md={5} className="p-4"><LoginWelcomeMessage /></Col>
         <Col>
           <div className="d-flex align-items-center justify-content-center">
             <div className="auth-box-w">
@@ -478,31 +482,6 @@ const LoginForm = ({ authClient }) => {
       </Row>
     );
   }
-};
-
-const WelcomeMessage = () => {
-  return (
-    <div className="ml-4">
-      <h2 className="mb-3 bd-text-purple-bright">Welcome to Opsera!</h2>
-      <div style={{ fontSize: "1.1rem" }}>
-        Opsera’s vision is to enable and empower the developers, operations and release teams by giving the
-        flexibility in selecting the various DevOps
-        functional tools, build the pipeline with quality and security gates.
-      </div>
-      <div style={{ fontSize: "1.1rem" }} className="mt-3">Opsera provides out of the box monitoring dashboard,
-        giving an end to end visibility of DevOps landscape metrics
-        via an intelligent dashboard to improve the Agility, Operational excellence and help them to track
-        security and compliance metrics.
-      </div>
-
-      <div className="row mx-n2 mt-4">
-        <RegisterAccountButton />
-        {/*<div className="col-md px-2">
-        <Button variant="outline-success" className="btn-lg w-100 mb-3" onClick={login}>Log In</Button>
-      </div>*/}
-      </div>
-    </div>
-  );
 };
 
 LoginForm.propTypes = {

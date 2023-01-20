@@ -1,7 +1,14 @@
 /* Custom CSS for workflows here */
 
 .workflow-view {
-  min-height: 85vh;
+    /*
+    Full height
+    - navbar height (68px)
+    - subnav height 42.1~ px
+    - title height (28px)
+    - tabs height (48px)
+    */
+  min-height: calc(100vh - 68px - 43px - 28px - 48px - 48px - 30px);
 }
 
 .workflow-container {
@@ -13,15 +20,15 @@
   background-image: linear-gradient(to right, #dddddd 1px, transparent 1px),
     linear-gradient(to bottom, #dddddd 1px, transparent 1px);
 
-  min-height: 70vh;
+  min-height: calc(100vh - 68px - 43px - 28px - 48px - 48px - 30px - 48px - 10px);
 }
 
 .workflow-module-container-width-sm {
-  max-width: 200px;
+  max-width: 275px;
 }
 
 .workflow-module-container-width {
-  max-width: 275px;
+  max-width: 350px;
 }
 
 .workflow-module-container-height {
@@ -50,6 +57,7 @@
 
 .pipeline-card-title {
   background-color: #E8E8E8;
+  font-size: 1rem;
 }
 
 .pipeline-card-text {
@@ -166,12 +174,11 @@
 .step-setting-editor {
   background-color: #fff;
   height: 100%;
-  width: 600px;
+  width: 750px;
 }
 
 .step-settings-container {
   min-height: calc(100% - 65px);
-  overflow: auto;
 }
 
 .step-settings-body {

@@ -55,15 +55,15 @@ function GithubDeployKeysEditorPanel({ githubDeployKeyData, toolData, repoId, ha
     let newConfiguration = githubDeployKeyModel.getPersistData();
     const deployKeyVaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
     newConfiguration.deployKey = await toolsActions.saveKeyPasswordToVault(githubDeployKeyModel, "deployKey", newConfiguration.deployKey, deployKeyVaultKey, getAccessToken, toolData.getData("_id"));
-    return await githubDeployKeysActions.createGithubDeployKey(getAccessToken, cancelTokenSource, toolData?._id, newConfiguration);
+    return await githubDeployKeysActions.createGithubDeployKey(getAccessToken, cancelTokenSource, toolData?.getData("_id"), newConfiguration);
   };
 
   const updateRepository = async () => {
-    return await githubDeployKeysActions.updateGithubDeployKey(getAccessToken, cancelTokenSource, toolData?._id, repoId, githubDeployKeyModel);
+    return await githubDeployKeysActions.updateGithubDeployKey(getAccessToken, cancelTokenSource, toolData?.getData("_id"), repoId, githubDeployKeyModel);
   };
 
   const deleteRepository = async () => {
-    await githubDeployKeysActions.deleteGithubDeployKey(getAccessToken, cancelTokenSource, toolData?._id, repoId);
+    await githubDeployKeysActions.deleteGithubDeployKey(getAccessToken, cancelTokenSource, toolData?.getData("_id"), repoId);
     await handleClose();
   };
 

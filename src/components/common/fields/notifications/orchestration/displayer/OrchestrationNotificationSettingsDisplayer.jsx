@@ -9,6 +9,7 @@ function OrchestrationNotificationSettingsDisplayer({notifications, className, n
   const [serviceNowSettings, setServiceNowSettings] = useState(undefined);
   const [slackSettings, setSlackSettings] = useState(undefined);
   const [microsoftTeamsSettings, setMicrosoftTeamsSettings] = useState(undefined);
+  const [gChatSettings, setGChatSettings] = useState(undefined);
 
   useEffect(() => {
       unpackRoles();
@@ -34,6 +35,9 @@ function OrchestrationNotificationSettingsDisplayer({notifications, className, n
             break;
           case ORCHESTRATION_NOTIFICATION_TYPES.TEAMS:
             setMicrosoftTeamsSettings({...notificationConfiguration});
+            break;
+          case ORCHESTRATION_NOTIFICATION_TYPES.GCHAT:
+            setGChatSettings({...notificationConfiguration});
             break;
         }
       });
@@ -61,6 +65,10 @@ function OrchestrationNotificationSettingsDisplayer({notifications, className, n
 
     if (microsoftTeamsSettings?.enabled === true) {
       enabledNotificationString += enabledNotificationString?.length > 0 ? ", Microsoft Teams" : "Microsoft Teams";
+    }
+
+    if (gChatSettings?.enabled === true) {
+      enabledNotificationString += enabledNotificationString?.length > 0 ? ", Google Chat" : "Google Chat";
     }
 
     if (enabledNotificationString?.length === 0) {

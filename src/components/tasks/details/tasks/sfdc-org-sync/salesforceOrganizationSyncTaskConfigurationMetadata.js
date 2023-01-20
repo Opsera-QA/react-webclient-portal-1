@@ -11,7 +11,6 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
     {
       label: "Jenkins Tool Name",
       id: "toolName",
-      isRequired: true,
       maxLength: 100,
       regexDefinitionName: "generalTextWithSpacesSlash",
     },  
@@ -47,15 +46,16 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
+      label: "Git Account",
       id: "gitToolId",
       isRequired: true,
       maxLength: 24,
       regexDefinitionName: "mongoId",
     },        
     {
+      label: "Repository",
       id: "projectId",
       maxLength: 100,
-      regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
       id: "gitUrl",
@@ -102,7 +102,6 @@ const salesforceOrganizationSyncTaskConfigurationMetadata = {
     {
       label: "Salesforce Account",
       id: "sfdcToolName",
-      isRequired: true,
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
     },

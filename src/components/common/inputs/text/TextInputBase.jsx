@@ -28,6 +28,7 @@ function TextInputBase(
     inputButtons,
     inputHelpOverlay,
     visible,
+    helpTooltipText,
   }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -69,8 +70,8 @@ function TextInputBase(
   const getInputClasses = () => {
     let classes = `form-control`;
 
-    if (errorMessage !== "") {
-      classes += ` border border-danger error-text`;
+    if (hasStringValue(errorMessage) === true) {
+      classes += ` border border-danger error-text-alt`;
     }
 
     if (inputClasses) {
@@ -78,6 +79,14 @@ function TextInputBase(
     }
 
     return classes;
+  };
+
+  const getErrorStyling = () => {
+    if (hasStringValue(errorMessage) === true) {
+      return ` error-text-alt`;
+    }
+
+    return "";
   };
 
   const getInputButtons = () => {
@@ -118,7 +127,7 @@ function TextInputBase(
     }
 
     return (
-      <div className={"d-flex"}>
+      <div className={"d-flex" + getErrorStyling()}>
         {getInputBody()}
         {getInputButtons()}
       </div>
@@ -140,6 +149,7 @@ function TextInputBase(
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(errorMessage) === true}
+        helpTooltipText={helpTooltipText}
       />
       {getInput()}
       <InfoText
@@ -176,6 +186,7 @@ TextInputBase.propTypes = {
   rightSideInputButton: PropTypes.object,
   inputButtons: PropTypes.any,
   visible: PropTypes.bool,
+  helpTooltipText: PropTypes.string,
 };
 
 export default TextInputBase;

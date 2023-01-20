@@ -94,9 +94,8 @@ function PipelineDataMappingEditorPanel(
         </Col>
         <Col xs={12}>
           <RoleAccessInput
-            fieldName={"roles"}
-            dataObject={pipelineDataMappingModel}
-            setDataObject={setPipelineDataMappingModel}
+            model={pipelineDataMappingModel}
+            setModel={setPipelineDataMappingModel}
           />
         </Col>
       </Row>

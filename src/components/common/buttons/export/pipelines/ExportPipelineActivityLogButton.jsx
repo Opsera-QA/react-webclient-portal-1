@@ -1,53 +1,34 @@
-import React, {useState} from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
-import Button from "react-bootstrap/Button";
-import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import ExportPipelineActivityLogDataModal from "components/common/modal/export_data/ExportPipelineActivityLogDataModal";
-import IconBase from "components/common/icons/IconBase";
+import ExportPipelineActivityLogDataOverlay from "components/pipeline/export/ExportPipelineActivityLogDataOverlay";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import ExportDataButtonBase from "components/common/modal/export_data/ExportDataButtonBase";
 
-function ExportPipelineActivityLogButton({isLoading, activityLogData, className}) {
-  const [showExportModal, setShowExportModal] = useState(false);
+function ExportPipelineActivityLogButton(
+  {
+    isLoading,
+    activityLogData,
+    className,
+  }) {
+  const toastContext = useContext(DialogToastContext);
 
-  const closeModal = () => {
-    setShowExportModal(false);
-  };
-
-  const rawDataResults = () =>{
-    return activityLogData ? activityLogData.map(item => JSON.stringify(item)) : "export failure";
-   };
-
-  const formatActivityLogData = () => {
-    let formattedData = activityLogData;
-
-    //any data formatting goes here
-
-    return formattedData;
-  };
-
-  // TODO: Refine when more is complete
-  return (
-    <>
-      <TooltipWrapper innerText={"Export as PDF"}>
-        <div className={className}>
-          <Button
-            variant={"outline-primary"}
-            size={"sm"}
-            disabled={isLoading}
-            onClick={() => setShowExportModal(true)}>
-            <span><IconBase icon={faFileDownload}/></span>
-          </Button>
-        </div>
-      </TooltipWrapper>
-      <ExportPipelineActivityLogDataModal
-        showModal={showExportModal}
-        closeModal={closeModal}
+  const launchOverlayFunction = () => {
+    toastContext.showOverlayPanel(
+      <ExportPipelineActivityLogDataOverlay
         isLoading={isLoading}
-        formattedData={formatActivityLogData()}
-        rawData={rawDataResults()}
+        activityLogData={activityLogData}
       />
-    </>
+    );
+  };
+
+  return (
+    <ExportDataButtonBase
+      className={className}
+      isLoading={isLoading}
+      disabled={!Array.isArray(activityLogData) || activityLogData.length === 0}
+      launchOverlayFunction={launchOverlayFunction}
+    />
   );
 }
 

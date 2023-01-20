@@ -1,11 +1,12 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useEffect, useState, useCallback, useRef, useContext } from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import { githubActions } from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
+import _ from "lodash";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
-import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import {githubActions} from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
-import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function GithubRepositorySelectInput(
   {
@@ -19,13 +20,12 @@ function GithubRepositorySelectInput(
     valueField,
     textField,
   }) {
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [githubRepositories, setGithubRepositories] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Github Repository");
+  const [error, setError] = useState(undefined);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
-  const {getAccessToken} = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -35,11 +35,10 @@ function GithubRepositorySelectInput(
     isMounted.current = true;
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-    setErrorMessage("");
     setGithubRepositories([]);
 
     if (isMongoDbId(toolId) === true) {
-      loadData(source).catch((error) => {
+      loadData("", toolId, source).catch((error) => {
         throw error;
       });
     }
@@ -50,45 +49,59 @@ function GithubRepositorySelectInput(
     };
   }, [toolId]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (
+    searchTerm = "",
+    currentToolId = toolId,
+    cancelSource = cancelTokenSource,
+  ) => {
     try {
+      setError(undefined);
       setIsLoading(true);
-      await loadGithubRepositories(cancelSource);
+      let defaultSearchTerm = searchTerm;
+      const existingRepository = model?.getData("repositoryName") || model?.getData("gitRepository") || model?.getData("repository");
+      // console.log(existingRepository);
+      if ((defaultSearchTerm === "") && (hasStringValue(existingRepository) === true)) {
+        defaultSearchTerm = existingRepository;
+      }
+      await loadGithubRepositories(defaultSearchTerm, currentToolId, cancelSource);
     } catch (error) {
-      setPlaceholderText("No Repositories Available!");
-      setErrorMessage("There was an error pulling Github Repositories");
-      console.error(error);
+      if (isMounted.current === true) {
+        setError(error);
+      }
     } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const loadGithubRepositories = async (cancelSource = cancelTokenSource) => {
-    const response = await githubActions.getRepositoriesFromGithubInstanceV2(getAccessToken, cancelSource, toolId);
-    const repositories = response?.data?.data;
-
-    if (isMounted?.current === true && Array.isArray(repositories)) {
-      setPlaceholderText("Select Github Repository");
-      setGithubRepositories([...repositories]);
-
-      const existingRepository = model?.getData(fieldName);
-
-      if (hasStringValue(existingRepository) === true) {
-        const existingRepositoryExists = repositories.find((repository) => repository[valueField] === existingRepository);
-
-        if (existingRepositoryExists == null) {
-          setErrorMessage(
-            "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list."
-          );
-        }
+      if (isMounted.current === true) {
+        setIsLoading(false);
       }
     }
   };
 
+  const loadGithubRepositories = async (
+    searchTerm,
+    currentToolId = toolId,
+    cancelSource = cancelTokenSource,
+  ) => {
+    const response = await githubActions.getRepositoriesFromGithubInstanceV3(getAccessToken, cancelSource, currentToolId, searchTerm);
+    const repositories = response?.data?.data;
+
+    if (isMounted?.current === true && Array.isArray(repositories)) {
+      setGithubRepositories([...repositories]);
+    }
+  };
+
+  const getDataPullLimitMessage = () => {
+    return "The first 100 repositories will be loaded by default, please enter at least 3 characters to search for repositories by name.";
+  };
+
+  const delayedSearchQuery = useCallback(
+    _.debounce((searchTerm, toolId) => loadData(searchTerm, toolId), 600),
+    [],
+  );
+
   return (
-    <SelectInputBase
+    <LazyLoadSelectInputBase
       fieldName={fieldName}
       dataObject={model}
+      helpTooltipText={getDataPullLimitMessage()}
       setDataObject={setModel}
       selectOptions={githubRepositories}
       busy={isLoading}
@@ -97,8 +110,10 @@ function GithubRepositorySelectInput(
       valueField={valueField}
       textField={textField}
       disabled={disabled}
-      placeholder={placeholder}
-      errorMessage={errorMessage}
+      singularTopic={"Github Repository"}
+      pluralTopic={"Github Repositories"}
+      error={error}
+      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
     />
   );
 }

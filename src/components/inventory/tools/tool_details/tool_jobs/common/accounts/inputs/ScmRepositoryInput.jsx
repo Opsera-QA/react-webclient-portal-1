@@ -20,6 +20,7 @@ function ScmRepositoryInput({dataObject, setDataObject, disabled}) {
     let newDataObject = {...dataObject};
     newDataObject.setData("repository", "");
     newDataObject.setData("repoId", "");
+    newDataObject.setData("projectId", "");
     newDataObject.setData("reviewerName", "");
     newDataObject.setData("reviewerId", "");
     newDataObject.setData("reviewer", "");    
@@ -28,7 +29,7 @@ function ScmRepositoryInput({dataObject, setDataObject, disabled}) {
 
   return (
      <RepositorySelectInput
-       fieldName={"repository"}
+       fieldName={"repoId"}
        service={dataObject.getData("service")}
        gitToolId={dataObject.getData("toolId")}
        workspace={dataObject.getData("workspace")}

@@ -8,7 +8,7 @@ function PipelineActivityLogTree(
   {
     pipelineLogTree,
     setCurrentRunNumber,
-    setCurrentStepName,
+    setCurrentStepId,
     pipelineRunCount,
   }) {
   const [secondaryLogTree] = useState(pipelineLogHelpers.getSecondaryTree());
@@ -29,9 +29,9 @@ function PipelineActivityLogTree(
   }, [pipelineLogTree]);
 
   useEffect(() => {
-    if (isMounted.current === true && pipelineRunCount && Array.isArray(pipelineLogTree) && pipelineLogTree.length > 0) {
+    if (pipelineRunCount) {
       setSelectedId(`${pipelineRunCount}`);
-      setCurrentStepName(undefined);
+      setCurrentStepId(undefined);
       setCurrentRunNumber(pipelineRunCount);
     }
   }, [pipelineRunCount]);
@@ -40,7 +40,7 @@ function PipelineActivityLogTree(
     setSelectedId(treeItem?.id);
 
     if (treeItem) {
-      setCurrentStepName(treeItem?.stepName);
+      setCurrentStepId(treeItem?.stepName);
       setCurrentRunNumber(treeItem?.runNumber);
     }
   };
@@ -62,7 +62,7 @@ function PipelineActivityLogTree(
 PipelineActivityLogTree.propTypes = {
   pipelineLogTree: PropTypes.array,
   setCurrentRunNumber: PropTypes.func,
-  setCurrentStepName: PropTypes.func,
+  setCurrentStepId: PropTypes.func,
   pipelineRunCount: PropTypes.number,
 };
 

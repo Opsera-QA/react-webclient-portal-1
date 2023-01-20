@@ -196,7 +196,7 @@ function ApigeeRunAssistantListObjectInput(
     if (!disabled && model?.getArrayData(field?.id)?.length > 0 && showClearValueButton !== false && (setDataFunction == null || clearDataFunction)) {
       return (
         <TooltipWrapper innerText={"Empty out all stored values"}>
-          <span onClick={() => clearValue()} className="badge badge-danger clear-value-badge pointer ml-2">
+          <span onClick={() => clearValue()} className="badge badge-danger pointer ml-2">
             <span className={"my-auto"}>
               <IconBase
                 icon={faTimes}

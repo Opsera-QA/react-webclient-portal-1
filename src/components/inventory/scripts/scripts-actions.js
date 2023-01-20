@@ -2,7 +2,7 @@ import baseActions from "utils/actionsBase";
 
 const scriptsActions = {};
 
-scriptsActions.getScripts = async (getAccessToken, cancelTokenSource, searchKeyword, type, fields = ["name", "type", "owner", "roles"]) => {
+scriptsActions.getScripts = async (getAccessToken, cancelTokenSource, searchKeyword, type, fields) => {
   const apiUrl = "/registry/scripts";
   const urlParams = {
     params: {
@@ -32,7 +32,7 @@ scriptsActions.updateScriptV2 = async (getAccessToken, cancelTokenSource, script
   const id = scriptModel.getData("_id");
   const apiUrl = `/registry/script/${id}/update`;
   const postBody = {
-    ...scriptModel.getChangedProperties()
+    ...scriptModel.getPersistData()
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);

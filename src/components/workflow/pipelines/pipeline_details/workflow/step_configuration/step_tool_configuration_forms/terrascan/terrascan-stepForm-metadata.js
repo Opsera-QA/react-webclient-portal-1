@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const terrascanStepFormMetadata = {
   type: "Terrascan Tool Configuration",
   fields: [
@@ -52,8 +54,9 @@ const terrascanStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Repository ID",
+      label: "Repository",
       id: "repoId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     
     {
@@ -79,6 +82,7 @@ const terrascanStepFormMetadata = {
     {
       label: "Repository",
       id: "repository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
       isRequired: true
     },
     
@@ -94,6 +98,7 @@ const terrascanStepFormMetadata = {
     {
       label: "Branch",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequired: true
     },
     

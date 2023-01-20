@@ -1,62 +1,29 @@
-import React, {useState, useEffect, useRef, useContext} from "react";
-import LoadingDialog from "components/common/status_notifications/loading";
+import React, {useState} from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import { faAnalytics, faTags, faTools, faUsers } from "@fortawesome/pro-light-svg-icons";
-import { useHistory } from "react-router-dom";
 import Model from "core/data_model/model";
 import userReportsMetadata from "components/reports/users/user-reports-metadata";
-import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import LdapUserByDomainSelectInput from "components/common/list_of_values_input/users/LdapUserByDomainSelectInput";
 import ConsolidatedUserToolAccessReport from "components/reports/users/user/consolidated_user_report/tool_access/ConsolidatedUserToolAccessReport";
 import ConsolidatedUserGroupMembershipReport
   from "components/reports/users/user/consolidated_user_report/group_membership/ConsolidatedUserGroupMembershipReport";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import InformationDialog from "components/common/status_notifications/info";
 import ConsolidatedUserPipelineAccessReport
   from "components/reports/users/user/consolidated_user_report/pipeline_access/ConsolidatedUserPipelineAccessReport";
 import ConsolidatedUserTaskAccessReport
   from "components/reports/users/user/consolidated_user_report/task_access/ConsolidatedUserTaskAccessReport";
+import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ConsolidatedUserReport() {
-  const { getAccessRoleData } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [ldapUserModel, setLdapUserModel] = useState(new Model({ ...userReportsMetadata }, userReportsMetadata, false));
-  const isMounted = useRef(false);
-  const history = useHistory();
-
-  useEffect(() => {
-    isMounted.current = true;
-
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async () => {
-    try {
-      const userRoleAccess = await getAccessRoleData();
-      if (isMounted?.current === true && userRoleAccess) {
-        setAccessRoleData(userRoleAccess);
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.error(error);
-        toastContext.showLoadingErrorDialog(error);
-      }
-    }
-  };
+  const {
+    isSiteAdministrator,
+    isOpseraAdministrator,
+    isAuditor,
+    isSecurityManager,
+  } = useComponentStateReference();
 
   const setDataFunction = (fieldName, value) => {
     let newDataObject = ldapUserModel;
@@ -75,26 +42,6 @@ function ConsolidatedUserReport() {
 
     setLdapUserModel({ ...newDataObject });
   };
-
-  const handleTabClick = (tabSelection) => (e) => {
-    e.preventDefault();
-    history.push(`/reports/${tabSelection}`);
-  };
-
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab activeTab={"users"} tabText={"All Reports"} handleTabClick={handleTabClick} tabName={"all"} icon={faAnalytics} />
-        <NavigationTab activeTab={"users"} tabText={"Tool Reports"} handleTabClick={handleTabClick} tabName={"tools"} icon={faTools} />
-        <NavigationTab activeTab={"users"} tabText={"Tag Reports"} handleTabClick={handleTabClick} tabName={"tags"} icon={faTags} />
-        <NavigationTab activeTab={"users"} tabText={"User Reports"} handleTabClick={handleTabClick} tabName={"users"} icon={faUsers} />
-      </NavigationTabContainer>
-    );
-  };
-
-  if (!accessRoleData) {
-    return <LoadingDialog size="sm" />;
-  }
 
   const getBody = () => {
     if (ldapUserModel == null || ldapUserModel?.getData("user") == null) {
@@ -137,12 +84,19 @@ function ConsolidatedUserReport() {
     );
   };
 
+  if (
+    isSiteAdministrator !== true
+    && isOpseraAdministrator !== true
+    && isAuditor !== true
+    && isSecurityManager !== true
+  ) {
+    return null;
+  }
+
   return (
     <ScreenContainer
       breadcrumbDestination={"consolidatedUserReport"}
-      accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
-      navigationTabContainer={getNavigationTabContainer()}
+      navigationTabContainer={<ReportsSubNavigationBar currentTab={"userReportViewer"} />}
       pageDescription={"View report for selected user"}
     >
       <Row className={"mb-3 mx-0"}>

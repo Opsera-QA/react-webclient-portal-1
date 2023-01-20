@@ -3,9 +3,19 @@ import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 import CopyToClipboardIcon from "components/common/icons/CopyToClipboardIcon";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function TextFieldBase({dataObject, fieldName, className, showClipboardButton, visible }) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+function TextFieldBase(
+  {
+    dataObject,
+    fieldName,
+    className,
+    showClipboardButton,
+    visible,
+    requireSavedValue,
+  }) {
+  const field = dataObject?.getFieldById(fieldName);
+  const value = DataParsingHelper.parseString(dataObject?.getData(fieldName));
 
   const getClipboardButton = () => {
     if (showClipboardButton === true) {
@@ -13,7 +23,7 @@ function TextFieldBase({dataObject, fieldName, className, showClipboardButton, v
     }
   };
 
-  if (field == null || visible === false) {
+  if (field == null || visible === false || (requireSavedValue === true && !value)) {
     return null;
   }
 
@@ -34,6 +44,7 @@ TextFieldBase.propTypes = {
   className: PropTypes.string,
   showClipboardButton: PropTypes.bool,
   visible: PropTypes.bool,
+  requireSavedValue: PropTypes.bool,
 };
 
 export default TextFieldBase;

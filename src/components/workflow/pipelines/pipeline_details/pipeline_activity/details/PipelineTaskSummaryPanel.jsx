@@ -20,8 +20,23 @@ import { toolIdentifierConstants } from "components/admin/tools/identifiers/tool
 import ExternalRestApiIntegrationTaskSummaryPanel
   from "components/workflow/plan/step/external_rest_api_integration/task_summary/ExternalRestApiIntegrationTaskSummaryPanel";
 import axios from "axios";
+import pipelineHelpers from "components/workflow/pipelineHelpers";
+import PipelineUserActionSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/user_action/PipelineUserActionSummaryPanel";
+import RuntimeSettingsTaskSummaryPanel
+  from "components/workflow/plan/step/runtime_settings/RuntimeSettingsTaskSummaryPanel";
 
-function PipelineTaskSummaryPanel({ pipelineTaskData }) {
+const PIPELINE_TASK_ACTIONS = {
+  REPORT: "report",
+  USER_ACTION: "user action",
+};
+
+// TODO: Rename PipelineActivityLogTaskSummaryPannel for clarity or something similar
+function PipelineTaskSummaryPanel(
+  {
+    pipelineTaskData,
+    setActiveTab,
+  }) {
   const {getAccessToken} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
@@ -76,12 +91,21 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
   };
 
   const getSummaryPanel = () => {
-    if (pipelineTaskData?.action === "report") {
-      return (
-        <PipelineSummaryReportPanel
-          pipelineTaskData={pipelineTaskData}
-        />
-      );
+    switch (pipelineTaskData?.action) {
+      case PIPELINE_TASK_ACTIONS.REPORT:
+        return (
+          <PipelineSummaryReportPanel
+            pipelineTaskData={pipelineTaskData}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case PIPELINE_TASK_ACTIONS.USER_ACTION:
+        return (
+          <PipelineUserActionSummaryPanel
+            pipelineTaskData={pipelineTaskData}
+            setActiveTab={setActiveTab}
+          />
+        );
     }
 
     const apiResponseStepIdentifier = pipelineTaskData?.api_response?.stepIdentifier;
@@ -90,6 +114,8 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
       return (
         <ExternalRestApiIntegrationTaskSummaryPanel
           externalRestApiIntegrationStepTaskModel={wrapObject(pipelineTaskMetadata)}
+          endpoint={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoint")}
+          endpoints={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoints")}
         />
       );
     }
@@ -103,10 +129,23 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
         return (
           <ExternalRestApiIntegrationTaskSummaryPanel
             externalRestApiIntegrationStepTaskModel={wrapObject(pipelineTaskMetadata)}
+            endpoint={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoint")}
+            endpoints={pipelineHelpers.parseSummaryLogApiResponseValue(pipelineTaskData, "endpoints")}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.RUNTIME_SETTINGS:
+        return (
+          <RuntimeSettingsTaskSummaryPanel
+            pipelineTaskModel={wrapObject(pipelineTaskMetadata)}
           />
         );
       default:
-        return (<PipelineTaskSummaryPanelBase pipelineTaskData={wrapObject(pipelineTaskMetadata)}/>);
+        return (
+          <PipelineTaskSummaryPanelBase
+            pipelineTaskData={wrapObject(pipelineTaskMetadata)}
+            setActiveTab={setActiveTab}
+          />
+        );
     }
   };
 
@@ -120,6 +159,7 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
 
 PipelineTaskSummaryPanel.propTypes = {
   pipelineTaskData: PropTypes.object,
+  setActiveTab: PropTypes.func,
 };
 
 export default PipelineTaskSummaryPanel;

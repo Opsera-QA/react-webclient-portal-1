@@ -12,6 +12,8 @@ import GitScraperScmToolSelectInput from "./inputs/GitScraperScmToolSelectInput"
 import GitIgnoreToggleInput from "./inputs/GitIgnoreToggleInput";
 import RepoSelectionView from "./inputs/RepoSelectionView";
 import GitScraperBitbucketWorkspaceSelectInput from "./inputs/GitScraperBitbucketWorkspaceSelectInput";
+import BooleanToggleInput from "../../../../common/inputs/boolean/BooleanToggleInput";
+import GitCustodianBranchSelectInput from "./inputs/GitCustodianBranchSelectInput";
 
 function GitScraperConfigurationPanel({
   gitTasksDataDto,
@@ -69,7 +71,7 @@ function GitScraperConfigurationPanel({
       <Col lg={12}>
         <TextInputBase
           fieldName={"threshold"}
-            dataObject={gitTasksConfigurationData}
+          dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
         />
       </Col>
@@ -81,18 +83,41 @@ function GitScraperConfigurationPanel({
         />
       </Col>
       <Col lg={12}>
-        <RepoSelectionView
-          dataObject={gitTasksConfigurationData}
+        <BooleanToggleInput
           setDataObject={setGitTasksConfigurationData}
-          service={gitTasksConfigurationData?.getData("service")}
-          gitToolId={gitTasksConfigurationData?.getData("gitToolId")}
-          workspace={gitTasksConfigurationData?.getData("workspace")}
-          disabled={
-            gitTasksConfigurationData?.getData("service")?.length === 0 ||
-            gitTasksConfigurationData?.getData("gitToolId")?.length === 0
-          }
+          dataObject={gitTasksConfigurationData}
+          fieldName={"scanAll"}
         />
       </Col>
+      <Col lg={12}>
+        <BooleanToggleInput
+          setDataObject={setGitTasksConfigurationData}
+          dataObject={gitTasksConfigurationData}
+          fieldName={"scanOnlyBranch"}
+        />
+      </Col>
+      <Col lg={12}>
+        <GitCustodianBranchSelectInput 
+          setModel={setGitTasksConfigurationData}
+          model={gitTasksConfigurationData}
+          fieldName={"gitBranch"}
+        />
+      </Col>
+      {!gitTasksConfigurationData?.getData("scanAll") && (
+        <Col lg={12}>
+          <RepoSelectionView
+            dataObject={gitTasksConfigurationData}
+            setDataObject={setGitTasksConfigurationData}
+            service={gitTasksConfigurationData?.getData("service")}
+            gitToolId={gitTasksConfigurationData?.getData("gitToolId")}
+            workspace={gitTasksConfigurationData?.getData("workspace")}
+            disabled={
+              gitTasksConfigurationData?.getData("service")?.length === 0 ||
+              gitTasksConfigurationData?.getData("gitToolId")?.length === 0
+            }
+          />
+        </Col>
+      )}
     </Row>
   );
 }

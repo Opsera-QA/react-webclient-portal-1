@@ -1,9 +1,5 @@
 const paths = {};
 
-// TODO: Rewrite these to be functions
-paths.userProfile = "user/profile";
-paths.userRecord = "user/myUserRecord";
-paths.accessTokens = "user/accessTokens";
 paths.home = "";
 paths.logs = "logs";
 paths.blueprint = "blueprint";
@@ -23,6 +19,18 @@ paths.systemManagement = paths.admin + "/manage-systems";
 
 paths.templateManagement = paths.admin + "/templates";
 paths.templateDetailView = paths.templateManagement + "/details/";
+
+paths.taskTemplateManagement = paths.admin + "/templates/tasks";
+paths.taskTemplateDetailView = paths.taskTemplateManagement + "/details/";
+
+paths.platformSystemParameterManagement = paths.admin + "/platform/system-parameters";
+paths.platformSystemParameterDetailView = paths.platformSystemParameterManagement + "/details";
+
+paths.platformSettingsManagement = paths.admin + "/platform/settings";
+paths.platformSettingsDetailView = paths.platformSettingsManagement + "/details";
+
+paths.freeTrialCustomerWorkspaceManagement = paths.admin + "/customer/workspaces";
+paths.freeTrialCustomerWorkspaceDetailView = paths.freeTrialCustomerWorkspaceManagement + "/user/";
 
 paths.pipelineStorageManagement = paths.admin + "/pipeline-storage";
 paths.pipelineStorageDetailView = paths.pipelineStorageManagement + "/details/";
@@ -51,11 +59,6 @@ paths.apiConnectionTest = paths.admin + "/demo/api";
 paths.kpiManagement = paths.admin + "/kpis";
 paths.kpiDetailView = paths.kpiManagement;
 
-// Pipelines Paths
-paths.pipelines = "workflow";
-paths.catalog = paths.pipelines + "/catalog";
-paths.pipelineDetailView = paths.pipelines + "/details";
-
 // Insights Paths
 paths.insights = "insights/dashboards";
 paths.dashboardDetails = paths.insights;
@@ -68,10 +71,14 @@ paths.connectedAssets = "insights/insightsConnectedAssets";
 paths.gitCustodian = "insights/insightsGitCustodian";
 
 // Settings Paths
+paths.freeTrialSettings = "/trial/settings";
 paths.accountSettings = "settings";
+paths.insightsSettings = "/settings/insights";
 paths.ldapUserManagement = paths.accountSettings + "/users";
 paths.ldapUserDetailView = paths.ldapUserManagement;
 paths.userManagement = paths.accountSettings + "/user-management";
+paths.logsExportManagement = paths.accountSettings + "/logs-export-management";
+paths.unsecuredItemReport = paths.accountSettings + "/unsecured-items";
 paths.activeUserDetailView = paths.userManagement;
 paths.pendingUserDetailView = paths.userManagement;
 paths.ldapGroupManagement = paths.accountSettings + "/groups";
@@ -93,6 +100,14 @@ paths.dataMappingManagement = paths.accountSettings + "/data_mapping";
 paths.projectTaggingDetailView = paths.dataMappingManagement + "/projects/details/";
 paths.pipelineDataMappingDetailView = paths.dataMappingManagement + "/pipeline/details/";
 paths.userTaggingDetailView = paths.dataMappingManagement + "/users/details/";
+
+paths.freeTrialUserExpirationManagement = paths.accountSettings + "/trial/user-expiration-management";
+paths.freeTrialUserExtensionScreen = `${paths.freeTrialUserExpirationManagement}/extension`;
+paths.freeTrialUserRevocationScreen = `${paths.freeTrialUserExpirationManagement}/revocation`;
+paths.freeTrialUserReinstatementScreen = `${paths.freeTrialUserExpirationManagement}/reinstatement`;
+
+paths.freeTrialUserActivityReport = `${paths.accountSettings}/trial/user/activity-report`;
+paths.freeTrialUserExpirationManagement = paths.accountSettings + "/trial/user-expiration-management";
 
 //Reports
 paths.reports = "reports";

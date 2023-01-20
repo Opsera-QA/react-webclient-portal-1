@@ -8,7 +8,6 @@ import {Light as SyntaxHighlighter} from "react-syntax-highlighter";
 import xml from "react-syntax-highlighter/dist/cjs/languages/hljs/xml";
 import docco from "react-syntax-highlighter/dist/cjs/styles/hljs/docco";
 import {formatXml} from "components/common/helpers/code-helpers";
-import axios from "axios";
 import ErrorDialog from "components/common/status_notifications/error";
 
 SyntaxHighlighter.registerLanguage("xml", xml);
@@ -98,7 +97,6 @@ function XmlFieldBase({model, fieldName, className, isLoading}) {
           </div>
         </div>
       </div>
-      <div className={"object-properties-footer"} />
     </InputContainer>
   );
 }

@@ -26,6 +26,17 @@ export const KPI_FILTER_TYPES = {
   SERVICE_NOW_SERVICE_OFFERINGS: "servicenow-service-offerings",
   SERVICE_NOW_CONFIGURATION_ITEMS: "servicenow-configuration-items",
   SERVICE_NOW_BUSINESS_SERVICES: "servicenow-business-services",
+  HIERARCHY_FILTERS: "hierarchyFilters",
+  DEPLOYMENT_STAGE: "deployment-stage",
+  GITLAB_PROJECT: "gitlab-project",
+  GITLAB_BRANCH: "gitlab-branch",
+  JIRA_PRIORITIES: "jira-priorities",
+  JIRA_PROJECTS: "jira-projects",
+  JIRA_CHANGE_TYPES: "jira-change-types",
+  JIRA_SERVICE_COMPONENTS: "jira-service-components",
+  JIRA_RESOLUTION_NAMES: "jira-resolution-names",
+  JIRA_EXCLUDED_RESOLUTION_NAMES: "jira-excluded-resolution-names",
+  JIRA_TEAM_NAMES: "jira-team-names",
 };
 
 export const KPI_FILTER_TYPE_LABELS = {
@@ -56,6 +67,17 @@ export const KPI_FILTER_TYPE_LABELS = {
   SERVICE_NOW_SERVICE_OFFERINGS: "Service Now Service Offerings",
   SERVICE_NOW_CONFIGURATION_ITEMS: "Service Now Configuration Items",
   SERVICE_NOW_BUSINESS_SERVICES: "Service Now Business Services",
+  HIERARCHY_FILTERS: "Hierarchy Filters",
+  DEPLOYMENT_STAGE: "Deployment Stage",
+  GITLAB_PROJECT: "Gitlab Repository",
+  GITLAB_BRANCH: "Gitlab Branch",
+  JIRA_PRIORITIES: "Jira Priorities",
+  JIRA_PROJECTS: "Jira Projects",
+  JIRA_CHANGE_TYPES: "Jira Change Types",
+  JIRA_SERVICE_COMPONENTS: "Jira Service Components",
+  JIRA_RESOLUTION_NAMES: "Jira Resolution Names",
+  JIRA_EXCLUDED_RESOLUTION_NAMES: "Jira Excluded Resolution Names",
+  JIRA_TEAM_NAMES: "Jira Team Names",
 };
 
 export const getKpiFilterTypeLabel = (kpiFilterType) => {
@@ -114,6 +136,28 @@ export const getKpiFilterTypeLabel = (kpiFilterType) => {
       return KPI_FILTER_TYPE_LABELS.SERVICE_NOW_CONFIGURATION_ITEMS;
     case KPI_FILTER_TYPES.SERVICE_NOW_BUSINESS_SERVICES:
       return KPI_FILTER_TYPE_LABELS.SERVICE_NOW_BUSINESS_SERVICES;
+    case KPI_FILTER_TYPES.HIERARCHY_FILTERS:
+      return KPI_FILTER_TYPE_LABELS.HIERARCHY_FILTERS;
+    case KPI_FILTER_TYPES.DEPLOYMENT_STAGE:
+      return KPI_FILTER_TYPE_LABELS.DEPLOYMENT_STAGE;
+    case KPI_FILTER_TYPES.GITLAB_PROJECT:
+      return KPI_FILTER_TYPE_LABELS.GITLAB_PROJECT;
+    case KPI_FILTER_TYPES.GITLAB_BRANCH:
+      return KPI_FILTER_TYPE_LABELS.GITLAB_BRANCH;
+    case KPI_FILTER_TYPES.JIRA_PRIORITIES:
+      return KPI_FILTER_TYPE_LABELS.JIRA_PRIORITIES;
+    case KPI_FILTER_TYPES.JIRA_PROJECTS:
+      return KPI_FILTER_TYPE_LABELS.JIRA_PROJECTS;
+    case KPI_FILTER_TYPES.JIRA_CHANGE_TYPES:
+      return KPI_FILTER_TYPE_LABELS.JIRA_CHANGE_TYPES;
+    case KPI_FILTER_TYPES.JIRA_SERVICE_COMPONENTS:
+      return KPI_FILTER_TYPE_LABELS.JIRA_SERVICE_COMPONENTS;
+    case KPI_FILTER_TYPES.JIRA_RESOLUTION_NAMES:
+      return KPI_FILTER_TYPE_LABELS.JIRA_RESOLUTION_NAMES;
+    case KPI_FILTER_TYPES.JIRA_EXCLUDED_RESOLUTION_NAMES:
+      return KPI_FILTER_TYPE_LABELS.JIRA_EXCLUDED_RESOLUTION_NAMES;
+    case KPI_FILTER_TYPES.JIRA_TEAM_NAMES:
+      return KPI_FILTER_TYPE_LABELS.JIRA_TEAM_NAMES;
     default:
       return kpiFilterType;
   }
@@ -248,6 +292,68 @@ export const KPI_FILTER_SELECT_OPTIONS = [
   {
     type: KPI_FILTER_TYPES.SERVICE_NOW_BUSINESS_SERVICES,
     text: KPI_FILTER_TYPE_LABELS.SERVICE_NOW_BUSINESS_SERVICES,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.HIERARCHY_FILTERS,
+    text: KPI_FILTER_TYPE_LABELS.HIERARCHY_FILTERS,
+    value: {
+      filter1: [],
+      filter2: [],
+      filter3: [],
+      filter4: [],
+      filter5: [],
+      filter6: [],
+    },
+  },
+  {
+    type: KPI_FILTER_TYPES.DEPLOYMENT_STAGE,
+    text: KPI_FILTER_TYPE_LABELS.DEPLOYMENT_STAGE,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.GITLAB_PROJECT,
+    text: KPI_FILTER_TYPE_LABELS.GITLAB_PROJECT,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.GITLAB_BRANCH,
+    text: KPI_FILTER_TYPE_LABELS.GITLAB_BRANCH,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.JIRA_PRIORITIES,
+    text: KPI_FILTER_TYPE_LABELS.JIRA_PRIORITIES,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.JIRA_PROJECTS,
+    text: KPI_FILTER_TYPE_LABELS.JIRA_PROJECTS,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.JIRA_CHANGE_TYPES,
+    text: KPI_FILTER_TYPE_LABELS.JIRA_CHANGE_TYPES,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.JIRA_SERVICE_COMPONENTS,
+    text: KPI_FILTER_TYPE_LABELS.JIRA_SERVICE_COMPONENTS,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.JIRA_RESOLUTION_NAMES,
+    text: KPI_FILTER_TYPE_LABELS.JIRA_RESOLUTION_NAMES,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.JIRA_EXCLUDED_RESOLUTION_NAMES,
+    text: KPI_FILTER_TYPE_LABELS.JIRA_EXCLUDED_RESOLUTION_NAMES,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.JIRA_TEAM_NAMES,
+    text: KPI_FILTER_TYPE_LABELS.JIRA_TEAM_NAMES,
     value: [],
   },
 ];

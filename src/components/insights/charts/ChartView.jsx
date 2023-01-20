@@ -33,6 +33,8 @@ import JiraIssuesCreatedVsResolvedLineChart from "./jira/line_chart/issues_creat
 import JiraIssuesAssignedToMe from "./jira/table/issues_assigned_to_me/JiraIssuesAssignedToMe";
 import JiraSprintBurndownLineChart from "./jira/line_chart/sprint_burndown/JiraSprintBurndownLineChart";
 import JiraLeadTimeLineChart from "./jira/line_chart/lead_time/JiraLeadTimeLineChart";
+import JiraMeanTimeToResolution from "./jira/bar_chart/mean_time_to_resolution/JiraMeanTimeToResolution";
+import JiraChangeFailureRate from "./jira/line_chart/change_failure_rate/JiraChangeFailureRate";
 
 // Anchore KPIs
 import AnchoreVulnerabilitySeverityByPackageBarChart from "./anchore/bar_chart/vulnerability_severity_by_package/AnchoreVulnerabilitySeverityByPackageBarChart";
@@ -73,6 +75,9 @@ import GitlabMergeRequestsPushesAndComments from "./gitlab/calendar_chart/merge_
 import GitlabTotalCommitsByProjectChart from "./gitlab/pie_chart/total_commits_by_project/GitlabTotalCommitsByProjectChart";
 import GitlabRecentMergeRequests from "./gitlab/table/recent_merge_requests/GitlabRecentMergeRequests";
 import GitlabPendingMergeRequests from "./gitlab/table/pending_merge_requests/GitlabPendingMergeRequests.jsx";
+import GitlabDeploymentFrequency from "./gitlab/deployment_frequency/GitlabDeploymentFrequencyMetric";
+import GitLabLeadTimeChart from "./gitlab/line_chart/lead_time/GitLabLeadTimeChart";
+import GitlabPipelineStatistics from "./gitlab/line_chart/pipeline-statistics/GitlabPipelineStatistics";
 
 //new
 import ProjectWiseUnitTestResults from './unit_tests/project_wise_results/ProjectWiseUnitTestResults';
@@ -86,6 +91,10 @@ import GithubRecentMergeRequests from "./github/table/recent_merge_requests/Gith
 import GithubTimeTakenToCompleteMergeRequestReview from "./github/bar_chart/time_taken_to_complete_merge_request_review/GithubTimeTakenToCompleteMergeRequestReview";
 import GithubMergeRequestByMaximumTimeChart from "./github/bar_chart/merge_request_by_maximum_time/GithubMergeRequestByMaximumTimeChart";
 import GithubCommitsByAuthor from "./github/calendar_chart/commits_by_author/GithubCommitsByAuthor";
+import AllGithubActionsDataBlock from "./github_actions/data_blocks/AllGithubActions/AllGithubActionsDataBlock";
+import LeadTimeAndReleaseTraceabilityDataBlock
+    from "./github_actions/data_blocks/LeadTimeAndReleaseTraceabilityDataBlock";
+
 import GithubPendingMergeRequests from "./github/table/pending_merge_requests/GithubPendingMergeRequests";
 
 // Bitbucket KPIs
@@ -146,6 +155,9 @@ import SdlcDurationByStageMetrics from "components/insights/charts/sdlc/bar_char
 // Coverity KPIs
 import CoverityIssuesByCategory from "./coverity/CoverityIssuesByCategory/CoverityIssuesByCategory";
 
+// Boomi KPIs
+import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
+
 import {
   getDateObjectFromKpiConfiguration,
   getTagsFromKpiConfiguration,
@@ -163,6 +175,19 @@ import SalesforceComponentsDataBlockChart
   from "./sfdc/data_block_chart/Salesforce_components/salesforceComponentsDataBlockChart";
 import GithubCommitsStatistics from "./github/pie_chart/commits_statistics/GithubCommitsStatistics";
 import DeploymentAnalytics from "./deployment_analytics/DeploymentAnalytics";
+import QuickDeployStatistics from "./quick-deploy-statistics/QuickDeployStatistics";
+
+//APIGEE KPIs
+import ApigeeReportsChartTab from "./apigee/reports/ApigeeReportsChartTab";
+import ApigeeSummaryChart from "./apigee/summary/ApigeeSummaryChart";
+
+// Approval Gates KPI
+import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
+
+// Dora KPI
+import DoraJiraGitlabRolledUpChart from "./dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpChart";
+import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/GitlabMergeRequestStatistics";
+
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -506,6 +531,30 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
 
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <JiraChangeFailureRate
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );   
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_MEAN_TIME_TO_RESOLUTION:
+        return (
+          <Col md={12} className="p-2">
+            <JiraMeanTimeToResolution
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       // Anchore KPIs
       case "anchore-vulnerability-severity-by-package":
         return (
@@ -865,6 +914,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
 
       // Gitlab KPIs
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_PIPELINE_STATISTICS:
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <GitlabPipelineStatistics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+      );
       case "gitlab-most-active-contributors":
         return (
           <Col xl={6} md={12} className="p-2">
@@ -939,7 +1000,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "gitlab-total-commits-by-project":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col xl={12} md={12} className="p-2">
             <GitlabTotalCommitsByProjectChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -951,7 +1012,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "gitlab-recent-merge-requests":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col xl={12} md={12} className="p-2">
             <GitlabRecentMergeRequests
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -963,8 +1024,71 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "gitlab-pending-merge-requests":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col xl={12} md={12} className="p-2">
             <GitlabPendingMergeRequests
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY:
+        return (
+            <Col xl={12} md={12} className="p-2">
+              <GitlabDeploymentFrequency
+                kpiConfiguration={kpiConfig}
+                setKpiConfiguration={setKpiConfig}
+                dashboardData={dashboardData}
+                setKpis={setKpis}
+                index={index}
+              />
+            </Col>
+          );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
+        return (
+            <Col md={12} className="p-2">
+              <GitLabLeadTimeChart
+                kpiConfiguration={kpiConfig}
+                setKpiConfiguration={setKpiConfig}
+                dashboardData={dashboardData}
+                setKpis={setKpis}
+                index={index}
+              />
+            </Col>
+        );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_MERGE_STATISTICS:
+            return (
+                <Col xl={12} md={12} className="p-2">
+                    <GitlabMergeRequestStatistics
+                        kpiConfiguration={kpiConfig}
+                        setKpiConfiguration={setKpiConfig}
+                        dashboardData={dashboardData}
+                        setKpis={setKpis}
+                        index={index}
+                    />
+                </Col>
+            );
+      //APIGEE KPIs
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_REPORT:
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <ApigeeReportsChartTab
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_SUMMARY:
+        return (
+          <Col xl={12} md={12} className="p-2">
+            <ApigeeSummaryChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1103,7 +1227,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "github-recent-merge-requests":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col xl={12} md={12} className="p-2">
             <GithubRecentMergeRequests
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1151,8 +1275,20 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "github-pending-merge-requests":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col xl={12} md={12} className="p-2">
             <GithubPendingMergeRequests
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "all-github-actions-data-block":
+        return(
+          <Col md={12} className="p-2">
+            <AllGithubActionsDataBlock
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1170,6 +1306,19 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               dashboardData={dashboardData}
               setKpis={setKpis}
               index={index}
+            />
+          </Col>
+        );
+      case "lead-time-and-release-traceability-data-block":
+        return(
+          <Col md={12} className="p-2">
+            <LeadTimeAndReleaseTraceabilityDataBlock
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+              showViewDetailsToggle={true}
             />
           </Col>
         );
@@ -1458,7 +1607,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "salesforce-components-chart":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_COMPONENTS_CHART:
         return (
           <Col md={12} className="p-2">
             <SalesforceComponentsDataBlockChart
@@ -1544,6 +1693,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.QUICK_DEPLOY_STATISTICS:
+            return (
+                <Col md={12} className="p-2">
+                    <QuickDeployStatistics
+                        kpiConfiguration={kpiConfig}
+                        setKpiConfiguration={setKpiConfig}
+                        dashboardData={dashboardData}
+                        setKpis={setKpis}
+                        index={index}
+                    />
+                </Col>
+            );
       // GitSrapperMetrics
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_SCRAPER_METRICS:
         return (
@@ -1557,6 +1718,45 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+
+
+      case  kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
+        return (
+          <Col md={12} className="p-2">
+            <BoomiBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.DORA_JIRA_GITLAB_ROLLED_UP:
+        return (
+          <Col md={12} className="p-2">
+            <DoraJiraGitlabRolledUpChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "approval-gates":
+        return (
+          <Col md={12} className="p-2">
+            <ApprovalGatesMetrics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+
       default:
         return null;
     }

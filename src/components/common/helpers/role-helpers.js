@@ -1,3 +1,6 @@
+// TODO: This needs to be decommissioned and we need to use the library helpers so node and react will have the same source of truth.
+//  Note to self-- make sure everything we need from here is ported to there.
+
 export const ROLE_LEVELS = {
   OPSERA_ADMINISTRATORS: "OPSERA_ADMINISTRATORS",
   ADMINISTRATORS: "ADMINISTRATORS",
@@ -95,7 +98,7 @@ export const isPowerUserOrSass = (accessRoleData) => {
 };
 
 export const isUser = (accessRoleData) => {
-  return accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator || accessRoleData?.User;
+  return accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator || accessRoleData?.User || accessRoleData?.SecurityManager || accessRoleData?.Auditor || accessRoleData?.Role === "guest";
 };
 
 export const isUserOrSassUser = (accessRoleData) => {
@@ -106,7 +109,18 @@ export const ACCESS_ROLE_PERMISSION_MESSAGES = {
   ADMINISTRATOR: "Site Administrator User Role: Your account has full access to the Opsera platform and its settings.",
   POWER_USER: "Power User Role: Your account has elevated privileges to the Opsera platform.",
   USER: "Standard User Role: Your account has standard user access to the Opsera platform and inherits access based on individual item access roles.",
+  SECURITY_MANAGER: "Security Manager User Role: Your account has read access to Tools, Tasks, and Pipelines in the Opsera platform and write access to security-owned items.",
+  AUDITOR: "Auditor User Role: Your account has full read access to Tools, Tasks, and Pipelines im the Opsera platform.",
   GUEST: "Guest User Role: Your account does not have any privileges associated with the Opsera platform and can only view and edit some data.",
+};
+
+export const ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE = {
+  ADMINISTRATOR: "Your account has full access to the Opsera platform and its settings.",
+  POWER_USER: "Your account has elevated privileges to the Opsera platform.",
+  USER: "Your account has standard user access to the Opsera platform and inherits access based on individual item access roles.",
+  SECURITY_MANAGER: "Your account has full read access to the Opsera platform and write access to security-owned items.",
+  AUDITOR: "Your account has full read access to the Opsera platform.",
+  GUEST: "Your account does not have any privileges associated with the Opsera platform and can only view and edit some data.",
 };
 
 export const getAccessRolePermissionMessage = (accessRole) => {
@@ -117,9 +131,31 @@ export const getAccessRolePermissionMessage = (accessRole) => {
       return ACCESS_ROLE_PERMISSION_MESSAGES.POWER_USER;
     case "user":
       return ACCESS_ROLE_PERMISSION_MESSAGES.USER;
+    case "security_manager":
+      return ACCESS_ROLE_PERMISSION_MESSAGES.SECURITY_MANAGER;
+    case "auditor":
+      return ACCESS_ROLE_PERMISSION_MESSAGES.AUDITOR;
     case "guest":
     default:
       return ACCESS_ROLE_PERMISSION_MESSAGES.GUEST;
+  }
+};
+
+export const getAccessRolePermissionMessageWithoutRole = (accessRole) => {
+  switch (accessRole?.Role) {
+    case "administrator":
+      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.ADMINISTRATOR;
+    case "power_user":
+      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.POWER_USER;
+    case "user":
+      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.USER;
+    case "security_manager":
+      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.SECURITY_MANAGER;
+    case "auditor":
+      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.AUDITOR;
+    case "guest":
+    default:
+      return ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE.GUEST;
   }
 };
 
@@ -262,213 +298,6 @@ export const parseRoleDefinitionsIntoSiteRoleTableRows =  (roleDefinitions) => {
   }
 
   return accessRoleRows;
-};
-
-export const getAllowedRoles = (actionName, roleDefinitions) => {
-  const roleDefinition = roleDefinitions[actionName];
-  return roleDefinition?.allowedRoles;
-};
-
-export const isAnLdapUser = (user, accessRole) => {
-  return accessRole?.Type !== "sass-user" && user?.ldap?.domain != null;
-};
-
-/**
- * Handles all authorization of actions.  It factors in the overall user roles and the individual object
- * access roles. It will be customized based on roleDefinitions passed in.
- *
- * @param customerAccessRules
- * @param action
- * @param roleDefinitions
- * @param owner
- * @param objectRoles
- * @param allowAllIfNoRolesAssigned
- * @returns {boolean}
- *
- *
- */
-export const isActionAllowed = (customerAccessRules, action, owner, objectRoles, roleDefinitions, allowAllIfNoRolesAssigned = true) => {
-  if (customerAccessRules == null || roleDefinitions == null) {
-    return false;
-  }
-
-  const allowedRoles = getAllowedRoles(action, roleDefinitions);
-
-  if (!Array.isArray(allowedRoles) || allowedRoles.length === 0) {
-    return false;
-  }
-
-  if (allowedRoles.includes(ACCESS_ROLES.NO_ACCESS_RULES)) {
-    return true;
-  }
-
-  // TODO: These are the defaults for compatibility, but we should probably just use the defined Access Roles sent from Node:
-  if (customerAccessRules?.OpseraAdministrator) {
-    return true; //all actions are authorized to Opsera Administrator
-  }
-
-  if (customerAccessRules?.Administrator) {
-    return true; //all actions are authorized to administrator
-  }
-
-  if (customerAccessRules?.SassPowerUser) {
-    return true; //all  are authorized to Saas User
-  }
-
-  if (process.env.REACT_APP_STACK === "free-trial") {
-    return false; //all actions disabled for user?
-  }
-
-  if (owner && customerAccessRules?.UserId === owner) {
-    return true; //owner can do all actions
-  }
-
-  // TODO: Should we remove this altogether and force role requirements?
-  // if allowAllIfNoRolesAssigned is true and no objectRole data passed, then allow ALL actions
-  if (allowAllIfNoRolesAssigned === true && (!Array.isArray(objectRoles) || objectRoles.length === 0)) {
-    return true;
-  }
-  // END TODOs
-
-  if (customerAccessRules?.OpseraAdministrator === true && allowedRoles.includes(SITE_ROLES.OPSERA_ADMINISTRATOR)) {
-    return true;
-  }
-
-  if (customerAccessRules?.OrganizationOwner === true && allowedRoles.includes(ACCESS_ROLES.ORGANIZATION_OWNER)) {
-    return true;
-  }
-
-  if (customerAccessRules?.OrganizationAccountOwner === true && allowedRoles.includes(ACCESS_ROLES.ORGANIZATION_ACCOUNT_OWNER)) {
-    return true;
-  }
-
-  if (customerAccessRules?.Administrator === true && allowedRoles.includes(SITE_ROLES.ADMINISTRATOR)) {
-    return true;
-  }
-
-  if (customerAccessRules?.SassPowerUser === true && allowedRoles.includes(SITE_ROLES.SAAS_USER)) {
-    return true;
-  }
-
-  if (customerAccessRules?.PowerUser === true && allowedRoles.includes(SITE_ROLES.POWER_USER)) {
-    return true;
-  }
-
-  if (process.env.REACT_APP_STACK === "free-trial" && allowedRoles.includes(SITE_ROLES.FREE_TRIAL_USER)) {
-    return true;
-  }
-
-  if (owner && customerAccessRules?.UserId === owner && allowedRoles.includes(ACCESS_ROLES.OWNER)) {
-    return true;
-  }
-
-  const userObjectRole = calculateUserObjectRole(customerAccessRules?.Email, customerAccessRules?.Groups, objectRoles);
-  // TODO: By default Admins can do everything, if we want to stop allowing that, do it here:
-  return userObjectRole === "administrator" || allowedRoles.includes(userObjectRole);
-};
-
-export const isFeatureActionAllowed = (customerAccessRules, roleDefinition) => {
-  if (customerAccessRules == null || roleDefinition == null) {
-    return false;
-  }
-
-  const allowedRoles = roleDefinition?.allowedRoles;
-
-  if (!Array.isArray(allowedRoles) || allowedRoles.length === 0) {
-    return false;
-  }
-
-  if (allowedRoles.includes(ACCESS_ROLES.NO_ACCESS_RULES)) {
-    return true;
-  }
-
-  if (customerAccessRules?.OpseraAdministrator) {
-    return true; //all actions are authorized to Opsera Administrator
-  }
-
-  if (customerAccessRules?.Administrator) {
-    return true; //all actions are authorized to administrator
-  }
-
-  if (customerAccessRules.OpseraAdministrator === true && allowedRoles.includes(SITE_ROLES.OPSERA_ADMINISTRATOR)) {
-    return true;
-  }
-
-  if (customerAccessRules.OrganizationOwner === true && allowedRoles.includes(ACCESS_ROLES.ORGANIZATION_OWNER)) {
-    return true;
-  }
-
-  if (customerAccessRules.OrganizationAccountOwner === true && allowedRoles.includes(ACCESS_ROLES.ORGANIZATION_ACCOUNT_OWNER)) {
-    return true;
-  }
-
-  if (customerAccessRules.Administrator === true && allowedRoles.includes(SITE_ROLES.ADMINISTRATOR)) {
-    return true;
-  }
-
-  if (customerAccessRules.SassPowerUser === true && allowedRoles.includes(SITE_ROLES.SAAS_USER)) {
-    return true;
-  }
-
-  if (customerAccessRules.FreeTrialUser === true && allowedRoles.includes(SITE_ROLES.FREE_TRIAL_USER)) {
-    return true;
-  }
-
-  return false;
-};
-
-//compares the user email to the objectRoles data to see if the user has a specific role
-// (either directly or through group membership)
-export const calculateUserObjectRole = (userEmail, userGroups, objectRoles) => {
-  if (!objectRoles || objectRoles.length === 0 || !userEmail) {
-    return false;
-  }
-
-  //filter out only user records (groups null)
-  const userRoles = objectRoles.filter(function(item) {
-    if (!item.user || typeof item.user !== "string") {
-      return false;
-    }
-    return item.user.toLowerCase() === userEmail.toLowerCase();
-  });
-
-  if (userRoles.length > 0) {
-    return userRoles[0].role;
-  }
-
-  //filter out only user records (groups null)
-  const groupRoles = objectRoles.filter(function(item) {
-    return item.group;
-  });
-
-  let userGroupsRole = [];
-  groupRoles.forEach(function(item) {
-    if (userGroups && userGroups.includes(item.group)) {
-      userGroupsRole.push(item.role);
-    }
-  });
-
-  if (userGroupsRole.length === 1) {
-    return userGroupsRole[0];
-  }
-
-  if (userGroupsRole.length >= 1) {
-    if (userGroupsRole.includes("administrator")) {
-      return "administrator";
-    }
-    if (userGroupsRole.includes("secops")) {
-      return "secops";
-    }
-    if (userGroupsRole.includes("manager")) {
-      return "manager";
-    }
-    if (userGroupsRole.includes("user")) {
-      return "user";
-    }
-    return userGroupsRole[0];
-  }
-
-  return false;
 };
 
 export const calculateRoleLevel = (customerAccessRules, objectRoles, dataModel) => {

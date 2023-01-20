@@ -1,5 +1,6 @@
-import {validateData, validateField, validatePotentialValue} from "core/data_model/modelValidation";
-import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import { modelValidation, validateData, validateField, validatePotentialValue } from "core/data_model/modelValidation";
+import { hasStringValue } from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export const DataState = {
   LOADED: 0,
@@ -11,8 +12,9 @@ export const DataState = {
 export class Model {
 
   constructor(data, metaData, newModel) {
-    this.metaData = dataParsingHelper.cloneDeep(metaData);
+    this.metaData = DataParsingHelper.cloneDeep(metaData);
     this.data = {...this.getNewObjectFields(), ...data};
+    this.originalData = DataParsingHelper.cloneDeep(this.data);
     this.newModel = newModel;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
     this.changeMap = new Map();
@@ -44,47 +46,32 @@ export class Model {
     });
   };
 
-  /**
-   * Retrieve nested item from object/array
-   * @param {String} fieldName dot separated
-   * @returns {*}
-   */
-  getNestedData = (fieldName) => {
-    let index;
-    const fieldNameArray = fieldName.split('.');
-    const length = fieldNameArray.length;
-    let nestedObject = {...this.data};
-
-    for (index = 0; index < length; index++) {
-      if(nestedObject == null) {
-        return null;
-      }
-
-    let nextFieldName = fieldNameArray[index];
-      nestedObject = nestedObject[nextFieldName];
-    }
-
-    return nestedObject !== undefined ? nestedObject : null;
-  };
-
-
   getData = (fieldName) => {
-    if (fieldName == null) {
+    if (hasStringValue(fieldName) !== true) {
       console.error("No field name was given, so returning null");
       return null;
     }
 
-    return fieldName && fieldName.includes('.') ? this.getNestedData(fieldName) : this.data[fieldName];
+    return DataParsingHelper.safeObjectPropertyParser(this.data, fieldName);
+  };
+
+  getStringData = (fieldName) => {
+    if (hasStringValue(fieldName) !== true) {
+      console.error("No field name was given, so returning null");
+      return null;
+    }
+
+    return DataParsingHelper.parseNestedString(this.data, fieldName, "");
   };
 
   getObjectData = (fieldName, defaultValue = {}) => {
-    if (fieldName == null) {
+    if (hasStringValue(fieldName) !== true) {
       console.error("No field name was given, so returning default value.");
       return defaultValue;
     }
 
     try {
-      const potentialObject = this.data[fieldName];
+      const potentialObject = this.getData(fieldName);
 
       if (typeof potentialObject !== "object") {
         console.error("The stored field was not an object. Returning default value.");
@@ -100,14 +87,13 @@ export class Model {
   };
 
   setData = (fieldName, newValue) => {
-      this.propertyChange(fieldName, newValue, this.getData(fieldName));
-      this.data[fieldName] = newValue;
+    this.propertyChange(fieldName, newValue, this.getData(fieldName));
+    this.data = DataParsingHelper.safeObjectPropertySetter(this.data, fieldName, newValue);
   };
 
   setDefaultValue = (fieldName) => {
     const defaultValue = this.metaData?.newObjectFields?.[fieldName];
-    this.propertyChange(fieldName, defaultValue, this.getData(fieldName));
-    this.data[fieldName] = defaultValue;
+    this.setData(fieldName, defaultValue);
   };
 
   setMetaData = (metaData) => {
@@ -120,6 +106,7 @@ export class Model {
 
   setTextData = (fieldName, newValue) => {
     const field = this.getFieldById(fieldName);
+
     if (field) {
       if (field.lowercase === true) {
         newValue = newValue.toLowerCase();
@@ -140,8 +127,7 @@ export class Model {
         }
       }
 
-      this.propertyChange(fieldName, newValue, this.getData(fieldName));
-      this.data[fieldName] = newValue;
+      this.setData(fieldName, newValue);
     }
   };
 
@@ -153,13 +139,34 @@ export class Model {
     }
 
     if (!Array.isArray(currentValue)) {
-      console.error(`Value was not saved as array. Returning in array.`);
+      console.error(`Value for field name [${fieldName}] was not saved as array. Returning in array.`);
       console.error(`Value: ${JSON.stringify(currentValue)}`);
       return [currentValue];
     }
 
     if (typeof index === "number") {
       return currentValue.length >= index + 1 ? currentValue[index] : null;
+    }
+
+    return currentValue;
+  };
+
+  removeArrayItem = (fieldName, index) => {
+    const array = DataParsingHelper.parseArray(this.getData(fieldName));
+
+    if (!array || array.length <= index) {
+      return;
+    }
+
+    array.splice(index, 1);
+    this.setData(fieldName, array);
+  };
+
+  getStringValue = (fieldName, defaultValue = "") => {
+    const currentValue = this.getData(fieldName);
+
+    if (hasStringValue(currentValue) !== true) {
+      return defaultValue;
     }
 
     return currentValue;
@@ -176,10 +183,8 @@ export class Model {
     return isValid === true;
   };
 
-  // This is a validity check without trimming
   checkCurrentValidity = () => {
-    let isValid = validateData(this);
-    return isValid === true;
+    return validateData(this) === true;
   };
 
   getPotentialFieldValidationError = (potentialValue, fieldName) => {
@@ -205,6 +210,10 @@ export class Model {
   getFieldError = (fieldName) => {
     let errors = validateField(this, this.getFieldById(fieldName));
     return errors != null ? errors[0] : "";
+  };
+
+  getFieldWarning = (fieldName) => {
+    return modelValidation.getFieldWarning(fieldName, this);
   };
 
   propertyChange = (id, newValue, oldValue) => {
@@ -237,6 +246,10 @@ export class Model {
   // TODO: Only send changemap for updates after getting everything else working
   getPersistData = () => {
     return this.trimStrings();
+  };
+
+  getOriginalData = () => {
+    return this.originalData;
   };
 
   getCurrentData = () => {
@@ -307,14 +320,18 @@ export class Model {
     return field?.lowercase === true;
   };
 
+  isLenient = () => {
+    return false;
+  };
+
   isUppercase = (fieldName) => {
     const field = this.getFieldById(fieldName);
     return field?.uppercase === true;
   };
 
-  isWebsite = (fieldName) => {
+  isUrlField = (fieldName) => {
     const field = this.getFieldById(fieldName);
-    return field != null ? field.isWebsite === true : false;
+    return field != null ? field.isUrl === true : false;
   };
 
   getInputMaskRegex = (fieldName) => {
@@ -330,18 +347,18 @@ export class Model {
     return this.metaData?.detailViewTitle != null ? this.metaData.detailViewTitle(this) : null;
   };
 
-  getLabel = (fieldName) => {
-    let fields = this.metaData.fields;
+  getLabel = (fieldName, defaultLabel = "No label found in metadata") => {
+    const fields = DataParsingHelper.parseNestedArray(this.getMetaData(), "fields", []);
     // TODO: Replace with metadata helper call once finished
-    let field = fields.find(field => { return field.id === fieldName;});
-    return field ? field.label : "No label found in metadata";
+    const field = fields.find(field => field.id === fieldName);
+    return field ? field.label : defaultLabel;
   };
 
   getMetaData = () => {
     return this.metaData;
   };
 
-  // TODO: Make filterModel and move filter related options there
+  // TODO: Use filterModel and move filter related options there once all references are updated
   getActiveFilters = () => {
     return this.metaData.getActiveFilters(this);
   };
@@ -413,11 +430,12 @@ export class Model {
 
   // TODO: Should we make view definitions?
   getNewObjectFields = () => {
-    return this.metaData?.newObjectFields != null ? this.metaData?.newObjectFields : {};
+    const newObjectFields = DataParsingHelper.parseObject(this.metaData?.newObjectFields, {});
+    return {...DataParsingHelper.cloneDeep(newObjectFields)};
   };
 
   clone = () => {
-    return dataParsingHelper.cloneDeep(this);
+    return DataParsingHelper.cloneDeep(this);
   };
 
   getNewInstance = (newData = this.getNewObjectFields(), isNew = this.newModel) => {

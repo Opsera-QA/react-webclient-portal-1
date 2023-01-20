@@ -29,14 +29,15 @@ function CreateCenterPanel({ children, titleIcon, objectType, closePanel, size, 
   return (
     <CenterOverlayContainer
       closePanel={handleClosingPanel}
-      showPanel={true}
       titleText={`Create New ${objectType}`}
       titleIcon={titleIcon}
       showToasts={true}
       showCloseButton={false}
       size={size}
     >
-      {children}
+      <div className={"bg-white h-100 w-100"}>
+        {children}
+      </div>
     </CenterOverlayContainer>
   );
 }

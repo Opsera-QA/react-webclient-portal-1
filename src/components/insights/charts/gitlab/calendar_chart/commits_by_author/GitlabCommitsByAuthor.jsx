@@ -7,7 +7,11 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, gradationalColors } from '../../../charts-views';
+import { defaultConfig } from '../../../charts-views';
+import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import GitlabCommitsByAuthorActionableOverlay from "./GitlabCommitsByAuthorActionableOverlay";
+
 function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -17,6 +21,7 @@ function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [users, setUsers] = useState([]);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -66,17 +71,23 @@ function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
     }
   };
 
+  const onChartClick = () => {
+    toastContext.showInfoOverlayPanel(
+      <GitlabCommitsByAuthorActionableOverlay metrics={metrics} />
+    );
+  };
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
   return (
-    <div className="new-chart mb-3" style={{height: "300px"}}>
+    <div className="new-chart mb-3" style={{height: METRIC_CHART_STANDARD_HEIGHT}}>
           <ResponsiveHeatMap
             data={metrics}
             {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
-            {...config(users, gradationalColors)}
-            onClick={() => setShowModal(true)}
+            {...config(users)}
+            onClick={onChartClick}
           />
       </div>
   );

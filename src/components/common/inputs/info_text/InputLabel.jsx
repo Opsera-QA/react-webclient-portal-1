@@ -6,14 +6,16 @@ import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import HelpInfoOverlayIcon from "components/common/icons/general/HelpInfoOverlayIcon";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
-import AzureDevopsPipelineStepConfigurationHelpDocumentation
-  from "components/common/help/documentation/pipelines/step_configuration/AzureDevopsPipelineStepConfigurationHelpDocumentation";
+import ReloadDataIcon from "components/common/icons/reload/ReloadDataIcon";
+import EnableEditingIcon from "components/common/icons/enable/EnableEditingIcon";
+import SelectAllIcon from "components/common/icons/field/SelectAllIcon";
 
 function InputLabel(
   {
     field,
     model,
     clearDataFunction,
+    enableEditingFunction,
     requireClearDataConfirmation,
     linkTooltipText,
     detailViewLink,
@@ -26,6 +28,13 @@ function InputLabel(
     ellipsisTooltipText,
     inputHelpOverlay,
     hasError,
+    hasWarningState,
+    helpTooltipText,
+    loadDataFunction,
+    disabled,
+    isLoading,
+    ellipsisOnClickFunction,
+    selectAllFunction,
   }) {
   const getInputHelpIcon = () => {
     if (inputHelpOverlay != null) {
@@ -33,6 +42,18 @@ function InputLabel(
         <LaunchHelpIcon
           className={"ml-1 view-details-icon"}
           helpComponent={inputHelpOverlay}
+        />
+      );
+    }
+
+    if (hasStringValue(helpTooltipText) === true) {
+      return (
+        <HelpInfoOverlayIcon
+          infoOverlay={helpTooltipText}
+          title={`${field?.label} Help`}
+          className={"ml-1 view-details-icon"}
+          overlayPlacement={"top"}
+          overlayHeight={100}
         />
       );
     }
@@ -58,8 +79,12 @@ function InputLabel(
   };
 
   const getFormattedLabel = () => {
+    const className =
+      hasError === true ? "danger-red" :
+        hasWarningState === true ? "yellow" :
+          "";
     return (
-      <label className={hasError === true ? "danger-red" : ""}>
+      <label className={className}>
         <span>{field?.label}{getRequiredAsterisk()}</span>
       </label>
     );
@@ -84,14 +109,33 @@ function InputLabel(
           />
           <EllipsisIcon
             overlay={infoOverlay}
+            onClickFunction={ellipsisOnClickFunction}
             tooltipText={ellipsisTooltipText}
             className={"ml-1 view-details-icon"}
+          />
+          <EnableEditingIcon
+            enableEditingFunction={enableEditingFunction}
+            disabled={disabled}
+            isLoading={isLoading}
+            className={"ml-2 my-auto"}
+          />
+          <ReloadDataIcon
+            loadDataFunction={loadDataFunction}
+            disabled={disabled}
+            isLoading={isLoading}
+            className={"ml-2 my-auto"}
+          />
+          <SelectAllIcon
+            selectAllFunction={selectAllFunction}
+            className={"ml-2 my-auto"}
+            disabled={disabled || isLoading}
           />
           <ClearDataIcon
             requireConfirmation={requireClearDataConfirmation}
             clearValueFunction={clearDataFunction}
             furtherDetails={clearDataDetails}
-            className={"ml-2"}
+            className={"ml-2 my-auto"}
+            disabled={disabled || isLoading}
           />
           {extraActionButtons}
         </div>
@@ -109,6 +153,7 @@ InputLabel.propTypes = {
   detailViewLink: PropTypes.string,
   linkTooltipText: PropTypes.string,
   clearDataFunction: PropTypes.func,
+  enableEditingFunction: PropTypes.func,
   requireClearDataConfirmation: PropTypes.bool,
   clearDataDetails: PropTypes.any,
   extraActionButtons: PropTypes.any,
@@ -116,6 +161,13 @@ InputLabel.propTypes = {
   ellipsisTooltipText: PropTypes.string,
   inputHelpOverlay: PropTypes.any,
   hasError: PropTypes.bool,
+  helpTooltipText: PropTypes.string,
+  loadDataFunction: PropTypes.bool,
+  disabled: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  ellipsisOnClickFunction: PropTypes.func,
+  selectAllFunction: PropTypes.func,
+  hasWarningState: PropTypes.bool,
 };
 
 export default InputLabel;

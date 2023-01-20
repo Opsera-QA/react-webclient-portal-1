@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { hasDateValue } from "components/common/helpers/date/date.helpers";
 
 // TODO: Clean up and figure out how we want to use this on React end
 export const dataParsingHelper = {};
@@ -24,8 +25,50 @@ dataParsingHelper.parseObject = (object, defaultValue = {}) => {
   return object != null && typeof object === "object" && Object.keys(object).length > 0 ? object : defaultValue;
 };
 
+dataParsingHelper.hasObjectProperties = (object) => {
+  return object != null && typeof object === "object" && Object.keys(object).length > 0;
+};
+
+dataParsingHelper.doesObjectContainValue = (object, keyValue) => {
+  const parsedKeyValue = dataParsingHelper.parseString(keyValue);
+  const parsedObject = dataParsingHelper.parseObject(object, undefined);
+
+  if (!parsedKeyValue || !parsedObject) {
+    return false;
+  }
+
+  const parsedObjectValues = dataParsingHelper.parseArray(Object.values(parsedObject));
+
+  if (!parsedObjectValues) {
+    return false;
+  }
+
+  return parsedObjectValues.includes(parsedKeyValue);
+};
+
+dataParsingHelper.getKeyForObjectValue = (object, keyValue) => {
+  const parsedKeyValue = dataParsingHelper.parseString(keyValue);
+  const parsedObject = dataParsingHelper.parseObject(object, undefined);
+
+  if (!parsedKeyValue || !parsedObject) {
+    return null;
+  }
+
+  const parsedObjectValues = dataParsingHelper.parseArray(Object.values(parsedObject));
+
+  if (!parsedObjectValues) {
+    return null;
+  }
+
+  if (parsedObjectValues.includes(parsedKeyValue) !== true) {
+    return null;
+  }
+
+  return Object.keys(parsedObject)?.find((key) => object[key] === keyValue);
+};
+
 dataParsingHelper.parseDate = (date, defaultValue) => {
-  if (!date) {
+  if (hasDateValue(date) !== true) {
     return defaultValue;
   }
 
@@ -81,6 +124,10 @@ dataParsingHelper.isEmpty = (objectToClone) => {
 
 dataParsingHelper.safeObjectPropertyParser = (object, propertyName, defaultValue = undefined) => {
   return _.get(object, propertyName, defaultValue);
+};
+
+dataParsingHelper.safeObjectPropertySetter = (object, fieldName, newValue) => {
+  return _.set(object, fieldName, newValue);
 };
 
 dataParsingHelper.parseArrayIntoString = (array, defaultValue = "") => {

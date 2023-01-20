@@ -5,11 +5,11 @@ import { axiosApiService } from "api/apiService";
 import LoadingDialog from "components/common/status_notifications/loading";
 import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import StepToolConfiguration from "./step_configuration/StepToolConfiguration";
-import StepConfiguration from "./step_configuration/StepConfiguration";
+import PipelineStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepConfiguration";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
-import SourceRepositoryConfiguration
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/SourceRepositoryConfiguration";
+import PipelineSourceRepositoryConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryConfiguration";
 import IconBase from "components/common/icons/IconBase";
 
 const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPlan }) => {
@@ -31,12 +31,11 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
     const apiUrl = `/pipelines/${pipeline._id}/update`;
     try {
       const response = await axiosApiService(accessToken).post(apiUrl, pipeline);
-      toastContext.showUpdateSuccessResultDialog(type);
       await fetchPlan();
       return response;
-    } catch (err) {
+    } catch (error) {
       setLoading(false);
-      toastContext.showLoadingErrorDialog(err);
+      toastContext.showSaveFailureToast(type, error);
     }
   };
 
@@ -56,21 +55,24 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
     return await postData(pipeline, "Pipeline Step Setup");
   };
 
-  const callbackFunctionSource = async (source) => {
-    pipeline.workflow.source = source;
-    return await postData(pipeline, "Source Repository");
-  };
-
   const getTitleBar = (title) => {
     return (
-      <div className="px-2 my-auto content-block-header">
-        <h5 className={"py-2 d-flex justify-content-between mb-0"}>
-          <div className={"my-auto"}>{title}</div>
-          <div className={"d-flex"}>
-            <StepToolHelpIcon type={editItem?.type} tool={editItem?.tool_name?.toLowerCase()} />
-            <IconBase icon={faTimes} iconSize={"lg"} className={"pointer"} onClickFunction={() => {handleCloseClick();}}/>
-          </div>
-        </h5>
+      <div className={"px-2 my-auto content-block-header d-flex"}>
+          <h5 className={"my-auto d-flex justify-content-between h-100 w-100"}>
+            <div className={"my-auto"}>{title}</div>
+            <div className={"d-flex"}>
+              <StepToolHelpIcon
+                type={editItem?.type}
+                tool={editItem?.tool_name?.toLowerCase()}
+              />
+              <IconBase
+                icon={faTimes}
+                iconSize={"lg"}
+                className={"pointer"}
+                onClickFunction={() => {handleCloseClick();}}
+              />
+            </div>
+          </h5>
       </div>
     );
   };
@@ -81,12 +83,10 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
 
   if (editItem.type === "source") {
     return (<>
-      {getTitleBar("Source Repository")}
+      {getTitleBar("Pipeline Settings")}
       <div className="p-3 bg-white step-settings-container">
-        {showToast && <div className="mb-2">{toast}</div>}
-        <SourceRepositoryConfiguration
+        <PipelineSourceRepositoryConfiguration
           pipeline={pipeline}
-          parentCallback={callbackFunctionSource}
           handleCloseClick={handleCloseClick}/>
       </div>
     </>);
@@ -94,20 +94,22 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
 
   if (editItem.type === "step") {
     return (<>
-      {getTitleBar("Step Setup")}
-      <div className="p-3 bg-white step-settings-container">
-        <StepConfiguration
-          plan={pipeline?.workflow?.plan}
+      {getTitleBar("Step Definition")}
+      <div className="px-3 pb-3 pt-2 bg-white step-settings-container">
+        <PipelineStepConfiguration
+          step={editItem}
           stepId={editItem?.step_id}
+          plan={pipeline?.workflow?.plan}
           parentCallback={callbackConfigureStep}
-          closeEditorPanel={handleCloseClick} />
+          closeEditorPanel={handleCloseClick}
+        />
       </div>
     </>);
   }
 
   return (
     <>
-      {getTitleBar("Step Configuration")}
+      {getTitleBar("Step Settings")}
       <div className="p-3 bg-white step-settings-container">
         {showToast && <div className="mb-2">{toast}</div>}
         <StepToolConfiguration

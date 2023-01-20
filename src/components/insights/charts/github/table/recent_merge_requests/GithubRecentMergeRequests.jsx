@@ -6,24 +6,44 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import githubRecentMergeRequestsMetadata from "components/insights/charts/github/table/recent_merge_requests/github-recent-merge-requests-metadata.js";
 import Model from "core/data_model/model";
-import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
-import ModalLogs from "components/common/modal/modalLogs";
-import RecentMergeRequestCardView from "../../card/RecentMergeRequestCardView";
+import VanitySetTabViewContainer from "../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
+import FilterContainer from "../../../../../common/table/FilterContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
+import GithubRecentMergeRequestVerticalTabContainer from "./GithubRecentMergeRequestVerticalTabContainer";
+import CustomTable from "../../../../../common/table/CustomTable";
+import {
+  getLimitedTableTextColumn,
+  getTableDateTimeColumn,
+  getTableTextColumn,
+} from "components/common/table/table-column-helpers";
+import { getField } from "components/common/metadata/metadata-helpers";
 
 function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = githubRecentMergeRequestsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
+  const [activeTab, setActiveTab] = useState();
   const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [metrics, setMetrics] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
+    new Model({ ...githubRecentMergeRequestsMetadata.newObjectFields }, githubRecentMergeRequestsMetadata, false)
   );
-  const [showModal, setShowModal] = useState(false);
-  const [modalData, setModalData] = useState(undefined);
 
+  const noDataMessage = "No Data is available for this chart at this time";
+
+  const columns = useMemo(
+      () => [
+        getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
+        getTableTextColumn(getField(fields, "AssigneeName")),
+        getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
+        getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
+        getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
+        getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
+      ],
+      []
+  );
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -33,11 +53,13 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
     setCancelTokenSource(source);
 
     isMounted.current = true;
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if(activeTab){
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
@@ -53,6 +75,10 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
+      let projectName;
+      if(!filterDto.getData('search')){
+        projectName =filterDto.getData('projectName') ;
+      }
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -61,7 +87,15 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         dashboardTags,
         filterDto,
         null,
-        dashboardOrgs
+        dashboardOrgs,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        projectName,
       );
       let dataObject = response?.data?.data[0]?.githubTimeTakenToCompleteMergeRequestReviewAndPushTime?.data;
 
@@ -85,29 +119,78 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
       }
     }
   };
-  // const onRowSelect = (rowData) => {
-  //   setModalData(rowData.original);
-  //   setShowModal(true);
-  // };
 
-  const getCardView = () => {
+  const getVerticalTabContainer = () => {
+    return <GithubRecentMergeRequestVerticalTabContainer
+      kpiConfiguration={kpiConfiguration}
+      setKpiConfiguration={setKpiConfiguration}
+      dashboardData={dashboardData}
+      setKpis={setKpis}
+      metric={metrics}
+      handleTabClick={handleTabClick}
+      activeTab={activeTab}/>;
+  };
+
+  const getTabContentContainer = () => {
     return (
-      <RecentMergeRequestCardView
-        mergeRequestDataFilterDto={tableFilterDto}
-        setMergeRequestDataFilterDto={setTableFilterDto}
-        isLoading={isLoading}
+      <VanitySetTabViewContainer className={"mb-3"}>
+        <FilterContainer
+          filterDto={tableFilterDto}
+          setFilterDto={setTableFilterDto}
+          body={getBody()}
+          isLoading={isLoading}
+          loadData={loadData}
+          supportSearch={true}
+        />
+      </VanitySetTabViewContainer>
+    );
+  };
+  const getBody = () => {
+    return (
+      <CustomTable
+        columns={columns}
         data={metrics}
+        noDataMessage={noDataMessage}
+        paginationDto={tableFilterDto}
+        setPaginationDto={setTableFilterDto}
         loadData={loadData}
+        scrollOnLoad={false}
       />
     );
   };
 
+  const handleTabClick = async (projectName) => {
+    let newFilterDto = tableFilterDto;
+    newFilterDto.setData("projectName",projectName);
+    newFilterDto.setDefaultValue("search");
+    setTableFilterDto({ ...newFilterDto });
+    // if no projectName then right side table will be empty and api will not be called
+    if(!projectName){
+      setMetrics([]);
+    } else {
+      setActiveTab(projectName);
+      await loadData(cancelTokenSource,newFilterDto);
+    }
+  };
+  const getFilterContainer = () => {
+    return (
+        <TabAndViewContainer
+            verticalTabContainer={getVerticalTabContainer()}
+            currentView={getTabContentContainer()}
+            defaultActiveKey={metrics && Array.isArray(metrics) && metrics[0]?.id && metrics[0]?.id}
+            bodyClassName="mx-0"
+            maximumHeight="calc(100vh - 264px)"
+            overflowYContainerStyle={"hidden"}
+            overflowYBodyStyle="auto"
+        />
+    );
+  };
   return (
     <div>
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={getCardView()}
+        chart={getFilterContainer()}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
@@ -115,14 +198,6 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         setKpis={setKpis}
         isLoading={isLoading}
         tableChart={true}
-      />
-      <ModalLogs
-        header="Github Recent Pull Requests"
-        size="lg"
-        jsonMessage={modalData}
-        dataType="bar"
-        show={showModal}
-        setParentVisibility={setShowModal}
       />
     </div>
   );

@@ -3,14 +3,20 @@ import PropTypes from "prop-types";
 import {faChartNetwork} from "@fortawesome/pro-light-svg-icons";
 import CardContainerBase from "components/common/card_containers/CardContainerBase";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
-import TitleBar from "components/common/fields/TitleBar";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import DescriptionField from "components/common/fields/text/DescriptionField";
 import DashboardLinkButton from "components/common/buttons/dashboards/DashboardLinkButton";
+import TitleBarBase from "components/common/fields/TitleBarBase";
 
 function DashboardSummaryCard({ dashboardModel, isLoading, loadDashboardInNewWindow, closePanel }) {
   const getTitleBar = () => {
-    return <TitleBar titleIcon={faChartNetwork} title={`${dashboardModel.getData("name")}`} isLoading={isLoading} />;
+    return (
+      <TitleBarBase
+        icon={faChartNetwork}
+        title={`${dashboardModel.getData("name")}`}
+        isLoading={isLoading}
+      />
+    );
   };
 
   if (isLoading) {

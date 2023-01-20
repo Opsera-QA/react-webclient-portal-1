@@ -21,7 +21,10 @@ function VanityDataContainer(
     className,
     metadata,
     exportButton,
-    type
+    minimumHeight,
+    maximumHeight,
+    type,
+    filterSelectionOverlayPanel,
   }) {
 
   const getFilterBar = () => {
@@ -38,15 +41,25 @@ function VanityDataContainer(
         dropdownFilters={dropdownFilters}
         inlineFilters={inlineFilters}
         exportButton={exportButton}
+        filterSelectionOverlayPanel={filterSelectionOverlayPanel}
       />
     );
+  };
+
+  const getBodyStylingObject = () => {
+    return ({
+      minHeight: minimumHeight,
+      maxHeight: maximumHeight,
+      overflowY: "auto",
+      overflowX: "hidden",
+    });
   };
 
   return (
     <div className={className}>
       <div className="filter-container container-border">
-        <div className="filter-title-bar w-100">
-          <div className="px-2 d-flex content-block-header">
+        <div className={"filter-title-bar w-100"}>
+          <div className={"px-2 d-flex content-block-header"}>
             <FilterTitleBar
               isLoading={isLoading}
               title={title}
@@ -57,9 +70,9 @@ function VanityDataContainer(
               addRecordFunction={addRecordFunction}
             />
           </div>
-          <ActiveFilterDisplayer filterModel={paginationModel} loadData={loadData} />
         </div>
-        <div>
+        <ActiveFilterDisplayer filterModel={paginationModel} loadData={loadData}/>
+        <div style={getBodyStylingObject()}>
           {body}
         </div>
       </div>
@@ -74,7 +87,7 @@ VanityDataContainer.propTypes = {
   isLoading: PropTypes.bool,
   supportSearch: PropTypes.bool,
   titleIcon: PropTypes.object,
-  title:PropTypes.string,
+  title: PropTypes.string,
   children: PropTypes.any,
   body: PropTypes.object,
   loadData: PropTypes.func,
@@ -86,7 +99,10 @@ VanityDataContainer.propTypes = {
   stackFilters: PropTypes.bool,
   metadata: PropTypes.object,
   exportButton: PropTypes.object,
-  showBorder: PropTypes.bool
+  showBorder: PropTypes.bool,
+  minimumHeight: PropTypes.string,
+  maximumHeight: PropTypes.string,
+  filterSelectionOverlayPanel: PropTypes.object,
 };
 
 export default VanityDataContainer;

@@ -18,8 +18,10 @@ function BooleanToggleInput(
     id,
     infoOverlay,
     inputHelpOverlay,
+    customInfoText,
+    helpTooltip,
   }) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
@@ -28,6 +30,10 @@ function BooleanToggleInput(
   };
 
   const updateValue = (newValue) => {
+    if (disabled === true) {
+      return;
+    }
+
     if (setDataFunction) {
       setDataFunction(fieldName, newValue);
     }
@@ -87,6 +93,18 @@ function BooleanToggleInput(
       );
     }
 
+    if (helpTooltip) {
+      return (
+        <HelpInfoOverlayIcon
+          infoOverlay={helpTooltip}
+          title={`${field?.label} Help`}
+          className={"ml-2 mt-auto view-details-icon"}
+          overlayPlacement={"top"}
+          overlayHeight={100}
+        />
+      );
+    }
+
     const fieldHelpTooltipText = field?.helpTooltipText;
 
     if (hasStringValue(fieldHelpTooltipText) === true) {
@@ -94,7 +112,7 @@ function BooleanToggleInput(
         <HelpInfoOverlayIcon
           infoOverlay={fieldHelpTooltipText}
           title={`${field?.label} Help`}
-          className={"ml-2 mt-auto"}
+          className={"ml-1 view-details-icon"}
           overlayPlacement={"top"}
         />
       );
@@ -106,8 +124,7 @@ function BooleanToggleInput(
   }
 
   return (
-    <div className={className}>
-      <InputContainer fieldName={fieldName}>
+      <InputContainer fieldName={fieldName} className={className}>
         <div className={"d-flex"}>
           <Form.Check
             type={"switch"}
@@ -134,9 +151,9 @@ function BooleanToggleInput(
           field={field}
           model={dataObject}
           fieldName={fieldName}
+          customMessage={customInfoText}
         />
       </InputContainer>
-    </div>
   );
 }
 
@@ -150,6 +167,8 @@ BooleanToggleInput.propTypes = {
   id: PropTypes.string,
   infoOverlay: PropTypes.any,
   inputHelpOverlay: PropTypes.any,
+  customInfoText: PropTypes.any,
+  helpTooltip: PropTypes.any,
 };
 
 export default BooleanToggleInput;

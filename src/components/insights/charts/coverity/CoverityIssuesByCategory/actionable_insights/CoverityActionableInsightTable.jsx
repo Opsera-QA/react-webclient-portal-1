@@ -11,8 +11,6 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import { faDraftingCompass } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
-import { getFormattedTimestamp } from "../../../../../common/fields/date/DateFieldBase";
 import { useHistory } from "react-router-dom";
 
 // TODO: Convert to cards

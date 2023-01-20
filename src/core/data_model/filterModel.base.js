@@ -1,31 +1,135 @@
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import sessionHelper from "utils/session.helper";
-import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import { numberHelpers } from "components/common/helpers/number/number.helpers";
+import { modelValidation, validateField } from "core/data_model/modelValidation";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export class FilterModelBase {
   constructor(metaData) {
     this.sessionDataKey = "";
     this.updateUrlWithQueryParameters = false;
-    this.metaData = { ...metaData };
-    this.data = { ...this.getNewObjectFields() };
+    this.metaData = {...DataParsingHelper.cloneDeep(metaData)};
+    this.data = { ...DataParsingHelper.cloneDeep(this.getNewObjectFields()) };
   }
 
   getData = (fieldName) => {
-    if (fieldName == null) {
+    if (hasStringValue(fieldName) !== true) {
       console.error("No field name was given, so returning null");
       return null;
     }
 
-    return this.data[fieldName];
+    return DataParsingHelper.safeObjectPropertyParser(this.data, fieldName);
+  };
+
+  getArrayData = (fieldName, index) => {
+    const currentValue = this.getData(fieldName);
+
+    if (currentValue == null) {
+      return [];
+    }
+
+    if (!Array.isArray(currentValue)) {
+      console.error(`Value was not saved as array. Returning in array.`);
+      console.error(`Value: ${JSON.stringify(currentValue)}`);
+      return [currentValue];
+    }
+
+    if (typeof index === "number") {
+      return currentValue.length >= index + 1 ? currentValue[index] : null;
+    }
+
+    return currentValue;
+  };
+
+  getDateRangeFilterObject = (
+    syncIncompleteDateRange,
+    startDateFieldName = "startDate",
+    endDateFieldName = "endDate",
+  ) => {
+    const startDate = this.getData(startDateFieldName);
+    const endDate = this.getData(endDateFieldName);
+    const hasNoDatesSet = !startDate && !endDate;
+    const incompleteDates = !startDate || !endDate;
+
+    if (hasNoDatesSet || (incompleteDates && syncIncompleteDateRange !== true)) {
+      return undefined;
+    }
+
+    if (!startDate) {
+      this.setData(startDateFieldName, endDate);
+
+      return {
+        startDate: endDate,
+        endDate: endDate,
+      };
+    }
+
+    if (!endDate && syncIncompleteDateRange === true) {
+      this.setData(endDateFieldName, startDate);
+
+      return {
+        startDate: startDate,
+        endDate: startDate,
+      };
+    }
+
+    return {
+      startDate: startDate,
+      endDate: endDate,
+    };
+  };
+
+  syncIncompleteDateRange = (
+    startDateFieldName = "startDate",
+    endDateFieldName = "endDate",
+  ) => {
+    const startDate = this.getData(startDateFieldName);
+    const endDate = this.getData(endDateFieldName);
+    const hasNoDatesSet = !startDate && !endDate;
+
+    if (hasNoDatesSet) {
+      return;
+    }
+
+    if (!startDate) {
+      this.setData(startDateFieldName, endDate);
+    }
+
+    if (!endDate) {
+      this.setData(endDateFieldName, startDate);
+    }
+  };
+
+  removeArrayItem = (fieldName, index) => {
+    const array = DataParsingHelper.parseArray(this.getData(fieldName));
+
+    if (!array || array.length <= index) {
+      return;
+    }
+
+    array.splice(index, 1);
+    this.setData(fieldName, array);
+  };
+
+  getStringValue = (fieldName, defaultValue = "") => {
+    const currentValue = this.getData(fieldName);
+
+    if (hasStringValue(currentValue) !== true) {
+      return defaultValue;
+    }
+
+    return currentValue;
   };
 
   setData = (fieldName, newValue, updateQueryParameters = true) => {
-    this.data[fieldName] = newValue;
+    this.data = DataParsingHelper.safeObjectPropertySetter(this.data, fieldName, newValue);
 
     if (updateQueryParameters === true && this.getUpdateUrlWithQueryParameters() === true) {
       sessionHelper.replaceStoredUrlParameter(fieldName, newValue);
-      this.updateBrowserStorage();
+
+      if (hasStringValue(this.sessionDataKey) === true) {
+        this.updateBrowserStorage();
+      }
     }
   };
 
@@ -41,6 +145,25 @@ export class FilterModelBase {
 
     const currentData = this.getPersistData();
     sessionHelper.setStoredSessionValue(this.sessionDataKey, currentData);
+  };
+
+  clearBrowserStorage = () => {
+    if (hasStringValue(this.sessionDataKey) === true) {
+      sessionHelper.deleteStoredSessionValue(this.sessionDataKey);
+    }
+  };
+
+  resetDataToDefault = () => {
+    const parsedData = DataParsingHelper.parseObject(this.getNewObjectFields(), {});
+    const newInstance = this;
+    newInstance.data = parsedData;
+    this.clearBrowserStorage();
+  };
+
+  resetBrowserStorage = () => {
+    if (hasStringValue(this.sessionDataKey) === true) {
+      this.updateBrowserStorage();
+    }
   };
 
   unpackCommonUrlParameters = () => {
@@ -116,7 +239,7 @@ export class FilterModelBase {
 
   unpackCommonBrowserStorageFields = () => {
     const browserStorage = sessionHelper.getStoredSessionValueByKey(this.sessionDataKey);
-    const parsedBrowserStorage = dataParsingHelper.parseJson(browserStorage);
+    const parsedBrowserStorage = DataParsingHelper.parseJson(browserStorage);
 
     if (parsedBrowserStorage) {
 
@@ -180,6 +303,23 @@ export class FilterModelBase {
     }
 
     return parsedBrowserStorage;
+  };
+
+  getCurrentData = () => {
+    return this.data;
+  };
+
+  isFieldValid = (fieldName) => {
+    return validateField(this, this.getFieldById(fieldName));
+  };
+
+  getFieldError = (fieldName) => {
+    let errors = validateField(this, this.getFieldById(fieldName));
+    return errors != null ? errors[0] : "";
+  };
+
+  getFieldWarning = (fieldName) => {
+    return modelValidation.getFieldWarning(fieldName, this);
   };
 
   getTotalCount = () => {
@@ -256,15 +396,24 @@ export class FilterModelBase {
   };
 
   updateActiveFilters = () => {
-    const activeFilters = dataParsingHelper.parseArray(this.getActiveFilters(), []);
+    const activeFilters = DataParsingHelper.parseArray(this.getActiveFilters(), []);
 
     if (Array.isArray(activeFilters)) {
-      this.data.activeFilters = activeFilters;
+      this.setData("activeFilters", activeFilters);
     }
   };
 
+  hasActiveFilterValue = (id) => {
+    return this.getActiveFilterValue(id) != null;
+  };
+
+  getActiveFilterValue = (id) => {
+    const activeFilters = DataParsingHelper.parseArray(this.getData("activeFilters"), []);
+    return activeFilters.find((filter) => filter.filterId === id);
+  };
+
   updateTotalCount = (newTotalCount) => {
-    const parsedTotalCount = dataParsingHelper.parseInteger(newTotalCount, 0);
+    const parsedTotalCount = DataParsingHelper.parseInteger(newTotalCount, 0);
 
     if (numberHelpers.isNumberGreaterThanOrEqualTo(0, parsedTotalCount)) {
       this.data.totalCount = parsedTotalCount;
@@ -292,6 +441,10 @@ export class FilterModelBase {
   };
 
   canToggleView = () => {
+    return false;
+  };
+
+  areFilterBadgesReadOnly = () => {
     return false;
   };
 
@@ -357,16 +510,30 @@ export class FilterModelBase {
   };
 
   getNewObjectFields = () => {
-    return this.metaData?.newObjectFields != null ? this.metaData.newObjectFields : {};
+    const newObjectFields = DataParsingHelper.parseObject(this.metaData?.newObjectFields, {});
+    return {...DataParsingHelper.cloneDeep(newObjectFields)};
   };
 
   getNewInstance = () => {
-    return new FilterModelBase(this.metaData);
+    this.resetDataToDefault();
+    return this;
   };
 
   getSortOption = () => {
     return this.getData("sortOption");
   };
+
+  clone = () => {
+    return DataParsingHelper.cloneDeep(this);
+  };
+
+  isNew = () => {
+    return true;
+  }
+
+  isChanged = () => {
+    return false;
+  }
 }
 
 export default FilterModelBase;

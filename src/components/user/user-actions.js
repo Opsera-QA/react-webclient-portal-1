@@ -1,6 +1,9 @@
-import {ApiService, axiosApiService} from "../../api/apiService";
-//import toolsActions from "../inventory/tools/tools-actions";
+import { ApiService, axiosApiService } from "../../api/apiService";
 import baseActions from "../../utils/actionsBase";
+import { stringHelper } from "components/common/helpers/string/string.helper";
+import { generateUUID } from "components/common/helpers/string-helpers";
+import { apiTokenHelper } from "temp-library-components/helpers/api/token/apiToken.helper";
+import routeTokenConstants from "@opsera/definitions/constants/routes/tokens/routeToken.constants";
 
 // TODO: Rename with whatever name makes sense
 const userActions = {};
@@ -16,22 +19,20 @@ userActions.getAnalyticsSettings = async (getAccessToken) => {
 };
 
 //Check if the email is already registered in the system
-userActions.isEmailAvailable = async (emailAddress) => {
-  console.log("checking if email exists: " + emailAddress);
-  const apiCall = new ApiService("/users/check-email", {}, null, { "email": emailAddress, "hostname": window.location.hostname });
-  return await apiCall
-    .post()
-    .then(function (response) {
-      if (response.data?.emailExists === true) {
-        return false; //cannot create new account beacuse this account is already enabled
-      } else {
-        return true;
-      }
-    })
-    .catch(function (error) {
-      console.error(error);
-      return true;
-    });
+userActions.isEmailAvailable = async (cancelTokenSource, emailAddress) => {
+  const token = apiTokenHelper.generateApiCallToken(routeTokenConstants.ROUTE_MIDDLEWARE_TOKEN_KEYS.DOES_EMAIL_EXIST);
+  const apiUrl = "/users/check-email";
+  const postBody = {
+    email: emailAddress,
+    hostname: window.location.hostname,
+  };
+
+  return await baseActions.customTokenApiPostCallV2(
+    cancelTokenSource,
+    token,
+    apiUrl,
+    postBody,
+  );
 };
 
 //Check if the domain is already registered in the system
@@ -62,27 +63,35 @@ userActions.isDomainAvailable = async (domain) => {
 
 
 // TODO: Update as needed, create multi level input items to prevent having to deconstruct them
-userActions.createFreeTrialAccount = async (registrationDataDto) => {
-  let finalObject = registrationDataDto.getPersistData();
-  let attributes = { title: registrationDataDto.getData("title"), company: registrationDataDto.getData("company") };
-  let configuration = { cloudProvider: "GKE", cloudProviderRegion: "" };
-  delete finalObject["title"];
-  delete finalObject["company"];
-  finalObject["attributes"] = attributes;
-  finalObject["configuration"] = configuration;
-  finalObject["domain"] = registrationDataDto.getData("domain");
-  finalObject["organizationName"] = "freeTrial";
+userActions.createFreeTrialAccount = async (cancelTokenSource, registrationModel) => {
+  const finalObject = registrationModel?.getPersistData();
+  const company = finalObject?.company;
+  const attributes = {
+    title: finalObject?.title,
+    company: company,
+  };
+  const configuration = {
+    cloudProvider: "GKE",
+    cloudProviderRegion: "",
+  };
+  finalObject.company = undefined;
+  finalObject.title = undefined;
+  finalObject.attributes = attributes;
+  finalObject.configuration = configuration;
+  finalObject.organizationName = `${stringHelper.replaceSpacesWithUnderscores(company)}-${finalObject?.email}-${generateUUID()}`;
+  const token = apiTokenHelper.generateApiCallToken(routeTokenConstants.ROUTE_MIDDLEWARE_TOKEN_KEYS.CREATE_OPSERA_ACCOUNT);
+  const apiUrl = "/users/create";
 
-  const apiCall = new ApiService("/users/create", {}, null, finalObject);
-  const response = await apiCall
-    .post()
-    .then((result) =>  {return result;})
-    .catch(error => {throw { error };});
-  return response;
+  return await baseActions.customTokenApiPostCallV2(
+    cancelTokenSource,
+    token,
+    apiUrl,
+    finalObject,
+  );
 };
 
 // TODO: Update as needed, create multi level input items to prevent having to deconstruct them
-userActions.createOpseraAccount = async (registrationDataDto) => {
+userActions.createOpseraAccount = async (cancelTokenSource, registrationDataDto) => {
   let finalObject = {...registrationDataDto.getPersistData()};
   let configuration = {
     cloudProvider: registrationDataDto.getData("cloudProvider"),
@@ -96,15 +105,30 @@ userActions.createOpseraAccount = async (registrationDataDto) => {
   delete finalObject["cloudProvider"];
   finalObject["configuration"] = configuration;
   finalObject["attributes"] = attributes;
+  const token = apiTokenHelper.generateApiCallToken(routeTokenConstants.ROUTE_MIDDLEWARE_TOKEN_KEYS.CREATE_OPSERA_ACCOUNT);
+  const apiUrl = "/users/create";
 
-  const apiCall = new ApiService("/users/create", {}, null, finalObject);
-  const response = await apiCall.post()
-    .then((result) =>  {return result;})
-    .catch(error => {throw { error };});
-  return response;
+  return await baseActions.customTokenApiPostCallV2(
+    cancelTokenSource,
+    token,
+    apiUrl,
+    finalObject,
+  );
 };
 
-userActions.createAwsMarketplaceOpseraAccount = async (registrationModel) => {
+userActions.getLoggedInUser = async (
+  token,
+  cancelTokenSource,
+  ) => {
+  const apiUrl = "/users";
+  return await baseActions.customTokenApiGetCallV2(
+    token,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+userActions.createAwsMarketplaceOpseraAccount = async (cancelTokenSource, registrationModel) => {
   const apiUrl = "/users/create";
   let finalObject = {...registrationModel.getPersistData()};
 
@@ -127,15 +151,30 @@ userActions.createAwsMarketplaceOpseraAccount = async (registrationModel) => {
 
   finalObject["configuration"] = configuration;
   finalObject["attributes"] = attributes;
+  const token = apiTokenHelper.generateApiCallToken(routeTokenConstants.ROUTE_MIDDLEWARE_TOKEN_KEYS.CREATE_OPSERA_ACCOUNT);
 
-  const apiCall = new ApiService(apiUrl, {}, null, finalObject);
-  return await apiCall.post()
-    .then((result) =>  {return result;})
-    .catch(error => {throw { error };});
+  return await baseActions.customTokenApiPostCallV2(
+    cancelTokenSource,
+    token,
+    apiUrl,
+    finalObject,
+  );
+};
+
+userActions.getUserWithAuthenticationStateToken = async (
+  cancelTokenSource,
+  token,
+) => {
+  const apiUrl = "/users";
+  return await baseActions.customTokenApiGetCall(token, apiUrl);
 };
 
 
-
+/***
+ * Calls the Opsera logout route which expires the User object cache in Redis
+ * @param getAccessToken
+ * @returns {Promise<AxiosResponse<any>>}
+ */
 userActions.logout = async (getAccessToken) => {
   const postBody = {};
   const accessToken = await getAccessToken();
@@ -151,6 +190,27 @@ userActions.logout = async (getAccessToken) => {
 };
 
 
+/***
+ * Calls an explicit Okta Revoke Access Token command to invalidate the current bearer token
+ * @param getAccessToken
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+userActions.revokeAuthToken = async (getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = "/users/token/okta/revoke";
+
+  const response = await axiosApiService(accessToken).put(apiUrl, null, null)
+    .then((result) => {
+      return result;
+    })
+    .catch(error => {
+      throw error;
+    });
+  return response;
+};
+
+
+
 userActions.syncUser = async (getAccessToken, cancelTokenSource) => {
   let urlParams = {
     params: {
@@ -161,6 +221,7 @@ userActions.syncUser = async (getAccessToken, cancelTokenSource) => {
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+// TODO: Remove once all instances are updated to awsActions.getAwsRegionsV2
 userActions.getAwsRegionsV2 = async (cancelTokenSource) => {
   const apiUrl = `/users/aws/regions`;
   return await baseActions.apiTokenlessGetCallV2(cancelTokenSource, apiUrl);
@@ -176,14 +237,15 @@ userActions.getAccountInformationWithEmailAddress = async (emailAddress, token) 
   return await baseActions.customTokenApiPostCall(token, apiUrl, postBody);
 };
 
-userActions.getAccountInformationWithDomain = async (domain, token) => {
+userActions.getAccountInformationWithDomain = async (cancelTokenSource, domain) => {
   const apiUrl = `/users/account/summary`;
+  const token = apiTokenHelper.generateApiCallToken("orgRegistrationForm");
 
   const postBody = {
     domain: domain,
   };
 
-  return await baseActions.customTokenApiPostCall(token, apiUrl, postBody);
+  return await baseActions.customTokenApiPostCallV2(cancelTokenSource, token, apiUrl, postBody);
 };
 
 userActions.getAccountInformationV2 = async (cancelTokenSource, domain, token) => {

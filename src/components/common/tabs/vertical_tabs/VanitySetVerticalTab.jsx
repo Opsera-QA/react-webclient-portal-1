@@ -59,8 +59,8 @@ function VanitySetVerticalTab(
       >
         <div>
           <div className={"h-100 d-flex"}>
-            <IconBase icon={icon} className={"mr-2"} iconSize={"2x"} />
-            <div className="my-auto">{tabText}</div>
+            <IconBase icon={icon} className={"mr-2"} iconSize={"lg"} />
+            <div className={"my-auto"}>{tabText}</div>
           </div>
         </div>
       </Nav.Link>
@@ -70,7 +70,7 @@ function VanitySetVerticalTab(
 
 VanitySetVerticalTab.propTypes = {
   tabName: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  tabText: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  tabText: PropTypes.any.isRequired,
   icon: PropTypes.object,
   visible: PropTypes.bool,
   tooltipText: PropTypes.string,

@@ -13,10 +13,24 @@ import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/s
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 import {fieldValidation} from "core/data_model/modelValidation";
 
-function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setDataFunction, allowCreate, inline, allowedTypes, getDisabledTags, placeholderText}) {
+function TagManager(
+  {
+    fieldName,
+    type,
+    dataObject,
+    setDataObject,
+    disabled,
+    setDataFunction,
+    allowCreate,
+    inline,
+    allowedTypes,
+    excludeTypes,
+    getDisabledTags,
+    placeholderText,
+  }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
   const [tagOptions, setTagOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
@@ -48,7 +62,6 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
     try {
       setIsLoading(true);
       await getTags(cancelSource);
-      await removeOldTags();
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -67,27 +80,8 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
     const response = await adminTagsActions.getAllTagsV2(getAccessToken, cancelSource);
     let tags = response?.data?.data;
 
-    if (isMounted?.current === true && Array.isArray(tags) && tags.length > 0)
-    {
+    if (isMounted?.current === true && Array.isArray(tags) && tags.length > 0) {
       loadTagOptions(tags);
-    }
-  };
-
-  const removeOldTags = async () => {
-    let newTags = [];
-
-    dataObject.getArrayData(fieldName).map((tag, index) => {
-      if (tag["type"] != null && tag["type"] !== "" && tag["value"] != null && tag["value"] !== "")
-      {
-        let tagOption = {type: tag["type"], value: tag["value"]};
-        newTags.push(tagOption);
-      }
-    });
-    let newDataObject = dataObject;
-    newDataObject.setData(fieldName, newTags);
-
-    if (isMounted?.current === true) {
-      setDataObject({...newDataObject});
     }
   };
 
@@ -111,7 +105,11 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
           currentOptions.push(tagOption);
         }
       }
-      else {
+      else if (Array.isArray(excludeTypes) && excludeTypes.length > 0) {
+        if (!(excludeTypes.includes(tagOption.type))) {
+          currentOptions.push(tagOption);
+        }
+      } else {
         if (!dataObject.getArrayData(fieldName).some(item => item.type === tagOption.type && item.value === tagOption.value)) {
           currentOptions.push(tagOption);
         }     
@@ -183,7 +181,11 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
     }
   };
 
-  if (type == null) {
+  const hasWarningState = () => {
+    return field.noItemsWarning && dataObject?.getArrayData(fieldName)?.length === 0;
+  };
+
+  if (type == null && allowCreate !== false) {
     return (<div className="danger-red">Error for tag manager input: You forgot to wire up type!</div>);
   }
 
@@ -197,15 +199,18 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
         showLabel={inline !== true}
         model={dataObject}
         field={field}
-        className={"mt-1 mr-2"}
         hasError={hasStringValue(errorMessage) === true}
+        hasWarningState={hasWarningState()}
+        disabled={disabled}
+        isLoading={isLoading}
       />
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput
           hasErrorState={hasStringValue(errorMessage)}
+          hasWarningState={hasWarningState()}
           selectOptions={[...tagOptions]}
           textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + capitalizeFirstLetter(data["value"])}
-          allowCreate={allowCreate}
+          allowCreate={allowCreate === true && hasStringValue(type)}
           groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
           className={inline ? `inline-filter-input inline-select-filter` : undefined}
           busy={isLoading}
@@ -238,7 +243,8 @@ TagManager.propTypes = {
   inline: PropTypes.bool,
   allowedTypes: PropTypes.array,
   getDisabledTags: PropTypes.func,
-  placeholderText: PropTypes.string
+  placeholderText: PropTypes.string,
+  excludeTypes: PropTypes.array,
 };
 
 TagManager.defaultProps = {

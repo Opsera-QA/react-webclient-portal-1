@@ -15,6 +15,9 @@ import NewExternalApiIntegratorEndpointOverlay
 import {
   getEndpointRequestTypeLabel
 } from "components/common/list_of_values_input/tools/extermal_api_integrator/request/types/endpointRequestType.constants";
+import {
+  getEndpointTypeLabel
+} from "components/common/list_of_values_input/inventory/endpoints/type/endpointType.constants";
 
 function ExternalApiIntegratorEndpointsTable(
   {
@@ -48,6 +51,7 @@ function ExternalApiIntegratorEndpointsTable(
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
+      getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), getEndpointTypeLabel),
       getFormattedLabelWithFunctionColumnDefinition(getField(fields, "requestType"), getEndpointRequestTypeLabel),
       getTableTextColumn(getField(fields, "url")),
       getTableTextColumn(getField(fields, "description")),

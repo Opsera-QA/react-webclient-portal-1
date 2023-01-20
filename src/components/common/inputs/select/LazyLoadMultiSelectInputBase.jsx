@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
@@ -6,35 +6,54 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { errorHelpers } from "components/common/helpers/error-helpers";
 
-function LazyLoadMultiSelectInputBase({
-  fieldName,
-  dataObject,
-  setDataObject,
-  groupBy,
-  disabled,
-  selectOptions,
-  valueField,
-  textField,
-  placeholderText,
-  setDataFunction,
-  busy,
-  showClearValueButton,
-  clearDataFunction,
-  className,
-  showLabel,
-  requireClearDataConfirmation,
-  clearDataDetails,
-  linkTooltipText,
-  detailViewLink,
-  infoOverlay,
-  inputHelpOverlay,
-  onToggleFunction,
-  onSearchFunction,
-  useToggle,
-}) {
+function LazyLoadMultiSelectInputBase(
+  {
+    fieldName,
+    dataObject,
+    setDataObject,
+    groupBy,
+    disabled,
+    selectOptions,
+    valueField,
+    textField,
+    placeholderText,
+    setDataFunction,
+    busy,
+    showClearValueButton,
+    clearDataFunction,
+    className,
+    showLabel,
+    requireClearDataConfirmation,
+    clearDataDetails,
+    linkTooltipText,
+    detailViewLink,
+    infoOverlay,
+    inputHelpOverlay,
+    onToggleFunction,
+    onSearchFunction,
+    useToggle,
+    helpTooltipText,
+    error,
+    pluralTopic,
+    singularTopic,
+  }) {
   const [errorMessage, setErrorMessage] = useState("");
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
+  const [internalErrorMessage, setInternalErrorMessage] = useState("");
+
+  useEffect(() => {
+    setInternalErrorMessage("");
+    setInternalPlaceholderText("");
+
+    if (error) {
+      console.error(error);
+      setInternalPlaceholderText(errorHelpers.constructApiResponseErrorPlaceholderText(pluralTopic));
+      setInternalErrorMessage(errorHelpers.parseApiErrorForInfoText(pluralTopic, error));
+    }
+  }, [error]);
 
   const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
@@ -96,6 +115,33 @@ function LazyLoadMultiSelectInputBase({
     return parsedValues;
   };
 
+  const getErrorMessage = () => {
+    if (hasStringValue(internalErrorMessage) === true) {
+      return internalErrorMessage;
+    }
+
+    if (hasStringValue(errorMessage) === true) {
+      return errorMessage;
+    }
+  };
+
+  const getPlaceholderText = () => {
+    if (hasStringValue(internalPlaceholderText) === true) {
+      return internalPlaceholderText;
+    }
+
+    if (hasStringValue(placeholderText) === true) {
+      return placeholderText;
+    }
+
+    if (hasStringValue(singularTopic) === true) {
+      return `Select ${singularTopic}`;
+    }
+
+    return "Select One";
+  };
+
+
   if (field == null) {
     return null;
   }
@@ -113,7 +159,8 @@ function LazyLoadMultiSelectInputBase({
         clearDataDetails={clearDataDetails}
         infoOverlay={infoOverlay}
         inputHelpOverlay={inputHelpOverlay}
-        hasError={hasStringValue(errorMessage) === true}
+        hasError={hasStringValue(getErrorMessage()) === true}
+        helpTooltipText={helpTooltipText}
       />
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput
@@ -124,12 +171,12 @@ function LazyLoadMultiSelectInputBase({
           filter="contains"
           groupBy={groupBy}
           onToggleFunction={(test) => {
-            if (useToggle && test === true && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) {
+            if (onToggleFunction && useToggle && test === true && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) {
               onToggleFunction();
             }
           }}
           value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : []}
-          placeholderText={placeholderText}
+          placeholderText={getPlaceholderText()}
           disabled={disabled}
           onSearchFunction={onSearchFunction}
           setDataFunction={(newValue) =>
@@ -142,7 +189,7 @@ function LazyLoadMultiSelectInputBase({
         model={dataObject}
         fieldName={fieldName}
         field={field}
-        errorMessage={errorMessage}
+        errorMessage={getErrorMessage()}
         hideRegexDefinitionText={true}
       />
     </InputContainer>
@@ -170,11 +217,15 @@ LazyLoadMultiSelectInputBase.propTypes = {
   clearDataDetails: PropTypes.any,
   linkTooltipText: PropTypes.string,
   detailViewLink: PropTypes.string,
-  inputHelpOverlay: PropTypes.object,
-  infoOverlay: PropTypes.object,
+  inputHelpOverlay: PropTypes.any,
+  infoOverlay: PropTypes.any,
   onToggleFunction: PropTypes.func,
   onSearchFunction: PropTypes.func,
   useToggle: PropTypes.bool,
+  helpTooltipText: PropTypes.string,
+  singularTopic: PropTypes.string,
+  pluralTopic: PropTypes.string,
+  error: PropTypes.any,
 };
 
 LazyLoadMultiSelectInputBase.defaultProps = {

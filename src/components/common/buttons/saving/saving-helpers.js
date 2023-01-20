@@ -13,12 +13,14 @@ export async function persistNewRecordAndViewDetails(model, toastContext, showSu
     );
 
   if (response != null && response !== false && history != null) {
-    const updatedDto = model.getNewInstance(response?.data, false);
+    const newData = response?.data?.data ? response?.data?.data : response?.data;
+    const updatedDto = model.getNewInstance(newData, false);
     let link = updatedDto.getDetailViewLink();
 
     if (hasStringValue(link) === true) {
+      toastContext.removeInlineMessage();
       toastContext.clearOverlayPanel();
-      if (link != null) {
+      if (hasStringValue(link)) {
         history.push(link);
       }
     }
@@ -39,6 +41,7 @@ export async function persistNewRecordAndClose(model, toastContext, showSuccessT
   );
 
   if (response != null && response !== false && handleClose) {
+    toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
     handleClose();
   }

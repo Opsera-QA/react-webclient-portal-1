@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {Grid} from "@opsera/dhx-suite-package";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
 function VanitySelectionTableBase(
   {
@@ -16,6 +17,7 @@ function VanitySelectionTableBase(
     selectedId,
     selectedModel,
     rowSelection,
+    sortable,
   }) {
   const containerRef = useRef(null);
   const [grid, setGrid] = useState(null);
@@ -37,7 +39,7 @@ function VanitySelectionTableBase(
 
       if (hasStringValue(selectedId)) {
         const selection = grid.data.find((item) => {
-          return item?.getData("_id") === selectedId;
+          return item?._id === selectedId;
         });
 
         if (selection) {
@@ -61,7 +63,7 @@ function VanitySelectionTableBase(
       data: Array.isArray(data) && data.length > 0 ? data : [],
       htmlEnable: true,
       resizable: true,
-      sortable: false,
+      sortable: sortable,
       selection: rowSelection,
       headerRowHeight: 30,
       rowHeight: 30,
@@ -79,6 +81,10 @@ function VanitySelectionTableBase(
 
     if (onRowSelect) {
       grid.selection.events.on("beforeSelect", async (row, column, e) => {
+        if (row._id === selectedId) {
+          return true;
+        }
+
         const response = await onRowSelect(selectedModel, grid, row);
         return response === true;
       });
@@ -91,10 +97,9 @@ function VanitySelectionTableBase(
       });
     }
 
-    const selectedId = selectedModel?.getData("_id");
-    if (hasStringValue(selectedId)) {
+    if (isMongoDbId(selectedId)) {
       const selection = grid.data.find((item, index) => {
-        return item?.getData("_id") === selectedId;
+        return item?._id === selectedId;
       });
 
       if (selection) {
@@ -131,13 +136,15 @@ VanitySelectionTableBase.propTypes = {
   onCellEdit: PropTypes.func,
   rowSelection: PropTypes.string,
   selectedModel: PropTypes.object,
+  sortable: PropTypes.bool,
 };
 
 VanitySelectionTableBase.defaultProps = {
   data: [],
   isLoading: false,
   height: "500px",
-  rowSelection: "row"
+  rowSelection: "row",
+  sortable: true,
 };
 
 export default VanitySelectionTableBase;

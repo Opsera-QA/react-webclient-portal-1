@@ -2,8 +2,11 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faDraftingCompass, faHexagon, faLayerGroup} from "@fortawesome/pro-light-svg-icons";
+import {faBallotCheck, faDraftingCompass, faHexagon, faLayerGroup} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import {pipelineInstructionsHelper} from "components/workflow/instructions/pipelineInstructions.helper";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
+import {pipelineCatalogHelper} from "components/workflow/catalog/pipelineCatalog.helper";
 
 function WorkflowSubNavigationBar({currentTab}) {
   const history = useHistory();
@@ -13,34 +16,45 @@ function WorkflowSubNavigationBar({currentTab}) {
 
     switch (tabSelection) {
       case "catalog":
-        history.push(`/workflow/catalog/library`);
+        history.push(pipelineCatalogHelper.getManagementScreenLink());
         return;
       case "pipelines":
-        history.push(`/workflow/`);
+        history.push(pipelineHelper.getManagementScreenLink());
         return;
-    }
-  };
-
-  const getActiveViewerTab = () => {
-    switch (currentTab) {
-      case "pipelineViewer":
-        return (
-          <NavigationTab
-            activeTab={currentTab}
-            tabText={"Pipeline Viewer"}
-            handleTabClick={handleTabClick}
-            tabName={"pipelineViewer"}
-            toolTipText={"Pipeline Viewer"}
-            icon={faLayerGroup}
-          />
-        );
-      default:
-        return null;
+      case "pipelineInstructionsManagement":
+        history.push(pipelineInstructionsHelper.getManagementScreenLink());
+        return;
     }
   };
 
   return (
     <NavigationTabContainer>
+      <NavigationTab
+        activeTab={currentTab}
+        tabText={"Catalog"}
+        handleTabClick={handleTabClick}
+        tabName={"catalog"}
+        toolTipText={"Catalog"}
+        icon={faHexagon}
+      />
+      <NavigationTab
+        activeTab={currentTab}
+        tabText={"Pipeline Template Viewer"}
+        handleTabClick={handleTabClick}
+        tabName={"customerPipelineTemplateDetailView"}
+        toolTipText={"Pipeline Template Viewer"}
+        icon={faHexagon}
+        hideIfInactive={true}
+      />
+      <NavigationTab
+        activeTab={currentTab}
+        tabText={"Pipeline Template Viewer"}
+        handleTabClick={handleTabClick}
+        tabName={"platformPipelineTemplateDetailView"}
+        toolTipText={"Pipeline Template Viewer"}
+        icon={faHexagon}
+        hideIfInactive={true}
+      />
       <NavigationTab
         activeTab={currentTab}
         tabText={"Pipelines"}
@@ -51,13 +65,28 @@ function WorkflowSubNavigationBar({currentTab}) {
       />
       <NavigationTab
         activeTab={currentTab}
-        tabText={"Catalog"}
+        tabText={"Pipeline Viewer"}
         handleTabClick={handleTabClick}
-        tabName={"catalog"}
-        toolTipText={"Catalog"}
-        icon={faHexagon}
+        tabName={"pipelineViewer"}
+        toolTipText={"Pipeline Viewer"}
+        icon={faLayerGroup}
+        hideIfInactive={true}
       />
-      {getActiveViewerTab()}
+      <NavigationTab
+        icon={faBallotCheck}
+        tabName={"pipelineInstructionsManagement"}
+        handleTabClick={handleTabClick}
+        activeTab={currentTab}
+        tabText={"Instructions"}
+      />
+      <NavigationTab
+        icon={faBallotCheck}
+        tabName={"pipelineInstructionsViewer"}
+        handleTabClick={handleTabClick}
+        activeTab={currentTab}
+        tabText={"Pipeline Instructions Viewer"}
+        hideIfInactive={true}
+      />
     </NavigationTabContainer>
   );
 }

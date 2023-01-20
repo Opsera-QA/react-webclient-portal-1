@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
 import AssignedRoleAccessTable from "components/common/fields/access/table/AssignedRoleAccessTable";
 import SiteRoleAccessTable from "components/common/fields/access/table/SiteRoleAccessTable";
+import scriptsLibrariesRoles from "@opsera/know-your-role/roles/registry/script_library/scriptsLibrary.roles";
 
-function ScriptsHelpDocumentation({scriptRoleDefinitions}) {
+function ScriptsHelpDocumentation() {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -26,7 +26,7 @@ function ScriptsHelpDocumentation({scriptRoleDefinitions}) {
             <li>Select <b>Create</b> button to save the new script in the Opsera Scripts Library. The script can now be referenced in a pipeline.</li>
           </ol>
           <div className={"mb-1"}>For more detailed information on Script creation and how to configure a script in Opsera pipelines,
-            view the  <a href="https://opsera.atlassian.net/l/c/S2c72ieq" target="_blank" rel="noreferrer"><b>Script Library Help Documentation</b>.</a>
+            view the  <a href="https://docs.opsera.io/tool-registry/scripts-creation" target="_blank" rel="noreferrer"><b>Scripts Creation Documentation</b>.</a>
           </div>
         </div>
       </div>
@@ -41,17 +41,13 @@ function ScriptsHelpDocumentation({scriptRoleDefinitions}) {
       helpDocumentation={getHelpDocumentation()}
     >
       <div className={"my-2"}>
-        <AssignedRoleAccessTable roleAccessDefinitions={scriptRoleDefinitions} />
+        <AssignedRoleAccessTable roleAccessDefinitions={scriptsLibrariesRoles} />
       </div>
       <div className={"my-2"}>
-        <SiteRoleAccessTable roleAccessDefinitions={scriptRoleDefinitions} />
+        <SiteRoleAccessTable roleAccessDefinitions={scriptsLibrariesRoles} />
       </div>
     </HelpOverlayBase>
   );
 }
-
-ScriptsHelpDocumentation.propTypes = {
-  scriptRoleDefinitions: PropTypes.object,
-};
 
 export default React.memo(ScriptsHelpDocumentation);

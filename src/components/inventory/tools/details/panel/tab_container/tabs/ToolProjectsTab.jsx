@@ -6,6 +6,7 @@ import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolId
 
 export const PROJECT_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC,
   "jira",
 ];
 
@@ -21,7 +22,7 @@ function ToolProjectsTab({ toolModel, handleTabClick, activeTab }) {
       handleTabClick={handleTabClick}
       activeTab={activeTab}
       tabText={"Projects"}
-      accessRestricted={!toolModel.canPerformAction("update_tool_projects")}
+      accessRestricted={toolModel.canUpdateRegistryToolProjects() !== true}
     />
   );
 }

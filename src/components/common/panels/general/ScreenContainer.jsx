@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import {getBreadcrumb} from "components/common/navigation/trails";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
-import TitleBar from "components/common/fields/TitleBar";
+import ScreenContainerTitleBar from "components/common/fields/ScreenContainerTitleBar";
 import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
 import {meetsRequirements} from "components/common/helpers/role-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -26,6 +26,7 @@ function ScreenContainer(
     titleActionBar,
     helpComponent,
     bodyClassName,
+    auditLogType,
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const toastContext = useContext(DialogToastContext);
@@ -44,15 +45,15 @@ function ScreenContainer(
 
     if (navigationTabContainer) {
       return (
-        <div className="mb-3">
+        <div className={"mb-2"}>
           {navigationTabContainer}
         </div>
       );
     }
 
     return (
-      <div className="mb-3">
-        <div className="sub-navigation-block" />
+      <div className={"mb-2"}>
+        <div className={"sub-navigation-block"} />
       </div>
     );
   };
@@ -62,16 +63,20 @@ function ScreenContainer(
 
     if (hasStringValue(pageDescription) === true) {
       return (
-        <div className={"page-description px-3 py-2"}>
-          {pageDescription}
+        <div className={"page-description px-3 mt-1 d-flex"}>
+          <div className={"mt-auto"}>
+            {pageDescription}
+          </div>
         </div>
       );
     }
 
     if (hasStringValue(breadcrumbPageDescription) === true) {
       return (
-        <div className={"page-description px-3 py-2"}>
-          {breadcrumbPageDescription}
+        <div className={"page-description px-3 mt-1 d-flex"}>
+          <div className={"mt-auto"}>
+            {breadcrumbPageDescription}
+          </div>
         </div>
       );
     }
@@ -143,15 +148,18 @@ function ScreenContainer(
         className={"content-container content-card-1"}
         style={{ minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT}}
       >
-        <div className={"pl-2 content-block-header title-text-header-1"}>
-          <TitleBar
-            titleIcon={breadcrumb?.icon}
-            title={breadcrumb?.title}
-            isBeta={breadcrumb?.isBeta === true}
-            isLoading={isLoading}
-            titleActionBar={titleActionBar}
-            helpComponent={helpComponent}
-          />
+        <div className={"pl-2 content-block-header title-text-header-1 d-flex"}>
+          <div className={"my-auto w-100"}>
+            <ScreenContainerTitleBar
+              titleIcon={breadcrumb?.icon}
+              title={breadcrumb?.title}
+              isBeta={breadcrumb?.isBeta === true}
+              isLoading={isLoading}
+              titleActionBar={titleActionBar}
+              helpComponent={helpComponent}
+              auditLogType={auditLogType}
+            />
+          </div>
         </div>
         <div
           style={{ minHeight: getBodyHeight()}}
@@ -159,7 +167,6 @@ function ScreenContainer(
           {getBody()}
         </div>
         {getRoleRequirementField()}
-        <div className={"content-block-footer"}/>
       </div>
     </div>
   );
@@ -178,6 +185,7 @@ ScreenContainer.propTypes = {
   roleRequirement: PropTypes.string,
   helpComponent: PropTypes.object,
   bodyClassName: PropTypes.string,
+  auditLogType: PropTypes.string,
 };
 
 ScreenContainer.defaultProps = {

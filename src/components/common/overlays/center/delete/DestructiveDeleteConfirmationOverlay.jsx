@@ -1,11 +1,15 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {faTrash} from "@fortawesome/pro-light-svg-icons";
-import {Button, Col, Row} from "react-bootstrap";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {cannotBeUndone} from "components/common/tooltip/popover-text";
+import { faTrash } from "@fortawesome/pro-light-svg-icons";
+import { Col, Row } from "react-bootstrap";
+import { cannotBeUndone } from "components/common/tooltip/popover-text";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import LoadingIcon from "components/common/icons/LoadingIcon";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import CancelButton from "components/common/buttons/CancelButton";
+import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
+import InputContainer from "components/common/inputs/InputContainer";
+import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 
 function DestructiveDeleteConfirmationOverlay(
   {
@@ -14,26 +18,17 @@ function DestructiveDeleteConfirmationOverlay(
     closePanel,
     deleteDetails,
     size,
-    handleDeleteFunction
+    handleDeleteFunction,
   }) {
   const [confirmText, setConfirmText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  const getDeleteButtonText = () => {
-    if (isDeleting) {
-      return <span><LoadingIcon className={"mr-2"} />Deleting...</span>;
-    }
-
-    return ("CONFIRM DELETE");
-  };
+  const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
 
   const handleDelete = async () => {
     try {
-      setIsDeleting(true);
+      setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
       await handleDeleteFunction();
-    }
-    finally {
-      setIsDeleting(false);
+    } finally {
+      setButtonState(buttonLabelHelper.BUTTON_STATES.READY);
     }
   };
 
@@ -55,21 +50,44 @@ function DestructiveDeleteConfirmationOverlay(
       <div className="p-3">
         <Row>
           <Col>
-            <div>This is a destructive deletion process. None of the relevant data can be recovered after deletion.</div>
+            <H5FieldSubHeader
+              subheaderText={"This is a destructive deletion process. None of the relevant data can be recovered after deletion."}
+            />
             {deleteDetails}
-            <div className="mt-2">If you are absolutely sure you want to delete {deleteTopic}, type &quot;CONFIRM&quot; and click CONFIRM DELETE. </div>
-            <div className="mt-2">THIS ACTION CANNOT BE UNDONE.</div>
-            <input value={confirmText} className="form-control mt-2" onChange={newText => setConfirmText(newText.target.value)}/>
-            <TooltipWrapper innerText={cannotBeUndone}>
-              <Button
-                className={"mt-2"}
-                disabled={confirmText !== "CONFIRM" || isDeleting}
+            <div className={"mt-2"}>
+              If you are absolutely sure you want to delete {deleteTopic}, type &quot;CONFIRM&quot; and click CONFIRM
+              DELETE.
+            </div>
+            <div className={"mt-2"}>
+              THIS ACTION CANNOT BE UNDONE.
+            </div>
+            <InputContainer>
+              <input
+                value={confirmText}
+                className={"form-control mt-2"}
+                onChange={newText => setConfirmText(newText.target.value)}
+              />
+            </InputContainer>
+            <ButtonContainerBase>
+              <CancelButton
+                cancelFunction={closePanel}
+                className={"mr-2"}
+                size={"md"}
+              />
+              <VanityButtonBase
+                buttonState={buttonState}
+                normalText={"CONFIRM DELETE"}
+                busyText={`Deleting ${deleteTopic}`}
+                tooltip={cannotBeUndone}
+                icon={faTrash}
+                disabled={confirmText !== "CONFIRM" || buttonState === buttonLabelHelper.BUTTON_STATES.BUSY}
                 variant={"danger"}
+                errorText={`Failed To Delete ${deleteTopic}!`}
                 onClick={handleDelete}
+                onClickFunction={handleDelete}
               >
-                {getDeleteButtonText()}
-              </Button>
-            </TooltipWrapper>
+              </VanityButtonBase>
+            </ButtonContainerBase>
           </Col>
         </Row>
       </div>

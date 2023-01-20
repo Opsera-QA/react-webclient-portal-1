@@ -1,21 +1,24 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import TagReportPageLinkCards from "components/reports/tags/TagReportPageLinkCards";
 import ToolReportPageLinkCards from "components/reports/tools/ToolReportPageLinkCards";
 import UserReportPageLinkCards from "components/reports/users/UserReportPageLinkCards";
-import { AuthContext } from "contexts/AuthContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function ReportsPageLinkCards({accessRoleData}) {
-  const { isSassUser } = useContext(AuthContext);
+function ReportsPageLinkCards() {
+  const {
+    isSaasUser,
+    accessRoleData,
+  } = useComponentStateReference();
 
   const getUserReports = () => {
-    if (isSassUser() === false) {
+    if (isSaasUser === false) {
       return (
         <div className={"mt-3"}>
           <H5FieldSubHeader className={"ml-3"} subheaderText={"User Reports"} />
-          <UserReportPageLinkCards accessRoleData={accessRoleData} />
+          <UserReportPageLinkCards />
         </div>
       );
     }
@@ -26,15 +29,25 @@ function ReportsPageLinkCards({accessRoleData}) {
       <div>
         <div>
           <H5FieldSubHeader className={"ml-3"} subheaderText={"Tag Reports"} />
-          <TagReportPageLinkCards accessRoleData={accessRoleData} />
+          <TagReportPageLinkCards />
         </div>
         <div className={"mt-3"}>
           <H5FieldSubHeader className={"ml-3"} subheaderText={"Tool Reports"} />
-          <ToolReportPageLinkCards accessRoleData={accessRoleData} />
+          <ToolReportPageLinkCards />
         </div>
         {getUserReports()}
+
         {/*TODO: Uncomment when Pipeline Report is added*/}
+        {/*<div className={"mt-3"}>*/}
+          {/*<H5FieldSubHeader className={"ml-3"} subheaderText={"Pipeline Reports"} />*/}
         {/*<PipelineReports />*/}
+        {/*</div>*/}
+
+
+          {/*<div className={"mt-3"}>*/}
+          {/*  <H5FieldSubHeader className={"ml-3"} subheaderText={"Audit Reports"} />*/}
+        {/*<AuditReportPageLinkCards />*/}
+        {/*  </div>*/}
       </div>
     );
   };

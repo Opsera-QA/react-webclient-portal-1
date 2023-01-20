@@ -6,7 +6,19 @@ import ConfirmResumePipeline from "components/workflow/wizards/ConfirmResumePipe
 import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 
-function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, pipeline, handleClose, handlePipelineWizardRequest }) {
+export const PIPELINE_START_WIZARD_FLOWS = {
+  PRE_RUN_TASK_SCREEN: "pre_run_task_screen",
+  SALESFORCE_PIPELINE_WIZARD: "salesforce_pipeline_wizard",
+};
+
+function PipelineStartWizard(
+  {
+    pipelineType,
+    pipelineId,
+    pipelineOrientation,
+    pipeline,
+    handlePipelineWizardRequest,
+  }) {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -25,7 +37,7 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
           pipelineId={pipelineId}
           pipeline={pipeline}
           handlePipelineWizardRequest={handlePipelineWizardRequest}
-          handleClose={handleClose}
+          handleClose={closePanel}
           pipelineOrientation={pipelineOrientation}
         />
       );
@@ -54,7 +66,6 @@ PipelineStartWizard.propTypes = {
   pipeline: PropTypes.object,
   pipelineOrientation: PropTypes.string,
   handlePipelineWizardRequest: PropTypes.func,
-  handleClose: PropTypes.func,
 };
 
 export default PipelineStartWizard;

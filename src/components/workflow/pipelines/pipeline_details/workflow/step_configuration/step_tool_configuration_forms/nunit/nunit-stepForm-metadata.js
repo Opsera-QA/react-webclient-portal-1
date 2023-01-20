@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const nunitStepFormMetadata = {
   type: "NUnit Tool Configuration",
   fields: [
@@ -48,8 +50,9 @@ const nunitStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Repo ID",
+      label: "Repository",
       id: "repoId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       label: "SCM Service Type",
@@ -59,6 +62,7 @@ const nunitStepFormMetadata = {
     
     {
       id: "projectId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       id: "gitUrl",
@@ -73,6 +77,7 @@ const nunitStepFormMetadata = {
     {
       label: "Repository",
       id: "repository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
       isRequired: true
     },
     
@@ -89,6 +94,7 @@ const nunitStepFormMetadata = {
     {
       label: "Branch",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequired: true
     },
     {

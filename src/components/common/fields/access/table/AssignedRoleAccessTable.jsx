@@ -1,55 +1,30 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
-import axios from "axios";
-import {AuthContext} from "contexts/AuthContext";
 import {parseRoleDefinitionsIntoRbacTableRows} from "components/common/helpers/role-helpers";
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import {accessRoleDefinitionMetadata} from "components/common/fields/access/table/accessRoleDefinition.metadata";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function AssignedRoleAccessTable({ roleAccessDefinitions, loadData, isLoading }) {
-  const { getAccessRoleData, isSassUser } = useContext(AuthContext);
+function AssignedRoleAccessTable({ roleAccessDefinitions, isLoading }) {
+  const [accessRoles, setAccessRoles] = useState([]);
   const fields = accessRoleDefinitionMetadata?.fields;
-  const [userRoleAccess, setUserRoleAccess] = useState(undefined);
-  const [accessRoles, setAccessRoles] = useState(undefined);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    accessRoleData,
+    isSaasUser,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+    setAccessRoles([]);
+    if (isSaasUser === false && roleAccessDefinitions && accessRoleData) {
+      const tableRows = DataParsingHelper.parseArray(parseRoleDefinitionsIntoRbacTableRows(roleAccessDefinitions, accessRoleData), []);
+      setAccessRoles([...tableRows]);
     }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-
-    if (roleAccessDefinitions) {
-      loadAccessRoleData(roleAccessDefinitions).catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [roleAccessDefinitions]);
-
-  const loadAccessRoleData = async (roleAccessDefinitions) => {
-    const accessRoleData = await getAccessRoleData();
-
-    if (accessRoleData) {
-      setUserRoleAccess(accessRoleData);
-      setAccessRoles([...parseRoleDefinitionsIntoRbacTableRows(roleAccessDefinitions, accessRoleData)]);
-    }
-  };
 
   const columns = useMemo(
     () => [
@@ -70,18 +45,16 @@ function AssignedRoleAccessTable({ roleAccessDefinitions, loadData, isLoading })
         data={accessRoles}
         columns={columns}
         isLoading={isLoading}
-        loadData={loadData}
       />
     );
   };
 
-  if (isSassUser() === true) {
+  if (isSaasUser !== false) {
     return null;
   }
 
   return (
     <FilterContainer
-      loadData={loadData}
       isLoading={isLoading}
       body={getRoleDefinitionTable()}
       metadata={accessRoleDefinitionMetadata}

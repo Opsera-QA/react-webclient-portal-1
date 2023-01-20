@@ -85,7 +85,7 @@ function ArgoAwsIamClusterSelectInput({
     } catch (error) {
       setPlaceholder("No Clusters Found");
       console.error(error);
-      toastContext.showServiceUnavailableDialog();
+      toastContext.showLoadingErrorDialog(error);
     }
   };
 

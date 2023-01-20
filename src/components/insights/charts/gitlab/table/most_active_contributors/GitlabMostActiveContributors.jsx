@@ -12,6 +12,7 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import IconBase from "components/common/icons/IconBase";
+import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 
 function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = gitlabMostActiveContributorsMetadata.fields;
@@ -104,7 +105,7 @@ function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
   };
 
   const getChartTable = () => {
-    return (
+    return (      
       <CustomTable
         columns={columns}
         data={metrics}
@@ -113,7 +114,7 @@ function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
-      />
+      />      
     );
   };
 

@@ -18,10 +18,12 @@ function VanityEditorPanelContainer(
     extraButtons,
     getHelpComponent,
     booleanToggleDisabled,
+    showDeleteButton,
     showBooleanToggle,
     enabledText,
     disabledText,
     className,
+    viewDetailsUponCreate,
   }) {
   const [helpIsShown, setHelpIsShown] = useState(false);
 
@@ -66,6 +68,8 @@ function VanityEditorPanelContainer(
         disable={disable}
         model={model}
         setModel={setModel}
+        showDeleteButton={showDeleteButton}
+        viewDetailsUponCreate={viewDetailsUponCreate}
       />
     );
   };
@@ -123,7 +127,6 @@ VanityEditorPanelContainer.propTypes = {
   handleClose: PropTypes.func,
   setModel: PropTypes.func,
   model: PropTypes.object,
-  lenient: PropTypes.bool,
   disable: PropTypes.bool,
   extraButtons: PropTypes.any,
   showBooleanToggle: PropTypes.bool,
@@ -132,6 +135,8 @@ VanityEditorPanelContainer.propTypes = {
   getHelpComponent: PropTypes.func,
   booleanToggleDisabled: PropTypes.bool,
   className: PropTypes.string,
+  showDeleteButton: PropTypes.bool,
+  viewDetailsUponCreate: PropTypes.bool,
 };
 
 export default VanityEditorPanelContainer;

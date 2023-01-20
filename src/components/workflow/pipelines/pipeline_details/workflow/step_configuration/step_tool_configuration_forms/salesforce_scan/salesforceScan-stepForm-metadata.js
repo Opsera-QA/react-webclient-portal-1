@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const salesforceScanStepFormMetadata = {
   type: "Salesforce Scan Tool Configuration",
   fields: [
@@ -44,11 +46,19 @@ const salesforceScanStepFormMetadata = {
     {
       label: "Repository",
       id: "repository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
+      // isRequired: true
+    },
+    {
+      label: "Repository",
+      id: "repoId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
       // isRequired: true
     },
     {
       label: "Branch Name",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       // isRequired: true
     },
     {

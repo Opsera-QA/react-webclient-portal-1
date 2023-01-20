@@ -4,7 +4,7 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import ScraperCommonInputBase from "./ScraperCommonInputBase";
 import { faFileCode, faHandshake, faUserSecret } from "@fortawesome/pro-light-svg-icons";
 import ParameterSelectListInputBase
-  from "../../../../../common/list_of_values_input/parameters/ParameterSelectListInputBase";
+  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 
 function GitIgnoreToggleInput({model, setModel, fieldName, disabled, plan}) {
 

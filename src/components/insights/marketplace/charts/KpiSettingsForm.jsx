@@ -5,8 +5,7 @@ import { Row, Col } from "react-bootstrap";
 import DateRangeInput from "components/common/inputs/date/DateRangeInput";
 import ThreeMonthsRestrictedDateRangeInput from "components/common/inputs/date/ThreeMonthsRestrictedDateRangeInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import kpiConfigurationMetadata from "components/insights/marketplace/charts/kpi-configuration-metadata";
-import {
+import kpiConfigurationMetadata, {
   kpiDateFilterMetadata,
   kpiTagsFilterMetadata,
   kpiGoalsFilterMetadata,
@@ -333,7 +332,8 @@ function KpiSettingsForm({
     "git-scraper",
     "salesforce-components-chart",
     "github-commit-statistics",
-    "deployment-analytics"
+    "deployment-analytics",
+    "gitlab-merge-requests-statistics"
   ];
 
   const getKpiFilters = (filter) => {

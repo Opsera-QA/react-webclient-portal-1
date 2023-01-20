@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import { errorHelpers } from "components/common/helpers/error-helpers";
 
 function LazyLoadSelectInputBase(
   {
@@ -36,8 +37,25 @@ function LazyLoadSelectInputBase(
     lenientClearValueButton,
     onToggleFunction,
     inputHelpOverlay,
+    helpTooltipText,
+    error,
+    pluralTopic,
+    singularTopic,
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
+  const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
+  const [internalErrorMessage, setInternalErrorMessage] = useState("");
+
+  useEffect(() => {
+    setInternalErrorMessage("");
+    setInternalPlaceholderText("");
+
+    if (error) {
+      console.error(error);
+      setInternalPlaceholderText(errorHelpers.constructApiResponseErrorPlaceholderText(pluralTopic));
+      setInternalErrorMessage(errorHelpers.parseApiErrorForInfoText(pluralTopic, error));
+    }
+  }, [error]);
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
@@ -83,6 +101,32 @@ function LazyLoadSelectInputBase(
     return dataObject?.getData(field.id);
   };
 
+  const getErrorMessage = () => {
+    if (hasStringValue(internalErrorMessage) === true) {
+      return internalErrorMessage;
+    }
+
+    if (hasStringValue(errorMessage) === true) {
+      return errorMessage;
+    }
+  };
+
+  const getPlaceholderText = () => {
+    if (hasStringValue(internalPlaceholderText) === true) {
+      return internalPlaceholderText;
+    }
+
+    if (hasStringValue(placeholderText) === true) {
+      return placeholderText;
+    }
+
+    if (hasStringValue(singularTopic) === true) {
+      return `Select ${singularTopic}`;
+    }
+
+    return "Select One";
+  };
+
   if (field == null) {
     return null;
   }
@@ -103,6 +147,7 @@ function LazyLoadSelectInputBase(
         ellipsisTooltipText={ellipsisTooltipText}
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(errorMessage) === true}
+        helpTooltipText={helpTooltipText}
       />
       <StandaloneSelectInput
         selectOptions={selectOptions}
@@ -116,7 +161,7 @@ function LazyLoadSelectInputBase(
             onToggleFunction();
           }
         }}
-        placeholderText={placeholderText}
+        placeholderText={getPlaceholderText()}
         setDataFunction={(newValue) => updateValue(newValue)}
         disabled={disabled}
         onSearchFunction={onSearchFunction}
@@ -126,7 +171,7 @@ function LazyLoadSelectInputBase(
         model={dataObject}
         fieldName={fieldName}
         field={field}
-        errorMessage={errorMessage}
+        errorMessage={getErrorMessage()}
         hideRegexDefinitionText={true}
       />
     </InputContainer>
@@ -171,6 +216,10 @@ LazyLoadSelectInputBase.propTypes = {
   ellipsisTooltipText: PropTypes.string,
   lenientClearValueButton: PropTypes.bool,
   onToggleFunction: PropTypes.func,
+  helpTooltipText: PropTypes.string,
+  singularTopic: PropTypes.string,
+  pluralTopic: PropTypes.string,
+  error: PropTypes.any,
 };
 
 LazyLoadSelectInputBase.defaultProps = {

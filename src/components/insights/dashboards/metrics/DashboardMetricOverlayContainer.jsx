@@ -25,6 +25,23 @@ import SonarRatingMetricsEditorPanel from "../../charts/sonar/sonar_ratings/Sona
 import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 import ServiceNowMeanTimeToResolutionEditorPanel
   from "../../charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionEditorPanel";
+import QuickDeployStatisticsEditorPanel from "../../charts/quick-deploy-statistics/QuickDeployStatisticsEditorPanel";
+import SalesforceComponentsEditorPanel
+  from "../../charts/sfdc/data_block_chart/Salesforce_components/SalesforceComponentsEditorPanel";
+import ApigeeReportsEditorPanel from "../../charts/apigee/reports/ApigeeReportsEditorPanel";
+import GitlabDeploymentFrequencyEditorPanel from "components/insights/charts/gitlab/deployment_frequency/GitlabDeploymentFrequencyEditorPanel";
+import ApigeeSummaryEditorPanel from "../../charts/apigee/summary/ApigeeSummaryEditorPanel";
+import BoomiBarChartEditorPanel from "components/insights/charts/boomi/bar_chart/BoomiBarChartEditorPanel";
+import GitlabLeadTimeEditorPanel from "../../charts/gitlab/line_chart/lead_time/GitlabLeadTimeEditorPanel";
+import JiraMeanTimeToResolutionEditorPanel
+  from "../../charts/jira/bar_chart/mean_time_to_resolution/JiraMeanTimeToResolutionEditorPanel";
+import JiraChangeFailureRateEditorPanel from "components/insights/charts/jira/line_chart/change_failure_rate/JiraChangeFailureRateEditorPanel";
+import GitlabPipelineStatisticsEditorPanel
+  from "../../charts/gitlab/line_chart/pipeline-statistics/GitlabPipelineStatisticsEditorPanel";
+import DoraJiraGitlabRolledUpEditorPanel
+  from "../../charts/dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpEditorPanel";
+import GitlabMergeRequestStatisticsEditorPanel
+  from "../../charts/gitlab/merge_request_statistics/GitlabMergeRequestStatisticsEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
@@ -163,6 +180,126 @@ function DashboardMetricOverlayContainer(
             unpackedFilterData={unpackedFilterData}
             kpiConfiguration={kpiConfiguration}
           />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.DORA_JIRA_GITLAB_ROLLED_UP:
+        return (
+          <DoraJiraGitlabRolledUpEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_PIPELINE_STATISTICS:
+        return (
+          <GitlabPipelineStatisticsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.QUICK_DEPLOY_STATISTICS:
+        return (
+            <QuickDeployStatisticsEditorPanel
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+                unpackedFilterData={unpackedFilterData}
+                kpiConfiguration={kpiConfiguration}
+            />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_COMPONENTS_CHART:
+        return (
+            <SalesforceComponentsEditorPanel
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+                unpackedFilterData={unpackedFilterData}
+                kpiConfiguration={kpiConfiguration}
+            />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_REPORT:
+        return (
+          <ApigeeReportsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY:
+        return (
+          <GitlabDeploymentFrequencyEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
+        return (
+          <GitlabLeadTimeEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_SUMMARY:
+        return (
+          <ApigeeSummaryEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
+        return(
+          <BoomiBarChartEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_MEAN_TIME_TO_RESOLUTION:
+        return(
+          <JiraMeanTimeToResolutionEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.JIRA_CHANGE_FAILURE_RATE:
+        return(
+          <JiraChangeFailureRateEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_MERGE_STATISTICS:
+        return (
+            <GitlabMergeRequestStatisticsEditorPanel
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+                unpackedFilterData={unpackedFilterData}
+                kpiConfiguration={kpiConfiguration}
+            />
         );
     }
   };

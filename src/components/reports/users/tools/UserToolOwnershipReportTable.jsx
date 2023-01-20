@@ -2,14 +2,14 @@ import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
-import toolMetadata from "components/inventory/tools/tool-metadata";
 import {getTableBooleanIconColumn, getTableDateColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import { useHistory } from "react-router-dom";
 import VanityTable from "components/common/table/VanityTable";
+import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
 
 function UserToolOwnershipReportTable({ toolList, isLoading, paginationModel, setPaginationModel, loadData }) {
-  const fields = toolMetadata.fields;
+  const fields = registryToolMetadata.fields;
   const history = useHistory();
 
   const columns = useMemo(
@@ -65,7 +65,7 @@ function UserToolOwnershipReportTable({ toolList, isLoading, paginationModel, se
       setFilterDto={setPaginationModel}
       supportSearch={true}
       isLoading={isLoading}
-      metadata={toolMetadata}
+      metadata={registryToolMetadata}
       body={getToolTable()}
       titleIcon={faTools}
       title={"Tools"}

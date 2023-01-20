@@ -1,35 +1,26 @@
-import React, {useEffect, useState, useContext, useRef} from "react";
-import { AuthContext } from "contexts/AuthContext";
-import LoadingDialog from "components/common/status_notifications/loading";
+import React, {useEffect, useState, useRef} from "react";
 import Model from "core/data_model/model";
-import axios from "axios";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ConnectedAssetsDetails from "./ConnectedAssetsDetails";
-import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
-import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import { Button, Popover, Overlay } from "react-bootstrap";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
-import { format, addDays } from "date-fns";
+import {format, addDays} from "date-fns";
 import { DateRangePicker } from "react-date-range";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import IconBase from "components/common/icons/IconBase";
+import connectedAssetsMetadata from "./connectedAssets-metadata";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 
 function ConnectedAssets() {
-  const {getUserRecord, setAccessRoles} = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
-  const toastContext = useContext(DialogToastContext);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [dashboardData, setDashboardData] = useState(undefined);
-  const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(modelHelpers.getDashboardFilterModel(dashboardData, "tags", dashboardFiltersMetadata));
+  const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(new Model({ ...connectedAssetsMetadata.newObjectFields }, connectedAssetsMetadata, false));
   const [date, setDate] = useState([
     {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      startDate: new Date(addDays(new Date(), -90)),
+      endDate: new Date(),
       key: "selection",
     },
   ]);
@@ -40,54 +31,13 @@ function ConnectedAssets() {
   const [calenderActivation, setCalenderActivation] = useState(false);
   const node = useRef();
   const ref = useRef(null);
+  const { isMounted, isSiteAdministrator, isSaasUser } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-    let newDataObject = new Model({...dashboardMetadata.newObjectFields}, dashboardMetadata, true);
-    newDataObject.setData("filters", []);
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
-    loadData(newDataObject, source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
+    const newModel = new Model({...connectedAssetsMetadata.newObjectFields}, connectedAssetsMetadata, true);
+    newModel.setData("filters", []);
+    setDashboardData({...newModel});
   }, []);
-
-  const loadData = async (newDataObject, cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      await getRoles(cancelSource);
-      setDashboardData({...newDataObject});
-    } catch (error) {
-      if (isMounted.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
-      }
-    } finally {
-      if (isMounted.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (isMounted.current === true && userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-    }
-  };
 
   const toggleCalendar = (event) => {
     setCalenderActivation(true);
@@ -134,20 +84,17 @@ function ConnectedAssets() {
       } else {
         let endDate = format(item.selection.endDate, "MM/dd/yyyy");
         setEDate(endDate);
-        validate(startDate,endDate);
+        validate(item.selection.startDate,item.selection.endDate);
       }
     }
   };
 
   const validate = (startDate,endDate)=>{
-    let sDate = startDate ? new Date(startDate).toISOString() : undefined;
-    let eDate = endDate ? new Date(endDate).toISOString() : undefined;
     let newDashboardFilterTagsModel = dashboardFilterTagsModel;
-    newDashboardFilterTagsModel.setData( "date" , { startDate: sDate , endDate: eDate, key: "selection" } );
+    newDashboardFilterTagsModel.setData( "date" , { startDate: startDate , endDate: endDate, key: "selection" } );
     setDashboardFilterTagsModel({...newDashboardFilterTagsModel});
-
-    let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardData, "date", { startDate: sDate , endDate: eDate, key: "selection" });
-    loadData(newDataModel);
+    let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardFilterTagsModel, "date", { startDate: startDate , endDate: endDate, key: "selection" });
+    setDashboardData({...newDataModel});
   };
 
   const clearCalendar = () => {
@@ -200,6 +147,8 @@ function ConnectedAssets() {
               startDatePlaceholder="Start Date"
               endDatePlaceholder="End Date"
               onChange={dateChange}
+              minDate={new Date(addDays(new Date(), -7300).setHours(0, 0, 0, 0))}
+              maxDate={new Date}
               showSelectionPreview={true}
               moveRangeOnFirstSelection={false}
               months={1}
@@ -229,8 +178,12 @@ function ConnectedAssets() {
     );
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm" message="Loading Insights"/>);
+  if (isSiteAdministrator !== true && isSaasUser !== true) {
+    return (
+      <AccessDeniedContainer
+        navigationTabContainer={<InsightsSubNavigationBar currentTab={"connectedAssets"}/>}
+      />
+    );
   }
 
   return (
@@ -239,7 +192,7 @@ function ConnectedAssets() {
       pageDescription={`An 'Admin Only' page that provides categorized number of assets that are connected and associated to Opsera through different sources.`}
       breadcrumbDestination={"insightsConnectedAssets"}
     >
-      {/*{getConnectedAssetsActionBar()}*/}
+      {getConnectedAssetsActionBar()}
       <ConnectedAssetsDetails dashboardData={dashboardData} setDashboardData={setDashboardData}/>
     </ScreenContainer>
   );

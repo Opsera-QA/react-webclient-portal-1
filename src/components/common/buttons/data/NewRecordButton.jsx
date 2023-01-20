@@ -30,7 +30,13 @@ function NewRecordButton(
 
   return (
     <div className={className}>
-      <Button variant={variant} size={size} disabled={isLoading || disabled === true} onClick={() => {addRecordFunction();}}>
+      <Button
+        variant={variant}
+        size={size}
+        disabled={isLoading || disabled === true}
+        onClick={() => {addRecordFunction();}}
+        className={"d-flex text-nowrap"}
+      >
         <span className={"d-sm-none"}><IconBase icon={faPlus}/></span>
         <span className={"d-none d-sm-inline"}><IconBase icon={faPlus} className={"mr-1"}/>{getButtonText()}</span>
       </Button>

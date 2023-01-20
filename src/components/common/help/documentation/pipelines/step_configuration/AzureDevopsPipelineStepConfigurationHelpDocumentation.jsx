@@ -12,7 +12,7 @@ function AzureDevopsPipelineStepConfigurationHelpDocumentation() {
   const getHelpDocumentation = () => {
     return (
       <div>
-        <div className={"mb-1 ml-3"}>To configure Azure DevOps in the pipeline step, select values provided in the following drop down fields. Organization Name, Project Name/ID and Pipeline ID are fetched from a configured pipeline within the Azure DevOps portal.</div>
+        <div className={"ml-2 mb-2"}>To configure Azure DevOps in the pipeline step, select values provided in the following drop down fields. Organization Name, Project Name/ID and Pipeline ID are fetched from a configured pipeline within the Azure DevOps portal.</div>
           <ul style={{listStyleType: "none"}}>
             <li><b>Azure DevOps Tool</b> - This field contains Azure DevOps tools that have been configured in the Opsera Tool Registry. Upon tool configuration, a Personal Access Token and an Organization Name (found in the Azure DevOps portal) were entered. To edit or reconfigure a tool, select <b>View Or Edit this Tool’s Registry settings.</b></li>
             <li><b>Organization Name</b> - Defined in Tool Registry in the Tool Details Connection tab. Organization Name can be found in the Azure DevOps portal. </li>

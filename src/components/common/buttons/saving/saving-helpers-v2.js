@@ -1,4 +1,5 @@
-// This needs to be tested
+import { hasStringValue } from "components/common/helpers/string-helpers";
+
 export async function persistNewRecordAndViewDetails(
   model,
   toastContext,
@@ -14,12 +15,15 @@ export async function persistNewRecordAndViewDetails(
     isIncomplete,
   );
 
-  if (response?.data != null && model.getDetailViewLink != null && history != null) {
-    const newModel = model.getNewInstance(response?.data);
+  const newData = response?.data?.data ? response?.data?.data : response?.data;
+
+  if (newData != null && model.getDetailViewLink != null && history != null) {
+    const newModel = model.getNewInstance(newData);
     const link = newModel.getDetailViewLink();
 
+    toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
-    if (link != null) {
+    if (hasStringValue(link) === true) {
       history.push(link);
     }
   }
@@ -43,8 +47,8 @@ export async function persistNewRecordAndClose(
   );
 
   if (response != null && response !== false && handleClose) {
-    toastContext.clearOverlayPanel();
-    handleClose();
+    toastContext.removeInlineMessage();
+    handleClose(response);
   }
 
   return response;

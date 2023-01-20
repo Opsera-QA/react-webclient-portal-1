@@ -2,8 +2,9 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faArrowLeft, faBuilding} from "@fortawesome/pro-light-svg-icons";
+import { faBuilding } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import AccountSettingsSubNavigationBarBase from "components/settings/AccountSettingsSubNavigationBarBase";
 
 function LdapDepartmentManagementSubNavigationBar({activeTab}) {
   const history = useHistory();
@@ -11,10 +12,11 @@ function LdapDepartmentManagementSubNavigationBar({activeTab}) {
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
 
+    if (activeTab === tabSelection) {
+      return;
+    }
+
     switch (tabSelection) {
-      case "accountSettings":
-        history.push(`/settings`);
-        return;
       case "departments":
         history.push(`/settings/departments`);
         return;
@@ -40,12 +42,8 @@ function LdapDepartmentManagementSubNavigationBar({activeTab}) {
 
   return (
     <NavigationTabContainer>
-      <NavigationTab
-        icon={faArrowLeft}
-        tabName={"accountSettings"}
-        handleTabClick={handleTabClick}
+      <AccountSettingsSubNavigationBarBase
         activeTab={activeTab}
-        tabText={"Back to Account Settings"}
       />
       <NavigationTab
         icon={faBuilding}

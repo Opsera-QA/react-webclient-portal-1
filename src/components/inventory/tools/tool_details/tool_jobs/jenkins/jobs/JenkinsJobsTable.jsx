@@ -5,27 +5,27 @@ import NewJenkinsJobOverlay from "components/inventory/tools/tool_details/tool_j
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {
   getTableBooleanIconColumn,
-  getTableTextColumn
+  getTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import JenkinsJobMetadata from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/jenkins-job-metadata";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faAbacus} from "@fortawesome/pro-light-svg-icons";
-import {getColumnHeader, getColumnId} from "components/common/table/column_definitions/model-table-column-definitions";
+import { getColumnHeader, getColumnId } from "components/common/table/table-column-helpers-v2";
 
-export const getJenkinsJobTypeColumn = (field, className) => {
-  let header = getColumnHeader(field);
-
-  return {
-    header: header,
-    id: getColumnId(field),
-    width: 200,
-    template: function (value) {
-      return value[0];
-    },
-    class: className
-  };
-};
+// export const getJenkinsJobTypeColumn = (field, className) => {
+//   let header = getColumnHeader(field);
+//
+//   return {
+//     header: header,
+//     id: getColumnId(field),
+//     width: 200,
+//     template: function (value) {
+//       return value[0];
+//     },
+//     class: className
+//   };
+// };
 
 export const getJobTypeColumn = (field, className) => {
   return {

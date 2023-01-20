@@ -24,6 +24,9 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import JenkinsStepJobTypeSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepJobTypeSelectInput";
+import JenkinsSfdcDataTransformerRulesSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsSfdcDataTransformerRulesSelectInput";
+import JenkinsNodeBuildTypePanel from "./inputs/JenkinsNodeBuildTypePanel";
 
 // TODO: This should probably be moved to some helper function so we only need to update it in one spot
 //  and also use ENUMs to make it easier to ensure spelling it is correct and consistent everywhere.
@@ -51,7 +54,6 @@ function JenkinsStepConfiguration({
   const [isLoading, setIsLoading] = useState(true);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
-
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -233,6 +235,13 @@ function JenkinsStepConfiguration({
           workspace={jenkinsStepConfigurationDto?.getData("workspace")}
           repoId={jenkinsStepConfigurationDto?.getData("repoId")}
         />
+        <JenkinsSfdcDataTransformerRulesSelectInput
+          model={jenkinsStepConfigurationDto}
+          setModel={setJenkinsStepConfigurationDto}
+          jobType={jenkinsStepConfigurationDto?.getData("jobType")}
+          toolId={jenkinsStepConfigurationDto?.getData("sfdcToolId")}
+          disabled={jenkinsStepConfigurationDto?.getData("sfdcToolId") == undefined || jenkinsStepConfigurationDto?.getData("sfdcToolId") === ""}
+        />
         <JenkinsXmlStepInfoSelectInput
           dataObject={jenkinsStepConfigurationDto}
           setDataObject={setJenkinsStepConfigurationDto}
@@ -244,6 +253,8 @@ function JenkinsStepConfiguration({
           model={jenkinsStepConfigurationDto}
           setModel={setJenkinsStepConfigurationDto}
           buildType={jenkinsStepConfigurationDto?.getData("buildType")}
+          plan={plan}
+          stepId={stepId}
         />
         <JenkinsPythonPanel
           dataObject={jenkinsStepConfigurationDto}
@@ -256,6 +267,13 @@ function JenkinsStepConfiguration({
           dataObject={jenkinsStepConfigurationDto}
           setDataObject={setJenkinsStepConfigurationDto}
           buildType={jenkinsStepConfigurationDto?.getData("buildType")}
+        />
+        <JenkinsNodeBuildTypePanel
+            plan={plan}
+            stepId={stepId}
+            dataObject={jenkinsStepConfigurationDto}
+            setDataObject={setJenkinsStepConfigurationDto}
+            buildType={jenkinsStepConfigurationDto?.getData("buildType")}
         />
       </div>
     );
@@ -281,6 +299,7 @@ function JenkinsStepConfiguration({
       <JenkinsStepDependencyTypeInput
         model={jenkinsStepConfigurationDto}
         setModel={setJenkinsStepConfigurationDto}
+        buildType={jenkinsStepConfigurationDto?.getData("buildType")}
       />
     </PipelineStepEditorPanelContainer>
   );

@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const ruleFields = [
-  {value: "committedFileId", text: "File ID"},
+  {value: "committedFileId", text: "Salesforce Component ID"},
   {value: "componentName", text: "Component Name"},
-  // {value: "committedTime", text: "Commit Time"}, // TODO: For future release
-  {value: "committedBy", text: "Committed By"},
+  // {value: "committedTime", text: "Last Modified Time"}, // TODO: For future release
+  {value: "committedBy", text: "Last Modified By"},
 ];
 
 function SfdcRuleFieldSelectInput({fieldName, className, dataObject, setDataObject, disabled, showLabel}) {

@@ -6,6 +6,7 @@ export const SOURCE_REPOSITORY_TOOLS = [
   { value: "gitlab", text: "GitLab" },
   { value: "github", text: "GitHub" },
   { value: "bitbucket", text: "Bitbucket" },
+  { value: "azure-devops", text: "Azure Devops" },
 ];
 
 function SourceRepositoryToolIdentifierSelectInput({ fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, lenientClearValueButton }) {
@@ -18,8 +19,8 @@ function SourceRepositoryToolIdentifierSelectInput({ fieldName, model, setModel,
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
       lenientClearValueButton={lenientClearValueButton}
-      valueField="value"
-      textField="text"
+      valueField={"value"}
+      textField={"text"}
       disabled={disabled}
     />
   );

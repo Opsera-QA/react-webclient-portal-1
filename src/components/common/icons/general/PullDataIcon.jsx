@@ -12,11 +12,13 @@ function PullDataIcon({ pullDataFunction, className, tooltipText }) {
   return (
     <div className={className}>
       <TooltipWrapper innerText={tooltipText} placement={"top"}>
-        <IconBase
-          onClickFunction={pullDataFunction}
-          icon={faFileDownload}
-          className={"pointer"}
-        />
+        <div>
+          <IconBase
+            onClickFunction={pullDataFunction}
+            icon={faFileDownload}
+            className={"pointer"}
+          />
+        </div>
       </TooltipWrapper>
     </div>
   );

@@ -1,7 +1,6 @@
 import FilterModelBase from "core/data_model/filterModel.base";
 import sessionHelper from "utils/session.helper";
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
-import { getTaskTypeLabel } from "components/tasks/task.types";
 
 const pipelineFilterMetadata = {
   type: "Pipeline",
@@ -50,25 +49,28 @@ const pipelineFilterMetadata = {
   newObjectFields: {
     pageSize: 25,
     currentPage: 1,
-    sortOption: "name",
+    sortOption: "last-updated",
     search: "",
     activeFilters: [],
     viewType: "list",
     category: "",
+    type: "",
     status: "",
     active: "",
   },
 };
 
 export class PipelineFilterModel extends FilterModelBase {
-  constructor(getAccessToken, cancelTokenSource, loadData) {
+  constructor(
+    useUrlParameters = true,
+  ) {
     super(pipelineFilterMetadata);
-    this.getAccessToken = getAccessToken;
-    this.cancelTokenSource = cancelTokenSource;
-    this.loadData = loadData;
-    this.sessionDataKey = "pipeline-filter-model-data";
-    this.enableUrlUpdatesWithQueryParameters();
-    this.unpackUrlParameters();
+
+    if (useUrlParameters === true) {
+      this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.PIPELINE_FILTER_MODEL_DATA;
+      this.enableUrlUpdatesWithQueryParameters();
+      this.unpackUrlParameters();
+    }
   }
 
   canSearch = () => {

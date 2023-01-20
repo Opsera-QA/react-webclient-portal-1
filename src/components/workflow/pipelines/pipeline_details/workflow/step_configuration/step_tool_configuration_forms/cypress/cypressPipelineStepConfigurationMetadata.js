@@ -1,42 +1,44 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const cypressPipelineStepConfigurationMetadata = {
   type: "Cypress Pipeline Step Configuration",
   fields: [
     {
       label: "Jenkins Tool",
       id: "toolConfigId",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Job Type",
       id: "jobType",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Job Type",
       id: "opsera_job_type",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Job Name",
       id: "jobName",
-      isRequiredFunction: (model) => {
-        return model?.getData("opsera_job_type") === "job";
-      },
+      // isRequiredFunction: (model) => {
+      //   return model?.getData("opsera_job_type") === "job";
+      // },
     },
     {
       label: "Jenkins URL",
       id: "jenkinsUrl",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Jenkins User ID",
       id: "jUserId",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Jenkins Authorization Token",
       id: "jAuthToken",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Job",
@@ -62,10 +64,17 @@ const cypressPipelineStepConfigurationMetadata = {
     {
       label: "Repository",
       id: "repository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
+    },
+    {
+      label: "Repository",
+      id: "repoId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       label: "Branch",
       id: "branch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
     },
     {
       label: "Rollback Branch Name",
@@ -74,6 +83,7 @@ const cypressPipelineStepConfigurationMetadata = {
     {
       label: "Branch Name",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
     },
     {
       label: "Build/Xml Step Info",
@@ -82,16 +92,16 @@ const cypressPipelineStepConfigurationMetadata = {
     {
       label: "Docker Name",
       id: "dockerName",
-      isRequiredFunction: (model) => {
-        return model?.getData("buildType") === "docker";
-      },
+      // isRequiredFunction: (model) => {
+      //   return model?.getData("buildType") === "docker";
+      // },
     },
     {
       label: "Docker Tag",
       id: "dockerTagName",
-      isRequiredFunction: (model) => {
-        return model?.getData("buildType") === "docker";
-      },
+      // isRequiredFunction: (model) => {
+      //   return model?.getData("buildType") === "docker";
+      // },
     },
     {
       label: "JSON Path",

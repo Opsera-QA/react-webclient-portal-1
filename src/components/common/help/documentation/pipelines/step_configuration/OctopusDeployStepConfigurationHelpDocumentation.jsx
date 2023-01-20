@@ -12,11 +12,11 @@ function OctopusDeployStepConfigurationHelpDocumentation() {
   const getHelpDocumentation = () => {
     return (
       <div>
-        <div className={"mb-2 ml-2"}>Octopus has a wide range of functionality which can be utilized using the Octopus Deploy pipeline step. To view in depth documentation on Octopus Deployment, including Tool Registry and Pipeline setup, view the <b><a href="https://opsera.atlassian.net/l/c/b1VftgBW" target="_blank" rel="noreferrer">Octopus Deployment Help Documentation</a></b> .
+        <div className={"ml-2 mb-2"}>Octopus has a wide range of functionality which can be utilized using the Octopus Deploy pipeline step. To view in depth documentation on Octopus Deployment, including Tool Registry and Pipeline setup, view the <b><a href="https://docs.opsera.io/octopus-deployment" target="_blank" rel="noreferrer">Octopus Deployment Help Documentation</a></b> .
         </div>
         <div className={"ml-4"}>
           <ol>
-            <li>Once the initial Step Setup is configured with the Octopus Tool, set the following values:
+            <li>Once the initial Step Setup is configured with the Octopus tool, set the following values:
               <ul style={{listStyleType: "none"}}>
                 <li><b>Octopus Tool ID</b> - Select a configured Octopus Tool from Tool Registry. Confirm configuration in Connections is successful before proceeding with tool.</li>
                 <li><b>Space Name</b> - Choose the Space Name, found in Octopus portal.</li>

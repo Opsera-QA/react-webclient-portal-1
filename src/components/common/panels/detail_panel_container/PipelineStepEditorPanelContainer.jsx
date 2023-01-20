@@ -17,6 +17,7 @@ function PipelineStepEditorPanelContainer(
     isStrict,
     disableSaveButton,
     showIncompleteDataMessage,
+    showSuccessToasts,
   }) {
   const getRequiredFieldsMessage = () => {
     if (showRequiredFieldsMessage !== false) {
@@ -33,20 +34,19 @@ function PipelineStepEditorPanelContainer(
   }
 
   return (
-    <Form className="scroll-y hide-x-overflow full-height">
-      <div>
-        <div>{children}</div>
-        <PipelineStepConfigurationButtonContainer
-          showIncompleteDataMessage={showIncompleteDataMessage}
-          persistRecord={persistRecord}
-          recordDto={recordDto}
-          handleClose={handleClose}
-          isStrict={isStrict}
-          disableSaveButton={disableSaveButton}
-        />
-        {getRequiredFieldsMessage()}
-      </div>
-    </Form>
+    <div>
+      <div>{children}</div>
+      <PipelineStepConfigurationButtonContainer
+        showIncompleteDataMessage={showIncompleteDataMessage}
+        persistRecord={persistRecord}
+        recordDto={recordDto}
+        handleClose={handleClose}
+        isStrict={isStrict}
+        disableSaveButton={disableSaveButton}
+        showSuccessToasts={showSuccessToasts}
+      />
+      {getRequiredFieldsMessage()}
+    </div>
   );
 }
 
@@ -61,6 +61,7 @@ PipelineStepEditorPanelContainer.propTypes = {
   isStrict: PropTypes.bool,
   disableSaveButton: PropTypes.bool,
   showIncompleteDataMessage: PropTypes.bool,
+  showSuccessToasts: PropTypes.bool,
 };
 
 export default PipelineStepEditorPanelContainer;

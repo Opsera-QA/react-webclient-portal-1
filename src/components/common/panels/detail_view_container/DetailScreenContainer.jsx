@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
-import TitleBar from "components/common/fields/TitleBar";
+import ScreenContainerTitleBar from "components/common/fields/ScreenContainerTitleBar";
 import {getBreadcrumb, getParentBreadcrumb} from "components/common/navigation/trails";
 import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
 import {meetsRequirements} from "components/common/helpers/role-helpers";
@@ -39,15 +39,15 @@ function DetailScreenContainer(
 
     if (navigationTabContainer) {
       return (
-        <div className="mb-3">
+        <div className={"mb-2"}>
           {navigationTabContainer}
         </div>
       );
     }
 
     return (
-      <div className="mb-3">
-        <div className="sub-navigation-block" />
+      <div className={"mb-2"}>
+        <div className={"sub-navigation-block"} />
       </div>
     );
   };
@@ -55,10 +55,10 @@ function DetailScreenContainer(
   const getTitleBar = () => {
     const activeField = dataObject?.getActiveField();
     return (
-      <TitleBar
+      <ScreenContainerTitleBar
         isLoading={isLoading}
         parentBreadcrumb={parentBreadcrumb}
-        titleIcon={breadcrumb?.icon}
+        titleIcon={breadcrumb?.dynamicIconFunction ? breadcrumb?.dynamicIconFunction(dataObject) : breadcrumb?.icon}
         title={dataObject?.getDetailViewTitle()}
         inactive={activeField ? dataObject?.getData(activeField) === false : false}
         titleActionBar={titleActionBar}
@@ -155,14 +155,16 @@ function DetailScreenContainer(
   }
 
   return (
-    <div className="max-content-width ml-2 max-content-height scroll-y hide-x-overflow">
+    <div className={"max-content-width"}>
       {getTopNavigation()}
       <div
-        className={"content-container content-card-1"}
+        className={"content-container content-card-1 mb-2"}
         style={{ minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT}}
       >
-        <div className="px-2 content-block-header title-text-header-1">
-          {getTitleBar()}
+        <div className={"pl-2 content-block-header title-text-header-1 d-flex"}>
+          <div className={"my-auto w-100"}>
+            {getTitleBar()}
+          </div>
         </div>
         <div
           style={{ minHeight: getBodyHeight()}}
@@ -170,7 +172,6 @@ function DetailScreenContainer(
           {getBody()}
         </div>
         {getAccessBasedField()}
-        <div className="content-block-footer"/>
       </div>
     </div>
   );
