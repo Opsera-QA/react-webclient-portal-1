@@ -1,36 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
+import {faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import ActivatePolicyButton
-  from "components/settings/organization_settings/policies/cards/inactive/ActivatePolicyButton";
-import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
-import useGetNewPolicyModel from "hooks/settings/organization_settings/policies/useGetNewPolicyModel";
-import PolicyEditorPanelBase from "components/settings/organization_settings/policies/details/PolicyEditorPanelBase";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import CancelButton from "components/common/buttons/CancelButton";
+import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 
-export default function PipelineStepTagWarningOverlay({ policyName }) {
-  const {
-    policyModel,
-    setPolicyModel,
-  } = useGetNewPolicyModel();
-  policyModel?.setData("name", policyName);
+export default function PipelineStepTagWarningOverlay(
+  {
+    stepConfigurationModel,
+    setStepConfigurationModel,
+    savePipelineStepConfiguration,
+  }) {
+  const field = stepConfigurationModel?.getFieldById("tags");
   const {
     toastContext,
   } = useComponentStateReference();
-
-  const getFormattedRoleLabel = () => {
-    const label = DataParsingHelper.parseString(policyConstants.getPolicyNameLabel(policyName));
-
-    if (label) {
-      return (
-        <b>{label}</b>
-      );
-    }
-  };
 
   const closeOverlayFunction = () => {
     toastContext.clearOverlayPanel();
@@ -40,8 +27,8 @@ export default function PipelineStepTagWarningOverlay({ policyName }) {
     <ConfirmationOverlay
       closePanel={closeOverlayFunction}
       showPanel={true}
-      titleText={`Activate Policy?`}
-      titleIcon={faQuestionCircle}
+      titleText={`Pipeline Step Tag Warning`}
+      titleIcon={faTriangleExclamation}
       showToasts={true}
       showCloseButton={false}
     >
@@ -49,15 +36,17 @@ export default function PipelineStepTagWarningOverlay({ policyName }) {
         hideCloseButton={true}
       >
         <div className={"mx-3 mb-3 mt-2"}>
-          <div>Are you sure you would like to activate the {getFormattedRoleLabel()} Policy?</div>
-          <PolicyEditorPanelBase
-            policyModel={policyModel}
-            setPolicyModel={setPolicyModel}
-          />
+          <div>{field?.formText}</div>
           <ButtonContainerBase>
-            <ActivatePolicyButton
-              policyModel={policyModel}
-              closeOverlayFunction={closeOverlayFunction}
+            <CancelButton
+              className={"ml-2"}
+              cancelFunction={closeOverlayFunction}
+              size={"sm"}
+            />
+            <VanityButtonBase
+              onClickFunction={savePipelineStepConfiguration}
+              className={"ml-2"}
+              normalText={"Skip"}
             />
           </ButtonContainerBase>
         </div>
@@ -67,5 +56,7 @@ export default function PipelineStepTagWarningOverlay({ policyName }) {
 }
 
 PipelineStepTagWarningOverlay.propTypes = {
-  policyName: PropTypes.string,
+  stepConfigurationModel: PropTypes.object,
+  setStepConfigurationModel: PropTypes.func,
+  savePipelineStepConfiguration: PropTypes.func,
 };
