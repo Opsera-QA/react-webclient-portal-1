@@ -142,8 +142,8 @@
 .metric-chart-container {
     margin: 0 auto;
     /*border: 1px solid #E6E5E3;*/
-    border-radius: .5rem;
-    /*overflow-x: hidden;*/
+    border-radius: 1rem;
+    overflow-x: hidden;
     /*box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);*/
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
 }
@@ -154,17 +154,15 @@
     background-color: #00a8e8;
     color: #fff;
     font-size: 1.4em;
-    height: 48px;
-    max-height: 48px;
-    border-top-left-radius: .5rem;
-    border-top-right-radius: .5rem;
+    /*border-top-left-radius: .5rem;*/
+    /*border-top-right-radius: .5rem;*/
 }
 
 .metric-input-container-header {
-    border-top-left-radius: .5rem;
-    border-top-right-radius: .5rem;
-    height: 28px;
-    max-height: 28px;
+    /*border-top-left-radius: .5rem;*/
+    /*border-top-right-radius: .5rem;*/
+    /*height: 28px;*/
+    /*max-height: 28px;*/
 }
 
 .metric-tab-tree .nav-link.active,
