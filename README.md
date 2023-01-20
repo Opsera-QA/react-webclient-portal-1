@@ -5,6 +5,17 @@ This project is a ReactJS SPA bootstrapped with [Create React App](https://githu
 [React FontAwesome](https://www.npmjs.com/package/react-fontawesome).  This project is designed to be the customer facing portal (client) 
 for the OpsERA platform
 
+---
+*Legacy Library Install Issue:*
+
+If you run into a problem performing npm install on the project, you will need to use the syntax:
+
+`npm install --legacy-peer-deps`
+
+It is also advised that you remove your package-lock.json file that's local before running this command.  This is due to 
+a version incompatibility with the latest NPM verions and some older libraries in use in this project.
+
+---
 
 ## Configuration Variables:
 This React App uses [dotenv](https://www.npmjs.com/package/dotenv) natively, although it's a paired down instance.  Any Environment variables 
