@@ -11,6 +11,7 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
+import {toolIdentifierConstants} from "../../../../../admin/tools/identifiers/toolIdentifier.constants";
 
 function AzureDevopsToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -56,7 +57,7 @@ function AzureDevopsToolConfiguration({ toolData }) {
       setModel={setAzureDevOpsConfigurationModel}
       persistRecord={saveAzureDevopsToolConfiguration}
       toolData={toolData}
-      toolConnectionCheckName={"azure"}
+      toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS}
     >
       <Row>
         <Col sm={12}>
