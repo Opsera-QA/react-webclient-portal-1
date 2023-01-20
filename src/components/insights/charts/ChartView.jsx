@@ -1139,7 +1139,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
 
       // Junit KPIs
-      case "junit-test-results":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.JUNIT_TEST_RESULTS:
         return (
           <Col md={12} className="p-2">
             <JunitTestResultsTable
