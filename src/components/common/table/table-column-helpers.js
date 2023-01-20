@@ -12,6 +12,7 @@ import {
   faTimesCircle,
   faTrash,
 } from "@fortawesome/pro-light-svg-icons";
+import { hoursToMinutes } from "date-fns";
 import { faBitbucket, faGithub, faGitlab, faJira, faSlack } from "@fortawesome/free-brands-svg-icons";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import WarningIcon from "../../common/icons/table/WarningIcon";
@@ -90,7 +91,7 @@ export const getTableHourDurationTextColumn = (field, className) => {
     accessor: getCustomTableAccessor(field),
     class: className ? className : undefined,
     Cell: function parseText(row) {
-      return getTimeDisplay(row?.value / 60);
+      return getTimeDisplay(hoursToMinutes(row?.value)); 
     }
   };
 };
