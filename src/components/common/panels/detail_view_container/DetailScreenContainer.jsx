@@ -9,7 +9,7 @@ import {meetsRequirements} from "components/common/helpers/role-helpers";
 import AccessRoleLevelField from "components/common/fields/access/AccessRoleLevelField";
 import ScreenContainerBodyLoadingDialog
   from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
-import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
+import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
 
 function DetailScreenContainer(
   {
@@ -31,10 +31,11 @@ function DetailScreenContainer(
   }) {
   const [breadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const [parentBreadcrumb] = useState(getParentBreadcrumb(breadcrumbDestination));
+  const activeField = dataObject?.getActiveField();
 
   const getTopNavigation = () => {
     if (showBreadcrumbTrail) {
-      return (<BreadcrumbTrail destination={breadcrumbDestination} />);
+      return (<BreadcrumbTrail destination={breadcrumbDestination}/>);
     }
 
     if (navigationTabContainer) {
@@ -47,31 +48,15 @@ function DetailScreenContainer(
 
     return (
       <div className={"mb-2"}>
-        <div className={"sub-navigation-block"} />
+        <div className={"sub-navigation-block"}/>
       </div>
-    );
-  };
-
-  const getTitleBar = () => {
-    const activeField = dataObject?.getActiveField();
-    return (
-      <ScreenContainerTitleBar
-        isLoading={isLoading}
-        parentBreadcrumb={parentBreadcrumb}
-        titleIcon={breadcrumb?.dynamicIconFunction ? breadcrumb?.dynamicIconFunction(dataObject) : breadcrumb?.icon}
-        title={dataObject?.getDetailViewTitle()}
-        inactive={activeField ? dataObject?.getData(activeField) === false : false}
-        titleActionBar={titleActionBar}
-        helpComponent={helpComponent}
-        isBeta={isBeta}
-      />
     );
   };
 
   const getBody = () => {
     if (isLoading) {
       return (
-        <ScreenContainerBodyLoadingDialog />
+        <ScreenContainerBodyLoadingDialog/>
       );
     }
 
@@ -90,7 +75,7 @@ function DetailScreenContainer(
       return <div className="mb-1">{actionBar}</div>;
     }
 
-    return <div className="py-2" />;
+    return <div className="py-2"/>;
   };
 
   const getAccessBasedField = () => {
@@ -158,16 +143,27 @@ function DetailScreenContainer(
     <div className={"max-content-width"}>
       {getTopNavigation()}
       <div
-        className={"content-container content-card-1 mb-2"}
-        style={{ minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT}}
+        className={"screen-container content-container content-card-1"}
+        style={{
+          minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT,
+        }}
       >
-        <div className={"pl-2 content-block-header title-text-header-1 d-flex"}>
+        <div className={"px-3 py-2 content-block-header title-text-header-1 d-flex"}>
           <div className={"my-auto w-100"}>
-            {getTitleBar()}
+            <ScreenContainerTitleBar
+              isLoading={isLoading}
+              parentBreadcrumb={parentBreadcrumb}
+              titleIcon={breadcrumb?.dynamicIconFunction ? breadcrumb?.dynamicIconFunction(dataObject) : breadcrumb?.icon}
+              title={dataObject?.getDetailViewTitle()}
+              inactive={activeField ? dataObject?.getData(activeField) === false : false}
+              titleActionBar={titleActionBar}
+              helpComponent={helpComponent}
+              isBeta={isBeta}
+            />
           </div>
         </div>
         <div
-          style={{ minHeight: getBodyHeight()}}
+          style={{minHeight: getBodyHeight()}}
         >
           {getBody()}
         </div>
