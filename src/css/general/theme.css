@@ -335,7 +335,7 @@ button.bg-primary:focus {
 }
 
 .nav-pills .nav-link {
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
 }
 
 .list-group-item-primary {
@@ -994,7 +994,6 @@ a.nav-link {
 .content-card-1 > .content-block-header {
     background-color: #3D3B36;
     color: #fef7fd;
-    min-height: 49px;
 }
 
 .content-block-header-inverse {
@@ -1378,7 +1377,7 @@ div.data-blocks-ellipses {
 
 /* Filter Container Styling */
 .filter-container, .screen-container {
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     overflow-x: hidden;
     letter-spacing: .01rem;
 }
@@ -1535,6 +1534,10 @@ div.data-blocks-ellipses {
 /* Pipeline Summary Card styling */
 .pipeline-summary-card .card-footer {
     padding: 5px;
+}
+
+.pipeline-task-message {
+    background-color: #f2f4f8;
 }
 
 /* End Pipeline Summary Card styling */
