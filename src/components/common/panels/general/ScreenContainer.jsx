@@ -11,6 +11,7 @@ import ScreenContainerBodyLoadingDialog
   from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ScreenContainer(
   {
@@ -27,9 +28,14 @@ function ScreenContainer(
     helpComponent,
     bodyClassName,
     auditLogType,
+    className,
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const toastContext = useContext(DialogToastContext);
+  const {
+    isOpseraAdministrator,
+    isFreeTrial
+  } = useComponentStateReference();
 
   useEffect(() => {
     toastContext.removeInlineMessage();
@@ -51,11 +57,13 @@ function ScreenContainer(
       );
     }
 
-    return (
-      <div className={"mb-2"}>
-        <div className={"sub-navigation-block"} />
-      </div>
-    );
+    if (isFreeTrial !== true || isOpseraAdministrator === true) {
+      return (
+        <div className="mb-2">
+          <div className="sub-navigation-block" />
+        </div>
+      );
+    }
   };
 
   const getPageDescription = () => {
@@ -142,14 +150,16 @@ function ScreenContainer(
   }
 
   return (
-    <div className={"max-content-width max-content-height scroll-y hide-x-overflow"}>
-      {getTopNavigation()}
-      <div
-        className={"content-container content-card-1"}
-        style={{ minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT}}
-      >
-        <div className={"pl-2 content-block-header title-text-header-1 d-flex"}>
-          <div className={"my-auto w-100"}>
+    <div className={className}>
+      <div className={"max-content-width max-content-height scroll-y hide-x-overflow"}>
+        {getTopNavigation()}
+        <div
+          className={"screen-container content-container content-card-1"}
+          style={{
+            minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT,
+        }}
+        >
+          <div className={"px-3 py-2 content-block-header title-text-header-1"}>
             <ScreenContainerTitleBar
               titleIcon={breadcrumb?.icon}
               title={breadcrumb?.title}
@@ -160,13 +170,13 @@ function ScreenContainer(
               auditLogType={auditLogType}
             />
           </div>
+          <div
+            style={{ minHeight: getBodyHeight()}}
+          >
+            {getBody()}
+          </div>
+          {getRoleRequirementField()}
         </div>
-        <div
-          style={{ minHeight: getBodyHeight()}}
-        >
-          {getBody()}
-        </div>
-        {getRoleRequirementField()}
       </div>
     </div>
   );
@@ -186,6 +196,7 @@ ScreenContainer.propTypes = {
   helpComponent: PropTypes.object,
   bodyClassName: PropTypes.string,
   auditLogType: PropTypes.string,
+  className: PropTypes.string,
 };
 
 ScreenContainer.defaultProps = {
