@@ -31,6 +31,9 @@ function KpiIdentifierSummaryPanel({ kpiData, setActiveTab }) {
           <BooleanField dataObject={kpiData} fieldName={"policySupport"} />
         </Col>
         <Col lg={6}>
+          <BooleanField dataObject={kpiData} fieldName={"dashboardNotificationsEnabled"} />
+        </Col>
+        <Col lg={6}>
           <SmartIdField model={kpiData} fieldName={"_id"} />
         </Col>
         <Col lg={6}>
