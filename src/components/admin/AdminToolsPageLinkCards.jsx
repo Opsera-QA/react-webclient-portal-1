@@ -13,14 +13,19 @@ import LdapOrganizationManagementPageLinkCard
 import LdapCustomerOnboardingPageLinkCard
   from "components/admin/accounts/ldap/customer_onboard/LdapCustomerOnboardingPageLinkCard";
 import PipelineTemplateManagementPageLinkCard
-  from "components/admin/template_editor/PipelineTemplateManagementPageLinkCard";
+  from "components/admin/pipeline_templates/PipelineTemplateManagementPageLinkCard";
 import ToolManagementPageLinkCard from "components/admin/tools/ToolManagementPageLinkCard";
 import CustomEnvironmentVariableManagementPageLinkCard
   from "components/admin/environment_variables/CustomEnvironmentVariableManagementPageLinkCard";
+import TaskTemplateManagementPageLinkCard from "components/admin/task_templates/TaskTemplateManagementPageLinkCard";
+import PlatformSystemParameterManagementPageLinkCard
+  from "components/admin/system_parameters/PlatformSystemParameterManagementPageLinkCard";
+import PlatformSettingsManagementPageLinkCard
+  from "components/admin/platform_settings/PlatformSettingsManagementPageLinkCard";
 
 function AdminToolsPageLinkCards({accessRoleData}) {
   return (
-    <div>
+    <div className={"mx-2"}>
       <ApiConnectionDemoPageLinkCard
         accessRoleData={accessRoleData}
       />
@@ -48,6 +53,9 @@ function AdminToolsPageLinkCards({accessRoleData}) {
       <PipelineTemplateManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
+      <PlatformSettingsManagementPageLinkCard />
+      <PlatformSystemParameterManagementPageLinkCard />
+      <TaskTemplateManagementPageLinkCard />
       <ToolManagementPageLinkCard
         accessRoleData={accessRoleData}
       />

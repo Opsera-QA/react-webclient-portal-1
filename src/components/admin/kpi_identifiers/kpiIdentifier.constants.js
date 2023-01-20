@@ -11,6 +11,10 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   AUTOMATED_TEST_RESULTS: "automated-test-results",
   AUTOMATION_PERCENTAGE: "automation-percentage",
 
+  //APIGEE
+  APIGEE_REPORT: "apigee-report",
+  APIGEE_SUMMARY: "apigee-summary",
+
   // Bitbucket
   BITBUCKET_COMMITS_BY_AUTHOR: "bitbucket-commits-by-author",
   BITBUCKET_MERGE_REQUESTS_BY_MAXIMUM_TIME: "bitbucket-merge-request-by-maximum-time",
@@ -49,6 +53,10 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   GITLAB_RECENT_MERGE_REQUESTS: "gitlab-recent-merge-requests",
   GITLAB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW: "gitlab-time-taken-to-complete-merge-request-review",
   GITLAB_TOTAL_COMMITS_BY_PROJECT: "gitlab-total-commits-by-project",
+  GITLAB_DEPLOYMENT_FREQUENCY: "gitlab-deployment-frequency",
+  GITLAB_LEAD_TIME:"gitlab-lead-time",
+  GITLAB_PIPELINE_STATISTICS:"gitlab-pipeline-statistics",
+  GITLAB_MERGE_STATISTICS:"gitlab-merge-requests-statistics",
 
   // Jenkins
   JENKINS_BUILD_DURATION: "jenkins-build-duration",
@@ -68,6 +76,8 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   JIRA_SPRINT_BURNDOWN: "jira-sprint-burndown",
   JIRA_TICKETS_ASSIGNED_BY_USER: "jira-tickets-assigned-by-user",
   JIRA_VELOCITY_REPORT: "jira-velocity-report",
+  JIRA_MEAN_TIME_TO_RESOLUTION:"jira-mean-time-to-resolution",
+  JIRA_CHANGE_FAILURE_RATE:"jira-change-failure-rate",
 
   // JMeter
   JMETER_CONNECT_TIME: "jmeter-connect-time",
@@ -102,6 +112,9 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   SALESFORCE_DURATION_BY_STAGE: "salesforce-duration-by-stage",
   SDLC_DURATION_STATISTICS: "sdlc-duration-statistics",
 
+  //Quick Deploy
+  QUICK_DEPLOY_STATISTICS: "quick-deploy-statistics",
+
   // Selenium
   SELENIUM_TEST_RESULTS: "selenium-test-results",
   SELENIUM_TEST_SUMMARY_PERCENTAGES: "selenium-test-summary-percentages",
@@ -115,6 +128,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   SALESFORCE_MANUAL_TEST: "sfdc-manual-test",
   SALESFORCE_PROFILE_MIGRATIONS: "sfdc-profile-migrations",
   SALESFORCE_UNIT_TESTING: "sfdc-unit-testing",
+  SALESFORCE_COMPONENTS_CHART :  "salesforce-components-chart",
 
   // Sonar
   SONAR_BUGS: "sonar-bugs",
@@ -142,4 +156,11 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
 
    // GitScrapper
    GIT_SCRAPER_METRICS: "git-scraper",
+
+  //Boomi
+  BOOMI_PIPELINE_EXECUTIONS:"boomi-pipeline-executions",
+
+  //DORA
+  DORA_JIRA_GITLAB_ROLLED_UP:"dora-jira-gitlab-rolled-up",
+
 };

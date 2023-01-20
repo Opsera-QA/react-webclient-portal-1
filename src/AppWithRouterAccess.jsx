@@ -1,32 +1,46 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, {useState, useRef, useEffect} from "react";
+import { Route, useHistory } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/status_notifications/loading";
-import Navbar from "./Navbar";
-import ToastContextProvider from "./contexts/DialogToastContext";
-import { axiosApiService } from "api/apiService";
-
+import AppRoutes from "routes/AppRoutes";
+import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
+import { generateUUID } from "components/common/helpers/string-helpers";
+import FreeTrialAppRoutes from "FreeTrialAppRoutes";
+import LoginForm from "components/login/LoginForm";
+import Logout from "components/login/Logout";
+import OpseraFooter from "components/footer/OpseraFooter";
+import useLocationReference from "hooks/useLocationReference";
+import useCancelTokenStateReference from "hooks/useCancelTokenStateReference";
+import userActions from "components/user/user-actions";
+import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
 //Okta Libraries
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
-import { Security } from "@okta/okta-react";
-import AppRoutes from "./AppRoutes";
-import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
-import {generateUUID} from "components/common/helpers/string-helpers";
+import { LoginCallback, Security } from "@okta/okta-react";
+
+const isFreeTrial = false;
 
 const AppWithRouterAccess = () => {
-  const [hideSideBar, setHideSideBar] = useState(false);
   const [loading, setLoading] = useState(false);
+  const authStateLoadingUser = useRef(false);
   const [error, setError] = useState(null);
   const [authenticatedState, setAuthenticatedState] = useState(false);
-  const [isPublicPathState, setIsPublicPathState] = useState(false);
-  const [data, setData] = useState(null);
-
+  const [userData, setUserData] = useState(null);
   const history = useHistory();
+  const { isPublicPathState } = useLocationReference();
+  const { cancelTokenSource } = useCancelTokenStateReference();
 
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
     history.replace(toRelativeUrl(originalUri ? originalUri : "/", window.location.origin));
   };
+
+  useEffect(() => {
+    // console.log("app with router access starting up");
+    //
+    // return () => {
+    //   console.log("app with router access return");
+    // };
+  }, []);
 
   const OKTA_CONFIG = {
     issuer: process.env.REACT_APP_OKTA_ISSUER,
@@ -67,81 +81,56 @@ const AppWithRouterAccess = () => {
   });
 
 
-  authClient.authStateManager.subscribe(async authState => {
+  authClient?.authStateManager?.subscribe(async authState => {
     //console.info("Auth State manager subscription event: ", authState);
     setAuthenticatedState(authState.isAuthenticated);
 
     if (!authState.isAuthenticated) {
-      setHideSideBar(true);
-      setData(null);
-
-      if (isPublicPath(history.location.pathname)) {
-        console.info("Public path identified");
-        setIsPublicPathState(true);
-      }
-
+      setUserData(null);
       return;
     }
 
-    if (authState.isAuthenticated && !data && !error && !loading) {
-      await setLoading(true);
-      await loadUsersData(authState.accessToken["accessToken"],loading);
+    if (authState.isAuthenticated && !userData && !error && authStateLoadingUser.current !== true) {
+      authStateLoadingUser.current = true;
+      await loadUsersData(authState.accessToken["accessToken"]);
+      authStateLoadingUser.current = false;
     }
-
   });
 
-  if (!authClient.isLoginRedirect()) {
+  if (!authClient?.isLoginRedirect()) {
     // Trigger an initial authState change event when the app startup
     authClient.authStateManager.updateAuthState();
   }
 
-  useEffect(() => {
-    enableSideBar(history.location.pathname);
-
-  }, [authenticatedState, history.location.pathname]);
-
-  // TODO: We need to put this in an actions file and wire up cancel token
-  const loadUsersData = async (token, loading) => {
-    if (loading) { return; }
-
+  const loadUsersData = async (token) => {
     try {
-      let apiUrl = "/users";
-      const response = await axiosApiService(token).get(apiUrl, {});
-      setData(response.data);
+      setLoading(true);
+      const response = await userActions.getLoggedInUser(
+        token,
+        cancelTokenSource,
+      );
+      setUserData(response?.data);
     } catch (error) {
-      console.error(error);
-      setError(error);
+      //console.log(error.response.data); //Forbidden
+      //console.log(error.response.status); //403
+      if (error.response && error.response.status === 403) {
+        //this means user doesn't have access so clearing sessiong and logging user out
+        let errorMsg = "Access denied when trying to retrieve user details.  This could indicate an expired or revoked token.  Please log back in before proceeding.";
+        console.error(errorMsg + "Service Response:" + error.response.data);
+        history.push("/logout");
+        setError(errorMsg);
+      } else {
+        console.error(error);
+        setError(error);
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  const isPublicPath = (path) => {
-    return (
-      path === "/login" ||
-      path === "/signup" ||
-      path === "/registration" ||
-      path === "/trial/registration" ||
-      path.includes("/account/registration") ||
-      path.includes("/signup/awsmarketplace")
-    );
-  };
-
-  const enableSideBar = (path) => {
-    if (isPublicPath(path)) {
-      setHideSideBar(true);
-    } else {
-      setHideSideBar(false);
-    }
-  };
-
   const refreshToken = async () => {
     const tokens = await authClient.tokenManager.getTokens();
-    await loadUsersData(tokens.accessToken.value, false);
-  };
-
-  const getNavBar = () => {
-    return (<Navbar hideAuthComponents={hideSideBar} userData={data} />);
+    await loadUsersData(tokens?.accessToken?.accessToken);
   };
 
   const getError = () => {
@@ -161,28 +150,60 @@ const AppWithRouterAccess = () => {
     }
   };
 
+  const onAuthResume = async () => {
+    history.push('/');
+  };
 
-  if (!data && loading && !error) {
+  const getRoutes = () => {
+    if (!authenticatedState && isPublicPathState !== true) {
+      return (
+        <div className={"w-100 px-3"}>
+          <div className={"d-flex flex-row"}>
+            <div className={"w-100"}>
+              <LoginForm authClient={authClient} />
+              <Route path='/implicit/callback' render={ (props) => <LoginCallback {...props} onAuthResume={ onAuthResume } /> } />
+              <Route path="/logout" exact component={Logout} />
+            </div>
+          </div>
+          <OpseraFooter />
+        </div>
+      );
+    }
+
+    const isOpseraAdministrator = SiteRoleHelper.isOpseraAdministrator(userData);
+
+    if (isFreeTrial === true && isOpseraAdministrator !== true) {
+      return (
+        <FreeTrialAppRoutes
+          authClient={authClient}
+        />
+      );
+    }
+
+    return (
+      <AppRoutes
+        authenticatedState={authenticatedState}
+        authClient={authClient}
+        userData={userData}
+      />
+    );
+  };
+
+  if (!userData && loading && !error) {
     return (<LoadingDialog />);
   }
 
   return (
     <Security oktaAuth={authClient} restoreOriginalUri={restoreOriginalUri}>
       {getError()}
-      <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
-        <ToastContextProvider navBar={getNavBar()}>
-
-          <AppRoutes
-            authenticatedState={authenticatedState}
-            authClient={authClient}
-            isPublicPathState={isPublicPathState}
-            OKTA_CONFIG={OKTA_CONFIG}
-            userData={data}
-            hideSideBar={hideSideBar}
-          />
-
-        </ToastContextProvider>
-      </AuthContextProvider>
+        <AuthContextProvider
+          userData={userData}
+          refreshToken={refreshToken}
+          authClient={authClient}
+          isAuthenticated={authenticatedState}
+        >
+          {getRoutes()}
+        </AuthContextProvider>
     </Security>
   );
 

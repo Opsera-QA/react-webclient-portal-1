@@ -181,8 +181,10 @@ function LdapCustomerOnboardEditorPanel() {
     return (
       <div>
         <div className="content-container content-card-1 max-content-width m-3">
-          <div className="pl-2 content-block-header title-text-header-1">
-            Organization
+          <div className={"pl-2 content-block-header title-text-header-1 d-flex"}>
+            <div className={"my-auto w-100"}>
+              Organization
+            </div>
           </div>
           <EditorPanelContainer
             disable={true}
@@ -236,7 +238,6 @@ function LdapCustomerOnboardEditorPanel() {
               </Col>
             </Row>
           </EditorPanelContainer>
-          <div className="content-block-footer"/>
         </div>
       </div>
     );
@@ -246,8 +247,10 @@ function LdapCustomerOnboardEditorPanel() {
     return (
       <div>
         <div className="content-container content-card-1 max-content-width m-3">
-          <div className="pl-2 content-block-header title-text-header-1">
-            Organization Account
+          <div className={"pl-2 content-block-header title-text-header-1 d-flex"}>
+            <div className={"my-auto w-100"}>
+              Organization Account
+            </div>
           </div>
           <EditorPanelContainer
             // createRecord={createOrganizationAccount}
@@ -344,7 +347,6 @@ function LdapCustomerOnboardEditorPanel() {
               </Col>
             </Row>
           </EditorPanelContainer>
-          <div className="content-block-footer"/>
         </div>
       </div>
     );
@@ -353,8 +355,10 @@ function LdapCustomerOnboardEditorPanel() {
   const getUsersInput = () => {
     return (
       <div className="content-container content-card-1 max-content-width m-3">
-        <div className="pl-2 content-block-header title-text-header-1">
-          User Accounts
+        <div className={"pl-2 content-block-header title-text-header-1 d-flex"}>
+          <div className={"my-auto w-100"}>
+            User Accounts
+          </div>
         </div>
         <div className="p-3">
           <Row>
@@ -363,7 +367,6 @@ function LdapCustomerOnboardEditorPanel() {
             </Col>
           </Row>
         </div>
-        <div className="content-block-footer"/>
       </div>
     );
   };
@@ -371,8 +374,10 @@ function LdapCustomerOnboardEditorPanel() {
   const getIdpAccountFields = () => {
     return (
       <div className="content-container content-card-1 max-content-width m-3">
-        <div className="pl-2 content-block-header title-text-header-1">
-          IDP Account
+        <div className={"pl-2 content-block-header title-text-header-1 d-flex"}>
+          <div className={"my-auto w-100"}>
+            IDP Account
+          </div>
         </div>
         <EditorPanelContainer
           recordDto={ldapIdpAccountDataDto}
@@ -412,7 +417,6 @@ function LdapCustomerOnboardEditorPanel() {
             </Col>
           </Row>
         </EditorPanelContainer>
-        <div className="content-block-footer"/>
       </div>
     );
   };

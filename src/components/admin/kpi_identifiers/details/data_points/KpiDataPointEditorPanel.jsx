@@ -13,39 +13,14 @@ import MetricDataPointStrategicCriteriaPanel
   from "components/common/inputs/metric/data_points/admin/strategic_criteria/MetricDataPointStrategicCriteriaPanel";
 import MetricDataPointVisibilityInput
   from "components/common/inputs/metric/data_points/visibility/MetricDataPointVisibilityInput";
+import DataPointAllowCustomMappingInput from "components/common/inputs/metric/data_points/custom_fields/DataPointAllowCustomMappingInput";
 
 function KpiDataPointEditorPanel({ dataPointModel, closeEditorPanel }) {
   const [kpiDataPointModel, setKpiDataPointModel] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async () => {
-    setIsLoading(true);
     setKpiDataPointModel(dataPointModel);
-    setIsLoading(false);
-  };
+  }, [dataPointModel]);
 
   if (kpiDataPointModel == null) {
     return <Loading size="sm" />;
@@ -55,7 +30,6 @@ function KpiDataPointEditorPanel({ dataPointModel, closeEditorPanel }) {
     <VanityEditorPanelContainer
       model={kpiDataPointModel}
       setModel={setKpiDataPointModel}
-      isLoading={isLoading}
       handleClose={closeEditorPanel}
     >
       <Row>
@@ -76,6 +50,13 @@ function KpiDataPointEditorPanel({ dataPointModel, closeEditorPanel }) {
         <Col lg={6}>
           <MetricDataPointTypeSelectInput
             fieldName={"type"}
+            model={kpiDataPointModel}
+            setModel={setKpiDataPointModel}
+          />
+        </Col>
+        <Col lg={12}>
+          <DataPointAllowCustomMappingInput
+            fieldName={"customFieldsMapping"}
             model={kpiDataPointModel}
             setModel={setKpiDataPointModel}
           />

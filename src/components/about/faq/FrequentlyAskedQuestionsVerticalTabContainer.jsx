@@ -5,7 +5,7 @@ import { faChartNetwork, faClipboardList, faDraftingCompass, faQuestion } from "
 import PipelinesFrequentlyAskedQuestions from "components/about/faq/PipelinesFrequentlyAskedQuestions";
 import InsightsFrequentlyAskedQuestions from "./InsightsFrequentlyAskedQuestions";
 import ToolRegistryFrequentlyAskedQuestions from "./ToolRegistryFrequentlyAskedQuestions";
-import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
 
 const FAQ_HEIGHT = `calc(${screenContainerHeights.SCREEN_CONTAINER_HEIGHT} - 72px)`;
@@ -69,7 +69,10 @@ function FrequentlyAskedQuestionsVerticalTabContainer() {
   const getCurrentView = () => {
     return (
       <div>
-        <div className={"mt-3 ml-4"}><h6>This page provides help with our most frequently asked questions. To view questions, expand a topic below. For more information, visit <b><a href="https://opsera.atlassian.net/l/c/GovpxW7m" target="_blank" rel="noreferrer">Opsera&rsquo;s Help Documentation</a></b>. Have a question? Contact <b><a id="mailto" href="mailto:support@opsera.io" target="_blank" rel="noreferrer">Opsera Support</a></b>.</h6></div>
+        <div className={"mt-3 ml-4"}>
+          <div><h6>This page provides help with our most frequently asked questions. To view questions, expand a topic below. For more information, visit <b><a href="https://docs.opsera.io/" target="_blank" rel="noreferrer">Opsera&rsquo;s Help Documentation</a>.</b></h6></div>
+          <div><h6>Have a question? Contact <b><a id="mailto" href="mailto:support@opsera.io" target="_blank" rel="noreferrer">Opsera Support</a></b>.</h6></div>
+        </div>
         {getCurrentScreen()}
       </div>
     );
