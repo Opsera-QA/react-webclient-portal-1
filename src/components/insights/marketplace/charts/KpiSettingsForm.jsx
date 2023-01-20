@@ -76,6 +76,7 @@ import DeleteDashboardMetricConfirmationPanel
   from "components/insights/marketplace/dashboards/metrics/delete/DeleteDashboardMetricConfirmationPanel";
 import DashboardMetricEditorPanelContainer
   from "components/common/panels/detail_panel_container/dashboard_metrics/DashboardMetricEditorPanelContainer";
+import { kpiIdentifierConstants } from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 
 // TODO: There are a handful of issues with this we need to address.
 function KpiSettingsForm({
@@ -271,7 +272,7 @@ function KpiSettingsForm({
     "gitlab-most-active-contributors",
     "gitlab-pending-merge-requests",
     "cypress-test-results",
-    "junit-test-results",
+    kpiIdentifierConstants.KPI_IDENTIFIERS.JUNIT_TEST_RESULTS,
     "xunit-test-results",
     "jmeter-hits",
     "jmeter-errors",
