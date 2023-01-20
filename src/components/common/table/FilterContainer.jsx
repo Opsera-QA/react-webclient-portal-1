@@ -3,43 +3,51 @@ import PropTypes from "prop-types";
 import FilterTitleBar from "components/common/table/FilterTitleBar";
 import ActiveFilterDisplayer from "components/common/filters/ActiveFilterDisplayer";
 import FilterBar from "components/common/filters/FilterBar";
-import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
+import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 const TITLE_BAR_HEIGHT = "46px";
 const screenContainerMargin = "30px";
 export const FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER = `calc(${screenContainerHeights.TABLE_MINIMUM_HEIGHT} - ${screenContainerMargin} - ${TITLE_BAR_HEIGHT})`;
 export const FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION = `calc(${FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER} - ${screenContainerHeights.PAGE_DESCRIPTION_HEIGHT})`;
 
-function FilterContainer({
-  filterDto,
-  setFilterDto,
-  titleIcon,
-  title,
-  dropdownFilters,
-  inlineFilters,
-  loadData,
-  isLoading,
-  isPolling,
-  body,
-  addRecordFunction,
-  supportSearch,
-  supportViewToggle,
-  className,
-  metadata,
-  exportButton,
-  supportClientSideSearching,
-  bodyClassName,
-  handleExportFunction,
-  handleImportFunction,
-  minimumHeight,
-  maximumHeight,
-  showRefreshButton,
-  disableNewRecordButton,
-  filterSelectionOverlayPanel,
-  hideActiveFilterDisplayer,
-  // TODO: Remove after filters are used everywhere
-  type,
-}) {
+function FilterContainer(
+  {
+    filterDto,
+    setFilterDto,
+    titleIcon,
+    title,
+    dropdownFilters,
+    inlineFilters,
+    loadData,
+    isLoading,
+    isPolling,
+    body,
+    addRecordFunction,
+    supportSearch,
+    supportViewToggle,
+    className,
+    metadata,
+    exportButton,
+    supportClientSideSearching,
+    bodyClassName,
+    handleExportFunction,
+    handleImportFunction,
+    minimumHeight,
+    maximumHeight,
+    showRefreshButton,
+    disableNewRecordButton,
+    filterSelectionOverlayPanel,
+    hideActiveFilterDisplayer,
+    bodyStyling,
+    hideXOverflow,
+    // TODO: Remove after filters are used everywhere
+    type,
+  }) {
+  const {
+    isFreeTrial,
+  } = useComponentStateReference();
+
   const getFilterBar = () => {
     return (
       <FilterBar
@@ -66,20 +74,24 @@ function FilterContainer({
   };
 
   const getContainerStylingObject = () => {
-    return {
+    return ({
       minHeight: minimumHeight,
       maxHeight: maximumHeight,
       overflowY: "hidden",
-    };
+    });
   };
 
   const getBodyStylingObject = () => {
-    return {
+    if (bodyStyling) {
+      return bodyStyling;
+    }
+
+    return ({
       minHeight: minimumHeight,
       maxHeight: maximumHeight,
       overflowY: "auto",
-      overflowX: "hidden",
-    };
+      overflowX: hideXOverflow !== false ? "hidden" : undefined,
+    });
   };
 
   const getActiveFilterDisplayer = () => {
@@ -95,9 +107,15 @@ function FilterContainer({
 
   return (
     <div className={className}>
-      <div className={"filter-container container-border"}>
-        <div className={"filter-title-bar w-100"}>
-          <div className={"px-2 d-flex content-block-header"}>
+      <div
+        className={"filter-container container-border"}
+      >
+        <div className={isFreeTrial === true ? "w-100" : "w-100 filter-title-bar"}>
+          <div className={
+            isFreeTrial === true
+              ? "d-flex filter-container-content-block-header"
+              : "px-2 d-flex content-block-header"
+          }>
             <FilterTitleBar
               isLoading={isLoading}
               isPolling={isPolling}
@@ -148,6 +166,8 @@ FilterContainer.propTypes = {
   loadingMessage: PropTypes.string,
   showRefreshButton: PropTypes.bool,
   disableNewRecordButton: PropTypes.bool,
+  bodyStyling: PropTypes.object,
+  hideXOverflow: PropTypes.bool,
   filterSelectionOverlayPanel: PropTypes.any,
   isPolling: PropTypes.bool,
   hideActiveFilterDisplayer: PropTypes.bool,
