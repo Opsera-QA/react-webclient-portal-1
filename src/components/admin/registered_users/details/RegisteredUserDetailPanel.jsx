@@ -46,7 +46,7 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
         return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
       case "ldap":
         return <LdapSettingsPanel userData={userData} ldapData={userData?.getData("ldap")} loadData={loadData} showSyncButton={true} />;
-      case "settings":
+      // case "settings":
       // return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
       default:
         return null;
