@@ -16,7 +16,6 @@ function ScreenContainerTitleBar(
     titleActionBar,
     helpComponent,
     isBeta,
-    auditLogType,
   }) {
   const {
     currentUrl,
@@ -30,7 +29,7 @@ function ScreenContainerTitleBar(
 
   const getRightSideItems = () => {
     return (
-      <div className="ml-auto d-flex mr-2">
+      <div className="ml-auto d-flex">
         {getInactiveText()}
         {titleActionBar}
         <CopyToClipboardIconBase
@@ -70,7 +69,6 @@ ScreenContainerTitleBar.propTypes = {
   isLoading: PropTypes.bool,
   helpComponent: PropTypes.object,
   isBeta: PropTypes.bool,
-  auditLogType: PropTypes.string,
 };
 
 export default ScreenContainerTitleBar;
