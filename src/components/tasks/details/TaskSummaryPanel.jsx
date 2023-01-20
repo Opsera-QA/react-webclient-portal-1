@@ -36,6 +36,7 @@ function TaskSummaryPanel(
     cancelTokenSource,
     getAccessToken,
     userData,
+    isFreeTrial,
   } = useComponentStateReference();
 
   const updateRecord = async (newDataModel) => {
@@ -126,6 +127,23 @@ function TaskSummaryPanel(
     }
   };
 
+  const getOwnerNameField = () => {
+    if (isFreeTrial !== true) {
+      return (
+        <Col md={6}>
+          <SsoUserField
+            fieldName={"owner"}
+            model={gitTasksData}
+          />
+        </Col>
+      );
+    }
+  };
+
+  if (gitTasksData == null) {
+    return null;
+  }
+
   return (
     <SummaryPanelContainer
       setActiveTab={setActiveTab}
@@ -135,12 +153,7 @@ function TaskSummaryPanel(
         <Col md={6}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"name"} />
         </Col>
-        <Col md={6}>
-          <SsoUserField
-            fieldName={"owner"}
-            model={gitTasksData}
-          />
-        </Col>
+        {getOwnerNameField()}
         <Col md={6}>
           <TaskStateField
             model={gitTasksData}
