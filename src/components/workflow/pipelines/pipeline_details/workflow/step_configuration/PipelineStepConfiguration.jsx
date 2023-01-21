@@ -18,7 +18,7 @@ import StepConfigurationTypeSelectInput from "./StepConfigurationTypeSelectInput
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineStepTagWarningOverlay
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepTagWarningOverlay";
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/tag_warning/PipelineStepTagWarningOverlay";
 
 function PipelineStepConfiguration(
   {
