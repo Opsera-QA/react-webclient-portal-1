@@ -1,7 +1,6 @@
 import React from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SelectionCardBase from "components/common/card/selection/SelectionCardBase";
-import {accountSettingsTrails} from "components/settings/accountSettings.trails";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 import PolicyActivationConfirmationOverlay
   from "components/settings/organization_settings/policies/cards/inactive/PolicyActivationConfirmationOverlay";
@@ -14,7 +13,7 @@ export default function InactivePipelineStepTagRequirementPolicyPageLinkCard() {
   const getBody = () => {
     return (
       <div>
-        <div className={"mb-2"}>The {policyConstants.POLICY_NAME_LABELS.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS} Policy is an optional Policy that Site Administrators can enable.</div>
+        <div className={"mb-2"}>The {policyConstants.POLICY_NAME_LABELS.PIPELINE_STEP_TAG_REQUIREMENT} Policy is an optional Policy that Site Administrators can enable.</div>
         <div className={"mb-2"}>By activating this Policy, you can restrict publishing pipelines to specific Site Roles.</div>
       </div>
     );
@@ -22,14 +21,14 @@ export default function InactivePipelineStepTagRequirementPolicyPageLinkCard() {
 
   const title = (
     <div className={"d-flex justify-content-between"}>
-      <div>{policyConstants.POLICY_NAME_LABELS.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS}</div>
+      <div>{policyConstants.POLICY_NAME_LABELS.PIPELINE_STEP_TAG_REQUIREMENT}</div>
     </div>
   );
 
   const launchActivationConfirmationOverlay = () => {
     toastContext.showOverlayPanel(
       <PolicyActivationConfirmationOverlay
-        policyName={policyConstants.POLICY_NAMES.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS}
+        policyName={policyConstants.POLICY_NAMES.PIPELINE_STEP_TAG_REQUIREMENT}
       />
     );
   };
