@@ -4,6 +4,8 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import {faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import useButtonState from "hooks/general/buttons/useButtonState";
+import useGetPolicyModelByName from "hooks/settings/organization_settings/policies/useGetPolicyModelByName";
+import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 
 export default function PipelineStepTagWarningSkipButton(
   {
@@ -19,6 +21,10 @@ export default function PipelineStepTagWarningSkipButton(
     buttonStateFunctions,
   }= useButtonState();
   const { toastContext, } = useComponentStateReference();
+  const {
+    policyModel,
+    isLoading,
+  } = useGetPolicyModelByName(policyConstants.POLICY_NAMES.PIPELINE_STEP_TAG_REQUIREMENT);
 
   const closeOverlayFunction = () => {
     toastContext.clearOverlayPanel();
@@ -40,6 +46,10 @@ export default function PipelineStepTagWarningSkipButton(
       setBusy(false);
     }
   };
+
+  if (isLoading === true || policyModel != null) {
+    return null;
+  }
 
   return (
     <VanityButtonBase
