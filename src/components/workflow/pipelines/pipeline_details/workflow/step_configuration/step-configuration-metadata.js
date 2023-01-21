@@ -24,7 +24,7 @@ const stepConfigurationMetadata = {
       formText: `
         Tags are used for log analysis and for generating dashboards and charts. 
         This is strongly recommend to be configured before running a Pipeline otherwise the analytics of previous runs will be incomplete. 
-        If you aren't sure what Tag value to use and no Tags are applied, Opsera will recommend something upon save."
+        If you aren't sure what Tag value to use and no Tags are applied, Opsera will recommend something upon save.
       `,
       noItemsWarning: true,
     },

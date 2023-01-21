@@ -58,3 +58,20 @@ pipelineHelper.getStepIndexFromPlan = (plan, stepId) => {
 
   return parsedPlan.findIndex((pipelineStep) => pipelineStep?._id === stepId);
 };
+
+pipelineHelper.getTagValueForStep = (step) => {
+  const parsedStep = DataParsingHelper.parseObject(step, {});
+  const parsedMongoDbId = DataParsingHelper.parseMongoDbId(parsedStep?._id);
+  const parsedName = DataParsingHelper.parseString(parsedStep?.name);
+
+  if (!parsedMongoDbId || !parsedName) {
+    return undefined;
+  }
+
+  let transformedName = parsedName.trim();
+  transformedName = transformedName.replaceAll(' ', '-');
+  transformedName = transformedName.replace(/[^A-Za-z0-9-.]/gi, '');
+  transformedName = transformedName.toLowerCase();
+
+  return `${transformedName}_${parsedMongoDbId}`;
+};
