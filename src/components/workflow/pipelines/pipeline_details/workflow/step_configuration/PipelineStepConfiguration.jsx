@@ -1,8 +1,6 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {faCog} from "@fortawesome/pro-light-svg-icons";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import axios from "axios";
 import Model from "core/data_model/model";
 import stepConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step-configuration-metadata";
@@ -17,13 +15,19 @@ import StepConfigurationTagsInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/StepConfigurationTagsInput";
 import IconBase from "components/common/icons/IconBase";
 import StepConfigurationTypeSelectInput from "./StepConfigurationTypeSelectInput";
-import {hasStringValue} from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineStepTagWarningOverlay
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepTagWarningOverlay";
 
-function PipelineStepConfiguration({plan, stepId, parentCallback, closeEditorPanel}) {
+function PipelineStepConfiguration(
+  {
+    plan,
+    stepId,
+    parentCallback,
+    closeEditorPanel,
+    step,
+  }) {
   const [stepConfigurationModel, setStepConfigurationModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [lockTool, setLockTool] = useState(false);
@@ -59,7 +63,8 @@ function PipelineStepConfiguration({plan, stepId, parentCallback, closeEditorPan
         type: step.type[0],
         tool_identifier: step.tool && step.tool.tool_identifier ? step.tool.tool_identifier : "",
         active: step.active === true,
-        tags: step.tags
+        tags: step.tags,
+        _id: step._id,
       };
 
       if (step?.tool?.tool_identifier?.length > 0) {
@@ -77,9 +82,9 @@ function PipelineStepConfiguration({plan, stepId, parentCallback, closeEditorPan
     }
   };
 
-  const savePipelineStepConfiguration = async () => {
+  const savePipelineStepConfiguration = async (model = stepConfigurationModel) => {
     const stepArrayIndex = pipelineHelpers.getStepIndexFromPlan(plan, stepId);
-    const stepConfigurationData = stepConfigurationModel.getPersistData();
+    const stepConfigurationData = model.getPersistData();
 
     if (stepArrayIndex >= 0 && plan[stepArrayIndex] !== undefined) {
       plan[stepArrayIndex].name = stepConfigurationData.name;
@@ -109,7 +114,7 @@ function PipelineStepConfiguration({plan, stepId, parentCallback, closeEditorPan
         />
       );
     } else {
-      return await savePipelineStepConfiguration();
+      return await savePipelineStepConfiguration(stepConfigurationModel);
     }
   };
 
@@ -168,6 +173,7 @@ PipelineStepConfiguration.propTypes = {
   stepId: PropTypes.string,
   parentCallback: PropTypes.func,
   closeEditorPanel: PropTypes.func,
+  step: PropTypes.object,
 };
 
 export default PipelineStepConfiguration;

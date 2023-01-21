@@ -68,7 +68,10 @@ pipelineHelper.getTagValueForStep = (step) => {
     return undefined;
   }
 
-  const transformedName = parsedName.replaceAll(" ", "-");
+  let transformedName = parsedName.trim();
+  transformedName = transformedName.replaceAll(' ', '-');
+  transformedName = transformedName.replace(/[^A-Za-z0-9-.]/gi, '');
+  transformedName = transformedName.toLowerCase();
 
-  return `${transformedName.toLowerCase()}_${parsedMongoDbId}`;
+  return `${transformedName}_${parsedMongoDbId}`;
 };
