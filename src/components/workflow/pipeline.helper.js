@@ -58,3 +58,17 @@ pipelineHelper.getStepIndexFromPlan = (plan, stepId) => {
 
   return parsedPlan.findIndex((pipelineStep) => pipelineStep?._id === stepId);
 };
+
+pipelineHelper.getTagValueForStep = (step) => {
+  const parsedStep = DataParsingHelper.parseObject(step, {});
+  const parsedMongoDbId = DataParsingHelper.parseMongoDbId(parsedStep?._id);
+  const parsedName = DataParsingHelper.parseString(parsedStep?.name);
+
+  if (!parsedMongoDbId || !parsedName) {
+    return undefined;
+  }
+
+  const transformedName = parsedName.replaceAll(" ", "-");
+
+  return `${transformedName.toLowerCase()}_${parsedMongoDbId}`;
+};
