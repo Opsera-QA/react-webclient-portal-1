@@ -202,8 +202,7 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
 
   const handleNextClick = async() => {
     const unitTestSteps = pipelineWizardModel?.getArrayData("unitTestSteps");
-    const unitTestStepsIds = unitTestSteps.map(({_id})=>({_id}));
-    const isUnitTestSelectedResponse = await sfdcPipelineActions.checkTestClassesCount(getAccessToken, cancelTokenSource, pipelineWizardModel, unitTestStepsIds);
+    const isUnitTestSelectedResponse = await sfdcPipelineActions.checkTestClassesCount(getAccessToken, cancelTokenSource, pipelineWizardModel, unitTestSteps);
     if(!isUnitTestSelectedResponse?.data) {
       toastContext.showSystemErrorToast("No Test Classes were selected, Please select test classes for above steps to proceed further.");
       return;
