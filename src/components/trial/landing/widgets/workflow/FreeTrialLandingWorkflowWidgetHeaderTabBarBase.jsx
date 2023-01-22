@@ -6,7 +6,7 @@ import HeaderNavigationBarItem from "components/header/navigation_bar/HeaderNavi
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import { pipelineHelper } from "components/workflow/pipeline.helper";
 import { taskHelper } from "components/tasks/task.helper";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
 import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 
 export const FREE_TRIAL_LANDING_WORKFLOW_WIDGET_HEADER_ITEMS = {

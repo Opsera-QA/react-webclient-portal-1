@@ -71,7 +71,7 @@ export default function PipelineStepTagWarningOverlay(
       >
         <div className={"mx-3 mb-3 mt-2"}>
           <div>{field?.formText}</div>
-          <div>{`If you aren't sure what Tag value to use and no Tags are applied, Opsera will apply a unique tag derived from the step upon save.`}</div>
+          <div>{`If you aren't sure what Tag value to use and no Tags are applied, Opsera will apply a unique tag derived from the step upon hitting Proceed.`}</div>
         </div>
       </OverlayPanelBodyContainer>
     </ConfirmationOverlay>

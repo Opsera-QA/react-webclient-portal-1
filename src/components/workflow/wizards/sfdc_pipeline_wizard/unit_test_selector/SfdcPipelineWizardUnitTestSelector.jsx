@@ -2,8 +2,8 @@ import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import { Button, Row, Col } from "react-bootstrap";
 import {
-  faStepBackward,
-  faStepForward,
+  faArrowLeft,
+  faArrowRight,
 } from "@fortawesome/pro-light-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -246,7 +246,7 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
               className="mr-2"
               onClick={() => { handleBackButtonClick(); }}
             >
-              <IconBase icon={faStepBackward} className={"mr-1"}/>
+              <IconBase icon={faArrowLeft} className={"mr-1"}/>
               Back
             </Button>
 
@@ -257,7 +257,7 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
                 handleNextClick();
               }}
             >
-              <IconBase icon={faStepForward} className={"mr-1"}/>
+              <IconBase icon={faArrowRight} className={"mr-1"}/>
               Next
             </Button>
 
