@@ -12,9 +12,18 @@ export default function PipelineStepTagRequirementPolicyPageLinkCard({ pipelineS
     );
   }
 
+  const getDescription = () => {
+    return (
+      <div>
+        Pipeline Step definitions of non-deploy types can no longer be saved without tags.
+      </div>
+    );
+  };
+
   return (
     <PolicyManagementPageLinkCardBase
       policy={pipelineStepTagRequirementPolicy}
+      description={getDescription()}
     />
   );
 }

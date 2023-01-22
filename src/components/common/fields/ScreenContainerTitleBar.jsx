@@ -30,7 +30,7 @@ function ScreenContainerTitleBar(
 
   const getRightSideItems = () => {
     return (
-      <div className="ml-auto d-flex mr-2">
+      <div className="ml-auto d-flex">
         {getInactiveText()}
         {titleActionBar}
         <CopyToClipboardIconBase
