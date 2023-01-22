@@ -19,6 +19,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineStepTagWarningOverlay
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/tag_warning/PipelineStepTagWarningOverlay";
+import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 
 function PipelineStepConfiguration(
   {
@@ -27,6 +28,7 @@ function PipelineStepConfiguration(
     parentCallback,
     closeEditorPanel,
     step,
+    pipelineId,
   }) {
   const [stepConfigurationModel, setStepConfigurationModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -37,6 +39,7 @@ function PipelineStepConfiguration(
     toastContext,
     getAccessToken,
   } = useComponentStateReference();
+  const pipelineActions = usePipelineActions();
 
   useEffect(() => {
     loadData().catch((error) => {
@@ -46,6 +49,7 @@ function PipelineStepConfiguration(
     });
   }, []);
 
+  // TODO: We should handle this better
   const loadData = async () => {
     try {
       setIsLoading(true);
@@ -82,6 +86,17 @@ function PipelineStepConfiguration(
     }
   };
 
+  const updatePipelineStepDefinition = async (model = stepConfigurationModel) => {
+    const stepConfigurationData = model.getPersistData();
+    await pipelineActions.updatePipelineStepDefinition(
+      pipelineId,
+      stepId,
+      stepConfigurationData,
+    );
+    closeEditorPanel();
+  };
+
+  // TODO: Remove after validation
   const savePipelineStepConfiguration = async (model = stepConfigurationModel) => {
     const stepArrayIndex = pipelineHelpers.getStepIndexFromPlan(plan, stepId);
     const stepConfigurationData = model.getPersistData();
@@ -110,11 +125,11 @@ function PipelineStepConfiguration(
         <PipelineStepTagWarningOverlay
           stepConfigurationModel={stepConfigurationModel}
           setStepConfigurationModel={setStepConfigurationModel}
-          savePipelineStepConfiguration={savePipelineStepConfiguration}
+          savePipelineStepConfiguration={updatePipelineStepDefinition}
         />
       );
     } else {
-      return await savePipelineStepConfiguration(stepConfigurationModel);
+      return await updatePipelineStepDefinition(stepConfigurationModel);
     }
   };
 
@@ -174,6 +189,7 @@ PipelineStepConfiguration.propTypes = {
   parentCallback: PropTypes.func,
   closeEditorPanel: PropTypes.func,
   step: PropTypes.object,
+  pipelineId: PropTypes.string,
 };
 
 export default PipelineStepConfiguration;

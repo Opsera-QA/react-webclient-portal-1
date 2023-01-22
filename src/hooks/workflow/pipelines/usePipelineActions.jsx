@@ -14,6 +14,18 @@ export default function usePipelineActions() {
     );
   };
 
+  pipelineActions.updatePipelineStepDefinition = async (
+    pipelineId,
+    pipelineStepId,
+    pipelineStepDefinition,
+  ) => {
+    const apiUrl = `/workflow/pipelines/${pipelineId}/steps/${pipelineStepId}`;
+    return await apiService.handleApiPutRequest(
+      apiUrl,
+      pipelineStepDefinition,
+    );
+  };
+
   pipelineActions.getPipelineStepActivityLog = async (
     pipelineId,
     pipelineStepId,

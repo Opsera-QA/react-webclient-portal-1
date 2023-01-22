@@ -100,6 +100,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
           step={editItem}
           stepId={editItem?.step_id}
           plan={pipeline?.workflow?.plan}
+          pipelineId={pipeline?._id}
           parentCallback={callbackConfigureStep}
           closeEditorPanel={handleCloseClick}
         />

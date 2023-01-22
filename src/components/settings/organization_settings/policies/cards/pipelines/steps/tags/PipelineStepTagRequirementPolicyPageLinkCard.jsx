@@ -15,7 +15,8 @@ export default function PipelineStepTagRequirementPolicyPageLinkCard({ pipelineS
   const getDescription = () => {
     return (
       <div>
-        Pipeline Step definitions of non-deploy types can no longer be saved without tags.
+        This Policy rule prevents new Pipeline Steps from being created without a tag for improving Opsera Insights functionality.
+        Please note: Deploy type Pipeline Steps have unique tag rules, so this rule will not restrict those.
       </div>
     );
   };
