@@ -7,7 +7,7 @@ import {
   faToolbox,
 } from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
-import ToolNameFieldDisplayer from "../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
+import ToolNameFieldDisplayer from "components/common/fields/inventory/name/ToolNameFieldDisplayer";
 
 export function UnitTestStepView({ item, stateColorClass, isSelected }) {
   return (
