@@ -1,14 +1,10 @@
 import React, { useContext, useState, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
-import { Button, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import {
-  faCheck,
-  faSpinner,
   faPlay,
-  faTimes,
-  faStepBackward,
-  faStepForward
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -126,7 +122,7 @@ const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }
               setView(1);
             }}
           >
-            <IconBase icon={faStepBackward} className={"mr-1"} />
+            <IconBase icon={faArrowLeft} className={"mr-1"} />
             Back
           </Button>
 
