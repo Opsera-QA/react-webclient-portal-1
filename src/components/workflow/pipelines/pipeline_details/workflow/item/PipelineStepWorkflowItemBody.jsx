@@ -18,6 +18,8 @@ import PipelineWorkflowStepIdField
   from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepIdField";
 import PipelineWorkflowStepToolIdentifierField
   from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepToolIdentifierField";
+import ParallelProcessorPipelineStepWorkflowItemBody
+  from "components/workflow/plan/step/parallel_processor/ParallelProcessorPipelineStepWorkflowItemBody";
 
 // TODO: Use the workflow item step field instead of hardcoding these for consistency,
 //  wire up fields based on the tool identifier (pull through metadata based on dynamic field type set)
@@ -93,6 +95,14 @@ export default function PipelineStepWorkflowItemBody(
       case toolIdentifierConstants.TOOL_IDENTIFIERS.CHILD_PIPELINE:
         return (
           <ChildPipelinePipelineStepWorkflowItemBody
+            toolIdentifier={toolIdentifier}
+            pipeline={pipeline}
+            step={step}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.PARALLEL_PROCESSOR:
+        return (
+          <ParallelProcessorPipelineStepWorkflowItemBody
             toolIdentifier={toolIdentifier}
             pipeline={pipeline}
             step={step}

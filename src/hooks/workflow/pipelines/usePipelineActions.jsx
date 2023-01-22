@@ -4,6 +4,15 @@ export default function usePipelineActions() {
   const apiService = useApiService();
   const pipelineActions = {};
 
+  pipelineActions.getPipelineNameById = async (
+    pipelineId,
+  ) => {
+    const apiUrl = `/workflow/pipelines/${pipelineId}/name`;
+    return await apiService.handleApiGetRequest(
+      apiUrl,
+    );
+  };
+
   pipelineActions.deletePipelineStepById = async (
     pipelineId,
     pipelineStepId,
