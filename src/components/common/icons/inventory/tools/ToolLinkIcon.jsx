@@ -72,7 +72,4 @@ ToolLinkIcon.propTypes = {
   isLoading: PropTypes.bool,
 };
 
-ToolLinkIcon.defaultProps = {
-  loadToolInNewWindow: true,
-};
 export default ToolLinkIcon;

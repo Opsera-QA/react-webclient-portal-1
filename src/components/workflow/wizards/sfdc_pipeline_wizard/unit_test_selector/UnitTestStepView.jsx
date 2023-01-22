@@ -46,6 +46,7 @@ export function UnitTestStepView({ item, stateColorClass, isSelected }) {
             />
             Salesforce Org: <ToolNameFieldDisplayer
               toolId={item.tool?.configuration?.sfdcToolId}
+              loadToolInNewWindow={true}
           />
           </div>
           <div className="p-1 text-muted small">
