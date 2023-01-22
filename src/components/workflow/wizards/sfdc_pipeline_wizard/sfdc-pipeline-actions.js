@@ -219,6 +219,20 @@ sfdcPipelineActions.triggerUnitTestClassesPull = async (getAccessToken, cancelTo
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+sfdcPipelineActions.triggerUnitTestClassesPullV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel, unitTestSteps) => {
+  const postBody = {
+    unitTestSteps: unitTestSteps,
+    // sfdcToolId: unitTestStep?.tool?.configuration?.sfdcToolId,
+    pipelineId: pipelineWizardModel.getData("pipelineId"),
+    // stepId: unitTestStep?._id,
+    stepIdXML: pipelineWizardModel.getData("stepId"),
+    isSfdc: pipelineWizardModel.getData("modifiedFilesOrigin") === "sfdc"
+  };
+
+  const apiUrl = `/pipelines/sfdc/wizard/trigger_all_unit_test_classes_pull`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 sfdcPipelineActions.getUnitTestClassesListV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel, unitTestStep) => {
   const urlParams = {
     params: {
