@@ -14,7 +14,8 @@ export default function InactivePipelineStepTagRequirementPolicyPageLinkCard() {
     return (
       <div>
         <div className={"mb-2"}>The {policyConstants.POLICY_NAME_LABELS.PIPELINE_STEP_TAG_REQUIREMENT} Policy is an optional Policy that Site Administrators can enable.</div>
-        <div className={"mb-2"}>By activating this Policy, you can restrict saving new Pipeline Step definitions without tags that are not Deploy steps.</div>
+        <div className={"mb-2"}>By activating this Policy, you can prevent new Pipeline Steps from being created without a tag for improving Opsera Insights functionality.</div>
+        <div className={"mb-2"}>Please note: Deploy type Pipeline Steps have unique tag rules, so this rule will not restrict those.</div>
       </div>
     );
   };
