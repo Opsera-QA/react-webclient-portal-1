@@ -71,7 +71,6 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
     const testClasses = await getUnitTestList(testClassFilterDto, unitClassStep, selectedStep);
 
     if (!Array.isArray(testClasses) && count <= 5 && filePullCompleted === false) {
-      console.log("new promis ", count);
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
       return await unitTestPolling(testClassFilterDto, unitClassStep,count + 1);
     }
