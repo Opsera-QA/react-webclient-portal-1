@@ -116,24 +116,15 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
       setIsLoading(true);
       stopPolling();
       setFilePullCompleted(false);
-      const response = await sfdcPipelineActions.triggerUnitTestClassesPull(getAccessToken, cancelTokenSource, pipelineWizardModel, unitClassStep);
-
-      // TODO: Is this check necessary?
-      if (response?.data?.status !== 200 ) {
-        console.error("Error getting API Data: ", response?.data?.message);
-        toastContext.showInlineErrorMessage(response?.data?.message);
-      }
-      else {
         setSelectedStep(unitClassStep);
 
-        if(Object.keys(unitClassStep).length > 0){
+        if (Object.keys(unitClassStep).length > 0) {
           setSelectedUnitTestClassesList([]);
           setUnitTestClassesList([]);
           // start polling
           await unitTestPolling(testClassFilterDto, unitClassStep);
           // await getUnitTestList(testClassFilterDto, unitClassStep);
         }
-      }
     } catch (error) {
       console.error("Error getting API Data: ", error);
       toastContext.showLoadingErrorDialog(error);

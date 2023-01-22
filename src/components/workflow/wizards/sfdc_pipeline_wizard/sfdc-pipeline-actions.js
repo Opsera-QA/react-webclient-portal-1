@@ -206,6 +206,7 @@ sfdcPipelineActions.setProfileComponentListV2 = async (getAccessToken, cancelTok
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+// TODO : Remove this once v2 flow is completed
 sfdcPipelineActions.triggerUnitTestClassesPull = async (getAccessToken, cancelTokenSource, pipelineWizardModel, unitTestStep) => {
   const postBody = {
     sfdcToolId: unitTestStep?.tool?.configuration?.sfdcToolId,
