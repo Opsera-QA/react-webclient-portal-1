@@ -11,43 +11,38 @@ const screenContainerMargin = "30px";
 export const FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER = `calc(${screenContainerHeights.TABLE_MINIMUM_HEIGHT} - ${screenContainerMargin} - ${TITLE_BAR_HEIGHT})`;
 export const FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION = `calc(${FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER} - ${screenContainerHeights.PAGE_DESCRIPTION_HEIGHT})`;
 
-function FilterContainer(
-  {
-    filterDto,
-    setFilterDto,
-    titleIcon,
-    title,
-    dropdownFilters,
-    inlineFilters,
-    loadData,
-    isLoading,
-    isPolling,
-    body,
-    addRecordFunction,
-    supportSearch,
-    supportViewToggle,
-    className,
-    metadata,
-    exportButton,
-    supportClientSideSearching,
-    bodyClassName,
-    handleExportFunction,
-    handleImportFunction,
-    minimumHeight,
-    maximumHeight,
-    showRefreshButton,
-    disableNewRecordButton,
-    filterSelectionOverlayPanel,
-    hideActiveFilterDisplayer,
-    bodyStyling,
-    hideXOverflow,
-    // TODO: Remove after filters are used everywhere
-    type,
-  }) {
-  const {
-    isFreeTrial,
-  } = useComponentStateReference();
-
+function FilterContainer({
+  filterDto,
+  setFilterDto,
+  titleIcon,
+  title,
+  dropdownFilters,
+  inlineFilters,
+  loadData,
+  isLoading,
+  isPolling,
+  body,
+  addRecordFunction,
+  supportSearch,
+  supportViewToggle,
+  className,
+  metadata,
+  exportButton,
+  supportClientSideSearching,
+  bodyClassName,
+  handleExportFunction,
+  handleImportFunction,
+  minimumHeight,
+  maximumHeight,
+  showRefreshButton,
+  disableNewRecordButton,
+  filterSelectionOverlayPanel,
+  hideActiveFilterDisplayer,
+  bodyStyling,
+  hideXOverflow,
+  // TODO: Remove after filters are used everywhere
+  type,
+}) {
   const getFilterBar = () => {
     return (
       <FilterBar
@@ -72,6 +67,10 @@ function FilterContainer(
       />
     );
   };
+
+  const {
+    isFreeTrial,
+  } = useComponentStateReference();
 
   const getContainerStylingObject = () => {
     return ({
@@ -114,7 +113,7 @@ function FilterContainer(
           <div className={
             isFreeTrial === true
               ? "d-flex filter-container-content-block-header"
-              : "px-2 d-flex content-block-header"
+              : "px-2 py-1 d-flex content-block-header"
           }>
             <FilterTitleBar
               isLoading={isLoading}

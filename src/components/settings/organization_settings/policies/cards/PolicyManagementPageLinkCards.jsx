@@ -27,9 +27,9 @@ export default function PolicyManagementPageLinkCards({policies}) {
       <PlatformPipelineCatalogVisibilityPageLinkCard
         platformPipelineCatalogVisibilityPolicy={platformPipelineCatalogVisibilityPolicy}
       />
-      <PipelineStepTagRequirementPolicyPageLinkCard
-        pipelineStepTagRequirementPolicy={pipelineStepTagRequirementPolicy}
-      />
+      {/*<PipelineStepTagRequirementPolicyPageLinkCard*/}
+      {/*  pipelineStepTagRequirementPolicy={pipelineStepTagRequirementPolicy}*/}
+      {/*/>*/}
     </div>
   );
 }

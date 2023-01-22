@@ -105,7 +105,7 @@ function PipelineStepConfiguration(
   const handleTagsCheck = async () => {
     const tags = DataParsingHelper.parseArray(stepConfigurationModel?.getData("tags"), []);
 
-    if (tags.length === 0) {
+    if (stepConfigurationModel?.getData("type") !== "deploy" && tags.length === 0) {
       toastContext.showOverlayPanel(
         <PipelineStepTagWarningOverlay
           stepConfigurationModel={stepConfigurationModel}
@@ -126,15 +126,15 @@ function PipelineStepConfiguration(
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
       recordDto={stepConfigurationModel}
-      persistRecord={handleTagsCheck}
-      showSuccessToasts={stepConfigurationModel?.getArrayData("tags").length > 0}
+      persistRecord={savePipelineStepConfiguration}
+      // persistRecord={handleTagsCheck}
+      // showSuccessToasts={stepConfigurationModel?.getData("type") !== "deploy" || stepConfigurationModel?.getArrayData("tags").length > 0}
       isLoading={isLoading}
       isStrict={true}
     >
       <div className="text-muted mt-1 mb-3">
-        A pipeline step represents a tool and an operation. Each step requires a tool and a custom Step Name. After tool
-        setup, navigate to Step Configuration by selecting the cog icon (<IconBase icon={faCog}
-                                                                                   className={"text-muted"}/>) to define
+        A pipeline step represents a tool and an operation. Each step requires a tool and a custom Step Name.
+        After tool setup, navigate to Step Configuration by selecting the cog icon (<IconBase icon={faCog} className={"text-muted"}/>) to define
         operations. If the tool requires configuration information, jobs or accounts, configure them
         in the Tool Registry before Step Setup.
       </div>
