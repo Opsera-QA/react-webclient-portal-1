@@ -9,6 +9,7 @@ import {pipelineHelper} from "components/workflow/pipeline.helper";
 export default function PipelineIdFieldBase(
   {
     pipelineId,
+    className,
   }) {
   const {
     isLoading,
@@ -52,21 +53,24 @@ export default function PipelineIdFieldBase(
   }
 
   return (
-    <div className={"d-flex"}>
-      <IconBase
-        isLoading={isLoading}
-        className={"mr-1"}
-      />
-      <div>{pipelineId}</div>
-      <CopyToClipboardIconBase
-        className={"ml-2"}
-        copyString={pipelineHelper.getDetailViewLink(pipelineId)}
-        copyText={"Copy link to Child Pipeline"}
-      />
+    <div className={className}>
+      <div className={"d-flex"}>
+        <IconBase
+          isLoading={isLoading}
+          className={"mr-1"}
+        />
+        <div>{pipelineId}</div>
+        <CopyToClipboardIconBase
+          className={"ml-2"}
+          copyString={pipelineHelper.getDetailViewLink(pipelineId)}
+          copyText={"Copy link to Child Pipeline"}
+        />
+      </div>
     </div>
   );
 }
 
 PipelineIdFieldBase.propTypes = {
   pipelineId: PropTypes.string,
+  className: PropTypes.string,
 };
