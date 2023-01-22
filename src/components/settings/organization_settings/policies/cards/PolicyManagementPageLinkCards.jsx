@@ -29,6 +29,7 @@ export default function PolicyManagementPageLinkCards({policies}) {
       />
       <PipelineStepTagRequirementPolicyPageLinkCard
         pipelineStepTagRequirementPolicy={pipelineStepTagRequirementPolicy}
+      />
     </div>
   );
 }
