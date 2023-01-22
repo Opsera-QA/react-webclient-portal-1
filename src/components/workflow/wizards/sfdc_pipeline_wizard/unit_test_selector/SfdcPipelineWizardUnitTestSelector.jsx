@@ -8,7 +8,6 @@ import {
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
-import { RenderWorkflowItem } from "components/workflow/StepApprovalOverlay";
 import Model from "core/data_model/model";
 import filterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/filter-metadata";
 import SfdcUnitTestManagementPanel from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/SfdcUnitTestManagementPanel";
@@ -20,6 +19,7 @@ import SfdcPipelineWizardManualTestClassSelector
   from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/SfdcPipelineWizardManualTestClassSelector";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import IconBase from "components/common/icons/IconBase";
+import {UnitTestStepView} from "./UnitTestStepView";
 
 // TODO: This should really be altered to be a part of each of the workflow boxes rather than having it rely on selected object
 const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, setPipelineWizardScreen }) => {
@@ -143,7 +143,7 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
               return (
                 <Col key={idx}>
                   <div className="p-1" style={{cursor: isLoading ? "not-allowed" : "pointer"}} onClick={() => isLoading ? null : handleStepClick(step)}>
-                    <RenderWorkflowItem item={step} isSelected={selectedStep?._id === step._id} stateColorClass=""/>
+                    <UnitTestStepView item={step} isSelected={selectedStep?._id === step._id} stateColorClass=""/>
                   </div>
                 </Col>
               );

@@ -5,6 +5,7 @@ import {useHistory} from "react-router-dom";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
+import CustomerTagFilter from "../../../filters/tags/tag/CustomerTagFilter";
 
 function ToolLinkIcon({toolId, isLoading, accessAllowed, loadToolInNewWindow, className, handleClose}) {
   let history = useHistory();
@@ -71,4 +72,7 @@ ToolLinkIcon.propTypes = {
   isLoading: PropTypes.bool,
 };
 
+ToolLinkIcon.defaultProps = {
+  loadToolInNewWindow: true,
+};
 export default ToolLinkIcon;
