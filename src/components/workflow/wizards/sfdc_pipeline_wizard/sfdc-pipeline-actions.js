@@ -481,9 +481,9 @@ sfdcPipelineActions.checkIfSfdx = async (getAccessToken, cancelTokenSource, id) 
 
 sfdcPipelineActions.checkTestClassesCount = async (getAccessToken, cancelTokenSource, pipelineWizardModel, unitTestSteps) => {
   const postBody = {
-      pipelineId: pipelineWizardModel.getData("pipelineId"),
-      stepIds: unitTestSteps,
-    };
+    pipelineId: pipelineWizardModel.getData("pipelineId"),
+    unitTestSteps: unitTestSteps,
+  };
 
   const apiUrl = `/pipelines/sfdc/wizard/check_unit_test_class_count`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
