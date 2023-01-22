@@ -1,8 +1,6 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {faCog} from "@fortawesome/pro-light-svg-icons";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import axios from "axios";
 import Model from "core/data_model/model";
 import stepConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step-configuration-metadata";
@@ -17,11 +15,19 @@ import StepConfigurationTagsInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/StepConfigurationTagsInput";
 import IconBase from "components/common/icons/IconBase";
 import StepConfigurationTypeSelectInput from "./StepConfigurationTypeSelectInput";
-import { hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import PipelineStepTagWarningOverlay
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/tag_warning/PipelineStepTagWarningOverlay";
 
-function PipelineStepConfiguration({ plan, stepId, parentCallback, closeEditorPanel }) {
+function PipelineStepConfiguration(
+  {
+    plan,
+    stepId,
+    parentCallback,
+    closeEditorPanel,
+    step,
+  }) {
   const [stepConfigurationModel, setStepConfigurationModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [lockTool, setLockTool] = useState(false);
@@ -57,7 +63,8 @@ function PipelineStepConfiguration({ plan, stepId, parentCallback, closeEditorPa
         type: step.type[0],
         tool_identifier: step.tool && step.tool.tool_identifier ? step.tool.tool_identifier : "",
         active: step.active === true,
-        tags: step.tags
+        tags: step.tags,
+        _id: step._id,
       };
 
       if (step?.tool?.tool_identifier?.length > 0) {
@@ -65,28 +72,29 @@ function PipelineStepConfiguration({ plan, stepId, parentCallback, closeEditorPa
       }
 
       setStepConfigurationModel(new Model({...currentData}, stepConfigurationMetadata, false));
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
         console.error(error);
       }
-    }
-    finally {
+    } finally {
       setIsLoading(false);
     }
   };
 
-  const savePipelineStepConfiguration = async () => {
+  const savePipelineStepConfiguration = async (model = stepConfigurationModel) => {
     const stepArrayIndex = pipelineHelpers.getStepIndexFromPlan(plan, stepId);
-    const stepConfigurationData = stepConfigurationModel.getPersistData();
+    const stepConfigurationData = model.getPersistData();
 
     if (stepArrayIndex >= 0 && plan[stepArrayIndex] !== undefined) {
       plan[stepArrayIndex].name = stepConfigurationData.name;
       plan[stepArrayIndex].type[0] = stepConfigurationData.type;
       plan[stepArrayIndex].tool_category = stepConfigurationData.type;
       plan[stepArrayIndex].orchestration_type = "standard";
-      plan[stepArrayIndex].tool = { ...plan[stepArrayIndex].tool, tool_identifier: stepConfigurationData.tool_identifier };
+      plan[stepArrayIndex].tool = {
+        ...plan[stepArrayIndex].tool,
+        tool_identifier: stepConfigurationData.tool_identifier
+      };
       plan[stepArrayIndex].active = stepConfigurationData.active;
       plan[stepArrayIndex].tags = stepConfigurationData.tags;
       await parentCallback(plan);
@@ -97,10 +105,16 @@ function PipelineStepConfiguration({ plan, stepId, parentCallback, closeEditorPa
   const handleTagsCheck = async () => {
     const tags = DataParsingHelper.parseArray(stepConfigurationModel?.getData("tags"), []);
 
-    if (tags.length === 0) {
-      console.log("You need tags");
+    if (stepConfigurationModel?.getData("type") !== "deploy" && tags.length === 0) {
+      toastContext.showOverlayPanel(
+        <PipelineStepTagWarningOverlay
+          stepConfigurationModel={stepConfigurationModel}
+          setStepConfigurationModel={setStepConfigurationModel}
+          savePipelineStepConfiguration={savePipelineStepConfiguration}
+        />
+      );
     } else {
-      return await savePipelineStepConfiguration();
+      return await savePipelineStepConfiguration(stepConfigurationModel);
     }
   };
 
@@ -114,12 +128,14 @@ function PipelineStepConfiguration({ plan, stepId, parentCallback, closeEditorPa
       recordDto={stepConfigurationModel}
       persistRecord={savePipelineStepConfiguration}
       // persistRecord={handleTagsCheck}
-      // showSuccessToasts={stepConfigurationModel?.getArrayData("tags").length > 0}
+      // showSuccessToasts={stepConfigurationModel?.getData("type") !== "deploy" || stepConfigurationModel?.getArrayData("tags").length > 0}
       isLoading={isLoading}
       isStrict={true}
     >
       <div className="text-muted mt-1 mb-3">
-        A pipeline step represents a tool and an operation. Each step requires a tool and a custom Step Name. After tool setup, navigate to Step Configuration by selecting the cog icon (<IconBase icon={faCog} className={"text-muted"} />) to define operations. If the tool requires configuration information, jobs or accounts, configure them
+        A pipeline step represents a tool and an operation. Each step requires a tool and a custom Step Name.
+        After tool setup, navigate to Step Configuration by selecting the cog icon (<IconBase icon={faCog} className={"text-muted"}/>) to define
+        operations. If the tool requires configuration information, jobs or accounts, configure them
         in the Tool Registry before Step Setup.
       </div>
       <div className="step-settings-body">
@@ -157,6 +173,7 @@ PipelineStepConfiguration.propTypes = {
   stepId: PropTypes.string,
   parentCallback: PropTypes.func,
   closeEditorPanel: PropTypes.func,
+  step: PropTypes.object,
 };
 
 export default PipelineStepConfiguration;

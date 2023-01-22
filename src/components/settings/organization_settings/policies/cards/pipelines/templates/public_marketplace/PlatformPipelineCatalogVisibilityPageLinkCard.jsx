@@ -3,7 +3,7 @@ import PropType from "prop-types";
 import PolicyManagementPageLinkCardBase
   from "components/settings/organization_settings/policies/cards/PolicyManagementPageLinkCardBase";
 import InactivePlatformPipelineCatalogVisibilityPageLinkCard
-  from "components/settings/organization_settings/policies/cards/inactive/InactivePlatformPipelineCatalogVisibilityPageLinkCard";
+  from "components/settings/organization_settings/policies/cards/pipelines/templates/public_marketplace/InactivePlatformPipelineCatalogVisibilityPageLinkCard";
 
 export default function PlatformPipelineCatalogVisibilityPageLinkCard({ platformPipelineCatalogVisibilityPolicy }) {
   if (platformPipelineCatalogVisibilityPolicy == null) {
