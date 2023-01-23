@@ -40,7 +40,6 @@ export default function PipelineStepTagWarningApplyTagButton(
       const response = await tagActions.doesTagExistWithTypeAndValue("pipeline", tagValue);
       const doesTagExist = response?.data?.data === true;
 
-      console.log("doesTagExist: " + doesTagExist);
       if (doesTagExist !== true) {
         const newTag = {
           type: "pipeline",

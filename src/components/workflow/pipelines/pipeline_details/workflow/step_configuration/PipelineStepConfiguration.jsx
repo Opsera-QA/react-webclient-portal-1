@@ -26,7 +26,6 @@ function PipelineStepConfiguration(
     plan,
     stepId,
     closeEditorPanel,
-    step,
     pipelineId,
   }) {
   const [stepConfigurationModel, setStepConfigurationModel] = useState(undefined);
@@ -162,7 +161,6 @@ PipelineStepConfiguration.propTypes = {
   plan: PropTypes.array,
   stepId: PropTypes.string,
   closeEditorPanel: PropTypes.func,
-  step: PropTypes.object,
   pipelineId: PropTypes.string,
 };
 
