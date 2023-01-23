@@ -17,6 +17,7 @@ function PipelineStepEditorPanelContainer(
     isStrict,
     disableSaveButton,
     showIncompleteDataMessage,
+    showSuccessToasts,
   }) {
   const getRequiredFieldsMessage = () => {
     if (showRequiredFieldsMessage !== false) {
@@ -42,6 +43,7 @@ function PipelineStepEditorPanelContainer(
         handleClose={handleClose}
         isStrict={isStrict}
         disableSaveButton={disableSaveButton}
+        showSuccessToasts={showSuccessToasts}
       />
       {getRequiredFieldsMessage()}
     </div>
@@ -59,6 +61,7 @@ PipelineStepEditorPanelContainer.propTypes = {
   isStrict: PropTypes.bool,
   disableSaveButton: PropTypes.bool,
   showIncompleteDataMessage: PropTypes.bool,
+  showSuccessToasts: PropTypes.bool,
 };
 
 export default PipelineStepEditorPanelContainer;

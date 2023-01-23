@@ -10,7 +10,7 @@ import {AuthContext} from "contexts/AuthContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import {Button} from "react-bootstrap";
-import {faStepBackward} from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
 import CancelButton from "components/common/buttons/CancelButton";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import SfdcPipelineWizardSubmitSfdcFilesButton
@@ -140,7 +140,7 @@ const SfdcPipelineWizardSfdcFileSelector = ({ pipelineWizardModel, setPipelineWi
       <InlineWarning warningMessage={sfdcWarningMessage} className="pl-3" />
       <SaveButtonContainer>
         <Button variant="secondary" size="sm" className="mr-2" onClick={() => {setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR);}}>
-          <IconBase icon={faStepBackward} className={"mr-1"}/>Back
+          <IconBase icon={faArrowLeft} className={"mr-1"}/>Back
         </Button>
         <SfdcPipelineWizardSubmitSfdcFilesButton
           setPipelineWizardScreen={setPipelineWizardScreen}

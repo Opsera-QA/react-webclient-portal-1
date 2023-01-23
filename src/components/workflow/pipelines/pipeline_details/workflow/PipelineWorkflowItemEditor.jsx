@@ -5,7 +5,7 @@ import { axiosApiService } from "api/apiService";
 import LoadingDialog from "components/common/status_notifications/loading";
 import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import StepToolConfiguration from "./step_configuration/StepToolConfiguration";
-import StepConfiguration from "./step_configuration/StepConfiguration";
+import PipelineStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepConfiguration";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 import PipelineSourceRepositoryConfiguration
@@ -57,7 +57,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
 
   const getTitleBar = (title) => {
     return (
-      <div className={"px-2 my-auto content-block-header d-flex"}>
+      <div className={"p-2 my-auto content-block-header d-flex"}>
           <h5 className={"my-auto d-flex justify-content-between h-100 w-100"}>
             <div className={"my-auto"}>{title}</div>
             <div className={"d-flex"}>
@@ -95,12 +95,15 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
   if (editItem.type === "step") {
     return (<>
       {getTitleBar("Step Definition")}
-      <div className="p-3 bg-white step-settings-container">
-        <StepConfiguration
-          plan={pipeline?.workflow?.plan}
+      <div className="px-3 pb-3 pt-2 bg-white step-settings-container">
+        <PipelineStepConfiguration
+          step={editItem}
           stepId={editItem?.step_id}
+          plan={pipeline?.workflow?.plan}
+          pipelineId={pipeline?._id}
           parentCallback={callbackConfigureStep}
-          closeEditorPanel={handleCloseClick} />
+          closeEditorPanel={handleCloseClick}
+        />
       </div>
     </>);
   }

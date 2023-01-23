@@ -7,11 +7,23 @@ import VanitySetVerticalTabContainer from "components/common/tabs/vertical_tabs/
 import {faGitAlt} from "@fortawesome/free-brands-svg-icons/faGitAlt";
 import { isTaskTypeOfCategory } from "components/tasks/task.types";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function TaskVerticalTabContainer({ isLoading, taskFilterModel, loadData }) {
+  const {
+    userData,
+  } = useComponentStateReference();
+
   const handleTabClick = (category) => {
-    taskFilterModel?.setData("category", category);
     const type = taskFilterModel?.getData("type");
+
+    if (category === "owner") {
+      taskFilterModel?.setData("owner", userData?._id);
+    } else {
+      taskFilterModel?.setData("owner", "");
+    }
+
+    taskFilterModel?.setData("category", category);
 
     if (
       hasStringValue(type) === true

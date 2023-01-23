@@ -20,9 +20,8 @@ import TaskSchedulerField, { SCHEDULER_SUPPORTED_TASK_TYPES } from "components/t
 import GitScraperActionButton from "../buttons/gitscraper/GitScraperActionButton";
 import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import RbacWarningField from "temp-library-components/fields/rbac/RbacWarningField";
-import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import TaskStateField from "temp-library-components/fields/orchestration/state/task/TaskStateField";
+import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
 
 function TaskSummaryPanel(
   {
@@ -37,6 +36,7 @@ function TaskSummaryPanel(
     cancelTokenSource,
     getAccessToken,
     userData,
+    isFreeTrial,
   } = useComponentStateReference();
 
   const updateRecord = async (newDataModel) => {
@@ -127,6 +127,23 @@ function TaskSummaryPanel(
     }
   };
 
+  const getOwnerNameField = () => {
+    if (isFreeTrial !== true) {
+      return (
+        <Col md={6}>
+          <SsoUserField
+            fieldName={"owner"}
+            model={gitTasksData}
+          />
+        </Col>
+      );
+    }
+  };
+
+  if (gitTasksData == null) {
+    return null;
+  }
+
   return (
     <SummaryPanelContainer
       setActiveTab={setActiveTab}
@@ -136,9 +153,7 @@ function TaskSummaryPanel(
         <Col md={6}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"name"} />
         </Col>
-        <Col md={6}>
-          <TextFieldBase dataObject={gitTasksData} fieldName={"owner_name"} />
-        </Col>
+        {getOwnerNameField()}
         <Col md={6}>
           <TaskStateField
             model={gitTasksData}

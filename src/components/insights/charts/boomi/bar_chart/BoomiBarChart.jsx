@@ -9,13 +9,18 @@ import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
 import { BOOMI_CONSTANTS as dataPointConstants } from "./Boomi_datapoint_identifiers";
-import { faArrowCircleDown, faArrowCircleUp, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowCircleDown,
+  faArrowCircleUp,
+  faMinusCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import { dataPointHelpers } from "components/common/helpers/metrics/data_point/dataPoint.helpers.js";
 import DataPointVisibilityWrapper from "components/common/metrics/data_points/DataPointVisibilityWrapper.jsx";
 import ChartTooltip from "../../ChartTooltip.jsx";
 import {
   adjustBarWidth,
-  assignStandardColors, assignStandardLineColors,
+  assignStandardColors,
+  assignStandardLineColors,
   defaultConfig,
   spaceOutServiceNowCountBySeverityLegend,
 } from "../../charts-views.js";
@@ -25,10 +30,9 @@ import { DialogToastContext } from "contexts/DialogToastContext.js";
 import { ResponsiveLine } from "@nivo/line";
 import chartsActions from "../../charts-actions";
 import BoomiActionableTabOverlay from "../actionable_insights/BoomiActionableTabOverlay";
-import AutomationPercentageChartHelpDocumentation
-  from "../../../../common/help/documentation/insights/charts/AutomationPercentageChartHelpDocumentation";
-import BoomiChartHelpDocumentation
-  from "../../../../common/help/documentation/insights/charts/BoomiChartHelpDocumentation";
+import AutomationPercentageChartHelpDocumentation from "../../../../common/help/documentation/insights/charts/AutomationPercentageChartHelpDocumentation";
+import BoomiChartHelpDocumentation from "../../../../common/help/documentation/insights/charts/BoomiChartHelpDocumentation";
+import BoomiAverageDurationDataBlock from "../data_blocks/BoomiAverageDurationDataBlock";
 
 function BoomiBarChart({
   kpiConfiguration,
@@ -87,9 +91,22 @@ function BoomiBarChart({
             kpiConfiguration?.filters.findIndex((obj) => obj.type === "goals")
           ]?.value;
       setGoalsData(goals);
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "boomiChartandBlocksData", kpiConfiguration, dashboardTags);
-        let dataObject = response?.data?.data[0]?.ChartData?.boomiDeploymentLineChartFrequency?.data,
-        datablock = response?.data?.data[0]?.DataBlockStats?.boomiTrendBlockStatistics?.data[0]?.statisticsData;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "boomiChartandBlocksData",
+        kpiConfiguration,
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs,
+      );
+      let dataObject =
+          response?.data?.data[0]?.ChartData?.boomiDeploymentLineChartFrequency
+            ?.data,
+        datablock =
+          response?.data?.data[0]?.DataBlockStats?.boomiTrendBlockStatistics
+            ?.data[0]?.statisticsData;
 
       setGoalsData(goals);
       assignStandardColors(dataObject, true);
@@ -114,16 +131,14 @@ function BoomiBarChart({
 
   console.log("boomi metrics", metrics);
 
-
   const onRowSelect = () => {
     toastContext.showOverlayPanel(
-        <BoomiActionableTabOverlay
-            kpiConfiguration={kpiConfiguration}
-            dashboardData={dashboardData}
-        />
+      <BoomiActionableTabOverlay
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+      />,
     );
   };
- 
 
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
@@ -133,9 +148,10 @@ function BoomiBarChart({
     const dataPoints = kpiConfiguration?.dataPoints;
     const boomiFrequencyPercentageDataPoint = dataPointHelpers.getDataPoint(
       dataPoints,
-      dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS.BOOMI_SUCCESS_PERCENTAGE_DATA_POINT,
+      dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS
+        .BOOMI_SUCCESS_PERCENTAGE_DATA_POINT,
     );
-    
+
     const boomiSuccessPercentageDataPoint = dataPointHelpers.getDataPoint(
       dataPoints,
       dataPointConstants.SUPPORTED_DATA_POINT_IDENTIFIERS
@@ -154,7 +170,7 @@ function BoomiBarChart({
           break;
       }
     };
-  
+
     const getIconColor = (severity) => {
       switch (severity) {
         case "red":
@@ -170,66 +186,119 @@ function BoomiBarChart({
       }
     };
 
-    const getDataBlocks = () =>{
-      return (<><Row className={'pb-2'}>
-        <Col>
-          <DataPointVisibilityWrapper dataPoint={boomiSuccessPercentageDataPoint} >
-            <BoomiSuccessPercentageDataBlock
-              data={dataBlockValues?.SuccessPercentage}
-              dataPoint={boomiSuccessPercentageDataPoint}
-              lastScore={ dataBlockValues?.prevSuccessPercentage}
-              icon={getIcon(dataBlockValues?.successPercentageTrend?.trend)}
-              className={getIconColor(dataBlockValues?.successPercentageTrend?.trend)}
-            />
-          </DataPointVisibilityWrapper>
-        </Col>
-        </Row><Row className={'pb-2 pt-2'}>
-        <Col>
-          <DataPointVisibilityWrapper dataPoint={boomiFrequencyPercentageDataPoint} >
-            <BoomiFrequencyDataBlock
-              data={dataBlockValues?.freq}
-              dataPoint={boomiFrequencyPercentageDataPoint}
-              lastScore={ dataBlockValues?.prevFreq}
-              icon={getIcon(dataBlockValues?.frequencyTrend?.trend)}
-              className={getIconColor(dataBlockValues?.frequencyTrend?.trend)}
-            />
-          </DataPointVisibilityWrapper>
-        </Col>
-      </Row></>);
+    const getDataBlocks = () => {
+      return (
+        <>
+          <Row className={"pb-1"}>
+            <Col>
+              <DataPointVisibilityWrapper
+                dataPoint={boomiSuccessPercentageDataPoint}
+              >
+                <BoomiSuccessPercentageDataBlock
+                  data={dataBlockValues?.SuccessPercentage}
+                  dataPoint={boomiSuccessPercentageDataPoint}
+                  lastScore={dataBlockValues?.prevSuccessPercentage}
+                  icon={getIcon(dataBlockValues?.successPercentageTrend?.trend)}
+                  className={getIconColor(
+                    dataBlockValues?.successPercentageTrend?.trend,
+                  )}
+                />
+              </DataPointVisibilityWrapper>
+            </Col>
+          </Row>
+          <Row className={"pb-1 pt-1"}>
+            <Col>
+              <DataPointVisibilityWrapper
+                dataPoint={boomiFrequencyPercentageDataPoint}
+              >
+                <BoomiFrequencyDataBlock
+                  data={dataBlockValues?.freq}
+                  dataPoint={boomiFrequencyPercentageDataPoint}
+                  lastScore={dataBlockValues?.prevFreq}
+                  icon={getIcon(dataBlockValues?.frequencyTrend?.trend)}
+                  className={getIconColor(
+                    dataBlockValues?.frequencyTrend?.trend,
+                  )}
+                />
+              </DataPointVisibilityWrapper>
+            </Col>
+          </Row>
+          <Row className={"pb-1 pt-1"}>
+            <Col>
+              <DataPointVisibilityWrapper
+                dataPoint={boomiFrequencyPercentageDataPoint}
+              >
+                <BoomiAverageDurationDataBlock
+                  data={dataBlockValues?.totalDeployments}
+                  dataPoint={boomiFrequencyPercentageDataPoint}
+                  lastScore={dataBlockValues?.prevDeployments}
+                  icon={getIcon(dataBlockValues?.deploymentsTrend?.trend)}
+                  className={getIconColor(
+                    dataBlockValues?.deploymentsTrend?.trend,
+                  )}
+                />
+              </DataPointVisibilityWrapper>
+            </Col>
+          </Row>
+        </>
+      );
     };
-    const getChart = () =>{
-      return(<Row>
-        <Col md={12} sm={12} lg={12} >
-          <div className="chart" style={{ height: "276px" }} >
-            <ResponsiveLine
-              data={metrics}
-              {...defaultConfig(
-                "Count",
-                "Date",
-                false,
-                false,
-                "wholeNumbers",
-                "monthDate2",
-              )}
-              {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
-              {...adjustBarWidth(metrics)}
-              tooltip={({point, color}) => <ChartTooltip
-                  titles = {["Date", "Number of Deployments"]}
-                  values = {[String(point.data.xFormatted), point.data.y]}
-                  color = {color} />}
-            />
-          </div>
-        </Col>
-      </Row>);
+    const getChart = () => {
+      return (
+        <Row>
+          <Col
+            md={12}
+            sm={12}
+            lg={12}
+          >
+            <div
+              className="chart"
+              style={{ height: "354px" }}
+            >
+              <ResponsiveLine
+                data={metrics}
+                {...defaultConfig(
+                  "Count",
+                  "Date",
+                  false,
+                  false,
+                  "wholeNumbers",
+                  "monthDate2",
+                )}
+                {...config(METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY)}
+                {...adjustBarWidth(metrics)}
+                tooltip={({ point, color }) => (
+                  <ChartTooltip
+                    titles={["Date", "Deployments"]}
+                    values={[String(point.data.xFormatted), point.data.y]}
+                    color={color}
+                  />
+                )}
+              />
+            </div>
+          </Col>
+        </Row>
+      );
     };
 
-    
     return (
       <>
         <div className="new-chart m-3">
           <Row>
-            <Col md={3} sm={6} lg={3}>{getDataBlocks()}</Col>
-            <Col md={9} sm={6} lg={9}>{getChart()}</Col>
+            <Col
+              md={3}
+              sm={6}
+              lg={3}
+            >
+              {getDataBlocks()}
+            </Col>
+            <Col
+              md={9}
+              sm={6}
+              lg={9}
+            >
+              {getChart()}
+            </Col>
           </Row>
         </div>
       </>
@@ -251,7 +320,7 @@ function BoomiBarChart({
         showSettingsToggle={showSettingsToggle}
         launchActionableInsightsFunction={onRowSelect}
         chartHelpComponent={(closeHelpPanel) => (
-            <BoomiChartHelpDocumentation closeHelpPanel={closeHelpPanel} />
+          <BoomiChartHelpDocumentation closeHelpPanel={closeHelpPanel} />
         )}
       />
       <ModalLogs

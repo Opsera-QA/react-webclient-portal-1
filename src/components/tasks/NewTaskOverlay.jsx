@@ -9,7 +9,6 @@ export default function NewTaskOverlay(
   {
     loadData,
     isMounted,
-    taskMetadata,
   }) {
   const toastContext = useContext(DialogToastContext);
   const { taskModel, setTaskModel } = useGetNewTaskModel();
@@ -23,13 +22,13 @@ export default function NewTaskOverlay(
     toastContext.clearOverlayPanel();
   };
 
-  if (taskMetadata == null || taskModel == null) {
+  if (taskModel == null) {
     return null;
   }
 
   return (
     <CreateCenterPanel
-      objectType={taskMetadata?.type}
+      objectType={"Task"}
       loadData={loadData}
       closePanel={closePanel}
     >
@@ -44,5 +43,4 @@ export default function NewTaskOverlay(
 NewTaskOverlay.propTypes = {
   loadData: PropTypes.func,
   isMounted: PropTypes.object,
-  taskMetadata: PropTypes.object,
 };

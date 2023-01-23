@@ -1,13 +1,10 @@
 import React from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
 import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
-//import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import DashboardViewer from "components/insights/dashboards/dashboard_details/DashboardViewer";
 import DashboardModel from "components/insights/dashboards/dashboard.model";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
-import chartsActions from "components/insights/charts/charts-actions";
+
 export default function FreeTrialInsightsLanding() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"insights"} />);
   let response = {
@@ -266,8 +263,7 @@ export default function FreeTrialInsightsLanding() {
     }
   };
   let dashboard = response.data;
-  let roles = response.roles;
-  let dashboardModel = new DashboardModel(dashboard, dashboardMetadata, false, null, null, null, null, roles);
+  let dashboardModel = new DashboardModel(dashboard, dashboardMetadata);
 
   return (
     <div className={"max-content-width"}>

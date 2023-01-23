@@ -29,7 +29,7 @@ export default function PlatformSettingsManagement() {
         }
       });
     }
-  }, [accessRoleData]);
+  }, [isOpseraAdministrator]);
 
   const loadData = async () => {
     try {

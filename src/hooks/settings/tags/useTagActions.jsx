@@ -37,6 +37,15 @@ export default function useTagActions() {
     return await apiService.handleApiGetRequest(apiUrl, urlParams);
   };
 
+  tagActions.doesTagExistWithTypeAndValue = async (type, value) => {
+    const apiUrl = "/tags/find";
+    const queryParameters = {
+      type: type,
+      value: value,
+    };
+    return await apiService.handleApiGetRequest(apiUrl, queryParameters);
+  };
+
   tagActions.getPlatformTags = async () => {
     const apiUrl = "/tags/platform";
     return await apiService.handleApiGetRequest(
@@ -83,9 +92,9 @@ export default function useTagActions() {
     return await apiService.handleApiGetRequest(apiUrl);
   };
 
-  tagActions.createTag = async (tagDataDto) => {
+  tagActions.createTag = async (tagModel) => {
     const postBody = {
-      ...tagDataDto.getPersistData(),
+      ...tagModel.getPersistData(),
     };
     const apiUrl = "/tags/create";
     return await apiService.handleApiPostRequest(apiUrl, postBody);
