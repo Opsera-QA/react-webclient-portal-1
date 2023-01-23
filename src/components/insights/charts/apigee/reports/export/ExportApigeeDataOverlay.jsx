@@ -71,7 +71,7 @@ function ExportApigeeDataOverlay({ kpiConfiguration, dashboardTags, filterDto, p
   };
 
   const getRawData = () => {
-    return new Blob([rawData], { type: 'text/plain' });
+    return new Blob([JSON.stringify(rawData)], { type: 'text/plain' });
   };
 
   const getPdfExporter = () => {
