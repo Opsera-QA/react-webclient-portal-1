@@ -41,10 +41,17 @@ function LazyLoadSelectInputBase(
     error,
     pluralTopic,
     singularTopic,
+    requireUserEnable,
+    onEnableEditFunction,
 }) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
+  const [enabled, setEnabled] = useState(undefined);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
   const [internalErrorMessage, setInternalErrorMessage] = useState("");
+
+  useEffect(() => {
+    setEnabled(requireUserEnable !== true);
+  }, [requireUserEnable]);
 
   useEffect(() => {
     setInternalErrorMessage("");
@@ -127,6 +134,20 @@ function LazyLoadSelectInputBase(
     return "Select One";
   };
 
+  const enableEditingFunction = () => {
+    setEnabled(true);
+
+    if (onEnableEditFunction) {
+      onEnableEditFunction();
+    }
+  };
+
+  const getEnableEditFunction = () => {
+    if (requireUserEnable === true && enabled === false) {
+      return enableEditingFunction;
+    }
+  };
+
   if (field == null) {
     return null;
   }
@@ -148,6 +169,7 @@ function LazyLoadSelectInputBase(
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(errorMessage) === true}
         helpTooltipText={helpTooltipText}
+        enableEditingFunction={getEnableEditFunction()}
       />
       <StandaloneSelectInput
         selectOptions={selectOptions}
@@ -163,7 +185,7 @@ function LazyLoadSelectInputBase(
         }}
         placeholderText={getPlaceholderText()}
         setDataFunction={(newValue) => updateValue(newValue)}
-        disabled={disabled}
+        disabled={disabled || (requireUserEnable === true && enabled === false)}
         onSearchFunction={onSearchFunction}
         lazyLoad={true}
       />
@@ -220,6 +242,8 @@ LazyLoadSelectInputBase.propTypes = {
   singularTopic: PropTypes.string,
   pluralTopic: PropTypes.string,
   error: PropTypes.any,
+  requireUserEnable: PropTypes.bool,
+  onEnableEditFunction: PropTypes.func,
 };
 
 LazyLoadSelectInputBase.defaultProps = {

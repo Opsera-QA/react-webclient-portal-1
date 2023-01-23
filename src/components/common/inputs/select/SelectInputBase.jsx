@@ -47,6 +47,7 @@ function SelectInputBase(
     handleCreateFunction,
     requireUserEnable,
     ellipsisOnClickFunction,
+    onEnableEditFunction,
 }) {
   const field = dataObject?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
@@ -138,6 +139,10 @@ function SelectInputBase(
 
   const enableEditingFunction = () => {
     setEnabled(true);
+
+    if (onEnableEditFunction) {
+      onEnableEditFunction();
+    }
   };
 
   const getEnableEditFunction = () => {
@@ -254,6 +259,7 @@ SelectInputBase.propTypes = {
   handleCreateFunction: PropTypes.func,
   requireUserEnable: PropTypes.bool,
   ellipsisOnClickFunction: PropTypes.func,
+  onEnableEditFunction: PropTypes.func,
 };
 
 SelectInputBase.defaultProps = {

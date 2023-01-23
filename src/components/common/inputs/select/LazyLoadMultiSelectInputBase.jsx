@@ -38,11 +38,18 @@ function LazyLoadMultiSelectInputBase(
     error,
     pluralTopic,
     singularTopic,
+    requireUserEnable,
+    onEnableEditFunction,
   }) {
+  const field = dataObject?.getFieldById(fieldName);
+  const [enabled, setEnabled] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
-  const [field] = useState(dataObject?.getFieldById(fieldName));
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
   const [internalErrorMessage, setInternalErrorMessage] = useState("");
+
+  useEffect(() => {
+    setEnabled(requireUserEnable !== true);
+  }, [requireUserEnable]);
 
   useEffect(() => {
     setInternalErrorMessage("");
@@ -141,6 +148,20 @@ function LazyLoadMultiSelectInputBase(
     return "Select One";
   };
 
+  const enableEditingFunction = () => {
+    setEnabled(true);
+
+    if (onEnableEditFunction) {
+      onEnableEditFunction();
+    }
+  };
+
+  const getEnableEditFunction = () => {
+    if (requireUserEnable === true && enabled === false) {
+      return enableEditingFunction;
+    }
+  };
+
 
   if (field == null) {
     return null;
@@ -161,6 +182,7 @@ function LazyLoadMultiSelectInputBase(
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(getErrorMessage()) === true}
         helpTooltipText={helpTooltipText}
+        enableEditingFunction={getEnableEditFunction()}
       />
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput
@@ -177,7 +199,7 @@ function LazyLoadMultiSelectInputBase(
           }}
           value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : []}
           placeholderText={getPlaceholderText()}
-          disabled={disabled}
+          disabled={disabled || (requireUserEnable === true && enabled === false)}
           onSearchFunction={onSearchFunction}
           setDataFunction={(newValue) =>
             setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)
@@ -226,6 +248,8 @@ LazyLoadMultiSelectInputBase.propTypes = {
   singularTopic: PropTypes.string,
   pluralTopic: PropTypes.string,
   error: PropTypes.any,
+  requireUserEnable: PropTypes.bool,
+  onEnableEditFunction: PropTypes.func,
 };
 
 LazyLoadMultiSelectInputBase.defaultProps = {
