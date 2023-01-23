@@ -14,17 +14,17 @@ export default function useTagActions() {
     return await apiService.handleApiGetRequest(apiUrl, urlParams);
   };
 
-  tagActions.deleteTagV2 = async (tagId) => {
+  tagActions.deleteTag = async (tagId) => {
     const apiUrl = `/tags/${tagId}`;
     return await apiService.handleApiDeleteRequest(apiUrl);
   };
 
-  tagActions.updateTagV2 = async (tagDataDto) => {
+  tagActions.updateTag = async (tagDataDto) => {
     const postBody = {
       ...tagDataDto.getPersistData(),
     };
-    const apiUrl = `/tags/${tagDataDto.getData("_id")}/update/`;
-    return await apiService.handleApiPostRequest(apiUrl, postBody);
+    const apiUrl = `/tags/${tagDataDto.getData("_id")}/`;
+    return await apiService.handleApiPutRequest(apiUrl, postBody);
   };
 
   tagActions.getAllTagsV2 = async (status = "active", usage = false) => {
@@ -96,7 +96,7 @@ export default function useTagActions() {
     const postBody = {
       ...tagModel.getPersistData(),
     };
-    const apiUrl = "/tags/create";
+    const apiUrl = "/tags";
     return await apiService.handleApiPostRequest(apiUrl, postBody);
   };
 
