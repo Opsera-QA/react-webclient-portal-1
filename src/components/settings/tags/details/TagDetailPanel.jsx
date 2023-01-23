@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import TagSummaryPanel from "components/settings/tags/tags_detail_view/TagSummaryPanel";
-import TagEditorPanel from "components/settings/tags/tags_detail_view/TagEditorPanel";
+import TagSummaryPanel from "components/settings/tags/details/TagSummaryPanel";
+import TagEditorPanel from "components/settings/tags/details/TagEditorPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import CustomTab from "components/common/tabs/CustomTab";
