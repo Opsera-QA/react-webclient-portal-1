@@ -16,7 +16,7 @@ import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import {getMetricFilterValue} from "../../../../common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "../../../../common/badges/date/metrics/MetricDateRangeBadge";
 
-function ApigeeDetailedReportsTable({ pipeline, rowData, dashboardData, kpiConfiguration }) {
+function ApigeeDetailedReportsTable({ pipeline, rowData, dashboardData, kpiConfiguration, assetType }) {
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -85,17 +85,22 @@ function ApigeeDetailedReportsTable({ pipeline, rowData, dashboardData, kpiConfi
 
   const loadPipelineData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     setIsLoading(true);
-    let dashboardTags =
+    const dashboardTags =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+    const dashboardOrgs =
+      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
+      
     const response = await apigeeActions.getReportDetails(
       getAccessToken,
       cancelSource,
       kpiConfiguration,
       dashboardTags,
+      dashboardOrgs,
       pipeline?.pipelineId,
       rowData?.organization,
       rowData?.environment,
-      filterDto
+      filterDto,
+      assetType,
     );
     let dataObject = response?.data?.data?.data?.[0];
     let dataCount = dataObject?.count ? dataObject?.count : 0;
@@ -176,6 +181,7 @@ ApigeeDetailedReportsTable.propTypes = {
   pipeline: PropTypes.object,
   rowData: PropTypes.object,
   dashboardData: PropTypes.object,
-  kpiConfiguration: PropTypes.object
+  kpiConfiguration: PropTypes.object,
+  assetType: PropTypes.string,
 };
 export default ApigeeDetailedReportsTable;

@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {faStepForward} from "@fortawesome/pro-light-svg-icons";
+import {faArrowRight} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 import {AuthContext} from "contexts/AuthContext";
@@ -77,11 +77,20 @@ function SfdcPipelineWizardSubmitGitFilesButton({pipelineWizardModel, setPipelin
       toastContext.showInlineErrorMessage(generateXMLResponse?.data?.message);
       return;
     }
-    setPipelineWizardScreen(
-      pipelineWizardModel.getData("unitTestSteps").length > 0
-        ? PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR
-        : PIPELINE_WIZARD_SCREENS.XML_VIEWER
-    );
+    if(pipelineWizardModel.getData("unitTestSteps").length > 0) {
+      const response = await sfdcPipelineActions.triggerUnitTestClassesPullV2(getAccessToken, cancelTokenSource, pipelineWizardModel, pipelineWizardModel.getData("unitTestSteps"));
+      if (response?.data?.status !== 200 ) {
+        console.error("Error getting Test Classes : ", response?.data?.message);
+        toastContext.showInlineErrorMessage(response?.data?.message);
+        return;
+      }
+      else {
+        setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR);
+        return;
+      }
+    }
+    setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.XML_VIEWER);
+    return;
   };
 
   if (pipelineWizardModel == null) {
@@ -120,7 +129,7 @@ SfdcPipelineWizardSubmitGitFilesButton.propTypes = {
 
 SfdcPipelineWizardSubmitGitFilesButton.defaultProps = {
   size: "sm",
-  icon: faStepForward
+  icon: faArrowRight
 };
 
 export default SfdcPipelineWizardSubmitGitFilesButton;

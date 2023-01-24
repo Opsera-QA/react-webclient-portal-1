@@ -90,13 +90,17 @@ function ApigeeReportsPipelineTable({ pipeline, dashboardData, kpiConfiguration 
   const loadPipelineData = async (filterDto, cancelSource) => {
     setIsLoading(true);
     setMetrics([]);
-    let dashboardTags =
+    const dashboardTags =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+    const dashboardOrgs =
+      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
+
     const response = await apigeeActions.getReport(
       getAccessToken,
       cancelSource,
       kpiConfiguration,
       dashboardTags,
+      dashboardOrgs,
       filterDto,
       pipeline?.pipelineId
     );
@@ -126,7 +130,7 @@ function ApigeeReportsPipelineTable({ pipeline, dashboardData, kpiConfiguration 
         isLoading={false}
       >
         <div className={"p-3"}>
-          <ApigeeDetailedReportsTable kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} pipeline={pipeline} rowData={rowData?.original} />
+          <ApigeeDetailedReportsTable kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} pipeline={pipeline} rowData={rowData?.original} assetType={filterModel?.getData("assetType")} />
         </div>
       </FullScreenCenterOverlayContainer>
     );

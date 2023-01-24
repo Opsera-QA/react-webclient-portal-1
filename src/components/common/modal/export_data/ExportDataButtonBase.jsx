@@ -4,6 +4,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import Button from "react-bootstrap/Button";
 import IconBase from "components/common/icons/IconBase";
 import { faFileDownload } from "@fortawesome/pro-light-svg-icons";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ExportDataButtonBase({
   className,
@@ -13,12 +14,16 @@ function ExportDataButtonBase({
   showExportPanel,
   buttonSize,
 }) {
+  const {
+    isFreeTrial,
+  } = useComponentStateReference();
+
   const getVariant = () => {
     if (showExportPanel === true) {
-      return "outline-success";
+      return isFreeTrial === true ? "success" : "outline-success";
     }
 
-    return "outline-primary";
+    return isFreeTrial === true ? "secondary" : "outline-primary";
   };
 
   return (

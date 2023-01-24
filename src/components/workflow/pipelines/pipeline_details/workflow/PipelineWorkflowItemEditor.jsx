@@ -57,7 +57,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
 
   const getTitleBar = (title) => {
     return (
-      <div className={"px-2 my-auto content-block-header d-flex"}>
+      <div className={"p-2 my-auto content-block-header d-flex"}>
           <h5 className={"my-auto d-flex justify-content-between h-100 w-100"}>
             <div className={"my-auto"}>{title}</div>
             <div className={"d-flex"}>
@@ -100,6 +100,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
           step={editItem}
           stepId={editItem?.step_id}
           plan={pipeline?.workflow?.plan}
+          pipelineId={pipeline?._id}
           parentCallback={callbackConfigureStep}
           closeEditorPanel={handleCloseClick}
         />

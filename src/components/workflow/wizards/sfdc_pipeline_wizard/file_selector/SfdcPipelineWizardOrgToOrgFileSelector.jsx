@@ -7,7 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import {Button} from "react-bootstrap";
-import {faStepBackward} from "@fortawesome/pro-light-svg-icons";
+import {faArrowLeft} from "@fortawesome/pro-light-svg-icons";
 import CancelButton from "components/common/buttons/CancelButton";
 import SfdcPipelineWizardOriginOrganizationFilesTable
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/org_to_org/SfdcPipelineWizardOriginOrganizationFilesTable";
@@ -119,7 +119,7 @@ const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipeli
       {getBody()}
       <SaveButtonContainer>
         <Button variant="secondary" size="sm" className="mr-2" onClick={() => {setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR);}}>
-          <IconBase icon={faStepBackward} className={"mr-1"}/>Back
+          <IconBase icon={faArrowLeft} className={"mr-1"}/>Back
         </Button>
         <SfdcPipelineWizardSubmitSfdcFilesButton
           setPipelineWizardScreen={setPipelineWizardScreen}

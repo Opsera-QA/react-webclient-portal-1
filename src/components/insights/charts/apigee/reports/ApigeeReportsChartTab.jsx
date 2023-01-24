@@ -62,13 +62,16 @@ function ApigeeReportsChartTab({ kpiConfiguration, setKpiConfiguration, dashboar
   const loadData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     try {
       setIsLoading(true);
-      let dashboardTags =
+      const dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
       const response = await apigeeActions.getPipelines(
         getAccessToken,
         cancelSource,
         kpiConfiguration,
         dashboardTags,
+        dashboardOrgs,
         filterDto
       );
       const responseData1 = response?.data?.data?.data?.[0];
