@@ -107,6 +107,7 @@ import UserActionsPipelineStepEditorPanel
   from "components/workflow/plan/step/user_actions/UserActionsPipelineStepEditorPanel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import HelmStepConfiguration from "./step_tool_configuration_forms/helm/HelmStepConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -850,6 +851,20 @@ function StepToolConfiguration({
       case "terraform": 
         return (
           <TerraformStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "helm": 
+        return (
+          <HelmStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}
