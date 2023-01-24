@@ -5,10 +5,10 @@ import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import userActions from "components/user/user-actions";
 
-function HelmS3BucketRegionSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
-  const toastContext = useContext(DialogToastContext);
+function HelmS3BucketRegionSelectInput({ fieldName, model, setModel, disabled, textField, valueField}) {
   const [cloudProviderRegions, setCloudProviderRegions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError]=useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -36,10 +36,11 @@ function HelmS3BucketRegionSelectInput({ fieldName, dataObject, setDataObject, d
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      setError(null);
       await loadAwsRegions(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      setError(error);
     }
     finally {
       setIsLoading(false);
@@ -47,55 +48,33 @@ function HelmS3BucketRegionSelectInput({ fieldName, dataObject, setDataObject, d
   };
 
   const loadAwsRegions = async (cancelSource = cancelTokenSource) => {
-    try {
       const response = await userActions.getAwsRegionsV2(cancelSource);
       const regions = response?.data?.data;
       if (Array.isArray(regions)) {
         setCloudProviderRegions(regions);
       }
-    } catch (error) {
-      console.error(error);
-      toastContext.showServiceUnavailableDialog();
-    }
   };
-
-  const getPlaceholderText = () => {
-    if (!isLoading && (cloudProviderRegions == null || cloudProviderRegions.length === 0)) {
-      return ("S3 Bucket Region information is missing or unavailable!");
-    }
-
-    return ("Select S3 Bucket Region");
-  };
-
-  if (!isLoading && (cloudProviderRegions == null || cloudProviderRegions.length === 0)) {
-    return (
-      <div className="form-text text-muted p-2">
-        S3 Bucket Region information is missing or unavailable!
-      </div>
-    );
-  }
 
   return (
-    <div>
       <SelectInputBase
         fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
+        dataObject={model}
+        setDataObject={setModel}
         selectOptions={cloudProviderRegions}
         busy={isLoading}
         valueField={valueField}
         textField={textField}
-        placeholderText={getPlaceholderText()}
+        singularTopic={"S3 Bucket"}
         disabled={disabled || isLoading}
+        error={error}
       />
-    </div>
   );
 }
 
 HelmS3BucketRegionSelectInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string

@@ -2,42 +2,40 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function HelmStoreStateInS3Toggle({ dataObject, setDataObject, fieldName, disabled }) {
-  const [field, setField] = useState(dataObject?.getFieldById(fieldName));
+function HelmStoreStateInS3Toggle({ model, setModel, fieldName, disabled }) {
+  const field = useState(model?.getFieldById(fieldName));
 
   if (field == null) {
     return null;
   }
 
   const setDataFunction = (fieldName, value) => {
-    let newDataObject = {...dataObject};
-    newDataObject.setData(fieldName, value);
-    newDataObject.setData("bucketName", "");
-    newDataObject.setData("bucketRegion", "");
+    let newModel = {...model};
+    newModel.setData(fieldName, value);
+    newModel.setData("bucketName", "");
+    newModel.setData("bucketRegion", "");
     if(value){
-      newDataObject.getFieldById("bucketName").isRequired = true;
-      newDataObject.getFieldById("bucketRegion").isRequired = true;
+      newModel.getFieldById("bucketName").isRequired = true;
+      newModel.getFieldById("bucketRegion").isRequired = true;
     }else {
-      newDataObject.getFieldById("bucketName").isRequired = false;
-      newDataObject.getFieldById("bucketRegion").isRequired = false;
+      newModel.getFieldById("bucketName").isRequired = false;
+      newModel.getFieldById("bucketRegion").isRequired = false;
     }
-    setDataObject({...newDataObject});
+    setModel({...newModel});
   };
 
   return (
-    <>
       <BooleanToggleInput disabled={disabled} fieldName={field.id}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
+        dataObject={model}
+        setDataObject={setModel}
         setDataFunction={setDataFunction}
       />
-    </>
   );
 }
 
 HelmStoreStateInS3Toggle.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   fieldName: PropTypes.string,
   disabled: PropTypes.bool
 };

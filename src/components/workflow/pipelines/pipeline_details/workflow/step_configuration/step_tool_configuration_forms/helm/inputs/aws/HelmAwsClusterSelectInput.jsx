@@ -16,11 +16,9 @@ function HelmAwsClusterSelectInput({
   awsToolConfigId,
   clusterData
 }) {
-  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [clusters, setClusters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Cluster");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [error, setError] = useState(undefined);
@@ -64,27 +62,17 @@ function HelmAwsClusterSelectInput({
   };
 
   const loadAwsClusters = async (cancelSource) => {
-    try {
       setClusters([]);
       const res = await argoActions.getAwsEksClusters(getAccessToken, cancelSource, awsToolConfigId);
       if (res && res.status === 200) {
         if (res.data.length === 0) {
-          setPlaceholder("No Clusters Found");
           return;
         }
-        setPlaceholder("Select a Cluster");
         const clusterNames = clusterData.map(c => c.name.trim());                
         const tempClusters = res.data.filter(cluster => !clusterNames.includes(cluster));
         setClusters(tempClusters);
         return;
       }
-      setPlaceholder("No Clusters Found");
-      setClusters([]);
-    } catch (error) {
-      setPlaceholder("No Clusters Found");
-      console.error(error);
-      toastContext.showLoadingErrorDialog(error);
-    }
   };
 
   return (
@@ -97,7 +85,8 @@ function HelmAwsClusterSelectInput({
       valueField={valueField}
       error={error}
       busy={isLoading}
-      placeholderText={placeholder}
+      singularTopic={"Cluster"}
+      pluralTopic={"Clusters"}
       disabled={disabled || isLoading || (!isLoading && (clusters == null || clusters.length === 0))}
     />
   );

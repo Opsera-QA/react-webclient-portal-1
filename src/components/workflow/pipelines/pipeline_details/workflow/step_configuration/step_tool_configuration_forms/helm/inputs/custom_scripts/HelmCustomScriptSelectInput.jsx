@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function HelmCustomScriptSelectInput({dataObject, setDataObject, disabled}) {
+function HelmCustomScriptSelectInput({model, setModel, disabled}) {
 
   const JOB_TYPES = [
     {
@@ -16,7 +16,7 @@ function HelmCustomScriptSelectInput({dataObject, setDataObject, disabled}) {
   ];
 
   const setDataFunction = (fieldName, selectedOption) => {
-    let newModel = {...dataObject};
+    let newModel = {...model};
     newModel.setData(fieldName, selectedOption.value);
     newModel.setData("resourceGroup", "");
     newModel.setData("storageName", "");
@@ -28,11 +28,11 @@ function HelmCustomScriptSelectInput({dataObject, setDataObject, disabled}) {
     newModel.setData("environmentVariables", []);
     newModel.setData("commands", "");
     newModel.setData("keyValueMap", {});
-    setDataObject({...newModel});
+    setModel({...newModel});
   };
 
   const clearDataFunction = () => {
-    let newModel = {...dataObject};
+    let newModel = {...model};
     newModel.setData("resourceGroup", "");
     newModel.setData("storageName", "");
     newModel.setData("containerName", "");
@@ -43,15 +43,15 @@ function HelmCustomScriptSelectInput({dataObject, setDataObject, disabled}) {
     newModel.setData("environmentVariables", []);
     newModel.setData("commands", "");
     newModel.setData("keyValueMap", {});
-    setDataObject({...newModel});
+    setModel({...newModel});
   };
 
 
   return (
     <SelectInputBase
       fieldName={"customScript"}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      dataObject={model}
+      setDataObject={setModel}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
       selectOptions={JOB_TYPES}
@@ -65,8 +65,8 @@ function HelmCustomScriptSelectInput({dataObject, setDataObject, disabled}) {
 }
 
 HelmCustomScriptSelectInput.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string
 };

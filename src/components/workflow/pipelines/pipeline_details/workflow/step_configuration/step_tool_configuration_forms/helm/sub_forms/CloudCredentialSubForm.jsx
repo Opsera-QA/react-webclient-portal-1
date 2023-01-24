@@ -28,8 +28,8 @@ function CloudCredentialSubForm({ model, setModel}) {
             return (
                 <>
                     <HelmAwsCredentialsSelectInput model={model} setModel={setModel} />
-                    <HelmS3BucketSelectInput dataObject={model} setDataObject={setModel} />
-                    <HelmS3BucketRegionSelectInput dataObject={model} setDataObject={setModel} fieldName="bucketRegion" />
+                    <HelmS3BucketSelectInput model={model} setModel={setModel} />
+                    <HelmS3BucketRegionSelectInput model={model} setModel={setModel} fieldName="bucketRegion" />
                 </>
             );
         }

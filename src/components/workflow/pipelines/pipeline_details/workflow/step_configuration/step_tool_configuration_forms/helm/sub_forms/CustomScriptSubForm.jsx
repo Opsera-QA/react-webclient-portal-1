@@ -15,7 +15,7 @@ function CustomScriptSubForm({ model, setModel }) {
 
   return (
     <>
-      <HelmCustomScriptSelectInput dataObject={model} setDataObject={setModel} />
+      <HelmCustomScriptSelectInput model={model} setModel={setModel} />
       {getScriptFields()}      
     </>
   );

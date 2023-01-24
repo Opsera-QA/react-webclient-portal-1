@@ -11,8 +11,8 @@ import toolsActions from "components/inventory/tools/tools-actions";
 function AzureContainerSelectInput(
   {
     fieldName,
-    dataObject,
-    setDataObject,
+    model,
+    setModel,
     azureToolConfigId,
     applicationId,
     storageName,
@@ -24,8 +24,7 @@ function AzureContainerSelectInput(
   const [isLoading, setIsLoading] = useState(false);
   const [azureRegionList, setAzureRegionList] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Container");
-  const toastContext = useContext(DialogToastContext);
+  const [error, setError] = useState(undefined);
   const { getAccessToken } = useContext(AuthContext);
 
   useEffect(() => {
@@ -48,9 +47,8 @@ function AzureContainerSelectInput(
       setIsLoading(true);
       await loadAzureRegistries(cancelSource);
     } catch (error) {
-      setPlaceholderText("There was an error pulling Containers");
+      setError(error);
       setErrorMessage("No Containers available.");
-      toastContext.showErrorDialog(error);
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -64,7 +62,6 @@ function AzureContainerSelectInput(
     const tool = response?.data?.data;
 
     if (tool == null) {
-      setPlaceholderText("Error Pulling Containers!");
       setErrorMessage("Could not find Tool to grab Containers.");
       return;
     }
@@ -73,7 +70,6 @@ function AzureContainerSelectInput(
     const applicationData = applicationResponse?.data?.data;
 
     if (applicationData == null) {
-      setPlaceholderText("Error Pulling Containers!");
       setErrorMessage(`
         The selected Application was not found. 
         It may have been deleted, or the Tool's access roles may have been updated.
@@ -92,14 +88,13 @@ function AzureContainerSelectInput(
     );
 
     const result = azureResponse?.data?.data;
-    console.log(result);
+
     if (Array.isArray(result) && result.length > 0) {
       setErrorMessage("");
       setAzureRegionList(result);
     }
 
     if (result?.length === 0) {
-      setPlaceholderText("No containers found with this azure configuration");
       setErrorMessage("No Containers found");
     }
   };
@@ -107,14 +102,14 @@ function AzureContainerSelectInput(
   return (
       <SelectInputBase
         fieldName={fieldName}
-        dataObject={dataObject}
+        dataObject={model}
         textField={textField}
         valueField={valueField}
-        setDataObject={setDataObject}
+        setDataObject={setModel}
         selectOptions={azureRegionList}
         busy={isLoading}
         disabled={isLoading}
-        placeholder={placeholder}
+        error={error}
         errorMessage={errorMessage}
       />
   );

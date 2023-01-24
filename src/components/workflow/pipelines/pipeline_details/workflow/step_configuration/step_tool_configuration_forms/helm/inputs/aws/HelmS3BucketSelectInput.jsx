@@ -2,24 +2,24 @@ import React from "react";
 import PropTypes from "prop-types";
 import AwsS3BucketNameSelectInput from "components/common/list_of_values_input/tools/aws/AwsS3BucketNameSelectInput";
 
-function HelmS3BucketSelectInput({dataObject, setDataObject, disabled}) {
+function HelmS3BucketSelectInput({model, setModel, disabled}) {
   const setBucketName = (fieldName, selectedOption) => {
-    let newDataObject = {...dataObject};
-    newDataObject.setData("bucketName", selectedOption);
-    setDataObject({...newDataObject});
+    let newModel = {...model};
+    newModel.setData("bucketName", selectedOption);
+    setModel({...newModel});
   };
   const clearDataFunction = () => {
-    let newDataObject = {...dataObject};
-    newDataObject.setData("bucketName", "");
-    setDataObject({...newDataObject});
+    let newModel = {...model};
+    newModel.setData("bucketName", "");
+    setModel({...newModel});
   };
   return (
      <AwsS3BucketNameSelectInput
        fieldName={"bucketName"}
-       awsToolId={dataObject.getData("awsToolConfigId")}
-       model={dataObject}
+       awsToolId={model.getData("awsToolConfigId")}
+       model={model}
        setDataFunction={setBucketName}
-       setModel={setDataObject}
+       setModel={setModel}
        clearDataFunction={clearDataFunction}
        disabled={disabled}
      />
@@ -27,8 +27,8 @@ function HelmS3BucketSelectInput({dataObject, setDataObject, disabled}) {
 }
 
 HelmS3BucketSelectInput.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 

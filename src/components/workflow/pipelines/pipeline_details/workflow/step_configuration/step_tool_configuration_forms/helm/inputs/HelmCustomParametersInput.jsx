@@ -18,8 +18,8 @@ function HelmCustomParametersInput({model, setModel, fieldName, disabled}) {
     if (model?.getData("saveEnvironmentVariables") === true && fieldName === "saveEnvironmentVariables") {
       return (
         <HelmEnvironmentVariables
-          dataObject={model}
-          setDataObject={setModel}
+          model={model}
+          setModel={setModel}
           disabled={disabled}
         />
       );

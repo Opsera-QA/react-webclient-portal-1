@@ -12,8 +12,8 @@ import helmStepActions from "../../helm-step-actions";
 function AzureStorageAccountInput(
     {
         fieldName,
-        dataObject,
-        setDataObject,
+        model,
+        setModel,
         azureToolConfigId,
         applicationId,
         resourceGroup
@@ -22,8 +22,7 @@ function AzureStorageAccountInput(
     const [isLoading, setIsLoading] = useState(false);
     const [azureRegionList, setAzureRegionList] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
-    const [placeholder, setPlaceholderText] = useState("Select Storage Account");
-    const toastContext = useContext(DialogToastContext);
+    const [error, setError]=useState(undefined);
     const { getAccessToken } = useContext(AuthContext);
 
     useEffect(() => {
@@ -45,10 +44,9 @@ function AzureStorageAccountInput(
         try {
             setIsLoading(true);
             await loadStorageAccounts(cancelSource);
+            setError(null);
         } catch (error) {
-            setPlaceholderText("There was an error pulling Storage Accounts");
-            setErrorMessage("No Storage Accounts available.");
-            console.error(error);
+            setError(error);
         } finally {
             setIsLoading(false);
         }
@@ -59,7 +57,6 @@ function AzureStorageAccountInput(
         const tool = response?.data?.data;
 
         if (tool == null) {
-            setPlaceholderText("Error Pulling Storage Accounts!");
             setErrorMessage("Could not find Tool to grab Storage Accounts.");
             return;
         }
@@ -68,7 +65,6 @@ function AzureStorageAccountInput(
         const applicationData = applicationResponse?.data?.data;
 
         if (applicationData == null) {
-            setPlaceholderText("Error Pulling Storage Accounts!");
             setErrorMessage(`
         The selected Application was not found. 
         It may have been deleted, or the Tool's access roles may have been updated.
@@ -92,7 +88,6 @@ function AzureStorageAccountInput(
         }
 
         if (result?.length === 0) {
-            setPlaceholderText("No storage accounts found with this azure configuration");
             setErrorMessage("No Storage Accounts found");
         }
     };
@@ -100,23 +95,25 @@ function AzureStorageAccountInput(
     return (
         <SelectInputBase
             fieldName={fieldName}
-            dataObject={dataObject}
+            dataObject={model}
             textField={"name"}
             valueField={"name"}
-            setDataObject={setDataObject}
+            setDataObject={setModel}
             selectOptions={azureRegionList}
             busy={isLoading}
             disabled={isLoading}
-            placeholder={placeholder}
+            singularTopic={"Storage Account"}
+            pluralTopic={"Storage Accounts"}
             errorMessage={errorMessage}
+            error={error}
         />
     );
 }
 
 AzureStorageAccountInput.propTypes = {
     fieldName: PropTypes.string,
-    dataObject: PropTypes.object,
-    setDataObject: PropTypes.func,
+    model: PropTypes.object,
+    setModel: PropTypes.func,
     azureToolConfigId: PropTypes.string,
     applicationId: PropTypes.string,
     resourceGroup: PropTypes.string,

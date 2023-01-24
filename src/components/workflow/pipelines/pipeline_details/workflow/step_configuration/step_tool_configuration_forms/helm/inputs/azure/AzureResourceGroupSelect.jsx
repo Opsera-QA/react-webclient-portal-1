@@ -13,8 +13,8 @@ import IconBase from "components/common/icons/IconBase";
 function AksResourceGroupSelectInput(
   {
     fieldName,
-    dataObject,
-    setDataObject,
+    model,
+    setModel,
     azureToolConfigId,
     azureApplication,
     textField,
@@ -26,7 +26,7 @@ function AksResourceGroupSelectInput(
   const [azureRegionList, setAzureRegionList] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [placeholder, setPlaceholderText] = useState("Select Cluster");
-  const toastContext = useContext(DialogToastContext);
+  const [error, setError] = useState(undefined);
   const { getAccessToken } = useContext(AuthContext);
 
   useEffect(() => {
@@ -48,10 +48,9 @@ function AksResourceGroupSelectInput(
     try {
       setIsLoading(true);
       await loadAzureRegistries(cancelSource);
+      setError(null);
     } catch (error) {
-      setPlaceholderText("There was an error pulling Resource Groups");
-      setErrorMessage("No Resource Groups available.");
-      toastContext.showErrorDialog(error);
+      setError(error);
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -65,7 +64,6 @@ function AksResourceGroupSelectInput(
     const tool = response?.data?.data;
 
     if (tool == null) {
-      setPlaceholderText("Error Pulling Clusters!");
       setErrorMessage("Could not find Tool to grab Clusters.");
       return;
     }
@@ -74,7 +72,6 @@ function AksResourceGroupSelectInput(
     const applicationData = applicationResponse?.data?.data;
 
     if (applicationData == null) {
-      setPlaceholderText("Error Pulling Clusters!");
       setErrorMessage(`
         The selected Application was not found. 
         It may have been deleted, or the Tool's access roles may have been updated.
@@ -97,13 +94,12 @@ function AksResourceGroupSelectInput(
     }
 
     if (result?.length === 0) {
-      setPlaceholderText("No resource groups found with this azure configuration");
       setErrorMessage("No Resource Groups found");
     }
   };
 
   const getInfoText = () => {
-    if (dataObject?.getData("resource")?.length > 0) {
+    if (model?.getData("resource")?.length > 0) {
       return (
         <small>
           <IconBase icon={faSync} className={"pr-1"} />
@@ -117,15 +113,17 @@ function AksResourceGroupSelectInput(
     <>
       <SelectInputBase
         fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
+        dataObject={model}
+        setDataObject={setModel}
         selectOptions={azureRegionList}
         busy={isLoading}
         disabled={isLoading || disabled}
-        placeholder={placeholder}
+        singularTopic={"Resource Group"}
+        pluralTopic={"Resource Groups"}
         textField={textField}
         valueField={valueField}
         errorMessage={errorMessage}
+        error={error}
       />
       <div onClick={() => loadData()} className="text-muted ml-3 dropdown-data-fetch">
         {getInfoText()}
@@ -136,8 +134,8 @@ function AksResourceGroupSelectInput(
 
 AksResourceGroupSelectInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   azureToolConfigId: PropTypes.string,
   azureApplication: PropTypes.string,
   textField: PropTypes.string,

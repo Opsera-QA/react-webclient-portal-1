@@ -8,13 +8,13 @@ import HelmScmToolTypeSelectInput from "components/workflow/pipelines/pipeline_d
 import HelmScmToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/helm/inputs/HelmScmToolSelectInput";
 import HelmBitbucketWorkspaceSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformBitbucketWorkspaceSelectInput";
 import HelmGitRepositorySelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/helm/inputs/HelmGitRepositorySelectInput";
-import HelmGitBranchSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformGitBranchSelectInput";
 import helmStepFormMetadata from "./helm-stepForm-metadata";
 import HelmCustomParametersInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/helm/inputs/HelmCustomParametersInput";
 import HelmCloudProviderSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCloudProviderSelectInput";
 import CloudCredentialSubForm from "./sub_forms/CloudCredentialSubForm";
 import CustomScriptSubForm from "./sub_forms/CustomScriptSubForm";
+import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 
 function HelmStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -68,7 +68,15 @@ console.log(helmStepConfigurationModel);
       <HelmScmToolSelectInput model={helmStepConfigurationModel} setModel={setHelmStepConfigurationModel} />
       <HelmBitbucketWorkspaceSelectInput model={helmStepConfigurationModel} setModel={setHelmStepConfigurationModel} />
       <HelmGitRepositorySelectInput model={helmStepConfigurationModel} setModel={setHelmStepConfigurationModel} />
-      <HelmGitBranchSelectInput model={helmStepConfigurationModel} setModel={setHelmStepConfigurationModel} />
+      <GitBranchInput 
+        fieldName="defaultBranch" 
+        service={helmStepConfigurationModel?.getData("type")}
+        gitToolId={helmStepConfigurationModel?.getData("gitToolId")}
+        workspace={helmStepConfigurationModel?.getData("bitbucketWorkspace")}
+        repoId={helmStepConfigurationModel?.getData("gitRepositoryID")}
+        dataObject={helmStepConfigurationModel}
+        setDataObject={setHelmStepConfigurationModel}
+      />  
       <TextInputBase dataObject={helmStepConfigurationModel} fieldName={"gitFilePath"} setDataObject={setHelmStepConfigurationModel}/>
       <HelmCloudProviderSelectInput dataObject={helmStepConfigurationModel} setDataObject={setHelmStepConfigurationModel} fieldName={"cloudProvider"} />
       <CloudCredentialSubForm model={helmStepConfigurationModel} setModel={setHelmStepConfigurationModel} />

@@ -4,26 +4,25 @@ import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 import ParameterMappingInputBase
   from "../../../../../../../../../common/list_of_values_input/parameters/ParameterMappingInputBase";
 
-function HelmEnvironmentVariables({ dataObject, setDataObject, disabled, fieldName}) {
+function HelmEnvironmentVariables({ model, setModel, disabled, fieldName}) {
 
   return (
     <ParameterMappingInputBase
       titleIcon={faHandshake}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      dataObject={model}
+      setDataObject={setModel}
       fieldName={fieldName}
       allowIncompleteItems={true}
       type={"Environment Variables"}
-      regexValidationRequired={false}
       titleText={"Environment Variable Mapping"}
     />
   );
 }
 
 HelmEnvironmentVariables.propTypes = {
-  dataObject: PropTypes.object,
+  model: PropTypes.object,
   fieldName: PropTypes.string,
-  setDataObject: PropTypes.func,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   regexValidationRequired: PropTypes.bool,
 };
