@@ -154,7 +154,7 @@ function MembersPanel(
     <div className={"ml-2"}>
       {getButtons()}
       <div className="content-card-1 content-container">
-        <div className="px-2 d-flex content-block-header members-title justify-content-between">
+        <div className="p-2 d-flex content-block-header members-title justify-content-between">
           <div className={"my-auto"}><IconBase icon={faUsers} className={"mr-2"} />Members</div>
           <div className={"my-auto"}>{members.length} {members.length !== 1 ? "users" : "user"}</div>
         </div>
