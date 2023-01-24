@@ -133,6 +133,10 @@ function LazyLoadMultiSelectInputBase(
   };
 
   const getPlaceholderText = () => {
+    if (requireUserEnable === true && enabled === false) {
+      return `Click to Load ${pluralTopic} and Enable Edit Mode`;
+    }
+
     if (hasStringValue(internalPlaceholderText) === true) {
       return internalPlaceholderText;
     }
@@ -205,6 +209,7 @@ function LazyLoadMultiSelectInputBase(
             setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)
           }
           lazyLoad={true}
+          onClickFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
         />
       </div>
       <InfoText

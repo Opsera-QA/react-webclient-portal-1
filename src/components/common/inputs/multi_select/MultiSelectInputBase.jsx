@@ -161,6 +161,10 @@ function MultiSelectInputBase(
   };
 
   const getPlaceholderText = () => {
+    if (requireUserEnable === true && enabled === false) {
+      return `Click to Load ${pluralTopic} and Enable Edit Mode`;
+    }
+
     if (hasStringValue(internalPlaceholderText) === true) {
       return internalPlaceholderText;
     }
@@ -218,6 +222,7 @@ function MultiSelectInputBase(
         disabled={disabled || (requireUserEnable === true && enabled === false)}
         setDataFunction={updateValue}
         onSearchFunction={onSearchFunction}
+        onClickFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
       />
       <InfoText
         fieldName={fieldName}

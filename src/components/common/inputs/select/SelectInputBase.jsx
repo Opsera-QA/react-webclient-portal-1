@@ -122,6 +122,10 @@ function SelectInputBase(
   };
 
   const getPlaceholderText = () => {
+    if (requireUserEnable === true && enabled === false) {
+      return `Click to Load ${pluralTopic} and Enable Edit Mode`;
+    }
+
     if (hasStringValue(internalPlaceholderText) === true) {
       return internalPlaceholderText;
     }
@@ -191,6 +195,7 @@ function SelectInputBase(
           setDataFunction={(newValue) => updateValue(newValue)}
           disabled={disabled || (requireUserEnable === true && enabled === false)}
           onSearchFunction={onSearchFunction}
+          onClickFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
         />
         <NewRecordButton
           addRecordFunction={handleCreateFunction}
