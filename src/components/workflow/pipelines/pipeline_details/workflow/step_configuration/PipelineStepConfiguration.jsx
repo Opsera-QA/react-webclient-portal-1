@@ -25,9 +25,7 @@ function PipelineStepConfiguration(
   {
     plan,
     stepId,
-    parentCallback,
     closeEditorPanel,
-    step,
     pipelineId,
   }) {
   const [stepConfigurationModel, setStepConfigurationModel] = useState(undefined);
@@ -35,9 +33,7 @@ function PipelineStepConfiguration(
   const [lockTool, setLockTool] = useState(false);
   const {
     isMounted,
-    cancelTokenSource,
     toastContext,
-    getAccessToken,
   } = useComponentStateReference();
   const pipelineActions = usePipelineActions();
 
@@ -96,27 +92,6 @@ function PipelineStepConfiguration(
     closeEditorPanel();
   };
 
-  // TODO: Remove after validation
-  const savePipelineStepConfiguration = async (model = stepConfigurationModel) => {
-    const stepArrayIndex = pipelineHelpers.getStepIndexFromPlan(plan, stepId);
-    const stepConfigurationData = model.getPersistData();
-
-    if (stepArrayIndex >= 0 && plan[stepArrayIndex] !== undefined) {
-      plan[stepArrayIndex].name = stepConfigurationData.name;
-      plan[stepArrayIndex].type[0] = stepConfigurationData.type;
-      plan[stepArrayIndex].tool_category = stepConfigurationData.type;
-      plan[stepArrayIndex].orchestration_type = "standard";
-      plan[stepArrayIndex].tool = {
-        ...plan[stepArrayIndex].tool,
-        tool_identifier: stepConfigurationData.tool_identifier
-      };
-      plan[stepArrayIndex].active = stepConfigurationData.active;
-      plan[stepArrayIndex].tags = stepConfigurationData.tags;
-      await parentCallback(plan);
-      closeEditorPanel();
-    }
-  };
-
   const handleTagsCheck = async () => {
     const tags = DataParsingHelper.parseArray(stepConfigurationModel?.getData("tags"), []);
 
@@ -141,9 +116,8 @@ function PipelineStepConfiguration(
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
       recordDto={stepConfigurationModel}
-      persistRecord={savePipelineStepConfiguration}
-      // persistRecord={handleTagsCheck}
-      // showSuccessToasts={stepConfigurationModel?.getData("type") !== "deploy" || stepConfigurationModel?.getArrayData("tags").length > 0}
+      persistRecord={handleTagsCheck}
+      showSuccessToasts={stepConfigurationModel?.getData("type") !== "deploy" || stepConfigurationModel?.getArrayData("tags").length > 0}
       isLoading={isLoading}
       isStrict={true}
     >
@@ -186,9 +160,7 @@ function PipelineStepConfiguration(
 PipelineStepConfiguration.propTypes = {
   plan: PropTypes.array,
   stepId: PropTypes.string,
-  parentCallback: PropTypes.func,
   closeEditorPanel: PropTypes.func,
-  step: PropTypes.object,
   pipelineId: PropTypes.string,
 };
 

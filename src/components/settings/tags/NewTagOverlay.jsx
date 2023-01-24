@@ -2,7 +2,7 @@ import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import tagMetadata from "components/settings/tags/tag.metadata";
-import TagEditorPanel from "components/settings/tags/tags_detail_view/TagEditorPanel";
+import TagEditorPanel from "components/settings/tags/details/TagEditorPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import {CENTER_OVERLAY_SIZES} from "components/common/overlays/center/CenterOverlayContainer";

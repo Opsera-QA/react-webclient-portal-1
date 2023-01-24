@@ -18,7 +18,7 @@ import SsoUserDetailView from "components/settings/users/sso_user_details/SsoUse
 import LogsExportManagement from "components/settings/logs_management/LogsExportManagement";
 import UnsecuredItemReport from "components/settings/unsecured_items/UnsecuredItemReport";
 import TagEditor from "components/settings/tags/TagManagement";
-import TagDetailView from "components/settings/tags/tags_detail_view/TagDetailView";
+import TagDetailView from "components/settings/tags/details/TagDetailView";
 import AnalyticsProfileSettings from "components/settings/analytics/analyticsProfileSettings";
 import DataMappingManagement from "components/settings/data_mapping/DataMappingManagement";
 import ProjectDataMappingDetailView

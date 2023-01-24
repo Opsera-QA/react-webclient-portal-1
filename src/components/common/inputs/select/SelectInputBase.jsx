@@ -47,6 +47,7 @@ function SelectInputBase(
     handleCreateFunction,
     requireUserEnable,
     ellipsisOnClickFunction,
+    onEnableEditFunction,
 }) {
   const field = dataObject?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
@@ -121,6 +122,10 @@ function SelectInputBase(
   };
 
   const getPlaceholderText = () => {
+    if (requireUserEnable === true && enabled === false) {
+      return `Click to Load ${pluralTopic} and Enable Edit Mode`;
+    }
+
     if (hasStringValue(internalPlaceholderText) === true) {
       return internalPlaceholderText;
     }
@@ -138,6 +143,10 @@ function SelectInputBase(
 
   const enableEditingFunction = () => {
     setEnabled(true);
+
+    if (onEnableEditFunction) {
+      onEnableEditFunction();
+    }
   };
 
   const getEnableEditFunction = () => {
@@ -186,6 +195,7 @@ function SelectInputBase(
           setDataFunction={(newValue) => updateValue(newValue)}
           disabled={disabled || (requireUserEnable === true && enabled === false)}
           onSearchFunction={onSearchFunction}
+          onClickFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
         />
         <NewRecordButton
           addRecordFunction={handleCreateFunction}
@@ -254,6 +264,7 @@ SelectInputBase.propTypes = {
   handleCreateFunction: PropTypes.func,
   requireUserEnable: PropTypes.bool,
   ellipsisOnClickFunction: PropTypes.func,
+  onEnableEditFunction: PropTypes.func,
 };
 
 SelectInputBase.defaultProps = {

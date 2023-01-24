@@ -4,10 +4,10 @@ import PipelineWorkflowStepToolIdentifierField
   from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepToolIdentifierField";
 import PipelineWorkflowStepIdField
   from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepIdField";
-import PipelineWorkflowStepChildPipelineField
-  from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepChildPipelineField";
+import PipelineWorkflowStepParallelPipelinesField
+  from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepParallelPipelinesField";
 
-export default function ChildPipelinePipelineStepWorkflowItemBody(
+export default function ParallelProcessorPipelineStepWorkflowItemBody(
   {
     step,
     toolIdentifier,
@@ -24,14 +24,14 @@ export default function ChildPipelinePipelineStepWorkflowItemBody(
       <PipelineWorkflowStepToolIdentifierField
         toolIdentifier={toolIdentifier}
       />
-      <PipelineWorkflowStepChildPipelineField
+      <PipelineWorkflowStepParallelPipelinesField
         step={step}
       />
     </div>
   );
 }
 
-ChildPipelinePipelineStepWorkflowItemBody.propTypes = {
+ParallelProcessorPipelineStepWorkflowItemBody.propTypes = {
   pipeline: PropTypes.object,
   step: PropTypes.object,
   toolIdentifier: PropTypes.object,
