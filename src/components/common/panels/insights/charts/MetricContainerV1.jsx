@@ -53,7 +53,7 @@ function MetricContainerV1({ isLoading, children, title, chartHelpComponent }) {
 
   return (
     <div className={`metric-container content-container content-card-1`}>
-      <div className="px-2 content-block-header-inverse title-text-header-2">
+      <div className="p-2 content-block-header-inverse title-text-header-2">
         {getTitleBar()}
       </div>
       <div style={{padding: 0}} className={"new-chart m-2 shaded-panel"}>

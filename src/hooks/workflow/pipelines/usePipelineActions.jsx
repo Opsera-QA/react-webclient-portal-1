@@ -13,6 +13,21 @@ export default function usePipelineActions() {
     );
   };
 
+  pipelineActions.updatePipelineActionRoles = async (
+    pipelineId,
+    roles,
+  ) => {
+    const apiUrl = `/workflow/pipelines/${pipelineId}/roles`;
+    const postBody = {
+      roles: roles,
+    };
+    return await apiService.handleApiPatchRequest(
+      apiUrl,
+      postBody,
+    );
+  };
+
+
   pipelineActions.deletePipelineStepById = async (
     pipelineId,
     pipelineStepId,
