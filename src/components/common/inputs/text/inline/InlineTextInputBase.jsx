@@ -121,6 +121,7 @@ export default function InlineTextInputBase(
 
   const handleCancelFunction = () => {
     updateValue(model?.getOriginalValue(fieldName));
+    setInEditMode(false);
   };
 
   const getEditIcon = () => {
@@ -172,7 +173,7 @@ export default function InlineTextInputBase(
   };
 
   const getCancelIcon = () => {
-    if (isSaving !== true) {
+    if (isSaving !== true && inEditMode === true) {
       return (
         <IconBase
           icon={faTimes}
