@@ -16,7 +16,7 @@ export default function TaskTemplateInlineRoleAccessInput(
 
   const saveData = async (newRoles) => {
     templateModel.setData(fieldName, newRoles);
-    const response = await taskTemplateActions.updateTemplate(templateModel, getAccessToken);
+    const response = await taskTemplateActions.updateTemplateV2(templateModel, getAccessToken);
     setTemplateModel({...templateModel});
     return response;
   };

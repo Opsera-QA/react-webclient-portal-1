@@ -48,13 +48,16 @@ function ApigeeSummaryChart({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let dashboardTags =
+      const dashboardTags =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const dashboardOrgs =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
       const response = await apigeeActions.getSummaryChartDetails(
         getAccessToken,
         cancelSource,
         kpiConfiguration,
         dashboardTags,
+        dashboardOrgs,
       );
       const metrics1 = response?.data?.data?.data;
 

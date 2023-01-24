@@ -1,4 +1,5 @@
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
+import { format, hoursToMinutes } from "date-fns";
 import {
   faCheckCircle,
   faCircle,
@@ -12,7 +13,6 @@ import {
   faTimesCircle,
   faTrash,
 } from "@fortawesome/pro-light-svg-icons";
-import { hoursToMinutes } from "date-fns";
 import { faBitbucket, faGithub, faGitlab, faJira, faSlack } from "@fortawesome/free-brands-svg-icons";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import WarningIcon from "../../common/icons/table/WarningIcon";
