@@ -9,7 +9,7 @@ import LdapGroupMembershipManagementPanel
 import SiteRoleSummaryPanel from "components/settings/ldap_site_roles/details/SiteRoleSummaryPanel";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 
-function SiteRoleDetailPanel({ldapGroupData, orgDomain, loadData }) {
+function SiteRoleDetailPanel({ldapGroupData, orgDomain, loadData, isLoading }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -43,6 +43,7 @@ function SiteRoleDetailPanel({ldapGroupData, orgDomain, loadData }) {
             domain={orgDomain}
             setActiveTab={setActiveTab}
             loadData={loadData}
+            isLoading={isLoading}
           />
         );
       case "manage":
@@ -72,6 +73,7 @@ SiteRoleDetailPanel.propTypes = {
   ldapGroupData: PropTypes.object,
   orgDomain: PropTypes.string,
   loadData: PropTypes.func,
+  isLoading: PropTypes.bool,
 };
 
 export default SiteRoleDetailPanel;

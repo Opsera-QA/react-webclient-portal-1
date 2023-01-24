@@ -117,10 +117,6 @@ function SiteRoleDetailView() {
     }
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
   const getActionBar = () => {
     if (ldapGroupData != null) {
       return (
@@ -133,12 +129,16 @@ function SiteRoleDetailView() {
     }
   };
 
+  if (!accessRoleData) {
+    return (<LoadingDialog size="sm"/>);
+  }
+
   return (
     <DetailScreenContainer
       breadcrumbDestination={"ldapSiteRoleDetailView"}
       metadata={ldapGroupMetaData}
       dataObject={ldapGroupData}
-      isLoading={isLoading}
+      isLoading={isLoading && ldapGroupData == null}
       navigationTabContainer={<SiteRoleManagementSubNavigationBar activeTab={"siteRoleViewer"}/>}
       actionBar={getActionBar()}
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
@@ -146,7 +146,8 @@ function SiteRoleDetailView() {
         <SiteRoleDetailPanel
           orgDomain={orgDomain}
           ldapGroupData={ldapGroupData}
-          loadData={getRoles}
+          loadData={loadData}
+          isLoading={isLoading}
         />
       }
     />
