@@ -119,6 +119,10 @@ function LazyLoadSelectInputBase(
   };
 
   const getPlaceholderText = () => {
+    if (requireUserEnable === true && enabled === false) {
+      return `Click to Load ${pluralTopic} and Enable Edit Mode`;
+    }
+
     if (hasStringValue(internalPlaceholderText) === true) {
       return internalPlaceholderText;
     }
@@ -188,6 +192,7 @@ function LazyLoadSelectInputBase(
         disabled={disabled || (requireUserEnable === true && enabled === false)}
         onSearchFunction={onSearchFunction}
         lazyLoad={true}
+        onClickFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
       />
       <InfoText
         model={dataObject}

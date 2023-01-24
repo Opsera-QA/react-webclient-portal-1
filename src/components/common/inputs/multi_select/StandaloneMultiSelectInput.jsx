@@ -37,9 +37,13 @@ function StandaloneMultiSelectInput(
     lazyLoad,
     manualEntry,
     onSearchFunction,
+    onClickFunction,
   }) {
   return (
-    <div className={"custom-multiselect-input"}>
+    <div
+      className={"custom-multiselect-input"}
+      onClick={onClickFunction}
+    >
       <Multiselect
         className={getClassNames(className, hasErrorState, hasWarningState)}
         data={selectOptions}
@@ -92,6 +96,7 @@ StandaloneMultiSelectInput.propTypes = {
   lazyLoad: PropTypes.bool,
   manualEntry: PropTypes.bool,
   onSearchFunction: PropTypes.func,
+  onClickFunction: PropTypes.func,
 };
 
 export default StandaloneMultiSelectInput;
