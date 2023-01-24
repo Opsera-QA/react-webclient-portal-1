@@ -82,7 +82,7 @@ function SelectedUnitTestClassesPanel({selectedMembers, setSelectedMembers, nonM
         </Button>
       </div>
       <div className="content-card-1 content-container">
-        <div className="px-2 d-flex content-block-header members-title justify-content-between">
+        <div className="p-2 d-flex content-block-header members-title justify-content-between">
           <div><IconBase icon={faCode} className={"mr-2"}/>Selected Unit Test Classes</div>
           <div>{members.length} {members.length !== 1 ? "classes" : "class"}</div>
         </div>

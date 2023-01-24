@@ -79,11 +79,11 @@ export const getTableTextColumn = (field, className) => {
 };
 
 /**
-  * given a value in hours, display the time duration in format such as "37 min" or "2 hr, 17 min, 1 sec", see getTimeDisplay for more details
-  * @param {String} field 
-  * @param {String} className 
-  * @returns table column definition
-  */
+ * given a value in hours, display the time duration in format such as "37 min" or "2 hr, 17 min, 1 sec", see getTimeDisplay for more details
+ * @param {String} field 
+ * @param {String} className 
+ * @returns table column definition
+ */
 export const getTableHourDurationTextColumn = (field, className) => {
   return {
     Header: getCustomTableHeader(field),

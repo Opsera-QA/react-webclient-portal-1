@@ -5,33 +5,32 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import CancelButtonBase from "components/common/buttons/cancel/CancelButtonBase";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import IconBase from "components/common/icons/IconBase";
-import {faShareAlt, faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
+import {faCheckCircle, faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
-export default function OwnershipTransferConfirmationOverlay(
+export default function AccessRoleLoseAccessConfirmationOverlay(
   {
     closePanelFunction,
-    type,
-    willLoseAccess,
-    ownershipTransferFunction,
+    saveAccessRolesFunction,
+    lostAccessRerouteRoute,
   }) {
   const toastContext = useContext(DialogToastContext);
   const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
 
-  const transferOwnership = async () => {
+  const saveAccessRoles = async () => {
     try {
       setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
-      await ownershipTransferFunction(willLoseAccess);
-      toastContext.showUpdateSuccessResultDialog(type);
+      await saveAccessRolesFunction();
+      toastContext.showUpdateSuccessResultDialog("Access Rules");
       document.body.click();
       handleClosePanelFunction();
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
     }
     catch (error) {
       setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);
-      toastContext.showUpdateFailureResultDialog(type, error);
+      toastContext.showUpdateFailureResultDialog("Access Rules", error);
     }
   };
 
@@ -43,13 +42,13 @@ export default function OwnershipTransferConfirmationOverlay(
           size={"md"}
         />
         <VanityButtonBase
+          icon={faCheckCircle}
           buttonState={buttonState}
-          icon={faShareAlt}
-          onClickFunction={transferOwnership}
-          normalText={`Transfer Ownership`}
-          errorText={`Error Transferring Ownership`}
-          busyText={`Transferring Ownership`}
-          successText={`Successfully Transferred Ownership`}
+          onClickFunction={saveAccessRoles}
+          normalText={`Save Access Roles`}
+          errorText={`Error Saving Access Roles`}
+          busyText={`Saving Access Roles`}
+          successText={`Successfully Saved Access Roles`}
           className={"ml-2"}
         />
       </ButtonContainerBase>
@@ -64,24 +63,7 @@ export default function OwnershipTransferConfirmationOverlay(
     }
   };
 
-  const getText = () => {
-    if (willLoseAccess === true) {
-      return (
-        <div>
-          <H5FieldSubHeader
-            subheaderText={"You will lose access if you transfer owners."}
-          />
-          <div>Are you sure you would like to transfer ownership for this {type}?</div>
-        </div>
-      );
-    }
-
-    return (
-      <div>Are you sure you would like to transfer ownership for this {type}?</div>
-    );
-  };
-
-  if (ownershipTransferFunction == null) {
+  if (saveAccessRolesFunction == null || lostAccessRerouteRoute == null) {
     return null;
   }
 
@@ -89,7 +71,7 @@ export default function OwnershipTransferConfirmationOverlay(
     <ConfirmationOverlay
       closePanel={handleClosePanelFunction}
       buttonContainer={getButtonContainer()}
-      titleText={`Confirm Ownership Transfer`}
+      titleText={`Confirm Access Role Updates`}
       titleIcon={faTriangleExclamation}
       height={"200px"}
     >
@@ -102,7 +84,10 @@ export default function OwnershipTransferConfirmationOverlay(
           </div>
           <div className={"flex-fill ml-4"}>
             <div>
-              {getText()}
+              <H5FieldSubHeader
+                subheaderText={"You will lose access if you apply these Access Rules."}
+              />
+              <div>Are you sure you would like to apply these Access Rules?</div>
             </div>
           </div>
         </div>
@@ -111,10 +96,9 @@ export default function OwnershipTransferConfirmationOverlay(
   );
 }
 
-OwnershipTransferConfirmationOverlay.propTypes = {
+AccessRoleLoseAccessConfirmationOverlay.propTypes = {
   closePanelFunction: PropTypes.func,
-  ownershipTransferFunction: PropTypes.func,
-  willLoseAccess: PropTypes.bool,
-  type: PropTypes.string,
+  saveAccessRolesFunction: PropTypes.func,
+  lostAccessRerouteRoute: PropTypes.string,
 };
 

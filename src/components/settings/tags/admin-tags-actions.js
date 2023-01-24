@@ -13,19 +13,6 @@ adminTagsActions.getEstimatedTagCountV2 = async (getAccessToken, cancelTokenSour
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-adminTagsActions.deleteTagV2 = async (getAccessToken, cancelTokenSource, tagId) => {
-  const apiUrl = `/tags/${tagId}`;
-  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-adminTagsActions.updateTagV2 = async (getAccessToken, cancelTokenSource, tagDataDto) => {
-  let postBody = {
-    ...tagDataDto.getPersistData(),
-  };
-  const apiUrl = `/tags/${tagDataDto.getData("_id")}/update/`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
 // Remove after wiring up V2
 adminTagsActions.getAllTags = async (getAccessToken) => {
   const apiUrl = "/tags";
@@ -101,17 +88,12 @@ adminTagsActions.getVisibleTags = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
-adminTagsActions.getTagV2 = async (getAccessToken, cancelTokenSource, tagId) => {
-  const apiUrl = `/tags/${tagId}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
 // TODO: Remove when all references are updated to createTagV2
 adminTagsActions.create = async (tagDataDto, getAccessToken) => {
   let postBody = {
     ...tagDataDto.getPersistData(),
   };
-  const apiUrl = "/tags/create";
+  const apiUrl = "/tags";
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
@@ -119,7 +101,7 @@ adminTagsActions.createTagV2 = async (getAccessToken, cancelTokenSource, tagData
   let postBody = {
     ...tagDataDto.getPersistData(),
   };
-  const apiUrl = "/tags/create";
+  const apiUrl = "/tags";
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
