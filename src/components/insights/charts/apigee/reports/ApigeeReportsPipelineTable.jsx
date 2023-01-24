@@ -126,7 +126,7 @@ function ApigeeReportsPipelineTable({ pipeline, dashboardData, kpiConfiguration 
         isLoading={false}
       >
         <div className={"p-3"}>
-          <ApigeeDetailedReportsTable kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} pipeline={pipeline} rowData={rowData?.original} />
+          <ApigeeDetailedReportsTable kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} pipeline={pipeline} rowData={rowData?.original} assetType={filterModel?.getData("assetType")} />
         </div>
       </FullScreenCenterOverlayContainer>
     );

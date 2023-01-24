@@ -68,6 +68,7 @@ apigeeActions.getReportDetails = async (
   organization,
   environment,
   tableFilterDto,
+  assetType
 ) => {
   const apiUrl = apigeeBaseURL + "report/details";
   const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
@@ -83,6 +84,7 @@ apigeeActions.getReportDetails = async (
     page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
     size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
     search: tableFilterDto?.getData("search"),
+    assetType: assetType,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
