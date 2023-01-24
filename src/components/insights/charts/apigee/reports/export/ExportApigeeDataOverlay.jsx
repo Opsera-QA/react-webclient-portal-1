@@ -6,7 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import apigeeActions from "../../apigee.action";
 
-function ExportApigeeDataOverlay({ kpiConfiguration, dashboardTags, filterDto, pipelineId }) {
+function ExportApigeeDataOverlay({ kpiConfiguration, dashboardTags, dashboardOrgs, filterDto, pipelineId }) {
 
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
@@ -36,7 +36,7 @@ function ExportApigeeDataOverlay({ kpiConfiguration, dashboardTags, filterDto, p
       source.cancel();
       isMounted.current = false;
     };
-  }, [kpiConfiguration, dashboardTags, filterDto, pipelineId]);
+  }, [kpiConfiguration, dashboardTags, dashboardOrgs, filterDto, pipelineId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -60,6 +60,7 @@ function ExportApigeeDataOverlay({ kpiConfiguration, dashboardTags, filterDto, p
       cancelSource,
       kpiConfiguration,
       dashboardTags,
+      dashboardOrgs,
       filterDto,
       pipelineId
     );
@@ -115,6 +116,7 @@ function ExportApigeeDataOverlay({ kpiConfiguration, dashboardTags, filterDto, p
 ExportApigeeDataOverlay.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardTags: PropTypes.array,
+  dashboardOrgs: PropTypes.array,
   filterDto: PropTypes.object,
   pipelineId: PropTypes.string,
 };

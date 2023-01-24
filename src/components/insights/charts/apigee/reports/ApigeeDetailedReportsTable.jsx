@@ -85,13 +85,17 @@ function ApigeeDetailedReportsTable({ pipeline, rowData, dashboardData, kpiConfi
 
   const loadPipelineData = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
     setIsLoading(true);
-    let dashboardTags =
+    const dashboardTags =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+    const dashboardOrgs =
+      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
+      
     const response = await apigeeActions.getReportDetails(
       getAccessToken,
       cancelSource,
       kpiConfiguration,
       dashboardTags,
+      dashboardOrgs,
       pipeline?.pipelineId,
       rowData?.organization,
       rowData?.environment,

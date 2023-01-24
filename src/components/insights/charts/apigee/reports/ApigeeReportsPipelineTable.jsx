@@ -90,13 +90,17 @@ function ApigeeReportsPipelineTable({ pipeline, dashboardData, kpiConfiguration 
   const loadPipelineData = async (filterDto, cancelSource) => {
     setIsLoading(true);
     setMetrics([]);
-    let dashboardTags =
+    const dashboardTags =
       dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+    const dashboardOrgs =
+      dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
+
     const response = await apigeeActions.getReport(
       getAccessToken,
       cancelSource,
       kpiConfiguration,
       dashboardTags,
+      dashboardOrgs,
       filterDto,
       pipeline?.pipelineId
     );
