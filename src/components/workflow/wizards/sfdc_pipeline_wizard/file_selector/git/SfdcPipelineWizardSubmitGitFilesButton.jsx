@@ -77,11 +77,19 @@ function SfdcPipelineWizardSubmitGitFilesButton({pipelineWizardModel, setPipelin
       toastContext.showInlineErrorMessage(generateXMLResponse?.data?.message);
       return;
     }
-    setPipelineWizardScreen(
-      pipelineWizardModel.getData("unitTestSteps").length > 0
-        ? PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR
-        : PIPELINE_WIZARD_SCREENS.XML_VIEWER
-    );
+    if(pipelineWizardModel.getData("unitTestSteps").length > 0) {
+      const response = await sfdcPipelineActions.triggerUnitTestClassesPullV2(getAccessToken, cancelTokenSource, pipelineWizardModel, pipelineWizardModel.getData("unitTestSteps"));
+      if (response?.data?.status !== 200 ) {
+        console.error("Error getting Test Classes : ", response?.data?.message);
+        toastContext.showInlineErrorMessage(response?.data?.message);
+      }
+      else {
+        setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR);
+        return;
+      }
+    }
+    setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.XML_VIEWER);
+    return;
   };
 
   if (pipelineWizardModel == null) {
