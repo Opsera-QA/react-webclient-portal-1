@@ -8,6 +8,7 @@ import { AuthContext } from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import SnykConnectivityTypeSelectInput from "components/inventory/tools/tool_details/tool_jobs/snyk/inputs/SnykConnectivityTypeSelectInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function SnykToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -41,18 +42,6 @@ function SnykToolConfiguration({ toolData }) {
       toolData.getData("_id"),
     );
 
-    const organizationVaultKey = `${toolData.getData("_id")}-${toolData.getData(
-      "tool_identifier",
-    )}-organization`;
-    newConfiguration.organization = await toolsActions.saveKeyPasswordToVault(
-      snykConfigurationModel,
-      "organization",
-      newConfiguration.organization,
-      organizationVaultKey,
-      getAccessToken,
-      toolData.getData("_id"),
-    );
-
     const item = { configuration: newConfiguration };
     return await toolsActions.saveToolConfiguration(
       toolData,
@@ -70,6 +59,7 @@ function SnykToolConfiguration({ toolData }) {
       model={snykConfigurationModel}
       setModel={setSnykConfigurationModel}
       persistRecord={saveSnykToolConfiguration}
+      toolConnectionCheckName={"snyk"}
       toolData={toolData}
     >
       <Col sm={12}>
@@ -89,8 +79,7 @@ function SnykToolConfiguration({ toolData }) {
         />
       </Col>
       <Col sm={12}>
-        <VaultTextInput
-          type={"password"}
+        <TextInputBase
           dataObject={snykConfigurationModel}
           setDataObject={setSnykConfigurationModel}
           fieldName={"organization"}
