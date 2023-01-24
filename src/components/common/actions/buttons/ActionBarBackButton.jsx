@@ -1,7 +1,7 @@
 import React  from "react";
 import PropTypes from "prop-types";
 import ActionBarButton from "./ActionBarButton";
-import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import {faArrowLeft} from "@fortawesome/pro-light-svg-icons";
 import {useHistory} from "react-router-dom";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { hasStringValue } from "components/common/helpers/string-helpers";

@@ -39,6 +39,7 @@ function MultiSelectInputBase(
     helpTooltipText,
     loadDataFunction,
     requireUserEnable,
+    onEnableEditFunction,
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
@@ -160,6 +161,10 @@ function MultiSelectInputBase(
   };
 
   const getPlaceholderText = () => {
+    if (requireUserEnable === true && enabled === false) {
+      return `Click to Load ${pluralTopic} and Enable Edit Mode`;
+    }
+
     if (hasStringValue(internalPlaceholderText) === true) {
       return internalPlaceholderText;
     }
@@ -177,6 +182,10 @@ function MultiSelectInputBase(
 
   const enableEditingFunction = () => {
     setEnabled(true);
+
+    if (onEnableEditFunction) {
+      onEnableEditFunction();
+    }
   };
 
   if (field == null || visible === false) {
@@ -213,6 +222,7 @@ function MultiSelectInputBase(
         disabled={disabled || (requireUserEnable === true && enabled === false)}
         setDataFunction={updateValue}
         onSearchFunction={onSearchFunction}
+        onClickFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
       />
       <InfoText
         fieldName={fieldName}
@@ -266,6 +276,7 @@ MultiSelectInputBase.propTypes = {
   helpTooltipText: PropTypes.string,
   loadDataFunction: PropTypes.func,
   requireUserEnable: PropTypes.bool,
+  onEnableEditFunction: PropTypes.func,
 };
 
 export default MultiSelectInputBase;

@@ -68,7 +68,7 @@ function JiraResolutionNamesFilterSelectInput({
       setResolutionNames(response?.data?.data);
     }
   };
-  const disabled = model.getData('jira-projects').length === 0;
+  const disabled = model.getArrayData('jira-projects').length === 0;
   return (
     <MultiSelectInputBase
       fieldName={fieldName}

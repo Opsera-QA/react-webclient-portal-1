@@ -206,6 +206,7 @@ sfdcPipelineActions.setProfileComponentListV2 = async (getAccessToken, cancelTok
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+// TODO : Remove this once v2 flow is completed
 sfdcPipelineActions.triggerUnitTestClassesPull = async (getAccessToken, cancelTokenSource, pipelineWizardModel, unitTestStep) => {
   const postBody = {
     sfdcToolId: unitTestStep?.tool?.configuration?.sfdcToolId,
@@ -216,6 +217,20 @@ sfdcPipelineActions.triggerUnitTestClassesPull = async (getAccessToken, cancelTo
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/trigger_unit_test_classes_pull`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+sfdcPipelineActions.triggerUnitTestClassesPullV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel, unitTestSteps) => {
+  const postBody = {
+    unitTestSteps: unitTestSteps,
+    // sfdcToolId: unitTestStep?.tool?.configuration?.sfdcToolId,
+    pipelineId: pipelineWizardModel.getData("pipelineId"),
+    // stepId: unitTestStep?._id,
+    stepIdXML: pipelineWizardModel.getData("stepId"),
+    isSfdc: pipelineWizardModel.getData("modifiedFilesOrigin") === "sfdc"
+  };
+
+  const apiUrl = `/pipelines/sfdc/wizard/trigger_all_unit_test_classes_pull`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
@@ -466,9 +481,9 @@ sfdcPipelineActions.checkIfSfdx = async (getAccessToken, cancelTokenSource, id) 
 
 sfdcPipelineActions.checkTestClassesCount = async (getAccessToken, cancelTokenSource, pipelineWizardModel, unitTestSteps) => {
   const postBody = {
-      pipelineId: pipelineWizardModel.getData("pipelineId"),
-      stepIds: unitTestSteps,
-    };
+    pipelineId: pipelineWizardModel.getData("pipelineId"),
+    unitTestSteps: unitTestSteps,
+  };
 
   const apiUrl = `/pipelines/sfdc/wizard/check_unit_test_class_count`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);

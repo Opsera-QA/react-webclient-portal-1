@@ -16,7 +16,7 @@ function AnalyticsProfileSettings() {
   return (
     <>
       <div className="content-container content-card-analytics">
-        <div className={"pl-2 content-block-header title-text-header-2 d-flex"}>
+        <div className={"pl-2 py-2 content-block-header title-text-header-2 d-flex"}>
           <div className={"my-auto w-100"}>
             <TitleBarBase
               icon={faChartNetwork}

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import StepConfigurationEnvironmentTagInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/StepConfigurationEnvironmentTagInput";
 import TagManager from "components/common/inputs/tags/TagManager";
-import {hasStringValue} from "components/common/helpers/string-helpers";
 
 export default function StepConfigurationTagsInput(
   {
@@ -42,7 +41,7 @@ export default function StepConfigurationTagsInput(
       dataObject={stepConfigurationModel}
       getDisabledTags={getDisabledTags}
       type={"pipeline"}
-      disabled={stepConfigurationModel.getData("active") !== true || hasStringValue(stepConfigurationModel.getData("type")) !== true}
+      disabled={stepConfigurationModel.getData("active") !== true}
     />
   );
 }

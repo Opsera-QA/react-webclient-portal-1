@@ -4,18 +4,18 @@ import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlo
 import ThreeLineScoreDataBlock from "components/common/metrics/score/ThreeLineScoreDataBlock";
 
 function BoomiAverageDurationDataBlock({ data, dataPoint, lastScore, icon, className  }) {
-  return (
-    <DataBlockBoxContainer showBorder={true}>
-        <ThreeLineScoreDataBlock
-            className={`${className} p-2 h-70`}
-            icon={icon}
-            score={data}
-            bottomText={"Previous: " + lastScore}
-            topText={"Total Deployments"}
-            dataPoint={dataPoint}
-        />
-    </DataBlockBoxContainer>
-  );
+    return (
+        <DataBlockBoxContainer showBorder={true}>
+            <ThreeLineScoreDataBlock
+                className={`${className} p-2 h-70`}
+                icon={icon}
+                score={data}
+                bottomText={"Previous: " + lastScore}
+                topText={"Total Deployments"}
+                dataPoint={dataPoint}
+            />
+        </DataBlockBoxContainer>
+    );
 }
 
 BoomiAverageDurationDataBlock.propTypes = {

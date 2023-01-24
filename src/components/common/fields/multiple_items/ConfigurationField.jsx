@@ -4,17 +4,19 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function ConfigurationField({dataObject, fieldName, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const getItems = () => {
-    const configuration = dataObject.getData(fieldName);
-    const configurationKeys = Object.keys(configuration);
+    const configuration = DataParsingHelper.parseObject(dataObject.getData(fieldName));
 
-    if (configurationKeys == null || configurationKeys.length === 0) {
+    if (!configuration) {
       return <span>No Configurations Applied</span>;
     }
+
+    const configurationKeys = Object.keys(configuration);
 
     return (
       configurationKeys.map((key, i) => {

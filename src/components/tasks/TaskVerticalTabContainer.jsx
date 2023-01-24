@@ -15,14 +15,15 @@ function TaskVerticalTabContainer({ isLoading, taskFilterModel, loadData }) {
   } = useComponentStateReference();
 
   const handleTabClick = (category) => {
-    taskFilterModel?.setData("category", category);
     const type = taskFilterModel?.getData("type");
 
     if (category === "owner") {
       taskFilterModel?.setData("owner", userData?._id);
-    } else if (taskFilterModel?.getData("category") === "owner") {
-      taskFilterModel?.setData("owner", undefined);
+    } else {
+      taskFilterModel?.setData("owner", "");
     }
+
+    taskFilterModel?.setData("category", category);
 
     if (
       hasStringValue(type) === true
