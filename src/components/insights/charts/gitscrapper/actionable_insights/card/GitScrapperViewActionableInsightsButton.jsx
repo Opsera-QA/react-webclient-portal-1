@@ -13,15 +13,7 @@ function GitScrapperViewActionableInsightsButton({ dataObject, kpiConfiguration,
 
   const getActionableInsights = () => {
     const {repository, branch} = dataObject.getPersistData();
-    console.log("repository", repository);
-    console.log("branch", branch);
-    // toastContext.showOverlayPanel(
-    //   <GitScraperViewListOfIssuesOverlay
-    //     dataObject={dataObject}
-    //     kpiConfiguration={kpiConfiguration}
-    //     dashboardData={dashboardData}
-    //   />
-    // );
+
     toastContext.clearOverlayPanel();
     history.push(`/insights/reports/scans/gitscraper/${repository}/${branch}`);
   };
