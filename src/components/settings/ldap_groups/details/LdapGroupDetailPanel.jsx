@@ -20,6 +20,7 @@ function LdapGroupDetailPanel(
     orgDomain,
     loadData,
     authorizedActions,
+    isLoading,
   }) {
   const [activeTab, setActiveTab] = useState("summary");
 
@@ -67,6 +68,7 @@ function LdapGroupDetailPanel(
             ldapGroupData={ldapGroupData}
             domain={orgDomain}
             loadData={loadData}
+            isLoading={isLoading}
           />
         );
       case "manage":
@@ -116,6 +118,7 @@ LdapGroupDetailPanel.propTypes = {
   currentUserEmail: PropTypes.string,
   loadData: PropTypes.func,
   authorizedActions: PropTypes.array,
+  isLoading: PropTypes.bool,
 };
 
 export default LdapGroupDetailPanel;
