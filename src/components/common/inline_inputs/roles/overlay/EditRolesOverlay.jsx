@@ -114,8 +114,7 @@ function EditRolesOverlay(
             size={"1x"}
             showToasts={false}
             disable={roleAccessInputModel?.checkCurrentValidity() !== true}
-            // saveFunction={handleAccessCheck}
-            saveFunction={handleSave}
+            saveFunction={handleAccessCheck}
           />
         </ButtonContainerBase>
       </div>
