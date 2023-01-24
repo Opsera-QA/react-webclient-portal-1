@@ -1,11 +1,20 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
-import Model from "core/data_model/model";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {faEdit} from "@fortawesome/pro-light-svg-icons";
 import PersistAndCloseButtonContainer from "components/common/buttons/saving/containers/PersistAndCloseButtonContainer";
+import RoleParsingHelper from "@opsera/persephone/helpers/data/roles/roleParsing.helper";
+import modelHelpers from "components/common/model/modelHelpers";
+import {roleAccessInputMetadata} from "components/common/inline_inputs/roles/overlay/roleAccessInput.metadata";
+import RoleHelper from "@opsera/know-your-role/roles/role.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import AccessRoleLoseAccessConfirmationOverlay
+  from "components/common/inline_inputs/roles/overlay/AccessRoleLoseAccessConfirmationOverlay";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import StandaloneSaveButton from "components/common/buttons/saving/StandaloneSaveButton";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import {useHistory} from "react-router-dom";
 
 function EditRolesOverlay(
   {
@@ -13,19 +22,56 @@ function EditRolesOverlay(
     fieldName,
     loadData,
     saveDataFunction,
+    lostAccessRerouteRoute,
   }) {
-  const toastContext = useContext(DialogToastContext);
-  const [temporaryDataObject, setTemporaryDataObject] = useState(undefined);
+  const history = useHistory();
+  const [roleAccessInputModel, setRoleAccessInputModel] = useState(undefined);
+  const {
+    userData,
+    toastContext,
+  } = useComponentStateReference();
 
   useEffect(() => {
     toastContext.removeInlineMessage();
-    setTemporaryDataObject(new Model({...model?.getPersistData()}, model?.getMetaData(), false));
+    const data = {
+      roles: RoleParsingHelper.parseRoleArray(model?.getData(fieldName), []),
+    };
+    setRoleAccessInputModel({...modelHelpers.parseObjectIntoModel(data, roleAccessInputMetadata)});
   }, [model]);
 
-  const handleSave = async () => {
-    const response =  await saveDataFunction(temporaryDataObject.getData(fieldName));
+  const handleSave = async (willLoseAccess) => {
+    const response =  await saveDataFunction(roleAccessInputModel.getData(fieldName));
+    toastContext.showUpdateSuccessResultDialog("Access Rules");
     closePanelFunction();
+
+    if (willLoseAccess === true) {
+      history.push(lostAccessRerouteRoute);
+    }
+
     return response;
+  };
+
+  const handleAccessCheck = async () => {
+    if (hasStringValue(lostAccessRerouteRoute) === true) {
+      const willLoseAccess = RoleHelper.willLoseAccessIfRolesChanged(
+        userData,
+        model?.getCurrentData(),
+        RoleParsingHelper.parseRoleArray(model?.getData(fieldName), []),
+      );
+
+      if (willLoseAccess === true) {
+       toastContext.showOverlayPanel(
+         <AccessRoleLoseAccessConfirmationOverlay
+          closePanelFunction={closePanelFunction}
+          lostAccessRerouteRoute={lostAccessRerouteRoute}
+          saveAccessRolesFunction={() => handleSave(true)}
+         />
+       );
+        return;
+      }
+    }
+
+    return await handleSave();
   };
 
   const closePanelFunction = () => {
@@ -37,7 +83,7 @@ function EditRolesOverlay(
     toastContext.clearOverlayPanel();
   };
 
-  if (model == null || temporaryDataObject == null) {
+  if (model == null || roleAccessInputModel == null) {
     return null;
   }
 
@@ -58,16 +104,20 @@ function EditRolesOverlay(
         </div>
         <div>
           <RoleAccessInput
-            model={temporaryDataObject}
-            setModel={setTemporaryDataObject}
+            model={roleAccessInputModel}
+            setModel={setRoleAccessInputModel}
             fieldName={fieldName}
           />
         </div>
-        <PersistAndCloseButtonContainer
-          recordDto={temporaryDataObject}
-          updateRecord={handleSave}
-          handleClose={closePanelFunction}
-        />
+        <ButtonContainerBase>
+          <StandaloneSaveButton
+            size={"1x"}
+            showToasts={false}
+            disable={roleAccessInputModel?.checkCurrentValidity() !== true}
+            // saveFunction={handleAccessCheck}
+            saveFunction={handleSave}
+          />
+        </ButtonContainerBase>
       </div>
     </CenterOverlayContainer>
   );
@@ -78,6 +128,7 @@ EditRolesOverlay.propTypes = {
   saveDataFunction: PropTypes.func,
   model: PropTypes.object,
   fieldName: PropTypes.string,
+  lostAccessRerouteRoute: PropTypes.string,
 };
 
 export default EditRolesOverlay;

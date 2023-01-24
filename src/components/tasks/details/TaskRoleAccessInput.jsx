@@ -6,6 +6,7 @@ import GitRoleAccessHelpDocumentation
   from "components/common/help/documentation/tasks/GitRoleAccessHelpDocumentation";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
+import {taskHelper} from "components/tasks/task.helper";
 
 function TaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, visible}) {
   const [canEditRoles, setCanEditRoles] = useState(undefined);
@@ -61,6 +62,7 @@ function TaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, vi
       noDataMessage={getNoDataMessage()}
       visible={visible}
       helpComponent={<GitRoleAccessHelpDocumentation />}
+      lostAccessRerouteRoute={taskHelper.getManagementScreenLink()}
     />
   );
 }
