@@ -69,7 +69,6 @@ function GitScraperViewListOfIssuesOverlay({ dataObject, kpiConfiguration, dashb
         repository, 
         branch
       );
-      console.log("response", response);
 
       const dataBlocks = response?.data && response?.status === 200 ? 
                                                   response?.data?.data?.data : [];      
