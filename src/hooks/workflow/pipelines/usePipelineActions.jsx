@@ -13,6 +13,17 @@ export default function usePipelineActions() {
     );
   };
 
+  pipelineActions.updatePipeline = async (
+    pipelineId,
+    pipeline,
+  ) => {
+    const apiUrl = `/pipelines/${pipelineId}/update/`;
+    return await apiService.handleApiPostRequest(
+      apiUrl,
+      pipeline,
+    );
+  };
+
   pipelineActions.updatePipelineActionRoles = async (
     pipelineId,
     roles,
