@@ -81,6 +81,7 @@ function SfdcPipelineWizardSubmitSfdcFilesButton({pipelineWizardModel, setPipeli
       if (response?.data?.status !== 200 ) {
         console.error("Error getting Test Classes : ", response?.data?.message);
         toastContext.showInlineErrorMessage(response?.data?.message);
+        return;
       }
       else {
         setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR);
