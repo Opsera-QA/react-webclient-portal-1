@@ -59,6 +59,7 @@ function SnykToolConfiguration({ toolData }) {
       model={snykConfigurationModel}
       setModel={setSnykConfigurationModel}
       persistRecord={saveSnykToolConfiguration}
+      toolConnectionCheckName={"snyk"}
       toolData={toolData}
     >
       <Col sm={12}>
