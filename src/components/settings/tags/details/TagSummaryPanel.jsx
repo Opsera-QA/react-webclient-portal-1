@@ -7,15 +7,19 @@ import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import ConfigurationField from "components/common/fields/multiple_items/ConfigurationField";
-import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import TagRoleHelper from "@opsera/know-your-role/roles/settings/tags/tagRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function TagSummaryPanel({ tagData, setActiveTab, accessRoleData }) {
+  const { userData } = useComponentStateReference();
+
   if (tagData == null) {
     return <LoadingDialog size="sm" />;
   }
 
   return (
-    <SummaryPanelContainer setActiveTab={meetsRequirements(ROLE_LEVELS.ADMINISTRATORS_AND_SASS, accessRoleData) ? setActiveTab : undefined}>
+    <SummaryPanelContainer
+      setActiveTab={TagRoleHelper.canUpdateTags(userData) === true ? setActiveTab : undefined}>
       <Row>
         <Col lg={6}>
           <TextFieldBase dataObject={tagData} fieldName={"_id"}/>
