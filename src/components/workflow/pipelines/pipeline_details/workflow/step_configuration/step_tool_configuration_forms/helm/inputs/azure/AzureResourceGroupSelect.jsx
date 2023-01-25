@@ -8,7 +8,7 @@ import azureActions from "components/workflow/pipelines/pipeline_details/workflo
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import toolsActions from "components/inventory/tools/tools-actions";
 
-function ArgoAzureResourceGroupSelectInput(
+function AzureResourceGroupSelectInput(
   {
     fieldName,
     model,
@@ -118,7 +118,7 @@ function ArgoAzureResourceGroupSelectInput(
   );
 }
 
-ArgoAzureResourceGroupSelectInput.propTypes = {
+AzureResourceGroupSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -130,10 +130,10 @@ ArgoAzureResourceGroupSelectInput.propTypes = {
   disabled: PropTypes.bool
 };
 
-ArgoAzureResourceGroupSelectInput.defaultProps = {
+AzureResourceGroupSelectInput.defaultProps = {
   fieldName: "resourceGroup",
   textField: "resourceGroup",
   valueField: "resourceGroup",
 };
 
-export default ArgoAzureResourceGroupSelectInput;
+export default AzureResourceGroupSelectInput;
