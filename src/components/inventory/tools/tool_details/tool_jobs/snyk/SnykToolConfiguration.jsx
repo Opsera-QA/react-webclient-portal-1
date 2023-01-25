@@ -71,18 +71,18 @@ function SnykToolConfiguration({ toolData }) {
         />
       </Col>
       <Col sm={12}>
+        <TextInputBase
+            dataObject={snykConfigurationModel}
+            setDataObject={setSnykConfigurationModel}
+            fieldName={"organization"}
+        />
+      </Col>
+      <Col sm={12}>
         <VaultTextInput
           type={"password"}
           dataObject={snykConfigurationModel}
           setDataObject={setSnykConfigurationModel}
           fieldName={"token"}
-        />
-      </Col>
-      <Col sm={12}>
-        <TextInputBase
-          dataObject={snykConfigurationModel}
-          setDataObject={setSnykConfigurationModel}
-          fieldName={"organization"}
         />
       </Col>
     </ToolConfigurationEditorPanelContainer>
