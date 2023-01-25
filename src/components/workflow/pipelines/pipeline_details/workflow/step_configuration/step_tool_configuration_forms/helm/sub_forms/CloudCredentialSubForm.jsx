@@ -9,6 +9,7 @@ import HelmS3BucketRegionSelectInput from "../inputs/aws/HelmS3BucketRegionSelec
 import AzureClusterTypeSelectInput from "../inputs/azure/AzureClusterTypeSelectInput";
 import HelmAzureClusterSelectInput from "../inputs/azure/HelmAzureClusterSelectInput";
 import AzureResourceGroupSelectInput from "../inputs/azure/AzureResourceGroupSelect";
+import HelmAwsClusterSelectInput from "../inputs/aws/HelmAwsClusterSelectInput";
 
 function CloudCredentialSubForm({ model, setModel}) {
 
@@ -32,6 +33,7 @@ function CloudCredentialSubForm({ model, setModel}) {
                     <HelmAwsCredentialsSelectInput model={model} setModel={setModel} />
                     <HelmS3BucketSelectInput model={model} setModel={setModel} />
                     <HelmS3BucketRegionSelectInput model={model} setModel={setModel} fieldName="bucketRegion" />
+                    <HelmAwsClusterSelectInput model={model} setModel={setModel} awsToolConfigId={model.getData("awsToolConfigId")} />
                 </>
             );
         }
