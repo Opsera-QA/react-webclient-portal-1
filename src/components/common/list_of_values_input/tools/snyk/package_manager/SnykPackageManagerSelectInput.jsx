@@ -13,8 +13,9 @@ export default function SnykPackageManagerSelectInput(
     setDataFunction,
     clearDataFunction,
     language,
+    version,
   }) {
-  const packageManagers = snykIntegratorLanguageOptionConstants.getPackageManagersForLanguage(language);
+  const packageManagers = snykIntegratorLanguageOptionConstants.getPackageManagersForLanguage(language, version);
 
   if (!Array.isArray(packageManagers) || packageManagers.length === 0) {
     return null;
@@ -27,6 +28,8 @@ export default function SnykPackageManagerSelectInput(
       setDataObject={setModel}
       selectOptions={packageManagers}
       disabled={disabled}
+      textField={"text"}
+      valueField={"value"}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
       singularTopic={"Package Manager or Build Tool"}
@@ -43,4 +46,5 @@ SnykPackageManagerSelectInput.propTypes = {
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
   language: PropTypes.string,
+  version: PropTypes.string,
 };
