@@ -12,7 +12,7 @@ export default function SnykPipelineStepLanguageSelectInput({
   disabled,
 }) {
   const setDataFunction = (fieldName, selectOption) => {
-    model?.setData(fieldName, selectOption?.language);
+    model?.setData(fieldName, selectOption?.value);
     model?.setDefaultValue("version");
     model?.setDefaultValue("packagerNameOrBuildTool");
     setModel({...model});
