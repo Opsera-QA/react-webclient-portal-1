@@ -70,60 +70,66 @@ function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
         model={snykModel}
         setModel={setSnykModel}
       />
-      <SnykPipelineStepLanguageSelectInput
-        fieldName={"languageLevelId"}
-        model={snykModel}
-        setModel={setSnykModel}
+      <SourceRepositoryToolIdentifierSelectInput
+          fieldName={"service"}
+          model={snykModel}
+          setModel={setSnykModel}
       />
-      <SnykLanguageVersionSelectInput 
-        fieldName={"version"}
-        model={snykModel}
-        setModel={setSnykModel}
-        language={snykModel.getData("languageLevelId")}
+      <SnykScmToolSelectInput
+          model={snykModel}
+          setModel={setSnykModel}
+          service={snykModel.getData("service")}
+      />
+      <SnykBitbucketWorkspaceInput
+          dataObject={snykModel}
+          setDataObject={setSnykModel}
+      />
+      <SnykScmRepositorySelectInput
+          dataObject={snykModel}
+          setDataObject={setSnykModel}
+      />
+      <GitBranchInput
+          fieldName={"gitBranch"}
+          service={snykModel.getData("service")}
+          gitToolId={snykModel.getData("gitToolId")}
+          workspace={snykModel.getData("workspace")}
+          dataObject={snykModel}
+          setDataObject={setSnykModel}
+          repoId={snykModel.getData("repoId")}
+      />
+      <SnykPipelineStepLanguageSelectInput
+          fieldName={"languageLevelId"}
+          model={snykModel}
+          setModel={setSnykModel}
+      />
+      <SnykLanguageVersionSelectInput
+          fieldName={"version"}
+          model={snykModel}
+          setModel={setSnykModel}
+          language={snykModel.getData("languageLevelId")}
       />
       <SnykPackageManagerSelectInput
-        fieldName={"packagerNameOrBuildTool"}
-        model={snykModel}
-        setModel={setSnykModel}
-        language={snykModel.getData("languageLevelId")}
-        version={snykModel?.getData("version")}
+          fieldName={"packagerNameOrBuildTool"}
+          model={snykModel}
+          setModel={setSnykModel}
+          language={snykModel.getData("languageLevelId")}
+          version={snykModel?.getData("version")}
       />
       <BooleanToggleInput
         fieldName={"multiModuleProject"}
         dataObject={snykModel}
         setDataObject={setSnykModel}
       />
+      <BooleanToggleInput
+          dataObject={snykModel}
+          setDataObject={setSnykModel}
+          fieldName={"clientSideThreshold"}
+      />
       <SnykVulnerabilityThresholdInput 
         fieldName={"thresholdVulnerability"}
         model={snykModel}
         setModel={setSnykModel}
-      />
-      <SourceRepositoryToolIdentifierSelectInput 
-        fieldName={"service"}
-        model={snykModel}
-        setModel={setSnykModel}
-      />
-      <SnykScmToolSelectInput 
-        model={snykModel}
-        setModel={setSnykModel}
-        service={snykModel.getData("service")}
-      />
-      <SnykBitbucketWorkspaceInput 
-        dataObject={snykModel}
-        setDataObject={setSnykModel}
-      />
-      <SnykScmRepositorySelectInput 
-        dataObject={snykModel}
-        setDataObject={setSnykModel}
-      /> 
-      <GitBranchInput 
-        fieldName={"gitBranch"}
-        service={snykModel.getData("service")}
-        gitToolId={snykModel.getData("gitToolId")}
-        workspace={snykModel.getData("workspace")}
-        dataObject={snykModel}
-        setDataObject={setSnykModel}
-        repoId={snykModel.getData("repoId")}
+        visible={snykModel?.getData("clientSideThreshold")}
       />
     </PipelineStepEditorPanelContainer>
   );

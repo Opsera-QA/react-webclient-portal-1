@@ -79,7 +79,11 @@ const snykStepFormMetadata = {
     {
       label: "Workspace Name",
       id: "workspaceName",
-    }
+    },
+    {
+      label: "Enable Client Side thresholds",
+      id: "clientSideThreshold",
+    },
   ],
   newObjectFields: {
     snykProducts: [],
@@ -95,6 +99,7 @@ const snykStepFormMetadata = {
     service: "",
     sshUrl: "",
     gitUrl:"",
+    clientSideThreshold: false,
   }
 };
 
