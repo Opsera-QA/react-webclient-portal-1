@@ -45,7 +45,7 @@ function CloudCredentialSubForm({ model, setModel}) {
                     <CloudProviderAzureApplicationSelect model={model} setModel={setModel}/>
                     <HelmAzureClusterSelectInput model={model} setModel={setModel} azureToolConfigId={model.getData("azureToolConfigId")} applicationId={model.getData("azureCredentialId")} />
                     <AzureClusterTypeSelectInput model={model} setModel={setModel} azureToolConfigId={model.getData("azureToolConfigId")} azureApplication={model.getData("azureCredentialId")} clusterName={model.getData("clusterName")}/>
-                    <AzureResourceGroupSelectInput model={model} setModel={setModel} />
+                    <AzureResourceGroupSelectInput model={model} setModel={setModel} azureToolConfigId={model.getData("azureToolConfigId")} azureApplication={model.getData("azureCredentialId")} clusterName={model.getData("clusterName")} />
                 </>
             );
         }
