@@ -6,7 +6,9 @@ import CloudProviderAzureToolSelect from "../inputs/azure/CloudProviderAzureTool
 import CloudProviderAzureApplicationSelect from "../inputs/azure/CloudProviderAzureApplicationSelect";
 import HelmS3BucketSelectInput from "../inputs/aws/HelmS3BucketSelectInput";
 import HelmS3BucketRegionSelectInput from "../inputs/aws/HelmS3BucketRegionSelectInput";
-import HelmAwsClusterSelectInput from "../inputs/aws/HelmAwsClusterSelectInput";
+import AzureClusterTypeSelectInput from "../inputs/azure/AzureClusterTypeSelectInput";
+import HelmAzureClusterSelectInput from "../inputs/azure/HelmAzureClusterSelectInput";
+import AzureResourceGroupSelectInput from "../inputs/azure/AzureResourceGroupSelect";
 
 function CloudCredentialSubForm({ model, setModel}) {
 
@@ -41,6 +43,9 @@ function CloudCredentialSubForm({ model, setModel}) {
                 <>
                     <CloudProviderAzureToolSelect model={model} setModel={setModel}/>
                     <CloudProviderAzureApplicationSelect model={model} setModel={setModel}/>
+                    <HelmAzureClusterSelectInput model={model} setModel={setModel} azureToolConfigId={model.getData("azureToolConfigId")} applicationId={model.getData("azureCredentialId")} />
+                    <AzureClusterTypeSelectInput model={model} setModel={setModel} azureToolConfigId={model.getData("azureToolConfigId")} azureApplication={model.getData("azureCredentialId")} clusterName={model.getData("clusterName")}/>
+                    <AzureResourceGroupSelectInput model={model} setModel={setModel} />
                 </>
             );
         }

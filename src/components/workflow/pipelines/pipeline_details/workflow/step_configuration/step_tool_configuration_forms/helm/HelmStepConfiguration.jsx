@@ -56,7 +56,7 @@ function HelmStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeE
   if (isLoading || helmStepConfigurationModel == null) {
     return <DetailPanelLoadingDialog />;
   }
-console.log(helmStepConfigurationModel);
+
   return (
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
@@ -82,9 +82,7 @@ console.log(helmStepConfigurationModel);
       <CloudCredentialSubForm model={helmStepConfigurationModel} setModel={setHelmStepConfigurationModel} />
       <CustomScriptSubForm model={helmStepConfigurationModel} setModel={setHelmStepConfigurationModel} />
       <TextInputBase dataObject={helmStepConfigurationModel} fieldName={"inputFileName"} setDataObject={setHelmStepConfigurationModel}/>
-      <TextInputBase dataObject={helmStepConfigurationModel} fieldName={"clusterName"} setDataObject={setHelmStepConfigurationModel}/>
       <TextInputBase dataObject={helmStepConfigurationModel} fieldName={"namespace"} setDataObject={setHelmStepConfigurationModel}/>
-      <TextInputBase dataObject={helmStepConfigurationModel} fieldName={"resourceGroup"} setDataObject={setHelmStepConfigurationModel}/>
       <TextInputBase dataObject={helmStepConfigurationModel} fieldName={"serviceName"} setDataObject={setHelmStepConfigurationModel}/>
       <HelmCustomParametersInput
         model={helmStepConfigurationModel}

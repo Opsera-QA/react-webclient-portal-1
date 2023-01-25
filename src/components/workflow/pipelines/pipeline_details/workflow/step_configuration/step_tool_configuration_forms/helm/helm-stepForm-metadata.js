@@ -145,6 +145,14 @@ const helmStepFormMetadata = {
       label: "Input File Name",
       id: "inputFileName",
       isRequired: true
+    },
+    {
+      label: "Cluster Type",
+      id: "clusterType"
+    },
+    {
+      label: "Azure Application",
+      id: "azureApplicationId"
     }
   ],
   newObjectFields: {
