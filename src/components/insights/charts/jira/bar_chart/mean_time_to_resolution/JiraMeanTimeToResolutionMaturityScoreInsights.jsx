@@ -19,7 +19,6 @@ import TabPanelContainer from "../../../../../common/panels/general/TabPanelCont
 import { getMaturityScoreText } from "../../../charts-helpers";
 import JiraMeanTimeToResolutionInsightsDataBlock from "./JiraMeanTimeToResolutionInsightsDataBlock";
 import JiraMeanTimeToResolutionMaturityScoreInsightsMetadata from "./JiraMeanTimeToResolutionMaturityScoreInsightsMetaData";
-import FilterContainer from "../../../../../common/table/FilterContainer";
 
 function JiraMeanTimeToResolutionMaturityScoreInsights({
   kpiConfiguration,
@@ -106,29 +105,11 @@ function JiraMeanTimeToResolutionMaturityScoreInsights({
   const getTable = () => {
     let data;
     if (activeHorizontalTab == "projects") {
-      return (
-        <FilterContainer
-          title={"Maturity Score by Projects"}
-          body={getTableContainer(projectColumns, maturityScoreByProject)}
-          className={"pt-2"}
-        />
-      );
+      return getTableContainer(projectColumns, maturityScoreByProject);
     } else if (activeHorizontalTab == "teams") {
-      return (
-        <FilterContainer
-          title={"Maturity Score by Teams"}
-          body={getTableContainer(teamNameColumns, maturityScoreByTeam)}
-          className={"pt-2"}
-        />
-      );
+      return getTableContainer(teamNameColumns, maturityScoreByTeam);
     } else if (activeHorizontalTab == "serviceComponents") {
-      return (
-        <FilterContainer
-          title={"Maturity Score by Service Components"}
-          body={getTableContainer(serviceComponentColumns, maturityScoreByServiceComponent)}
-          className={"pt-2"}
-        />
-      );
+      return getTableContainer(serviceComponentColumns, maturityScoreByServiceComponent);
     } else if (activeHorizontalTab == "tags") {
       if (activeVerticalTab) {
         data = maturityScoreByTag.filter(
@@ -139,13 +120,7 @@ function JiraMeanTimeToResolutionMaturityScoreInsights({
           (tag) => tag.name === maturityScoreByTag[0].name,
         );
       }
-      return (
-        <FilterContainer
-          title={"Maturity Score by Tags"}
-          body={getTableContainer(tagColumns, data[0]?.values || [])}
-          className={"pt-2"}
-        />
-      );
+      return getTableContainer(tagColumns, data[0]?.values || []);
     }
   };
 

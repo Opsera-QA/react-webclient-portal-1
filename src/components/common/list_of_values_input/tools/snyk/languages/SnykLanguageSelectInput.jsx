@@ -18,8 +18,8 @@ export default function SnykLanguageSelectInput({
       dataObject={model}
       setDataObject={setModel}
       selectOptions={snykIntegratorLanguageOptionConstants.LANGUAGE_SELECT_OPTIONS}
-      textField={"language"}
-      valueField={"language"}
+      textField={"text"}
+      valueField={"value"}
       disabled={disabled}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
