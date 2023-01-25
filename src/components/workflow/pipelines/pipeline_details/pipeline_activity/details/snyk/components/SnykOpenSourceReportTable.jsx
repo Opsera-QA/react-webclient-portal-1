@@ -66,7 +66,7 @@ function SnykOpenSourceReportTable({ openSourceReport }) {
           className={"mr-2"}
           icon={faCheckCircle}
         />
-        There were no vulnerabilities identified with this execution.
+          There were no open source scan results were identified with this execution.
       </div>
     );
   }
