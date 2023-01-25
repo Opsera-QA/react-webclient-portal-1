@@ -88,10 +88,8 @@ function HelmAzureClusterSelectInput(
 
     const result = azureResponse?.data?.data;
     if (Array.isArray(result) && result.length > 0) {
-      setErrorMessage("");
-      const clusterNames = clusterData.map(c => c.name.trim());                
-      const tempClusters = result.filter(cluster => !clusterNames.includes(cluster));      
-      setAzureRegionList(tempClusters);
+      setErrorMessage("");      
+      setAzureRegionList(result);
     }
 
     if (result?.length === 0) {
