@@ -70,23 +70,6 @@ function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
         model={snykModel}
         setModel={setSnykModel}
       />
-      <SnykPipelineStepLanguageSelectInput
-        fieldName={"languageLevelId"}
-        model={snykModel}
-        setModel={setSnykModel}
-      />
-      <SnykLanguageVersionSelectInput 
-        fieldName={"version"}
-        model={snykModel}
-        setModel={setSnykModel}
-        language={snykModel.getData("languageLevelId")}
-      />
-      <SnykPackageManagerSelectInput
-        fieldName={"packagerNameOrBuildTool"}
-        model={snykModel}
-        setModel={setSnykModel}
-        language={snykModel.getData("languageLevelId")}
-      />
       <SourceRepositoryToolIdentifierSelectInput
           fieldName={"service"}
           model={snykModel}
@@ -113,6 +96,23 @@ function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
           dataObject={snykModel}
           setDataObject={setSnykModel}
           repoId={snykModel.getData("repoId")}
+      />
+      <SnykPipelineStepLanguageSelectInput
+          fieldName={"languageLevelId"}
+          model={snykModel}
+          setModel={setSnykModel}
+      />
+      <SnykLanguageVersionSelectInput
+          fieldName={"version"}
+          model={snykModel}
+          setModel={setSnykModel}
+          language={snykModel.getData("languageLevelId")}
+      />
+      <SnykPackageManagerSelectInput
+          fieldName={"packagerNameOrBuildTool"}
+          model={snykModel}
+          setModel={setSnykModel}
+          language={snykModel.getData("languageLevelId")}
       />
       <BooleanToggleInput
         fieldName={"multiModuleProject"}
