@@ -14,6 +14,7 @@ function SnykScmRepositorySelectInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("repoId", repoId);
     newDataObject.setData("sshUrl", sshUrl);
     newDataObject.setData("gitUrl", gitUrl);
+    newDataObject.setData("gitBranch", "");
     setDataObject({...newDataObject});
   };
 
@@ -24,6 +25,7 @@ function SnykScmRepositorySelectInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("repoId", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("gitUrl", "");
+    newDataObject.setData("gitBranch", "");
     setDataObject({...newDataObject});
   };
 
