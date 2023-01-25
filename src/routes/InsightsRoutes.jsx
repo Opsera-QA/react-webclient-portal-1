@@ -32,8 +32,8 @@ export default function InsightsRoutes() {
                    component={SonarPipelineScanReport} />
       <SecureRoute path="/insights/reports/scans/coverity/:pipelineId/:projectName/:runCount/:coveritySeverity"
                    component={CoverityScanReport} />
-        <SecureRoute path="/insights/reports/scans/gitscraper/:repository/:branch"
-                     component={GitScraperScanReport} />
+      <SecureRoute path="/insights/reports/scans/gitscraper/:repository/:branch"
+                   component={GitScraperScanReport} />
     </>
   );
 }

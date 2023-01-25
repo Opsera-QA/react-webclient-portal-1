@@ -6,7 +6,6 @@ import React, {
   useCallback,
 } from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
@@ -17,20 +16,19 @@ import _ from "lodash";
 import LazyLoadMultiSelectInputBase from "../../../../inputs/select/LazyLoadMultiSelectInputBase";
 
 function GithubBranchSelectInput({
-  fieldName,
-  model,
-  setModel,
-  toolId,
-  disabled,
-  setDataFunction,
-  clearDataFunction,
-  repositoryId,
-  multi,
-}) {
+                                   fieldName,
+                                   model,
+                                   setModel,
+                                   toolId,
+                                   disabled,
+                                   setDataFunction,
+                                   clearDataFunction,
+                                   repositoryId,
+                                   multi,
+                                 }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [githubBranches, setGithubBranches] = useState([]);
-  const [inEditMode, setInEditMode] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [placeholderText, setPlaceholderText] = useState(
     "Select Github Branch",
@@ -50,7 +48,7 @@ function GithubBranchSelectInput({
     setErrorMessage("");
     setPlaceholderText("Select Github Branch");
 
-    if (inEditMode === true && isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
+    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
       loadData(source).catch((error) => {
         throw error;
       });
@@ -60,7 +58,7 @@ function GithubBranchSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId, repositoryId, inEditMode]);
+  }, [toolId, repositoryId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -126,8 +124,6 @@ function GithubBranchSelectInput({
           delayedSearchQuery(searchTerm, repositoryId, toolId)
         }
         useToggle={true}
-        requireUserEnable={true}
-        onEnableEditFunction={() => setInEditMode(true)}
       />
     );
   }
@@ -152,8 +148,6 @@ function GithubBranchSelectInput({
         delayedSearchQuery(searchTerm, repositoryId, toolId)
       }
       useToggle={true}
-      requireUserEnable={true}
-      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }
