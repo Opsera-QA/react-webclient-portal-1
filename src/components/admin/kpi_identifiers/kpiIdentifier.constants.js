@@ -3,6 +3,7 @@ export const kpiIdentifierConstants = {};
 
 kpiIdentifierConstants.KPI_IDENTIFIERS = {
   ADOPTION_PERCENTAGE: "adoption-percentage",
+  APPROVAL_GATES: "approval-gates",
 
   // Github Actions
   ALL_GITHUB_ACTIONS_DATA_BLOCK: "all-github-actions-data-block",
@@ -154,13 +155,22 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   // XUnit
   XUNIT_TEST_RESULTS: "xunit-test-results",
 
-   // GitScrapper
-   GIT_SCRAPER_METRICS: "git-scraper",
+  // GitScrapper
+  GIT_SCRAPER_METRICS: "git-scraper",
 
   //Boomi
   BOOMI_PIPELINE_EXECUTIONS:"boomi-pipeline-executions",
 
   //DORA
   DORA_JIRA_GITLAB_ROLLED_UP:"dora-jira-gitlab-rolled-up",
-
 };
+
+kpiIdentifierConstants.SUPPORTED_ANALYTICS_DATA_ENTRY_IDENTIFIERS = [
+  kpiIdentifierConstants.KPI_IDENTIFIERS.QA_MANUAL_TEST,
+  kpiIdentifierConstants.KPI_IDENTIFIERS.FIRST_PASS_YIELD,
+  kpiIdentifierConstants.KPI_IDENTIFIERS.CUMULATIVE_OPEN_DEFECTS,
+  kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATION_PERCENTAGE,
+  kpiIdentifierConstants.KPI_IDENTIFIERS.ADOPTION_PERCENTAGE,
+  kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATED_TEST_RESULTS,
+  kpiIdentifierConstants.KPI_IDENTIFIERS.DEFECT_REMOVAL_EFFICIENCY,
+];
