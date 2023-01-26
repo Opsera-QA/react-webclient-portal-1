@@ -20,11 +20,11 @@ function SnykScmRepositorySelectInput({dataObject, setDataObject, disabled}) {
 
   const clearData = () => {
     let newDataObject = {...dataObject};
-    newDataObject.setData("repositoryName", "");
-    newDataObject.setData("projectId", "");
-    newDataObject.setData("repoId", "");
-    newDataObject.setData("sshUrl", "");
-    newDataObject.setData("gitUrl", "");
+    newDataObject.setDefaultValue("repositoryName");
+    newDataObject.setDefaultValue("projectId");
+    newDataObject.setDefaultValue("repoId");
+    newDataObject.setDefaultValue("sshUrl");
+    newDataObject.setDefaultValue("gitUrl");
     newDataObject.setDefaultValue("gitBranch");
     setDataObject({...newDataObject});
   };
