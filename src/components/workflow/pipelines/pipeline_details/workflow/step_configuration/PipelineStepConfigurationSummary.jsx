@@ -248,7 +248,8 @@ import azureZipDeploymentMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_zip_deployment/azureZipDeployment.metadata";
 import AzureZipDeploymentStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfigurationSummaryPanel";
-
+import SnykPipelineStepConfigurationSummary from "./step_tool_configuration_forms/snyk/inputs/SnykPipelineStepConfigurationSummary";
+import snykStepFormMetadata from "./step_tool_configuration_forms/snyk/snyk-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -776,6 +777,13 @@ function PipelineStepConfigurationSummary({
             <DockerCliPipelineStepConfigurationSummary
                 pipelineData={pipelineData}
                 dockerCliPipelineDataObject={getModelWrappedObject(dockerCliStepFormMetadata)}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK:
+        return (
+            <SnykPipelineStepConfigurationSummary
+                pipelineData={pipelineData}
+                snykPipelineDataObject={getModelWrappedObject(snykStepFormMetadata)}
             />
         );
       default:
