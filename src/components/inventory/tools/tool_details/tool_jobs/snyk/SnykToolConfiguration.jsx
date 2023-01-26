@@ -17,7 +17,7 @@ function SnykToolConfiguration({ toolData }) {
   useEffect(() => {
     loadData();
   }, []);
-
+ 
   const loadData = async () => {
     let snykConfigurationData = modelHelpers.getToolConfigurationModel(
       toolData.getData("configuration"),

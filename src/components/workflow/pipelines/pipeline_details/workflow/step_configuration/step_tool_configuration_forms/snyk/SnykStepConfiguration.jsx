@@ -18,7 +18,7 @@ import SnykScmRepositorySelectInput from "./inputs/SnykScmRepositorySelectInput"
 import SnykBitbucketWorkspaceInput from "./inputs/SnykBitbucketWorkspaceInput";
 import SnykPipelineStepLanguageSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snyk/inputs/SnykPipelineStepLanguageSelectInput";
-
+ 
 function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
   const [snykModel, setSnykModel] = useState(undefined);

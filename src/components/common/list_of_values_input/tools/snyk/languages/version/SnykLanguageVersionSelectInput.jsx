@@ -6,7 +6,7 @@ import snykIntegratorLanguageOptionConstants
 
 export default function SnykLanguageVersionSelectInput({
   fieldName,
-  model,
+  model, 
   setModel,
   disabled,
   setDataFunction,

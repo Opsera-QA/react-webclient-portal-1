@@ -18,7 +18,7 @@ function SnykToolSelectInput({ fieldName, model, setModel, disabled }) {
     newDataObject.setData("gitBranch", "");
     setModel({...newDataObject});
   };
-
+ 
   return (
     <RoleRestrictedSnykToolSelectInput
       fieldName={fieldName}

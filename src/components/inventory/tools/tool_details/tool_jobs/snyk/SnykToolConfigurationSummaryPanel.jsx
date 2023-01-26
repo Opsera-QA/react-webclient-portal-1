@@ -11,7 +11,7 @@ function SnykToolConfigurationSummaryPanel({ snykToolConfigurationModel }) {
   if (snykToolConfigurationModel == null) {
     return <LoadingDialog size="sm" />;
   }
-
+ 
   return (
     <SummaryPanelContainer>
       <Row>

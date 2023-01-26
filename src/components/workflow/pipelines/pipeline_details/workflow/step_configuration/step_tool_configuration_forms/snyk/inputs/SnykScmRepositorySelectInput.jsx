@@ -17,7 +17,7 @@ function SnykScmRepositorySelectInput({dataObject, setDataObject, disabled}) {
     newDataObject.setDefaultValue("gitBranch");
     setDataObject({...newDataObject});
   };
-
+ 
   const clearData = () => {
     let newDataObject = {...dataObject};
     newDataObject.setDefaultValue("repositoryName");

@@ -36,7 +36,7 @@ export default function SnykPackageManagerSelectInput(
       pluralTopic={"Package Managers or Build Tools"}
     />
   );
-}
+} 
 
 SnykPackageManagerSelectInput.propTypes = {
   fieldName: PropTypes.string,

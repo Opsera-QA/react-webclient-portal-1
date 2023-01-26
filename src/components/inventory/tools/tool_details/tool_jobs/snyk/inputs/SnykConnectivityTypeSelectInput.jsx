@@ -16,7 +16,7 @@ export default function SnykConnectivityTypeSelectInput({fieldName, model, setMo
     newModel.setData(fieldName, selectedOption?.value);    
     setModel({ ...newModel });
   };
-
+ 
   return (
     <SelectInputBase
       fieldName={fieldName}
