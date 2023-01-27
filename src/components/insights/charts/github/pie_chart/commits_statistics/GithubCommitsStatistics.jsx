@@ -8,7 +8,11 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, assignStandardColors, adjustBarWidth } from "../../../charts-views";
+import {
+  defaultConfig,
+  assignStandardColors,
+  adjustBarWidth,
+} from "../../../charts-views";
 import {
   METRIC_THEME_CHART_PALETTE_COLORS,
   METRIC_CHART_STANDARD_HEIGHT,
@@ -20,8 +24,16 @@ import GitHubCommitsTotalPullRequestsDataBlock from "./data_blocks/GitHubCommits
 import { DialogToastContext } from "contexts/DialogToastContext";
 import GithubCommitsActionableInsightOverlay from "./actionable_insights/GithubCommitsActionableInsightOverlay";
 import GithubDeclinedPullRequestActionableInsightOverlay from "./actionable_insights/GithubDeclinedPullRequestActionableInsightOverlay";
+import GithubApprovedPullRequestActionableInsightOverlay from "./actionable_insights/GithubApprovedPullRequestActionableInsightOverlay";
+// import GithubCommitStatisticsHelpDocumentation from "components/common/help/documentation/insights/charts/github/GithubCommitStatisticsHelpDocumentation";
 
-function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function GithubCommitsStatistics({
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  setKpis,
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [mostActiveUsersMetrics, setMostActiveUsersMetrics] = useState([]);
@@ -34,6 +46,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
   const [totalMerges, setTotalMerges] = useState(0);
   const [highestMergesMetric, setHighestMergesMetric] = useState([]);
   const [totalDeclinedMerges, setTotalDeclinedMerges] = useState([]);
+  const [repositoriesWithCommits, setRepositoriesWithCommits] = useState([]);
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -61,18 +74,32 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
     try {
       setIsLoading(true);
       let dashboardTags =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+        ]?.value;
       let dashboardOrgs =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-          ?.value;
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations",
+          )
+        ]?.value;
+      let dashboardFilters =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "hierarchyFilters",
+          )
+        ]?.value;
       const response = await chartsActions.getGithubTotalCommitsMetrics(
         kpiConfiguration,
         getAccessToken,
         cancelSource,
         dashboardTags,
-        dashboardOrgs
+        dashboardFilters,
+        dashboardOrgs,
       );
-      let dataObject = response?.data ? response?.data?.data?.most_active_users : [];
+      let dataObject = response?.data
+        ? response?.data?.data?.most_active_users
+        : [];
       dataObject.sort((a, b) => {
         if (a.commitCount < b.commitCount) {
           return -1;
@@ -82,11 +109,24 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
         }
         return 0;
       });
-      const total_pull_request = response?.data ? response?.data?.data?.total_pull_request : 0;
-      const total_commits = response?.data ? response?.data?.data?.total_commits : 0;
-      const total_merges = response?.data ? response?.data?.data?.total_merges : 0;
-      const project_with_highest_merges = response?.data ? response?.data?.data?.project_with_highest_merges : [];
-      const total_declined_merges = response?.data ? response?.data?.data?.total_declined_merges : [];
+      const total_pull_request = response?.data
+        ? response?.data?.data?.total_pull_request
+        : 0;
+      const total_commits = response?.data
+        ? response?.data?.data?.total_commits
+        : 0;
+      const total_merges = response?.data
+        ? response?.data?.data?.total_merges
+        : 0;
+      const project_with_highest_merges = response?.data
+        ? response?.data?.data?.project_with_highest_merges
+        : [];
+      const total_declined_merges = response?.data
+        ? response?.data?.data?.total_declined_merges
+        : [];
+      const repositories_with_commits = response?.data
+        ? response?.data?.data?.repositories_with_commits
+        : [];
       assignStandardColors(dataObject, true);
 
       if (isMounted?.current === true && dataObject) {
@@ -96,6 +136,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
         setTotalMerges(total_merges);
         setHighestMergesMetric(project_with_highest_merges);
         setTotalDeclinedMerges(total_declined_merges);
+        setRepositoriesWithCommits(repositories_with_commits);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -114,7 +155,20 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
         highestMergesMetric={highestMergesMetric}
-      />
+        totalDeclinedMerges={totalDeclinedMerges}
+        repositoriesWithCommits={repositoriesWithCommits}
+      />,
+    );
+  };
+
+  const showGithubApprovedPullRequestModal = (node) => {
+    toastContext.showOverlayPanel(
+      <GithubApprovedPullRequestActionableInsightOverlay
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+        highestMergesMetric={highestMergesMetric}
+        repository={node?.id}
+      />,
     );
   };
 
@@ -125,20 +179,29 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
         dashboardData={dashboardData}
         highestMergesMetric={highestMergesMetric}
         repository={node?.id}
-      />
+      />,
     );
   };
 
-  const getHorizontalDataBlocks =() => {
+  const getHorizontalDataBlocks = () => {
     return (
       <Row className="px-4 justify-content-between">
-        <Col md={4} className={"my-1"}>
+        <Col
+          md={4}
+          className={"my-1"}
+        >
           <GitHubCommitsTotalCommitsDataBlock data={totalCommits} />
         </Col>
-        <Col md={4} className={"my-1"}>
+        <Col
+          md={4}
+          className={"my-1"}
+        >
           <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
         </Col>
-        <Col md={4} className={"my-1"}>
+        <Col
+          md={4}
+          className={"my-1"}
+        >
           <GitHubCommitsTotalPullRequestsDataBlock data={totalPullRequest} />
         </Col>
       </Row>
@@ -148,14 +211,23 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
   const getDataBlocks = () => {
     return (
       <Row className="px-4 justify-content-between">
-        <Col md={12} className={"my-1"}>
+        <Col
+          md={12}
+          className={"my-1"}
+        >
           <GitHubCommitsTotalCommitsDataBlock data={totalCommits} />
         </Col>
-        <Col md={12} className={"my-1"}>
-          <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
-        </Col>
-        <Col md={12} className={"my-1"}>
+        <Col
+          md={12}
+          className={"my-1"}
+        >
           <GitHubCommitsTotalPullRequestsDataBlock data={totalPullRequest} />
+        </Col>
+        <Col
+          md={12}
+          className={"my-1"}
+        >
+          <GitHubCommitsTotalMergesDataBlock data={totalMerges} />
         </Col>
       </Row>
     );
@@ -163,11 +235,11 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
   const getSmallView = () => {
     return (
       <div className={"d-block d-lg-none"}>
-         <Row>
+        <Row>
           <Col md={12}>{getHorizontalDataBlocks()}</Col>
         </Row>
         <Row>
-        <Col md={4}>
+          <Col md={4}>
             <div className="text-center col-12">
               <div className="font-inter-light-400 light-gray-text-secondary metric-block-footer-text">
                 Approved Pull Requests
@@ -178,7 +250,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
                 data={highestMergesMetric}
                 {...defaultConfig("", "", false, false, "", "", true)}
                 {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => setShowModal(true)}
+                onClick={(node) => showGithubApprovedPullRequestModal(node)}
               />
             </div>
           </Col>
@@ -191,7 +263,15 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
             <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
               <ResponsiveBar
                 data={mostActiveUsersMetrics}
-                {...defaultConfig("Users", "Total Merges", true, false, "cutoffString", "wholeNumbers", true)}
+                {...defaultConfig(
+                  "Users",
+                  "Total Commits",
+                  true,
+                  false,
+                  "cutoffString",
+                  "wholeNumbers",
+                  true,
+                )}
                 {...config(METRIC_THEME_CHART_PALETTE_COLORS)}
                 {...adjustBarWidth(mostActiveUsersMetrics, false)}
               />
@@ -216,7 +296,6 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
       </div>
     );
   };
-  
 
   const getLargeView = () => {
     return (
@@ -229,7 +308,7 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
                 data={highestMergesMetric}
                 {...defaultConfig("", "", false, false, "", "", true)}
                 {...pieChartConfig(METRIC_THEME_CHART_PALETTE_COLORS)}
-                onClick={() => setShowModal(true)}
+                onClick={(node) => showGithubApprovedPullRequestModal(node)}
               />
             </div>
             <div className="text-center col-12">
@@ -242,7 +321,15 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
             <div style={{ height: METRIC_CHART_STANDARD_HEIGHT }}>
               <ResponsiveBar
                 data={mostActiveUsersMetrics}
-                {...defaultConfig("Users", "Total Merges", true, false, "cutoffString", "wholeNumbers", true)}
+                {...defaultConfig(
+                  "Users",
+                  "Total Merges",
+                  true,
+                  false,
+                  "cutoffString",
+                  "wholeNumbers",
+                  true,
+                )}
                 {...config(METRIC_THEME_CHART_PALETTE_COLORS)}
                 {...adjustBarWidth(mostActiveUsersMetrics, false)}
               />
@@ -274,7 +361,10 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
   };
 
   const getChartBody = () => {
-    if (!Array.isArray(mostActiveUsersMetrics) || mostActiveUsersMetrics.length === 0) {
+    if (
+      !Array.isArray(mostActiveUsersMetrics) ||
+      mostActiveUsersMetrics.length === 0
+    ) {
       return null;
     }
 
@@ -282,7 +372,6 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
       <div className="new-chart mb-3">
         {getLargeView()}
         {getSmallView()}
-        
       </div>
     );
   };
@@ -301,6 +390,11 @@ function GithubCommitsStatistics({ kpiConfiguration, setKpiConfiguration, dashbo
         setKpis={setKpis}
         isLoading={isLoading}
         launchActionableInsightsFunction={onRowSelect}
+        // chartHelpComponent={(closeHelpPanel) => (
+        //   <GithubCommitStatisticsHelpDocumentation
+        //     closeHelpPanel={closeHelpPanel}
+        //   />
+        // )}
       />
       <ModalLogs
         header="Github Commits Statistics"

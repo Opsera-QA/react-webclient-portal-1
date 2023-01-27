@@ -6,13 +6,21 @@ import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabV
 import GithubCommitsVerticalTabContainer from "./GithubCommitsVerticalTabContainer";
 import GithubContributorsCommitsTab from "./tableData/GithubContributorsCommitsTab";
 
-function GithubCommitsActionableInsightContributorsTab({highestMergesMetric, dashboardData, kpiConfiguration, icon}) {
-
-   const getTabContentContainer = () => {
+function GithubCommitsActionableInsightContributorsTab({
+  highestMergesMetric,
+  dashboardData,
+  kpiConfiguration,
+  icon,
+}) {
+  console.log(highestMergesMetric);
+  const getTabContentContainer = () => {
     return (
       <VanitySetTabViewContainer>
-        {highestMergesMetric.map((item,index)=>(
-          <VanitySetTabView key={index} tabKey={item.id}>
+        {highestMergesMetric.map((item, index) => (
+          <VanitySetTabView
+            key={index}
+            tabKey={item.id}
+          >
             <GithubContributorsCommitsTab
               repository={item.id}
               dashboardData={dashboardData}
@@ -21,27 +29,32 @@ function GithubCommitsActionableInsightContributorsTab({highestMergesMetric, das
             />
           </VanitySetTabView>
         ))}
-        
       </VanitySetTabViewContainer>
     );
   };
 
-
   return (
     <VanitySetTabAndViewContainer
       title={`Github Contributors`}
-      defaultActiveKey={highestMergesMetric && Array.isArray(highestMergesMetric) && highestMergesMetric[0].id && highestMergesMetric[0].id}
-      verticalTabContainer={<GithubCommitsVerticalTabContainer highestMergesMetric={highestMergesMetric} />}
+      defaultActiveKey={
+        highestMergesMetric &&
+        Array.isArray(highestMergesMetric) &&
+        highestMergesMetric[0]?.id &&
+        highestMergesMetric[0]?.id
+      }
+      verticalTabContainer={
+        <GithubCommitsVerticalTabContainer
+          highestMergesMetric={highestMergesMetric}
+        />
+      }
       currentView={getTabContentContainer()}
     />
   );
-
 }
 GithubCommitsActionableInsightContributorsTab.propTypes = {
   highestMergesMetric: PropTypes.array,
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object,
-  icon: PropTypes.object
+  icon: PropTypes.object,
 };
 export default GithubCommitsActionableInsightContributorsTab;
-
