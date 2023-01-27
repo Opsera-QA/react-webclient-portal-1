@@ -34,6 +34,7 @@ import DateTimeField from "components/common/fields/date/DateTimeField";
 import OwnerNameField from "components/common/fields/text/general/OwnerNameField";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
+import PipelineNameTextInput from "components/workflow/pipelines/summary/inputs/PipelineNameTextInput";
 
 const INITIAL_FORM_DATA = {
   name: "",
