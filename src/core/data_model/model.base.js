@@ -352,19 +352,19 @@ export default class ModelBase {
   };
 
   updateState = () => {
-    if (this.setStateFunction) {
+    if (typeof this.setStateFunction === "function") {
       this.setStateFunction({...this});
     }
   };
 
   unselectModel = () => {
-    if (this.setStateFunction) {
+    if (typeof this.setStateFunction === "function") {
       this.setStateFunction(undefined);
     }
   };
 
   setSetStateFunction = (setStateFunction) => {
-    if (setStateFunction) {
+    if (typeof setStateFunction === "function") {
       this.setStateFunction = setStateFunction;
     }
   };

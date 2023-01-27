@@ -10,12 +10,12 @@ import AutomationPercentageConfiguration from "./automation_percentage/Automatio
 import AdoptionPercentageConfiguration from "./adoption_percentage/AdoptionPercentageConfiguration";
 import AutomatedTestResultsConfigPanel from "./automated_test_results/AutomatedTestResultsConfigPanel";
 import DefectRemovalEfficiencyConfigurationPanel from "./defect_removal_efficiency/DefectRemovalEfficiencyConfigurationPanel";
+import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 
 function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setAnalyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
   const getConfigurationPanel = () => {
-    // TODO: Divyesha, the switch case needs to be changed to match the identifier of your KPI
-    switch (analyticsDataEntryModel.getData("kpi_identifier")) {
-      case "qa-manual-test":
+    switch (analyticsDataEntryModel?.getData("kpi_identifier")) {
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.QA_MANUAL_TEST:
         return (
           <QaManualTestConfigurationPanel
             analyticsDataEntryModel={analyticsDataEntryModel}
@@ -23,7 +23,7 @@ function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setA
             kpiConfigurationData={kpiConfigurationData}
           />
         );
-      case "first-pass-yield":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.FIRST_PASS_YIELD:
         return (
           <FirstPassYieldConfiguration
             analyticsDataEntryModel={analyticsDataEntryModel}
@@ -31,7 +31,7 @@ function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setA
             kpiConfigurationData={kpiConfigurationData}
           />
         );
-      case "cumulative-open-defects":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.CUMULATIVE_OPEN_DEFECTS:
         return (
           <CumulativeOpenDefectsConfiguration
             analyticsDataEntryModel={analyticsDataEntryModel}
@@ -39,7 +39,7 @@ function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setA
             kpiConfigurationData={kpiConfigurationData}
           />
         );
-      case "automation-percentage":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATION_PERCENTAGE:
         return (
           <AutomationPercentageConfiguration
             analyticsDataEntryModel={analyticsDataEntryModel}
@@ -47,7 +47,7 @@ function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setA
             kpiConfigurationData={kpiConfigurationData}
           />
         );
-      case "adoption-percentage":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.ADOPTION_PERCENTAGE:
         return (
           <AdoptionPercentageConfiguration
             analyticsDataEntryModel={analyticsDataEntryModel}
@@ -55,7 +55,7 @@ function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setA
             kpiConfigurationData={kpiConfigurationData}
           />
         );
-      case "automated-test-results":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATED_TEST_RESULTS:
         return (
           <AutomatedTestResultsConfigPanel
             analyticsDataEntryModel={analyticsDataEntryModel}
@@ -63,7 +63,7 @@ function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setA
             kpiConfigurationData={kpiConfigurationData}
           />
         );
-      case "defect-removal-efficiency":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.DEFECT_REMOVAL_EFFICIENCY:
         return (
           <DefectRemovalEfficiencyConfigurationPanel 
             analyticsDataEntryModel={analyticsDataEntryModel}
