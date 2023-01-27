@@ -52,7 +52,7 @@ function HelmAzureNamespaceSelectInput({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      model.getData("awsToolConfigId") && clusterName && resourceGroup ? await loadAzureNamespaces(cancelSource) : null;
+      model.getData("azureToolConfigId") && clusterName && resourceGroup ? await loadAzureNamespaces(cancelSource) : null;
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
