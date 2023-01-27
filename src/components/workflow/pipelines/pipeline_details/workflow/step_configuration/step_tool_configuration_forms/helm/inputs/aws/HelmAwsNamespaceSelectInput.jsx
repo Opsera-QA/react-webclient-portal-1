@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
-import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
+import helmStepActions from "../../helm-step-actions";
 
-function HelmAwsClusterSelectInput({
+function HelmAwsNamespaceSelectInput({
   fieldName,
   model,
   setModel,
@@ -14,10 +13,10 @@ function HelmAwsClusterSelectInput({
   textField,
   valueField,
   awsToolConfigId,
-  clusterData
+  clusterName
 }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [clusters, setClusters] = useState([]);
+  const [namespaces, setNamespaces] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -45,12 +44,12 @@ function HelmAwsClusterSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [awsToolConfigId]);
+  }, [awsToolConfigId, clusterName]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      model.getData("awsToolConfigId") ? await loadAwsClusters(cancelSource) : null;
+      model.getData("awsToolConfigId") && clusterName ? await loadAwsNamespaces(cancelSource) : null;
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
@@ -62,14 +61,14 @@ function HelmAwsClusterSelectInput({
     }
   };
 
-  const loadAwsClusters = async (cancelSource) => {
-      setClusters([]);
-      const res = await argoActions.getAwsEksClusters(getAccessToken, cancelSource, awsToolConfigId);
+  const loadAwsNamespaces = async (cancelSource) => {
+      setNamespaces([]);
+      const res = await helmStepActions.getAwsNamespaces(getAccessToken, cancelSource, awsToolConfigId, clusterName);
       if (res && res.status === 200) {
         if (res.data.length === 0) {
           return;
         }
-        setClusters(res.data);
+        setNamespaces(res.data);
         return;
       }
   };
@@ -79,19 +78,19 @@ function HelmAwsClusterSelectInput({
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={clusters}
+      selectOptions={namespaces}
       textField={textField}
       valueField={valueField}
       error={error}
       busy={isLoading}
-      singularTopic={"Cluster"}
-      pluralTopic={"Clusters"}
-      disabled={disabled || isLoading || (!isLoading && (clusters == null || clusters.length === 0))}
+      singularTopic={"Namespace"}
+      pluralTopic={"Namespaces"}
+      disabled={disabled || isLoading || (!isLoading && (namespaces == null || namespaces.length === 0))}
     />
   );
 }
 
-HelmAwsClusterSelectInput.propTypes = {
+HelmAwsNamespaceSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -100,12 +99,13 @@ HelmAwsClusterSelectInput.propTypes = {
   valueField: PropTypes.string,
   awsToolConfigId: PropTypes.string,
   clusterData: PropTypes.array,
+  clusterName: PropTypes.string,
 };
 
-HelmAwsClusterSelectInput.defaultProps = {
-  fieldName: "clusterName",
-  textField: "clusterName",
-  valueField: "clusterName",
+HelmAwsNamespaceSelectInput.defaultProps = {
+  fieldName: "namespace",
+  textField: "namespace",
+  valueField: "namespace",
 };
 
-export default HelmAwsClusterSelectInput;
+export default HelmAwsNamespaceSelectInput;

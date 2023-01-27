@@ -8,17 +8,14 @@ import azureActions from "components/workflow/pipelines/pipeline_details/workflo
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import toolsActions from "components/inventory/tools/tools-actions";
 
-function AzureResourceGroupSelectInput(
+function HelmAzureClusterSelectInput(
   {
     fieldName,
     model,
     setModel,
     azureToolConfigId,
-    azureApplication,
-    textField,
-    valueField,
-    clusterName,
-    disabled
+    applicationId,
+    clusterData
   }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -34,22 +31,22 @@ function AzureResourceGroupSelectInput(
     }
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-    setAzureRegionList([]);
 
-    if (hasStringValue(azureToolConfigId) && hasStringValue(azureApplication) && hasStringValue(clusterName) && !disabled) {
+    setAzureRegionList([]);
+    if (hasStringValue(applicationId) === true && hasStringValue(azureToolConfigId) === true) {
       loadData(source).catch((error) => {
         throw error;
       });
     }
-  }, [azureToolConfigId, azureApplication, clusterName]);
+  }, [azureToolConfigId, applicationId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadAzureRegistries(cancelSource);
+      await loadAzureClusters(cancelSource);
     } catch (error) {
-      setPlaceholderText("There was an error pulling Resource Groups");
-      setErrorMessage("No Resource Groups available.");
+      setPlaceholderText("There was an error pulling Clusters");
+      setErrorMessage("No Clusters available.");
       toastContext.showErrorDialog(error);
       console.error(error);
     } finally {
@@ -57,9 +54,7 @@ function AzureResourceGroupSelectInput(
     }
   };
 
-  // TODO: We should make a route on node where you can pass an azure tool ID and an azure Application ID
-  //  and return the resource groups instead of constructing the complex query here on React
-  const loadAzureRegistries = async (cancelSource = cancelTokenSource) => {
+  const loadAzureClusters = async (cancelSource = cancelTokenSource) => {
     const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, azureToolConfigId);
     const tool = response?.data?.data;
 
@@ -69,7 +64,7 @@ function AzureResourceGroupSelectInput(
       return;
     }
 
-    const applicationResponse = await toolsActions.getRoleLimitedToolApplicationByIdV2(getAccessToken, cancelSource, azureToolConfigId, azureApplication);
+    const applicationResponse = await toolsActions.getRoleLimitedToolApplicationByIdV2(getAccessToken, cancelSource, azureToolConfigId, applicationId);
     const applicationData = applicationResponse?.data?.data;
 
     if (applicationData == null) {
@@ -82,24 +77,32 @@ function AzureResourceGroupSelectInput(
       return;
     }
 
-    const resourceGroupResponse = await azureActions.getAzureResourceGroups(
+    updateClientDetails(applicationData?.configuration);
+
+    const azureResponse = await azureActions.getAzureClusters(
       getAccessToken,
       cancelSource,
       tool,
-      applicationData?.configuration,
-      clusterName
+      applicationData?.configuration
     );
-    const result = resourceGroupResponse?.data?.data;
 
+    const result = azureResponse?.data?.data;
     if (Array.isArray(result) && result.length > 0) {
-      setErrorMessage("");
+      setErrorMessage("");      
       setAzureRegionList(result);
     }
 
     if (result?.length === 0) {
-      setPlaceholderText("No resource groups found with this azure configuration");
-      setErrorMessage("No Resource Groups found");
+      setPlaceholderText("No clusters found with this azure configuration");
+      setErrorMessage("No Clusters found");
     }
+  };
+
+  const updateClientDetails = (config) => {
+    let newDataObject = { ...model };
+    newDataObject.setData("clientId", config?.clientId?.vaultKey);
+    newDataObject.setData("clientSecret", config?.clientSecret?.vaultKey);
+    setModel({ ...newDataObject });
   };
 
   return (
@@ -109,31 +112,26 @@ function AzureResourceGroupSelectInput(
       setDataObject={setModel}
       selectOptions={azureRegionList}
       busy={isLoading}
-      disabled={isLoading || disabled}
+      disabled={isLoading}
       placeholder={placeholder}
-      textField={textField}
-      valueField={valueField}
       errorMessage={errorMessage}
     />
   );
 }
 
-AzureResourceGroupSelectInput.propTypes = {
+HelmAzureClusterSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
   azureToolConfigId: PropTypes.string,
-  azureApplication: PropTypes.string,
-  textField: PropTypes.string,
-  valueField: PropTypes.string,
-  clusterName: PropTypes.string,
-  disabled: PropTypes.bool
+  applicationId: PropTypes.string,
+  clusterData: PropTypes.array,
 };
 
-AzureResourceGroupSelectInput.defaultProps = {
-  fieldName: "resourceGroup",
-  textField: "resourceGroup",
-  valueField: "resourceGroup",
+HelmAzureClusterSelectInput.defaultProps = {
+  fieldName: "clusterName",
+  textField: "clusterName",
+  valueField: "clusterName",
 };
 
-export default AzureResourceGroupSelectInput;
+export default HelmAzureClusterSelectInput;
