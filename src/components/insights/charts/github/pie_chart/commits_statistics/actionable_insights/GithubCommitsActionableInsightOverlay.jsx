@@ -1,7 +1,14 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { faTable, faCodeMerge, faCodePullRequest, faCodePullRequestClosed, faPersonArrowUpFromLine, faUsers} from "@fortawesome/pro-light-svg-icons";
+import {
+  faTable,
+  faCodeMerge,
+  faCodePullRequest,
+  faCodePullRequestClosed,
+  faPersonArrowUpFromLine,
+  faUsers,
+} from "@fortawesome/pro-light-svg-icons";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
@@ -11,7 +18,13 @@ import FullScreenCenterOverlayContainer from "components/common/overlays/center/
 import GithubCommitsActionableInsightMergedTab from "./GithubCommitsActionableInsightMergedTab";
 import GithubCommitsActionableInsightContributorsTab from "./GithubCommitsActionableInsightContributorsTab";
 
-function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData, highestMergesMetric }) {
+function GithubCommitsActionableInsightOverlay({
+  kpiConfiguration,
+  dashboardData,
+  highestMergesMetric,
+  totalDeclinedMerges,
+  repositoriesWithCommits,
+}) {
   const toastContext = useContext(DialogToastContext);
   const [activeTab, setActiveTab] = useState("opened");
 
@@ -33,7 +46,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
     } else if (activeTab == "closed") {
       return (
         <GithubCommitsActionableInsightClosedTab
-          highestMergesMetric={highestMergesMetric}
+          highestMergesMetric={totalDeclinedMerges}
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
           icon={faCodePullRequestClosed}
@@ -51,7 +64,7 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
     } else if (activeTab == "contributors") {
       return (
         <GithubCommitsActionableInsightContributorsTab
-          highestMergesMetric={highestMergesMetric}
+          highestMergesMetric={repositoriesWithCommits}
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
           icon={faPersonArrowUpFromLine}
@@ -111,7 +124,10 @@ function GithubCommitsActionableInsightOverlay({ kpiConfiguration, dashboardData
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
-        <TabPanelContainer currentView={getBody()} tabContainer={getTabContainer()} />
+        <TabPanelContainer
+          currentView={getBody()}
+          tabContainer={getTabContainer()}
+        />
       </div>
     </FullScreenCenterOverlayContainer>
   );
@@ -121,6 +137,8 @@ GithubCommitsActionableInsightOverlay.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   highestMergesMetric: PropTypes.array,
+  totalDeclinedMerges: PropTypes.array,
+  repositoriesWithCommits: PropTypes.array,
 };
 
 export default GithubCommitsActionableInsightOverlay;

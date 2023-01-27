@@ -6,13 +6,20 @@ import VanitySetTabView from "components/common/tabs/vertical_tabs/VanitySetTabV
 import GithubCommitsVerticalTabContainer from "./GithubCommitsVerticalTabContainer";
 import GithubClosedCommitsTab from "./tableData/GithubClosedCommitsTab";
 
-function GithubCommitsActionableInsightClosedTab({highestMergesMetric, dashboardData, kpiConfiguration, icon}) {
-
-   const getTabContentContainer = () => {
+function GithubCommitsActionableInsightClosedTab({
+  highestMergesMetric,
+  dashboardData,
+  kpiConfiguration,
+  icon,
+}) {
+  const getTabContentContainer = () => {
     return (
       <VanitySetTabViewContainer className={"mb-3"}>
-        {highestMergesMetric.map((item,index)=>(
-          <VanitySetTabView key={index} tabKey={item.id} >
+        {highestMergesMetric.map((item, index) => (
+          <VanitySetTabView
+            key={index}
+            tabKey={item.id}
+          >
             <GithubClosedCommitsTab
               repository={item.id}
               dashboardData={dashboardData}
@@ -21,27 +28,32 @@ function GithubCommitsActionableInsightClosedTab({highestMergesMetric, dashboard
             />
           </VanitySetTabView>
         ))}
-        
       </VanitySetTabViewContainer>
     );
   };
 
-
   return (
     <VanitySetTabAndViewContainer
       title={`Github Closed Pull Requests`}
-      defaultActiveKey={highestMergesMetric && Array.isArray(highestMergesMetric) && highestMergesMetric[0].id && highestMergesMetric[0].id}
-      verticalTabContainer={<GithubCommitsVerticalTabContainer highestMergesMetric={highestMergesMetric} />}
+      defaultActiveKey={
+        highestMergesMetric &&
+        Array.isArray(highestMergesMetric) &&
+        highestMergesMetric[0]?.id &&
+        highestMergesMetric[0]?.id
+      }
+      verticalTabContainer={
+        <GithubCommitsVerticalTabContainer
+          highestMergesMetric={highestMergesMetric}
+        />
+      }
       currentView={getTabContentContainer()}
     />
   );
-
 }
 GithubCommitsActionableInsightClosedTab.propTypes = {
   highestMergesMetric: PropTypes.array,
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object,
-  icon: PropTypes.object
+  icon: PropTypes.object,
 };
 export default GithubCommitsActionableInsightClosedTab;
-
