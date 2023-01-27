@@ -24,7 +24,7 @@ function ExportTaskActivityLogDataOverlay({activityLogData, isLoading}) {
         activityLog.log_type,
         activityLog.message,
         activityLog.status,
-        DateFormatHelper.formatDate(activityLog.createdAt, DateFormatHelper.DATE_FORMATS.TIMESTAMP_WITHOUT_SECONDS),
+        DateFormatHelper.formatDateAsTimestampWithoutSeconds(activityLog.createdAt),
       ]);
     });
   };

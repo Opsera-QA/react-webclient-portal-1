@@ -23,7 +23,7 @@ function ExportReportsDataOverlay({ formattedData, rawData, isLoading}) {
         item.name,
         item.description,
         item._id,
-        DateFormatHelper.formatDate(item.createdAt, DateFormatHelper.DATE_FORMATS.TIMESTAMP_WITHOUT_SECONDS),
+        DateFormatHelper.formatDateAsTimestampWithoutSeconds(item.createdAt),
         item.active ? "active" : "inactive"])
     });
 
@@ -37,7 +37,7 @@ function ExportReportsDataOverlay({ formattedData, rawData, isLoading}) {
           item.name,
           item.description,
           item._id,
-          DateFormatHelper.formatDate(item.createdAt, DateFormatHelper.DATE_FORMATS.TIMESTAMP_WITHOUT_SECONDS),
+          DateFormatHelper.formatDateAsTimestampWithoutSeconds(item.createdAt),
           item.active ? "active" : "inactive"
         ]
       )];
