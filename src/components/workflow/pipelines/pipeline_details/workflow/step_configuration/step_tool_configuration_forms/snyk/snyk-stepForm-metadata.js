@@ -64,12 +64,8 @@ const snykStepFormMetadata = {
       isRequired: true,
     },
     {
-      label: "Repository",
-      id: "projectId",
-    },
-    {
       label: "Repository Name",
-      id: "repositoryName",
+      id: "repository",
     },
     {
       label: "Workspace",
@@ -94,6 +90,7 @@ const snykStepFormMetadata = {
     thresholdVulnerability: [],
     gitToolId: "",
     repoId: "",
+    repository: "",
     gitBranch: "",
     service: "",
     sshUrl: "",
