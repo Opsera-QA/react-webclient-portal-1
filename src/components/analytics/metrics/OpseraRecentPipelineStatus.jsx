@@ -8,7 +8,8 @@ import CustomTable from "../../common/table/CustomTable";
 import SuccessIcon from '../../common/icons/table/SuccessIcon';
 import PropTypes from "prop-types";
 import FailIcon from '../../common/icons/table/FailIcon';
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
+
 
 function OpseraRecentPipelineStatus({ date }) {
   const contextType = useContext(AuthContext);
@@ -48,7 +49,7 @@ function OpseraRecentPipelineStatus({ date }) {
         Header: "Completed At",
         accessor: "timestamp",
         Cell: function parseDate(row) {
-          return format(new Date(row?.value), "yyyy-MM-dd', 'hh:mm a");
+          return DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(row?.value));
         },
       },
       {

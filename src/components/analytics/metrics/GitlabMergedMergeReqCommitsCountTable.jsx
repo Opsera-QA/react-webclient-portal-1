@@ -4,7 +4,7 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import CustomTable from "../../common/table/CustomTable";
 import PropTypes from "prop-types";
 
@@ -104,7 +104,7 @@ function GitlabMergedMergeReqCommitsCountTable({ date }) {
         Header: "Time",
         accessor: "mrCompletionTimeTimeStamp",
         Cell: (props) => {
-          return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
+          return DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(props.value));
         },
       },
     ],
@@ -214,7 +214,7 @@ function GitlabMergedMergeReqCommitsCountTable({ date }) {
     //               <td>{value["PushCodeTime"]}</td>
     //               <td>{value["BranchName"]}</td>
     //               <td>{value["ProjectName"]}</td>
-    //               <td>{format(new Date(value["mrCompletionTimeTimeStamp"]), "yyyy-MM-dd', 'hh:mm a")}</td>
+    //               <td>{DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(value["mrCompletionTimeTimeStamp"]))}</td>
     //               {/* <td>{value["mrCompletionTimeTimeStamp"]}</td> */}
     //             </tr>
     //           );

@@ -12,9 +12,10 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { format } from "date-fns";
 import { defaultConfig, getColor, assignStandardColors } from '../../../charts-views';
 import ChartTooltip from "../../../ChartTooltip";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
+
 
 function NewBugsCountLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -86,7 +87,7 @@ function NewBugsCountLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
               onClick={() => setShowModal(true)}
               tooltip={({ point, color }) => <ChartTooltip 
                 titles = {["Timestamp", "New Bugs", "Project Key"]}
-                values = {[format(new Date(point.data.x), "yyyy-MM-dd', 'hh:mm a"),
+                values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(point.data.x)),
                           point.data.y, point.data.key]}
                 color = {color} />}
             />

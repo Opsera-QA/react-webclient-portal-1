@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import { Table } from "react-bootstrap";
 import ModalLogs from "components/common/modal/modalLogs";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
-import { format } from "date-fns";
 import IconBase from "components/common/icons/IconBase";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
+
 
 function CommitSearchResult({ searchResults }) {
   const [showModal, setShowModal] = useState(false);
@@ -43,7 +44,7 @@ function CommitSearchResult({ searchResults }) {
               <td className="force-text-wrap">{item["user"]}</td>
               <td className="force-text-wrap">{item["git_branch"]}</td>
               <td className="force-text-wrap">{item["project"]}</td>
-              <td>{format(new Date(item["time"]), "yyyy-MM-dd', 'hh:mm a")}</td>  
+              <td>{DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(item["time"]))}</td>
             </tr>
           ))}
         </tbody>
@@ -72,7 +73,7 @@ function CommitSearchResult({ searchResults }) {
               </td>
               <td className="force-text-wrap">{item["git_commit"]}</td>
               <td className="force-text-wrap">{item["git_branch"]}</td>
-              <td>{format(new Date(item["time"]), "yyyy-MM-dd', 'hh:mm a")}</td>  
+              <td>{DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(item["time"]))}</td>
             </tr>
           ))}
         </tbody>
@@ -103,7 +104,7 @@ function CommitSearchResult({ searchResults }) {
               <td className="force-text-wrap">{item["git_commit"]}</td>
               <td className="force-text-wrap">{item["branch"]}</td>
               <td className="force-text-wrap">{item["project"]}</td>
-              <td>{format(new Date(item["time"]), "yyyy-MM-dd', 'hh:mm a")}</td>  
+              <td>{DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(item["time"]))}</td>
             </tr>
           ))}
         </tbody>

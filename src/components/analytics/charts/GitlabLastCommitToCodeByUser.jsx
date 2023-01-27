@@ -5,7 +5,7 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 import { Table }  from "react-bootstrap";
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 function GitlabLastCommitToCodeByUser({ date }) {
   const contextType = useContext(AuthContext);
@@ -85,7 +85,7 @@ function GitlabLastCommitToCodeByUser({ date }) {
                   <td>{value["AuthorName"]}</td>
                   <td>{value["MergeRequestTitle"]}</td>
                   <td>{value["CommitTitle"]}</td>
-                  <td>{format(new Date(value["Time"]), "yyyy-MM-dd', 'hh:mm a")}</td>                
+                  <td>{DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(value["Time"]))}</td>
                 </tr>;
               })
               }
