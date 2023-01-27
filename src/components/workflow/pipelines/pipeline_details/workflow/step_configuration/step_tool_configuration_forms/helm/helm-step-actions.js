@@ -70,4 +70,32 @@ helmStepActions.getAzureContainers = async (getAccessToken, cancelTokenSource, c
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+helmStepActions.getAwsNamespaces = async (getAccessToken, cancelTokenSource, awsToolConfigId, clusterName) => {
+  
+  let urlParams = {
+    awsToolConfigId: awsToolConfigId,
+    clusterName: clusterName,
+  };
+  const apiURL = `tools/helm/aws/namespace?awsToolConfigId=${awsToolConfigId}&clusterName=${clusterName}`;
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiURL,
+    urlParams,
+  );
+};
+
+helmStepActions.getAzureContainers = async (getAccessToken, cancelTokenSource, clusterName, clusterType, azureToolConfigId, azureCredentialId, resourceGroup) => {
+  const apiUrl = `tools/helm/azure/namespace`;
+  const postBody = {
+    clusterName, 
+    clusterType, 
+    azureToolConfigId, 
+    azureCredentialId, 
+    resourceGroup
+  };
+
+return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default helmStepActions;

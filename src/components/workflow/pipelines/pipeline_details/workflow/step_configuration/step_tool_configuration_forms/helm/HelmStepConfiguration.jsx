@@ -82,7 +82,6 @@ function HelmStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeE
       <CloudCredentialSubForm model={helmStepConfigurationModel} setModel={setHelmStepConfigurationModel} />
       <CustomScriptSubForm model={helmStepConfigurationModel} setModel={setHelmStepConfigurationModel} />
       <TextInputBase dataObject={helmStepConfigurationModel} fieldName={"inputFileName"} setDataObject={setHelmStepConfigurationModel}/>
-      <TextInputBase dataObject={helmStepConfigurationModel} fieldName={"namespace"} setDataObject={setHelmStepConfigurationModel}/>
       <TextInputBase dataObject={helmStepConfigurationModel} fieldName={"serviceName"} setDataObject={setHelmStepConfigurationModel}/>
       <HelmCustomParametersInput
         model={helmStepConfigurationModel}
