@@ -34,6 +34,7 @@ function BitbucketRepositorySelectInput({
   const [bitbucketBranches, setBitbucketBranches] = useState([]);
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
+  const [inEditMode, setInEditMode] = useState(false);
   const { getAccessToken } = useContext(AuthContext);
 
   useEffect(() => {
@@ -50,7 +51,8 @@ function BitbucketRepositorySelectInput({
     if (
       isMongoDbId(toolId) === true &&
       hasStringValue(workspace) === true &&
-      hasStringValue(repositoryId) === true
+      hasStringValue(repositoryId) === true &&
+      inEditMode === true
     ) {
       loadData(source).catch((error) => {
         throw error;
@@ -61,7 +63,7 @@ function BitbucketRepositorySelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId, workspace, repositoryId]);
+  }, [toolId, workspace, repositoryId, inEditMode]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -91,6 +93,7 @@ function BitbucketRepositorySelectInput({
     repositoryId,
     cancelSource = cancelTokenSource,
   ) => {
+    setIsLoading(true);
     const response = await bitbucketActions.getBranchesFromBitbucketInstanceV3(
       getAccessToken,
       cancelSource,
@@ -104,6 +107,7 @@ function BitbucketRepositorySelectInput({
     if (isMounted?.current === true && Array.isArray(branches)) {
       setBitbucketBranches([...branches]);
     }
+    setIsLoading(false);
   };
 
   const delayedSearchQuery = useCallback(
@@ -126,6 +130,7 @@ function BitbucketRepositorySelectInput({
         setDataFunction={setDataFunction}
         clearDataFunction={clearDataFunction}
         valueField={"name"}
+        filterOption={"startsWith"}
         textField={"name"}
         disabled={disabled}
         error={error}
@@ -135,6 +140,8 @@ function BitbucketRepositorySelectInput({
           delayedSearchQuery(searchTerm, repositoryId, toolId)
         }
         useToggle={true}
+        requireUserEnable={true}
+        onEnableEditFunction={() => setInEditMode(true)}
       />
     );
   }
@@ -151,6 +158,7 @@ function BitbucketRepositorySelectInput({
       valueField={"name"}
       textField={"name"}
       disabled={disabled}
+      filterOption={"startsWith"}
       error={error}
       pluralTopic={"Bitbucket Branches"}
       singularTopic={"Bitbucket Branch"}
@@ -158,6 +166,8 @@ function BitbucketRepositorySelectInput({
         delayedSearchQuery(searchTerm, repositoryId, toolId)
       }
       useToggle={true}
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }

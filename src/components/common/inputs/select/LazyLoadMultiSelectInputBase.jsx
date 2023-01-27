@@ -40,6 +40,7 @@ function LazyLoadMultiSelectInputBase(
     singularTopic,
     requireUserEnable,
     onEnableEditFunction,
+    filterOption
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const [enabled, setEnabled] = useState(undefined);
@@ -194,7 +195,7 @@ function LazyLoadMultiSelectInputBase(
           valueField={valueField}
           textField={textField}
           busy={busy}
-          filter="contains"
+          filterOption={filterOption}
           groupBy={groupBy}
           onToggleFunction={(test) => {
             if (onToggleFunction && useToggle && test === true && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) {
@@ -255,6 +256,7 @@ LazyLoadMultiSelectInputBase.propTypes = {
   error: PropTypes.any,
   requireUserEnable: PropTypes.bool,
   onEnableEditFunction: PropTypes.func,
+  filterOption: PropTypes.string
 };
 
 LazyLoadMultiSelectInputBase.defaultProps = {

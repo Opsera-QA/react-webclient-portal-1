@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState, useCallback} from "react";
 import PropTypes from "prop-types";
 import {faExclamationCircle, faTools} from "@fortawesome/pro-light-svg-icons";
 import {Link} from "react-router-dom";
@@ -9,6 +9,8 @@ import axios from "axios";
 import RegistryToolInfoOverlay from "components/common/list_of_values_input/tools/RegistryToolInfoOverlay";
 import toolsActions from "components/inventory/tools/tools-actions";
 import IconBase from "components/common/icons/IconBase";
+import LazyLoadSelectInputBase from "../../inputs/select/LazyLoadSelectInputBase";
+import _ from "lodash";
 
 function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className, fields}) {
   const toastContext = useContext(DialogToastContext);
@@ -17,6 +19,7 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
   const [isLoading, setIsLoading] = useState(false);
   const [toolMetadata, setToolMetadata] = useState(undefined);
   const isMounted = useRef(false);
+  const [inEditMode, setInEditMode] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -30,17 +33,19 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
 
 
     setTools([]);
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (inEditMode === true) {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [inEditMode]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -78,14 +83,22 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
   };
 
   const getErrorMessage = () => {
-    if (!isLoading && (!Array.isArray(tools) || tools.length === 0)) {
+    if (
+      !isLoading &&
+      inEditMode &&
+      (!Array.isArray(tools) || tools.length === 0)
+    ) {
       return (
         <div className="form-text text-muted p-2">
-          <IconBase icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
-          No {configurationRequired ? "configured " : ""}tools have been registered.
-          Please go to
-          <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to
-          proceed.
+          <IconBase
+            icon={faExclamationCircle}
+            className="text-muted mr-1"
+            fixedWidth
+          />
+          No {configurationRequired ? "configured " : ""}tools have been
+          registered. Please go to
+          <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for
+          this repository in order to proceed.
         </div>
       );
     }
@@ -98,6 +111,15 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
 
     return (`View tools`);
   };
+
+  const delayedSearchQuery = useCallback(
+      _.debounce(
+          () =>
+              loadTools(),
+          600,
+      ),
+      [],
+  );
 
   const getRegistryToolInfoOverlay = () => {
     return (
@@ -122,7 +144,7 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
 
   return (
     <>
-      <SelectInputBase
+      <LazyLoadSelectInputBase
         className={className}
         fieldName={fieldName}
         dataObject={model}
@@ -139,7 +161,15 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
         ellipsisTooltipText={getEllipsisTooltipText()}
         infoOverlay={getRegistryToolInfoOverlay()}
         linkTooltipText={`Load Tool Registry`}
+        singularTopic={"Tool"}
+        pluralTopic={"Tools"}
         linkIcon={faTools}
+        onSearchFunction={(searchTerm) =>
+            delayedSearchQuery(searchTerm)
+        }
+        useToggle={true}
+        requireUserEnable={true}
+        onEnableEditFunction={() => setInEditMode(true)}
       />
       {getErrorMessage()}
     </>

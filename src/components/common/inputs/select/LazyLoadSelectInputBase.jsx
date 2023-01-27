@@ -43,6 +43,7 @@ function LazyLoadSelectInputBase(
     singularTopic,
     requireUserEnable,
     onEnableEditFunction,
+    filterOption
 }) {
   const field = dataObject?.getFieldById(fieldName);
   const [enabled, setEnabled] = useState(undefined);
@@ -180,6 +181,7 @@ function LazyLoadSelectInputBase(
         valueField={valueField}
         textField={textField}
         groupBy={groupBy}
+        filterOption={filterOption}
         value={findCurrentValue()}
         busy={busy}
         onToggle={(test) => {
@@ -249,6 +251,7 @@ LazyLoadSelectInputBase.propTypes = {
   error: PropTypes.any,
   requireUserEnable: PropTypes.bool,
   onEnableEditFunction: PropTypes.func,
+  filterOption: PropTypes.string
 };
 
 LazyLoadSelectInputBase.defaultProps = {

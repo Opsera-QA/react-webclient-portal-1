@@ -81,6 +81,7 @@ function GithubBranchSelectInput({
     repositoryId,
     cancelSource = cancelTokenSource,
   ) => {
+    setIsLoading(true);
     const response = await githubActions.getBranchesFromGithubInstanceV3(
       getAccessToken,
       cancelSource,
@@ -94,6 +95,7 @@ function GithubBranchSelectInput({
       setPlaceholderText("Select Github Branch");
       setGithubBranches([...branches]);
     }
+    setIsLoading(false);
   };
 
   const delayedSearchQuery = useCallback(
@@ -117,6 +119,7 @@ function GithubBranchSelectInput({
         clearDataFunction={clearDataFunction}
         valueField={"name"}
         textField={"name"}
+        filterOption={"startsWith"}
         disabled={disabled}
         placeholderText={placeholderText}
         error={errorMessage}
@@ -144,6 +147,7 @@ function GithubBranchSelectInput({
       valueField={"name"}
       textField={"name"}
       disabled={disabled}
+      filterOption={"startsWith"}
       placeholderText={placeholderText}
       error={errorMessage}
       pluralTopic={"Github Branches"}

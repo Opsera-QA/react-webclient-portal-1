@@ -27,6 +27,7 @@ function GitlabBranchSelectInput(
   const [gitlabBranches, setGitlabBranches] = useState([]);
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
+  const [inEditMode, setInEditMode] = useState(false);
   const {getAccessToken} = useContext(AuthContext);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ function GitlabBranchSelectInput(
     setGitlabBranches([]);
     setError(undefined);
 
-    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
+    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true && inEditMode === true) {
       loadData(source).catch((error) => {
         throw error;
       });
@@ -50,7 +51,7 @@ function GitlabBranchSelectInput(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId, repositoryId]);
+  }, [toolId, repositoryId, inEditMode]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -68,6 +69,7 @@ function GitlabBranchSelectInput(
   };
 
   const loadGitlabBranches = async (searchTerm, toolId, repositoryId, cancelSource = cancelTokenSource) => {
+    setIsLoading(true);
     // const response = await gitlabActions.getBranchesFromGitlabInstanceV2(getAccessToken, cancelSource, toolId, repositoryId);
     const response = await gitlabActions.getBranchesFromGitlabInstanceV3(getAccessToken, cancelSource, toolId, repositoryId, searchTerm);
     const branches = response?.data?.data;
@@ -75,6 +77,7 @@ function GitlabBranchSelectInput(
     if (isMounted?.current === true && Array.isArray(branches)) {
       setGitlabBranches([...branches]);
     }
+    setIsLoading(false);
   };
 
   const delayedSearchQuery = useCallback(
@@ -96,10 +99,13 @@ function GitlabBranchSelectInput(
         textField={"name"}
         disabled={disabled}
         error={error}
+        filterOption={"startsWith"}
         pluralTopic={"Gitlab Branches"}
         singularTopic={"Gitlab Branch"}
         onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, repositoryId, toolId)}
         useToggle={true}
+        requireUserEnable={true}
+        onEnableEditFunction={() => setInEditMode(true)}
       />
     );
   }
@@ -116,11 +122,14 @@ function GitlabBranchSelectInput(
       valueField={"name"}
       textField={"name"}
       disabled={disabled}
+      filterOption={"startsWith"}
       error={error}
       pluralTopic={"Gitlab Branches"}
       singularTopic={"Gitlab Branch"}
       onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, repositoryId, toolId)}
       useToggle={true}
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }
