@@ -8,7 +8,6 @@ import {
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
-import { RenderWorkflowItem } from "components/workflow/StepApprovalOverlay";
 import Model from "core/data_model/model";
 import filterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/filter-metadata";
 import SfdcUnitTestManagementPanel from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/SfdcUnitTestManagementPanel";
@@ -20,6 +19,7 @@ import SfdcPipelineWizardManualTestClassSelector
   from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/SfdcPipelineWizardManualTestClassSelector";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import IconBase from "components/common/icons/IconBase";
+import {UnitTestStepView} from "./UnitTestStepView";
 
 // TODO: This should really be altered to be a part of each of the workflow boxes rather than having it rely on selected object
 const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, setPipelineWizardScreen }) => {
@@ -71,7 +71,6 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
     const testClasses = await getUnitTestList(testClassFilterDto, unitClassStep, selectedStep);
 
     if (!Array.isArray(testClasses) && count <= 5 && filePullCompleted === false) {
-      console.log("new promis ", count);
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
       return await unitTestPolling(testClassFilterDto, unitClassStep,count + 1);
     }
@@ -116,24 +115,15 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
       setIsLoading(true);
       stopPolling();
       setFilePullCompleted(false);
-      const response = await sfdcPipelineActions.triggerUnitTestClassesPull(getAccessToken, cancelTokenSource, pipelineWizardModel, unitClassStep);
-
-      // TODO: Is this check necessary?
-      if (response?.data?.status !== 200 ) {
-        console.error("Error getting API Data: ", response?.data?.message);
-        toastContext.showInlineErrorMessage(response?.data?.message);
-      }
-      else {
         setSelectedStep(unitClassStep);
 
-        if(Object.keys(unitClassStep).length > 0){
+        if (Object.keys(unitClassStep).length > 0) {
           setSelectedUnitTestClassesList([]);
           setUnitTestClassesList([]);
           // start polling
           await unitTestPolling(testClassFilterDto, unitClassStep);
           // await getUnitTestList(testClassFilterDto, unitClassStep);
         }
-      }
     } catch (error) {
       console.error("Error getting API Data: ", error);
       toastContext.showLoadingErrorDialog(error);
@@ -153,7 +143,7 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
               return (
                 <Col key={idx}>
                   <div className="p-1" style={{cursor: isLoading ? "not-allowed" : "pointer"}} onClick={() => isLoading ? null : handleStepClick(step)}>
-                    <RenderWorkflowItem item={step} isSelected={selectedStep?._id === step._id} stateColorClass=""/>
+                    <UnitTestStepView item={step} isSelected={selectedStep?._id === step._id} stateColorClass=""/>
                   </div>
                 </Col>
               );
@@ -211,8 +201,7 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
 
   const handleNextClick = async() => {
     const unitTestSteps = pipelineWizardModel?.getArrayData("unitTestSteps");
-    const unitTestStepsIds = unitTestSteps.map(({_id})=>({_id}));
-    const isUnitTestSelectedResponse = await sfdcPipelineActions.checkTestClassesCount(getAccessToken, cancelTokenSource, pipelineWizardModel, unitTestStepsIds);
+    const isUnitTestSelectedResponse = await sfdcPipelineActions.checkTestClassesCount(getAccessToken, cancelTokenSource, pipelineWizardModel, unitTestSteps);
     if(!isUnitTestSelectedResponse?.data) {
       toastContext.showSystemErrorToast("No Test Classes were selected, Please select test classes for above steps to proceed further.");
       return;
