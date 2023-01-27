@@ -54,15 +54,15 @@ function GitScraperScanReportTable(
                     <b>Branch:</b> {branch}
                 </div>
             </div>
-        <FilterContainer
-            loadData={loadData}
-            isLoading={isLoading}
-            body={getGitScraperScanReportTable()}
-            titleIcon={faTally}
-            title={"Git Scraper Vulnerabilities Report"}
-            className={"px-2 pb-2"}
-            exportButton={<ExportGitScraperScanDetailsButton className={"ml-2"} isLoading={isLoading} scanData={data} />}
-        />
+            <FilterContainer
+                loadData={loadData}
+                isLoading={isLoading}
+                body={getGitScraperScanReportTable()}
+                titleIcon={faTally}
+                title={"Git Scraper Vulnerabilities Report"}
+                className={"px-2 pb-2"}
+                exportButton={<ExportGitScraperScanDetailsButton className={"ml-2"} isLoading={isLoading} scanData={data} />}
+            />
         </div>
     );
 }

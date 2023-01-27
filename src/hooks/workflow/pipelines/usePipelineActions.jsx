@@ -38,7 +38,6 @@ export default function usePipelineActions() {
     );
   };
 
-
   pipelineActions.deletePipelineStepById = async (
     pipelineId,
     pipelineStepId,

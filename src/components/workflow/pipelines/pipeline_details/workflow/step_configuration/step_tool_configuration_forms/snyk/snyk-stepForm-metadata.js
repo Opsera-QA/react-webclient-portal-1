@@ -21,7 +21,7 @@ const snykStepFormMetadata = {
       id: "version",
       isRequired: true
     },
-    {
+    { 
       label: "Package Manager or Build Tool",
       id: "packagerNameOrBuildTool",
     },
@@ -32,7 +32,6 @@ const snykStepFormMetadata = {
     {
       label: "Vulnerability Threshold",
       id: "thresholdVulnerability",
-      isRequired: true,
     },
     {
       label: "Git Tool ID",

@@ -17,7 +17,7 @@ function SnykToolConfiguration({ toolData }) {
   useEffect(() => {
     loadData();
   }, []);
-
+ 
   const loadData = async () => {
     let snykConfigurationData = modelHelpers.getToolConfigurationModel(
       toolData.getData("configuration"),
@@ -78,8 +78,7 @@ function SnykToolConfiguration({ toolData }) {
         />
       </Col>
       <Col sm={12}>
-        <VaultTextInput
-          type={"password"}
+        <TextInputBase
           dataObject={snykConfigurationModel}
           setDataObject={setSnykConfigurationModel}
           fieldName={"token"}

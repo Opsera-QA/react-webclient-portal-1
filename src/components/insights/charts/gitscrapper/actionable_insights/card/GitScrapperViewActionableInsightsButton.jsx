@@ -2,7 +2,6 @@ import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
-import GitScraperViewListOfIssuesOverlay from "../GitScraperViewListOfIssuesOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {useHistory} from "react-router-dom";
 

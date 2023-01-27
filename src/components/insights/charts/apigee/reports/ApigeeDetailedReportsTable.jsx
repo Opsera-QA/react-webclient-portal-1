@@ -177,6 +177,7 @@ function ApigeeDetailedReportsTable({ pipeline, rowData, dashboardData, kpiConfi
     </div>
   );
 }
+
 ApigeeDetailedReportsTable.propTypes = {
   pipeline: PropTypes.object,
   rowData: PropTypes.object,
@@ -184,4 +185,5 @@ ApigeeDetailedReportsTable.propTypes = {
   kpiConfiguration: PropTypes.object,
   assetType: PropTypes.string,
 };
+
 export default ApigeeDetailedReportsTable;

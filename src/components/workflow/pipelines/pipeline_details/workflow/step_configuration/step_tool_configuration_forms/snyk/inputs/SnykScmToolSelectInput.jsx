@@ -15,7 +15,7 @@ function SnykScmToolSelectInput({model, setModel, disabled, service}) {
     newModel.setDefaultValue("gitBranch");
     setModel({...newModel});
   };
-
+ 
   const clearDataFunction = () => {
     let newModel = {...model};
     newModel.setDefaultValue("gitToolId");

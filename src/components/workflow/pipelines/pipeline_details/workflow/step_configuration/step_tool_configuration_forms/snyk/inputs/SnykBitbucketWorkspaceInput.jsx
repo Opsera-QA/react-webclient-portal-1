@@ -21,7 +21,7 @@ function SnykBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("gitBranch", "");
     setDataObject({...newDataObject});
   };
-
+ 
   if (dataObject.getData("service") !== "bitbucket") {
     return <></>;
   }

@@ -12,7 +12,7 @@ function SnykPipelineStepConfigurationSummary({ snykPipelineDataObject, pipeline
   if (snykPipelineDataObject == null) {
     return <LoadingDialog size="sm" />;
   }
-
+ 
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
