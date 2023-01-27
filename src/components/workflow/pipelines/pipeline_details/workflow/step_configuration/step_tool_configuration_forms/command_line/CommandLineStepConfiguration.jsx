@@ -170,16 +170,6 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
       <StepConfigUseTerraformOutput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
       {getTerraformSelect()}
       {getDynamicFields()}
-      {/*<CommandLineInputParametersInput*/}
-      {/*  model={commandLineStepConfigurationDto}*/}
-      {/*  setModel={setCommandLineStepConfigurationDataDto}*/}
-      {/*  plan={plan}*/}
-      {/*/>*/}
-      {/*<LocalInputParametersInputBase*/}
-      {/*  model={commandLineStepConfigurationDto}*/}
-      {/*  setModel={setCommandLineStepConfigurationDataDto}*/}
-      {/*  fieldName={"stepParameters"}*/}
-      {/*/>*/}
       <CommandLineInputParameterInputBase
         model={commandLineStepConfigurationDto}
         setModel={setCommandLineStepConfigurationDataDto}

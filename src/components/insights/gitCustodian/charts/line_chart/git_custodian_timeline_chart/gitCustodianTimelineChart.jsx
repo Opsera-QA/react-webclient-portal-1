@@ -105,12 +105,12 @@ function GitCustodianTimelineChart({ dashboardData, data }) {
       <div className="new-chart p-0" style={{height: "200px"}}>
         <ResponsiveLine
           data={data}
-          {...defaultConfig("Issues Added", "Date",
+          {...defaultConfig("Issues", "Date",
             false, true, "wholeNumbers", "monthDate2")}
           {...config(getColor, METRIC_THEME_CHART_PALETTE_COLORS)}
           tooltip={({ point, color }) => <ChartTooltip
             key={point.data.range}
-            titles = {["Issues"]}
+            titles = {[point.data.text]}
             values = {[point.data.y]} />}
           axisBottom={{
             format: formats.dynamicDateFormat,

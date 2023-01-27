@@ -17,7 +17,7 @@ import BlueprintLogOverlay from "../../../../blueprint/BlueprintLogOverlay";
 function BoomiActionableInsightsMigrateTable({ data, isLoading, loadData, filterModel, setFilterModel, title }) {
     const toastContext = useContext(DialogToastContext);
     const fields = BoomiActionableMetadata.fields;
-    const tableTitle = "Boomi Actionable Insight Table";
+    const tableTitle = "Boomi Actionable Insights Table";
     const noDataMessage = "Boomi report is currently unavailable at this time";
     let history = useHistory();
 

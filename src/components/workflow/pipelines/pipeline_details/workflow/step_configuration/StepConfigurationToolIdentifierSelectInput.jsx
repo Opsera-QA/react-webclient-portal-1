@@ -3,25 +3,35 @@ import PropTypes from "prop-types";
 import PipelineUsageToolSelectInput
   from "components/common/list_of_values_input/workflow/pipelines/PipelineUsageToolSelectInput";
 
-function StepConfigurationToolIdentifierSelectInput({fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
+function StepConfigurationToolIdentifierSelectInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    disabled,
+    textField,
+    valueField,
+  }) {
   const setDataFunction = (fieldName, selectedOption) => {
-    let newDataObject = {...dataObject};
-    newDataObject.setData("tool_identifier", selectedOption?.identifier);
-    newDataObject.setData("type", selectedOption?.tool_type_identifier);
-    newDataObject.setData("tags", []);
-    setDataObject({...newDataObject});
+    model?.setData("tool_identifier", selectedOption?.identifier);
+    model?.setData("type", selectedOption?.tool_type_identifier);
+    
+    if (model?.getData("type") === "deploy") {
+      model.setData("tags", []);
+    }
+
+    setModel({...model});
   };
 
   return (
     <PipelineUsageToolSelectInput
       fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      dataObject={model}
+      setDataObject={setModel}
       setDataFunction={setDataFunction}
       valueField={valueField}
       textField={textField}
-      placeholderText={"Select a Tool"}
-      disabled={disabled && dataObject?.getData("tool_identifier").length > 0}
+      disabled={disabled && model?.getData("tool_identifier").length > 0}
     />
   );
 }
@@ -30,8 +40,8 @@ StepConfigurationToolIdentifierSelectInput.propTypes = {
   fieldName: PropTypes.string,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool
 };

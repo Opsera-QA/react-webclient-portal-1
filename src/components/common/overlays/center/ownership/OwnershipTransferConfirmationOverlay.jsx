@@ -5,7 +5,7 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import CancelButtonBase from "components/common/buttons/cancel/CancelButtonBase";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import IconBase from "components/common/icons/IconBase";
-import { faTriangleExclamation } from "@fortawesome/pro-light-svg-icons";
+import {faShareAlt, faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
@@ -44,6 +44,7 @@ export default function OwnershipTransferConfirmationOverlay(
         />
         <VanityButtonBase
           buttonState={buttonState}
+          icon={faShareAlt}
           onClickFunction={transferOwnership}
           normalText={`Transfer Ownership`}
           errorText={`Error Transferring Ownership`}

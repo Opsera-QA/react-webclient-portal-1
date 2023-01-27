@@ -55,7 +55,6 @@ function LdapCustomerOnboardEditorPanel() {
   // TODO: Implement if we use this for updates
   // eslint-disable-next-line no-unused-vars
   const unpackLdapUserData = async (ldapUserData) => {
-    console.log("ldapUserData in unpackLdapUserData: " + JSON.stringify(ldapUserData));
     // if (ldapUserData != null) {
     //   setFormField("key", ldapUserData["key"] != null ? ldapUserData["key"] : "");
     //   setFormField("value", ldapUserData["value"] != null ? ldapUserData["value"] : "");
@@ -104,7 +103,6 @@ function LdapCustomerOnboardEditorPanel() {
     // }
     ldapOrganizationAccountDataDto.setData("administrator", newAdmin);
 
-    console.log("administrator: " + JSON.stringify(ldapOrganizationAccountDataDto.getData("administrator")));
     // setFormData({...formData, users: currentUsers});
     // console.log("Current Users: " + JSON.stringify(currentUsers));
   };
@@ -116,11 +114,8 @@ function LdapCustomerOnboardEditorPanel() {
     let completeAccount = {organization: ldapOrganizationDataDto.getPersistData(), orgAccount: ldapOrganizationAccountDataDto.getPersistData(), users: usersFormData.users, idpAccount: ldapIdpAccountDataDto.getPersistData()};
 
 
-    console.log("Persisting new account to DB: " + JSON.stringify(completeAccount));
-
     if (isFormValid) {
       let createLdapAccountResponse = await accountsActions.create(completeAccount, getAccessToken);
-      console.log("createLdapAccountResponse: ", JSON.stringify(createLdapAccountResponse));
 
       if (createLdapAccountResponse.error != null) {
         const errorMsg = `Microservice error reported creating the organization for : ${completeAccount.accountName}.  Error returned: ${JSON.stringify(createLdapAccountResponse.error.message, null, 2)}`;
@@ -181,7 +176,7 @@ function LdapCustomerOnboardEditorPanel() {
     return (
       <div>
         <div className="content-container content-card-1 max-content-width m-3">
-          <div className={"pl-2 content-block-header title-text-header-1 d-flex"}>
+          <div className={"pl-2 py-2 content-block-header title-text-header-1 d-flex"}>
             <div className={"my-auto w-100"}>
               Organization
             </div>
@@ -247,7 +242,7 @@ function LdapCustomerOnboardEditorPanel() {
     return (
       <div>
         <div className="content-container content-card-1 max-content-width m-3">
-          <div className={"pl-2 content-block-header title-text-header-1 d-flex"}>
+          <div className={"pl-2 py-2 content-block-header title-text-header-1 d-flex"}>
             <div className={"my-auto w-100"}>
               Organization Account
             </div>
@@ -355,7 +350,7 @@ function LdapCustomerOnboardEditorPanel() {
   const getUsersInput = () => {
     return (
       <div className="content-container content-card-1 max-content-width m-3">
-        <div className={"pl-2 content-block-header title-text-header-1 d-flex"}>
+        <div className={"pl-2 py-2 content-block-header title-text-header-1 d-flex"}>
           <div className={"my-auto w-100"}>
             User Accounts
           </div>
@@ -374,7 +369,7 @@ function LdapCustomerOnboardEditorPanel() {
   const getIdpAccountFields = () => {
     return (
       <div className="content-container content-card-1 max-content-width m-3">
-        <div className={"pl-2 content-block-header title-text-header-1 d-flex"}>
+        <div className={"pl-2 py-2 content-block-header title-text-header-1 d-flex"}>
           <div className={"my-auto w-100"}>
             IDP Account
           </div>

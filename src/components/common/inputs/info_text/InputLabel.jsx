@@ -28,6 +28,7 @@ function InputLabel(
     ellipsisTooltipText,
     inputHelpOverlay,
     hasError,
+    hasWarningState,
     helpTooltipText,
     loadDataFunction,
     disabled,
@@ -78,8 +79,12 @@ function InputLabel(
   };
 
   const getFormattedLabel = () => {
+    const className =
+      hasError === true ? "danger-red" :
+        hasWarningState === true ? "yellow" :
+          "";
     return (
-      <label className={hasError === true ? "danger-red" : ""}>
+      <label className={className}>
         <span>{field?.label}{getRequiredAsterisk()}</span>
       </label>
     );
@@ -162,6 +167,7 @@ InputLabel.propTypes = {
   isLoading: PropTypes.bool,
   ellipsisOnClickFunction: PropTypes.func,
   selectAllFunction: PropTypes.func,
+  hasWarningState: PropTypes.bool,
 };
 
 export default InputLabel;

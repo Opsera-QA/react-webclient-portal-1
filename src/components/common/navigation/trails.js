@@ -784,6 +784,14 @@ export const breadcrumbs = {
     linkText: "Coverity Reports",
     icon: faAnalytics
   },
+  gitscraperReports: {
+    parent: undefined,
+    name: "gitscraperReports",
+    path: paths.gitscraperReports,
+    title: "Git Scraper Reports",
+    linkText: "Git Scraper Reports",
+    icon: faAnalytics
+  },
   toolsUsedInPipelineReport: {
     parent: "toolReports",
     name: "toolsUsedInPipelineReport",

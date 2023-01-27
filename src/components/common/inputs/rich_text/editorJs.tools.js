@@ -9,7 +9,6 @@ import Delimiter from "@editorjs/delimiter";
 import InlineCode from "@editorjs/inline-code";
 import NestedList from "@editorjs/nested-list";
 
-// TODO: Install and implement some of these when ready
 export const EDITOR_JS_TOOLS = {
   table: Table,
   paragraph: Paragraph,

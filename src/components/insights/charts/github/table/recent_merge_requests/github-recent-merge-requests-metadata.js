@@ -42,6 +42,10 @@ const githubRecentMergeRequestsMetadata = {
         label: "Time",
         id: "mrCompletionTimeTimeStamp"
       },
+      {
+        label: "Time Taken",
+        id: "MergeRequestTimeTaken"
+      },
     ],
     newObjectFields: {
       pageSize: 5,

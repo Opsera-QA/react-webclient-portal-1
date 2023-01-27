@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {
+  getLimitedTableTextColumn,
   getTableDateTimeColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
@@ -14,6 +15,8 @@ import junitTestResultsTableMetadata
 import {getField} from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+
+const MAX_JOB_NAME_LENGTH = 30;
 
 function JunitTestResultsTable({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const fields = junitTestResultsTableMetadata.fields;
@@ -29,14 +32,13 @@ function JunitTestResultsTable({ kpiConfiguration, setKpiConfiguration, dashboar
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "jobId"), "no-wrap-inline"),
+      getLimitedTableTextColumn(getField(fields, "jobId"), MAX_JOB_NAME_LENGTH, "no-wrap-inline"),
       getTableTextColumn(getField(fields, "runCount")),
       getTableDateTimeColumn(getField(fields, "timestamp")),
       getTableTextColumn(getField(fields, "testsRun")),
       getTableTextColumn(getField(fields, "testsPassed")),
       getTableTextColumn(getField(fields, "testsFailed")),
       getTableTextColumn(getField(fields, "duration"))
-
     ],
     []
   );

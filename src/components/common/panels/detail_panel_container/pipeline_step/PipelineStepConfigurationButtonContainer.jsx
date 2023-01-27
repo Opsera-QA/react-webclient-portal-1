@@ -14,6 +14,7 @@ function PipelineStepConfigurationButtonContainer(
     isStrict,
     disableSaveButton,
     showIncompleteDataMessage,
+    showSuccessToasts,
   }) {
 
   const getSaveButton = () => {
@@ -23,6 +24,7 @@ function PipelineStepConfigurationButtonContainer(
           disable={disableSaveButton}
           recordDto={recordDto}
           updateRecord={persistRecord}
+          showSuccessToasts={showSuccessToasts}
         />
       );
     }
@@ -33,6 +35,7 @@ function PipelineStepConfigurationButtonContainer(
         recordDto={recordDto}
         updateRecord={persistRecord}
         showIncompleteDataMessage={showIncompleteDataMessage}
+        showSuccessToasts={showSuccessToasts}
       />
     );
   };
@@ -52,6 +55,7 @@ PipelineStepConfigurationButtonContainer.propTypes = {
   isStrict: PropTypes.bool,
   disableSaveButton: PropTypes.bool,
   showIncompleteDataMessage: PropTypes.bool,
+  showSuccessToasts: PropTypes.bool,
 };
 
 export default PipelineStepConfigurationButtonContainer;

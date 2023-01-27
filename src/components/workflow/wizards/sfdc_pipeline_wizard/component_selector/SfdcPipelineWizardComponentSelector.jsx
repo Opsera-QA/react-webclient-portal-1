@@ -14,7 +14,7 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import SfdcPipelineWizardSubmitComponentTypesButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardSubmitComponentTypesButton";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
-import {faStepBackward} from "@fortawesome/free-solid-svg-icons";
+import {faArrowLeft} from "@fortawesome/pro-light-svg-icons";
 import SfdcPipelineWizardIncludeDependenciesToggle
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
 import IconBase from "components/common/icons/IconBase";
@@ -63,7 +63,7 @@ const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineW
       </div>
       <SaveButtonContainer>
         <Button variant="secondary" size="sm" className="mr-2" onClick={() => backButtonClick()}>
-          <IconBase icon={faStepBackward} className={"mr-1"}/>Back
+          <IconBase icon={faArrowLeft} className={"mr-1"}/>Back
         </Button>
         <SfdcPipelineWizardSubmitComponentTypesButton
           pipelineWizardModel={pipelineWizardModel}

@@ -9,6 +9,7 @@ import xml from "react-syntax-highlighter/dist/cjs/languages/hljs/xml";
 import docco from "react-syntax-highlighter/dist/cjs/styles/hljs/docco";
 import ErrorDialog from "components/common/status_notifications/error";
 import {_xmlFormattingHelper} from "components/common/helpers/code-helpers";
+import CopyToClipboardIcon from "../../icons/CopyToClipboardIcon";
 
 SyntaxHighlighter.registerLanguage("xml", xml);
 
@@ -76,9 +77,14 @@ function PackageXmlFieldBase({model, fieldName, className, isLoading}) {
     }
 
     return (
-      <SyntaxHighlighter language="xml" style={docco}>
-        {formattedXml}
-      </SyntaxHighlighter>
+      <div style={{ padding: "10px" }}>
+        <SyntaxHighlighter
+          language="xml"
+          style={docco}
+        >
+          {formattedXml}
+        </SyntaxHighlighter>
+      </div>
     );
   };
 
@@ -91,7 +97,7 @@ function PackageXmlFieldBase({model, fieldName, className, isLoading}) {
     <InputContainer className={className} fieldName={fieldName}>
       <div className="object-properties-input">
         <div className="content-container">
-          <FieldTitleBar field={field} icon={faFileCode} isLoading={isLoading} />
+          <FieldTitleBar field={field} icon={faFileCode} actionButtons={<CopyToClipboardIcon copyString={formattedXml} />} isLoading={isLoading} />
           <div style={{height: "500px", maxHeight: "500px", overflowY: "auto"}}>
             {getBody()}
           </div>

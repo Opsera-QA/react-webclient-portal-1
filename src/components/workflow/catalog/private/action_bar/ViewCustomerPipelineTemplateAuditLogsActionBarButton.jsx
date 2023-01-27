@@ -9,6 +9,7 @@ import CustomerPipelineTemplateAuditLogOverlay
 export default function ViewCustomerPipelineTemplateAuditLogsActionBarButton(
   {
     templateModel,
+    className,
   }) {
   const {
     userData,
@@ -25,7 +26,7 @@ export default function ViewCustomerPipelineTemplateAuditLogsActionBarButton(
 
   return (
     <ActionBarPopoverButton
-      className={"ml-3"}
+      className={className}
       icon={faShieldCheck}
       popoverText={`View Pipeline Template Audit Logs`}
       onClickFunction={openOverlay}
@@ -35,4 +36,5 @@ export default function ViewCustomerPipelineTemplateAuditLogsActionBarButton(
 
 ViewCustomerPipelineTemplateAuditLogsActionBarButton.propTypes = {
   templateModel: PropTypes.object,
+  className: PropTypes.string,
 };

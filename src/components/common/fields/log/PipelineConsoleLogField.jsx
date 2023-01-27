@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import StandaloneConsoleLogsDisplayer from "components/common/fields/log/StandaloneConsoleLogsDisplayer";
-import {getFormattedTimestamp} from "components/common/fields/date/DateFieldBase";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 // TODO: This needs to be tailored to Pipeline Field
 function PipelineConsoleLogField({dataObject, apiResponse}) {
@@ -117,7 +117,7 @@ function PipelineConsoleLogField({dataObject, apiResponse}) {
     <div>
       <div className="m-2">
         <div className="float-right mr-2">
-          <span>{getFormattedTimestamp(dataObject?.createdAt)}</span>
+          <span>{DateFormatHelper.formatDateAsTimestamp(dataObject?.createdAt)}</span>
         </div>
         <span><span className="text-muted ml-2">Step: </span> {dataObject?.step_name}</span>
       </div>

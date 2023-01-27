@@ -16,12 +16,12 @@ export default (getColor, METRIC_THEME_CHART_PALETTE_COLORS) => ({
     tickValues: 5,
     tickPadding: 5,
     tickRotation: 0,
-    legend: "Issues Added",
+    legend: "Issues",
     legendOffset: -45,
     legendPosition: "middle",
   },
   xFormat: "time:%Y-%m-%d",
-  curve: "step",
+  // curve: "step",
   colors: [
     METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_1,
     METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_2,
@@ -29,5 +29,5 @@ export default (getColor, METRIC_THEME_CHART_PALETTE_COLORS) => ({
     METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_4,
     METRIC_THEME_CHART_PALETTE_COLORS.CHART_PALETTE_COLOR_5,
     ],
-  pointSize: 6  
+  pointSize: 6,
 });

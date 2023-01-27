@@ -59,10 +59,8 @@ const SfdcPipelineWizardGitTasksFileSelector = ({ pipelineWizardModel, setPipeli
   };
 
   const pullGitTaskFiles = async (cancelSource = cancelTokenSource) => {
-    console.log("in pullGitTaskFiles");
     const result = await sfdcPipelineActions.triggerGitTaskFilesPullV2(getAccessToken, cancelSource, pipelineWizardModel);
 
-    console.log("in pullGitTaskFiles result: " + JSON.stringify(result));
     if (result?.data?.status === 500) {
       const message = result?.data?.message;
       console.error("Service Error Pulling File List from Salesforce: " + message);

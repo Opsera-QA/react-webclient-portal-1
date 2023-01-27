@@ -3,14 +3,14 @@ const defaultSignupFormFields = {
     {
       label: "First Name",
       id: "firstName",
-      regexDefinitionName: "nameField",
+      regexDefinitionName: "humanNameField",
       isRequired: true,
       maxLength: 50
     },
     {
       label: "Last Name",
       id: "lastName",
-      regexDefinitionName: "nameField",
+      regexDefinitionName: "humanNameField",
       isRequired: true,
       maxLength: 50
     },

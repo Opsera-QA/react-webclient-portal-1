@@ -27,7 +27,7 @@ export default function ParameterSelectListInputBaseHelpIcon({visible}) {
   return (
     <OverlayIconBase
       icon={faInfoCircle}
-      className={"fa-pull-right pointer pr-2 mt-1 pl-0"}
+      className={"fa-pull-right pr-2 mt-1 pl-0"}
       overlayTitle={"Parameter Selection"}
       overlayBody={getHelpOverlayBody()}
       overlayWidth={"500px"}

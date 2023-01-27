@@ -1,27 +1,21 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
 import {
-  faExclamationTriangle,
-  faIdCard, faPlus,
-  faTimes, faTrash,
+  faIdCard,
+  faTrash,
 } from "@fortawesome/pro-light-svg-icons";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import accountsActions from "components/admin/accounts/accounts-actions";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
-import StandaloneRoleAccessTypeInput from "components/common/inputs/roles/StandaloneRoleAccessTypeInput";
-import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import {hasStringValue} from "components/common/helpers/string-helpers";
 import RoleAccessInputHeaderField from "components/common/inputs/roles/RoleAccessInputHeaderField";
 import InfoContainer from "components/common/containers/InfoContainer";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
+import RoleAccessInputInlineField from "components/common/inputs/roles/RoleAccessInputInlineField";
+import RoleAccessInputRow from "components/common/inputs/roles/RoleAccessInputRow";
+import RoleParsingHelper from "@opsera/persephone/helpers/data/roles/roleParsing.helper";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import AccessRuleModel from "components/common/inputs/roles/model/accessRule.model";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
-// TODO: Create RoleAccessInputRow that holds the actual inputs to clean this up.
 export default function RoleAccessInput(
   {
     fieldName,
@@ -32,375 +26,93 @@ export default function RoleAccessInput(
     visible,
   }) {
   const field = model?.getFieldById(fieldName);
-  const [userList, setUserList] = useState([]);
-  const [groupList, setGroupList] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const toastContext = useContext(DialogToastContext);
-  const [roles, setRoles] = useState([]);
-  const [loadingUsers, setLoadingUsers] = useState(true);
-  const [loadingGroups, setLoadingGroups] = useState(true);
+  const [accessRuleModel, setAccessRuleModel] = useState(new AccessRuleModel({}, false));
   const {
-    cancelTokenSource,
-    isMounted,
     isSaasUser,
-    accessRoleData,
-    userData,
-    getAccessToken,
   } = useComponentStateReference();
 
-  useEffect(() => {
-    if (isSaasUser === false && visible !== true) {
-      loadData().catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
-  }, [userData, field]);
-
-  const loadData = async () => {
-    unpackData();
-
-    const ldap = userData?.ldap;
-    if (accessRoleData) {
-      if (ldap.domain != null) {
-        getGroupsByDomain(ldap.domain);
-        getLdapUsers(ldap.domain);
-      }
-    }
-  };
-
-  const getGroupsByDomain = async (ldapDomain) => {
-    try {
-      setLoadingGroups(true);
-      const response = await accountsActions.getLdapUserGroupsWithDomainV2(
-        getAccessToken,
-        cancelTokenSource,
-        ldapDomain,
-      );
-
-      const newGroups = DataParsingHelper.parseArray(response?.data?.data, []);
-      setGroupList(newGroups);
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    } finally {
-      setLoadingGroups(false);
-    }
-  };
-
-  const getLdapUsers = async (ldapDomain) => {
-    try {
-      setLoadingUsers(true);
-      const response = await accountsActions.getLdapUsersWithDomainV2(
-        getAccessToken,
-        cancelTokenSource,
-        ldapDomain,
-      );
-
-      if (response?.data) {
-        setUserList(response.data);
-      }
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    } finally {
-      setLoadingUsers(false);
-    }
-  };
-
-  const unpackData = () => {
-    const currentData = model?.getData(fieldName);
-    const unpackedRoles = [];
-
-    if (Array.isArray(currentData) && currentData.length > 0) {
-      currentData.map((item) => {
-        const hasUserRule = hasStringValue(item?.user) === true;
-        const hasGroupRule = hasStringValue(item?.group) === true;
-        const hasSiteRoleRule = hasStringValue(item?.site_role) === true;
-        const type =
-          hasUserRule ? "user" :
-            hasGroupRule ? "group" :
-              hasSiteRoleRule ? "site_role" : undefined;
-
-        if (type) {
-          unpackedRoles.push(
-            {
-              role: item?.role,
-              user: item?.user,
-              group: item?.group,
-              site_role: item?.site_role,
-              createdAt: item?.createdAt,
-              updatedAt: item?.updatedAt,
-              roleAccessType: type
-            }
-          );
-        }
-      });
-    } else {
-      unpackedRoles.push({
-        role: "",
-        site_role: "",
-        user: "",
-        group: "",
-        roleAccessType: "group",
-      });
-    }
-
-    setRoles([...unpackedRoles]);
-  };
-
   const validateAndSetData = (newRoleList) => {
-    setRoles([...newRoleList]);
-    const newDataObject = {...model};
+    const parsedRoleArray = RoleParsingHelper.parseRoleArray(newRoleList);
 
-    if (newRoleList.length > field.maxItems) {
+    if (parsedRoleArray.length > field.maxItems) {
       setErrorMessage("You have reached the maximum allowed number of role access items. Please remove one to add another.");
+      return false;
+    }
+
+    model.setData(fieldName, [...parsedRoleArray]);
+    setModel({...model});
+    return true;
+  };
+
+  const addRoleFunction = () => {
+    const newRole = accessRuleModel?.getPersistData();
+    const isRoleValid = RoleParsingHelper.isRoleValid(newRole);
+
+    if (!isRoleValid) {
       return;
     }
 
-    let newArray = [];
+    const parsedRole = RoleParsingHelper.parseRole(newRole);
+    const currentRoles = model?.getArrayData(fieldName);
+    currentRoles.push(parsedRole);
+    const successfulAdd = validateAndSetData(currentRoles);
 
-    if (newRoleList && newRoleList.length > 0) {
-      newRoleList.map((item) => {
-        if (item?.role === "" || (item?.user === "" && item?.group === "" && item?.site_role === "")) {
-          return;
-        }
-
-        newArray.push(
-          {
-            _id: item?._id,
-            role: item?.role,
-            user: item?.user !== "" ? item?.user : null,
-            group: item?.group !== "" ? item?.group : null,
-            site_role: item?.site_role !== "" ? item?.site_role : null,
-            createdAt: item?.createdAt,
-            updatedAt: item?.updatedAt,
-          }
-        );
-      });
-    }
-
-    newDataObject.setData(fieldName, [...newArray]);
-    setModel({...newDataObject});
-  };
-
-  const isRoleComplete = (role) => {
-    return !(role?.role === "" || (role?.user === "" && role?.group === ""));
-  };
-
-  const lastRoleComplete = () => {
-    let newPropertyList = roles;
-
-    if (newPropertyList.length === 0) {
-      return true;
-    }
-
-    let lastObject = newPropertyList[newPropertyList.length - 1];
-    return isRoleComplete(lastObject);
-  };
-
-  const addRole = () => {
-    let newRoleList = roles;
-
-    if (lastRoleComplete()) {
-      let newRow = {role: "", user: "", group: "", site_role: "", roleAccessType: "group"};
-      newRoleList.push(newRow);
-      validateAndSetData(newRoleList);
+    if (successfulAdd === true) {
+      accessRuleModel?.resetData();
+      setAccessRuleModel({...accessRuleModel});
     }
   };
 
-  const deleteRole = (index) => {
-    let newRoleList = roles;
-    newRoleList.splice(index, 1);
-    validateAndSetData(newRoleList);
+  const editAccessRoleFunction = (index) => {
+    const parsedRole = deleteRoleFunction(index);
+    setAccessRuleModel({...new AccessRuleModel(parsedRole, false)});
   };
 
-  const updateProperty = (row, innerField, newValue) => {
-    let newPropertyList = roles;
-    let index = newPropertyList.indexOf(row);
-
-    if (newPropertyList[index][innerField] !== newValue) {
-      if (innerField === "roleAccessType") {
-        newPropertyList[index]["group"] = "";
-        newPropertyList[index]["user"] = "";
-        newPropertyList[index]["site_role"] = "";
-      }
-
-      newPropertyList[index][innerField] = newValue;
-      validateAndSetData(newPropertyList);
-    }
+  const deleteRoleFunction = (index) => {
+    const currentRoles = model?.getArrayData(fieldName);
+    const deletedRole = currentRoles[index];
+    currentRoles.splice(index, 1);
+    validateAndSetData(currentRoles);
+    return deletedRole;
   };
 
   const clearRolesArray = () => {
     validateAndSetData([]);
   };
 
-  const getDisabledUsers = () => {
-    if (roles.length > 0) {
-      const disabledUsers = [];
-
-      roles.forEach((role) => {
-        const emailAddress = DataParsingHelper.parseEmailAddress(role?.user);
-
-        if (emailAddress) {
-          const foundUser = userList?.find((user) => user?.emailAddress === emailAddress);
-
-          if (foundUser) {
-            disabledUsers.push(foundUser);
-          }
-        }
-      });
-
-      return disabledUsers;
-    }
-  };
-
-  const getDisabledGroups = () => {
-    if (roles.length > 0) {
-      const disabledGroups = [];
-
-      roles.forEach((role) => {
-        const groupName = DataParsingHelper.parseString(role?.group);
-
-        if (groupName) {
-          const foundGroup = groupList?.find((group) => group?.name === groupName);
-
-          if (foundGroup) {
-            disabledGroups.push(foundGroup);
-          }
-        }
-      });
-
-      return disabledGroups;
-    }
-  };
-
-  const getTypeInput = (role, index) => {
-    return (
-      <div className="mt-2 d-inline-flex">
-        <div className="m-auto mr-2">
-          <input
-            className={"mr-2"}
-            type={"radio"}
-            name={`roleAccessType-${index}`}
-            value={"group"}
-            checked={role?.roleAccessType === "group"}
-            disabled={disabled}
-            onChange={() => updateProperty(role, "roleAccessType", "group")}
-          />
-          <span className={"mr-2"}>Group</span>
-        </div>
-        <div className="m-auto mx-2">
-          <input
-            className="mr-2"
-            type="radio"
-            name={`roleAccessType-${index}`}
-            disabled={disabled}
-            value={"user"}
-            checked={role?.roleAccessType === "user"}
-            onChange={() => updateProperty(role, "roleAccessType", "user")}
-          />
-          <span>User</span>
-        </div>
-        {/*<div className="m-auto ml-2">*/}
-        {/*  <input*/}
-        {/*    className={"mr-2"}*/}
-        {/*    type={"radio"}*/}
-        {/*    name={`roleAccessType-${index}`}*/}
-        {/*    disabled={disabled}*/}
-        {/*    value={"role"}*/}
-        {/*    checked={role?.roleAccessType === "role"}*/}
-        {/*    onChange={() => updateProperty(role, "roleAccessType", "role")}*/}
-        {/*  />*/}
-        {/*  <span>Role</span>*/}
-        {/*</div>*/}
-      </div>
-    );
-  };
-
-  const getAssigneeInput = (role) => {
-    if (role?.roleAccessType === "user") {
-      return (
-        <StandaloneSelectInput
-          selectOptions={userList}
-          valueField={"emailAddress"}
-          textField={(item) => item != null && typeof item === "object" ? `${item.name} (${item.emailAddress})` : item}
-          value={role?.user}
-          busy={loadingUsers}
-          disabled={disabled || getDisabledUsers()}
-          placeholderText={"Select A User"}
-          setDataFunction={(value) => updateProperty(role, "user", value?.emailAddress)}
-        />
-      );
-    }
-
-    if (role?.roleAccessType === "group") {
-      return (
-        <StandaloneSelectInput
-          selectOptions={groupList}
-          valueField={"name"}
-          textField={"name"}
-          value={role["group"]}
-          busy={loadingGroups}
-          disabled={disabled || getDisabledGroups()}
-          placeholderText={"Select A Group"}
-          setDataFunction={(value) => updateProperty(role, "group", value?.name)}
-        />
-      );
-    }
-  };
-
-  const getDeletePropertyButton = (index) => {
-    if (disabled !== true) {
-      return (
-        <Button variant="link" onClick={() => deleteRole(index)}>
-          <span><IconBase className="danger-red" icon={faTimes}/></span>
-        </Button>
-      );
-    }
-  };
-
-  const getPropertyRow = (role, index) => {
-    return (
-      <div className="d-flex py-2" key={index}>
-        <Col sm={11}>
-          <Row>
-            <Col sm={4} className={"pr-1"}>
-              {getTypeInput(role, index)}
-            </Col>
-            <Col sm={4} className={"pl-1 pr-0"}>
-              {getAssigneeInput(role)}
-            </Col>
-            <Col sm={4} className={"pl-2 pr-2"}>
-              <StandaloneRoleAccessTypeInput
-                accessRole={role}
-                disabled={disabled}
-                updateRoleType={updateProperty}
-              />
-            </Col>
-          </Row>
-        </Col>
-        <Col sm={1} className={"px-0 mr-auto delete-button"}>
-          {getDeletePropertyButton(index)}
-        </Col>
-      </div>
-    );
-  };
-
   const getFieldBody = () => {
+    const roles = model?.getArrayData(fieldName);
+
     if (!roles || roles.length === 0) {
       return (
-        <div className="roles-input">
-          <div className="text-center text-muted no-data-message">No access roles have been added yet.</div>
+        <div className={"my-3"}>
+          <CenteredContentWrapper>
+            <div>No access roles have been added yet.</div>
+          </CenteredContentWrapper>
+          <div className={"mx-3"}>
+            <hr/>
+          </div>
         </div>
       );
     }
 
     return (
-      <div className="flex-fill">
+      <div>
         {roles.map((role, index) => {
           return (
-            <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
-              {getPropertyRow(role, index)}
+            <div
+              key={index}
+              // className={`${index % 2 === 0 ? "odd-row" : "even-row"}`}
+            >
+              <RoleAccessInputInlineField
+                accessRule={role}
+                deleteAccessRuleFunction={() => deleteRoleFunction(index)}
+                editAccessRoleFunction={() => editAccessRoleFunction(index)}
+              />
+              <div className={"mx-3"}>
+                <hr/>
+              </div>
             </div>
           );
         })}
@@ -409,7 +121,9 @@ export default function RoleAccessInput(
   };
 
   const getRolesMessage = () => {
-    if (!Array.isArray(roles) || roles.length === 0 || (roles.length === 1 && lastRoleComplete() === false)) {
+    const roles = model?.getArrayData(fieldName);
+
+    if (!Array.isArray(roles) || roles.length === 0 || (roles.length === 1)) {
       return (`
         If no Roles are assigned, all users will have access. 
         Once a role is applied, only then will access be restricted to the Roles given. 
@@ -447,31 +161,6 @@ export default function RoleAccessInput(
     }
   };
 
-  const getAddPropertyButton = () => {
-    return (
-      <VanityButtonBase
-        onClickFunction={addRole}
-        normalText={"Add Role"}
-        buttonSize={"sm"}
-        className={"mr-2"}
-        variant={"secondary"}
-        disabled={disabled || lastRoleComplete() !== true}
-        icon={faPlus}
-      />
-    );
-  };
-
-  const getIncompleteRowBlock = () => {
-    if (!lastRoleComplete()) {
-      return (
-        <div className="w-100 m-2 text-muted small">
-          <IconBase className={"text-warning mr-1"} icon={faExclamationTriangle}/>
-          <span className="mt-1">{`Incomplete Roles Will Be Removed Upon Saving`}</span>
-        </div>
-      );
-    }
-  };
-
   if (field == null || isSaasUser === true || visible === false) {
     return <></>;
   }
@@ -483,26 +172,26 @@ export default function RoleAccessInput(
       </div>
       <InfoContainer
         titleIcon={faIdCard}
-        addProperty={addRole}
-        titleText={"Roles"}
+        titleText={"Access Controls"}
         errorMessage={errorMessage}
         helpComponent={helpComponent}
+        titleRightSideButton={getClearDataButton()}
       >
         <div>
           <RoleAccessInputHeaderField/>
-          <div className="rules-input">
-            {getFieldBody()}
-          </div>
+          {getFieldBody()}
+          <H5FieldSubHeader
+            className={"mx-3"}
+            subheaderText={"Add New Access Control Rule"}
+          />
+          <RoleAccessInputRow
+            accessRuleModel={accessRuleModel}
+            setAccessRuleModel={setAccessRuleModel}
+            roles={model?.getArrayData(fieldName)}
+            disabled={disabled}
+            addRoleFunction={addRoleFunction}
+          />
         </div>
-        <Row className={"d-flex justify-content-between mx-0"}>
-          <div className={"mt-auto"}>
-            {getIncompleteRowBlock()}
-          </div>
-          <div className={"ml-auto m-2 d-flex"}>
-            {getClearDataButton()}
-            {getAddPropertyButton()}
-          </div>
-        </Row>
       </InfoContainer>
       <div className={"mx-2"}>
         <InfoText customMessage={getRolesSubMessage()}/>

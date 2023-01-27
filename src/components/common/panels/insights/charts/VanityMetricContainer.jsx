@@ -331,7 +331,7 @@ function VanityMetricContainer(
 
   return (
     <div className="metric-chart-container bg-white">
-      <div className="px-3 metric-title-bar title-text-header-1 chart-header-name-text">
+      <div className="pl-3 pr-2 py-1 metric-title-bar title-text-header-1 chart-header-name-text">
         {getTitleBar()}
       </div>
       <div>

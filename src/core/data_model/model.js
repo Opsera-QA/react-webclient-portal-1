@@ -1,6 +1,7 @@
 import { modelValidation, validateData, validateField, validatePotentialValue } from "core/data_model/modelValidation";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
 
 export const DataState = {
   LOADED: 0,
@@ -250,6 +251,14 @@ export class Model {
 
   getOriginalData = () => {
     return this.originalData;
+  };
+
+  replaceOriginalData = (newOriginalData) => {
+    const parsedNewOriginalData = DataParsingHelper.parseObject(newOriginalData);
+
+    if (parsedNewOriginalData && ObjectHelper.areObjectsEqualLodash(this.originalData, parsedNewOriginalData) !== true) {
+      this.originalData = parsedNewOriginalData;
+    }
   };
 
   getCurrentData = () => {

@@ -8,12 +8,21 @@ import PublishCustomerPipelineOverlay
   from "components/workflow/pipelines/summary/action_bar/buttons/publish/PublishCustomerPipelineOverlay";
 import CustomerPipelineTemplateRoleHelper
   from "@opsera/know-your-role/roles/pipelines/templates/customer/customerPipelineTemplateRole.helper";
+import useGetPolicyModelByName from "hooks/settings/organization_settings/policies/useGetPolicyModelByName";
+import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
 export default function ActionBarPublishPipelineToCustomerCatalogButton({pipelineModel, className}) {
   const {
     toastContext,
     userData,
   } = useComponentStateReference();
+  const {
+    isLoading,
+    policyModel,
+  } = useGetPolicyModelByName(policyConstants.POLICY_NAMES.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS);
+  const allowedRoles = DataParsingHelper.parseArray(policyModel?.getData("parameters.allowed_roles"), []);
 
   const launchPublishDashboardToCustomerCatalogOverlay = () => {
     toastContext.showOverlayPanel(
@@ -23,7 +32,12 @@ export default function ActionBarPublishPipelineToCustomerCatalogButton({pipelin
     );
   };
 
-  if (pipelineModel == null || CustomerPipelineTemplateRoleHelper.canPublishCustomerPipelineTemplate(userData, pipelineModel?.getCurrentData()) !== true) {
+  if (
+    pipelineModel == null
+    || CustomerPipelineTemplateRoleHelper.canPublishCustomerPipelineTemplate(userData, pipelineModel?.getCurrentData()) !== true
+    || isLoading === true
+    || SiteRoleHelper.isMemberOfAllowedSiteRoles(userData, allowedRoles) !== true
+  ) {
     return null;
   }
 

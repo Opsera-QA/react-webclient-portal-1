@@ -4,12 +4,14 @@ export const freeTrialRegistrationMetadata = {
     {
       label: "First Name",
       id: "firstName",
-      isRequired: true
+      isRequired: true,
+      regexDefinitionName: "humanNameField",
     },
     {
       label: "Last Name",
       id: "lastName",
-      isRequired: true
+      isRequired: true,
+      regexDefinitionName: "humanNameField",
     },
     {
       label: "Email",

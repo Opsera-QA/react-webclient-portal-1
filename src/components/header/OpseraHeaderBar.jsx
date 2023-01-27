@@ -16,6 +16,7 @@ export default function OpseraHeaderBar({ hideAuthComponents }) {
 
   return (
     <Navbar
+      className={"py-2 px-3"}
       style={{
         backgroundColor: themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE,
       }}

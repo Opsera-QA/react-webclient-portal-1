@@ -3,7 +3,6 @@ import React from "react";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { Col, Row } from "react-bootstrap";
-import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
 import { TASK_TYPE_CATEGORIES, taskTypeConstants } from "components/tasks/task.types";
 import TaskCardFooter from "temp-library-components/cards/tasks/TaskCardFooter";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
@@ -11,6 +10,7 @@ import OrchestrationStateFieldBase
   from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import TaskCardHeader from "temp-library-components/cards/tasks/TaskCardHeader";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 const getLastRunDetails = (taskModel) => {
   const runCount = DataParsingHelper.parseInteger(taskModel?.getData("run_count"), 0);
@@ -30,7 +30,7 @@ const getLastRunDetails = (taskModel) => {
   if (lastRunCompletionDate != null) {
     return (
       <div className={"d-flex justify-content-between"}>
-        {getFormattedTimestamp(lastRunCompletionDate)}
+        {DateFormatHelper.formatDateAsTimestamp(lastRunCompletionDate)}
         <div>
           <OrchestrationStateFieldBase
             orchestrationState={lastRun?.status}

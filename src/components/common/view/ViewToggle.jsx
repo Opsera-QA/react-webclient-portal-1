@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {faList, faThLarge} from "@fortawesome/pro-light-svg-icons";
 import Button from "react-bootstrap/Button";
 import IconBase from "components/common/icons/IconBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ViewToggle(
   {
@@ -12,13 +13,16 @@ function ViewToggle(
     className, 
     isLoading,
   }) {
+  const {
+    isFreeTrial,
+  } = useComponentStateReference();
 
   const getViewToggle = () => {
     const view = filterModel?.getData("viewType");
     return (
       <div className={"d-flex"}>
         <Button
-          variant={view === "list" ? "success" : "outline-secondary"}
+          variant={view === "list" ? "success" : isFreeTrial === true ? "secondary" : "outline-secondary"}
           className={"mr-2"}
           size={"sm"}
           onClick={() => switchView()}
@@ -28,7 +32,7 @@ function ViewToggle(
           <IconBase icon={faList} />
         </Button>
         <Button
-          variant={view === "card" ? "success" : "outline-secondary"}
+          variant={view === "card" ? "success" : isFreeTrial === true ? "secondary" : "outline-secondary"}
           size={"sm"}
           onClick={() => switchView()}
           disabled={isLoading}

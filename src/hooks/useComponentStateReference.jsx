@@ -16,6 +16,7 @@ export default function useComponentStateReference() {
     userData,
     backgroundColor,
     isAuthenticated,
+    renewUserToken,
   } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const {
@@ -46,6 +47,7 @@ export default function useComponentStateReference() {
     isSassUser: isSaasUser, // TODO: Remove and replace with the proper spelling
     isSaasUser: isSaasUser,
     userData: userData,
+    loadUserData: renewUserToken,
     isFreeTrial: false,
     backgroundColor: backgroundColor,
     isAuthenticated: isAuthenticated,

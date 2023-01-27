@@ -6,28 +6,26 @@ import React, {
   useCallback,
 } from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { githubActions } from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
-import MultiSelectInputBase from "../../../../inputs/multi_select/MultiSelectInputBase";
 import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
 import _ from "lodash";
 import LazyLoadMultiSelectInputBase from "../../../../inputs/select/LazyLoadMultiSelectInputBase";
 
 function GithubBranchSelectInput({
-  fieldName,
-  model,
-  setModel,
-  toolId,
-  disabled,
-  setDataFunction,
-  clearDataFunction,
-  repositoryId,
-  multi,
-}) {
+                                   fieldName,
+                                   model,
+                                   setModel,
+                                   toolId,
+                                   disabled,
+                                   setDataFunction,
+                                   clearDataFunction,
+                                   repositoryId,
+                                   multi,
+                                 }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [githubBranches, setGithubBranches] = useState([]);

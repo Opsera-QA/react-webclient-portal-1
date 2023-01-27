@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import jsPDF from "jspdf";
 import ExportDataPanel from "components/common/modal/export_data/ExportDataPanel";
-import {DATE_FORMATS, getFormattedDate} from "components/common/fields/date/DateFieldBase";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 export default function ExportInsightsLookupDetailsPanel({
   showExportPanel,
@@ -45,8 +45,8 @@ export default function ExportInsightsLookupDetailsPanel({
         item.pipelineName,
         item.jobType,
         item.createdByName,
-        getFormattedDate(item.startTimestamp, DATE_FORMATS.TIMESTAMP_WITHOUT_SECONDS),
-        getFormattedDate(item.endTimestamp, DATE_FORMATS.TIMESTAMP_WITHOUT_SECONDS),
+        DateFormatHelper.formatDate(new Date(item.startTimestamp)),
+        DateFormatHelper.formatDate(new Date(item.endTimestamp)),
       ]),
     });
 
@@ -68,8 +68,8 @@ export default function ExportInsightsLookupDetailsPanel({
         item.pipelineName,
         item.jobType,
         item.createdByName,
-        getFormattedDate(item.startTimestamp, DATE_FORMATS.TIMESTAMP_WITHOUT_SECONDS),
-        getFormattedDate(item.endTimestamp, DATE_FORMATS.TIMESTAMP_WITHOUT_SECONDS),
+        DateFormatHelper.formatDate(new Date(item.startTimestamp)),
+        DateFormatHelper.formatDate(new Date(item.endTimestamp)),
       ]),
     ];
   };

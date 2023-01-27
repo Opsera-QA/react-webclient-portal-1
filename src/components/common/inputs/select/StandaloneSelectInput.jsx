@@ -23,6 +23,7 @@ function StandaloneSelectInput(
     hasErrorState,
     lazyLoad,
     dropUp,
+    onClickFunction,
   }) {
   const getPlaceholderText = () => {
     if (!Array.isArray(selectOptions)) {
@@ -37,25 +38,27 @@ function StandaloneSelectInput(
   };
 
   return (
-    <DropdownList
-      className={`${hasErrorState ? "select-input-error " : ""}${className}`}
-      data={selectOptions}
-      dataKey={valueField}
-      textField={textField}
-      groupBy={groupBy}
-      value={value}
-      filter={"contains"}
-      busy={busy}
-      defaultValue={defaultValue}
-      onCreate={onCreate}
-      onToggle={onToggleFunction}
-      dropUp={dropUp}
-      placeholder={getPlaceholderText()}
-      onChange={(newValue) => setDataFunction(newValue)}
-      disabled={disabled || (lazyLoad !== true && (!Array.isArray(selectOptions) || selectOptions.length === 0))}
-      onSearch={onSearchFunction}
-      allowCreate={allowCreate}
-    />
+    <div onClick={onClickFunction} className={`d-flex w-100 ${onClickFunction != null ?  " pointer" : ""}`}>
+      <DropdownList
+        className={`${hasErrorState ? "select-input-error " : ""}${className}`}
+        data={selectOptions}
+        dataKey={valueField}
+        textField={textField}
+        groupBy={groupBy}
+        value={value}
+        filter={"contains"}
+        busy={busy}
+        defaultValue={defaultValue}
+        onCreate={onCreate}
+        onToggle={onToggleFunction}
+        dropUp={dropUp}
+        placeholder={getPlaceholderText()}
+        onChange={(newValue) => setDataFunction(newValue)}
+        disabled={disabled || (lazyLoad !== true && (!Array.isArray(selectOptions) || selectOptions.length === 0))}
+        onSearch={onSearchFunction}
+        allowCreate={allowCreate}
+      />
+    </div>
   );
 }
 
@@ -89,6 +92,7 @@ StandaloneSelectInput.propTypes = {
   hasErrorState: PropTypes.bool,
   lazyLoad: PropTypes.bool,
   dropUp: PropTypes.bool,
+  onClickFunction: PropTypes.func,
 };
 
 StandaloneSelectInput.defaultProps = {

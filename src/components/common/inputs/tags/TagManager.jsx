@@ -30,7 +30,7 @@ function TagManager(
   }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
   const [tagOptions, setTagOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
@@ -181,7 +181,11 @@ function TagManager(
     }
   };
 
-  if (type == null) {
+  const hasWarningState = () => {
+    return field.noItemsWarning && dataObject?.getArrayData(fieldName)?.length === 0;
+  };
+
+  if (type == null && allowCreate !== false) {
     return (<div className="danger-red">Error for tag manager input: You forgot to wire up type!</div>);
   }
 
@@ -196,15 +200,17 @@ function TagManager(
         model={dataObject}
         field={field}
         hasError={hasStringValue(errorMessage) === true}
+        hasWarningState={hasWarningState()}
         disabled={disabled}
         isLoading={isLoading}
       />
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput
           hasErrorState={hasStringValue(errorMessage)}
+          hasWarningState={hasWarningState()}
           selectOptions={[...tagOptions]}
           textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + capitalizeFirstLetter(data["value"])}
-          allowCreate={allowCreate}
+          allowCreate={allowCreate === true && hasStringValue(type)}
           groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
           className={inline ? `inline-filter-input inline-select-filter` : undefined}
           busy={isLoading}

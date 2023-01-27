@@ -10,9 +10,9 @@ import PipelineSubscriptionIcon from "components/common/icons/subscription/Pipel
 import {getPipelineStateFieldBase} from "components/common/fields/pipelines/state/PipelineStateField";
 import IconBase from "components/common/icons/IconBase";
 import PipelineTypeIcon from "components/common/fields/pipelines/types/PipelineTypeIcon";
-import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {truncateString} from "components/common/helpers/string-helpers";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 // TODO: Rewrite
 const PipelineCard = (
@@ -59,7 +59,7 @@ const PipelineCard = (
     const lastRunCompletionDate = pipeline?.workflow?.last_run?.completed;
 
     if (lastRunCompletionDate != null) {
-      return getFormattedTimestamp(lastRunCompletionDate);
+      return DateFormatHelper.formatDateAsTimestamp(lastRunCompletionDate);
     }
   };
 

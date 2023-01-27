@@ -55,7 +55,6 @@ function PipelineSummaryPanel(
     runCount,
   }) {
   const contextType = useContext(AuthContext);
-  const [editTitle, setEditTitle] = useState(false);
   const [editDescription, setEditDescription] = useState(false);
   const [editTags, setEditTags] = useState(false);
   const [editType, setEditType] = useState(false);
@@ -75,13 +74,6 @@ function PipelineSummaryPanel(
       let postBody = {};
 
       switch (type) {
-        case "name":
-          pipeline.name = value.name;
-          postBody = {
-            "name": value.name,
-          };
-          setEditTitle(false);
-          break;
         case "description":
           pipeline.description = value.description;
           postBody = {
@@ -127,10 +119,6 @@ function PipelineSummaryPanel(
 
   const handleEditPropertyClick = (type) => {
     switch (type) {
-      case "name":
-        setEditTitle(true);
-        setFormData({ ...formData, name: pipeline.name });
-        break;
       case "description":
         setEditDescription(true);
         setFormData({ ...formData, description: pipeline.description });
@@ -254,26 +242,11 @@ function PipelineSummaryPanel(
 
   const getPipelineTitleField = () => {
     return (
-      <div className="d-flex title-text-header-2">
-        {editTitle ?
-          <>
-            <div className="flex-fill p-2">
-              <Form.Control maxLength="500" type="text" placeholder="" value={formData.name || ""}
-                            onChange={e => setFormData({ ...formData, name: e.target.value })} /></div>
-            <div className="flex-fill p-2">
-              {getSaveIcon("name")}
-              {getCancelIcon(setEditTitle)}
-            </div>
-          </>
-          :
-          <>{pipeline.name}
-            {PipelineRoleHelper.canEditPipelineName(userData, pipeline)
-            && parentWorkflowStatus !== "running"
-              ? getEditIcon("name")
-              : null}
-          </>
-        }
-      </div>
+      <PipelineNameTextInput
+        pipelineModel={pipelineModel}
+        setPipelineModel={setPipelineModel}
+        workflowStatus={parentWorkflowStatus}
+      />
     );
   };
 

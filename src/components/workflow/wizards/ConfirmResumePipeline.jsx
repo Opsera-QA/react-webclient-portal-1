@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Button} from "react-bootstrap";
-import {faPlay, faSpinner, faStepForward} from "@fortawesome/pro-light-svg-icons";
+import {faPlay, faSpinner, faArrowRight} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 
@@ -31,7 +31,7 @@ const ConfirmResumePipeline = ({ pipelineId, handlePipelineWizardRequest }) => {
           <Button variant="primary" className="ml-2" size="sm"
                   onClick={() => { setResume(true); handlePipelineWizardRequest(pipelineId, false);  }}
                   disabled={false}>
-            <IconBase icon={faStepForward} className={"mr-1"} isLoading={resume} />
+            <IconBase icon={faArrowRight} className={"mr-1"} isLoading={resume} />
             Resume Existing Run</Button>
         </div>
       </div>

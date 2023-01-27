@@ -1,6 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Multiselect from "react-widgets/Multiselect";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+
+const getClassNames = (className, hasErrorState, hasWarningState) => {
+  const parsedClassName = DataParsingHelper.parseString(className, "");
+
+  if (hasErrorState === true) {
+    return `select-input-error ${parsedClassName}`;
+  }
+
+  if (hasWarningState === true) {
+    return `select-input-warning ${parsedClassName}`;
+  }
+
+  return parsedClassName;
+};
 
 function StandaloneMultiSelectInput(
   {
@@ -8,6 +23,7 @@ function StandaloneMultiSelectInput(
     groupBy,
     disabled,
     selectOptions,
+    hasWarningState,
     valueField,
     textField,
     placeholderText,
@@ -21,12 +37,15 @@ function StandaloneMultiSelectInput(
     lazyLoad,
     manualEntry,
     onSearchFunction,
+    onClickFunction,
   }) {
-
   return (
-    <div className={"custom-multiselect-input"}>
+    <div
+      className={"custom-multiselect-input"}
+      onClick={onClickFunction}
+    >
       <Multiselect
-        className={`${hasErrorState ? "select-input-error " : ""}${className}`}
+        className={getClassNames(className, hasErrorState, hasWarningState)}
         data={selectOptions}
         dataKey={valueField}
         textField={textField}
@@ -73,9 +92,11 @@ StandaloneMultiSelectInput.propTypes = {
   onToggleFunction: PropTypes.func,
   className: PropTypes.string,
   hasErrorState: PropTypes.bool,
+  hasWarningState: PropTypes.bool,
   lazyLoad: PropTypes.bool,
   manualEntry: PropTypes.bool,
   onSearchFunction: PropTypes.func,
+  onClickFunction: PropTypes.func,
 };
 
 export default StandaloneMultiSelectInput;

@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import OverlayTitleBar from "components/common/overlays/OverlayTitleBar";
 import CloseButton from "components/common/buttons/CloseButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export const CONFIRMATION_OVERLAY_DEFAULT_HEIGHT = "250px";
 
@@ -24,7 +24,10 @@ function ConfirmationOverlay(
     linkTooltipText,
     height,
   }) {
-  const toastContext = useContext(DialogToastContext);
+  const {
+    toastContext,
+    isFreeTrial,
+  } = useComponentStateReference();
 
   useEffect(() => {
     if (showToasts) {
@@ -59,6 +62,14 @@ function ConfirmationOverlay(
     return children;
   };
 
+  const getStyling = () => {
+    if (isFreeTrial === true) {
+      return "screen-container confirmation-overlay content-card-1";
+    }
+
+    return "confirmation-overlay content-card-1 bg-white";
+  };
+
   if (showPanel === false) {
     return null;
   }
@@ -66,7 +77,7 @@ function ConfirmationOverlay(
   return (
     <div className={`overlay-panel center-overlay-shadow-background`}>
       <div className={"confirmation-overlay-panel"}>
-        <div className={"confirmation-overlay content-card-1 bg-white"}>
+        <div className={getStyling()}>
           <OverlayTitleBar
             handleClose={closePanel}
             isLoading={isLoading}

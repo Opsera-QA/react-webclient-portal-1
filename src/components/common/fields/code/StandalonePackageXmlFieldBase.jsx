@@ -10,6 +10,7 @@ import InfoContainer from "components/common/containers/InfoContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import CopyToClipboardIcon from "../../icons/CopyToClipboardIcon";
 
 SyntaxHighlighter.registerLanguage("xml", xml);
 
@@ -94,6 +95,7 @@ function StandalonePackageXmlFieldBase({xml, title, errorMessage, className, isL
       isLoading={isLoading}
       titleIcon={faFileCode}
       className={className}
+      titleRightSideButton={<CopyToClipboardIcon copyString={formattedXml} />}
     >
       {getBody()}
     </InfoContainer>

@@ -403,6 +403,11 @@ input[disabled] {
     border-radius: 5px;
 }
 
+.select-input-warning {
+    box-shadow: 0 0 3px #CF940C;
+    border-radius: 5px;
+}
+
 .input-container {
 }
 

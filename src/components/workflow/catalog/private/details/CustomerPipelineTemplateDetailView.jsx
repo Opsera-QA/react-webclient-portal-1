@@ -36,13 +36,15 @@ export default function CustomerPipelineTemplateDetailView() {
             <ActionBarTransferCustomerPipelineTemplateButton
               templateModel={pipelineTemplateModel}
               loadTemplate={loadData}
-              className={"mr-3"}
+              className={"ml-3"}
             />
             <ViewCustomerPipelineTemplateAuditLogsActionBarButton
               templateModel={pipelineTemplateModel}
+              className={"ml-3"}
             />
             <ActionBarDeleteCustomerPipelineTemplateButton
               customerPipelineTemplateModel={pipelineTemplateModel}
+              className={"ml-3"}
             />
           </div>
         </ActionBarContainer>

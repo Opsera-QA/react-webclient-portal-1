@@ -23,6 +23,7 @@ function FilterButtons(
   }) {
   const {
     toastContext,
+    isFreeTrial,
   } = useComponentStateReference();
 
   const loadFilters = async () => {
@@ -79,7 +80,7 @@ function FilterButtons(
           <Button
             className={filterBtnClassName}
             disabled={filterDto == null || isLoading}
-            variant={"outline-primary"}
+            variant={isFreeTrial === true ? "secondary" : "outline-primary"}
             size={"sm"}
             onClick={launchFilterSelectionOverlay}
           >
@@ -118,7 +119,7 @@ function FilterButtons(
           <Button
             className={`${filterBtnClassName}`}
             disabled={filterDto == null || filterDto?.getArrayData("activeFilters").length === 0 || isLoading}
-            variant={"outline-primary"}
+            variant={isFreeTrial === true ? "secondary" : "outline-primary"}
             size={"sm"}
             onClick={() => resetFilters()}
           >

@@ -12,6 +12,7 @@ export default function SyncProfileButton() {
     cancelTokenSource,
     getAccessToken,
     toastContext,
+    loadUserData,
   } = useComponentStateReference();
 
   const syncUserData = async () => {
@@ -19,7 +20,7 @@ export default function SyncProfileButton() {
       setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
       await userActions.syncUser(getAccessToken, cancelTokenSource);
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
-      window.location.reload();
+      await loadUserData();
     } catch (error) {
       if (isMounted.current === true) {
         setButtonState(buttonLabelHelper.BUTTON_STATES.ERROR);

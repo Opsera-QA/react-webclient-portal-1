@@ -15,6 +15,7 @@ import {
   getLimitedTableTextColumn,
   getTableDateTimeColumn,
   getTableTextColumn,
+  getTableHourDurationTextColumn
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 
@@ -41,6 +42,7 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
         getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
         getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
+        getTableHourDurationTextColumn(getField(fields, "MergeRequestTimeTaken"))
       ],
       []
   );

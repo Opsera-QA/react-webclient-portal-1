@@ -198,6 +198,7 @@ function PipelineDetailView() {
           currentTab={currentTab}
           setCurrentTab={setCurrentTab}
           getPipeline={getPipeline}
+          pipelineId={id}
         />
         {getCurrentView()}
       </div>

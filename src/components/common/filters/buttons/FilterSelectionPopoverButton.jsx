@@ -6,6 +6,7 @@ import StackedFilterRemovalIcon from "components/common/icons/StackedFilterRemov
 import Popover from "react-bootstrap/Popover";
 import IconBase from "components/common/icons/IconBase";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function FilterSelectionPopoverButton(
   {
@@ -18,6 +19,10 @@ export default function FilterSelectionPopoverButton(
     filterBtnClassName,
     includeButtonText,
   }) {
+  const {
+    isFreeTrial,
+  } = useComponentStateReference();
+
   const getInnerFilters = () => {
     if (dropdownFilters) {
       if (Array.isArray(dropdownFilters)) {
@@ -55,7 +60,7 @@ export default function FilterSelectionPopoverButton(
           {getInnerFilters()}
           <div className="d-flex justify-content-between">
             <div className="w-50 mr-1">
-              <Button variant="primary" disabled={isLoading} size="sm" onClick={() => loadFilters()} className="w-100">
+              <Button variant={isFreeTrial === true ? "secondary" : "primary"} disabled={isLoading} size="sm" onClick={() => loadFilters()} className="w-100">
                 <span className="pr-3"><IconBase icon={faFilter} className={"mr-2"}/>Filter</span>
               </Button>
             </div>
@@ -74,7 +79,7 @@ export default function FilterSelectionPopoverButton(
   return (
     <OverlayTrigger trigger={isLoading === true ? undefined : "click"} rootClose placement="bottom" overlay={getPopover()} className="filter-popover">
       <div className={"mr-2"}>
-        <Button className={filterBtnClassName} disabled={filterDto == null || isLoading} variant="outline-primary" size="sm">
+        <Button className={filterBtnClassName} disabled={filterDto == null || isLoading} variant={isFreeTrial === true ? "secondary" : "outline-primary"} size="sm">
           <span><IconBase icon={faFilter}/></span>
           {includeButtonText && <span>Filter Results</span>}
         </Button>

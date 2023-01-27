@@ -18,8 +18,8 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose, pageLin
 
   if (isLoading) {
     return (
-      <div className={"pl-2 pr-3 content-block-header title-text-header-1 d-flex"}>
-        <div className={"d-flex w-100 justify-content-between my-auto"}>
+      <div className={"px-3 py-2 content-block-header title-text-header-1 d-flex"}>
+        <div className={"d-flex justify-content-between my-auto w-100"}>
           <div><span><LoadingIcon className="mr-2"/>Loading Data</span></div>
           <div className={"d-flex"}>
             <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
@@ -32,21 +32,18 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose, pageLin
 
   if (titleText == null) {
     return (
-      <Row className={"title-text-header-1 w-100 p-1 mx-0 bg-white d-flex"}>
-        <div className={"d-flex my-auto w-100"}>
-          <div />
-          <div className={"ml-auto dark-grey"}>
-            <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
-            <CloseIcon handleCloseFunction={handleClose} />
-          </div>
+      <Row className={"title-text-header-1 w-100 p-2 mx-0 bg-white d-flex"}>
+        <div className={"ml-auto dark-grey d-flex my-auto"}>
+          <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
+          <CloseIcon handleCloseFunction={handleClose} />
         </div>
       </Row>
     );
   }
 
   return (
-    <div className={"pl-2 pr-3 content-block-header title-text-header-1 d-flex"}>
-      <div className={"h-100 d-flex justify-content-between my-auto w-100"}>
+    <div className={"px-3 py-2 content-block-header title-text-header-1 d-flex"}>
+      <div className={"d-flex justify-content-between my-auto w-100"}>
         <div><span>{getTitleIcon()}{titleText}</span></div>
         <div className={"d-flex"}>
           <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />

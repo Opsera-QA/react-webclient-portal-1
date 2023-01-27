@@ -13,7 +13,13 @@ import SfdcPipelineWizardUploadComponentTypesRadioInput
 import SfdcPipelineWizardIncludeDependenciesToggle
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
 
-function SfdcPipelineWizardPastRunComponent({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) {
+function SfdcPipelineWizardPastRunComponent(
+  {
+    pipelineWizardModel,
+    setPipelineWizardModel,
+    setPipelineWizardScreen,
+    handleClose,
+  }) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);

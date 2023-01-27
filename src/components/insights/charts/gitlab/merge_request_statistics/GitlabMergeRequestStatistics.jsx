@@ -116,9 +116,6 @@ function GitlabMergeRequestStatistics({
         }
     };
 
-    console.log("closeStats", closeStats);
-    console.log("closeChart", closeChart);
-
     const getChartBody = () => {
         if (
             !closeStats || !openStats|| !closeChart?.length || !openChart?.length) {

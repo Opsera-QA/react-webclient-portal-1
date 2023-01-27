@@ -14,7 +14,8 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import NewPlatformSystemParameterOverlay
   from "components/admin/system_parameters/create/NewPlatformSystemParameterOverlay";
 import { platformSystemParametersMetadata } from "components/admin/system_parameters/platformSystemParameters.metadata";
-import { platformSystemParameterConstants } from "components/admin/system_parameters/platformSystemParameter.constants";
+import platformSystemParameterConstants
+  from "@opsera/definitions/constants/platform/system_parameters/platformSystemParameter.constants";
 
 export default function PlatformSystemParameterTable(
   {

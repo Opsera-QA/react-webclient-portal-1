@@ -7,11 +7,11 @@ import {
   pipelineTypeConstants,
 } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import { Col, Row } from "react-bootstrap";
-import { getFormattedTimestamp } from "components/common/fields/date/DateFieldBase";
 import PipelineCardFooter from "temp-library-components/cards/pipelines/PipelineCardFooter";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import PipelineCardHeader from "temp-library-components/cards/pipelines/PipelineCardHeader";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 const getLastRunDetails = (pipelineModel) => {
   const runCount = DataParsingHelper.parseInteger(pipelineModel?.getData("workflow.run_count"), 0);
@@ -31,7 +31,7 @@ const getLastRunDetails = (pipelineModel) => {
     return (
       <div className={"d-flex text-muted"}>
         <div className={"mx-auto"}>
-          {getFormattedTimestamp(lastRunCompletionDate)}
+          {DateFormatHelper.formatDateAsTimestamp(lastRunCompletionDate)}
         </div>
       </div>
     );

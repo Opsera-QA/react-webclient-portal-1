@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {DATE_FORMATS, getFormattedDate} from "components/common/fields/date/DateFieldBase";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 export default function StandaloneDateFieldBase(
   {
@@ -14,7 +14,7 @@ export default function StandaloneDateFieldBase(
 
   return (
     <div className={className}>
-      {getFormattedDate(date, dateFormat)}
+      {DateFormatHelper.formatDate(date, dateFormat)}
     </div>
   );
 }
@@ -26,5 +26,5 @@ StandaloneDateFieldBase.propTypes = {
 };
 
 StandaloneDateFieldBase.defaultProps = {
-  dateFormat: DATE_FORMATS.DATE,
+  dateFormat: DateFormatHelper.DATE_FORMATS.DATE,
 };

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import regexDefinitions from "utils/regexDefinitions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
-import { faTriangleExclamation } from "@fortawesome/pro-light-svg-icons";
+import {faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
 
 function InfoText(
   {
@@ -24,7 +24,7 @@ function InfoText(
     );
   }
 
-  if(hasStringValue(successMessage) === true) {
+  if (hasStringValue(successMessage) === true) {
     return (
       <small className={"green form-text mx-1"}>
         <div>{successMessage}</div>
@@ -32,11 +32,33 @@ function InfoText(
     );
   }
 
-  if (hasStringValue(field?.formText) === true) {
+  if (model && field) {
+    const warning = model?.getFieldWarning(field?.id);
+
+    if (hasStringValue(warning) === true) {
+      return (
+        <small className={"warning-text-alt form-text mx-1"}>
+          <div>
+            <IconBase
+              icon={faTriangleExclamation}
+            />
+            {warning}
+          </div>
+        </small>
+      );
+    }
+  }
+
+  if (hasStringValue(warningMessage) === true) {
     return (
-      <small className={"text-muted form-text mx-1"}>
-        <div>{field?.formText}</div>
-      </small>
+      <span className={"warning-text-alt form-text mx-1"}>
+        <div>
+          <IconBase
+            icon={faTriangleExclamation}
+          />
+          {warningMessage}
+        </div>
+      </span>
     );
   }
 
@@ -54,30 +76,12 @@ function InfoText(
     }
   }
 
-  if (hasStringValue(warningMessage) === true) {
+  if (hasStringValue(field?.formText) === true) {
     return (
-      <span className={"warning-text-alt form-text mx-1"}>
-        <div>
-          <IconBase
-            icon={faTriangleExclamation}
-            className={"mr-1"}
-          />
-          {warningMessage}
-        </div>
-      </span>
+      <small className={"text-muted form-text mx-1"}>
+        <div>{field?.formText}</div>
+      </small>
     );
-  }
-
-  if (model && field) {
-    const warning = model?.getFieldWarning(field?.id);
-
-      if (hasStringValue(warning) === true) {
-        return (
-          <small className={"warning-text-alt form-text mx-1"}>
-            <div>{warning}</div>
-          </small>
-        );
-      }
   }
 
   if (customMessage == null) {

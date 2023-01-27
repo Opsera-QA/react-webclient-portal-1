@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {faCheck, faStepBackward} from "@fortawesome/free-solid-svg-icons";
+import {faCheck, faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
@@ -241,7 +241,7 @@ const SfdcPipelineWizardXmlViewer = (
         {getView()}        
         <SaveButtonContainer>
           <Button variant="secondary" size="sm" className="mr-2" onClick={() => { handleBackButton(); }}>
-            <IconBase icon={faStepBackward} fixedWidth className="mr-2" />
+            <IconBase icon={faArrowLeft} fixedWidth className="mr-2" />
             Back
           </Button>
           <Button variant="success" size="sm" onClick={() => {createJenkinsJob();}} disabled={isSaving || (pipelineWizardModel.getData("isRollBack") && pipelineWizardModel.getData("destructiveXml")?.length === 0)}>

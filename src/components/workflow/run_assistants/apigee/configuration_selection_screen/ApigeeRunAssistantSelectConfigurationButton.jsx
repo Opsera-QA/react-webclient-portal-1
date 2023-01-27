@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {faStepForward} from "@fortawesome/pro-light-svg-icons";
+import {faArrowRight} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import IconBase from "components/common/icons/IconBase";
 import {AuthContext} from "contexts/AuthContext";
@@ -124,7 +124,7 @@ ApigeeRunAssistantSelectConfigurationButton.propTypes = {
 
 ApigeeRunAssistantSelectConfigurationButton.defaultProps = {
   size: "sm",
-  icon: faStepForward
+  icon: faArrowRight
 };
 
 export default ApigeeRunAssistantSelectConfigurationButton;

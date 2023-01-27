@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ConstantFieldBase from "components/common/fields/constant/ConstantFieldBase";
-import { platformSystemParameterConstants } from "components/admin/system_parameters/platformSystemParameter.constants";
+import platformSystemParameterConstants
+  from "@opsera/definitions/constants/platform/system_parameters/platformSystemParameter.constants";
 
 export default function PlatformSystemParameterTypeField(
   {

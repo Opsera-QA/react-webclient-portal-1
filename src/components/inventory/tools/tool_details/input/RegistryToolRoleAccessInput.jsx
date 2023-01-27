@@ -6,6 +6,7 @@ import ToolRegistryRoleAccessHelpDocumentation
   from "components/common/help/documentation/tool_registry/ToolRegistryRoleAccessHelpDocumentation";
 import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import {toolHelper} from "components/inventory/tools/tool.helper";
 
 export default function RegistryToolRoleAccessInput(
   {
@@ -45,6 +46,7 @@ export default function RegistryToolRoleAccessInput(
       saveData={saveData}
       helpComponent={<ToolRegistryRoleAccessHelpDocumentation/>}
       visible={visible}
+      lostAccessRerouteRoute={toolHelper.getManagementScreenLink()}
     />
   );
 }

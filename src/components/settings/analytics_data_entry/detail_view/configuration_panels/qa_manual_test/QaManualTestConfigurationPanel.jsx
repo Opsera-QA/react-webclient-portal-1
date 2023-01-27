@@ -17,7 +17,6 @@ function QaManualTestConfigurationPanel({ analyticsDataEntryModel, kpiConfigurat
 
   const loadData = async () => {
     const configurationData = modelHelpers.getToolConfigurationModel(analyticsDataEntryModel.getData("data"), qaManualTestConfigurationMetadata);
-    console.log("configurationData: " + JSON.stringify(configurationData));
     setKpiConfigurationData({...configurationData});
   };
 
