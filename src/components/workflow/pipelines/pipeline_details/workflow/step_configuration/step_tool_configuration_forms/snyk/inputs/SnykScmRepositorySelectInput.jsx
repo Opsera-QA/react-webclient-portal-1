@@ -9,7 +9,7 @@ function SnykScmRepositorySelectInput({dataObject, setDataObject, disabled}) {
     const repoId = selectedOption?._id || selectedOption?.id || selectedOption?.repositoryId || "";
     const gitUrl = selectedOption?.httpUrl || selectedOption?.remoteUrl || "";
     const sshUrl = selectedOption?.sshUrl || selectedOption?.configuration?.sshUrl || "";
-    newDataObject.setData("repositoryName", selectedOption.name);
+    newDataObject.setData("repository", selectedOption.name);
     newDataObject.setData("projectId", repoId);
     newDataObject.setData("repoId", repoId);
     newDataObject.setData("sshUrl", sshUrl);
@@ -20,7 +20,7 @@ function SnykScmRepositorySelectInput({dataObject, setDataObject, disabled}) {
  
   const clearData = () => {
     let newDataObject = {...dataObject};
-    newDataObject.setDefaultValue("repositoryName");
+    newDataObject.setDefaultValue("repository");
     newDataObject.setDefaultValue("projectId");
     newDataObject.setDefaultValue("repoId");
     newDataObject.setDefaultValue("sshUrl");
@@ -31,7 +31,7 @@ function SnykScmRepositorySelectInput({dataObject, setDataObject, disabled}) {
 
   return (
      <RepositorySelectInput
-       fieldName={"projectId"}
+       fieldName={"repoId"}
        service={dataObject.getData("service")}
        gitToolId={dataObject.getData("gitToolId")}
        workspace={dataObject.getData("workspace")}
