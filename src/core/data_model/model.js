@@ -27,6 +27,10 @@ export class Model {
       // console.log("This.metadata: " + JSON.stringify(Object.keys(this.metaData.fields)));
       // this.id = this.metaData.idProperty;
       for (const field of this.metaData.fields) {
+        if (field.id === "data") {
+          continue;
+        }
+
         let id = field.id;
         this.defineProperty(id);
       }
@@ -36,7 +40,7 @@ export class Model {
   defineProperty = (id) => {
     Object.defineProperty(this, id, {
       get: () => {
-        return this.data[id];
+        return this.getData(id);
       },
       set: (newValue) => {
         if (this.getData(id) !== newValue) {

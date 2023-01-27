@@ -49,6 +49,10 @@ export default class ModelBase {
     const fields = metaData?.fields;
     if (Array.isArray(fields)) {
       for (const field of fields) {
+        if (field.id === "data") {
+          continue;
+        }
+
         let id = field.id;
 
         Object.defineProperty(this, id, {
