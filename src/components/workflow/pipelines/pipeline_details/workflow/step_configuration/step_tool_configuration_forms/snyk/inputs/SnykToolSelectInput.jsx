@@ -7,12 +7,12 @@ function SnykToolSelectInput({ fieldName, model, setModel, disabled }) {
   const setDataFunction=(fieldName,selectedOption)=>{
     let newDataObject = {...model};
     newDataObject.setData(fieldName, selectedOption?._id);
-    newDataObject.setData("snykProducts","");
+    newDataObject.setData("snykProducts", []);
     newDataObject.setData("languageLevelId", "");
     newDataObject.setData("version", "");
     newDataObject.setData("packagerNameOrBuildTool", "");
     newDataObject.setData("multiModuleProject", "");
-    newDataObject.setData("thresholdVulnerability", "");
+    newDataObject.setData("thresholdVulnerability", []);
     newDataObject.setData("gitToolId", "");
     newDataObject.setData("repoId", "");
     newDataObject.setData("gitBranch", "");
