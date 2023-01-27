@@ -12,6 +12,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   AWS_DEPLOY: "aws-deploy",
   AWS_ECS_DEPLOY: "aws_ecs_deploy",
   AWS_LAMDA: "aws_lambda",
+  AQUASEC: "aquasec",
   AZURE: "azure",
   AZURE_ACCOUNT: "azure_account",
   AZURE_ACR_PUSH: "azure_acr_push",
