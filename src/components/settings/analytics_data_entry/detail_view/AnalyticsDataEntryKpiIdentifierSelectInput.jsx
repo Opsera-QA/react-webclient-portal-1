@@ -4,11 +4,10 @@ import KpiSelectInput from "components/common/list_of_values_input/admin/kpi_con
 
 function AnalyticsDataEntryKpiIdentifierSelectInput({ fieldName, analyticsDataEntryModel, setAnalyticsDataEntryModel, setKpiConfigurationModel}) {
   const setDataFunction = (fieldName, kpi) => {
-    let newModel = {...analyticsDataEntryModel};
-    newModel.setData(fieldName, kpi?.identifier);
-    newModel.setData("data", {});
+    analyticsDataEntryModel?.setData(fieldName, kpi?.identifier);
+    analyticsDataEntryModel?.setData("data", {});
     setKpiConfigurationModel(undefined);
-    setAnalyticsDataEntryModel({...newModel});
+    setAnalyticsDataEntryModel({...analyticsDataEntryModel});
   };
 
   return (
