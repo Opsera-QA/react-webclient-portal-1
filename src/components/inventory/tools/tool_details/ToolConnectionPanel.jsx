@@ -49,6 +49,7 @@ import BlackduckToolConfiguration from "components/inventory/tools/tool_details/
 import GChatToolConfiguration from "./tool_jobs/gchat/GChatToolConfiguration";
 import FortifyToolConfiguration from "./tool_jobs/fortify/FortifyToolConfiguration";
 import SnykToolConfiguration from "./tool_jobs/snyk/SnykToolConfiguration";
+import AquasecToolConfiguration from "./tool_jobs/aquasec/AquasecToolConfiguration";
 
 //TODO: Use constants, alphabetize
 export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
@@ -98,6 +99,7 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK,
   toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY,
   toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC,
 ];
 
 function ToolConnectionPanel({ toolData, setToolData }) {
@@ -205,6 +207,8 @@ function ToolConnectionPanel({ toolData, setToolData }) {
         return <FortifyToolConfiguration toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK:
         return <SnykToolConfiguration toolData={toolData} />;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
+        return <AquasecToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Connection configuration is not currently available for this tool.</div>;
     }
