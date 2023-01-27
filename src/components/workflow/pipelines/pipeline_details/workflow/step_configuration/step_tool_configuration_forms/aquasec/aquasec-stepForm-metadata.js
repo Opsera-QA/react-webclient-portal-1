@@ -2,6 +2,11 @@ const AquasecStepFormMetadata = {
   type: "Aquasec Step Configuration",
   fields: [
     {
+      label: "Jenkins Tool Selection",
+      id: "toolConfigId",
+      isRequired: true
+    },
+    {
       label: "Aquasec Tool",
       id: "aquasecToolConfigId",
       isRequired: true,
@@ -23,10 +28,13 @@ const AquasecStepFormMetadata = {
     },        
   ],
   newObjectFields: {
+    toolConfigId: "",
     aquasecToolConfigId: "",
     buildStepId: "",
     dockerRegistryToolConfigId: "",
-    dockerImage: "",    
+    dockerImage: "",
+    agentLabels: "generic-linux",
+    jobType: "AQUASEC_SCAN",
   }
 };
 

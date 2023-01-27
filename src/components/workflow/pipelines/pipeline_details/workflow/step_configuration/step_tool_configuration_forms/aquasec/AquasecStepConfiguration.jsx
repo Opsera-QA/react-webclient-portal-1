@@ -8,10 +8,12 @@ import PipelineStepEditorPanelContainer
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import RoleRestrictedAquasecToolSelectInput from "components/common/list_of_values_input/tools/aquasec/RoleRestrictedAquasecToolSelectInput";
 import AquasecDockerBuildStepSelectInput from "./inputs/AquasecDockerBuildStepSelectInput";
-import RoleRestrictedJFrogArtifactoryDockerToolSelectInput 
+import RoleRestrictedJFrogArtifactoryDockerToolSelectInput
   from "components/common/list_of_values_input/tools/jfrog/RoleRestrictedJFrogArtifactoryDockerToolSelectInput";
+import RoleRestrictedJenkinsToolSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/RoleRestrictedJenkinsToolSelectInput";
 
-function AquasecStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback }) {
+function AquasecStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEditorPanel, parentCallback, createJob }) {
   const [isLoading, setIsLoading] = useState(false);
   const [aquasecStepConfigurationDataModel, setAquasecStepConfigurationDataModel] = useState(undefined);
 
@@ -21,7 +23,7 @@ function AquasecStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdi
 
   const loadData = async () => {
     setIsLoading(true);
-    await loadFormData(stepTool);    
+    await loadFormData(stepTool);
     setIsLoading(false);
   };
 
@@ -38,17 +40,24 @@ function AquasecStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdi
   };
 
   const handleSaveStepConfig = async () => {
-    await callbackFunction();
-    closeEditorPanel();
-  };
 
-  const callbackFunction = async () => {
-    let newDataObject = aquasecStepConfigurationDataModel;
-    setAquasecStepConfigurationDataModel({ ...newDataObject });
-    const item = {
-      configuration: aquasecStepConfigurationDataModel.getPersistData(),
-    };
-    await parentCallback(item);
+    const toolId = aquasecStepConfigurationDataModel.getData("toolConfigId");
+
+    if (toolId) {
+      const createJobPostBody = {
+        jobId: "",
+        pipelineId: pipelineId,
+        stepId: stepId,
+      };
+  
+      const toolConfiguration = {
+        configuration: aquasecStepConfigurationDataModel.getPersistData(),        
+        job_type: aquasecStepConfigurationDataModel.getData("jobType"),
+      };
+  
+      await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
+      closeEditorPanel();
+    }
   };
 
   if (isLoading || aquasecStepConfigurationDataModel == null) {
@@ -62,6 +71,11 @@ function AquasecStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdi
       persistRecord={handleSaveStepConfig}
       isLoading={isLoading}
     >
+      <RoleRestrictedJenkinsToolSelectInput
+        model={aquasecStepConfigurationDataModel}
+        setModel={setAquasecStepConfigurationDataModel}
+        fieldName={"toolConfigId"}
+      />
       <RoleRestrictedAquasecToolSelectInput
         model={aquasecStepConfigurationDataModel}
         setModel={setAquasecStepConfigurationDataModel}
@@ -77,7 +91,7 @@ function AquasecStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdi
       <RoleRestrictedJFrogArtifactoryDockerToolSelectInput
         fieldName={"dockerRegistryToolConfigId"}
         model={aquasecStepConfigurationDataModel}
-        setModel={setAquasecStepConfigurationDataModel}        
+        setModel={setAquasecStepConfigurationDataModel}
       />
       <TextInputBase
         dataObject={aquasecStepConfigurationDataModel}
@@ -95,6 +109,7 @@ AquasecStepConfiguration.propTypes = {
   parentCallback: PropTypes.func,
   pipelineId: PropTypes.string,
   closeEditorPanel: PropTypes.func,
+  createJob: PropTypes.func,
 };
 
 export default AquasecStepConfiguration;

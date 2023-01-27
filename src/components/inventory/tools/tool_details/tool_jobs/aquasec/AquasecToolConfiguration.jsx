@@ -42,7 +42,7 @@ function AquasecToolConfiguration({ toolData }) {
     >
       <Row>
         <Col sm={12}>
-          <TextInputBase dataObject={aquasecConfigurationModel} setDataObject={setAquasecConfigurationModel} fieldName={"url"} />
+          <TextInputBase dataObject={aquasecConfigurationModel} setDataObject={setAquasecConfigurationModel} fieldName={"toolURL"} />
           <TextInputBase dataObject={aquasecConfigurationModel} setDataObject={setAquasecConfigurationModel} fieldName={"accountUsername"} />
           <VaultTextInput dataObject={aquasecConfigurationModel} setDataObject={setAquasecConfigurationModel} fieldName={"accountPassword"} />
         </Col>

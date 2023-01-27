@@ -4,7 +4,7 @@ const AquasecMetadata = {
   fields: [
     {
       label: "URL",
-      id: "url",
+      id: "toolURL",
       isRequired: true,
       isSecureUrl: true,
     },
@@ -21,7 +21,7 @@ const AquasecMetadata = {
   ],
   newObjectFields:
   {
-    url: "",
+    toolURL: "",
     accountUsername: "",
     accountPassword: "",
   }

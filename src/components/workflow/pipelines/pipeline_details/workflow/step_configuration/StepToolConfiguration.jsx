@@ -1464,6 +1464,7 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             closeEditorPanel={closeEditorPanel}
+            createJob={createTwistlockJob}
           />
         );        
     }

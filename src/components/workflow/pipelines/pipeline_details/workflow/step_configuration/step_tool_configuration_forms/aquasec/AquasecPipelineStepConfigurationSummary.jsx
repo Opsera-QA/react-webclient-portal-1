@@ -15,6 +15,9 @@ function AquasecPipelineStepConfigurationSummary({ aquasecPipelineDataObject, pi
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
+      <Col lg={6}>
+          <ToolNameField model={aquasecPipelineDataObject} fieldName={"toolConfigId"} />
+        </Col>
         <Col lg={6}>
           <ToolNameField model={aquasecPipelineDataObject} fieldName={"aquasecToolConfigId"} />
         </Col>
