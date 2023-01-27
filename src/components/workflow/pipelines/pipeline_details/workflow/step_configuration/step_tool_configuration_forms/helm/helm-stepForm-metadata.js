@@ -75,7 +75,6 @@ const helmStepFormMetadata = {
     {
       label: "Resource Group",
       id: "resourceGroup",
-      isRequired: true
     },
     {
       label: "Storage Account Name",
