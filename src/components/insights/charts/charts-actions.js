@@ -208,6 +208,7 @@ chartsActions.getGithubTotalCommitsMetrics = async (
   getAccessToken,
   cancelTokenSource,
   dashboardTags,
+  dashboardFilters,
   dashboardOrgs,
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
