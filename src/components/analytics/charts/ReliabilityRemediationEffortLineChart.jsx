@@ -4,7 +4,6 @@
 // Persona - All
 
 import PropTypes from "prop-types";
-import { format } from "date-fns";
 import { ResponsiveLine } from "@nivo/line";
 import ErrorDialog from "../../common/status_notifications/error";
 import config from "./ReliabilityRemediationEffortLineChartConfigs";
@@ -17,6 +16,7 @@ import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import { defaultConfig, getColor, assignStandardColors } from "../../insights/charts/charts-views";
 import ChartTooltip from "../../insights/charts/ChartTooltip";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 function ReliabilityRemediationEffortLineChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -108,7 +108,7 @@ function ReliabilityRemediationEffortLineChart({ persona, date }) {
               colors={getColor}
               tooltip={({ point, color }) => <ChartTooltip 
                 titles = {["Timestamp", "Time", "Project Key"]}
-                values = {[format(new Date(point.data.x), "yyyy-MM-dd', 'hh:mm a"),
+                values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(point.data.x)),
                           point.data.y, point.data.key]}
                 color = {color} />}
             />

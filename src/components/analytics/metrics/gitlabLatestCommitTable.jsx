@@ -5,7 +5,7 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 import { Table }  from "react-bootstrap";
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 function GitlabLatestCommitTable() {
   const contextType = useContext(AuthContext);
@@ -81,7 +81,7 @@ function GitlabLatestCommitTable() {
               {data.gitlabLatestCommit.data.map(function (value, index) {
                 return <tr key = {index}>
                   <td>{value["repository"]}</td>
-                  <td>{format(new Date(typeof(value["latest_commit"]) !== "undefined" ? value["latest_commit"] : null), "yyyy-MM-dd', 'hh:mm a")}</td>
+                  <td>{DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(typeof(value["latest_commit"]) !== "undefined" ? value["latest_commit"] : null))}</td>
                 </tr>;
               })
               }

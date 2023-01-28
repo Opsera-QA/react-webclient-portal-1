@@ -1,6 +1,7 @@
 import { modelValidation, validateData, validateField, validatePotentialValue } from "core/data_model/modelValidation";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
 
 export const DataState = {
   LOADED: 0,
@@ -48,6 +49,10 @@ export default class ModelBase {
     const fields = metaData?.fields;
     if (Array.isArray(fields)) {
       for (const field of fields) {
+        if (field.id === "data") {
+          continue;
+        }
+
         let id = field.id;
 
         Object.defineProperty(this, id, {
@@ -295,6 +300,14 @@ export default class ModelBase {
 
   getOriginalData = () => {
     return this.originalData;
+  };
+
+  replaceOriginalData = (newOriginalData) => {
+    const parsedNewOriginalData = DataParsingHelper.parseObject(newOriginalData);
+
+    if (parsedNewOriginalData && ObjectHelper.areObjectsEqualLodash(this.originalData, parsedNewOriginalData) !== true) {
+      this.originalData = parsedNewOriginalData;
+    }
   };
 
   getCurrentData = () => {

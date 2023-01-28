@@ -55,7 +55,6 @@ function LdapCustomerOnboardEditorPanel() {
   // TODO: Implement if we use this for updates
   // eslint-disable-next-line no-unused-vars
   const unpackLdapUserData = async (ldapUserData) => {
-    console.log("ldapUserData in unpackLdapUserData: " + JSON.stringify(ldapUserData));
     // if (ldapUserData != null) {
     //   setFormField("key", ldapUserData["key"] != null ? ldapUserData["key"] : "");
     //   setFormField("value", ldapUserData["value"] != null ? ldapUserData["value"] : "");
@@ -104,7 +103,6 @@ function LdapCustomerOnboardEditorPanel() {
     // }
     ldapOrganizationAccountDataDto.setData("administrator", newAdmin);
 
-    console.log("administrator: " + JSON.stringify(ldapOrganizationAccountDataDto.getData("administrator")));
     // setFormData({...formData, users: currentUsers});
     // console.log("Current Users: " + JSON.stringify(currentUsers));
   };
@@ -116,11 +114,8 @@ function LdapCustomerOnboardEditorPanel() {
     let completeAccount = {organization: ldapOrganizationDataDto.getPersistData(), orgAccount: ldapOrganizationAccountDataDto.getPersistData(), users: usersFormData.users, idpAccount: ldapIdpAccountDataDto.getPersistData()};
 
 
-    console.log("Persisting new account to DB: " + JSON.stringify(completeAccount));
-
     if (isFormValid) {
       let createLdapAccountResponse = await accountsActions.create(completeAccount, getAccessToken);
-      console.log("createLdapAccountResponse: ", JSON.stringify(createLdapAccountResponse));
 
       if (createLdapAccountResponse.error != null) {
         const errorMsg = `Microservice error reported creating the organization for : ${completeAccount.accountName}.  Error returned: ${JSON.stringify(createLdapAccountResponse.error.message, null, 2)}`;

@@ -1,7 +1,6 @@
 import React, {useContext, useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import { Row, Col, Form } from "react-bootstrap";
-import { format } from "date-fns";
 import {
   faPencilAlt,
   faSave, faTag,
@@ -34,6 +33,8 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import OwnerNameField from "components/common/fields/text/general/OwnerNameField";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
+import PipelineNameTextInput from "components/workflow/pipelines/summary/inputs/PipelineNameTextInput";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -55,7 +56,6 @@ function PipelineSummaryPanel(
     runCount,
   }) {
   const contextType = useContext(AuthContext);
-  const [editTitle, setEditTitle] = useState(false);
   const [editDescription, setEditDescription] = useState(false);
   const [editTags, setEditTags] = useState(false);
   const [editType, setEditType] = useState(false);
@@ -75,13 +75,6 @@ function PipelineSummaryPanel(
       let postBody = {};
 
       switch (type) {
-        case "name":
-          pipeline.name = value.name;
-          postBody = {
-            "name": value.name,
-          };
-          setEditTitle(false);
-          break;
         case "description":
           pipeline.description = value.description;
           postBody = {
@@ -127,10 +120,6 @@ function PipelineSummaryPanel(
 
   const handleEditPropertyClick = (type) => {
     switch (type) {
-      case "name":
-        setEditTitle(true);
-        setFormData({ ...formData, name: pipeline.name });
-        break;
       case "description":
         setEditDescription(true);
         setFormData({ ...formData, description: pipeline.description });
@@ -254,26 +243,11 @@ function PipelineSummaryPanel(
 
   const getPipelineTitleField = () => {
     return (
-      <div className="d-flex title-text-header-2">
-        {editTitle ?
-          <>
-            <div className="flex-fill p-2">
-              <Form.Control maxLength="500" type="text" placeholder="" value={formData.name || ""}
-                            onChange={e => setFormData({ ...formData, name: e.target.value })} /></div>
-            <div className="flex-fill p-2">
-              {getSaveIcon("name")}
-              {getCancelIcon(setEditTitle)}
-            </div>
-          </>
-          :
-          <>{pipeline.name}
-            {PipelineRoleHelper.canEditPipelineName(userData, pipeline)
-            && parentWorkflowStatus !== "running"
-              ? getEditIcon("name")
-              : null}
-          </>
-        }
-      </div>
+      <PipelineNameTextInput
+        pipelineModel={pipelineModel}
+        setPipelineModel={setPipelineModel}
+        workflowStatus={parentWorkflowStatus}
+      />
     );
   };
 
@@ -350,7 +324,7 @@ function PipelineSummaryPanel(
         <Col sm={12} className="py-2">
           <span className="text-muted mr-1">Summary:</span>
           Last complete run of pipeline finished on {
-          format(new Date(completed), "yyyy-MM-dd', 'hh:mm a")} with a status
+          DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(completed))} with a status
           of {status}.
         </Col>
       );

@@ -14,6 +14,7 @@ function ToolNameFieldDisplayer(
   {
     toolId,
     handleClose,
+    loadToolInNewWindow
   }) {
   const toastContext = useContext(DialogToastContext);
   const {getAccessToken} = useContext(AuthContext);
@@ -134,6 +135,7 @@ function ToolNameFieldDisplayer(
         toolId={toolId}
         accessAllowed={accessAllowed}
         handleClose={handleClose}
+        loadToolInNewWindow={loadToolInNewWindow}
       />
     </span>
   );
@@ -142,6 +144,7 @@ function ToolNameFieldDisplayer(
 ToolNameFieldDisplayer.propTypes = {
   handleClose: PropTypes.func,
   toolId: PropTypes.string,
+  loadToolInNewWindow: PropTypes.bool
 };
 
 export default ToolNameFieldDisplayer;

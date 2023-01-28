@@ -9,7 +9,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 function SonarCodeCoverageBarChart( { kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis } ) {
   const { getAccessToken } = useContext(AuthContext);
@@ -104,7 +104,7 @@ function SonarCodeCoverageBarChart( { kpiConfiguration, setKpiConfiguration, das
             tooltip={({ indexValue, value, id, color, data }) => (
               <div>
                 <strong style={{ color }}>
-              Timestamp: </strong> {format(new Date(indexValue), "yyyy-MM-dd', 'hh:mm a")}<br></br>
+              Timestamp: </strong> {DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(indexValue))}<br></br>
                 <strong style={{ color }}>  Coverage: </strong> {value} <br></br>
                 <strong style={{ color }}> Project Key: </strong> {data.key}
               </div>

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 // { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 // import { AuthContext } from "../../../contexts/AuthContext";
 // import { axiosApiService } from "../../../api/apiService";
 // import LoadingDialog from "../../common/loading";
@@ -48,7 +48,7 @@ function SonarLinesToCoverBarChart({ data, persona }) {
             colors={({ id, data }) => data[`${id}_color`]}
             tooltip={({ indexValue, value, id, color, data }) => <ChartTooltip 
                 titles = {["Timestamp", capitalizeFirstLetter(id) , "Project Key"]}
-                values = {[format(new Date(indexValue), "yyyy-MM-dd', 'hh:mm a"), value, data.key]}
+                values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(indexValue)), value, data.key]}
                 style = {false}
                 color = {color} />}
           />
