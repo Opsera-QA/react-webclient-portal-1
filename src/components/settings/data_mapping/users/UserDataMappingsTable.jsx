@@ -40,7 +40,7 @@ function UserDataMappingsTable(
   };
 
   const selectedRow = (rowData) => {
-    history.push(analyticsUserDataMappingHelper);
+    history.push(analyticsUserDataMappingHelper.getDetailViewLink(rowData?.original?._id));
   };
 
   const noDataMessage = "No User Data Mapping Tags have been configured";
