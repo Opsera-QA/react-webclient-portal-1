@@ -4,7 +4,7 @@ import CreateCenterPanel from "components/common/overlays/center/CreateCenterPan
 import analyticsDataEntryMetadata
   from "@opsera/definitions/constants/settings/analytics_data_entries/analyticsDataEntry.metadata";
 import AnalyticsDataEntryEditorPanel from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryEditorPanel";
-import useGetAnalyticsDataEntryModel from "components/settings/analytics_data_entry/useGetAnalyticsDataEntryModel";
+import useGetAnalyticsDataEntryModel from "hooks/settings/insights/analytics_data_entries/useGetAnalyticsDataEntryModel";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function NewAnalyticsDataEntryOverlay({ isMounted, loadData }) {
@@ -23,10 +23,12 @@ function NewAnalyticsDataEntryOverlay({ isMounted, loadData }) {
 
   return (
     <CreateCenterPanel closePanel={closePanel} objectType={analyticsDataEntryMetadata.type} loadData={loadData}>
-      <AnalyticsDataEntryEditorPanel
-        handleClose={closePanel}
-        analyticsDataEntry={analyticsDataEntryModel}
-      />
+      <div className={"p-3"}>
+        <AnalyticsDataEntryEditorPanel
+          handleClose={closePanel}
+          analyticsDataEntry={analyticsDataEntryModel}
+        />
+      </div>
     </CreateCenterPanel>
   );
 }

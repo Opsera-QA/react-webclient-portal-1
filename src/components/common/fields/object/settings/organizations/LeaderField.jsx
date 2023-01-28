@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function LeaderField({dataObject, fieldName, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const getFormattedValue = () => {
-    const value = dataObject.getData(fieldName);
+    const value = DataParsingHelper.parseObject(dataObject.getData(fieldName));
 
     if (value != null) {
       return `${value.name} (${value.email})`;
