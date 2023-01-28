@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetLdapUsers from "components/settings/ldap_users/hooks/useGetLdapUsers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function LdapUserSelectInput(
   {
@@ -25,15 +26,13 @@ export default function LdapUserSelectInput(
   } = useComponentStateReference();
 
   const getCurrentValue = () => {
-    const currentValue = model?.getData(fieldName);
+    const currentValue = DataParsingHelper.parseObject(model?.getData(fieldName));
 
     if (typeof currentValue === 'object' && currentValue !== null) {
       if (currentValue._id) {
         return currentValue._id;
       }
     }
-
-    return currentValue;
   };
 
   if (isSaasUser !== false) {

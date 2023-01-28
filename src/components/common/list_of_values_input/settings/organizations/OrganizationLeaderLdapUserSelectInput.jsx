@@ -12,7 +12,6 @@ function OrganizationLeaderLdapUserSelectInput({ dataObject, setDataObject, fiel
       email: selectedOption?.user?.email,
       _id: selectedOption?.user?._id,
     };
-    console.log("leader: " + JSON.stringify(leader));
     dataObject.setData("leader", leader);
     setDataObject({...dataObject});
   };

@@ -28,8 +28,6 @@ export default function useGetOrganizationById(organizationId, handleErrorFuncti
     const response = await organizationActions.getOrganizationById(organizationId);
     const newOrganization = DataParsingHelper.parseNestedObject(response, "data.data");
 
-    console.log("organization: " + JSON.stringify(organization));
-
     if (ObjectHelper.areObjectsEqualLodash(organization, newOrganization) !== true) {
       setOrganization({...newOrganization});
     }

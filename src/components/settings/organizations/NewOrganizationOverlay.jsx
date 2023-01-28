@@ -10,7 +10,7 @@ import useGetOrganizationModel from "hooks/settings/insights/organizations/useGe
 function NewOrganizationOverlay({ isMounted, loadData }) {
   const toastContext = useContext(DialogToastContext);
   const getOrganizationModel = useGetOrganizationModel();
-  const [organizationModel, setOrganizationModel] = useState(getOrganizationModel(organizationMetadata, true));
+  const [organizationModel, setOrganizationModel] = useState(getOrganizationModel(undefined, true));
 
   const closePanel = () => {
     if (isMounted?.current === true) {
@@ -22,8 +22,18 @@ function NewOrganizationOverlay({ isMounted, loadData }) {
   };
 
   return (
-    <CreateCenterPanel closePanel={closePanel} objectType={organizationMetadata.type} loadData={loadData}>
-      <OrganizationEditorPanel setOrganizationData={setOrganizationModel} handleClose={closePanel} organizationData={organizationModel}/>
+    <CreateCenterPanel
+      closePanel={closePanel}
+      objectType={organizationMetadata.type}
+      loadData={loadData}
+    >
+      <div className={"px-3 pb-3 pt-1"}>
+        <OrganizationEditorPanel
+          setOrganizationData={setOrganizationModel}
+          handleClose={closePanel}
+          organizationData={organizationModel}
+        />
+      </div>
     </CreateCenterPanel>
   );
 }
