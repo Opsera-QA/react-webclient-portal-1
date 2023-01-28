@@ -3,8 +3,8 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import ProjectDataMappingsTable from "components/settings/data_mapping/projects/ProjectDataMappingsTable";
 import Model from "../../../../core/data_model/model";
 import projectMappingMetadata from "components/settings/data_mapping/projects/projectDataMappingFilter.metadata.js";
-import useAnalyticsDataProjectMappingActions
-  from "hooks/settings/insights/analytics_data_mappings/projects/useAnalyticsDataProjectMappingActions";
+import useAnalyticsProjectDataMappingActions
+  from "hooks/settings/insights/analytics_data_mappings/projects/useAnalyticsProjectDataMappingActions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function ProjectDataMappingManagement() {
@@ -13,7 +13,7 @@ function ProjectDataMappingManagement() {
   const [projectDataMappings, setProjectDataMappings] = useState([]);
   const isMounted = useRef(false);
   const [projectDataMappingFilterModel, setProjectDataMappingFilterModel] = useState(new Model({...projectMappingMetadata.newObjectFields}, projectMappingMetadata, false));
-  const analyticsDataProjectMappingActions = useAnalyticsDataProjectMappingActions();
+  const analyticsProjectDataMappingActions = useAnalyticsProjectDataMappingActions();
 
   useEffect(() => {
     isMounted.current = true;
@@ -45,7 +45,7 @@ function ProjectDataMappingManagement() {
   };
 
   const getProjectDataMappings = async (filterDto = projectDataMappingFilterModel) => {
-    const response = await analyticsDataProjectMappingActions.getProjectDataMappings(filterDto);
+    const response = await analyticsProjectDataMappingActions.getProjectDataMappings(filterDto);
     const mappings = DataParsingHelper.parseNestedArray(response, "data.data");
 
     if (isMounted?.current === true && Array.isArray(mappings)) {

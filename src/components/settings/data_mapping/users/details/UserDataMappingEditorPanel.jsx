@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "contexts/AuthContext";
 import { Card, Col, Row } from "react-bootstrap";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
@@ -16,7 +15,6 @@ import UserMappingOpseraUserSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingOpseraUserSelectInput";
 import UserMappingSourceControlUserSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingSourceControlUserSelectInput";
-  import axios from "axios";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 
 function UserDataMappingEditorPanel(
@@ -25,24 +23,6 @@ function UserDataMappingEditorPanel(
     setUserDataMappingModel,
     handleClose,
   }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
 
   // TODO: Rewrite into switch statement or sub panels
   const getDynamicFields = () => {
@@ -106,7 +86,7 @@ function UserDataMappingEditorPanel(
       model={userDataMappingModel}
       setModel={setUserDataMappingModel}
       handleClose={handleClose}
-      className={"mx-3 my-2"}
+      className={"px-3 pb-3 pt-1"}
     >
       {getWarningMessage()}
       <Row>

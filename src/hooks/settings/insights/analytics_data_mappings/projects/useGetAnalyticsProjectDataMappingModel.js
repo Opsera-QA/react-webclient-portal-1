@@ -11,17 +11,17 @@ import AnalyticsProjectDataMappingRoleHelper
 
 export default function useGetAnalyticsProjectDataMappingModel() {
   const getModelBase = useGetModelBase();
-  const analyticsDataProjectMappingActions = useAnalyticsDataProjectMappingActions();
+  const analyticsProjectDataMappingActions = useAnalyticsProjectDataMappingActions();
 
   const getAnalyticsProjectDataMappingModel = (analyticsDataEntry, newModel) => {
     const initialModel = getModelBase(analyticsDataEntry, projectDataMappingMetadata, newModel);
 
     initialModel.createModel = async () => {
-      return await analyticsDataProjectMappingActions.createProjectDataMapping(initialModel);
+      return await analyticsProjectDataMappingActions.createProjectDataMapping(initialModel);
     };
 
     initialModel.saveModel = async () => {
-      return await analyticsDataProjectMappingActions.updateProjectDataMapping(initialModel);
+      return await analyticsProjectDataMappingActions.updateProjectDataMapping(initialModel);
     };
 
     initialModel.deleteModel = async () => {
@@ -31,7 +31,7 @@ export default function useGetAnalyticsProjectDataMappingModel() {
         throw "Access Denied";
       }
 
-      await analyticsDataProjectMappingActions.deleteProjectDataMapping(initialModel?.getMongoDbId());
+      await analyticsProjectDataMappingActions.deleteProjectDataMapping(initialModel?.getMongoDbId());
     };
 
     initialModel.canCreate = () => {
