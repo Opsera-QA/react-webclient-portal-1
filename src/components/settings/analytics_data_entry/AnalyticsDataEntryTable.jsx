@@ -11,11 +11,13 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import { faUserChart } from "@fortawesome/pro-light-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { analyticsDataEntryMetadata } from "components/settings/analytics_data_entry/analyticsDataEntry.metadata";
+import analyticsDataEntryMetadata
+  from "@opsera/definitions/constants/settings/analytics_data_entries/analyticsDataEntry.metadata";
 import NewAnalyticsDataEntryOverlay from "components/settings/analytics_data_entry/NewAnalyticsDataEntryOverlay";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import KpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/KpiIdentifierFilter";
 import InlineKpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/InlineKpiIdentifierFilter";
+import {analyticsDataEntryHelper} from "components/settings/analytics_data_entry/analyticsDataEntry.helper";
 
 function AnalyticsDataEntryTable({
   analyticsDataEntries,
@@ -32,7 +34,7 @@ function AnalyticsDataEntryTable({
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "_id")),
-      getTableTextColumn(getField(fields, "kpi_identifier")),
+      getTableTextColumn(getField(fields, "kpi_identifier_name")),
       getTableTextColumn(getField(fields, "owner_name")),
       getTableTextColumn(getField(fields, "data.domain")),
       getTableTextColumn(getField(fields, "data.application")),
@@ -48,7 +50,7 @@ function AnalyticsDataEntryTable({
   };
 
   const onRowSelect = (rowData) => {
-    history.push(`/settings/analytics-data-entries/details/${rowData.original._id}`);
+    history.push(analyticsDataEntryHelper.getDetailViewLink(rowData.original._id));
   };
 
   const getAnalyticsDataEntryTable = () => {

@@ -1,22 +1,23 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import LdapUserSelectInput from "components/common/list_of_values_input/users/LdapUserSelectInput";
-import {AuthContext} from "contexts/AuthContext";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function OrganizationLeaderLdapUserSelectInput({ dataObject, setDataObject, fieldName}) {
-  const { isSassUser } = useContext(AuthContext);
+  const { isSaasUser } = useComponentStateReference();
 
   const handleLdapUserChange = (fieldName, selectedOption) => {
-    let newDataObject = dataObject;
-    let leader = {};
-    leader["name"] = selectedOption?.user?.firstName + " " + selectedOption?.user?.lastName;
-    leader["email"] = selectedOption?.user?.email;
-    leader["_id"] = selectedOption?.user?._id;
-    newDataObject.setData("leader", leader);
-    setDataObject({...newDataObject});
+    const leader = {
+      name: `${selectedOption?.user?.firstName} ${selectedOption?.user?.lastName}`,
+      email: selectedOption?.user?.email,
+      _id: selectedOption?.user?._id,
+    };
+    console.log("leader: " + JSON.stringify(leader));
+    dataObject.setData("leader", leader);
+    setDataObject({...dataObject});
   };
 
-  if (isSassUser() === true) {
+  if (isSaasUser !== false) {
     return null;
   }
 

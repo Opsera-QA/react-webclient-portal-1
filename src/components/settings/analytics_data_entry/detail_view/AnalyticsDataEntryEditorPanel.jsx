@@ -1,64 +1,27 @@
-import React, {useEffect, useState, useContext, useRef} from "react";
+import React, {useState} from "react";
 import {Col} from "react-bootstrap";
 import PropTypes from "prop-types";
-import {AuthContext} from "contexts/AuthContext";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
-import axios from "axios";
-import analyticsDataActions from "components/settings/analytics_data_entry/analytics-data-actions";
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
 import AnalyticsDataEntryKpiConfigurationPanel
   from "components/settings/analytics_data_entry/detail_view/configuration_panels/AnalyticsDataEntryKpiConfigurationPanel";
 
 function AnalyticsDataEntryEditorPanel({analyticsDataEntry, handleClose }) {
-  const {getAccessToken} = useContext(AuthContext);
-  const [analyticsDataEntryModel, setAnalyticsDataEntryModel] = useState(undefined);
+  const [analyticsDataEntryModel, setAnalyticsDataEntryModel] = useState({...analyticsDataEntry});
   const [kpiConfigurationData, setKpiConfigurationData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-
-  const loadData = async () => {
-    setIsLoading(true);
-    setAnalyticsDataEntryModel(analyticsDataEntry);
-    setIsLoading(false);
-  };
 
   const createAnalyticsDataEntry = async () => {
-    const data = kpiConfigurationData ? kpiConfigurationData?.getPersistData() : {};
-    analyticsDataEntryModel.setData("data", data);
-    return await analyticsDataActions.createAnalyticsDataEntryV2(getAccessToken, cancelTokenSource, analyticsDataEntryModel);
+    analyticsDataEntryModel.setData("data", kpiConfigurationData?.getPersistData());
+    return await analyticsDataEntryModel.createModel();
   };
 
   const updateAnalyticsDataEntry = async () => {
-    const data = kpiConfigurationData ? kpiConfigurationData?.getPersistData() : {};
-    analyticsDataEntryModel.setData("data", data);
-    return await analyticsDataActions.updateAnalyticsDataEntryV2(getAccessToken, cancelTokenSource, analyticsDataEntryModel);
+    analyticsDataEntryModel.setData("data", kpiConfigurationData?.getPersistData());
+    return await analyticsDataEntryModel.saveModel();
   };
 
-  if (isLoading || analyticsDataEntryModel == null) {
+  if (analyticsDataEntryModel == null) {
     return (<LoadingDialog/>);
   }
 
@@ -69,6 +32,7 @@ function AnalyticsDataEntryEditorPanel({analyticsDataEntry, handleClose }) {
       setRecordDto={setAnalyticsDataEntryModel}
       recordDto={analyticsDataEntryModel}
       handleClose={handleClose}
+      lenient={true}
       disable={
         !analyticsDataEntryModel.checkCurrentValidity()
         || (kpiConfigurationData == null || !kpiConfigurationData.checkCurrentValidity())}

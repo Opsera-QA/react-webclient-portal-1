@@ -1,56 +1,51 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import React, {useState, useEffect, useRef} from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import axios from "axios";
 import Model from "core/data_model/model";
 import analyticsDataFilterMetadata from "components/settings/analytics_data_entry/analytics-data-filter-metadata";
-import analyticsDataActions from "components/settings/analytics_data_entry/analytics-data-actions";
 import AnalyticsDataEntryTable from "components/settings/analytics_data_entry/AnalyticsDataEntryTable";
 import AnalyticsDataEntryManagementSubNavigationBar
   from "components/settings/analytics_data_entry/AnalyticsDataEntryManagementSubNavigationBar";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import useAnalyticsDataEntryActions from "hooks/settings/insights/analytics_data_entries/useAnalyticsDataEntryActions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function AnalyticsDataEntryManagement() {
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const {getUserRecord, setAccessRoles, getAccessToken} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const [analyticsDataEntries, setAnalyticsDataEntries] = useState([]);
-  const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [analyticsDataEntryFilterModel, setAnalyticsDataEntryFilterModel] = useState(new Model({...analyticsDataFilterMetadata.newObjectFields}, analyticsDataFilterMetadata, false));
+  const analyticsDataEntryActions = useAnalyticsDataEntryActions();
+  const {
+    accessRoleData,
+    toastContext,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(analyticsDataEntryFilterModel, source).catch((error) => {
+    loadData(analyticsDataEntryFilterModel).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
 
     return () => {
-      source.cancel();
       isMounted.current = false;
     };
   }, []);
 
-  const loadData = async (filterModel = analyticsDataEntryFilterModel, cancelSource = cancelTokenSource) => {
+  const loadData = async (filterModel = analyticsDataEntryFilterModel) => {
     try {
       setIsLoading(true);
-      await getRoles(filterModel, cancelSource);
+
+      if (meetsRequirements(ROLE_LEVELS.POWER_USERS_AND_SASS, accessRoleData)) {
+        await getAnalyticsDataEntries(filterModel);
+      }
     }
     catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
-        console.error(error);
       }
     }
     finally {
@@ -60,29 +55,15 @@ function AnalyticsDataEntryManagement() {
     }
   };
 
-  const getAnalyticsDataEntries = async (filterModel = analyticsDataEntryFilterModel, cancelSource = cancelTokenSource) => {
-    let response = await analyticsDataActions.getAnalyticsDataEntriesV2(getAccessToken, cancelSource, filterModel);
-    const analyticsDataEntryList = response?.data?.data;
+  const getAnalyticsDataEntries = async (filterModel = analyticsDataEntryFilterModel) => {
+    let response = await analyticsDataEntryActions.getAnalyticsDataEntries(filterModel);
+    const analyticsDataEntryList = DataParsingHelper.parseNestedArray(response, "data.data");
 
     if (isMounted?.current === true && analyticsDataEntryList) {
       setAnalyticsDataEntries(analyticsDataEntryList);
-      let newFilterModel = filterModel;
-      newFilterModel.setData("totalCount", response?.data?.count);
-      newFilterModel.setData("activeFilters", newFilterModel.getActiveFilters());
-      setAnalyticsDataEntryFilterModel({...newFilterModel});
-    }
-  };
-
-  const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (isMounted?.current === true && userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-
-      if (meetsRequirements(ROLE_LEVELS.POWER_USERS_AND_SASS, userRoleAccess)) {
-        await getAnalyticsDataEntries(cancelSource);
-      }
+      filterModel.setData("totalCount", response?.data?.count);
+      filterModel.setData("activeFilters", filterModel.getActiveFilters());
+      setAnalyticsDataEntryFilterModel({...filterModel});
     }
   };
 

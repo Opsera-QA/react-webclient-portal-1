@@ -7,18 +7,21 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
-import organizationActions from "components/settings/organizations/organization-actions";
 import axios from "axios";
 import OrganizationLeaderLdapUserSelectInput
   from "components/common/list_of_values_input/settings/organizations/OrganizationLeaderLdapUserSelectInput";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function OrganizationEditorPanel({organizationData, handleClose }) {
-  const {getAccessToken, isSassUser, getUserRecord} = useContext(AuthContext);
   const [organizationModel, setOrganizationModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isSaasUser,
+    userData,
+  } = useComponentStateReference();
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -44,30 +47,30 @@ function OrganizationEditorPanel({organizationData, handleClose }) {
 
   const loadData = async () => {
     setIsLoading(true);
-    setOrganizationModel(organizationData);
 
-    if (isSassUser()) {
-      const user = await getUserRecord();
-      let leader = {};
-      leader["name"] = user?.firstName + " " + user?.lastName;
-      leader["email"] = user?.email;
-      leader["_id"] = user?._id;
+    if (isSaasUser === true) {
+      const leader = {
+        name: `${userData?.firstName} ${userData?.lastName}`,
+        email: userData?.email,
+        _id: userData?._id,
+      };
       organizationData.setData("leader", leader);
     }
 
+    setOrganizationModel(organizationData);
     setIsLoading(false);
   };
 
   const createOrganization = async () => {
-    return await organizationActions.createOrganizationV2(getAccessToken, cancelTokenSource, organizationModel);
+    return await organizationModel.createModel();
   };
 
   const updateOrganization = async () => {
-    return await organizationActions.updateOrganizationV2(getAccessToken, cancelTokenSource, organizationModel);
+    return await organizationModel.saveModel();
   };
 
   const getDynamicField = () => {
-    if (!isSassUser()) {
+    if (isSaasUser === false) {
       return (
         <Col lg={6}>
           <OrganizationLeaderLdapUserSelectInput dataObject={organizationModel} setDataObject={setOrganizationModel} />
