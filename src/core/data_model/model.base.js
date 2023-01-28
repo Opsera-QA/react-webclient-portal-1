@@ -536,9 +536,9 @@ export default class ModelBase {
 
   getNewInstance = (newData = this.getNewObjectFields()) => {
     const parsedData = DataParsingHelper.parseObject(newData, this.getNewObjectFields());
-    const newInstance = this;
-    newInstance.data = { ...parsedData };
-    return newInstance;
+    this.replaceOriginalData(parsedData);
+    this.replaceData(parsedData);
+    return this;
   };
 
   canUpdate = () => {

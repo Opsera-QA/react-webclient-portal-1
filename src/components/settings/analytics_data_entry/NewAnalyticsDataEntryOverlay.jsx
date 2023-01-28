@@ -23,10 +23,12 @@ function NewAnalyticsDataEntryOverlay({ isMounted, loadData }) {
 
   return (
     <CreateCenterPanel closePanel={closePanel} objectType={analyticsDataEntryMetadata.type} loadData={loadData}>
-      <AnalyticsDataEntryEditorPanel
-        handleClose={closePanel}
-        analyticsDataEntry={analyticsDataEntryModel}
-      />
+      <div className={"p-3"}>
+        <AnalyticsDataEntryEditorPanel
+          handleClose={closePanel}
+          analyticsDataEntry={analyticsDataEntryModel}
+        />
+      </div>
     </CreateCenterPanel>
   );
 }

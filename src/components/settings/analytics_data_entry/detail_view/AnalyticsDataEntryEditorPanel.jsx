@@ -6,19 +6,17 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
 import AnalyticsDataEntryKpiConfigurationPanel
   from "components/settings/analytics_data_entry/detail_view/configuration_panels/AnalyticsDataEntryKpiConfigurationPanel";
+import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 
 function AnalyticsDataEntryEditorPanel({analyticsDataEntry, handleClose }) {
   const [analyticsDataEntryModel, setAnalyticsDataEntryModel] = useState({...analyticsDataEntry});
-  const [kpiConfigurationData, setKpiConfigurationData] = useState(undefined);
+  const [internalDataModel, setInternalDataModel] = useState(undefined);
 
-  const createAnalyticsDataEntry = async () => {
-    analyticsDataEntryModel.setData("data", kpiConfigurationData?.getPersistData());
-    return await analyticsDataEntryModel.createModel();
-  };
-
-  const updateAnalyticsDataEntry = async () => {
-    analyticsDataEntryModel.setData("data", kpiConfigurationData?.getPersistData());
-    return await analyticsDataEntryModel.saveModel();
+  const updateInternalDataModel = (newModel) => {
+    if (newModel) {
+      analyticsDataEntryModel.setData("data", newModel?.getPersistData());
+      setInternalDataModel({...newModel});
+    }
   };
 
   if (analyticsDataEntryModel == null) {
@@ -26,27 +24,22 @@ function AnalyticsDataEntryEditorPanel({analyticsDataEntry, handleClose }) {
   }
 
   return (
-    <EditorPanelContainer
-      createRecord={createAnalyticsDataEntry}
-      updateRecord={updateAnalyticsDataEntry}
-      setRecordDto={setAnalyticsDataEntryModel}
-      recordDto={analyticsDataEntryModel}
+    <VanityEditorPanelContainer
+      setModel={setAnalyticsDataEntryModel}
+      model={analyticsDataEntryModel}
       handleClose={handleClose}
-      lenient={true}
-      disable={
-        !analyticsDataEntryModel.checkCurrentValidity()
-        || (kpiConfigurationData == null || !kpiConfigurationData.checkCurrentValidity())}
+      disable={analyticsDataEntryModel?.checkCurrentValidity() !== true || internalDataModel?.checkCurrentValidity() !== true}
     >
       <AnalyticsDataEntryKpiConfigurationPanel
         analyticsDataEntryModel={analyticsDataEntryModel}
         setAnalyticsDataEntryModel={setAnalyticsDataEntryModel}
-        kpiConfigurationData={kpiConfigurationData}
-        setKpiConfigurationData={setKpiConfigurationData}
+        kpiConfigurationData={internalDataModel}
+        setKpiConfigurationData={updateInternalDataModel}
       />
       <Col lg={12}>
         <TagMultiSelectInput dataObject={analyticsDataEntryModel} setDataObject={setAnalyticsDataEntryModel}/>
       </Col>
-    </EditorPanelContainer>
+    </VanityEditorPanelContainer>
   );
 }
 

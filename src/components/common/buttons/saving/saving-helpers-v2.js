@@ -18,11 +18,12 @@ export async function persistNewRecordAndViewDetails(
   const newData = response?.data?.data ? response?.data?.data : response?.data;
 
   if (newData != null && model.getDetailViewLink != null && history != null) {
-    const newModel = model.getNewInstance(newData);
-    const link = newModel.getDetailViewLink();
+    model.replaceData(newData);
+    const link = model.getDetailViewLink();
 
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
+
     if (hasStringValue(link) === true) {
       history.push(link);
     }
