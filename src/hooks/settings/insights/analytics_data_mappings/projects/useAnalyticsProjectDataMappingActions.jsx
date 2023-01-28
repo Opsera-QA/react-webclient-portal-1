@@ -1,10 +1,10 @@
 import useApiService from "hooks/api/service/useApiService";
 
-export default function useAnalyticsDataProjectMappingActions() {
+export default function useAnalyticsProjectDataMappingActions() {
   const apiService = useApiService();
   const analyticsProjectDataMappingActions = {};
 
-  analyticsProjectDataMappingActions.getProjectDataMappings = async (getAccessToken, cancelTokenSource, toolFilterModel) => {
+  analyticsProjectDataMappingActions.getProjectDataMappings = async (toolFilterModel) => {
     const apiUrl = `/mappings/project/v2`;
 
     const queryParameters = {

@@ -6,7 +6,7 @@ import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
 import useAnalyticsProjectDataMappingActions
   from "hooks/settings/insights/analytics_data_mappings/projects/useAnalyticsProjectDataMappingActions";
 
-export default function useGetAnalyticsProjectDataMappingById(analyticsProjectDataMappingId, handleErrorFunction) {
+export default function useGetAnalyticsPipelineDataMappingById(analyticsProjectDataMappingId, handleErrorFunction) {
   const analyticsProjectDataMappingActions = useAnalyticsProjectDataMappingActions();
   const [analyticsProjectDataMapping, setAnalyticsProjectDataMapping] = useState(undefined);
   const {

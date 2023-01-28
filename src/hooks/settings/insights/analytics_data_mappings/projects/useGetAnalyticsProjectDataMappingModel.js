@@ -4,24 +4,24 @@ import {
 } from "components/settings/data_mapping/projects/analyticsProjectDataMapping.helper";
 import projectDataMappingMetadata
   from "@opsera/definitions/constants/settings/data_mapping/project/projectDataMapping.metadata";
-import useAnalyticsDataProjectMappingActions
-  from "hooks/settings/insights/analytics_data_mappings/projects/useAnalyticsDataProjectMappingActions";
+import useAnalyticsProjectDataMappingActions
+  from "hooks/settings/insights/analytics_data_mappings/projects/useAnalyticsProjectDataMappingActions";
 import AnalyticsProjectDataMappingRoleHelper
   from "@opsera/know-your-role/roles/settings/analytics_data_mappings/projects/analyticsProjectDataMappingRole.helper";
 
 export default function useGetAnalyticsProjectDataMappingModel() {
   const getModelBase = useGetModelBase();
-  const analyticsDataProjectMappingActions = useAnalyticsDataProjectMappingActions();
+  const analyticsProjectDataMappingActions = useAnalyticsProjectDataMappingActions();
 
   const getAnalyticsProjectDataMappingModel = (analyticsDataEntry, newModel) => {
     const initialModel = getModelBase(analyticsDataEntry, projectDataMappingMetadata, newModel);
 
     initialModel.createModel = async () => {
-      return await analyticsDataProjectMappingActions.createProjectDataMapping(initialModel);
+      return await analyticsProjectDataMappingActions.createProjectDataMapping(initialModel);
     };
 
     initialModel.saveModel = async () => {
-      return await analyticsDataProjectMappingActions.updateProjectDataMapping(initialModel);
+      return await analyticsProjectDataMappingActions.updateProjectDataMapping(initialModel);
     };
 
     initialModel.deleteModel = async () => {
@@ -31,7 +31,7 @@ export default function useGetAnalyticsProjectDataMappingModel() {
         throw "Access Denied";
       }
 
-      await analyticsDataProjectMappingActions.deleteProjectDataMapping(initialModel?.getMongoDbId());
+      await analyticsProjectDataMappingActions.deleteProjectDataMapping(initialModel?.getMongoDbId());
     };
 
     initialModel.canCreate = () => {
