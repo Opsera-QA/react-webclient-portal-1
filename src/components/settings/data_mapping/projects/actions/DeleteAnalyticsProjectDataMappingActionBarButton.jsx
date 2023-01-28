@@ -4,7 +4,9 @@ import DeleteConfirmationOverlay from "components/common/overlays/center/delete/
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {useHistory} from "react-router-dom";
 import ActionBarDeleteButtonBase from "components/common/actions/buttons/ActionBarDeleteButtonBase";
-import {analyticsDataEntryHelper} from "components/settings/analytics_data_entry/analyticsDataEntry.helper";
+import {
+  analyticsProjectDataMappingHelper
+} from "components/settings/data_mapping/projects/analyticsProjectDataMapping.helper";
 
 export default function DeleteAnalyticsProjectDataMappingActionBarButton(
   {
@@ -25,7 +27,7 @@ export default function DeleteAnalyticsProjectDataMappingActionBarButton(
       <DeleteConfirmationOverlay
         type={"Analytics Project Data Mapping"}
         handleDeleteFunction={handleDeleteFunction}
-        afterDeleteFunction={() => history.push(analyticsDataEntryHelper.getManagementScreenLink())}
+        afterDeleteFunction={() => history.push(analyticsProjectDataMappingHelper.getManagementScreenLink())}
       />
     );
   };
