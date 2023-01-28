@@ -1,6 +1,6 @@
 import {capitalizeFirstLetter, hasStringValue} from "../../../common/helpers/string-helpers";
 
-const projectDataMappingMetadata = {
+const projectDataMappingFilterMetadata = {
   idProperty: "_id",
   type: "Project Mapping",
   activeField: "active",
@@ -143,4 +143,4 @@ const projectDataMappingMetadata = {
   ]
 };
 
-export default projectDataMappingMetadata;
+export default projectDataMappingFilterMetadata;

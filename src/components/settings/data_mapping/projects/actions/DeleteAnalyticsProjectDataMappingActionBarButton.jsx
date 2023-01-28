@@ -6,9 +6,9 @@ import {useHistory} from "react-router-dom";
 import ActionBarDeleteButtonBase from "components/common/actions/buttons/ActionBarDeleteButtonBase";
 import {analyticsDataEntryHelper} from "components/settings/analytics_data_entry/analyticsDataEntry.helper";
 
-export default function DeleteAnalyticsDataEntryActionBarButton(
+export default function DeleteAnalyticsProjectDataMappingActionBarButton(
   {
-    analyticsDataEntryModel,
+    analyticsProjectDataMappingModel,
     className,
   }) {
   const {
@@ -17,33 +17,33 @@ export default function DeleteAnalyticsDataEntryActionBarButton(
   const history = useHistory();
 
   const handleDeleteFunction = async () => {
-    return await analyticsDataEntryModel.deleteModel();
+    return await analyticsProjectDataMappingModel.deleteModel();
   };
 
   const showOverlayFunction = async () => {
     toastContext.showOverlayPanel(
       <DeleteConfirmationOverlay
-        type={"Analytics Data Entry"}
+        type={"Analytics Project Data Mapping"}
         handleDeleteFunction={handleDeleteFunction}
         afterDeleteFunction={() => history.push(analyticsDataEntryHelper.getManagementScreenLink())}
       />
     );
   };
 
-  if (analyticsDataEntryModel.canDelete() !== true) {
+  if (analyticsProjectDataMappingModel.canDelete() !== true) {
     return null;
   }
 
   return (
     <ActionBarDeleteButtonBase
       handleDeleteFunction={showOverlayFunction}
-      type={`Analytics Data Entry`}
+      type={"Analytics Project Data Mapping"}
       className={className}
     />
   );
 }
 
-DeleteAnalyticsDataEntryActionBarButton.propTypes = {
-  analyticsDataEntryModel: PropTypes.object,
+DeleteAnalyticsProjectDataMappingActionBarButton.propTypes = {
+  analyticsProjectDataMappingModel: PropTypes.object,
   className: PropTypes.string,
 };

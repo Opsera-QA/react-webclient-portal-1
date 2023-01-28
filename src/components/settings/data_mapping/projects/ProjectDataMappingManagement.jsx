@@ -1,22 +1,20 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
-import { AuthContext } from "contexts/AuthContext";
+import React, {useState, useEffect, useContext, useRef} from "react";
+import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import ProjectDataMappingsTable from "components/settings/data_mapping/projects/ProjectDataMappingsTable";
 import {projectDataMappingActions} from "components/settings/data_mapping/projects/projectDataMapping.actions";
 import Model from "../../../../core/data_model/model";
-import projectMappingMetadata from "./projectDataMapping.metadata.js";
+import projectMappingMetadata from "components/settings/data_mapping/projects/projectDataMappingFilter.metadata.js";
 
 function ProjectDataMappingManagement() {
   const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
+  const {getAccessToken} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [projectDataMappingMetadata, setProjectDataMappingMetadata] = useState(undefined);
   const [projectDataMappings, setProjectDataMappings] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [toolFilterDto, setToolFilterDto] = useState(new Model({...projectMappingMetadata.newObjectFields}, projectMappingMetadata, false));
-
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -43,14 +41,12 @@ function ProjectDataMappingManagement() {
     try {
       setIsLoading(true);
       await getProjectDataMappings(cancelSource);
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
       }
-    }
-    finally {
-      if (isMounted?.current === true ) {
+    } finally {
+      if (isMounted?.current === true) {
         setIsLoading(false);
       }
     }
@@ -62,7 +58,6 @@ function ProjectDataMappingManagement() {
       const mappings = response?.data?.data;
 
       if (isMounted?.current === true && Array.isArray(mappings)) {
-        setProjectDataMappingMetadata({...response?.data?.metadata});
         setProjectDataMappings(mappings);
         filterDto.setData("activeFilters", filterDto?.getActiveFilters());
         setToolFilterDto({...filterDto});
@@ -74,17 +69,16 @@ function ProjectDataMappingManagement() {
 
 
   return (
-      <div className={"mt-2"}>
-        <ProjectDataMappingsTable
-            loadData={loadData}
-            isLoading={isLoading}
-            projectDataMappings={projectDataMappings}
-            isMounted={isMounted}
-            projectDataMappingMetadata={projectDataMappingMetadata}
-            toolFilterDto={toolFilterDto}
-            setToolFilterDto={setToolFilterDto}
-        />
-      </div>
+    <div className={"mt-2"}>
+      <ProjectDataMappingsTable
+        loadData={loadData}
+        isLoading={isLoading}
+        projectDataMappings={projectDataMappings}
+        isMounted={isMounted}
+        toolFilterDto={toolFilterDto}
+        setToolFilterDto={setToolFilterDto}
+      />
+    </div>
   );
 }
 
