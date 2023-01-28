@@ -17,11 +17,11 @@ export default function useGetAnalyticsProjectDataMappingModel() {
     const initialModel = getModelBase(analyticsDataEntry, projectDataMappingMetadata, newModel);
 
     initialModel.createModel = async () => {
-      return await analyticsDataProjectMappingActions.createAnalyticsDataEntry(initialModel);
+      return await analyticsDataProjectMappingActions.createProjectDataMapping(initialModel);
     };
 
     initialModel.saveModel = async () => {
-      return await analyticsDataProjectMappingActions.updateAnalyticsDataEntry(initialModel);
+      return await analyticsDataProjectMappingActions.updateProjectDataMapping(initialModel);
     };
 
     initialModel.deleteModel = async () => {
@@ -31,7 +31,7 @@ export default function useGetAnalyticsProjectDataMappingModel() {
         throw "Access Denied";
       }
 
-      await analyticsDataProjectMappingActions.deleteAnalyticsDataEntryById(initialModel?.getMongoDbId());
+      await analyticsDataProjectMappingActions.deleteProjectDataMapping(initialModel?.getMongoDbId());
     };
 
     initialModel.canCreate = () => {
