@@ -51,7 +51,6 @@ function AzureWebappsArtifactStepSelectInput({
     }
 
     return elegibleSteps?.filter((step) =>
-      step?.active && 
       step?.tool?.tool_identifier === toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS &&
       step?.tool?.configuration?.buildTool === "docker"
     );
