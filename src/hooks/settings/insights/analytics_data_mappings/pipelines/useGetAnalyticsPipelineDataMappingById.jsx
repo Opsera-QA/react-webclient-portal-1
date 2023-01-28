@@ -3,12 +3,12 @@ import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
-import useAnalyticsProjectDataMappingActions
-  from "hooks/settings/insights/analytics_data_mappings/projects/useAnalyticsProjectDataMappingActions";
+import useAnalyticsPipelineDataMappingActions
+  from "hooks/settings/insights/analytics_data_mappings/pipelines/useAnalyticsPipelineDataMappingActions";
 
-export default function useGetAnalyticsPipelineDataMappingById(analyticsProjectDataMappingId, handleErrorFunction) {
-  const analyticsProjectDataMappingActions = useAnalyticsProjectDataMappingActions();
-  const [analyticsProjectDataMapping, setAnalyticsProjectDataMapping] = useState(undefined);
+export default function useGetAnalyticsPipelineDataMappingById(analyticsPipelineDataMappingId, handleErrorFunction) {
+  const analyticsPipelineDataMappingActions = useAnalyticsPipelineDataMappingActions();
+  const [analyticsPipelineDataMapping, setAnalyticsPipelineDataMapping] = useState(undefined);
   const {
     isLoading,
     error,
@@ -17,27 +17,27 @@ export default function useGetAnalyticsPipelineDataMappingById(analyticsProjectD
   } = useLoadData();
 
   useEffect(() => {
-    setAnalyticsProjectDataMapping(undefined);
+    setAnalyticsPipelineDataMapping(undefined);
 
-    if (isMongoDbId(analyticsProjectDataMappingId) && loadData) {
-      loadData(getAnalyticsProjectDataMappingById, handleErrorFunction).catch(() => {});
+    if (isMongoDbId(analyticsPipelineDataMappingId) && loadData) {
+      loadData(getAnalyticsPipelineDataMappingById, handleErrorFunction).catch(() => {});
     }
-  }, [analyticsProjectDataMappingId]);
+  }, [analyticsPipelineDataMappingId]);
 
-  const getAnalyticsProjectDataMappingById = async () => {
-    setAnalyticsProjectDataMapping(undefined);
-    const response = await analyticsProjectDataMappingActions.getProjectDataMappingById(analyticsProjectDataMappingId);
+  const getAnalyticsPipelineDataMappingById = async () => {
+    setAnalyticsPipelineDataMapping(undefined);
+    const response = await analyticsPipelineDataMappingActions.getPipelineDataMappingById(analyticsPipelineDataMappingId);
     const newAnalyticsDataEntry = DataParsingHelper.parseNestedObject(response, "data.data");
 
-    if (ObjectHelper.areObjectsEqualLodash(analyticsProjectDataMapping, newAnalyticsDataEntry) !== true) {
-      setAnalyticsProjectDataMapping({...newAnalyticsDataEntry});
+    if (ObjectHelper.areObjectsEqualLodash(analyticsPipelineDataMapping, newAnalyticsDataEntry) !== true) {
+      setAnalyticsPipelineDataMapping({...newAnalyticsDataEntry});
     }
   };
 
   return ({
-    analyticsProjectDataMapping: analyticsProjectDataMapping,
-    setAnalyticsProjectDataMapping: setAnalyticsProjectDataMapping,
-    loadData: () => loadData(getAnalyticsProjectDataMappingById, handleErrorFunction),
+    analyticsPipelineDataMapping: analyticsPipelineDataMapping,
+    setAnalyticsPipelineDataMapping: setAnalyticsPipelineDataMapping,
+    loadData: () => loadData(getAnalyticsPipelineDataMappingById, handleErrorFunction),
     isLoading: isLoading,
     error: error,
     setError: setError,
