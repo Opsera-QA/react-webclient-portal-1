@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Card, Col, Row } from "react-bootstrap";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -14,7 +14,6 @@ import ProjectMappingToolSelectInput
 import SonarProjectSelectInput
   from "../../../../common/list_of_values_input/settings/data_tagging/projects/SonarProjectSelectInput";
 import TagManager from "components/common/inputs/tags/TagManager";
-import axios from "axios";
 import JenkinsRegistryToolJobSelectInput
   from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
@@ -33,24 +32,6 @@ function ProjectDataMappingEditorPanel(
     setProjectDataMappingModel,
     handleClose,
   }) {
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
   const setDataHandler = (id, selectedOption) => {
     projectDataMappingModel.setData('key', determineKeyFromFullPath(selectedOption?.nameSpacedPath));
     projectDataMappingModel.setData('keyPath', selectedOption?.nameSpacedPath);
@@ -199,7 +180,7 @@ function ProjectDataMappingEditorPanel(
       model={projectDataMappingModel}
       setModel={setProjectDataMappingModel}
       handleClose={handleClose}
-      className={"mx-3 my-2"}
+      className={"px-3 pt-1 pb-3"}
     >
       {getWarningMessage()}
       <Row>

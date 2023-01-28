@@ -13,6 +13,7 @@ import {faSitemap} from "@fortawesome/pro-light-svg-icons";
 import {organizationMetadata} from "components/settings/organizations/organization.metadata";
 import NewOrganizationOverlay from "components/settings/organizations/NewOrganizationOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import {organizationHelper} from "components/settings/organizations/organization.helper";
 
 function OrganizationsTable({ organizations, isLoading, loadData, isMounted, organizationFilterModel, setOrganizationFilterModel }) {
   const toastContext = useContext(DialogToastContext);
@@ -35,7 +36,7 @@ function OrganizationsTable({ organizations, isLoading, loadData, isMounted, org
   };
   
   const onRowSelect = (rowData) => {
-    history.push(`/settings/organizations/details/${rowData.original._id}`);
+    history.push(organizationHelper.getDetailViewLink(rowData?.original?._id));
   };
 
   const getOrganizationsTable = () => {

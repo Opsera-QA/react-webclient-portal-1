@@ -1,5 +1,5 @@
-import useGetAnalyticsDataEntryById from "hooks/settings/insights/analytics_data_entries/useAnalyticsDataEntryById";
-import useGetAnalyticsDataEntryModel from "components/settings/analytics_data_entry/useGetAnalyticsDataEntryModel";
+import useGetAnalyticsDataEntryById from "hooks/settings/insights/analytics_data_entries/useGetAnalyticsDataEntryById";
+import useGetAnalyticsDataEntryModel from "hooks/settings/insights/analytics_data_entries/useGetAnalyticsDataEntryModel";
 import {useEffect, useState} from "react";
 
 export default function useGetAnalyticsDataEntryModelById(analyticsDataEntryId, handleErrorFunction) {
