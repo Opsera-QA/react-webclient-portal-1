@@ -1,5 +1,3 @@
-import AnalyticsDataEntryRoleHelper
-  from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
 import useGetModelBase from "hooks/model/useGetModelBase";
 import {
   analyticsProjectDataMappingHelper
@@ -8,6 +6,8 @@ import projectDataMappingMetadata
   from "@opsera/definitions/constants/settings/data_mapping/project/projectDataMapping.metadata";
 import useAnalyticsDataProjectMappingActions
   from "hooks/settings/insights/analytics_data_mappings/projects/useAnalyticsDataProjectMappingActions";
+import AnalyticsProjectDataMappingRoleHelper
+  from "@opsera/know-your-role/roles/settings/analytics_data_mappings/projects/analyticsProjectDataMappingRole.helper";
 
 export default function useGetAnalyticsProjectDataMappingModel() {
   const getModelBase = useGetModelBase();
@@ -35,29 +35,29 @@ export default function useGetAnalyticsProjectDataMappingModel() {
     };
 
     initialModel.canCreate = () => {
-      return AnalyticsDataEntryRoleHelper.canCreateAnalyticsDataEntry(
+      return AnalyticsProjectDataMappingRoleHelper.canCreateAnalyticsProjectDataMapping(
         initialModel.userData,
       );
     };
 
     initialModel.canUpdate = () => {
-      return AnalyticsDataEntryRoleHelper.canUpdateAnalyticsDataEntry(
+      return AnalyticsProjectDataMappingRoleHelper.canUpdateAnalyticsProjectDataMapping(
         initialModel.userData,
-        initialModel.getCurrentData(),
+        initialModel.getOriginalData(),
       );
     };
 
     initialModel.canDelete = () => {
-      return AnalyticsDataEntryRoleHelper.canDeleteAnalyticsDataEntry(
+      return AnalyticsProjectDataMappingRoleHelper.canDeleteAnalyticsProjectDataMapping(
         initialModel.userData,
-        initialModel.getCurrentData(),
+        initialModel.getOriginalData(),
       );
     };
 
     initialModel.canTransferOwnership = () => {
-      return AnalyticsDataEntryRoleHelper.canTransferAnalyticsDataEntryOwnership(
+      return AnalyticsProjectDataMappingRoleHelper.canTransferAnalyticsProjectDataMappingOwnership(
         initialModel.userData,
-        initialModel.getCurrentData(),
+        initialModel.getOriginalData(),
       );
     };
 

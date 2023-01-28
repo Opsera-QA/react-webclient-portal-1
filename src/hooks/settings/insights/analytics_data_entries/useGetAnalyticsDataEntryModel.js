@@ -40,21 +40,21 @@ export default function useGetAnalyticsDataEntryModel() {
     initialModel.canUpdate = () => {
       return AnalyticsDataEntryRoleHelper.canUpdateAnalyticsDataEntry(
         initialModel.userData,
-        initialModel.getCurrentData(),
+        initialModel.getOriginalData(),
       );
     };
 
     initialModel.canDelete = () => {
       return AnalyticsDataEntryRoleHelper.canDeleteAnalyticsDataEntry(
         initialModel.userData,
-        initialModel.getCurrentData(),
+        initialModel.getOriginalData(),
       );
     };
 
     initialModel.canTransferOwnership = () => {
       return AnalyticsDataEntryRoleHelper.canTransferAnalyticsDataEntryOwnership(
         initialModel.userData,
-        initialModel.getCurrentData(),
+        initialModel.getOriginalData(),
       );
     };
 
