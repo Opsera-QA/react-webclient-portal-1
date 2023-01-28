@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import { faCheckSquare, faSave } from "@fortawesome/pro-light-svg-icons";
+import { faCheckSquare, faSave, faExclamationTriangle } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import mergeSyncTaskWizardActions
   from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
@@ -84,15 +84,36 @@ function MergeSyncTaskWizardSubmitEditedFileButton(
     return null;
   }
 
+  const getVariant = () => {
+    if (isSubmitted) {
+      return "success";
+    }
+    if (fileContent.length > 0) {
+      return "warning";
+    }
+    return "primary";
+  };
+
+  const getIcon = () => {
+    if (isSubmitted) {
+      return faCheckSquare;
+    }
+    if (fileContent.length > 0) {
+      return faExclamationTriangle;
+    }
+    return icon;
+  };
+
   const getLabel = () => {
     if (isSubmitted) {
       return ("Saved Edited File");
     }
-
     if (isSaving) {
       return ("Saving Edited File");
     }
-
+    if (fileContent.length > 0) {
+      return ("Unsaved File, Please click here to save.");
+    }
     return ("Save Edited File");
   };
 
@@ -105,7 +126,7 @@ function MergeSyncTaskWizardSubmitEditedFileButton(
       <div className={"d-flex"}>
         <Button
           size={size}
-          variant={isSubmitted === true ? "success" : "primary"}
+          variant={getVariant()}
           disabled={
             fileContent.length < 1 ||
             isSubmitted === true ||
@@ -118,7 +139,7 @@ function MergeSyncTaskWizardSubmitEditedFileButton(
           <span>
             <IconBase
               isLoading={isSaving}
-              icon={isSubmitted === true ? faCheckSquare : icon}
+              icon={getIcon()}
               className={"mr-2"}
             />
             {getLabel()}
