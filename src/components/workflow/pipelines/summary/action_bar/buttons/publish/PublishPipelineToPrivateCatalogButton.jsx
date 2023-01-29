@@ -31,6 +31,7 @@ export default function PublishPipelineToPrivateCatalogButton(
     toastContext,
     isMounted,
     getAccessToken,
+    userData,
   } = useComponentStateReference();
 
   const handlePublishPipelineFunction = async () => {
@@ -57,7 +58,7 @@ export default function PublishPipelineToPrivateCatalogButton(
     <VanityButtonBase
       className={className}
       icon={faShareAll}
-      disabled={disabled || isLoading || SiteRoleHelper.isMemberOfAllowedSiteRoles(allowedRoles) !== true}
+      disabled={disabled || isLoading || SiteRoleHelper.isMemberOfAllowedSiteRoles(userData, allowedRoles) !== true}
       onClickFunction={handlePublishPipelineFunction}
       buttonSize={buttonSize}
       buttonState={buttonState}
