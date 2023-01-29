@@ -92,5 +92,15 @@ export default function usePipelineActions() {
     );
   };
 
+  pipelineActions.getUniquePipelineOwnersForFilter = async () => {
+    const apiUrl = `/workflow/pipelines/filters/owners`;
+    return await apiService.handleApiGetRequest(apiUrl);
+  };
+
+  pipelineActions.getUniqueAppliedTagsForPipelineFilter = async () => {
+    const apiUrl = `/workflow/pipelines/filters/tags`;
+    return await apiService.handleApiGetRequest(apiUrl);
+  };
+
   return pipelineActions;
 }
