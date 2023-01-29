@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const pipelineMetadata = {
   idProperty: "_id",
   type: "Pipeline",
@@ -39,8 +41,12 @@ const pipelineMetadata = {
       id: "type",
     },
     {
-      label: "Description",
+      label: "Notes",
       id: "description",
+      maxLength: 1000,
+      regexDefinitionName: "descriptionField",
+      formText: "Notes can be up to 1000 characters and can consist of letters, apostrophes, numbers, spaces, slashes, dashes, colons, exclamation points, commas, underscores, and periods",
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
       label: "Owner",

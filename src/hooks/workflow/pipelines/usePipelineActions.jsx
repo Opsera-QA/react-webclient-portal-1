@@ -1,4 +1,6 @@
 import useApiService from "hooks/api/service/useApiService";
+import baseActions from "utils/actionsBase";
+import pipelineActions from "components/workflow/pipeline-actions";
 
 export default function usePipelineActions() {
   const apiService = useApiService();
@@ -76,6 +78,17 @@ export default function usePipelineActions() {
     return await apiService.handleApiGetRequest(
       apiUrl,
       urlParameters,
+    );
+  };
+
+  pipelineActions.duplicatePipeline = async (
+    duplicatePipelineModel,
+  ) => {
+    const apiUrl = `/pipelines/${duplicatePipelineModel?.getMongoDbId()}/duplicate/`;
+    const postBody = duplicatePipelineModel.getPersistData();
+    return await apiService.handleApiPostRequest(
+      apiUrl,
+      postBody,
     );
   };
 
