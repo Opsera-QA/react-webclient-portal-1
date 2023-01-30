@@ -13,6 +13,7 @@ export default function JenkinsStepDestinationSalesforceCredentialsSelectInput(
   const setDataFunction = (fieldName, selectedOption) => {
     model.setData('sfdcDestToolId', selectedOption._id);
     model.setData('destAccountUsername', DataParsingHelper.parseNestedString(selectedOption, "configuration.destAccountUsername", ""));
+    setModel({...model});
   };
 
   return (
