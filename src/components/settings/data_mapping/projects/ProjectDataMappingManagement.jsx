@@ -1,90 +1,72 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
-import { AuthContext } from "contexts/AuthContext";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import axios from "axios";
 import ProjectDataMappingsTable from "components/settings/data_mapping/projects/ProjectDataMappingsTable";
-import {projectDataMappingActions} from "components/settings/data_mapping/projects/projectDataMapping.actions";
 import Model from "../../../../core/data_model/model";
-import projectMappingMetadata from "./projectDataMapping.metadata.js";
+import projectMappingMetadata from "components/settings/data_mapping/projects/projectDataMappingFilter.metadata.js";
+import useAnalyticsProjectDataMappingActions
+  from "hooks/settings/insights/analytics_data_mappings/projects/useAnalyticsProjectDataMappingActions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function ProjectDataMappingManagement() {
   const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [projectDataMappingMetadata, setProjectDataMappingMetadata] = useState(undefined);
   const [projectDataMappings, setProjectDataMappings] = useState([]);
   const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [toolFilterDto, setToolFilterDto] = useState(new Model({...projectMappingMetadata.newObjectFields}, projectMappingMetadata, false));
-
+  const [projectDataMappingFilterModel, setProjectDataMappingFilterModel] = useState(new Model({...projectMappingMetadata.newObjectFields}, projectMappingMetadata, false));
+  const analyticsProjectDataMappingActions = useAnalyticsProjectDataMappingActions();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
 
     return () => {
-      source.cancel();
       isMounted.current = false;
     };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setIsLoading(true);
-      await getProjectDataMappings(cancelSource);
-    }
-    catch (error) {
+      await getProjectDataMappings();
+    } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
       }
-    }
-    finally {
-      if (isMounted?.current === true ) {
+    } finally {
+      if (isMounted?.current === true) {
         setIsLoading(false);
       }
     }
   };
 
-  const getProjectDataMappings = async (cancelSource = cancelTokenSource, filterDto = toolFilterDto) => {
-    try {
-      const response = await projectDataMappingActions.getProjectDataMappingsV2(getAccessToken, cancelSource, filterDto);
-      const mappings = response?.data?.data;
+  const getProjectDataMappings = async (filterDto = projectDataMappingFilterModel) => {
+    const response = await analyticsProjectDataMappingActions.getProjectDataMappings(filterDto);
+    const mappings = DataParsingHelper.parseNestedArray(response, "data.data");
 
-      if (isMounted?.current === true && Array.isArray(mappings)) {
-        setProjectDataMappingMetadata({...response?.data?.metadata});
-        setProjectDataMappings(mappings);
-        filterDto.setData("activeFilters", filterDto?.getActiveFilters());
-        setToolFilterDto({...filterDto});
-      }
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+    if (isMounted?.current === true && Array.isArray(mappings)) {
+      setProjectDataMappings(mappings);
+      filterDto.setData("activeFilters", filterDto?.getActiveFilters());
+      setProjectDataMappingFilterModel({...filterDto});
     }
   };
 
 
   return (
-      <div className={"mt-2"}>
-        <ProjectDataMappingsTable
-            loadData={loadData}
-            isLoading={isLoading}
-            projectDataMappings={projectDataMappings}
-            isMounted={isMounted}
-            projectDataMappingMetadata={projectDataMappingMetadata}
-            toolFilterDto={toolFilterDto}
-            setToolFilterDto={setToolFilterDto}
-        />
-      </div>
+    <div className={"mt-2"}>
+      <ProjectDataMappingsTable
+        loadData={loadData}
+        isLoading={isLoading}
+        projectDataMappings={projectDataMappings}
+        isMounted={isMounted}
+        toolFilterDto={projectDataMappingFilterModel}
+        setToolFilterDto={setProjectDataMappingFilterModel}
+      />
+    </div>
   );
 }
 
