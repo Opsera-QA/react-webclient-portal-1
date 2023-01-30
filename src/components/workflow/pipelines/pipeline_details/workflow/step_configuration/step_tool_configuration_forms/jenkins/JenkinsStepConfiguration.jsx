@@ -228,7 +228,6 @@ function JenkinsStepConfiguration({
         <JenkinsStepConfigurationBranchEditorPanel
           dataObject={jenkinsStepConfigurationDto}
           setDataObject={setJenkinsStepConfigurationDto}
-          jenkinsList={jenkinsList}
           service={jenkinsStepConfigurationDto?.getData("service")}
           gitToolId={jenkinsStepConfigurationDto?.getData("gitToolId")}
           jobType={jenkinsStepConfigurationDto?.getData("jobType")}
