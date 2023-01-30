@@ -85,7 +85,7 @@ helmStepActions.getAwsNamespaces = async (getAccessToken, cancelTokenSource, aws
   );
 };
 
-helmStepActions.getAzureContainers = async (getAccessToken, cancelTokenSource, clusterName, clusterType, azureToolConfigId, azureCredentialId, resourceGroup) => {
+helmStepActions.getAzureNamespaces = async (getAccessToken, cancelTokenSource, clusterName, clusterType, azureToolConfigId, azureCredentialId, resourceGroup) => {
   const apiUrl = `tools/helm/azure/namespace`;
   const postBody = {
     clusterName, 
