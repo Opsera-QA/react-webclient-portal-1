@@ -56,7 +56,6 @@
     "jspdf-autotable": "^3.5.14",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
-    "monaco-editor": "^0.34.0",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-ace": "^9.5.0",
