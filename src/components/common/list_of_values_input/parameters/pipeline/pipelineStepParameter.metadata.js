@@ -37,6 +37,7 @@ export const pipelineStepParameterMetadata = {
     {
       label: "Output Key",
       id: "outputKey",
+      maxLength: 50,
     },
   ],
   newObjectFields: {
