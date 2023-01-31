@@ -12,8 +12,8 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { githubActions } from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
 import _ from "lodash";
-import LazyLoadMultiSelectInputBase from "../../../../inputs/select/LazyLoadMultiSelectInputBase";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
 function GithubBranchSelectInput({
                                    fieldName,
@@ -105,7 +105,7 @@ function GithubBranchSelectInput({
 
   if (multi) {
     return (
-      <LazyLoadMultiSelectInputBase
+      <MultiSelectInputBase
         fieldName={fieldName}
         dataObject={model}
         setDataObject={setModel}
@@ -123,7 +123,6 @@ function GithubBranchSelectInput({
         onSearchFunction={(searchTerm) =>
           delayedSearchQuery(searchTerm, repositoryId, toolId)
         }
-        useToggle={true}
       />
     );
   }
