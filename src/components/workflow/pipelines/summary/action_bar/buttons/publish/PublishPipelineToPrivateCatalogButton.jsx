@@ -22,11 +22,6 @@ export default function PublishPipelineToPrivateCatalogButton(
   }) {
   const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
   const {
-    isLoading,
-    policyModel,
-  } = useGetPolicyModelByName(policyConstants.POLICY_NAMES.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS);
-  const allowedRoles = DataParsingHelper.parseArray(policyModel?.getData("parameters.allowed_roles"), []);
-  const {
     cancelTokenSource,
     toastContext,
     isMounted,
@@ -57,7 +52,7 @@ export default function PublishPipelineToPrivateCatalogButton(
     <VanityButtonBase
       className={className}
       icon={faShareAll}
-      disabled={disabled || isLoading || SiteRoleHelper.isMemberOfAllowedSiteRoles(allowedRoles) !== true}
+      disabled={disabled}
       onClickFunction={handlePublishPipelineFunction}
       buttonSize={buttonSize}
       buttonState={buttonState}
