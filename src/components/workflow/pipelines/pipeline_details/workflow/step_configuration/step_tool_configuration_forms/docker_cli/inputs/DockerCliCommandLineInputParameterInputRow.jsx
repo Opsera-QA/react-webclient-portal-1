@@ -18,7 +18,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 
-export default function CommandLineInputParameterInputRow(
+export default function DockerCliCommandLineInputParameterInputRow(
   {
     error,
     className,
@@ -115,7 +115,7 @@ export default function CommandLineInputParameterInputRow(
   );
 }
 
-CommandLineInputParameterInputRow.propTypes = {
+DockerCliCommandLineInputParameterInputRow.propTypes = {
   addGlobalCustomParameterFunction: PropTypes.func,
   addLocalParameterFunction: PropTypes.func,
   addEnvironmentParameterFunction: PropTypes.func,
