@@ -37,6 +37,7 @@ function RoleRestrictedToolByIdentifierInputBase(
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [inEditMode, setInEditMode] = useState(false);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -49,7 +50,7 @@ function RoleRestrictedToolByIdentifierInputBase(
     setTools([]);
     setError(undefined);
 
-    if (hasStringValue(toolIdentifier) === true) {
+    if (hasStringValue(toolIdentifier) === true && inEditMode === true) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           setError(error);
@@ -61,7 +62,7 @@ function RoleRestrictedToolByIdentifierInputBase(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolIdentifier]);
+  }, [toolIdentifier, inEditMode]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -109,7 +110,7 @@ function RoleRestrictedToolByIdentifierInputBase(
   };
 
   const getErrorMessage = () => {
-    if (!isLoading && (!Array.isArray(tools) || tools.length === 0) && toolFriendlyName && toolIdentifier) {
+    if (!isLoading && (!Array.isArray(tools) || tools.length === 0) && toolFriendlyName && toolIdentifier && inEditMode) {
       return (
         <div className="form-text text-muted p-2">
           <IconBase icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
@@ -171,6 +172,11 @@ function RoleRestrictedToolByIdentifierInputBase(
         infoOverlay={getInfoOverlay()}
         linkTooltipText={`Load Tool Registry`}
         linkIcon={faTools}
+        singularTopic={"Tool"}
+        pluralTopic={"Tools"}
+        useToggle={true}
+        requireUserEnable={true}
+        onEnableEditFunction={() => setInEditMode(true)}
       />
       {getErrorMessage()}
     </>

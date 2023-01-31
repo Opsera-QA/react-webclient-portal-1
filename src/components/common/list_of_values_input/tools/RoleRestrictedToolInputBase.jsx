@@ -166,7 +166,6 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
         onSearchFunction={(searchTerm) =>
             delayedSearchQuery(searchTerm)
         }
-        useToggle={true}
         requireUserEnable={true}
         onEnableEditFunction={() => setInEditMode(true)}
       />
