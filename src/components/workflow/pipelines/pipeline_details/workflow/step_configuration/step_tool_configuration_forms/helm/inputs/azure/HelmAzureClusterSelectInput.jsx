@@ -77,7 +77,7 @@ function HelmAzureClusterSelectInput(
       return;
     }
 
-    updateClientDetails(applicationData?.configuration);
+    // updateClientDetails(applicationData?.configuration);
 
     const azureResponse = await azureActions.getAzureClusters(
       getAccessToken,
