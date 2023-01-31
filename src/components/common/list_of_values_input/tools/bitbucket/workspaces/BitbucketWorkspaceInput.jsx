@@ -1,14 +1,9 @@
 import React, {useContext, useEffect, useRef, useState, useCallback} from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import pipelineActions from "components/workflow/pipeline-actions";
 import axios from "axios";
 import {bitbucketActions} from "components/inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket.actions";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import {parseError} from "components/common/helpers/error-helpers";
-import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
 import _ from "lodash";
 
 // TODO: Rename BitbucketWorkspaceSelectInput, change "gitToolId" to "toolId"
@@ -86,7 +81,7 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
   }
 
   return (
-    <LazyLoadSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
@@ -102,7 +97,6 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
       onSearchFunction={(searchTerm) =>
           delayedSearchQuery(searchTerm)
       }
-      useToggle={true}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
       singularTopic={"Workspace"}

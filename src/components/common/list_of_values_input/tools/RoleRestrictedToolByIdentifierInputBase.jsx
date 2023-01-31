@@ -10,7 +10,6 @@ import RegistryToolInfoOverlay from "components/common/list_of_values_input/tool
 import toolsActions from "components/inventory/tools/tools-actions";
 import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
-import LazyLoadSelectInputBase from "../../inputs/select/LazyLoadSelectInputBase";
 
 function RoleRestrictedToolByIdentifierInputBase(
   {
@@ -153,7 +152,7 @@ function RoleRestrictedToolByIdentifierInputBase(
 
   return (
     <>
-      <LazyLoadSelectInputBase
+      <SelectInputBase
         className={className}
         fieldName={fieldName}
         dataObject={model}

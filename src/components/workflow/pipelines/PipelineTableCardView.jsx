@@ -17,6 +17,7 @@ import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
+import PipelineTagFilter from "components/common/filters/tags/tag/pipelines/PipelineTagFilter";
 
 function PipelineTableCardView(
   {
@@ -44,6 +45,10 @@ function PipelineTableCardView(
           filterDto={pipelineFilterModel}
           setFilterDto={setPipelineFilterModel}
         />
+        {/*<PipelineTagFilter*/}
+        {/*  filterModel={pipelineFilterModel}*/}
+        {/*  setFilterModel={setPipelineFilterModel}*/}
+        {/*/>*/}
         <OwnerFilter
           filterModel={pipelineFilterModel}
           setFilterModel={setPipelineFilterModel}
