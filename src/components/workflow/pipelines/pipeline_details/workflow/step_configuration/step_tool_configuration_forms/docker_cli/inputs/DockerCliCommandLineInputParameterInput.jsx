@@ -18,6 +18,7 @@ import ParameterSelectListInlineField
   from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInlineField";
 import CommandLineInputParameterInputBaseHelpText
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParameterInputBaseHelpText";
+import DockerCliCommandLineInputParameterInputRow from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_cli/inputs/DockerCliCommandLineInputParameterInputRow";
 
 export default function CommandLineInputParameterInputBase(
   {
@@ -156,7 +157,7 @@ export default function CommandLineInputParameterInputBase(
       >
         <div className={"m-3"}>
           {getCustomParameterFields()}
-          <CommandLineInputParameterInputRow
+          <DockerCliCommandLineInputParameterInputRow
             disabled={disabled}
             saveEnvironmentVariables={model.getData("saveEnvironmentVariables") === true}
             commandLineStepModel={model}
