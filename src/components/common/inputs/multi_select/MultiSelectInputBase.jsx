@@ -161,7 +161,7 @@ function MultiSelectInputBase(
   };
 
   const getPlaceholderText = () => {
-    if (requireUserEnable === true && enabled === false) {
+    if (requireUserEnable === true && enabled === false && disabled !== true) {
       return `Click to Load ${pluralTopic} and Enable Edit Mode`;
     }
 
@@ -198,6 +198,7 @@ function MultiSelectInputBase(
         model={dataObject}
         showLabel={showLabel}
         field={field}
+        disabled={disabled}
         clearDataFunction={getClearDataFunction()}
         requireClearDataConfirmation={requireClearDataConfirmation}
         linkTooltipText={linkTooltipText}
@@ -208,7 +209,7 @@ function MultiSelectInputBase(
         hasError={hasStringValue(internalErrorMessage) === true || hasStringValue(errorMessage) === true}
         helpTooltipText={helpTooltipText}
         loadDataFunction={loadDataFunction}
-        enableEditingFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
+        enableEditingFunction={disabled !== true && requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
       />
       <StandaloneMultiSelectInput
         hasErrorState={hasStringValue(getErrorMessage()) === true}
