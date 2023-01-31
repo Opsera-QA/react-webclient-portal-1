@@ -3,11 +3,7 @@ import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import modelHelpers from "components/common/model/modelHelpers";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
-import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import {hasStringValue} from "components/common/helpers/string-helpers";
-import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 import {
   pipelineStepParameterMetadata
 } from "components/common/list_of_values_input/parameters/pipeline/pipelineStepParameter.metadata";
