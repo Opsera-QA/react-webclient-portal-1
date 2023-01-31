@@ -10,6 +10,7 @@ function AksServiceDeployStepAzureToolSelectInput({ fieldName, model, setModel, 
     newModel.setData("resourceGroup", "");
     newModel.setData("storageName", "");
     newModel.setData("containerName", "");
+    newModel.setData("clusterName", "");
     newModel.setData(fieldName, selectedOption?._id);
     setModel({...newModel});
   };
@@ -20,6 +21,7 @@ function AksServiceDeployStepAzureToolSelectInput({ fieldName, model, setModel, 
     newModel.setData("resourceGroup", "");
     newModel.setData("storageName", "");
     newModel.setData("containerName", "");
+    newModel.setData("clusterName", "");
     newModel.setData("azureCPToolConfigId", "");
     newModel.setData("azureCPCredentialId", "");
     setModel({...newModel});
