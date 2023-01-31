@@ -147,12 +147,6 @@ function LazyLoadSelectInputBase(
     }
   };
 
-  const getEnableEditFunction = () => {
-    if (requireUserEnable === true && enabled === false) {
-      return enableEditingFunction;
-    }
-  };
-
   if (field == null) {
     return null;
   }
@@ -163,6 +157,7 @@ function LazyLoadSelectInputBase(
         model={dataObject}
         showLabel={showLabel}
         field={field}
+        disabled={disabled}
         clearDataFunction={getClearDataFunction()}
         requireClearDataConfirmation={requireClearDataConfirmation}
         linkTooltipText={linkTooltipText}
@@ -174,7 +169,7 @@ function LazyLoadSelectInputBase(
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(errorMessage) === true}
         helpTooltipText={helpTooltipText}
-        enableEditingFunction={getEnableEditFunction()}
+        enableEditingFunction={disabled !== true && requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
       />
       <StandaloneSelectInput
         selectOptions={selectOptions}

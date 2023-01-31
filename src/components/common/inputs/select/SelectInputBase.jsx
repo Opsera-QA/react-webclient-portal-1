@@ -122,7 +122,7 @@ function SelectInputBase(
   };
 
   const getPlaceholderText = () => {
-    if (requireUserEnable === true && enabled === false) {
+    if (disabled !== true && requireUserEnable === true && enabled === false) {
       return `Click to Load ${pluralTopic} and Enable Edit Mode`;
     }
 
@@ -149,12 +149,6 @@ function SelectInputBase(
     }
   };
 
-  const getEnableEditFunction = () => {
-    if (requireUserEnable === true && enabled === false) {
-      return enableEditingFunction;
-    }
-  };
-
   if (field == null || visible === false) {
     return null;
   }
@@ -173,7 +167,7 @@ function SelectInputBase(
         infoOverlay={infoOverlay}
         linkIcon={linkIcon}
         ellipsisTooltipText={ellipsisTooltipText}
-        enableEditingFunction={getEnableEditFunction()}
+        enableEditingFunction={disabled !== true && requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
         ellipsisOnClickFunction={ellipsisOnClickFunction}
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(internalErrorMessage) === true || hasStringValue(errorMessage) === true}

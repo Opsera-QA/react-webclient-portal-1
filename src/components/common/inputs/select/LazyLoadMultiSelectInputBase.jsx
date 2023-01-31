@@ -187,7 +187,8 @@ function LazyLoadMultiSelectInputBase(
         inputHelpOverlay={inputHelpOverlay}
         hasError={hasStringValue(getErrorMessage()) === true}
         helpTooltipText={helpTooltipText}
-        enableEditingFunction={getEnableEditFunction()}
+        enableEditingFunction={disabled !== true && requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
+        disabled={disabled}
       />
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput
