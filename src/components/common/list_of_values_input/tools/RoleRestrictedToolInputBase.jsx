@@ -9,7 +9,6 @@ import axios from "axios";
 import RegistryToolInfoOverlay from "components/common/list_of_values_input/tools/RegistryToolInfoOverlay";
 import toolsActions from "components/inventory/tools/tools-actions";
 import IconBase from "components/common/icons/IconBase";
-import LazyLoadSelectInputBase from "../../inputs/select/LazyLoadSelectInputBase";
 import _ from "lodash";
 
 function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled, configurationRequired, className, fields}) {
@@ -144,7 +143,7 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
 
   return (
     <>
-      <LazyLoadSelectInputBase
+      <SelectInputBase
         className={className}
         fieldName={fieldName}
         dataObject={model}

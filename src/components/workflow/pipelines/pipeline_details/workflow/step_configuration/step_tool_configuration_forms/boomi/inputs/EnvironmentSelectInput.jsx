@@ -5,8 +5,6 @@ import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import BoomiActions from "../boomi.actions";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
-import {isMongoDbId} from "../../../../../../../../common/helpers/mongo/mongoDb.helpers";
-import LazyLoadSelectInputBase from "../../../../../../../../common/inputs/select/LazyLoadSelectInputBase";
 
 function EnvironmentSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool, idField}) {
     const toastContext = useContext(DialogToastContext);
@@ -105,7 +103,7 @@ function EnvironmentSelectInput({ fieldName, dataObject, setDataObject, disabled
 
     return (
         <div>
-            <LazyLoadSelectInputBase
+            <SelectInputBase
                 fieldName={fieldName}
                 dataObject={dataObject}
                 setDataObject={setDataObject}
