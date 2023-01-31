@@ -24,12 +24,6 @@ function DockerCliDependenciesInputForm({ model, setModel, plan }) {
             setDataObject={setModel}
             fieldName={"commands"}        
           />
-          <EditableParameterMappingInput
-            model={model}
-            setModel={setModel}
-            fieldName={"environmentVariables"}
-            nameMaxLength={50}
-          />
           <PipelineStepParameterInputBase
             saveEnvironmentVariables={true}
             environmentVariablesFieldName={"environmentVariables"}
