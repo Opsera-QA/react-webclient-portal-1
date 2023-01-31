@@ -41,7 +41,7 @@ export const pipelineStepParameterMetadata = {
   ],
   newObjectFields: {
     type: "global",
-    name: "opsera-local-",
+    name: "",
     parameterId: "",
     parameterName: "",
     outputKey: "",
