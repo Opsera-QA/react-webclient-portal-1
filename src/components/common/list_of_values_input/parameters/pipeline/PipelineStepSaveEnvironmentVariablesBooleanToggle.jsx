@@ -25,7 +25,7 @@ export default function PipelineStepSaveEnvironmentVariablesBooleanToggle(
 
   if (showConfirmationMessage === true) {
     return (
-      <div className={"d-flex"}>
+      <div className={"d-flex mb-auto"}>
         <div>Switching this setting will clear out Global Parameters. Would you like to proceed?</div>
         <VanityButtonBase
           className={"ml-2"}

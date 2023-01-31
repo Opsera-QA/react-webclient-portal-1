@@ -82,7 +82,7 @@ export default function PipelineStepAddLocalParameterButton(
       className={className}
       variant={"success"}
       icon={faPlus}
-      disabled={disabled || isValid === true || invalidLocalParameter === true || hasDuplicateName === true}
+      disabled={disabled || isValid !== true || invalidLocalParameter === true || hasDuplicateName === true}
       onClickFunction={handleAddPropertyFunction}
       normalText={"Add Parameter"}
     />

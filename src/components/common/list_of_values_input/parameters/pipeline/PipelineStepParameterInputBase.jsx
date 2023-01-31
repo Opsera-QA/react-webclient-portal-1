@@ -5,8 +5,8 @@ import InfoContainer from "components/common/containers/InfoContainer";
 import InputContainer from "components/common/inputs/InputContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import CommandLineInputParameterInputBaseHelpText
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParameterInputBaseHelpText";
+import PipelineStepParameterInputBaseHelpText
+  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBaseHelpText";
 import LocalInputParameterFields
   from "components/common/list_of_values_input/parameters/local/LocalInputParameterFields";
 import EditableParameterMappingInlineFields
@@ -33,7 +33,7 @@ export default function PipelineStepParameterInputBase(
   const getRightSideButtons = () => {
     return (
       <CenteredContentWrapper>
-        <CommandLineInputParameterInputBaseHelpText
+        <PipelineStepParameterInputBaseHelpText
           showTerraformHelpText={allowTerraformParametersSync === true && isMongoDbId(model?.getData("terraformStepId"))}
         />
       </CenteredContentWrapper>

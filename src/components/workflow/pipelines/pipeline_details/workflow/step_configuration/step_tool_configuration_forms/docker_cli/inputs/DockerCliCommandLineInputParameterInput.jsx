@@ -1,11 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {faBracketsCurly, faInfoCircle, faSync} from "@fortawesome/pro-light-svg-icons";
+import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
-import CommandLineInputParameterInputRow
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParameterInputRow";
-import CommandLineStepSaveEnvironmentVariablesBooleanToggle
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineStepSaveEnvironmentVariablesBooleanToggle";
 import InputContainer from "components/common/inputs/InputContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
@@ -16,9 +12,11 @@ import ParameterSelectListHeaderField
   from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListHeaderField";
 import ParameterSelectListInlineField
   from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInlineField";
-import CommandLineInputParameterInputBaseHelpText
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParameterInputBaseHelpText";
+import PipelineStepParameterInputBaseHelpText
+  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBaseHelpText";
 import DockerCliCommandLineInputParameterInputRow from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_cli/inputs/DockerCliCommandLineInputParameterInputRow";
+import PipelineStepSaveEnvironmentVariablesBooleanToggle
+  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepSaveEnvironmentVariablesBooleanToggle";
 
 export default function CommandLineInputParameterInputBase(
   {
@@ -33,7 +31,7 @@ export default function CommandLineInputParameterInputBase(
   const getRightSideButtons = () => {
     return (
       <CenteredContentWrapper>
-        <CommandLineInputParameterInputBaseHelpText />
+        <PipelineStepParameterInputBaseHelpText />
       </CenteredContentWrapper>
     );
   };
@@ -93,7 +91,7 @@ export default function CommandLineInputParameterInputBase(
               />
             </div>
             <div className={"d-flex"}>
-              <CommandLineStepSaveEnvironmentVariablesBooleanToggle
+              <PipelineStepSaveEnvironmentVariablesBooleanToggle
                 setModel={setModel}
                 model={model}
                 disabled={disabled}
