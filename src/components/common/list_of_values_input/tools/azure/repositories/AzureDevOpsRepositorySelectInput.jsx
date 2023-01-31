@@ -10,9 +10,9 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
-import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
 import _ from "lodash";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function AzureDevOpsRepositorySelectInput({
   fieldName,
@@ -108,7 +108,7 @@ function AzureDevOpsRepositorySelectInput({
   );
 
   return (
-    <LazyLoadSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
