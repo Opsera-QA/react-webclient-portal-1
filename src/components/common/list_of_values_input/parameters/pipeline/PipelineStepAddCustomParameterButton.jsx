@@ -46,7 +46,7 @@ export default function PipelineStepAddCustomParameterButton(
       }
     });
 
-    model.setData(customParametersFieldName, newArray);
+    model.setData(customParametersFieldName, [...newArray]);
     setModel({...model});
     return true;
   };

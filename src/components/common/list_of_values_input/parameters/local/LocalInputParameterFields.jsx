@@ -82,7 +82,3 @@ LocalInputParameterFields.propTypes = {
   fieldName: PropTypes.string,
   disabled: PropTypes.bool,
 };
-
-LocalInputParameterFields.defaultProps = {
-  fieldName: "stepParameters",
-};

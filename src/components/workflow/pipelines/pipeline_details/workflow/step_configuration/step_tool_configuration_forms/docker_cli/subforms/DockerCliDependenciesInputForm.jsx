@@ -6,6 +6,8 @@ import CommandLineDependencyTypeInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineDependencyTypeInput";
 import EditableParameterMappingInput from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingInput";
 import DockerCliCommandLineInputParameterInput from "../inputs/DockerCliCommandLineInputParameterInput";
+import PipelineStepParameterInputBase
+  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBase";
 
 function DockerCliDependenciesInputForm({ model, setModel, plan }) {
 
@@ -28,7 +30,15 @@ function DockerCliDependenciesInputForm({ model, setModel, plan }) {
             fieldName={"environmentVariables"}
             nameMaxLength={50}
           />
-          <DockerCliCommandLineInputParameterInput model={model} setModel={setModel} plan={plan} fieldName={"environmentVariables"} />
+          <PipelineStepParameterInputBase
+            saveEnvironmentVariables={true}
+            environmentVariablesFieldName={"environmentVariables"}
+            model={model}
+            setModel={setModel}
+            plan={plan}
+            allowTerraformParametersSync={true}
+            allowParameterMapping={true}
+          />
         </>
       );
     }

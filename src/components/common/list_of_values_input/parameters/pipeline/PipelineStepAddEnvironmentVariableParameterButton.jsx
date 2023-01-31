@@ -52,7 +52,7 @@ export default function PipelineStepAddEnvironmentVariableParameterButton(
       }
     });
 
-    model.setData(environmentVariablesFieldName, newArray);
+    model.setData(environmentVariablesFieldName, [...newArray]);
     setModel({...model});
     return true;
   };

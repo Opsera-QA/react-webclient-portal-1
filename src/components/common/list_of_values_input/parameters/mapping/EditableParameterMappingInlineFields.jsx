@@ -19,7 +19,7 @@ export default function EditableParameterMappingInlineFields(
     customParametersFieldName,
     showSaveEnvironmentVariablesToggle,
   }) {
-  const environmentVariables = DataParsingHelper.parseArray(fieldName);
+  const environmentVariables = DataParsingHelper.parseArray(model?.getData(fieldName), []);
 
   const deleteParameterFunction = (index) => {
     const currentData = model?.getArrayData(fieldName);
@@ -102,8 +102,4 @@ EditableParameterMappingInlineFields.propTypes = {
   disabled: PropTypes.bool,
   showSaveEnvironmentVariablesToggle: PropTypes.bool,
   customParametersFieldName: PropTypes.bool,
-};
-
-EditableParameterMappingInlineFields.defaultProps = {
-  fieldName: "environmentVariables",
 };

@@ -34,8 +34,6 @@ export default function PipelineStepInputParameterInputRow(
   const [error, setError] = useState(undefined);
   const [parameterModel, setParameterModel] = useState(modelHelpers.parseObjectIntoModel({}, pipelineStepParameterMetadata));
 
-  // TODO: Make separate inpu
-
   const getAddButton = () => {
     const type = parameterModel?.getData("type");
 

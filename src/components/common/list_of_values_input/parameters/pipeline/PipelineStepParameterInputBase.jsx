@@ -2,8 +2,6 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
-import CommandLineInputParameterInputRow
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParameterInputRow";
 import InputContainer from "components/common/inputs/InputContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
@@ -122,4 +120,10 @@ PipelineStepParameterInputBase.propTypes = {
   saveEnvironmentVariables: PropTypes.bool,
   plan: PropTypes.array,
   showSaveEnvironmentVariablesToggle: PropTypes.bool,
+};
+
+PipelineStepParameterInputBase.defaultProps = {
+  localParametersFieldName: "stepParameters",
+  customParametersFieldName: "customParameters",
+  environmentVariablesFieldName: "environmentVariables",
 };

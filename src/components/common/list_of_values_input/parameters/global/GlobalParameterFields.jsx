@@ -149,7 +149,3 @@ export default function GlobalParameterFields(
     environmentVariablesFieldName: PropTypes.string,
     showSaveEnvironmentVariablesToggle: PropTypes.bool,
   };
-
-  GlobalParameterFields.defaultProps = {
-    fieldName: "customParameters",
-  };

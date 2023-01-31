@@ -55,7 +55,7 @@ export default function PipelineStepAddLocalParameterButton(
       }
     });
 
-    model.setData(localParametersFieldName, newArray);
+    model.setData(localParametersFieldName, [...newArray]);
     setModel({...model});
     return true;
   };
