@@ -2,6 +2,7 @@ FROM node:16-alpine3.15 as build
 ARG build_env=kube-generic
 RUN echo ${build_env}
 RUN apk add curl
+RUN rm -rf  /usr/src/app
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
