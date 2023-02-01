@@ -11,8 +11,8 @@ import { AuthContext } from "contexts/AuthContext";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { gitlabActions } from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
 import _ from "lodash";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function GitlabRepositorySelectInput({
   fieldName,
@@ -109,7 +109,7 @@ function GitlabRepositorySelectInput({
   );
 
   return (
-    <LazyLoadSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={model}
       helpTooltipText={getDataPullLimitMessage()}
@@ -125,7 +125,6 @@ function GitlabRepositorySelectInput({
       pluralTopic={"Gitlab Repositories"}
       error={error}
       onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
-      useToggle={true}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
     />

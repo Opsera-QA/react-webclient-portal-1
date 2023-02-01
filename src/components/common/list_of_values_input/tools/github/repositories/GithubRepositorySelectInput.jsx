@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { githubActions } from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
 import _ from "lodash";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function GithubRepositorySelectInput(
   {
@@ -99,7 +99,7 @@ function GithubRepositorySelectInput(
   );
 
   return (
-    <LazyLoadSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={model}
       helpTooltipText={getDataPullLimitMessage()}
