@@ -11,6 +11,7 @@ import {
 function DoraJiraGitlabRolledUpColumnDataBlock({
   overlayData,
   maturityScoreText,
+  onSelect
 }) {
   const maturityScore = getMaturityScoreText(maturityScoreText);
   const maturityColor = getMaturityColorClass(maturityScoreText);
@@ -62,8 +63,9 @@ function DoraJiraGitlabRolledUpColumnDataBlock({
       >
         <div
           className={
-            "d-flex pr-1 dark-gray-text-primary metric-block-content-text font-inter-light-500"
+            "d-flex pr-1 dark-gray-text-primary metric-block-content-text font-inter-light-500 pointer"
           }
+          onClick={onSelect}
         >
           {maturityScore}
         </div>
@@ -80,6 +82,7 @@ function DoraJiraGitlabRolledUpColumnDataBlock({
 DoraJiraGitlabRolledUpColumnDataBlock.propTypes = {
   overlayData: PropTypes.any,
   maturityScoreText: PropTypes.string,
+  onSelect: PropTypes.func,
 };
 
 export default DoraJiraGitlabRolledUpColumnDataBlock;
