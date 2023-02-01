@@ -12,6 +12,9 @@ import {
 import InfoDialog from "../../../../common/status_notifications/info";
 import doraAction from "../dora.action";
 import DoraJiraGitlabRolledUpColumnDataBlock from "./DoraJiraGitlabRolledUpColumnDataBlock";
+import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
+import BoomiActionableTabOverlay from "../../boomi/actionable_insights/BoomiActionableTabOverlay";
+import DoraJiraOrgsActionableOverlay from "./actionable_insights/DoraJiraOrgsActionableOverlay";
 
 
 function DoraJiraGitlabRolledUpChart({
@@ -98,6 +101,19 @@ function DoraJiraGitlabRolledUpChart({
     }
   };
 
+  const toastContext = useContext(DialogToastContext);
+
+  const onRowSelect = (stat) => {
+    toastContext.showOverlayPanel(
+        <DoraJiraOrgsActionableOverlay
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            data={metricData?.filter(item=> item.overallMaturityScoreText == stat)}
+        />
+    );
+  };
+
+
   const getChartBody = () => {
     const selectedDeploymentStages =
       getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
@@ -137,24 +153,28 @@ function DoraJiraGitlabRolledUpChart({
         >
           <Col md={12} className={"pl-2 pr-1"}>
         <DoraJiraGitlabRolledUpColumnDataBlock
+          onSelect={() => onRowSelect("elite")}
           maturityScoreText = {'elite'}
           overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'elite')}
         />
           </Col>
           <Col md={12} className={"px-1"}>
           <DoraJiraGitlabRolledUpColumnDataBlock
+              onSelect={() => onRowSelect("high")}
             maturityScoreText = {'high'}
             overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'high')}
         />
           </Col>
           <Col md={12} className={"px-1"}>
           <DoraJiraGitlabRolledUpColumnDataBlock
+              onSelect={() => onRowSelect("medium")}
               maturityScoreText = {'medium'}
               overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'medium')}
         />
           </Col>
           <Col md={12} className={"pl-1 pr-2"}>
         <DoraJiraGitlabRolledUpColumnDataBlock
+            onSelect={() => onRowSelect("low")}
             maturityScoreText = {'low'}
             overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'low')}
         />
