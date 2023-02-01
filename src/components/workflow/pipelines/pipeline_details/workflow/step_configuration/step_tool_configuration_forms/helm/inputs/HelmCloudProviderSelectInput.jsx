@@ -17,12 +17,15 @@ function HelmCloudProviderSelectInput({dataObject, setDataObject, disabled, fiel
 
   const setDataFunction = (fieldName, value) => {
     let newModel = {...dataObject};
-    newModel.setData("azureToolConfigId", "");
-    newModel.setData("azureCredentialId", "");
-    newModel.setData("accessKeyParamName", "");
-    newModel.setData("secretKeyParamName", "");
-    newModel.setData("regionParamName", "");
-    newModel.setData("awsToolConfigId", "");
+    newModel.setDefaultValue("azureToolConfigId");
+    newModel.setDefaultValue("azureCredentialId");
+    newModel.setDefaultValue("accessKeyParamName");
+    newModel.setDefaultValue("secretKeyParamName");
+    newModel.setDefaultValue("regionParamName");
+    newModel.setDefaultValue("awsToolConfigId");
+    newModel.setDefaultValue("clusterName");
+    newModel.setDefaultValue("namespace");
+    newModel.setDefaultValue("resoureceGroup");
     newModel.setData(fieldName, value.value);
     setDataObject({...newModel});
     return newModel;
@@ -30,13 +33,16 @@ function HelmCloudProviderSelectInput({dataObject, setDataObject, disabled, fiel
 
   const clearDataFunction = (fieldName, value) => {
     let newModel = {...dataObject};
-    newModel.setData("azureToolConfigId", "");
-    newModel.setData("azureCredentialId", "");
-    newModel.setData("accessKeyParamName", "");
-    newModel.setData("secretKeyParamName", "");
-    newModel.setData("regionParamName", "");
-    newModel.setData("awsToolConfigId", "");
-    newModel.setData(fieldName, "");
+    newModel.setDefaultValue("azureToolConfigId");
+    newModel.setDefaultValue("azureCredentialId");
+    newModel.setDefaultValue("accessKeyParamName");
+    newModel.setDefaultValue("secretKeyParamName");
+    newModel.setDefaultValue("regionParamName");
+    newModel.setDefaultValue("awsToolConfigId");
+    newModel.setDefaultValue("clusterName");
+    newModel.setDefaultValue("namespace");
+    newModel.setDefaultValue("resourceGroup");
+    newModel.setDefaultValue(fieldName);
     setDataObject({...newModel});
     return newModel;
   };

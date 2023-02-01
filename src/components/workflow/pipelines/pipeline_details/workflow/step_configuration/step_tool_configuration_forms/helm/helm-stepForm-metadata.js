@@ -138,7 +138,8 @@ const helmStepFormMetadata = {
     {
       label: "Service Name",
       id: "serviceName",
-      isRequired: true
+      isRequired: true,
+      lowercase: true,
     },
     {
       label: "Input File Name",
