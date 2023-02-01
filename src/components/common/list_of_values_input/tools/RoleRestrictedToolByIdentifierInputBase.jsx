@@ -37,7 +37,6 @@ function RoleRestrictedToolByIdentifierInputBase(
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [inEditMode, setInEditMode] = useState(false);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -50,7 +49,7 @@ function RoleRestrictedToolByIdentifierInputBase(
     setTools([]);
     setError(undefined);
 
-    if (hasStringValue(toolIdentifier) === true && inEditMode === true) {
+    if (hasStringValue(toolIdentifier) === true) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           setError(error);
@@ -62,7 +61,7 @@ function RoleRestrictedToolByIdentifierInputBase(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolIdentifier, inEditMode]);
+  }, [toolIdentifier]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -174,9 +173,6 @@ function RoleRestrictedToolByIdentifierInputBase(
         linkIcon={faTools}
         singularTopic={"Tool"}
         pluralTopic={"Tools"}
-        useToggle={true}
-        requireUserEnable={true}
-        onEnableEditFunction={() => setInEditMode(true)}
       />
       {getErrorMessage()}
     </>
