@@ -2,6 +2,7 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import axios from "axios";
+import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 
 export const parseAxiosError = (error) => {
   if (!axios.isCancel(error)) {
@@ -25,7 +26,7 @@ const axiosTimeoutErrorMessage = `
 
 const getAxiosInstance = (token, cancelToken) => {
   const configuration = {
-    baseURL: process.env.REACT_APP_OPSERA_API_SERVER_URL,
+    baseURL: NODE_API_ORCHESTRATOR_SERVER_URL,
     timeout: 50000,
     cancelToken: cancelToken,
   };
