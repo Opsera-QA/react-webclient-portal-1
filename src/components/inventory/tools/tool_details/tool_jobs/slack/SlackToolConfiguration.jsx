@@ -7,6 +7,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import axios from "axios";
+import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 
 function SlackToolConfiguration({ toolData }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -86,7 +87,7 @@ function SlackToolConfiguration({ toolData }) {
   };
 
   const addSlackCredentials = () => {
-    let redirectURI = process.env.REACT_APP_OPSERA_API_SERVER_URL + "/proxy/microservice/slack/authentication";
+    let redirectURI = `${NODE_API_ORCHESTRATOR_SERVER_URL}/proxy/microservice/slack/authentication`;
     if (slackUrl) {
       window.open(`${slackUrl}&redirect_uri=${redirectURI}`);
     }

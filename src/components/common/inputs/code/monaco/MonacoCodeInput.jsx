@@ -17,6 +17,7 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import CopyToClipboardIcon from "components/common/icons/CopyToClipboardIcon";
 import MonacoEditorCodeInputBase from "./MonacoEditorCodeInputBase";
 import MonacoEditorCodeDiffInputBase from "./MonacoEditorCodeDiffInputBase";
+import CopyToClipboardButton from "components/common/buttons/clipboard/CopyToClipboardButton";
 
 // TODO: If more are added, make sure to add the respective imports into CodeInputBase
 export const CODE_THEME_TYPES = {
@@ -76,14 +77,16 @@ function MonacoCodeInput({
   const getTitleBarActionButtons = () => {
     return (
       <div className={"d-flex"}>
-        <div className={"mr-2"}>{titleBarActionButtons}</div>
-        <CopyToClipboardIcon
+        <div className={"ml-2"}>{titleBarActionButtons}</div>
+        <CopyToClipboardButton
           copyString={model?.getData(fieldName)}
-          className={"mr-2"}
+          className={"ml-2"}
+          size={"sm"}
         />
         <ToggleThemeIconButton
           theme={internalTheme}
           toggleTheme={toggleTheme}
+          className={"ml-2"}
         />
       </div>
     );
