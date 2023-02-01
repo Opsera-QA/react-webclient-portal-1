@@ -7,7 +7,7 @@ import {
 import aquasecReportMetaData from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/aquasec/metadata/aquasecReport.metadata";
 import {
   getTableTextColumn,
-  getTableActiveBooleanIconColumn,
+  getExternalLinkWithIcon,
 } from "components/common/table/table-column-helpers-v2";
 import { getField } from "components/common/metadata/metadata-helpers";
 import VanityTable from "components/common/table/VanityTable";
@@ -22,11 +22,11 @@ function AquasecLogSummaryTable({ aquasecObj }) {
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "type")),
-      getTableTextColumn(getField(fields, "revision")),
-      getTableTextColumn(getField(fields, "state")),
-      getTableActiveBooleanIconColumn(getField(fields, "isNew"), "", 100),
+      getTableTextColumn(getField(fields, "name"), null, 250),
+      getTableTextColumn(getField(fields, "description")),
+      getTableTextColumn(getField(fields, "aqua_severity"), null, 150),
+      getTableTextColumn(getField(fields, "aqua_score"), null, 100),
+      getExternalLinkWithIcon(getField(fields, "nvd_url")),
     ],
     [],
   );
