@@ -18,7 +18,6 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
   const [isLoading, setIsLoading] = useState(false);
   const [toolMetadata, setToolMetadata] = useState(undefined);
   const isMounted = useRef(false);
-  const [inEditMode, setInEditMode] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -32,19 +31,17 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
 
 
     setTools([]);
-    if (inEditMode === true) {
-      loadData(source).catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
 
     return () => {
       source.cancel();
       isMounted.current = false;
     };
-  }, [inEditMode]);
+  }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -166,8 +163,6 @@ function RoleRestrictedToolInputBase({ placeholderText, visible, fieldName, mode
         onSearchFunction={(searchTerm) =>
             delayedSearchQuery(searchTerm)
         }
-        requireUserEnable={true}
-        onEnableEditFunction={() => setInEditMode(true)}
       />
       {getErrorMessage()}
     </>
