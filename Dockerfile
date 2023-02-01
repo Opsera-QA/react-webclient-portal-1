@@ -9,10 +9,8 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 ENV GENERATE_SOURCEMAP false
 COPY package.json /usr/src/app/package.json
 COPY package-lock.json /usr/src/app/package-lock.json
-COPY public /usr/src/app/public
 COPY .npmrc /usr/src/app/.npmrc
 RUN npm install --legacy-peer-deps
-#RUN npm install react-scripts -g --silent
 COPY . /usr/src/app
 RUN npm run build:${build_env}
 RUN mv build* code
