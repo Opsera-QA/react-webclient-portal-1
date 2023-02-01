@@ -219,7 +219,16 @@ const dockerCliStepFormMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("registryType") === "nexus";
       },
-    },    
+    },
+    {
+      label: "Output Variables",
+      id: "outputVariables",
+      maxItems: 15
+    },
+    {
+      label: "Enable Output Variables",
+      id: "enableOutputVariables",
+    }    
   ],
   newObjectFields: {
     service: "",
@@ -260,6 +269,7 @@ const dockerCliStepFormMetadata = {
     port: "",
     nexusToolConfigId: "",    
     dockerPort: "",
+    enableOutputVariables: false
   }
 };
 

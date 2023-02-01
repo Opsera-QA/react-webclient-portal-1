@@ -6,19 +6,20 @@ import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import {faPlus} from "@fortawesome/pro-light-svg-icons";
-import {
-  commandLineInputParameterMetadata
-} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/commandLineInputParameter.metadata";
-import CommandLineInputParameterTypeSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParameterTypeSelectInput";
+import { commandLineInputParameterMetadata } from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/commandLineInputParameter.metadata";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import TextAreaInput from "components/common/inputs/text/TextAreaInput";
-import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-export default function CommandLineInputParameterInputRow(
+const DOCKER_CLI_OUTPUT_VARIABLE_SELECT_OPTIONS = [
+{text: "Docker Registry Name", value: "docker_registry_name "},
+{text: "Docker Tag Name", value:"docker_tag_name"},
+{text: "Docker Name", value:"docker_name"},
+];
+
+
+export default function DockerCliOutputVariableCommandLineInputParameterInputRow(
   {
     error,
     className,
@@ -54,6 +55,17 @@ export default function CommandLineInputParameterInputRow(
       : environmentVariables.find((parameter) => parameter?.parameterName === parameterName) != null;
   };
 
+  const hasDuplicateValue = () => {
+    const outputVariables = commandLineStepModel?.getArrayData("outputVariables");
+    const environmentVariables = commandLineStepModel?.getArrayData("environmentVariables");
+    const outputKey = commandLineInputParameterModel?.getData("outputKey");
+
+    return saveEnvironmentVariables !== true
+      ? outputVariables.find((parameter) => parameter?.outputKey === outputKey) != null
+      : environmentVariables.find((parameter) => parameter?.outputKey === outputKey) != null;
+  };
+  
+
   // TODO: Make separate input
   const setParameterFunction = (fieldName, selectedOption) => {
     commandLineInputParameterModel.setData("parameterId", selectedOption?._id);
@@ -63,7 +75,8 @@ export default function CommandLineInputParameterInputRow(
 
   const isValid = commandLineInputParameterModel?.checkCurrentValidity();
   const missingOutputKey = saveEnvironmentVariables === true && hasStringValue(commandLineInputParameterModel?.getData("outputKey")) !== true;
-  const isDuplicate = hasDuplicateName();
+  const isDuplicateName = hasDuplicateName();
+  const isDuplicateValue = hasDuplicateValue();
 
   const getInputFields = () => {
         return (
@@ -77,11 +90,14 @@ export default function CommandLineInputParameterInputRow(
               />
             </Col>
             <Col xs={5}>
-              <TextInputBase
+              <SelectInputBase
                 fieldName={"outputKey"}
                 dataObject={commandLineInputParameterModel}
                 setDataObject={setCommandLineInputParameterModel}
                 disabled={disabled}
+                selectOptions={DOCKER_CLI_OUTPUT_VARIABLE_SELECT_OPTIONS}
+                textField="text"
+                valueField="value"
               />
             </Col>
           </>
@@ -98,7 +114,7 @@ export default function CommandLineInputParameterInputRow(
               className={"ml-auto"}
               variant={"success"}
               icon={faPlus}
-              disabled={ isValid !== true || disabled === true || missingOutputKey === true || isDuplicate === true}
+              disabled={ isValid !== true || disabled === true || missingOutputKey === true || isDuplicateName === true || isDuplicateValue === true}
               onClickFunction={handleAddPropertyFunction}
               normalText={"Add Parameter"}
             />
@@ -106,7 +122,7 @@ export default function CommandLineInputParameterInputRow(
         </Col>
         <Col xs={12}>
           <InfoText
-            errorMessage={error ? error : isDuplicate === true ? "You have already added this Parameter." : undefined}
+            errorMessage={error ? error : isDuplicateName === true || isDuplicateValue === true? "You have already added this Parameter." : undefined}
           />
         </Col>
       </Row>
@@ -114,7 +130,7 @@ export default function CommandLineInputParameterInputRow(
   );
 }
 
-CommandLineInputParameterInputRow.propTypes = {
+DockerCliOutputVariableCommandLineInputParameterInputRow.propTypes = {
   addGlobalCustomParameterFunction: PropTypes.func,
   addEnvironmentParameterFunction: PropTypes.func,
   commandLineStepModel: PropTypes.object,
