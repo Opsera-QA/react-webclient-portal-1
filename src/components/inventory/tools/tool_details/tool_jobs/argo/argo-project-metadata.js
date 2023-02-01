@@ -13,26 +13,28 @@ const argoProjectMetadata = {
     {
       label: "Description",
       id: "description",
+      isRequired: true,
       lowercase: true,
       maxLength: 1000,
       regexDefinitionName: "expandedTextAndSymbolsWithSpaces",
     },
     {
+      label: "Advanced Settings",
+      id: "advancedSettings",
+    },
+    {
       label: "Sources",
-      id: "sourceRepos",
-      isRequired: true,
+      id: "sourceRepos",      
       formText: "Repositories where application manifests are permitted to be retrieved from"
     },
     {
       label: "Destinations",
       id: "destinations",
-      isRequired: true,
       formText: "Cluster and namespace where applications are permitted to be deployed to"
     },
     {
       label: "Whitelisted Cluster Resources",
       id: "clusterResourceWhitelist",
-      isRequired: true,
       formText: "Cluster-scoped K8s API groups and Kinds which are permitted to be deployed"
     },
     {
@@ -43,7 +45,6 @@ const argoProjectMetadata = {
     {
       label: "Whitelisted Namespaced Resources",
       id: "namespaceResourceWhitelist",
-      isRequired: true,
       formText: "Namespace-scoped K8s API Groups and Kinds which are permitted to deploy"
     },
     {
@@ -54,12 +55,13 @@ const argoProjectMetadata = {
   ],
   newObjectFields: {
     name: "",
-    sourceRepos: "",
+    sourceRepos: ["*"],
     description: "",
-    destinations: {},
-    clusterResourceWhitelist: {},
-    namespaceResourceBlacklist: {},
-    namespaceResourceWhitelist: {},    
+    advancedSettings: false,
+    destinations: [],
+    clusterResourceWhitelist: [],
+    namespaceResourceBlacklist: [],
+    namespaceResourceWhitelist: [],
     orphanedResources: false
   }
 };

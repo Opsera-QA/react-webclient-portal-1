@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {getScriptLanguageDisplayMode} from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
-import PullScriptValueIcon from "components/inventory/scripts/details/PullScriptValueIcon";
+import PullScriptValueButton from "components/inventory/scripts/details/PullScriptValueButton";
 import InfoContainer from "components/common/containers/InfoContainer";
 import { faExclamationTriangle, faFileCode, faFileDownload } from "@fortawesome/pro-light-svg-icons";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
@@ -31,7 +31,7 @@ function ScriptViewerField(
   const getPullScriptIcon = () => {
     if (isMongoDbId(scriptId) === true) {
       return (
-        <PullScriptValueIcon
+        <PullScriptValueButton
           setIsLoading={setIsLoading}
           loadScriptFunction={loadData}
           setErrorMessage={setErrorMessage}

@@ -16,6 +16,7 @@ import ApiConnectionDemoSubNavigationBar from "components/admin/api_demo/ApiConn
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
 import InfoContainer from "components/common/containers/InfoContainer";
 import {faChartNetwork, faUser} from "@fortawesome/pro-light-svg-icons";
+import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 
 function ApiConnectionTest() {
   const {getAccessToken, getUserRecord} = useContext(AuthContext);
@@ -202,7 +203,7 @@ function ApiConnectionTest() {
           API Server is
           programmed to return it to confirm it was sent and received properly.</small></h6>
       <br/>
-      <div><i>OPSERA_API_SERVER_URL:</i> {process.env.REACT_APP_OPSERA_API_SERVER_URL}</div>
+      <div><i>OPSERA_API_SERVER_URL:</i> {NODE_API_ORCHESTRATOR_SERVER_URL}</div>
       <div><i>OPSERA_CLIENT_HOST:</i> {process.env.REACT_APP_OPSERA_CLIENT_HOST}</div>
       <div><i>OKTA_BASEURL:</i> {process.env.REACT_APP_OKTA_BASEURL}</div>
       <br/>

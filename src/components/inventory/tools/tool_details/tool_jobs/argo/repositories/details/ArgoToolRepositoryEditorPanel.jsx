@@ -25,55 +25,23 @@ function ArgoToolRepositoryEditorPanel({ argoRepositoryData, toolId, handleClose
   }, [argoRepositoryData]);
 
   const createRepository = async () => {
-    return await argoActions.createArgoRepository(getAccessToken, cancelTokenSource, toolId, argoRepositoryModel);
-  };
-
-  const updateRepository = async () => {
-    return await argoActions.updateArgoRepository(getAccessToken, cancelTokenSource, toolId, argoRepositoryModel);
+    return await argoActions.createArgoRepositoryV2(getAccessToken, cancelTokenSource, toolId, argoRepositoryModel);
   };
 
   const deleteRepository = async () => {
-    await argoActions.deleteArgoRepository(getAccessToken, cancelTokenSource, toolId, argoRepositoryModel?.getData("repoId"));
+    const response = await argoActions.deleteArgoRepositoryV2(getAccessToken, cancelTokenSource, toolId, argoRepositoryModel?.getData("repo"));
     handleClose();
+    return response;
   };
 
   if (argoRepositoryModel == null) {
     return <LoadingDialog size="sm" message={"Loading Data"} />;
   }
 
-  return (
-    <EditorPanelContainer
-      recordDto={argoRepositoryModel}
-      createRecord={createRepository}
-      updateRecord={updateRepository}
-      setRecordDto={setArgoRepositoryModel}
-      extraButtons={
-        <DeleteButtonWithInlineConfirmation
-          dataObject={argoRepositoryModel}
-          deleteRecord={deleteRepository}
-        />
-      }
-      handleClose={handleClose}
-    >
-      <div>
-        <Row>
-          <Col lg={12}>
-            <TextInputBase
-              setDataObject={setArgoRepositoryModel}
-              dataObject={argoRepositoryModel}
-              fieldName={"name"}
-              disabled={argoRepositoryData?.isNew() !== true}
-            />
-          </Col>
-          <Col lg={12}>
-            <ArgoRepositoriesArgoProjectSelectInput 
-              argoToolId={toolId}
-              setModel={setArgoRepositoryModel}
-              model={argoRepositoryModel}
-              fieldName={"projectName"}
-              disabled={argoRepositoryData?.isNew() !== true}
-            />
-          </Col>
+  const getScmFields = () => {
+    if (argoRepositoryData?.isNew() === true) {
+      return (
+        <>
           <Col lg={12}>
             <ArgoRepositoryScmTypeSelectInput
               setDataObject={setArgoRepositoryModel}
@@ -102,6 +70,56 @@ function ArgoToolRepositoryEditorPanel({ argoRepositoryData, toolId, handleClose
               disabled={argoRepositoryData?.isNew() !== true}
             />
           </Col>
+        </>
+      );
+    }
+  };
+
+  return (
+    <EditorPanelContainer
+      recordDto={argoRepositoryModel}
+      createRecord={createRepository}
+      setRecordDto={setArgoRepositoryModel}
+      extraButtons={
+        <DeleteButtonWithInlineConfirmation
+          dataObject={argoRepositoryModel}
+          deleteRecord={deleteRepository}
+        />
+      }
+      handleClose={handleClose}
+    >
+      <div>
+        <Row>          
+          <Col lg={12}>
+            <ArgoRepositoriesArgoProjectSelectInput 
+              argoToolId={toolId}
+              setModel={setArgoRepositoryModel}
+              model={argoRepositoryModel}
+              fieldName={"project"}
+              disabled={argoRepositoryData?.isNew() !== true}
+            />
+          </Col>
+          {getScmFields()}
+          {argoRepositoryData?.isNew() !== true && 
+          <>
+            <Col lg={12}>
+              <TextInputBase
+                setDataObject={setArgoRepositoryModel}
+                dataObject={argoRepositoryModel}
+                fieldName={"name"}
+                disabled={argoRepositoryData?.isNew() !== true}
+              />
+            </Col>
+            <Col lg={12}>
+              <TextInputBase
+                setDataObject={setArgoRepositoryModel}
+                dataObject={argoRepositoryModel}
+                fieldName={"repo"}
+                disabled={argoRepositoryData?.isNew() !== true}
+              />
+            </Col>
+          </>          
+          }
         </Row>
       </div>
     </EditorPanelContainer>

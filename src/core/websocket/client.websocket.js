@@ -1,6 +1,7 @@
 import {LIVE_MESSAGE_TOPICS} from "core/websocket/constants/liveMessage.constants";
 import {WebsocketHelper} from "core/websocket/helper/websocket.helper";
 import io from 'socket.io-client';
+import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 
 export const WEBSOCKET_STATE = {
   CONNECTING: 0,
@@ -45,7 +46,7 @@ export class ClientWebsocket {
     this.user = userData;
 
     try {
-      const websocketUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
+      const websocketUrl = NODE_API_ORCHESTRATOR_SERVER_URL;
       const newClient = io(websocketUrl);
       newClient.connect();
 
