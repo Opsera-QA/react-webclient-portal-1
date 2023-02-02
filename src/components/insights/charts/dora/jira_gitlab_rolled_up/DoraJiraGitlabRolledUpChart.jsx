@@ -82,7 +82,7 @@ function DoraJiraGitlabRolledUpChart({
         const metrics = response?.data?.data;
 
         if (
-          isMounted?.current === true && metrics?.length
+            isMounted?.current === true && metrics?.length
         ) {
           setMetricData(metrics);
         } else {
@@ -141,46 +141,46 @@ function DoraJiraGitlabRolledUpChart({
     }
 
     return (
-      <div
-        className="m-3"
-        style={{ minHeight: "450px", display: "flex" }}
-      >
-        <Row
-            xl={4}
-            lg={4}
-            md={4}
-            className={`mb-2 w-100 py-2 d-flex justify-content-center maturity-border`}
+        <div
+            className="m-3"
+            style={{ minHeight: "450px", display: "flex" }}
         >
-          <Col md={12} className={"pl-2 pr-1"}>
-        <DoraJiraGitlabRolledUpColumnDataBlock
-          onSelect={() => onRowSelect("elite")}
-          maturityScoreText = {'elite'}
-          overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'elite')}
-        />
-          </Col>
-          <Col md={12} className={"px-1"}>
-          <DoraJiraGitlabRolledUpColumnDataBlock
-              onSelect={() => onRowSelect("high")}
-            maturityScoreText = {'high'}
-            overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'high')}
-        />
-          </Col>
-          <Col md={12} className={"px-1"}>
-          <DoraJiraGitlabRolledUpColumnDataBlock
-              onSelect={() => onRowSelect("medium")}
-              maturityScoreText = {'medium'}
-              overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'medium')}
-        />
-          </Col>
-          <Col md={12} className={"pl-1 pr-2"}>
-        <DoraJiraGitlabRolledUpColumnDataBlock
-            onSelect={() => onRowSelect("low")}
-            maturityScoreText = {'low'}
-            overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'low')}
-        />
-          </Col>
-        </Row>
-      </div>
+          <Row
+              xl={4}
+              lg={4}
+              md={4}
+              className={`mb-2 w-100 py-2 d-flex justify-content-center maturity-border`}
+          >
+            <Col md={12} className={"pl-2 pr-1"}>
+              <DoraJiraGitlabRolledUpColumnDataBlock
+                  onSelect={() => onRowSelect("elite")}
+                  maturityScoreText = {'elite'}
+                  overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'elite')}
+              />
+            </Col>
+            <Col md={12} className={"px-1"}>
+              <DoraJiraGitlabRolledUpColumnDataBlock
+                  onSelect={() => onRowSelect("high")}
+                  maturityScoreText = {'high'}
+                  overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'high')}
+              />
+            </Col>
+            <Col md={12} className={"px-1"}>
+              <DoraJiraGitlabRolledUpColumnDataBlock
+                  onSelect={() => onRowSelect("medium")}
+                  maturityScoreText = {'medium'}
+                  overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'medium')}
+              />
+            </Col>
+            <Col md={12} className={"pl-1 pr-2"}>
+              <DoraJiraGitlabRolledUpColumnDataBlock
+                  onSelect={() => onRowSelect("low")}
+                  maturityScoreText = {'low'}
+                  overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'low')}
+              />
+            </Col>
+          </Row>
+        </div>
     );
   };
 

@@ -20,7 +20,11 @@ export default function ActionBarDuplicatePipelineButton({pipelineModel}) {
     );
   };
 
-  if (pipelineModel == null || PipelineRoleHelper.canDuplicatePipeline(userData, pipelineModel?.getCurrentData()) !== true) {
+  if (
+    pipelineModel == null
+    || PipelineRoleHelper.canCreatePipeline(userData) !== true
+    || PipelineRoleHelper.canDuplicatePipeline(userData, pipelineModel?.getCurrentData()) !== true
+  ) {
     return null;
   }
 
