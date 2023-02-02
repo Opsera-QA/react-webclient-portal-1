@@ -22,13 +22,12 @@ function DockerCliDependenciesInputForm({ model, setModel, plan }) {
             setDataObject={setModel}
             fieldName={"commands"}        
           />
-          <EditableParameterMappingInput
-            model={model}
-            setModel={setModel}
-            fieldName={"environmentVariables"}
-            nameMaxLength={50}
-          />
-          <DockerCliCommandLineInputParameterInput model={model} setModel={setModel} plan={plan} fieldName={"environmentVariables"} />
+
+          <DockerCliCommandLineInputParameterInput 
+            model={model} 
+            setModel={setModel} 
+            plan={plan} 
+            fieldName={"environmentVariables"} />
         </>
       );
     }

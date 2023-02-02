@@ -69,15 +69,12 @@ function DockerCliDockerBuildDetailsInputForm({ model, setModel, plan }) {
             setDataObject={setModel}
           />
           {getDockerTagInputs()}          
-          <EditableParameterMappingInput
-            model={model}
-            setModel={setModel}
-            fieldName={"buildArguments"}
-            nameMaxLength={50}
-            titleText={"Build Arguments Mapping"}
-            type={"Build Argument"}
-          />
-          <DockerCliCommandLineInputParameterInput model={model} setModel={setModel} plan={plan} fieldName={"buildArguments"} subheaderText={"Build Arguments"} />
+          <DockerCliCommandLineInputParameterInput 
+            model={model} 
+            setModel={setModel} 
+            plan={plan} 
+            fieldName={"buildArguments"} 
+            subheaderText={"Build Arguments"} />
         </>
       );
     }

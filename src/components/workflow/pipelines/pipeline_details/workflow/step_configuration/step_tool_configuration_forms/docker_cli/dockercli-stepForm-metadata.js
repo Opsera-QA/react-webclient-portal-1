@@ -222,7 +222,7 @@ const dockerCliStepFormMetadata = {
     },
     {
       label: "Output Variables",
-      id: "outputVariables",
+      id: "outputCustomParameters",
       maxItems: 15
     },
     {

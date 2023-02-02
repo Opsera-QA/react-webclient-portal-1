@@ -23,7 +23,7 @@ export default function ParameterSelectListInlineField(
             {parameter?.parameterName}
           </Col>
           <Col sm={6} className={"pl-2 pr-0 force-text-wrap"}>
-            {parameter?.outputKey ? "Terraform Output" : "User defined parameter"}
+            {parameter?.outputKey ? "User defined parameter" : "Terraform Output"}
           </Col>
         </Row>
       </Col>

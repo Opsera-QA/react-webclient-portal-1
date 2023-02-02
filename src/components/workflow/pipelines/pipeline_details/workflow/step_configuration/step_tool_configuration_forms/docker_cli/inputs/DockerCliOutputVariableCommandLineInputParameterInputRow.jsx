@@ -56,7 +56,7 @@ export default function DockerCliOutputVariableCommandLineInputParameterInputRow
   };
 
   const hasDuplicateValue = () => {
-    const outputVariables = commandLineStepModel?.getArrayData("outputVariables");
+    const outputVariables = commandLineStepModel?.getArrayData("outputCustomParameters");
     const environmentVariables = commandLineStepModel?.getArrayData("environmentVariables");
     const outputKey = commandLineInputParameterModel?.getData("outputKey");
 
