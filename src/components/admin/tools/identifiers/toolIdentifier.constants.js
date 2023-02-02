@@ -51,6 +51,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   GIT_OPERATION: "git-operation",
   GITSCRAPER: "gitscraper",
   HASHICORP_VAULT: "hashicorp_vault",
+  HELM: "helm",
   INFORMATICA: "informatica",
   INFORMATICA_IDQ: "informatica-idq",
   JENKINS: "jenkins",
