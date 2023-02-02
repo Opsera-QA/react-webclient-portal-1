@@ -9,6 +9,7 @@ import TabPanelContainer from "../../../../../common/panels/general/TabPanelCont
 function DoraJiraOrgsActionableOverlay({ kpiConfiguration, dashboardData, data }) {
     const [activeTab, setActiveTab] = useState("main");
     const toastContext = useContext(DialogToastContext);
+    const noDataMessage = "No data for Dora actionable insights report is currently unavailable.";
     const newData = [];
     data.forEach((obj) => {newData.push(obj.name);});
 
@@ -18,14 +19,19 @@ function DoraJiraOrgsActionableOverlay({ kpiConfiguration, dashboardData, data }
     };
 
     const getBody = () => {
-        if (activeTab == "main") {
-            return (
-                <DoraJiraActionableTab
-                    orgs={newData}
-                    dashboardData={dashboardData}
-                    kpiConfiguration={kpiConfiguration}
-                />
-            );
+        if (data.length > 0) {
+            if (activeTab == "main") {
+                return (
+                    <DoraJiraActionableTab
+                        orgs={newData}
+                        dashboardData={dashboardData}
+                        kpiConfiguration={kpiConfiguration}
+                    />
+                );
+            }
+        }
+        else{
+            return noDataMessage;
         }
 
     };
