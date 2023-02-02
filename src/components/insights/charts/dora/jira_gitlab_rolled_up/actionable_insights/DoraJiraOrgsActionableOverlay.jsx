@@ -9,7 +9,7 @@ import TabPanelContainer from "../../../../../common/panels/general/TabPanelCont
 function DoraJiraOrgsActionableOverlay({ kpiConfiguration, dashboardData, data }) {
     const [activeTab, setActiveTab] = useState("main");
     const toastContext = useContext(DialogToastContext);
-    const noDataMessage = "No data for Dora actionable insights report is currently unavailable.";
+    const noDataMessage = "No data for Dora actionable insights report is currently available.";
     const newData = [];
     data.forEach((obj) => {newData.push(obj.name);});
 
