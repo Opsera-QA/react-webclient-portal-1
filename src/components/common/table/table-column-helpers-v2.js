@@ -669,13 +669,13 @@ export const getExternalLinkWithIcon = (field, className, width) => {
     class: className,
     width: width,
     tooltipTemplate: function (value) {
-      return `<div class="custom-tooltip"><span>${value?.key}</span></div>`;
+      return `<div class="custom-tooltip"><span>${value?.key || value}</span></div>`;
     },
     template: function (value) {
       return (`
-        <a href=${value?.url} target="_blank" className="text-muted console-text-invert-modal">
+        <a href=${value?.url || value} target="_blank" className="text-muted console-text-invert-modal">
           <i class="fal fa-external-link cell-icon my-auto"></i>
-          <span>${value?.key}</span>
+          <span>${value?.key || value}</span>
         </a>
       `);      
     },

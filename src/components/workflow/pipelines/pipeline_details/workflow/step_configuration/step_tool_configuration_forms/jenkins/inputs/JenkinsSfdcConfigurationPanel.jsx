@@ -1,14 +1,9 @@
-import React, {useEffect, useState, useContext, useRef} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import JenkinsSfdcInput from "components/common/list_of_values_input/tools/jenkins/JenkinsSfdcInput";
-import pipelineActions from "components/workflow/pipeline-actions.js";
+import JenkinsStepSalesforceConfiguratorToolSelectInput from "components/common/list_of_values_input/tools/jenkins/JenkinsStepSalesforceConfiguratorToolSelectInput";
 import { Form } from "react-bootstrap";
-import JenkinsDestinationSalesForceCredentialsInput from "components/common/list_of_values_input/tools/jenkins/JenkinsDestinationSalesForceCredentialsInput";
+import JenkinsStepDestinationSalesforceCredentialsSelectInput from "components/common/list_of_values_input/tools/jenkins/JenkinsStepDestinationSalesforceCredentialsSelectInput";
 import JenkinsSfdcUnitTestTypeSelectInput from "components/common/list_of_values_input/tools/jenkins/JenkinsSfdcUnitTestTypeSelectInput";
-import {AuthContext} from "contexts/AuthContext";
-import axios from "axios";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import toolsActions from "components/inventory/tools/tools-actions";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 // TODO: Is this supposed to still be in here
@@ -16,69 +11,6 @@ const testArr = ["SFDC UNIT TESTING", "SFDC VALIDATE PACKAGE XML", "SFDC DEPLOY"
 
 // TODO: Rewrite
 function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const { toastContext } = useContext(DialogToastContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const [sfdcList, setSfdcList] = useState([]);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    setSfdcList([]);
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-      const response = await toolsActions.getRoleLimitedToolsByIdentifier(getAccessToken, cancelTokenSource,"sfdc-configurator");
-      const toolsReponse = response?.data?.data;
-
-      if (isMounted?.current === true && Array.isArray(toolsReponse)) {
-        let tools = [];
-        toolsReponse.map((item) => {
-          tools.push({
-            name: item.name,
-            id: item._id,
-            configuration: item.configuration,
-            accounts: item.accounts,
-            jobs: item.jobs,
-          });
-        });
-
-        if (Array.isArray(tools) && tools.length > 0) {
-          const filteredList = tools.filter((el) => el.configuration !== undefined);
-          if (Array.isArray(filteredList) && filteredList.length > 0) {
-            setSfdcList(filteredList);
-          }
-        }
-      }
-    }
-    catch (error) {
-      toastContext.showErrorDialog(error);
-    }
-    finally {
-      setIsLoading(false);
-    }
-  };
-
   const handleSFDCCreatePackageXMLChange = (checked) => {
     let newDataObject = { ...dataObject };
     newDataObject.setData("isOrgToOrg", checked);
@@ -90,11 +22,9 @@ function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
   const getJenkinsSfdcInput = () => {
     if (dataObject.getData("jobType") !== "SFDC PUSH ARTIFACTS") {
      return (
-       <JenkinsSfdcInput
-         dataObject={dataObject}
-         setDataObject={setDataObject}
-         sfdcList={sfdcList}
-         busy={isLoading}
+       <JenkinsStepSalesforceConfiguratorToolSelectInput
+         model={dataObject}
+         setModel={setDataObject}
        />
      );
     }
@@ -117,11 +47,9 @@ function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
   const getSfdcCredentialsInput = () => {
     if (dataObject?.getData("isOrgToOrg")) {
       return (
-        <JenkinsDestinationSalesForceCredentialsInput
-          dataObject={dataObject}
-          setDataObject={setDataObject}
-          sfdcList={sfdcList}
-          busy={isLoading}
+        <JenkinsStepDestinationSalesforceCredentialsSelectInput
+          model={dataObject}
+          setModel={setDataObject}
         />
       );
     }
@@ -130,7 +58,10 @@ function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
   const getUnitTestTypeInput = () => {
     if (dataObject?.getData("sfdcToolId")?.length > 0 && testArr.includes(dataObject?.getData("jobType"))) {
       return (
-        <JenkinsSfdcUnitTestTypeSelectInput dataObject={dataObject} setDataObject={setDataObject} />
+        <JenkinsSfdcUnitTestTypeSelectInput
+          dataObject={dataObject}
+          setDataObject={setDataObject}
+        />
       );
     }
   };
