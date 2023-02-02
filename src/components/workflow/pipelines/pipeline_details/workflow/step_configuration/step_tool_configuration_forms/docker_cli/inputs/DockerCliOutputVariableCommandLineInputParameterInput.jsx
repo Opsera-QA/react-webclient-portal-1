@@ -71,7 +71,7 @@ export default function DockerCliOutputVariableCommandLineInputParameterInput(
         });
       }
     });
-console.log(model);
+
     model.setData(fieldName, newArray);
     setModel({...model});
     return true;

@@ -70,7 +70,7 @@ export default function CommandLineInputParameterInputBase(
         });
       }
     });
-console.log(model);
+
     model.setData(fieldName, newArray);
     setModel({...model});
     return true;

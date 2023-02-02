@@ -20,7 +20,7 @@ function DockerCliOutputVariablesInputForm({ model, setModel, plan }) {
       );
     }
   };
-console.log(model);
+
   return (
     <>
       <BooleanToggleInput
