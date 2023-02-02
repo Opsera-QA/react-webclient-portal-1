@@ -9,6 +9,7 @@ import CustomEnvironmentVariablesSubNavigationBar
 import customEnvironmentVariableActions
   from "components/admin/environment_variables/customEnvironmentVariables.actions";
 import StandaloneJsonField from "components/common/fields/json/StandaloneJsonField";
+import {NODE_ANALYTICS_API_SERVER_URL, NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 
 function CustomEnvironmentVariableManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -83,8 +84,8 @@ function CustomEnvironmentVariableManagement() {
       PUBLIC_URL: process.env.PUBLIC_URL,
       REACT_APP_OPSERA_CLIENT_HOST: process.env.REACT_APP_OPSERA_CLIENT_HOST,
       REACT_APP_OPSERA_CLIENT_ROOT_URL: process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL,
-      REACT_APP_OPSERA_API_SERVER_URL: process.env.REACT_APP_OPSERA_API_SERVER_URL,
-      REACT_APP_ANALYTICS_API_SERVER_URL: process.env.REACT_APP_ANALYTICS_API_SERVER_URL,
+      REACT_APP_OPSERA_API_SERVER_URL: NODE_API_ORCHESTRATOR_SERVER_URL,
+      REACT_APP_ANALYTICS_API_SERVER_URL: NODE_ANALYTICS_API_SERVER_URL,
       REACT_APP_OPSERA_ANALYTICS_SERVER_URL: process.env.REACT_APP_OPSERA_ANALYTICS_SERVER_URL,
       REACT_APP_OPSERA_S3_STORAGE_URL: process.env.REACT_APP_OPSERA_S3_STORAGE_URL,
       REACT_APP_OPSERA_TENANT: process.env.REACT_APP_OPSERA_TENANT,

@@ -8,8 +8,8 @@ import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
-function HelmPipelineStepConfigurationSummaryPanel({ terraformPipelineDataObject, pipelineData, setActiveTab }) {
-  if (terraformPipelineDataObject == null) {
+function HelmPipelineStepConfigurationSummaryPanel({ helmPipelineDataObject, pipelineData, setActiveTab }) {
+  if (helmPipelineDataObject == null) {
     return <LoadingDialog size="sm" />;
   }
 
@@ -17,25 +17,25 @@ function HelmPipelineStepConfigurationSummaryPanel({ terraformPipelineDataObject
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={terraformPipelineDataObject} fieldName={"type"}/>
+          <TextFieldBase dataObject={helmPipelineDataObject} fieldName={"type"}/>
         </Col>
         <Col lg={6}>
-          <ToolNameField model={terraformPipelineDataObject} fieldName={"gitToolId"}/>
+          <ToolNameField model={helmPipelineDataObject} fieldName={"gitToolId"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={terraformPipelineDataObject} fieldName={"gitRepository"}/>
+          <TextFieldBase dataObject={helmPipelineDataObject} fieldName={"gitRepository"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={terraformPipelineDataObject} fieldName={"defaultBranch"}/>
+          <TextFieldBase dataObject={helmPipelineDataObject} fieldName={"defaultBranch"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={terraformPipelineDataObject} fieldName={"gitFilePath"}/>
+          <TextFieldBase dataObject={helmPipelineDataObject} fieldName={"gitFilePath"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={terraformPipelineDataObject} fieldName={"gitRepositoryID"}/>
+          <TextFieldBase dataObject={helmPipelineDataObject} fieldName={"gitRepositoryID"}/>
         </Col>
         <Col lg={6}>
-          <JsonField dataObject={terraformPipelineDataObject} fieldName={"keyValueMap"}/>
+          <JsonField dataObject={helmPipelineDataObject} fieldName={"keyValueMap"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
@@ -43,7 +43,7 @@ function HelmPipelineStepConfigurationSummaryPanel({ terraformPipelineDataObject
 }
 
 HelmPipelineStepConfigurationSummaryPanel.propTypes = {
-  terraformPipelineDataObject: PropTypes.object,
+  helmPipelineDataObject: PropTypes.object,
   pipelineData: PropTypes.object,
   setActiveTab: PropTypes.func
 };

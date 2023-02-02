@@ -7,16 +7,14 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import CodeInputBase from "components/common/inputs/code/CodeInputBase";
 import ToggleThemeIconButton from "components/common/buttons/toggle/ToggleThemeIconButton";
 import IconBase from "components/common/icons/IconBase";
 import InfoContainer from "components/common/containers/InfoContainer";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import CopyToClipboardIcon from "components/common/icons/CopyToClipboardIcon";
 import MonacoEditorCodeInputBase from "./MonacoEditorCodeInputBase";
-import MonacoEditorCodeDiffInputBase from "./MonacoEditorCodeDiffInputBase";
+import CopyToClipboardButton from "components/common/buttons/clipboard/CopyToClipboardButton";
 
 // TODO: If more are added, make sure to add the respective imports into CodeInputBase
 export const CODE_THEME_TYPES = {
@@ -76,14 +74,16 @@ function MonacoCodeInput({
   const getTitleBarActionButtons = () => {
     return (
       <div className={"d-flex"}>
-        <div className={"mr-2"}>{titleBarActionButtons}</div>
-        <CopyToClipboardIcon
+        <div className={"ml-2"}>{titleBarActionButtons}</div>
+        <CopyToClipboardButton
           copyString={model?.getData(fieldName)}
-          className={"mr-2"}
+          className={"ml-2"}
+          size={"sm"}
         />
         <ToggleThemeIconButton
           theme={internalTheme}
           toggleTheme={toggleTheme}
+          className={"ml-2"}
         />
       </div>
     );
