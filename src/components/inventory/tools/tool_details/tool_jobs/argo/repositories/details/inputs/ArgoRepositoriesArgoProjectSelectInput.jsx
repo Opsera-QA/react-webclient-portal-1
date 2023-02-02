@@ -15,7 +15,7 @@ function ArgoRepositoriesArgoProjectSelectInput(
   }) {
   const setDataFunction = (fieldName, value) => {
     const newModel = model;
-    newModel.setData("projectName", value?.name);
+    newModel.setData("project", value?.name);
     setModel({ ...newModel });
   };
 

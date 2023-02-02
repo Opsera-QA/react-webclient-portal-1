@@ -681,3 +681,23 @@ export const getExternalLinkWithIcon = (field, className, width) => {
     },
   };
 };
+
+export const getArgoConnectionStatus = (field, className, width=200) => {
+  return {
+    header: getColumnHeader(field),
+    id: getColumnId(field),
+    class: className,
+    width: width,
+    tooltipTemplate: function (value) {
+      return `<div class="custom-tooltip"><span>${value?.message ? value?.message : value?.status}</span></div>`;
+    },
+    template: function (value) {
+      return (`
+        <span>
+          <i class="fal ${getPipelineStatusIconCss(String(value?.status).toLowerCase())} cell-icon my-auto"></i>
+          <span class="ml-1">${capitalizeFirstLetter(value?.status)}</span>
+        </span>
+      `);      
+    },
+  };
+};

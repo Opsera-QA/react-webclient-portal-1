@@ -11,7 +11,7 @@ import HelmGitRepositorySelectInput from "components/workflow/pipelines/pipeline
 import helmStepFormMetadata from "./helm-stepForm-metadata";
 import HelmCustomParametersInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/helm/inputs/HelmCustomParametersInput";
-import HelmCloudProviderSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCloudProviderSelectInput";
+import HelmCloudProviderSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/helm/inputs/HelmCloudProviderSelectInput";
 import CloudCredentialSubForm from "./sub_forms/CloudCredentialSubForm";
 import CustomScriptSubForm from "./sub_forms/CustomScriptSubForm";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";

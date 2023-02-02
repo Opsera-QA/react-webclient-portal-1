@@ -12,7 +12,7 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import _ from "lodash";
-import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function AzureDevOpsBranchSelectInput({
   fieldName,
@@ -96,7 +96,7 @@ function AzureDevOpsBranchSelectInput({
   );
 
   return (
-    <LazyLoadSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}

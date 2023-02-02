@@ -1,14 +1,14 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {argoCdActions} from "components/common/list_of_values_input/tools/argo_cd/argocd.actions";
 
-function ArgoRepositorySelectInput(
+function ArgoRepositoryMultiSelectInput(
   {
     fieldName,
     model,
@@ -98,7 +98,7 @@ function ArgoRepositorySelectInput(
 
   return (
     <div className={className}>
-      <SelectInputBase
+      <MultiSelectInputBase
         fieldName={fieldName}
         dataObject={model}
         setDataObject={setModel}
@@ -117,7 +117,7 @@ function ArgoRepositorySelectInput(
   );
 }
 
-ArgoRepositorySelectInput.propTypes = {
+ArgoRepositoryMultiSelectInput.propTypes = {
   argoToolId: PropTypes.string,
   fieldName: PropTypes.string,
   model: PropTypes.object,
@@ -129,4 +129,4 @@ ArgoRepositorySelectInput.propTypes = {
   clearDataFunction: PropTypes.func,
 };
 
-export default ArgoRepositorySelectInput;
+export default ArgoRepositoryMultiSelectInput;

@@ -6,6 +6,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import GenericItemField from "components/common/fields/multiple_items/GenericItemField";
+import DateTimeField from "components/common/fields/date/DateTimeField";
 
 function AnalyticsDataEntrySummaryPanelContainer({ analyticsDataEntry, setActiveTab, children }) {
   if (analyticsDataEntry == null) {
@@ -31,10 +32,10 @@ function AnalyticsDataEntrySummaryPanelContainer({ analyticsDataEntry, setActive
           <GenericItemField dataObject={analyticsDataEntry} fieldName={"data.application"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={analyticsDataEntry} fieldName={"data.from"} />
+          <DateTimeField dataObject={analyticsDataEntry} fieldName={"data.from"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={analyticsDataEntry} fieldName={"data.to"} />
+          <DateTimeField dataObject={analyticsDataEntry} fieldName={"data.to"} />
         </Col>
         {children}
         <Col lg={12}>

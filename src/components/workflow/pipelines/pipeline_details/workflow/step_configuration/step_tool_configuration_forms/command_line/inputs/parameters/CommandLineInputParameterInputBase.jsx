@@ -82,7 +82,7 @@ export default function CommandLineInputParameterInputBase(
     const parsedUpdatedData = DataParsingHelper.parseArray(model?.getData("environmentVariables"), []);
     const field = model?.getFieldById("environmentVariables");
 
-    if (parsedUpdatedData.length > field.maxItems) {
+    if (parsedUpdatedData.length > field?.maxItems) {
       setError(`You have reached the maximum allowed number of Global Parameters. Please remove one to add another.`);
       return false;
     }
@@ -164,7 +164,7 @@ export default function CommandLineInputParameterInputBase(
       return false;
     }
 
-    if (parsedUpdatedData.length > field.maxItems) {
+    if (parsedUpdatedData.length > field?.maxItems) {
       setError(`You have reached the maximum allowed number of Local Input Parameters. Please remove one to add another.`);
       return false;
     }
