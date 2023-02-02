@@ -252,6 +252,8 @@ import SnykPipelineStepConfigurationSummary from "./step_tool_configuration_form
 import snykStepFormMetadata from "./step_tool_configuration_forms/snyk/snyk-stepForm-metadata";
 import AquasecPipelineStepConfigurationSummary from "./step_tool_configuration_forms/aquasec/AquasecPipelineStepConfigurationSummary";
 import AquasecStepFormMetadata from "./step_tool_configuration_forms/aquasec/aquasec-stepForm-metadata";
+import HelmPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/helm/HelmPipelineStepConfigurationSummaryPanel";
+import helmStepFormMetadata from "./step_tool_configuration_forms/helm/helm-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -793,6 +795,13 @@ function PipelineStepConfigurationSummary({
             <AquasecPipelineStepConfigurationSummary
                 pipelineData={pipelineData}
                 aquasecPipelineDataObject={getModelWrappedObject(AquasecStepFormMetadata)}
+            />
+        );        
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.HELM:
+        return (
+            <HelmPipelineStepConfigurationSummaryPanel
+                pipelineData={pipelineData}
+                helmPipelineDataObject={getModelWrappedObject(helmStepFormMetadata)}
             />
         );        
       default:
