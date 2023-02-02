@@ -5,6 +5,7 @@ import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import CommandLineDependencyTypeInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineDependencyTypeInput";
 import EditableParameterMappingInput from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingInput";
+import DockerCliCommandLineInputParameterInput from "../inputs/DockerCliCommandLineInputParameterInput";
 
 function DockerCliDependenciesInputForm({ model, setModel, plan }) {
 
@@ -21,12 +22,12 @@ function DockerCliDependenciesInputForm({ model, setModel, plan }) {
             setDataObject={setModel}
             fieldName={"commands"}        
           />
-          <EditableParameterMappingInput
-            model={model}
-            setModel={setModel}
-            fieldName={"environmentVariables"}
-            nameMaxLength={50}
-          />
+
+          <DockerCliCommandLineInputParameterInput 
+            model={model} 
+            setModel={setModel} 
+            plan={plan} 
+            fieldName={"environmentVariables"} />
         </>
       );
     }
