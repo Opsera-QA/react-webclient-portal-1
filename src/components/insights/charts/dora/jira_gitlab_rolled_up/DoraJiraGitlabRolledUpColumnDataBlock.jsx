@@ -11,7 +11,7 @@ import {
 function DoraJiraGitlabRolledUpColumnDataBlock({
   overlayData,
   maturityScoreText,
-  onSelect
+  onSelect,
 }) {
   const maturityScore = getMaturityScoreText(maturityScoreText);
   const maturityColor = getMaturityColorClass(maturityScoreText);
@@ -57,25 +57,25 @@ function DoraJiraGitlabRolledUpColumnDataBlock({
   };
 
   return (
-    <div>
-      <Row
-        className={`ml-3 mr-5 p-2 d-flex maturity-top-border ${maturityColor}`}
-      >
-        <div
-          className={
-            "d-flex pr-1 dark-gray-text-primary metric-block-content-text font-inter-light-500 pointer"
-          }
-          onClick={onSelect}
+      <div>
+        <Row
+            className={`ml-3 mr-5 p-2 d-flex maturity-top-border ${maturityColor}`}
         >
-          {maturityScore}
-        </div>
-      </Row>
-      <Row
-        className={`ml-3 w-100 h-100 text-center maturity-rolled-up-border ${maturityColor}`}
-      >
-        <div style={{ minHeight: "400px" }}>{getOrgData(overlayData)}</div>
-      </Row>
-    </div>
+          <div
+              className={
+                "d-flex pr-1 dark-gray-text-primary metric-block-content-text font-inter-light-500 pointer"
+              }
+              onClick={onSelect}
+          >
+            {maturityScore}
+          </div>
+        </Row>
+        <Row
+            className={`ml-3 w-100 h-100 text-center maturity-rolled-up-border ${maturityColor}`}
+        >
+          <div style={{ minHeight: "400px" }}>{getOrgData(overlayData)}</div>
+        </Row>
+      </div>
   );
 }
 
