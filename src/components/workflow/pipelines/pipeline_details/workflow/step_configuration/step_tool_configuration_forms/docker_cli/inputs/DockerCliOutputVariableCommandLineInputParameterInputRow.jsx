@@ -13,7 +13,7 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const DOCKER_CLI_OUTPUT_VARIABLE_SELECT_OPTIONS = [
-{text: "Docker Registry Name", value: "docker_registry_name "},
+{text: "Docker Registry Name", value: "docker_registry_name"},
 {text: "Docker Tag Name", value:"docker_tag_name"},
 {text: "Docker Name", value:"docker_name"},
 ];
