@@ -58,7 +58,7 @@ function AquasecLogSummaryTable({ aquasecObj }) {
           className={"mr-2"}
           icon={faCheckCircle}
         />
-        There were no secrets identified with this execution.
+        There were no vulnerabilities identified with this execution.
       </div>
     );
   }
