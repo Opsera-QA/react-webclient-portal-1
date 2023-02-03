@@ -73,7 +73,7 @@ export default function DockerCliOutputVariableCommandLineInputParameterInput(
   };
 
   const deleteCustomParameter = (index) => {
-    const currentData = model?.getArrayData("environmentVariables");
+    const currentData = model?.getArrayData(fieldName);
     currentData.splice(index, 1);
     model.setData(fieldName, [...currentData]);
     setModel({...model});
