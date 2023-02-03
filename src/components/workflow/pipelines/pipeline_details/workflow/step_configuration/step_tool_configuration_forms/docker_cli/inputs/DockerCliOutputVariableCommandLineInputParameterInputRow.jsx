@@ -75,7 +75,7 @@ export default function DockerCliOutputVariableCommandLineInputParameterInputRow
   };
 
   const isValid = commandLineInputParameterModel?.checkCurrentValidity();
-  const missingOutputKey = saveEnvironmentVariables === true && hasStringValue(commandLineInputParameterModel?.getData("outputKey")) !== true;
+  const missingOutputKey = hasStringValue(commandLineInputParameterModel?.getData("outputKey")) !== true;
   const isDuplicateName = hasDuplicateName();
   const isDuplicateValue = hasDuplicateValue();
 
@@ -115,7 +115,7 @@ export default function DockerCliOutputVariableCommandLineInputParameterInputRow
               className={"ml-auto"}
               variant={"success"}
               icon={faPlus}
-              disabled={ isValid !== true || disabled === true || missingOutputKey === true || isDuplicateName === true || isDuplicateValue === true}
+              disabled={ isValid !== true || disabled === true || missingOutputKey === true || isDuplicateName === true || isDuplicateValue === true || !commandLineInputParameterModel.getData("parameterId")}
               onClickFunction={handleAddPropertyFunction}
               normalText={"Add Parameter"}
             />
