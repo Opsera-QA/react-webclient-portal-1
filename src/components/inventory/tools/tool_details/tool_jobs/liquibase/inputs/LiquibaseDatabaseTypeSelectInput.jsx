@@ -5,6 +5,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 const DB_TYPES = [
   { name: "Snowflake", value: "snowflake" },
   { name: "Oracle", value: "oracle"},
+  { name: "Redshift", value: "redshift"},
 ];
 
 function LiquibaseDatabaseTypeSelectInput({ fieldName, model, setModel, disabled, textField, valueField }) {
