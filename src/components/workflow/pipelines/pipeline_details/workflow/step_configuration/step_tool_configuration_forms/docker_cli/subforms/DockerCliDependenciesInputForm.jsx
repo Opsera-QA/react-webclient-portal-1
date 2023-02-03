@@ -33,6 +33,12 @@ function DockerCliDependenciesInputForm({ model, setModel, plan }) {
             allowTerraformParametersSync={true}
             allowParameterMapping={true}
           />
+          {/*<DockerCliCommandLineInputParameterInput */}
+          {/*  model={model} */}
+          {/*  setModel={setModel} */}
+          {/*  plan={plan} */}
+          {/*  fieldName={"environmentVariables"} */}
+          {/*/>*/}
         </>
       );
     }

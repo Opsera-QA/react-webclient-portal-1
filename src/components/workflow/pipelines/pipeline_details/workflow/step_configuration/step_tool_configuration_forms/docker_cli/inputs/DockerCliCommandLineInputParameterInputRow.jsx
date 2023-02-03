@@ -19,7 +19,6 @@ export default function DockerCliCommandLineInputParameterInputRow(
     className,
     disabled,
     saveEnvironmentVariables,
-    addLocalParameterFunction,
     addEnvironmentParameterFunction,
     addGlobalCustomParameterFunction,
     commandLineStepModel,
@@ -67,7 +66,7 @@ export default function DockerCliCommandLineInputParameterInputRow(
             <Col xs={5}>
               <CustomParameterSelectInput
                 model={commandLineInputParameterModel}
-                fieldName={"parameterId"}
+                fieldName={"parameterId"} 
                 disabled={disabled}
                 setDataFunction={setParameterFunction}
               />
@@ -112,7 +111,6 @@ export default function DockerCliCommandLineInputParameterInputRow(
 
 DockerCliCommandLineInputParameterInputRow.propTypes = {
   addGlobalCustomParameterFunction: PropTypes.func,
-  addLocalParameterFunction: PropTypes.func,
   addEnvironmentParameterFunction: PropTypes.func,
   commandLineStepModel: PropTypes.object,
   className: PropTypes.string,

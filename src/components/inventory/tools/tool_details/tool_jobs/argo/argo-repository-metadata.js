@@ -10,12 +10,7 @@ const argoRepositoryMetadata = {
     },
     {
       label: "Name",
-      id: "name",
-      isRequired: true,
-      lowercase: true,
-      spacesAllowed: false,
-      formText: "Name cannot contain spaces.",
-      maxLength: 63
+      id: "name",      
     },
     {
       label: "SCM type",
@@ -58,13 +53,21 @@ const argoRepositoryMetadata = {
     },
     {
       label: "Repository Type",
-      id: "repositoryType",
+      id: "type",
       isRequired: true
     },
     {
       label: "Project Name",
-      id: "projectName",
+      id: "project",
       isRequired: true
+    },
+    {
+      label: "Repository",
+      id: "repo",
+    },
+    {
+      label: "Connection Status",
+      id: "connectionState",
     },
   ],
   newObjectFields: {
@@ -77,8 +80,8 @@ const argoRepositoryMetadata = {
     repositoryName: "",
     projectId: "",
     repoId: "",
-    repositoryType: "git",
-    projectName: "",
+    type: "git",
+    project: "",
   }
 };
 

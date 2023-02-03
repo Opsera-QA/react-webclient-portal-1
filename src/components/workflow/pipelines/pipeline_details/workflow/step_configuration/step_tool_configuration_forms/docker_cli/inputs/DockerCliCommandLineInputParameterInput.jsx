@@ -8,15 +8,13 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import ParameterSelectListHeaderField
-  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListHeaderField";
-import ParameterSelectListInlineField
-  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInlineField";
 import PipelineStepParameterInputBaseHelpText
   from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBaseHelpText";
 import DockerCliCommandLineInputParameterInputRow from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_cli/inputs/DockerCliCommandLineInputParameterInputRow";
 import PipelineStepSaveEnvironmentVariablesBooleanToggle
   from "components/common/list_of_values_input/parameters/pipeline/PipelineStepSaveEnvironmentVariablesBooleanToggle";
+import DockerCliParameterSelectListInlineField from "../parameters/DockerCliParameterSelectListInlineField";
+import DockerCliParameterSelectListHeaderField from "../parameters/DockerCliParameterSelectListHeaderField";
 
 export default function CommandLineInputParameterInputBase(
   {
@@ -24,7 +22,8 @@ export default function CommandLineInputParameterInputBase(
     setModel,
     disabled,
     plan,
-    fieldName
+    fieldName,
+    subheaderText
   }) {
   const [error, setError] = useState(undefined);
 
@@ -55,6 +54,7 @@ export default function CommandLineInputParameterInputBase(
     newArray.push({
       parameterId: newParameter?.parameterId,
       parameterName: newParameter?.parameterName,
+      outputKey: newParameter?.outputKey
     });
 
     parsedUpdatedData.forEach((parameter) => {
@@ -62,6 +62,7 @@ export default function CommandLineInputParameterInputBase(
         newArray.push({
           parameterName: parameter?.parameterName,
           parameterId: parameter?.parameterId,
+          outputKey: newParameter?.outputKey
         });
       }
     });
@@ -87,7 +88,7 @@ export default function CommandLineInputParameterInputBase(
           <div className={"d-flex justify-content-between"}>
             <div>
               <H5FieldSubHeader
-                subheaderText={"Global Parameters"}
+                subheaderText={subheaderText ? subheaderText : "Global Parameters"}
               />
             </div>
             <div className={"d-flex"}>
@@ -105,11 +106,11 @@ export default function CommandLineInputParameterInputBase(
               overflowY: "hidden",
             }}
           >
-            <ParameterSelectListHeaderField/>
+            <DockerCliParameterSelectListHeaderField/>
 
             {customParameters.map((parameter, index) => {
               return (
-                <ParameterSelectListInlineField
+                <DockerCliParameterSelectListInlineField
                   disabled={disabled}
                   parameter={parameter}
                   deleteParameterFunction={deleteCustomParameter}
@@ -128,7 +129,7 @@ export default function CommandLineInputParameterInputBase(
       <div className={"mb-3"}>
         <div>
           <H5FieldSubHeader
-            subheaderText={"Global Parameters"}
+            subheaderText={subheaderText ? subheaderText : "Global Parameters"}
           />
         </div>
         <div
@@ -175,4 +176,5 @@ CommandLineInputParameterInputBase.propTypes = {
   disabled: PropTypes.bool,
   plan: PropTypes.array,
   fieldName: PropTypes.string,
+  subheaderText: PropTypes.string
 };

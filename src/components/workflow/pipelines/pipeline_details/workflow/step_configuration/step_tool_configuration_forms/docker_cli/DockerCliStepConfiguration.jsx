@@ -10,6 +10,7 @@ import DockerCliDependenciesInputForm from "./subforms/DockerCliDependenciesInpu
 import DockerCliDockerBuildDetailsInputForm from "./subforms/DockerCliDockerBuildDetailsInputForm";
 import DockerCliDockerPushDetailsInputForm from "./subforms/DockerCliDockerPushDetailsInputForm";
 import DockerCliScmDetailsInputForm from "./subforms/DockerCliScmDetailsInputForm";
+import DockerCliOutputVariablesInputForm from "./subforms/DockerCliOutputVariablesInputForm";
 
 function DockerCliStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -65,11 +66,17 @@ function DockerCliStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       <DockerCliDockerBuildDetailsInputForm
         model={dockerCliStepConfigurationDataDto}
         setModel={setDockerCliStepConfigurationDataDto}
+        plan={plan}
       />
       <DockerCliDockerPushDetailsInputForm
         model={dockerCliStepConfigurationDataDto}
         setModel={setDockerCliStepConfigurationDataDto}
         stepId={stepId}
+        plan={plan}
+      />
+      <DockerCliOutputVariablesInputForm 
+        model={dockerCliStepConfigurationDataDto}
+        setModel={setDockerCliStepConfigurationDataDto}
         plan={plan}
       />
     </PipelineStepEditorPanelContainer>
