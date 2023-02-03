@@ -33,8 +33,8 @@ import RoleRestrictedSonarToolSelectInput
   from "components/common/list_of_values_input/tools/sonar/tool/RoleRestrictedSonarToolSelectInput";
 import CommandLineSonarCustomParametersToggle from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineSonarCustomParametersToggle";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import CommandLineInputParameterInputBase
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParameterInputBase";
+import PipelineStepParameterInputBase
+  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBase";
 
 function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -170,10 +170,15 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
       <StepConfigUseTerraformOutput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
       {getTerraformSelect()}
       {getDynamicFields()}
-      <CommandLineInputParameterInputBase
+      <PipelineStepParameterInputBase
         model={commandLineStepConfigurationDto}
         setModel={setCommandLineStepConfigurationDataDto}
         plan={plan}
+        showSaveEnvironmentVariablesToggle={true}
+        allowLocalParameters={true}
+        allowTerraformParametersSync={true}
+        saveEnvironmentVariables={commandLineStepConfigurationDto?.getData("saveEnvironmentVariables") === true}
+        allowParameterMapping={true}
       />
       <ParameterSelectListInputBase
         titleIcon={faHandshake}
