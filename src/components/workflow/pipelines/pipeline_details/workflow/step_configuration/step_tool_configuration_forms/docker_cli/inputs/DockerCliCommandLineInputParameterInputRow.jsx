@@ -6,19 +6,14 @@ import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import {faPlus} from "@fortawesome/pro-light-svg-icons";
-import {
-  commandLineInputParameterMetadata
-} from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/commandLineInputParameter.metadata";
-import CommandLineInputParameterTypeSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParameterTypeSelectInput";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import TextAreaInput from "components/common/inputs/text/TextAreaInput";
-import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
+import {
+  pipelineStepParameterMetadata
+} from "components/common/list_of_values_input/parameters/pipeline/pipelineStepParameter.metadata";
 
-export default function CommandLineInputParameterInputRow(
+export default function DockerCliCommandLineInputParameterInputRow(
   {
     error,
     className,
@@ -28,7 +23,7 @@ export default function CommandLineInputParameterInputRow(
     addGlobalCustomParameterFunction,
     commandLineStepModel,
   }) {
-  const [commandLineInputParameterModel, setCommandLineInputParameterModel] = useState(modelHelpers.parseObjectIntoModel({}, commandLineInputParameterMetadata));
+  const [commandLineInputParameterModel, setCommandLineInputParameterModel] = useState(modelHelpers.parseObjectIntoModel({}, pipelineStepParameterMetadata));
 
   const handleAddPropertyFunction = () => {
     let successfulAdd = false;
@@ -114,7 +109,7 @@ export default function CommandLineInputParameterInputRow(
   );
 }
 
-CommandLineInputParameterInputRow.propTypes = {
+DockerCliCommandLineInputParameterInputRow.propTypes = {
   addGlobalCustomParameterFunction: PropTypes.func,
   addEnvironmentParameterFunction: PropTypes.func,
   commandLineStepModel: PropTypes.object,

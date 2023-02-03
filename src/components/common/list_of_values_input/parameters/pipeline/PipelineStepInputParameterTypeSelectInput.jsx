@@ -14,26 +14,32 @@ const INPUT_PARAMETER_TYPES = [
   }
 ];
 
-export default function CommandLineInputParameterTypeSelectInput(
+export default function PipelineStepInputParameterTypeSelectInput(
   {
     model, 
     setModel, 
     isLoading, 
     disabled,
-  }) {  
+    visible,
+  }) {
   const setDataFunction = async (fieldName, selectedOption) => {
     model.resetData();
     model.setData("type", selectedOption?.value);
 
     if (selectedOption?.value === "global") {
       model.setData("name", "");
+    } else {
+      model.setData("name", "opsera-local-");
     }
 
     setModel({ ...model });
   };
 
-  return (
+  if (visible === false) {
+    return null;
+  }
 
+  return (
     <SelectInputBase
       fieldName={"type"}
       dataObject={model}
@@ -49,10 +55,11 @@ export default function CommandLineInputParameterTypeSelectInput(
   );
 }
 
-CommandLineInputParameterTypeSelectInput.propTypes = {
+PipelineStepInputParameterTypeSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   isLoading: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  visible: PropTypes.bool,
 };

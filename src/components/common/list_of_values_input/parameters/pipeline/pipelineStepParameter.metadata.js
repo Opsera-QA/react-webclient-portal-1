@@ -1,4 +1,4 @@
-export const commandLineInputParameterMetadata = {
+export const pipelineStepParameterMetadata = {
   type: "Input Parameter Metadata",
   fields: [
     {
@@ -37,11 +37,12 @@ export const commandLineInputParameterMetadata = {
     {
       label: "Output Key",
       id: "outputKey",
+      maxLength: 50,
     },
   ],
   newObjectFields: {
-    type: "local",
-    name: "opsera-local-",
+    type: "global",
+    name: "",
     parameterId: "",
     parameterName: "",
     outputKey: "",

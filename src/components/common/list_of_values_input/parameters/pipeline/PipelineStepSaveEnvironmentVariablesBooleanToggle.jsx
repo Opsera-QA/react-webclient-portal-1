@@ -3,30 +3,29 @@ import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import CancelButtonBase from "components/common/buttons/cancel/CancelButtonBase";
-import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
-import IconBase from "components/common/icons/IconBase";
-import {faCheckCircle, faSave} from "@fortawesome/pro-light-svg-icons";
-import {Button} from "react-bootstrap";
+import {faCheckCircle} from "@fortawesome/pro-light-svg-icons";
 
-export default function CommandLineStepSaveEnvironmentVariablesBooleanToggle(
+export default function PipelineStepSaveEnvironmentVariablesBooleanToggle(
   {
     model,
     setModel,
     disabled,
     className,
+    visible,
+    environmentVariablesFieldName,
+    customParametersFieldName,
   }) {
   const [showConfirmationMessage, setShowConfirmationMessage] = useState(false);
-
   const setDataFunction = () => {
     model?.setData("saveEnvironmentVariables", !model?.getData("saveEnvironmentVariables"));
-    model?.setDefaultValue("environmentVariables");
-    model?.setDefaultValue("customParameters");
+    model?.setDefaultValue(environmentVariablesFieldName);
+    model?.setDefaultValue(customParametersFieldName);
     setModel({...model});
   };
 
   if (showConfirmationMessage === true) {
     return (
-      <div className={"d-flex"}>
+      <div className={"d-flex mb-auto"}>
         <div>Switching this setting will clear out Global Parameters. Would you like to proceed?</div>
         <VanityButtonBase
           className={"ml-2"}
@@ -45,6 +44,10 @@ export default function CommandLineStepSaveEnvironmentVariablesBooleanToggle(
     );
   }
 
+  if (visible === false) {
+    return null;
+  }
+
   return (
     <BooleanToggleInput
       className={className}
@@ -57,9 +60,17 @@ export default function CommandLineStepSaveEnvironmentVariablesBooleanToggle(
   );
 }
 
-CommandLineStepSaveEnvironmentVariablesBooleanToggle.propTypes = {
+PipelineStepSaveEnvironmentVariablesBooleanToggle.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string,
+  visible: PropTypes.bool,
+  environmentVariablesFieldName: PropTypes.string,
+  customParametersFieldName: PropTypes.string,
+};
+
+PipelineStepSaveEnvironmentVariablesBooleanToggle.defaultProps = {
+  environmentVariablesFieldName: "environmentVariables",
+  customParametersFieldName: "customParameters",
 };

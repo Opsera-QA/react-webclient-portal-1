@@ -158,6 +158,7 @@ const PipelineWorkflowItem = (
           toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_SCRIPTS,
           toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION,
           toolIdentifierConstants.TOOL_IDENTIFIERS.COMMAND_LINE,
+          toolIdentifierConstants.TOOL_IDENTIFIERS.DOCKER_CLI,
         ];
 
         if (newOverlayToolIdentifiers.includes(toolIdentifier) === true && type === "tool") {

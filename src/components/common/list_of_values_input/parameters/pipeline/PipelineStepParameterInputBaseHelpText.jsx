@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
-export default function CommandLineInputParameterInputBaseHelpText({ showTerraformHelpText, }) {
+export default function PipelineStepParameterInputBaseHelpText({ showTerraformHelpText, }) {
   const getDynamicHelpText = () => {
     if (showTerraformHelpText === true) {
       return (
@@ -44,6 +44,6 @@ export default function CommandLineInputParameterInputBaseHelpText({ showTerrafo
   );
 }
 
-CommandLineInputParameterInputBaseHelpText.propTypes = {
+PipelineStepParameterInputBaseHelpText.propTypes = {
   showTerraformHelpText: PropTypes.bool,
 };

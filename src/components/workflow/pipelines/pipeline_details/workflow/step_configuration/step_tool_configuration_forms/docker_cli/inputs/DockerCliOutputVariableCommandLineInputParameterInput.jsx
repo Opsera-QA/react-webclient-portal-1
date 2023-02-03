@@ -2,24 +2,19 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {faBracketsCurly, faInfoCircle, faSync} from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
-import CommandLineInputParameterInputRow
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParameterInputRow";
-import CommandLineStepSaveEnvironmentVariablesBooleanToggle
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineStepSaveEnvironmentVariablesBooleanToggle";
 import InputContainer from "components/common/inputs/InputContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import ParameterSelectListHeaderField
-  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListHeaderField";
-import ParameterSelectListInlineField
-  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInlineField";
-import CommandLineInputParameterInputBaseHelpText
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParameterInputBaseHelpText";
-import DockerCliCommandLineInputParameterInputRow from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_cli/inputs/DockerCliCommandLineInputParameterInputRow";
 import DockerCliOutputVariableCommandLineInputParameterInputRow from "./DockerCliOutputVariableCommandLineInputParameterInputRow";
+import DockerCliParameterSelectListHeaderField from "../parameters/DockerCliParameterSelectListHeaderField";
+import DockerCliParameterSelectListInlineField from "../parameters/DockerCliParameterSelectListInlineField";
+import PipelineStepSaveEnvironmentVariablesBooleanToggle
+  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepSaveEnvironmentVariablesBooleanToggle";
+import PipelineStepParameterInputBaseHelpText
+  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBaseHelpText";
 
 export default function DockerCliOutputVariableCommandLineInputParameterInput(
   {
@@ -35,7 +30,7 @@ export default function DockerCliOutputVariableCommandLineInputParameterInput(
   const getRightSideButtons = () => {
     return (
       <CenteredContentWrapper>
-        <CommandLineInputParameterInputBaseHelpText />
+        <PipelineStepParameterInputBaseHelpText />
       </CenteredContentWrapper>
     );
   };
@@ -97,7 +92,7 @@ export default function DockerCliOutputVariableCommandLineInputParameterInput(
               />
             </div>
             <div className={"d-flex"}>
-              <CommandLineStepSaveEnvironmentVariablesBooleanToggle
+              <PipelineStepSaveEnvironmentVariablesBooleanToggle
                 setModel={setModel}
                 model={model}
                 disabled={disabled}
@@ -111,11 +106,11 @@ export default function DockerCliOutputVariableCommandLineInputParameterInput(
               overflowY: "hidden",
             }}
           >
-            <ParameterSelectListHeaderField/>
+            <DockerCliParameterSelectListHeaderField/>
 
             {customParameters.map((parameter, index) => {
               return (
-                <ParameterSelectListInlineField
+                <DockerCliParameterSelectListInlineField
                   disabled={disabled}
                   parameter={parameter}
                   deleteParameterFunction={deleteCustomParameter}
