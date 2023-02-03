@@ -62,7 +62,7 @@ export default function DockerCliOutputVariableCommandLineInputParameterInput(
         newArray.push({
           parameterName: parameter?.parameterName,
           parameterId: parameter?.parameterId,
-          outputKey: newParameter?.outputKey
+          outputKey: parameter?.outputKey
         });
       }
     });
