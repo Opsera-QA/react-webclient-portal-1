@@ -1,14 +1,16 @@
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
-import Model from "core/data_model/model";
-import {analyticsDataEntryMetadata} from "components/settings/analytics_data_entry/analyticsDataEntry.metadata";
+import analyticsDataEntryMetadata
+  from "@opsera/definitions/constants/settings/analytics_data_entries/analyticsDataEntry.metadata";
 import AnalyticsDataEntryEditorPanel from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryEditorPanel";
+import useGetAnalyticsDataEntryModel from "hooks/settings/insights/analytics_data_entries/useGetAnalyticsDataEntryModel";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function NewAnalyticsDataEntryOverlay({ isMounted, loadData }) {
-  const toastContext = useContext(DialogToastContext);
-  const [analyticsDataEntry] = useState(new Model({...analyticsDataEntryMetadata.newObjectFields}, analyticsDataEntryMetadata, true));
+  const { toastContext } = useComponentStateReference();
+  const getAnalyticsDataEntryModel = useGetAnalyticsDataEntryModel();
+  const [analyticsDataEntryModel] = useState(getAnalyticsDataEntryModel(undefined, true));
 
   const closePanel = () => {
     if (isMounted?.current === true) {
@@ -21,7 +23,12 @@ function NewAnalyticsDataEntryOverlay({ isMounted, loadData }) {
 
   return (
     <CreateCenterPanel closePanel={closePanel} objectType={analyticsDataEntryMetadata.type} loadData={loadData}>
-      <AnalyticsDataEntryEditorPanel handleClose={closePanel} analyticsDataEntry={analyticsDataEntry}/>
+      <div className={"p-3"}>
+        <AnalyticsDataEntryEditorPanel
+          handleClose={closePanel}
+          analyticsDataEntry={analyticsDataEntryModel}
+        />
+      </div>
     </CreateCenterPanel>
   );
 }

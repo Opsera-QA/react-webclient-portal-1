@@ -41,7 +41,7 @@ function VanityCreateButton(
     if (addAnother) {
       await persistNewRecordAndAddAnother(model, toastContext, showSuccessToasts, setModel);
     }
-    else if (viewDetailsUponCreate !== false && model.getDetailViewLink != null && hasStringValue(model.getDetailViewLink()) === true) {
+    else if (viewDetailsUponCreate !== false && typeof model.getDetailViewLink === "function") {
       await persistNewRecordAndViewDetails(model, toastContext, showSuccessToasts, history);
     }
     else if (handleClose != null) {

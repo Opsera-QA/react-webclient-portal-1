@@ -75,7 +75,6 @@ const helmStepFormMetadata = {
     {
       label: "Resource Group",
       id: "resourceGroup",
-      isRequired: true
     },
     {
       label: "Storage Account Name",
@@ -139,12 +138,21 @@ const helmStepFormMetadata = {
     {
       label: "Service Name",
       id: "serviceName",
-      isRequired: true
+      isRequired: true,
+      lowercase: true,
     },
     {
       label: "Input File Name",
       id: "inputFileName",
       isRequired: true
+    },
+    {
+      label: "Cluster Type",
+      id: "clusterType"
+    },
+    {
+      label: "Azure Application",
+      id: "azureApplicationId"
     }
   ],
   newObjectFields: {

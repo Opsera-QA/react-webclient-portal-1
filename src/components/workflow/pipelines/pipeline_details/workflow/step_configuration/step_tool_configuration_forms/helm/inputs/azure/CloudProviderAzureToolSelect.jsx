@@ -6,16 +6,22 @@ import RoleRestrictedAzureToolSelectInput
 function CloudProviderAzureToolSelect({ fieldName, model, setModel, disabled, textField, valueField}) {
     const setDataFunction = (fieldName, selectedOption) => {
         let newModel = {...model};
-        newModel.setData("azureCredentialId", "");
+        newModel.setDefaultValue("azureCredentialId");
         newModel.setData(fieldName, selectedOption?._id);
+        newModel.setDefaultValue("clusterName");
+        newModel.setDefaultValue("namespace");
+        newModel.setDefaultValue("resourceGroup");
         setModel({...newModel});
     };
 
     const clearDataFunction = () => {
         let newModel = {...model};
-        newModel.setData(fieldName, "");
-        newModel.setData("azureToolConfigId", "");
-        newModel.setData("azureCredentialId", "");
+        newModel.setDefaultValue(fieldName);
+        newModel.setDefaultValue("azureToolConfigId");
+        newModel.setDefaultValue("azureCredentialId");
+        newModel.setDefaultValue("clusterName");
+        newModel.setDefaultValue("namespace");
+        newModel.setDefaultValue("resourceGroup");
         setModel({...newModel});
     };
 

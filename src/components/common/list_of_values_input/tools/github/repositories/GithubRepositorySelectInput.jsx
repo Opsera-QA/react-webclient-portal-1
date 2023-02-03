@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { githubActions } from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
 import _ from "lodash";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function GithubRepositorySelectInput(
   {
@@ -23,6 +23,7 @@ function GithubRepositorySelectInput(
   const [isLoading, setIsLoading] = useState(false);
   const [githubRepositories, setGithubRepositories] = useState([]);
   const [error, setError] = useState(undefined);
+  const [inEditMode, setInEditMode] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
   const { getAccessToken } = useContext(AuthContext);
@@ -37,7 +38,7 @@ function GithubRepositorySelectInput(
     setCancelTokenSource(source);
     setGithubRepositories([]);
 
-    if (isMongoDbId(toolId) === true) {
+    if (inEditMode === true && isMongoDbId(toolId) === true) {
       loadData("", toolId, source).catch((error) => {
         throw error;
       });
@@ -47,7 +48,7 @@ function GithubRepositorySelectInput(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId]);
+  }, [toolId, inEditMode]);
 
   const loadData = async (
     searchTerm = "",
@@ -98,7 +99,7 @@ function GithubRepositorySelectInput(
   );
 
   return (
-    <LazyLoadSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={model}
       helpTooltipText={getDataPullLimitMessage()}
@@ -114,6 +115,8 @@ function GithubRepositorySelectInput(
       pluralTopic={"Github Repositories"}
       error={error}
       onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }

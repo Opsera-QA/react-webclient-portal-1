@@ -4,9 +4,12 @@ import HelmAwsCredentialsSelectInput from "../inputs/aws/HelmAwsCredentialsSelec
 import TextInputBase from "../../../../../../../../common/inputs/text/TextInputBase";
 import CloudProviderAzureToolSelect from "../inputs/azure/CloudProviderAzureToolSelect";
 import CloudProviderAzureApplicationSelect from "../inputs/azure/CloudProviderAzureApplicationSelect";
-import HelmS3BucketSelectInput from "../inputs/aws/HelmS3BucketSelectInput";
-import HelmS3BucketRegionSelectInput from "../inputs/aws/HelmS3BucketRegionSelectInput";
+import AzureClusterTypeSelectInput from "../inputs/azure/AzureClusterTypeSelectInput";
+import HelmAzureClusterSelectInput from "../inputs/azure/HelmAzureClusterSelectInput";
+import AzureResourceGroupSelectInput from "../inputs/azure/AzureResourceGroupSelect";
 import HelmAwsClusterSelectInput from "../inputs/aws/HelmAwsClusterSelectInput";
+import HelmAwsNamespaceSelectInput from "../inputs/aws/HelmAwsNamespaceSelectInput";
+import HelmAzureNamespaceSelectInput from "../inputs/azure/HelmAzureNamespaceSelectInput";
 
 function CloudCredentialSubForm({ model, setModel}) {
 
@@ -28,8 +31,8 @@ function CloudCredentialSubForm({ model, setModel}) {
             return (
                 <>
                     <HelmAwsCredentialsSelectInput model={model} setModel={setModel} />
-                    <HelmS3BucketSelectInput model={model} setModel={setModel} />
-                    <HelmS3BucketRegionSelectInput model={model} setModel={setModel} fieldName="bucketRegion" />
+                    <HelmAwsClusterSelectInput model={model} setModel={setModel} awsToolConfigId={model.getData("awsToolConfigId")} />
+                    <HelmAwsNamespaceSelectInput model={model} setModel={setModel} awsToolConfigId={model.getData("awsToolConfigId")} clusterName={model.getData("clusterName")} />
                 </>
             );
         }
@@ -41,6 +44,10 @@ function CloudCredentialSubForm({ model, setModel}) {
                 <>
                     <CloudProviderAzureToolSelect model={model} setModel={setModel}/>
                     <CloudProviderAzureApplicationSelect model={model} setModel={setModel}/>
+                    <HelmAzureClusterSelectInput model={model} setModel={setModel} azureToolConfigId={model.getData("azureToolConfigId")} applicationId={model.getData("azureCredentialId")} />
+                    <AzureClusterTypeSelectInput model={model} setModel={setModel} azureToolConfigId={model.getData("azureToolConfigId")} azureApplication={model.getData("azureCredentialId")} clusterName={model.getData("clusterName")}/>
+                    <AzureResourceGroupSelectInput model={model} setModel={setModel} azureToolConfigId={model.getData("azureToolConfigId")} azureApplication={model.getData("azureCredentialId")} clusterName={model.getData("clusterName")} />
+                    <HelmAzureNamespaceSelectInput model={model} setModel={setModel} azureToolConfigId={model.getData("azureToolConfigId")} azureCredentialId={model.getData("azureCredentialId")} clusterName={model.getData("clusterName")} clusterType={model.getData("clusterType")} resourceGroup={model.getData("resourceGroup")} /> 
                 </>
             );
         }

@@ -12,7 +12,7 @@ import ArgoClusterNamespaceInput from "./inputs/ArgoClusterNamespaceInput";
 import ArgoGroupKindInput from "./inputs/ArgoGroupKindInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import ArgoRepositorySelectInput
-  from "components/common/list_of_values_input/tools/argo_cd/repositories/ArgoRepositorySelectInput";
+  from "components/common/list_of_values_input/tools/argo_cd/repositories/ArgoRepositoryMultiSelectInput";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ArgoProjectEditorPanel({ argoProjectData, toolId, handleClose }) {
@@ -25,61 +25,29 @@ function ArgoProjectEditorPanel({ argoProjectData, toolId, handleClose }) {
   }, [argoProjectData]);
 
   const createProject = async () => {
-    return await argoActions.createArgoProject(getAccessToken, cancelTokenSource, toolId, argoProjectModel);
+    return await argoActions.createArgoProjectV2(getAccessToken, cancelTokenSource, toolId, argoProjectModel);
   };
 
   const updateProject = async () => {
-    return await argoActions.updateArgoProject(getAccessToken, cancelTokenSource, toolId, argoProjectModel);
+    return await argoActions.updateArgoProjectV2(getAccessToken, cancelTokenSource, toolId, argoProjectModel);
   };
 
   const deleteProject = async () => {
-    await argoActions.deleteArgoProject(getAccessToken, cancelTokenSource, toolId, argoProjectModel?.getData("projId"));
+    const response = await argoActions.deleteArgoProjectV2(getAccessToken, cancelTokenSource, toolId, argoProjectModel?.getData("name"));
     handleClose();
+    return response;
   };
 
-  if (argoProjectModel == null) {
-    return <LoadingDialog size="sm" message={"Loading Data"} />;
-  }
-
-  return (
-    <EditorPanelContainer
-      recordDto={argoProjectModel}
-      createRecord={createProject}
-      updateRecord={updateProject}
-      setRecordDto={setArgoProjectModel}
-      extraButtons={
-        <DeleteButtonWithInlineConfirmation
-          dataObject={argoProjectModel}
-          deleteRecord={deleteProject}
-        />
-      }
-      handleClose={handleClose}
-    >
-      <div>
-        <Row>
-          <Col lg={12}>
-            <TextInputBase
-              setDataObject={setArgoProjectModel}
-              dataObject={argoProjectModel}
-              fieldName={"name"}
-              disabled={!argoProjectData?.isNew()}
-            />
-          </Col>
-          <Col lg={12}>
-            <TextInputBase
-              setDataObject={setArgoProjectModel}
-              dataObject={argoProjectModel}
-              fieldName={"description"}
-              disabled={!argoProjectData?.isNew()}
-            />
-          </Col>
+  const getAdvancedSettings = () => {
+    if (argoProjectModel.getData("advancedSettings") === true) {
+      return (
+        <>
           <Col lg={12}>
             <ArgoRepositorySelectInput
               fieldName={"sourceRepos"}
               model={argoProjectModel}
               setModel={setArgoProjectModel}
               argoToolId={toolId}
-              disabled={!argoProjectData?.isNew()}
             />
           </Col>
           <Col lg={12}>
@@ -116,6 +84,54 @@ function ArgoProjectEditorPanel({ argoProjectData, toolId, handleClose }) {
               fieldName={"orphanedResources"}
             />
           </Col>
+        </>
+      );
+    }
+  };
+
+  if (argoProjectModel == null) {
+    return <LoadingDialog size="sm" message={"Loading Data"} />;
+  }
+
+  return (
+    <EditorPanelContainer
+      recordDto={argoProjectModel}
+      createRecord={createProject}
+      updateRecord={updateProject}
+      setRecordDto={setArgoProjectModel}
+      extraButtons={
+        <DeleteButtonWithInlineConfirmation
+          dataObject={argoProjectModel}
+          deleteRecord={deleteProject}
+        />
+      }
+      handleClose={handleClose}
+    >
+      <div>
+        <Row>
+          <Col lg={12}>
+            <TextInputBase
+              setDataObject={setArgoProjectModel}
+              dataObject={argoProjectModel}
+              fieldName={"name"}
+              disabled={!argoProjectData?.isNew()}
+            />
+          </Col>
+          <Col lg={12}>
+            <TextInputBase
+              setDataObject={setArgoProjectModel}
+              dataObject={argoProjectModel}
+              fieldName={"description"}
+            />
+          </Col>
+          <Col lg={12}>
+            <BooleanToggleInput 
+              setDataObject={setArgoProjectModel}
+              dataObject={argoProjectModel}
+              fieldName={"advancedSettings"}
+            />
+          </Col>
+          { getAdvancedSettings() }          
         </Row>
       </div>
     </EditorPanelContainer>

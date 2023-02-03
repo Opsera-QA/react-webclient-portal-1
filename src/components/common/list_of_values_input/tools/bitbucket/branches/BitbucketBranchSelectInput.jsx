@@ -6,16 +6,14 @@ import React, {
   useCallback,
 } from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { bitbucketActions } from "components/inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket.actions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
-import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
 import _ from "lodash";
-import LazyLoadMultiSelectInputBase from "../../../../inputs/select/LazyLoadMultiSelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
 function BitbucketRepositorySelectInput({
   fieldName,
@@ -34,6 +32,7 @@ function BitbucketRepositorySelectInput({
   const [bitbucketBranches, setBitbucketBranches] = useState([]);
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
+  const [inEditMode, setInEditMode] = useState(false);
   const { getAccessToken } = useContext(AuthContext);
 
   useEffect(() => {
@@ -50,7 +49,8 @@ function BitbucketRepositorySelectInput({
     if (
       isMongoDbId(toolId) === true &&
       hasStringValue(workspace) === true &&
-      hasStringValue(repositoryId) === true
+      hasStringValue(repositoryId) === true &&
+      inEditMode === true
     ) {
       loadData(source).catch((error) => {
         throw error;
@@ -61,7 +61,7 @@ function BitbucketRepositorySelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId, workspace, repositoryId]);
+  }, [toolId, workspace, repositoryId, inEditMode]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -91,6 +91,7 @@ function BitbucketRepositorySelectInput({
     repositoryId,
     cancelSource = cancelTokenSource,
   ) => {
+    setIsLoading(true);
     const response = await bitbucketActions.getBranchesFromBitbucketInstanceV3(
       getAccessToken,
       cancelSource,
@@ -104,6 +105,7 @@ function BitbucketRepositorySelectInput({
     if (isMounted?.current === true && Array.isArray(branches)) {
       setBitbucketBranches([...branches]);
     }
+    setIsLoading(false);
   };
 
   const delayedSearchQuery = useCallback(
@@ -117,7 +119,7 @@ function BitbucketRepositorySelectInput({
 
   if (multi) {
     return (
-      <LazyLoadMultiSelectInputBase
+      <MultiSelectInputBase
         fieldName={fieldName}
         dataObject={model}
         setDataObject={setModel}
@@ -126,6 +128,7 @@ function BitbucketRepositorySelectInput({
         setDataFunction={setDataFunction}
         clearDataFunction={clearDataFunction}
         valueField={"name"}
+        filterOption={"startsWith"}
         textField={"name"}
         disabled={disabled}
         error={error}
@@ -134,13 +137,14 @@ function BitbucketRepositorySelectInput({
         onSearchFunction={(searchTerm) =>
           delayedSearchQuery(searchTerm, repositoryId, toolId)
         }
-        useToggle={true}
+        requireUserEnable={true}
+        onEnableEditFunction={() => setInEditMode(true)}
       />
     );
   }
 
   return (
-    <LazyLoadSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
@@ -151,13 +155,15 @@ function BitbucketRepositorySelectInput({
       valueField={"name"}
       textField={"name"}
       disabled={disabled}
+      filterOption={"startsWith"}
       error={error}
       pluralTopic={"Bitbucket Branches"}
       singularTopic={"Bitbucket Branch"}
       onSearchFunction={(searchTerm) =>
         delayedSearchQuery(searchTerm, repositoryId, toolId)
       }
-      useToggle={true}
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }

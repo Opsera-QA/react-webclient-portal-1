@@ -6,7 +6,7 @@ import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {gitlabActions} from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
 import _ from "lodash";
-import LazyLoadMultiSelectInputBase from "../../../../inputs/select/LazyLoadMultiSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
 function GitlabBranchSelectInput(
   {
@@ -22,6 +22,7 @@ function GitlabBranchSelectInput(
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [gitlabBranches, setGitlabBranches] = useState([]);
+  const [inEditMode, setInEditMode] = useState(false);
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
@@ -37,7 +38,7 @@ function GitlabBranchSelectInput(
     setGitlabBranches([]);
     setError(undefined);
 
-    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
+    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true && inEditMode === true) {
       loadData(source).catch((error) => {
         throw error;
       });
@@ -47,7 +48,7 @@ function GitlabBranchSelectInput(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId, repositoryId]);
+  }, [toolId, repositoryId, inEditMode]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -76,7 +77,7 @@ function GitlabBranchSelectInput(
   );
 
   return (
-    <LazyLoadMultiSelectInputBase
+    <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
@@ -91,7 +92,8 @@ function GitlabBranchSelectInput(
       singularTopic={"Gitlab Branch"}
       pluralTopic={"Gitlab Branches"}
       onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, repositoryId, toolId)}
-      useToggle={true}
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }

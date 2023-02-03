@@ -17,11 +17,11 @@ function SnykBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("repoId", "");
     newDataObject.setData("projectId", "");
-    newDataObject.setData("repositoryName", "");
+    newDataObject.setData("repository", "");
     newDataObject.setData("gitBranch", "");
     setDataObject({...newDataObject});
   };
-
+ 
   if (dataObject.getData("service") !== "bitbucket") {
     return <></>;
   }

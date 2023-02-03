@@ -1,109 +1,47 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import DataMappingManagementSubNavigationBar
   from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
-import axios from "axios";
-import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import ActionBarModelDeleteButton from "components/common/actions/buttons/ActionBarModelDeleteButton";
 import PipelineDataMappingDetailPanel
   from "components/settings/data_mapping/pipelines/details/PipelineDataMappingDetailPanel";
-import {pipelineDataMappingActions} from "components/settings/data_mapping/pipelines/pipelineDataMapping.actions";
-import PipelineDataMappingModel from "components/settings/data_mapping/pipelines/pipelineDataMapping.model";
+import useGetAnalyticsPipelineDataMappingModelById
+  from "hooks/settings/insights/analytics_data_mappings/pipelines/useGetAnalyticsPipelineDataMappingModelById";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import {
+  analyticsPipelineDataMappingHelper
+} from "components/settings/data_mapping/pipelines/analyticsPipelineDataMapping.helper";
+import pipelineDataMappingMetadata
+  from "@opsera/definitions/constants/settings/data_mapping/pipeline/pipelineDataMapping.metadata";
+import DeleteAnalyticsPipelineDataMappingActionBarButton
+  from "components/settings/data_mapping/pipelines/actions/DeleteAnalyticsPipelineDataMappingActionBarButton";
 
 function PipelineDataMappingDetailView() {
   const { pipelineDataMappingId } = useParams();
-  const toastContext = useContext(DialogToastContext);
-  const [accessRoleData, setAccessRoleData] = useState({});
-  const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
-  const [pipelineDataMappingModel, setPipelineDataMappingModel] = useState(undefined);
-  const [pipelineDataMappingMetadata, setPipelineDataMappingMetadata] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    if (isMongoDbId(pipelineDataMappingId) === true) {
-      loadData(source).catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      await getRoles(cancelSource);
-    } catch (error) {
-      if (!error.message.includes(404)) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-      await getProjectDataMapping(cancelSource);
-    }
-  };
-
-  const getProjectDataMapping = async (cancelSource = cancelTokenSource) => {
-    const response = await pipelineDataMappingActions.getPipelineDataMappingByIdV2(getAccessToken, cancelSource, pipelineDataMappingId);
-    const mapping = response?.data?.data;
-
-    if (isMounted?.current === true && mapping) {
-      const metadata = response?.data?.metadata;
-      setPipelineDataMappingMetadata({...metadata});
-      setPipelineDataMappingModel(new PipelineDataMappingModel(
-        mapping,
-        metadata,
-        false,
-        getAccessToken,
-        cancelSource,
-        loadData,
-        [],
-        setPipelineDataMappingModel,
-      ));
-    }
-  };
+  const {
+    accessRoleData,
+  } = useComponentStateReference();
+  const {
+    analyticsPipelineDataMappingModel,
+    setAnalyticsPipelineDataMappingModel,
+    isLoading,
+    error,
+  } = useGetAnalyticsPipelineDataMappingModelById(pipelineDataMappingId);
 
   const getActionBar = () => {
     return (
       <ActionBarContainer>
         <div>
           <ActionBarBackButton
-            path={"/settings/data_mapping"}
+            path={analyticsPipelineDataMappingHelper.getManagementScreenLink()}
           />
         </div>
         <div>
-          <ActionBarModelDeleteButton
-            model={pipelineDataMappingModel}
-            relocationPath={"/settings/data_mapping"}
+          <DeleteAnalyticsPipelineDataMappingActionBarButton
+            analyticsPipelineDataMappingModel={analyticsPipelineDataMappingModel}
+            className={"ml-3"}
           />
         </div>
       </ActionBarContainer>
@@ -116,13 +54,13 @@ function PipelineDataMappingDetailView() {
       breadcrumbDestination={"projectTaggingDetailView"}
       accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       metadata={pipelineDataMappingMetadata}
-      dataObject={pipelineDataMappingModel}
+      dataObject={analyticsPipelineDataMappingModel}
       isLoading={isLoading}
       actionBar={getActionBar()}
       detailPanel={
         <PipelineDataMappingDetailPanel
-          pipelineDataMappingModel={pipelineDataMappingModel}
-          setPipelineDataMappingModel={setPipelineDataMappingModel}
+          pipelineDataMappingModel={analyticsPipelineDataMappingModel}
+          setPipelineDataMappingModel={setAnalyticsPipelineDataMappingModel}
         />
       }
     />

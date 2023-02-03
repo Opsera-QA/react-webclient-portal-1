@@ -6,15 +6,14 @@ import React, {
   useCallback,
 } from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { githubActions } from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
-import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
 import _ from "lodash";
-import LazyLoadMultiSelectInputBase from "../../../../inputs/select/LazyLoadMultiSelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
 function GithubBranchSelectInput({
   fieldName,
@@ -81,6 +80,7 @@ function GithubBranchSelectInput({
     repositoryId,
     cancelSource = cancelTokenSource,
   ) => {
+    setIsLoading(true);
     const response = await githubActions.getBranchesFromGithubInstanceV3(
       getAccessToken,
       cancelSource,
@@ -94,6 +94,7 @@ function GithubBranchSelectInput({
       setPlaceholderText("Select Github Branch");
       setGithubBranches([...branches]);
     }
+    setIsLoading(false);
   };
 
   const delayedSearchQuery = useCallback(
@@ -107,7 +108,7 @@ function GithubBranchSelectInput({
 
   if (multi) {
     return (
-      <LazyLoadMultiSelectInputBase
+      <MultiSelectInputBase
         fieldName={fieldName}
         dataObject={model}
         setDataObject={setModel}
@@ -117,6 +118,7 @@ function GithubBranchSelectInput({
         clearDataFunction={clearDataFunction}
         valueField={"name"}
         textField={"name"}
+        filterOption={"startsWith"}
         disabled={disabled}
         placeholderText={placeholderText}
         error={errorMessage}
@@ -125,7 +127,6 @@ function GithubBranchSelectInput({
         onSearchFunction={(searchTerm) =>
           delayedSearchQuery(searchTerm, repositoryId, toolId)
         }
-        useToggle={true}
         requireUserEnable={true}
         onEnableEditFunction={() => setInEditMode(true)}
       />
@@ -133,7 +134,7 @@ function GithubBranchSelectInput({
   }
 
   return (
-    <LazyLoadSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
@@ -144,6 +145,7 @@ function GithubBranchSelectInput({
       valueField={"name"}
       textField={"name"}
       disabled={disabled}
+      filterOption={"startsWith"}
       placeholderText={placeholderText}
       error={errorMessage}
       pluralTopic={"Github Branches"}
@@ -151,7 +153,6 @@ function GithubBranchSelectInput({
       onSearchFunction={(searchTerm) =>
         delayedSearchQuery(searchTerm, repositoryId, toolId)
       }
-      useToggle={true}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
     />

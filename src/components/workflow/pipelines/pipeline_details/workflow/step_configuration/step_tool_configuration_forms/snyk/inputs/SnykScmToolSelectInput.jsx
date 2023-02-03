@@ -10,19 +10,19 @@ function SnykScmToolSelectInput({model, setModel, disabled, service}) {
     newModel.setData("gitCredential", selectedOption?.name);
     newModel.setDefaultValue("gitUrl");
     newModel.setDefaultValue("sshUrl");
-    newModel.setDefaultValue("projectId");
+    newModel.setDefaultValue("repoId");
     newModel.setDefaultValue("repository");
     newModel.setDefaultValue("gitBranch");
     setModel({...newModel});
   };
-
+ 
   const clearDataFunction = () => {
     let newModel = {...model};
     newModel.setDefaultValue("gitToolId");
     newModel.setDefaultValue("gitCredential");
     newModel.setDefaultValue("gitUrl");
     newModel.setDefaultValue("sshUrl");
-    newModel.setDefaultValue("projectId");
+    newModel.setDefaultValue("repoId");
     newModel.setDefaultValue("repository");
     newModel.setDefaultValue("gitBranch");
     setModel({...newModel});

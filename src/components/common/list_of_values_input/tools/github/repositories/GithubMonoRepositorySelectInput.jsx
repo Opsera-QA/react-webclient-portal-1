@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState, useCallback} from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
@@ -6,6 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import toolsActions from "../../../../../inventory/tools/tools-actions";
+import _ from "lodash";
 
 function GithubMonoRepositorySelectInput(
   {
@@ -24,6 +25,7 @@ function GithubMonoRepositorySelectInput(
   const [githubRepositories, setGithubRepositories] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [placeholder, setPlaceholderText] = useState("Select Github Repository");
+  const [inEditMode, setInEditMode] = useState(false);
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
 
@@ -38,7 +40,7 @@ function GithubMonoRepositorySelectInput(
     setErrorMessage("");
     setGithubRepositories([]);
 
-    if (isMongoDbId(toolId) === true) {
+    if (isMongoDbId(toolId) === true && inEditMode === true) {
       loadData(source).catch((error) => {
         throw error;
       });
@@ -48,7 +50,7 @@ function GithubMonoRepositorySelectInput(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId]);
+  }, [toolId, inEditMode]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -86,6 +88,11 @@ function GithubMonoRepositorySelectInput(
     }
   };
 
+  const delayedSearchQuery = useCallback(
+      _.debounce((cancelTokenSource) => loadData(cancelTokenSource), 600),
+      [],
+  );
+
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -100,6 +107,11 @@ function GithubMonoRepositorySelectInput(
       disabled={disabled}
       placeholder={placeholder}
       errorMessage={errorMessage}
+      singularTopic={"Gitlab Repository"}
+      pluralTopic={"Gitlab Repositories"}
+      onSearchFunction={(searchTerm) => delayedSearchQuery(cancelTokenSource)}
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }

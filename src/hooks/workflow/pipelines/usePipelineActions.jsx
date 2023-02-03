@@ -1,4 +1,6 @@
 import useApiService from "hooks/api/service/useApiService";
+import baseActions from "utils/actionsBase";
+import pipelineActions from "components/workflow/pipeline-actions";
 
 export default function usePipelineActions() {
   const apiService = useApiService();
@@ -77,6 +79,27 @@ export default function usePipelineActions() {
       apiUrl,
       urlParameters,
     );
+  };
+
+  pipelineActions.duplicatePipeline = async (
+    duplicatePipelineModel,
+  ) => {
+    const apiUrl = `/pipelines/${duplicatePipelineModel?.getMongoDbId()}/duplicate/`;
+    const postBody = duplicatePipelineModel.getPersistData();
+    return await apiService.handleApiPostRequest(
+      apiUrl,
+      postBody,
+    );
+  };
+
+  pipelineActions.getUniquePipelineOwnersForFilter = async () => {
+    const apiUrl = `/workflow/pipelines/filters/owners`;
+    return await apiService.handleApiGetRequest(apiUrl);
+  };
+
+  pipelineActions.getUniqueAppliedTagsForPipelineFilter = async () => {
+    const apiUrl = `/workflow/pipelines/filters/tags`;
+    return await apiService.handleApiGetRequest(apiUrl);
   };
 
   return pipelineActions;

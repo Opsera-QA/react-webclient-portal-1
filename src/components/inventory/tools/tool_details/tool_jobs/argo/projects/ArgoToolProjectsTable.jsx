@@ -7,10 +7,10 @@ import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateArgoProjectOverlay
   from "components/inventory/tools/tool_details/tool_jobs/argo/projects/CreateArgoProjectOverlay";
-import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
+import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 
-function ArgoToolProjectsTable({ toolId, hasConfigurationDetails, argoProjects, loadData, onRowSelect, isLoading }) {
+function ArgoToolProjectsTable({ toolId, argoProjects, loadData, onRowSelect, isLoading }) {
   const toastContext = useContext(DialogToastContext);
   let fields = argoProjectMetadata.fields;
 
@@ -27,7 +27,6 @@ function ArgoToolProjectsTable({ toolId, hasConfigurationDetails, argoProjects, 
     () => [
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "description")),
-      getTableTextColumn(getField(fields, "sourceRepos")),
     ],
     []
   );
@@ -50,7 +49,7 @@ function ArgoToolProjectsTable({ toolId, hasConfigurationDetails, argoProjects, 
       title={"Argo Projects"}
       type={"Argo Projects"}
       titleIcon={faBrowser}
-      addRecordFunction={hasConfigurationDetails === true ? createArgoProject : undefined}
+      addRecordFunction={createArgoProject}
       body={getTable()}
       showBorder={false}
     />
@@ -59,7 +58,6 @@ function ArgoToolProjectsTable({ toolId, hasConfigurationDetails, argoProjects, 
 
 ArgoToolProjectsTable.propTypes = {
   toolId: PropTypes.string,
-  hasConfigurationDetails: PropTypes.bool,
   loadData: PropTypes.func,
   onRowSelect: PropTypes.func,
   isLoading: PropTypes.bool,

@@ -18,7 +18,7 @@ snykStepActions.getLanguages = async (getAccessToken, cancelTokenSource) => {
     cancelTokenSource,
     apiURL,
   );
-};
+}; 
 
 snykStepActions.getLanguageVersions = async (getAccessToken, cancelTokenSource, language) => {
   const apiURL = `tools/snyk/languages/version`;

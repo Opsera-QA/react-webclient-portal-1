@@ -352,19 +352,19 @@ export default class ModelBase {
   };
 
   updateState = () => {
-    if (this.setStateFunction) {
+    if (typeof this.setStateFunction === "function") {
       this.setStateFunction({...this});
     }
   };
 
   unselectModel = () => {
-    if (this.setStateFunction) {
+    if (typeof this.setStateFunction === "function") {
       this.setStateFunction(undefined);
     }
   };
 
   setSetStateFunction = (setStateFunction) => {
-    if (setStateFunction) {
+    if (typeof setStateFunction === "function") {
       this.setStateFunction = setStateFunction;
     }
   };
@@ -510,9 +510,9 @@ export default class ModelBase {
 
   getNewInstance = (newData = this.getNewObjectFields()) => {
     const parsedData = DataParsingHelper.parseObject(newData, this.getNewObjectFields());
-    const newInstance = this;
-    newInstance.data = { ...parsedData };
-    return newInstance;
+    this.replaceOriginalData(parsedData);
+    this.replaceData(parsedData);
+    return this;
   };
 
   canUpdate = () => {

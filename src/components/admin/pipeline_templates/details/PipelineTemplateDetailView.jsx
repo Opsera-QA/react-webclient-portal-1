@@ -16,6 +16,8 @@ import useGetPlatformPipelineTemplateModelById
 import {
   platformPipelineTemplateCatalogActions
 } from "components/workflow/catalog/platform/platformPipelineTemplateCatalog.actions";
+import ViewPlatformPipelineTemplateAuditLogsActionBarButton
+  from "components/workflow/catalog/platform/action_bar/ViewPlatformPipelineTemplateAuditLogsActionBarButton";
 
 function PipelineTemplateDetailView() {
   const {templateId} = useParams();
@@ -42,8 +44,15 @@ function PipelineTemplateDetailView() {
           <ActionBarBackButton path={"/admin/templates"}/>
         </div>
         <div className={"d-flex"}>
-          <ActionBarShowJsonButton dataObject={pipelineTemplateModel}/>
+          <ActionBarShowJsonButton
+            className={"ml-3"}
+            dataObject={pipelineTemplateModel}
+          />
+          <ViewPlatformPipelineTemplateAuditLogsActionBarButton
+            templateModel={pipelineTemplateModel}
+          />
           <ActionBarDeleteButton2
+            className={"ml-3"}
             relocationPath={"/admin/templates"}
             dataObject={pipelineTemplateModel}
             handleDelete={deleteTemplate}

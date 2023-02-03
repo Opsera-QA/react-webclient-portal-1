@@ -28,10 +28,11 @@ function HelmAwsClusterSelectInput({
       cancelTokenSource.cancel();
     }
 
+    setError(null);
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-
+    
     if (!disabled) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
@@ -49,7 +50,7 @@ function HelmAwsClusterSelectInput({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadAwsClusters(cancelSource);
+      model.getData("awsToolConfigId") ? await loadAwsClusters(cancelSource) : null;
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
@@ -68,9 +69,7 @@ function HelmAwsClusterSelectInput({
         if (res.data.length === 0) {
           return;
         }
-        const clusterNames = clusterData.map(c => c.name.trim());                
-        const tempClusters = res.data.filter(cluster => !clusterNames.includes(cluster));
-        setClusters(tempClusters);
+        setClusters(res.data);
         return;
       }
   };

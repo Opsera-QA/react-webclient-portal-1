@@ -7,7 +7,7 @@ function RoleRestrictedSnykToolSelectInput({model, setModel, setDataFunction, cl
   return (
     <RoleRestrictedToolByIdentifierInputBase
       toolIdentifier={"snyk"}
-      toolFriendlyName={"Snyk"}
+      toolFriendlyName={"Snyk"} 
       fieldName={fieldName}
       configurationRequired={true}
       model={model}

@@ -21,7 +21,7 @@ const snykStepFormMetadata = {
       id: "version",
       isRequired: true
     },
-    {
+    { 
       label: "Package Manager or Build Tool",
       id: "packagerNameOrBuildTool",
     },
@@ -32,7 +32,6 @@ const snykStepFormMetadata = {
     {
       label: "Vulnerability Threshold",
       id: "thresholdVulnerability",
-      isRequired: true,
     },
     {
       label: "Git Tool ID",
@@ -65,12 +64,8 @@ const snykStepFormMetadata = {
       isRequired: true,
     },
     {
-      label: "Repository",
-      id: "projectId",
-    },
-    {
       label: "Repository Name",
-      id: "repositoryName",
+      id: "repository",
     },
     {
       label: "Workspace",
@@ -95,6 +90,7 @@ const snykStepFormMetadata = {
     thresholdVulnerability: [],
     gitToolId: "",
     repoId: "",
+    repository: "",
     gitBranch: "",
     service: "",
     sshUrl: "",

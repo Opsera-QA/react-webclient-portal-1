@@ -38,6 +38,7 @@ function StandaloneMultiSelectInput(
     manualEntry,
     onSearchFunction,
     onClickFunction,
+    filterOption
   }) {
   return (
     <div
@@ -50,7 +51,7 @@ function StandaloneMultiSelectInput(
         dataKey={valueField}
         textField={textField}
         busy={busy}
-        filter={"contains"}
+        filter={filterOption}
         allowCreate={allowCreate}
         groupBy={groupBy}
         onToggle={onToggleFunction}
@@ -97,6 +98,11 @@ StandaloneMultiSelectInput.propTypes = {
   manualEntry: PropTypes.bool,
   onSearchFunction: PropTypes.func,
   onClickFunction: PropTypes.func,
+  filterOption: PropTypes.string
+};
+
+StandaloneMultiSelectInput.defaultProps = {
+    filterOption: "contains"
 };
 
 export default StandaloneMultiSelectInput;

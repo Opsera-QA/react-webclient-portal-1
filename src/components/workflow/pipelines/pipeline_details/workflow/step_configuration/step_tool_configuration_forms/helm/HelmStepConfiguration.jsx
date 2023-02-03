@@ -11,7 +11,7 @@ import HelmGitRepositorySelectInput from "components/workflow/pipelines/pipeline
 import helmStepFormMetadata from "./helm-stepForm-metadata";
 import HelmCustomParametersInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/helm/inputs/HelmCustomParametersInput";
-import HelmCloudProviderSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCloudProviderSelectInput";
+import HelmCloudProviderSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/helm/inputs/HelmCloudProviderSelectInput";
 import CloudCredentialSubForm from "./sub_forms/CloudCredentialSubForm";
 import CustomScriptSubForm from "./sub_forms/CustomScriptSubForm";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
@@ -56,7 +56,7 @@ function HelmStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeE
   if (isLoading || helmStepConfigurationModel == null) {
     return <DetailPanelLoadingDialog />;
   }
-console.log(helmStepConfigurationModel);
+
   return (
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
@@ -82,9 +82,6 @@ console.log(helmStepConfigurationModel);
       <CloudCredentialSubForm model={helmStepConfigurationModel} setModel={setHelmStepConfigurationModel} />
       <CustomScriptSubForm model={helmStepConfigurationModel} setModel={setHelmStepConfigurationModel} />
       <TextInputBase dataObject={helmStepConfigurationModel} fieldName={"inputFileName"} setDataObject={setHelmStepConfigurationModel}/>
-      <TextInputBase dataObject={helmStepConfigurationModel} fieldName={"clusterName"} setDataObject={setHelmStepConfigurationModel}/>
-      <TextInputBase dataObject={helmStepConfigurationModel} fieldName={"namespace"} setDataObject={setHelmStepConfigurationModel}/>
-      <TextInputBase dataObject={helmStepConfigurationModel} fieldName={"resourceGroup"} setDataObject={setHelmStepConfigurationModel}/>
       <TextInputBase dataObject={helmStepConfigurationModel} fieldName={"serviceName"} setDataObject={setHelmStepConfigurationModel}/>
       <HelmCustomParametersInput
         model={helmStepConfigurationModel}

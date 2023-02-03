@@ -18,7 +18,8 @@ import SnykScmRepositorySelectInput from "./inputs/SnykScmRepositorySelectInput"
 import SnykBitbucketWorkspaceInput from "./inputs/SnykBitbucketWorkspaceInput";
 import SnykPipelineStepLanguageSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snyk/inputs/SnykPipelineStepLanguageSelectInput";
-
+import SourceRepositoryTypeSelectInput from "../sap_cpq/inputs/SourceRepositoryTypeSelectInput";
+ 
 function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
   const [snykModel, setSnykModel] = useState(undefined);
@@ -70,7 +71,7 @@ function SnykStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
         model={snykModel}
         setModel={setSnykModel}
       />
-      <SourceRepositoryToolIdentifierSelectInput
+      <SourceRepositoryTypeSelectInput
           fieldName={"service"}
           model={snykModel}
           setModel={setSnykModel}

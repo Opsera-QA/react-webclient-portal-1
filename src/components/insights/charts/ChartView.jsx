@@ -766,7 +766,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "sonar-ratings":
+      case  kpiIdentifierConstants.KPI_IDENTIFIERS.SONAR_RATINGS_LEGACY:
         return (
           <Col xl={6} md={12} className="p-2">
             <LegacySonarRatingMetrics
@@ -1456,7 +1456,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
       // QA Testing
-      case "qa-manual-test":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.QA_MANUAL_TEST:
         return (
           <Col md={12} className="p-2">
             <ManualQaTestPieChart
@@ -1480,7 +1480,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "cumulative-open-defects":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.CUMULATIVE_OPEN_DEFECTS:
         return (
           <Col md={12} className="p-2">
             <CumulativeOpenDefectsMetric
@@ -1504,7 +1504,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "adoption-percentage":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.ADOPTION_PERCENTAGE:
         return (
           <Col md={12} className="p-2">
             {/*<AdoptionTestPercentageMetricV1*/}
@@ -1523,7 +1523,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "automated-test-results":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATED_TEST_RESULTS:
         return (
           <Col md={12} className="p-2">
             <AutomatedTestResultsPieChart
@@ -1668,7 +1668,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       //       />
       //     </Col>
       //   );
-      case "defect-removal-efficiency":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.DEFECT_REMOVAL_EFFICIENCY:
         return (
           <Col md={12} className="p-2">
             <DefectRemovalEfficiencyMetrics
@@ -1744,7 +1744,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "approval-gates":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.APPROVAL_GATES:
         return (
           <Col md={12} className="p-2">
             <ApprovalGatesMetrics

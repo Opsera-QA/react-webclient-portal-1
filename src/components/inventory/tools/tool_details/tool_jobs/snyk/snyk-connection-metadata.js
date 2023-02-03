@@ -17,7 +17,7 @@ const snykConnectionMetadata = {
       id: "organization",
       isRequired: true,
     },
-  ],
+  ], 
   newObjectFields: {
     connectivityType: "Snyk CLI",
     token: "",

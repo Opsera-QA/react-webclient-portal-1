@@ -12,7 +12,7 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import _ from "lodash";
-import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function AzureDevOpsBranchSelectInput({
   fieldName,
@@ -29,6 +29,7 @@ function AzureDevOpsBranchSelectInput({
   const [azureBranches, setAzureBranches] = useState([]);
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
+  const [inEditMode, setInEditMode] = useState(false);
   const { getAccessToken } = useContext(AuthContext);
 
   useEffect(() => {
@@ -42,7 +43,7 @@ function AzureDevOpsBranchSelectInput({
     setAzureBranches([]);
     setError(undefined);
 
-    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
+    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true && inEditMode === true) {
       loadData(source).catch((error) => {
         throw error;
       });
@@ -52,7 +53,7 @@ function AzureDevOpsBranchSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId, repositoryId]);
+  }, [toolId, repositoryId, inEditMode]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -95,7 +96,7 @@ function AzureDevOpsBranchSelectInput({
   );
 
   return (
-    <LazyLoadSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
@@ -105,11 +106,14 @@ function AzureDevOpsBranchSelectInput({
       clearDataFunction={clearDataFunction}
       disabled={disabled}
       error={error}
+      filterOption={"startsWith"}
       singularTopic={"Azure Branch"}
       pluralTopic={"Azure Branches"}
       onSearchFunction={(searchTerm) =>
         delayedSearchQuery(searchTerm, repositoryId, toolId)
       }
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }

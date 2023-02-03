@@ -6,7 +6,7 @@ import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionB
 import {DialogToastContext} from "contexts/DialogToastContext";
 import PipelinesSummaryHelpDocumentation from "components/common/help/documentation/pipelines/PipelinesSummaryHelpDocumentation";
 import ActionBarDuplicatePipelineButton
-  from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarDuplicatePipelineButton";
+  from "components/workflow/pipelines/summary/action_bar/buttons/duplicate/ActionBarDuplicatePipelineButton";
 import ActionBarDeletePipelineButton from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarDeletePipelineButton";
 import ActionBarShowPipelineSummaryOverlayButton
   from "components/workflow/pipelines/summary/action_bar/buttons/ActionBarShowPipelineSummaryOverlayButton";
@@ -41,7 +41,7 @@ function PipelineSummaryActionBar({pipelineModel, pipeline, loadPipeline}) {
         className={"ml-3"}
       />
       <ActionBarDuplicatePipelineButton
-        pipeline={pipeline}
+        pipelineModel={pipelineModel}
       />
       <ActionBarTransferPipelineButton
         loadPipeline={loadPipeline}
