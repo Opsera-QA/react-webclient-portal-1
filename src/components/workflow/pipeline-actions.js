@@ -37,6 +37,7 @@ pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipel
       owner: pipelineFilterModel?.getFilterValue("owner"),
       tag: pipelineFilterModel?.getFilterValue("tag"),
       status: pipelineFilterModel?.getFilterValue("status"),
+      toolIdentifier: pipelineFilterModel?.getFilterValue("tool_identifier"),
       fields: fields,
     },
   };

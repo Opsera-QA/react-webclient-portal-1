@@ -102,5 +102,15 @@ export default function usePipelineActions() {
     return await apiService.handleApiGetRequest(apiUrl);
   };
 
+  pipelineActions.getUniqueToolIdentifiersByPipelineUsageForFilter = async () => {
+    const apiUrl = `/workflow/pipelines/filters/tool-identifiers`;
+    return await apiService.handleApiGetRequest(apiUrl);
+  };
+
+  pipelineActions.getUniqueAppliedTagsForPipelineFilter = async (toolIdentifier) => {
+    const apiUrl = `/workflow/pipelines/filters/${toolIdentifier}`;
+    return await apiService.handleApiGetRequest(apiUrl);
+  };
+
   return pipelineActions;
 }
