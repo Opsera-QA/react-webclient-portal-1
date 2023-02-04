@@ -24,13 +24,13 @@ export default function useExternalToolPropertyCacheEntry(
   }, [uniqueId, toolIdentifier, toolId, enableAutomaticCachePull]);
 
   const pullCachedValue = () => {
-    apiStateFunctions.setBusyState();
     const parsedUniqueId = DataParsingHelper.parseString(uniqueId);
     const parsedToolIdentifier = DataParsingHelper.parseString(toolIdentifier);
     const parsedToolId = DataParsingHelper.parseMongoDbId(toolId);
     setCachedEntry(undefined);
 
     if (parsedUniqueId && (parsedToolIdentifier || parsedToolId)) {
+      apiStateFunctions.setBusyState();
       return externalToolPropertyCacheActions.getExternalToolPropertyCacheEntry(
         parsedToolId,
         parsedToolIdentifier,

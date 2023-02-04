@@ -3,10 +3,10 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 
-export default function useGetPipelineAppliedTags(
+export default function useGetPipelineAppliedToolIdentifiers(
   handleErrorFunction,
 ) {
-  const [tags, setTags] = useState([]);
+  const [toolIdentifiers, setToolIdentifiers] = useState([]);
   const {
     isLoading,
     error,
@@ -16,23 +16,23 @@ export default function useGetPipelineAppliedTags(
   const pipelineActions = usePipelineActions();
 
   useEffect(() => {
-    setTags([]);
+    setToolIdentifiers([]);
 
     if (loadData) {
-      loadData(getUniqueAppliedTagsForPipelineFilter, handleErrorFunction).catch(() => {});
+      loadData(getUniqueAppliedToolIdentifiersForPipelineFilter, handleErrorFunction).catch(() => {});
     }
   }, []);
 
-  const getUniqueAppliedTagsForPipelineFilter = async () => {
-    const response = await pipelineActions.getUniqueAppliedTagsForPipelineFilter();
+  const getUniqueAppliedToolIdentifiersForPipelineFilter = async () => {
+    const response = await pipelineActions.getUniqueToolIdentifiersByPipelineUsageForFilter();
     const newTags = DataParsingHelper.parseNestedArray(response, "data.data", []);
-    setTags([...newTags]);
+    setToolIdentifiers([...newTags]);
   };
 
   return ({
-    tags: tags,
-    setTags: setTags,
-    loadData: () => getUniqueAppliedTagsForPipelineFilter(),
+    toolIdentifiers: toolIdentifiers,
+    setToolIdentifiers: setToolIdentifiers,
+    loadData: () => getUniqueAppliedToolIdentifiersForPipelineFilter(),
     isLoading: isLoading,
     error: error,
     setError: setError,

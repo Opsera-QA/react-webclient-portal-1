@@ -1,6 +1,7 @@
 import FilterModelBase from "core/data_model/filterModel.base";
 import sessionHelper from "utils/session.helper";
 import { capitalizeFirstLetter, hasStringValue } from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const pipelineFilterMetadata = {
   type: "Pipeline",
@@ -34,6 +35,10 @@ const pipelineFilterMetadata = {
       id: "owner",
     },
     {
+      label: "Tool",
+      id: "tool_identifier",
+    },
+    {
       label: "Tag",
       id: "tag",
     },
@@ -57,6 +62,8 @@ const pipelineFilterMetadata = {
     type: "",
     status: "",
     active: "",
+    tool_identifier: "",
+    tool_identifier_name: "",
   },
 };
 
@@ -112,6 +119,13 @@ export class PipelineFilterModel extends FilterModelBase {
       if (Array.isArray(tagArray) && tagArray.length === 2) {
         activeFilters.push({ filterId: "tag", text: `Tag: ${capitalizeFirstLetter(tagArray[0])}: ${tagArray[1]}` });
       }
+    }
+
+    const toolIdentifier = DataParsingHelper.parseString(this.getData("tool_identifier"));
+    const toolIdentifierName = DataParsingHelper.parseString(this.getData("tool_identifier_name"));
+
+    if (toolIdentifier && toolIdentifierName) {
+      activeFilters.push({ filterId: "tool_identifier", text: `Tool: ${toolIdentifierName}`});
     }
 
     const searchKeyword = this.getData("search");
