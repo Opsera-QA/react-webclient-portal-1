@@ -8,7 +8,7 @@ const JENKINS_JOB_TYPES = [
     value: "BUILD"
   },
   {
-    label: "SFDC Jobs",
+    label: "Salesforce Jobs",
     value: "SFDC"
   },
   {

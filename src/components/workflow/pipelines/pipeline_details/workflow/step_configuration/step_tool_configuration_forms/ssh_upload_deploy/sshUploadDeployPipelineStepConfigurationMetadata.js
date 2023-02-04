@@ -1,5 +1,5 @@
 const sshUploadDeployPipelineStepConfigurationMetadata = {
-  type: "SFDC Pipeline Step Configuration",
+  type: "SSH Upload Deploy Pipeline Step Configuration",
   fields: [
     {
       label: "Security Key",
