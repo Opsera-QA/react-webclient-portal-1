@@ -10,7 +10,7 @@ function BoomiAverageDurationDataBlock({ data, dataPoint, lastScore, icon, class
                 className={`${className} p-2 h-70`}
                 icon={icon}
                 score={data}
-                bottomText={"Previous: " + lastScore}
+                bottomText={`Previous: ${lastScore || lastScore === 0? lastScore : "NA"}`}
                 topText={"Total Deployments"}
                 dataPoint={dataPoint}
             />
