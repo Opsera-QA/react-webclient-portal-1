@@ -48,11 +48,11 @@ function PipelineTableCardView(
           setFilterDto={setPipelineFilterModel}
           className={"mb-2"}
         />
-        {/*<PipelineToolIdentifierFilter*/}
-        {/*  filterModel={pipelineFilterModel}*/}
-        {/*  setFilterModel={setPipelineFilterModel}*/}
-        {/*  className={"mb-2"}*/}
-        {/*/>*/}
+        <PipelineToolIdentifierFilter
+          filterModel={pipelineFilterModel}
+          setFilterModel={setPipelineFilterModel}
+          className={"mb-2"}
+        />
         {/*<PipelineTagFilter*/}
         {/*  filterModel={pipelineFilterModel}*/}
         {/*  setFilterModel={setPipelineFilterModel}*/}
