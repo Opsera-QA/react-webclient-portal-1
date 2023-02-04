@@ -20,6 +20,9 @@ import VanityEditorPanelContainer from "components/common/panels/detail_panel_co
 import JiraProjectSelectInput from "components/common/list_of_values_input/tools/jira/projects/JiraProjectSelectInput";
 import JiraCustomTagFieldSelectInput from "components/common/list_of_values_input/tools/jira/custom_fields/JiraCustomTagFieldSelectInput";
 import JiraCustomFieldMappingSelectInput from "components/common/list_of_values_input/tools/jira/custom_fields/JiraCustomFieldMappingSelectInput";
+import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
+import AnalyticsDataMappingEditWarningMessage
+  from "components/settings/data_mapping/AnalyticsDataMappingEditWarningMessage";
 
 const determineKeyFromFullPath = keyPath => {
   const splitPath = keyPath.split('/');
@@ -159,14 +162,7 @@ function ProjectDataMappingEditorPanel(
   const getWarningMessage = () => {
     if (projectDataMappingModel?.isNew() !== true) {
       return (
-        <div className="m-2">
-          <Card>
-            <Card.Text className={"mt-3 mb-3"} style={{ display: "flex", justifyContent: "center" }}>
-              <strong>WARNING: </strong> Editing an active Analytics Data Mapping will result in loss of filtering
-              functionality from data previously mapped with this information
-            </Card.Text>
-          </Card>
-        </div>
+        <AnalyticsDataMappingEditWarningMessage />
       );
     }
   };
