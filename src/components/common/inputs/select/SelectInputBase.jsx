@@ -7,6 +7,10 @@ import StandaloneSelectInput from "components/common/inputs/select/StandaloneSel
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {errorHelpers, parseError} from "components/common/helpers/error-helpers";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
+import useExternalToolPropertyCacheActions from "hooks/cache/external_tools/useExternalToolPropertyCacheActions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
+import useExternalToolPropertyCacheEntry from "hooks/cache/external_tools/useExternalToolPropertyCache";
 
 function SelectInputBase(
   {
@@ -48,11 +52,23 @@ function SelectInputBase(
     requireUserEnable,
     ellipsisOnClickFunction,
     onEnableEditFunction,
-}) {
+    externalCacheToolId,
+    externalCacheToolIdentifier,
+  }) {
   const field = dataObject?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
   const [internalErrorMessage, setInternalErrorMessage] = useState("");
   const [enabled, setEnabled] = useState(undefined);
+  const {
+    cachedEntry,
+    setCachedValue,
+    isHandlingCache,
+  } = useExternalToolPropertyCacheEntry(
+    requireUserEnable === true,
+    dataObject?.getData(fieldName),
+    externalCacheToolId,
+    externalCacheToolIdentifier,
+  );
 
   useEffect(() => {
     setEnabled(requireUserEnable !== true);
@@ -74,10 +90,15 @@ function SelectInputBase(
   };
 
   const updateValue = (newValue) => {
+    if (requireUserEnable === true) {
+      setCachedValue({
+        cache: newValue,
+      });
+    }
+
     if (setDataFunction) {
       setDataFunction(field?.id, newValue);
-    }
-    else {
+    } else {
       const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
       validateAndSetData(field?.id, parsedValue);
     }
@@ -86,8 +107,7 @@ function SelectInputBase(
   const clearValue = () => {
     if (!setDataFunction && !clearDataFunction) {
       validateAndSetData(field?.id, "");
-    }
-    else if (clearDataFunction) {
+    } else if (clearDataFunction) {
       clearDataFunction(field?.id);
     }
   };
@@ -149,6 +169,39 @@ function SelectInputBase(
     }
   };
 
+  const handleTextFieldFunction = (foundValue) => {
+    let formattedValue;
+    const parsedFoundValue = DataParsingHelper.parseObject(foundValue);
+
+    if (parsedFoundValue) {
+      if (typeof textField === "function") {
+        formattedValue = textField(parsedFoundValue);
+      } else if (typeof textField === "string") {
+        formattedValue = parsedFoundValue[textField];
+      }
+
+      setCachedValue({
+        cache: parsedFoundValue,
+      });
+    }
+
+    const parsedCache = DataParsingHelper.parseNestedObject(cachedEntry, "parameters.cache");
+
+    if (!formattedValue && parsedCache && textField) {
+      if (typeof textField === "function") {
+        formattedValue = textField(parsedCache);
+      } else if (typeof textField === "string") {
+        formattedValue = parsedCache[textField];
+      }
+    }
+
+    if (formattedValue) {
+      return formattedValue;
+    }
+
+    return foundValue;
+  };
+
   if (field == null || visible === false) {
     return null;
   }
@@ -181,10 +234,10 @@ function SelectInputBase(
           hasErrorState={hasStringValue(getErrorMessage()) === true}
           selectOptions={selectOptions}
           valueField={valueField}
-          textField={textField}
+          textField={requireUserEnable === true ? handleTextFieldFunction : textField}
           groupBy={groupBy}
           value={findCurrentValue()}
-          busy={busy}
+          busy={busy || isHandlingCache === true}
           placeholderText={getPlaceholderText()}
           setDataFunction={(newValue) => updateValue(newValue)}
           disabled={disabled || (requireUserEnable === true && enabled === false)}
@@ -259,6 +312,8 @@ SelectInputBase.propTypes = {
   requireUserEnable: PropTypes.bool,
   ellipsisOnClickFunction: PropTypes.func,
   onEnableEditFunction: PropTypes.func,
+  externalCacheToolId: PropTypes.string,
+  externalCacheToolIdentifier: PropTypes.string,
 };
 
 SelectInputBase.defaultProps = {
