@@ -34,7 +34,7 @@ export default function OrganizationsField(
                       icon={faSitemap}
                       className={"mr-1"}
                     />
-                  {`${organization})`}
+                  {`${organization}`}
                 </span>
               );
             })}

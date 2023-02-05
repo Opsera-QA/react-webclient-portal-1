@@ -20,6 +20,7 @@ function SaveButtonBase(
     showTypeOnLabel,
     showIncompleteDataMessage,
     isIncomplete,
+    clearChangeMapAfterSave,
   }) {
   let toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
@@ -45,6 +46,7 @@ function SaveButtonBase(
       showIncompleteDataMessage,
       setModel,
       isIncomplete,
+      clearChangeMapAfterSave,
       );
 
     if (isMounted.current === true) {
@@ -90,6 +92,7 @@ SaveButtonBase.propTypes = {
   showIncompleteDataMessage: PropTypes.bool,
   setModel: PropTypes.func,
   isIncomplete: PropTypes.bool,
+  clearChangeMapAfterSave: PropTypes.bool,
 };
 
 SaveButtonBase.defaultProps = {
