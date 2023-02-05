@@ -18,8 +18,8 @@ import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 import PipelineTagFilter from "components/common/filters/tags/tag/pipelines/PipelineTagFilter";
-import PipelineToolIdentifierFilter
-  from "components/common/filters/tools/tool_identifier/pipelines/PipelineToolIdentifierFilter";
+import PipelineStepToolIdentifierFilter
+  from "components/common/filters/tools/tool_identifier/pipelines/PipelineStepToolIdentifierFilter";
 
 function PipelineTableCardView(
   {
@@ -48,7 +48,7 @@ function PipelineTableCardView(
           setFilterDto={setPipelineFilterModel}
           className={"mb-2"}
         />
-        <PipelineToolIdentifierFilter
+        <PipelineStepToolIdentifierFilter
           filterModel={pipelineFilterModel}
           setFilterModel={setPipelineFilterModel}
           className={"mb-2"}
