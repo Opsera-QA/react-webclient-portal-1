@@ -2,10 +2,10 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getLimitedTableTextColumn, getRoleAccessColumn,
+  getLimitedTableTextColumn, getOwnerNameField, getRoleAccessColumn,
   getTableBooleanIconColumn,
   getTableDateColumn,
-  getTableTextColumn,
+  getTableTextColumn, getToolIdentifierNameField,
 } from "components/common/table/table-column-helpers";
 import {useHistory} from "react-router-dom";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -26,8 +26,9 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
       const columnsArray = [
         getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
         getLimitedTableTextColumn(getField(fields, "description"), 100),
-        getTableTextColumn(getField(fields, "tool_identifier"), "no-wrap-inline"),
-        getTableTextColumn(getField(fields, "owner_name"), "no-wrap-inline"),
+        getTableTextColumn(getField(fields, "tool_identifier"), "no-wrap-inline"), // TODO: Replace with below line
+        // getToolIdentifierNameField(),
+        getOwnerNameField(),
         getTableDateColumn(getField(fields, "createdAt")),
         getTableBooleanIconColumn(getField(fields, "active")),
       ];

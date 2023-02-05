@@ -28,7 +28,7 @@ export default function PipelineToolIdentifierFilter(
         fieldName={"tool_identifier"}
         busy={isLoading}
         placeholderText={"Filter by Tool"}
-        groupBy={"tool_type_identifier"}
+        groupBy={"tool_type_identifier_name"}
         dataObject={filterModel}
         setDataObject={setFilterModel}
         setDataFunction={setDataFunction}

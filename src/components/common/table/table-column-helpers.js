@@ -130,6 +130,15 @@ export const getOwnerNameField = (headerText = "Owner Name") => {
   return {
     Header: headerText,
     accessor: "owner_name",
+    class: "no-wrap-inline",
+  };
+};
+
+export const getToolIdentifierNameField = (headerText = "Tool Identifier") => {
+  return {
+    Header: headerText,
+    accessor: "tool_identifier_name",
+    class: "no-wrap-inline",
   };
 };
 
