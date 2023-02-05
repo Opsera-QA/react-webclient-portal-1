@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getCustomTablePipelineStateColumnDefinition, getOwnerNameField,
+  getCustomTablePipelineStateColumnDefinition, getLimitedTableTextColumn, getOwnerNameField,
   getPipelineTypeColumn, getRoleAccessColumn,
   getTableDateTimeColumn,
   getTableTextColumn,
@@ -30,7 +30,7 @@ function PipelinesTableBase(
       const columnsArray = [
         getPipelineTypeColumn(getField(fields, "type")),
         getTableTextColumn(getField(fields, "_id")),
-        getTableTextColumn(getField(fields, "name")),
+        getLimitedTableTextColumn(getField(fields, "name"), 50),
         getOwnerNameField(),
         getCustomTablePipelineStateColumnDefinition(getField(fields, "state")),
         getTableTextColumn(getField(fields, "workflow.run_count")),
