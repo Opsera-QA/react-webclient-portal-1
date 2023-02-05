@@ -17,21 +17,22 @@ export default function OrganizationsField(
   }) {
   const field = model?.getFieldById(fieldName);
   const parsedIdArray = DataParsingHelper.parseMongoDbIdArray(model?.getArrayData(fieldName));
-  // const {
-  //   organizations,
-  //   isLoading,
-  // } = useGetOrganizationNamesByIds(model?.getArrayData(fieldName));
+  const {
+    organizations,
+    isLoading,
+  } = useGetOrganizationNamesByIds(model?.getArrayData(fieldName));
 
   const getOrganizations = () => {
-    // TODO: Remove when bug ticket is approved
-    return (
-      <CustomBadgeContainer>
+    if (isLoading) {
+      return (
+        <CustomBadgeContainer>
           <span className="item-field">
             {parsedIdArray.map((organization, i) => {
               return (
                 <span key={i} className={`mx-1 mb-1 badge badge-light item-badge`}>
                     <IconBase
                       icon={faSitemap}
+                      isLoading={isLoading}
                       className={"mr-1"}
                     />
                   {`${organization})`}
@@ -39,49 +40,29 @@ export default function OrganizationsField(
               );
             })}
           </span>
+        </CustomBadgeContainer>
+      );
+    }
+
+    const parsedOrganizations = DataParsingHelper.parseArray(organizations, []);
+
+    if (parsedOrganizations.length === 0) {
+      return null;
+    }
+
+    return (
+      <CustomBadgeContainer>
+        <span className="item-field">
+          {parsedOrganizations.map((organization, i) => {
+            return (
+              <span key={i} className={`mx-1 mb-1 badge badge-light item-badge`}>
+                <IconBase icon={faSitemap} className={"mr-1"}/>{`${organization?.name} (${organization?._id})`}
+              </span>
+            );
+          })}
+        </span>
       </CustomBadgeContainer>
     );
-
-    // if (isLoading) {
-    //   return (
-    //     <CustomBadgeContainer>
-    //       <span className="item-field">
-    //         {parsedIdArray.map((organization, i) => {
-    //           return (
-    //             <span key={i} className={`mx-1 mb-1 badge badge-light item-badge`}>
-    //                 <IconBase
-    //                   icon={faSitemap}
-    //                   isLoading={isLoading}
-    //                   className={"mr-1"}
-    //                 />
-    //               {`${organization})`}
-    //             </span>
-    //           );
-    //         })}
-    //       </span>
-    //     </CustomBadgeContainer>
-    //   );
-    // }
-    //
-    // const parsedOrganizations = DataParsingHelper.parseArray(organizations, []);
-    //
-    // if (parsedOrganizations.length === 0) {
-    //   return null;
-    // }
-    //
-    // return (
-    //   <CustomBadgeContainer>
-    //     <span className="item-field">
-    //       {parsedOrganizations.map((organization, i) => {
-    //         return (
-    //           <span key={i} className={`mx-1 mb-1 badge badge-light item-badge`}>
-    //             <IconBase icon={faSitemap} className={"mr-1"}/>{`${organization?.name} (${organization?._id})`}
-    //           </span>
-    //         );
-    //       })}
-    //     </span>
-    //   </CustomBadgeContainer>
-    // );
   };
 
   if (field == null) {
