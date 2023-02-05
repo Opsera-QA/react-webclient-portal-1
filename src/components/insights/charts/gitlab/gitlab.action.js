@@ -166,6 +166,42 @@ gitlabActions.gitlabDeploymentStatistics = async (
     return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+gitlabActions.gitlabDeploymentStatisticsV2 = async (
+    getAccessToken,
+    cancelTokenSource,
+    kpiConfiguration,
+    dashboardTags,
+    dashboardOrgs,
+) => {
+    const apiUrl = gitlabBaseURL + "gitlabDeploymentStatisticsV2";
+    const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+    let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+    const startDate =  new Date(dateRange?.start);
+    const endDate =  new Date(dateRange?.end);
+
+    // Checking the use kpi tags toggle
+    const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+    const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
+
+    if (!useKpiTags) {
+        tags = null;
+    }
+    if (!useDashboardTags) {
+        dashboardTags = null;
+        dashboardOrgs = null;
+    }
+    const postBody = {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        tags: tags && dashboardTags ? tags.concat(dashboardTags) : dashboardTags?.length > 0 ? dashboardTags : tags,
+        dashboardOrgs: dashboardOrgs,
+        deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
+        gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
+    };
+
+    return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 gitlabActions.getActionablePipelinesChartData = async (
     getAccessToken,
     cancelTokenSource,
@@ -386,6 +422,15 @@ gitlabActions.gitlabLeadTimeForChange = async (
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+gitlabActions.gitlabDeploymentStagesListV2 = async (
+    getAccessToken,
+    cancelTokenSource,
+) => {
+    const apiUrl = gitlabBaseURL + "gitlabDeploymentStagesListV2";
+    const postBody = {};
+    return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 gitlabActions.gitlabAverageCommitTimeToMerge = async (
