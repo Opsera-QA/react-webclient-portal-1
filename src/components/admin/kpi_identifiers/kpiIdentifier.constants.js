@@ -58,6 +58,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   GITLAB_LEAD_TIME:"gitlab-lead-time",
   GITLAB_PIPELINE_STATISTICS:"gitlab-pipeline-statistics",
   GITLAB_MERGE_STATISTICS:"gitlab-merge-requests-statistics",
+  GITLAB_DEPLOYMENT_FREQUENCY_V2: "gitlab-deployment-frequency-v2",
 
   // Jenkins
   JENKINS_BUILD_DURATION: "jenkins-build-duration",
