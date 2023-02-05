@@ -10,6 +10,7 @@ import PipelineStepTagWarningSkipButton
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/tag_warning/PipelineStepTagWarningSkipButton";
 import PipelineStepTagWarningApplyTagButton
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/tag_warning/PipelineStepTagWarningApplyTagButton";
+import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
 
 export default function PipelineStepTagWarningOverlay(
   {
@@ -70,8 +71,10 @@ export default function PipelineStepTagWarningOverlay(
         hideCloseButton={true}
       >
         <div className={"mx-3 mb-3 mt-2"}>
-          <div>{field?.formText}</div>
-          <div>{`If you aren't sure what Tag value to use and no Tags are applied, Opsera will apply a unique tag derived from the step upon hitting Proceed.`}</div>
+          <WarningMessageFieldBase
+            message={field?.formText}
+          />
+          <div className={"mx-2"}>{`If you aren't sure what Tag value to use and no Tags are applied, Opsera will apply a unique tag derived from the step upon hitting Proceed.`}</div>
         </div>
       </OverlayPanelBodyContainer>
     </ConfirmationOverlay>
