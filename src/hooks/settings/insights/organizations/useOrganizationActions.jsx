@@ -1,5 +1,4 @@
 import useApiService from "hooks/api/service/useApiService";
-import baseActions from "utils/actionsBase";
 
 export default function useOrganizationActions() {
   const apiService = useApiService();
@@ -33,6 +32,14 @@ export default function useOrganizationActions() {
   organizationActions.getOrganizationById = async (organizationId) => {
     const apiUrl = `/organization/${organizationId}`;
     return await apiService.handleApiGetRequest(apiUrl);
+  };
+
+  organizationActions.getOrganizationNamesForIds = async (organizationIds) => {
+    const apiUrl = `/organization/names`;
+    const queryParameters = {
+      organizationIds: organizationIds,
+    };
+    return await apiService.handleApiGetRequest(apiUrl, queryParameters);
   };
 
   organizationActions.createOrganization = async (organizationModel) => {
