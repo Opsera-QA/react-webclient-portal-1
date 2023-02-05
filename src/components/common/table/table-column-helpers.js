@@ -126,7 +126,7 @@ export const getTableDurationTextColumn = (field, className) => {
   };
 };
 
-export const getOwnerNameField = (headerText = "Owner Name") => {
+export const getOwnerNameField = (headerText = "Owner") => {
   return {
     Header: headerText,
     accessor: "owner_name",
