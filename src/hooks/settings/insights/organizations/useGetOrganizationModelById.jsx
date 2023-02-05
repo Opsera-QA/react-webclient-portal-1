@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import useGetOrganizationById from "hooks/settings/insights/organizations/useGetOrganizationById";
 import useGetOrganizationModel from "hooks/settings/insights/organizations/useGetOrganizationModel";
 
-export default function useOrganizationModelById(organizationId, handleErrorFunction) {
+export default function useGetOrganizationModelById(organizationId, handleErrorFunction) {
   const [organizationModel, setOrganizationModel] = useState(undefined);
   const {
     organization,
