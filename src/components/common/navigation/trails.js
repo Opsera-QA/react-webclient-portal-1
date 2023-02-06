@@ -863,6 +863,15 @@ export const breadcrumbs = {
     icon: faChartNetwork,
     pageDescription: "View Dashboards based on the selected Tags.",
   },
+  tagsUsedInProjectsReport: {
+    parent: "tagReports",
+    name: "tagsUsedInProjectsReport",
+    path: paths.tagsUsedInProjectsReport,
+    title: "Projects by Tags",
+    linkText: "Projects by Tags",
+    icon: faTags,
+    pageDescription: "View Projects based on the selected Tags.",
+  },
 
   userReports: {
     parent: "reports",

@@ -119,6 +119,7 @@ paths.tagReports = paths.reports + "/tags";
 paths.tagsUsedInPipelineReport = paths.tagReports + "/tags-used-in-pipeline";
 paths.tagsUsedInToolsReport = paths.tagReports + "/tags-used-in-tools";
 paths.tagsUsedInDashboardsReport = paths.tagReports + "/tags-used-in-dashboards";
+paths.tagsUsedInProjectsReport = paths.tagReports + "/tags-used-in-projects";
 paths.userReports = paths.reports + "/users";
 paths.groupMembershipReport = paths.userReports + "/group-membership";
 paths.pipelineOwnershipReport = paths.userReports + "/pipeline-ownership";
