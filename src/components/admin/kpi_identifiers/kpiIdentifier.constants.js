@@ -56,6 +56,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   GITLAB_TOTAL_COMMITS_BY_PROJECT: "gitlab-total-commits-by-project",
   GITLAB_DEPLOYMENT_FREQUENCY: "gitlab-deployment-frequency",
   GITLAB_LEAD_TIME:"gitlab-lead-time",
+  GITLAB_LEAD_TIME_V2:"gitlab-lead-time-v2",
   GITLAB_PIPELINE_STATISTICS:"gitlab-pipeline-statistics",
   GITLAB_MERGE_STATISTICS:"gitlab-merge-requests-statistics",
   GITLAB_DEPLOYMENT_FREQUENCY_V2: "gitlab-deployment-frequency-v2",

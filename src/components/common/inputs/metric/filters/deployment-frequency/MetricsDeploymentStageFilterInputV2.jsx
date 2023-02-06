@@ -12,18 +12,13 @@ function MetricDeploymentStageFilterInputV2({
     fieldName
 }) {
     return (
-        <SupportedMetricFilterInputContainer
-            filterType={KPI_FILTER_TYPES.DEPLOYMENT_STAGE}
-            supportedFilters={metricModel?.getData("filters")}
-        >
-            <DeploymentFrequencyConfigurationItemsSelectInputV2
-                fieldName={fieldName}
-                valueField={"value"}
-                textField={"text"}
-                model={metricFilterModel}
-                setModel={setMetricFilterModel}
-            />
-        </SupportedMetricFilterInputContainer>
+        <DeploymentFrequencyConfigurationItemsSelectInputV2
+            fieldName={fieldName}
+            valueField={"value"}
+            textField={"text"}
+            model={metricFilterModel}
+            setModel={setMetricFilterModel}
+        />
     );
 }
 
