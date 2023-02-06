@@ -35,7 +35,7 @@ export default function OrganizationsField(
                       isLoading={isLoading}
                       className={"mr-1"}
                     />
-                  {`${organization})`}
+                  {`${organization}`}
                 </span>
               );
             })}
