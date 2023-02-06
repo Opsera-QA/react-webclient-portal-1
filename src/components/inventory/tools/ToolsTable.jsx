@@ -26,8 +26,7 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
       const columnsArray = [
         getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
         getLimitedTableTextColumn(getField(fields, "description"), 100),
-        getTableTextColumn(getField(fields, "tool_identifier"), "no-wrap-inline"), // TODO: Replace with below line
-        // getToolIdentifierNameField(),
+        getToolIdentifierNameField(),
         getOwnerNameField(),
         getTableDateColumn(getField(fields, "createdAt")),
         getTableBooleanIconColumn(getField(fields, "active")),
