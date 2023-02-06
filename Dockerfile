@@ -2,6 +2,7 @@ FROM node:16-alpine3.15 as build
 ARG build_env=kube-generic
 RUN echo ${build_env}
 RUN apk add curl
+RUN rm -rf  /usr/src/app
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
@@ -9,8 +10,7 @@ ENV GENERATE_SOURCEMAP false
 COPY package.json /usr/src/app/package.json
 COPY package-lock.json /usr/src/app/package-lock.json
 COPY .npmrc /usr/src/app/.npmrc
-RUN npm install --legacy-peer-deps
-RUN npm install react-scripts -g --silent
+RUN npm install --legacy-peer-deps --omit=dev
 COPY . /usr/src/app
 RUN npm run build:${build_env}
 RUN mv build* code
