@@ -4,7 +4,7 @@ import FilterSelectInputBase from "components/common/filters/input/FilterSelectI
 import useGetPipelineAppliedToolIdentifiers
   from "hooks/workflow/pipelines/tool_identifiers/useGetPipelineAppliedToolIdentifiers";
 
-export default function PipelineToolIdentifierFilter(
+export default function PipelineStepToolIdentifierFilter(
   {
     filterModel,
     setFilterModel,
@@ -27,8 +27,8 @@ export default function PipelineToolIdentifierFilter(
       <FilterSelectInputBase
         fieldName={"tool_identifier"}
         busy={isLoading}
-        placeholderText={"Filter by Tool"}
-        groupBy={"tool_type_identifier"}
+        placeholderText={"Filter by Pipeline Step"}
+        groupBy={"tool_type_identifier_name"}
         dataObject={filterModel}
         setDataObject={setFilterModel}
         setDataFunction={setDataFunction}
@@ -41,7 +41,7 @@ export default function PipelineToolIdentifierFilter(
   );
 }
 
-PipelineToolIdentifierFilter.propTypes = {
+PipelineStepToolIdentifierFilter.propTypes = {
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
   className: PropTypes.string,

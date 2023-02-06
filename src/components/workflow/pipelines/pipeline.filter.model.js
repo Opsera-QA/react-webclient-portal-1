@@ -35,7 +35,7 @@ const pipelineFilterMetadata = {
       id: "owner",
     },
     {
-      label: "Tool",
+      label: "Pipeline Step",
       id: "tool_identifier",
     },
     {
@@ -125,7 +125,7 @@ export class PipelineFilterModel extends FilterModelBase {
     const toolIdentifierName = DataParsingHelper.parseString(this.getData("tool_identifier_name"));
 
     if (toolIdentifier && toolIdentifierName) {
-      activeFilters.push({ filterId: "tool_identifier", text: `Tool: ${toolIdentifierName}`});
+      activeFilters.push({ filterId: "tool_identifier", text: `Pipeline Step: ${toolIdentifierName}`});
     }
 
     const searchKeyword = this.getData("search");

@@ -6,6 +6,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import {parseError} from "components/common/helpers/error-helpers";
 import {InputGroup} from "react-bootstrap";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function TextInputBase(
   {
@@ -34,7 +35,11 @@ function TextInputBase(
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    setField(dataObject?.getFieldById(fieldName));
+    const newField = DataParsingHelper.parseObject(dataObject?.getFieldById(fieldName));
+
+    if (newField) {
+      setField({...newField});
+    }
   }, [fieldName]);
 
   useEffect(() => {

@@ -2,8 +2,6 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {faCog} from "@fortawesome/pro-light-svg-icons";
 import Model from "core/data_model/model";
-import stepConfigurationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step-configuration-metadata";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
@@ -20,6 +18,8 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineStepTagWarningOverlay
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/tag_warning/PipelineStepTagWarningOverlay";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
+import pipelineStepDefinitionMetadata
+  from "@opsera/definitions/constants/pipelines/steps/definitions/pipelineStepDefinition.metadata";
 
 function PipelineStepConfiguration(
   {
@@ -53,7 +53,8 @@ function PipelineStepConfiguration(
       const stepIndex = pipelineHelpers.getStepIndexFromPlan(plan, stepId);
 
       if (stepIndex == null || stepIndex === -1) {
-        setStepConfigurationModel(new Model({...stepConfigurationMetadata.newObjectFields}, stepConfigurationMetadata, true));
+        // eslint-disable-next-line no-undef
+        setStepConfigurationModel(new Model({...pipelineStepDefinitionMetadata.newObjectFields}, pipelineStepDefinitionMetadata, true));
         return;
       }
 
@@ -71,7 +72,7 @@ function PipelineStepConfiguration(
         setLockTool(true);
       }
 
-      setStepConfigurationModel(new Model({...currentData}, stepConfigurationMetadata, false));
+      setStepConfigurationModel(new Model({...currentData}, pipelineStepDefinitionMetadata, false));
     } catch (error) {
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -117,9 +118,10 @@ function PipelineStepConfiguration(
       handleClose={closeEditorPanel}
       recordDto={stepConfigurationModel}
       persistRecord={handleTagsCheck}
-      showSuccessToasts={stepConfigurationModel?.getData("type") !== "deploy" || stepConfigurationModel?.getArrayData("tags").length > 0}
+      showSuccessToasts={stepConfigurationModel?.getData("type") === "deploy" || stepConfigurationModel?.getArrayData("tags").length > 0}
       isLoading={isLoading}
       isStrict={true}
+      clearChangeMapAfterSave={false}
     >
       <div className="text-muted mt-1 mb-3">
         A pipeline step represents a tool and an operation. Each step requires a tool and a custom Step Name.
