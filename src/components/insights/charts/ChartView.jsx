@@ -76,7 +76,10 @@ import GitlabTotalCommitsByProjectChart from "./gitlab/pie_chart/total_commits_b
 import GitlabRecentMergeRequests from "./gitlab/table/recent_merge_requests/GitlabRecentMergeRequests";
 import GitlabPendingMergeRequests from "./gitlab/table/pending_merge_requests/GitlabPendingMergeRequests.jsx";
 import GitlabDeploymentFrequency from "./gitlab/deployment_frequency/GitlabDeploymentFrequencyMetric";
+import GitlabDeploymentFrequencyV2 from "./gitlab/deployment_frequency_v2/GitlabDeploymentFrequencyMetric";
 import GitLabLeadTimeChart from "./gitlab/line_chart/lead_time/GitLabLeadTimeChart";
+import GitLabLeadTimeChartV2 from "./gitlab/line_chart/lead_time_v2/GitLabLeadTimeChart";
+
 import GitlabPipelineStatistics from "./gitlab/line_chart/pipeline-statistics/GitlabPipelineStatistics";
 import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/GitlabMergeRequestStatistics";
 
@@ -1047,6 +1050,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               />
             </Col>
           );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY_V2:
+            return (
+                <Col xl={12} md={12} className="p-2">
+                    <GitlabDeploymentFrequencyV2
+                        kpiConfiguration={kpiConfig}
+                        setKpiConfiguration={setKpiConfig}
+                        dashboardData={dashboardData}
+                        setKpis={setKpis}
+                        index={index}
+                    />
+                </Col>
+            );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
         return (
             <Col md={12} className="p-2">
@@ -1059,6 +1074,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
               />
             </Col>
         );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME_V2:
+            return (
+                <Col md={12} className="p-2">
+                    <GitLabLeadTimeChartV2
+                        kpiConfiguration={kpiConfig}
+                        setKpiConfiguration={setKpiConfig}
+                        dashboardData={dashboardData}
+                        setKpis={setKpis}
+                        index={index}
+                    />
+                </Col>
+            );
         case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_MERGE_STATISTICS:
             return (
                 <Col xl={12} md={12} className="p-2">
