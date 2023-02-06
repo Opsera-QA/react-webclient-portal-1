@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Model from "core/data_model/model";
 import tagsUsedInProjectsMetadata from "./tags-used-in-projects-metadata";
-import TagArrayUsedInPipelinesField from "components/common/fields/tags/TagArrayUsedInPipelinesField";
+import TagArrayUsedInProjectsField from "components/common/fields/tags/TagArrayUsedInProjectsField";
 import TagManager from "components/common/inputs/tags/TagManager";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
@@ -49,7 +49,7 @@ function TagsUsedInProjectsReport() {
       </Row>
       <Row className={"px-2"}>
         <Col>
-          <TagArrayUsedInPipelinesField tags={tagsUsedInProjectsDto?.getData("tags")} showTable={true}/>
+          <TagArrayUsedInProjectsField tags={tagsUsedInProjectsDto?.getData("tags")} />
         </Col>
       </Row>
     </ScreenContainer>
