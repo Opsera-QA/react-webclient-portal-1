@@ -42,13 +42,10 @@ customerPipelineTemplateCatalogActions.getCustomerCatalogPipelineTemplateById = 
 customerPipelineTemplateCatalogActions.publishPipelineToCustomerCatalog = async (
   getAccessToken,
   cancelTokenSource,
-  pipelineId,
-  roles,
+  publishPipelineModel,
 ) => {
-  const apiUrl = `/workflow/templates/customer/${pipelineId}`;
-  const postBody = {
-    roles: roles,
-  };
+  const apiUrl = `/workflow/templates/customer/${publishPipelineModel?.getMongoDbId()}`;
+  const postBody = publishPipelineModel.getPersistData();
 
   return await baseActions.apiPostCallV2(
     getAccessToken,

@@ -39,6 +39,7 @@ import PipelineWorkflowStepIncompleteStepIcon
   from "components/workflow/pipelines/pipeline_details/workflow/item/icon/PipelineWorkflowStepIncompleteStepIcon";
 import PipelineStepWorkflowStepAwaitingApprovalStepIcon
   from "components/workflow/pipelines/pipeline_details/workflow/item/icon/PipelineStepWorkflowStepAwaitingApprovalStepIcon";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 const PipelineWorkflowItem = (
   {
@@ -271,6 +272,35 @@ const PipelineWorkflowItem = (
     }
   };
 
+  // TODO: Make separate component
+  const getStepDefinitionEditButton = () => {
+    const mongoDbId = DataParsingHelper.parseMongoDbId(item?._id);
+
+    if (mongoDbId && (editWorkflow || !isToolSet)) {
+      return (
+        <OverlayIconBase
+          icon={faPen}
+          className={"text-muted ml-2"}
+          overlayBody={"Step Setup"}
+          onClickFunction={() =>  handleEditClick("step", item.tool, item._id, item)}
+        />
+      );
+    }
+  };
+
+  if (!DataParsingHelper.parseMongoDbId(item?._id)) {
+    return (
+      <div className="workflow-module-container-height">
+        <div className="title-text-6 upper-case-first ml-1 mt-1 d-flex">
+          <div className="text-muted mr-1">
+            <LoadingIcon className={"mr-2"} />
+            Initializing Step
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="workflow-module-container-height">
@@ -360,14 +390,7 @@ const PipelineWorkflowItem = (
                 inWorkflowEditMode={editWorkflow}
                 loadPipelineFunction={loadPipeline}
               />
-              {(editWorkflow || !isToolSet) &&
-                <OverlayIconBase
-                  icon={faPen}
-                  className={"text-muted ml-2"}
-                  overlayBody={"Step Setup"}
-                  onClickFunction={() =>  handleEditClick("step", item.tool, item._id, item)}
-                />
-              }
+              {getStepDefinitionEditButton()}
               <StepToolHelpIcon
                 iconClassName={"mb-1"}
                 className={"ml-2"}

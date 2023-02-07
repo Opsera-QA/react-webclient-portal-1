@@ -5,6 +5,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import InfoOverlayBase from "components/common/overlays/info/InfoOverlayBase";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 import {pipelineValidationHelper} from "components/workflow/pipelines/helpers/pipelineValidation.helper";
+import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
 
 export default function PipelineWorkflowStepIncompleteStepIcon(
   {
@@ -21,11 +22,13 @@ export default function PipelineWorkflowStepIncompleteStepIcon(
         titleText={"Step Warning"}
         titleIcon={faExclamationTriangle}
       >
-        {`
+        <WarningMessageFieldBase
+          message={`
            This step is either missing configuration settings or needs to be reviewed. 
            In its current state, it will not run properly.  
            Please view the step settings and ensure the required fields are provided and valid.
         `}
+        />
       </InfoOverlayBase>
     );
   };
