@@ -127,8 +127,6 @@ function GithubBranchSelectInput({
         onSearchFunction={(searchTerm) =>
           delayedSearchQuery(searchTerm, repositoryId, toolId)
         }
-        requireUserEnable={true}
-        onEnableEditFunction={() => setInEditMode(true)}
       />
     );
   }
@@ -155,6 +153,7 @@ function GithubBranchSelectInput({
       }
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
+      externalCacheToolId={toolId}
     />
   );
 }

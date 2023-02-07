@@ -112,6 +112,7 @@ function GithubMonoRepositorySelectInput(
       onSearchFunction={(searchTerm) => delayedSearchQuery(cancelTokenSource)}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
+      externalCacheToolId={toolId}
     />
   );
 }

@@ -118,6 +118,7 @@ function BitbucketRepositorySelectInput(
       onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
+      externalCacheToolId={toolId}
     />
   );
 }
