@@ -125,6 +125,11 @@ adminTagsActions.getRelevantDashboardsV2 = async (getAccessToken, cancelTokenSou
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, tags);
 };
 
+adminTagsActions.getAllProjectsWithTags = async (getAccessToken, cancelTokenSource, tags) => {
+  const apiUrl = `/reports/projects/all-tags`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, tags);
+};
+
 adminTagsActions.subscribeToTag = async (getAccessToken, cancelTokenSource, tagId) => {
   const apiUrl = `/tags/${tagId}/subscribe`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
