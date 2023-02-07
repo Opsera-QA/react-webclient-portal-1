@@ -40,7 +40,6 @@ function TagArrayUsedInProjectsField({ orgTags, tags }) {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      console.log('loadData');
       await loadProjects(cancelSource);
     }
     catch (error) {
@@ -57,9 +56,15 @@ function TagArrayUsedInProjectsField({ orgTags, tags }) {
 
   const loadProjects = async (cancelSource = cancelTokenSource) => {
     if (Array.isArray(tags) && Array.isArray(orgTags) && (tags.length > 0 || orgTags.length > 0)) {
-      const response = await adminTagsActions.getAllProjectsWithTags(getAccessToken, cancelSource, { orgTags, tags });
 
-      console.log({ response });
+      const allTags = [...tags];
+
+      // grab only the tags from each to combine into tags
+      orgTags.forEach(({ tags }) => {
+        allTags.push(...tags);
+      });
+
+      const response = await adminTagsActions.getAllProjectsWithTags(getAccessToken, cancelSource, allTags);
 
       if (response?.data != null) {
         setProjects(response?.data?.data);
@@ -67,12 +72,11 @@ function TagArrayUsedInProjectsField({ orgTags, tags }) {
     }
   };
 
-
   if (isLoading) {
     return <LoadingDialog message={"Loading Projects"} size={"sm"} />;
   }
 
-  if (!isLoading && (tags == null || tags.length === 0)) {
+  if (!isLoading && (tags == null || (tags.length === 0 && orgTags.length === 0))) {
     return null;
   }
 
