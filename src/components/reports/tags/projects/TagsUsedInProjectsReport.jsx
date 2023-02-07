@@ -49,7 +49,7 @@ function TagsUsedInProjectsReport() {
       </Row>
       <Row className={"px-2"}>
         <Col>
-          <TagArrayUsedInProjectsField tags={tagsUsedInProjectsDto?.getData("tags")} />
+          <TagArrayUsedInProjectsField orgTags={tagsUsedInProjectsDto?.getData('orgTags')} tags={tagsUsedInProjectsDto?.getData("tags")} />
         </Col>
       </Row>
     </ScreenContainer>

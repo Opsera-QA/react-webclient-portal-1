@@ -125,9 +125,9 @@ adminTagsActions.getRelevantDashboardsV2 = async (getAccessToken, cancelTokenSou
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, tags);
 };
 
-adminTagsActions.getAllProjectsWithTags = async (getAccessToken, cancelTokenSource, tags) => {
+adminTagsActions.getAllProjectsWithTags = async (getAccessToken, cancelTokenSource, query) => {
   const apiUrl = `/reports/projects/all-tags`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, tags);
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, query);
 };
 
 adminTagsActions.subscribeToTag = async (getAccessToken, cancelTokenSource, tagId) => {
