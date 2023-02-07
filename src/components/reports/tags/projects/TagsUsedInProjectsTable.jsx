@@ -19,7 +19,7 @@ function TagsUsedInProjectsTable({ data, loadData, isLoading}) {
     () => [
       getTableTextColumn(getField(fields, "_id")),
       getTableTextColumn(getField(fields, "key")),
-      getTableTextColumn(getField(fields, "owner")),
+      // getTableTextColumn(getField(fields, "owner")), // add back once getProjectsWithTags API can correctly lookup owner name
       getTableTextColumn(getField(fields, "tool_identifier")),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableDateColumn(getField(fields, "updatedAt")),
