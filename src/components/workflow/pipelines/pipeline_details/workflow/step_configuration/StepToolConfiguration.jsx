@@ -1457,6 +1457,7 @@ function StepToolConfiguration({
               stepTool={stepTool}
               parentCallback={callbackFunction}
               closeEditorPanel={closeEditorPanel}
+              pipelineStep={pipelineStep}
             />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK:
