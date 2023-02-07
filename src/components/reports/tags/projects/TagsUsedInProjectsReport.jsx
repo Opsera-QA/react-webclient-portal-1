@@ -9,6 +9,7 @@ import TagArrayUsedInProjectsField from "components/common/fields/tags/TagArrayU
 import TagManager from "components/common/inputs/tags/TagManager";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import OrganizationTagManager from "components/common/inputs/tags/OrganizationTagManager";
 
 function TagsUsedInProjectsReport() {
   const [tagsUsedInProjectsDto, setTagsUsedInProjectsDto] = useState(new Model(tagsUsedInProjectsMetadata.newObjectFields, tagsUsedInProjectsMetadata, true));
@@ -47,9 +48,14 @@ function TagsUsedInProjectsReport() {
           <TagManager type={"tags"} allowCreate={false} fieldName={"tags"} dataObject={tagsUsedInProjectsDto} setDataObject={setTagsUsedInProjectsDto}/>
         </Col>
       </Row>
+      <Row className={"mb-3 mx-0"}>
+        <Col className={"mx-0"}>
+          <OrganizationTagManager fieldName={"orgTags"} dataObject={tagsUsedInProjectsDto} setDataObject={setTagsUsedInProjectsDto}/>
+        </Col>
+      </Row>
       <Row className={"px-2"}>
         <Col>
-          <TagArrayUsedInProjectsField orgTags={tagsUsedInProjectsDto?.getData('orgTags')} tags={tagsUsedInProjectsDto?.getData("tags")} />
+          <TagArrayUsedInProjectsField orgTags={tagsUsedInProjectsDto?.getData("orgTags")} tags={tagsUsedInProjectsDto?.getData("tags")} />
         </Col>
       </Row>
     </ScreenContainer>
