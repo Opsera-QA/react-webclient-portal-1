@@ -125,7 +125,6 @@ JenkinsStepConfigurationBranchEditorPanel.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
-  jenkinsList: PropTypes.any,
   repoId: PropTypes.string,
   service: PropTypes.string,
   gitToolId: PropTypes.string,

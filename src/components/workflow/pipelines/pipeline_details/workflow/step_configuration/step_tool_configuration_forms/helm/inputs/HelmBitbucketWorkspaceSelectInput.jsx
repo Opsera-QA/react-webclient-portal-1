@@ -14,7 +14,7 @@ function HelmBitbucketWorkspaceSelectInput({model, setModel, disabled}) {
   if (model?.getData("type") !== "bitbucket") {
     return <></>;
   }
-
+ 
   return (
      <BitbucketWorkspaceInput
        fieldName={"bitbucketWorkspaceName"}

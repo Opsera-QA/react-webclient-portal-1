@@ -41,7 +41,7 @@ function PipelineWorkflow({
   lastStep,
 }) {
   const [zoomValue, setZoomValue] = useState(2); //1,2, or 3 with 2 being default zoom
-  const [updatingWorkflow, setUpdatingWorkflow] = useState(2); //1,2, or 3 with 2 being default zoom
+  const [updatingWorkflow, setUpdatingWorkflow] = useState(false);
   const [editWorkflow, setEditWorkflow] = useState(false);
   const workflowSource = DataParsingHelper.parseNestedObject(pipeline, "workflow.source", {});
   const gitExportEnabled = DataParsingHelper.parseBooleanV2(workflowSource.gitExportEnabled, false);

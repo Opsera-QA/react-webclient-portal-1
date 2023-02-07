@@ -14,7 +14,7 @@ function HelmCustomScriptSelectInput({model, setModel, disabled}) {
       value: false,
     }
   ];
-
+ 
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData(fieldName, selectedOption.value);

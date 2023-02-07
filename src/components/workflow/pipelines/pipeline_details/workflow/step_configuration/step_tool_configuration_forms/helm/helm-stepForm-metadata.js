@@ -97,7 +97,7 @@ const helmStepFormMetadata = {
       id: "workspaceName",
     },
     {
-      label: "Azure Credential",
+      label: "Azure Credential", 
       id: "azureCredentialId",
     },
     {
@@ -138,7 +138,8 @@ const helmStepFormMetadata = {
     {
       label: "Service Name",
       id: "serviceName",
-      isRequired: true
+      isRequired: true,
+      lowercase: true,
     },
     {
       label: "Input File Name",

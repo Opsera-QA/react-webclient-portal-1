@@ -27,6 +27,7 @@ import BlackduckLogSummaryReportPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/blackduck/BlackduckLogSummaryReportPanel";
 import SnykSummaryReportPanel
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/snyk/SnykSummaryReportPanel";
+import AquasecLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/aquasec/AquasecLogSummaryReportPanel";
 
 function PipelineSummaryReportPanel(
   {
@@ -129,6 +130,10 @@ function PipelineSummaryReportPanel(
         return (
             <SnykSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
+        return (
+            <AquasecLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );        
       default:
         return (
           <PipelineTaskSummaryPanelBase

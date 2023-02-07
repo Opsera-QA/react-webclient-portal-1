@@ -42,7 +42,7 @@ function HelmAzureNamespaceSelectInput({
         }
       });
     }
-
+ 
     return () => {
       source.cancel();
       isMounted.current = false;

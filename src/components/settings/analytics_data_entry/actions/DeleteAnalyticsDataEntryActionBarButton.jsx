@@ -4,10 +4,7 @@ import DeleteConfirmationOverlay from "components/common/overlays/center/delete/
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {useHistory} from "react-router-dom";
 import ActionBarDeleteButtonBase from "components/common/actions/buttons/ActionBarDeleteButtonBase";
-import AnalyticsDataEntryRoleHelper
-  from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
 import {analyticsDataEntryHelper} from "components/settings/analytics_data_entry/analyticsDataEntry.helper";
-import useAnalyticsDataEntryActions from "hooks/settings/insights/analytics_data_entries/useAnalyticsDataEntryActions";
 
 export default function DeleteAnalyticsDataEntryActionBarButton(
   {
@@ -15,16 +12,12 @@ export default function DeleteAnalyticsDataEntryActionBarButton(
     className,
   }) {
   const {
-    userData,
     toastContext,
   } = useComponentStateReference();
   const history = useHistory();
-  const analyticsDataEntryActions = useAnalyticsDataEntryActions();
 
   const handleDeleteFunction = async () => {
-    return await analyticsDataEntryActions.deleteAnalyticsDataEntryById(
-      analyticsDataEntryModel?.getMongoDbId(),
-    );
+    return await analyticsDataEntryModel.deleteModel();
   };
 
   const showOverlayFunction = async () => {
@@ -37,7 +30,7 @@ export default function DeleteAnalyticsDataEntryActionBarButton(
     );
   };
 
-  if (AnalyticsDataEntryRoleHelper.canDeleteAnalyticsDataEntry(userData, analyticsDataEntryModel?.getOriginalData()) !== true) {
+  if (analyticsDataEntryModel.canDelete() !== true) {
     return null;
   }
 

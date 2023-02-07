@@ -18,7 +18,7 @@ function HelmEnvironmentVariables({ model, setModel, disabled, fieldName}) {
     />
   );
 }
-
+ 
 HelmEnvironmentVariables.propTypes = {
   model: PropTypes.object,
   fieldName: PropTypes.string,

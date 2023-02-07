@@ -20,10 +20,9 @@ function HelmAzureClusterSelectInput(
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [azureRegionList, setAzureRegionList] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Cluster");
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
+  const [error, setError] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -35,6 +34,7 @@ function HelmAzureClusterSelectInput(
     setAzureRegionList([]);
     if (hasStringValue(applicationId) === true && hasStringValue(azureToolConfigId) === true) {
       loadData(source).catch((error) => {
+        setError(error);
         throw error;
       });
     }
@@ -43,10 +43,10 @@ function HelmAzureClusterSelectInput(
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      setError(null);
       await loadAzureClusters(cancelSource);
     } catch (error) {
-      setPlaceholderText("There was an error pulling Clusters");
-      setErrorMessage("No Clusters available.");
+      setError(error);
       toastContext.showErrorDialog(error);
       console.error(error);
     } finally {
@@ -58,26 +58,8 @@ function HelmAzureClusterSelectInput(
     const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, azureToolConfigId);
     const tool = response?.data?.data;
 
-    if (tool == null) {
-      setPlaceholderText("Error Pulling Clusters!");
-      setErrorMessage("Could not find Tool to grab Clusters.");
-      return;
-    }
-
     const applicationResponse = await toolsActions.getRoleLimitedToolApplicationByIdV2(getAccessToken, cancelSource, azureToolConfigId, applicationId);
     const applicationData = applicationResponse?.data?.data;
-
-    if (applicationData == null) {
-      setPlaceholderText("Error Pulling Clusters!");
-      setErrorMessage(`
-        The selected Application was not found. 
-        It may have been deleted, or the Tool's access roles may have been updated.
-        Please select another Application or create another in the Tool Registry.
-      `);
-      return;
-    }
-
-    updateClientDetails(applicationData?.configuration);
 
     const azureResponse = await azureActions.getAzureClusters(
       getAccessToken,
@@ -87,22 +69,9 @@ function HelmAzureClusterSelectInput(
     );
 
     const result = azureResponse?.data?.data;
-    if (Array.isArray(result) && result.length > 0) {
-      setErrorMessage("");      
+    if (Array.isArray(result) && result.length > 0) {     
       setAzureRegionList(result);
     }
-
-    if (result?.length === 0) {
-      setPlaceholderText("No clusters found with this azure configuration");
-      setErrorMessage("No Clusters found");
-    }
-  };
-
-  const updateClientDetails = (config) => {
-    let newDataObject = { ...model };
-    newDataObject.setData("clientId", config?.clientId?.vaultKey);
-    newDataObject.setData("clientSecret", config?.clientSecret?.vaultKey);
-    setModel({ ...newDataObject });
   };
 
   return (
@@ -113,12 +82,13 @@ function HelmAzureClusterSelectInput(
       selectOptions={azureRegionList}
       busy={isLoading}
       disabled={isLoading}
-      placeholder={placeholder}
-      errorMessage={errorMessage}
+      singularTopic={"Cluster"}
+      pluralTopic={"Clusters"}
+      error={error}
     />
   );
 }
-
+ 
 HelmAzureClusterSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,

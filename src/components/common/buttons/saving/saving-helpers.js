@@ -106,7 +106,7 @@ export async function persistNewRecord(model, toastContext, showSuccessToasts, c
   }
 }
 
-export async function persistUpdatedRecord(model, toastContext, showSuccessToasts, updateRecord, lenient, showIncompleteDataMessage, setModel, isIncomplete) {
+export async function persistUpdatedRecord(model, toastContext, showSuccessToasts, updateRecord, lenient, showIncompleteDataMessage, setModel, isIncomplete, clearChangeMap = true) {
   try {
     if (model == null) {
       return false;
@@ -129,7 +129,10 @@ export async function persistUpdatedRecord(model, toastContext, showSuccessToast
         toastContext.showUpdateSuccessResultDialog(model.getType());
       }
     }
-    model.clearChangeMap();
+
+    if (clearChangeMap === true) {
+      model.clearChangeMap();
+    }
 
     if (setModel) {
       setModel({...model});

@@ -26,7 +26,6 @@ export default function useGetPipelineAppliedTags(
   const getUniqueAppliedTagsForPipelineFilter = async () => {
     const response = await pipelineActions.getUniqueAppliedTagsForPipelineFilter();
     const newTags = DataParsingHelper.parseNestedArray(response, "data.data", []);
-    console.log("newTags: " + JSON.stringify(newTags));
     setTags([...newTags]);
   };
 

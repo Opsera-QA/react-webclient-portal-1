@@ -25,7 +25,7 @@ function AzureResourceGroupSelectInput(
   const [azureRegionList, setAzureRegionList] = useState([]);
   const [error, setError] = useState(undefined);
   const { getAccessToken } = useContext(AuthContext);
-
+ 
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();

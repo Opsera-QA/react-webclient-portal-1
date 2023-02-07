@@ -7,15 +7,21 @@ function CloudProviderAzureApplicationSelect({fieldName, model, setModel}) {
     const setDataFunction = (fieldName, selectedOption) => {
         let newModel = {...model};
         newModel.setData(fieldName, selectedOption._id);
+        newModel.setDefaultValue("clusterName");
+        newModel.setDefaultValue("resourceGroup");
+        newModel.setDefaultValue("namespace");
         setModel({...newModel});
     };
 
     const clearDataFunction = () => {
         let newModel = {...model};
         newModel.setData(fieldName, "");
+        newModel.setDefaultValue("clusterName");
+        newModel.setDefaultValue("resourceGroup");
+        newModel.setDefaultValue("namespace");
         setModel({...newModel});
     };
-
+ 
     return (
         <RoleRestrictedRegistryToolApplicationSelectInput
             fieldName={fieldName}

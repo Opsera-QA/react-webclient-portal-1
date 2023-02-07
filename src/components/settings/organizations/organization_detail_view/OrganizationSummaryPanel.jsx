@@ -6,6 +6,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
 import LeaderField from "components/common/fields/object/settings/organizations/LeaderField";
 import ActivityField from "components/common/fields/boolean/ActivityField";
+import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
 
 function OrganizationSummaryPanel({ organizationData, setActiveTab }) {
   if (organizationData == null) {
@@ -22,7 +23,7 @@ function OrganizationSummaryPanel({ organizationData, setActiveTab }) {
           <TextFieldBase dataObject={organizationData} fieldName={"_id"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={organizationData} fieldName={"owner_name"}/>
+          <SsoUserField model={organizationData} fieldName={"owner"}/>
         </Col>
         <Col lg={6}>
           <LeaderField dataObject={organizationData} fieldName={"leader"}/>

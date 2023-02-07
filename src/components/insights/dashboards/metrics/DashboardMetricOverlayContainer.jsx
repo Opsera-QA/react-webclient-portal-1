@@ -30,9 +30,11 @@ import SalesforceComponentsEditorPanel
   from "../../charts/sfdc/data_block_chart/Salesforce_components/SalesforceComponentsEditorPanel";
 import ApigeeReportsEditorPanel from "../../charts/apigee/reports/ApigeeReportsEditorPanel";
 import GitlabDeploymentFrequencyEditorPanel from "components/insights/charts/gitlab/deployment_frequency/GitlabDeploymentFrequencyEditorPanel";
+import GitlabDeploymentFrequencyEditorPanelV2 from "components/insights/charts/gitlab/deployment_frequency_v2/GitlabDeploymentFrequencyEditorPanel";
 import ApigeeSummaryEditorPanel from "../../charts/apigee/summary/ApigeeSummaryEditorPanel";
 import BoomiBarChartEditorPanel from "components/insights/charts/boomi/bar_chart/BoomiBarChartEditorPanel";
 import GitlabLeadTimeEditorPanel from "../../charts/gitlab/line_chart/lead_time/GitlabLeadTimeEditorPanel";
+import GitlabLeadTimeEditorPanelV2 from "../../charts/gitlab/line_chart/lead_time_v2/GitlabLeadTimeEditorPanel";
 import JiraMeanTimeToResolutionEditorPanel
   from "../../charts/jira/bar_chart/mean_time_to_resolution/JiraMeanTimeToResolutionEditorPanel";
 import JiraChangeFailureRateEditorPanel from "components/insights/charts/jira/line_chart/change_failure_rate/JiraChangeFailureRateEditorPanel";
@@ -241,9 +243,29 @@ function DashboardMetricOverlayContainer(
             kpiConfiguration={kpiConfiguration}
           />
         );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY_V2:
+        return (
+            <GitlabDeploymentFrequencyEditorPanelV2
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+                unpackedFilterData={unpackedFilterData}
+                kpiConfiguration={kpiConfiguration}
+            />
+        );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
         return (
           <GitlabLeadTimeEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME_V2:
+        return (
+          <GitlabLeadTimeEditorPanelV2
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}
