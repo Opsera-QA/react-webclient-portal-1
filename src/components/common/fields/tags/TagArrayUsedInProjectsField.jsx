@@ -9,7 +9,7 @@ import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
 
 
-function TagArrayUsedInProjectsField({ tags }) {
+function TagArrayUsedInProjectsField({ orgTags, tags }) {
   const { getAccessToken } = useContext(AuthContext);
   const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -35,7 +35,7 @@ function TagArrayUsedInProjectsField({ tags }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, [tags]);
+  }, [orgTags, tags]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -56,9 +56,8 @@ function TagArrayUsedInProjectsField({ tags }) {
   };
 
   const loadProjects = async (cancelSource = cancelTokenSource) => {
-    console.log('loadProjects', tags);
-    if (Array.isArray(tags) && tags.length > 0) {
-      const response = await adminTagsActions.getAllProjectsWithTags(getAccessToken, cancelSource, tags);
+    if (Array.isArray(tags) && Array.isArray(orgTags) && (tags.length > 0 || orgTags.length > 0)) {
+      const response = await adminTagsActions.getAllProjectsWithTags(getAccessToken, cancelSource, { orgTags, tags });
 
       console.log({ response });
 
@@ -99,6 +98,7 @@ function TagArrayUsedInProjectsField({ tags }) {
 }
 
 TagArrayUsedInProjectsField.propTypes = {
+  orgTags: PropTypes.array,
   tags: PropTypes.array,
   showTable: PropTypes.bool
 };
