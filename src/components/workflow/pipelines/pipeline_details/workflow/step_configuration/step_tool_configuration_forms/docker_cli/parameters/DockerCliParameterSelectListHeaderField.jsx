@@ -8,10 +8,14 @@ export default function DockerCliParameterSelectListHeaderField() {
       <Col sm={11}>
         <Row>
           <Col sm={6} className={"pl-2 pr-0 py-2"}>
-            <span className="text-muted">Parameter</span>
+            <label >
+              <span>Parameter ID</span>
+            </label>
           </Col>
           <Col sm={6} className={"pl-2 pr-0 py-2"}>
-            <span className="text-muted">Output Key</span>
+          <label >
+              <span>Output Key</span>
+            </label>
           </Col>
         </Row>
       </Col>
