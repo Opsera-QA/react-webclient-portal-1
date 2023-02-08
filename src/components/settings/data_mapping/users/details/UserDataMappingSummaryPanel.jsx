@@ -6,6 +6,8 @@ import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
+import ToolIdentifierNameField from "components/common/fields/tool_identifier/ToolIdentifierNameField";
+import ExternalToolPropertyCacheField from "components/common/fields/cache/ExternalToolPropertyCacheField";
 
 export default function UserDataMappingSummaryPanel({ userDataMappingModel, setActiveTab }) {
 
@@ -17,13 +19,18 @@ export default function UserDataMappingSummaryPanel({ userDataMappingModel, setA
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={userDataMappingModel} fieldName={"tool_identifier"}/>
+          <ToolIdentifierNameField model={userDataMappingModel} fieldName={"tool_identifier"}/>
         </Col>
         <Col lg={6}>
           <ToolNameField model={userDataMappingModel} fieldName={"tool_id"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={userDataMappingModel} fieldName={"tool_user_id"}/>
+          <ExternalToolPropertyCacheField
+            model={userDataMappingModel}
+            fieldName={"tool_user_id"}
+            toolIdFieldName={"tool_id"}
+            externalCacheLabelPropertyName={"displayName"}
+          />
         </Col>
         <Col lg={6}>
           <EmailAddressField model={userDataMappingModel} fieldName={"tool_user_email"}/>
