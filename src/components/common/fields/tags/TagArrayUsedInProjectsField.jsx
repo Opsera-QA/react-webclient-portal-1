@@ -56,15 +56,7 @@ function TagArrayUsedInProjectsField({ orgTags, tags }) {
 
   const loadProjects = async (cancelSource = cancelTokenSource) => {
     if (Array.isArray(tags) && Array.isArray(orgTags) && (tags.length > 0 || orgTags.length > 0)) {
-
-      const allTags = [...tags];
-
-      // grab only the tags from each to combine into tags
-      orgTags.forEach(({ tags }) => {
-        allTags.push(...tags);
-      });
-
-      const response = await adminTagsActions.getAllProjectsWithTags(getAccessToken, cancelSource, allTags);
+      const response = await adminTagsActions.getAllProjectsWithTags(getAccessToken, cancelSource, [...tags, ...orgTags]);
 
       if (response?.data != null) {
         setProjects(response?.data?.data);
