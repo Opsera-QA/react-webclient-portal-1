@@ -187,6 +187,9 @@ import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
 import DoraJiraGitlabRolledUpChart from "./dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpChart";
 import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/GitlabMergeRequestStatistics";
 import AquasecIssuesBySeverity from "./aquasec_security_insights/AquasecIssuesBySeverity";
+import GitLogCommitActivitiesEditorPanel from "./gitlog/commit_activities/GitLogCommitActivitiesEditorPanel";
+import GitLogCommitActivities from "./gitlog/commit_activities/GitLogCommitActivities";
+
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({
@@ -2278,7 +2281,20 @@ function ChartView({
             />
           </Col>
         );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_COMMIT_ACTIVITIES:
+          return (
+            <Col md={12} className="p-2">
+              <GitLogCommitActivities
+                kpiConfiguration={kpiConfig}
+                setKpiConfiguration={setKpiConfig}
+                dashboardData={dashboardData}
+                setKpis={setKpis}
+                index={index}
+              />
+            </Col>
+          );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.APPROVAL_GATES:
+      case "approval-gates":
         return (
           <Col
             md={12}

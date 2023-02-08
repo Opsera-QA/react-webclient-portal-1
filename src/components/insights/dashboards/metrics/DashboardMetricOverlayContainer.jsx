@@ -38,6 +38,7 @@ import GitlabMostActiveContributorsEditorPanel from "../../charts/gitlab/table/m
 import GitlabTimeTakenToCompleteMergeRequestReviewEditorPanel from "../../charts/gitlab/bar_chart/time_taken_to_complete_merge_request_review/GitlabTimeTakenToCompleteMergeRequestReviewEditorPanel";
 import GitlabMergeRequestsByUserEditorPanel from "../../charts/gitlab/bar_chart/merge_requests_by_user/GitlabMergeRequestsByUserEditorPanel";
 import GitlabCommitsByAuthorEditorPanel from "../../charts/gitlab/calendar_chart/commits_by_author/GitlabCommitsByAuthorEditorPanel";
+import GitLogCommitActivitiesEditorPanel from "../../charts/gitlog/commit_activities/GitLogCommitActivitiesEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer({
@@ -193,6 +194,16 @@ function DashboardMetricOverlayContainer({
             unpackedFilterData={unpackedFilterData}
             kpiConfiguration={kpiConfiguration}
           />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_COMMIT_ACTIVITIES:
+        return (
+            <GitLogCommitActivitiesEditorPanel
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+                unpackedFilterData={unpackedFilterData}
+                kpiConfiguration={kpiConfiguration}
+            />
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_PIPELINE_STATISTICS:
         return (
