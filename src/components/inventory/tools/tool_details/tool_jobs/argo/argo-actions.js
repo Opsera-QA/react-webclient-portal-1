@@ -195,4 +195,23 @@ argoActions.deleteArgoProjectV2 = async (getAccessToken, cancelTokenSource, tool
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+argoActions.getArgoRepositoryBranchesAndTags = async (getAccessToken, cancelTokenSource, toolId, repoUrl) => {
+  const apiUrl = `/tools/${toolId}/argo/v2/repositories/refs`;
+  const postBody = {
+    repoUrl: repoUrl,
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+argoActions.validateApplicationPath = async (getAccessToken, cancelTokenSource, toolId, data) => {
+  const apiUrl = `/tools/${toolId}/argo/applications/validatePath`;
+  const postBody = {
+    name: data?.name,
+    path: data?.path,
+    branch: data?.branch,
+    repoUrl: data?.repoUrl,
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default argoActions;

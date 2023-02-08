@@ -100,6 +100,7 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
       }
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
+      externalCacheToolId={gitToolId}
       singularTopic={"Workspace"}
       pluralTopic={"Workspaces"}
     />

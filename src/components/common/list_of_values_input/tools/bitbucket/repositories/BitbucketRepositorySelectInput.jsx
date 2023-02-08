@@ -60,7 +60,7 @@ function BitbucketRepositorySelectInput(
       setError(undefined);
       setIsLoading(true);
       let defaultSearchTerm = searchTerm;
-      const existingRepository = model?.getData("repositoryName") || model?.getData("gitRepository") || model?.getData("repository");
+      const existingRepository = model?.getData("gitRepository") || model?.getData("repository") || model?.getData("repositoryName");
       // console.log(existingRepository);
       if ((defaultSearchTerm === "") && (hasStringValue(existingRepository) === true)) {
         defaultSearchTerm = existingRepository;
@@ -118,6 +118,7 @@ function BitbucketRepositorySelectInput(
       onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
+      externalCacheToolId={toolId}
     />
   );
 }

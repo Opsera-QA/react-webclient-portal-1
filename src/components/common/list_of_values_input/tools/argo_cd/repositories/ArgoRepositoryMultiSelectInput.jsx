@@ -6,7 +6,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import {argoCdActions} from "components/common/list_of_values_input/tools/argo_cd/argocd.actions";
+import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
 
 function ArgoRepositoryMultiSelectInput(
   {
@@ -70,7 +70,7 @@ function ArgoRepositoryMultiSelectInput(
   };
 
   const loadRepositories = async (argoToolId, cancelSource = cancelTokenSource) => {
-    const response = await argoCdActions.getArgoRepositoriesV2(getAccessToken, cancelSource, argoToolId);
+    const response = await argoActions.getArgoRepositories(getAccessToken, cancelSource, argoToolId);    
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
