@@ -182,6 +182,7 @@ function SelectInputBase(
 
       setCachedValue({
         cache: parsedFoundValue,
+        textField: textField,
       });
     }
 
