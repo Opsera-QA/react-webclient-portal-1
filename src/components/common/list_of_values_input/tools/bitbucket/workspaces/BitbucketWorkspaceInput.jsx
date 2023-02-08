@@ -87,6 +87,7 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
       clearDataFunction={clearDataFunction}
       disabled={disabled || isLoading || workspaces.length === 0}
       className={className}
+      externalCacheToolId={gitToolId}
     />
   );
 }
