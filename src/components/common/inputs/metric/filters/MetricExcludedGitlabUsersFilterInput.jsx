@@ -11,20 +11,13 @@ function MetricExcludedGitlabUsersFilterInput({
   fieldName,
 }) {
   return (
-    <>
-      <SupportedMetricFilterInputContainer
-        filterType={KPI_FILTER_TYPES.GITLAB_MOST_ACTIVE_CONTRIBUTOR}
-        supportedFilters={metricModel?.getData("filters")}
-      >
-        <GitlabUsersFilterSelectInput
-          fieldName={fieldName}
-          valueField={"value"}
-          textField={"text"}
-          model={metricFilterModel}
-          setModel={setMetricFilterModel}
-        />
-      </SupportedMetricFilterInputContainer>
-    </>
+    <GitlabUsersFilterSelectInput
+      fieldName={fieldName}
+      valueField={"value"}
+      textField={"text"}
+      model={metricFilterModel}
+      setModel={setMetricFilterModel}
+    />
   );
 }
 
