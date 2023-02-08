@@ -190,6 +190,8 @@ import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
 
 // Dora KPI
 import DoraJiraGitlabRolledUpChart from "./dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpChart";
+import GitLogCommitActivitiesEditorPanel from "./gitlog/commit_activities/GitLogCommitActivitiesEditorPanel";
+import GitLogCommitActivities from "./gitlog/commit_activities/GitLogCommitActivities";
 
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
@@ -1759,6 +1761,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+<<<<<<< HEAD
       case kpiIdentifierConstants.KPI_IDENTIFIERS.DORA_JIRA_GITLAB_ROLLED_UP:
         return (
           <Col md={12} className="p-2">
@@ -1772,6 +1775,33 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.APPROVAL_GATES:
+=======
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.DORA_JIRA_GITLAB_ROLLED_UP:
+            return (
+                <Col md={12} className="p-2">
+                    <DoraJiraGitlabRolledUpChart
+                        kpiConfiguration={kpiConfig}
+                        setKpiConfiguration={setKpiConfig}
+                        dashboardData={dashboardData}
+                        setKpis={setKpis}
+                        index={index}
+                    />
+                </Col>
+            );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_COMMIT_ACTIVITIES:
+            return (
+                <Col md={12} className="p-2">
+                    <GitLogCommitActivities
+                        kpiConfiguration={kpiConfig}
+                        setKpiConfiguration={setKpiConfig}
+                        dashboardData={dashboardData}
+                        setKpis={setKpis}
+                        index={index}
+                    />
+                </Col>
+            );
+      case "approval-gates":
+>>>>>>> 75d3add26 (commit activities in progress)
         return (
           <Col md={12} className="p-2">
             <ApprovalGatesMetrics

@@ -44,6 +44,7 @@ import DoraJiraGitlabRolledUpEditorPanel
   from "../../charts/dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpEditorPanel";
 import GitlabMergeRequestStatisticsEditorPanel
   from "../../charts/gitlab/merge_request_statistics/GitlabMergeRequestStatisticsEditorPanel";
+import GitLogCommitActivitiesEditorPanel from "../../charts/gitlog/commit_activities/GitLogCommitActivitiesEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer(
@@ -192,6 +193,16 @@ function DashboardMetricOverlayContainer(
             unpackedFilterData={unpackedFilterData}
             kpiConfiguration={kpiConfiguration}
           />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_COMMIT_ACTIVITIES:
+        return (
+            <GitLogCommitActivitiesEditorPanel
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+                unpackedFilterData={unpackedFilterData}
+                kpiConfiguration={kpiConfiguration}
+            />
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_PIPELINE_STATISTICS:
         return (
