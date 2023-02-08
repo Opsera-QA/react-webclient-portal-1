@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
-import adminTagsActions from "components/settings/tags/admin-tags-actions";
+import reportTagsActions from "components/reports/tags/report-tags-actions";
 import TagsUsedInProjectsTable from "components/reports/tags/projects/TagsUsedInProjectsTable";
 import axios from "axios";
 import IconBase from "components/common/icons/IconBase";
@@ -56,7 +56,7 @@ function TagArrayUsedInProjectsField({ orgTags, tags }) {
 
   const loadProjects = async (cancelSource = cancelTokenSource) => {
     if (Array.isArray(tags) && Array.isArray(orgTags) && (tags.length > 0 || orgTags.length > 0)) {
-      const response = await adminTagsActions.getAllProjectsWithTags(getAccessToken, cancelSource, [...tags, ...orgTags]);
+      const response = await reportTagsActions.getAllProjectsWithTags(getAccessToken, cancelSource, [...tags, ...orgTags]);
 
       if (response?.data != null) {
         setProjects(response?.data?.data);
