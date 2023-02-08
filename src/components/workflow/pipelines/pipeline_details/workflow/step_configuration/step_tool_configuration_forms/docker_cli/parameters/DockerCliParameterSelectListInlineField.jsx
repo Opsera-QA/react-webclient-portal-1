@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
 
-export default function ParameterSelectListInlineField(
+export default function DockerCliParameterSelectListInlineField( 
   {
     parameter,
     index,
@@ -23,7 +23,7 @@ export default function ParameterSelectListInlineField(
             {parameter?.parameterName}
           </Col>
           <Col sm={6} className={"pl-2 pr-0 force-text-wrap"}>
-            {parameter?.outputKey ? "User defined parameter" : "Terraform Output"}
+            {parameter?.outputKey ? parameter?.outputKey : ""}
           </Col>
         </Row>
       </Col>
@@ -39,7 +39,7 @@ export default function ParameterSelectListInlineField(
   );
 }
 
-ParameterSelectListInlineField.propTypes = {
+DockerCliParameterSelectListInlineField.propTypes = {
   parameter: PropTypes.object,
   index: PropTypes.number,
   deleteParameterFunction: PropTypes.func,
