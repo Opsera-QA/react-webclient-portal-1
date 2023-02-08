@@ -23,6 +23,7 @@ import JiraCustomFieldMappingSelectInput from "components/common/list_of_values_
 import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
 import AnalyticsDataMappingEditWarningMessage
   from "components/settings/data_mapping/AnalyticsDataMappingEditWarningMessage";
+import GitlabProjectDataMappingSubform from "../../tools/gitlab/subforms/GitlabProjectDataMappingSubform"; 
 
 const determineKeyFromFullPath = keyPath => {
   const splitPath = keyPath.split('/');
@@ -96,6 +97,7 @@ function ProjectDataMappingEditorPanel(
     }
     if (projectDataMappingModel?.getData("tool_identifier") === "gitlab") {
       return (
+        <>
         <Col lg={12}>
           <ProjectRepositorySelectInput
             model={projectDataMappingModel}
@@ -104,6 +106,13 @@ function ProjectDataMappingEditorPanel(
             valueField="nameSpacedPath"
           />
         </Col>
+        <Col lg={12}>
+          <GitlabProjectDataMappingSubform
+            model={projectDataMappingModel}
+            setModel={setProjectDataMappingModel}
+          />
+        </Col>
+        </>
       );
     }
     if (projectDataMappingModel?.getData("tool_identifier") === "github") {
