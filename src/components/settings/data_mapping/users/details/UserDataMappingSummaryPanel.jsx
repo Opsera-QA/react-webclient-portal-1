@@ -34,7 +34,6 @@ export default function UserDataMappingSummaryPanel({ userDataMappingModel, setA
               model={userDataMappingModel}
               fieldName={"tool_user_id"}
               toolIdFieldName={"tool_id"}
-              externalCacheLabelPropertyName={"name"}
             />
           </Col>
         );
