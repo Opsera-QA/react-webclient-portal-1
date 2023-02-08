@@ -16,6 +16,8 @@ import UserMappingOpseraUserSelectInput
 import UserMappingSourceControlUserSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingSourceControlUserSelectInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
+import AnalyticsDataMappingEditWarningMessage
+  from "components/settings/data_mapping/AnalyticsDataMappingEditWarningMessage";
 
 function UserDataMappingEditorPanel(
   {
@@ -65,14 +67,7 @@ function UserDataMappingEditorPanel(
   const getWarningMessage = () => {
     if (userDataMappingModel?.isNew() !== true) {
       return (
-        <div className="m-2">
-          <Card>
-            <Card.Text className={"mt-3 mb-3"} style={{ display: "flex", justifyContent: "center" }}>
-              <strong>WARNING: </strong> Editing an active Analytics Data Mapping will result in loss of filtering
-              functionality from data previously mapped with this information
-            </Card.Text>
-          </Card>
-        </div>
+        <AnalyticsDataMappingEditWarningMessage />
       );
     }
   };

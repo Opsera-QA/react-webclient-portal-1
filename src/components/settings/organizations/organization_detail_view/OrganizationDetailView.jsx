@@ -8,7 +8,7 @@ import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import OrganizationsSubNavigationBar from "components/settings/organizations/OrganizationsSubNavigationBar";
-import useOrganizationModelById from "hooks/settings/insights/organizations/useOrganizationModelById";
+import useGetOrganizationModelById from "hooks/settings/insights/organizations/useGetOrganizationModelById";
 import {organizationHelper} from "components/settings/organizations/organization.helper";
 import {useParams} from "react-router-dom";
 import useComponentStateReference from "hooks/useComponentStateReference";
@@ -21,7 +21,7 @@ export default function OrganizationDetailView() {
     organizationModel,
     setOrganizationModel,
     isLoading,
-  } = useOrganizationModelById(id);
+  } = useGetOrganizationModelById(id);
   const {
     accessRoleData,
   } = useComponentStateReference();

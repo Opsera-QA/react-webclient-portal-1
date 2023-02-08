@@ -121,6 +121,7 @@ function EnvironmentSelectInput({ fieldName, dataObject, setDataObject, disabled
                 disabled={disabled || isLoading}
                 requireUserEnable={true}
                 onEnableEditFunction={() => setInEditMode(true)}
+                externalCacheToolId={tool}
             />
         </div>
     );

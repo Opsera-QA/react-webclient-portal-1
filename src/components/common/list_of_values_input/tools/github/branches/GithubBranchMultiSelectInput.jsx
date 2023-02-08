@@ -103,8 +103,6 @@ function GithubBranchMultiSelectInput(
       onSearchFunction={(searchTerm) =>
           delayedSearchQuery(searchTerm)
       }
-      requireUserEnable={true}
-      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }

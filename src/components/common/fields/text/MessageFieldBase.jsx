@@ -7,6 +7,7 @@ import IconBase from "components/common/icons/IconBase";
 export default function MessageFieldBase(
   {
     message,
+    messageFieldClassName,
     icon,
     label,
     className,
@@ -14,7 +15,7 @@ export default function MessageFieldBase(
   return (
     <FieldContainer className={className}>
       <H5FieldSubHeader subheaderText={label} />
-      <div className={"p-3 text-muted message-field"}>
+      <div className={`p-3 message-field ${messageFieldClassName}`}>
         <div className={"px-3 d-flex"}>
           <IconBase iconSize={"lg"} icon={icon} className={"mr-2"} />
           {message}
@@ -25,8 +26,13 @@ export default function MessageFieldBase(
 }
 
 MessageFieldBase.propTypes = {
-  message: PropTypes.string,
+  message: PropTypes.any,
   className: PropTypes.string,
   icon: PropTypes.object,
   label: PropTypes.string,
+  messageFieldClassName: PropTypes.string,
+};
+
+MessageFieldBase.defaultProps = {
+  messageFieldClassName: "info-message-field",
 };

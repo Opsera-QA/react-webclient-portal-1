@@ -15,6 +15,7 @@ function PipelineStepConfigurationButtonContainer(
     disableSaveButton,
     showIncompleteDataMessage,
     showSuccessToasts,
+    clearChangeMapAfterSave,
   }) {
 
   const getSaveButton = () => {
@@ -25,6 +26,7 @@ function PipelineStepConfigurationButtonContainer(
           recordDto={recordDto}
           updateRecord={persistRecord}
           showSuccessToasts={showSuccessToasts}
+          clearChangeMapAfterSave={clearChangeMapAfterSave}
         />
       );
     }
@@ -56,6 +58,7 @@ PipelineStepConfigurationButtonContainer.propTypes = {
   disableSaveButton: PropTypes.bool,
   showIncompleteDataMessage: PropTypes.bool,
   showSuccessToasts: PropTypes.bool,
+  clearChangeMapAfterSave: PropTypes.bool,
 };
 
 export default PipelineStepConfigurationButtonContainer;

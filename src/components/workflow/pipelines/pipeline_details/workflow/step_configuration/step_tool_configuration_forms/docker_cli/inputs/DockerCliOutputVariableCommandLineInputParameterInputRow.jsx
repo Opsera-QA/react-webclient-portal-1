@@ -3,14 +3,15 @@ import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import modelHelpers from "components/common/model/modelHelpers";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import {faPlus} from "@fortawesome/pro-light-svg-icons";
-import { commandLineInputParameterMetadata } from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/commandLineInputParameter.metadata";
 import CustomParameterSelectInput from "components/common/list_of_values_input/parameters/CustomParameterSelectInput";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import {
+  pipelineStepParameterMetadata
+} from "components/common/list_of_values_input/parameters/pipeline/pipelineStepParameter.metadata";
 
 const DOCKER_CLI_OUTPUT_VARIABLE_SELECT_OPTIONS = [
 {text: "Docker Registry Name", value: "docker_registry_name"},
@@ -29,7 +30,7 @@ export default function DockerCliOutputVariableCommandLineInputParameterInputRow
     addGlobalCustomParameterFunction,
     commandLineStepModel,
   }) {
-  const [commandLineInputParameterModel, setCommandLineInputParameterModel] = useState(modelHelpers.parseObjectIntoModel({}, commandLineInputParameterMetadata));
+  const [commandLineInputParameterModel, setCommandLineInputParameterModel] = useState(modelHelpers.parseObjectIntoModel({}, pipelineStepParameterMetadata));
 
   const handleAddPropertyFunction = () => {
     let successfulAdd = false;
@@ -74,7 +75,7 @@ export default function DockerCliOutputVariableCommandLineInputParameterInputRow
   };
 
   const isValid = commandLineInputParameterModel?.checkCurrentValidity();
-  const missingOutputKey = saveEnvironmentVariables === true && hasStringValue(commandLineInputParameterModel?.getData("outputKey")) !== true;
+  const missingOutputKey = hasStringValue(commandLineInputParameterModel?.getData("outputKey")) !== true;
   const isDuplicateName = hasDuplicateName();
   const isDuplicateValue = hasDuplicateValue();
 
@@ -114,7 +115,7 @@ export default function DockerCliOutputVariableCommandLineInputParameterInputRow
               className={"ml-auto"}
               variant={"success"}
               icon={faPlus}
-              disabled={ isValid !== true || disabled === true || missingOutputKey === true || isDuplicateName === true || isDuplicateValue === true}
+              disabled={ isValid !== true || disabled === true || missingOutputKey === true || isDuplicateName === true || isDuplicateValue === true || !commandLineInputParameterModel.getData("parameterId")}
               onClickFunction={handleAddPropertyFunction}
               normalText={"Add Parameter"}
             />

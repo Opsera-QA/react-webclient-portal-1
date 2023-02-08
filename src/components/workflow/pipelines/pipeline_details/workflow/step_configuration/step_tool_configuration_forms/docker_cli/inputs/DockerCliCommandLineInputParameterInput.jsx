@@ -1,24 +1,20 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {faBracketsCurly, faInfoCircle, faSync} from "@fortawesome/pro-light-svg-icons";
+import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import InfoContainer from "components/common/containers/InfoContainer";
-import CommandLineInputParameterInputRow
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParameterInputRow";
-import CommandLineStepSaveEnvironmentVariablesBooleanToggle
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineStepSaveEnvironmentVariablesBooleanToggle";
 import InputContainer from "components/common/inputs/InputContainer";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import ParameterSelectListHeaderField
-  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListHeaderField";
-import ParameterSelectListInlineField
-  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInlineField";
-import CommandLineInputParameterInputBaseHelpText
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/parameters/CommandLineInputParameterInputBaseHelpText";
+import PipelineStepParameterInputBaseHelpText
+  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBaseHelpText";
 import DockerCliCommandLineInputParameterInputRow from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_cli/inputs/DockerCliCommandLineInputParameterInputRow";
+import PipelineStepSaveEnvironmentVariablesBooleanToggle
+  from "components/common/list_of_values_input/parameters/pipeline/PipelineStepSaveEnvironmentVariablesBooleanToggle";
+import DockerCliParameterSelectListInlineField from "../parameters/DockerCliParameterSelectListInlineField";
+import DockerCliParameterSelectListHeaderField from "../parameters/DockerCliParameterSelectListHeaderField";
 
 export default function CommandLineInputParameterInputBase(
   {
@@ -34,7 +30,7 @@ export default function CommandLineInputParameterInputBase(
   const getRightSideButtons = () => {
     return (
       <CenteredContentWrapper>
-        <CommandLineInputParameterInputBaseHelpText />
+        <PipelineStepParameterInputBaseHelpText />
       </CenteredContentWrapper>
     );
   };
@@ -66,7 +62,7 @@ export default function CommandLineInputParameterInputBase(
         newArray.push({
           parameterName: parameter?.parameterName,
           parameterId: parameter?.parameterId,
-          outputKey: newParameter?.outputKey
+          outputKey: parameter?.outputKey
         });
       }
     });
@@ -77,9 +73,9 @@ export default function CommandLineInputParameterInputBase(
   };
 
   const deleteCustomParameter = (index) => {
-    const currentData = model?.getArrayData("environmentVariables");
+    const currentData = model?.getArrayData(fieldName);
     currentData.splice(index, 1);
-    model.setData(fieldName, currentData);
+    model.setData(fieldName, [...currentData]);
     setModel({...model});
   };
 
@@ -96,7 +92,7 @@ export default function CommandLineInputParameterInputBase(
               />
             </div>
             <div className={"d-flex"}>
-              <CommandLineStepSaveEnvironmentVariablesBooleanToggle
+              <PipelineStepSaveEnvironmentVariablesBooleanToggle
                 setModel={setModel}
                 model={model}
                 disabled={disabled}
@@ -110,11 +106,11 @@ export default function CommandLineInputParameterInputBase(
               overflowY: "hidden",
             }}
           >
-            <ParameterSelectListHeaderField/>
+            <DockerCliParameterSelectListHeaderField/>
 
             {customParameters.map((parameter, index) => {
               return (
-                <ParameterSelectListInlineField
+                <DockerCliParameterSelectListInlineField
                   disabled={disabled}
                   parameter={parameter}
                   deleteParameterFunction={deleteCustomParameter}
@@ -143,7 +139,7 @@ export default function CommandLineInputParameterInputBase(
           }}
         >
           <CenteredContentWrapper minHeight={"50px"}>
-            <div>No parameters have been added yet</div>
+            <div>No Global Parameters have been added yet</div>
           </CenteredContentWrapper>
         </div>
         <hr/>

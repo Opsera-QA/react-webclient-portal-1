@@ -139,6 +139,7 @@ function BitbucketRepositorySelectInput({
         }
         requireUserEnable={true}
         onEnableEditFunction={() => setInEditMode(true)}
+        externalCacheToolId={toolId}
       />
     );
   }
@@ -164,6 +165,7 @@ function BitbucketRepositorySelectInput({
       }
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
+      externalCacheToolId={toolId}
     />
   );
 }

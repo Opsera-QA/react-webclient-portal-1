@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetPipelineAppliedTags from "hooks/workflow/pipelines/tags/useGetPipelineAppliedTags";
 
 export default function PipelineTagFilter(
@@ -50,7 +49,6 @@ export default function PipelineTagFilter(
     </div>
   );
 }
-
 
 PipelineTagFilter.propTypes = {
   filterModel: PropTypes.object,

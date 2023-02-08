@@ -1,6 +1,6 @@
 const sfdcComponentsMetadata = {
   idProperty: "_id",
-  type: "Sfdc Component Selections",
+  type: "Salesforce Component Selections",
   fields: [
     {
       label: "Components",
