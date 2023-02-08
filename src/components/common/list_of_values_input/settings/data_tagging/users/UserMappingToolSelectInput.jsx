@@ -7,10 +7,10 @@ import RoleRestrictedToolByIdentifierInputBase
 function UserMappingToolSelectInput({visible, dataObject, setDataObject, disabled, fieldName}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
+    newDataObject.setData("tool_id", selectedOption?._id);
     newDataObject.setData("tool_prop", "");
     newDataObject.setData("tool_user_prop", "");
     newDataObject.setData("tool_user_id", "");
-    newDataObject.setData("tool_id", selectedOption?._id);
     newDataObject.setData("tool_prop", "");
     newDataObject.setData("tool_user_prop", "");
     newDataObject.setData("tool_user_id", "");

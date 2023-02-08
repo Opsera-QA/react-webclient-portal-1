@@ -85,8 +85,8 @@ function UserDataMappingEditorPanel(
       <Row>
         <Col lg={12}>
           <UserMappingToolIdentifierSelectInput
-            dataObject={userDataMappingModel}
-            setDataObject={setUserDataMappingModel}
+            model={userDataMappingModel}
+            setModel={setUserDataMappingModel}
           />
         </Col>
         <Col lg={12}>
