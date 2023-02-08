@@ -90,10 +90,15 @@ function SelectInputBase(
   };
 
   const updateValue = (newValue) => {
-    if (requireUserEnable === true) {
-      setCachedValue({
-        cache: newValue,
-      });
+    if (externalCacheToolIdentifier || externalCacheToolId) {
+      const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
+      parameters.cache = newValue;
+
+      if (typeof textField === "string") {
+        parameters.textField = textField;
+      }
+
+      setCachedValue(parameters);
     }
 
     if (setDataFunction) {
@@ -174,25 +179,33 @@ function SelectInputBase(
     const parsedFoundValue = DataParsingHelper.parseObject(foundValue);
 
     if (parsedFoundValue) {
+      const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
+      parameters.cache = foundValue;
+
       if (typeof textField === "function") {
         formattedValue = textField(parsedFoundValue);
       } else if (typeof textField === "string") {
         formattedValue = parsedFoundValue[textField];
+
+        parameters.textField = textField;
       }
 
-      setCachedValue({
-        cache: parsedFoundValue,
-        textField: textField,
-      });
+      setCachedValue(parameters);
     }
 
     const parsedCache = DataParsingHelper.parseNestedObject(cachedEntry, "parameters.cache");
 
-    if (!formattedValue && parsedCache && textField) {
-      if (typeof textField === "function") {
-        formattedValue = textField(parsedCache);
-      } else if (typeof textField === "string") {
-        formattedValue = parsedCache[textField];
+    if (!formattedValue && parsedCache) {
+      const parsedCacheTextField = DataParsingHelper.parseNestedString(cachedEntry, "parameters.textField");
+
+      if (textField) {
+        if (typeof textField === "function") {
+          formattedValue = textField(parsedCache);
+        } else if (typeof textField === "string") {
+          formattedValue = parsedCache[textField];
+        }
+      } else if (parsedCacheTextField) {
+        formattedValue = parsedCache[parsedCacheTextField];
       }
     }
 

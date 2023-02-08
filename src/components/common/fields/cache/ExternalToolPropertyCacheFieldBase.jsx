@@ -20,6 +20,8 @@ export default function ExternalToolPropertyCacheFieldBase(
     uniqueId,
     toolId,
   );
+  const textField = DataParsingHelper.parseNestedString(cachedEntry, "parameters.textField");
+  const cache = DataParsingHelper.parseNestedString(cachedEntry, "parameters.cache");
 
   if (isHandlingCache) {
     return (
@@ -42,8 +44,8 @@ export default function ExternalToolPropertyCacheFieldBase(
     return (
       <span>
         {DataParsingHelper.parseNestedString(
-          cachedEntry,
-          `parameters.cache.${externalCacheLabelPropertyName}`,
+          cache,
+          externalCacheLabelPropertyName,
           uniqueId,
         )}
       </span>
@@ -51,7 +53,20 @@ export default function ExternalToolPropertyCacheFieldBase(
   }
 
   if (typeof formatExternalCacheLabelFunction === "function") {
-    return formatExternalCacheLabelFunction(cachedEntry);
+    return (
+      <span>
+        {formatExternalCacheLabelFunction(cachedEntry)}
+      </span>
+    );
+  }
+
+
+  if (textField) {
+    return (
+      <span>
+        {cache[textField]}
+      </span>
+    );
   }
 
   return (
