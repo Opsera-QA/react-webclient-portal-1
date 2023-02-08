@@ -59,7 +59,7 @@ function BitbucketRepositorySelectInput(
       setError(undefined);
       setIsLoading(true);
       let defaultSearchTerm = searchTerm;
-      const existingRepository = model?.getData("repositoryName") || model?.getData("gitRepository") || model?.getData("repository");
+      const existingRepository = model?.getData("gitRepository") || model?.getData("repository") || model?.getData("repositoryName");
       // console.log(existingRepository);
       if ((defaultSearchTerm === "") && (hasStringValue(existingRepository) === true)) {
         defaultSearchTerm = existingRepository;
