@@ -31,7 +31,6 @@ export default function useGetToolIdentifierByIdentifier(
     }
 
     const response = await toolIdentifierActions.getToolIdentifierByIdentifier( identifier);
-    console.log("response: " + JSON.stringify(response));
     setToolIdentifier(DataParsingHelper.parseNestedObject(response, "data.data"));
   };
 

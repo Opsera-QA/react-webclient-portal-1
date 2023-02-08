@@ -11,8 +11,6 @@ export default function ToolIdentifierNameFieldBase(
     toolIdentifier,
     isLoading,
   } = useGetToolIdentifierByIdentifier(identifier);
-  console.log("identifier: " + JSON.stringify(identifier));
-  console.log("toolIdentifier: " + JSON.stringify(toolIdentifier));
 
   if (isLoading) {
     return (
@@ -24,7 +22,6 @@ export default function ToolIdentifierNameFieldBase(
   }
 
   if (toolIdentifier) {
-    console.log("found tool identifier: " + JSON.stringify(toolIdentifier));
     return (
       <span>
         {toolIdentifier?.name}
