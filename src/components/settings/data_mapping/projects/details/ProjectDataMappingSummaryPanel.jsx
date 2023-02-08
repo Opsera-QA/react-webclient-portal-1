@@ -33,7 +33,6 @@ function ProjectDataMappingSummaryPanel(
             model={projectDataMappingModel}
             fieldName={"key"}
             toolIdFieldName={"tool_id"}
-            externalCacheLabelPropertyName={"name"}
           />
         </Col>
         <Col lg={6}>
