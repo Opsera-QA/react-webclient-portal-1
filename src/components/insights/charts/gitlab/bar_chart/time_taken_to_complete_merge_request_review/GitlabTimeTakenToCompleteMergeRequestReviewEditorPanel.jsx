@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import MetricTagFilterInput from "components/common/inputs/metric/filters/tags/MetricTagFilterInput";
 import MetricDateRangeFilterInput from "components/common/inputs/metric/filters/date/MetricDateRangeFilterInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import gitlabMostActiveContributorsMetadata from "./gitlab-most-active-contributors-metadata";
+import gitlabTimeTakenToCompleteMergeRequestReviewMetadata from ".//gitlab-time-taken-to-complete-merge-request-review-metadata";
 import MetricExcludedGitlabUsersFilterInput from "components/common/inputs/metric/filters/MetricExcludedGitlabUsersFilterInput";
-function GitlabMostActiveContributorsEditorPanel({
+function GitlabTimeTakenToCompleteMergeRequestReviewEditorPanel({
   metricModel,
   unpackedFilterData,
   metricFilterModel,
@@ -18,7 +18,7 @@ function GitlabMostActiveContributorsEditorPanel({
       setMetricFilterModel(
         modelHelpers.parseObjectIntoModel(
           unpackedFilterData,
-          gitlabMostActiveContributorsMetadata,
+          gitlabTimeTakenToCompleteMergeRequestReviewMetadata,
         ),
       );
     }
@@ -49,11 +49,11 @@ function GitlabMostActiveContributorsEditorPanel({
   );
 }
 
-GitlabMostActiveContributorsEditorPanel.propTypes = {
+GitlabTimeTakenToCompleteMergeRequestReviewEditorPanel.propTypes = {
   metricModel: PropTypes.object,
   unpackedFilterData: PropTypes.object,
   metricFilterModel: PropTypes.object,
   setMetricFilterModel: PropTypes.func,
 };
 
-export default GitlabMostActiveContributorsEditorPanel;
+export default GitlabTimeTakenToCompleteMergeRequestReviewEditorPanel;

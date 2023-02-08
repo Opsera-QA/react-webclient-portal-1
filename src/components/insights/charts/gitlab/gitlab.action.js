@@ -1096,7 +1096,9 @@ gitlabActions.getRepoOpenActionable = async (
 
 gitlabActions.getGitlabUsers = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = gitlabBaseURL + "getGitlabUsers";
-  const postBody = {};
+  const postBody = {
+    size: 10,
+  };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
     cancelTokenSource,

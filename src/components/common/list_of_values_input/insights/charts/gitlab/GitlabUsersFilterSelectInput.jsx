@@ -62,10 +62,12 @@ function GitlabUsersFilterSelectInput({
       getAccessToken,
       cancelSource,
     );
+    console.log(response);
     if (response.data != null) {
       setUsers(response?.data?.data);
     }
   };
+
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
