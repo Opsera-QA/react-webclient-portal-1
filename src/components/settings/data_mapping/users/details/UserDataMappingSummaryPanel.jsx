@@ -5,8 +5,9 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
+import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 
-function DataMappingSummary({ userDataMappingModel, setActiveTab }) {
+export default function UserDataMappingSummaryPanel({ userDataMappingModel, setActiveTab }) {
 
   if (userDataMappingModel === null) {
     return <></>;
@@ -25,10 +26,10 @@ function DataMappingSummary({ userDataMappingModel, setActiveTab }) {
           <TextFieldBase dataObject={userDataMappingModel} fieldName={"tool_user_id"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={userDataMappingModel} fieldName={"tool_user_email"}/>
+          <EmailAddressField model={userDataMappingModel} fieldName={"tool_user_email"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={userDataMappingModel} fieldName={"opsera_user_email"}/>
+          <EmailAddressField model={userDataMappingModel} fieldName={"opsera_user_email"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={userDataMappingModel} fieldName={"tool_user_prop"}/>
@@ -41,9 +42,7 @@ function DataMappingSummary({ userDataMappingModel, setActiveTab }) {
   );
 }
 
-DataMappingSummary.propTypes = {
+UserDataMappingSummaryPanel.propTypes = {
   userDataMappingModel: PropTypes.object,
   setActiveTab: PropTypes.func,
 };
-
-export default DataMappingSummary;

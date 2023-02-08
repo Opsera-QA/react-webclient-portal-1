@@ -40,10 +40,8 @@ function UserDataMappingEditorPanel(
           </Col>
           <Col lg={12}>
             <UserMappingJiraUserSelectInput
-              dataObject={userDataMappingModel}
-              setDataObject={setUserDataMappingModel}
-              tool_id={userDataMappingModel.getData("tool_id")}
-              tool_user_prop={userDataMappingModel.getData("tool_user_prop")}
+              model={userDataMappingModel}
+              setModel={setUserDataMappingModel}
             />
           </Col>
         </>
