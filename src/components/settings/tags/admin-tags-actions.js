@@ -36,17 +36,6 @@ adminTagsActions.getAllTagsV2 = async (getAccessToken, cancelTokenSource, status
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-adminTagsActions.getOrganizationTags = async (getAccessToken, cancelTokenSource, status = "active") => {
-  const apiUrl = "/organization";
-  const urlParams = {
-    params: {
-      size: 10000,
-      status
-    },
-  };
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
 adminTagsActions.getPlatformTags = async (
   getAccessToken,
   cancelTokenSource,

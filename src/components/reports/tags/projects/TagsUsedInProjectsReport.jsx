@@ -9,7 +9,7 @@ import TagArrayUsedInProjectsField from "components/common/fields/tags/TagArrayU
 import TagManager from "components/common/inputs/tags/TagManager";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import OrganizationTagManager from "components/common/inputs/tags/OrganizationTagManager";
+import OrganizationMultiSelectInput from "components/common/list_of_values_input/settings/organizations/OrganizationMultiSelectInput";
 
 function TagsUsedInProjectsReport() {
   const [tagsUsedInProjectsDto, setTagsUsedInProjectsDto] = useState(new Model(tagsUsedInProjectsMetadata.newObjectFields, tagsUsedInProjectsMetadata, true));
@@ -50,7 +50,7 @@ function TagsUsedInProjectsReport() {
       </Row>
       <Row className={"mb-3 mx-0"}>
         <Col className={"mx-0"}>
-          <OrganizationTagManager fieldName={"orgTags"} dataObject={tagsUsedInProjectsDto} setDataObject={setTagsUsedInProjectsDto}/>
+          <OrganizationMultiSelectInput fieldName={"orgTags"} dataObject={tagsUsedInProjectsDto} setDataObject={setTagsUsedInProjectsDto} />
         </Col>
       </Row>
       <Row className={"px-2"}>
