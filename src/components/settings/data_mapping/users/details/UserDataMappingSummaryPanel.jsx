@@ -8,8 +8,38 @@ import ToolNameField from "components/common/fields/inventory/ToolNameField";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 import ToolIdentifierNameField from "components/common/fields/tool_identifier/ToolIdentifierNameField";
 import ExternalToolPropertyCacheField from "components/common/fields/cache/ExternalToolPropertyCacheField";
+import JiraProjectUserCacheField
+  from "components/common/list_of_values_input/tools/jira/users/JiraProjectUserCacheField";
+import toolIdentifierConstants from "@opsera/definitions/constants/tool_identifiers/toolIdentifier.constants";
 
 export default function UserDataMappingSummaryPanel({ userDataMappingModel, setActiveTab }) {
+  const getUserField = () => {
+    switch (userDataMappingModel?.getData("tool_identifier")) {
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.JIRA:
+        return (
+          <Col lg={6}>
+            <JiraProjectUserCacheField
+              model={userDataMappingModel}
+              fieldName={"tool_user_id"}
+              jiraToolIdFieldName={"tool_id"}
+              externalCacheLabelPropertyName={"displayName"}
+            />
+          </Col>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
+        return (
+          <Col lg={6}>
+            <ExternalToolPropertyCacheField
+              model={userDataMappingModel}
+              fieldName={"tool_user_id"}
+              toolIdFieldName={"tool_id"}
+              externalCacheLabelPropertyName={"name"}
+            />
+          </Col>
+        );
+    }
+  };
 
   if (userDataMappingModel === null) {
     return <></>;
@@ -24,14 +54,7 @@ export default function UserDataMappingSummaryPanel({ userDataMappingModel, setA
         <Col lg={6}>
           <ToolNameField model={userDataMappingModel} fieldName={"tool_id"}/>
         </Col>
-        <Col lg={6}>
-          <ExternalToolPropertyCacheField
-            model={userDataMappingModel}
-            fieldName={"tool_user_id"}
-            toolIdFieldName={"tool_id"}
-            externalCacheLabelPropertyName={"displayName"}
-          />
-        </Col>
+        {getUserField()}
         <Col lg={6}>
           <EmailAddressField model={userDataMappingModel} fieldName={"tool_user_email"}/>
         </Col>
