@@ -20,7 +20,6 @@ import VanityEditorPanelContainer from "components/common/panels/detail_panel_co
 import JiraProjectSelectInput from "components/common/list_of_values_input/tools/jira/projects/JiraProjectSelectInput";
 import JiraCustomTagFieldSelectInput from "components/common/list_of_values_input/tools/jira/custom_fields/JiraCustomTagFieldSelectInput";
 import JiraCustomFieldMappingSelectInput from "components/common/list_of_values_input/tools/jira/custom_fields/JiraCustomFieldMappingSelectInput";
-import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
 import AnalyticsDataMappingEditWarningMessage
   from "components/settings/data_mapping/AnalyticsDataMappingEditWarningMessage";
 

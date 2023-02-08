@@ -234,7 +234,7 @@ function SelectInputBase(
           hasErrorState={hasStringValue(getErrorMessage()) === true}
           selectOptions={selectOptions}
           valueField={valueField}
-          textField={requireUserEnable === true ? handleTextFieldFunction : textField}
+          textField={externalCacheToolId || externalCacheToolIdentifier ? handleTextFieldFunction : textField}
           groupBy={groupBy}
           value={findCurrentValue()}
           busy={busy || isHandlingCache === true}
