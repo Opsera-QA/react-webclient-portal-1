@@ -56,7 +56,7 @@ function TagArrayUsedInProjectsField({ orgTags, tags }) {
 
   const loadProjects = async (cancelSource = cancelTokenSource) => {
     if (Array.isArray(tags) && Array.isArray(orgTags) && (tags.length > 0 || orgTags.length > 0)) {
-      // orgTags is array of full organization document, only need to pull out tags property from each, and combine into a single array
+      // orgTags is array of organization documents, only need to pull out tags property from each, and combine into a single array
       const tagsFromOrgTags = [];
       orgTags.forEach(({ tags }) => {
         tagsFromOrgTags.push(...tags);
