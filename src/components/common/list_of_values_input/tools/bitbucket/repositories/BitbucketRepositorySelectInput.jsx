@@ -119,6 +119,7 @@ function BitbucketRepositorySelectInput(
       useToggle={true}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
+      externalCacheToolId={toolId}
     />
   );
 }

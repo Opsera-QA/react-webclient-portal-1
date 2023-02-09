@@ -45,8 +45,8 @@ export default function PipelineIdFieldBase(
         <div>{pipeline?.name}</div>
         <CopyToClipboardIconBase
           className={"ml-2"}
-          copyString={pipelineHelper.getDetailViewLink(pipelineId)}
-          copyText={"Copy link to Child Pipeline"}
+          copyString={`${process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL}${pipelineHelper.getDetailViewLink(pipelineId)}`}
+          copyText={"Copy link to Pipeline"}
         />
       </div>
     );
@@ -62,8 +62,8 @@ export default function PipelineIdFieldBase(
         <div>{pipelineId}</div>
         <CopyToClipboardIconBase
           className={"ml-2"}
-          copyString={pipelineHelper.getDetailViewLink(pipelineId)}
-          copyText={"Copy link to Child Pipeline"}
+          copyString={`${process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL}${pipelineHelper.getDetailViewLink(pipelineId)}`}
+          copyText={"Copy link to Pipeline"}
         />
       </div>
     </div>

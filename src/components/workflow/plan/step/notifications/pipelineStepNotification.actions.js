@@ -8,24 +8,6 @@ pipelineStepNotificationActions.getJiraProjects2 = async (toolId, getAccessToken
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-// TODO: Update references to the new file and move elsewhere
-pipelineStepNotificationActions.getJiraProjectUsers = async (jiraStepNotificationDto, getAccessToken) => {
-  let toolId = jiraStepNotificationDto.getData("jiraToolId");
-  let projectKey = jiraStepNotificationDto.getData("jiraProject");
-  const apiUrl = `/connectors/jira/${toolId}/project/users?project=${projectKey}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-pipelineStepNotificationActions.getJiraProjectUsers2 = async (toolId, projectKey, getAccessToken) => {
-  const apiUrl = `/connectors/jira/${toolId}/project/users?project=${projectKey}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-pipelineStepNotificationActions.getJiraProjectUsers2 = async (jiraToolId, jiraProject, getAccessToken) => {
-  const apiUrl = `/connectors/jira/${jiraToolId}/project/users?project=${jiraProject}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
 pipelineStepNotificationActions.getJiraPriorities = async (jiraStepNotificationDto, getAccessToken) => {
   let toolId = jiraStepNotificationDto.getData("jiraToolId");
   const apiUrl = `/connectors/jira/${toolId}/priorities`;

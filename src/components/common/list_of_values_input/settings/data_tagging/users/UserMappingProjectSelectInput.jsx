@@ -56,6 +56,7 @@ function UserMappingProjectSelectInput({ fieldName, dataObject, setDataObject, d
       textField={textField}
       placeholderText={"Select a project"}
       disabled={disabled || isLoading || projects.length === 0}
+      externalCacheToolId={tool_id}
     />
   );
 }
