@@ -62,7 +62,7 @@ function ServiceNowServiceOfferingsSelectInput({
   useEffect(() => {
     setServiceOfferings([]);
     if (serviceNowToolId !== "" && serviceNowToolId != null) {
-      loadServiceOfferings("", serviceNowToolId).catch((error) => {
+      loadServiceOfferings("").catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -70,7 +70,7 @@ function ServiceNowServiceOfferingsSelectInput({
     }
   }, [serviceNowToolId]);
 
-  const loadServiceOfferings = async (searchTerm, serviceNowToolId) => {
+  const loadServiceOfferings = async (searchTerm) => {
     // if (searchTerm) {
       try {
         setIsLoading(true);
@@ -126,11 +126,6 @@ function ServiceNowServiceOfferingsSelectInput({
     }
   };
 
-  const delayedSearchQuery = useCallback(
-    _.debounce((searchTerm, toolId) => loadServiceOfferings(searchTerm, toolId), 600),
-    [],
-  );
-
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
@@ -144,7 +139,7 @@ function ServiceNowServiceOfferingsSelectInput({
       placeholderText={getPlaceholderText()}
       disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, serviceNowToolId)}
+      supportSearchLookup={true}
     />
   );
 }

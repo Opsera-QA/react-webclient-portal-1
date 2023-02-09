@@ -7,6 +7,7 @@ import {bitbucketActions} from "components/inventory/tools/tool_details/tool_job
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import _ from "lodash";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function BitbucketBranchMultiSelectInput(
   {
@@ -20,43 +21,32 @@ function BitbucketBranchMultiSelectInput(
     workspace,
     repositoryId,
   }) {
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [bitbucketBranches, setBitbucketBranches] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [inEditMode, setInEditMode] = useState(false);
   const [placeholderText, setPlaceholderText] = useState("Select Bitbucket Branches");
-  const isMounted = useRef(false);
-  const {getAccessToken} = useContext(AuthContext);
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    isMounted.current = true;
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
     setBitbucketBranches([]);
     setErrorMessage("");
     setPlaceholderText("Select Bitbucket Branch");
 
-    if (isMongoDbId(toolId) === true && hasStringValue(workspace) === true && hasStringValue(repositoryId) === true && inEditMode === true) {
-      loadData(source).catch((error) => {
+    if (isMongoDbId(toolId) === true && hasStringValue(workspace) === true && hasStringValue(repositoryId) === true) {
+      loadData().catch((error) => {
         throw error;
       });
     }
+  }, [toolId, workspace, repositoryId]);
 
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, [toolId, workspace, repositoryId, inEditMode]);
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setIsLoading(true);
-      await loadBitbucketBranches(cancelSource);
+      await loadBitbucketBranches();
     } catch (error) {
       setPlaceholderText("No Branches Available!");
       setErrorMessage("There was an error pulling Bitbucket Branches");
@@ -76,15 +66,6 @@ function BitbucketBranchMultiSelectInput(
     }
   };
 
-  const delayedSearchQuery = useCallback(
-      _.debounce(
-          () =>
-              loadBitbucketBranches(),
-          600,
-      ),
-      [],
-  );
-
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
@@ -101,9 +82,6 @@ function BitbucketBranchMultiSelectInput(
       errorMessage={errorMessage}
       singularTopic={"Branch"}
       pluralTopic={"Branches"}
-      onSearchFunction={(searchTerm) =>
-          delayedSearchQuery(searchTerm)
-      }
       loadDataFunction={loadData}
     />
   );

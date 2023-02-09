@@ -127,10 +127,8 @@ function BitbucketRepositorySelectInput({
       error={error}
       pluralTopic={"Bitbucket Branches"}
       singularTopic={"Bitbucket Branch"}
-      onSearchFunction={(searchTerm) =>
-        delayedSearchQuery(searchTerm, repositoryId, toolId)
-      }
       requireUserEnable={true}
+      supportSearchLookup={true}
       onEnableEditFunction={() => setInEditMode(true)}
       externalCacheToolId={toolId}
     />
