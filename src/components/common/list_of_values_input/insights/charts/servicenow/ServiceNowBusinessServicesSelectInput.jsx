@@ -70,7 +70,7 @@ function ServiceNowBusinessServicesSelectInput({
     }
   }, [serviceNowToolId]);
 
-  const loadBusinessServices = async (searchTerm, serviceNowToolId) => {
+  const loadBusinessServices = async (searchTerm) => {
     // if (searchTerm) {
       try {
         setIsLoading(true);
@@ -126,11 +126,6 @@ function ServiceNowBusinessServicesSelectInput({
     }
   };
 
-  const delayedSearchQuery = useCallback(
-    _.debounce((searchTerm, toolId) => loadBusinessServices(searchTerm, toolId), 600),
-    [],
-  );
-
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
@@ -144,7 +139,8 @@ function ServiceNowBusinessServicesSelectInput({
       placeholderText={getPlaceholderText()}
       disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, serviceNowToolId)}
+      supportSearchLookup={true}
+      loadDataFunction={loadBusinessServices}
     />
   );
 }

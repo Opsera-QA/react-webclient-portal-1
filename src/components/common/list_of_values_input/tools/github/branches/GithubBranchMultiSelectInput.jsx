@@ -75,15 +75,6 @@ function GithubBranchMultiSelectInput(
     }
   };
 
-  const delayedSearchQuery = useCallback(
-      _.debounce(
-          () =>
-              loadGithubBranches(),
-          600,
-      ),
-      [],
-  );
-
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
@@ -100,9 +91,6 @@ function GithubBranchMultiSelectInput(
       errorMessage={errorMessage}
       singularTopic={"Branch"}
       pluralTopic={"Branches"}
-      onSearchFunction={(searchTerm) =>
-          delayedSearchQuery(searchTerm)
-      }
       loadDataFunction={loadData}
     />
   );
