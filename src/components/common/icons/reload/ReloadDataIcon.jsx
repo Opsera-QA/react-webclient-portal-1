@@ -43,7 +43,7 @@ export default function ReloadDataIcon(
     }
   };
 
-  if (loadDataFunction == null || visible === false) {
+  if (loadDataFunction == null || visible === false || disabled === true) {
     return null;
   }
 
