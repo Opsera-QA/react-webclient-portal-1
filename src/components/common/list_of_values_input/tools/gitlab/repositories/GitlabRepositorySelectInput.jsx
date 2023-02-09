@@ -60,7 +60,7 @@ function GitlabRepositorySelectInput({
       setError(undefined);
       setIsLoading(true);
       let defaultSearchTerm = searchTerm;
-      const existingRepository = model?.getData("gitRepository") || model?.getData("repository") || model?.getData("repositoryName");
+      const existingRepository = model?.getData("gitRepository") || model?.getData("repository");
       // console.log(existingRepository);
       if ((defaultSearchTerm === "") && (hasStringValue(existingRepository) === true)) {
         defaultSearchTerm = existingRepository;
@@ -128,6 +128,7 @@ function GitlabRepositorySelectInput({
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
       externalCacheToolId={toolId}
+      loadDataFunction={loadData}
     />
   );
 }

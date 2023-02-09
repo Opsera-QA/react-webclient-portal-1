@@ -54,6 +54,7 @@ function GitlabBranchSelectInput(
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
+      setError(undefined);
       setIsLoading(true);
       await loadGitlabBranches("", toolId, repositoryId, cancelSource);
     } catch (error) {

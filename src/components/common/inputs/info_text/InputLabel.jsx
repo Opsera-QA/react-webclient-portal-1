@@ -123,6 +123,7 @@ function InputLabel(
             loadDataFunction={loadDataFunction}
             disabled={disabled}
             isLoading={isLoading}
+            visible={enableEditingFunction != null}
             className={"ml-2 my-auto"}
           />
           <SelectAllIcon

@@ -16,9 +16,8 @@ function ArgoApplicationGitUrlSelectInput(
     disabled,
     className,
   }) {
-  const defaultSelection = { username: "*", repo: "*" };
   const { getAccessToken } = useContext(AuthContext);
-  const [repositories, setRepositories] = useState([defaultSelection]);
+  const [repositories, setRepositories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
@@ -70,7 +69,7 @@ function ArgoApplicationGitUrlSelectInput(
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
-      setRepositories([defaultSelection, ...repositories]);
+      setRepositories(repositories);
     }
   };
 

@@ -23,7 +23,7 @@ function BitbucketRepositorySelectInput(
     }) {
   const [isLoading, setIsLoading] = useState(false);
   const [bitbucketRepositories, setBitbucketRepositories] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [inEditMode, setInEditMode] = useState(false);
   const isMounted = useRef(false);
@@ -60,7 +60,7 @@ function BitbucketRepositorySelectInput(
       setError(undefined);
       setIsLoading(true);
       let defaultSearchTerm = searchTerm;
-      const existingRepository = model?.getData("gitRepository") || model?.getData("repository") || model?.getData("repositoryName");
+      const existingRepository = model?.getData("gitRepository") || model?.getData("repository");
       // console.log(existingRepository);
       if ((defaultSearchTerm === "") && (hasStringValue(existingRepository) === true)) {
         defaultSearchTerm = existingRepository;
@@ -119,6 +119,7 @@ function BitbucketRepositorySelectInput(
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
       externalCacheToolId={toolId}
+      loadDataFunction={loadData}
     />
   );
 }

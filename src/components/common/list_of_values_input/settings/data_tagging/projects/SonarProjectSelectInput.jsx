@@ -65,6 +65,7 @@ function SonarProjectSelectInput({ fieldName, dataObject, setDataObject, disable
       textField={textField}
       placeholderText={"Select a Sonar Project"}
       disabled={isLoading || projects.length === 0}
+      externalCacheToolId={dataObject?.getData("tool_id")}
     />
   );
 }

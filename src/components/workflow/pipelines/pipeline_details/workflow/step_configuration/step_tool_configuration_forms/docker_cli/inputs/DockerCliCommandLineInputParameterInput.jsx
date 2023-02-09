@@ -19,7 +19,7 @@ import DockerCliParameterSelectListHeaderField from "../parameters/DockerCliPara
 export default function CommandLineInputParameterInputBase(
   {
     model,
-    setModel,
+    setModel, 
     disabled,
     plan,
     fieldName,

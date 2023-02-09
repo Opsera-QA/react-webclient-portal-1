@@ -1,21 +1,25 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
-import pipelineStepNotificationActions
-  from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
+import {jiraActions} from "components/common/list_of_values_input/tools/jira/jira.actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function JiraUserInputs({jiraToolId, jiraProject, dataObject, setDataObject, disabled}) {
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const {
+    cancelTokenSource,
+    getAccessToken,
+    toastContext,
+  } = useComponentStateReference();
 
   useEffect(() => {
     setUsers([]);
-    if (jiraToolId && jiraProject) {
+    if (isMongoDbId(jiraToolId) === true && hasStringValue(jiraProject) === true) {
       loadData();
     }
   }, [jiraToolId, jiraProject]);
@@ -34,10 +38,16 @@ function JiraUserInputs({jiraToolId, jiraProject, dataObject, setDataObject, dis
   };
 
   const loadUsers = async () => {
-    const response = await pipelineStepNotificationActions.getJiraProjectUsers2(jiraToolId, jiraProject, getAccessToken);
+    const response = await jiraActions.getJiraProjectUsersV2(
+      getAccessToken,
+      cancelTokenSource,
+      jiraToolId,
+      jiraProject,
+    );
+    const users = DataParsingHelper.parseNestedArray(response, "data.data");
 
-    if (response.data != null && response.data.message != null && Array.isArray(response.data.message)) {
-      setUsers(response.data.message);
+    if (users) {
+      setUsers([...users]);
     }
   };
 

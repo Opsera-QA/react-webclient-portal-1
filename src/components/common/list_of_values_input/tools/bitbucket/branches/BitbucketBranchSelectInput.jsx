@@ -65,6 +65,7 @@ function BitbucketRepositorySelectInput({
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
+      setError(undefined);
       setIsLoading(true);
       await loadBitbucketBranches(
         "",
@@ -137,9 +138,6 @@ function BitbucketRepositorySelectInput({
         onSearchFunction={(searchTerm) =>
           delayedSearchQuery(searchTerm, repositoryId, toolId)
         }
-        requireUserEnable={true}
-        onEnableEditFunction={() => setInEditMode(true)}
-        externalCacheToolId={toolId}
       />
     );
   }
