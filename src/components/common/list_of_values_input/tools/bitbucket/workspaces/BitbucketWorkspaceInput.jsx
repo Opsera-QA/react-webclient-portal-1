@@ -99,7 +99,6 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
       onSearchFunction={(searchTerm) =>
           delayedSearchQuery(searchTerm)
       }
-      useToggle={true}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
       singularTopic={"Workspace"}

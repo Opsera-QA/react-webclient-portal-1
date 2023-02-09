@@ -160,7 +160,6 @@ function BitbucketRepositorySelectInput({
       onSearchFunction={(searchTerm) =>
         delayedSearchQuery(searchTerm, repositoryId, toolId)
       }
-      useToggle={true}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
       externalCacheToolId={toolId}
