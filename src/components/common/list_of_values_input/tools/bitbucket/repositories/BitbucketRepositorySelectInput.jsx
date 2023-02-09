@@ -25,6 +25,7 @@ function BitbucketRepositorySelectInput(
   const [bitbucketRepositories, setBitbucketRepositories] = useState([]);
   const [error, setError] = useState("");
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [inEditMode, setInEditMode] = useState(false);
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
 
@@ -38,7 +39,7 @@ function BitbucketRepositorySelectInput(
     setBitbucketRepositories([]);
     setCancelTokenSource(cancelSource);
 
-    if (isMongoDbId(toolId) === true && hasStringValue(workspace) === true) {
+    if (isMongoDbId(toolId) === true && hasStringValue(workspace) === true && inEditMode === true) {
       loadData("", toolId, cancelSource).catch((error) => {
         throw error;
       });
@@ -48,7 +49,7 @@ function BitbucketRepositorySelectInput(
       cancelSource.cancel();
       isMounted.current = false;
     };
-  }, [toolId, workspace]);
+  }, [toolId, workspace, inEditMode]);
 
   const loadData = async (
     searchTerm = "",
@@ -115,6 +116,9 @@ function BitbucketRepositorySelectInput(
       pluralTopic={"Bitbucket Repositories"}
       error={error}
       onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
+      useToggle={true}
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }

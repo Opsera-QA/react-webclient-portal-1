@@ -29,6 +29,7 @@ function AzureDevOpsBranchSelectInput({
   const [azureBranches, setAzureBranches] = useState([]);
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
+  const [inEditMode, setInEditMode] = useState(false);
   const { getAccessToken } = useContext(AuthContext);
 
   useEffect(() => {
@@ -42,7 +43,7 @@ function AzureDevOpsBranchSelectInput({
     setAzureBranches([]);
     setError(undefined);
 
-    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
+    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true && inEditMode === true) {
       loadData(source).catch((error) => {
         throw error;
       });
@@ -52,7 +53,7 @@ function AzureDevOpsBranchSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId, repositoryId]);
+  }, [toolId, repositoryId, inEditMode]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -105,11 +106,14 @@ function AzureDevOpsBranchSelectInput({
       clearDataFunction={clearDataFunction}
       disabled={disabled}
       error={error}
+      filterOption={"startsWith"}
       singularTopic={"Azure Branch"}
       pluralTopic={"Azure Branches"}
       onSearchFunction={(searchTerm) =>
         delayedSearchQuery(searchTerm, repositoryId, toolId)
       }
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }

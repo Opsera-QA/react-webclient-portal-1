@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState, useCallback} from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
@@ -6,6 +6,8 @@ import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {githubActions} from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
+import _ from "lodash";
+import LazyLoadMultiSelectInputBase from "../../../../inputs/select/LazyLoadMultiSelectInputBase";
 
 function GithubBranchMultiSelectInput(
   {
@@ -21,6 +23,7 @@ function GithubBranchMultiSelectInput(
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [githubBranches, setGithubBranches] = useState([]);
+  const [inEditMode, setInEditMode] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [placeholderText, setPlaceholderText] = useState("Select Github Branches");
   const isMounted = useRef(false);
@@ -38,7 +41,7 @@ function GithubBranchMultiSelectInput(
     setErrorMessage("");
     setPlaceholderText("Select Github Branches");
 
-    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
+    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true && inEditMode === true) {
       loadData(source).catch((error) => {
         throw error;
       });
@@ -48,7 +51,7 @@ function GithubBranchMultiSelectInput(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId, repositoryId]);
+  }, [toolId, repositoryId, inEditMode]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -73,8 +76,17 @@ function GithubBranchMultiSelectInput(
     }
   };
 
+  const delayedSearchQuery = useCallback(
+      _.debounce(
+          () =>
+              loadGithubBranches(),
+          600,
+      ),
+      [],
+  );
+
   return (
-    <MultiSelectInputBase
+    <LazyLoadMultiSelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
@@ -87,6 +99,14 @@ function GithubBranchMultiSelectInput(
       disabled={disabled}
       placeholderText={placeholderText}
       errorMessage={errorMessage}
+      singularTopic={"Branch"}
+      pluralTopic={"Branches"}
+      onSearchFunction={(searchTerm) =>
+          delayedSearchQuery(searchTerm)
+      }
+      useToggle={true}
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }

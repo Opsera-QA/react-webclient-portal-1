@@ -29,6 +29,7 @@ function AzureDevOpsRepositorySelectInput({
   const [isLoading, setIsLoading] = useState(false);
   const [azureRepositories, setAzureRepositories] = useState([]);
   const [error, setError] = useState(undefined);
+  const [inEditMode, setInEditMode] = useState(false);
   const isMounted = useRef(false);
   const { getAccessToken } = useContext(AuthContext);
 
@@ -43,7 +44,7 @@ function AzureDevOpsRepositorySelectInput({
     setAzureRepositories([]);
     setError(undefined);
 
-    if (isMongoDbId(toolId) === true) {
+    if (inEditMode === true && isMongoDbId(toolId) === true) {
       loadData("", toolId, source).catch((error) => {
         throw error;
       });
@@ -53,7 +54,7 @@ function AzureDevOpsRepositorySelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId]);
+  }, [toolId, inEditMode]);
 
   const loadData = async (
     searchTerm = "",
@@ -123,6 +124,8 @@ function AzureDevOpsRepositorySelectInput({
       singularTopic={"Azure Repository"}
       error={error}
       onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }

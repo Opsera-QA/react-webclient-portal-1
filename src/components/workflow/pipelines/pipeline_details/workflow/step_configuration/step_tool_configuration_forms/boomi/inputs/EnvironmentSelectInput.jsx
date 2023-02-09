@@ -5,12 +5,15 @@ import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import BoomiActions from "../boomi.actions";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
+import {isMongoDbId} from "../../../../../../../../common/helpers/mongo/mongoDb.helpers";
+import LazyLoadSelectInputBase from "../../../../../../../../common/inputs/select/LazyLoadSelectInputBase";
 
 function EnvironmentSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool, idField}) {
     const toastContext = useContext(DialogToastContext);
     const [environments, setEnvs] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const isMounted = useRef(false);
+    const [inEditMode, setInEditMode] = useState(false);
     const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
     const { getAccessToken } = useContext(AuthContext);
     const [placeholder, setPlaceholderText] = useState("Select Environment");
@@ -26,7 +29,7 @@ function EnvironmentSelectInput({ fieldName, dataObject, setDataObject, disabled
         const source = axios.CancelToken.source();
         setCancelTokenSource(source);
         isMounted.current = true;
-        if (!disabled) {
+        if (inEditMode === true && !disabled) {
             loadData(source).catch((error) => {
                 if (isMounted?.current === true) {
                     throw error;
@@ -38,7 +41,7 @@ function EnvironmentSelectInput({ fieldName, dataObject, setDataObject, disabled
             source.cancel();
             isMounted.current = false;
         };
-    }, [tool, disabled]);
+    }, [tool, disabled, inEditMode]);
 
     const loadData = async (cancelSource = cancelTokenSource) => {
         try {
@@ -102,19 +105,24 @@ function EnvironmentSelectInput({ fieldName, dataObject, setDataObject, disabled
 
     return (
         <div>
-            <SelectInputBase
+            <LazyLoadSelectInputBase
                 fieldName={fieldName}
                 dataObject={dataObject}
                 setDataObject={setDataObject}
                 setDataFunction={setDataFunction}
                 clearDataFunction={clearDataFunction}
+                showClearValueButton={true}
                 selectOptions={environments}
                 busy={isLoading}
                 valueField={valueField}
                 error={errorMessage}
                 textField={textField}
                 placeholderText={placeholder}
+                pluralTopic={"Environments"}
+                singularTopic={"Environment"}
                 disabled={disabled || isLoading}
+                requireUserEnable={true}
+                onEnableEditFunction={() => setInEditMode(true)}
             />
         </div>
     );

@@ -88,7 +88,7 @@ function BoomiSCMRepoFilesSelectInput({
         placeholderText={placeholder}
         disabled={disabled || isLoading || (!isLoading && (repoFiles == null || repoFiles.length === 0))}
       />
-      <div onClick={() => loadData()} className="text-muted ml-3 dropdown-data-fetch">
+      <div onClick={() => loadData()} className="text-muted dropdown-data-fetch">
         {getInfoText()}
       </div>
     </div>
