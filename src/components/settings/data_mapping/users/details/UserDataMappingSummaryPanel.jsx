@@ -22,7 +22,6 @@ export default function UserDataMappingSummaryPanel({ userDataMappingModel, setA
               model={userDataMappingModel}
               fieldName={"tool_user_id"}
               jiraToolIdFieldName={"tool_id"}
-              externalCacheLabelPropertyName={"displayName"}
             />
           </Col>
         );
