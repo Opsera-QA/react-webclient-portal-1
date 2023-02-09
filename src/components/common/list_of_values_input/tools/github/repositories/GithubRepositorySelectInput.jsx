@@ -23,6 +23,7 @@ function GithubRepositorySelectInput(
   const [isLoading, setIsLoading] = useState(false);
   const [githubRepositories, setGithubRepositories] = useState([]);
   const [error, setError] = useState(undefined);
+  const [inEditMode, setInEditMode] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const isMounted = useRef(false);
   const { getAccessToken } = useContext(AuthContext);
@@ -37,7 +38,7 @@ function GithubRepositorySelectInput(
     setCancelTokenSource(source);
     setGithubRepositories([]);
 
-    if (isMongoDbId(toolId) === true) {
+    if (inEditMode === true && isMongoDbId(toolId) === true) {
       loadData("", toolId, source).catch((error) => {
         throw error;
       });
@@ -47,7 +48,7 @@ function GithubRepositorySelectInput(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId]);
+  }, [toolId, inEditMode]);
 
   const loadData = async (
     searchTerm = "",
@@ -58,7 +59,7 @@ function GithubRepositorySelectInput(
       setError(undefined);
       setIsLoading(true);
       let defaultSearchTerm = searchTerm;
-      const existingRepository = model?.getData("repositoryName") || model?.getData("gitRepository") || model?.getData("repository");
+      const existingRepository = model?.getData("gitRepository") || model?.getData("repository") || model?.getData("repositoryName");
       // console.log(existingRepository);
       if ((defaultSearchTerm === "") && (hasStringValue(existingRepository) === true)) {
         defaultSearchTerm = existingRepository;
@@ -114,6 +115,8 @@ function GithubRepositorySelectInput(
       pluralTopic={"Github Repositories"}
       error={error}
       onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }
