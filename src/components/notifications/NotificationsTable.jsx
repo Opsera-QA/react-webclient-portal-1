@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
   getFormattedLabelWithFunctionColumnDefinition,
-  getLimitedTableTextColumn,
+  getLimitedTableTextColumn, getOwnerNameField,
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn
@@ -29,10 +29,9 @@ function NotificationsTable(
     setNotificationFilterDto,
     loadData,
     isLoading,
-    isMounted,
   }) {
   const toastContext = useContext(DialogToastContext);
-  let history = useHistory();
+  const history = useHistory();
   const fields = notificationsMetadata.fields;
 
   const rowStyling = (row) => {
@@ -41,11 +40,12 @@ function NotificationsTable(
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "name";})),
+      getTableTextColumn(getField(fields, "name")),
+      getOwnerNameField(),
       getLimitedTableTextColumn(getField(fields, "description"), 100),
       getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), getNotificationTypeLabel),
-      getTableDateColumn(fields.find(field => { return field.id === "createdAt";})),
-      getTableBooleanIconColumn(fields.find(field => { return field.id === "active";})),
+      getTableDateColumn(getField(fields, "createdAt")),
+      getTableBooleanIconColumn(getField(fields, "active")),
     ],
     []
   );
@@ -57,9 +57,20 @@ function NotificationsTable(
   const getDropdownFilters = () => {
     return (
       <>
-        <ActiveFilter filterDto={notificationFilterDto} setFilterDto={setNotificationFilterDto} className="mb-2" />
-        <NotificationTypeFilter filterDto={notificationFilterDto} setFilterDto={setNotificationFilterDto} className="mb-2" />
-        <TagFilter filterDto={notificationFilterDto} setFilterDto={setNotificationFilterDto} />
+        <ActiveFilter
+          filterDto={notificationFilterDto}
+          setFilterDto={setNotificationFilterDto}
+          className={"mb-2"}
+        />
+        <NotificationTypeFilter
+          filterDto={notificationFilterDto}
+          setFilterDto={setNotificationFilterDto}
+          className={"mb-2"}
+        />
+        <TagFilter
+          filterDto={notificationFilterDto}
+          setFilterDto={setNotificationFilterDto}
+        />
       </>
     );
   };
@@ -76,7 +87,11 @@ function NotificationsTable(
   };
 
   const createNewNotification = () => {
-    toastContext.showOverlayPanel(<NewNotificationOverlay loadData={loadData} isMounted={isMounted} />);
+    toastContext.showOverlayPanel(
+      <NewNotificationOverlay
+        loadData={loadData}
+      />
+    );
   };
 
   const getNotificationTable = () => {
@@ -118,7 +133,6 @@ NotificationsTable.propTypes = {
   isLoading: PropTypes.bool,
   notificationFilterDto: PropTypes.object,
   setNotificationFilterDto: PropTypes.func,
-  isMounted: PropTypes.object,
 };
 
 export default NotificationsTable;

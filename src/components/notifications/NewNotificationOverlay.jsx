@@ -1,18 +1,20 @@
-import React, {useState, useContext} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import Model from "core/data_model/model";
 import notificationsMetadata from "./notifications-metadata";
 import NotificationEditorPanel from "./notification_details/NotificationEditorPanel";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
+import useGetNewNotificationPolicyModel from "hooks/notification_policies/model/useGetNewNotificationPolicyModel";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-
-function NewNotificationOverlay({ loadData, isMounted } ) {
-  const toastContext = useContext(DialogToastContext);
-  const [notificationData, setNotificationData] = useState(new Model ({...notificationsMetadata.newObjectFields}, notificationsMetadata, true));
+export default function NewNotificationOverlay({ loadData } ) {
+  const { toastContext } = useComponentStateReference();
+  const {
+    notificationPolicyModel,
+    setNotificationPolicyModel,
+  } = useGetNewNotificationPolicyModel();
 
   const closePanel = () => {
-    if (isMounted?.current === true) {
+    if (loadData) {
       loadData();
     }
 
@@ -22,16 +24,15 @@ function NewNotificationOverlay({ loadData, isMounted } ) {
 
   return (
     <CreateCenterPanel closePanel={closePanel} objectType={notificationsMetadata.type} loadData={loadData}>
-      <NotificationEditorPanel setNotificationData={setNotificationData} handleClose={closePanel} notificationData={notificationData}/>
+      <NotificationEditorPanel
+        notificationData={notificationPolicyModel}
+        setNotificationData={setNotificationPolicyModel}
+        handleClose={closePanel}
+      />
     </CreateCenterPanel>
   );
 }
 
 NewNotificationOverlay.propTypes = {
-  isMounted: PropTypes.object,
   loadData: PropTypes.func,
 };
-
-export default NewNotificationOverlay;
-
-
