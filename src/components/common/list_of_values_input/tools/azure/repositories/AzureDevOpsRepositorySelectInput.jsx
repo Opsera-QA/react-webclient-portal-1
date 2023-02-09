@@ -65,7 +65,7 @@ function AzureDevOpsRepositorySelectInput({
       setError(undefined);
       setIsLoading(true);
       let defaultSearchTerm = searchTerm;
-      const existingRepository = model?.getData("gitRepository") || model?.getData("repository") || model?.getData("repositoryName");
+      const existingRepository = model?.getData("gitRepository") || model?.getData("repository");
       // console.log(existingRepository);
       if ((defaultSearchTerm === "") && (hasStringValue(existingRepository) === true)) {
         defaultSearchTerm = existingRepository;
