@@ -103,6 +103,7 @@ function GithubBranchMultiSelectInput(
       onSearchFunction={(searchTerm) =>
           delayedSearchQuery(searchTerm)
       }
+      loadDataFunction={loadData}
     />
   );
 }

@@ -110,6 +110,7 @@ function AzureDevOpsBranchSelectInput({
       onSearchFunction={(searchTerm) =>
         delayedSearchQuery(searchTerm, repositoryId, toolId)
       }
+      loadDataFunction={loadData}
     />
   );
 }
