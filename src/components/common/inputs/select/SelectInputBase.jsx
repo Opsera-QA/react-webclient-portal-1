@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
@@ -11,6 +11,7 @@ import useExternalToolPropertyCacheActions from "hooks/cache/external_tools/useE
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
 import useExternalToolPropertyCacheEntry from "hooks/cache/external_tools/useExternalToolPropertyCache";
+import _ from "lodash";
 
 function SelectInputBase(
   {
@@ -31,7 +32,6 @@ function SelectInputBase(
     getCurrentValue,
     showLabel,
     className,
-    onSearchFunction,
     requireClearDataConfirmation,
     clearDataDetails,
     linkTooltipText,
@@ -54,6 +54,7 @@ function SelectInputBase(
     onEnableEditFunction,
     externalCacheToolId,
     externalCacheToolIdentifier,
+    supportSearchLookup,
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
@@ -216,6 +217,11 @@ function SelectInputBase(
     return foundValue;
   };
 
+  const onSearchFunction = useCallback(
+    loadDataFunction ? _.debounce(loadDataFunction, 600) : undefined,
+    [loadDataFunction],
+  );
+
   if (field == null || visible === false) {
     return null;
   }
@@ -255,7 +261,7 @@ function SelectInputBase(
           placeholderText={getPlaceholderText()}
           setDataFunction={(newValue) => updateValue(newValue)}
           disabled={disabled || (requireUserEnable === true && enabled === false)}
-          onSearchFunction={onSearchFunction}
+          onSearchFunction={supportSearchLookup === true && typeof loadDataFunction === "function" ? onSearchFunction : undefined}
           onClickFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
         />
         <NewRecordButton
@@ -305,7 +311,6 @@ SelectInputBase.propTypes = {
   getCurrentValue: PropTypes.func,
   showLabel: PropTypes.bool,
   className: PropTypes.string,
-  onSearchFunction: PropTypes.func,
   requireClearDataConfirmation: PropTypes.bool,
   clearDataDetails: PropTypes.any,
   linkTooltipText: PropTypes.string,
@@ -328,6 +333,7 @@ SelectInputBase.propTypes = {
   onEnableEditFunction: PropTypes.func,
   externalCacheToolId: PropTypes.string,
   externalCacheToolIdentifier: PropTypes.string,
+  supportSearchLookup: PropTypes.bool,
 };
 
 SelectInputBase.defaultProps = {
