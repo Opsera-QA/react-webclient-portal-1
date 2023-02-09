@@ -92,6 +92,7 @@ function GitlabBranchSelectInput(
       singularTopic={"Gitlab Branch"}
       pluralTopic={"Gitlab Branches"}
       onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, repositoryId, toolId)}
+      loadDataFunction={loadData}
     />
   );
 }

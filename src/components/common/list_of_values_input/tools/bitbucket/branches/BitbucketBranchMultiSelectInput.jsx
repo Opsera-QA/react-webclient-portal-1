@@ -104,6 +104,7 @@ function BitbucketBranchMultiSelectInput(
       onSearchFunction={(searchTerm) =>
           delayedSearchQuery(searchTerm)
       }
+      loadDataFunction={loadData}
     />
   );
 }
