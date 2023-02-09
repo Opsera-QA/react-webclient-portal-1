@@ -21,7 +21,7 @@ export default function ExternalToolPropertyCacheFieldBase(
     toolId,
   );
   const textField = DataParsingHelper.parseNestedString(cachedEntry, "parameters.textField");
-  const cache = DataParsingHelper.parseNestedString(cachedEntry, "parameters.cache");
+  const cache = DataParsingHelper.parseNestedObject(cachedEntry, "parameters.cache");
 
   if (isHandlingCache) {
     return (
