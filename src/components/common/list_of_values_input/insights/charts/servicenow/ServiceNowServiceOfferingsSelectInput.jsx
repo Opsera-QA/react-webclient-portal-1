@@ -16,15 +16,15 @@ function ServiceNowServiceOfferingsSelectInput({
   disabled,
   serviceNowToolId,
 }) {
-  const toastContext = useContext(DialogToastContext);
   const [field] = useState(dataObject?.getFieldById(fieldName));
-  const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   // const [toggleSelected, setToggleSelected] = useState(false);
   const [serviceOfferings, setServiceOfferings] = useState([]);
   const {
-    isMounted,
     cancelTokenSource,
+    isMounted,
+    getAccessToken,
+    toastContext,
   } = useComponentStateReference();
 
   const validateAndSetData = (fieldName, valueArray) => {
@@ -139,6 +139,7 @@ function ServiceNowServiceOfferingsSelectInput({
       placeholderText={getPlaceholderText()}
       disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
+      loadDataFunction={loadServiceOfferings}
       supportSearchLookup={true}
     />
   );
