@@ -27,11 +27,13 @@ function LiquibaseTagSelectInput({ model, setModel, disabled, toolConfigId, data
     let newModel = {...model};
     setModel({...newModel});
 
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (toolConfigId && database && schema) {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }   
 
     return () => {
       source.cancel();
