@@ -23,7 +23,7 @@ function BitbucketRepositorySelectInput(
     }) {
   const [isLoading, setIsLoading] = useState(false);
   const [bitbucketRepositories, setBitbucketRepositories] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [inEditMode, setInEditMode] = useState(false);
   const isMounted = useRef(false);
@@ -119,6 +119,7 @@ function BitbucketRepositorySelectInput(
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
       externalCacheToolId={toolId}
+      loadDataFunction={loadData}
     />
   );
 }

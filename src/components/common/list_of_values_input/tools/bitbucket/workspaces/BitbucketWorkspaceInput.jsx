@@ -5,7 +5,6 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import {bitbucketActions} from "components/inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket.actions";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import _ from "lodash";
 
 // TODO: Rename BitbucketWorkspaceSelectInput, change "gitToolId" to "toolId"
 function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, className}) {
@@ -44,6 +43,7 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
+      setError(undefined);
       setIsLoading(true);
       await getWorkspaces(cancelSource);
     }
@@ -68,15 +68,6 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
     }
   };
 
-  const delayedSearchQuery = useCallback(
-      _.debounce(
-          () =>
-              getWorkspaces(),
-          600,
-      ),
-      [],
-  );
-
   if (visible === false) {
     return null;
   }
@@ -96,13 +87,11 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
       disabled={disabled || isLoading || workspaces.length === 0}
       className={className}
       externalCacheToolId={gitToolId}
-      onSearchFunction={(searchTerm) =>
-          delayedSearchQuery(searchTerm)
-      }
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
       singularTopic={"Workspace"}
       pluralTopic={"Workspaces"}
+      loadDataFunction={loadData}
     />
   );
 }

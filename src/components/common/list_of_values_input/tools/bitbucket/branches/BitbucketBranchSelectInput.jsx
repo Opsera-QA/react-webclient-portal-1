@@ -65,6 +65,7 @@ function BitbucketRepositorySelectInput({
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
+      setError(undefined);
       setIsLoading(true);
       await loadBitbucketBranches(
         "",

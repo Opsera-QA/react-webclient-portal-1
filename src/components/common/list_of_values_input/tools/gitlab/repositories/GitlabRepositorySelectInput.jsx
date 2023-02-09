@@ -128,6 +128,7 @@ function GitlabRepositorySelectInput({
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
       externalCacheToolId={toolId}
+      loadDataFunction={loadData}
     />
   );
 }
