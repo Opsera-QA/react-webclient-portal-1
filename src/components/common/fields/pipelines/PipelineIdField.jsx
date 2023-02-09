@@ -14,10 +14,12 @@ export default function PipelineIdField(
 
   return (
     <FieldContainer className={className}>
-      <FieldLabel fieldName={fieldName} field={field}/>
-      <PipelineIdFieldBase
-        pipelineId={model?.getData(fieldName)}
-      />
+      <div className={"d-flex"}>
+        <FieldLabel fieldName={fieldName} field={field}/>
+        <PipelineIdFieldBase
+          pipelineId={model?.getData(fieldName)}
+        />
+      </div>
     </FieldContainer>
   );
 }
