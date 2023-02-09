@@ -59,7 +59,7 @@ function GithubRepositorySelectInput(
       setIsLoading(true);
       let defaultSearchTerm = searchTerm;
       const existingRepository = model?.getData("gitRepository") || model?.getData("repository");
-      console.log(existingRepository);
+      // console.log(existingRepository);
       if ((defaultSearchTerm === "") && (hasStringValue(existingRepository) === true)) {
         defaultSearchTerm = existingRepository;
       }
