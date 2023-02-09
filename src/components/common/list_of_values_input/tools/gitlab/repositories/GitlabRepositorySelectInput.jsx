@@ -1,17 +1,10 @@
 import React, {
-  useContext,
   useEffect,
-  useRef,
   useState,
-  useCallback,
 } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
-import { AuthContext } from "contexts/AuthContext";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { gitlabActions } from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
-import { hasStringValue } from "components/common/helpers/string-helpers";
-import _ from "lodash";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 

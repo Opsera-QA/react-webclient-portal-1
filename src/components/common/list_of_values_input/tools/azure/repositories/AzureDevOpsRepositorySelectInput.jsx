@@ -28,12 +28,13 @@ function AzureDevOpsRepositorySelectInput({
     isMounted,
     getAccessToken,
   } = useComponentStateReference();
+  
   useEffect(() => {
     setAzureRepositories([]);
     setError(undefined);
 
     if (inEditMode === true && isMongoDbId(toolId) === true) {
-      loadData("", toolId, source).catch((error) => {
+      loadData("").catch((error) => {
         throw error;
       });
     }
