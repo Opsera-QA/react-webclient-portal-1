@@ -242,7 +242,6 @@ function SelectInputBase(
         loadDataFunction={loadDataFunction}
         disabled={disabled}
         isLoading={busy}
-        inEditMode={enabled}
       />
       <div className={"d-flex"}>
         <StandaloneSelectInput
