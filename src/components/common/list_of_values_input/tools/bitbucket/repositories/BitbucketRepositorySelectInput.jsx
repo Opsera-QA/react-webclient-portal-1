@@ -23,7 +23,7 @@ function BitbucketRepositorySelectInput(
     }) {
   const [isLoading, setIsLoading] = useState(false);
   const [bitbucketRepositories, setBitbucketRepositories] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [inEditMode, setInEditMode] = useState(false);
   const isMounted = useRef(false);
@@ -116,9 +116,10 @@ function BitbucketRepositorySelectInput(
       pluralTopic={"Bitbucket Repositories"}
       error={error}
       onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
-      useToggle={true}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
+      externalCacheToolId={toolId}
+      loadDataFunction={loadData}
     />
   );
 }

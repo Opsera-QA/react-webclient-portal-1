@@ -35,6 +35,7 @@ function InputLabel(
     isLoading,
     ellipsisOnClickFunction,
     selectAllFunction,
+    inEditMode,
   }) {
   const getInputHelpIcon = () => {
     if (inputHelpOverlay != null) {
@@ -123,6 +124,7 @@ function InputLabel(
             loadDataFunction={loadDataFunction}
             disabled={disabled}
             isLoading={isLoading}
+            visible={inEditMode !== false}
             className={"ml-2 my-auto"}
           />
           <SelectAllIcon
@@ -168,6 +170,7 @@ InputLabel.propTypes = {
   ellipsisOnClickFunction: PropTypes.func,
   selectAllFunction: PropTypes.func,
   hasWarningState: PropTypes.bool,
+  inEditMode: PropTypes.bool,
 };
 
 export default InputLabel;

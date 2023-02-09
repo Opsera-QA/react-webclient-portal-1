@@ -57,6 +57,7 @@ function AzureDevOpsBranchSelectInput({
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
+      setError(undefined);
       setIsLoading(true);
       await loadAzureBranches("", toolId, repositoryId, cancelSource);
     } catch (error) {
@@ -114,6 +115,8 @@ function AzureDevOpsBranchSelectInput({
       }
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
+      externalCacheToolId={toolId}
+      loadDataFunction={loadData}
     />
   );
 }
