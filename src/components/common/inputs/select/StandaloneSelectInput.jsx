@@ -21,7 +21,6 @@ function StandaloneSelectInput(
     className,
     onToggleFunction,
     hasErrorState,
-    lazyLoad,
     dropUp,
     onClickFunction,
     filterOption
@@ -55,7 +54,7 @@ function StandaloneSelectInput(
         dropUp={dropUp}
         placeholder={getPlaceholderText()}
         onChange={(newValue) => setDataFunction(newValue)}
-        disabled={disabled || (lazyLoad !== true && (!Array.isArray(selectOptions) || selectOptions.length === 0))}
+        disabled={disabled || (onSearchFunction == null && (!Array.isArray(selectOptions) || selectOptions.length === 0))}
         onSearch={onSearchFunction}
         allowCreate={allowCreate}
       />
@@ -91,7 +90,6 @@ StandaloneSelectInput.propTypes = {
   noDataText: PropTypes.string,
   defaultValue: PropTypes.any,
   hasErrorState: PropTypes.bool,
-  lazyLoad: PropTypes.bool,
   dropUp: PropTypes.bool,
   onClickFunction: PropTypes.func,
   filterOption: PropTypes.string
