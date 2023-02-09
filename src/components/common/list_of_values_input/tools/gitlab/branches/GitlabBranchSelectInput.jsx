@@ -103,9 +103,6 @@ function GitlabBranchSelectInput(
         pluralTopic={"Gitlab Branches"}
         singularTopic={"Gitlab Branch"}
         onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, repositoryId, toolId)}
-        useToggle={true}
-        requireUserEnable={true}
-        onEnableEditFunction={() => setInEditMode(true)}
       />
     );
   }
@@ -127,9 +124,9 @@ function GitlabBranchSelectInput(
       pluralTopic={"Gitlab Branches"}
       singularTopic={"Gitlab Branch"}
       onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, repositoryId, toolId)}
-      useToggle={true}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
+      externalCacheToolId={toolId}
     />
   );
 }

@@ -6,8 +6,6 @@ import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {bitbucketActions} from "components/inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
-import LazyLoadMultiSelectInputBase from "../../../../inputs/select/LazyLoadMultiSelectInputBase";
-import {faTools} from "@fortawesome/pro-light-svg-icons";
 import _ from "lodash";
 
 function BitbucketBranchMultiSelectInput(
@@ -88,7 +86,7 @@ function BitbucketBranchMultiSelectInput(
   );
 
   return (
-    <LazyLoadMultiSelectInputBase
+    <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
@@ -106,9 +104,6 @@ function BitbucketBranchMultiSelectInput(
       onSearchFunction={(searchTerm) =>
           delayedSearchQuery(searchTerm)
       }
-      useToggle={true}
-      requireUserEnable={true}
-      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }

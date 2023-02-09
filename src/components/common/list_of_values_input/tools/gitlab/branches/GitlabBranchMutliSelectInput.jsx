@@ -92,9 +92,6 @@ function GitlabBranchSelectInput(
       singularTopic={"Gitlab Branch"}
       pluralTopic={"Gitlab Branches"}
       onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, repositoryId, toolId)}
-      useToggle={true}
-      requireUserEnable={true}
-      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }

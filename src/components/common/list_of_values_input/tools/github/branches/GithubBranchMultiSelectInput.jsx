@@ -7,7 +7,6 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import {githubActions} from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import _ from "lodash";
-import LazyLoadMultiSelectInputBase from "../../../../inputs/select/LazyLoadMultiSelectInputBase";
 
 function GithubBranchMultiSelectInput(
   {
@@ -86,7 +85,7 @@ function GithubBranchMultiSelectInput(
   );
 
   return (
-    <LazyLoadMultiSelectInputBase
+    <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
@@ -104,9 +103,6 @@ function GithubBranchMultiSelectInput(
       onSearchFunction={(searchTerm) =>
           delayedSearchQuery(searchTerm)
       }
-      useToggle={true}
-      requireUserEnable={true}
-      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }
