@@ -13,6 +13,7 @@ import { gitlabActions } from "components/inventory/tools/tool_details/tool_jobs
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import _ from "lodash";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function GitlabRepositorySelectInput({
   fieldName,
@@ -25,50 +26,32 @@ function GitlabRepositorySelectInput({
   valueField,
   textField,
 }) {
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [gitlabRepositories, setGitlabRepositories] = useState([]);
   const [error, setError] = useState(undefined);
   const [inEditMode, setInEditMode] = useState(false);
-  const isMounted = useRef(false);
-  const { getAccessToken } = useContext(AuthContext);
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    isMounted.current = true;
-    const cancelSource = axios.CancelToken.source();
-    setCancelTokenSource(cancelSource);
     setGitlabRepositories([]);
 
     if (isMongoDbId(toolId) === true && inEditMode === true) {
-      loadData("", toolId, cancelSource).catch((error) => {
+      loadData("").catch((error) => {
         throw error;
       });
     }
-
-    return () => {
-      cancelSource.cancel();
-      isMounted.current = false;
-    };
   }, [toolId, inEditMode]);
 
-  const loadData = async (searchTerm = "", currentToolId = toolId, cancelSource = cancelTokenSource) => {
+  const loadData = async (searchTerm = "") => {
     try {
       setError(undefined);
       setIsLoading(true);
-      let defaultSearchTerm = searchTerm;
-      const existingRepository = model?.getData("gitRepository") || model?.getData("repository") || model?.getData("repositoryName");
-      // console.log(existingRepository);
-      if ((defaultSearchTerm === "") && (hasStringValue(existingRepository) === true)) {
-        defaultSearchTerm = existingRepository;
-      }
       await loadGitlabRepositories(
-        defaultSearchTerm,
-        currentToolId,
-        cancelSource,
+        searchTerm,
       );
     } catch (error) {
       if (isMounted?.current === true) {
@@ -83,12 +66,10 @@ function GitlabRepositorySelectInput({
 
   const loadGitlabRepositories = async (
     searchTerm,
-    toolId,
-    cancelSource = cancelTokenSource,
   ) => {
     const response = await gitlabActions.getRepositoriesFromGitlabInstanceV3(
       getAccessToken,
-      cancelSource,
+      cancelTokenSource,
       searchTerm,
       toolId,
     );
@@ -102,11 +83,6 @@ function GitlabRepositorySelectInput({
   const getDataPullLimitMessage = () => {
     return "The first 100 repositories will be loaded by default, please enter at least 3 characters to search for repositories by name.";
   };
-
-  const delayedSearchQuery = useCallback(
-    _.debounce((searchTerm, toolId) => loadData(searchTerm, toolId), 600),
-    [],
-  );
 
   return (
     <SelectInputBase
@@ -124,11 +100,11 @@ function GitlabRepositorySelectInput({
       singularTopic={"Gitlab Repository"}
       pluralTopic={"Gitlab Repositories"}
       error={error}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
       externalCacheToolId={toolId}
       loadDataFunction={loadData}
+      supportSearchLookup={true}
     />
   );
 }

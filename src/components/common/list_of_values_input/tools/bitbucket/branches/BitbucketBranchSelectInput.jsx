@@ -14,6 +14,7 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import _ from "lodash";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function BitbucketRepositorySelectInput({
   fieldName,
@@ -27,22 +28,17 @@ function BitbucketRepositorySelectInput({
   repositoryId,
   multi,
 }) {
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [bitbucketBranches, setBitbucketBranches] = useState([]);
   const [error, setError] = useState(undefined);
-  const isMounted = useRef(false);
   const [inEditMode, setInEditMode] = useState(false);
-  const { getAccessToken } = useContext(AuthContext);
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    isMounted.current = true;
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
     setBitbucketBranches([]);
     setError(undefined);
 
@@ -50,30 +46,19 @@ function BitbucketRepositorySelectInput({
       isMongoDbId(toolId) === true &&
       hasStringValue(workspace) === true &&
       hasStringValue(repositoryId) === true &&
-      inEditMode === true
+      (multi || inEditMode === true)
     ) {
-      loadData(source).catch((error) => {
+      loadData().catch((error) => {
         throw error;
       });
     }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [toolId, workspace, repositoryId, inEditMode]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (searchTerm = "") => {
     try {
       setError(undefined);
       setIsLoading(true);
-      await loadBitbucketBranches(
-        "",
-        toolId,
-        workspace,
-        repositoryId,
-        cancelSource,
-      );
+      await loadBitbucketBranches(searchTerm);
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
@@ -87,15 +72,10 @@ function BitbucketRepositorySelectInput({
 
   const loadBitbucketBranches = async (
     searchTerm = "",
-    toolId,
-    workspace,
-    repositoryId,
-    cancelSource = cancelTokenSource,
   ) => {
-    setIsLoading(true);
     const response = await bitbucketActions.getBranchesFromBitbucketInstanceV3(
       getAccessToken,
-      cancelSource,
+      cancelTokenSource,
       toolId,
       workspace,
       repositoryId,
@@ -106,17 +86,7 @@ function BitbucketRepositorySelectInput({
     if (isMounted?.current === true && Array.isArray(branches)) {
       setBitbucketBranches([...branches]);
     }
-    setIsLoading(false);
   };
-
-  const delayedSearchQuery = useCallback(
-    _.debounce(
-      (searchTerm, repositoryId, toolId) =>
-        loadBitbucketBranches(searchTerm, toolId, workspace, repositoryId),
-      600,
-    ),
-    [],
-  );
 
   if (multi) {
     return (
@@ -135,9 +105,8 @@ function BitbucketRepositorySelectInput({
         error={error}
         pluralTopic={"Bitbucket Branches"}
         singularTopic={"Bitbucket Branch"}
-        onSearchFunction={(searchTerm) =>
-          delayedSearchQuery(searchTerm, repositoryId, toolId)
-        }
+        supportSearchLookup={true}
+        loadDataFunction={loadData}
       />
     );
   }

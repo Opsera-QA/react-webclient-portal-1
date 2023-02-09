@@ -1,18 +1,12 @@
 import React, {
-  useContext,
   useEffect,
-  useRef,
-  useCallback,
   useState,
 } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
-import { AuthContext } from "contexts/AuthContext";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
-import _ from "lodash";
-import {hasStringValue} from "components/common/helpers/string-helpers";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function AzureDevOpsRepositorySelectInput({
   fieldName,
@@ -25,22 +19,16 @@ function AzureDevOpsRepositorySelectInput({
   valueField,
   textField,
 }) {
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [azureRepositories, setAzureRepositories] = useState([]);
   const [error, setError] = useState(undefined);
   const [inEditMode, setInEditMode] = useState(false);
-  const isMounted = useRef(false);
-  const { getAccessToken } = useContext(AuthContext);
-
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+  } = useComponentStateReference();
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    isMounted.current = true;
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
     setAzureRepositories([]);
     setError(undefined);
 
@@ -49,28 +37,15 @@ function AzureDevOpsRepositorySelectInput({
         throw error;
       });
     }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [toolId, inEditMode]);
 
   const loadData = async (
     searchTerm = "",
-    currentToolId = toolId,
-    cancelSource = cancelTokenSource,
   ) => {
     try {
       setError(undefined);
       setIsLoading(true);
-      let defaultSearchTerm = searchTerm;
-      const existingRepository = model?.getData("gitRepository") || model?.getData("repository") || model?.getData("repositoryName");
-      // console.log(existingRepository);
-      if ((defaultSearchTerm === "") && (hasStringValue(existingRepository) === true)) {
-        defaultSearchTerm = existingRepository;
-      }
-      await loadAzureRepositories(defaultSearchTerm, currentToolId, cancelSource);
+      await loadAzureRepositories(searchTerm);
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
@@ -84,13 +59,11 @@ function AzureDevOpsRepositorySelectInput({
 
   const loadAzureRepositories = async (
     searchTerm,
-    currentToolId = toolId,
-    cancelSource = cancelTokenSource,
   ) => {
     const response = await azureActions.getRepositoriesFromAzureInstanceV2(
       getAccessToken,
-      cancelSource,
-      currentToolId,
+      cancelTokenSource,
+      toolId,
       searchTerm,
     );
     const repositories = response?.data?.data;
@@ -99,14 +72,6 @@ function AzureDevOpsRepositorySelectInput({
       setAzureRepositories([...repositories]);
     }
   };
-
-  const delayedSearchQuery = useCallback(
-    _.debounce(
-      (searchTerm, toolId) => loadData(searchTerm, toolId),
-      600,
-    ),
-    [],
-  );
 
   return (
     <SelectInputBase
@@ -123,9 +88,9 @@ function AzureDevOpsRepositorySelectInput({
       pluralTopic={"Azure Repositories"}
       singularTopic={"Azure Repository"}
       error={error}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
+      supportSearchLookup={true}
       externalCacheToolId={toolId}
       loadDataFunction={loadData}
     />
