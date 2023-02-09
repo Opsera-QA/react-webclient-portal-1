@@ -28,7 +28,7 @@ function AzureDevOpsRepositorySelectInput({
     isMounted,
     getAccessToken,
   } = useComponentStateReference();
-  
+
   useEffect(() => {
     setAzureRepositories([]);
     setError(undefined);
