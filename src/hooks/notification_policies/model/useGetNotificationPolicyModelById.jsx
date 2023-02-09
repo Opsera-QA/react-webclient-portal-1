@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import useGetPolicyModel from "hooks/settings/organization_settings/policies/useGetPolicyModel";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import usePolicyActions from "hooks/settings/organization_settings/policies/usePolicyActions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useGetNotificationPolicyModel from "hooks/notification_policies/model/useGetNotificationPolicyModel";
 
 export default function useGetNotificationPolicyModelById(
   policyId,
 ) {
-  const [policyModel, setPolicyModel] = useState(undefined);
-  const { getPolicyModel } = useGetPolicyModel();
+  const [notificationPolicyModel, setNotificationPolicyModel] = useState(undefined);
+  const { getNotificationPolicyModel } = useGetNotificationPolicyModel();
   const {
     isLoading,
     error,
@@ -19,7 +19,7 @@ export default function useGetNotificationPolicyModelById(
   const policyActions = usePolicyActions();
 
   useEffect(() => {
-    setPolicyModel(undefined);
+    setNotificationPolicyModel(undefined);
 
     if (isMongoDbId(policyId) === true) {
       loadData(getPolicy).catch(() => {
@@ -32,20 +32,20 @@ export default function useGetNotificationPolicyModelById(
       policyId,
     );
 
-    const policy = DataParsingHelper.parseNestedObject(response, "data.data");
+    const newNotificationPolicy = DataParsingHelper.parseNestedObject(response, "data.data");
 
-    if (policy) {
-      const newModel = getPolicyModel(
-        policy,
+    if (newNotificationPolicy) {
+      const newModel = getNotificationPolicyModel(
+        newNotificationPolicy,
         false,
       );
-      setPolicyModel({ ...newModel });
+      setNotificationPolicyModel({ ...newModel });
     }
   };
 
   return ({
-    policyModel: policyModel,
-    setPolicyModel: setPolicyModel,
+    notificationPolicyModel: notificationPolicyModel,
+    setNotificationPolicyModel: setNotificationPolicyModel,
     error: error,
     setError: setError,
     loadData: () => loadData(getPolicy),

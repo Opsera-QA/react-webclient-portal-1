@@ -2,11 +2,11 @@ import NotificationPolicyModel from "hooks/notification_policies/model/notificat
 
 export default function useGetNotificationPolicyModel() {
   const getNotificationPolicyModel = (
-    policy,
+    notificationPolicy,
     isNew,
   ) => {
     return new NotificationPolicyModel(
-      policy,
+      notificationPolicy,
       isNew,
     );
   };
