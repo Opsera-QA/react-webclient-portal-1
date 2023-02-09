@@ -5,7 +5,7 @@ import DockerCliOutputVariableCommandLineInputParameterInput from "../inputs/Doc
 
 
 
-function DockerCliOutputVariablesInputForm({ model, setModel, plan }) {
+function DockerCliOutputVariablesInputForm({ model, setModel, plan }) { 
 
   const getDynamicFields = () => {
     if (model?.getData("enableOutputVariables") === true) {

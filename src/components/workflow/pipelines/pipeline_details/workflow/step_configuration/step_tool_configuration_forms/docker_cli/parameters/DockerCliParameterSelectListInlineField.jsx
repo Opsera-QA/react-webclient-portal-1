@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
 
-export default function DockerCliParameterSelectListInlineField(
+export default function DockerCliParameterSelectListInlineField( 
   {
     parameter,
     index,

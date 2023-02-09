@@ -18,7 +18,7 @@ import PipelineStepParameterInputBaseHelpText
 
 export default function DockerCliOutputVariableCommandLineInputParameterInput(
   {
-    model,
+    model, 
     setModel,
     disabled,
     plan,

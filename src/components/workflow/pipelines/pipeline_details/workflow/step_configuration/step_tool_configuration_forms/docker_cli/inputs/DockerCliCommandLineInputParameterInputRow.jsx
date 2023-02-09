@@ -13,7 +13,7 @@ import {
   pipelineStepParameterMetadata
 } from "components/common/list_of_values_input/parameters/pipeline/pipelineStepParameter.metadata";
 
-export default function DockerCliCommandLineInputParameterInputRow(
+export default function DockerCliCommandLineInputParameterInputRow( 
   {
     error,
     className,

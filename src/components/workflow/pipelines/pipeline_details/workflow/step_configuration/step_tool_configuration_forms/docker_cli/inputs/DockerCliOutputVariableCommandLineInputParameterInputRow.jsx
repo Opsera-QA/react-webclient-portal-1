@@ -20,7 +20,7 @@ const DOCKER_CLI_OUTPUT_VARIABLE_SELECT_OPTIONS = [
 ];
 
 
-export default function DockerCliOutputVariableCommandLineInputParameterInputRow(
+export default function DockerCliOutputVariableCommandLineInputParameterInputRow( 
   {
     error,
     className,
