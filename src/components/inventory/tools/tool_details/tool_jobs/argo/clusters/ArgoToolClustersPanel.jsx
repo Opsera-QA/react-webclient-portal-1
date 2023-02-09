@@ -9,6 +9,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import argoClusterMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/argo-cluster-metadata";
 import ArgoClusterEditorPanel
   from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/details/ArgoClusterEditorPanel";
+import _ from "lodash";
 
 function ArgoToolClustersPanel({ toolId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -61,7 +62,7 @@ function ArgoToolClustersPanel({ toolId }) {
     const clusters = response?.data?.data;
 
     if(isMounted?.current === true && Array.isArray(clusters)){
-      setArgoClusters(clusters);
+      setArgoClusters(_.sortBy(clusters, ["name"]));
     }
   };
 
