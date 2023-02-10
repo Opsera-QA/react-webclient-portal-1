@@ -9,10 +9,6 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import {
   mergeSyncTaskGitConfigurationMetadata
 } from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata";
-import SalesforceToGitMergeSyncTaskWizardConfirmRepositorySettingsButton
-  from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardConfirmRepositorySettingsButton";
-import SalesforceToGitMergeSyncTaskBitbucketWorkspaceSelectInput
-  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskBitbucketWorkspaceSelectInput";
 import SalesforceToGitMergeSyncTaskRepositorySelectInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskRepositorySelectInput";
 import SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput
