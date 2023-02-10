@@ -54,7 +54,7 @@ export default function GitlabMonoRepoPathSelectInput({
 
   const loadMonoRepoPaths = async () => {
     const response = await dataMappingActions.getMonoRepoPaths(getAccessToken, cancelTokenSource, repoId);
-    const repoPaths = DataParsingHelper.parseNestedArray(response, "data.data", []);
+    const repoPaths = DataParsingHelper.parseNestedArray(response, "data.data.gitlabRepoPaths.data", []);
     setMonoRepoPaths([...repoPaths]);
   };
 
