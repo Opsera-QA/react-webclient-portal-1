@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {faExclamationCircle, faTools} from "@fortawesome/pro-light-svg-icons";
 import {Link} from "react-router-dom";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import RegistryToolInfoOverlay from "components/common/list_of_values_input/tools/RegistryToolInfoOverlay";
@@ -15,7 +14,6 @@ function RoleRestrictedToolByIdentifierInputBase(
   {
     toolIdentifier,
     toolFriendlyName,
-    placeholderText,
     visible,
     fieldName,
     model,
@@ -160,7 +158,6 @@ function RoleRestrictedToolByIdentifierInputBase(
         textField={textField}
         visible={visible}
         error={error}
-        placeholderText={placeholderText}
         clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading}
         detailViewLink={getDetailViewToolUrl()}
@@ -168,6 +165,9 @@ function RoleRestrictedToolByIdentifierInputBase(
         infoOverlay={getInfoOverlay()}
         linkTooltipText={`Load Tool Registry`}
         linkIcon={faTools}
+        loadDataFunction={loadData}
+        singularTopic={"Tool"}
+        pluralTopic={"Tools"}
       />
       {getErrorMessage()}
     </>

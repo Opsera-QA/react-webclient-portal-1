@@ -34,7 +34,6 @@ function RoleRestrictedToolByIdentifierMultiSelectInputBase(
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [toolMetadata, setToolMetadata] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -81,7 +80,6 @@ function RoleRestrictedToolByIdentifierMultiSelectInputBase(
     const tools = response?.data?.data;
 
     if (Array.isArray(tools)) {
-      setToolMetadata(response?.data?.metadata);
       if (filterDataFunction) {
         const filteredTools = filterDataFunction(tools);
         // TODO: This is a safeguard temporarily but won't be forever
@@ -132,7 +130,6 @@ function RoleRestrictedToolByIdentifierMultiSelectInputBase(
           selectedToolId={model?.getData(fieldName)}
           tools={tools}
           loadData={loadData}
-          toolMetadata={toolMetadata}
           isMounted={isMounted}
           isLoading={isLoading}
           model={model}
