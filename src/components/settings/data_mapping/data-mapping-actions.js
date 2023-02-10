@@ -26,4 +26,17 @@ dataMappingActions.getSonarProjects = async (data, getAccessToken) => {
   return [];
 };
 
+dataMappingActions.getMonoRepoPaths = async (getAccessToken, sourceToken, repoId) => {
+  const apiUrl = `/analytics/gitlab/v1/gitlabRepoPaths`;
+  const postBody = {
+    repositoryId: repoId
+  };
+
+  let response = await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, sourceToken, apiUrl, postBody);
+  if (response && response.status === 200) {
+    return response.data;
+  }
+  return [];
+};
+
 export default dataMappingActions;

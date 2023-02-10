@@ -38,6 +38,7 @@ function ProjectDataMappingEditorPanel(
   const setDataHandler = (id, selectedOption) => {
     projectDataMappingModel.setData('key', determineKeyFromFullPath(selectedOption?.nameSpacedPath));
     projectDataMappingModel.setData('keyPath', selectedOption?.nameSpacedPath);
+    projectDataMappingModel.setData('repoId', selectedOption?.id);
     setProjectDataMappingModel({ ...projectDataMappingModel });
   };
 
