@@ -95,8 +95,6 @@ function PipelineSourceRepositoryConfiguration(
         name: name,
         service: service,
         accountId: accountId,
-        username: username,
-        password: password,
         workspace: workspace,
         workspaceName: workspaceName,
         repository: repository,

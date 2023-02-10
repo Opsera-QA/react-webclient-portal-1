@@ -14,8 +14,6 @@ function PipelineSourceRepositoryToolSelectInput(
   }) {
   const setDataFunction = (fieldName, selectedOption) => {
     model.setData("accountId", selectedOption?._id);
-    model.setData("username", selectedOption?.configuration?.accountUsername);
-    model.setData("password", selectedOption?.configuration?.accountPassword);
     model.setDefaultValue("workspace");
     model.setDefaultValue("workspaceName");
     model.setDefaultValue("repository");
@@ -26,8 +24,6 @@ function PipelineSourceRepositoryToolSelectInput(
 
   const clearDataFunction = () => {
     model.setDefaultValue("accountId");
-    model.setDefaultValue("username");
-    model.setDefaultValue("password");
     model.setDefaultValue("workspace");
     model.setDefaultValue("workspaceName");
     model.setDefaultValue("repository");
