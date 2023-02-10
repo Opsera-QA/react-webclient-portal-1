@@ -30,12 +30,12 @@ export default function GitlabMonoRepoPathSelectInput({
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData().catch((error) => {
+    repoId ? loadData().catch((error) => {
       setError(error);
       if (isMounted?.current === true) {
         throw error;
       }
-    });
+    }): null;
 
     return () => {
       source.cancel();
@@ -44,19 +44,14 @@ export default function GitlabMonoRepoPathSelectInput({
   }, [repoId]);
 
   const loadData = async () => {
-    setIsLoading(true);
-    setMonoRepoPaths([]);
-
-    const monoRepoPaths = await dataMappingActions.getMonoRepoPaths(getAccessToken, cancelTokenSource, repoId);
-
-    setMonoRepoPaths(monoRepoPaths);
-    setIsLoading(false);
-  };
+      setIsLoading(true);
+      setMonoRepoPaths([]);
   
-
-  if (!Array.isArray(monoRepoPaths) || monoRepoPaths.length === 0) {
-    return null;
-  }
+      const monoRepoPaths = await dataMappingActions.getMonoRepoPaths(getAccessToken, cancelTokenSource, repoId);
+  
+      setMonoRepoPaths(monoRepoPaths);
+      setIsLoading(false);
+  };
 
   return (
     <SelectInputBase
@@ -64,7 +59,7 @@ export default function GitlabMonoRepoPathSelectInput({
       dataObject={model}
       setDataObject={setModel}
       selectOptions={monoRepoPaths}
-      disabled={disabled || isLoading}
+      disabled={disabled}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
       singularTopic={"Mono Repo Path"}

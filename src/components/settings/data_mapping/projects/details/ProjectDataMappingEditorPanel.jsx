@@ -110,6 +110,7 @@ function ProjectDataMappingEditorPanel(
           <GitlabProjectDataMappingSubform
             model={projectDataMappingModel}
             setModel={setProjectDataMappingModel}
+            repoId={projectDataMappingModel.getData("repoId")}
           />
         </Col>
         </>
