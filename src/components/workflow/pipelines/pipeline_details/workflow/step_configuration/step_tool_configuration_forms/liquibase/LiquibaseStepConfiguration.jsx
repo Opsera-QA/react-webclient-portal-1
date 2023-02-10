@@ -127,6 +127,7 @@ function LiquibaseStepConfiguration({ pipelineId, stepTool, plan, stepId, closeE
           setModel={setLiquibaseConfigurationDataDto}
           toolConfigId={liquibaseStepConfigurationDto?.getData("toolConfigId")}
           database={liquibaseStepConfigurationDto?.getData("database")}
+          dbType={liquibaseStepConfigurationDto?.getData("dbType")}
           schema={liquibaseStepConfigurationDto?.getData("baseSchema")}
         />
       );
