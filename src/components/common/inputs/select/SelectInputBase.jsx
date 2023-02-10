@@ -178,8 +178,9 @@ function SelectInputBase(
   const handleTextFieldFunction = (foundValue) => {
     let formattedValue;
     const parsedFoundValue = DataParsingHelper.parseObject(foundValue);
+    const currentValue = DataParsingHelper.parseString(dataObject?.getData(fieldName));
 
-    if (parsedFoundValue) {
+    if (parsedFoundValue && currentValue && currentValue === parsedFoundValue[valueField]) {
       const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
       parameters.cache = foundValue;
 
@@ -195,8 +196,9 @@ function SelectInputBase(
     }
 
     const parsedCache = DataParsingHelper.parseNestedObject(cachedEntry, "parameters.cache");
+    const cachedUniqueId = DataParsingHelper.parseNestedString(cachedEntry, "unique_id");
 
-    if (!formattedValue && parsedCache) {
+    if (!formattedValue && currentValue && parsedCache && cachedUniqueId && cachedUniqueId === currentValue) {
       const parsedCacheTextField = DataParsingHelper.parseNestedString(cachedEntry, "parameters.textField");
 
       if (textField) {
@@ -214,6 +216,12 @@ function SelectInputBase(
       return formattedValue;
     }
 
+    if (typeof textField === "function") {
+      return textField(foundValue);
+    } else if (typeof textField === "string" && parsedFoundValue) {
+      return parsedFoundValue[textField];
+    }
+    
     return foundValue;
   };
 
