@@ -5,7 +5,7 @@ import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
 import LiquibaseStepActions from "../liquibase-step-actions";
 
-function LiquibaseTagSelectInput({ model, setModel, disabled, toolConfigId, database, schema }) {
+function LiquibaseTagSelectInput({ model, setModel, disabled, toolConfigId, database, schema, dbType }) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -26,8 +26,9 @@ function LiquibaseTagSelectInput({ model, setModel, disabled, toolConfigId, data
     setErrorMessage("");
     let newModel = {...model};
     setModel({...newModel});
+    setEnvironmentsList([]);    
 
-    if (toolConfigId && database && schema) {
+    if (toolConfigId && schema && (dbType === "oracle" || database)) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -39,7 +40,7 @@ function LiquibaseTagSelectInput({ model, setModel, disabled, toolConfigId, data
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolConfigId, database, schema]);
+  }, [toolConfigId, database, schema, dbType]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -102,6 +103,7 @@ LiquibaseTagSelectInput.propTypes = {
   toolConfigId: PropTypes.string,
   database: PropTypes.string,
   schema: PropTypes.string,
+  dbType: PropTypes.string,
 };
 
 export default LiquibaseTagSelectInput;
