@@ -178,8 +178,9 @@ function SelectInputBase(
   const handleTextFieldFunction = (foundValue) => {
     let formattedValue;
     const parsedFoundValue = DataParsingHelper.parseObject(foundValue);
+    const currentValue = DataParsingHelper.parseString(dataObject?.getData(fieldName));
 
-    if (parsedFoundValue) {
+    if (parsedFoundValue && currentValue && currentValue === parsedFoundValue[valueField]) {
       const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
       parameters.cache = foundValue;
 
@@ -192,21 +193,20 @@ function SelectInputBase(
       }
 
       setCachedValue(parameters);
-    }
+      const parsedCache = DataParsingHelper.parseNestedObject(cachedEntry, "parameters.cache");
 
-    const parsedCache = DataParsingHelper.parseNestedObject(cachedEntry, "parameters.cache");
+      if (!formattedValue && parsedCache) {
+        const parsedCacheTextField = DataParsingHelper.parseNestedString(cachedEntry, "parameters.textField");
 
-    if (!formattedValue && parsedCache) {
-      const parsedCacheTextField = DataParsingHelper.parseNestedString(cachedEntry, "parameters.textField");
-
-      if (textField) {
-        if (typeof textField === "function") {
-          formattedValue = textField(parsedCache);
-        } else if (typeof textField === "string") {
-          formattedValue = parsedCache[textField];
+        if (textField) {
+          if (typeof textField === "function") {
+            formattedValue = textField(parsedCache);
+          } else if (typeof textField === "string") {
+            formattedValue = parsedCache[textField];
+          }
+        } else if (parsedCacheTextField) {
+          formattedValue = parsedCache[parsedCacheTextField];
         }
-      } else if (parsedCacheTextField) {
-        formattedValue = parsedCache[parsedCacheTextField];
       }
     }
 
