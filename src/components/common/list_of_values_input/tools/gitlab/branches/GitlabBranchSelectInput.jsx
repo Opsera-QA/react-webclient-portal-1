@@ -86,6 +86,7 @@ function GitlabBranchSelectInput(
         pluralTopic={"Gitlab Branches"}
         singularTopic={"Gitlab Branch"}
         supportSearchLookup={true}
+        loadDataFunction={loadData}
       />
     );
   }
@@ -110,6 +111,7 @@ function GitlabBranchSelectInput(
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
       externalCacheToolId={toolId}
+      loadDataFunction={loadData}
     />
   );
 }

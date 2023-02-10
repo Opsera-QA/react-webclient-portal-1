@@ -131,6 +131,7 @@ function BitbucketRepositorySelectInput({
       supportSearchLookup={true}
       onEnableEditFunction={() => setInEditMode(true)}
       externalCacheToolId={toolId}
+      loadDataFunction={loadData}
     />
   );
 }
