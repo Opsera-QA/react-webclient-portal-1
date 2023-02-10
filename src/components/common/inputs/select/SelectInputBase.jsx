@@ -210,16 +210,16 @@ function SelectInputBase(
       }
     }
 
-    if (typeof textField === "function") {
-      formattedValue = textField(parsedFoundValue);
-    } else if (typeof textField === "string") {
-      formattedValue = parsedFoundValue[textField];
-    }
-
     if (formattedValue) {
       return formattedValue;
     }
 
+    if (typeof textField === "function") {
+      return textField(foundValue);
+    } else if (typeof textField === "string" && parsedFoundValue) {
+      return parsedFoundValue[textField];
+    }
+    
     return foundValue;
   };
 
