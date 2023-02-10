@@ -133,6 +133,13 @@ function RunTaskButton(
           taskModel={taskModel}
         />
       );
+    } else if (taskModel?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE) {
+      handleClose();
+      toastContext.showOverlayPanel(
+        <SalesforceBulkMigrationTaskWizardOverlay
+          taskModel={taskModel}
+        />
+      );
     } else {
       toastContext.showOverlayPanel(
         <RunTaskOverlay
