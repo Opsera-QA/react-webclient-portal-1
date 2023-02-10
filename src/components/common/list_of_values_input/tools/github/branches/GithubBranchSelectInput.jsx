@@ -116,9 +116,6 @@ function GithubBranchSelectInput(
       singularTopic={"Github Branch"}
       loadDataFunction={loadData}
       supportSearchLookup={true}
-      onSearchFunction={(searchTerm) =>
-        delayedSearchQuery(searchTerm, repositoryId, toolId)
-      }
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
     />
