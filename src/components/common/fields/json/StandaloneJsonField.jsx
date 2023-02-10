@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import InfoContainer from "components/common/containers/InfoContainer";
 import { faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
 import JsonFieldBase from "components/common/fields/json/JsonFieldBase";
 import CopyToClipboardButton from "components/common/buttons/clipboard/CopyToClipboardButton";
 import ExportJsonButton from "temp-library-components/button/export/ExportJsonButton";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function StandaloneJsonField(
   {
@@ -19,17 +20,28 @@ function StandaloneJsonField(
     minimumHeight,
     maximumHeight,
   }) {
+  const [copiedJson, setCopiedJson] = useState(undefined);
+
+  useEffect(() => {
+    setCopiedJson(undefined);
+    const parsedJson = DataParsingHelper.parseJson(json);
+
+    if (parsedJson) {
+      setCopiedJson({...DataParsingHelper.cloneDeep(parsedJson)});
+    }
+  }, [json]);
+
   const rightSideButtons = () => {
-    if (enableClipboard !== false && json !== null) {
+    if (enableClipboard !== false && copiedJson != null) {
       return (
         <div className={"d-flex"}>
           <CopyToClipboardButton
-            copyString={JSON.stringify(json)}
+            copyString={JSON.stringify(copiedJson)}
             size={"sm"}
             className={"ml-3"}
           />
           <ExportJsonButton
-            json={json}
+            json={copiedJson}
             fileName={exportFileName}
             buttonSize={"sm"}
             className={"ml-3"}
@@ -51,7 +63,7 @@ function StandaloneJsonField(
     >
       <JsonFieldBase
         className={"m-3"}
-        json={json}
+        json={copiedJson}
         enableClipboard={enableClipboard}
         displayDataTypes={displayDataTypes}
         collapsed={collapsed}
