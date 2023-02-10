@@ -23,9 +23,9 @@ function GithubBranchSelectInput(
     multi,
   }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [inEditMode, setInEditMode] = useState(false);
   const [githubBranches, setGithubBranches] = useState([]);
   const [error, setError] = useState(undefined);
-  const [inEditMode, setInEditMode] = useState(false);
   const {
     cancelTokenSource,
     isMounted,

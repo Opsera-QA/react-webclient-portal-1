@@ -213,6 +213,12 @@ regexDefinitions.localVariableValue = {
   errorFormText: "Values can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : , ; |",
 };
 
+regexDefinitions.environmentVariableName = {
+  regex: /^[-._a-zA-Z][-._a-zA-Z0-9]*$/,
+  formText: "Output Key environment variable name must consist of alphabetic characters, digits, '_', '-', or '.', and must not start with a digit (e.g. 'my.env-name', or 'MY_ENV.NAME', or 'MyEnvName1'",
+  errorFormText: "Output Key environment variable name must consist of alphabetic characters, digits, '_', '-', or '.', and must not start with a digit (e.g. 'my.env-name', or 'MY_ENV.NAME', or 'MyEnvName1'",
+};
+
 regexDefinitions.dockerName = {
   regex: /^[a-z0-9_.-]*$/,
   formText: "Accepts lowercase alphanumeric characters, periods, dashes, and underscores without spaces.",

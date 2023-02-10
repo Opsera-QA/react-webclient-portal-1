@@ -131,7 +131,7 @@ function OverviewLanding() {
     if (id) {
       history.push(`/workflow/details/${id}/summary`);
     } else {
-      history.push("/workflow/owner");
+      history.push("/workflow/owner?activeFilters=&type=owner");
     }
   };
 

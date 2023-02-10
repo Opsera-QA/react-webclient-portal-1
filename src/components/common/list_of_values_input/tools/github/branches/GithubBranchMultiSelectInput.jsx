@@ -22,7 +22,6 @@ function GithubBranchMultiSelectInput(
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [githubBranches, setGithubBranches] = useState([]);
-  const [inEditMode, setInEditMode] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [placeholderText, setPlaceholderText] = useState("Select Github Branches");
   const isMounted = useRef(false);
@@ -40,7 +39,7 @@ function GithubBranchMultiSelectInput(
     setErrorMessage("");
     setPlaceholderText("Select Github Branches");
 
-    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true && inEditMode === true) {
+    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
       loadData(source).catch((error) => {
         throw error;
       });
@@ -50,7 +49,7 @@ function GithubBranchMultiSelectInput(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId, repositoryId, inEditMode]);
+  }, [toolId, repositoryId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {

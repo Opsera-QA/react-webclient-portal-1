@@ -46,7 +46,7 @@ function BitbucketRepositorySelectInput({
       isMongoDbId(toolId) === true &&
       hasStringValue(workspace) === true &&
       hasStringValue(repositoryId) === true &&
-      (multi || inEditMode === true)
+      (inEditMode === true || multi)
     ) {
       loadData().catch((error) => {
         throw error;
