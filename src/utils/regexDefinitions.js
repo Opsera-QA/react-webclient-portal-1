@@ -215,8 +215,8 @@ regexDefinitions.localVariableValue = {
 
 regexDefinitions.environmentVariableName = {
   regex: /^[-._a-zA-Z][-._a-zA-Z0-9]*$/,
-  formText: "Values can contain alphabetic characters, digits, '_', '-', or '.' but must not start with a digit",
-  errorFormText: "Values can contain alphabetic characters, digits, '_', '-', or '.' but must not start with a digit",
+  formText: "Alphabetic characters, digits, ‘_’, ‘-’, or ‘.’ are allowed, starting with a digit is not allowed",
+  errorFormText: "Alphabetic characters, digits, ‘_’, ‘-’, or ‘.’ are allowed, starting with a digit is not allowed",
 };
 
 regexDefinitions.dockerName = {
