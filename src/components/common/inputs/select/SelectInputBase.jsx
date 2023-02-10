@@ -197,8 +197,9 @@ function SelectInputBase(
 
     const parsedCache = DataParsingHelper.parseNestedObject(cachedEntry, "parameters.cache");
     const cachedUniqueId = DataParsingHelper.parseNestedString(cachedEntry, "unique_id");
+    const parsedFoundValueUniqueId = DataParsingHelper.parseNestedString(foundValue, valueField);
 
-    if (!formattedValue && currentValue && parsedCache && cachedUniqueId && cachedUniqueId === currentValue) {
+    if (!formattedValue && parsedCache && cachedUniqueId && (foundValue === cachedUniqueId || (parsedFoundValueUniqueId && cachedUniqueId === parsedFoundValueUniqueId))) {
       const parsedCacheTextField = DataParsingHelper.parseNestedString(cachedEntry, "parameters.textField");
 
       if (textField) {
