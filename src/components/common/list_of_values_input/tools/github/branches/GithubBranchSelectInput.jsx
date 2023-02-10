@@ -45,7 +45,7 @@ function GithubBranchSelectInput(
         throw error;
       });
     }
-  }, [toolId, repositoryId]);
+  }, [toolId, repositoryId, inEditMode]);
 
   const loadData = async (searchTerm = "") => {
     try {
