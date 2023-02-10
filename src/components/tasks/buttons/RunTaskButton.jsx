@@ -14,6 +14,8 @@ import SalesforceToGitMergeSyncTaskWizardOverlay
   from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
 import SalesforceOrganizationSyncTaskWizardOverlay from "components/tasks/wizard/organization_sync/SalesforceOrganizationSyncTaskWizardOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import SalesforceBulkMigrationTaskWizardOverlay
+  from "components/tasks/buttons/run_task/SalesforceBulkMigrationTaskWizardOverlay";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_GIT_BRANCHES,
@@ -103,8 +105,7 @@ function RunTaskButton(
           toastContext.showLoadingErrorDialog(error);
         }
       }
-    }
-    else if (taskModel?.getData("type") === TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC) {
+    } else if (taskModel?.getData("type") === TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC) {
       try{
         setIsStarting(true);
         handleClose();
@@ -118,16 +119,21 @@ function RunTaskButton(
           toastContext.showLoadingErrorDialog(error);
         }
       }
-    }
-    else if (taskModel?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {
+    } else if (taskModel?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {
       handleClose();
       toastContext.showOverlayPanel(
         <SalesforceOrganizationSyncTaskWizardOverlay
           taskModel={taskModel}
         />
       );
-    }
-    else {
+    } else if (taskModel?.getData("type") === TASK_TYPES.SALESFORCE_BULK_MIGRATION) {
+      handleClose();
+      toastContext.showOverlayPanel(
+        <SalesforceBulkMigrationTaskWizardOverlay
+          taskModel={taskModel}
+        />
+      );
+    } else {
       toastContext.showOverlayPanel(
         <RunTaskOverlay
           handleClose={handleClose}

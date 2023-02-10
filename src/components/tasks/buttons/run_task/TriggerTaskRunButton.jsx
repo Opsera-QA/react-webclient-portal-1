@@ -62,21 +62,6 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
         setIsLoading(false);
       }
     }
-    else if (gitTasksData?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {
-       try {
-        setIsLoading(true);
-        const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-        gitTasksData.setData("configuration", configuration);
-        await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
-      } catch (error) {
-        toastContext.showLoadingErrorDialog(error);
-        setIsLoading(false);
-      } finally {
-        handleClose();
-        toastContext.showOverlayPanel(<GitTaskSfdcPipelineWizardOverlay gitTasksData={gitTasksData}/>);
-        setIsLoading(false);
-      }
-    }
     else if (gitTasksData?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE) {
       // pipeline action call to trigger branch conversion
       try{

@@ -22,8 +22,6 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import TaskWizardConfirmRepositorySettingsButton
   from "components/tasks/wizard/TaskWizardConfirmRepositorySettingsButton";
-import SalesforceToGitMergeSyncTaskIncludePackageXmlToggleInput
-  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskIncludePackageXmlToggleInput";
 
 export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
   {
