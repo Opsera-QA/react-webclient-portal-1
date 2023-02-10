@@ -4,6 +4,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function GitlabMonoRepoPathSelectInput({
   fieldName,
@@ -53,8 +54,8 @@ export default function GitlabMonoRepoPathSelectInput({
 
   const loadMonoRepoPaths = async () => {
     const response = await dataMappingActions.getMonoRepoPaths(getAccessToken, cancelTokenSource, repoId);
-    console.log("response: " + JSON.stringify(response));
-    setMonoRepoPaths(monoRepoPaths);
+    const repoPaths = DataParsingHelper.parseNestedArray(response, "data.data", []);
+    setMonoRepoPaths([...repoPaths]);
   };
 
   return (
