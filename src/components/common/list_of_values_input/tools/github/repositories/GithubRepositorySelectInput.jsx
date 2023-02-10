@@ -1,12 +1,7 @@
-import React, { useEffect, useState, useCallback, useRef, useContext } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import { githubActions } from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
-import { hasStringValue } from "components/common/helpers/string-helpers";
-import _ from "lodash";
-import axios from "axios";
-import { AuthContext } from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import useGetGithubRepositories from "hooks/tools/github/useGetGithubRepositories";
 
 function GithubRepositorySelectInput(
   {
@@ -20,83 +15,17 @@ function GithubRepositorySelectInput(
     valueField,
     textField,
   }) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [githubRepositories, setGithubRepositories] = useState([]);
-  const [error, setError] = useState(undefined);
   const [inEditMode, setInEditMode] = useState(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const isMounted = useRef(false);
-  const { getAccessToken } = useContext(AuthContext);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    isMounted.current = true;
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    setGithubRepositories([]);
-
-    if (inEditMode === true && isMongoDbId(toolId) === true) {
-      loadData("", toolId, source).catch((error) => {
-        throw error;
-      });
-    }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, [toolId, inEditMode]);
-
-  const loadData = async (
-    searchTerm = "",
-    currentToolId = toolId,
-    cancelSource = cancelTokenSource,
-  ) => {
-    try {
-      setError(undefined);
-      setIsLoading(true);
-      let defaultSearchTerm = searchTerm;
-      const existingRepository = model?.getData("gitRepository") || model?.getData("repository");
-      // console.log(existingRepository);
-      if ((defaultSearchTerm === "") && (hasStringValue(existingRepository) === true)) {
-        defaultSearchTerm = existingRepository;
-      }
-      await loadGithubRepositories(defaultSearchTerm, currentToolId, cancelSource);
-    } catch (error) {
-      if (isMounted.current === true) {
-        setError(error);
-      }
-    } finally {
-      if (isMounted.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const loadGithubRepositories = async (
-    searchTerm,
-    currentToolId = toolId,
-    cancelSource = cancelTokenSource,
-  ) => {
-    const response = await githubActions.getRepositoriesFromGithubInstanceV3(getAccessToken, cancelSource, currentToolId, searchTerm);
-    const repositories = response?.data?.data;
-
-    if (isMounted?.current === true && Array.isArray(repositories)) {
-      setGithubRepositories([...repositories]);
-    }
-  };
+  const {
+    githubRepositories,
+    isLoading,
+    error,
+    loadData,
+  } = useGetGithubRepositories(inEditMode, toolId);
 
   const getDataPullLimitMessage = () => {
     return "The first 100 repositories will be loaded by default, please enter at least 3 characters to search for repositories by name.";
   };
-
-  const delayedSearchQuery = useCallback(
-    _.debounce((searchTerm, toolId) => loadData(searchTerm, toolId), 600),
-    [],
-  );
 
   return (
     <SelectInputBase
@@ -114,11 +43,11 @@ function GithubRepositorySelectInput(
       singularTopic={"Github Repository"}
       pluralTopic={"Github Repositories"}
       error={error}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
       externalCacheToolId={toolId}
-      loadDataFunction={loadData}
+      loadDataFunction={(searchTerm) => loadData(searchTerm)}
+      supportSearchLookup={true}
     />
   );
 }

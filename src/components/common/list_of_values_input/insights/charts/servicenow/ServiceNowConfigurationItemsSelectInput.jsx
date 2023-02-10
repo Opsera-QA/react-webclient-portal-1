@@ -70,7 +70,7 @@ function ServiceNowConfigurationItemsSelectInput({
     }
   }, [serviceNowToolId]);
 
-  const loadConfigurationItems = async (searchTerm, serviceNowToolId) => {
+  const loadConfigurationItems = async (searchTerm) => {
     // if (searchTerm) {
       try {
         setIsLoading(true);
@@ -126,11 +126,6 @@ function ServiceNowConfigurationItemsSelectInput({
     }
   };
 
-  const delayedSearchQuery = useCallback(
-    _.debounce((searchTerm, toolId) => loadConfigurationItems(searchTerm, toolId), 600),
-    [],
-  );
-
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
@@ -144,7 +139,8 @@ function ServiceNowConfigurationItemsSelectInput({
       placeholderText={getPlaceholderText()}
       disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, serviceNowToolId)}
+      supportSearchLookup={true}
+      loadDataFunction={loadConfigurationItems}
     />
   );
 }

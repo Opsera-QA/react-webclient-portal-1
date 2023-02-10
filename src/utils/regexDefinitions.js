@@ -215,8 +215,8 @@ regexDefinitions.localVariableValue = {
 
 regexDefinitions.environmentVariableName = {
   regex: /^[-._a-zA-Z][-._a-zA-Z0-9]*$/,
-  formText: "Output Key environment variable name must consist of alphabetic characters, digits, '_', '-', or '.', and must not start with a digit (e.g. 'my.env-name', or 'MY_ENV.NAME', or 'MyEnvName1'",
-  errorFormText: "Output Key environment variable name must consist of alphabetic characters, digits, '_', '-', or '.', and must not start with a digit (e.g. 'my.env-name', or 'MY_ENV.NAME', or 'MyEnvName1'",
+  formText: "Alphabetic characters, digits, ‘_’, ‘-’, or ‘.’ are allowed, starting with a digit is not allowed",
+  errorFormText: "Alphabetic characters, digits, ‘_’, ‘-’, or ‘.’ are allowed, starting with a digit is not allowed",
 };
 
 regexDefinitions.dockerName = {

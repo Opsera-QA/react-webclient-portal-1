@@ -58,7 +58,7 @@ function StandaloneMultiSelectInput(
         value={value}
         onCreate={createOptionFunction}
         placeholder={placeholderText}
-        disabled={disabled || (manualEntry !== true && onSearchFunction == null && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) || busy}
+        disabled={disabled || (manualEntry !== true && (onSearchFunction == null && (!Array.isArray(selectOptions) || selectOptions?.length === 0 || busy)))}
         onChange={setDataFunction}
       />
     </div>
