@@ -16,8 +16,8 @@ import SalesforceOrganizationSyncTaskGitBranchSelectInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
 import SalesforceOrganizationSyncTaskNewBranchToggleInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskNewBranchToggleInput";
-import SalesforceOrganizationSyncTaskWizardConfirmRepositorySettingsButton
-  from "components/tasks/wizard/organization_sync/pre_run_tasks/SalesforceOrganizationSyncTaskWizardConfirmRepositorySettingsButton";
+import TaskWizardConfirmRepositorySettingsButton
+  from "components/tasks/wizard/TaskWizardConfirmRepositorySettingsButton";
 import SalesforceOrganizationSyncTaskGitBranchTextInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchTextInput";
 import SalesforceOrganizationSyncTaskUpstreamBranchSelectInput
@@ -126,7 +126,7 @@ export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
         {getDynamicFields()}
       </Row>
       <ButtonContainerBase>
-        <SalesforceOrganizationSyncTaskWizardConfirmRepositorySettingsButton
+        <TaskWizardConfirmRepositorySettingsButton
           taskModel={taskModel}
           setTaskModel={setTaskModel}
           taskConfigurationModel={taskConfigurationModel}

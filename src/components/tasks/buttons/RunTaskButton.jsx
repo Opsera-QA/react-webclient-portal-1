@@ -92,9 +92,6 @@ function RunTaskButton(
     if (taskModel?.getData("type") === TASK_TYPES.GIT_TO_GIT_MERGE_SYNC) {
       try{
         setIsStarting(true);
-        // const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-        // gitTasksData.setData("configuration", configuration);
-        // await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
         handleClose();
         toastContext.showOverlayPanel(
           <GitToGitMergeSyncTaskWizardOverlay
@@ -110,9 +107,6 @@ function RunTaskButton(
     else if (taskModel?.getData("type") === TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC) {
       try{
         setIsStarting(true);
-        // const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-        // gitTasksData.setData("configuration", configuration);
-        // await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
         handleClose();
         toastContext.showOverlayPanel(
           <SalesforceToGitMergeSyncTaskWizardOverlay
@@ -126,9 +120,6 @@ function RunTaskButton(
       }
     }
     else if (taskModel?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {
-      // const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-      // gitTasksData.setData("configuration", configuration);
-      // await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
       handleClose();
       toastContext.showOverlayPanel(
         <SalesforceOrganizationSyncTaskWizardOverlay

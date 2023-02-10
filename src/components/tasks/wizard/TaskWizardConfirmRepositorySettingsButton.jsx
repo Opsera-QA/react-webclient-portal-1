@@ -8,7 +8,7 @@ import { faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import { SALESFORCE_ORGANIZATION_TASK_WIZARD_SCREENS } from "components/tasks/wizard/organization_sync/SalesforceOrganizationSyncTaskWizardOverlay";
 import taskActions from "components/tasks/task.actions";
 
-export default function SalesforceOrganizationSyncTaskWizardConfirmRepositorySettingsButton(
+export default function TaskWizardConfirmRepositorySettingsButton(
   {
     setCurrentScreen,
     taskModel,
@@ -86,7 +86,7 @@ export default function SalesforceOrganizationSyncTaskWizardConfirmRepositorySet
   );
 }
 
-SalesforceOrganizationSyncTaskWizardConfirmRepositorySettingsButton.propTypes = {
+TaskWizardConfirmRepositorySettingsButton.propTypes = {
   setCurrentScreen: PropTypes.func,
   taskModel: PropTypes.object,
   setTaskModel: PropTypes.func,
