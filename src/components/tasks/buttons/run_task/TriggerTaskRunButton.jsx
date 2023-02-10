@@ -5,14 +5,11 @@ import { faPlay } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
-import GitTaskSfdcPipelineWizardOverlay from "components/tasks/buttons/run_task/GitTaskSfdcPipelineWizardOverlay";
 import taskActions from "components/tasks/task.actions";
 import axios from "axios";
 import LoadingDialog from "components/common/status_notifications/loading";
 import IconBase from "components/common/icons/IconBase";
 import {TASK_TYPES} from "components/tasks/task.types";
-import SalesforceBulkMigrationTaskWizardOverlay
-  from "components/tasks/buttons/run_task/SalesforceBulkMigrationTaskWizardOverlay";
 
 // TODO: THis should be separated into multiple buttons based on task.
 function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurationDataDto, handleClose, disable, className, loadData }) {
@@ -43,26 +40,7 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
 
   // TODO: This should be separate buttons OR passed into this component from a wrapper component for each type
   const handleRunGitTask = async () => {
-    // TODO: consolidate trigger calls
-    if (gitTasksData?.getData("type") === TASK_TYPES.SALESFORCE_BULK_MIGRATION) {
-      try{
-        setIsLoading(true);
-        const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-        gitTasksData.setData("configuration", configuration);
-        await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
-        handleClose();
-        toastContext.showOverlayPanel(
-          <SalesforceBulkMigrationTaskWizardOverlay
-            taskModel={gitTasksData}
-          />
-        );
-      } catch (error) {
-        toastContext.showLoadingErrorDialog(error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    else if (gitTasksData?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE) {
+    if (gitTasksData?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE) {
       // pipeline action call to trigger branch conversion
       try{
         setIsLoading(true);

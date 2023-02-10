@@ -31,7 +31,6 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
     className,
   }) {
   const [gitConfigurationModel, setGitConfigurationModel] = useState(undefined);
-  const [salesforceConfigurationModel, setSalesforceConfigurationModel] = useState(undefined);
   const { toastContext } = useComponentStateReference();
 
   useEffect(() => {

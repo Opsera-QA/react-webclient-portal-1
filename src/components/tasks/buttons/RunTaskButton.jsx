@@ -15,7 +15,7 @@ import SalesforceToGitMergeSyncTaskWizardOverlay
 import SalesforceOrganizationSyncTaskWizardOverlay from "components/tasks/wizard/organization_sync/SalesforceOrganizationSyncTaskWizardOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SalesforceBulkMigrationTaskWizardOverlay
-  from "components/tasks/buttons/run_task/SalesforceBulkMigrationTaskWizardOverlay";
+  from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationTaskWizardOverlay";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_GIT_BRANCHES,
