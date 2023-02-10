@@ -1,10 +1,9 @@
-import React, {useEffect, useRef, useState, useContext} from 'react';
-import { AuthContext } from "contexts/AuthContext";
+import React, {useEffect, useState} from 'react';
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
-import axios from "axios";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function GitlabMonoRepoPathSelectInput({
   fieldName,
@@ -16,21 +15,15 @@ export default function GitlabMonoRepoPathSelectInput({
   repoId,
 }) {
   const [isLoading, setIsLoading] = useState(true);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [monoRepoPaths, setMonoRepoPaths] = useState([]);
   const [error, setError] = useState(undefined);
-  const {getAccessToken} = useContext(AuthContext);
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
     setMonoRepoPaths([]);
     if (hasStringValue(repoId) === true) {
       loadData().catch((error) => {
@@ -40,11 +33,6 @@ export default function GitlabMonoRepoPathSelectInput({
         }
       });
     }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [repoId]);
 
   const loadData = async () => {
@@ -81,6 +69,8 @@ export default function GitlabMonoRepoPathSelectInput({
       singularTopic={"Mono Repo Path"}
       pluralTopic={"Mono Repo Paths"}
       error={error}
+      busy={isLoading}
+      loadDataFunction={loadData}
     />
   );
 }

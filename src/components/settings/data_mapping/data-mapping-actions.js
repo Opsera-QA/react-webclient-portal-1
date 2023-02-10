@@ -32,11 +32,7 @@ dataMappingActions.getMonoRepoPaths = async (getAccessToken, sourceToken, repoId
     repositoryId: repoId
   };
 
-  let response = await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, sourceToken, apiUrl, postBody);
-  if (response && response.status === 200) {
-    return response.data;
-  }
-  return [];
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, sourceToken, apiUrl, postBody);
 };
 
 export default dataMappingActions;
