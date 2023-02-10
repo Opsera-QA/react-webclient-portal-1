@@ -5,8 +5,8 @@ import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import SalesforceBulkMigrationWizard
   from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationWizard";
-import SalesforceBulkMigrationTaskWizardPreRunTaskScreen
-  from "components/workflow/wizards/salesforce_bulk_migration/pre_run/SalesforceBulkMigrationTaskWizardPreRunTaskScreen";
+import SalesforceBranchStructureTaskPreRunTaskScreen
+  from "components/tasks/details/tasks/sfdc-branch-structure/run/SalesforceBranchStructureTaskPreRunTaskScreen";
 
 export const SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS = {
   PRE_RUN_TASK_SCREEN: "pre_run_task_screen",
@@ -32,7 +32,7 @@ export default function SalesforceBranchStructureTaskInitializationOverlay({ tas
   const getBody = () => {
     if (currentScreen === SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS.PRE_RUN_TASK_SCREEN) {
       return (
-        <SalesforceBulkMigrationTaskWizardPreRunTaskScreen
+        <SalesforceBranchStructureTaskPreRunTaskScreen
           setCurrentScreen={setCurrentScreen}
           taskModel={internalTaskModel}
           setTaskModel={setInternalTaskModel}

@@ -16,6 +16,8 @@ import SalesforceOrganizationSyncTaskWizardOverlay from "components/tasks/wizard
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SalesforceBulkMigrationTaskWizardOverlay
   from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationTaskWizardOverlay";
+import SalesforceBranchStructureTaskInitializationOverlay
+  from "components/tasks/details/tasks/sfdc-branch-structure/run/SalesforceBranchStructureTaskInitializationOverlay";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_GIT_BRANCHES,
@@ -136,7 +138,7 @@ function RunTaskButton(
     } else if (taskModel?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE) {
       handleClose();
       toastContext.showOverlayPanel(
-        <SalesforceBulkMigrationTaskWizardOverlay
+        <SalesforceBranchStructureTaskInitializationOverlay
           taskModel={taskModel}
         />
       );

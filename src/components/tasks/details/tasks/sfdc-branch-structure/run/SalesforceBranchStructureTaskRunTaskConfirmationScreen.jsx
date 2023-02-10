@@ -25,9 +25,11 @@ import SalesforceBulkMigrationTaskRepositorySelectInput
   from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskRepositorySelectInput";
 import SalesforceBulkMigrationTaskNewBranchToggleInput
   from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskNewBranchToggleInput";
-import BackButtonBase from "components/common/buttons/back/BackButtonBase";
+import TriggerSalesforceBranchStructureTaskRunButton
+  from "components/tasks/details/tasks/sfdc-branch-structure/run/TriggerSalesforceBranchStructureTaskRunButton";
+import CancelButton from "components/common/buttons/CancelButton";
 
-export default function SalesforceBulkMigrationTaskWizardPreRunTaskScreen(
+export default function SalesforceBranchStructureTaskRunTaskConfirmationScreen(
   {
     taskModel,
     setTaskModel,
@@ -63,14 +65,14 @@ export default function SalesforceBulkMigrationTaskWizardPreRunTaskScreen(
             <SalesforceBulkMigrationTaskGitBranchTextInput
               fieldName={"gitBranch"}
               model={taskConfigurationModel}
-              setModel={setModelFunction}
+              setModel={setTaskConfigurationModel}
               visible={taskConfigurationModel?.getData("isNewBranch") === true}
             />
           </Col>
           <Col lg={12}>
             <SalesforceBulkMigrationTaskUpstreamBranchSelectInput
               model={taskConfigurationModel}
-              setModel={setModelFunction}
+              setModel={setTaskConfigurationModel}
             />
           </Col>
         </>
@@ -81,7 +83,7 @@ export default function SalesforceBulkMigrationTaskWizardPreRunTaskScreen(
       <Col lg={12}>
         <SalesforceBulkMigrationTaskGitBranchSelectInput
           model={taskConfigurationModel}
-          setModel={setModelFunction}
+          setModel={setTaskConfigurationModel}
           visible={taskConfigurationModel?.getData("isNewBranch") !== true}
         />
       </Col>
@@ -120,31 +122,29 @@ export default function SalesforceBulkMigrationTaskWizardPreRunTaskScreen(
         <Col lg={12}>
           <SalesforceBulkMigrationTaskBitbucketWorkspaceSelectInput
             model={taskConfigurationModel}
-            setModel={setModelFunction}
+            setModel={setTaskConfigurationModel}
           />
         </Col>
         <Col lg={12}>
           <SalesforceBulkMigrationTaskRepositorySelectInput
             model={taskConfigurationModel}
-            setModel={setModelFunction}
+            setModel={setTaskConfigurationModel}
           />
         </Col>
         <Col lg={12}>
           <SalesforceBulkMigrationTaskNewBranchToggleInput
             model={taskConfigurationModel}
-            setModel={setModelFunction}
+            setModel={setTaskConfigurationModel}
           />
         </Col>
         {getDynamicFields()}
       </Row>
-      <ButtonContainerBase
-        leftSideButtons={
-          <BackButtonBase
-            backButtonFunction={toastContext.clearOverlayPanel}
-          />
-        }
-      >
-        <TaskWizardConfirmRepositorySettingsButton
+      <ButtonContainerBase>
+        <CancelButton
+          size={"1x"}
+          cancelFunction={toastContext.clearOverlayPanel}
+        />
+        <TriggerSalesforceBranchStructureTaskRunButton
           taskModel={taskModel}
           setCurrentScreen={setCurrentScreen}
           disabled={taskConfigurationModel?.checkCurrentValidity() !== true}
@@ -154,7 +154,7 @@ export default function SalesforceBulkMigrationTaskWizardPreRunTaskScreen(
   );
 }
 
-SalesforceBulkMigrationTaskWizardPreRunTaskScreen.propTypes = {
+SalesforceBranchStructureTaskRunTaskConfirmationScreen.propTypes = {
   taskModel: PropTypes.object,
   setTaskModel: PropTypes.func,
   setCurrentScreen: PropTypes.func,

@@ -10,24 +10,18 @@ import TaskWizardConfirmRepositorySettingsButton
   from "components/tasks/wizard/TaskWizardConfirmRepositorySettingsButton";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
-import {
-  salesforceBulkMigrationTaskConfigurationMetadata
-} from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
-import SalesforceBulkMigrationTaskGitBranchTextInput
-  from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskGitBranchTextInput";
-import SalesforceBulkMigrationTaskUpstreamBranchSelectInput
-  from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskUpstreamBranchSelectInput";
-import SalesforceBulkMigrationTaskGitBranchSelectInput
-  from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskGitBranchSelectInput";
-import SalesforceBulkMigrationTaskBitbucketWorkspaceSelectInput
-  from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskBitbucketWorkspaceSelectInput";
-import SalesforceBulkMigrationTaskRepositorySelectInput
-  from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskRepositorySelectInput";
-import SalesforceBulkMigrationTaskNewBranchToggleInput
-  from "components/tasks/details/tasks/sfdc-bulk-migration/inputs/SalesforceBulkMigrationTaskNewBranchToggleInput";
+import SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
+  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput";
+import SalesforceOrganizationSyncTaskRepositorySelectInput
+  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskRepositorySelectInput";
+import SalesforceOrganizationSyncTaskGitBranchSelectInput
+  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
+import sfdcGitBranchTaskConfigurationMetadata
+  from "components/tasks/details/tasks/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
 
-export default function SalesforceBulkMigrationTaskWizardPreRunTaskScreen(
+export default function SalesforceBranchStructureTaskPreRunTaskScreen(
   {
     taskModel,
     setTaskModel,
@@ -40,7 +34,7 @@ export default function SalesforceBulkMigrationTaskWizardPreRunTaskScreen(
   useEffect(() => {
     if (taskModel) {
       try {
-        const configurationModel = modelHelpers.getToolConfigurationModel(taskModel?.getData("configuration"), salesforceBulkMigrationTaskConfigurationMetadata);
+        const configurationModel = modelHelpers.getToolConfigurationModel(taskModel?.getData("configuration"), sfdcGitBranchTaskConfigurationMetadata);
         setTaskConfigurationModel({...configurationModel});
       }
       catch (error) {
@@ -48,45 +42,6 @@ export default function SalesforceBulkMigrationTaskWizardPreRunTaskScreen(
       }
     }
   }, [taskModel]);
-
-  const setModelFunction = (newModel) => {
-    setTaskConfigurationModel({...newModel});
-    taskModel?.setData("configuration", newModel?.getPersistData());
-    setTaskModel({...taskModel});
-  };
-
-  const getDynamicFields = () => {
-    if (taskConfigurationModel?.getData("isNewBranch") === true) {
-      return (
-        <>
-          <Col lg={12}>
-            <SalesforceBulkMigrationTaskGitBranchTextInput
-              fieldName={"gitBranch"}
-              model={taskConfigurationModel}
-              setModel={setModelFunction}
-              visible={taskConfigurationModel?.getData("isNewBranch") === true}
-            />
-          </Col>
-          <Col lg={12}>
-            <SalesforceBulkMigrationTaskUpstreamBranchSelectInput
-              model={taskConfigurationModel}
-              setModel={setModelFunction}
-            />
-          </Col>
-        </>
-      );
-    }
-
-    return (
-      <Col lg={12}>
-        <SalesforceBulkMigrationTaskGitBranchSelectInput
-          model={taskConfigurationModel}
-          setModel={setModelFunction}
-          visible={taskConfigurationModel?.getData("isNewBranch") !== true}
-        />
-      </Col>
-    );
-  };
 
   const getWelcomeText = () => {
     return (
@@ -105,6 +60,12 @@ export default function SalesforceBulkMigrationTaskWizardPreRunTaskScreen(
     );
   };
 
+  const setModelFunction = (newModel) => {
+    setTaskConfigurationModel({...newModel});
+    taskModel?.setData("configuration", newModel?.getPersistData());
+    setTaskModel({...taskModel});
+  };
+
   if (taskModel == null || taskConfigurationModel == null) {
     return null;
   }
@@ -118,24 +79,30 @@ export default function SalesforceBulkMigrationTaskWizardPreRunTaskScreen(
       <div>Please select the repository and branch you wish to use for this Salesforce workflow</div>
       <Row>
         <Col lg={12}>
-          <SalesforceBulkMigrationTaskBitbucketWorkspaceSelectInput
+          <SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
             model={taskConfigurationModel}
             setModel={setModelFunction}
           />
         </Col>
         <Col lg={12}>
-          <SalesforceBulkMigrationTaskRepositorySelectInput
+          <SalesforceOrganizationSyncTaskRepositorySelectInput
             model={taskConfigurationModel}
             setModel={setModelFunction}
           />
         </Col>
         <Col lg={12}>
-          <SalesforceBulkMigrationTaskNewBranchToggleInput
+          <SalesforceOrganizationSyncTaskGitBranchSelectInput
             model={taskConfigurationModel}
             setModel={setModelFunction}
           />
         </Col>
-        {getDynamicFields()}
+        <Col lg={12}>
+          <TextInputBase
+            fieldName={"destinationBranch"}
+            dataObject={taskConfigurationModel}
+            setDataObject={setModelFunction}
+          />
+        </Col>
       </Row>
       <ButtonContainerBase
         leftSideButtons={
@@ -154,7 +121,7 @@ export default function SalesforceBulkMigrationTaskWizardPreRunTaskScreen(
   );
 }
 
-SalesforceBulkMigrationTaskWizardPreRunTaskScreen.propTypes = {
+SalesforceBranchStructureTaskPreRunTaskScreen.propTypes = {
   taskModel: PropTypes.object,
   setTaskModel: PropTypes.func,
   setCurrentScreen: PropTypes.func,

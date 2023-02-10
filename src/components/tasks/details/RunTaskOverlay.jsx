@@ -6,24 +6,15 @@ import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import CloseButton from "components/common/buttons/CloseButton";
 import TriggerTaskRunButton from "components/tasks/buttons/run_task/TriggerTaskRunButton";
-import SalesforceOrganizationSyncTaskNewBranchToggleInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskNewBranchToggleInput";
-import SalesforceOrganizationSyncTaskUpstreamBranchSelectInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskUpstreamBranchSelectInput";
 import ec2ClusterCreationTaskConfigurationMetadata from "components/tasks/details/tasks/ecs-cluster-creation/ecs-creation-git-task-configuration";
 import sfdxCertGenTaskConfigurationMetadata from "components/tasks/details/tasks/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
 import branchToBranchGitTaskConfigurationMetadata from "components/tasks/details/tasks/branch-to-branch/branch-to-branch-git-task-configuration";
-import sfdcGitBranchTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
 import ec2ServiceCreationTaskConfigurationMetadata from "components/tasks/details/tasks/ecs-service-creation/ecs-service-creation-git-task-configuration";
-import SalesforceOrganizationSyncTaskGitBranchTextInput from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchTextInput";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import {TASK_TYPES} from "components/tasks/task.types";
-import SfdcBulkMigrationPrerunHelpDocumentation
-  from "../../common/help/documentation/tasks/SfdcBulkMigrationPrerunHelpDocumentation";
 import azureAksClusterTaskConfigurationMetadata
   from "components/tasks/details/tasks/azure-cluster-creation/azure-cluster-metadata";
-import SalesforceOrganizationSyncTaskGitBranchSelectInput
-  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
 import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
-import {salesforceBulkMigrationTaskConfigurationMetadata} from "components/tasks/details/tasks/sfdc-bulk-migration/salesforceBulkMigrationTaskConfigurationMetadata";
 import salesforceQuickDeployTaskConfigurationMetadata from "components/tasks/details/tasks/sfdc-quick-deploy/salesforceQuickDeployTaskConfigurationMetadata";
 import SalesforceQuickDeployTaskSalesforceToolSelectInput from "./tasks/sfdc-quick-deploy/inputs/SalesforceQuickDeployTaskSalesforceToolSelectInput";
 import TextInputBase from "../../common/inputs/text/TextInputBase";
@@ -38,6 +29,7 @@ import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 
+// TODO: Remove and make individual overlays per task and wire them up in RunTaskButton to keep things isolated better
 function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
   const [taskConfigurationModel, setTaskConfigurationModel] =
     useState(undefined);
@@ -77,18 +69,6 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
         configurationData = modelHelpers.parseObjectIntoModel(
           configuration,
           sfdxCertGenTaskConfigurationMetadata,
-        );
-        break;
-      case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-        configurationData = modelHelpers.parseObjectIntoModel(
-          configuration,
-          sfdcGitBranchTaskConfigurationMetadata,
-        );
-        break;
-      case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
-        configurationData = modelHelpers.parseObjectIntoModel(
-          configuration,
-          salesforceBulkMigrationTaskConfigurationMetadata,
         );
         break;
       case TASK_TYPES.SYNC_GIT_BRANCHES:
@@ -222,19 +202,6 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
     }
   };
 
-  const getHelpComponentFunction = (setShowHelp) => {
-    switch (taskModel?.getData("type")) {
-      case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
-      case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-      case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-      case TASK_TYPES.SYNC_GIT_BRANCHES:
-      case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
-      case TASK_TYPES.AZURE_CLUSTER_CREATION:
-      default:
-        return null;
-    }
-  };
-
   if (taskModel == null) {
     return <LoadingDialog size="sm" />;
   }
@@ -250,7 +217,6 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
       buttonContainer={getButtonContainer()}
     >
       <OverlayPanelBodyContainer
-        getHelpComponentFunction={getHelpComponentFunction}
         hideCloseButton={true}
       >
         <div className={"mx-lg-5 mb-2"}>
