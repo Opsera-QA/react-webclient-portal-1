@@ -68,15 +68,6 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
     }
   };
 
-  const delayedSearchQuery = useCallback(
-      _.debounce(
-          () =>
-              getWorkspaces(),
-          600,
-      ),
-      [],
-  );
-
   if (visible === false) {
     return null;
   }
@@ -93,12 +84,9 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
       textField={"name"}
       error={error}
       clearDataFunction={clearDataFunction}
-      disabled={disabled || isLoading || workspaces.length === 0}
+      disabled={disabled}
       className={className}
       externalCacheToolId={gitToolId}
-      onSearchFunction={(searchTerm) =>
-          delayedSearchQuery(searchTerm)
-      }
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
       singularTopic={"Workspace"}

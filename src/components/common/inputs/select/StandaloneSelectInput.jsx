@@ -55,7 +55,7 @@ function StandaloneSelectInput(
         dropUp={dropUp}
         placeholder={getPlaceholderText()}
         onChange={(newValue) => setDataFunction(newValue)}
-        disabled={disabled || (lazyLoad !== true && (!Array.isArray(selectOptions) || selectOptions.length === 0))}
+        disabled={disabled || (onSearchFunction == null && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) || busy}
         onSearch={onSearchFunction}
         allowCreate={allowCreate}
       />

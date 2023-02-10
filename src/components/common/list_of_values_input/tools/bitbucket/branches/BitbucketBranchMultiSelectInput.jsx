@@ -24,7 +24,6 @@ function BitbucketBranchMultiSelectInput(
   const [isLoading, setIsLoading] = useState(false);
   const [bitbucketBranches, setBitbucketBranches] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [inEditMode, setInEditMode] = useState(false);
   const [placeholderText, setPlaceholderText] = useState("Select Bitbucket Branches");
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
@@ -41,7 +40,7 @@ function BitbucketBranchMultiSelectInput(
     setErrorMessage("");
     setPlaceholderText("Select Bitbucket Branch");
 
-    if (isMongoDbId(toolId) === true && hasStringValue(workspace) === true && hasStringValue(repositoryId) === true && inEditMode === true) {
+    if (isMongoDbId(toolId) === true && hasStringValue(workspace) === true && hasStringValue(repositoryId) === true) {
       loadData(source).catch((error) => {
         throw error;
       });
@@ -51,7 +50,7 @@ function BitbucketBranchMultiSelectInput(
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolId, workspace, repositoryId, inEditMode]);
+  }, [toolId, workspace, repositoryId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -76,15 +75,6 @@ function BitbucketBranchMultiSelectInput(
     }
   };
 
-  const delayedSearchQuery = useCallback(
-      _.debounce(
-          () =>
-              loadBitbucketBranches(),
-          600,
-      ),
-      [],
-  );
-
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
@@ -101,9 +91,6 @@ function BitbucketBranchMultiSelectInput(
       errorMessage={errorMessage}
       singularTopic={"Branch"}
       pluralTopic={"Branches"}
-      onSearchFunction={(searchTerm) =>
-          delayedSearchQuery(searchTerm)
-      }
     />
   );
 }

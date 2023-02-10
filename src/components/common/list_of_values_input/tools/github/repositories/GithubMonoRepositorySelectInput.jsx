@@ -88,11 +88,6 @@ function GithubMonoRepositorySelectInput(
     }
   };
 
-  const delayedSearchQuery = useCallback(
-      _.debounce((cancelTokenSource) => loadData(cancelTokenSource), 600),
-      [],
-  );
-
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -109,7 +104,6 @@ function GithubMonoRepositorySelectInput(
       errorMessage={errorMessage}
       singularTopic={"Gitlab Repository"}
       pluralTopic={"Gitlab Repositories"}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(cancelTokenSource)}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
       externalCacheToolId={toolId}

@@ -28,6 +28,7 @@ function GithubBranchSelectInput({
                                  }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
+  const [inEditMode, setInEditMode] = useState(false);
   const [githubBranches, setGithubBranches] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [placeholderText, setPlaceholderText] = useState(
@@ -48,7 +49,11 @@ function GithubBranchSelectInput({
     setErrorMessage("");
     setPlaceholderText("Select Github Branch");
 
-    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
+    if (
+      isMongoDbId(toolId) === true
+      && hasStringValue(repositoryId) === true
+      && (inEditMode === true || multi)
+    ) {
       loadData(source).catch((error) => {
         throw error;
       });
@@ -150,6 +155,8 @@ function GithubBranchSelectInput({
       onSearchFunction={(searchTerm) =>
         delayedSearchQuery(searchTerm, repositoryId, toolId)
       }
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
     />
   );
 }
