@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
 import axios from "axios";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 export default function GitlabMonoRepoPathSelectInput({
   fieldName,
@@ -30,12 +31,15 @@ export default function GitlabMonoRepoPathSelectInput({
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    repoId ? loadData().catch((error) => {
-      setError(error);
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    }): null;
+    setMonoRepoPaths([]);
+    if (hasStringValue(repoId) === true) {
+      loadData().catch((error) => {
+        setError(error);
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
@@ -44,13 +48,25 @@ export default function GitlabMonoRepoPathSelectInput({
   }, [repoId]);
 
   const loadData = async () => {
+    try {
+      setError(undefined);
       setIsLoading(true);
-      setMonoRepoPaths([]);
-  
-      const monoRepoPaths = await dataMappingActions.getMonoRepoPaths(getAccessToken, cancelTokenSource, repoId);
-  
-      setMonoRepoPaths(monoRepoPaths);
-      setIsLoading(false);
+      await loadMonoRepoPaths();
+    } catch (error) {
+      if (isMounted?.current === true) {
+        setError(error);
+      }
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const loadMonoRepoPaths = async () => {
+    const response = await dataMappingActions.getMonoRepoPaths(getAccessToken, cancelTokenSource, repoId);
+    console.log("response: " + JSON.stringify(response));
+    setMonoRepoPaths(monoRepoPaths);
   };
 
   return (

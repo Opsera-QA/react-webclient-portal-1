@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import GitlabMonoRepoPathSelectInput from "../inputs/GitlabMonoRepoPathSelectInput";
 
-function GitlabProjectDataMappingSubform({ model, setModel, repoId }) {
-
+function GitlabProjectDataMappingSubform({ model, setModel }) {
   return (
     <>
       <BooleanToggleInput
@@ -16,7 +15,7 @@ function GitlabProjectDataMappingSubform({ model, setModel, repoId }) {
         fieldName={"monoRepoPath"}
         model={model}
         setModel={setModel}
-        repoId={repoId}
+        repoId={model?.getData("repoId")}
       />
     </>
   );
