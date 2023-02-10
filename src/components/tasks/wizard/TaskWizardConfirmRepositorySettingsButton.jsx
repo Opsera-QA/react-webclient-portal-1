@@ -12,8 +12,6 @@ export default function TaskWizardConfirmRepositorySettingsButton(
   {
     setCurrentScreen,
     taskModel,
-    setTaskModel,
-    taskConfigurationModel,
     disabled,
     className,
   }) {
@@ -28,9 +26,7 @@ export default function TaskWizardConfirmRepositorySettingsButton(
   const updateTask = async () => {
     try {
       setButtonState(buttonLabelHelper.BUTTON_STATES.BUSY);
-      taskModel.setData("configuration", taskConfigurationModel?.getPersistData());
       await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, taskModel);
-      setTaskModel({...taskModel});
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
       setCurrentScreen(SALESFORCE_ORGANIZATION_TASK_WIZARD_SCREENS.SALESFORCE_TASK_WIZARD);
     } catch (error) {
@@ -67,7 +63,6 @@ export default function TaskWizardConfirmRepositorySettingsButton(
       <Button
         disabled={
           buttonState === buttonLabelHelper.BUTTON_STATES.BUSY
-          || taskConfigurationModel?.checkCurrentValidity() !== true
           || disabled === true
         }
         onClick={updateTask}
@@ -89,8 +84,6 @@ export default function TaskWizardConfirmRepositorySettingsButton(
 TaskWizardConfirmRepositorySettingsButton.propTypes = {
   setCurrentScreen: PropTypes.func,
   taskModel: PropTypes.object,
-  setTaskModel: PropTypes.func,
-  taskConfigurationModel: PropTypes.string,
   disabled: PropTypes.bool,
   className: PropTypes.string,
 };

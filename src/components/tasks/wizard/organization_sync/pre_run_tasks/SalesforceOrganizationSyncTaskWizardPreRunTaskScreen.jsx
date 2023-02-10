@@ -47,6 +47,12 @@ export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
     }
   }, [taskModel]);
 
+  const setModelFunction = (newModel) => {
+    setTaskConfigurationModel({...newModel});
+    taskModel?.setData("configuration", newModel?.getPersistData());
+    setTaskModel({...taskModel});
+  };
+
   const getDynamicFields = () => {
     if (taskConfigurationModel?.getData("isNewBranch") === true) {
       return (
@@ -55,13 +61,13 @@ export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
             <SalesforceOrganizationSyncTaskGitBranchTextInput
               fieldName={"gitBranch"}
               model={taskConfigurationModel}
-              setModel={setTaskConfigurationModel}
+              setModel={setModelFunction}
             />
           </Col>
           <Col lg={12}>
             <SalesforceOrganizationSyncTaskUpstreamBranchSelectInput
               model={taskConfigurationModel}
-              setModel={setTaskConfigurationModel}
+              setModel={setModelFunction}
             />
           </Col>
         </>
@@ -101,26 +107,26 @@ export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
         <Col lg={12}>
           <SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
             model={taskConfigurationModel}
-            setModel={setTaskConfigurationModel}
+            setModel={setModelFunction}
           />
         </Col>
         <Col lg={12}>
           <SalesforceOrganizationSyncTaskRepositorySelectInput
             model={taskConfigurationModel}
-            setModel={setTaskConfigurationModel}
+            setModel={setModelFunction}
           />
         </Col>
         <Col lg={12}>
           <SalesforceOrganizationSyncTaskGitBranchSelectInput
             model={taskConfigurationModel}
-            setModel={setTaskConfigurationModel}
+            setModel={setModelFunction}
             visible={taskConfigurationModel?.getData("isNewBranch") !== true}
           />
         </Col>
         <Col lg={12}>
           <SalesforceOrganizationSyncTaskNewBranchToggleInput
             model={taskConfigurationModel}
-            setModel={setTaskConfigurationModel}
+            setModel={setModelFunction}
           />
         </Col>
         {getDynamicFields()}
@@ -128,9 +134,8 @@ export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
       <ButtonContainerBase>
         <TaskWizardConfirmRepositorySettingsButton
           taskModel={taskModel}
-          setTaskModel={setTaskModel}
-          taskConfigurationModel={taskConfigurationModel}
           setCurrentScreen={setCurrentScreen}
+          disabled={taskConfigurationModel?.checkCurrentValidity() !== true}
         />
       </ButtonContainerBase>
     </div>

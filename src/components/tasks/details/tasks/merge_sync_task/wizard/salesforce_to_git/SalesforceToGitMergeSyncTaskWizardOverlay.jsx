@@ -10,7 +10,7 @@ import SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen
 
 export const SALESFORCE_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS = {
   PRE_RUN_TASK_SCREEN: "pre_run_task_screen",
-  SALESFORCE_TASK_WIZARD: "salesforce_task_wizard",
+  TASK_WIZARD: "task_wizard",
 };
 
 function SalesforceToGitMergeSyncTaskWizardOverlay({ taskModel }) {
