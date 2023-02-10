@@ -193,20 +193,22 @@ function SelectInputBase(
       }
 
       setCachedValue(parameters);
-      const parsedCache = DataParsingHelper.parseNestedObject(cachedEntry, "parameters.cache");
+    }
 
-      if (!formattedValue && parsedCache) {
-        const parsedCacheTextField = DataParsingHelper.parseNestedString(cachedEntry, "parameters.textField");
+    const parsedCache = DataParsingHelper.parseNestedObject(cachedEntry, "parameters.cache");
+    const cachedUniqueId = DataParsingHelper.parseNestedString(cachedEntry, "unique_id");
 
-        if (textField) {
-          if (typeof textField === "function") {
-            formattedValue = textField(parsedCache);
-          } else if (typeof textField === "string") {
-            formattedValue = parsedCache[textField];
-          }
-        } else if (parsedCacheTextField) {
-          formattedValue = parsedCache[parsedCacheTextField];
+    if (!formattedValue && currentValue && parsedCache && cachedUniqueId && cachedUniqueId === currentValue) {
+      const parsedCacheTextField = DataParsingHelper.parseNestedString(cachedEntry, "parameters.textField");
+
+      if (textField) {
+        if (typeof textField === "function") {
+          formattedValue = textField(parsedCache);
+        } else if (typeof textField === "string") {
+          formattedValue = parsedCache[textField];
         }
+      } else if (parsedCacheTextField) {
+        formattedValue = parsedCache[parsedCacheTextField];
       }
     }
 
