@@ -3,18 +3,33 @@ import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
-function PipelineSourceRepositoryToolSelectInput({className, fieldName, model, setModel, disabled, sourceRepositoryToolIdentifier}) {
+function PipelineSourceRepositoryToolSelectInput(
+  {
+    className,
+    fieldName,
+    model,
+    setModel,
+    disabled,
+    sourceRepositoryToolIdentifier,
+  }) {
   const setDataFunction = (fieldName, selectedOption) => {
-    let newModel = {...model};
-    newModel.setData("accountId", selectedOption?._id);
-    newModel.setData("username", selectedOption?.configuration?.accountUsername);
-    newModel.setData("password", selectedOption?.configuration?.accountPassword);
-    newModel.setData("workspace", "");
-    newModel.setData("workspaceName", "");
-    newModel.setData("repository", "");
-    newModel.setData("repoId", "");
-    newModel.setData("branch", "");
-    setModel({...newModel});
+    model.setData("accountId", selectedOption?._id);
+    model.setDefaultValue("workspace");
+    model.setDefaultValue("workspaceName");
+    model.setDefaultValue("repository");
+    model.setDefaultValue("repoId");
+    model.setDefaultValue("branch");
+    setModel({...model});
+  };
+
+  const clearDataFunction = () => {
+    model.setDefaultValue("accountId");
+    model.setDefaultValue("workspace");
+    model.setDefaultValue("workspaceName");
+    model.setDefaultValue("repository");
+    model.setDefaultValue("repoId");
+    model.setDefaultValue("branch");
+    setModel({...model});
   };
 
   const getTextField = (tool) => {
@@ -35,6 +50,7 @@ function PipelineSourceRepositoryToolSelectInput({className, fieldName, model, s
       model={model}
       setModel={setModel}
       setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
       disabled={disabled || sourceRepositoryToolIdentifier === "" || sourceRepositoryToolIdentifier == null}
       className={className}
     />

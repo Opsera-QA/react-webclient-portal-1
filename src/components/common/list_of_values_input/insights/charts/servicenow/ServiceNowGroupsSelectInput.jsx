@@ -67,7 +67,7 @@ function ServiceNowAssignmentGroupSelectInput(
     setGroups([]);
     setError("");
     if (isMongoDbId(serviceNowToolId) === true) {
-      loadGroups("", serviceNowToolId).catch((error) => {
+      loadGroups("").catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -75,7 +75,7 @@ function ServiceNowAssignmentGroupSelectInput(
     }
   }, [serviceNowToolId]);
 
-  const loadGroups = async (searchTerm, serviceNowToolId) => {
+  const loadGroups = async (searchTerm) => {
     // if (searchTerm) {
     try {
       setIsLoading(true);
@@ -133,11 +133,6 @@ function ServiceNowAssignmentGroupSelectInput(
     }
   };
 
-  const delayedSearchQuery = useCallback(
-    _.debounce((searchTerm, toolId) => loadGroups(searchTerm, toolId), 600),
-    [],
-  );
-
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
@@ -151,7 +146,8 @@ function ServiceNowAssignmentGroupSelectInput(
       placeholderText={getPlaceholderText()}
       disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
-      onSearchFunction={(searchTerm) => {console.log(searchTerm); delayedSearchQuery(searchTerm, serviceNowToolId);}}
+      loadDataFunction={loadGroups}
+      supportSearchLookup={true}
       error={error}
     />
   );

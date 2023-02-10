@@ -6,7 +6,6 @@ import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import toolsActions from "../../../../../inventory/tools/tools-actions";
-import _ from "lodash";
 
 function GithubMonoRepositorySelectInput(
   {
@@ -23,8 +22,7 @@ function GithubMonoRepositorySelectInput(
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [githubRepositories, setGithubRepositories] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [placeholder, setPlaceholderText] = useState("Select Github Repository");
+  const [error, setError] = useState(undefined);
   const [inEditMode, setInEditMode] = useState(false);
   const isMounted = useRef(false);
   const {getAccessToken} = useContext(AuthContext);
@@ -37,7 +35,7 @@ function GithubMonoRepositorySelectInput(
     isMounted.current = true;
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-    setErrorMessage("");
+    setError("");
     setGithubRepositories([]);
 
     if (isMongoDbId(toolId) === true && inEditMode === true) {
@@ -57,9 +55,7 @@ function GithubMonoRepositorySelectInput(
       setIsLoading(true);
       await loadGithubMonoRepositories(cancelSource);
     } catch (error) {
-      setPlaceholderText("No Repositories Available!");
-      setErrorMessage("There was an error pulling Github Mono Repositories");
-      console.error(error);
+      setError(error);
     } finally {
       setIsLoading(false);
     }
@@ -70,8 +66,6 @@ function GithubMonoRepositorySelectInput(
     const repositories = response?.data?.data?.repositories;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
-      setPlaceholderText("Select Github Repository");
-      console.log(repositories);
       setGithubRepositories([...repositories]);
 
       const existingRepository = model?.getData(fieldName);
@@ -80,7 +74,7 @@ function GithubMonoRepositorySelectInput(
         const existingRepositoryExists = repositories.find((repository) => repository[valueField] === existingRepository);
 
         if (existingRepositoryExists == null) {
-          setErrorMessage(
+          setError(
             "Previously saved repository is no longer available. It may have been deleted. Please select another repository from the list."
           );
         }
@@ -100,13 +94,13 @@ function GithubMonoRepositorySelectInput(
       valueField={valueField}
       textField={textField}
       disabled={disabled}
-      placeholder={placeholder}
-      errorMessage={errorMessage}
+      error={error}
       singularTopic={"Gitlab Repository"}
       pluralTopic={"Gitlab Repositories"}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
       externalCacheToolId={toolId}
+      loadDataFunction={loadData}
     />
   );
 }

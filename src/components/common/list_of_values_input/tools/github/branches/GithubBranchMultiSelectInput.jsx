@@ -90,6 +90,7 @@ function GithubBranchMultiSelectInput(
       errorMessage={errorMessage}
       singularTopic={"Branch"}
       pluralTopic={"Branches"}
+      loadDataFunction={loadData}
     />
   );
 }

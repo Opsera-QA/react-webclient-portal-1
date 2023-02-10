@@ -1,13 +1,11 @@
 import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
-import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {gitlabActions} from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
-import _ from "lodash";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function GitlabBranchSelectInput(
   {
@@ -21,41 +19,35 @@ function GitlabBranchSelectInput(
     repositoryId,
     multi
   }) {
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [gitlabBranches, setGitlabBranches] = useState([]);
   const [error, setError] = useState(undefined);
-  const isMounted = useRef(false);
   const [inEditMode, setInEditMode] = useState(false);
-  const {getAccessToken} = useContext(AuthContext);
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    isMounted.current = true;
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
     setGitlabBranches([]);
     setError(undefined);
 
-    if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true && inEditMode === true) {
-      loadData(source).catch((error) => {
+    if (
+      isMongoDbId(toolId) === true
+      && hasStringValue(repositoryId) === true
+      && (multi || inEditMode === true)) {
+      loadData().catch((error) => {
         throw error;
       });
     }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [toolId, repositoryId, inEditMode]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (searchTerm = "") => {
     try {
+      setError(undefined);
       setIsLoading(true);
-      await loadGitlabBranches("", toolId, repositoryId, cancelSource);
+      await loadGitlabBranches(searchTerm);
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
@@ -67,22 +59,14 @@ function GitlabBranchSelectInput(
     }
   };
 
-  const loadGitlabBranches = async (searchTerm, toolId, repositoryId, cancelSource = cancelTokenSource) => {
-    setIsLoading(true);
-    // const response = await gitlabActions.getBranchesFromGitlabInstanceV2(getAccessToken, cancelSource, toolId, repositoryId);
-    const response = await gitlabActions.getBranchesFromGitlabInstanceV3(getAccessToken, cancelSource, toolId, repositoryId, searchTerm);
+  const loadGitlabBranches = async (searchTerm) => {
+    const response = await gitlabActions.getBranchesFromGitlabInstanceV3(getAccessToken, cancelTokenSource, toolId, repositoryId, searchTerm);
     const branches = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(branches)) {
       setGitlabBranches([...branches]);
     }
-    setIsLoading(false);
   };
-
-  const delayedSearchQuery = useCallback(
-      _.debounce((searchTerm, repositoryId, toolId) => loadGitlabBranches(searchTerm, toolId, repositoryId), 600),
-      [],
-  );
 
   if (multi) {
     return (
@@ -101,7 +85,7 @@ function GitlabBranchSelectInput(
         filterOption={"startsWith"}
         pluralTopic={"Gitlab Branches"}
         singularTopic={"Gitlab Branch"}
-        onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, repositoryId, toolId)}
+        supportSearchLookup={true}
       />
     );
   }
@@ -122,7 +106,7 @@ function GitlabBranchSelectInput(
       error={error}
       pluralTopic={"Gitlab Branches"}
       singularTopic={"Gitlab Branch"}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, repositoryId, toolId)}
+      supportSearchLookup={true}
       requireUserEnable={true}
       onEnableEditFunction={() => setInEditMode(true)}
       externalCacheToolId={toolId}
