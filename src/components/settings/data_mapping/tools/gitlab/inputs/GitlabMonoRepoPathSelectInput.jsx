@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import MultiSelectInputBase from 'components/common/inputs/multi_select/MultiSelectInputBase';
 import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
@@ -59,7 +60,7 @@ export default function GitlabMonoRepoPathSelectInput({
   };
 
   return (
-    <SelectInputBase
+    <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
