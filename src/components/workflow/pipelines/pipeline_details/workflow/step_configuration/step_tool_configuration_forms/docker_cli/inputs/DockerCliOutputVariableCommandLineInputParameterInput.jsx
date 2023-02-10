@@ -38,6 +38,7 @@ export default function DockerCliOutputVariableCommandLineInputParameterInput(
 
   const addGlobalCustomParameterFunction = (newParameter) => {
     const newArray = [];
+    setError(undefined);
     const parsedUpdatedData = DataParsingHelper.parseArray(model?.getData(fieldName), []);
     const field = model?.getFieldById(fieldName);
 
