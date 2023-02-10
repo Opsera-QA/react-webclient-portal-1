@@ -11,6 +11,7 @@ function LiquibaseToolSelectInput({ model, setModel, className, disabled }) {
     newModel.setData("dbType", selectedOption?.configuration?.buildType);
     newModel.setDefaultValue("database");
     newModel.setDefaultValue("warehouse");
+    newModel.setDefaultValue("tag");
     setModel({...newModel});
   };
 
@@ -20,6 +21,7 @@ function LiquibaseToolSelectInput({ model, setModel, className, disabled }) {
     newModel.setDefaultValue("dbType");
     newModel.setDefaultValue("database");
     newModel.setDefaultValue("warehouse");
+    newModel.setDefaultValue("tag");
     setModel({...newModel});
   };
 
