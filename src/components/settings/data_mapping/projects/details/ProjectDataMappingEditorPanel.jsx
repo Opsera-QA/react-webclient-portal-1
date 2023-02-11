@@ -25,6 +25,8 @@ import ProjectDataMappingGithubRepositorySelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingGithubRepositorySelectInput";
 import ProjectDataMappingJiraProjectSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingJiraProjectSelectInput";
+import ProjectDataMappingBitbucketRepositorySelectInput
+  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingBitbucketRepositorySelectInput";
 
 function ProjectDataMappingEditorPanel(
   {
@@ -69,7 +71,7 @@ function ProjectDataMappingEditorPanel(
             />
           </Col>
           <Col lg={12}>
-            <ProjectDataMappingGitlabRepositorySelectInput
+            <ProjectDataMappingBitbucketRepositorySelectInput
               model={projectDataMappingModel}
               setModel={setProjectDataMappingModel}
             />
