@@ -59,8 +59,8 @@ export default function GitlabMonoRepoPathMultiSelectInput({
     setMonoRepoPaths([...repoPaths]);
   };
 
-  if (!repoId) {
-    return null;
+  if (repoId.length < 1) {
+    return <></>;
   }
 
   return (
