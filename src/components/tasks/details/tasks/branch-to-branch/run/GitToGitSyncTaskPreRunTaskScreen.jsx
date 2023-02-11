@@ -95,7 +95,7 @@ export default function GitToGitSyncTaskPreRunTaskScreen(
       <div className={"m-3"}>
         {getWelcomeText()}
         <H5FieldSubHeader
-          subheaderText={"Salesforce Task Run: Pre Run Tasks"}
+          subheaderText={"Git to Git Sync Task Run: Pre Run Tasks"}
         />
         <div>Please confirm the repository and branches you wish to use for this workflow</div>
         <Row>

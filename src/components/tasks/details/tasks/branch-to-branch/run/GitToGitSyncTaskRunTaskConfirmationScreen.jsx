@@ -76,7 +76,7 @@ export default function GitToGitSyncTaskRunTaskConfirmationScreen(
             cancelFunction={toastContext.clearOverlayPanel}
           />
           <TriggerGitToGitSyncTaskRunButton
-            className={"ml-3"}
+            className={"ml-2"}
             taskModel={taskModel}
             setCurrentScreen={setCurrentScreen}
           />

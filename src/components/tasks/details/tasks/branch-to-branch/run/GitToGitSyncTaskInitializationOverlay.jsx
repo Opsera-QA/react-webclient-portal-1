@@ -35,6 +35,7 @@ export default function GitToGitSyncTaskInitializationOverlay({ taskModel }) {
   return (
     <GitToGitSyncTaskRunTaskConfirmationScreen
       taskModel={taskModel}
+      setCurrentScreen={setCurrentScreen}
     />
   );
 

@@ -41,7 +41,7 @@ function SalesforceToGitMergeSyncTaskWizardOverlay({ taskModel }) {
     return (
       <GitToGitMergeSyncTaskWizard
         taskModel={internalTaskModel}
-        handleClose={closePanel}
+        handleClose={closePanel} 
       />
     );
   };
