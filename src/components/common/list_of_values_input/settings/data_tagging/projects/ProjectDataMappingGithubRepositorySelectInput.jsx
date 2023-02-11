@@ -18,7 +18,7 @@ export default function ProjectDataMappingGithubRepositorySelectInput(
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      valueField={"nameSpacedPath"}
+      valueField={"name"}
       textField={textField}
       disabled={disabled}
     />
