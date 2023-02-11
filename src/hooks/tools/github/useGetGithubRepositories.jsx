@@ -26,9 +26,7 @@ export default function useGetGithubRepositories(
     }
   }, [inEditMode, toolId]);
 
-  const getRepositories = async (searchTerm = "", tool = toolId) => {
-    console.log("searchTerm: " + JSON.stringify(searchTerm));
-    console.log("tool: " + JSON.stringify(tool));
+  const getRepositories = async (searchTerm = "") => {
     if (isMongoDbId(toolId) !== true) {
       return;
     }
