@@ -64,6 +64,7 @@ function SelectInputBase(
     cachedEntry,
     setCachedValue,
     isHandlingCache,
+    isCachedEntryRelevant,
   } = useExternalToolPropertyCacheEntry(
     requireUserEnable === true,
     dataObject?.getData(fieldName),
@@ -91,7 +92,9 @@ function SelectInputBase(
   };
 
   const updateValue = (newValue) => {
-    if (externalCacheToolIdentifier || externalCacheToolId) {
+    const parsedNewValue = DataParsingHelper.parseObject(newValue);
+
+    if (parsedNewValue && (externalCacheToolIdentifier || externalCacheToolId)) {
       const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
       parameters.cache = newValue;
 
@@ -99,7 +102,7 @@ function SelectInputBase(
         parameters.textField = textField;
       }
 
-      setCachedValue(parameters);
+      setCachedValue(parsedNewValue[valueField], parameters);
     }
 
     if (setDataFunction) {
@@ -177,39 +180,40 @@ function SelectInputBase(
 
   const handleTextFieldFunction = (foundValue) => {
     let formattedValue;
-    const parsedFoundValue = DataParsingHelper.parseObject(foundValue);
+    const parsedFoundValueObject = DataParsingHelper.parseObject(foundValue);
     const currentValue = DataParsingHelper.parseString(dataObject?.getData(fieldName));
+    const isCacheRelevant = isCachedEntryRelevant(foundValue, valueField);
 
-    if (parsedFoundValue && currentValue && currentValue === parsedFoundValue[valueField]) {
-      const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
-      parameters.cache = foundValue;
+    if (isCacheRelevant === true && currentValue) {
+      if (parsedFoundValueObject) {
+        const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
+        parameters.cache = foundValue;
 
-      if (typeof textField === "function") {
-        formattedValue = textField(parsedFoundValue);
-      } else if (typeof textField === "string") {
-        formattedValue = parsedFoundValue[textField];
+        if (typeof textField === "function") {
+          formattedValue = textField(parsedFoundValueObject);
+        } else if (typeof textField === "string") {
+          formattedValue = parsedFoundValueObject[textField];
 
-        parameters.textField = textField;
+          parameters.textField = textField;
+        }
+
+        setCachedValue(parsedFoundValueObject[valueField], parameters);
       }
 
-      setCachedValue(parameters);
-    }
+      const parsedCache = DataParsingHelper.parseNestedObject(cachedEntry, "parameters.cache");
 
-    const parsedCache = DataParsingHelper.parseNestedObject(cachedEntry, "parameters.cache");
-    const cachedUniqueId = DataParsingHelper.parseNestedString(cachedEntry, "unique_id");
-    const parsedFoundValueUniqueId = DataParsingHelper.parseNestedString(foundValue, valueField);
+      if (!formattedValue && parsedCache) {
+        const parsedCacheTextField = DataParsingHelper.parseNestedString(cachedEntry, "parameters.textField");
 
-    if (!formattedValue && parsedCache && cachedUniqueId && (foundValue === cachedUniqueId || (parsedFoundValueUniqueId && cachedUniqueId === parsedFoundValueUniqueId))) {
-      const parsedCacheTextField = DataParsingHelper.parseNestedString(cachedEntry, "parameters.textField");
-
-      if (textField) {
-        if (typeof textField === "function") {
-          formattedValue = textField(parsedCache);
-        } else if (typeof textField === "string") {
-          formattedValue = parsedCache[textField];
+        if (textField) {
+          if (typeof textField === "function") {
+            formattedValue = textField(parsedCache);
+          } else if (typeof textField === "string") {
+            formattedValue = parsedCache[textField];
+          }
+        } else if (parsedCacheTextField) {
+          formattedValue = parsedCache[parsedCacheTextField];
         }
-      } else if (parsedCacheTextField) {
-        formattedValue = parsedCache[parsedCacheTextField];
       }
     }
 
@@ -219,8 +223,8 @@ function SelectInputBase(
 
     if (typeof textField === "function") {
       return textField(foundValue);
-    } else if (typeof textField === "string" && parsedFoundValue) {
-      return parsedFoundValue[textField];
+    } else if (typeof textField === "string" && parsedFoundValueObject) {
+      return parsedFoundValueObject[textField];
     }
     
     return foundValue;
