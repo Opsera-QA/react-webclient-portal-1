@@ -97,7 +97,7 @@ export default function GitToGitSyncTaskPreRunTaskScreen(
         <H5FieldSubHeader
           subheaderText={"Salesforce Task Run: Pre Run Tasks"}
         />
-        <div>Please select the repository and branch you wish to use for this Salesforce workflow</div>
+        <div>Please confirm the repository and branches you wish to use for this workflow</div>
         <Row>
           <Col lg={12}>
             <GitToGitSyncTaskScmTypeSelectInput
