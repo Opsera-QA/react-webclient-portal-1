@@ -59,7 +59,7 @@ export default function GitlabMonoRepoPathMultiSelectInput({
     console.log(deploymentStages);
   };
 
-  if (repoId.length < 1) {
+  if (!model.getData("repoId")) {
     return null;
   }
 
