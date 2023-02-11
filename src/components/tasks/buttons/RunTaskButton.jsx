@@ -18,6 +18,8 @@ import SalesforceBulkMigrationTaskWizardOverlay
   from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationTaskWizardOverlay";
 import SalesforceBranchStructureTaskInitializationOverlay
   from "components/tasks/details/tasks/sfdc-branch-structure/run/SalesforceBranchStructureTaskInitializationOverlay";
+import GitToGitSyncTaskInitializationOverlay
+  from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskInitializationOverlay";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_GIT_BRANCHES,
@@ -139,6 +141,13 @@ function RunTaskButton(
       handleClose();
       toastContext.showOverlayPanel(
         <SalesforceBranchStructureTaskInitializationOverlay
+          taskModel={taskModel}
+        />
+      );
+    } else if (taskModel?.getData("type") === TASK_TYPES.SYNC_GIT_BRANCHES) {
+      handleClose();
+      toastContext.showOverlayPanel(
+        <GitToGitSyncTaskInitializationOverlay
           taskModel={taskModel}
         />
       );

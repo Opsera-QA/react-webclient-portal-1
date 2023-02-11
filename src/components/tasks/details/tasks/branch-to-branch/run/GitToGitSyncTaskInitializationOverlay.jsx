@@ -8,13 +8,13 @@ import GitToGitSyncTaskRunTaskConfirmationScreen
 import GitToGitSyncTaskPreRunTaskScreen
   from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskPreRunTaskScreen";
 
-export const SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS = {
+export const GIT_TO_GIT_SYNC_TASK_INITIALIZATION_SCREENS = {
   PRE_RUN_TASK_SCREEN: "pre_run_task_screen",
   TASK_WIZARD: "task_wizard",
 };
 
 export default function GitToGitSyncTaskInitializationOverlay({ taskModel }) {
-  const [currentScreen, setCurrentScreen] = useState(SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS.PRE_RUN_TASK_SCREEN);
+  const [currentScreen, setCurrentScreen] = useState(GIT_TO_GIT_SYNC_TASK_INITIALIZATION_SCREENS.PRE_RUN_TASK_SCREEN);
   const [internalTaskModel, setInternalTaskModel] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
 
@@ -30,7 +30,7 @@ export default function GitToGitSyncTaskInitializationOverlay({ taskModel }) {
   };
 
   const getBody = () => {
-    if (currentScreen === SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS.PRE_RUN_TASK_SCREEN) {
+    if (currentScreen === GIT_TO_GIT_SYNC_TASK_INITIALIZATION_SCREENS.PRE_RUN_TASK_SCREEN) {
       return (
         <GitToGitSyncTaskPreRunTaskScreen
           setCurrentScreen={setCurrentScreen}
@@ -53,7 +53,7 @@ export default function GitToGitSyncTaskInitializationOverlay({ taskModel }) {
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
-      titleText={`Salesforce Branch Structure Task Initialization`}
+      titleText={`Git to Git Sync Task Initialization`}
       titleIcon={faFileInvoice}
       showToasts={true}
       showCloseButton={false}

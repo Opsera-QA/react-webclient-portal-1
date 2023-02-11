@@ -10,16 +10,22 @@ import TaskWizardConfirmRepositorySettingsButton
   from "components/tasks/wizard/TaskWizardConfirmRepositorySettingsButton";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
-import SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
-  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput";
-import SalesforceOrganizationSyncTaskRepositorySelectInput
-  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskRepositorySelectInput";
-import SalesforceOrganizationSyncTaskGitBranchSelectInput
-  from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
-import sfdcGitBranchTaskConfigurationMetadata
-  from "components/tasks/details/tasks/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
+import GitToGitSyncTaskScmTypeSelectInput
+  from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskScmTypeSelectInput";
+import GitToGitSyncTaskScmToolSelectInput
+  from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskScmToolSelectInput";
+import GitToGitSyncTaskBitbucketWorkspaceSelectInput
+  from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskBitbucketWorkspaceSelectInput";
+import GitToGitSyncTaskRepositorySelectInput
+  from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskRepositorySelectInput";
+import GitToGitSyncTaskSourceBranchSelectInput
+  from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskSourceBranchSelectInput";
+import GitToGitSyncTaskDestinationBranchSelectInput
+  from "components/tasks/details/tasks/branch-to-branch/inputs/GitToGitSyncTaskDestinationBranchSelectInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import branchToBranchGitTaskConfigurationMetadata
+  from "components/tasks/details/tasks/branch-to-branch/branch-to-branch-git-task-configuration";
 
 export default function GitToGitSyncTaskPreRunTaskScreen(
   {
@@ -34,7 +40,7 @@ export default function GitToGitSyncTaskPreRunTaskScreen(
   useEffect(() => {
     if (taskModel) {
       try {
-        const configurationModel = modelHelpers.getToolConfigurationModel(taskModel?.getData("configuration"), sfdcGitBranchTaskConfigurationMetadata);
+        const configurationModel = modelHelpers.getToolConfigurationModel(taskModel?.getData("configuration"), branchToBranchGitTaskConfigurationMetadata);
         setTaskConfigurationModel({...configurationModel});
       }
       catch (error) {
@@ -79,28 +85,49 @@ export default function GitToGitSyncTaskPreRunTaskScreen(
       <div>Please select the repository and branch you wish to use for this Salesforce workflow</div>
       <Row>
         <Col lg={12}>
-          <SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
+          <GitToGitSyncTaskScmTypeSelectInput
             model={taskConfigurationModel}
             setModel={setModelFunction}
           />
         </Col>
         <Col lg={12}>
-          <SalesforceOrganizationSyncTaskRepositorySelectInput
+          <GitToGitSyncTaskScmToolSelectInput
+            model={taskConfigurationModel}
+            setModel={setModelFunction}
+            toolIdentifier={taskConfigurationModel?.getData("service")}
+          />
+        </Col>
+        <Col lg={12}>
+          <GitToGitSyncTaskBitbucketWorkspaceSelectInput
             model={taskConfigurationModel}
             setModel={setModelFunction}
           />
         </Col>
         <Col lg={12}>
-          <SalesforceOrganizationSyncTaskGitBranchSelectInput
+          <GitToGitSyncTaskRepositorySelectInput
             model={taskConfigurationModel}
             setModel={setModelFunction}
           />
         </Col>
         <Col lg={12}>
-          <TextInputBase
-            fieldName={"destinationBranch"}
+          <GitToGitSyncTaskSourceBranchSelectInput
+            model={taskConfigurationModel}
+            setModel={setModelFunction}
+            targetBranch={taskConfigurationModel?.getData("gitBranch")}
+          />
+        </Col>
+        <Col lg={12}>
+          <GitToGitSyncTaskDestinationBranchSelectInput
+            model={taskConfigurationModel}
+            setModel={setModelFunction}
+            sourceBranch={taskConfigurationModel?.getData("sourceBranch")}
+          />
+        </Col>
+        <Col lg={12}>
+          <BooleanToggleInput
             dataObject={taskConfigurationModel}
             setDataObject={setModelFunction}
+            fieldName={"deleteSourceBranch"}
           />
         </Col>
       </Row>
