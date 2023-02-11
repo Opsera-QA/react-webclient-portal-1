@@ -17,13 +17,14 @@ import TagManager from "components/common/inputs/tags/TagManager";
 import JenkinsRegistryToolJobSelectInput
   from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
-import JiraProjectSelectInput from "components/common/list_of_values_input/tools/jira/projects/JiraProjectSelectInput";
 import JiraCustomTagFieldSelectInput from "components/common/list_of_values_input/tools/jira/custom_fields/JiraCustomTagFieldSelectInput";
 import JiraCustomFieldMappingSelectInput from "components/common/list_of_values_input/tools/jira/custom_fields/JiraCustomFieldMappingSelectInput";
 import AnalyticsDataMappingEditWarningMessage
   from "components/settings/data_mapping/AnalyticsDataMappingEditWarningMessage";
 import ProjectDataMappingGithubRepositorySelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingGithubRepositorySelectInput";
+import ProjectDataMappingJiraProjectSelectInput
+  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingJiraProjectSelectInput";
 
 function ProjectDataMappingEditorPanel(
   {
@@ -31,15 +32,6 @@ function ProjectDataMappingEditorPanel(
     setProjectDataMappingModel,
     handleClose,
   }) {
-
-  const setJiraDataHandler = (fieldName, selectedOption) => {
-    const newProjectDataMappingModel = { ...projectDataMappingModel };
-    newProjectDataMappingModel.setData('key', selectedOption?.name);
-    newProjectDataMappingModel.setData('projectKey', selectedOption?.key);
-    newProjectDataMappingModel.setDefaultValue("value");
-    newProjectDataMappingModel.setDefaultValue("customTagFields");
-    setProjectDataMappingModel({ ...newProjectDataMappingModel });
-  };
 
   // TODO: Rewrite into switch statement or sub panels
   const getDynamicFields = () => {
@@ -108,13 +100,9 @@ function ProjectDataMappingEditorPanel(
     if (projectDataMappingModel?.getData("tool_identifier") === "jira") {
       return (
         <Col lg={12}>
-          <JiraProjectSelectInput
+          <ProjectDataMappingJiraProjectSelectInput
             model={projectDataMappingModel}
             setModel={setProjectDataMappingModel}
-            jiraToolId={projectDataMappingModel.getData("tool_id")}
-            valueField={"name"}
-            fieldName={"key"}
-            setDataFunction={setJiraDataHandler}
           />
         </Col>
       );
