@@ -91,7 +91,7 @@ function ProjectDataMappingEditorPanel(
           <GitlabProjectDataMappingSubform
             model={projectDataMappingModel}
             setModel={setProjectDataMappingModel}
-          
+          />
         </Col>
       );
     }
