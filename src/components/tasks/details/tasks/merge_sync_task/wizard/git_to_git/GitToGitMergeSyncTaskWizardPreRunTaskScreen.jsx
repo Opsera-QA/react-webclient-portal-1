@@ -112,7 +112,7 @@ export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
     <div className={className}>
       {getWelcomeText()}
       <H5FieldSubHeader
-        subheaderText={"Salesforce to Git Merge Sync Task Run: Pre Run Tasks"}
+        subheaderText={"Git to Git Merge Sync Task Run: Pre Run Tasks"}
       />
       <div>Please select the repository and branch you wish to use for this Salesforce workflow</div>
       <Row>

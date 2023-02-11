@@ -40,7 +40,7 @@ export default function SalesforceBulkMigrationTaskWizardPreRunTaskScreen(
   useEffect(() => {
     if (taskModel) {
       try {
-        const configurationModel = modelHelpers.getToolConfigurationModel(taskModel?.getData("configuration"), salesforceBulkMigrationTaskConfigurationMetadata);
+        const configurationModel = modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), salesforceBulkMigrationTaskConfigurationMetadata);
         setTaskConfigurationModel({...configurationModel});
       }
       catch (error) {

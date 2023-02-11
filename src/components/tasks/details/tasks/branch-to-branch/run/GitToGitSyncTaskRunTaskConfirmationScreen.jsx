@@ -27,6 +27,16 @@ export default function GitToGitSyncTaskRunTaskConfirmationScreen(
     toastContext.clearOverlayPanel();
   };
 
+  const getBackButton = () => {
+    if (taskModel?.canUpdate() === true) {
+      return (
+        <BackButtonBase
+          backButtonFunction={() => setCurrentScreen(GIT_TO_GIT_SYNC_TASK_INITIALIZATION_SCREENS.PRE_RUN_TASK_SCREEN)}
+        />
+      );
+    }
+  };
+
   if (taskModel == null) {
     return null;
   }
@@ -59,18 +69,14 @@ export default function GitToGitSyncTaskRunTaskConfirmationScreen(
         </div>
         <ButtonContainerBase
           className={"mt-3"}
-          leftSideButtons={
-            <BackButtonBase
-              backButtonFunction={() => setCurrentScreen(GIT_TO_GIT_SYNC_TASK_INITIALIZATION_SCREENS.PRE_RUN_TASK_SCREEN)}
-            />
-          }
+          leftSideButtons={getBackButton()}
         >
           <CancelButton
             size={"1x"}
             cancelFunction={toastContext.clearOverlayPanel}
           />
           <TriggerGitToGitSyncTaskRunButton
-            className={"ml-3"}
+            className={"ml-2"}
             taskModel={taskModel}
             setCurrentScreen={setCurrentScreen}
           />

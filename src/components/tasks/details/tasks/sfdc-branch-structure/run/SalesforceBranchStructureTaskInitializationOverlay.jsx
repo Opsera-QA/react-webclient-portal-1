@@ -11,7 +11,9 @@ export const SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS = {
 };
 
 export default function SalesforceBranchStructureTaskInitializationOverlay({taskModel}) {
-  const [currentScreen, setCurrentScreen] = useState(SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS.PRE_RUN_TASK_SCREEN);
+  const [currentScreen, setCurrentScreen] = useState(
+    taskModel.canUpdate() ? SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS.PRE_RUN_TASK_SCREEN : SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS.TASK_WIZARD
+  );
   const [internalTaskModel, setInternalTaskModel] = useState(undefined);
 
   useEffect(() => {

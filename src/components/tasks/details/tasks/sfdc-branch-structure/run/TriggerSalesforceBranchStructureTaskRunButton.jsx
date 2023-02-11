@@ -27,10 +27,11 @@ export default function TriggerSalesforceBranchStructureTaskRunButton(
     try {
       buttonStateFunctions.setBusyState();
       await sfdcPipelineActions.triggerGitTaskV2(getAccessToken, cancelTokenSource, taskModel.getData("_id"));
+      toastContext.showInformationToast("A request to start this Task has been submitted.", 20);
       closePanel();
       buttonStateFunctions.setSuccessState();
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      toastContext.showSystemErrorToast(error, "There was an issue starting this Task:");
       buttonStateFunctions.setErrorState();
     }
   };

@@ -14,6 +14,12 @@ import SalesforceToGitMergeSyncTaskWizardOverlay
   from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardOverlay";
 import SalesforceOrganizationSyncTaskWizardOverlay from "components/tasks/wizard/organization_sync/SalesforceOrganizationSyncTaskWizardOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import SalesforceBulkMigrationTaskWizardOverlay
+  from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationTaskWizardOverlay";
+import SalesforceBranchStructureTaskInitializationOverlay
+  from "components/tasks/details/tasks/sfdc-branch-structure/run/SalesforceBranchStructureTaskInitializationOverlay";
+import GitToGitSyncTaskInitializationOverlay
+  from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskInitializationOverlay";
 
 const ALLOWED_TASK_TYPES = [
   TASK_TYPES.SYNC_GIT_BRANCHES,
@@ -92,9 +98,6 @@ function RunTaskButton(
     if (taskModel?.getData("type") === TASK_TYPES.GIT_TO_GIT_MERGE_SYNC) {
       try{
         setIsStarting(true);
-        // const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-        // gitTasksData.setData("configuration", configuration);
-        // await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
         handleClose();
         toastContext.showOverlayPanel(
           <GitToGitMergeSyncTaskWizardOverlay
@@ -106,13 +109,9 @@ function RunTaskButton(
           toastContext.showLoadingErrorDialog(error);
         }
       }
-    }
-    else if (taskModel?.getData("type") === TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC) {
+    } else if (taskModel?.getData("type") === TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC) {
       try{
         setIsStarting(true);
-        // const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-        // gitTasksData.setData("configuration", configuration);
-        // await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
         handleClose();
         toastContext.showOverlayPanel(
           <SalesforceToGitMergeSyncTaskWizardOverlay
@@ -124,19 +123,35 @@ function RunTaskButton(
           toastContext.showLoadingErrorDialog(error);
         }
       }
-    }
-    else if (taskModel?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {
-      // const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
-      // gitTasksData.setData("configuration", configuration);
-      // await taskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
+    } else if (taskModel?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_REPO) {
       handleClose();
       toastContext.showOverlayPanel(
         <SalesforceOrganizationSyncTaskWizardOverlay
           taskModel={taskModel}
         />
       );
-    }
-    else {
+    } else if (taskModel?.getData("type") === TASK_TYPES.SALESFORCE_BULK_MIGRATION) {
+      handleClose();
+      toastContext.showOverlayPanel(
+        <SalesforceBulkMigrationTaskWizardOverlay
+          taskModel={taskModel}
+        />
+      );
+    } else if (taskModel?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE) {
+      handleClose();
+      toastContext.showOverlayPanel(
+        <SalesforceBranchStructureTaskInitializationOverlay
+          taskModel={taskModel}
+        />
+      );
+    } else if (taskModel?.getData("type") === TASK_TYPES.SYNC_GIT_BRANCHES) {
+      handleClose();
+      toastContext.showOverlayPanel(
+        <GitToGitSyncTaskInitializationOverlay
+          taskModel={taskModel}
+        />
+      );
+    } else {
       toastContext.showOverlayPanel(
         <RunTaskOverlay
           handleClose={handleClose}
