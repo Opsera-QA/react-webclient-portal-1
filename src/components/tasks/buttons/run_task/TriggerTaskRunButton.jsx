@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import { faPlay } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
 import taskActions from "components/tasks/task.actions";
 import axios from "axios";
@@ -38,7 +37,7 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
     return !gitTasksConfigurationDataDto?.checkCurrentValidity();
   };
 
-  // TODO: This should be separate buttons OR passed into this component from a wrapper component for each type
+  // TODO: Don't add any more support here. Make separate run task initializations screen to allow configuring as in RunTaskButton
   const handleRunGitTask = async () => {
     if (gitTasksData?.getData("type") === TASK_TYPES.AWS_CREATE_ECS_CLUSTER){
       // call to trigger merge request
