@@ -6,6 +6,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import useButtonState from "hooks/general/buttons/useButtonState";
+import taskActions from "components/tasks/task.actions";
 
 export default function TriggerGitToGitSyncTaskRunButton(
   {
@@ -26,7 +27,7 @@ export default function TriggerGitToGitSyncTaskRunButton(
   const handleRunGitTask = async () => {
     try {
       buttonStateFunctions.setBusyState();
-      await sfdcPipelineActions.triggerGitTaskV2(getAccessToken, cancelTokenSource, taskModel.getData("_id"));
+      await taskActions.triggerGitToGitSyncRequest( getAccessToken, cancelTokenSource, taskModel?.getMongoDbId());
       closePanel();
       buttonStateFunctions.setSuccessState();
     } catch (error) {

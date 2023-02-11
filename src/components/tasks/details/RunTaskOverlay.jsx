@@ -8,7 +8,6 @@ import CloseButton from "components/common/buttons/CloseButton";
 import TriggerTaskRunButton from "components/tasks/buttons/run_task/TriggerTaskRunButton";
 import ec2ClusterCreationTaskConfigurationMetadata from "components/tasks/details/tasks/ecs-cluster-creation/ecs-creation-git-task-configuration";
 import sfdxCertGenTaskConfigurationMetadata from "components/tasks/details/tasks/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
-import branchToBranchGitTaskConfigurationMetadata from "components/tasks/details/tasks/branch-to-branch/branch-to-branch-git-task-configuration";
 import ec2ServiceCreationTaskConfigurationMetadata from "components/tasks/details/tasks/ecs-service-creation/ecs-service-creation-git-task-configuration";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import {TASK_TYPES} from "components/tasks/task.types";
@@ -69,12 +68,6 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
         configurationData = modelHelpers.parseObjectIntoModel(
           configuration,
           sfdxCertGenTaskConfigurationMetadata,
-        );
-        break;
-      case TASK_TYPES.SYNC_GIT_BRANCHES:
-        configurationData = modelHelpers.parseObjectIntoModel(
-          configuration,
-          branchToBranchGitTaskConfigurationMetadata,
         );
         break;
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:

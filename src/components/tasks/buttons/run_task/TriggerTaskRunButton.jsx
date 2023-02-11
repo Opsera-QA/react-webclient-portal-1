@@ -40,42 +40,7 @@ function TriggerTaskRunButton({gitTasksData, setGitTasksData, gitTasksConfigurat
 
   // TODO: This should be separate buttons OR passed into this component from a wrapper component for each type
   const handleRunGitTask = async () => {
-    if (gitTasksData?.getData("type") === TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE) {
-      // pipeline action call to trigger branch conversion
-      try{
-        setIsLoading(true);
-        await sfdcPipelineActions.triggerGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData.getData("_id"));
-      } catch (error) {
-        toastContext.showLoadingErrorDialog(error);
-        setIsLoading(false);
-      } finally {
-        handleClose();
-        setIsLoading(false);
-      }
-    }
-    else if (gitTasksData?.getData("type") === TASK_TYPES.SYNC_GIT_BRANCHES){
-      // call to trigger merge request
-      try{
-        setIsLoading(true);
-        let postBody = {
-          "gitTaskId":gitTasksData.getData("_id")
-        };
-        await taskActions.processSyncRequest(postBody, getAccessToken);
-      } catch (error) {
-        console.log(error);
-        if(error?.error?.response?.data?.message){
-          toastContext.showLoadingErrorDialog(error.error.response.data.message);
-        }else{
-          toastContext.showLoadingErrorDialog(error);
-        }
-
-        setIsLoading(false);
-      } finally {
-        handleClose();
-        setIsLoading(false);
-      }
-    }
-    else if (gitTasksData?.getData("type") === TASK_TYPES.AWS_CREATE_ECS_CLUSTER){
+    if (gitTasksData?.getData("type") === TASK_TYPES.AWS_CREATE_ECS_CLUSTER){
       // call to trigger merge request
       try{
         setIsLoading(true);
