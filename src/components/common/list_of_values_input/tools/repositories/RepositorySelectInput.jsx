@@ -26,22 +26,9 @@ function RepositorySelectInput(
     setDataFunction,
     clearDataFunction,
     disabled,
-    valueField
+    valueField,
+    textField,
   }) {
-
-  // TODO : Use this for other SCMs if they match
-  const getGitLabTextField = (repo) => {
-    if(!repo || repo.length === 0) {
-      return "No Repository";
-    }
-    const repoName = repo?.name ? repo?.name : repo;
-    const repoFullName = repo?.nameSpacedPath || false;
-    const repoId = repo?.id || "No Repository ID Assigned";
-    if (repoFullName) {
-      return (`${repoName} (${repoFullName})`);
-    }
-    return (`${repoName}`);
-  };
 
   const getRelevantInput = () => {
     switch(service) {
@@ -55,6 +42,8 @@ function RepositorySelectInput(
             fieldName={fieldName}
             disabled={disabled}
             clearDataFunction={clearDataFunction}
+            valueField={valueField}
+            textField={textField}
           />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET:
@@ -68,6 +57,8 @@ function RepositorySelectInput(
             disabled={disabled}
             clearDataFunction={clearDataFunction}
             workspace={workspace}
+            valueField={valueField}
+            textField={textField}
           />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
@@ -80,6 +71,8 @@ function RepositorySelectInput(
             fieldName={fieldName}
             disabled={disabled}
             clearDataFunction={clearDataFunction}
+            valueField={valueField}
+            textField={textField}
           />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB:
@@ -92,8 +85,8 @@ function RepositorySelectInput(
             fieldName={fieldName}
             disabled={disabled}
             clearDataFunction={clearDataFunction}
-            textField={(repo) => getGitLabTextField(repo)}
-            valueField={"id"}
+            valueField={valueField}
+            textField={textField}
           />
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB_DEPLOY_KEY:
@@ -106,6 +99,8 @@ function RepositorySelectInput(
             fieldName={fieldName}
             disabled={disabled}
             clearDataFunction={clearDataFunction}
+            valueField={valueField}
+            textField={textField}
           />
         );
       default:
@@ -134,13 +129,14 @@ RepositorySelectInput.propTypes = {
   validateSavedData: PropTypes.bool,
   placeholderText: PropTypes.string,
   valueField: PropTypes.string,
-  textField: PropTypes.string,
+  textField: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]),
 };
 
 RepositorySelectInput.defaultProps = {
   placeholderText: "Select Repository",
-  valueField: "name",
-  textField: "name",
 };
 
 export default RepositorySelectInput;

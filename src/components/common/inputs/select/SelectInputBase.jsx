@@ -64,6 +64,7 @@ function SelectInputBase(
     cachedEntry,
     setCachedValue,
     isHandlingCache,
+    isCachedEntryRelevant,
   } = useExternalToolPropertyCacheEntry(
     requireUserEnable === true,
     dataObject?.getData(fieldName),
@@ -91,7 +92,10 @@ function SelectInputBase(
   };
 
   const updateValue = (newValue) => {
-    if (externalCacheToolIdentifier || externalCacheToolId) {
+    const parsedNewValue = DataParsingHelper.parseObject(newValue);
+    const parsedValueField = DataParsingHelper.parseString(valueField);
+
+    if (parsedNewValue && parsedValueField && (externalCacheToolIdentifier || externalCacheToolId)) {
       const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
       parameters.cache = newValue;
 
@@ -99,7 +103,7 @@ function SelectInputBase(
         parameters.textField = textField;
       }
 
-      setCachedValue(parameters);
+      setCachedValue(parsedNewValue[parsedValueField], parameters);
     }
 
     if (setDataFunction) {
@@ -175,40 +179,47 @@ function SelectInputBase(
     }
   };
 
-  const handleTextFieldFunction = (foundValue) => {
-    let formattedValue;
-    const parsedFoundValue = DataParsingHelper.parseObject(foundValue);
-    const currentValue = DataParsingHelper.parseString(dataObject?.getData(fieldName));
+  const getFormattedLabelForValue = (value) => {
+    const parsedValueObject = DataParsingHelper.parseObject(value);
 
-    if (parsedFoundValue && currentValue && currentValue === parsedFoundValue[valueField]) {
-      const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
-      parameters.cache = foundValue;
-
-      if (typeof textField === "function") {
-        formattedValue = textField(parsedFoundValue);
-      } else if (typeof textField === "string") {
-        formattedValue = parsedFoundValue[textField];
-
-        parameters.textField = textField;
-      }
-
-      setCachedValue(parameters);
+    if (typeof textField === "function") {
+      return textField(value);
+    } else if (parsedValueObject && typeof textField === "string") {
+      return parsedValueObject[textField];
     }
 
-    const parsedCache = DataParsingHelper.parseNestedObject(cachedEntry, "parameters.cache");
-    const cachedUniqueId = DataParsingHelper.parseNestedString(cachedEntry, "unique_id");
+    return value;
+  };
 
-    if (!formattedValue && currentValue && parsedCache && cachedUniqueId && cachedUniqueId === currentValue) {
-      const parsedCacheTextField = DataParsingHelper.parseNestedString(cachedEntry, "parameters.textField");
+  const handleTextFieldFunction = (foundValue) => {
+    let formattedValue;
+    const parsedFoundValueObject = DataParsingHelper.parseObject(foundValue);
+    const currentValue = DataParsingHelper.parseString(dataObject?.getData(fieldName));
+    const isCacheRelevant = isCachedEntryRelevant(foundValue, valueField);
 
-      if (textField) {
-        if (typeof textField === "function") {
-          formattedValue = textField(parsedCache);
-        } else if (typeof textField === "string") {
-          formattedValue = parsedCache[textField];
+    if (isCacheRelevant === true && currentValue) {
+      if (parsedFoundValueObject) {
+        const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
+        parameters.cache = parsedFoundValueObject;
+        formattedValue = getFormattedLabelForValue(parsedFoundValueObject);
+
+        if (typeof textField === "string") {
+          parameters.textField = textField;
         }
-      } else if (parsedCacheTextField) {
-        formattedValue = parsedCache[parsedCacheTextField];
+
+        setCachedValue(parsedFoundValueObject[valueField], parameters);
+      }
+
+      const parsedCache = DataParsingHelper.parseNestedObject(cachedEntry, "parameters.cache");
+
+      if (!formattedValue && parsedCache) {
+        const parsedCacheTextField = DataParsingHelper.parseNestedString(cachedEntry, "parameters.textField");
+
+        if (textField) {
+          formattedValue = getFormattedLabelForValue(parsedCache);
+        } else if (parsedCacheTextField) {
+          formattedValue = parsedCache[parsedCacheTextField];
+        }
       }
     }
 
@@ -216,13 +227,7 @@ function SelectInputBase(
       return formattedValue;
     }
 
-    if (typeof textField === "function") {
-      return textField(foundValue);
-    } else if (typeof textField === "string" && parsedFoundValue) {
-      return parsedFoundValue[textField];
-    }
-    
-    return foundValue;
+    return getFormattedLabelForValue(foundValue);
   };
 
   const onSearchFunction = useCallback(

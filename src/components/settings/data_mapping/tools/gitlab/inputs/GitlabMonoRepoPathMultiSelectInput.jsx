@@ -60,7 +60,7 @@ export default function GitlabMonoRepoPathMultiSelectInput({
   };
 
   if (repoId.length < 1) {
-    return <></>;
+    return null;
   }
 
   return (
