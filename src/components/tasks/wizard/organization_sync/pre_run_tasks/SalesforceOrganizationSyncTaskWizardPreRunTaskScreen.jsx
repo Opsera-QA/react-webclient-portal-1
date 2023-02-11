@@ -38,7 +38,7 @@ export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
   useEffect(() => {
     if (taskModel) {
       try {
-        const configurationModel = modelHelpers.getToolConfigurationModel(taskModel?.getData("configuration"), salesforceOrganizationSyncTaskConfigurationMetadata);
+        const configurationModel = modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), salesforceOrganizationSyncTaskConfigurationMetadata);
         setTaskConfigurationModel({...configurationModel});
       }
       catch (error) {

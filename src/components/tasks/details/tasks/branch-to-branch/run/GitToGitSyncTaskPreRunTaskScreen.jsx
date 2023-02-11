@@ -41,7 +41,7 @@ export default function GitToGitSyncTaskPreRunTaskScreen(
   useEffect(() => {
     if (taskModel) {
       try {
-        const configurationModel = modelHelpers.getToolConfigurationModel(taskModel?.getData("configuration"), branchToBranchGitTaskConfigurationMetadata);
+        const configurationModel = modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), branchToBranchGitTaskConfigurationMetadata);
         setTaskConfigurationModel({...configurationModel});
       } catch (error) {
         toastContext.showInlineErrorMessage(error, "Error initializing Salesforce Task run:");
