@@ -24,7 +24,7 @@ function GitToGitSyncTaskConfigurationEditorPanel({ taskModel, taskConfiguration
   useEffect(() => {loadData();}, []);
 
   const loadData = async () => {    
-    const configurationData = modelHelpers.getToolConfigurationModel(taskModel?.getData("configuration"), branchToBranchGitTaskConfigurationMetadata);
+    const configurationData = modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), branchToBranchGitTaskConfigurationMetadata);
     setTaskConfigurationModel({...configurationData});
   };
 

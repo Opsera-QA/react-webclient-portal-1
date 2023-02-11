@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import { faPlay } from "@fortawesome/pro-light-svg-icons";
-import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
@@ -28,10 +27,11 @@ export default function TriggerGitToGitSyncTaskRunButton(
     try {
       buttonStateFunctions.setBusyState();
       await taskActions.triggerGitToGitSyncRequest( getAccessToken, cancelTokenSource, taskModel?.getMongoDbId());
+      toastContext.showInformationToast("A request to start this Task has been submitted.", 20);
       closePanel();
       buttonStateFunctions.setSuccessState();
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      toastContext.showSystemErrorToast(error, "There was an issue starting this Task:");
       buttonStateFunctions.setErrorState();
     }
   };
