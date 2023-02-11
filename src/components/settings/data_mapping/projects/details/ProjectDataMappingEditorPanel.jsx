@@ -22,6 +22,8 @@ import JiraCustomTagFieldSelectInput from "components/common/list_of_values_inpu
 import JiraCustomFieldMappingSelectInput from "components/common/list_of_values_input/tools/jira/custom_fields/JiraCustomFieldMappingSelectInput";
 import AnalyticsDataMappingEditWarningMessage
   from "components/settings/data_mapping/AnalyticsDataMappingEditWarningMessage";
+import ProjectDataMappingGithubRepositorySelectInput
+  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingGithubRepositorySelectInput";
 
 function ProjectDataMappingEditorPanel(
   {
@@ -89,7 +91,6 @@ function ProjectDataMappingEditorPanel(
           <ProjectDataMappingGitlabRepositorySelectInput
             model={projectDataMappingModel}
             setModel={setProjectDataMappingModel}
-            valueField={"nameSpacedPath"}
           />
         </Col>
       );
@@ -97,7 +98,7 @@ function ProjectDataMappingEditorPanel(
     if (projectDataMappingModel?.getData("tool_identifier") === "github") {
       return (
         <Col lg={12}>
-          <ProjectDataMappingGitlabRepositorySelectInput
+          <ProjectDataMappingGithubRepositorySelectInput
             model={projectDataMappingModel}
             setModel={setProjectDataMappingModel}
           />
