@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import GitlabMonoRepoPathSelectInput from "../inputs/GitlabMonoRepoPathSelectInput";
+import GitlabMonoRepoPathMultiSelectInput from "../inputs/GitlabMonoRepoPathMultiSelectInput";
+import GitlabDeploymentStagesMultiSelectInput from "../inputs/GitlabDeploymentStagesMultiSelectInput";
 
 function GitlabProjectDataMappingSubform({ model, setModel }) {
   return (
@@ -11,8 +12,14 @@ function GitlabProjectDataMappingSubform({ model, setModel }) {
         dataObject={model}
         setDataObject={setModel}
       />
-      <GitlabMonoRepoPathSelectInput 
+      <GitlabMonoRepoPathMultiSelectInput 
         fieldName={"monoRepoPath"}
+        model={model}
+        setModel={setModel}
+        repoId={model?.getData("repoId")}
+      />
+      <GitlabDeploymentStagesMultiSelectInput 
+        fieldName={"deploymentStage"}
         model={model}
         setModel={setModel}
         repoId={model?.getData("repoId")}

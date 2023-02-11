@@ -14,8 +14,7 @@ import {
 } from "components/settings/data_mapping/projects/analyticsProjectDataMapping.helper";
 import DeleteAnalyticsProjectDataMappingActionBarButton
   from "components/settings/data_mapping/projects/actions/DeleteAnalyticsProjectDataMappingActionBarButton";
-import projectDataMappingMetadata
-  from "@opsera/definitions/constants/settings/data_mapping/project/projectDataMapping.metadata";
+import projectDataMappingMetadata from "../projectDataMapping.metadata";
 
 function ProjectDataMappingDetailView() {
   const { projectMappingId } = useParams();

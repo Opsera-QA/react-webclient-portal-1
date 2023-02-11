@@ -35,4 +35,13 @@ dataMappingActions.getMonoRepoPaths = async (getAccessToken, sourceToken, repoId
   return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, sourceToken, apiUrl, postBody);
 };
 
+dataMappingActions.getDeploymentStages = async (getAccessToken, sourceToken, repoId) => {
+  const apiUrl = `/analytics/gitlab/v1/gitlabDeploymentStagesListV2`;
+  const postBody = {
+    repositoryId: repoId
+  };
+
+  return await baseActions.handleNodeAnalyticsApiPostRequest(getAccessToken, sourceToken, apiUrl, postBody);
+};
+
 export default dataMappingActions;

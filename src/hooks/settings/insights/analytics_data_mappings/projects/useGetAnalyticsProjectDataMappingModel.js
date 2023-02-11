@@ -2,8 +2,7 @@ import useGetModelBase from "hooks/model/useGetModelBase";
 import {
   analyticsProjectDataMappingHelper
 } from "components/settings/data_mapping/projects/analyticsProjectDataMapping.helper";
-import projectDataMappingMetadata
-  from "@opsera/definitions/constants/settings/data_mapping/project/projectDataMapping.metadata";
+import projectDataMappingMetadata from "components/settings/data_mapping/projects/projectDataMapping.metadata";
 import useAnalyticsProjectDataMappingActions
   from "hooks/settings/insights/analytics_data_mappings/projects/useAnalyticsProjectDataMappingActions";
 import AnalyticsProjectDataMappingRoleHelper
