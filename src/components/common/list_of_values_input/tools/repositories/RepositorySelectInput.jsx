@@ -137,8 +137,6 @@ RepositorySelectInput.propTypes = {
 
 RepositorySelectInput.defaultProps = {
   placeholderText: "Select Repository",
-  valueField: "name",
-  textField: "name",
 };
 
 export default RepositorySelectInput;
