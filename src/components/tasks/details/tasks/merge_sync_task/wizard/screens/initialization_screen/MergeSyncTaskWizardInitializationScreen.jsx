@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import LoadingDialog from "components/common/status_notifications/loading";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import CancelButton from "components/common/buttons/CancelButton";
 import MergeSyncTaskWizardCreateNewRecordButton
@@ -8,6 +7,7 @@ import MergeSyncTaskWizardCreateNewRecordButton
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 const MergeSyncTaskWizardInitializationScreen = ({
   wizardModel,
@@ -19,9 +19,9 @@ const MergeSyncTaskWizardInitializationScreen = ({
   const getBody = () => {
     if (wizardModel == null) {
       return (
-        <LoadingDialog
+        <CenterLoadingIndicator
+          minHeight={"500px"}
           message={`Initializing ${mergeSyncType} Merge Sync Wizard`}
-          size={"sm"}
         />
       );
     }
