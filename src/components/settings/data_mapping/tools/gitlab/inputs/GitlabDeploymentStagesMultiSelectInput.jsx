@@ -56,7 +56,6 @@ export default function GitlabMonoRepoPathMultiSelectInput({
     const response = await dataMappingActions.getDeploymentStages(getAccessToken, cancelTokenSource, repoId);
     const stages = DataParsingHelper.parseNestedArray(response, "data.data.gitlabDeploymentStagesList.data", []);
     setDeploymentStages([...stages]);
-    console.log(deploymentStages);
   };
 
   if (!model.getData("repoId")) {
