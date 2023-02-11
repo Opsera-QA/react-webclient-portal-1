@@ -5,36 +5,28 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import CancelButton from "components/common/buttons/CancelButton";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
-import {
-  SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS
-} from "components/tasks/details/tasks/sfdc-branch-structure/run/SalesforceBranchStructureTaskInitializationOverlay";
 import TriggerGitToGitSyncTaskRunButton
   from "components/tasks/details/tasks/branch-to-branch/run/TriggerGitToGitSyncTaskRunButton";
+import {
+  GIT_TO_GIT_SYNC_TASK_INITIALIZATION_SCREENS
+} from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskInitializationOverlay";
+import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 
 export default function GitToGitSyncTaskRunTaskConfirmationScreen(
   {
     taskModel,
     setCurrentScreen,
-    className,
   }) {
-  const { toastContext } = useComponentStateReference();
+  const {toastContext} = useComponentStateReference();
 
-  if (taskModel == null) {
-    return null;
-  }
-
-  return (
-    <div className={className}>
-      <H5FieldSubHeader
-        subheaderText={"Trigger Task Run?"}
-      />
-      <div className={"mx-3 mb-3 mt-1"}>
-        Do you want to run this Task: {taskModel?.getData("name")}?
-      </div>
+  const getButtonContainer = () => {
+    return (
       <ButtonContainerBase
+        className={"mt-3"}
         leftSideButtons={
           <BackButtonBase
-            backButtonFunction={() => setCurrentScreen(SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS.PRE_RUN_TASK_SCREEN)}
+            backButtonFunction={() => setCurrentScreen(GIT_TO_GIT_SYNC_TASK_INITIALIZATION_SCREENS.PRE_RUN_TASK_SCREEN)}
           />
         }
       >
@@ -43,16 +35,45 @@ export default function GitToGitSyncTaskRunTaskConfirmationScreen(
           cancelFunction={toastContext.clearOverlayPanel}
         />
         <TriggerGitToGitSyncTaskRunButton
+          className={"ml-3"}
           taskModel={taskModel}
           setCurrentScreen={setCurrentScreen}
         />
       </ButtonContainerBase>
-    </div>
+    );
+  };
+
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
+
+  if (taskModel == null) {
+    return null;
+  }
+
+  return (
+    <FullScreenCenterOverlayContainer
+      closePanel={closePanel}
+      titleText={`Git to Git Sync Task Initialization`}
+      titleIcon={faFileInvoice}
+      showToasts={true}
+      showCloseButton={false}
+      buttonContainer={getButtonContainer()}
+    >
+      <div className={"m-3"}>
+        <H5FieldSubHeader
+          subheaderText={"Trigger Task Run?"}
+        />
+        <div className={"mx-3 mb-3 mt-1"}>
+          Do you want to run this Task: {taskModel?.getData("name")}?
+        </div>
+      </div>
+    </FullScreenCenterOverlayContainer>
   );
 }
 
 GitToGitSyncTaskRunTaskConfirmationScreen.propTypes = {
   taskModel: PropTypes.object,
   setCurrentScreen: PropTypes.func,
-  className: PropTypes.string,
 };

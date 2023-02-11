@@ -53,7 +53,7 @@ export default function TriggerGitToGitSyncTaskRunButton(
         icon={faPlay}
         disabled={taskModel?.getData("status") === "running" || disabled}
         onClickFunction={handleRunGitTask}
-        variant={"Success"}
+        variant={"success"}
         normalText={"Run Task"}
         busyText={"Starting Task"}
         errorText={"Failed to Start Task!"}

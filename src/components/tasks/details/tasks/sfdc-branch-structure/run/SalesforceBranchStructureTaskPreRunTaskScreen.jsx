@@ -20,13 +20,14 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 import sfdcGitBranchTaskConfigurationMetadata
   from "components/tasks/details/tasks/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
+import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 
 export default function SalesforceBranchStructureTaskPreRunTaskScreen(
   {
     taskModel,
     setTaskModel,
     setCurrentScreen,
-    className,
   }) {
   const [taskConfigurationModel, setTaskConfigurationModel] = useState(undefined);
   const { toastContext } = useComponentStateReference();
@@ -66,58 +67,71 @@ export default function SalesforceBranchStructureTaskPreRunTaskScreen(
     setTaskModel({...taskModel});
   };
 
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
+
   if (taskModel == null || taskConfigurationModel == null) {
     return null;
   }
 
   return (
-    <div className={className}>
-      {getWelcomeText()}
-      <H5FieldSubHeader
-        subheaderText={"Salesforce Task Run: Pre Run Tasks"}
-      />
-      <div>Please select the repository and branch you wish to use for this Salesforce workflow</div>
-      <Row>
-        <Col lg={12}>
-          <SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
-            model={taskConfigurationModel}
-            setModel={setModelFunction}
-          />
-        </Col>
-        <Col lg={12}>
-          <SalesforceOrganizationSyncTaskRepositorySelectInput
-            model={taskConfigurationModel}
-            setModel={setModelFunction}
-          />
-        </Col>
-        <Col lg={12}>
-          <SalesforceOrganizationSyncTaskGitBranchSelectInput
-            model={taskConfigurationModel}
-            setModel={setModelFunction}
-          />
-        </Col>
-        <Col lg={12}>
-          <TextInputBase
-            fieldName={"destinationBranch"}
-            dataObject={taskConfigurationModel}
-            setDataObject={setModelFunction}
-          />
-        </Col>
-      </Row>
-      <ButtonContainerBase
-        leftSideButtons={
-          <BackButtonBase
-            backButtonFunction={toastContext.clearOverlayPanel}
-          />
-        }
-      >
-        <TaskWizardConfirmRepositorySettingsButton
-          taskModel={taskModel}
-          setCurrentScreen={setCurrentScreen}
-          disabled={taskConfigurationModel?.checkCurrentValidity() !== true}
+    <FullScreenCenterOverlayContainer
+      closePanel={closePanel}
+      titleText={`Salesforce Branch Structure Task Initialization`}
+      titleIcon={faFileInvoice}
+      showToasts={true}
+      showCloseButton={false}
+    >
+      <div className={"m-3"}>
+        {getWelcomeText()}
+        <H5FieldSubHeader
+          subheaderText={"Salesforce Task Run: Pre Run Tasks"}
         />
-      </ButtonContainerBase>
-    </div>
+        <div>Please select the repository and branch you wish to use for this Salesforce workflow</div>
+        <Row>
+          <Col lg={12}>
+            <SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
+              model={taskConfigurationModel}
+              setModel={setModelFunction}
+            />
+          </Col>
+          <Col lg={12}>
+            <SalesforceOrganizationSyncTaskRepositorySelectInput
+              model={taskConfigurationModel}
+              setModel={setModelFunction}
+            />
+          </Col>
+          <Col lg={12}>
+            <SalesforceOrganizationSyncTaskGitBranchSelectInput
+              model={taskConfigurationModel}
+              setModel={setModelFunction}
+            />
+          </Col>
+          <Col lg={12}>
+            <TextInputBase
+              fieldName={"destinationBranch"}
+              dataObject={taskConfigurationModel}
+              setDataObject={setModelFunction}
+            />
+          </Col>
+        </Row>
+        <ButtonContainerBase
+          leftSideButtons={
+            <BackButtonBase
+              backButtonFunction={toastContext.clearOverlayPanel}
+            />
+          }
+        >
+          <TaskWizardConfirmRepositorySettingsButton
+            taskModel={taskModel}
+            setCurrentScreen={setCurrentScreen}
+            disabled={taskConfigurationModel?.checkCurrentValidity() !== true}
+          />
+        </ButtonContainerBase>
+      </div>
+    </FullScreenCenterOverlayContainer>
   );
 }
 
@@ -125,5 +139,4 @@ SalesforceBranchStructureTaskPreRunTaskScreen.propTypes = {
   taskModel: PropTypes.object,
   setTaskModel: PropTypes.func,
   setCurrentScreen: PropTypes.func,
-  className: PropTypes.string,
 };
