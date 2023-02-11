@@ -27,7 +27,6 @@ export default function GitToGitSyncTaskRunTaskConfirmationScreen(
     toastContext.clearOverlayPanel();
   };
 
-
   const getBackButton = () => {
     if (taskModel?.canUpdate() === true) {
       return (
