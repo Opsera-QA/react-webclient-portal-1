@@ -25,6 +25,16 @@ export default function SalesforceBranchStructureTaskRunTaskConfirmationScreen(
     toastContext.clearOverlayPanel();
   };
 
+  const getBackButton = () => {
+    if (taskModel?.canUpdate() === true) {
+      return (
+        <BackButtonBase
+          backButtonFunction={() => setCurrentScreen(SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS.PRE_RUN_TASK_SCREEN)}
+        />
+      );
+    }
+  };
+
   if (taskModel == null) {
     return null;
   }
@@ -45,11 +55,7 @@ export default function SalesforceBranchStructureTaskRunTaskConfirmationScreen(
         Do you want to run this Task: {taskModel?.getData("name")}?
         <ButtonContainerBase
           className={"mt-3"}
-          leftSideButtons={
-            <BackButtonBase
-              backButtonFunction={() => setCurrentScreen(SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS.PRE_RUN_TASK_SCREEN)}
-            />
-          }
+          leftSideButtons={getBackButton()}
         >
           <CancelButton
             size={"1x"}

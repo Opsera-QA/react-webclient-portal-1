@@ -11,7 +11,9 @@ export const GIT_TO_GIT_SYNC_TASK_INITIALIZATION_SCREENS = {
 };
 
 export default function GitToGitSyncTaskInitializationOverlay({ taskModel }) {
-  const [currentScreen, setCurrentScreen] = useState(GIT_TO_GIT_SYNC_TASK_INITIALIZATION_SCREENS.PRE_RUN_TASK_SCREEN);
+  const [currentScreen, setCurrentScreen] = useState(
+    taskModel.canUpdate() ? GIT_TO_GIT_SYNC_TASK_INITIALIZATION_SCREENS.PRE_RUN_TASK_SCREEN : GIT_TO_GIT_SYNC_TASK_INITIALIZATION_SCREENS.TASK_WIZARD
+  );
   const [internalTaskModel, setInternalTaskModel] = useState(undefined);
 
   useEffect(() => {

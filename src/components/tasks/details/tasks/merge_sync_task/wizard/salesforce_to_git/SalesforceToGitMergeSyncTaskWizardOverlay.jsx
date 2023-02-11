@@ -14,7 +14,9 @@ export const SALESFORCE_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS = {
 };
 
 function SalesforceToGitMergeSyncTaskWizardOverlay({ taskModel }) {
-  const [currentScreen, setCurrentScreen] = useState(SALESFORCE_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.PRE_RUN_TASK_SCREEN);
+  const [currentScreen, setCurrentScreen] = useState(
+    taskModel.canUpdate() ? SALESFORCE_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.PRE_RUN_TASK_SCREEN : SALESFORCE_TO_GIT_MERGE_SYNC_TASK_WIZARD_SCREENS.TASK_WIZARD
+  );
   const [internalTaskModel, setInternalTaskModel] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
 

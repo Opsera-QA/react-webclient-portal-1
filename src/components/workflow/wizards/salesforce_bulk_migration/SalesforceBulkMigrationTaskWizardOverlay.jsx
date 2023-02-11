@@ -14,7 +14,9 @@ export const SALESFORCE_BULK_MIGRATION_TASK_WIZARD_SCREENS = {
 };
 
 function SalesforceBulkMigrationTaskWizardOverlay({ taskModel }) {
-  const [currentScreen, setCurrentScreen] = useState(SALESFORCE_BULK_MIGRATION_TASK_WIZARD_SCREENS.PRE_RUN_TASK_SCREEN);
+  const [currentScreen, setCurrentScreen] = useState(
+    taskModel.canUpdate() ? SALESFORCE_BULK_MIGRATION_TASK_WIZARD_SCREENS.PRE_RUN_TASK_SCREEN : SALESFORCE_BULK_MIGRATION_TASK_WIZARD_SCREENS.TASK_WIZARD
+  );
   const [internalTaskModel, setInternalTaskModel] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
 
