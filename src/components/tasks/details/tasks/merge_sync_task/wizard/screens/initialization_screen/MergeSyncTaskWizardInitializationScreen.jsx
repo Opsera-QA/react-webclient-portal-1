@@ -5,6 +5,9 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import CancelButton from "components/common/buttons/CancelButton";
 import MergeSyncTaskWizardCreateNewRecordButton
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/initialization_screen/MergeSyncTaskWizardCreateNewRecordButton";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
 const MergeSyncTaskWizardInitializationScreen = ({
   wizardModel,
@@ -25,8 +28,24 @@ const MergeSyncTaskWizardInitializationScreen = ({
 
     return (
       <div>
-        <div className={"mt-2"}>
-          {`Would you like to start a new ${mergeSyncType} Merge Sync Task Wizard Instance?`}
+        <div className={"m-3"}>
+          <div className={"mb-4"}>
+            <CenteredContentWrapper>
+              <div className={"mx-auto"}>
+                <OpseraInfinityLogo/>
+              </div>
+            </CenteredContentWrapper>
+            <CenteredContentWrapper>
+              <div className={"mx-auto mt-3"}>
+                <H5FieldSubHeader
+                  subheaderText={`${mergeSyncType} Merge Sync: Initialization`}
+                />
+                <div className={"focusText"}>
+                  {`Would you like to start a new ${mergeSyncType} Merge Sync Task Wizard Instance?`}
+                </div>
+              </div>
+            </CenteredContentWrapper>
+          </div>
         </div>
         <SaveButtonContainer>
           <MergeSyncTaskWizardCreateNewRecordButton
@@ -48,7 +67,6 @@ const MergeSyncTaskWizardInitializationScreen = ({
   const getMainView = () => {
     return (
       <div>
-        <div className={"h5"}>{`${mergeSyncType} Merge Sync: Initialization`}</div>
         <div className={"my-3"}>{getBody()}</div>
       </div>
     );

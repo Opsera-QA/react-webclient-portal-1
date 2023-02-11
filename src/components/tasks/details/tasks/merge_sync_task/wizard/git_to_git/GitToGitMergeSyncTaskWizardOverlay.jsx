@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen
-  from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen";
 import GitToGitMergeSyncTaskWizard
   from "components/tasks/details/tasks/merge_sync_task/wizard/git_to_git/GitToGitMergeSyncTaskWizard";
 import GitToGitMergeSyncTaskWizardPreRunTaskScreen
@@ -56,7 +54,7 @@ function SalesforceToGitMergeSyncTaskWizardOverlay({ taskModel }) {
   return (
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
-      titleText={`Salesforce to Git Merge Sync Wizard`}
+      titleText={`Git to Git Merge Sync Wizard`}
       titleIcon={faFileInvoice}
       showToasts={true}
       showCloseButton={false}
