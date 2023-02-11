@@ -7,8 +7,8 @@ import ProjectMappingToolIdentifierSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolIdentifierSelectInput";
 import ProjectMappingWorkspaceSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingWorkspaceSelectInput";
-import ProjectRepositorySelectInput
-  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectRepositorySelectInput";
+import ProjectDataMappingGitlabRepositorySelectInput
+  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingGitlabRepositorySelectInput";
 import ProjectMappingToolSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
 import SonarProjectSelectInput
@@ -23,22 +23,12 @@ import JiraCustomFieldMappingSelectInput from "components/common/list_of_values_
 import AnalyticsDataMappingEditWarningMessage
   from "components/settings/data_mapping/AnalyticsDataMappingEditWarningMessage";
 
-const determineKeyFromFullPath = keyPath => {
-  const splitPath = keyPath.split('/');
-  return splitPath[splitPath.length - 1];
-};
-
 function ProjectDataMappingEditorPanel(
   {
     projectDataMappingModel,
     setProjectDataMappingModel,
     handleClose,
   }) {
-  const setDataHandler = (id, selectedOption) => {
-    projectDataMappingModel.setData('key', determineKeyFromFullPath(selectedOption?.nameSpacedPath));
-    projectDataMappingModel.setData('keyPath', selectedOption?.nameSpacedPath);
-    setProjectDataMappingModel({ ...projectDataMappingModel });
-  };
 
   const setJiraDataHandler = (fieldName, selectedOption) => {
     const newProjectDataMappingModel = { ...projectDataMappingModel };
@@ -85,7 +75,7 @@ function ProjectDataMappingEditorPanel(
             />
           </Col>
           <Col lg={12}>
-            <ProjectRepositorySelectInput
+            <ProjectDataMappingGitlabRepositorySelectInput
               model={projectDataMappingModel}
               setModel={setProjectDataMappingModel}
             />
@@ -96,11 +86,10 @@ function ProjectDataMappingEditorPanel(
     if (projectDataMappingModel?.getData("tool_identifier") === "gitlab") {
       return (
         <Col lg={12}>
-          <ProjectRepositorySelectInput
+          <ProjectDataMappingGitlabRepositorySelectInput
             model={projectDataMappingModel}
             setModel={setProjectDataMappingModel}
-            setDataFunction={setDataHandler}
-            valueField="nameSpacedPath"
+            valueField={"nameSpacedPath"}
           />
         </Col>
       );
@@ -108,7 +97,7 @@ function ProjectDataMappingEditorPanel(
     if (projectDataMappingModel?.getData("tool_identifier") === "github") {
       return (
         <Col lg={12}>
-          <ProjectRepositorySelectInput
+          <ProjectDataMappingGitlabRepositorySelectInput
             model={projectDataMappingModel}
             setModel={setProjectDataMappingModel}
           />

@@ -7,6 +7,7 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { gitlabActions } from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function GitlabRepositorySelectInput({
   fieldName,
@@ -77,6 +78,47 @@ function GitlabRepositorySelectInput({
     return "The first 100 repositories will be loaded by default, please enter at least 3 characters to search for repositories by name.";
   };
 
+  const getGitLabTextField = (repo) => {
+    if (typeof textField === "function") {
+      return textField(repo);
+    }
+
+    const parsedRepoString = DataParsingHelper.parseString(repo);
+
+    if(parsedRepoString) {
+      return parsedRepoString;
+    }
+
+    const parsedRepoObject = DataParsingHelper.parseObject(repo);
+
+    if (!parsedRepoObject) {
+      return repo;
+    }
+
+    const repoName = DataParsingHelper.parseString(parsedRepoObject.name);
+    const repoFullName = DataParsingHelper.parseString(parsedRepoObject.nameSpacedPath);
+    const repoId = DataParsingHelper.parseString(repo?.id);
+
+    if (repoName && repoFullName) {
+      return (`${repoName} (${repoFullName})`);
+    }
+
+    if (repoFullName) {
+      return repoFullName;
+    }
+
+    if (repoName && repoId) {
+      return (`${repoName} (${repoId})`);
+    }
+
+
+    if (repoName) {
+      return (`${repoName}`);
+    }
+    
+    return repo;
+  };
+
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -88,7 +130,7 @@ function GitlabRepositorySelectInput({
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
       valueField={valueField}
-      textField={textField}
+      textField={getGitLabTextField}
       disabled={disabled}
       singularTopic={"Gitlab Repository"}
       pluralTopic={"Gitlab Repositories"}

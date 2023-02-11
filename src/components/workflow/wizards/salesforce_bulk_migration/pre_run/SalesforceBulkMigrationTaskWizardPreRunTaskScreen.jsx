@@ -138,6 +138,7 @@ export default function SalesforceBulkMigrationTaskWizardPreRunTaskScreen(
         {getDynamicFields()}
       </Row>
       <ButtonContainerBase
+        className={"mt-3"}
         leftSideButtons={
           <BackButtonBase
             backButtonFunction={toastContext.clearOverlayPanel}
