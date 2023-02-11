@@ -3,15 +3,15 @@ import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import TriggerSalesforceBranchStructureTaskRunButton
-  from "components/tasks/details/tasks/sfdc-branch-structure/run/TriggerSalesforceBranchStructureTaskRunButton";
 import CancelButton from "components/common/buttons/CancelButton";
 import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 import {
   SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS
 } from "components/tasks/details/tasks/sfdc-branch-structure/run/SalesforceBranchStructureTaskInitializationOverlay";
+import TriggerGitToGitSyncTaskRunButton
+  from "components/tasks/details/tasks/branch-to-branch/run/TriggerGitToGitSyncTaskRunButton";
 
-export default function SalesforceBranchStructureTaskRunTaskConfirmationScreen(
+export default function GitToGitSyncTaskRunTaskConfirmationScreen(
   {
     taskModel,
     setCurrentScreen,
@@ -42,7 +42,7 @@ export default function SalesforceBranchStructureTaskRunTaskConfirmationScreen(
           size={"1x"}
           cancelFunction={toastContext.clearOverlayPanel}
         />
-        <TriggerSalesforceBranchStructureTaskRunButton
+        <TriggerGitToGitSyncTaskRunButton
           taskModel={taskModel}
           setCurrentScreen={setCurrentScreen}
         />
@@ -51,7 +51,7 @@ export default function SalesforceBranchStructureTaskRunTaskConfirmationScreen(
   );
 }
 
-SalesforceBranchStructureTaskRunTaskConfirmationScreen.propTypes = {
+GitToGitSyncTaskRunTaskConfirmationScreen.propTypes = {
   taskModel: PropTypes.object,
   setCurrentScreen: PropTypes.func,
   className: PropTypes.string,

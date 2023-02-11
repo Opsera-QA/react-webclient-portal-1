@@ -3,19 +3,17 @@ import PropTypes from 'prop-types';
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import SalesforceBulkMigrationWizard
-  from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationWizard";
-import SalesforceBranchStructureTaskPreRunTaskScreen
-  from "components/tasks/details/tasks/sfdc-branch-structure/run/SalesforceBranchStructureTaskPreRunTaskScreen";
-import SalesforceBranchStructureTaskRunTaskConfirmationScreen
-  from "components/tasks/details/tasks/sfdc-branch-structure/run/SalesforceBranchStructureTaskRunTaskConfirmationScreen";
+import GitToGitSyncTaskRunTaskConfirmationScreen
+  from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskRunTaskConfirmationScreen";
+import GitToGitSyncTaskPreRunTaskScreen
+  from "components/tasks/details/tasks/branch-to-branch/run/GitToGitSyncTaskPreRunTaskScreen";
 
 export const SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS = {
   PRE_RUN_TASK_SCREEN: "pre_run_task_screen",
   TASK_WIZARD: "task_wizard",
 };
 
-export default function SalesforceBranchStructureTaskInitializationOverlay({ taskModel }) {
+export default function GitToGitSyncTaskInitializationOverlay({ taskModel }) {
   const [currentScreen, setCurrentScreen] = useState(SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS.PRE_RUN_TASK_SCREEN);
   const [internalTaskModel, setInternalTaskModel] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
@@ -34,7 +32,7 @@ export default function SalesforceBranchStructureTaskInitializationOverlay({ tas
   const getBody = () => {
     if (currentScreen === SALESFORCE_BRANCH_STRUCTURE_TASK_INITIALIZATION_SCREENS.PRE_RUN_TASK_SCREEN) {
       return (
-        <SalesforceBranchStructureTaskPreRunTaskScreen
+        <GitToGitSyncTaskPreRunTaskScreen
           setCurrentScreen={setCurrentScreen}
           taskModel={internalTaskModel}
           setTaskModel={setInternalTaskModel}
@@ -44,9 +42,9 @@ export default function SalesforceBranchStructureTaskInitializationOverlay({ tas
     }
 
     return (
-      <SalesforceBranchStructureTaskRunTaskConfirmationScreen
+      <GitToGitSyncTaskRunTaskConfirmationScreen
         taskModel={taskModel}
-        setCurrentScreen={setCurrentScreen}
+        handleClose={closePanel}
       />
     );
   };
@@ -65,6 +63,6 @@ export default function SalesforceBranchStructureTaskInitializationOverlay({ tas
   );
 }
 
-SalesforceBranchStructureTaskInitializationOverlay.propTypes = {
+GitToGitSyncTaskInitializationOverlay.propTypes = {
   taskModel: PropTypes.object
 };
