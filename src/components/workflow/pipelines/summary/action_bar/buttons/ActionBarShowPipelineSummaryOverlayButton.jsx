@@ -9,6 +9,7 @@ function ActionBarShowPipelineSummaryOverlayButton({pipeline}) {
   const {
     toastContext,
     userData,
+    isFreeTrial,
   } = useComponentStateReference();
 
   const showDetailsFunction = () => {
@@ -17,6 +18,17 @@ function ActionBarShowPipelineSummaryOverlayButton({pipeline}) {
 
   if (pipeline == null || PipelineRoleHelper.canViewPipelineTemplate(userData, pipeline) !== true) {
     return null;
+  }
+
+  if (isFreeTrial === true && isOpseraAdministrator !== true) {
+    return null;
+    // return (
+    //   <ActionBarViewDetailsButtonBase
+    //     className={"ml-3"}
+    //     tooltipText={"Viewing Pipeline configuration details is available in the full Opsera Offering."}
+    //     disabled={true}
+    //   />
+    // );
   }
 
   return (

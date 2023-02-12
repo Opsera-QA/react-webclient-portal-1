@@ -17,6 +17,8 @@ export default function ActionBarPublishPipelineToCustomerCatalogButton({pipelin
   const {
     toastContext,
     userData,
+    isFreeTrial,
+    isOpseraAdministrator,
   } = useComponentStateReference();
   const {
     isLoading,
@@ -34,6 +36,7 @@ export default function ActionBarPublishPipelineToCustomerCatalogButton({pipelin
 
   if (
     pipelineModel == null
+    || (isFreeTrial === true && isOpseraAdministrator !== true)
     || CustomerPipelineTemplateRoleHelper.canPublishCustomerPipelineTemplate(userData, pipelineModel?.getCurrentData()) !== true
     || isLoading === true
     || SiteRoleHelper.isMemberOfAllowedSiteRoles(userData, allowedRoles) !== true
