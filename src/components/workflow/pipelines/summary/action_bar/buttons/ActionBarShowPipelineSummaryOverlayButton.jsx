@@ -10,6 +10,7 @@ function ActionBarShowPipelineSummaryOverlayButton({pipeline}) {
     toastContext,
     userData,
     isFreeTrial,
+    isOpseraAdministrator,
   } = useComponentStateReference();
 
   const showDetailsFunction = () => {
