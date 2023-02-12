@@ -96,14 +96,10 @@ export default function ExportDataPanel(
   }
 
   return (
-    <div
-      className={"text-color w-100"}
-    >
+    <div className={"text-color w-100 p-3"}>
       {toastContext.getInlineBanner()}
       <Row>
-        <Col xs={12}>
-          {children}
-        </Col>
+        <Col xs={12}>{children}</Col>
         <Col xs={12}>
           <TextInputBase
             className={"mb-2"}
@@ -112,9 +108,7 @@ export default function ExportDataPanel(
             setDataObject={setExportDataModel}
           />
         </Col>
-        <Col xs={12}>
-          {getExportOptions()}
-        </Col>
+        <Col xs={12}>{getExportOptions()}</Col>
       </Row>
       <ButtonContainerBase className={"mt-3"}>
         <ExportButton
@@ -126,7 +120,10 @@ export default function ExportDataPanel(
           isLoading={isLoading}
           closeEditorCallback={closePanel}
         />
-        <CloseButton closeEditorCallback={closePanel} showUnsavedChangesMessage={false} />
+        <CloseButton
+          closeEditorCallback={closePanel}
+          showUnsavedChangesMessage={false}
+        />
       </ButtonContainerBase>
     </div>
   );

@@ -6,7 +6,7 @@ import PythonFilesInput from "../PythonFilesInput";
 import StepConfigTerraformStepSelectInput from "../../common/inputs/StepConfigTerraformStepSelectInput";
 import StepConfigUseTerraformOutput from "../../common/inputs/StepConfigUseTerraformOutput";
 import ParameterSelectListInputBase
-  from "../../../../../../../../common/list_of_values_input/parameters/ParameterSelectListInputBase";
+  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 
 const allowedBuildTypes = [

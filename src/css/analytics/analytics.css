@@ -140,3 +140,15 @@
     border-radius: 6px 6px 0px 0px !important
 }
 
+.maturity-rolled-up-border {
+    border-radius: 0px 6px 6px 6px !important;
+    border: 5px solid ;
+    background: none;
+}
+
+.maturity-rolled-up-text {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    text-align: left;
+}
+

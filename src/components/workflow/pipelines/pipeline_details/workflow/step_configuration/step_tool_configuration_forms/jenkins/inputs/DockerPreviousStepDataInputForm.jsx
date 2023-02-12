@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import EditableParameterMappingInput from "components/common/list_of_values_input/parameters/EditableParameterMappingInput";
+import EditableParameterMappingInput from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingInput";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import pipelineHelpers from "components/workflow/pipelineHelpers";

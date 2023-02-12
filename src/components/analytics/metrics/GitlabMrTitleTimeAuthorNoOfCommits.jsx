@@ -5,7 +5,7 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 import { Table }  from "react-bootstrap";
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 
 function GitlabMrTitleTimeAuthorNoOfCommits({ date }) {
@@ -93,7 +93,7 @@ function GitlabMrTitleTimeAuthorNoOfCommits({ date }) {
                   <td>{value["MergeRequestTitle"]}</td>
                   <td>{value["TimeTaken"]}</td>
                   <td>{value["ProjectName"]}</td>                  
-                  <td>{format(new Date(value["PushTimeStamp"]), "yyyy-MM-dd', 'hh:mm a")}</td>
+                  <td>{DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(value["PushTimeStamp"]))}</td>
                   <td>{value["TotalCommits"]}</td>
                 </tr>;
               })

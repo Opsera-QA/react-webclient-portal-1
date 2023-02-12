@@ -6,9 +6,11 @@ import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {gitlabActions} from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
 import _ from "lodash";
-import LazyLoadMultiSelectInputBase from "../../../../inputs/select/LazyLoadMultiSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function GitlabBranchSelectInput(
+function GitlabBranchMultiSelectInput(
   {
     fieldName,
     model,
@@ -19,40 +21,31 @@ function GitlabBranchSelectInput(
     clearDataFunction,
     repositoryId,
   }) {
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [gitlabBranches, setGitlabBranches] = useState([]);
   const [error, setError] = useState(undefined);
-  const isMounted = useRef(false);
-  const {getAccessToken} = useContext(AuthContext);
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    isMounted.current = true;
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
     setGitlabBranches([]);
     setError(undefined);
 
     if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
-      loadData(source).catch((error) => {
+      loadData("").catch((error) => {
         throw error;
       });
     }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [toolId, repositoryId]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (searchTerm) => {
     try {
+      setError(undefined);
       setIsLoading(true);
-      await loadGitlabBranches("", toolId, repositoryId, cancelSource);
+      await loadGitlabBranches(searchTerm, toolId, repositoryId);
     } catch (error) {
       setError(error);
     } finally {
@@ -60,23 +53,17 @@ function GitlabBranchSelectInput(
     }
   };
 
-  const loadGitlabBranches = async (searchTerm, toolId, repositoryId, cancelSource = cancelTokenSource) => {
-    // const response = await gitlabActions.getBranchesFromGitlabInstanceV2(getAccessToken, cancelSource, toolId, repositoryId);
-    const response = await gitlabActions.getBranchesFromGitlabInstanceV3(getAccessToken, cancelSource, toolId, repositoryId, searchTerm);
-    const branches = response?.data?.data;
+  const loadGitlabBranches = async (searchTerm) => {
+    const response = await gitlabActions.getBranchesFromGitlabInstanceV3(getAccessToken, cancelTokenSource, toolId, repositoryId, searchTerm);
+    const branches = DataParsingHelper.parseNestedArray(response, "data.data");
 
     if (isMounted?.current === true && Array.isArray(branches)) {
       setGitlabBranches([...branches]);
     }
   };
 
-  const delayedSearchQuery = useCallback(
-      _.debounce((searchTerm, repositoryId, toolId) => loadGitlabBranches(searchTerm, toolId, repositoryId), 600),
-      [],
-  );
-
   return (
-    <LazyLoadMultiSelectInputBase
+    <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
@@ -90,13 +77,13 @@ function GitlabBranchSelectInput(
       error={error}
       singularTopic={"Gitlab Branch"}
       pluralTopic={"Gitlab Branches"}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, repositoryId, toolId)}
-      useToggle={true}
+      supportSearchLookup={true}
+      loadDataFunction={loadData}
     />
   );
 }
 
-GitlabBranchSelectInput.propTypes = {
+GitlabBranchMultiSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -110,4 +97,4 @@ GitlabBranchSelectInput.propTypes = {
   repositoryId: PropTypes.string,
 };
 
-export default GitlabBranchSelectInput;
+export default GitlabBranchMultiSelectInput;

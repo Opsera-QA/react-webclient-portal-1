@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useCallback, useEffect, useState} from "react";
 
 const loadData = async (
   loadDataFunction,
@@ -24,15 +24,25 @@ export default function useLoadData(loadDataFunction, handleErrorFunction) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
 
-  useEffect(() => {
-    (async () => {
-      await loadData(
-        loadDataFunction,
-        setIsLoading,
-        handleErrorFunction,
-        setError,
-      );
-    })();
+  useEffect(() => {}, []);
+
+  const loadData = useCallback(async (loadDataFunction, handleErrorFunction) => {
+    try {
+      setIsLoading(true);
+      setError(undefined);
+
+      if (loadDataFunction) {
+        await loadDataFunction();
+      }
+    } catch (error) {
+      if (handleErrorFunction) {
+        handleErrorFunction(error);
+      }
+
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   return ({

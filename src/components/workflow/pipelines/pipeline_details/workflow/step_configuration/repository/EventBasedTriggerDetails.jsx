@@ -5,6 +5,8 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import CopyToClipboardButton from "components/common/buttons/clipboard/CopyToClipboardButton";
 import CheckboxInputBase from "../../../../../../common/inputs/boolean/CheckboxInputBase";
+import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
+import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 
 // TODO: Refactor
 function EventBasedTriggerDetails({
@@ -13,14 +15,14 @@ function EventBasedTriggerDetails({
   setModel,
   savePipelineFunction,
 }) {
-  const apiUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
+  const apiUrl = NODE_API_ORCHESTRATOR_SERVER_URL;
   const [triggerUrl, setTriggerUrl] = useState("");
 
   useEffect(() => {
     setTriggerUrl(`${apiUrl}/hooks/${pipeline?.owner}/${pipeline?._id}/source`);
   }, [JSON.stringify(pipeline)]);
 
-  console.log(model.getPersistData());
+  // console.log(model.getPersistData());
 
   const setDataFunction = (fieldName, newValue) => {
     const newModel = { ...model };
@@ -30,10 +32,6 @@ function EventBasedTriggerDetails({
   };
 
   const EventTriggerOptions = () => {
-    // TODO : FF only for BB for now
-    if (model?.getData("source") && model?.getData("source") !== "bitbucket") {
-      return;
-    }
     return (
       <div className={"d-flex justify-content-between"}>
         <div>
@@ -75,7 +73,7 @@ function EventBasedTriggerDetails({
                           model={model}
                           setModel={setModel}
                           setDataFunction={setDataFunction}
-                          // disabled={disabled}
+                          disabled={model.getData("service") === toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS}
                       />
                   </div>
               </div>

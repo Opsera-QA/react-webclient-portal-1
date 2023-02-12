@@ -11,5 +11,5 @@ export const okta_config = {
   onAuthRequired: onAuthRequired
 };
 
-export const apiServerUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
+export const NODE_API_ORCHESTRATOR_SERVER_URL = process.env.REACT_APP_OPSERA_API_SERVER_URL;
 export const NODE_ANALYTICS_API_SERVER_URL = process.env.REACT_APP_ANALYTICS_API_SERVER_URL;

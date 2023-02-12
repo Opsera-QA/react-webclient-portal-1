@@ -23,6 +23,8 @@ export default function ReportsRoutes() {
     isSiteAdministrator,
     isSassUser,
     isPowerUser,
+    isSecurityManager,
+    isAuditor,
   } = useComponentStateReference();
 
   if (
@@ -30,6 +32,8 @@ export default function ReportsRoutes() {
     && isSiteAdministrator !== true
     && isSassUser !== true
     && isPowerUser !== true
+    && isSecurityManager !== true
+    && isAuditor !== true
   ) {
     return null;
   }

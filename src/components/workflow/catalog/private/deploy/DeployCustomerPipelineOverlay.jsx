@@ -71,17 +71,17 @@ export default function DeployCustomerPipelineOverlay(
             className={"my-3"}
           />
         </CenteredContentWrapper>
-        {/*<div className={"my-3"}>*/}
-        {/*  {`Please specify the access rule restrictions for this Pipeline. By default, it copies the access rules applied to the Template.`}*/}
-        {/*</div>*/}
-        {/*<Row>*/}
-        {/*  <Col xs={12}>*/}
-        {/*    <RoleAccessInput*/}
-        {/*      model={pipelineTemplateModelCopy}*/}
-        {/*      setModel={setPipelineTemplateModelCopy}*/}
-        {/*    />*/}
-        {/*  </Col>*/}
-        {/*</Row>*/}
+        <div className={"my-3"}>
+          {`Please specify the access rule restrictions for this Pipeline. By default, it copies the access rules applied to the Template.`}
+        </div>
+        <Row>
+          <Col xs={12}>
+            <RoleAccessInput
+              model={pipelineTemplateModelCopy}
+              setModel={setPipelineTemplateModelCopy}
+            />
+          </Col>
+        </Row>
       </div>
     </CenterOverlayContainer>
   );

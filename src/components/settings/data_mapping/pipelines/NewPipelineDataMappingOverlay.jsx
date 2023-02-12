@@ -1,58 +1,16 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
-import axios from "axios";
-import {AuthContext} from "contexts/AuthContext";
-import PipelineDataMappingModel from "components/settings/data_mapping/pipelines/pipelineDataMapping.model";
 import PipelineDataMappingEditorPanel
   from "components/settings/data_mapping/pipelines/details/PipelineDataMappingEditorPanel";
+import useGetAnalyticsPipelineDataMappingModel
+  from "hooks/settings/insights/analytics_data_mappings/pipelines/useGetAnalyticsPipelineDataMappingModel";
 
 function NewPipelineDataMappingOverlay({loadData, isMounted, pipelineDataMappingMetadata,}) {
-  const {getAccessToken, getAccessRoleData} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [pipelineDataMappingModel, setPipelineDataMappingModel] = useState(undefined);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    createNewPipelineDataMappingModel(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-    };
-  }, []);
-
-  const createNewPipelineDataMappingModel = async (cancelSource = cancelTokenSource) => {
-    try {
-      const accessRoleData = await getAccessRoleData();
-      const newModel = new PipelineDataMappingModel(
-        {...pipelineDataMappingMetadata.newObjectFields},
-        pipelineDataMappingMetadata,
-        true,
-        getAccessToken,
-        cancelSource,
-        accessRoleData,
-        loadData,
-        [],
-        setPipelineDataMappingModel
-      );
-      setPipelineDataMappingModel(newModel);
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    }
-  };
+  const getAnalyticsPipelineDataMappingModel = useGetAnalyticsPipelineDataMappingModel();
+  const [pipelineDataMappingModel, setPipelineDataMappingModel] = useState(getAnalyticsPipelineDataMappingModel(undefined, true));
 
   const closePanel = () => {
     if (isMounted?.current === true) {

@@ -16,6 +16,7 @@ function BuildkiteSCMToolTypeSelectInput({dataObject, setDataObject, isLoading, 
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("gitBranch", "");
+    newDataObject.setData("branch", "");
     setDataObject({...newDataObject});
     return;
   };

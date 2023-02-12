@@ -6,12 +6,23 @@ export const insightsLookupActions = {};
 insightsLookupActions.getComponentNames = async (
   getAccessToken,
   cancelTokenSource,
+  startDate,
+  endDate,
+  componentNames,
+  selectedComponentFilterData,
 ) => {
   const apiUrl = `/analytics/sfdc/v1/component/names`;
-  return await baseActions.handleNodeAnalyticsApiGetRequest(
+  const postBody = {
+    startDate: startDate,
+    endDate: endDate,
+    fullNameArr: componentNames,
+    selectedComponentFilterData: selectedComponentFilterData,
+  };
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
     cancelTokenSource,
     apiUrl,
+    postBody,
   );
 };
 
@@ -30,26 +41,68 @@ insightsLookupActions.getComponentByName = async (
   );
 };
 
+insightsLookupActions.getComponentTypes = async (
+  getAccessToken,
+  cancelTokenSource,
+) => {
+  const apiUrl = `/analytics/sfdc/v1/component/get-component-types`;
+  return await baseActions.handleNodeAnalyticsApiGetRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+insightsLookupActions.getPipelines = async (
+  getAccessToken,
+  cancelTokenSource,
+) => {
+  const apiUrl = `/analytics/sfdc/v1/component/get-pipelines`;
+  return await baseActions.handleNodeAnalyticsApiGetRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+insightsLookupActions.getTasks = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/analytics/sfdc/v1/component/get-tasks`;
+  return await baseActions.handleNodeAnalyticsApiGetRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
+insightsLookupActions.getOrgs = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/analytics/sfdc/v1/component/get-orgs`;
+  return await baseActions.handleNodeAnalyticsApiGetRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
 insightsLookupActions.searchComponents = async (
   getAccessToken,
   cancelTokenSource,
   startDate,
   endDate,
   componentNames,
+  selectedComponentFilterData,
 ) => {
   const apiUrl = `/analytics/sfdc/v1/component`;
-  const urlParams = {
-    params: {
-      startDate: startDate,
-      endDate: endDate,
-      fullNameArr: componentNames,
-    },
+  const postBody = {
+    startDate: startDate,
+    endDate: endDate,
+    fullNameArr: componentNames,
+    selectedComponentFilterData: selectedComponentFilterData,
   };
-  return await baseActions.handleNodeAnalyticsApiGetRequest(
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
     cancelTokenSource,
     apiUrl,
-    urlParams,
+    postBody,
   );
 };
 

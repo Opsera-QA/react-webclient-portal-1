@@ -82,7 +82,7 @@ function UnitTestClassesPanel({selectedNonMembers, setSelectedNonMembers, nonMem
         </Button>
       </div>
       <div className="content-card-1 content-container scroller">
-        <div className="px-2 d-flex content-block-header justify-content-between">
+        <div className="p-2 d-flex content-block-header justify-content-between">
           <div><IconBase icon={faCode} className={"mr-2"}/>Unit Test Classes</div>
           <div>{nonMembers.length} {nonMembers.length !== 1 ? "classes" : "class"}</div>
         </div>

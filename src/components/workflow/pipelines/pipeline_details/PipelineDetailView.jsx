@@ -9,25 +9,28 @@ import AccessDeniedContainer from "components/common/panels/detail_view_containe
 import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
 import pipelineActions from "components/workflow/pipeline-actions";
 import PipelineWorkflowTabBar from "components/workflow/pipelines/pipeline_details/PipelineWorkflowTabBar";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineActivityLogTreeTable
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTreeTable";
+import useGetPollingPipelineOrchestrationStatusById
+  from "hooks/workflow/pipelines/orchestration/useGetPollingPipelineOrchestrationStatusById";
 
-let internalRefreshCount = 1;
 const refreshInterval = 15000;
+const pausedMessage = "This Pipeline has been paused. Please check the activity logs for details.";
+const stoppedMessage = "This Pipeline has completed running. Please check the activity logs for details.";
+const failedMessage = "This Pipeline has completed running with a failed status. Please check the activity logs for details.";
+const successMessage = "This Pipeline has completed running with a successful status. Please check the activity logs for details.";
+const runningMessage = "This Pipeline is currently running. Please check the activity logs for details.";
 
 function PipelineDetailView() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"workspace"} />);
-  const { tab, id } = useParams();
+  const {tab, id} = useParams();
+  const [currentTab, setCurrentTab] = useState(tab);
   const [pipeline, setPipeline] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [softLoading, setSoftLoading] = useState(false);
-  const [workflowStatus, setWorkflowStatus] = useState(false);
   const [editItem, setEditItem] = useState(false);
-  const [refreshCount, setRefreshCount] = useState(0);
   const [isPipelineRunning, setIsPipelineRunning] = useState(false);
-  const [refreshTimer, setRefreshTimer] = useState(null);
   const {
     accessRoleData,
     getAccessToken,
@@ -37,27 +40,25 @@ function PipelineDetailView() {
     userData,
     toastContext,
   } = useComponentStateReference();
+  const {
+    status,
+    isQueued,
+    runCount,
+    lastStep,
+    restingStepId,
+    updatedAt,
+  } = useGetPollingPipelineOrchestrationStatusById(id, refreshInterval);
 
+  // TODO: We probably don't need to refresh the pipeline on resting step changes.
   useEffect(() => {
+    console.log(`Refreshing pipeline with \n   status: [${status}]\n    run count: [${runCount}]\n   Resting Step ID: [${restingStepId}] \n Last Updated At: [${updatedAt}]`);
+    evaluatePipelineStatus(pipeline);
     loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      if (refreshTimer) {
-        console.log("clearing refresh timer");
-        clearTimeout(refreshTimer);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (pipeline) {
-      evaluatePipelineStatus(pipeline);
-    }
-  }, [pipeline]);
+  }, [status, runCount, restingStepId, updatedAt]);
 
   const loadData = async () => {
     try {
@@ -68,8 +69,7 @@ function PipelineDetailView() {
         console.error(error.message);
         toastContext.showLoadingErrorDialog(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -82,10 +82,8 @@ function PipelineDetailView() {
         return;
       }
 
-      const newRefreshCount = refreshCount + 1;
-      setRefreshCount(newRefreshCount);
-
       setSoftLoading(true);
+      console.log("refreshing pipeline");
       const response = await pipelineActions.getPipelineByIdV2(getAccessToken, cancelTokenSource, id);
       const newPipeline = response?.data?.data;
 
@@ -114,64 +112,35 @@ function PipelineDetailView() {
     }
   };
 
-  const evaluatePipelineStatus = (pipeline) => {
-    console.log("evaluating pipeline status function");
-    if (!pipeline || Object.entries(pipeline).length === 0) {
-      return;
-    }
-
-    const pipelineStatus = DataParsingHelper.parseNestedString(pipeline, "workflow.last_step.status");
-
-    if (!pipelineStatus || pipelineStatus === "stopped") {
-      const isPaused = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.last_step.running.paused");
-
-      if (isPaused === true) {
-        setWorkflowStatus("paused");
-        const pausedMessage = "The Pipeline has been paused. Please check the activity logs for details.";
-        toastContext.showInformationToast(pausedMessage, 20);
-      } else if (isPipelineRunning === true) {
-        setWorkflowStatus(pipelineStatus);
-        const stoppedMessage = "The Pipeline has completed running. Please check the activity logs for details.";
-        toastContext.showInformationToast(stoppedMessage, 20);
-      }
-
-      setIsPipelineRunning(false);
-      console.log("Pipeline stopped, no need to schedule refresh. Status: ", isPaused === true ? "Paused" : pipelineStatus);
-      return;
-    }
-
-    if (refreshTimer) {
-      clearTimeout(refreshTimer);
-    }
-
-    if (isPipelineRunning !== true) {
-      toastContext.showInformationToast("The Pipeline is currently running. Please check the activity logs for details.", 20);
+  const evaluatePipelineStatus = () => {
+    if (status === "paused") {
+      toastContext.showSystemInformationToast(pausedMessage, 20);
+    } else if (isPipelineRunning === true && status === "stopped") {
+      toastContext.showSystemInformationToast(stoppedMessage, 20);
+    } else if (isPipelineRunning === true && status === "success") {
+      toastContext.showSystemSuccessToast(successMessage, 20);
+    } else if (isPipelineRunning === true && status === "failed") {
+      toastContext.showSystemErrorToast(failedMessage, undefined,20);
+    } else if (isPipelineRunning !== true && status === "running") {
+      toastContext.showSystemInformationToast(runningMessage, 20);
       setIsPipelineRunning(true);
     }
-
-    console.log(`Scheduling status check followup for Pipeline: ${pipeline._id}, counter: ${internalRefreshCount}, interval: ${refreshInterval} `);
-    const newRefreshTimer = setTimeout(async function() {
-      internalRefreshCount++;
-      console.log("running pipeline refresh interval");
-      await getPipeline();
-    }, refreshInterval);
-
-    setRefreshTimer(newRefreshTimer);
   };
 
   const getCurrentView = () => {
-    if (tab === "model") {
+    if (currentTab === "model") {
       return (
         <PipelineWorkflowView
-          parentWorkflowStatus={workflowStatus}
+          pipelineStatus={status}
           pipeline={pipeline}
           setPipeline={setPipeline}
-          refreshCount={refreshCount}
           editItem={editItem}
           setEditItem={setEditItem}
           fetchPlan={fetchPlan}
-          setWorkflowStatus={setWorkflowStatus}
           softLoading={softLoading}
+          isQueued={isQueued}
+          lastStep={lastStep}
+          runCount={runCount}
         />
       );
     }
@@ -180,24 +149,25 @@ function PipelineDetailView() {
       <div>
         <div
           className="max-content-width content-block-no-height p-2 mb-2"
-          style={{ width: "80vw", border: "1px solid #d2d2d2", borderRadius: "0" }}
+          style={{width: "80vw", border: "1px solid #d2d2d2", borderRadius: "0"}}
         >
           <PipelineSummaryPanel
             pipeline={pipeline}
             setPipeline={setPipeline}
-            parentWorkflowStatus={workflowStatus}
-            setWorkflowStatus={setWorkflowStatus}
+            parentWorkflowStatus={status}
             fetchPlan={fetchPlan}
             isLoading={softLoading || isLoading}
+            isQueued={isQueued}
+            runCount={runCount}
           />
         </div>
         <div className="max-content-width-1875 mr-2">
           <PipelineActivityLogTreeTable
             pipeline={pipeline}
-            pipelineStatus={workflowStatus}
+            pipelineStatus={status}
             pipelineId={id}
             getPipeline={getPipeline}
-            pipelineRunCount={DataParsingHelper.parseNestedInteger(pipeline, "workflow.run_count")}
+            pipelineRunCount={runCount}
             loadPipelineFunction={fetchPlan}
           />
         </div>
@@ -206,7 +176,7 @@ function PipelineDetailView() {
   };
 
   const getBody = () => {
-    if (isLoading) {
+    if (isLoading && !pipeline) {
       return (
         <LoadingDialog
           size="md"
@@ -229,9 +199,10 @@ function PipelineDetailView() {
           {pipeline?.name}
         </div>
         <PipelineWorkflowTabBar
-          currentTab={tab}
-          pipelineId={id}
+          currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
           getPipeline={getPipeline}
+          pipelineId={id}
         />
         {getCurrentView()}
       </div>
@@ -240,7 +211,7 @@ function PipelineDetailView() {
 
   return (
     <div>
-      <WorkflowSubNavigationBar currentTab={"pipelineViewer"} />
+      <WorkflowSubNavigationBar currentTab={"pipelineViewer"}/>
       {getBody()}
     </div>
   );

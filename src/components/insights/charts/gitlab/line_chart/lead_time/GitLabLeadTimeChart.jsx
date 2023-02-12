@@ -26,8 +26,6 @@ import BadgeBase from "../../../../../common/badges/BadgeBase";
 import GitlabLeadTimeMaturityBlock from "./GitlabLeadTimeMaturityBlock";
 import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
-import GitlabDeploymentFrequencyMaturityScoreInsights
-  from "../../deployment_frequency/GitlabDeploymentFrequencyMaturityScoreInsights";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import GitlabLeadTimeMaturityScoreInsights from "./GitlabLeadTimeMaturityScoreInsights";
 
@@ -313,7 +311,7 @@ function GitLabLeadTimeChart({
             </div>
           </Col>
           <Col md={12} className={"my-2 p-0 d-flex flex-column align-items-end"}>
-            <GitlabLeadTimeScatterPlotContainer chartData={chartData} />
+            <GitlabLeadTimeScatterPlotContainer chartData={chartData} kpiConfiguration={kpiConfiguration}/>
           </Col>
           <Col md={12} className={"my-2 p-0"}>
             <BadgeBase className={"mx-2"} badgeText={"Note: Results fetched are based on UTC timezone of selected dates"} />

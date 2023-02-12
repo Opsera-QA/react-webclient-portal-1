@@ -1,19 +1,24 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import toolsActions from "components/inventory/tools/tools-actions";
 import ToolCountTable from "components/reports/tools/counts/ToolCountTable";
-import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function ToolCountsReport() {
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [toolCounts, setToolCounts] = useState(undefined);
-  const { getAccessToken } = useContext(AuthContext);
-  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
+  const {
+    isOpseraAdministrator,
+    isSiteAdministrator,
+    isSassUser,
+    isPowerUser,
+    isSecurityManager,
+    isAuditor,
+    getAccessToken,
+    toastContext,
+    accessRoleData,
+  } = useComponentStateReference();
 
   useEffect(() => {
     loadData();
@@ -33,26 +38,29 @@ function ToolCountsReport() {
   };
 
   const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
+    const toolCountResponse = await toolsActions.getToolCounts(getAccessToken);
 
-      const toolCountResponse = await toolsActions.getToolCounts(getAccessToken);
-
-      if (toolCountResponse?.data) {
-        setToolCounts(toolCountResponse.data);
-      }
+    if (toolCountResponse?.data) {
+      setToolCounts(toolCountResponse.data);
     }
   };
+
+  if (
+    isOpseraAdministrator !== true
+    && isSiteAdministrator !== true
+    && isSassUser !== true
+    && isPowerUser !== true
+    && isSecurityManager !== true
+    && isAuditor !== true
+  ) {
+    return null;
+  }
 
   return (
     <ScreenContainer
       breadcrumbDestination={"toolCountsReport"}
       pageDescription={"View Tool usage counts"}
       isLoading={!accessRoleData}
-      accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       navigationTabContainer={<ReportsSubNavigationBar currentTab={"toolReportViewer"} />}
     >
       <ToolCountTable isLoading={isLoading} data={toolCounts} loadData={loadData} />

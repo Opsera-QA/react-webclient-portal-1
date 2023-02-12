@@ -7,6 +7,8 @@ function CoverityBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) 
     let newDataObject = {...dataObject};
     newDataObject.setData("workspace", selectedOption.key);
     newDataObject.setData("workspaceName", selectedOption.name);
+    newDataObject.setData("gitBranch", "");
+    newDataObject.setData("branch", "");
     setDataObject({...newDataObject});
   };
 

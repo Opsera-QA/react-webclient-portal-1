@@ -136,6 +136,10 @@ pre {
     z-index: 1600 !important;
 }
 
+.bold-label label {
+    font-weight: bold;
+}
+
 .rw-multiselect .rw-popup, .rw-dropdown-list .rw-popup {
     /* 31px per row item + top padding */
     max-height: calc((30px * 6) + 1rem) !important;
@@ -153,6 +157,14 @@ pre {
 .rdrDateRangePickerWrapper {
     margin: 0;
     padding: 0;
+}
+
+.rdrMonthAndYearWrapper {
+    padding: 0;
+}
+
+.rdrDefinedRangesWrapper {
+    width: 188px;
 }
 
 /* End Select input styling */
@@ -408,16 +420,17 @@ input[disabled] {
     border-radius: 5px;
 }
 
-.custom-select-input {
-    padding-bottom: 10px;
-}
-
-.object-properties-input {
-    padding-bottom: 10px;
+.select-input-warning {
+    box-shadow: 0 0 3px #CF940C;
+    border-radius: 5px;
 }
 
 .input-container {
-    padding-bottom: 10px;
+}
+
+.input-label label {
+    margin-bottom: 0;
+    font-size: 1rem;
 }
 
 .input-container label {

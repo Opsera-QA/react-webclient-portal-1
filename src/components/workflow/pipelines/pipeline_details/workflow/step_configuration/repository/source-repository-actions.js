@@ -1,14 +1,16 @@
 import baseActions from "utils/actionsBase";
+import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 
 const SourceRepositoryActions = {};
 
 SourceRepositoryActions.registerHook = async (getAccessToken, cancelTokenSource, pipelineOwner, pipelineId, sourceRepositoryModel) => {
-  const nodeUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
+  const nodeUrl = NODE_API_ORCHESTRATOR_SERVER_URL;
   const hookUrl = encodeURIComponent(`${nodeUrl}/hooks/${pipelineOwner}/${pipelineId}/source`);
   const apiUrl = `/connectors/${sourceRepositoryModel?.getData("service")}/${sourceRepositoryModel?.getData("accountId")}/hook/create`;
   const queryParams = {
     params: {
       repo: sourceRepositoryModel?.getData("repoId"),
+      projectId: sourceRepositoryModel?.getData("projectId"),
       hook: hookUrl,
       branch: sourceRepositoryModel?.getData("branch"),
       workspace: sourceRepositoryModel?.getData("workspace"),

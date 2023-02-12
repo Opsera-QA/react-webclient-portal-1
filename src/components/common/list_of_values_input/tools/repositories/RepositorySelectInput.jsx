@@ -31,10 +31,16 @@ function RepositorySelectInput(
 
   // TODO : Use this for other SCMs if they match
   const getGitLabTextField = (repo) => {
-    const repoName = repo?.name || "No Repository";
-    const repoFullName = repo?.nameSpacedPath || "";
+    if(!repo || repo.length === 0) {
+      return "No Repository";
+    }
+    const repoName = repo?.name ? repo?.name : repo;
+    const repoFullName = repo?.nameSpacedPath || false;
     const repoId = repo?.id || "No Repository ID Assigned";
-    return (`${repoName} (${repoFullName})`);
+    if (repoFullName) {
+      return (`${repoName} (${repoFullName})`);
+    }
+    return (`${repoName}`);
   };
 
   const getRelevantInput = () => {

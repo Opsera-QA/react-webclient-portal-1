@@ -27,7 +27,7 @@ function SideOverlayContainer({ children, titleText, titleIcon, showPanel, close
 
   return (
     <div className={`${rightSide ? `right-side-overlay` : `left-side-overlay`} overlay-panel content-card-1 w-25`}>
-      <div className="px-3 content-block-header title-text-header-1 d-flex">
+      <div className="px-3 py-2 content-block-header title-text-header-1 d-flex">
         <div className={"my-auto w-100"}>
           <OverlayTitleBar handleClose={handleClose} isLoading={isLoading} titleText={titleText} titleIcon={titleIcon} />
         </div>

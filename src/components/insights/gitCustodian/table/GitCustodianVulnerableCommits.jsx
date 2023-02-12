@@ -6,8 +6,9 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import modelHelpers from "components/common/model/modelHelpers";
 import GitCustodianVulnerableCommitsTable
   from "components/insights/gitCustodian/table/GitCustodianVulnerableCommitsTable";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function GitCustodianVulnerableCommits({ gitCustodianData, gitCustodianFilterModel }) {
+function GitCustodianVulnerableCommits({ gitCustodianData, gitCustodianFilterModel, setGitCustodianFilterModel }) {
   const [isLoading, setIsLoading] = useState(false);
   const [vulnerableCommits, setVulnerableCommits] = useState([]);
   const [tableFilterModel, setTableFilterModel] = useState(modelHelpers.parseObjectIntoModel(undefined, GitCustodianFilterMetadata));
@@ -23,10 +24,11 @@ function GitCustodianVulnerableCommits({ gitCustodianData, gitCustodianFilterMod
         throw error;
       }
     });
-  }, []);
+  }, [gitCustodianData]);
 
   const loadData = async (filterModel = tableFilterModel) => {
     try {
+      setVulnerableCommits([]);
       setIsLoading(true);
       // TODO: This API should be sending back the data like this and not nested so deep
       //  {

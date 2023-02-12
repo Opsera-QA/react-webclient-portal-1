@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 
+// TODO: Move to constants library
 export const ACCESS_ROLE_TYPES = {
   ADMINISTRATOR: "administrator",
   MANAGER: "manager",

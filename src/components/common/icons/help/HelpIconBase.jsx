@@ -4,12 +4,13 @@ import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
 
-function HelpIconBase(
+export default function HelpIconBase(
   {
     className,
     onClickFunction,
     helpOverlay,
     helpOverlayTitle,
+    iconSize,
   }) {
   return (
     <div className={className}>
@@ -21,6 +22,7 @@ function HelpIconBase(
         <IconBase
           onClickFunction={onClickFunction}
           icon={faQuestionCircle}
+          iconSize={iconSize}
         />
       </TooltipWrapper>
     </div>
@@ -33,6 +35,5 @@ HelpIconBase.propTypes = {
   tooltipText: PropTypes.string,
   helpOverlay: PropTypes.any,
   helpOverlayTitle: PropTypes.any,
+  iconSize: PropTypes.string,
 };
-
-export default HelpIconBase;

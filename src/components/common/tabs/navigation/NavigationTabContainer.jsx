@@ -3,10 +3,13 @@ import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function NavigationTabContainer({children, styling}) {
-  const { isOpseraAdministrator } = useComponentStateReference();
+  const {
+    isOpseraAdministrator,
+    isFreeTrial,
+  } = useComponentStateReference();
 
   // This is hidden on free trial for users besides opsera administrators
-  if (isOpseraAdministrator !== true) {
+  if (isFreeTrial === true && isOpseraAdministrator !== true) {
     return null;
   }
 

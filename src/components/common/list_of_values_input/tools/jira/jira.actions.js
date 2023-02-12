@@ -95,3 +95,8 @@ jiraActions.getJiraCustomTagFields = async (getAccessToken, cancelTokenSource, t
   const apiUrl = `/tool/jira/${toolId}/project/${projectKey}/customTagFields`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
+
+jiraActions.getJiraCustomMappingFields = async (getAccessToken, cancelTokenSource, toolId, projectKey) => {
+  const apiUrl = `/tool/jira/${toolId}/project/${projectKey}/customMappingFields`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};

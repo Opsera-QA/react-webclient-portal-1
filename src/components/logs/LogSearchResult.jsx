@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import { Alert } from "react-bootstrap";
 import ModalLogs from "components/common/modal/modalLogs";
 import { faSearchPlus } from "@fortawesome/free-solid-svg-icons";
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
+
 import IconBase from "components/common/icons/IconBase";
 import TextHighlighter from "components/common/highlighter/TextHighlighter";
 import { hasStringValue } from "components/common/helpers/string-helpers";
@@ -62,10 +63,8 @@ function LogSearchResult({ searchResults, submittedSearchTerm, getPaginator }) {
                 }}
               />
               <strong className="ml-2">
-                {format(
-                  new Date(typeof item._source["@timestamp"] !== "undefined" ? item._source["@timestamp"] : null),
-                  "yyyy-MM-dd', 'hh:mm a"
-                )}
+                {DateFormatHelper.formatDateAsTimestampWithoutSeconds(
+                  new Date(typeof item._source["@timestamp"] !== "undefined" ? item._source["@timestamp"] : null))}
               </strong>
               {item._source.data ? (
                 <strong className="ml-4">

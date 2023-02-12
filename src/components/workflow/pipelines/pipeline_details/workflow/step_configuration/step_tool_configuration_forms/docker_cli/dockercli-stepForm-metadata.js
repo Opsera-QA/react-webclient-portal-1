@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const dockerCliStepFormMetadata = {
   type: "Docker CLI Tool Configuration",
   fields: [
@@ -22,15 +24,18 @@ const dockerCliStepFormMetadata = {
     {
       label: "Repository",
       id: "gitRepository",
-    },
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
+      isRequired: true
+    },    
     {
       label: "Repository",
       id: "repoId",
-      isRequired: true,
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       label: "Branch",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequired: true
     },
     {
@@ -63,6 +68,11 @@ const dockerCliStepFormMetadata = {
       label: "Dynamic Parameters",
       id: "environmentVariables",
       maxItems: 15,      
+    },
+    {
+      label: "Custom Parameters",
+      id:"customParameters",
+      maxItems: 15,
     },
     {
       label: "Enable Docker Build",
@@ -110,6 +120,7 @@ const dockerCliStepFormMetadata = {
     {
       label: "Build Arguments",
       id: "buildArguments",
+      maxItems: 15,
     },
     {
       label: "Enable Docker Push",
@@ -208,7 +219,16 @@ const dockerCliStepFormMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("registryType") === "nexus";
       },
-    },    
+    },
+    {
+      label: "Output Variables",
+      id: "outputCustomParameters",
+      maxItems: 15
+    },
+    {
+      label: "Enable Output Variables",
+      id: "enableOutputVariables",
+    }    
   ],
   newObjectFields: {
     service: "",
@@ -249,6 +269,7 @@ const dockerCliStepFormMetadata = {
     port: "",
     nexusToolConfigId: "",    
     dockerPort: "",
+    enableOutputVariables: false
   }
 };
 

@@ -2,7 +2,7 @@ const axios = require("axios");
 const config = require("../config");
 
 const axiosInstance = axios.create({
-  baseURL: config.apiServerUrl,
+  baseURL: config.NODE_API_ORCHESTRATOR_SERVER_URL,
   timeout: 50000,
 });
 

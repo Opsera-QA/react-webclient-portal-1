@@ -9,11 +9,12 @@ import Model from "core/data_model/model";
 import FilterContainer from "../../../../../common/table/FilterContainer";
 import VanitySetTabViewContainer from "../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import GithubPendingMergeRequestVerticalTabContainer from "./GithubPendingMergeRequestVerticalTabContainer";
-import TabAndViewContainer from "../../../../../common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import {
   getLimitedTableTextColumn,
   getTableDateTimeColumn,
   getTableTextColumn,
+  getTableHourDurationTextColumn,
 } from "components/common/table/table-column-helpers";
 import CustomTable from "../../../../../common/table/CustomTable";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -41,6 +42,7 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
       getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
       getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
       getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
+      getTableHourDurationTextColumn(getField(fields, "MergeRequestTimeTaken"))
     ],
     []
   );

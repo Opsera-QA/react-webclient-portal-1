@@ -31,7 +31,7 @@ export default function TaskTemplateManagement() {
         }
       });
     }
-  }, [accessRoleData]);
+  }, [isOpseraAdministrator]);
 
   const loadData = async () => {
     try {

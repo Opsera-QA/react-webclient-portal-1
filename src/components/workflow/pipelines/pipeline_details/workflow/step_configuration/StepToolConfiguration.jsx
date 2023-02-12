@@ -102,9 +102,13 @@ import LiquibaseStepConfiguration
 import BlackDuckStepConfiguration from "./step_tool_configuration_forms/black_duck/BlackDuckStepConfiguration";
 import FortifyStepConfiguration from "./step_tool_configuration_forms/fortify/FortifyStepConfiguration";
 import DockerCliStepConfiguration from "./step_tool_configuration_forms/docker_cli/DockerCliStepConfiguration";
+import SnykStepConfiguration from "./step_tool_configuration_forms/snyk/SnykStepConfiguration";
+import AquasecStepConfiguration from "./step_tool_configuration_forms/aquasec/AquasecStepConfiguration";
 import UserActionsPipelineStepEditorPanel
   from "components/workflow/plan/step/user_actions/UserActionsPipelineStepEditorPanel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import HelmStepConfiguration from "./step_tool_configuration_forms/helm/HelmStepConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -116,32 +120,16 @@ function StepToolConfiguration({
   setToast,
   setShowToast
 }) {
-  const contextType = useContext(AuthContext);
   const { plan } = pipeline.workflow;
   const [pipelineStep, setPipelineStep] = useState(undefined);
   const [stepTool, setStepTool] = useState(undefined);
   const [stepName, setStepName] = useState(undefined);
   const [stepId, setStepId] = useState(undefined);
-  const { getAccessToken } = contextType;
-  const toastContext = useContext(DialogToastContext);
-
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;    
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
+  const {
+    cancelTokenSource,
+    toastContext,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
     if (isMongoDbId(pipelineStepId) === true) {
@@ -586,7 +574,7 @@ function StepToolConfiguration({
             handleCloseFunction={closeEditorPanel}
           />
         );
-      case "command-line":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.COMMAND_LINE:
         return (
           <CommandLineStepConfiguration
             pipelineId={pipeline._id}
@@ -864,6 +852,20 @@ function StepToolConfiguration({
       case "terraform": 
         return (
           <TerraformStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "helm": 
+        return (
+          <HelmStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}
@@ -1455,8 +1457,32 @@ function StepToolConfiguration({
               stepTool={stepTool}
               parentCallback={callbackFunction}
               closeEditorPanel={closeEditorPanel}
+              pipelineStep={pipelineStep}
             />
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK:
+        return (
+            <SnykStepConfiguration
+              pipelineId={pipeline._id}
+              plan={pipeline.workflow.plan}
+              stepId={stepId}
+              stepTool={stepTool}
+              parentCallback={callbackFunction}
+              closeEditorPanel={closeEditorPanel}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
+        return (
+          <AquasecStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            closeEditorPanel={closeEditorPanel}
+            createJob={createTwistlockJob}
+          />
+        );        
     }
   };
 

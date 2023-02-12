@@ -21,6 +21,7 @@ import GitScraperActionButton from "../buttons/gitscraper/GitScraperActionButton
 import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import TaskStateField from "temp-library-components/fields/orchestration/state/task/TaskStateField";
+import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
 
 function TaskSummaryPanel(
   {
@@ -29,6 +30,7 @@ function TaskSummaryPanel(
     setActiveTab,
     loadData,
     status,
+    runCount,
   }) {
   const {
     cancelTokenSource,
@@ -64,6 +66,7 @@ function TaskSummaryPanel(
           <TaskAksActionButtons
             gitTasksData={gitTasksData}
             status={status}
+            runCount={runCount}
           />
         );
       case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
@@ -71,6 +74,7 @@ function TaskSummaryPanel(
           <TasksEcsActionButtons
             gitTasksData={gitTasksData}
             status={status}
+            runCount={runCount}
           />
         );
       case TASK_TYPES.GITSCRAPER:
@@ -78,6 +82,7 @@ function TaskSummaryPanel(
           <GitScraperActionButton
             gitTasksData={gitTasksData}
             status={status}
+            runCount={runCount}
           />
         );
       default:
@@ -89,6 +94,7 @@ function TaskSummaryPanel(
             status={status}
             actionAllowed={TaskRoleHelper.canRunTask(userData, gitTasksData?.getPersistData())}
             taskType={gitTasksData?.getData("type")}
+            runCount={runCount}
           />
         );
     }
@@ -125,7 +131,10 @@ function TaskSummaryPanel(
     if (isFreeTrial !== true) {
       return (
         <Col md={6}>
-          <TextFieldBase dataObject={gitTasksData} fieldName={"owner_name"} />
+          <SsoUserField
+            fieldName={"owner"}
+            model={gitTasksData}
+          />
         </Col>
       );
     }
@@ -206,6 +215,7 @@ TaskSummaryPanel.propTypes = {
   setGitTasksData: PropTypes.func,
   loadData: PropTypes.func,
   status: PropTypes.string,
+  runCount: PropTypes.number,
 };
 
 export default TaskSummaryPanel;

@@ -16,7 +16,7 @@ export default function SelectAllIcon(
   return (
     <div className={className}>
       <div onClick={() => selectAllFunction()} className={"badge badge-success pointer d-flex"}>
-        <div className={"my-auto"}>
+        <div className={"my-auto mr-1"}>
           <IconBase
             icon={faPlus}
             className={"mr-1"}

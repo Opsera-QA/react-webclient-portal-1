@@ -1,14 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
 import {
   faPen,
   faCheck,
 } from "@fortawesome/pro-light-svg-icons";
-import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
+import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 
 export default function PipelineWorkflowWorkflowEditingToggleButton(
   {
@@ -20,18 +18,19 @@ export default function PipelineWorkflowWorkflowEditingToggleButton(
   const {
     isOpseraAdministrator,
     userData,
+    isFreeTrial,
   } = useComponentStateReference();
 
   if (editingWorkflow === true) {
     return (
-      <Button
+      <VanityButtonBase
+        className={"mr-1"}
         variant={"success"}
-        size="sm"
-        onClick={() => {setEditingWorkflow(false);}}
-      >
-        <IconBase icon={faCheck} className={"mr-1"} />
-        Done Editing
-      </Button>
+        buttonSize={"sm"}
+        icon={faCheck}
+        onClickFunction={() => {setEditingWorkflow(false);}}
+        normalText={"Done Editing"}
+      />
     );
   }
 
@@ -40,41 +39,31 @@ export default function PipelineWorkflowWorkflowEditingToggleButton(
     return null;
   }
 
-  if (isOpseraAdministrator !== true) {
+  if (isFreeTrial === true && isOpseraAdministrator !== true) {
     return (
-      <TooltipWrapper
-        innerText={"In the main Opsera offering you can add, update, or remove Pipeline steps to meet your exact needs."}
-        wrapInDiv={true}
-      >
-        <Button
-          className={"mr-1"}
-          variant={"outline-secondary"}
-          size={"sm"}
-          disabled={true}
-        >
-          <IconBase icon={faPen} className={"mr-1"} />Edit Workflow
-        </Button>
-      </TooltipWrapper>
+      <VanityButtonBase
+        tooltip={"In the main Opsera offering you can add, update, or remove Pipeline steps to meet your exact needs."}
+        disabled={true}
+        icon={faPen}
+        variant={"outline-secondary"}
+        className={"mr-1"}
+        buttonSize={"sm"}
+        normalText={"Edit Workflow"}
+      />
     );
   }
 
   return (
-    <TooltipWrapper
-      innerText={"Edit pipeline workflow: add or remove steps, edit step names and set tools for individual steps"}
-      wrapInDiv={true}
-    >
-      <Button
-        className={"mr-1"}
-        variant={"outline-secondary"}
-        size={"sm"}
-        onClick={() => {
-          setEditingWorkflow(true);
-        }}
-        disabled={(workflowStatus && workflowStatus !== "stopped")}
-      >
-        <IconBase icon={faPen} className={"mr-1"} />Edit Workflow
-      </Button>
-    </TooltipWrapper>
+    <VanityButtonBase
+      tooltip={"Edit Pipeline Workflow: add or remove steps, edit step names and set tools for individual steps"}
+      icon={faPen}
+      variant={"outline-secondary"}
+      className={"mr-1"}
+      buttonSize={"sm"}
+      normalText={"Edit Workflow"}
+      onClickFunction={() => setEditingWorkflow(true)}
+      disabled={workflowStatus && workflowStatus !== "stopped"}
+    />
   );
 }
 

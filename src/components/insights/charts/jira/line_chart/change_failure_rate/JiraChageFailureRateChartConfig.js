@@ -1,9 +1,7 @@
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
 
 export default () => ({
-  enableGridX: false,
-  enableGridY: false,
-  yScale: { 
+  yScale: {
     type: 'linear', 
     min: '0', 
     max: '100', 

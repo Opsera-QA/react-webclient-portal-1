@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
@@ -6,6 +6,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {errorHelpers} from "components/common/helpers/error-helpers";
+import _ from "lodash";
 
 function MultiSelectInputBase(
   {
@@ -29,7 +30,7 @@ function MultiSelectInputBase(
     linkTooltipText,
     detailViewLink,
     infoOverlay,
-    onSearchFunction,
+    supportSearchLookup,
     formatDataFunction,
     parseValueFunction,
     error,
@@ -39,6 +40,7 @@ function MultiSelectInputBase(
     helpTooltipText,
     loadDataFunction,
     requireUserEnable,
+    onEnableEditFunction,
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
@@ -160,6 +162,10 @@ function MultiSelectInputBase(
   };
 
   const getPlaceholderText = () => {
+    if (requireUserEnable === true && enabled === false && disabled !== true) {
+      return `Click to Load ${pluralTopic} and Enable Edit Mode`;
+    }
+
     if (hasStringValue(internalPlaceholderText) === true) {
       return internalPlaceholderText;
     }
@@ -177,7 +183,16 @@ function MultiSelectInputBase(
 
   const enableEditingFunction = () => {
     setEnabled(true);
+
+    if (onEnableEditFunction) {
+      onEnableEditFunction();
+    }
   };
+
+  const onSearchFunction = useCallback(
+    loadDataFunction ? _.debounce(loadDataFunction, 600) : undefined,
+    [loadDataFunction],
+  );
 
   if (field == null || visible === false) {
     return null;
@@ -189,6 +204,7 @@ function MultiSelectInputBase(
         model={dataObject}
         showLabel={showLabel}
         field={field}
+        disabled={disabled}
         clearDataFunction={getClearDataFunction()}
         requireClearDataConfirmation={requireClearDataConfirmation}
         linkTooltipText={linkTooltipText}
@@ -199,7 +215,7 @@ function MultiSelectInputBase(
         hasError={hasStringValue(internalErrorMessage) === true || hasStringValue(errorMessage) === true}
         helpTooltipText={helpTooltipText}
         loadDataFunction={loadDataFunction}
-        enableEditingFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
+        enableEditingFunction={disabled !== true && requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
       />
       <StandaloneMultiSelectInput
         hasErrorState={hasStringValue(getErrorMessage()) === true}
@@ -212,7 +228,8 @@ function MultiSelectInputBase(
         placeholderText={getPlaceholderText()}
         disabled={disabled || (requireUserEnable === true && enabled === false)}
         setDataFunction={updateValue}
-        onSearchFunction={onSearchFunction}
+        onSearchFunction={supportSearchLookup === true && typeof loadDataFunction === "function" ? onSearchFunction : undefined}
+        onClickFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
       />
       <InfoText
         fieldName={fieldName}
@@ -259,13 +276,14 @@ MultiSelectInputBase.propTypes = {
   inputHelpOverlay: PropTypes.any,
   formatDataFunction: PropTypes.func,
   parseValueFunction: PropTypes.func,
-  onSearchFunction: PropTypes.func,
   error: PropTypes.any,
   pluralTopic: PropTypes.string,
   visible: PropTypes.bool,
   helpTooltipText: PropTypes.string,
   loadDataFunction: PropTypes.func,
   requireUserEnable: PropTypes.bool,
+  onEnableEditFunction: PropTypes.func,
+  supportSearchLookup: PropTypes.bool,
 };
 
 export default MultiSelectInputBase;

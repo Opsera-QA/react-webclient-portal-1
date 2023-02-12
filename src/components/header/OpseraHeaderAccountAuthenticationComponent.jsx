@@ -10,10 +10,7 @@ import IconBase from "components/common/icons/IconBase";
 import { faUserCircle } from "@fortawesome/pro-light-svg-icons";
 import SiteViewModeNavigationSelectInput from "components/header/view_modes/SiteViewModeNavigationSelectInput";
 import OpseraHeaderSettingsLink from "components/header/OpseraHeaderSettingsLink";
-
-const EXTERNAL_LINKS = {
-  KNOWLEDGE_BASE: `https://docs.opsera.io/getting-started-with-free-trial`
-};
+import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
 
 export default function OpseraHeaderAccountAuthenticationComponent(
   {
@@ -29,8 +26,6 @@ export default function OpseraHeaderAccountAuthenticationComponent(
     getAccessToken,
     userData,
     themeConstants,
-    isTestEnvironment,
-    isProductionEnvironment,
   } = useComponentStateReference();
   // const fullUserName = `${userData?.firstName} ${userData?.lastName} (${userData?.email})`;
   const fullUserName = `${userData?.firstName} ${userData?.lastName}`;
@@ -67,24 +62,6 @@ export default function OpseraHeaderAccountAuthenticationComponent(
     );
   };
 
-  const getFrequentlyAskedQuestionsLink = () => {
-    return (
-      <Link to={"/faq"} id={"faq-button"} className={"dropdown-item nav-drop-down-item"}>
-        Frequently Asked Questions
-      </Link>
-    );
-  };
-
-  const getHelpDocumentationLink = () => {
-    if (isProductionEnvironment === false && isTestEnvironment === false) {
-      return (
-        <Link to={"/help-documentation"} id={"help-button"} className={"dropdown-item nav-drop-down-item"}>
-          Help Documentation
-        </Link>
-      );
-    }
-  };
-
   const getTitle = () => {
     return (
       <span
@@ -105,23 +82,8 @@ export default function OpseraHeaderAccountAuthenticationComponent(
         id={"basic-nav-dropdown"}
         className={"top-nav-dropdown"}
       >
-        {/*<Link
-          to={"/user/profile"}
-          id={"profile-button"}
-          className={"dropdown-item nav-drop-down-item"}
-        >
-          Profile
-        </Link>*/}
-        {/*{isLdapUser && <Link to="/user/myUserRecord" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>}*/}
-
-        {/*<NavDropdown.Divider/>*/}
-
-        <NavDropdown.Item href={EXTERNAL_LINKS.KNOWLEDGE_BASE} target="_blank"
+        <NavDropdown.Item href={EXTERNAL_LINKS.FREE_TRIAL_KNOWLEDGE_BASE} target="_blank"
                           className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
-        {/*<NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/AQBYAw" target="_blank"*/}
-        {/*                  className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>*/}
-        {/*{getFrequentlyAskedQuestionsLink()}*/}
-        {getHelpDocumentationLink()}
         <NavDropdown.Divider/>
 
         <NavDropdown.Item href="https://opsera.io/" target="_blank" className="nav-drop-down-item"
@@ -144,7 +106,7 @@ export default function OpseraHeaderAccountAuthenticationComponent(
     }
   };
 
-  if (!accessRoleData) {
+  if (!userData) {
     return null;
     // return (
     //   <Navbar.Collapse id={"basic-navbar-nav"}>

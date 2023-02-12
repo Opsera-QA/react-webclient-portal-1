@@ -7,7 +7,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SiteRolePermissionsField from "components/settings/ldap_site_roles/details/SiteRolePermissionsField";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 
-function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData }) {
+function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData, isLoading }) {
   if (ldapGroupData == null) {
     return <></>;
   }
@@ -35,6 +35,7 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData }) {
         loadData={loadData}
         orgDomain={domain}
         userData={ldapGroupData.getData("members")}
+        isLoading={isLoading}
       />
     </SummaryPanelContainer>
   );
@@ -43,7 +44,8 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData }) {
 LdapGroupSummaryPanel.propTypes = {
   ldapGroupData: PropTypes.object,
   domain: PropTypes.string,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  isLoading: PropTypes.bool,
 };
 
 

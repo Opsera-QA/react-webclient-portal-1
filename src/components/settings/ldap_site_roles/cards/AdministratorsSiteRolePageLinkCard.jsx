@@ -1,22 +1,17 @@
 import React from "react";
-import useComponentStateReference from "hooks/useComponentStateReference";
-import BreadcrumbPageLinkCard from "components/common/card/link/BreadcrumbPageLinkCard";
+import PropType from "prop-types";
+import SiteRoleManagementPageLinkCardBase
+  from "components/settings/ldap_site_roles/cards/SiteRoleManagementPageLinkCardBase";
 
-export default function AdministratorsSiteRolePageLinkCard() {
-  const {
-    isSiteAdministrator,
-    isOpseraAdministrator,
-    userData,
-  } = useComponentStateReference();
-
-  if (isSiteAdministrator !== true && isOpseraAdministrator !== true) {
-    return null;
-  }
-
+export default function AdministratorsSiteRolePageLinkCard({administratorsSiteRole}) {
   return (
-    <BreadcrumbPageLinkCard
+    <SiteRoleManagementPageLinkCardBase
+      siteRole={administratorsSiteRole}
       breadcrumbDestination={"ldapAdministratorsSiteRoleDetailView"}
-      pathParameter={userData}
     />
   );
 }
+
+AdministratorsSiteRolePageLinkCard.propTypes = {
+  administratorsSiteRole: PropType.object,
+};

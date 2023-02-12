@@ -22,7 +22,7 @@ import DotNetBitbucketWorkspaceInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/dotnetcli/inputs/DotNetBitbucketWorkspaceInput";
 import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
 import ParameterSelectListInputBase
-  from "components/common/list_of_values_input/parameters/ParameterSelectListInputBase";
+  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 import DotNetCliTypeSelectInput from "./inputs/DotNetCliTypeSelectInput";
 import DotNetCliSdkVersionSelectInput from "./inputs/DotNetCliSdkVersionSelectInput";
 

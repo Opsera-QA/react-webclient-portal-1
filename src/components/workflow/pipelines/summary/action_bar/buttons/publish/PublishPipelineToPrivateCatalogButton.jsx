@@ -4,7 +4,6 @@ import {faShareAll} from "@fortawesome/pro-light-svg-icons";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { buttonLabelHelper } from "temp-library-components/helpers/label/button/buttonLabel.helper";
-import pipelineActions from "components/workflow/pipeline-actions";
 import {
   customerPipelineTemplateCatalogActions
 } from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
@@ -14,8 +13,7 @@ export default function PublishPipelineToPrivateCatalogButton(
     disabled,
     className,
     buttonSize,
-    pipelineId,
-    roles,
+    publishPipelineModel,
   }) {
   const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
   const {
@@ -31,8 +29,7 @@ export default function PublishPipelineToPrivateCatalogButton(
       await customerPipelineTemplateCatalogActions.publishPipelineToCustomerCatalog(
         getAccessToken,
         cancelTokenSource,
-        pipelineId,
-        roles,
+        publishPipelineModel,
       );
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
       toastContext.showSystemInformationToast("You have published a copy of this pipeline template in your organization's private catalog for others in your organization to use.  Overall settings of the pipeline are shared but no tools or activity logs have been duplicated in this process.");
@@ -62,9 +59,8 @@ export default function PublishPipelineToPrivateCatalogButton(
 }
 
 PublishPipelineToPrivateCatalogButton.propTypes = {
-  pipelineId: PropTypes.string,
+  publishPipelineModel: PropTypes.object,
   className: PropTypes.string,
   disabled: PropTypes.bool,
   buttonSize: PropTypes.string,
-  roles: PropTypes.array,
 };

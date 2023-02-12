@@ -8,6 +8,7 @@ function CypressStepBitbucketWorkspaceSelectInput({model, setModel, disabled}) {
     newModel.setData("workspace", selectedOption?.key);
     newModel.setData("workspaceName", selectedOption?.name);
     newModel.setData("repoId", "");
+    newModel.setData("repository", "");
     newModel.setData("projectId", "");
     newModel.setData("gitUrl", "");
     newModel.setData("sshUrl", "");

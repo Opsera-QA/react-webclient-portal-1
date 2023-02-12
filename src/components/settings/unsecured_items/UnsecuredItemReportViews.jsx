@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { faShield } from "@fortawesome/pro-light-svg-icons";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import FilterContainer from "components/common/table/FilterContainer";
-import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import UnsecuredItemReportVerticalTabContainer from "components/settings/unsecured_items/UnsecuredItemReportVerticalTabContainer";
 import UnsecuredItemReportTable from "components/settings/unsecured_items/UnsecuredItemReportTable";
 import { FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION } from "components/common/table/FilterContainer.jsx";

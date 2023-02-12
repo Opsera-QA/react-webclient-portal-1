@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { faHandshake } from "@fortawesome/pro-light-svg-icons";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import ParameterSelectListInputBase from "components/common/list_of_values_input/parameters/ParameterSelectListInputBase";
+import ParameterSelectListInputBase from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 
 function AzureCliInputParametersInput({ model, setModel, disabled, fieldName }) {
 

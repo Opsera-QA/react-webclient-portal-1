@@ -8,7 +8,7 @@ import axios from "axios";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import PipelineThresholdInputRow from "components/common/inputs/object/pipelines/threshhold/PipelineThresholdInputRow";
 
-function PipelineThresholdInputBase({ fieldName, model, setModel, helpComponent, disabled, className }) {
+function PipelineThresholdInputBase({ fieldName, model, setModel, helpComponent, disabled, className, thresholds }) {
   const [field] = useState(model.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [thresholdRows, setThresholdRows] = useState([]);
@@ -148,6 +148,7 @@ function PipelineThresholdInputBase({ fieldName, model, setModel, helpComponent,
                 level={threshold?.level}
                 updateThresholdCount={(newValue) => updateThresholdRow(index, "count", newValue)}
                 updateThresholdLevel={(newValue) => updateThresholdRow(index, "level", newValue)}
+                thresholds={thresholds}
               />
             </div>
           );
@@ -228,6 +229,7 @@ PipelineThresholdInputBase.propTypes = {
   helpComponent: PropTypes.object,
   disabled: PropTypes.bool,
   className: PropTypes.string,
+  thresholds: PropTypes.array,
 };
 
 export default PipelineThresholdInputBase;

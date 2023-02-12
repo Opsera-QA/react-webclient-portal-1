@@ -1,17 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
 import BreadcrumbPageLinkCard from "components/common/card/link/BreadcrumbPageLinkCard";
 
-function PipelineOwnershipReportsPageLinkCard() {
+export default function PipelineOwnershipReportsPageLinkCard() {
   return (
     <BreadcrumbPageLinkCard
       breadcrumbDestination={"pipelineOwnershipReport"}
     />
   );
 }
-
-PipelineOwnershipReportsPageLinkCard.propTypes = {
-  accessRoleData: PropTypes.object,
-};
-
-export default PipelineOwnershipReportsPageLinkCard;

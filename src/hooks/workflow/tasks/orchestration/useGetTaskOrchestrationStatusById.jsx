@@ -45,6 +45,7 @@ export default function useGetTaskOrchestrationStatusById(
   return ({
     status: orchestrationStatus.status,
     runCount: orchestrationStatus.runCount,
+    updatedAt: orchestrationStatus.updatedAt,
     loadData: () => loadData(getOrchestrationStatus, handleErrorFunction),
     isLoading: isLoading,
     error: error,

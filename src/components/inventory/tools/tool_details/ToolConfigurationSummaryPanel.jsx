@@ -116,6 +116,10 @@ import FortifyToolConfigurationSummaryPanel
   from "components/inventory/tools/tool_details/tool_jobs/fortify/FortifyToolConfigurationSummaryPanel";
 import FortifyMetadata 
   from "components/inventory/tools/tool_details/tool_jobs/fortify/fortify-tool-metadata";
+  import SnykToolConfigurationSummaryPanel from "./tool_jobs/snyk/SnykToolConfigurationSummaryPanel";
+  import snykConnectionMetadata from "./tool_jobs/snyk/snyk-connection-metadata";
+import AquasecToolConfigurationSummaryPanel from "./tool_jobs/aquasec/AquasecToolConfigurationSummaryPanel";
+import AquasecMetadata from "./tool_jobs/aquasec/aquasec-tool-metadata";
 
 function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
   const getConfigurationSummaryPanel = () => {
@@ -321,6 +325,18 @@ function ToolConfigurationSummaryPanel({ toolConfiguration, toolIdentifier }) {
         return (
           <FortifyToolConfigurationSummaryPanel
             fortifyToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, FortifyMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK:
+        return (
+          <SnykToolConfigurationSummaryPanel
+            snykToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, snykConnectionMetadata)}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
+        return (
+          <AquasecToolConfigurationSummaryPanel
+            aquasecToolConfigurationModel={modelHelpers.parseObjectIntoModel(toolConfiguration, AquasecMetadata)}
           />
         );
       default:

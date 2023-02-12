@@ -4,6 +4,7 @@ import DtoTopPagination from "components/common/pagination/DtoTopPagination";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import LoadingDialog from "components/common/status_notifications/loading";
 import VanityPaginationContainer from "components/common/pagination/v2/VanityPaginationContainer";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 function PaginationContainer(
   {
@@ -48,7 +49,7 @@ function PaginationContainer(
   const getBody = () => {
     if (isLoading && (!Array.isArray(data) || data.length === 0)) {
       return (
-        <LoadingDialog
+        <CenterLoadingIndicator
           message={loadingMessage}
           size={"sm"}
         />

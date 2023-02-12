@@ -61,7 +61,7 @@ import {pipelinesTrails} from "components/workflow/pipelines.trails";
 import {accountSettingsTrails} from "components/settings/accountSettings.trails";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
-const breadcrumbs = {
+export const breadcrumbs = {
   frequentlyAskedQuestions: {
     parent: undefined,
     name: "frequentlyAskedQuestions",
@@ -782,6 +782,14 @@ const breadcrumbs = {
     path: paths.coverityReports,
     title: "Coverity Reports",
     linkText: "Coverity Reports",
+    icon: faAnalytics
+  },
+  gitscraperReports: {
+    parent: undefined,
+    name: "gitscraperReports",
+    path: paths.gitscraperReports,
+    title: "Git Scraper Reports",
+    linkText: "Git Scraper Reports",
     icon: faAnalytics
   },
   toolsUsedInPipelineReport: {

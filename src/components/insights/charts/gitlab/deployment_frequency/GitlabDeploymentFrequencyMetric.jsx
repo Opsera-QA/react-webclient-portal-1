@@ -26,6 +26,7 @@ import FullScreenCenterOverlayContainer from "../../../../common/overlays/center
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import GitlabDeploymentFrequencyMaturityScoreInsights from "./GitlabDeploymentFrequencyMaturityScoreInsights";
+import InfoDialog from "../../../../common/status_notifications/info";
 
 function GitlabDeploymentFrequency({
   kpiConfiguration,
@@ -82,21 +83,24 @@ function GitlabDeploymentFrequency({
             (obj) => obj.type === "organizations",
           )
         ]?.value;
-
-      const response = await gitlabAction.gitlabDeploymentStatistics(
-        getAccessToken,
-        cancelSource,
-        kpiConfiguration,
-        dashboardTags,
-        dashboardOrgs,
-      );
-      const metrics = response?.data?.data?.gitlabDeploymentStatistics?.data;
-      if (isMounted?.current === true && metrics?.statisticsData?.step?.total) {
-        setMetricData(metrics?.statisticsData);
-        setChartData(metrics?.chartData);
-      } else {
-        setMetricData({});
-        setChartData([]);
+      const selectedDeploymentStages =
+        getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
+      if(selectedDeploymentStages){
+        const response = await gitlabAction.gitlabDeploymentStatistics(
+          getAccessToken,
+          cancelSource,
+          kpiConfiguration,
+          dashboardTags,
+          dashboardOrgs,
+        );
+        const metrics = response?.data?.data?.gitlabDeploymentStatistics?.data;
+        if (isMounted?.current === true && metrics?.statisticsData?.step?.total) {
+          setMetricData(metrics?.statisticsData);
+          setChartData(metrics?.chartData);
+        } else {
+          setMetricData({});
+          setChartData([]);
+        }
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -145,6 +149,20 @@ const onRowSelect = () => {
 };
 
   const getChartBody = () => {
+    const selectedDeploymentStages =
+      getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
+
+    if (!selectedDeploymentStages) {
+      return (
+          <div className="new-chart mb-3" style={{ height: "300px" }}>
+            <div className="max-content-width p-5 mt-5"
+                 style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <InfoDialog message="No Stages selected. Please select a deployment stage on filters to proceed further." />
+            </div>
+          </div>
+      );
+    }
+
     if (
       !metricData?.step?.total ||
       !chartData?.step?.length
@@ -152,8 +170,6 @@ const onRowSelect = () => {
       return null;
     }
     const recentStageDate = new Date(metricData?.step?.stepFinishedAt).toLocaleDateString();
-    const selectedDeploymentStages =
-      getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
     const dataBlockTextForDeployment = {
       current: selectedDeploymentStages ? "Total Deployments" : "Total Stages Run",
       previous: selectedDeploymentStages ? "Prev Deployments" : "Prev Runs",

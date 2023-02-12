@@ -518,7 +518,7 @@ a.text-primary:hover, a.text-primary:focus {
     color: #fff;
 }
 
-.custom-table .table-row:hover {
+.custom-table .table-row:hover, .standalone-checkbox-input:hover {
     background: rgb(230, 229, 227);
     color: black;
 }
@@ -545,7 +545,16 @@ a.text-primary:hover, a.text-primary:focus {
 /* End custom table styling */
 
 .message-field, .pipeline-task-message {
+    border-radius: .75rem;
+}
+
+.info-message-field, .pipeline-task-message {
     background-color: #f2f4f8;
+}
+
+.warning-message-field {
+    border: 1px solid #CF940C;
+    background-color: rgba(207, 148, 12, .05);
 }
 
 /* Custom modal styling */

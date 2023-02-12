@@ -1,18 +1,12 @@
 import React, {
-  useContext,
   useEffect,
-  useRef,
   useState,
-  useCallback,
 } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
-import { AuthContext } from "contexts/AuthContext";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { gitlabActions } from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
-import { hasStringValue } from "components/common/helpers/string-helpers";
-import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
-import _ from "lodash";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function GitlabRepositorySelectInput({
   fieldName,
@@ -25,44 +19,33 @@ function GitlabRepositorySelectInput({
   valueField,
   textField,
 }) {
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [gitlabRepositories, setGitlabRepositories] = useState([]);
   const [error, setError] = useState(undefined);
-  const isMounted = useRef(false);
-  const { getAccessToken } = useContext(AuthContext);
+  const [inEditMode, setInEditMode] = useState(false);
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    isMounted.current = true;
-    const cancelSource = axios.CancelToken.source();
-    setCancelTokenSource(cancelSource);
-    setError(undefined);
     setGitlabRepositories([]);
 
-    if (isMongoDbId(toolId) === true) {
-      loadData("", toolId, cancelSource).catch((error) => {
+    if (isMongoDbId(toolId) === true && inEditMode === true) {
+      loadData("").catch((error) => {
         throw error;
       });
     }
+  }, [toolId, inEditMode]);
 
-    return () => {
-      cancelSource.cancel();
-      isMounted.current = false;
-    };
-  }, [toolId]);
-
-  const loadData = async (searchTerm = "", currentToolId = toolId, cancelSource = cancelTokenSource) => {
+  const loadData = async (searchTerm = "") => {
     try {
+      setError(undefined);
       setIsLoading(true);
       await loadGitlabRepositories(
         searchTerm,
-        currentToolId,
-        cancelSource,
-        );
+      );
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
@@ -76,12 +59,10 @@ function GitlabRepositorySelectInput({
 
   const loadGitlabRepositories = async (
     searchTerm,
-    toolId,
-    cancelSource = cancelTokenSource,
   ) => {
     const response = await gitlabActions.getRepositoriesFromGitlabInstanceV3(
       getAccessToken,
-      cancelSource,
+      cancelTokenSource,
       searchTerm,
       toolId,
     );
@@ -109,13 +90,8 @@ function GitlabRepositorySelectInput({
     return "The first 100 repositories will be loaded by default, please enter at least 3 characters to search for repositories by name.";
   };
 
-  const delayedSearchQuery = useCallback(
-    _.debounce((searchTerm, toolId) => loadData(searchTerm, toolId), 600),
-    [],
-  );
-
   return (
-    <LazyLoadSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={model}
       helpTooltipText={getDataPullLimitMessage()}
@@ -130,8 +106,11 @@ function GitlabRepositorySelectInput({
       singularTopic={"Gitlab Repository"}
       pluralTopic={"Gitlab Repositories"}
       error={error}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
-      useToggle={true}
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
+      externalCacheToolId={toolId}
+      loadDataFunction={loadData}
+      supportSearchLookup={true}
     />
   );
 }

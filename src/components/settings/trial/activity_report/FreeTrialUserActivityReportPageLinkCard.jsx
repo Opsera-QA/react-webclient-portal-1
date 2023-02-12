@@ -3,14 +3,6 @@ import BreadcrumbPageLinkCard from "components/common/card/link/BreadcrumbPageLi
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function FreeTrialUserActivityReportPageLinkCard() {
-  const {
-    accessRoleData,
-  } = useComponentStateReference();
-
-  if (accessRoleData?.OpseraAdministrator !== true) {
-    return null;
-  }
-
   return (
     <BreadcrumbPageLinkCard
       breadcrumbDestination={"freeTrialUserActivityReport"}

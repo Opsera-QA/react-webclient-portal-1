@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const SnaplogicStepFormMetadata = {
   type: "Snaplogic Step Configuration",
   fields: [
@@ -19,15 +21,18 @@ const SnaplogicStepFormMetadata = {
     {
       label: "Repository",
       id: "gitRepository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
       isRequired: true
     },    
     {
       label: "Repository",
       id: "repoId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       label: "Branch",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequired: true
     },
     {

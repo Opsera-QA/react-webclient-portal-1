@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import useGetPipelineAuditLogModelById from "hooks/workflow/pipelines/audit/useGetPipelineAuditLogModelById";
+import useGetPipelineAuditLogModelById from "hooks/audit_logs/pipelines/useGetPipelineAuditLogModelById";
 import UserActivityAuditLogDetailOverlayBase from "components/common/audit_log/UserActivityAuditLogDetailOverlayBase";
 
 export default function PipelineAuditLogDetailOverlay(

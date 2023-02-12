@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { hasStringValue } from "components/common/helpers/string-helpers";
@@ -6,7 +6,6 @@ import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
 import IconBase from "components/common/icons/IconBase";
 import { ExternalLink } from "temp-library-components/link/ExternalLink";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import FreetrialWizardHelpDocumentation
     from "../../../common/help/documentation/freetrial/FreetrialWizardHelpDocumentation";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
@@ -16,9 +15,8 @@ export default function WelcomeWidget({ className }) {
   const {
     themeConstants,
     userData,
+    toastContext,
   } = useComponentStateReference();
-
-    const toastContext = useContext(DialogToastContext);
 
   const getWelcomeText = () => {
     const welcomeText = hasStringValue(userData?.firstName) === true ? `Hello ${userData?.firstName}` : "Hello";

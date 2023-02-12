@@ -9,6 +9,8 @@ import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import anchoreIntegratorStepConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/anchore_integrator/anchore-integrator-step-configuration-metadata";
+import BooleanToggleInput from "../../../../../../../common/inputs/boolean/BooleanToggleInput";
+import CoverityStepImpactThresholdInput from "../coverity/inputs/CoverityStepImpactThresholdInput";
 
 function AnchoreIntegratorStepConfiguration({ stepTool, plan, stepId, parentCallback, closeEditorPanel }) {
   const toastContext = useContext(DialogToastContext);
@@ -73,6 +75,17 @@ function AnchoreIntegratorStepConfiguration({ stepTool, plan, stepId, parentCall
         plan={plan}
         fieldName={"ecrPushStepId"}
         disabled={anchoreIntegratorModel?.getData("anchoreToolConfigId")?.length === 0}
+      />
+      <BooleanToggleInput
+          dataObject={anchoreIntegratorModel}
+          setDataObject={setAnchoreIntegratorModel}
+          fieldName={"clientSideThreshold"}
+      />
+      <CoverityStepImpactThresholdInput
+          model={anchoreIntegratorModel}
+          setModel={setAnchoreIntegratorModel}
+          fieldName={"thresholdCompliance"}
+          visible={anchoreIntegratorModel?.getData("clientSideThreshold")}
       />
     </PipelineStepEditorPanelContainer>
   );

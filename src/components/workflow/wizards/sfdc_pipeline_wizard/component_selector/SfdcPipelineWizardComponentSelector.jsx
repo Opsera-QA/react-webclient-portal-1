@@ -14,7 +14,7 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import SfdcPipelineWizardSubmitComponentTypesButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardSubmitComponentTypesButton";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
-import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
+import {faArrowLeft} from "@fortawesome/pro-light-svg-icons";
 import SfdcPipelineWizardIncludeDependenciesToggle
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
 import IconBase from "components/common/icons/IconBase";

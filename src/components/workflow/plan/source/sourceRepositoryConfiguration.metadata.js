@@ -43,6 +43,10 @@ export const sourceRepositoryConfigurationMetadata = {
       isRequired: true,
     },
     {
+      label: "Project Id",
+      id: "projectId",
+    },
+    {
       label: "Primary Branch",
       id: "branch",
       isRequired: true,
@@ -111,17 +115,23 @@ export const sourceRepositoryConfigurationMetadata = {
       label: "Enabled",
       id: "dynamicSettings",
     },
+    {
+      label: "Allow users to set Dynamic Settings when starting this Pipeline",
+      id: "allowDynamicSettingsInUi",
+      formText: `
+        If this setting is enabled, users of this Pipeline will be able to set its Dynamic Settings in the UI at runtime. 
+      `
+    },
   ],
   dbSupportedFieldNames: [
     "name",
     "service",
     "accountId",
-    "username",
-    "password",
     "workspace",
     "workspaceName",
     "repository",
     "repoId",
+    "projectId",
     "gitUrl",
     "sshUrl",
     "branch",
@@ -135,14 +145,14 @@ export const sourceRepositoryConfigurationMetadata = {
     "gitExportEnabled",
     "gitExportPath",
     "dynamicSettings",
+    "allowDynamicSettingsInUi",
   ],
   newObjectFields: {
     name: "",
     service: "",
     accountId: "",
-    username: "",
-    password: "",
     repoId: "",
+    projectId: "",
     gitUrl: "",
     sshUrl: "",
     repository: "",

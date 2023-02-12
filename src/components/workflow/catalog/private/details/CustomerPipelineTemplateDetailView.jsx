@@ -13,6 +13,8 @@ import ActionBarTransferCustomerPipelineTemplateButton
   from "components/workflow/catalog/private/action_bar/ActionBarTransferCustomerPipelineTemplateButton";
 import ActionBarDeleteCustomerPipelineTemplateButton
   from "components/workflow/catalog/private/action_bar/ActionBarDeleteCustomerPipelineTemplateButton";
+import ViewCustomerPipelineTemplateAuditLogsActionBarButton
+  from "components/workflow/catalog/private/action_bar/ViewCustomerPipelineTemplateAuditLogsActionBarButton";
 
 export default function CustomerPipelineTemplateDetailView() {
   const {id} = useParams();
@@ -34,10 +36,15 @@ export default function CustomerPipelineTemplateDetailView() {
             <ActionBarTransferCustomerPipelineTemplateButton
               templateModel={pipelineTemplateModel}
               loadTemplate={loadData}
-              className={"mr-3"}
+              className={"ml-3"}
+            />
+            <ViewCustomerPipelineTemplateAuditLogsActionBarButton
+              templateModel={pipelineTemplateModel}
+              className={"ml-3"}
             />
             <ActionBarDeleteCustomerPipelineTemplateButton
               customerPipelineTemplateModel={pipelineTemplateModel}
+              className={"ml-3"}
             />
           </div>
         </ActionBarContainer>

@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import React from "react";
 import {
   getScriptLanguageDisplayText,
@@ -214,7 +214,7 @@ export const getTableDateColumn = (field, className, width = 150) => {
     template: function (text, row, col) {
       try {
         const newDate = text ? new Date(text) : undefined;
-        return newDate ? format(new Date(text), "yyyy-MM-dd") : "";
+        return newDate ? DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(text), "yyyy-MM-dd") : "";
       }
       catch (error) {
         return "";
@@ -253,7 +253,7 @@ export const getTableDateTimeColumn = (field, className, width = 175, showFilter
           dateString = date.toLocaleString("en-us");
         }
 
-        return format(new Date(dateString), "yyyy-MM-dd', 'hh:mm a");
+        return DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(dateString));
       } catch(error) {
         console.log(error?.message);
         return "";
@@ -669,13 +669,13 @@ export const getExternalLinkWithIcon = (field, className, width) => {
     class: className,
     width: width,
     tooltipTemplate: function (value) {
-      return `<div class="custom-tooltip"><span>${value?.key}</span></div>`;
+      return `<div class="custom-tooltip"><span>${value?.key || value}</span></div>`;
     },
     template: function (value) {
       return (`
-        <a href=${value?.url} target="_blank" className="text-muted console-text-invert-modal">
+        <a href=${value?.url || value} target="_blank" className="text-muted console-text-invert-modal">
           <i class="fal fa-external-link cell-icon my-auto"></i>
-          <span>${value?.key}</span>
+          <span>${value?.key || value}</span>
         </a>
       `);      
     },

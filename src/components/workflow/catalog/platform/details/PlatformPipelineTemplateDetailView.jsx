@@ -9,6 +9,8 @@ import PlatformPipelineTemplateDetailPanel
   from "components/workflow/catalog/platform/details/PlatformPipelineTemplateDetailPanel";
 import useGetPlatformPipelineTemplateModelById
   from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplateModelById";
+import ViewPlatformPipelineTemplateAuditLogsActionBarButton
+  from "components/workflow/catalog/platform/action_bar/ViewPlatformPipelineTemplateAuditLogsActionBarButton";
 
 export default function PlatformPipelineTemplateDetailView() {
   const {id} = useParams();
@@ -24,6 +26,11 @@ export default function PlatformPipelineTemplateDetailView() {
         <ActionBarContainer>
           <div>
             <ActionBarBackButton path={"/workflow/catalog/library"}/>
+          </div>
+          <div>
+            <ViewPlatformPipelineTemplateAuditLogsActionBarButton
+              templateModel={pipelineTemplateModel}
+            />
           </div>
         </ActionBarContainer>
       );

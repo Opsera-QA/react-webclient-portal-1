@@ -41,6 +41,65 @@ export class FilterModelBase {
     return currentValue;
   };
 
+  getDateRangeFilterObject = (
+    syncIncompleteDateRange,
+    startDateFieldName = "startDate",
+    endDateFieldName = "endDate",
+  ) => {
+    const startDate = this.getData(startDateFieldName);
+    const endDate = this.getData(endDateFieldName);
+    const hasNoDatesSet = !startDate && !endDate;
+    const incompleteDates = !startDate || !endDate;
+
+    if (hasNoDatesSet || (incompleteDates && syncIncompleteDateRange !== true)) {
+      return undefined;
+    }
+
+    if (!startDate) {
+      this.setData(startDateFieldName, endDate);
+
+      return {
+        startDate: endDate,
+        endDate: endDate,
+      };
+    }
+
+    if (!endDate && syncIncompleteDateRange === true) {
+      this.setData(endDateFieldName, startDate);
+
+      return {
+        startDate: startDate,
+        endDate: startDate,
+      };
+    }
+
+    return {
+      startDate: startDate,
+      endDate: endDate,
+    };
+  };
+
+  syncIncompleteDateRange = (
+    startDateFieldName = "startDate",
+    endDateFieldName = "endDate",
+  ) => {
+    const startDate = this.getData(startDateFieldName);
+    const endDate = this.getData(endDateFieldName);
+    const hasNoDatesSet = !startDate && !endDate;
+
+    if (hasNoDatesSet) {
+      return;
+    }
+
+    if (!startDate) {
+      this.setData(startDateFieldName, endDate);
+    }
+
+    if (!endDate) {
+      this.setData(endDateFieldName, startDate);
+    }
+  };
+
   removeArrayItem = (fieldName, index) => {
     const array = DataParsingHelper.parseArray(this.getData(fieldName));
 
@@ -344,6 +403,15 @@ export class FilterModelBase {
     }
   };
 
+  hasActiveFilterValue = (id) => {
+    return this.getActiveFilterValue(id) != null;
+  };
+
+  getActiveFilterValue = (id) => {
+    const activeFilters = DataParsingHelper.parseArray(this.getData("activeFilters"), []);
+    return activeFilters.find((filter) => filter.filterId === id);
+  };
+
   updateTotalCount = (newTotalCount) => {
     const parsedTotalCount = DataParsingHelper.parseInteger(newTotalCount, 0);
 
@@ -458,6 +526,14 @@ export class FilterModelBase {
   clone = () => {
     return DataParsingHelper.cloneDeep(this);
   };
+
+  isNew = () => {
+    return true;
+  }
+
+  isChanged = () => {
+    return false;
+  }
 }
 
 export default FilterModelBase;

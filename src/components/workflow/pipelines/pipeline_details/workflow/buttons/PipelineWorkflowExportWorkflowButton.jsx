@@ -1,13 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-bootstrap";
-import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { faGitAlt } from "@fortawesome/free-brands-svg-icons";
 import PipelineExportToGitOverlay
   from "components/workflow/pipelines/pipeline_details/workflow/PipelineExportToGitOverlay";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
+import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 
 export default function PipelineWorkflowExportWorkflowButton(
   {
@@ -21,6 +19,7 @@ export default function PipelineWorkflowExportWorkflowButton(
     isOpseraAdministrator,
     userData,
     toastContext,
+    isFreeTrial,
   } = useComponentStateReference();
   const tooltip =
     gitExportEnabled === true
@@ -36,47 +35,36 @@ export default function PipelineWorkflowExportWorkflowButton(
     );
   };
 
-  // TODO: Wire up role definitions
-  if (
-    PipelineRoleHelper.canViewPipelineConfiguration(userData, pipeline) !== true
-    || editingWorkflow === true
-  ) {
+  // TODO: Wire up role definitions from a model instead
+  if (PipelineRoleHelper.canViewPipelineConfiguration(userData, pipeline) !== true) {
     return null;
   }
 
-  if (isOpseraAdministrator !== true) {
+  if (isFreeTrial === true && isOpseraAdministrator !== true) {
     return (
-      <TooltipWrapper
-        innerText={"In the main Opsera offering you can export the current version of the Pipeline's configuration to your Git repository."}
-        wrapInDiv={true}
-      >
-        <Button
-          className={"mr-1"}
-          variant={"outline-secondary"}
-          size={"sm"}
-          disabled={true}
-        >
-          <IconBase icon={faGitAlt} className={"mr-1"} />Export to Git
-        </Button>
-      </TooltipWrapper>
+      <VanityButtonBase
+        className={"mr-1"}
+        icon={faGitAlt}
+        buttonSize={"sm"}
+        tooltip={"In the main Opsera offering you can export the current version of the Pipeline's configuration to your Git repository."}
+        variant={"outline-secondary"}
+        normalText={"Export to Git"}
+        disabled={true}
+      />
     );
   }
 
   return (
-    <TooltipWrapper
-      innerText={tooltip}
-      wrapInDiv={true}
-    >
-      <Button
-        className={"mr-1"}
-        variant={"outline-secondary"}
-        size={"sm"}
-        onClick={launchGitExportOverlay}
-        disabled={(workflowStatus && workflowStatus !== "stopped") || gitExportEnabled !== true || sourceRepositoryModel?.isModelValid() !== true}
-      >
-        <IconBase icon={faGitAlt} className={"mr-1"} />Export to Git
-      </Button>
-    </TooltipWrapper>
+    <VanityButtonBase
+      className={"mr-1"}
+      icon={faGitAlt}
+      buttonSize={"sm"}
+      tooltip={tooltip}
+      variant={"outline-secondary"}
+      normalText={"Export to Git"}
+      disabled={(workflowStatus && workflowStatus !== "stopped") || gitExportEnabled !== true || sourceRepositoryModel?.isModelValid() !== true || editingWorkflow === true}
+      onClickFunction={launchGitExportOverlay}
+    />
   );
 }
 

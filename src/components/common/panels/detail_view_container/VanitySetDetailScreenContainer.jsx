@@ -134,7 +134,7 @@ function VanitySetDetailScreenContainer(
     <div className={"max-content-width"}>
       {getTopNavigation()}
       <div className={"screen-container content-container content-card-1"}>
-        <div className={"px-2 content-block-header title-text-header-1 d-flex"}>
+        <div className={"p-2 content-block-header title-text-header-1 d-flex"}>
           <div className={"my-auto w-100"}>
             {getTitleBar()}
           </div>

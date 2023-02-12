@@ -14,6 +14,7 @@ import RegistryToolViewJsonActionBarButton
   from "components/inventory/tools/details/json/RegistryToolViewJsonActionBarButton";
 import ActionBarDeleteToolButton from "components/inventory/tools/action_bar/ActionBarDeleteToolButton";
 import ActionBarTransferToolButton from "components/inventory/tools/action_bar/ActionBarTransferToolButton";
+import ActionBarViewToolAuditLogsButton from "components/inventory/tools/action_bar/ActionBarViewToolAuditLogsButton";
 
 function ToolDetailView() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"workspace"} />);
@@ -41,9 +42,13 @@ function ToolDetailView() {
             toolModel={toolModel}
             loadTool={loadData}
           />
+          {/*<ActionBarViewToolAuditLogsButton*/}
+          {/*  className={"ml-3"}*/}
+          {/*  toolModel={toolModel}*/}
+          {/*/>*/}
           <ActionBarDeleteToolButton
             className={"ml-3"}
-            toolModel={toolModel}I
+            toolModel={toolModel}
           />
         </div>
       </ActionBarContainer>

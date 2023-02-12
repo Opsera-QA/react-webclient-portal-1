@@ -1,17 +1,12 @@
 import React, {
-  useContext,
   useEffect,
-  useRef,
-  useCallback,
   useState,
 } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
-import { AuthContext } from "contexts/AuthContext";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
-import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
-import _ from "lodash";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function AzureDevOpsRepositorySelectInput({
   fieldName,
@@ -24,44 +19,34 @@ function AzureDevOpsRepositorySelectInput({
   valueField,
   textField,
 }) {
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [azureRepositories, setAzureRepositories] = useState([]);
   const [error, setError] = useState(undefined);
-  const isMounted = useRef(false);
-  const { getAccessToken } = useContext(AuthContext);
+  const [inEditMode, setInEditMode] = useState(false);
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    isMounted.current = true;
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
     setAzureRepositories([]);
     setError(undefined);
 
-    if (isMongoDbId(toolId) === true) {
-      loadData(undefined, toolId, source).catch((error) => {
+    if (inEditMode === true && isMongoDbId(toolId) === true) {
+      loadData("").catch((error) => {
         throw error;
       });
     }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, [toolId]);
+  }, [toolId, inEditMode]);
 
   const loadData = async (
     searchTerm = "",
-    currentToolId = toolId,
-    cancelSource = cancelTokenSource,
   ) => {
     try {
+      setError(undefined);
       setIsLoading(true);
-      await loadAzureRepositories(searchTerm, currentToolId, cancelSource);
+      await loadAzureRepositories(searchTerm);
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
@@ -75,13 +60,11 @@ function AzureDevOpsRepositorySelectInput({
 
   const loadAzureRepositories = async (
     searchTerm,
-    currentToolId = toolId,
-    cancelSource = cancelTokenSource,
   ) => {
     const response = await azureActions.getRepositoriesFromAzureInstanceV2(
       getAccessToken,
-      cancelSource,
-      currentToolId,
+      cancelTokenSource,
+      toolId,
       searchTerm,
     );
     const repositories = response?.data?.data;
@@ -91,16 +74,8 @@ function AzureDevOpsRepositorySelectInput({
     }
   };
 
-  const delayedSearchQuery = useCallback(
-    _.debounce(
-      (searchTerm, toolId) => loadAzureRepositories(searchTerm, toolId),
-      600,
-    ),
-    [],
-  );
-
   return (
-    <LazyLoadSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
@@ -114,7 +89,11 @@ function AzureDevOpsRepositorySelectInput({
       pluralTopic={"Azure Repositories"}
       singularTopic={"Azure Repository"}
       error={error}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
+      supportSearchLookup={true}
+      externalCacheToolId={toolId}
+      loadDataFunction={loadData}
     />
   );
 }

@@ -10,36 +10,31 @@ import TaskOwnershipReportsPageLinkCard
   from "components/reports/users/user/consolidated_user_report/task_access/TaskOwnershipReportsPageLinkCard";
 import UserReportsPageLinkCard from "components/reports/users/user/UserReportsPageLinkCard";
 import PropTypes from "prop-types";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function UserReportPageLinkCards({accessRoleData}) {
+export default function UserReportPageLinkCards() {
+  const {
+    isSaasUser,
+  } = useComponentStateReference();
+
+  if (isSaasUser !== false) {
+    return null;
+  }
 
   return (
     <div className={"mx-2"}>
       <GroupMembershipReportsPageLinkCard
-        accessRoleData={accessRoleData}
       />
       {/*<UserSettingsPageLinkCard*/}
-      {/*  accessRoleData={accessRoleData}*/}
       {/*/>*/}
       <PipelineOwnershipReportsPageLinkCard
-        accessRoleData={accessRoleData}
       />
       <ToolOwnershipReportsPageLinkCard
-        accessRoleData={accessRoleData}
       />
       <TaskOwnershipReportsPageLinkCard
-        accessRoleData={accessRoleData}
       />
       <UserReportsPageLinkCard
-        accessRoleData={accessRoleData}
       />
     </div>
   );
 }
-
-UserReportPageLinkCards.propTypes = {
-  accessRoleData: PropTypes.object,
-};
-
-export default UserReportPageLinkCards;
-

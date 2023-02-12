@@ -1,25 +1,29 @@
 import React from "react";
-import PropTypes from "prop-types";
 import BreadcrumbPageLinkCard from "components/common/card/link/BreadcrumbPageLinkCard";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function UserReportsPageLinkCard({accessRoleData}) {
+export default function UserReportsPageLinkCard() {
+  const {
+    isSiteAdministrator,
+    isPowerUser,
+    isOpseraAdministrator,
+    isAuditor,
+    isSecurityManager,
+  } = useComponentStateReference();
+
   if (
-    accessRoleData.Administrator !== true
-    && accessRoleData.OpseraAdministrator !== true
-    && accessRoleData.PowerUser !== true
-    && accessRoleData.SassPowerUser !== true
+    isSiteAdministrator !== true
+    && isPowerUser !== true
+    && isOpseraAdministrator !== true
+    && isAuditor !== true
+    && isSecurityManager !== true
   ) {
     return null;
   }
+
   return (
     <BreadcrumbPageLinkCard
       breadcrumbDestination={"consolidatedUserReport"}
     />
   );
 }
-
-UserReportsPageLinkCard.propTypes = {
-  accessRoleData: PropTypes.object,
-};
-
-export default UserReportsPageLinkCard;

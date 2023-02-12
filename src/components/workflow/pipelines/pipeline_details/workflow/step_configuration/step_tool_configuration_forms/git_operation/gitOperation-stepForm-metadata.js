@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const gitOperationStepFormMetadata = {
   type: "PMD Tool Configuration",
   fields: [
@@ -18,12 +20,15 @@ const gitOperationStepFormMetadata = {
     {
       label: "Repository",
       id: "repository",
+      isRequired: true,
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
     },
     {
       label: "Repository",
       id: "repoId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
       isRequired: true,
       maxLength: 255,
     },
@@ -36,6 +41,7 @@ const gitOperationStepFormMetadata = {
     {
       label: "Branch",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequired: true,
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",

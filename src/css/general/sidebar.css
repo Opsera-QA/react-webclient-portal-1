@@ -23,10 +23,6 @@
     display: none;
 }
 
-.sidebar-menu .menu-text {
-  margin-left: 5px;
-}
-
 .sidebar-menu .menu-text-sub {
     margin-left: 2rem;
 }
@@ -39,7 +35,7 @@
     color: #CF940C; /* #0f3e84;*/
 }
 
-.sidebar-menu a:hover {
+.sidebar-menu a:hover, .sidebar-menu .collapse-icon:hover {
     /*color: #7A756C;*/ /* #0f3e84;*/
     color: #CF940C;
 }

@@ -14,6 +14,7 @@ import BoomiActionableTotalExecutionsDataBlock from "./data_blocks/BoomiActionab
 import BoomiActionableFreqDataBlock from "./data_blocks/BoomiActionableFreqDataBlock";
 import BoomiActionableSuccessPercentageDataBlock from "./data_blocks/BoomiActionableSuccessPercentageDataBlock";
 import BoomiActionableInsightsDeployTable from "./BoomiActionableInsightsDeployTable";
+import BoomiActionableTotalDeploymentsDataBlock from "./data_blocks/BoomiActionableTotalDeploymentsDataBlock";
 
 BoomiActionableInsightsDeployTable.propTypes = {
     isLoading: PropTypes.bool,
@@ -116,20 +117,26 @@ function BoomiActionableInsightDeployOverlay({ kpiConfiguration, dashboardData }
 
     const getDataBlocks = () =>{
         return (<Row className="px-2">
-            <Col xl={4} lg={4} sm={6} className={"my-3"}>
+            <Col xl={3} lg={3} sm={5} className={"my-3"}>
                 <BoomiActionableTotalExecutionsDataBlock
                     className={'p-2 dark-gray-text-primary'}
                     data={blockData?.totalExecutions}
                 />
             </Col>
-            <Col xl={4} lg={4} sm={6} className={"my-3"}>
+            <Col xl={3} lg={3} sm={5} className={"my-3"}>
+                <BoomiActionableTotalDeploymentsDataBlock
+                    className={'p-2 dark-gray-text-primary'}
+                    data={blockData?.totalDeployments}
+                />
+            </Col>
+            <Col xl={3} lg={3} sm={5} className={"my-3"}>
                 <BoomiActionableFreqDataBlock
                     className={'p-2 dark-gray-text-primary'}
                     data={blockData?.freq}
                     subtitle={"Frequency"}
                 />
             </Col>
-            <Col xl={4} lg={4} sm={6} className={"my-3"}>
+            <Col xl={3} lg={3} sm={5} className={"my-3"}>
                 <BoomiActionableSuccessPercentageDataBlock
                     className={'p-2 dark-gray-text-primary'}
                     data={blockData?.successPercentage}

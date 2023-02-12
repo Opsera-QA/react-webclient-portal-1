@@ -27,6 +27,10 @@ const JENKINS_BUILD_OPTIONS = [
       name: "Python",
       value: "python",
     },
+    {
+        name: "Node",
+        value: "node",
+    },
   ];
 
 function JenkinsJobsBuildTypeSelectInput({ fieldName, model, setModel }) {

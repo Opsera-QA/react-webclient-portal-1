@@ -22,13 +22,12 @@ import VanitySetVerticalTab from "../../../../../common/tabs/vertical_tabs/Vanit
 import VanitySetVerticalTabContainer from "../../../../../common/tabs/vertical_tabs/VanitySetVerticalTabContainer";
 import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
 import CustomTab from "../../../../../common/tabs/CustomTab";
-import TabAndViewContainer from "../../../../../common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import TabPanelContainer from "../../../../../common/panels/general/TabPanelContainer";
 import {getMaturityScoreText} from "../../../charts-helpers";
 import JiraChangeFailureRateMaturityScoreInsightsMetadata from "./JiraChangeFailureRateMaturityScoreInsightsMetaData";
 import JiraMeanTimeToResolutionInsightsDataBlock
     from "../../bar_chart/mean_time_to_resolution/JiraMeanTimeToResolutionInsightsDataBlock";
-import FilterContainer from "../../../../../common/table/FilterContainer";
 
 function JiraChangeFailureRateMaturityScoreInsights({ kpiConfiguration, insightsData }) {
     const [activeHorizontalTab, setActiveHorizontalTab] = useState("projects");
@@ -110,42 +109,18 @@ function JiraChangeFailureRateMaturityScoreInsights({ kpiConfiguration, insights
     const getTable = () => {
         let data;
         if(activeHorizontalTab == "projects") {
-            return (
-                <FilterContainer
-                    title={"Maturity Score by Projects"}
-                    body={getTableContainer(projectColumns, maturityScoreByProject)}
-                    className={"px-2 pb-2"}
-                />
-            );
+            return getTableContainer(projectColumns, maturityScoreByProject);
         } else if(activeHorizontalTab == "teams") {
-            return (
-                <FilterContainer
-                    title={"Maturity Score by Teams"}
-                    body={getTableContainer(teamNameColumns, maturityScoreByTeam)}
-                    className={"px-2 pb-2"}
-                />
-            );
+            return getTableContainer(teamNameColumns, maturityScoreByTeam);
         } else if(activeHorizontalTab == "serviceComponents") {
-            return (
-                <FilterContainer
-                    title={"Maturity Score by Service Components"}
-                    body={getTableContainer(serviceComponentColumns, maturityScoreByServiceComponent)}
-                    className={"px-2 pb-2"}
-                />
-            );
+            return getTableContainer(serviceComponentColumns, maturityScoreByServiceComponent);
         } else if(activeHorizontalTab == "tags") {
             if(activeVerticalTab) {
                 data = maturityScoreByTag.filter(tag => tag.name === activeVerticalTab);
             } else {
                 data = maturityScoreByTag.filter(tag => tag.name === maturityScoreByTag[0].name);
             }
-            return (
-                <FilterContainer
-                    title={"Maturity Score by Tags"}
-                    body={getTableContainer(tagColumns, data[0]?.values || [])}
-                    className={"px-2 pb-2"}
-                />
-            );
+            return getTableContainer(tagColumns, data[0]?.values || []);
         }
 
     };

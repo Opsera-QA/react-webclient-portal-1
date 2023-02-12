@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DeployPlatformPipelineOverlay from "components/workflow/catalog/platform/deploy/DeployPlatformPipelineOverlay";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
 
 export default function CreatePlatformPipelineButton(
   {
@@ -15,6 +16,7 @@ export default function CreatePlatformPipelineButton(
   const {
     toastContext,
     isOpseraAdministrator,
+    userData,
   } = useComponentStateReference();
 
   const launchConfirmationOverlay = () => {
@@ -25,7 +27,10 @@ export default function CreatePlatformPipelineButton(
     );
   };
 
-  if (isOpseraAdministrator !== true && (template?.readOnly === true || (template?.singleUse === true && activeTemplates.includes(template?._id)))) {
+  if (
+    PipelineRoleHelper.canCreatePipeline(userData) !== true ||
+    (isOpseraAdministrator !== true && (template?.readOnly === true || (template?.singleUse === true && activeTemplates.includes(template?._id))))
+  ) {
     return null;
   }
 

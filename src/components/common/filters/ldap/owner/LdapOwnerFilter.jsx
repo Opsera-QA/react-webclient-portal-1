@@ -9,13 +9,15 @@ function LdapOwnerFilter(
   { 
     filterModel, 
     setFilterModel, 
-    setDataFunction, 
+    setDataFunction,
+    clearDataFunction,
     className,
     visible,
     valueField,
     fieldName,
     placeholderText,
     inline,
+    showLabel,
   }) {
   const [isLoading, setIsLoading] = useState(false);
   const [ldapUsers, setLdapUsers] = useState([]);
@@ -85,6 +87,7 @@ function LdapOwnerFilter(
         fieldName={fieldName}
         busy={isLoading}
         placeholderText={placeholderText}
+        clearDataFunction={clearDataFunction}
         setDataObject={setFilterModel}
         dataObject={filterModel}
         textField={getTextField}
@@ -92,6 +95,7 @@ function LdapOwnerFilter(
         selectOptions={ldapUsers}
         setDataFunction={setDataFunction}
         inline={inline}
+        showLabel={showLabel}
       />
     </div>
   );
@@ -107,6 +111,8 @@ LdapOwnerFilter.propTypes = {
   fieldName: PropTypes.string,
   placeholderText: PropTypes.string,
   inline: PropTypes.bool,
+  showLabel: PropTypes.bool,
+  clearDataFunction: PropTypes.func,
 };
 
 LdapOwnerFilter.defaultProps = {

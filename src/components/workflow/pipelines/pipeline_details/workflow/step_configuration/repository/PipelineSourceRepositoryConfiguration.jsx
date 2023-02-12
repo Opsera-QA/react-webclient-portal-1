@@ -1,6 +1,5 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import PipelineSourceRepositoryToolIdentifierSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryToolIdentifierSelectInput";
 import PipelineSourceRepositoryBitbucketWorkspaceSelectInput
@@ -20,6 +19,7 @@ import PipelineSourceRepositoryToolSelectInput
 import PipelineSourceRepositorySecondaryBranchesMultiSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySecondaryBranchesMultiSelectInput";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
+import PipelineSourceRepositoryGitExportEnabledInput from "./PipelineSourceRepositoryGitExportEnabledInput";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
@@ -27,16 +27,21 @@ import PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
 import {
   sourceRepositoryConfigurationMetadata
 } from "components/workflow/plan/source/sourceRepositoryConfiguration.metadata";
-import PipelineSourceRepositoryGitExportEnabledInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryGitExportEnabledInput";
+import usePipelineSourceRepositoryActions from "components/workflow/plan/source/usePipelineSourceRepositoryActions";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function PipelineSourceRepositoryConfiguration(
   {
     pipeline,
-    parentCallback,
     handleCloseClick,
   }) {
-  const toastContext = useContext(DialogToastContext);
+  const {
+    getAccessToken,
+    cancelTokenSource,
+    toastContext,
+  } = useComponentStateReference();
+  const pipelineSourceRepositoryActions = usePipelineSourceRepositoryActions();
+
   const [isLoading, setIsLoading] = useState(false);
   const [sourceRepositoryModel, setSourceRepositoryModel] = useState(undefined);
 
@@ -47,7 +52,7 @@ function PipelineSourceRepositoryConfiguration(
       const parsedModel = modelHelpers.parseObjectIntoModel(pipeline?.workflow?.source, sourceRepositoryConfigurationMetadata);
       setSourceRepositoryModel(parsedModel);
     }
-  }, [JSON.stringify(pipeline)]);
+  }, []);
 
   // TODO: Make Node route that just accepts the source object and updates it
   const callbackFunction = async () => {
@@ -59,17 +64,42 @@ function PipelineSourceRepositoryConfiguration(
       }
 
       // TODO: Don't deconstruct like this.
-      let { name, dynamicSettings, service, accountId, username, password, repository, branch, key, trigger_active, repoId, sshUrl, gitUrl, workspace, workspaceName, secondary_branches, gitExportEnabled, gitExportPath, isPushEvent, isPrEvent, prCreatedEvent, prApprovedEvent  } = persistData;
+      let {
+        name,
+        dynamicSettings,
+        service,
+        accountId,
+        username,
+        password,
+        repository,
+        branch,
+        key,
+        trigger_active,
+        repoId,
+        projectId,
+        sshUrl,
+        gitUrl,
+        workspace,
+        workspaceName,
+        secondary_branches,
+        gitExportEnabled,
+        gitExportPath,
+        isPushEvent,
+        isPrEvent,
+        prCreatedEvent,
+        prApprovedEvent,
+        allowDynamicSettingsInUi,
+      } = persistData;
+
       const item = {
         name: name,
         service: service,
         accountId: accountId,
-        username: username,
-        password: password,
         workspace: workspace,
         workspaceName: workspaceName,
         repository: repository,
         repoId: repoId,
+        projectId: projectId,
         gitUrl: gitUrl,
         sshUrl: sshUrl,
         branch: branch,
@@ -83,10 +113,14 @@ function PipelineSourceRepositoryConfiguration(
         gitExportEnabled: gitExportEnabled, 
         gitExportPath: gitExportPath,
         dynamicSettings: dynamicSettings,
+        allowDynamicSettingsInUi: allowDynamicSettingsInUi,
       };
-      //console.log("saving config: " + JSON.stringify(item));
+      // console.log("saving config: " + JSON.stringify(item));
       //console.log("saving getPersistData: " + JSON.stringify(sourceRepositoryModel?.getPersistData()));
-      await parentCallback(item);
+      await pipelineSourceRepositoryActions.updatePipelineSourceRepository(
+        pipeline?._id,
+        item,
+      );
       handleCloseClick();
     }
   };
@@ -203,7 +237,6 @@ function PipelineSourceRepositoryConfiguration(
           fieldName={"gitExportEnabled"}
           model={sourceRepositoryModel}
           setModel={setSourceRepositoryModel}
-          service={sourceRepositoryModel?.getData("service")}
           disabled={sourceRepositoryModel.getData("service") !== "gitlab" && sourceRepositoryModel.getData("service") !== "github"}
         />
       <PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
@@ -218,7 +251,6 @@ function PipelineSourceRepositoryConfiguration(
 
 PipelineSourceRepositoryConfiguration.propTypes = {
   pipeline: PropTypes.object,
-  parentCallback: PropTypes.func,
   handleCloseClick: PropTypes.func,
 };
 

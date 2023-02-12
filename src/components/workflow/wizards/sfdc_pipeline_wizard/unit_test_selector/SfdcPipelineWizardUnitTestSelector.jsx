@@ -8,7 +8,6 @@ import {
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
-import { RenderWorkflowItem } from "components/workflow/StepApprovalOverlay";
 import Model from "core/data_model/model";
 import filterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/filter-metadata";
 import SfdcUnitTestManagementPanel from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/SfdcUnitTestManagementPanel";
@@ -20,6 +19,7 @@ import SfdcPipelineWizardManualTestClassSelector
   from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/SfdcPipelineWizardManualTestClassSelector";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import IconBase from "components/common/icons/IconBase";
+import {UnitTestStepView} from "./UnitTestStepView";
 
 // TODO: This should really be altered to be a part of each of the workflow boxes rather than having it rely on selected object
 const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, setPipelineWizardScreen }) => {
@@ -33,7 +33,10 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
   const [selectedUnitTestClassesList, setSelectedUnitTestClassesList] = useState([]);
   const [testClassFilterDto, setTestClassFilterDto] = useState(new Model({...filterMetadata.newObjectFields}, filterMetadata, false));
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [filePullCompleted, setFilePullCompleted] = useState(false);
   const isMounted = useRef(false);
+
+  let timerIds = [];
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -49,8 +52,29 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
     return () => {
       source.cancel();
       isMounted.current = false;
+      // stopPolling();
     };
   }, []);
+
+
+  const stopPolling = () => {
+    if (Array.isArray(timerIds) && timerIds.length > 0) {
+      timerIds?.forEach(timerId => clearTimeout(timerId));
+    }
+  };
+
+  const unitTestPolling = async (testClassFilterDto, unitClassStep, count = 1) => {
+    if (isMounted?.current !== true) {
+      return;
+    }
+
+    const testClasses = await getUnitTestList(testClassFilterDto, unitClassStep, selectedStep);
+
+    if (!Array.isArray(testClasses) && count <= 5 && filePullCompleted === false) {
+      await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
+      return await unitTestPolling(testClassFilterDto, unitClassStep,count + 1);
+    }
+  };
 
   const getUnitTestList = async (filterDto = testClassFilterDto, step = selectedStep) => {
     setUnitTestListLoading(true);
@@ -63,24 +87,22 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
       const response = await sfdcPipelineActions.getUnitTestClassesListV2(getAccessToken, cancelTokenSource, pipelineWizardModel, step);
       const testClasses = response?.data?.testClasses?.data;
       const selectedTestClasses = response?.data?.selectedTestClasses?.data;
-
-      if(!Array.isArray(testClasses) || !Array.isArray(selectedTestClasses)) {
-        toastContext.showInlineErrorMessage("Error getting Unit Test API Data.");
+      if (isMounted?.current === true && Array.isArray(testClasses) && Array.isArray(selectedTestClasses)) {
+        // save the mongo record id so that we can update it when saving selected data
+        setUnitTestRecordId(response?.data?._id);
+        if (Array.isArray(selectedTestClasses) && selectedTestClasses.length > 0) {
+          setSelectedUnitTestClassesList(testClasses?.filter((testClasses)=> selectedTestClasses.includes(testClasses)));
+        }
+        setUnitTestClassesList(testClasses);
+        console.log("files pull completed");
+        setFilePullCompleted(true);
+        setUnitTestListLoading(false);
       }
 
-      // save the mongo record id so that we can update it when saving selected data
-      setUnitTestRecordId(response?.data?._id);
-
-      if (Array.isArray(selectedTestClasses) && selectedTestClasses.length > 0) {
-        setSelectedUnitTestClassesList(testClasses?.filter((testClasses)=> selectedTestClasses.includes(testClasses)));
-      }
-
-      setUnitTestClassesList(testClasses);
+      return testClasses;
     } catch (error) {
       console.error("Error getting API Data: ", error);
       toastContext.showLoadingErrorDialog(error);
-    } finally {
-      setUnitTestListLoading(false);
     }
   };
 
@@ -91,22 +113,17 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
   const getTestClasses = async (unitClassStep) => {
     try {
       setIsLoading(true);
-      const response = await sfdcPipelineActions.triggerUnitTestClassesPull(getAccessToken, cancelTokenSource, pipelineWizardModel, unitClassStep);
-
-      // TODO: Is this check necessary?
-      if (response?.data?.status !== 200 ) {
-        console.error("Error getting API Data: ", response?.data?.message);
-        toastContext.showInlineErrorMessage(response?.data?.message);
-      }
-      else {
+      stopPolling();
+      setFilePullCompleted(false);
         setSelectedStep(unitClassStep);
 
-        if(Object.keys(unitClassStep).length > 0){
+        if (Object.keys(unitClassStep).length > 0) {
           setSelectedUnitTestClassesList([]);
           setUnitTestClassesList([]);
-          await getUnitTestList(testClassFilterDto, unitClassStep);
+          // start polling
+          await unitTestPolling(testClassFilterDto, unitClassStep);
+          // await getUnitTestList(testClassFilterDto, unitClassStep);
         }
-      }
     } catch (error) {
       console.error("Error getting API Data: ", error);
       toastContext.showLoadingErrorDialog(error);
@@ -126,7 +143,7 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
               return (
                 <Col key={idx}>
                   <div className="p-1" style={{cursor: isLoading ? "not-allowed" : "pointer"}} onClick={() => isLoading ? null : handleStepClick(step)}>
-                    <RenderWorkflowItem item={step} isSelected={selectedStep?._id === step._id} stateColorClass=""/>
+                    <UnitTestStepView item={step} isSelected={selectedStep?._id === step._id} stateColorClass=""/>
                   </div>
                 </Col>
               );
@@ -184,9 +201,9 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
 
   const handleNextClick = async() => {
     const unitTestSteps = pipelineWizardModel?.getArrayData("unitTestSteps");
-    const unitTestStepsIds = unitTestSteps.map(({_id})=>({_id}));
-    const isUnitTestSelectedResponse = await sfdcPipelineActions.checkTestClassesCount(getAccessToken, cancelTokenSource, pipelineWizardModel, unitTestStepsIds);
-    if(!isUnitTestSelectedResponse?.data) {
+    const isUnitTestSelectedResponse = await sfdcPipelineActions.checkTestClassesCount(getAccessToken, cancelTokenSource, pipelineWizardModel, unitTestSteps);
+    if(!isUnitTestSelectedResponse?.data?.status) {
+      isUnitTestSelectedResponse?.data?.message ? toastContext.showSystemErrorToast(isUnitTestSelectedResponse?.data?.message) :
       toastContext.showSystemErrorToast("No Test Classes were selected, Please select test classes for above steps to proceed further.");
       return;
     }

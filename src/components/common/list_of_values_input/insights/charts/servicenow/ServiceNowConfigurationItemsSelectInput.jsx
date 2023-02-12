@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
-import LazyLoadMultiSelectInputBase from "components/common/inputs/select/LazyLoadMultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
-import axios from "axios";
 import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import _ from "lodash";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
 function ServiceNowConfigurationItemsSelectInput({
   valueField,
@@ -71,7 +70,7 @@ function ServiceNowConfigurationItemsSelectInput({
     }
   }, [serviceNowToolId]);
 
-  const loadConfigurationItems = async (searchTerm, serviceNowToolId) => {
+  const loadConfigurationItems = async (searchTerm) => {
     // if (searchTerm) {
       try {
         setIsLoading(true);
@@ -127,13 +126,8 @@ function ServiceNowConfigurationItemsSelectInput({
     }
   };
 
-  const delayedSearchQuery = useCallback(
-    _.debounce((searchTerm, toolId) => loadConfigurationItems(searchTerm, toolId), 600),
-    [],
-  );
-
   return (
-    <LazyLoadMultiSelectInputBase
+    <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
@@ -143,11 +137,10 @@ function ServiceNowConfigurationItemsSelectInput({
       valueField={valueField}
       textField={textField}
       placeholderText={getPlaceholderText()}
-      // onToggleFunction={loadBusinessServices}
       disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, serviceNowToolId)}
-      useToggle={false}
+      supportSearchLookup={true}
+      loadDataFunction={loadConfigurationItems}
     />
   );
 }

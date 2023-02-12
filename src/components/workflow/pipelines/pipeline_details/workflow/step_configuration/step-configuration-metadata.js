@@ -20,7 +20,12 @@ const stepConfigurationMetadata = {
     },
     {
       label: "Tags",
-      id: "tags"
+      id: "tags",
+      formText: `
+        Tags are used for log analysis and for generating dashboards and charts. 
+        This is strongly recommend to be configured before running a Pipeline otherwise the analytics of previous runs will be incomplete. 
+      `,
+      noItemsWarning: true,
     },
     {
       label: "Step Type",

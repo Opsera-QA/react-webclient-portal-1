@@ -43,6 +43,8 @@ function JenkinsStepToolJobSelectInput({ fieldName, model, setModel, disabled, j
     newDataObject.setData("agentLabels", agentLabels);
     newDataObject.setData("buildType", buildType);
     newDataObject.setData("buildTool", buildTool);
+    newDataObject?.setDefaultValue("dependencyType");
+    newDataObject?.setDefaultValue("dependencies");
 
     // TODO: We need to re-evaluate and rework this:
     if ("configuration" in selectedOption) {

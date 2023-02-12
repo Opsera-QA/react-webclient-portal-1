@@ -1,31 +1,28 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { SteppedLineTo } from "react-lineto";
 import { faPlusSquare, faCaretSquareDown, faCaretSquareUp, faCopy } from "@fortawesome/pro-light-svg-icons";
 import PipelineWorkflowItem from "./PipelineWorkflowItem";
 import { pipelineValidationHelper } from "components/workflow/pipelines/helpers/pipelineValidation.helper";
 import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {SteppedLineTo} from "react-lineto";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
 function PipelineWorkflowItemList(
   {
     pipeline,
+    plan,
     lastStep,
     editWorkflow,
     pipelineId,
     parentCallbackEditItem,
-    parentHandleViewSourceActivityLog,
     quietSavePlan,
     fetchPlan,
     parentWorkflowStatus,
-    refreshCount,
   }) {
   const [isSaving, setIsSaving] = useState(false);
-  const [pipelineSteps, setPipelineSteps] = useState(pipeline.workflow.plan);
   const [isLoading, setIsLoading] = useState(false);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
   const {
@@ -69,15 +66,8 @@ function PipelineWorkflowItemList(
     }
   };
 
-  useEffect(() => {
-    if (pipeline) {
-      setPipelineSteps(pipeline?.workflow?.plan);
-    }
-  }, [refreshCount, JSON.stringify(lastStep), JSON.stringify(pipeline.workflow)]);
-
-
   const handleAddStep = async (itemId, index) => {
-    const steps = pipelineSteps;
+    const steps = plan;
 
     setIsSaving(true);
 
@@ -90,17 +80,14 @@ function PipelineWorkflowItemList(
       "active": true,
     };
     steps.splice(index + 1, 0, newStep);
-
     await quietSavePlan(steps);
-
-    await fetchPlan();
 
     setIsSaving(false);
   };
 
 
   const handleCopyStep = async (item, index) => {
-    const steps = pipelineSteps;
+    const steps = plan;
 
     setIsSaving(true);
 
@@ -117,32 +104,11 @@ function PipelineWorkflowItemList(
 
     await quietSavePlan(steps);
 
-    await fetchPlan();
-
     setIsSaving(false);
   };
-
-
-  const deleteStep = async (index) => {
-    const steps = pipelineSteps;
-
-    setIsSaving(true);
-    steps.splice(index, 1);
-
-    if (steps.length === 0) {
-      await handleAddStep("", 0);
-    } else {
-      await quietSavePlan(steps);
-
-      await fetchPlan();
-    }
-
-    setIsSaving(false);
-  };
-
 
   const handleMoveStep = async (itemId, index, direction) => {
-    const steps = pipelineSteps;
+    const steps = plan;
 
     if (direction === "up" && index > 0) {
       setIsSaving(true);
@@ -150,8 +116,6 @@ function PipelineWorkflowItemList(
       steps.splice(index - 1, 0, cutOut);
 
       await quietSavePlan(steps);
-
-      await fetchPlan();
       setIsSaving(false);
 
     } else if (direction === "down" && index < steps.length - 1) {
@@ -161,14 +125,12 @@ function PipelineWorkflowItemList(
       steps.splice(index + 1, 0, cutOut);
 
       await quietSavePlan(steps);
-
-      await fetchPlan();
       setIsSaving(false);
     }
   };
 
 
-  const setStepStatusClass = (last_step, item) => {
+  const setStepStatusClass = (item) => {
     const item_id = DataParsingHelper.parseMongoDbId(item?._id);
     let classString = "step-" + item_id;
 
@@ -182,8 +144,8 @@ function PipelineWorkflowItemList(
           : "";
 
     //if operations have occurred and the step is still valid
-    if (typeof (last_step) !== "undefined" && isStepValid) {
-      const {success, running, failed} = last_step;
+    if (typeof (lastStep) !== "undefined" && isStepValid) {
+      const {success, running, failed} = lastStep;
 
       if (success && success.step_id === item_id) {
         stepStatusClass = "workflow-step-success";
@@ -218,52 +180,35 @@ function PipelineWorkflowItemList(
             height: "42px",
           }}
         >
-          <div className={"m-auto"}>
-          <OverlayTrigger
-            placement="top"
-            delay={{show: 250, hide: 400}}
-            overlay={renderTooltip({message: "Move lower step up one position"})}>
-            <IconBase icon={faCaretSquareUp} iconSize={"lg"}
-                      className={index === 0 ? "fa-disabled" : "pointer dark-grey"}
-                      onClickFunction={() => {
-                        handleMoveStep(item._id, index, "up");
-                      }}/>
-          </OverlayTrigger>
-
-          <OverlayTrigger
-            placement="top"
-            delay={{show: 250, hide: 400}}
-            overlay={renderTooltip({message: "Add new step here"})}>
-            <IconBase icon={faPlusSquare}
-                      iconSize={"lg"}
-                      className={"green pointer ml-2 mr-1"}
-                      onClickFunction={() => {
-                        handleAddStep(item._id, index);
-                      }}/>
-          </OverlayTrigger>
-
-          <OverlayTrigger
-            placement="top"
-            delay={{show: 250, hide: 400}}
-            overlay={renderTooltip({message: "Copy previous step"})}>
-            <IconBase icon={faCopy}
-                      iconSize={"lg"}
-                      className={"yellow pointer ml-1 mr-2"}
-                      onClickFunction={() => {
-                        handleCopyStep(item, index);
-                      }}/>
-          </OverlayTrigger>
-
-          <OverlayTrigger
-            placement="top"
-            delay={{show: 250, hide: 400}}
-            overlay={renderTooltip({message: "Move upper step down one position"})}>
-            <IconBase icon={faCaretSquareDown} iconSize={"lg"}
-                      className={index === pipelineSteps.length - 1 ? "fa-disabled" : "pointer dark-grey"}
-                      onClickFunction={() => {
-                        handleMoveStep(item._id, index, "down");
-                      }}/>
-          </OverlayTrigger>
+          <div className={"m-auto d-flex"}>
+            <OverlayIconBase
+              icon={faCaretSquareUp}
+              iconSize={"lg"}
+              className={index === 0 ? "fa-disabled" : "pointer dark-grey"}
+              onClickFunction={() => handleMoveStep(item._id, index, "up")}
+              overlayBody={"Move lower step up one position"}
+            />
+            <OverlayIconBase
+              icon={faPlusSquare}
+              iconSize={"lg"}
+              className={"green pointer ml-2 mr-1"}
+              onClickFunction={() => handleAddStep(item._id, index)}
+              overlayBody={"Add new step here"}
+            />
+            <OverlayIconBase
+              icon={faCopy}
+              iconSize={"lg"}
+              className={"yellow pointer ml-1 mr-2"}
+              onClickFunction={() => handleCopyStep(item, index)}
+              overlayBody={"Copy previous step"}
+            />
+            <OverlayIconBase
+              icon={faCaretSquareDown}
+              iconSize={"lg"}
+              className={index === plan.length - 1 ? "fa-disabled" : "pointer dark-grey"}
+              onClickFunction={() => handleMoveStep(item._id, index, "down")}
+              overlayBody={"Move upper step down one position"}
+            />
           </div>
         </div>
       );
@@ -272,8 +217,8 @@ function PipelineWorkflowItemList(
     return (
       <>
         <SteppedLineTo
-          from={"step-" + item._id}
-          to={"step-" + index}
+          from={`step-${item._id}`}
+          to={`step-${index}`}
           delay={100}
           orientation={"v"}
           zIndex={10}
@@ -288,31 +233,29 @@ function PipelineWorkflowItemList(
   };
 
   return (
-    <>
-      {pipelineSteps && pipelineSteps.map((item, index) => (
+    <div className="step-items workflow-module-container-width mx-auto">
+      {Array.isArray(plan) && plan.map((item, index) => (
         <div
           key={index}
           className={isSaving ? "fa-disabled" : ""}
         >
           <div
-            className={"p-1 workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(lastStep, item)}
+            className={"p-1 workflow-module-container workflow-module-container-width mx-auto " + setStepStatusClass(item)}
             style={{
               boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)",
-              borderRadius: ".2rem",
+              borderRadius: ".30rem",
             }}
           >
             <PipelineWorkflowItem
               pipeline={pipeline}
-              plan={pipelineSteps}
+              plan={plan}
               item={item}
               index={index}
               lastStep={lastStep}
               editWorkflow={editWorkflow}
               pipelineId={pipelineId}
+              tempLoading={isLoading}
               parentCallbackEditItem={parentCallbackEditItem}
-              deleteStep={deleteStep}
-              refreshCount={refreshCount}
-              parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog}
               parentWorkflowStatus={parentWorkflowStatus}
               toolIdentifier={getToolIdentifierForStep(item?.tool?.tool_identifier)}
               loadPipeline={fetchPlan}
@@ -321,19 +264,9 @@ function PipelineWorkflowItemList(
           {getPipelineWorkflowItemControls(item, index)}
         </div>
       ))}
-    </>
+    </div>
   );
 }
-
-function renderTooltip(props) {
-  const { message } = props;
-  return (
-    <Tooltip id="button-tooltip" {...props}>
-      {message}
-    </Tooltip>
-  );
-}
-
 
 PipelineWorkflowItemList.propTypes = {
   pipeline: PropTypes.object,
@@ -341,13 +274,10 @@ PipelineWorkflowItemList.propTypes = {
   editWorkflow: PropTypes.bool,
   pipelineId: PropTypes.string,
   parentCallbackEditItem: PropTypes.func,
-  parentHandleViewSourceActivityLog: PropTypes.func,
-  setStateItems: PropTypes.func,
   quietSavePlan: PropTypes.func,
   fetchPlan: PropTypes.func,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  refreshCount: PropTypes.number,
+  plan: PropTypes.array,
 };
-
 
 export default PipelineWorkflowItemList;

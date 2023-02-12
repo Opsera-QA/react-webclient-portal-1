@@ -8,7 +8,7 @@ import axios from "axios";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import modelHelpers from "components/common/model/modelHelpers";
 
-function CreateArgoApplicationOverlay({ loadData, toolData, argoDataObject, applicationId }) {
+function CreateArgoApplicationOverlay({ loadData, toolData, argoDataObject, applicationName }) {
   const toastContext = useContext(DialogToastContext);
   const [argoApplicationData, setArgoApplicationData] = useState(undefined);
   const isMounted = useRef(false);
@@ -57,7 +57,7 @@ function CreateArgoApplicationOverlay({ loadData, toolData, argoDataObject, appl
         toolData={toolData}
         loadData={loadData}
         handleClose={closePanel}
-        applicationId={applicationId}
+        applicationName={applicationName}
       />
     </CreateCenterPanel>
   );
@@ -67,7 +67,7 @@ CreateArgoApplicationOverlay.propTypes = {
   toolData: PropTypes.object,
   argoDataObject: PropTypes.object,
   loadData: PropTypes.func,
-  applicationId: PropTypes.string,
+  applicationName: PropTypes.string,
 };
 
 export default CreateArgoApplicationOverlay;

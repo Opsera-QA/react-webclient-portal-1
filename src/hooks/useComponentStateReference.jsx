@@ -3,25 +3,31 @@ import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import useIsMountedStateReference from "hooks/useIsMountedStateReference";
 import useCancelTokenStateReference from "hooks/useCancelTokenStateReference";
+import useAccessRoleData from "hooks/roles/useAccessRoleData";
 
 export default function useComponentStateReference() {
   const isMounted = useIsMountedStateReference();
   const cancelTokenSource = useCancelTokenStateReference();
   const {
     getAccessToken,
-    userAccessRoles,
     themeConstants,
-    isSassUser,
-    isOpseraAdministrator,
     featureFlagHideItemInProd,
     featureFlagHideItemInTest,
-    isSiteAdministrator,
-    isPowerUser,
     userData,
     backgroundColor,
     isAuthenticated,
+    renewUserToken,
   } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
+  const {
+    isSiteAdministrator,
+    isSaasUser,
+    isOpseraAdministrator,
+    isPowerUser,
+    accessRoleData,
+    isSecurityManager,
+    isAuditor,
+  } = useAccessRoleData();
 
   useEffect(() => {}, []);
 
@@ -30,16 +36,19 @@ export default function useComponentStateReference() {
     cancelTokenSource: cancelTokenSource,
     getAccessToken: getAccessToken,
     toastContext: toastContext,
-    accessRoleData: userAccessRoles,
+    accessRoleData: accessRoleData,
     themeConstants: themeConstants,
-    isOpseraAdministrator: isOpseraAdministrator(),
+    isOpseraAdministrator: isOpseraAdministrator,
     isSiteAdministrator: isSiteAdministrator,
+    isSecurityManager: isSecurityManager,
+    isAuditor: isAuditor,
     isProductionEnvironment: featureFlagHideItemInProd(),
     isTestEnvironment: featureFlagHideItemInTest(),
-    isSassUser: isSassUser(), // TODO: Remove and replace with the proper spelling
-    isSaasUser: isSassUser(),
+    isSassUser: isSaasUser, // TODO: Remove and replace with the proper spelling
+    isSaasUser: isSaasUser,
     userData: userData,
     isFreeTrial: true,
+    loadUserData: renewUserToken,
     backgroundColor: backgroundColor,
     isAuthenticated: isAuthenticated,
     isPowerUser: isPowerUser,

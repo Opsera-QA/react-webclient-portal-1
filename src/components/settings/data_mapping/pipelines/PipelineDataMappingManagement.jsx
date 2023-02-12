@@ -1,44 +1,35 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { AuthContext } from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import axios from "axios";
-import {pipelineDataMappingActions} from "components/settings/data_mapping/pipelines/pipelineDataMapping.actions";
 import PipelineDataMappingsTable from "components/settings/data_mapping/pipelines/PipelineDataMappingsTable";
+import useAnalyticsPipelineDataMappingActions
+  from "hooks/settings/insights/analytics_data_mappings/pipelines/useAnalyticsPipelineDataMappingActions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function PipelineDataMappingManagement() {
   const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [pipelineDataMappingMetadata, setPipelineDataMappingMetadata] = useState(undefined);
   const [pipelineDataMappings, setPipelineDataMappings] = useState([]);
   const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const analyticsPipelineDataMappingActions = useAnalyticsPipelineDataMappingActions();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
 
     return () => {
-      source.cancel();
       isMounted.current = false;
     };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setIsLoading(true);
-      await getPipelineDataMappings(cancelSource);
+      await getPipelineDataMappings();
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -52,17 +43,12 @@ function PipelineDataMappingManagement() {
     }
   };
 
-  const getPipelineDataMappings = async (cancelSource = cancelTokenSource) => {
-    try {
-      const response = await pipelineDataMappingActions.getPipelineDataMappingsV2(getAccessToken, cancelSource);
-      const mappings = response?.data?.data;
+  const getPipelineDataMappings = async () => {
+    const response = await analyticsPipelineDataMappingActions.getPipelineDataMappings();
+    const mappings = DataParsingHelper.parseNestedArray(response, "data.data");
 
-      if (isMounted?.current === true && Array.isArray(mappings)) {
-        setPipelineDataMappingMetadata({...response?.data?.metadata});
-        setPipelineDataMappings(mappings);
-      }
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+    if (isMounted?.current === true && Array.isArray(mappings)) {
+      setPipelineDataMappings(mappings);
     }
   };
 
@@ -73,7 +59,6 @@ function PipelineDataMappingManagement() {
         isLoading={isLoading}
         pipelineDataMappings={pipelineDataMappings}
         isMounted={isMounted}
-        pipelineDataMappingMetadata={pipelineDataMappingMetadata}
       />
     </div>
   );

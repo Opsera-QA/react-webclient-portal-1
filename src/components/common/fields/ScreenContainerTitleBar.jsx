@@ -16,6 +16,7 @@ function ScreenContainerTitleBar(
     titleActionBar,
     helpComponent,
     isBeta,
+    auditLogType,
   }) {
   const {
     currentUrl,
@@ -69,6 +70,7 @@ ScreenContainerTitleBar.propTypes = {
   isLoading: PropTypes.bool,
   helpComponent: PropTypes.object,
   isBeta: PropTypes.bool,
+  auditLogType: PropTypes.string,
 };
 
 export default ScreenContainerTitleBar;

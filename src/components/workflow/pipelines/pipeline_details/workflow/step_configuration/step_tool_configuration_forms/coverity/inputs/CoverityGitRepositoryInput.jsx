@@ -12,6 +12,8 @@ function CoverityGitRepositoryInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("repoId", repoId);
     newDataObject.setData("sshUrl", sshUrl);
     newDataObject.setData("gitUrl", gitUrl);
+    newDataObject.setData("gitBranch", "");
+    newDataObject.setData("branch", "");
     setDataObject({...newDataObject});
   };
 

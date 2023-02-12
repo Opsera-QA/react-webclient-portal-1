@@ -24,7 +24,7 @@ import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
 import ScriptLibrarySelectInput
   from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
 import ParameterSelectListInputBase
-  from "components/common/list_of_values_input/parameters/ParameterSelectListInputBase";
+  from "components/common/list_of_values_input/parameters/legacy/ParameterSelectListInputBase";
 
 function DotNetStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);

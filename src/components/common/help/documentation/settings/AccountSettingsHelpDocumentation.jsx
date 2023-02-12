@@ -56,18 +56,6 @@ function AccountSettingsHelpDocumentation() {
     }
   };
 
-  const getSiteRolesHelpInformation = () => {
-    if (
-      (isSiteAdministrator === true
-        || isOpseraAdministrator === true
-        || isPowerUser !== true)
-      && isSaasUser !== true
-    ) {
-      return (
-        <li><b>Site Roles</b> - Manage the following Site Roles levels: Administrators, Power Users and Users. View <b><a href="https://docs.opsera.io/role-based-access-pipelines-and-tool-registry" target="_blank" rel="noreferrer">Site Roles Help Documentation</a></b>. </li>
-      );
-    }
-  };
 
   const getUnsecuredItemsHelpInformation = () => {
     if (
@@ -82,6 +70,31 @@ function AccountSettingsHelpDocumentation() {
     }
   };
 
+  const getSiteRolesHelpInformation = () => {
+    if (
+      (isSiteAdministrator === true
+        || isOpseraAdministrator === true
+        || isPowerUser !== true)
+      && isSaasUser !== true
+    ) {
+      return (
+        <li><b>Site Roles</b> - Manage the following Site Roles levels: Administrators, Power Users and Users. View <b><a href="https://docs.opsera.io/role-based-access-pipelines-and-tool-registry" target="_blank" rel="noreferrer">Site Roles Help Documentation</a></b>. </li>
+      );
+    }
+  };
+
+  const getPoliciesHelpInformation = () => {
+    if (
+      (isSiteAdministrator === true
+        || isOpseraAdministrator === true
+        || isPowerUser !== true)
+      && isSaasUser !== true
+    ) {
+      return (
+        <li><b>Policies</b> - Manage Organization Policies to tailor Opsera to your needs. </li>
+      );
+    }
+  };
   const getUsersHelpInformation = () => {
     if (
       (isSiteAdministrator === true
@@ -95,6 +108,19 @@ function AccountSettingsHelpDocumentation() {
     }
   };
 
+  const getTagsHelpInformation = () => {
+    if (
+      (isSiteAdministrator === true
+        || isOpseraAdministrator === true
+        || isPowerUser === true)
+      || isSaasUser === true
+    ) {
+      return (
+        <li><b>Tags</b> - Manage Tags and view their usage in Tools, Pipelines, and Dashboards.</li>
+      );
+    }
+  };
+
   const getHelpDocumentation = () => {
     return (
       <div>Administrators and Power Users can manage account settings from this dashboard.
@@ -103,9 +129,11 @@ function AccountSettingsHelpDocumentation() {
             {getDeleteToolChainsHelpInformation()}
             {getGroupsHelpInformation()}
             {getLogsExportHelpInformation()}
-            {getSiteRolesHelpInformation()}
             {getUnsecuredItemsHelpInformation()}
+            {getSiteRolesHelpInformation()}
+            {getPoliciesHelpInformation()}
             {getUsersHelpInformation()}
+            {getTagsHelpInformation()}
           </ul>
         </div>
       </div>

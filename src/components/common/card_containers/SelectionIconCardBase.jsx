@@ -4,6 +4,7 @@ import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper"
 import useComponentStateReference from "hooks/useComponentStateReference";
 import IconCardBase from "components/common/card/selection/IconCardBase";
 
+// TODO: At some point we need to combine RadioButtonCard, SelectionIconCardBase, and SelectionCardBase to have a common base
 export default function SelectionIconCardBase(
   {
     children,

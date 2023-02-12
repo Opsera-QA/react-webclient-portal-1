@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 export const ArgoCdStepConfigurationMetadata = {
   type: "Argo CD Step Configuration",
   fields: [
@@ -15,11 +17,13 @@ export const ArgoCdStepConfigurationMetadata = {
       label: "Repository",
       id: "gitRepository",
       isRequired: true,
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
     },
     {
       label: "Branch",
       id: "defaultBranch",
       isRequired: true,
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
     },
     {
       label: "Docker/ECR Step",
@@ -64,6 +68,7 @@ export const ArgoCdStepConfigurationMetadata = {
     {
       label: "Repository",
       id: "gitRepositoryID",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
       label: "BitBucket Workspace",

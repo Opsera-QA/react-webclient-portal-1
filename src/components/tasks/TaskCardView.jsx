@@ -4,12 +4,13 @@ import Model from "core/data_model/model";
 import TaskCard from "components/common/fields/tasks/TaskCard";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
+import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 
-function TaskCardView({ taskData, taskFilterModel, loadData, isLoading, taskMetadata }) {
+function TaskCardView({ taskData, taskFilterModel, loadData, isLoading }) {
   const getTaskCard = (task) => {
     return (
       <TaskCard
-        taskModel={new Model({...task}, taskMetadata, false)}
+        taskModel={new Model({...task}, tasksMetadata, false)}
       />
     );
   };

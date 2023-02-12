@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 const flywayDatabaseStepFormMetadata = {
   type: "Flyway Tool Configuration",
   fields: [
@@ -32,6 +34,7 @@ const flywayDatabaseStepFormMetadata = {
     {
       label: "Repository",
       id: "repository",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_NAME,
       isRequired: true,
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
@@ -39,6 +42,7 @@ const flywayDatabaseStepFormMetadata = {
     {
       label: "Repository",
       id: "repoId",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
       isRequired: true,
       maxLength: 255,
     },
@@ -51,6 +55,7 @@ const flywayDatabaseStepFormMetadata = {
     {
       label: "Branch",
       id: "gitBranch",
+      dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.PRIMARY_BRANCH,
       isRequired: true,
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",

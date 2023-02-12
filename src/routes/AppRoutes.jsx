@@ -28,11 +28,10 @@ import FreeTrialAdminToolsRoutes from "routes/FreeTrialAdminToolsRoutes";
 export default function AppRoutes(
   {
     authenticatedState,
-    isPublicPathState,
     authClient,
   }) {
   useEffect(() => {
-  }, [authenticatedState, isPublicPathState]);
+  }, [authenticatedState]);
 
   // Authenticated routes
   return (
@@ -74,6 +73,5 @@ export default function AppRoutes(
 
 AppRoutes.propTypes = {
   authenticatedState: PropTypes.bool,
-  isPublicPathState: PropTypes.bool,
   authClient: PropTypes.object,
 };

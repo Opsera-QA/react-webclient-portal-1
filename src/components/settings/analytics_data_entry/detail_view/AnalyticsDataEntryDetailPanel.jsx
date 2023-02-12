@@ -34,17 +34,30 @@ function AnalyticsDataEntryDetailPanel({ analyticsDataEntry }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <AnalyticsDataEntrySummaryPanel analyticsDataEntry={analyticsDataEntry} setActiveTab={setActiveTab} />;
+        return (
+          <AnalyticsDataEntrySummaryPanel
+            analyticsDataEntry={analyticsDataEntry}
+            setActiveTab={setActiveTab}
+          />
+        );
       case "settings":
         return (
-          <AnalyticsDataEntryEditorPanel handleClose={toggleSummaryPanel} analyticsDataEntry={analyticsDataEntry} />
+          <AnalyticsDataEntryEditorPanel
+            handleClose={toggleSummaryPanel}
+            analyticsDataEntry={analyticsDataEntry}
+          />
         );
       default:
         return null;
     }
   };
 
-  return <DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />;
+  return (
+    <DetailTabPanelContainer
+      detailView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
+  );
 }
 
 AnalyticsDataEntryDetailPanel.propTypes = {

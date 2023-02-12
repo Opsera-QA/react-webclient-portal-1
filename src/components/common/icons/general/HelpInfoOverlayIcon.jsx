@@ -11,6 +11,7 @@ function HelpInfoOverlayIcon(
     overlayPlacement,
     overlayHeight,
     overlayWidth,
+    iconSize,
   }) {
 
   if (infoOverlay == null) {
@@ -28,6 +29,7 @@ function HelpInfoOverlayIcon(
     >
       <div className={className}>
         <HelpIconBase
+          iconSize={iconSize}
         />
       </div>
     </TooltipWrapper>
@@ -47,6 +49,7 @@ HelpInfoOverlayIcon.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
+  iconSize: PropTypes.string,
 };
 
 HelpInfoOverlayIcon.defaultProps = {

@@ -10,9 +10,7 @@ import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarD
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import GroupManagementSubNavigationBar from "components/settings/ldap_groups/GroupManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
-
-// TODO: Can we get an API Call to get role group names associated with an organization?
-const roleGroups = ["Administrators", "PowerUsers", "Users"];
+import {roleGroups} from "components/settings/ldap_site_roles/details/SiteRoleDetailView";
 
 function LdapGroupDetailView() {
   const history = useHistory();
@@ -133,7 +131,7 @@ function LdapGroupDetailView() {
       breadcrumbDestination={"ldapGroupDetailView"}
       metadata={ldapGroupMetaData}
       dataObject={ldapGroupData}
-      isLoading={isLoading}
+      isLoading={isLoading && ldapGroupData == null}
       navigationTabContainer={<GroupManagementSubNavigationBar activeTab={"groupViewer"} />}
       actionBar={getActionBar()}
       detailPanel={
@@ -143,6 +141,7 @@ function LdapGroupDetailView() {
           currentUserEmail={userData?.email}
           setLdapGroupData={setLdapGroupData}
           loadData={loadData}
+          isLoading={isLoading}
         />
       }
     />

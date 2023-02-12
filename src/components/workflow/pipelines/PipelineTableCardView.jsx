@@ -14,7 +14,12 @@ import TableCardView from "components/common/table/TableCardView";
 import {useHistory} from "react-router-dom";
 import PipelineVerticalTabContainer from "components/workflow/pipelines/PipelineVerticalTabContainer";
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
-import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
+import PipelineTagFilter from "components/common/filters/tags/tag/pipelines/PipelineTagFilter";
+import PipelineStepToolIdentifierFilter
+  from "components/common/filters/tools/tool_identifier/pipelines/PipelineStepToolIdentifierFilter";
 
 function PipelineTableCardView(
   {
@@ -26,6 +31,9 @@ function PipelineTableCardView(
     subscribedPipelineIds,
   }) {
   const history = useHistory();
+  const {
+    userData,
+  } = useComponentStateReference();
 
   const getDropdownFilters = () => {
     return (
@@ -38,11 +46,20 @@ function PipelineTableCardView(
         <TagFilter
           filterDto={pipelineFilterModel}
           setFilterDto={setPipelineFilterModel}
+          className={"mb-2"}
         />
+        <PipelineStepToolIdentifierFilter
+          filterModel={pipelineFilterModel}
+          setFilterModel={setPipelineFilterModel}
+          className={"mb-2"}
+        />
+        {/*<PipelineTagFilter*/}
+        {/*  filterModel={pipelineFilterModel}*/}
+        {/*  setFilterModel={setPipelineFilterModel}*/}
+        {/*/>*/}
         <OwnerFilter
           filterModel={pipelineFilterModel}
           setFilterModel={setPipelineFilterModel}
-          className={"mt-2"}
           visible={pipelineFilterModel?.getData("type") !== "owner"}
         />
       </>
@@ -150,7 +167,7 @@ function PipelineTableCardView(
         loadData={loadData}
         filterDto={pipelineFilterModel}
         setFilterDto={setPipelineFilterModel}
-        addRecordFunction={addPipeline}
+        addRecordFunction={PipelineRoleHelper.canCreatePipeline(userData) === true ? addPipeline : undefined}
         supportSearch={true}
         supportViewToggle={true}
         isLoading={isLoading}

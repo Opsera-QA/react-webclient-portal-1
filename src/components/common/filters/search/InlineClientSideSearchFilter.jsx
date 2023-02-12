@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {Button, InputGroup} from "react-bootstrap";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function InlineClientSideSearchFilter(
   {
@@ -14,10 +15,13 @@ function InlineClientSideSearchFilter(
     className,
     isLoading,
   }) {
+  const {
+    isFreeTrial,
+  } = useComponentStateReference();
+
   const validateAndSetData = (value) => {
-    let newFilterDto = {...filterModel};
-    newFilterDto.setData(fieldName, value);
-    setFilterModel({...newFilterDto});
+    filterModel.setData(fieldName, value);
+    setFilterModel({...filterModel});
   };
 
   if (setFilterModel == null || filterModel == null || supportClientSideSearching !== true) {
@@ -38,7 +42,7 @@ function InlineClientSideSearchFilter(
           <Button
             className={"inline-filter-input"}
             disabled={isLoading || disabled}
-            variant={"secondary"}
+            variant={isFreeTrial === true ? "secondary" : "outline-primary"}
           >
             <IconBase
               isLoading={isLoading}

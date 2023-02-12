@@ -7,10 +7,14 @@ import {useHistory} from "react-router-dom";
 import IconBase from "components/common/icons/IconBase";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, fieldName, supportSearch, className, isLoading, metadata}) {
   let history = useHistory();
   const [isSearching, setIsSearching] = useState(false);
+  const {
+    isFreeTrial,
+  } = useComponentStateReference();
 
   const validateAndSetData = (value) => {
     filterDto.setData(fieldName, value);
@@ -90,7 +94,7 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
           <Button
             className={"inline-filter-input"}
             disabled={isLoading || disabled}
-            variant={"secondary"}
+            variant={isFreeTrial === true ? "secondary" : "outline-primary"}
             onClick={handleSearch}
           >
             <IconBase

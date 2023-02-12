@@ -18,13 +18,14 @@ export default function useGetPollingPipelineOrchestrationStatusById(
     lastStep,
     runCount,
     restingStepId,
+    updatedAt,
   } = useGetPipelineOrchestrationStatusById(id, handleErrorFunction);
 
   usePollingInterval(() => {
     if (loadData) {
       loadData();
     }
-  }, Math.max(pollingDelayInMs, 5000));
+  }, Math.max(pollingDelayInMs, 5000), error);
 
   return ({
     status: status,
@@ -32,6 +33,7 @@ export default function useGetPollingPipelineOrchestrationStatusById(
     lastStep: lastStep,
     runCount: runCount,
     restingStepId: restingStepId,
+    updatedAt: updatedAt,
     loadData: loadData,
     isLoading: isLoading,
     error: error,

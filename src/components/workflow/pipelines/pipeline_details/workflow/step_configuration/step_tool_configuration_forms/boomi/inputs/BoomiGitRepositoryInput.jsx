@@ -13,6 +13,7 @@ function BoomiGitRepositoryInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("projectId", repoId);
     newDataObject.setData("sshUrl", sshUrl);
     newDataObject.setData("gitUrl", gitUrl);
+    newDataObject.setData("gitBranch", "");
     setDataObject({...newDataObject});
   };
 

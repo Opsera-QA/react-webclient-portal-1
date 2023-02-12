@@ -38,6 +38,7 @@ export default function PipelineAuditLogOverlay({pipelineId}) {
       titleText={`Pipeline Audit Log Viewer`}
       titleIcon={faShieldCheck}
       showToasts={true}
+      showCloseBackButton={true}
     >
       <div className={"p-3"}>
         <PipelineAuditLogsDisplayer

@@ -1,15 +1,15 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import ScreenContainerTitleBar from "components/common/fields/ScreenContainerTitleBar";
-import {getBreadcrumb, getParentBreadcrumb} from "components/common/navigation/trails";
-import ScreenContainerBodyLoadingDialog
-  from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
+import {
+  getBreadcrumb,
+  getParentBreadcrumb,
+} from "components/common/navigation/trails";
+import ScreenContainerBodyLoadingDialog from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 import TitleActionBarContainer from "components/common/actions/TitleActionBarContainer";
-import PublishCustomerDashboardIcon
-  from "components/insights/marketplace/dashboards/templates/private/publish/PublishCustomerDashboardIcon";
-import PublishPlatformDashboardIcon
-  from "components/insights/marketplace/dashboards/templates/platform/PublishPlatformDashboardIcon";
+import PublishCustomerDashboardIcon from "components/insights/marketplace/dashboards/templates/private/publish/PublishCustomerDashboardIcon";
+import PublishPlatformDashboardIcon from "components/insights/marketplace/dashboards/templates/platform/PublishPlatformDashboardIcon";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
@@ -19,29 +19,27 @@ import DashboardViewer from "components/insights/dashboards/dashboard_details/Da
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import AddKpiIcon from "components/common/icons/metrics/AddKpiIcon";
 import EditDashboardFiltersIcon from "components/common/icons/metrics/EditDashboardFiltersIcon";
-import TransferDashboardOwnershipButton
-  from "components/common/buttons/insights/ownership/TransferDashboardOwnershipButton";
+import TransferDashboardOwnershipButton from "components/common/buttons/insights/ownership/TransferDashboardOwnershipButton";
 import DashboardSubscriptionIcon from "components/common/icons/subscription/DashboardSubscriptionIcon";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import EditDashboardDateIcon from "../../icons/metrics/EditDashboardDateIcon";
 
-function DashboardScreenContainer(
-  {
-    tab,
-    dashboardModel,
-    setDashboardModel,
-    isLoading,
-    loadData,
-  }) {
+function DashboardScreenContainer({
+  tab,
+  dashboardModel,
+  setDashboardModel,
+  isLoading,
+  loadData,
+}) {
   const [breadcrumb] = useState(getBreadcrumb("dashboardDetails"));
   const [parentBreadcrumb] = useState(getParentBreadcrumb("dashboardDetails"));
-  const [activeTab, setActiveTab] = useState(tab  === "settings" ? tab : "viewer");
-  const {
-    cancelTokenSource,
-    getAccessToken,
-  } = useComponentStateReference();
+  const [activeTab, setActiveTab] = useState(
+    tab === "settings" ? tab : "viewer",
+  );
+  const { cancelTokenSource, getAccessToken } = useComponentStateReference();
 
   const handleClose = async () => {
+    loadData();
     setActiveTab("viewer");
   };
 
@@ -109,7 +107,7 @@ function DashboardScreenContainer(
       return (
         <div className="mb-1">
           <ActionBarContainer>
-            <div/>
+            <div />
             <div className="d-inline-flex float-right">
               <DashboardSubscriptionIcon
                 dashboardModel={dashboardModel}
@@ -132,7 +130,6 @@ function DashboardScreenContainer(
     return null;
   };
 
-
   const getTitleBar = () => {
     const activeField = dashboardModel?.getActiveField();
     return (
@@ -141,17 +138,19 @@ function DashboardScreenContainer(
         parentBreadcrumb={parentBreadcrumb}
         titleIcon={breadcrumb?.icon}
         title={dashboardModel?.getDetailViewTitle()}
-        inactive={activeField ? dashboardModel?.getData(activeField) === false : false}
-        titleActionBar={activeTab !== "settings" ? getTitleActionBar() : undefined}
+        inactive={
+          activeField ? dashboardModel?.getData(activeField) === false : false
+        }
+        titleActionBar={
+          activeTab !== "settings" ? getTitleActionBar() : undefined
+        }
       />
     );
   };
 
   const getBody = () => {
     if (isLoading) {
-      return (
-        <ScreenContainerBodyLoadingDialog />
-      );
+      return <ScreenContainerBodyLoadingDialog />;
     }
 
     if (activeTab === "settings") {
@@ -190,23 +189,36 @@ function DashboardScreenContainer(
   if (!isLoading && dashboardModel == null) {
     return (
       <AccessDeniedContainer
-        navigationTabContainer={<InsightsSubNavigationBar currentTab={"dashboardViewer"} />}
+        navigationTabContainer={
+          <InsightsSubNavigationBar currentTab={"dashboardViewer"} />
+        }
       />
     );
   }
 
   return (
-    <div className={"max-content-width"} style={{ overflowX: "hidden" }}>
+    <div
+      className={"max-content-width"}
+      style={{ overflowX: "hidden" }}
+    >
       <div className="mb-3">
         <InsightsSubNavigationBar currentTab={"dashboardViewer"} />
       </div>
       <div>
-        <div className={"px-2 dashboard-container-header chart-header-name-text title-text-header-1 d-flex"}>
-          <div className={"w-100 my-auto"}>
-            {getTitleBar()}
-          </div>
+        <div
+          className={
+            "px-2 dashboard-container-header chart-header-name-text title-text-header-1 d-flex"
+          }
+        >
+          <div className={"w-100 my-auto"}>{getTitleBar()}</div>
         </div>
-        <div className={tab === "settings" ? `detail-container-body` : `detail-container-body dashboard-screen-container-body mb-2`}>
+        <div
+          className={
+            tab === "settings"
+              ? `detail-container-body`
+              : `detail-container-body dashboard-screen-container-body mb-2`
+          }
+        >
           {getBody()}
         </div>
       </div>

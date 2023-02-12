@@ -7,6 +7,10 @@ function AnsibleStepBitbucketWorkspaceInput({ gitToolId, fieldName, model, setMo
     let newModel = model;
     newModel.setData("workspace", selectedOption?.key);
     newModel.setData("workspaceName", selectedOption?.name);
+    newModel.setData("repository", "");
+    newModel.setData("repoId", "");
+    newModel.setData("defaultBranch", "");
+    newModel.setData("gitBranch", "");
     setModel({ ...newModel });
   };
 

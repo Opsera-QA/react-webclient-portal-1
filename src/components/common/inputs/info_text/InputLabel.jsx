@@ -8,6 +8,7 @@ import HelpInfoOverlayIcon from "components/common/icons/general/HelpInfoOverlay
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 import ReloadDataIcon from "components/common/icons/reload/ReloadDataIcon";
 import EnableEditingIcon from "components/common/icons/enable/EnableEditingIcon";
+import SelectAllIcon from "components/common/icons/field/SelectAllIcon";
 
 function InputLabel(
   {
@@ -27,11 +28,13 @@ function InputLabel(
     ellipsisTooltipText,
     inputHelpOverlay,
     hasError,
+    hasWarningState,
     helpTooltipText,
     loadDataFunction,
     disabled,
     isLoading,
     ellipsisOnClickFunction,
+    selectAllFunction,
   }) {
   const getInputHelpIcon = () => {
     if (inputHelpOverlay != null) {
@@ -76,8 +79,12 @@ function InputLabel(
   };
 
   const getFormattedLabel = () => {
+    const className =
+      hasError === true ? "danger-red" :
+        hasWarningState === true ? "yellow" :
+          "";
     return (
-      <label className={hasError === true ? "danger-red" : ""}>
+      <label className={className}>
         <span>{field?.label}{getRequiredAsterisk()}</span>
       </label>
     );
@@ -116,7 +123,13 @@ function InputLabel(
             loadDataFunction={loadDataFunction}
             disabled={disabled}
             isLoading={isLoading}
+            visible={enableEditingFunction == null}
             className={"ml-2 my-auto"}
+          />
+          <SelectAllIcon
+            selectAllFunction={selectAllFunction}
+            className={"ml-2 my-auto"}
+            disabled={disabled || isLoading}
           />
           <ClearDataIcon
             requireConfirmation={requireClearDataConfirmation}
@@ -154,6 +167,8 @@ InputLabel.propTypes = {
   disabled: PropTypes.bool,
   isLoading: PropTypes.bool,
   ellipsisOnClickFunction: PropTypes.func,
+  selectAllFunction: PropTypes.func,
+  hasWarningState: PropTypes.bool,
 };
 
 export default InputLabel;

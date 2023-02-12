@@ -78,6 +78,7 @@ export const fieldValidation = (value, model, field) => {
       || value === {}
     ) {
       errorMessages.push(field.label + " is required.");
+
     }
   }
 
@@ -190,6 +191,12 @@ export const fieldValidation = (value, model, field) => {
     }
   }
 
+  if (value && typeof field.isValidFunction === "function" && field.isValidFunction(value) !== true) {
+    errorMessages.push(
+        `${model.getLabel(field.id)} is invalid.`
+    );
+  }
+
   if (Array.isArray(value) && field?.minItems != null && value?.length < field?.minItems) {
     errorMessages.push(`You have selected ${value?.length} values, but the minimum allowed is ${field?.minItems}`);
   }
@@ -277,8 +284,16 @@ modelValidation.getFieldWarning = (fieldName, model) => {
   const field = model?.getFieldById(fieldName);
   const value = model?.getData(fieldName);
 
-  if (hasStringValue(value) === true && field.isUrl === true && value.startsWith("https") !== true) {
+  if (hasStringValue(value) === true && field?.isUrl === true && value.startsWith("https") !== true) {
     return "Warning, an unsecure HTTP URL detected. Please ensure the external resource supports HTTP or switch to HTTPS before saving.";
+  }
+
+  if (field?.noItemsWarning === true) {
+    const parsedArray = DataParsingHelper.parseArray(value, []);
+
+    if (parsedArray.length === 0) {
+      return field?.formText;
+    }
   }
 };
 

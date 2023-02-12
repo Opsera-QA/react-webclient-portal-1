@@ -5,7 +5,7 @@ import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizar
 import {AuthContext} from "contexts/AuthContext";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import {Button} from "react-bootstrap";
-import { faArrowLeft } from "@fortawesome/pro-light-svg-icons";
+import {faArrowLeft} from "@fortawesome/pro-light-svg-icons";
 import CancelButton from "components/common/buttons/CancelButton";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";

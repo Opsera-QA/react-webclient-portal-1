@@ -11,6 +11,7 @@ import kpiDataPointMetadata from "components/common/inputs/metric/data_points/kp
 import DataPointStrategicCriteriaInfoPanel
   from "components/common/metrics/panels/strategic_criteria/data_point/DataPointStrategicCriteriaInfoPanel";
 import DashboardDefaultNotificationInput from "./visibility/DashboardDefaultNotificationInput";
+import DashboardMetricCustomFieldsMappingForm from "./custom_fields/DashboardMetricCustomFieldsMappingForm";
 
 function DashboardMetricDataPointInputBase(
   {
@@ -87,11 +88,26 @@ function DashboardMetricDataPointInputBase(
     }
   };
 
+  const getCustomFieldsMappingInput = () => {
+    if (dataPointModel?.getData("customFieldsMapping")?.enabled) {
+      return (
+        <DashboardMetricCustomFieldsMappingForm
+          model={dataPointModel}
+          setModel={setDataFunction}
+          dataPoint={dataPoint}
+          fromDashboardMetric={true}
+          className={"mb-3"}
+        />
+      );
+    }
+  };
+
   return (
     <div className={"m-1"}>
       {getDescription()}
       <div className={"m-3"}>
         {getDataPointVisibilityInput()}
+        {getCustomFieldsMappingInput()}
         {getDefaultNotificationsInput()}
         {getDataPointStrategicCriteriaInput()}
       </div>

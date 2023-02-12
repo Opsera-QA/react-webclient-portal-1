@@ -4,6 +4,7 @@ import {mouseHelper} from "temp-library-components/helpers/mouse/mouse.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
+// TODO: At some point we need to combine RadioButtonCard, SelectionIconCardBase, and SelectionCardBase to have a common base
 export default function RadioButtonCard(
   {
     fieldName,

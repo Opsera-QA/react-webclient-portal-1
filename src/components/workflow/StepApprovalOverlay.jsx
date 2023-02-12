@@ -33,7 +33,7 @@ const delayCheckInterval = 15000;
 function StepApprovalOverlay(
   {
     pipelineId,
-    loadPipelineFunction,
+    setPipelineStarting,
   }) {
   const contextType = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -62,27 +62,8 @@ function StepApprovalOverlay(
         toastContext.showLoadingErrorDialog(error);
       }
     } finally {
-      handleDelayCheckRefresh(pipelineId);
+      setPipelineStarting(true);
     }
-  };
-
-  const handleDelayCheckRefresh = (pipelineId) => {
-    setTimeout(async function() {
-      console.log(`Scheduling startup status check followup for Pipeline: ${pipelineId}, interval: ${delayCheckInterval} `);
-      await loadPipelineFunction();
-    }, delayCheckInterval);
-  };
-
-  const delayRefresh = () => {
-    setTimeout(async function() {
-      await loadPipelineFunction();
-    }, delayCheckInterval);
-  };
-
-  const delayResume = (pipelineId) => {
-    setTimeout(async function() {
-      await handleResumeWorkflowClick(pipelineId);
-    }, 5000);
   };
 
   useEffect(() => {
@@ -241,13 +222,11 @@ function StepApprovalOverlay(
         return;
       });
 
-    if (!isChildProcess) {
-      await loadPipelineFunction();
-    } else {
-        delayResume(pipelineId);
+    if (isChildProcess) {
+      await handleResumeWorkflowClick(pipelineId);
     }
 
-    delayRefresh();
+    setPipelineStarting(true);
     toastContext.showInformationToast("Your approval has been recorded in the Pipeline Activity Logs for the given step.  Pipeline operations will resume shortly.", 20);
     setIsSaving(false);
     handleClose();
@@ -265,13 +244,11 @@ function StepApprovalOverlay(
         toastContext.showLoadingErrorDialog(err);
       });
 
-    if (!isChildProcess) {
-      await loadPipelineFunction();
-    } else {
-      delayResume(pipelineId);
+    if (isChildProcess) {
+      await handleResumeWorkflowClick(pipelineId);
     }
 
-    delayRefresh();
+    setPipelineStarting(true);
     toastContext.showInformationToast("Your denial has been recorded in the Pipeline Activity Logs for the given step.  Pipeline operations will resume shortly.", 20);
     setIsSavingDeny(false);
     handleClose();
@@ -447,7 +424,7 @@ export function RenderWorkflowItem({ item, stateColorClass, isSelected }) {
             </Col>
           </Row>
 
-         
+
           <div className="p-1 text-muted small">
             <IconBase
               icon={faToolbox}
@@ -487,7 +464,7 @@ RenderWorkflowItem.propTypes = {
 
 StepApprovalOverlay.propTypes = {
   pipelineId: PropTypes.string,
-  loadPipelineFunction: PropTypes.func,
+  setPipelineStarting: PropTypes.func,
 };
 
 export default StepApprovalOverlay;

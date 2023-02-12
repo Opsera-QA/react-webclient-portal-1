@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Card, Col, Row } from "react-bootstrap";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -14,12 +14,14 @@ import ProjectMappingToolSelectInput
 import SonarProjectSelectInput
   from "../../../../common/list_of_values_input/settings/data_tagging/projects/SonarProjectSelectInput";
 import TagManager from "components/common/inputs/tags/TagManager";
-import axios from "axios";
 import JenkinsRegistryToolJobSelectInput
   from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import JiraProjectSelectInput from "components/common/list_of_values_input/tools/jira/projects/JiraProjectSelectInput";
-import JiraCustomTagFieldSelectInput from "components/common/list_of_values_input/tools/jira/custom_tag_fields/JiraCustomTagFieldSelectInput";
+import JiraCustomTagFieldSelectInput from "components/common/list_of_values_input/tools/jira/custom_fields/JiraCustomTagFieldSelectInput";
+import JiraCustomFieldMappingSelectInput from "components/common/list_of_values_input/tools/jira/custom_fields/JiraCustomFieldMappingSelectInput";
+import AnalyticsDataMappingEditWarningMessage
+  from "components/settings/data_mapping/AnalyticsDataMappingEditWarningMessage";
 
 const determineKeyFromFullPath = keyPath => {
   const splitPath = keyPath.split('/');
@@ -32,24 +34,6 @@ function ProjectDataMappingEditorPanel(
     setProjectDataMappingModel,
     handleClose,
   }) {
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
   const setDataHandler = (id, selectedOption) => {
     projectDataMappingModel.setData('key', determineKeyFromFullPath(selectedOption?.nameSpacedPath));
     projectDataMappingModel.setData('keyPath', selectedOption?.nameSpacedPath);
@@ -150,15 +134,26 @@ function ProjectDataMappingEditorPanel(
   const getCustomTagFieldInput = () => {
     if (projectDataMappingModel?.getData("tool_identifier") === "jira" && projectDataMappingModel?.getData("projectKey") && projectDataMappingModel?.getData("projectKey") !== "") {
       return (
-        <Col lg={12}>
-          <JiraCustomTagFieldSelectInput
-            model={projectDataMappingModel}
-            setModel={setProjectDataMappingModel}
-            jiraToolId={projectDataMappingModel.getData("tool_id")}
-            projectKey={projectDataMappingModel?.getData("projectKey")}
-            fieldName={"customTagFields"}
-          />
-        </Col>
+        <>
+          <Col lg={12}>
+            <JiraCustomTagFieldSelectInput
+              model={projectDataMappingModel}
+              setModel={setProjectDataMappingModel}
+              jiraToolId={projectDataMappingModel.getData("tool_id")}
+              projectKey={projectDataMappingModel?.getData("projectKey")}
+              fieldName={"customTagFields"}
+            />
+          </Col>
+          <Col lg={12}>
+            <JiraCustomFieldMappingSelectInput
+              model={projectDataMappingModel}
+              setModel={setProjectDataMappingModel}
+              jiraToolId={projectDataMappingModel.getData("tool_id")}
+              projectKey={projectDataMappingModel?.getData("projectKey")}
+              fieldName={"customMappingFields"}
+            />
+          </Col>
+        </>
       );
     }
   };
@@ -166,14 +161,7 @@ function ProjectDataMappingEditorPanel(
   const getWarningMessage = () => {
     if (projectDataMappingModel?.isNew() !== true) {
       return (
-        <div className="m-2">
-          <Card>
-            <Card.Text className={"mt-3 mb-3"} style={{ display: "flex", justifyContent: "center" }}>
-              <strong>WARNING: </strong> Editing an active Analytics Data Mapping will result in loss of filtering
-              functionality from data previously mapped with this information
-            </Card.Text>
-          </Card>
-        </div>
+        <AnalyticsDataMappingEditWarningMessage />
       );
     }
   };
@@ -187,7 +175,7 @@ function ProjectDataMappingEditorPanel(
       model={projectDataMappingModel}
       setModel={setProjectDataMappingModel}
       handleClose={handleClose}
-      className={"mx-3 my-2"}
+      className={"px-3 pt-1 pb-3"}
     >
       {getWarningMessage()}
       <Row>
@@ -211,7 +199,7 @@ function ProjectDataMappingEditorPanel(
             fieldName={"value"}
             setDataObject={setProjectDataMappingModel}
             disabled={projectDataMappingModel && projectDataMappingModel.getData("tool_id").length === 0}
-            allowedTypes={["project"]}
+            excludeTypes={["custom"]}
           />
         </Col>
         {getCustomTagFieldInput()}

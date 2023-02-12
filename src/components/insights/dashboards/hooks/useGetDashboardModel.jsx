@@ -9,13 +9,14 @@ export default function useGetDashboardModel() {
     userData,
   } = useComponentStateReference();
 
-  const getNewDashboardModel = (dashboard, isNew) => {
+  const getNewDashboardModel = (dashboard, isNew, loadDataFunction) => {
     const newModel = new DashboardModel(
       dashboard,
       isNew,
     );
     newModel.getAccessToken = getAccessToken;
     newModel.cancelTokenSource = cancelTokenSource;
+    newModel.loadDataFunction = loadDataFunction;
     newModel.userData = userData;
 
     if (isNew === true) {

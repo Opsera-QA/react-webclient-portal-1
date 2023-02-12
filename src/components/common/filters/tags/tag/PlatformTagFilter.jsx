@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import useComponentStateReference from "hooks/useComponentStateReference";
+import useGetPlatformTags from "hooks/settings/tags/useGetPlatformTags";
 
 export default function PlatformTagFilter(
   {
@@ -12,48 +10,11 @@ export default function PlatformTagFilter(
     setFilterModel,
     className,
   }) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [tags, setTags] = useState([]);
   const {
-    cancelTokenSource,
-    getAccessToken,
-    isMounted,
-    toastContext,
-  } = useComponentStateReference();
-
-
-  useEffect(() => {
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-  }, []);
-
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-      await getTags();
-    }
-    catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showErrorDialog(error,"Could not load Tags:");
-      }
-    }
-    finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getTags = async () => {
-    const response = await adminTagsActions.getPlatformTags(getAccessToken, cancelTokenSource);
-
-    if (isMounted?.current === true) {
-      setTags(DataParsingHelper.parseNestedArray(response, "data.data", []));
-    }
-  };
+    isLoading,
+    platformTags,
+    error,
+  } = useGetPlatformTags();
 
   const getTextFieldString = (tag) => {
     if (tag == null) {
@@ -79,7 +40,8 @@ export default function PlatformTagFilter(
         setDataFunction={setDataFunction}
         dataObject={filterModel}
         textField={getTextFieldString}
-        selectOptions={tags}
+        selectOptions={platformTags}
+        error={error}
       />
     </div>
   );

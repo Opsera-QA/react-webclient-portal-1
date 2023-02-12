@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import EditableParameterMappingInput from "components/common/list_of_values_input/parameters/EditableParameterMappingInput";
+import EditableParameterMappingInput from "components/common/list_of_values_input/parameters/mapping/EditableParameterMappingInput";
 import DockerTagTypeSelectionInput 
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/DockerTagTypeSelectionInput";
+import DockerCliCommandLineInputParameterInput from "../inputs/DockerCliCommandLineInputParameterInput";
 
 
-
-function DockerCliDockerBuildDetailsInputForm({ model, setModel }) {
+function DockerCliDockerBuildDetailsInputForm({ model, setModel, plan }) {
 
   const getDynamicTagNameField = () => {
     if (model?.getData("dockerTagType") === "other") {
@@ -69,14 +69,12 @@ function DockerCliDockerBuildDetailsInputForm({ model, setModel }) {
             setDataObject={setModel}
           />
           {getDockerTagInputs()}          
-          <EditableParameterMappingInput
-            model={model}
-            setModel={setModel}
-            fieldName={"buildArguments"}
-            nameMaxLength={50}
-            titleText={"Build Arguments Mapping"}
-            type={"Build Argument"}
-          />
+          <DockerCliCommandLineInputParameterInput 
+            model={model} 
+            setModel={setModel} 
+            plan={plan} 
+            fieldName={"buildArguments"} 
+            subheaderText={"Build Arguments"} />
         </>
       );
     }
@@ -107,6 +105,7 @@ function DockerCliDockerBuildDetailsInputForm({ model, setModel }) {
 DockerCliDockerBuildDetailsInputForm.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
+  plan: PropTypes.any, 
 };
 
 export default DockerCliDockerBuildDetailsInputForm;

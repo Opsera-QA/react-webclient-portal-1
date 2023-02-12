@@ -4,8 +4,9 @@ import { faFilter, faTimes } from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import FilterContainer from "../table/FilterContainer";
 
-function ActiveFilterDisplayer(
+export default function ActiveFilterDisplayer(
   {
     filterModel,
     loadData,
@@ -76,4 +77,3 @@ ActiveFilterDisplayer.propTypes = {
   loadData: PropTypes.func,
 };
 
-export default ActiveFilterDisplayer;

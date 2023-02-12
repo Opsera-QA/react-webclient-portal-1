@@ -15,7 +15,7 @@ import gitlabPendingMergeRequestsMetadata from "components/insights/charts/gitla
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import VanitySetTabViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabViewContainer";
-import TabAndViewContainer from "../../../../../common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import FilterContainer from "../../../../../common/table/FilterContainer";
 import { ANALYTICS_TEXT_CONSTANTS } from "../../../../../common/constants/text/analytics/analytics.text.constants";
 import GitlabPendingMergeRequestVerticalTabContainer from "./GitlabPendingMergeRequestVerticalTabContainer";

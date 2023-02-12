@@ -7,7 +7,7 @@ import IconBase from "components/common/icons/IconBase";
 function HelpDocumentationContainer({ children, isLoading, helpTopic, confluenceLink, closeHelpPanel, externalLinkText, bodyClassName }) {
   const getTitleBar = () => {
     return (
-      <div className="pt-2 px-2 d-flex justify-content-between my-auto">
+      <div className={"p-2 d-flex justify-content-between my-auto"}>
         <div className={"d-flex"}>
           <IconBase isLoading={isLoading} className="mr-2"/>
           <span>{helpTopic} Help</span>
@@ -30,8 +30,13 @@ function HelpDocumentationContainer({ children, isLoading, helpTopic, confluence
   };
 
   return (
-    <div className="help-documentation-container">
-      <div className="header h6 pb-2 mb-0">
+    <div
+      className={"help-documentation-container content-container-border"}
+      style={{
+        overflow: "hidden",
+      }}
+    >
+      <div className={"content-block-header title-text-header-1 header mb-0"}>
         {getTitleBar()}
       </div>
       <div className={`help-body ${bodyClassName}`}>

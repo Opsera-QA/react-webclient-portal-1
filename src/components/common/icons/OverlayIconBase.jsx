@@ -19,8 +19,10 @@ function OverlayIconBase(
     overlayTitle,
     overlayBody,
     overlayPlacement,
+    visible,
+    overlayWidth,
   }) {
-  if (icon == null) {
+  if (icon == null || visible === false) {
     return null;
   }
 
@@ -30,6 +32,7 @@ function OverlayIconBase(
       title={overlayTitle}
       showCloseButton={false}
       placement={overlayPlacement}
+      overlayWidth={overlayWidth}
     >
       <div>
         <IconBase
@@ -65,6 +68,8 @@ OverlayIconBase.propTypes = {
   overlayTitle: PropTypes.string,
   overlayBody: PropTypes.any,
   overlayPlacement: PropTypes.string,
+  visible: PropTypes.bool,
+  overlayWidth: PropTypes.string,
 };
 
 export default React.memo(OverlayIconBase);

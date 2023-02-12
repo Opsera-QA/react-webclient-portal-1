@@ -18,6 +18,7 @@ export default function ButtonTooltip(
       placement={placement}
       trigger={trigger}
       innerText={innerText}
+      wrapInDiv={true}
     >
       {children}
     </TooltipWrapper>

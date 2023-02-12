@@ -199,7 +199,7 @@ import ApigeePipelineStepConfigurationSummaryPanel
 import ApigeeStepFormMetadata from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/apigee/apigee-stepForm-metadata";
 import SnaplogicPipelineStepConfigurationSummary
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/SnaplogicPipelineStepConfigurationSummary";
-import SnaplogicStepFormMetadata 
+import SnaplogicStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/snaplogic/snaplogic-stepForm-metadata";
 import SapCpqPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/sap_cpq/SapCpqPipelineStepConfigurationSummaryPanel";
@@ -222,7 +222,7 @@ import LiquibaseStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/liquibase/liquibase-stepForm-metadata";
 import BlackDuckPipelineStepConfigurationSummary
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/black_duck/BlackDuckPipelineStepConfigurationSummary";
-import BlackDuckStepFormMetadata 
+import BlackDuckStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/black_duck/blackduck-stepForm-metadata";
 import FortifyPipelineStepConfigurationSummary
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/fortify/FortifyPipelineStepConfigurationSummary";
@@ -248,7 +248,12 @@ import azureZipDeploymentMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_zip_deployment/azureZipDeployment.metadata";
 import AzureZipDeploymentStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfigurationSummaryPanel";
-
+import SnykPipelineStepConfigurationSummary from "./step_tool_configuration_forms/snyk/inputs/SnykPipelineStepConfigurationSummary";
+import snykStepFormMetadata from "./step_tool_configuration_forms/snyk/snyk-stepForm-metadata";
+import AquasecPipelineStepConfigurationSummary from "./step_tool_configuration_forms/aquasec/AquasecPipelineStepConfigurationSummary";
+import AquasecStepFormMetadata from "./step_tool_configuration_forms/aquasec/aquasec-stepForm-metadata";
+import HelmPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/helm/HelmPipelineStepConfigurationSummaryPanel";
+import helmStepFormMetadata from "./step_tool_configuration_forms/helm/helm-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -432,7 +437,7 @@ function PipelineStepConfigurationSummary({
         return (
           <TerraformVcsStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            terraformPipelineDataObject={getModelWrappedObject(TerraformVcsStepFormMetadata)}
+            terraformVcsStepModel={getModelWrappedObject(TerraformVcsStepFormMetadata)}
           />
         );
       case "xunit":
@@ -778,6 +783,27 @@ function PipelineStepConfigurationSummary({
                 dockerCliPipelineDataObject={getModelWrappedObject(dockerCliStepFormMetadata)}
             />
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK:
+        return (
+            <SnykPipelineStepConfigurationSummary
+                pipelineData={pipelineData}
+                snykPipelineDataObject={getModelWrappedObject(snykStepFormMetadata)}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
+        return (
+            <AquasecPipelineStepConfigurationSummary
+                pipelineData={pipelineData}
+                aquasecPipelineDataObject={getModelWrappedObject(AquasecStepFormMetadata)}
+            />
+        );        
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.HELM:
+        return (
+            <HelmPipelineStepConfigurationSummaryPanel
+                pipelineData={pipelineData}
+                helmPipelineDataObject={getModelWrappedObject(helmStepFormMetadata)}
+            />
+        );        
       default:
         return (
           <SummaryPanelContainer>

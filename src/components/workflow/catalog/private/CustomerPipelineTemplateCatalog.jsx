@@ -6,9 +6,9 @@ import {faOctagon} from "@fortawesome/pro-light-svg-icons";
 import InlinePipelineTypeFilter from "components/common/filters/admin/templates/pipeline_type/InlinePipelineTypeFilter";
 import CustomerPipelineTemplateCardView from "components/workflow/catalog/private/CustomerPipelineTemplateCardView";
 import useGetCustomerPipelineTemplates from "hooks/workflow/catalog/customer/useGetCustomerPipelineTemplates";
+import CustomerTagFilter from "components/common/filters/tags/tag/CustomerTagFilter";
 
 export default function CustomerPipelineTemplateCatalog({activeTemplates}) {
-
   const {
     pipelineTemplates,
     pipelineTemplateFilterModel,
@@ -34,10 +34,9 @@ export default function CustomerPipelineTemplateCatalog({activeTemplates}) {
 
   const getDropdownFilters = () => {
     return (
-      <TagFilter
-        filterDto={pipelineTemplateFilterModel}
-        setFilterDto={setPipelineTemplateFilterModel}
-        valueField={"value2"}
+      <CustomerTagFilter
+        filterModel={pipelineTemplateFilterModel}
+        setFilterModel={setPipelineTemplateFilterModel}
       />
     );
   };
@@ -69,7 +68,7 @@ export default function CustomerPipelineTemplateCatalog({activeTemplates}) {
         supportSearch={true}
         isLoading={isLoading}
         body={getPipelineCardView()}
-        dropdownFilters={getDropdownFilters()}
+        // dropdownFilters={getDropdownFilters()}
         inlineFilters={getInlineFilters()}
         titleIcon={faOctagon}
         title={"Pipeline Templates"}

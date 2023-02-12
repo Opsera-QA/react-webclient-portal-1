@@ -12,7 +12,7 @@ import {AuthContext} from "contexts/AuthContext";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-function CancelPipelineQueueConfirmationOverlay({ pipeline, setHasQueuedRequest }) {
+function CancelPipelineQueueConfirmationOverlay({ pipeline }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const {
@@ -22,7 +22,6 @@ function CancelPipelineQueueConfirmationOverlay({ pipeline, setHasQueuedRequest 
   const deletePipelineQueueRequest = async () => {
     try {
       await pipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
-      setHasQueuedRequest(false);
       handleClose();
       toastContext.showInformationToast("The pipeline queue request has been cancelled.");
     }
@@ -84,7 +83,6 @@ function CancelPipelineQueueConfirmationOverlay({ pipeline, setHasQueuedRequest 
 
 CancelPipelineQueueConfirmationOverlay.propTypes = {
   pipeline: PropTypes.object,
-  setHasQueuedRequest: PropTypes.func,
 };
 
 export default CancelPipelineQueueConfirmationOverlay;

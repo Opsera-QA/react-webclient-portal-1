@@ -1,24 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { Form } from "react-bootstrap";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import StandaloneCheckboxInput from "components/common/inputs/boolean/checkbox/StandaloneCheckboxInput";
 
-// TODO: Wire up use of StandaloneCheckboxInput
-function CheckboxInputBase({fieldName, model, setModel, setDataFunction, disabled}) {
-  const [field] = useState(model?.getFieldById(fieldName));
+export default function CheckboxInputBase({fieldName, model, setModel, setDataFunction, disabled}) {
+  const field = model?.getFieldById(fieldName);
 
   const validateAndSetData = (value) => {
-    let newDataObject = model;
-    newDataObject.setData(fieldName, value);
-    setModel({...newDataObject});
+    model.setData(fieldName, value);
+    setModel({...model});
   };
 
   const updateValue = (newValue) => {
     if (setDataFunction) {
       setDataFunction(fieldName, newValue);
-    }
-    else {
+    } else {
       validateAndSetData(newValue);
     }
   };
@@ -29,15 +26,12 @@ function CheckboxInputBase({fieldName, model, setModel, setDataFunction, disable
 
   return (
     <InputContainer fieldName={fieldName}>
-      <Form.Check
-        type="checkbox"
+      <StandaloneCheckboxInput
         id={field?.id}
-        checked={!!model?.getData(fieldName)}
+        value={!!model?.getData(fieldName)}
         disabled={disabled}
         label={model?.getLabel(fieldName)}
-        onChange={() => {
-          updateValue(!model?.getData(fieldName));
-        }}
+        setDataFunction={updateValue}
       />
       <InfoText
         field={field}
@@ -55,5 +49,3 @@ CheckboxInputBase.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
 };
-
-export default CheckboxInputBase;

@@ -8,13 +8,14 @@ import githubRecentMergeRequestsMetadata from "components/insights/charts/github
 import Model from "core/data_model/model";
 import VanitySetTabViewContainer from "../../../../../common/tabs/vertical_tabs/VanitySetTabViewContainer";
 import FilterContainer from "../../../../../common/table/FilterContainer";
-import TabAndViewContainer from "../../../../../common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import GithubRecentMergeRequestVerticalTabContainer from "./GithubRecentMergeRequestVerticalTabContainer";
 import CustomTable from "../../../../../common/table/CustomTable";
 import {
   getLimitedTableTextColumn,
   getTableDateTimeColumn,
   getTableTextColumn,
+  getTableHourDurationTextColumn
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 
@@ -41,6 +42,7 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
         getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
         getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
+        getTableHourDurationTextColumn(getField(fields, "MergeRequestTimeTaken"))
       ],
       []
   );

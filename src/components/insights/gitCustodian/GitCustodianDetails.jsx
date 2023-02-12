@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import {AuthContext} from "../../../contexts/AuthContext";
 import axios from "axios";
 import LoadingDialog from "../../common/status_notifications/loading";
 import {parseError} from "../../common/helpers/error-helpers";

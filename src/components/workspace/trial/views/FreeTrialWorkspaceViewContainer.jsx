@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import FreeTrialWorkspaceVerticalTabContainer from "components/workspace/trial/views/FreeTrialWorkspaceVerticalTabContainer";
-import TabAndViewContainer from "components/common/tabs/tree/TabTreeAndViewContainer";
+import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import { faRectangleList } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer, {
   FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION,

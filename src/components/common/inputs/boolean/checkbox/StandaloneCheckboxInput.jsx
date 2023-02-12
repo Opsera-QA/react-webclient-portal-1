@@ -1,20 +1,41 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Form } from "react-bootstrap";
-import { generateUUID } from "components/common/helpers/string-helpers";
+import {Form} from "react-bootstrap";
+import {generateUUID, hasStringValue} from "components/common/helpers/string-helpers";
+import {mouseHelper} from "temp-library-components/helpers/mouse/mouse.helper";
 
-function StandaloneCheckboxInput({id, value, label, setDataFunction, disabled}) {
+export default function StandaloneCheckboxInput(
+  {
+    id,
+    value,
+    label,
+    setDataFunction,
+    disabled,
+    className,
+  }) {
+  const mouseCursor = mouseHelper.getMouseCursor(setDataFunction, disabled);
+  const classNames = hasStringValue(className) ? `${className} d-flex` : "d-flex";
+
   return (
-    <Form.Check
-      type={"checkbox"}
-      id={id}
-      checked={!!value}
-      disabled={disabled}
-      label={label}
-      onChange={() => {
-        setDataFunction(!value);
+    <div
+      className={`${mouseCursor} standalone-checkbox-input`}
+      onClick={disabled !== true ? () => setDataFunction(!value) : undefined}
+      style={{
+        height: "22px"
       }}
-    />
+    >
+      <div className={classNames}>
+        <input
+          type={"checkbox"}
+          checked={!!value}
+          disabled={disabled === true}
+          id={id}
+          readOnly={true}
+          className={"my-auto mr-2"}
+        />
+        <div className={"mb-auto"}>{label}</div>
+      </div>
+    </div>
   );
 }
 
@@ -24,10 +45,9 @@ StandaloneCheckboxInput.propTypes = {
   label: PropTypes.string,
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func,
+  className: PropTypes.string,
 };
 
 StandaloneCheckboxInput.defaultProps = {
   id: generateUUID(),
 };
-
-export default StandaloneCheckboxInput;

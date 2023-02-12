@@ -3,45 +3,46 @@ import PropTypes from "prop-types";
 import FilterTitleBar from "components/common/table/FilterTitleBar";
 import ActiveFilterDisplayer from "components/common/filters/ActiveFilterDisplayer";
 import FilterBar from "components/common/filters/FilterBar";
-import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
+import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 const TITLE_BAR_HEIGHT = "46px";
 const screenContainerMargin = "30px";
 export const FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER = `calc(${screenContainerHeights.TABLE_MINIMUM_HEIGHT} - ${screenContainerMargin} - ${TITLE_BAR_HEIGHT})`;
 export const FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION = `calc(${FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER} - ${screenContainerHeights.PAGE_DESCRIPTION_HEIGHT})`;
 
-function FilterContainer(
-  {
-    filterDto,
-    setFilterDto,
-    titleIcon,
-    title,
-    dropdownFilters,
-    inlineFilters,
-    loadData,
-    isLoading,
-    isPolling,
-    body,
-    addRecordFunction,
-    supportSearch,
-    supportViewToggle,
-    className,
-    metadata,
-    exportButton,
-    supportClientSideSearching,
-    bodyClassName,
-    handleExportFunction,
-    handleImportFunction,
-    minimumHeight,
-    maximumHeight,
-    showRefreshButton,
-    disableNewRecordButton,
-    bodyStyling,
-    hideXOverflow,
-    filterSelectionOverlayPanel,
-    // TODO: Remove after filters are used everywhere
-    type
-  }) {
+function FilterContainer({
+  filterDto,
+  setFilterDto,
+  titleIcon,
+  title,
+  dropdownFilters,
+  inlineFilters,
+  loadData,
+  isLoading,
+  isPolling,
+  body,
+  addRecordFunction,
+  supportSearch,
+  supportViewToggle,
+  className,
+  metadata,
+  exportButton,
+  supportClientSideSearching,
+  bodyClassName,
+  handleExportFunction,
+  handleImportFunction,
+  minimumHeight,
+  maximumHeight,
+  showRefreshButton,
+  disableNewRecordButton,
+  filterSelectionOverlayPanel,
+  hideActiveFilterDisplayer,
+  bodyStyling,
+  hideXOverflow,
+  // TODO: Remove after filters are used everywhere
+  type,
+}) {
   const getFilterBar = () => {
     return (
       <FilterBar
@@ -67,6 +68,10 @@ function FilterContainer(
     );
   };
 
+  const {
+    isFreeTrial,
+  } = useComponentStateReference();
+
   const getContainerStylingObject = () => {
     return ({
       minHeight: minimumHeight,
@@ -88,13 +93,28 @@ function FilterContainer(
     });
   };
 
+  const getActiveFilterDisplayer = () => {
+    if (hideActiveFilterDisplayer !== true) {
+      return (
+        <ActiveFilterDisplayer
+          filterModel={filterDto}
+          loadData={loadData}
+        />
+      );
+    }
+  };
+
   return (
     <div className={className}>
       <div
         className={"filter-container container-border"}
       >
-        <div className={"w-100"}>
-          <div className={"d-flex filter-container-content-block-header"}>
+        <div className={isFreeTrial === true ? "w-100" : "w-100 filter-title-bar"}>
+          <div className={
+            isFreeTrial === true
+              ? "d-flex filter-container-content-block-header"
+              : "px-2 py-1 d-flex content-block-header"
+          }>
             <FilterTitleBar
               isLoading={isLoading}
               isPolling={isPolling}
@@ -106,10 +126,7 @@ function FilterContainer(
               addRecordFunction={addRecordFunction}
             />
           </div>
-          <ActiveFilterDisplayer
-            filterModel={filterDto}
-            loadData={loadData}
-          />
+          {getActiveFilterDisplayer()}
         </div>
         <div
           className={bodyClassName}
@@ -129,7 +146,7 @@ FilterContainer.propTypes = {
   isLoading: PropTypes.bool,
   supportSearch: PropTypes.bool,
   titleIcon: PropTypes.object,
-  title:PropTypes.string,
+  title: PropTypes.string,
   body: PropTypes.object,
   loadData: PropTypes.func,
   addRecordFunction: PropTypes.func,
@@ -152,11 +169,12 @@ FilterContainer.propTypes = {
   hideXOverflow: PropTypes.bool,
   filterSelectionOverlayPanel: PropTypes.any,
   isPolling: PropTypes.bool,
+  hideActiveFilterDisplayer: PropTypes.bool,
 };
 
 FilterContainer.defaultProps = {
   showRefreshButton: true,
-  disableNewRecordButton: false
+  disableNewRecordButton: false,
 };
 
 export default FilterContainer;

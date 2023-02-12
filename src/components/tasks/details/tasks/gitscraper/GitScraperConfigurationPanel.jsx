@@ -13,6 +13,7 @@ import GitIgnoreToggleInput from "./inputs/GitIgnoreToggleInput";
 import RepoSelectionView from "./inputs/RepoSelectionView";
 import GitScraperBitbucketWorkspaceSelectInput from "./inputs/GitScraperBitbucketWorkspaceSelectInput";
 import BooleanToggleInput from "../../../../common/inputs/boolean/BooleanToggleInput";
+import GitCustodianBranchSelectInput from "./inputs/GitCustodianBranchSelectInput";
 
 function GitScraperConfigurationPanel({
   gitTasksDataDto,
@@ -86,6 +87,20 @@ function GitScraperConfigurationPanel({
           setDataObject={setGitTasksConfigurationData}
           dataObject={gitTasksConfigurationData}
           fieldName={"scanAll"}
+        />
+      </Col>
+      <Col lg={12}>
+        <BooleanToggleInput
+          setDataObject={setGitTasksConfigurationData}
+          dataObject={gitTasksConfigurationData}
+          fieldName={"scanOnlyBranch"}
+        />
+      </Col>
+      <Col lg={12}>
+        <GitCustodianBranchSelectInput 
+          setModel={setGitTasksConfigurationData}
+          model={gitTasksConfigurationData}
+          fieldName={"gitBranch"}
         />
       </Col>
       {!gitTasksConfigurationData?.getData("scanAll") && (

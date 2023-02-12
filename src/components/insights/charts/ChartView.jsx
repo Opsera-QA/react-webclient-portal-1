@@ -76,7 +76,10 @@ import GitlabTotalCommitsByProjectChart from "./gitlab/pie_chart/total_commits_b
 import GitlabRecentMergeRequests from "./gitlab/table/recent_merge_requests/GitlabRecentMergeRequests";
 import GitlabPendingMergeRequests from "./gitlab/table/pending_merge_requests/GitlabPendingMergeRequests.jsx";
 import GitlabDeploymentFrequency from "./gitlab/deployment_frequency/GitlabDeploymentFrequencyMetric";
+import GitlabDeploymentFrequencyV2 from "./gitlab/deployment_frequency_v2/GitlabDeploymentFrequencyMetric";
 import GitLabLeadTimeChart from "./gitlab/line_chart/lead_time/GitLabLeadTimeChart";
+import GitLabLeadTimeChartV2 from "./gitlab/line_chart/lead_time_v2/GitLabLeadTimeChart";
+
 import GitlabPipelineStatistics from "./gitlab/line_chart/pipeline-statistics/GitlabPipelineStatistics";
 
 //new
@@ -182,6 +185,9 @@ import BoomiBarChart from "components/insights/charts/boomi/bar_chart/BoomiBarCh
 // Approval Gates KPI
 import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
 
+// Dora KPI
+import DoraJiraGitlabRolledUpChart from "./dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpChart";
+import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/GitlabMergeRequestStatistics";
 
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
@@ -765,7 +771,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis,
             />
           </Col>
         );
-      case "sonar-ratings":
+      case  kpiIdentifierConstants.KPI_IDENTIFIERS.SONAR_RATINGS_LEGACY:
         return (
           <Col xl={6} md={12} className="p-2">
             <LegacySonarRatingMetrics
@@ -1046,6 +1052,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis,
               />
             </Col>
           );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_DEPLOYMENT_FREQUENCY_V2:
+            return (
+                <Col xl={12} md={12} className="p-2">
+                    <GitlabDeploymentFrequencyV2
+                        kpiConfiguration={kpiConfig}
+                        setKpiConfiguration={setKpiConfig}
+                        dashboardData={dashboardData}
+                        setKpis={setKpis}
+                        index={index}
+                    />
+                </Col>
+            );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME:
         return (
             <Col md={12} className="p-2">
@@ -1058,6 +1076,30 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis,
               />
             </Col>
         );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_LEAD_TIME_V2:
+            return (
+                <Col md={12} className="p-2">
+                    <GitLabLeadTimeChartV2
+                        kpiConfiguration={kpiConfig}
+                        setKpiConfiguration={setKpiConfig}
+                        dashboardData={dashboardData}
+                        setKpis={setKpis}
+                        index={index}
+                    />
+                </Col>
+            );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_MERGE_STATISTICS:
+            return (
+                <Col xl={12} md={12} className="p-2">
+                    <GitlabMergeRequestStatistics
+                        kpiConfiguration={kpiConfig}
+                        setKpiConfiguration={setKpiConfig}
+                        dashboardData={dashboardData}
+                        setKpis={setKpis}
+                        index={index}
+                    />
+                </Col>
+            );
       //APIGEE KPIs
       case kpiIdentifierConstants.KPI_IDENTIFIERS.APIGEE_REPORT:
         return (
@@ -1126,9 +1168,9 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis,
         );
 
       // Junit KPIs
-      case "junit-test-results":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.JUNIT_TEST_RESULTS:
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col md={12} className="p-2">
             <JunitTestResultsTable
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -1443,7 +1485,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis,
           </Col>
         );
       // QA Testing
-      case "qa-manual-test":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.QA_MANUAL_TEST:
         return (
           <Col md={12} className="p-2">
             <ManualQaTestPieChart
@@ -1467,7 +1509,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis,
             />
           </Col>
         );
-      case "cumulative-open-defects":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.CUMULATIVE_OPEN_DEFECTS:
         return (
           <Col md={12} className="p-2">
             <CumulativeOpenDefectsMetric
@@ -1491,7 +1533,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis,
             />
           </Col>
         );
-      case "adoption-percentage":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.ADOPTION_PERCENTAGE:
         return (
           <Col md={12} className="p-2">
             {/*<AdoptionTestPercentageMetricV1*/}
@@ -1510,7 +1552,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis,
             />
           </Col>
         );
-      case "automated-test-results":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATED_TEST_RESULTS:
         return (
           <Col md={12} className="p-2">
             <AutomatedTestResultsPieChart
@@ -1659,7 +1701,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis,
       //       />
       //     </Col>
       //   );
-      case "defect-removal-efficiency":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.DEFECT_REMOVAL_EFFICIENCY:
         return (
           <Col md={12} className="p-2">
             <DefectRemovalEfficiencyMetrics
@@ -1723,8 +1765,19 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis,
             />
           </Col>
         );
-
-      case "approval-gates":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.DORA_JIRA_GITLAB_ROLLED_UP:
+        return (
+          <Col md={12} className="p-2">
+            <DoraJiraGitlabRolledUpChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.APPROVAL_GATES:
         return (
           <Col md={12} className="p-2">
             <ApprovalGatesMetrics

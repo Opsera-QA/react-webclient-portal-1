@@ -8,14 +8,14 @@ function SentenialBitbucketWorkspaceSelectInput({model, setModel, disabled}) {
     newModel.setData("bitbucketWorkspace", selectedOption?.key);
     newModel.setData("bitbucketWorkspaceName", selectedOption?.name);
     newModel.setData("repoId", "");
-    newModel.setData("branch", "");
+    newModel.setData("gitBranch", "");
     setModel({...newModel});
   };
 
-  if (model?.getData("type") !== "bitbucket") {
+  if (model?.getData("service") !== "bitbucket") {
     return <></>;
   }
-
+  
   return (
      <BitbucketWorkspaceInput
        fieldName={"bitbucketWorkspaceName"}

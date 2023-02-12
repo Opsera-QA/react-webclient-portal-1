@@ -105,16 +105,16 @@ pipelineValidationHelper.isPipelineStepToolValid = (pipelineStep) => {
 };
 
 pipelineValidationHelper.isPipelineSourceRepositoryValidForDynamicSettings = (pipeline) => {
-  const pipelineSourceRepository = DataParsingHelper.parseNestedObject(pipeline, "workflow.source");
-
-  if (!pipelineSourceRepository) {
-    return false;
-  }
-
   const dynamicSettingsEnabled  = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.source.dynamicSettings");
 
   if (dynamicSettingsEnabled !== true) {
-    return;
+    return false;
+  }
+
+  const uiAllowed  = DataParsingHelper.parseNestedBoolean(pipeline, "workflow.source.allowDynamicSettingsInUi");
+
+  if (uiAllowed !== true) {
+    return false;
   }
 
   const repository = DataParsingHelper.parseNestedString(pipeline, "workflow.source.repoId");

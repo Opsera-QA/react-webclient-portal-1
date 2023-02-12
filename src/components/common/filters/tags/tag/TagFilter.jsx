@@ -8,7 +8,7 @@ import axios from "axios";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-// TODO: Deprecate the current string value and pass actual tag object instead
+// TODO: Use CustomerTagFilter instead. This is left in for legacy support
 function TagFilter(
   {
     filterDto,

@@ -8,6 +8,7 @@ import {
 import {getField} from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import userActivityAuditLogMetadata from "@opsera/definitions/constants/audit-logs/user/userActivityAuditLog.metadata";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function UserActivityAuditLogTableBase(
   {
@@ -19,14 +20,29 @@ export default function UserActivityAuditLogTableBase(
     setSelectedActivityLogId,
   }) {
   const fields = userActivityAuditLogMetadata.fields;
+  const activeFilters = DataParsingHelper.parseArray(filterModel?.getActiveFilters(), []);
 
   const columns = useMemo(
-    () => [
-      getTableTextColumn(getField(fields, "action")),
-      getOwnerNameField("User"),
-      getTableCreatedAtColumn("Date"),
-    ],
-    [fields]
+    () => {
+      const columns = [];
+
+      const hasActionFilterValue = filterModel?.hasActiveFilterValue("actions");
+      const actions = DataParsingHelper.parseArray(filterModel?.getData("actions"), []);
+
+      if (hasActionFilterValue !== true || actions.length !== -1) {
+        if (actions.length !== 1) {
+          columns.push(getTableTextColumn(getField(fields, "action")));
+        }
+      }
+
+      if (filterModel?.hasActiveFilterValue("user") !== true) {
+        columns.push(getOwnerNameField("User"));
+      }
+
+      columns.push(getTableCreatedAtColumn("Date"));
+      return columns;
+    },
+    [fields, activeFilters]
   );
 
   const rowClickFunction = (row) => {

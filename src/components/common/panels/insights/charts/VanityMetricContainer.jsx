@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import {faCalendar, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
+import {faArrowDown, faArrowUp, faCalendar, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import InfoDialog from "components/common/status_notifications/info";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
@@ -13,8 +13,8 @@ import AppliedMetricTagBadge from "components/common/badges/tag/metrics/AppliedM
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import SpyglassIcon from "components/common/icons/general/SpyglassIcon";
 import BetaBadge from "components/common/badges/BetaBadge";
-import BadgeBase from "../../../badges/BadgeBase";
 import MetricBadgeBase from "../../../badges/metric/MetricBadgeBase";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
 
 function VanityMetricContainer(
   {
@@ -36,10 +36,12 @@ function VanityMetricContainer(
   }) {
   const toastContext = useContext(DialogToastContext);
   const [view, setView] = useState("chart");
+  const [isMovingKpi, setIsMovingKpi] = useState(false);
   const [helpIsShown, setHelpIsShown] = useState(false);
   const isMounted = useRef(false);
 
   useEffect(() => {
+    setIsMovingKpi(false);
     isMounted.current = true;
 
     if (loadChart) {
@@ -110,6 +112,66 @@ function VanityMetricContainer(
     }
   };
 
+  const moveItemUp = async () => {
+    const configuration = dashboardData?.getData("configuration");
+
+    if (index === 0) {
+      return;
+    }
+
+    setIsMovingKpi(true);
+    const newIndex = index - 1;
+    const currentItem = configuration[index];
+    const item = configuration[newIndex];
+    configuration[index] = item;
+    configuration[newIndex] = currentItem;
+    dashboardData.setData("configuration", configuration);
+    await dashboardData.saveModel();
+    await dashboardData.reloadData();
+  };
+
+  const moveItemDown = async () => {
+    const configuration = dashboardData?.getData("configuration");
+    const count = configuration?.length;
+
+    if (index >= count - 1) {
+      return;
+    }
+
+    setIsMovingKpi(true);
+    const newIndex = index + 1;
+    const currentItem = configuration[index];
+    const item = configuration[newIndex];
+    configuration[index] = item;
+    configuration[newIndex] = currentItem;
+    dashboardData.setData("configuration", configuration);
+    await dashboardData.saveModel();
+    await dashboardData.reloadData();
+  };
+
+
+  const getMoveIcons = () => {
+    const count = dashboardData?.getData("configuration")?.length;
+    return (
+      <>
+        <OverlayIconBase
+          className={"my-auto"}
+          icon={faArrowUp}
+          visible={dashboardData?.canUpdateDashboardMetric() === true && index > 0}
+          onClickFunction={moveItemUp}
+          overlayBody={"Move KPI up"}
+        />
+        <OverlayIconBase
+          className={"ml-2 my-auto"}
+          icon={faArrowDown}
+          visible={dashboardData?.canUpdateDashboardMetric() === true && index < count - 1}
+          onClickFunction={moveItemDown}
+          overlayBody={"Move KPI down"}
+        />
+      </>
+    );
+  };
+
   const getTitleBar = () => {
     if (isLoading) {
       return (
@@ -122,6 +184,23 @@ function VanityMetricContainer(
             <span className={"my-auto"}>
             <IconBase isLoading={true} className={"mr-2"} />
             Loading Chart
+          </span>
+          </div>
+        </div>
+      );
+    }
+
+    if (isMovingKpi === true) {
+      return (
+        <div className={"h-100 d-flex justify-content-between"}>
+          <div className={"d-flex"}>
+            <BetaBadge
+              isBeta={isBeta}
+              className={"mr-2 my-auto"}
+            />
+            <span className={"my-auto"}>
+            <IconBase isLoading={true} className={"mr-2"} />
+            Moving Chart
           </span>
           </div>
         </div>
@@ -142,6 +221,8 @@ function VanityMetricContainer(
             </div>
           </div>
           <div className={"d-flex my-auto"}>
+            {getMoveIcons()}
+            {getHelpToggle()}
             {getSettingsToggle()}
           </div>
         </div>
@@ -160,6 +241,7 @@ function VanityMetricContainer(
           </div>
         </div>
         <div className={"d-flex my-auto"}>
+          {getMoveIcons()}
           {getHelpToggle()}
           {getActionableInsightOverlayToggle()}
           {getSettingsToggle()}

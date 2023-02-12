@@ -173,7 +173,7 @@ export default function FreeTrialLandingAccountStatsWidget({ className }) {
           />
           <div className={"ml-1"}>or</div>
           <ExternalLink
-            link={EXTERNAL_LINKS.REQUEST_HELP}
+            link={EXTERNAL_LINKS.FREE_TRIAL_REQUEST_HELP}
             label={"click here"}
             className={"ml-1 my-auto"}
           />.

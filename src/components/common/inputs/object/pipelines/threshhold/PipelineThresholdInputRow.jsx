@@ -11,6 +11,7 @@ import StandalonePositiveIntegerNumberTextInput
   from "components/common/inputs/text/number/integer/StandalonePositiveIntegerNumberTextInput";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import IconBase from "components/common/icons/IconBase";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function PipelineThresholdInputRow(
   {
@@ -21,13 +22,19 @@ function PipelineThresholdInputRow(
     updateThresholdLevel,
     deleteThresholdRow,
     count,
-    level
+    level,
+    thresholds,
   }) {
 
   const getThresholdLevelInput = () => {
+
+    const tmpThresholds = DataParsingHelper.parseArray(thresholds, []);
+
+    const thresholdLevels = tmpThresholds.length > 0 ? tmpThresholds : THRESHOLD_LEVELS;
+
     return (
       <StandaloneSelectInput
-        selectOptions={THRESHOLD_LEVELS.filter(level => !disabledThresholdLevels.includes(level.value))}
+        selectOptions={thresholdLevels.filter(level => !disabledThresholdLevels.includes(level.value))}
         valueField={"value"}
         textField={"text"}
         value={level}
@@ -83,6 +90,7 @@ PipelineThresholdInputRow.propTypes = {
     PropTypes.number,
   ]),
   level: PropTypes.string,
+  thresholds: PropTypes.array,
 };
 
 export default PipelineThresholdInputRow;

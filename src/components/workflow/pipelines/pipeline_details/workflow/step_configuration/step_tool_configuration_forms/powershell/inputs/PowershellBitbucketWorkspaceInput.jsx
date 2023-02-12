@@ -7,8 +7,9 @@ function PowershellBitbucketWorkspaceInput({dataObject, setDataObject, disabled}
     let newDataObject = {...dataObject};
     newDataObject.setData("workspace", selectedOption.key);
     newDataObject.setData("workspaceName", selectedOption.name);
+    newDataObject.setData("repository", "");
     newDataObject.setData("repoId", "");
-    newDataObject.setData("branch", "");
+    newDataObject.setData("gitBranch", "");
     setDataObject({...newDataObject});
   };
 

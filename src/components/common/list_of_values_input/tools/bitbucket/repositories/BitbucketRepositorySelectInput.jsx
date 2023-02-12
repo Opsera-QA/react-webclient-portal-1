@@ -1,13 +1,9 @@
-import React, {useContext, useEffect, useRef, useState, useCallback} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import axios from "axios";
-import { AuthContext } from "contexts/AuthContext";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {bitbucketActions} from "components/inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket.actions";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
-import _ from "lodash";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 function BitbucketRepositorySelectInput(
@@ -25,42 +21,30 @@ function BitbucketRepositorySelectInput(
     }) {
   const [isLoading, setIsLoading] = useState(false);
   const [bitbucketRepositories, setBitbucketRepositories] = useState([]);
-  const [error, setError] = useState("");
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const isMounted = useRef(false);
-  const {getAccessToken} = useContext(AuthContext);
+  const [error, setError] = useState(undefined);
+  const [inEditMode, setInEditMode] = useState(false);
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    isMounted.current = true;
-    const cancelSource = axios.CancelToken.source();
     setBitbucketRepositories([]);
-    setCancelTokenSource(cancelSource);
-
-    if (isMongoDbId(toolId) === true && hasStringValue(workspace) === true) {
-      loadData("", toolId, cancelSource).catch((error) => {
+    if (isMongoDbId(toolId) === true && hasStringValue(workspace) === true && inEditMode === true) {
+      loadData("").catch((error) => {
         throw error;
       });
     }
-
-    return () => {
-      cancelSource.cancel();
-      isMounted.current = false;
-    };
-  }, [toolId, workspace]);
+  }, [toolId, workspace, inEditMode]);
 
   const loadData = async (
     searchTerm = "",
-    currentToolId = toolId,
-    cancelSource = cancelTokenSource,
   ) => {
     try {
       setError(undefined);
       setIsLoading(true);
-      await loadBitbucketRepositories(searchTerm, currentToolId, cancelSource);
+      await loadBitbucketRepositories(searchTerm);
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
@@ -74,10 +58,8 @@ function BitbucketRepositorySelectInput(
 
   const loadBitbucketRepositories = async (
     searchTerm,
-    toolId,
-    cancelSource = cancelTokenSource,
   ) => {
-    const response = await bitbucketActions.getRepositoriesFromBitbucketInstanceV3(getAccessToken, cancelSource, toolId, workspace, searchTerm);
+    const response = await bitbucketActions.getRepositoriesFromBitbucketInstanceV3(getAccessToken, cancelTokenSource, toolId, workspace, searchTerm);
     const repositories = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(repositories)) {
@@ -100,13 +82,8 @@ function BitbucketRepositorySelectInput(
     return "The first 100 repositories will be loaded by default, please enter at least 3 characters to search for repositories by name.";
   };
 
-  const delayedSearchQuery = useCallback(
-      _.debounce((searchTerm, toolId) => loadData(searchTerm, toolId), 600),
-      [],
-  );
-
   return (
-    <LazyLoadSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={model}
       helpTooltipText={getDataPullLimitMessage()}
@@ -121,8 +98,11 @@ function BitbucketRepositorySelectInput(
       singularTopic={"Bitbucket Repository"}
       pluralTopic={"Bitbucket Repositories"}
       error={error}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
-      useToggle={true}
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
+      supportSearchLookup={true}
+      externalCacheToolId={toolId}
+      loadDataFunction={loadData}
     />
   );
 }

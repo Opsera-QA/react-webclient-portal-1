@@ -107,6 +107,7 @@ chartsActions.getGithubPullRequestsMetrics = async (
   getAccessToken,
   cancelTokenSource,
   dashboardTags,
+  dashboardFilters,
   dashboardOrgs,
   tableFilterDto,
   type,
@@ -157,6 +158,7 @@ chartsActions.getGithubTotalCommitsPerContributorsAndRepositories = async (
   getAccessToken,
   cancelTokenSource,
   dashboardTags,
+  dashboardFilters,
   dashboardOrgs,
   tableFilterDto,
   repository,
@@ -206,6 +208,7 @@ chartsActions.getGithubTotalCommitsMetrics = async (
   getAccessToken,
   cancelTokenSource,
   dashboardTags,
+  dashboardFilters,
   dashboardOrgs,
 ) => {
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
@@ -326,8 +329,9 @@ chartsActions.getGitCustodianTableData = async (
       service: filterModel.getFilterValue("service")
         ? filterModel.getFilterValue("service")
         : [],
-      status: filterModel.getFilterValue("status")
-        ? filterModel.getFilterValue("status")
+      // status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status') : [],
+      status: tableFilterDto.getFilterValue("status")
+        ? tableFilterDto.getFilterValue("status")
         : [],
       email: filterModel.getFilterValue("email")
         ? filterModel.getFilterValue("email")
@@ -942,6 +946,21 @@ chartsActions.getGithubListOfRepositories = async (
     sortOption: tableFilterDto?.getData("sortOption")?.value,
   };
 
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
+chartsActions.updateGitCustodianVulnerabilityStatus = async (
+  getAccessToken,
+  cancelTokenSource,
+  postBody,
+) => {
+  delete postBody.issuesList;
+  const apiUrl = "/analytics/gitscraper/v1/dashboard/table/updateStatus";
   return await baseActions.handleNodeAnalyticsApiPostRequest(
     getAccessToken,
     cancelTokenSource,

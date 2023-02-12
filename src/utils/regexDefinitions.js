@@ -35,6 +35,12 @@ regexDefinitions.nameField = {
   errorFormText: "Only letters, numbers, dashes, underscores, and periods are allowed",
 };
 
+regexDefinitions.humanNameField = {
+  regex: /^[a-zA-Z-. ]*$/,
+  formText: "Letters, dashes, spaces, and periods are allowed",
+  errorFormText: "Only letters, dashes, spaces, and periods are allowed",
+};
+
 // TODO: Validate
 regexDefinitions.imagePathField = {
   regex: /^\w+\.(jpg|jpeg|gif|png|tiff|bmp)$/gi,
@@ -55,9 +61,9 @@ regexDefinitions.generalTextWithSpacesSlash = {
 };
 
 regexDefinitions.expandedTextAndSymbolsWithSpaces = {
-  regex: /^[A-Za-z0-9'\-,._&+*()! ]*$/,
-  formText: "Spaces, letters, numbers, underscores, dashes, periods, commas, parentheses, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
-  errorFormText: "Only spaces, letters, numbers, underscores, dashes, periods, commas, parentheses, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
+  regex: /^[A-Za-z0-9'\-,._&+*()/[\]! ]*$/,
+  formText: "Spaces, letters, numbers, underscores, dashes, forward slashes, periods, commas, parentheses, brackets, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
+  errorFormText: "Only spaces, letters, numbers, underscores, dashes, forward slashes, periods, commas, parentheses, brackets, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
 };
 
 regexDefinitions.limitedTextWithSpaces = {
@@ -181,9 +187,9 @@ regexDefinitions.octopusFileList = {
 };
 
 regexDefinitions.customParameterValueRegex = {
-  regex: /^[a-zA-Z0-9-+|!.$@&:_; [\]\\/]*$/,
-  formText: "Values are visible to all users if no Access Roles are assigned to this record. Value can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : ; |",
-  errorFormText: "Values are visible to all users if no Access Roles are assigned to this record. Value can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : ; |",
+  regex: /^[a-zA-Z0-9-+|!.$@&:_,; [\]\\/]*$/,
+  formText: "Values are visible to all users if no Access Roles are assigned to this record. Value can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : , ; |",
+  errorFormText: "Values are visible to all users if no Access Roles are assigned to this record. Value can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : , ; |",
   isRequiredFunction: (model) => {
     return (model?.getData("vaultEnabled") !== true);
   },
@@ -193,6 +199,24 @@ regexDefinitions.customParameterNameRegex = {
   regex: /^opsera-[a-z0-9-_]*$/,
   formText: "Name must begin with \"opsera-\" and can contain lowercase letters, numbers, and dashes",
   errorFormText: "Name must begin with \"opsera-\" and can contain lowercase letters, numbers, and dashes",
+};
+
+regexDefinitions.localVariableName = {
+  regex: /^opsera-local-[a-z0-9-]*$/,
+  formText: "Name must begin with \"opsera-local-\" and can contain lowercase letters, numbers, underscores, and dashes",
+  errorFormText: "Name must begin with \"opsera-local-\" and can contain lowercase letters, numbers, underscores, and dashes",
+};
+
+regexDefinitions.localVariableValue = {
+  regex: /^[a-zA-Z0-9-+|!.$@&:_,; [\]\\/]*$/,
+  formText: "Values can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : , ; |",
+  errorFormText: "Values can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : , ; |",
+};
+
+regexDefinitions.environmentVariableName = {
+  regex: /^[-._a-zA-Z][-._a-zA-Z0-9]*$/,
+  formText: "Alphabetic characters, digits, ‘_’, ‘-’, or ‘.’ are allowed, starting with a digit is not allowed",
+  errorFormText: "Alphabetic characters, digits, ‘_’, ‘-’, or ‘.’ are allowed, starting with a digit is not allowed",
 };
 
 regexDefinitions.dockerName = {

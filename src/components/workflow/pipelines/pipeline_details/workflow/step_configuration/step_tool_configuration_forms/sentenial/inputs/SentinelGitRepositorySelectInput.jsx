@@ -11,6 +11,7 @@ function SentenialGitRepositorySelectInput({model, setModel, disabled}) {
     newModel.setData("repoId", repoId);
     newModel.setData("sshUrl", selectedOption?.sshUrl || "");
     newModel.setData("gitUrl", gitUrl);
+    newModel.setData("gitBranch", "");
     setModel({...newModel});
   };
 

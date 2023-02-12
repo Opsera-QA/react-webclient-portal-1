@@ -62,7 +62,7 @@ function TagArrayUsedInPipelinesField({ tags, showTable }) {
 
   const loadPipelines = async (cancelSource = cancelTokenSource) => {
     if (Array.isArray(tags) && tags.length > 0) {
-      const response = await adminTagsActions.getRelevantPipelinesV2(getAccessToken, cancelSource, tags);
+      const response = await adminTagsActions.getAllPipelinesWithTags(getAccessToken, cancelSource, tags);
 
       if (response?.data != null) {
         setPipelines(response?.data?.data);

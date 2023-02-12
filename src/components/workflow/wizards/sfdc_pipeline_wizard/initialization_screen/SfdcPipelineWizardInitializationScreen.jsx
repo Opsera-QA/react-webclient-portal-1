@@ -10,7 +10,7 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import CancelButton from "components/common/buttons/CancelButton";
 import {Button} from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
-import {faFileCode, faArrowRight, faSync} from "@fortawesome/pro-light-svg-icons";
+import {faFileCode, faStepForward, faSync} from "@fortawesome/pro-light-svg-icons";
 import {parseDate} from "utils/helpers";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
@@ -20,19 +20,9 @@ import SfdcPipelineWizardFileUploadComponent
 import SfdcPipelineWizardPastRunComponent
   from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardPastRunComponent";
 import toolsActions from "components/inventory/tools/tools-actions";
-import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+const DataParsingHelper = require("@opsera/persephone/helpers/data/dataParsing.helper");
 
-export default function SfdcPipelineWizardInitializationScreen(
-  {
-    pipelineWizardModel,
-    setPipelineWizardModel,
-    setPipelineWizardScreen,
-    handleClose,
-    pipeline,
-    task,
-    setError,
-  }) {
+const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, pipeline, gitTaskData, setError }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [activeTab, setActiveTab] = useState("manual");
   const isMounted = useRef(false);
@@ -49,7 +39,7 @@ export default function SfdcPipelineWizardInitializationScreen(
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    loadData(pipelineWizardModel, pipeline?.workflow?.plan, source).catch((error) => {
+    loadData(pipelineWizardModel, gitTaskData, pipeline?.workflow?.plan, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -59,15 +49,15 @@ export default function SfdcPipelineWizardInitializationScreen(
       source.cancel();
       isMounted.current = false;
     };
-  }, [pipeline, task]);
+  }, [pipeline]);
 
-  const loadData = async (newPipelineWizardModel, plan, cancelSource = cancelTokenSource) => {
+  const loadData = async (newPipelineWizardModel, gitTaskData, plan, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       let newPipelineWizardRecord;
 
-      if (task) {
-        newPipelineWizardRecord = loadGitTaskInformation(newPipelineWizardModel);
+      if (gitTaskData) {
+        newPipelineWizardRecord = loadGitTaskInformation(newPipelineWizardModel, gitTaskData);
       }
       else {
         newPipelineWizardRecord = await loadSfdcInitStep(newPipelineWizardModel, plan, cancelSource);
@@ -86,24 +76,22 @@ export default function SfdcPipelineWizardInitializationScreen(
     }
   };
 
-  const loadGitTaskInformation = (newPipelineWizardModel) => {
-    const gitTaskId = task?._id;
+  const loadGitTaskInformation = (newPipelineWizardModel, gitTaskData) => {
+    const gitTaskId = gitTaskData.getData("_id");
+    const sfdcToolId = gitTaskData.getData("configuration")?.sfdcToolId;
+    const gitToolId = gitTaskData.getData("configuration")?.gitToolId;
+    const sfdcDestToolId = gitTaskData.getData("configuration")?.sfdcDestToolId;
+    const accountUsername = gitTaskData.getData("configuration")?.accountUsername;
+    const gitBranch = gitTaskData.getData("configuration")?.gitBranch;
 
-    if (isMongoDbId(gitTaskId) !== true) {
-      setError("Could not find Task");
+
+    if (gitTaskId == null || gitTaskId === "") {
+      setError("Could not find Git Task");
     }
 
-    const configuration = DataParsingHelper.parseObject(task?.configuration, {});
-    const sfdcToolId = configuration?.sfdcToolId;
-
-    if (isMongoDbId(sfdcToolId) !== true) {
-      setError("No Salesforce Account is associated with this Task");
+    if (sfdcToolId == null || sfdcToolId === "") {
+      setError("No Salesforce Tool is associated with this Task");
     }
-
-    const gitToolId = configuration?.gitToolId;
-    const sfdcDestToolId = configuration?.sfdcDestToolId;
-    const accountUsername = configuration?.accountUsername;
-    const gitBranch = configuration?.gitBranch;
 
     newPipelineWizardModel.setData("accountUsername", accountUsername);
     newPipelineWizardModel.setData("gitBranch", gitBranch);
@@ -148,15 +136,11 @@ export default function SfdcPipelineWizardInitializationScreen(
       setError("Could not find Pipeline");
     }
 
-    if (stepId == null) {
+    if (stepId == null || sfdcToolId == null) {
       setError(`
         Could not find Salesforce Jenkins step needed to run the Pipeline Wizard. 
         Please edit the workflow and add the SFDC Ant Job setting in order to run this pipeline.
       `);
-    }
-
-    if (isMongoDbId(sfdcToolId) !== true) {
-      setError("No Salesforce Account is associated with this Pipeline");
     }
 
     if (runCount != null) {
@@ -289,12 +273,25 @@ export default function SfdcPipelineWizardInitializationScreen(
 
   // TODO: Should this be moved to a helper class?
   const getCustomUnitTestSteps = (steps) => {
-    return steps.map((step) =>
-      (step?.tool
-        && (step?.tool?.configuration?.jobType === "SFDC VALIDATE PACKAGE XML"
-          || step?.tool?.configuration?.jobType === "SFDC UNIT TESTING"
-          || step?.tool?.configuration?.jobType === "SFDC DEPLOY"))
-      && step?.tool?.configuration?.sfdcUnitTestType === "RunSpecifiedTests" && step?.active ? step : '').filter(String);
+    return steps
+      .map((step) =>
+        step?.tool &&
+        (step?.tool?.configuration?.jobType === "SFDC VALIDATE PACKAGE XML" ||
+          step?.tool?.configuration?.jobType === "SFDC UNIT TESTING" ||
+          step?.tool?.configuration?.jobType === "SFDC DEPLOY") &&
+        (DataParsingHelper.safeObjectPropertyParser(
+          step,
+          "tool.configuration.sfdcUnitTestType",
+        ) === "RunSpecifiedTests" ||
+          DataParsingHelper.safeObjectPropertyParser(
+            step,
+            "tool.configuration.sfdcUnitTestType",
+          ) === "AutoIncludeTests") &&
+        step?.active
+          ? step
+          : "",
+      )
+      .filter(String);
   };
 
   const getBody = () => {
@@ -310,8 +307,11 @@ export default function SfdcPipelineWizardInitializationScreen(
           <div>
             {`
           The Salesforce Pipeline Run Wizard was previously initiated on ${format(new Date(existingRecord?.createdAt), "yyyy-MM-dd', 'hh:mm a")} by 
-          ${existingRecord?.owner_name || "ERROR PULLING OWNER'S NAME"} but was not completed. Would you like to pick up where the last flow was left off or start a new run configuration?
+          ${existingRecord?.owner_name || "ERROR PULLING OWNER'S NAME"} but was not completed.
           `}
+          </div>
+          <div className={"mt-2"}>
+            {`Would you like to start a new instance or continue where the last instance left off?`}
           </div>
           <div className={"mt-2"}>
             {`If you continue, you will be able to adjust all parameters that were previously applied.`}
@@ -330,7 +330,7 @@ export default function SfdcPipelineWizardInitializationScreen(
                 <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Translation Instance</span>
               </Button>
               <Button size={"sm"} variant="success" disabled={isLoading} onClick={() => unpackPreviousPipelineRun()}>
-                <span><IconBase icon={faArrowRight} fixedWidth className="mr-2"/>Resume Last Configuration</span>
+                <span><IconBase icon={faStepForward} fixedWidth className="mr-2"/>Continue Where The Last Instance Left Off</span>
               </Button>
               <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose}
                             size={"sm"}/>
@@ -339,10 +339,10 @@ export default function SfdcPipelineWizardInitializationScreen(
             <SaveButtonContainer>
               <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading}
                       onClick={() => createNewPipelineWizardRecord(undefined, true, false)}>
-                <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start New</span>
+                <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Instance</span>
               </Button>
               <Button size={"sm"} variant="success" disabled={isLoading} onClick={() => unpackPreviousPipelineRun()}>
-                <span><IconBase icon={faArrowRight} fixedWidth className="mr-2"/>Resume Last Configuration</span>
+                <span><IconBase icon={faStepForward} fixedWidth className="mr-2"/>Continue Where The Last Instance Left Off</span>
               </Button>
               <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose}
                             size={"sm"}/>
@@ -356,7 +356,7 @@ export default function SfdcPipelineWizardInitializationScreen(
     return (
       <div>
         <div className={"mt-2"}>
-          {`Would you like to start a new Salesforce Pipeline Run Wizard Instance?`}
+          {`Would you like to start a new SFDC Pipeline Run Wizard Instance?`}
         </div>
         {pipelineWizardModel.getData("isProfiles") === true ? 
           <SaveButtonContainer>
@@ -371,7 +371,7 @@ export default function SfdcPipelineWizardInitializationScreen(
           :
           <SaveButtonContainer>
             <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading} onClick={() => createNewPipelineWizardRecord(undefined, true)}>
-              <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start New</span>
+              <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Instance</span>
             </Button>
             <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
           </SaveButtonContainer>
@@ -396,7 +396,7 @@ export default function SfdcPipelineWizardInitializationScreen(
     return (
       <CustomTab
         activeTab={activeTab}
-        tabText={"Use Prior Run Configuration"}
+        tabText={"Use Past Run's XML"}
         handleTabClick={handleTabClick}
         tabName={"past_run"}
         toolTipText={"Deploy using a past Pipeline run's Package XML"}
@@ -409,13 +409,13 @@ export default function SfdcPipelineWizardInitializationScreen(
     return (
       <div>
         <div className={"mt-2"}>
-          This pipeline requires additional information before it can run.  You can start a new run or re-use prior run configurations.
+          Would you like to start a manual Pipeline Wizard run or use the XML/File Upload Process?
         </div>
         <div className={"mt-2"}>
           <CustomTabContainer>
             <CustomTab
               activeTab={activeTab}
-              tabText={"Build New Run Configuration"}
+              tabText={"Manual Pipeline Wizard Run"}
               handleTabClick={handleTabClick}
               tabName={"manual"}
               toolTipText={"Use Salesforce Component Selection Deployment"}
@@ -494,7 +494,7 @@ export default function SfdcPipelineWizardInitializationScreen(
       {getMainView()}
     </div>
   );
-}
+};
 
 SfdcPipelineWizardInitializationScreen.propTypes = {
   setPipelineWizardScreen: PropTypes.func,
@@ -502,6 +502,8 @@ SfdcPipelineWizardInitializationScreen.propTypes = {
   pipelineWizardModel: PropTypes.object,
   setPipelineWizardModel: PropTypes.func,
   pipeline: PropTypes.object,
-  task: PropTypes.object,
+  gitTaskData: PropTypes.object,
   setError: PropTypes.func
 };
+
+export default SfdcPipelineWizardInitializationScreen;

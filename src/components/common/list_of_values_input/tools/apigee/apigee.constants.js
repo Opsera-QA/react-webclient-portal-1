@@ -19,3 +19,9 @@ export const APIGEE_VERSIONS = [
     value: "edge"
   },
 ];
+
+export const APIGEE_ASSET_TYPE_FILTER_VALUES = [
+  "Proxy API",
+  "Shared Flow",
+  "Key Value Map",  
+];

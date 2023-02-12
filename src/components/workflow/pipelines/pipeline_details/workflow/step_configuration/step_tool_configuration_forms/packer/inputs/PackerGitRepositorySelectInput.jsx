@@ -11,6 +11,7 @@ function PackerGitRepositorySelectInput({model, setModel, disabled}) {
     newModel.setData("gitRepositoryID", repoId);
     newModel.setData("sshUrl", selectedOption?.sshUrl || "");
     newModel.setData("gitUrl", gitUrl);
+    newModel.setData("defaultBranch", "");
     setModel({...newModel});
   };
 

@@ -8,7 +8,7 @@ import LdapUserSummaryPanel from "./LdapUserSummaryPanel";
 import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
 import SettingsTab from "../../../common/tabs/detail_view/SettingsTab";
 
-function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, authorizedActions, hideSettings }) {
+function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, hideSettings }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -46,7 +46,7 @@ function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, authori
       case "summary":
         return <LdapUserSummaryPanel ldapUserData={ldapUserData} setActiveTab={!hideSettings ? setActiveTab : null} />;
       case "settings":
-        return <LdapUserEditorPanel setLdapUserData={setLdapUserData} authorizedActions={authorizedActions} ldapUserData={ldapUserData} orgDomain={orgDomain} handleClose={toggleSummaryPanel} />;
+        return <LdapUserEditorPanel setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} orgDomain={orgDomain} handleClose={toggleSummaryPanel} />;
       default:
         return null;
     }

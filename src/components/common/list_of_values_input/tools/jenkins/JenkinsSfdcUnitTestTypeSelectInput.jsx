@@ -8,6 +8,7 @@ const UNIT_TEST_OPTIONS = [
 	{ value: "RunLocalTests", label: "Run Local Tests" },
 	{ value: "RunAllTestsInOrg", label: "Run All Tests In Org" },
 	{ value: "RunSpecifiedTests", label: "Run Specified Tests" },
+	{ value: "AutoIncludeTests", label: "Auto Include Tests" },
 ];
 const PROD_UNIT_TEST_OPTIONS = [
 	{ value: "", label: "Select One", isDisabled: "yes" },
@@ -15,6 +16,7 @@ const PROD_UNIT_TEST_OPTIONS = [
 	{ value: "RunLocalTests", label: "Run Local Tests" },
 	{ value: "RunAllTestsInOrg", label: "Run All Tests In Org" },
 	{ value: "RunSpecifiedTests", label: "Run Specified Tests" },
+	{ value: "AutoIncludeTests", label: "Auto Include Tests" },
 ];
 function JenkinsSfdcUnitTestTypeSelectInput({ dataObject, setDataObject,  disabled }) {
     const options = dataObject.data.jobType === "SFDC UNIT TESTING" ?  UNIT_TEST_OPTIONS : PROD_UNIT_TEST_OPTIONS;

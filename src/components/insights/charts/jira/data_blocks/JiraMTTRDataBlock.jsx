@@ -39,7 +39,6 @@ JiraMTTRDataBlock.propTypes = {
 
 JiraMTTRDataBlock.defaultProps = {
     getIcon: () => {},
-    onClick: () => {},
     classes: "",
     style: {}
 };

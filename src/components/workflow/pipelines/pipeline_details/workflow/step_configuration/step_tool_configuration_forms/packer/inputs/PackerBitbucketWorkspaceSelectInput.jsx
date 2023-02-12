@@ -8,6 +8,7 @@ function PackerBitbucketWorkspaceSelectInput({model, setModel, disabled}) {
     newModel.setData("bitbucketWorkspace", selectedOption?.key);
     newModel.setData("bitbucketWorkspaceName", selectedOption?.name);
     newModel.setData("gitRepositoryID", "");
+    newModel.setData("gitRepository", "");
     newModel.setData("defaultBranch", "");
     setModel({...newModel});
   };

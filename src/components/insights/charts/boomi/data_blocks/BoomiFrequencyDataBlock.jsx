@@ -7,10 +7,10 @@ function BoomiFrequencyDataBlock({ data, dataPoint, lastScore, icon, className }
     return (
         <DataBlockBoxContainer showBorder={true}>
             <ThreeLineScoreDataBlock
-                className={`${className} p-3 h-100`}
+                className={`${className} p-2 h-70`}
                 icon={icon}
                 score={data}
-                bottomText={"Previous: " + lastScore}
+                bottomText={`Previous: ${lastScore || lastScore === 0? lastScore : "NA"}`}
                 topText={"Average Frequency"}
                 dataPoint={dataPoint}
             />
