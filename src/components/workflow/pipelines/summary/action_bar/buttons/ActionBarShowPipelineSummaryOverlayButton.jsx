@@ -10,6 +10,7 @@ function ActionBarShowPipelineSummaryOverlayButton({pipeline}) {
     toastContext,
     isOpseraAdministrator,
     userData,
+    isFreeTrial,
   } = useComponentStateReference();
 
   const showDetailsFunction = () => {
@@ -20,7 +21,7 @@ function ActionBarShowPipelineSummaryOverlayButton({pipeline}) {
     return null;
   }
 
-  if (isOpseraAdministrator !== true) {
+  if (isFreeTrial === true && isOpseraAdministrator !== true) {
     return null;
     // return (
     //   <ActionBarViewDetailsButtonBase

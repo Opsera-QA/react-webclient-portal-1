@@ -30,6 +30,7 @@ function ActionBarTransferPipelineButton(
     getAccessToken,
     isSaasUser,
     userData,
+    isFreeTrial,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -112,20 +113,9 @@ function ActionBarTransferPipelineButton(
       </div>
     );
 
-  if (isOpseraAdministrator !== true) {
-    return null;
-    // return (
-      // <ActionBarPopoverButton
-      //   className={"ml-3"}
-      //   disabled={true}
-      //   icon={faShareAlt}
-      //   popoverText={`Transferring Pipelines to another Owner is available in the main Opsera offering.`}
-      // />
-    // );
-  }
-
   if (
     isSaasUser !== false
+    || (isFreeTrial === true && isOpseraAdministrator !== true)
     || pipeline == null
     || pipeline?.account == null
     || PipelineRoleHelper.canTransferPipelineOwnership(userData, pipeline) !== true) {
