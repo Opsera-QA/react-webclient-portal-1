@@ -47,12 +47,17 @@ export default function DockerCliOutputVariableCommandLineInputParameterInputRow
   };
 
   const hasDuplicateName = () => {
-    const customParameters = commandLineStepModel?.getArrayData("customParameters");
     const environmentVariables = commandLineStepModel?.getArrayData("environmentVariables");
+    const outputCustomParameters = commandLineStepModel?.getArrayData("outputCustomParameters");
     const parameterName = commandLineInputParameterModel?.getData("parameterName");
+    const enableDockerPush = commandLineInputParameterModel?.getData("enableDockerPush");
 
-    return saveEnvironmentVariables !== true
-      ? customParameters.find((parameter) => parameter?.parameterName === parameterName) != null
+    // enableDependency -> environmentVariables
+    // enableDockerBuild -> buildArguments
+    // enableDockerPush -> outputCustomParameters
+
+    return enableDockerPush !== true
+      ? outputCustomParameters.find((parameter) => parameter?.parameterName === parameterName) != null
       : environmentVariables.find((parameter) => parameter?.parameterName === parameterName) != null;
   };
 
