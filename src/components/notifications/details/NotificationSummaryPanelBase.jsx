@@ -30,8 +30,8 @@ function NotificationSummaryPanelBase({ notificationData, setActiveTab, notifica
           <TagField dataObject={notificationData} fieldName={"tags"} />
         </Col>
       </Row>
-      <div className="px-3">{notificationTypeSummaryCard}</div>
-      <div className="px-3">{notificationMethodSummaryCard}</div>
+      <div>{notificationTypeSummaryCard}</div>
+      <div>{notificationMethodSummaryCard}</div>
     </SummaryPanelContainer>
   );
 }
