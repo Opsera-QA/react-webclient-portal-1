@@ -17,7 +17,7 @@ export default class NotificationPolicyModel extends ModelBase {
   }
 
   getDetailViewTitle = () => {
-    return policyConstants.getPolicyNameLabel(this.getData("name"));
+    return this.getData("name");
   };
 
   getDetailViewLink = () => {

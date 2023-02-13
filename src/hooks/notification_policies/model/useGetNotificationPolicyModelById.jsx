@@ -4,6 +4,7 @@ import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import usePolicyActions from "hooks/settings/organization_settings/policies/usePolicyActions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useGetNotificationPolicyModel from "hooks/notification_policies/model/useGetNotificationPolicyModel";
+import useNotificationPolicyActions from "hooks/notification_policies/useNotificationPolicyActions";
 
 export default function useGetNotificationPolicyModelById(
   policyId,
@@ -16,7 +17,7 @@ export default function useGetNotificationPolicyModelById(
     setError,
     loadData,
   } = useLoadData();
-  const policyActions = usePolicyActions();
+  const notificationPolicyActions = useNotificationPolicyActions();
 
   useEffect(() => {
     setNotificationPolicyModel(undefined);
@@ -28,7 +29,7 @@ export default function useGetNotificationPolicyModelById(
   }, [policyId]);
 
   const getPolicy = async () => {
-    const response = await policyActions.getPolicyById(
+    const response = await notificationPolicyActions.getNotificationPolicyById(
       policyId,
     );
 

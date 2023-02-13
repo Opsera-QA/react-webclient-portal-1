@@ -21,6 +21,7 @@ import InlineNotificationTypeFilter
 import NewNotificationOverlay from "components/notifications/NewNotificationOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {getNotificationTypeLabel} from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
+import {notificationPolicyHelper} from "hooks/notification_policies/notificationPolicy.helper";
 
 function NotificationsTable(
   {
@@ -51,7 +52,7 @@ function NotificationsTable(
   );
 
   const onRowSelect = (rowData) => {
-    history.push(`/notifications/details/${rowData.original._id}`);
+    history.push(notificationPolicyHelper.getDetailViewLink(rowData.original._id));
   };
 
   const getDropdownFilters = () => {
