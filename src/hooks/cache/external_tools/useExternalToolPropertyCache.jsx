@@ -49,16 +49,19 @@ export default function useExternalToolPropertyCacheEntry(
     }
   };
 
-  const setCachedValue = (newParameters) => {
+  const setCachedValue = (potentialCacheUniqueId, newParameters) => {
     const parsedExistingParameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters");
     const parsedNewParameters = DataParsingHelper.parseObject(newParameters);
     const parsedUniqueId = DataParsingHelper.parseString(uniqueId);
+    const parsedPotentialCacheUniqueId = DataParsingHelper.parseString(potentialCacheUniqueId);
     const parsedToolIdentifier = DataParsingHelper.parseString(toolIdentifier);
     const parsedToolId = DataParsingHelper.parseMongoDbId(toolId);
 
     if (
       parsedNewParameters
       && parsedUniqueId
+      && parsedPotentialCacheUniqueId
+      && parsedPotentialCacheUniqueId === parsedUniqueId
       && (parsedToolIdentifier || parsedToolId)
       && (!parsedExistingParameters || ObjectHelper.areObjectsEqualLodash(parsedExistingParameters, newParameters) !== true)
     ) {
@@ -80,10 +83,35 @@ export default function useExternalToolPropertyCacheEntry(
     }
   };
 
+  const isCachedEntryRelevant = (potentialCacheItem, uniqueIdField) => {
+    const parsedCachedEntryUniqueId = DataParsingHelper.parseString(uniqueId);
+    const parsedUniqueIdField = DataParsingHelper.parseString(uniqueIdField);
+
+    if (!parsedUniqueIdField || !parsedCachedEntryUniqueId) {
+      return false;
+    }
+
+    const parsedPotentialCacheItemString = DataParsingHelper.parseString(potentialCacheItem);
+
+    if (parsedPotentialCacheItemString) {
+      return parsedCachedEntryUniqueId && parsedPotentialCacheItemString === parsedCachedEntryUniqueId;
+    }
+
+    const parsedPotentialCacheItemObject = DataParsingHelper.parseObject(potentialCacheItem);
+
+    if (parsedPotentialCacheItemObject) {
+      const parsedPotentialCacheItemUniqueId = DataParsingHelper.parseString(parsedPotentialCacheItemObject[uniqueIdField]);
+      return parsedPotentialCacheItemUniqueId && parsedPotentialCacheItemUniqueId === parsedCachedEntryUniqueId;
+    }
+
+    return false;
+  };
+
   return {
     cachedEntry: cachedEntry,
     isHandlingCache: apiState === API_STATES.BUSY,
     pullCachedValue: pullCachedValue,
     setCachedValue: setCachedValue,
+    isCachedEntryRelevant: isCachedEntryRelevant,
   };
 }

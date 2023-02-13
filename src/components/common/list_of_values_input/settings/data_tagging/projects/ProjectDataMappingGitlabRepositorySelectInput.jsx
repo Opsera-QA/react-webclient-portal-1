@@ -1,17 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
 import RepositorySelectInput from "components/common/list_of_values_input/tools/repositories/RepositorySelectInput";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function ProjectRepositorySelectInput(
+const parseKeyFromFullPath = (keyPath) => {
+  const parsedKeyPath = DataParsingHelper.parseString(keyPath, "");
+  const splitPath = parsedKeyPath.split('/');
+  return splitPath[splitPath.length - 1];
+};
+
+export default function ProjectDataMappingGitlabRepositorySelectInput(
   {
     fieldName,
     model,
     setModel,
-    setDataFunction,
     disabled,
     textField,
-    valueField,
   }) {
+  const setDataFunction = (fieldName, selectedOption) => {
+    model.setData('key', parseKeyFromFullPath(selectedOption?.nameSpacedPath));
+    model.setData('keyPath', selectedOption?.nameSpacedPath);
+    setModel({ ...model });
+  };
+
   return (
     <RepositorySelectInput
       workspace={model?.getData("tool_prop")}
@@ -21,27 +32,21 @@ function ProjectRepositorySelectInput(
       dataObject={model}
       setDataObject={setModel}
       setDataFunction={setDataFunction}
-      valueField={valueField}
+      valueField={"nameSpacedPath"}
       textField={textField}
       disabled={disabled}
     />
   );
 }
 
-ProjectRepositorySelectInput.propTypes = {
+ProjectDataMappingGitlabRepositorySelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
-  setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
-  valueField: PropTypes.string,
 };
 
-ProjectRepositorySelectInput.defaultProps = {
-  fieldName: "key",
-  valueField: "name",
-  textField: "name"
+ProjectDataMappingGitlabRepositorySelectInput.defaultProps = {
+  fieldName: "keyPath",
 };
-
-export default ProjectRepositorySelectInput;
