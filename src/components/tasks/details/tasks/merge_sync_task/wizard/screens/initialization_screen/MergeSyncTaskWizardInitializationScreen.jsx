@@ -5,6 +5,7 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import CancelButton from "components/common/buttons/CancelButton";
 import MergeSyncTaskWizardCreateNewRecordButton
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/initialization_screen/MergeSyncTaskWizardCreateNewRecordButton";
+import BooleanToggleInput from "../../../../../../../common/inputs/boolean/BooleanToggleInput";
 
 const MergeSyncTaskWizardInitializationScreen = ({
   wizardModel,
@@ -29,6 +30,11 @@ const MergeSyncTaskWizardInitializationScreen = ({
           {`Would you like to start a new ${mergeSyncType} Merge Sync Task Wizard Instance?`}
         </div>
         <SaveButtonContainer>
+          <BooleanToggleInput
+            fieldName={"isProfile"}
+            dataObject={wizardModel}
+            setDataObject={setWizardModel}
+          />
           <MergeSyncTaskWizardCreateNewRecordButton
             wizardModel={wizardModel}
             setWizardModel={setWizardModel}
