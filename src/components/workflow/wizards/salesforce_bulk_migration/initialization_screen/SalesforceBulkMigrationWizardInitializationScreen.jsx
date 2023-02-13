@@ -11,6 +11,10 @@ import {faSync} from "@fortawesome/pro-light-svg-icons";
 import {SALESFORCE_BULK_MIGRATION_WIZARD_SCREENS} from "components/workflow/wizards/salesforce_bulk_migration/SalesforceBulkMigrationWizard";
 import salesforceBulkMigrationWizardActions
   from "components/workflow/wizards/salesforce_bulk_migration/salesforceBulkMigrationWizard.actions";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 const SalesforceBulkMigrationWizardInitializationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, taskModel, setError }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -110,14 +114,33 @@ const SalesforceBulkMigrationWizardInitializationScreen = ({ pipelineWizardModel
   const getBody = () => {
     if (isLoading || pipelineWizardModel == null) {
       return (
-        <LoadingDialog message={"Initializing Salesforce Bulk Migration Wizard"} size={"sm"} />
+        <CenterLoadingIndicator
+          minHeight={"500px"}
+          message={"Initializing Salesforce Bulk Migration Wizard"}
+        />
       );
     }
 
     return (
       <div>
-        <div className={"mt-2"}>
-          {`Would you like to start a new Salesforce Bulk Migration Wizard Instance?`}
+        <div className={"m-3"}>
+          <div className={"mb-4"}>
+            <CenteredContentWrapper>
+              <div className={"mx-auto"}>
+                <OpseraInfinityLogo/>
+              </div>
+            </CenteredContentWrapper>
+            <CenteredContentWrapper>
+              <div className={"mx-auto mt-3"}>
+                <H5FieldSubHeader
+                  subheaderText={`Salesforce Bulk Migration Wizard: Initialization`}
+                />
+                <div className={"focusText"}>
+                  {`Would you like to start a new Salesforce Bulk Migration Wizard Instance?`}
+                </div>
+              </div>
+            </CenteredContentWrapper>
+          </div>
         </div>
         <SaveButtonContainer>
           <Button
@@ -148,7 +171,6 @@ const SalesforceBulkMigrationWizardInitializationScreen = ({ pipelineWizardModel
 
     return (
       <div>
-        <div className="h5">Salesforce Bulk Migration: Initialization</div>
         <div className="my-3">
           {getBody()}
         </div>

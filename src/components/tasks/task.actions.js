@@ -152,9 +152,13 @@ taskActions.getGitTaskAccessForUserEmail = async (getAccessToken, cancelTokenSou
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-taskActions.processSyncRequest = async (postBody, getAccessToken) => {
+taskActions.triggerGitToGitSyncRequest = async (getAccessToken, cancelTokenSource, taskId) => {
   const apiUrl = `/tools/git/processSyncRequest`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+  const postBody = {
+    gitTaskId: taskId,
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 // TODO: This should be a get route.

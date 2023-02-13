@@ -9,21 +9,25 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import {
   mergeSyncTaskGitConfigurationMetadata
 } from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata";
-import SalesforceToGitMergeSyncTaskRepositorySelectInput
-  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskRepositorySelectInput";
-import SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput
-  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput";
-import SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput
-  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import SalesforceToGitMergeSyncTaskTargetBranchSelectInput
-  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskTargetBranchSelectInput";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
+import GitToGitMergeSyncTaskUpstreamBranchSelectInput
+  from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskUpstreamBranchSelectInput";
+import GitToGitMergeSyncTaskTargetBranchSelectInput
+  from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskTargetBranchSelectInput";
+import GitToGitMergeSyncTaskBitbucketWorkspaceSelectInput
+  from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskBitbucketWorkspaceSelectInput";
+import GitToGitMergeSyncTaskRepositorySelectInput
+  from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskRepositorySelectInput";
+import GitToGitMergeSyncTaskSourceBranchSelectInput
+  from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskSourceBranchSelectInput";
+import GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput
+  from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput";
 import TaskWizardConfirmRepositorySettingsButton
   from "components/tasks/wizard/TaskWizardConfirmRepositorySettingsButton";
 
-export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
+export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
   {
     taskModel,
     setTaskModel,
@@ -40,7 +44,7 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
         setGitConfigurationModel({...gitConfigurationModel});
       }
       catch (error) {
-        toastContext.showInlineErrorMessage(error, "Error initializing Salesforce Task run:");
+        toastContext.showInlineErrorMessage(error, "Error initializing Task run:");
       }
     }
   }, [taskModel]);
@@ -56,7 +60,7 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
       return (
         <>
           <Col lg={12}>
-            <SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput
+            <GitToGitMergeSyncTaskUpstreamBranchSelectInput
               model={gitConfigurationModel}
               setModel={setModelFunction}
             />
@@ -74,9 +78,10 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
 
     return (
       <Col lg={12}>
-        <SalesforceToGitMergeSyncTaskTargetBranchSelectInput
+        <GitToGitMergeSyncTaskTargetBranchSelectInput
           model={gitConfigurationModel}
           setModel={setModelFunction}
+          sourceBranch={gitConfigurationModel?.getData("sourceBranch")}
         />
       </Col>
     );
@@ -107,18 +112,31 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
     <div className={className}>
       {getWelcomeText()}
       <H5FieldSubHeader
-        subheaderText={"Salesforce to Git Merge Sync Task Run: Pre Run Tasks"}
+        subheaderText={"Git to Git Merge Sync Task Run: Pre Run Tasks"}
       />
       <div>Please select the repository and branch you wish to use for this Salesforce workflow</div>
       <Row>
         <Col lg={12}>
-          <SalesforceToGitMergeSyncTaskRepositorySelectInput
+        <GitToGitMergeSyncTaskBitbucketWorkspaceSelectInput
+          model={gitConfigurationModel}
+          setModel={setModelFunction}
+        />
+      </Col>
+        <Col lg={12}>
+          <GitToGitMergeSyncTaskRepositorySelectInput
             model={gitConfigurationModel}
             setModel={setModelFunction}
           />
         </Col>
         <Col lg={12}>
-          <SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput
+          <GitToGitMergeSyncTaskSourceBranchSelectInput
+            model={gitConfigurationModel}
+            setModel={setModelFunction}
+            targetBranch={gitConfigurationModel?.getData("targetBranch")}
+          />
+        </Col>
+        <Col lg={12}>
+          <GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput
             model={gitConfigurationModel}
             setModel={setModelFunction}
           />
@@ -129,16 +147,14 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
         <TaskWizardConfirmRepositorySettingsButton
           taskModel={taskModel}
           setCurrentScreen={setCurrentScreen}
-          disabled={
-            gitConfigurationModel?.checkCurrentValidity() !== true
-          }
+          disabled={gitConfigurationModel?.checkCurrentValidity() !== true}
         />
       </ButtonContainerBase>
     </div>
   );
 }
 
-SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen.propTypes = {
+GitToGitMergeSyncTaskWizardPreRunTaskScreen.propTypes = {
   taskModel: PropTypes.object,
   setTaskModel: PropTypes.func,
   setCurrentScreen: PropTypes.func,
