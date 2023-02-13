@@ -1,7 +1,7 @@
 import React from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import NotificationSubNavigationBar from "components/notifications/NotificationSubNavigationBar";
-import NotificationsTable from "components/notifications/NotificationsTable";
+import NotificationPolicySubNavigationBar from "components/notifications/NotificationPolicySubNavigationBar";
+import NotificationPoliciesTable from "components/notifications/NotificationPoliciesTable";
 import NotificationManagementHelpDocumentation
   from "../common/help/documentation/notifications/NotificationManagementHelpDocumentation";
 import useGetNotificationPolicies from "hooks/notification_policies/useGetNotificationPolicies";
@@ -27,9 +27,9 @@ function NotificationPolicyManagement() {
       pageDescription={`
         Create Notification Policies to tailor activity logging to your needs.
       `}
-      navigationTabContainer={<NotificationSubNavigationBar activeTab={"notifications"} />}
+      navigationTabContainer={<NotificationPolicySubNavigationBar activeTab={"notifications"} />}
     >
-      <NotificationsTable
+      <NotificationPoliciesTable
         isLoading={isLoading}
         loadData={loadData}
         data={notificationPolicies}

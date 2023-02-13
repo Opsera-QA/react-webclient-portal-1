@@ -2,7 +2,7 @@ import React from "react";
 import { SecureRoute } from "@okta/okta-react";
 import NotificationPolicyManagement from "components/notifications/NotificationPolicyManagement";
 import NotificationPoliciesActivityLogs from "components/notifications/NotificationPoliciesActivityLogs";
-import NotificationDetailView from "components/notifications/notification_details/NotificationDetailView";
+import NotificationDetailView from "components/notifications/details/NotificationDetailView";
 
 export default function NotificationsRoutes() {
   return (
