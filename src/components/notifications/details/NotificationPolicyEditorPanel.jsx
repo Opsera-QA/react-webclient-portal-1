@@ -21,18 +21,10 @@ function NotificationPolicyEditorPanel({ notificationData, handleClose }) {
   const notificationPolicyActions = useNotificationPolicyActions();
   
   const createNotification = async () => {
-    const configuration = notificationConfigurationDataDto ? notificationConfigurationDataDto.getPersistData() : {};
-    notificationDataDto.setData("configuration", configuration);
-    const notificationMethod = notificationMethodDataDto ? notificationMethodDataDto.getPersistData() : {};
-    notificationDataDto.setData("notification", notificationMethod);
     return await notificationPolicyActions.createNotificationPolicy(notificationDataDto);
   };
 
   const updateNotification = async () => {
-    const configuration = notificationConfigurationDataDto ? notificationConfigurationDataDto.getPersistData() : {};
-    notificationDataDto.setData("configuration", configuration);
-    const notificationMethod = notificationMethodDataDto ? notificationMethodDataDto.getPersistData() : {};
-    notificationDataDto.setData("notification", notificationMethod);
     return await notificationPolicyActions.updateNotificationPolicy(notificationDataDto);
   };
   

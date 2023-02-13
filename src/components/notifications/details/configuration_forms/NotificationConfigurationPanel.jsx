@@ -9,7 +9,7 @@ import NotificationTypeSelectInput
 
 function NotificationConfigurationPanel({ notificationDataDto, setNotificationDataDto, notificationConfigurationData, setNotificationConfigurationData }) {
   const updateModelFunction = (newNotificationConfigurationModel) => {
-    notificationDataDto.setData("configuration", newNotificationConfigurationModel?.getCurrentData());
+    notificationDataDto.setData("configuration", newNotificationConfigurationModel?.getPersistData());
     setNotificationConfigurationData({...newNotificationConfigurationModel});
     setNotificationDataDto({...notificationDataDto});
   };
