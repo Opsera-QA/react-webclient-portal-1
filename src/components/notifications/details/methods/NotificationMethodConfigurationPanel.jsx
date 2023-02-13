@@ -9,13 +9,19 @@ import NotificationMethodSelectInput
 import GChatNotificationMethodConfigurationPanel from "components/notifications/details/methods/gchat/GChatNotificationMethodConfigurationPanel";
 
 function NotificationMethodConfigurationPanel({ notificationDataDto, setNotificationDataDto, notificationMethodDataDto, setNotificationMethodDataDto }) {
+  const updateModelFunction = (newNotificationMethodModel) => {
+    notificationDataDto.setData("notification", newNotificationMethodModel?.getCurrentData());
+    setNotificationMethodDataDto({...newNotificationMethodModel});
+    setNotificationDataDto({...notificationDataDto});
+  };
+
   const getMethodConfigurationPanel = () => {
     switch (notificationDataDto.getData("method")) {
       case "email":
         return (
           <EmailNotificationMethodConfigurationPanel
             notificationDataDto={notificationDataDto}
-            setNotificationMethodDataDto={setNotificationMethodDataDto}
+            setNotificationMethodDataDto={updateModelFunction}
             notificationMethodDataDto={notificationMethodDataDto}
           />
         );
@@ -23,7 +29,7 @@ function NotificationMethodConfigurationPanel({ notificationDataDto, setNotifica
         return (
           <SlackNotificationMethodConfigurationPanel
             notificationDataDto={notificationDataDto}
-            setNotificationMethodDataDto={setNotificationMethodDataDto}
+            setNotificationMethodDataDto={updateModelFunction}
             notificationMethodDataDto={notificationMethodDataDto}
           />
         );
@@ -31,7 +37,7 @@ function NotificationMethodConfigurationPanel({ notificationDataDto, setNotifica
         return (
           <JiraNotificationMethodConfigurationPanel
             notificationDataDto={notificationDataDto}
-            setNotificationMethodDataDto={setNotificationMethodDataDto}
+            setNotificationMethodDataDto={updateModelFunction}
             notificationMethodDataDto={notificationMethodDataDto}
           />
         );
@@ -39,7 +45,7 @@ function NotificationMethodConfigurationPanel({ notificationDataDto, setNotifica
         return (
           <TeamsNotificationMethodConfigurationPanel
             notificationDataDto={notificationDataDto}
-            setNotificationMethodDataDto={setNotificationMethodDataDto}
+            setNotificationMethodDataDto={updateModelFunction}
             notificationMethodDataDto={notificationMethodDataDto}
           />
         );
@@ -47,7 +53,7 @@ function NotificationMethodConfigurationPanel({ notificationDataDto, setNotifica
         return (
           <GChatNotificationMethodConfigurationPanel
             notificationDataDto={notificationDataDto}
-            setNotificationMethodDataDto={setNotificationMethodDataDto}
+            setNotificationMethodDataDto={updateModelFunction}
             notificationMethodDataDto={notificationMethodDataDto}
           />
         );

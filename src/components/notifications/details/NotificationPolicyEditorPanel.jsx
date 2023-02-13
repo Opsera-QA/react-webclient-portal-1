@@ -15,8 +15,8 @@ import TagManager from "components/common/inputs/tags/TagManager";
 import useNotificationPolicyActions from "hooks/notification_policies/useNotificationPolicyActions";
 
 function NotificationPolicyEditorPanel({ notificationData, handleClose }) {
-  const [notificationDataDto, setNotificationDataDto] = useState(undefined);
-  const [notificationConfigurationDataDto, setNotificationConfigurationDataDto] = useState(notificationData);
+  const [notificationDataDto, setNotificationDataDto] = useState({...notificationData});
+  const [notificationConfigurationDataDto, setNotificationConfigurationDataDto] = useState(undefined);
   const [notificationMethodDataDto, setNotificationMethodDataDto] = useState(undefined);
   const notificationPolicyActions = useNotificationPolicyActions();
   

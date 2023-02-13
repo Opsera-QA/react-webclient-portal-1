@@ -8,13 +8,19 @@ import NotificationTypeSelectInput
   from "components/common/list_of_values_input/notifications/type/NotificationTypeSelectInput";
 
 function NotificationConfigurationPanel({ notificationDataDto, setNotificationDataDto, notificationConfigurationData, setNotificationConfigurationData }) {
+  const updateModelFunction = (newNotificationConfigurationModel) => {
+    notificationDataDto.setData("configuration", newNotificationConfigurationModel?.getCurrentData());
+    setNotificationConfigurationData({...newNotificationConfigurationModel});
+    setNotificationDataDto({...notificationDataDto});
+  };
+
   const getConfigurationPanel = () => {
     switch (notificationDataDto?.getData("type")) {
       case "metric":
         return (
           <MetricNotificationConfigurationPanel
             notificationDataDto={notificationDataDto}
-            setNotificationConfigurationData={setNotificationConfigurationData}
+            setNotificationConfigurationData={updateModelFunction}
             notificationConfigurationData={notificationConfigurationData}
           />
         );
@@ -22,7 +28,7 @@ function NotificationConfigurationPanel({ notificationDataDto, setNotificationDa
         return (
           <PipelineNotificationEditorPanel
             notificationDataDto={notificationDataDto}
-            setNotificationConfigurationData={setNotificationConfigurationData}
+            setNotificationConfigurationData={updateModelFunction}
             notificationConfigurationData={notificationConfigurationData}
           />
         );

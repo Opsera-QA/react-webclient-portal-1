@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import PropTypes from "prop-types";
 import NotificationPolicyEditorPanel from "components/notifications/details/NotificationPolicyEditorPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
