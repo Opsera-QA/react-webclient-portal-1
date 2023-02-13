@@ -15,13 +15,13 @@ export default function useNotificationPolicyActions() {
 
   notificationPolicyActions.createNotificationPolicy = async (notificationModel) => {
     const postBody = notificationModel.getPersistData();
-    const apiUrl = "/notifications/create";
+    const apiUrl = "/notifications";
     return await apiService.handleApiPostRequest(apiUrl, postBody);
   };
 
   notificationPolicyActions.updateNotificationPolicy = async (notificationModel) => {
     const postBody = notificationModel.getPersistData();
-    const apiUrl = `/notifications/${notificationModel.getData("_id")}/update`;
+    const apiUrl = `/notifications/${notificationModel.getData("_id")}`;
     return await apiService.handleApiPutRequest(apiUrl, postBody);
   };
 

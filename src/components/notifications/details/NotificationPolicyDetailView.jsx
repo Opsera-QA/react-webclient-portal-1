@@ -1,19 +1,18 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import notificationsActions from "../notifications-actions";
 import notificationMetadata from "../notifications-metadata";
-import NotificationDetailPanel from "./NotificationDetailPanel";
+import NotificationPolicyDetailPanel from "components/notifications/details/NotificationPolicyDetailPanel";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
-import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import NotificationPolicySubNavigationBar from "components/notifications/NotificationPolicySubNavigationBar";
 import NotificationDetailViewHelpDocumentation
   from "components/common/help/documentation/notifications/NotificationDetailViewHelpDocumentation";
 import useGetNotificationPolicyModelById from "hooks/notification_policies/model/useGetNotificationPolicyModelById";
-import useNotificationPolicyActions from "hooks/notification_policies/useNotificationPolicyActions";
+import DeleteNotificationPolicyActionBarButton
+  from "components/notifications/actions/DeleteNotificationPolicyActionBarButton";
 
-function NotificationDetailView() {
+function NotificationPolicyDetailView() {
   const { id } = useParams();
   const {
     notificationPolicyModel,
@@ -22,11 +21,6 @@ function NotificationDetailView() {
     error,
     loadData,
   } = useGetNotificationPolicyModelById(id);
-  const notificationPolicyActions = useNotificationPolicyActions();
-
-  const deleteNotification = async () => {
-    return await notificationPolicyActions.deleteNotificationPolicy(notificationPolicyModel?.getMongoDbId());
-  };
 
   const getActionBar = () => {
     return (
@@ -35,10 +29,9 @@ function NotificationDetailView() {
           <ActionBarBackButton path={"/notifications"} />
         </div>
         <div>
-          <ActionBarDeleteButton2
-            relocationPath={"/notifications/"}
-            handleDelete={deleteNotification}
-            dataObject={notificationPolicyModel}
+          <DeleteNotificationPolicyActionBarButton
+            notificationPolicyModel={notificationPolicyModel}
+            className={"ml-3"}
           />
         </div>
       </ActionBarContainer>
@@ -64,7 +57,7 @@ function NotificationDetailView() {
       actionBar={getActionBar()}
       // helpComponent={getHelpComponent()}
       detailPanel={
-        <NotificationDetailPanel
+        <NotificationPolicyDetailPanel
           notificationData={notificationPolicyModel}
           isLoading={isLoading}
           setNotificationData={setNotificationPolicyModel}
@@ -75,4 +68,4 @@ function NotificationDetailView() {
   );
 }
 
-export default NotificationDetailView;
+export default NotificationPolicyDetailView;

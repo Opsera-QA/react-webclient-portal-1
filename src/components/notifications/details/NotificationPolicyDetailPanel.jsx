@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 
 import PropTypes from "prop-types";
-import NotificationEditorPanel from "./NotificationEditorPanel";
+import NotificationPolicyEditorPanel from "components/notifications/details/NotificationPolicyEditorPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
-import NotificationSummaryPanel
-  from "components/notifications/details/NotificationSummaryPanel";
+import NotificationPolicySummaryPanel
+  from "components/notifications/details/NotificationPolicySummaryPanel";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import NotificationPolicyActivityLogs
   from "components/notifications/details/NotificationPolicyActivityLogs";
 
-function NotificationDetailPanel({ notificationData, setNotificationData, loadData, isLoading }) {
+function NotificationPolicyDetailPanel({ notificationData, setNotificationData, loadData, isLoading }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -38,14 +38,14 @@ function NotificationDetailPanel({ notificationData, setNotificationData, loadDa
     switch (activeTab) {
       case "summary":
         return (
-          <NotificationSummaryPanel
+          <NotificationPolicySummaryPanel
             notificationData={notificationData}
             setActiveTab={setActiveTab}
           />
         );
       case "settings":
         return (
-          <NotificationEditorPanel
+          <NotificationPolicyEditorPanel
             handleClose={toggleSummaryPanel}
             notificationData={notificationData}
             setNotificationData={setNotificationData}
@@ -73,13 +73,13 @@ function NotificationDetailPanel({ notificationData, setNotificationData, loadDa
   );
 }
 
-NotificationDetailPanel.propTypes = {
+NotificationPolicyDetailPanel.propTypes = {
   notificationData: PropTypes.object,
   setNotificationData: PropTypes.func,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
 };
 
-export default NotificationDetailPanel;
+export default NotificationPolicyDetailPanel;
 
 

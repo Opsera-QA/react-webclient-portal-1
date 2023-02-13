@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import NotificationSummaryPanelBase from "components/notifications/details/NotificationSummaryPanelBase";
+import NotificationPolicySummaryPanelBase from "components/notifications/details/NotificationPolicySummaryPanelBase";
 import pipelineNotificationConfigurationMetadata
   from "components/notifications/details/configuration_forms/pipeline/pipeline-notification-configuration-metadata";
 import metricNotificationConfigurationMetadata
@@ -31,7 +31,7 @@ import GChatNotificationMethodSummaryCard
 import gChatNotificationMetadata
   from "components/notifications/details/methods/gchat/gChatNotificationMetadata";
 
-function NotificationSummaryPanel({ notificationData, setActiveTab }) {
+function NotificationPolicySummaryPanel({ notificationData, setActiveTab }) {
   const wrapNotificationType = (metaData) => {
     return new Model(notificationData.getData("configuration"), metaData, false);
   };
@@ -106,7 +106,7 @@ function NotificationSummaryPanel({ notificationData, setActiveTab }) {
   };
 
   return (
-    <NotificationSummaryPanelBase
+    <NotificationPolicySummaryPanelBase
       notificationData={notificationData}
       setActiveTab={setActiveTab}
       notificationTypeSummaryCard={getNotificationTypeSummaryPanel()}
@@ -116,9 +116,9 @@ function NotificationSummaryPanel({ notificationData, setActiveTab }) {
 }
 
 
-NotificationSummaryPanel.propTypes = {
+NotificationPolicySummaryPanel.propTypes = {
   notificationData: PropTypes.object,
   setActiveTab: PropTypes.func
 };
 
-export default NotificationSummaryPanel;
+export default NotificationPolicySummaryPanel;

@@ -7,7 +7,7 @@ import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
 import NotificationTypeField from "components/common/list_of_values_input/notifications/type/NotificationTypeField";
 
-function NotificationSummaryPanelBase({ notificationData, setActiveTab, notificationTypeSummaryCard, notificationMethodSummaryCard }) {
+function NotificationPolicySummaryPanelBase({ notificationData, setActiveTab, notificationTypeSummaryCard, notificationMethodSummaryCard }) {
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
@@ -36,11 +36,11 @@ function NotificationSummaryPanelBase({ notificationData, setActiveTab, notifica
   );
 }
 
-NotificationSummaryPanelBase.propTypes = {
+NotificationPolicySummaryPanelBase.propTypes = {
   notificationData: PropTypes.object,
   setActiveTab: PropTypes.func,
   notificationTypeSummaryCard: PropTypes.object,
   notificationMethodSummaryCard: PropTypes.object
 };
 
-export default NotificationSummaryPanelBase;
+export default NotificationPolicySummaryPanelBase;
