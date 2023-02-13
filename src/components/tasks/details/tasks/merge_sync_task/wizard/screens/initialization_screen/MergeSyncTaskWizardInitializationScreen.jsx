@@ -31,7 +31,7 @@ const MergeSyncTaskWizardInitializationScreen = ({
         </div>
         <SaveButtonContainer>
           <BooleanToggleInput
-            fieldName={"isProfile"}
+            fieldName={"isProfiles"}
             dataObject={wizardModel}
             setDataObject={setWizardModel}
           />

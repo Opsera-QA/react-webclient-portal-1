@@ -50,6 +50,7 @@ function MergeSyncTaskWizardCreateNewRecordButton({
         cancelTokenSource,
         wizardModel?.getData("taskId"),
         wizardModel?.getData("runCount"),
+        wizardModel?.getData("isProfiles"),
       );
       const newRecord = response?.data?.data;
 

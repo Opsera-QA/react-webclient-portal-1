@@ -7,12 +7,14 @@ mergeSyncTaskWizardActions.createNewRecordV2 = async (
   getAccessToken,
   cancelTokenSource,
   taskId,
-  runCount
+  runCount,
+  isProfiles
 ) => {
   const apiUrl = `/tasks/merge-sync-task/wizard/create-record`;
   const postBody = {
     taskId: taskId,
     runCount: runCount,
+    isProfiles: isProfiles,
   };
 
   return await baseActions.apiPostCallV2(

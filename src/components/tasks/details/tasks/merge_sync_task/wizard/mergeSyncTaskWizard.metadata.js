@@ -69,7 +69,7 @@ export const mergeSyncTaskWizardMetadata = {
     },
     {
       label: "Profiles Components Only",
-      id: "isProfile",
+      id: "isProfiles",
     },
   ],
   newObjectFields: {
@@ -87,6 +87,6 @@ export const mergeSyncTaskWizardMetadata = {
     sfdcToolId: "",
     runCount: 1,
     type: "",
-    isProfile: false,
+    isProfiles: false,
   }
 };
