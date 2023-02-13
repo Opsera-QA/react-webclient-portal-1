@@ -26,9 +26,7 @@ export default function useGetGithubRepositories(
     }
   }, [inEditMode, toolId]);
 
-  const getRepositories = async (searchTerm = "", tool = toolId) => {
-    console.log("searchTerm: " + JSON.stringify(searchTerm));
-    console.log("tool: " + JSON.stringify(tool));
+  const getRepositories = async (searchTerm = "") => {
     if (isMongoDbId(toolId) !== true) {
       return;
     }
@@ -37,7 +35,8 @@ export default function useGetGithubRepositories(
       toolId,
       searchTerm,
     );
-    setGithubRepositories([...DataParsingHelper.parseNestedObject(response, "data.data")]);
+    const repositories = DataParsingHelper.parseNestedArray(response, "data.data", []);
+    setGithubRepositories([...repositories]);
   };
 
   return ({
