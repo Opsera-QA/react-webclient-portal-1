@@ -13,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import CoverityIssuesByCategoryHelpDocumentation from "components/common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
-import CoverityActionableInsightOverlay from "components/insights/charts/coverity/CoverityIssuesByCategory/actionable_insights/CoverityActionableInsightOverlay";
+import AquasecActionableInsightsOverlay from "./actionable_insights/AquasecActionableInsightsOverlay";
 import CoverityIssuesOverallLowTrendDataBlock from "components/insights/charts/coverity/CoverityIssuesByCategory/data_blocks/overall_low_trend/CoverityIssuesOverallLowTrendDataBlock";
 import CoverityIssuesOverallMediumTrendDataBlock from "components/insights/charts/coverity/CoverityIssuesByCategory/data_blocks/overall_medium_trend/CoverityIssuesOverallMediumTrendDataBlock";
 import CoverityIssuesOverallHighTrendDataBlock from "components/insights/charts/coverity/CoverityIssuesByCategory/data_blocks/overall_high_trend/CoverityIssuesOverallHighTrendDataBlock";
@@ -132,8 +132,8 @@ function AquasecSecurityInsightsBySeverity({
 
   const onRowSelect = (stat) => {
     toastContext.showOverlayPanel(
-      <CoverityActionableInsightOverlay
-        title={stat + " Issues Insights"}
+      <AquasecActionableInsightsOverlay
+        title={stat + " Severity Insights"}
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
         coveritySeverity={stat}
