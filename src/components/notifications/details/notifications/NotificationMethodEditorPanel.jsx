@@ -1,6 +1,5 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import modelHelpers from "components/common/model/modelHelpers";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import emailStepNotificationMetadata
@@ -10,12 +9,11 @@ import NotificationTabView from "components/notifications/details/notifications/
 import InfoText from "components/common/inputs/info_text/InfoText";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
-export default function NotificationEditorPanel(
+export default function NotificationMethodEditorPanel(
   {
     notificationModel,
     setNotificationModel,
   }) {
-  const toastContext = useContext(DialogToastContext);
   const [jiraNotificationModel, setJiraNotificationModel] = useState(undefined);
   const [teamsNotificationModel, setTeamsNotificationModel] = useState(undefined);
   const [slackNotificationModel, setSlackNotificationModel] = useState(undefined);
@@ -53,40 +51,6 @@ export default function NotificationEditorPanel(
     }
   }, []);
 
-  const validateRequiredFields = () => {
-    if (emailNotificationModel.getData("enabled") === true && !emailNotificationModel.isModelValid()) {
-      toastContext.showInlineErrorMessage("Error: Cannot enable Email notification without all required fields filled out.");
-      return false;
-    }
-
-    // if (teamsNotificationModel.getData("enabled") === true && !teamsNotificationModel.isModelValid()) {
-    //   toastContext.showInlineErrorMessage("Error: Cannot enable Teams notification without tool selected.");
-    //   return false;
-    // }
-
-    // if (slackNotificationModel.getData("enabled") === true && !slackNotificationModel.isModelValid()) {
-    //   toastContext.showInlineErrorMessage("Error: Cannot enable Slack notifications without all required fields filled out.");
-    //   return false;
-    // }
-
-    // if (jiraNotificationModel.getData("enabled") === true && !jiraNotificationModel.isModelValid()) {
-    //   toastContext.showInlineErrorMessage("Error: Cannot enable Jira notification without all required fields filled out.");
-    //   return false;
-    // }
-
-    // if (serviceNowNotificationModel.getData("enabled") === true && !serviceNowNotificationModel.isModelValid()) {
-    //   toastContext.showInlineErrorMessage("Error: Cannot enable ServiceNow notifications without all required fields filled out.");
-    //   return false;
-    // }
-
-    // if (gChatNotificationModel.getData("enabled") === true && !gChatNotificationModel.isModelValid()) {
-    //   toastContext.showInlineErrorMessage("Error: Cannot enable GChat notification without tool selected.");
-    //   return false;
-    // }
-
-    return true;
-  };
-
   // const getHelpComponentFunction = (setHelpIsShown) => {
   //   return (
   //     <TaskNotificationConfigurationHelpDocumentation
@@ -103,6 +67,7 @@ export default function NotificationEditorPanel(
       return;
     }
 
+    setError(undefined);
     const notifications = notificationModel?.getArrayData("notification");
     const index = notifications?.findIndex((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.EMAIL);
 
@@ -153,7 +118,7 @@ export default function NotificationEditorPanel(
   );
 }
 
-NotificationEditorPanel.propTypes = {
+NotificationMethodEditorPanel.propTypes = {
   notificationModel: PropTypes.object,
   setNotificationModel: PropTypes.func,
   notificationMethodModel: PropTypes.object,

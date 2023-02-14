@@ -11,7 +11,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import TagManager from "components/common/inputs/tags/TagManager";
 import useNotificationPolicyActions from "hooks/notification_policies/useNotificationPolicyActions";
-import NotificationEditorPanel from "components/notifications/details/notifications/NotificationEditorPanel";
+import NotificationMethodEditorPanel from "components/notifications/details/notifications/NotificationMethodEditorPanel";
 
 function NotificationPolicyEditorPanel({ notificationData, handleClose }) {
   const [notificationModel, setNotificationModel] = useState({...notificationData});
@@ -63,7 +63,7 @@ function NotificationPolicyEditorPanel({ notificationData, handleClose }) {
         setNotificationDataDto={setNotificationModel}
         setNotificationConfigurationData={setNotificationConfigurationModel}
       />
-      <NotificationEditorPanel
+      <NotificationMethodEditorPanel
         notificationModel={notificationModel}
         setNotificationModel={setNotificationModel}
       />
