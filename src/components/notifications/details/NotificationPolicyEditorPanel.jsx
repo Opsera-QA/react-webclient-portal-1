@@ -7,73 +7,68 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import NotificationConfigurationPanel
   from "components/notifications/details/configuration_forms/NotificationConfigurationPanel";
-import NotificationMethodConfigurationPanel 
-  from "components/notifications/details/methods/NotificationMethodConfigurationPanel";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import TagManager from "components/common/inputs/tags/TagManager";
 import useNotificationPolicyActions from "hooks/notification_policies/useNotificationPolicyActions";
+import NotificationEditorPanel from "components/notifications/details/notifications/NotificationEditorPanel";
 
 function NotificationPolicyEditorPanel({ notificationData, handleClose }) {
-  const [notificationDataDto, setNotificationDataDto] = useState({...notificationData});
-  const [notificationConfigurationDataDto, setNotificationConfigurationDataDto] = useState(undefined);
-  const [notificationMethodDataDto, setNotificationMethodDataDto] = useState(undefined);
+  const [notificationModel, setNotificationModel] = useState({...notificationData});
+  const [notificationConfigurationModel, setNotificationConfigurationModel] = useState(undefined);
   const notificationPolicyActions = useNotificationPolicyActions();
   
   const createNotification = async () => {
-    return await notificationPolicyActions.createNotificationPolicy(notificationDataDto);
+    return await notificationPolicyActions.createNotificationPolicy(notificationModel);
   };
 
   const updateNotification = async () => {
-    return await notificationPolicyActions.updateNotificationPolicy(notificationDataDto);
+    return await notificationPolicyActions.updateNotificationPolicy(notificationModel);
   };
   
-  if (notificationDataDto == null) {
+  if (notificationModel == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
   return (
     <EditorPanelContainer
       handleClose={handleClose}
-      recordDto={notificationDataDto}
+      recordDto={notificationModel}
       createRecord={createNotification}
       updateRecord={updateNotification}
-      setRecordDto={setNotificationDataDto}
+      setRecordDto={setNotificationModel}
       lenient={true}
       disable={
-        !notificationDataDto.checkCurrentValidity()
-        || (notificationConfigurationDataDto == null || !notificationConfigurationDataDto.checkCurrentValidity())
-        || (notificationMethodDataDto == null || !notificationMethodDataDto.checkCurrentValidity())
+        !notificationModel.checkCurrentValidity()
+        || (notificationConfigurationModel == null || !notificationConfigurationModel.checkCurrentValidity())
       }
     >
       <Row>
         <Col lg={6}>
-          <TextInputBase setDataObject={setNotificationDataDto} dataObject={notificationDataDto} fieldName={"name"}/>
+          <TextInputBase setDataObject={setNotificationModel} dataObject={notificationModel} fieldName={"name"}/>
         </Col>
         <Col lg={6}>
-          <ActivityToggleInput dataObject={notificationDataDto} setDataObject={setNotificationDataDto} fieldName={"active"} />
+          <ActivityToggleInput dataObject={notificationModel} setDataObject={setNotificationModel} fieldName={"active"} />
         </Col>
         <Col lg={12}>
-          <TextInputBase setDataObject={setNotificationDataDto} dataObject={notificationDataDto} fieldName={"description"}/>
+          <TextInputBase setDataObject={setNotificationModel} dataObject={notificationModel} fieldName={"description"}/>
         </Col>
         <Col lg={12}>
-          <TagManager type={"notification"} setDataObject={setNotificationDataDto} dataObject={notificationDataDto}/>
+          <TagManager type={"notification"} setDataObject={setNotificationModel} dataObject={notificationModel}/>
         </Col>
       </Row>
       <NotificationConfigurationPanel
-        notificationConfigurationData={notificationConfigurationDataDto}
-        notificationDataDto={notificationDataDto}
-        setNotificationDataDto={setNotificationDataDto}
-        setNotificationConfigurationData={setNotificationConfigurationDataDto}
+        notificationConfigurationData={notificationConfigurationModel}
+        notificationDataDto={notificationModel}
+        setNotificationDataDto={setNotificationModel}
+        setNotificationConfigurationData={setNotificationConfigurationModel}
       />
-      <NotificationMethodConfigurationPanel
-        notificationDataDto={notificationDataDto}
-        setNotificationDataDto={setNotificationDataDto}
-        notificationMethodDataDto={notificationMethodDataDto}
-        setNotificationMethodDataDto={setNotificationMethodDataDto}
+      <NotificationEditorPanel
+        notificationModel={notificationModel}
+        setNotificationModel={setNotificationModel}
       />
       <Col lg={12} className={"px-0"}>
-        <TextAreaInput setDataObject={setNotificationDataDto} dataObject={notificationDataDto} fieldName={"nextSteps"}/>
+        <TextAreaInput setDataObject={setNotificationModel} dataObject={notificationModel} fieldName={"nextSteps"}/>
       </Col>
     </EditorPanelContainer>
   );
