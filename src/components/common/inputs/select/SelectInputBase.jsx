@@ -5,11 +5,9 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import {errorHelpers, parseError} from "components/common/helpers/error-helpers";
+import {errorHelpers} from "components/common/helpers/error-helpers";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
-import useExternalToolPropertyCacheActions from "hooks/cache/external_tools/useExternalToolPropertyCacheActions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
 import useExternalToolPropertyCacheEntry from "hooks/cache/external_tools/useExternalToolPropertyCache";
 import _ from "lodash";
 

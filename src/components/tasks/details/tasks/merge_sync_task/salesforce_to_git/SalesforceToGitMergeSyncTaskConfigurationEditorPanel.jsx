@@ -33,6 +33,12 @@ import SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput";
 import SalesforceToGitMergeSyncTaskIncludePackageXmlToggleInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskIncludePackageXmlToggleInput";
+import SalesforceMergeSyncTaskJiraToolSelectInput 
+  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceMergeSyncTaskJiraToolSelectInput";
+import SalesforceMergeSyncTaskJiraProjectSelectInput 
+  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceMergeSyncTaskJiraProjectSelectInput";
+import SalesforceMergeSyncTaskJiraIssueSelectInput 
+  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceMergeSyncTaskJiraIssueSelectInput";
 
 function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
   {
@@ -111,6 +117,34 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
     );
   };
 
+  const getJiraInputs = () => {
+    return (
+      <>
+        <Col lg={12}>
+          <SalesforceMergeSyncTaskJiraToolSelectInput
+            model={salesforceConfigurationModel}
+            setModel={setSalesforceConfigurationModel}
+          />
+        </Col>
+        <Col lg={12}>
+          <SalesforceMergeSyncTaskJiraProjectSelectInput
+            model={salesforceConfigurationModel}
+            setModel={setSalesforceConfigurationModel}
+            jiraToolId={salesforceConfigurationModel?.getData("jiraToolId")}
+          />
+        </Col>
+        <Col lg={12}>
+          <SalesforceMergeSyncTaskJiraIssueSelectInput
+            model={salesforceConfigurationModel}
+            setModel={setSalesforceConfigurationModel}
+            jiraToolId={salesforceConfigurationModel?.getData("jiraToolId")}
+            jiraProjectKey={salesforceConfigurationModel?.getData("jiraProjectKey")}
+          />
+        </Col>        
+      </>
+    );
+  };
+
   if (taskModel == null || taskConfigurationModel == null || salesforceConfigurationModel == null) {
     return <LoadingDialog size="sm" />;
   }
@@ -156,6 +190,7 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
         />
       </Col>
       {getDestinationBranchInputs()}
+      {getJiraInputs()}
       <Col lg={12}>
         <SalesforceToGitMergeSyncTaskIncludePackageXmlToggleInput
           model={salesforceConfigurationModel}

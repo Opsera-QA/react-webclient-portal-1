@@ -65,7 +65,7 @@ GithubRepositorySelectInput.propTypes = {
 };
 
 GithubRepositorySelectInput.defaultProps = {
-  valueField: "name",
+  valueField: "id",
   textField: "name",
 };
 

@@ -29,7 +29,6 @@ import ProjectDataMappingBitbucketRepositorySelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingBitbucketRepositorySelectInput";
 import GitlabProjectDataMappingSubform from "../../tools/gitlab/subforms/GitlabProjectDataMappingSubform";
 
-
 function ProjectDataMappingEditorPanel(
   {
     projectDataMappingModel,

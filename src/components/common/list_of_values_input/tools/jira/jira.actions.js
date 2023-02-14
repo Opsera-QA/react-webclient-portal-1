@@ -100,3 +100,8 @@ jiraActions.getJiraCustomMappingFields = async (getAccessToken, cancelTokenSourc
   const apiUrl = `/tool/jira/${toolId}/project/${projectKey}/customMappingFields`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
+
+jiraActions.getJiraIssuesFromProject = async (getAccessToken, cancelTokenSource, toolId, projectKey) => {
+  const apiUrl = `/tool/jira/${toolId}/project/${projectKey}/openIssues`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
