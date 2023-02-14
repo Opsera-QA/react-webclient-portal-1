@@ -12,7 +12,7 @@ import {
   faMinusCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import CoverityIssuesByCategoryHelpDocumentation from "components/common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
+import AquasecIssuesBySeverityHelpDocumentation from "components/common/help/documentation/insights/charts/AquasecIssuesBySeverityHelpDocumentation";
 import AquasecActionableInsightsOverlay from "./actionable_insights/AquasecActionableInsightsOverlay";
 import CoverityIssuesOverallLowTrendDataBlock from "components/insights/charts/coverity/CoverityIssuesByCategory/data_blocks/overall_low_trend/CoverityIssuesOverallLowTrendDataBlock";
 import CoverityIssuesOverallMediumTrendDataBlock from "components/insights/charts/coverity/CoverityIssuesByCategory/data_blocks/overall_medium_trend/CoverityIssuesOverallMediumTrendDataBlock";
@@ -332,7 +332,7 @@ function AquasecSecurityInsightsBySeverity({
         setKpis={setKpis}
         isLoading={isLoading}
         chartHelpComponent={(closeHelpPanel) => (
-          <CoverityIssuesByCategoryHelpDocumentation
+          <AquasecIssuesBySeverityHelpDocumentation
             closeHelpPanel={closeHelpPanel}
           />
         )}
