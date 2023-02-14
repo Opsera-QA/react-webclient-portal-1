@@ -21,6 +21,8 @@ export default function ProjectDataMappingGitlabRepositorySelectInput(
     model.setData('key', parseKeyFromFullPath(selectedOption?.nameSpacedPath));
     model.setData('repoId', selectedOption?.id);
     model.setData('keyPath', selectedOption?.nameSpacedPath);
+    model.setDefaultValue('monoRepoPath');
+    model.setDefaultValue('deploymentStage');
     setModel({ ...model });
   };
 

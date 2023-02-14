@@ -59,7 +59,7 @@ export default function GitlabMonoRepoPathMultiSelectInput({
     setMonoRepoPaths([...repoPaths]);
   };
 
-  if (!model.getData("repoId")) {
+  if (!model.getData("repoId") || model.getData("isMonoRepo") === false) {
     return null;
   }
 
