@@ -10,7 +10,7 @@ import GChatNotificationMethodConfigurationPanel from "components/notifications/
 
 function NotificationMethodConfigurationPanel({ notificationDataDto, setNotificationDataDto, notificationMethodDataDto, setNotificationMethodDataDto }) {
   const updateModelFunction = (newNotificationMethodModel) => {
-    notificationDataDto.setData("notification", newNotificationMethodModel?.getPersistData());
+    notificationDataDto.setData("notification", newNotificationMethodModel?.getPersistData(false));
     setNotificationMethodDataDto({...newNotificationMethodModel});
     setNotificationDataDto({...notificationDataDto});
   };
