@@ -215,6 +215,7 @@ function PipelineSummaryPanel(
         <Col xs={12} sm={6}>
           <PipelineSchedulerField
             pipelineModel={pipelineModel}
+            updatedAt={pipelineModel?.getData("updatedAt")}
             canEditPipelineSchedule={PipelineRoleHelper.canEditPipelineAttributes(userData, pipeline) && parentWorkflowStatus !== "running"}
           />
         </Col>

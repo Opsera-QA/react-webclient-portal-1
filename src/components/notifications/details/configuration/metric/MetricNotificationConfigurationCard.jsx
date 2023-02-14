@@ -11,7 +11,11 @@ function MetricNotificationConfigurationCard({ notificationDataDto, notification
   }
 
   return (
-    <MetricConfigurationInput dataObject={notificationConfigurationData} setDataObject={setNotificationConfigurationData} fieldName={"kpi_identifier"} />
+    <MetricConfigurationInput
+      dataObject={notificationConfigurationData}
+      setDataObject={setNotificationConfigurationData}
+      fieldName={"kpi_identifier"}
+    />
   );
 }
 
