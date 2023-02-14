@@ -14,9 +14,7 @@ import {
 import { DialogToastContext } from "contexts/DialogToastContext";
 import AquasecIssuesBySeverityHelpDocumentation from "components/common/help/documentation/insights/charts/AquasecIssuesBySeverityHelpDocumentation";
 import AquasecActionableInsightsOverlay from "./actionable_insights/AquasecActionableInsightsOverlay";
-import CoverityIssuesOverallLowTrendDataBlock from "components/insights/charts/coverity/CoverityIssuesByCategory/data_blocks/overall_low_trend/CoverityIssuesOverallLowTrendDataBlock";
-import CoverityIssuesOverallMediumTrendDataBlock from "components/insights/charts/coverity/CoverityIssuesByCategory/data_blocks/overall_medium_trend/CoverityIssuesOverallMediumTrendDataBlock";
-import CoverityIssuesOverallHighTrendDataBlock from "components/insights/charts/coverity/CoverityIssuesByCategory/data_blocks/overall_high_trend/CoverityIssuesOverallHighTrendDataBlock";
+import AquasecIssuesOverallTrendDataBlock from "./AquasecIssuesOverallTrendDataBlock";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import IconBase from "components/common/icons/IconBase";
 
@@ -267,12 +265,13 @@ function AquasecIssuesBySeverity({
         <Container>
           <Row className="p-1 gray">
             <Col>
-              <CoverityIssuesOverallLowTrendDataBlock
+              <AquasecIssuesOverallTrendDataBlock
                 score={
                   dataMetrics?.lowIssues[0]?.DataBlocks[0]?.totalIssues
                     ? dataMetrics?.lowIssues[0]?.DataBlocks[0]?.totalIssues
                     : 0
                 }
+                severity={"Low"}
                 icon={getIcon(metrics[0].overallLowTrend)}
                 className={getIconColor(metrics[0].overallLowTrend)}
                 onSelect={() => onRowSelect("Low")}
@@ -281,12 +280,13 @@ function AquasecIssuesBySeverity({
               />
             </Col>
             <Col>
-              <CoverityIssuesOverallMediumTrendDataBlock
+              <AquasecIssuesOverallTrendDataBlock
                 score={
                   dataMetrics?.mediumIssues[0]?.DataBlocks[0]?.totalIssues
                     ? dataMetrics?.mediumIssues[0]?.DataBlocks[0]?.totalIssues
                     : 0
                 }
+                severity="Medium"
                 icon={getIcon(metrics[0].overallMediumTrend)}
                 className={getIconColor(metrics[0].overallMediumTrend)}
                 onSelect={() => onRowSelect("Medium")}
@@ -295,12 +295,13 @@ function AquasecIssuesBySeverity({
               />
             </Col>
             <Col>
-              <CoverityIssuesOverallHighTrendDataBlock
+              <AquasecIssuesOverallTrendDataBlock
                 score={
                   dataMetrics?.highIssues[0]?.DataBlocks[0]?.totalIssues
                     ? dataMetrics?.highIssues[0]?.DataBlocks[0]?.totalIssues
                     : 0
                 }
+                severity="High"
                 icon={getIcon(metrics[0].overallHighTrend)}
                 className={getIconColor(metrics[0].overallHighTrend)}
                 onSelect={() => onRowSelect("High")}
@@ -309,7 +310,6 @@ function AquasecIssuesBySeverity({
               />
             </Col>
           </Row>
-          {/* <div className={"mt-5"}>{getFooterLine()}</div> */}
           {<div className={"mt-5"}>{projectsWithHighIssues("High")}</div>}
           {<div>{projectsWithHighIssues("Medium")}</div>}
           {<div>{projectsWithHighIssues("Low")}</div>}
