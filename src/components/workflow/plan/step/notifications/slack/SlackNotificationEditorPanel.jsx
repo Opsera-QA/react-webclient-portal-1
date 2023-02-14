@@ -14,7 +14,30 @@ function SlackNotificationEditorPanel(
   {
     slackNotificationModel,
     setSlackNotificationModel,
+    showOrchestrationFields,
   }) {
+  const getOrchestrationFields = () => {
+    if (showOrchestrationFields !== false) {
+      return (
+        <>
+          <Col xs={12}>
+            <OrchestrationNotificationLevelSelectInput
+              model={slackNotificationModel}
+              setModel={setSlackNotificationModel}
+            />
+          </Col>
+          <Col xs={12}>
+            <BooleanToggleInput
+              dataObject={slackNotificationModel}
+              setDataObject={setSlackNotificationModel}
+              disabled={slackNotificationModel?.getData("enabled") === false}
+              fieldName={"logEnabled"}
+            />
+          </Col>
+        </>
+      );
+    }
+  };
 
   if (slackNotificationModel == null) {
     return null;
@@ -32,12 +55,6 @@ function SlackNotificationEditorPanel(
         <ConnectToToolMessage toolFriendlyName={"Slack"}/>
       </Col>
       <Col xs={12}>
-        <OrchestrationNotificationLevelSelectInput
-          model={slackNotificationModel}
-          setModel={setSlackNotificationModel}
-        />
-      </Col>
-      <Col xs={12}>
         <SlackStepNotificationToolInput
           setDataObject={setSlackNotificationModel}
           dataObject={slackNotificationModel}
@@ -51,14 +68,7 @@ function SlackNotificationEditorPanel(
           disabled={slackNotificationModel?.getData("enabled") === false}
         />
       </Col>
-      <Col xs={12}>
-        <BooleanToggleInput
-          dataObject={slackNotificationModel}
-          setDataObject={setSlackNotificationModel}
-          disabled={slackNotificationModel?.getData("enabled") === false}
-          fieldName={"logEnabled"}
-        />
-      </Col>
+      {getOrchestrationFields()}
     </Row>
   );
 }
@@ -66,6 +76,7 @@ function SlackNotificationEditorPanel(
 SlackNotificationEditorPanel.propTypes = {
   slackNotificationModel: PropTypes.object,
   setSlackNotificationModel: PropTypes.func,
+  showOrchestrationFields: PropTypes.bool,
 };
 
 export default SlackNotificationEditorPanel;

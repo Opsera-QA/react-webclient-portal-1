@@ -83,13 +83,15 @@ function NotificationPolicyEditorPanel({ notificationData, handleClose }) {
         notificationModel={notificationModel}
         setNotificationModel={setNotificationModel}
       />
-      <Col lg={12}>
-        <TextAreaInputBase
-          fieldName={"nextSteps"}
-          model={notificationModel}
-          setModel={setNotificationModel}
-        />
-      </Col>
+      <Row>
+        <Col lg={12}>
+          <TextAreaInputBase
+            fieldName={"nextSteps"}
+            model={notificationModel}
+            setModel={setNotificationModel}
+          />
+        </Col>
+      </Row>
     </EditorPanelContainer>
   );
 }

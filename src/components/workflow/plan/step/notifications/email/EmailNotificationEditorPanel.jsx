@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import OrchestrationNotificationLevelSelectInput from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
+import OrchestrationNotificationLevelSelectInput
+  from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
 import EmailNotificationToggle
   from "components/workflow/plan/step/notifications/email/EmailNotificationToggle";
 import Row from "react-bootstrap/Row";
@@ -12,7 +13,31 @@ function EmailNotificationEditorPanel(
   {
     emailNotificationModel,
     setEmailNotificationModel,
+    showOrchestrationFields,
   }) {
+  const getOrchestrationFields = () => {
+    if (showOrchestrationFields !== false) {
+      return (
+        <>
+          <Col xs={12}>
+            <OrchestrationNotificationLevelSelectInput
+              model={emailNotificationModel}
+              setModel={setEmailNotificationModel}
+            />
+          </Col>
+          <Col xs={12}>
+            <BooleanToggleInput
+              dataObject={emailNotificationModel}
+              setDataObject={setEmailNotificationModel}
+              disabled={emailNotificationModel?.getData("enabled") === false}
+              fieldName={"logEnabled"}
+            />
+          </Col>
+        </>
+      );
+    }
+  };
+
   if (emailNotificationModel == null) {
     return null;
   }
@@ -33,20 +58,7 @@ function EmailNotificationEditorPanel(
           disabled={emailNotificationModel?.getData("enabled") !== true}
         />
       </Col>
-      <Col xs={12}>
-        <OrchestrationNotificationLevelSelectInput
-          model={emailNotificationModel}
-          setModel={setEmailNotificationModel}
-        />
-      </Col>
-      <Col xs={12}>
-        <BooleanToggleInput
-          dataObject={emailNotificationModel}
-          setDataObject={setEmailNotificationModel}
-          disabled={emailNotificationModel?.getData("enabled") === false}
-          fieldName={"logEnabled"}
-        />
-      </Col>
+      {getOrchestrationFields()}
     </Row>
   );
 }
@@ -54,6 +66,7 @@ function EmailNotificationEditorPanel(
 EmailNotificationEditorPanel.propTypes = {
   emailNotificationModel: PropTypes.object,
   setEmailNotificationModel: PropTypes.func,
+  showOrchestrationFields: PropTypes.bool,
 };
 
 export default EmailNotificationEditorPanel;

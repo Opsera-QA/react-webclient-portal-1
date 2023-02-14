@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import modelHelpers from "components/common/model/modelHelpers";
-import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 import emailStepNotificationMetadata
   from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
 import { ORCHESTRATION_NOTIFICATION_TYPES } from "components/common/fields/notifications/notificationTypes.constants";
@@ -92,15 +91,7 @@ export default function NotificationMethodEditorPanel(
   }
 
   return (
-    <OverlayPanelBodyContainer
-      // getHelpComponentFunction={getHelpComponentFunction}
-      hideCloseButton={true}
-    >
-      <div>
-        <h6 className="upper-case-first">{notificationModel?.getData("name")}</h6>
-        <div className="text-muted mt-2 mb-3">Each Notification can be configured to trigger based upon the selected criteria.
-        </div>
-      </div>
+    <div>
       <NotificationTabView
         slackNotificationModel={slackNotificationModel}
         setSlackNotificationModel={setSlackNotificationModel}
@@ -116,7 +107,7 @@ export default function NotificationMethodEditorPanel(
         setGChatNotificationModel={setGChatNotificationModel}
       />
       <InfoText errorMessage={error} />
-    </OverlayPanelBodyContainer>
+    </div>
   );
 }
 

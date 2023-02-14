@@ -9,12 +9,28 @@ import ServiceNowGroupSelectInput
 import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function ServiceNowNotificationEditorPanel(
   {
     serviceNowNotificationModel,
     setServiceNowNotificationModel,
+    showOrchestrationFields,
   }) {
+  const getOrchestrationFields = () => {
+    if (showOrchestrationFields !== false) {
+      return (
+        <>
+          <Col xs={12}>
+            <OrchestrationNotificationLevelSelectInput
+              model={serviceNowNotificationModel}
+              setModel={setServiceNowNotificationModel}
+            />
+          </Col>
+        </>
+      );
+    }
+  };
   
   if (serviceNowNotificationModel == null) {
     return null;
@@ -31,12 +47,7 @@ function ServiceNowNotificationEditorPanel(
       <Col xs={12}>
         <ConnectToToolMessage toolFriendlyName={"ServiceNow"}/>
       </Col>
-      <Col xs={12}>
-        <OrchestrationNotificationLevelSelectInput
-          model={serviceNowNotificationModel}
-          setModel={setServiceNowNotificationModel}
-        />
-      </Col>
+      {getOrchestrationFields()}
       <Col xs={12}>
         <ServiceNowStepNotificationToolSelectInput
           model={serviceNowNotificationModel}
@@ -66,6 +77,7 @@ function ServiceNowNotificationEditorPanel(
 ServiceNowNotificationEditorPanel.propTypes = {
   serviceNowNotificationModel: PropTypes.object,
   setServiceNowNotificationModel: PropTypes.func,
+  showOrchestrationFields: PropTypes.bool,
 };
 
 export default ServiceNowNotificationEditorPanel;
