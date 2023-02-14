@@ -8,6 +8,7 @@ import { ORCHESTRATION_NOTIFICATION_TYPES } from "components/common/fields/notif
 import NotificationTabView from "components/notifications/details/notifications/NotificationTabView";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import {notificationMethodHelper} from "components/notifications/notificationMethod.helper";
 
 export default function NotificationMethodEditorPanel(
   {
@@ -77,7 +78,8 @@ export default function NotificationMethodEditorPanel(
       notifications[index] = newEmailNotificationModel?.getPersistData(false);
     }
 
-    notificationModel.setData("notification", notifications);
+    const validatedNotificationsArray = notificationMethodHelper.getValidatedNotificationsArray(notifications);
+    notificationModel.setData("notification", validatedNotificationsArray);
     setNotificationModel({...notificationModel});
   };
 

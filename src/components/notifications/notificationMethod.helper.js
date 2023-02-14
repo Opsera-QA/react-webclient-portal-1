@@ -16,7 +16,7 @@ import gChatStepNotificationMetadata
   from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
 
 // TODO: Move to Node so we can validate there.
-const notificationMethodHelper = {};
+export const notificationMethodHelper = {};
 
 notificationMethodHelper.getValidatedNotificationsArray = async (notificationsArray) => {
   const validatedNotificationsArray = [];

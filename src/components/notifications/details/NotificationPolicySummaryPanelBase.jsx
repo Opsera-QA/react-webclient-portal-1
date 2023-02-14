@@ -6,28 +6,53 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import TagField from "components/common/fields/multiple_items/tags/TagField";
 import NotificationTypeField from "components/common/list_of_values_input/notifications/type/NotificationTypeField";
+import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
+import SmartIdField from "components/common/fields/text/id/SmartIdField";
 
 function NotificationPolicySummaryPanelBase({ notificationData, setActiveTab, notificationTypeSummaryCard, notificationMethodSummaryCard }) {
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={notificationData} fieldName={"name"} />
+          <TextFieldBase
+            dataObject={notificationData}
+            fieldName={"name"}
+          />
         </Col>
         <Col lg={6}>
-          <NotificationTypeField model={notificationData} fieldName={"type"} />
+          <NotificationTypeField
+            model={notificationData}
+            fieldName={"type"}
+          />
+        </Col>
+        <Col lg={6}>
+          <SsoUserField
+            model={notificationData}
+            fieldName={"owner"}
+          />
+        </Col>
+        <Col lg={6}>
+          <SmartIdField
+            model={notificationData}
+          />
         </Col>
         <Col lg={12}>
-          <TextFieldBase dataObject={notificationData} fieldName={"description"} />
+          <TextFieldBase
+            dataObject={notificationData}
+            fieldName={"description"}
+          />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={notificationData} fieldName={"_id"} />
-        </Col>
-        <Col lg={6}>
-          <DateFieldBase dataObject={notificationData} fieldName={"createdAt"} />
+          <DateFieldBase
+            dataObject={notificationData}
+            fieldName={"createdAt"}
+          />
         </Col>
         <Col lg={12}>
-          <TagField dataObject={notificationData} fieldName={"tags"} />
+          <TagField 
+            dataObject={notificationData}
+            fieldName={"tags"}
+          />
         </Col>
       </Row>
       <div>{notificationTypeSummaryCard}</div>
