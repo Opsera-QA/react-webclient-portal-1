@@ -135,7 +135,7 @@ function AquasecIssuesBySeverity({
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
         coveritySeverity={stat}
-      />,
+      />
     );
   };
 
@@ -310,9 +310,11 @@ function AquasecIssuesBySeverity({
               />
             </Col>
           </Row>
-          {<div className={"mt-5"}>{projectsWithHighIssues("High")}</div>}
-          {<div>{projectsWithHighIssues("Medium")}</div>}
-          {<div>{projectsWithHighIssues("Low")}</div>}
+          <div className={"mt-3"}>
+            {projectsWithHighIssues("High")}
+            {projectsWithHighIssues("Medium")}
+            {projectsWithHighIssues("Low")}
+          </div>
         </Container>
       </div>
     );
