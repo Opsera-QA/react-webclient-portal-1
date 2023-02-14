@@ -49,7 +49,6 @@ function GitlabCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "gitlabTotalCommitsByUserAndDate", kpiConfiguration, dashboardTags);
-      console.log("response", response);
       let dataObject = response?.data ? response?.data?.data[0]?.gitlabTotalCommitsByUserAndDate?.data : [];
       var usersList = dataObject && dataObject.length > 0 ? Object.keys(dataObject[0]) : [];
       usersList = usersList.filter((value) => value != "date");

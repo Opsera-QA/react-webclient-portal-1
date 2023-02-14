@@ -12,7 +12,6 @@ import FilterContainer from "../../../../../common/table/FilterContainer";
 
 function GitlabCommitsBytAuthorActionableModal({ metrics }) {
   const toastContext = useContext(DialogToastContext);
-  console.log("metrics", metrics);
 
   const noDataMessage = "No data available";
 
