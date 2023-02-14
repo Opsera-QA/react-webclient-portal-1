@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineStepNotificationBooleanToggle from "components/workflow/plan/step/notifications/PipelineStepNotificationBooleanToggle";
+import EnabledNotificationBooleanToggle from "components/workflow/plan/step/notifications/EnabledNotificationBooleanToggle";
 import OrchestrationNotificationLevelSelectInput from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
 import TeamsStepNotificationTeamsToolSelectInput
   from "components/workflow/plan/step/notifications/teams/TeamsStepNotificationTeamsToolSelectInput";
@@ -9,7 +9,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function MicrosoftTeamsStepNotificationEditorPanel(
+function MicrosoftTeamsNotificationEditorPanel(
   {
     teamsNotificationModel,
     setTeamsNotificationModel,
@@ -22,7 +22,7 @@ function MicrosoftTeamsStepNotificationEditorPanel(
   return (
     <Row>
       <Col xs={12}>
-        <PipelineStepNotificationBooleanToggle
+        <EnabledNotificationBooleanToggle
           model={teamsNotificationModel}
           setModel={setTeamsNotificationModel}
         />
@@ -54,9 +54,9 @@ function MicrosoftTeamsStepNotificationEditorPanel(
 );
 }
 
-MicrosoftTeamsStepNotificationEditorPanel.propTypes = {
+MicrosoftTeamsNotificationEditorPanel.propTypes = {
   teamsNotificationModel: PropTypes.object,
   setTeamsNotificationModel: PropTypes.func,
 };
 
-export default MicrosoftTeamsStepNotificationEditorPanel;
+export default MicrosoftTeamsNotificationEditorPanel;

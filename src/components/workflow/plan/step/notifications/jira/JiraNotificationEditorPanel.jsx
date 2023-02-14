@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineStepNotificationBooleanToggle from "components/workflow/plan/step/notifications/PipelineStepNotificationBooleanToggle";
+import EnabledNotificationBooleanToggle from "components/workflow/plan/step/notifications/EnabledNotificationBooleanToggle";
 import JiraStepNotificationJiraToolSelectInput
   from "components/workflow/plan/step/notifications/jira/JiraStepNotificationJiraToolSelectInput";
 import JiraPrioritySelectInput
@@ -23,7 +23,7 @@ import ConnectToToolMessage from "components/common/fields/inventory/messages/Co
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
-function JiraStepNotificationEditorPanel(
+function JiraNotificationEditorPanel(
   {
     jiraNotificationModel,
     setJiraNotificationModel,
@@ -66,7 +66,7 @@ function JiraStepNotificationEditorPanel(
   return (
     <Row>
       <Col xs={12}>
-        <PipelineStepNotificationBooleanToggle
+        <EnabledNotificationBooleanToggle
           model={jiraNotificationModel}
           setModel={setJiraNotificationModel}
         />
@@ -154,10 +154,10 @@ function JiraStepNotificationEditorPanel(
   );
 }
 
-JiraStepNotificationEditorPanel.propTypes = {
+JiraNotificationEditorPanel.propTypes = {
   jiraNotificationModel: PropTypes.object,
   setJiraNotificationModel: PropTypes.func,
   isApprovalStep: PropTypes.bool,
 };
 
-export default JiraStepNotificationEditorPanel;
+export default JiraNotificationEditorPanel;

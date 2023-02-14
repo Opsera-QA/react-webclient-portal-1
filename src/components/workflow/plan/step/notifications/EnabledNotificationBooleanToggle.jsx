@@ -2,7 +2,7 @@ import React  from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function PipelineStepNotificationBooleanToggle(
+function EnabledNotificationBooleanToggle(
   {
     fieldName,
     model,
@@ -19,15 +19,15 @@ function PipelineStepNotificationBooleanToggle(
   );
 }
 
-PipelineStepNotificationBooleanToggle.propTypes = {
+EnabledNotificationBooleanToggle.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-PipelineStepNotificationBooleanToggle.defaultProps = {
+EnabledNotificationBooleanToggle.defaultProps = {
   fieldName: "enabled"
 };
 
-export default PipelineStepNotificationBooleanToggle;
+export default EnabledNotificationBooleanToggle;

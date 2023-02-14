@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineStepNotificationBooleanToggle from "components/workflow/plan/step/notifications/PipelineStepNotificationBooleanToggle";
+import EnabledNotificationBooleanToggle from "components/workflow/plan/step/notifications/EnabledNotificationBooleanToggle";
 import OrchestrationNotificationLevelSelectInput from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
 import SlackStepNotificationToolInput
   from "components/workflow/plan/step/notifications/slack/SlackStepNotificationToolInput";
@@ -10,7 +10,7 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-function SlackStepNotificationEditorPanel(
+function SlackNotificationEditorPanel(
   {
     slackNotificationModel,
     setSlackNotificationModel,
@@ -23,7 +23,7 @@ function SlackStepNotificationEditorPanel(
   return (
     <Row>
       <Col xs={12}>
-        <PipelineStepNotificationBooleanToggle
+        <EnabledNotificationBooleanToggle
           model={slackNotificationModel}
           setModel={setSlackNotificationModel}
         />
@@ -63,9 +63,9 @@ function SlackStepNotificationEditorPanel(
   );
 }
 
-SlackStepNotificationEditorPanel.propTypes = {
+SlackNotificationEditorPanel.propTypes = {
   slackNotificationModel: PropTypes.object,
   setSlackNotificationModel: PropTypes.func,
 };
 
-export default SlackStepNotificationEditorPanel;
+export default SlackNotificationEditorPanel;

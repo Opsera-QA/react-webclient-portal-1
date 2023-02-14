@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineStepNotificationBooleanToggle from "components/workflow/plan/step/notifications/PipelineStepNotificationBooleanToggle";
+import EnabledNotificationBooleanToggle from "components/workflow/plan/step/notifications/EnabledNotificationBooleanToggle";
 import OrchestrationNotificationLevelSelectInput from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
 import GChatStepNotificationToolSelectInput
   from "components/workflow/plan/step/notifications/gchat/GChatStepNotificationToolSelectInput";
@@ -9,7 +9,7 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-function GChatStepNotificationEditorPanel(
+function GChatNotificationEditorPanel(
   {
     gChatNotificationModel,
     setGChatNotificationModel,
@@ -22,7 +22,7 @@ function GChatStepNotificationEditorPanel(
   return (
     <Row>
       <Col xs={12}>
-        <PipelineStepNotificationBooleanToggle
+        <EnabledNotificationBooleanToggle
           model={gChatNotificationModel}
           setModel={setGChatNotificationModel}
         />
@@ -54,9 +54,9 @@ function GChatStepNotificationEditorPanel(
 );
 }
 
-GChatStepNotificationEditorPanel.propTypes = {
+GChatNotificationEditorPanel.propTypes = {
   gChatNotificationModel: PropTypes.object,
   setGChatNotificationModel: PropTypes.func,
 };
 
-export default GChatStepNotificationEditorPanel;
+export default GChatNotificationEditorPanel;

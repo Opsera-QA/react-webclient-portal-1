@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineStepNotificationBooleanToggle from "components/workflow/plan/step/notifications/PipelineStepNotificationBooleanToggle";
+import EnabledNotificationBooleanToggle from "components/workflow/plan/step/notifications/EnabledNotificationBooleanToggle";
 import OrchestrationNotificationLevelSelectInput from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
 import ServiceNowStepNotificationToolSelectInput
   from "components/workflow/plan/step/notifications/servicenow/ServiceNowStepNotificationToolSelectInput";
@@ -10,7 +10,7 @@ import ConnectToToolMessage from "components/common/fields/inventory/messages/Co
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-function ServiceNowStepNotificationEditorPanel(
+function ServiceNowNotificationEditorPanel(
   {
     serviceNowNotificationModel,
     setServiceNowNotificationModel,
@@ -23,7 +23,7 @@ function ServiceNowStepNotificationEditorPanel(
   return (
     <Row>
       <Col xs={12}>
-        <PipelineStepNotificationBooleanToggle
+        <EnabledNotificationBooleanToggle
           model={serviceNowNotificationModel}
           setModel={setServiceNowNotificationModel}
         />
@@ -63,9 +63,9 @@ function ServiceNowStepNotificationEditorPanel(
   );
 }
 
-ServiceNowStepNotificationEditorPanel.propTypes = {
+ServiceNowNotificationEditorPanel.propTypes = {
   serviceNowNotificationModel: PropTypes.object,
   setServiceNowNotificationModel: PropTypes.func,
 };
 
-export default ServiceNowStepNotificationEditorPanel;
+export default ServiceNowNotificationEditorPanel;
