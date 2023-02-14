@@ -5,6 +5,8 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import KpiActions from "components/admin/kpi_identifiers/kpi.actions";
 import axios from "axios";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import {kpiIdentifierConstants} from "components/admin/kpi_identifiers/kpiIdentifier.constants";
 
 function KpiIdentifierFilter({ fieldName, filterModel, setFilterModel, setDataFunction, inline, className, textField, valueField, status, policySupport, manualDataEntry}) {
   const toastContext = useContext(DialogToastContext);
@@ -50,8 +52,7 @@ function KpiIdentifierFilter({ fieldName, filterModel, setFilterModel, setDataFu
 
   const loadKpis = async (cancelSource = cancelTokenSource) => {
     const response = await KpiActions.getAllKpisV2(getAccessToken, cancelSource, status, policySupport, manualDataEntry);
-
-    const kpis = response?.data?.data;
+    const kpis = DataParsingHelper.parseArray(response?.data?.data);
 
     if (isMounted?.current === true && kpis) {
       setKpis(kpis);

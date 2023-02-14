@@ -16,7 +16,10 @@ function ToolAttributesPanel({ toolData, setActiveTab }) {
     >
       <Row>
         <Col sm={12} lg={6}>
-          <OrganizationsField dataObject={toolData} fieldName={"organization"} />
+          <OrganizationsField
+            model={toolData}
+            fieldName={"organization"}
+          />
         </Col>
         <Col sm={12} lg={6}>
           <NameValueFieldBase dataObject={toolData} fieldName={"location"} icon={faBuilding} />

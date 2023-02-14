@@ -7,25 +7,15 @@ import { buttonLabelHelper } from "temp-library-components/helpers/label/button/
 import {
   customerPipelineTemplateCatalogActions
 } from "components/workflow/catalog/private/customerPipelineTemplateCatalog.actions";
-import useGetPolicyModelByName from "hooks/settings/organization_settings/policies/useGetPolicyModelByName";
-import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
 export default function PublishPipelineToPrivateCatalogButton(
   {
     disabled,
     className,
     buttonSize,
-    pipelineId,
-    roles,
+    publishPipelineModel,
   }) {
   const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
-  const {
-    isLoading,
-    policyModel,
-  } = useGetPolicyModelByName(policyConstants.POLICY_NAMES.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS);
-  const allowedRoles = DataParsingHelper.parseArray(policyModel?.getData("parameters.allowed_roles"), []);
   const {
     cancelTokenSource,
     toastContext,
@@ -39,8 +29,7 @@ export default function PublishPipelineToPrivateCatalogButton(
       await customerPipelineTemplateCatalogActions.publishPipelineToCustomerCatalog(
         getAccessToken,
         cancelTokenSource,
-        pipelineId,
-        roles,
+        publishPipelineModel,
       );
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
       toastContext.showSystemInformationToast("You have published a copy of this pipeline template in your organization's private catalog for others in your organization to use.  Overall settings of the pipeline are shared but no tools or activity logs have been duplicated in this process.");
@@ -57,7 +46,7 @@ export default function PublishPipelineToPrivateCatalogButton(
     <VanityButtonBase
       className={className}
       icon={faShareAll}
-      disabled={disabled || isLoading || SiteRoleHelper.isMemberOfAllowedSiteRoles(allowedRoles) !== true}
+      disabled={disabled}
       onClickFunction={handlePublishPipelineFunction}
       buttonSize={buttonSize}
       buttonState={buttonState}
@@ -70,9 +59,8 @@ export default function PublishPipelineToPrivateCatalogButton(
 }
 
 PublishPipelineToPrivateCatalogButton.propTypes = {
-  pipelineId: PropTypes.string,
+  publishPipelineModel: PropTypes.object,
   className: PropTypes.string,
   disabled: PropTypes.bool,
   buttonSize: PropTypes.string,
-  roles: PropTypes.array,
 };

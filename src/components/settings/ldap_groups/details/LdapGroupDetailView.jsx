@@ -131,7 +131,7 @@ function LdapGroupDetailView() {
       breadcrumbDestination={"ldapGroupDetailView"}
       metadata={ldapGroupMetaData}
       dataObject={ldapGroupData}
-      isLoading={isLoading}
+      isLoading={isLoading && ldapGroupData == null}
       navigationTabContainer={<GroupManagementSubNavigationBar activeTab={"groupViewer"} />}
       actionBar={getActionBar()}
       detailPanel={
@@ -141,6 +141,7 @@ function LdapGroupDetailView() {
           currentUserEmail={userData?.email}
           setLdapGroupData={setLdapGroupData}
           loadData={loadData}
+          isLoading={isLoading}
         />
       }
     />

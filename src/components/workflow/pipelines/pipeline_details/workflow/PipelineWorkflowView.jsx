@@ -92,7 +92,7 @@ PipelineWorkflowView.propTypes = {
   softLoading: PropTypes.bool,
   isQueued: PropTypes.bool,
   lastStep: PropTypes.any,
-  runCount: PipelineWorkflow.number,
+  runCount: PropTypes.number,
 };
 
 export default PipelineWorkflowView;

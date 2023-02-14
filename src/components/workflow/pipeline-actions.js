@@ -37,6 +37,7 @@ pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipel
       owner: pipelineFilterModel?.getFilterValue("owner"),
       tag: pipelineFilterModel?.getFilterValue("tag"),
       status: pipelineFilterModel?.getFilterValue("status"),
+      toolIdentifier: pipelineFilterModel?.getFilterValue("tool_identifier"),
       fields: fields,
     },
   };
@@ -302,11 +303,6 @@ pipelineActions.duplicate = async (pipelineId, getAccessToken) => {
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
   return response;
-};
-
-pipelineActions.duplicatePipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
-  const apiUrl = `/pipelines/${pipelineId}/duplicate/`;
-  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 pipelineActions.publish = async (pipelineId, getAccessToken) => {

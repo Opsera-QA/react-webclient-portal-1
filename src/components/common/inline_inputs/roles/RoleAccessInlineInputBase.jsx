@@ -17,6 +17,7 @@ function RoleAccessInlineInputBase(
     visible,
     helpComponent,
     className,
+    lostAccessRerouteRoute,
   }) {
   const toastContext = useContext(DialogToastContext);
   const {
@@ -32,6 +33,7 @@ function RoleAccessInlineInputBase(
           model={model}
           fieldName={fieldName}
           saveDataFunction={saveData}
+          lostAccessRerouteRoute={lostAccessRerouteRoute}
         />
       );
     }
@@ -81,6 +83,7 @@ RoleAccessInlineInputBase.propTypes = {
   visible: PropTypes.bool,
   saveData: PropTypes.func,
   className: PropTypes.string,
+  lostAccessRerouteRoute: PropTypes.string,
 };
 
 RoleAccessInlineInputBase.defaultProps = {

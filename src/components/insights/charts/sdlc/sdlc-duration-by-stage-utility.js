@@ -3,6 +3,11 @@ import { statusColors } from "components/insights/charts/charts-views";
 import {dataPointHelpers} from "../../../common/helpers/metrics/data_point/dataPoint.helpers";
 import {METRIC_QUALITY_LEVELS} from "../../../common/metrics/text/MetricTextBase";
 
+/**
+ * convert given minutes to human readable print out such as "17 sec" or "38 min, 2 sec" or "4 hrs, 12 min, 1 sec"
+ * @param {Number} mins 
+ * @returns {String} duration
+ */
 export const getTimeDisplay = (mins) => {
   const seconds = Number(mins * 60);
   const days = Math.floor(seconds / (3600 * 24));

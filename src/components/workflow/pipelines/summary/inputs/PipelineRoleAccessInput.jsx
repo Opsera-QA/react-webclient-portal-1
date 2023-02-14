@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
-import pipelineActions from "components/workflow/pipeline-actions";
+import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
 
 export default function PipelineRoleAccessInput(
   {
-    fieldName, 
+    fieldName,
     pipelineModel,
     setPipelineModel,
     loadData,
@@ -17,19 +18,15 @@ export default function PipelineRoleAccessInput(
   }) {
   const {
     userData,
-    cancelTokenSource,
-    getAccessToken,
     isSaasUser,
   } = useComponentStateReference();
+  const pipelineActions = usePipelineActions();
 
-  // TODO: Make update tool roles route
   const saveData = async (newRoles) => {
     pipelineModel.setData(fieldName, newRoles);
-    const response = await pipelineActions.updatePipelineV2(
-      getAccessToken,
-      cancelTokenSource,
+    const response = await pipelineActions.updatePipelineActionRoles(
       pipelineModel.getMongoDbId(),
-      pipelineModel.getPersistData(),
+      newRoles,
     );
     setPipelineModel({...pipelineModel});
     if (loadData) {
@@ -52,6 +49,7 @@ export default function PipelineRoleAccessInput(
       disabled={canEdit !== true}
       saveData={saveData}
       visible={visible}
+      lostAccessRerouteRoute={pipelineHelper.getManagementScreenLink()}
     />
   );
 }

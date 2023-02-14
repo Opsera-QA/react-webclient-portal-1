@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React from 'react';
+import useApiState from "hooks/general/api/useApiState";
 
 export const BUTTON_STATES = {
   READY: "ready",
@@ -7,16 +8,13 @@ export const BUTTON_STATES = {
   ERROR: "error",
 };
 export default function useButtonState() {
-  const [buttonState, setButtonState] = useState(BUTTON_STATES.READY);
-  const buttonStateFunctions = {};
-
-  buttonStateFunctions.setReadyState = () => setButtonState(BUTTON_STATES.READY);
-  buttonStateFunctions.setBusyState = () => setButtonState(BUTTON_STATES.BUSY);
-  buttonStateFunctions.setErrorState = () => setButtonState(BUTTON_STATES.ERROR);
-  buttonStateFunctions.setSuccessState = () => setButtonState(BUTTON_STATES.SUCCESS);
+  const {
+    apiState,
+    apiStateFunctions,
+  } = useApiState();
 
   return ({
-    buttonState: buttonState,
-    buttonStateFunctions: buttonStateFunctions,
+    buttonState: apiState,
+    buttonStateFunctions: apiStateFunctions,
   });
 }

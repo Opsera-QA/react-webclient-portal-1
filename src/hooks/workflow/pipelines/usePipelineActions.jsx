@@ -13,6 +13,31 @@ export default function usePipelineActions() {
     );
   };
 
+  pipelineActions.updatePipeline = async (
+    pipelineId,
+    pipeline,
+  ) => {
+    const apiUrl = `/pipelines/${pipelineId}/update/`;
+    return await apiService.handleApiPostRequest(
+      apiUrl,
+      pipeline,
+    );
+  };
+
+  pipelineActions.updatePipelineActionRoles = async (
+    pipelineId,
+    roles,
+  ) => {
+    const apiUrl = `/workflow/pipelines/${pipelineId}/roles`;
+    const postBody = {
+      roles: roles,
+    };
+    return await apiService.handleApiPatchRequest(
+      apiUrl,
+      postBody,
+    );
+  };
+
   pipelineActions.deletePipelineStepById = async (
     pipelineId,
     pipelineStepId,
@@ -52,6 +77,37 @@ export default function usePipelineActions() {
       apiUrl,
       urlParameters,
     );
+  };
+
+  pipelineActions.duplicatePipeline = async (
+    duplicatePipelineModel,
+  ) => {
+    const apiUrl = `/pipelines/${duplicatePipelineModel?.getMongoDbId()}/duplicate/`;
+    const postBody = duplicatePipelineModel.getPersistData();
+    return await apiService.handleApiPostRequest(
+      apiUrl,
+      postBody,
+    );
+  };
+
+  pipelineActions.getUniquePipelineOwnersForFilter = async () => {
+    const apiUrl = `/workflow/pipelines/filters/owners`;
+    return await apiService.handleApiGetRequest(apiUrl);
+  };
+
+  pipelineActions.getUniqueAppliedTagsForPipelineFilter = async () => {
+    const apiUrl = `/workflow/pipelines/filters/tags`;
+    return await apiService.handleApiGetRequest(apiUrl);
+  };
+
+  pipelineActions.getUniqueToolIdentifiersByPipelineUsageForFilter = async () => {
+    const apiUrl = `/workflow/pipelines/filters/tool-identifiers`;
+    return await apiService.handleApiGetRequest(apiUrl);
+  };
+
+  pipelineActions.getUniqueAppliedTagsForPipelineFilter = async (toolIdentifier) => {
+    const apiUrl = `/workflow/pipelines/filters/${toolIdentifier}`;
+    return await apiService.handleApiGetRequest(apiUrl);
   };
 
   return pipelineActions;

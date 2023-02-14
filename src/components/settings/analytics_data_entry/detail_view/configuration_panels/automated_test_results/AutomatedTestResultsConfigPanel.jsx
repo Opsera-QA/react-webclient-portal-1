@@ -17,7 +17,6 @@ function AutomatedTestResultsConfigPanel({ analyticsDataEntryModel, kpiConfigura
 
   const loadData = async () => {
     const configurationData = modelHelpers.getToolConfigurationModel(analyticsDataEntryModel.getData("data"), automatedTestResultsConfigMetadata);
-    console.log("configurationData: " + JSON.stringify(configurationData));
     setKpiConfigurationData({...configurationData});
   };
 

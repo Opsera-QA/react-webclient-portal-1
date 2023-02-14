@@ -21,8 +21,9 @@ function StandaloneSelectInput(
     className,
     onToggleFunction,
     hasErrorState,
-    lazyLoad,
     dropUp,
+    onClickFunction,
+    filterOption
   }) {
   const getPlaceholderText = () => {
     if (!Array.isArray(selectOptions)) {
@@ -37,25 +38,27 @@ function StandaloneSelectInput(
   };
 
   return (
-    <DropdownList
-      className={`${hasErrorState ? "select-input-error " : ""}${className}`}
-      data={selectOptions}
-      dataKey={valueField}
-      textField={textField}
-      groupBy={groupBy}
-      value={value}
-      filter={"contains"}
-      busy={busy}
-      defaultValue={defaultValue}
-      onCreate={onCreate}
-      onToggle={onToggleFunction}
-      dropUp={dropUp}
-      placeholder={getPlaceholderText()}
-      onChange={(newValue) => setDataFunction(newValue)}
-      disabled={disabled || (lazyLoad !== true && (!Array.isArray(selectOptions) || selectOptions.length === 0))}
-      onSearch={onSearchFunction}
-      allowCreate={allowCreate}
-    />
+    <div onClick={onClickFunction} className={`d-flex w-100 ${onClickFunction != null ?  " pointer" : ""}`}>
+      <DropdownList
+        className={`${hasErrorState ? "select-input-error " : ""}${className}`}
+        data={selectOptions}
+        dataKey={valueField}
+        textField={textField}
+        groupBy={groupBy}
+        value={value}
+        filter={filterOption}
+        busy={busy}
+        defaultValue={defaultValue}
+        onCreate={onCreate}
+        onToggle={onToggleFunction}
+        dropUp={dropUp}
+        placeholder={getPlaceholderText()}
+        onChange={(newValue) => setDataFunction(newValue)}
+        disabled={disabled || (onSearchFunction == null && (!Array.isArray(selectOptions) || selectOptions?.length === 0 || busy))}
+        onSearch={onSearchFunction}
+        allowCreate={allowCreate}
+      />
+    </div>
   );
 }
 
@@ -87,12 +90,14 @@ StandaloneSelectInput.propTypes = {
   noDataText: PropTypes.string,
   defaultValue: PropTypes.any,
   hasErrorState: PropTypes.bool,
-  lazyLoad: PropTypes.bool,
   dropUp: PropTypes.bool,
+  onClickFunction: PropTypes.func,
+  filterOption: PropTypes.string
 };
 
 StandaloneSelectInput.defaultProps = {
-  placeholderText: "Select One"
+  placeholderText: "Select One",
+  filterOption: "contains"
 };
 
 export default StandaloneSelectInput;

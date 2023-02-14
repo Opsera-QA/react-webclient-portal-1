@@ -25,6 +25,9 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import AnchoreSummaryReportPanel from "./anchore/AnchoreSummaryReportPanel";
 import BlackduckLogSummaryReportPanel 
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/blackduck/BlackduckLogSummaryReportPanel";
+import SnykSummaryReportPanel
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/snyk/SnykSummaryReportPanel";
+import AquasecLogSummaryReportPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/aquasec/AquasecLogSummaryReportPanel";
 
 function PipelineSummaryReportPanel(
   {
@@ -123,6 +126,14 @@ function PipelineSummaryReportPanel(
         return (
           <BlackduckLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK:
+        return (
+            <SnykSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
+        return (
+            <AquasecLogSummaryReportPanel pipelineTaskData={pipelineTaskData}/>
+        );        
       default:
         return (
           <PipelineTaskSummaryPanelBase

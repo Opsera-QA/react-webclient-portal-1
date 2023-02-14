@@ -20,6 +20,7 @@ import SfdcPipelineWizardFileUploadComponent
 import SfdcPipelineWizardPastRunComponent
   from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardPastRunComponent";
 import toolsActions from "components/inventory/tools/tools-actions";
+const DataParsingHelper = require("@opsera/persephone/helpers/data/dataParsing.helper");
 
 const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, pipeline, gitTaskData, setError }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -272,12 +273,25 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
 
   // TODO: Should this be moved to a helper class?
   const getCustomUnitTestSteps = (steps) => {
-    return steps.map((step) =>
-      (step?.tool
-        && (step?.tool?.configuration?.jobType === "SFDC VALIDATE PACKAGE XML"
-          || step?.tool?.configuration?.jobType === "SFDC UNIT TESTING"
-          || step?.tool?.configuration?.jobType === "SFDC DEPLOY"))
-      && step?.tool?.configuration?.sfdcUnitTestType === "RunSpecifiedTests" && step?.active ? step : '').filter(String);
+    return steps
+      .map((step) =>
+        step?.tool &&
+        (step?.tool?.configuration?.jobType === "SFDC VALIDATE PACKAGE XML" ||
+          step?.tool?.configuration?.jobType === "SFDC UNIT TESTING" ||
+          step?.tool?.configuration?.jobType === "SFDC DEPLOY") &&
+        (DataParsingHelper.safeObjectPropertyParser(
+          step,
+          "tool.configuration.sfdcUnitTestType",
+        ) === "RunSpecifiedTests" ||
+          DataParsingHelper.safeObjectPropertyParser(
+            step,
+            "tool.configuration.sfdcUnitTestType",
+          ) === "AutoIncludeTests") &&
+        step?.active
+          ? step
+          : "",
+      )
+      .filter(String);
   };
 
   const getBody = () => {

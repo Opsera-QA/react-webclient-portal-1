@@ -9,7 +9,7 @@ import TagsCloudBase from "components/common/fields/tags/cloud/TagsCloudBase";
 import Model from "core/data_model/model";
 import tagMetadata from "components/settings/tags/tag.metadata";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import TagUsagePanel from "components/settings/tags/tags_detail_view/TagUsagePanel";
+import TagUsagePanel from "components/settings/tags/details/TagUsagePanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {capitalizeFirstLetter, getSingularOrPluralString} from "components/common/helpers/string-helpers";
 import LoadingIcon from "components/common/icons/LoadingIcon";

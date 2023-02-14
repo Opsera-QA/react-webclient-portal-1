@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
 import PropTypes from "prop-types";
-import LazyLoadMultiSelectInputBase from "components/common/inputs/select/LazyLoadMultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
-import axios from "axios";
 import pipelineStepNotificationActions from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import _ from "lodash";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
 function ServiceNowBusinessServicesSelectInput({
   valueField,
@@ -71,7 +70,7 @@ function ServiceNowBusinessServicesSelectInput({
     }
   }, [serviceNowToolId]);
 
-  const loadBusinessServices = async (searchTerm, serviceNowToolId) => {
+  const loadBusinessServices = async (searchTerm) => {
     // if (searchTerm) {
       try {
         setIsLoading(true);
@@ -127,13 +126,8 @@ function ServiceNowBusinessServicesSelectInput({
     }
   };
 
-  const delayedSearchQuery = useCallback(
-    _.debounce((searchTerm, toolId) => loadBusinessServices(searchTerm, toolId), 600),
-    [],
-  );
-
   return (
-    <LazyLoadMultiSelectInputBase
+    <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
@@ -143,11 +137,10 @@ function ServiceNowBusinessServicesSelectInput({
       valueField={valueField}
       textField={textField}
       placeholderText={getPlaceholderText()}
-      // onToggleFunction={loadBusinessServices}
       disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, serviceNowToolId)}
-      useToggle={false}
+      supportSearchLookup={true}
+      loadDataFunction={loadBusinessServices}
     />
   );
 }

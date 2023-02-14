@@ -1,18 +1,13 @@
 import React, {
-  useContext,
   useEffect,
-  useRef,
   useState,
-  useCallback,
 } from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
-import { AuthContext } from "contexts/AuthContext";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { gitlabActions } from "components/inventory/tools/tool_details/tool_jobs/gitlab/gitlab.actions";
-import { hasStringValue } from "components/common/helpers/string-helpers";
-import LazyLoadSelectInputBase from "../../../../inputs/select/LazyLoadSelectInputBase";
-import _ from "lodash";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function GitlabRepositorySelectInput({
   fieldName,
@@ -25,49 +20,32 @@ function GitlabRepositorySelectInput({
   valueField,
   textField,
 }) {
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [gitlabRepositories, setGitlabRepositories] = useState([]);
   const [error, setError] = useState(undefined);
-  const isMounted = useRef(false);
-  const { getAccessToken } = useContext(AuthContext);
+  const [inEditMode, setInEditMode] = useState(false);
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    isMounted.current = true;
-    const cancelSource = axios.CancelToken.source();
-    setCancelTokenSource(cancelSource);
     setGitlabRepositories([]);
 
-    if (isMongoDbId(toolId) === true) {
-      loadData("", toolId, cancelSource).catch((error) => {
+    if (isMongoDbId(toolId) === true && inEditMode === true) {
+      loadData("").catch((error) => {
         throw error;
       });
     }
+  }, [toolId, inEditMode]);
 
-    return () => {
-      cancelSource.cancel();
-      isMounted.current = false;
-    };
-  }, [toolId]);
-
-  const loadData = async (searchTerm = "", currentToolId = toolId, cancelSource = cancelTokenSource) => {
+  const loadData = async (searchTerm = "") => {
     try {
       setError(undefined);
       setIsLoading(true);
-      let defaultSearchTerm = searchTerm;
-      const existingRepository = model?.getData("repositoryName") || model?.getData("gitRepository") || model?.getData("repository");
-      // console.log(existingRepository);
-      if ((defaultSearchTerm === "") && (hasStringValue(existingRepository) === true)) {
-        defaultSearchTerm = existingRepository;
-      }
       await loadGitlabRepositories(
-        defaultSearchTerm,
-        currentToolId,
-        cancelSource,
+        searchTerm,
       );
     } catch (error) {
       if (isMounted?.current === true) {
@@ -82,12 +60,10 @@ function GitlabRepositorySelectInput({
 
   const loadGitlabRepositories = async (
     searchTerm,
-    toolId,
-    cancelSource = cancelTokenSource,
   ) => {
     const response = await gitlabActions.getRepositoriesFromGitlabInstanceV3(
       getAccessToken,
-      cancelSource,
+      cancelTokenSource,
       searchTerm,
       toolId,
     );
@@ -102,13 +78,49 @@ function GitlabRepositorySelectInput({
     return "The first 100 repositories will be loaded by default, please enter at least 3 characters to search for repositories by name.";
   };
 
-  const delayedSearchQuery = useCallback(
-    _.debounce((searchTerm, toolId) => loadData(searchTerm, toolId), 600),
-    [],
-  );
+  const getGitLabTextField = (repo) => {
+    if (typeof textField === "function") {
+      return textField(repo);
+    }
+
+    const parsedRepoString = DataParsingHelper.parseString(repo);
+
+    if(parsedRepoString) {
+      return parsedRepoString;
+    }
+
+    const parsedRepoObject = DataParsingHelper.parseObject(repo);
+
+    if (!parsedRepoObject) {
+      return repo;
+    }
+
+    const repoName = DataParsingHelper.parseString(parsedRepoObject.name);
+    const repoFullName = DataParsingHelper.parseString(parsedRepoObject.nameSpacedPath);
+    const repoId = DataParsingHelper.parseString(repo?.id);
+
+    if (repoName && repoFullName) {
+      return (`${repoName} (${repoFullName})`);
+    }
+
+    if (repoFullName) {
+      return repoFullName;
+    }
+
+    if (repoName && repoId) {
+      return (`${repoName} (${repoId})`);
+    }
+
+
+    if (repoName) {
+      return (`${repoName}`);
+    }
+    
+    return repo;
+  };
 
   return (
-    <LazyLoadSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={model}
       helpTooltipText={getDataPullLimitMessage()}
@@ -118,13 +130,16 @@ function GitlabRepositorySelectInput({
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
       valueField={valueField}
-      textField={textField}
+      textField={getGitLabTextField}
       disabled={disabled}
       singularTopic={"Gitlab Repository"}
       pluralTopic={"Gitlab Repositories"}
       error={error}
-      onSearchFunction={(searchTerm) => delayedSearchQuery(searchTerm, toolId)}
-      useToggle={true}
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
+      externalCacheToolId={toolId}
+      loadDataFunction={loadData}
+      supportSearchLookup={true}
     />
   );
 }

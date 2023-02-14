@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import RoleRestrictedToolByIdentifierInputBase
   from "components/common/list_of_values_input/tools/RoleRestrictedToolByIdentifierInputBase";
 
-// TODO: Add support for filtering list
 function ProjectMappingToolSelectInput({visible, model, setModel, disabled, fieldName}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData(fieldName, selectedOption?._id);
-    newModel.setData("tool_prop", "");
-    newModel.setData("key", "");
+    newModel.setDefaultValue("tool_prop");
+    newModel.setDefaultValue("key");
+    newModel.setDefaultValue("keyPath");
     setModel({...newModel});
   };
 

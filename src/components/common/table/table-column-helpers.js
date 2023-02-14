@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import {
   faCheckCircle,
   faCircle,
@@ -45,6 +45,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import AccessRoleIconBase from "components/common/fields/access/icon/AccessRoleIconBase";
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
 import CountdownUntilDateFieldBase from "components/common/fields/date/countdown/CountdownUntilDateFieldBase";
+import { hoursToMinutes } from "date-fns";
 
 export const getDataObjectFromTableRow = (row) => {
   try {
@@ -86,6 +87,29 @@ export const getTableTextColumn = (field, className) => {
   };
 };
 
+/**
+ * given a value in hours, display the time duration in format such as "37 min" or "2 hr, 17 min, 1 sec", see getTimeDisplay for more details
+ * @param {String} field
+ * @param {String} className
+ * @returns table column definition
+ */
+export const getTableHourDurationTextColumn = (field, className) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    class: className ? className : undefined,
+    Cell: function parseText(row) {
+      return getTimeDisplay(hoursToMinutes(row?.value));
+    },
+  };
+};
+
+/**
+ * given a value in minutes, display the time duration in format such as "25 sec" or "45 min, 17 sec", see getTimeDisplay for more details
+ * @param {String} field
+ * @param {String} className
+ * @returns table column definition
+ */
 export const getTableDurationTextColumn = (field, className) => {
   if (className) {
     return {
@@ -110,10 +134,19 @@ export const getTableDurationTextColumn = (field, className) => {
   };
 };
 
-export const getOwnerNameField = (headerText = "Owner Name") => {
+export const getOwnerNameField = (headerText = "Owner") => {
   return {
     Header: headerText,
     accessor: "owner_name",
+    class: "no-wrap-inline",
+  };
+};
+
+export const getToolIdentifierNameField = (headerText = "Tool Identifier") => {
+  return {
+    Header: headerText,
+    accessor: "tool_identifier_name",
+    class: "no-wrap-inline",
   };
 };
 
@@ -250,7 +283,11 @@ export const getTableDateColumn = (field, className) => {
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function parseDate(row) {
-      return row.value ? format(new Date(row.value), "yyyy-MM-dd") : "";
+      return row.value
+        ? DateFormatHelper.formatDateAsTimestampWithoutSeconds(
+            new Date(row.value),
+          )
+        : "";
     },
     class: className ? className : "no-wrap-inline",
   };
@@ -266,7 +303,9 @@ export const getTableDateTimeColumn = (
     accessor: getCustomTableAccessor(field),
     Cell: function parseDateTime(row) {
       return row.value
-        ? format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a")
+        ? DateFormatHelper.formatDateAsTimestampWithoutSeconds(
+            new Date(row.value),
+          )
         : emptyValuePlaceholder;
     },
     class: className ? className : "no-wrap-inline",
@@ -283,7 +322,9 @@ export const getTableCreatedAtColumn = (
     accessor: "createdAt",
     Cell: function parseDateTime(row) {
       return row.value
-        ? format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a")
+        ? DateFormatHelper.formatDateAsTimestampWithoutSeconds(
+            new Date(row.value),
+          )
         : emptyValuePlaceholder;
     },
     class: className,

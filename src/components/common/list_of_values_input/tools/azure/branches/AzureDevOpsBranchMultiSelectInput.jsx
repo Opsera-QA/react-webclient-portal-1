@@ -12,7 +12,8 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import _ from "lodash";
-import LazyLoadMultiSelectInputBase from "../../../../inputs/select/LazyLoadMultiSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function AzureDevOpsBranchSelectInput({
   fieldName,
@@ -24,40 +25,30 @@ function AzureDevOpsBranchSelectInput({
   clearDataFunction,
   repositoryId,
 }) {
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [azureBranches, setAzureBranches] = useState([]);
   const [error, setError] = useState(undefined);
-  const isMounted = useRef(false);
-  const { getAccessToken } = useContext(AuthContext);
+  const {
+    cancelTokenSource,
+    isMounted,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    isMounted.current = true;
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
     setAzureBranches([]);
     setError(undefined);
 
     if (isMongoDbId(toolId) === true && hasStringValue(repositoryId) === true) {
-      loadData(source).catch((error) => {
+      loadData().catch((error) => {
         throw error;
       });
     }
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [toolId, repositoryId]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (searchTerm = "") => {
     try {
       setIsLoading(true);
-      await loadAzureBranches("", toolId, repositoryId, cancelSource);
+      await loadAzureBranches(searchTerm);
     } catch (error) {
       setError(error);
     } finally {
@@ -67,13 +58,10 @@ function AzureDevOpsBranchSelectInput({
 
   const loadAzureBranches = async (
     searchTerm,
-    toolId,
-    repositoryId,
-    cancelSource = cancelTokenSource,
   ) => {
     const response = await azureActions.getBranchesFromAzureInstanceV2(
       getAccessToken,
-      cancelSource,
+      cancelTokenSource,
       toolId,
       repositoryId,
       searchTerm,
@@ -85,17 +73,8 @@ function AzureDevOpsBranchSelectInput({
     }
   };
 
-  const delayedSearchQuery = useCallback(
-    _.debounce(
-      (searchTerm, repositoryId, toolId) =>
-        loadAzureBranches(searchTerm, toolId, repositoryId),
-      600,
-    ),
-    [],
-  );
-
   return (
-    <LazyLoadMultiSelectInputBase
+    <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
@@ -107,9 +86,8 @@ function AzureDevOpsBranchSelectInput({
       error={error}
       singularTopic={"Azure Branch"}
       pluralTopic={"Azure Branches"}
-      onSearchFunction={(searchTerm) =>
-        delayedSearchQuery(searchTerm, repositoryId, toolId)
-      }
+      supportSearchLookup={true}
+      loadDataFunction={loadData}
     />
   );
 }

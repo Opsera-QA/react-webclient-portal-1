@@ -1,20 +1,33 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
-import pipelineStepNotificationActions
-  from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
 import JiraPrimaryUserField from "components/common/fields/inventory/tools/jira/JiraPrimaryUserField";
 import JiraSecondaryUsersField from "components/common/fields/inventory/tools/jira/JiraSecondaryUsersField";
+import {jiraActions} from "components/common/list_of_values_input/tools/jira/jira.actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function JiraUserFields({ dataObject, jiraToolId, jiraProjectKey, primaryUserField, secondaryUsersField }) {
-  const toastContext = useContext(DialogToastContext);
-  const {getAccessToken} = useContext(AuthContext);
+function JiraUserFields(
+  {
+    dataObject,
+    jiraToolId,
+    jiraProjectKey,
+    primaryUserField,
+    secondaryUsersField,
+  }) {
   const [jiraUsers, setJiraUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const {
+    cancelTokenSource,
+    getAccessToken,
+    toastContext,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    loadData();
+    if (isMongoDbId(jiraToolId) === true && hasStringValue(jiraProjectKey) === true) {
+      loadData();
+    }
   }, [jiraToolId, jiraProjectKey]);
 
   const loadData = async () => {
@@ -29,13 +42,16 @@ function JiraUserFields({ dataObject, jiraToolId, jiraProjectKey, primaryUserFie
   };
 
   const loadJiraUsers = async () => {
-    if (jiraToolId !== "" && jiraProjectKey !== "") {
-      const response = await pipelineStepNotificationActions.getJiraProjectUsers2(jiraToolId, jiraProjectKey, getAccessToken);
-      const jiraArray = response?.data?.message;
-      if (Array.isArray(jiraArray)) {
-        setJiraUsers(jiraArray);
+      const response = await jiraActions.getJiraProjectUsersV2(
+        getAccessToken,
+        cancelTokenSource,
+        jiraToolId,
+        jiraProjectKey,
+      );
+      const users = DataParsingHelper.parseNestedArray(response, "data.data");
+      if (Array.isArray(users)) {
+        setJiraUsers(users);
       }
-    }
   };
 
   return (

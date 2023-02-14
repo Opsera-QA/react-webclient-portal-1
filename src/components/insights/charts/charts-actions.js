@@ -246,133 +246,7 @@ chartsActions.getGithubTotalCommitsMetrics = async (
         : dashboardTags?.length > 0
         ? dashboardTags
         : tags,
-    projectTags: dashboardFilters,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
-
     dashboardOrgs: dashboardOrgs,
-  };
-
-  return await baseActions.handleNodeAnalyticsApiPostRequest(
-    getAccessToken,
-    cancelTokenSource,
-    apiUrl,
-    postBody,
-  );
-};
-
-chartsActions.getGithubCommitFrequency = async ({
-  getAccessToken,
-  cancelTokenSource,
-  kpiConfiguration,
-}) => {
-  const apiUrl = "/analytics/github/v1/githubCommitFrequency";
-
-  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
-
-  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
-
-  const tags = getTagsFromKpiConfiguration(kpiConfiguration);
-
-  const finalTags = !useKpiTags || !tags ? [] : tags;
-
-  const postBody = {
-    ...(date?.start && { startDate: date.start }),
-    ...(date?.end && { endDate: date.end }),
-    tags: finalTags,
-  };
-
-  return await baseActions.handleNodeAnalyticsApiPostRequest(
-    getAccessToken,
-    cancelTokenSource,
-    apiUrl,
-    postBody,
-  );
-};
-
-chartsActions.githubMergedPullRequestAverageTime = async (
-  kpiConfiguration,
-  getAccessToken,
-  cancelTokenSource,
-  dashboardTags,
-  dashboardOrgs,
-  dashboardFilters,
-) => {
-  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
-  const apiUrl = "/analytics/github/v1/githubMergedPullRequestAverageTime";
-  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
-  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
-  const useDashboardTags =
-    getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
-
-  if (!useKpiTags) {
-    tags = null;
-  }
-  if (!useDashboardTags) {
-    dashboardTags = null;
-    dashboardOrgs = null;
-  }
-
-  const postBody = {
-    startDate: date.start,
-    endDate: date.end,
-    tags:
-      tags && dashboardTags
-        ? tags.concat(dashboardTags)
-        : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
-    dashboardOrgs: dashboardOrgs,
-    dashboardFilters: dashboardFilters,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
-  };
-
-  return await baseActions.handleNodeAnalyticsApiPostRequest(
-    getAccessToken,
-    cancelTokenSource,
-    apiUrl,
-    postBody,
-  );
-};
-
-chartsActions.githubOpenPullRequestAverageTime = async (
-  kpiConfiguration,
-  getAccessToken,
-  cancelTokenSource,
-  dashboardTags,
-  dashboardOrgs,
-  dashboardFilters,
-) => {
-  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
-  const apiUrl = "/analytics/github/v1/githubOpenPullRequestAverageTime";
-  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
-  let hierarchyFilters =
-    getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
-  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
-  const useDashboardTags =
-    getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
-
-  if (!useKpiTags) {
-    tags = null;
-  }
-  if (!useDashboardTags) {
-    dashboardTags = null;
-    dashboardOrgs = null;
-  }
-
-  const postBody = {
-    startDate: date.start,
-    endDate: date.end,
-    tags:
-      tags && dashboardTags
-        ? tags.concat(dashboardTags)
-        : dashboardTags?.length > 0
-        ? dashboardTags
-        : tags,
-    dashboardOrgs: dashboardOrgs,
-    dashboardFilters: dashboardFilters,
-    hierarchyFilters: useKpiTags ? hierarchyFilters : null,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -465,8 +339,9 @@ chartsActions.getGitCustodianTableData = async (
       service: filterModel.getFilterValue("service")
         ? filterModel.getFilterValue("service")
         : [],
-      status: filterModel.getFilterValue("status")
-        ? filterModel.getFilterValue("status")
+      // status: filterModel.getFilterValue('status') ? filterModel.getFilterValue('status') : [],
+      status: tableFilterDto.getFilterValue("status")
+        ? tableFilterDto.getFilterValue("status")
         : [],
       email: filterModel.getFilterValue("email")
         ? filterModel.getFilterValue("email")
@@ -1006,7 +881,6 @@ chartsActions.getGithubListOfRepositories = async (
   cancelTokenSource,
   kpiConfiguration,
   dashboardTags,
-  dashboardFilters,
   dashboardOrgs,
   tableFilterDto,
 ) => {

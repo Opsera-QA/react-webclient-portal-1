@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Card, Col, Row } from "react-bootstrap";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -7,25 +7,26 @@ import ProjectMappingToolIdentifierSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolIdentifierSelectInput";
 import ProjectMappingWorkspaceSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingWorkspaceSelectInput";
-import ProjectRepositorySelectInput
-  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectRepositorySelectInput";
+import ProjectDataMappingGitlabRepositorySelectInput
+  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingGitlabRepositorySelectInput";
 import ProjectMappingToolSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
 import SonarProjectSelectInput
   from "../../../../common/list_of_values_input/settings/data_tagging/projects/SonarProjectSelectInput";
 import TagManager from "components/common/inputs/tags/TagManager";
-import axios from "axios";
 import JenkinsRegistryToolJobSelectInput
   from "components/common/list_of_values_input/tools/jenkins/tool_jobs/JenkinsRegistryToolJobSelectInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
-import JiraProjectSelectInput from "components/common/list_of_values_input/tools/jira/projects/JiraProjectSelectInput";
 import JiraCustomTagFieldSelectInput from "components/common/list_of_values_input/tools/jira/custom_fields/JiraCustomTagFieldSelectInput";
 import JiraCustomFieldMappingSelectInput from "components/common/list_of_values_input/tools/jira/custom_fields/JiraCustomFieldMappingSelectInput";
-
-const determineKeyFromFullPath = keyPath => {
-  const splitPath = keyPath.split('/');
-  return splitPath[splitPath.length - 1];
-};
+import AnalyticsDataMappingEditWarningMessage
+  from "components/settings/data_mapping/AnalyticsDataMappingEditWarningMessage";
+import ProjectDataMappingGithubRepositorySelectInput
+  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingGithubRepositorySelectInput";
+import ProjectDataMappingJiraProjectSelectInput
+  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingJiraProjectSelectInput";
+import ProjectDataMappingBitbucketRepositorySelectInput
+  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectDataMappingBitbucketRepositorySelectInput";
 
 function ProjectDataMappingEditorPanel(
   {
@@ -33,38 +34,6 @@ function ProjectDataMappingEditorPanel(
     setProjectDataMappingModel,
     handleClose,
   }) {
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const setDataHandler = (id, selectedOption) => {
-    projectDataMappingModel.setData('key', determineKeyFromFullPath(selectedOption?.nameSpacedPath));
-    projectDataMappingModel.setData('keyPath', selectedOption?.nameSpacedPath);
-    setProjectDataMappingModel({ ...projectDataMappingModel });
-  };
-
-  const setJiraDataHandler = (fieldName, selectedOption) => {
-    const newProjectDataMappingModel = { ...projectDataMappingModel };
-    newProjectDataMappingModel.setData('key', selectedOption?.name);
-    newProjectDataMappingModel.setData('projectKey', selectedOption?.key);
-    newProjectDataMappingModel.setDefaultValue("value");
-    newProjectDataMappingModel.setDefaultValue("customTagFields");
-    setProjectDataMappingModel({ ...newProjectDataMappingModel });
-  };
 
   // TODO: Rewrite into switch statement or sub panels
   const getDynamicFields = () => {
@@ -102,7 +71,7 @@ function ProjectDataMappingEditorPanel(
             />
           </Col>
           <Col lg={12}>
-            <ProjectRepositorySelectInput
+            <ProjectDataMappingBitbucketRepositorySelectInput
               model={projectDataMappingModel}
               setModel={setProjectDataMappingModel}
             />
@@ -113,11 +82,9 @@ function ProjectDataMappingEditorPanel(
     if (projectDataMappingModel?.getData("tool_identifier") === "gitlab") {
       return (
         <Col lg={12}>
-          <ProjectRepositorySelectInput
+          <ProjectDataMappingGitlabRepositorySelectInput
             model={projectDataMappingModel}
             setModel={setProjectDataMappingModel}
-            setDataFunction={setDataHandler}
-            valueField="nameSpacedPath"
           />
         </Col>
       );
@@ -125,7 +92,7 @@ function ProjectDataMappingEditorPanel(
     if (projectDataMappingModel?.getData("tool_identifier") === "github") {
       return (
         <Col lg={12}>
-          <ProjectRepositorySelectInput
+          <ProjectDataMappingGithubRepositorySelectInput
             model={projectDataMappingModel}
             setModel={setProjectDataMappingModel}
           />
@@ -135,13 +102,9 @@ function ProjectDataMappingEditorPanel(
     if (projectDataMappingModel?.getData("tool_identifier") === "jira") {
       return (
         <Col lg={12}>
-          <JiraProjectSelectInput
+          <ProjectDataMappingJiraProjectSelectInput
             model={projectDataMappingModel}
             setModel={setProjectDataMappingModel}
-            jiraToolId={projectDataMappingModel.getData("tool_id")}
-            valueField={"name"}
-            fieldName={"key"}
-            setDataFunction={setJiraDataHandler}
           />
         </Col>
       );
@@ -178,14 +141,7 @@ function ProjectDataMappingEditorPanel(
   const getWarningMessage = () => {
     if (projectDataMappingModel?.isNew() !== true) {
       return (
-        <div className="m-2">
-          <Card>
-            <Card.Text className={"mt-3 mb-3"} style={{ display: "flex", justifyContent: "center" }}>
-              <strong>WARNING: </strong> Editing an active Analytics Data Mapping will result in loss of filtering
-              functionality from data previously mapped with this information
-            </Card.Text>
-          </Card>
-        </div>
+        <AnalyticsDataMappingEditWarningMessage />
       );
     }
   };
@@ -199,7 +155,7 @@ function ProjectDataMappingEditorPanel(
       model={projectDataMappingModel}
       setModel={setProjectDataMappingModel}
       handleClose={handleClose}
-      className={"mx-3 my-2"}
+      className={"px-3 pt-1 pb-3"}
     >
       {getWarningMessage()}
       <Row>

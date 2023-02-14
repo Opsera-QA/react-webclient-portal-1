@@ -47,6 +47,7 @@ export default function CustomerPipelineTemplateRoleAccessInput(
       visible={visible}
       saveData={saveData}
       noDataMessage={getNoDataMessage()}
+      lostAccessRerouteRoute={"/workflow/catalog/library"}
     />
   );
 }

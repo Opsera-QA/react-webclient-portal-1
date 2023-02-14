@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState, useCallback} from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { AuthContext } from "contexts/AuthContext";
@@ -6,6 +6,7 @@ import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {githubActions} from "components/inventory/tools/tool_details/tool_jobs/github/github.actions";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
+import _ from "lodash";
 
 function GithubBranchMultiSelectInput(
   {
@@ -87,6 +88,9 @@ function GithubBranchMultiSelectInput(
       disabled={disabled}
       placeholderText={placeholderText}
       errorMessage={errorMessage}
+      singularTopic={"Branch"}
+      pluralTopic={"Branches"}
+      loadDataFunction={loadData}
     />
   );
 }

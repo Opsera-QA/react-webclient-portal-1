@@ -1,13 +1,10 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState, useCallback} from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import pipelineActions from "components/workflow/pipeline-actions";
 import axios from "axios";
 import {bitbucketActions} from "components/inventory/tools/tool_details/tool_jobs/bitbucket/bitbucket.actions";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
-import {parseError} from "components/common/helpers/error-helpers";
 
 // TODO: Rename BitbucketWorkspaceSelectInput, change "gitToolId" to "toolId"
 function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, className}) {
@@ -16,6 +13,7 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
+  const [inEditMode, setInEditMode] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -29,7 +27,7 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
     setError(undefined);
     setWorkspaces([]);
 
-    if (isMongoDbId(gitToolId) === true) {
+    if (isMongoDbId(gitToolId) === true && inEditMode === true) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -41,10 +39,11 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
       source.cancel();
       isMounted.current = false;
     };
-  }, [gitToolId]);
+  }, [gitToolId, inEditMode]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
+      setError(undefined);
       setIsLoading(true);
       await getWorkspaces(cancelSource);
     }
@@ -85,8 +84,14 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
       textField={"name"}
       error={error}
       clearDataFunction={clearDataFunction}
-      disabled={disabled || isLoading || workspaces.length === 0}
+      disabled={disabled}
       className={className}
+      externalCacheToolId={gitToolId}
+      requireUserEnable={true}
+      onEnableEditFunction={() => setInEditMode(true)}
+      singularTopic={"Workspace"}
+      pluralTopic={"Workspaces"}
+      loadDataFunction={loadData}
     />
   );
 }

@@ -8,7 +8,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { format } from "date-fns";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import { defaultConfig, getColorByData, assignStandardColors,
          adjustBarWidth } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
@@ -87,7 +87,7 @@ function SonarLinesToCoverBarChart({ kpiConfiguration, setKpiConfiguration, dash
         onClick={() => setShowModal(true)}
         tooltip={({ indexValue, value, color, data }) => <ChartTooltip 
                 titles = {["Timestamp", "Uncovered Lines", "Project Key"]}
-                values = {[format(new Date(indexValue), "yyyy-MM-dd', 'hh:mm a"), value, data.key]}
+                values = {[DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(indexValue)), value, data.key]}
                 style = {false}
                 color = {color} />}
           />

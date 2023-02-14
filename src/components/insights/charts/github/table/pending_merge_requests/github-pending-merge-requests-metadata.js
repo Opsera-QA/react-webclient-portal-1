@@ -50,6 +50,10 @@ const githubPendingMergeRequestsMetadata = {
         label: "Opened At",
         id: "mrCompletionTimeTimeStamp"
       },
+      {
+        label: "Duration",
+        id: "MergeRequestTimeTaken"
+      },
     ],
     newObjectFields: {
       pageSize: 5,

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
-import LazyLoadMultiSelectInputBase from "components/common/inputs/select/LazyLoadMultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import pipelineStepNotificationActions
   from "components/workflow/plan/step/notifications/pipelineStepNotification.actions";
@@ -8,6 +7,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import _ from "lodash";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 
 function ServiceNowAssignmentGroupSelectInput(
   {
@@ -67,7 +67,7 @@ function ServiceNowAssignmentGroupSelectInput(
     setGroups([]);
     setError("");
     if (isMongoDbId(serviceNowToolId) === true) {
-      loadGroups("", serviceNowToolId).catch((error) => {
+      loadGroups("").catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -75,7 +75,7 @@ function ServiceNowAssignmentGroupSelectInput(
     }
   }, [serviceNowToolId]);
 
-  const loadGroups = async (searchTerm, serviceNowToolId) => {
+  const loadGroups = async (searchTerm) => {
     // if (searchTerm) {
     try {
       setIsLoading(true);
@@ -133,13 +133,8 @@ function ServiceNowAssignmentGroupSelectInput(
     }
   };
 
-  const delayedSearchQuery = useCallback(
-    _.debounce((searchTerm, toolId) => loadGroups(searchTerm, toolId), 600),
-    [],
-  );
-
   return (
-    <LazyLoadMultiSelectInputBase
+    <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
@@ -149,11 +144,10 @@ function ServiceNowAssignmentGroupSelectInput(
       valueField={valueField}
       textField={textField}
       placeholderText={getPlaceholderText()}
-      // onToggleFunction={loadBusinessServices}
       disabled={disabled || serviceNowToolId === "" || !serviceNowToolId}
       onChange={(newValue) => validateAndSetData(field.id, newValue)}
-      onSearchFunction={(searchTerm) => {console.log(searchTerm); delayedSearchQuery(searchTerm, serviceNowToolId);}}
-      useToggle={false}
+      loadDataFunction={loadGroups}
+      supportSearchLookup={true}
       error={error}
     />
   );

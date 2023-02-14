@@ -6,6 +6,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import CopyToClipboardButton from "components/common/buttons/clipboard/CopyToClipboardButton";
 import CheckboxInputBase from "../../../../../../common/inputs/boolean/CheckboxInputBase";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
+import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 
 // TODO: Refactor
 function EventBasedTriggerDetails({
@@ -14,7 +15,7 @@ function EventBasedTriggerDetails({
   setModel,
   savePipelineFunction,
 }) {
-  const apiUrl = process.env.REACT_APP_OPSERA_API_SERVER_URL;
+  const apiUrl = NODE_API_ORCHESTRATOR_SERVER_URL;
   const [triggerUrl, setTriggerUrl] = useState("");
 
   useEffect(() => {

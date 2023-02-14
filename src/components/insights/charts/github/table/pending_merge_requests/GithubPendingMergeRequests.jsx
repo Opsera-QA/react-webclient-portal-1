@@ -14,13 +14,19 @@ import {
   getLimitedTableTextColumn,
   getTableDateTimeColumn,
   getTableTextColumn,
+  getTableHourDurationTextColumn,
 } from "components/common/table/table-column-helpers";
 import CustomTable from "../../../../../common/table/CustomTable";
 import { getField } from "components/common/metadata/metadata-helpers";
-import GithubPendingMergeRequestHelpDocumentation
-  from "../../../../../common/help/documentation/insights/charts/github/GithubPendingMergeRequestHelpDocumentation";
+import GithubPendingMergeRequestHelpDocumentation from "../../../../../common/help/documentation/insights/charts/github/GithubPendingMergeRequestHelpDocumentation";
 
-function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function GithubPendingMergeRequests({
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  setKpis,
+}) {
   const fields = githubPendingMergeRequestsMetadata.fields;
   const [activeTab, setActiveTab] = useState();
   const { getAccessToken } = useContext(AuthContext);
@@ -30,7 +36,11 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({ ...githubPendingMergeRequestsMetadata.newObjectFields  }, githubPendingMergeRequestsMetadata, false)
+    new Model(
+      { ...githubPendingMergeRequestsMetadata.newObjectFields },
+      githubPendingMergeRequestsMetadata,
+      false,
+    ),
   );
 
   const noDataMessage = "No Data is available for this chart at this time";
@@ -44,9 +54,9 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
       getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
       getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
       getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
-      getTableTextColumn(getField(fields, "mergeRequestUrl")),
+      getTableHourDurationTextColumn(getField(fields, "MergeRequestTimeTaken")),
     ],
-    []
+    [],
   );
 
   useEffect(() => {
@@ -58,7 +68,7 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
     setCancelTokenSource(source);
 
     isMounted.current = true;
-    if(activeTab){
+    if (activeTab) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -72,20 +82,31 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
+  const loadData = async (
+    cancelSource = cancelTokenSource,
+    filterDto = tableFilterDto,
+  ) => {
     try {
       setIsLoading(true);
       let dashboardTags =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+        ]?.value;
       let dashboardOrgs =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-          ?.value;
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations",
+          )
+        ]?.value;
       let dashboardFilters =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "hierarchyFilters")]
-          ?.value;
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "hierarchyFilters",
+          )
+        ]?.value;
       let projectName;
-      if(!filterDto.getData('search')){
-        projectName =filterDto.getData('projectName') ;
+      if (!filterDto.getData("search")) {
+        projectName = filterDto.getData("projectName");
       }
 
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
@@ -106,12 +127,16 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
         undefined,
         projectName,
       );
-      let dataObject = response?.data?.data[0]?.githubPendingMergeRequests?.data;
+      let dataObject =
+        response?.data?.data[0]?.githubPendingMergeRequests?.data;
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", response?.data?.data[0]?.githubPendingMergeRequests?.count);
+        newFilterDto.setData(
+          "totalCount",
+          response?.data?.data[0]?.githubPendingMergeRequests?.count,
+        );
         setTableFilterDto({ ...newFilterDto });
       }
     } catch (error) {
@@ -126,28 +151,31 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
     }
   };
   const getVerticalTabContainer = () => {
-    return <GithubPendingMergeRequestVerticalTabContainer
+    return (
+      <GithubPendingMergeRequestVerticalTabContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
         dashboardData={dashboardData}
         setKpis={setKpis}
         metric={metrics}
         handleTabClick={handleTabClick}
-        activeTab={activeTab}/>;
+        activeTab={activeTab}
+      />
+    );
   };
 
   const getTabContentContainer = () => {
     return (
-        <VanitySetTabViewContainer className={"mb-3"}>
-          <FilterContainer
-              filterDto={tableFilterDto}
-              setFilterDto={setTableFilterDto}
-              body={getBody()}
-              isLoading={isLoading}
-              loadData={loadData}
-              supportSearch={true}
-          />
-        </VanitySetTabViewContainer>
+      <VanitySetTabViewContainer className={"mb-3"}>
+        <FilterContainer
+          filterDto={tableFilterDto}
+          setFilterDto={setTableFilterDto}
+          body={getBody()}
+          isLoading={isLoading}
+          loadData={loadData}
+          supportSearch={true}
+        />
+      </VanitySetTabViewContainer>
     );
   };
   const getBody = () => {
@@ -166,28 +194,30 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
 
   const handleTabClick = async (projectName) => {
     let newFilterDto = tableFilterDto;
-    newFilterDto.setData("projectName",projectName);
+    newFilterDto.setData("projectName", projectName);
     newFilterDto.setDefaultValue("search");
     setTableFilterDto({ ...newFilterDto });
     // if no projectName then right side table will be empty and api will not be called
-    if(!projectName){
+    if (!projectName) {
       setMetrics([]);
     } else {
       setActiveTab(projectName);
-      await loadData(cancelTokenSource,newFilterDto);
+      await loadData(cancelTokenSource, newFilterDto);
     }
   };
   const getFilterContainer = () => {
     return (
-        <TabAndViewContainer
-            verticalTabContainer={getVerticalTabContainer()}
-            currentView={getTabContentContainer()}
-            defaultActiveKey={metrics && Array.isArray(metrics) && metrics[0]?.id && metrics[0]?.id}
-            bodyClassName="mx-0"
-            maximumHeight="calc(100vh - 264px)"
-            overflowYContainerStyle={"hidden"}
-            overflowYBodyStyle="auto"
-        />
+      <TabAndViewContainer
+        verticalTabContainer={getVerticalTabContainer()}
+        currentView={getTabContentContainer()}
+        defaultActiveKey={
+          metrics && Array.isArray(metrics) && metrics[0]?.id && metrics[0]?.id
+        }
+        bodyClassName="mx-0"
+        maximumHeight="calc(100vh - 264px)"
+        overflowYContainerStyle={"hidden"}
+        overflowYBodyStyle="auto"
+      />
     );
   };
   return (
@@ -203,7 +233,11 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
-        chartHelpComponent={(closeHelpPanel) => <GithubPendingMergeRequestHelpDocumentation closeHelpPanel={closeHelpPanel} />}
+        chartHelpComponent={(closeHelpPanel) => (
+          <GithubPendingMergeRequestHelpDocumentation
+            closeHelpPanel={closeHelpPanel}
+          />
+        )}
       />
     </div>
   );

@@ -34,19 +34,23 @@ function StandaloneMultiSelectInput(
     onToggleFunction,
     hasErrorState,
     className,
-    lazyLoad,
     manualEntry,
     onSearchFunction,
+    onClickFunction,
+    filterOption
   }) {
   return (
-    <div className={"custom-multiselect-input"}>
+    <div
+      className={"custom-multiselect-input"}
+      onClick={onClickFunction}
+    >
       <Multiselect
         className={getClassNames(className, hasErrorState, hasWarningState)}
         data={selectOptions}
         dataKey={valueField}
         textField={textField}
         busy={busy}
-        filter={"contains"}
+        filter={filterOption}
         allowCreate={allowCreate}
         groupBy={groupBy}
         onToggle={onToggleFunction}
@@ -54,7 +58,7 @@ function StandaloneMultiSelectInput(
         value={value}
         onCreate={createOptionFunction}
         placeholder={placeholderText}
-        disabled={disabled || (manualEntry !== true && lazyLoad !== true && (!Array.isArray(selectOptions) || selectOptions?.length === 0)) || busy}
+        disabled={disabled || (manualEntry !== true && (onSearchFunction == null && (!Array.isArray(selectOptions) || selectOptions?.length === 0 || busy)))}
         onChange={setDataFunction}
       />
     </div>
@@ -89,9 +93,14 @@ StandaloneMultiSelectInput.propTypes = {
   className: PropTypes.string,
   hasErrorState: PropTypes.bool,
   hasWarningState: PropTypes.bool,
-  lazyLoad: PropTypes.bool,
   manualEntry: PropTypes.bool,
   onSearchFunction: PropTypes.func,
+  onClickFunction: PropTypes.func,
+  filterOption: PropTypes.string
+};
+
+StandaloneMultiSelectInput.defaultProps = {
+    filterOption: "contains"
 };
 
 export default StandaloneMultiSelectInput;

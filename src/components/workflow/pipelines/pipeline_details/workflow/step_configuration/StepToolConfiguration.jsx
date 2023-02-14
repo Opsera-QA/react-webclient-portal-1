@@ -102,10 +102,13 @@ import LiquibaseStepConfiguration
 import BlackDuckStepConfiguration from "./step_tool_configuration_forms/black_duck/BlackDuckStepConfiguration";
 import FortifyStepConfiguration from "./step_tool_configuration_forms/fortify/FortifyStepConfiguration";
 import DockerCliStepConfiguration from "./step_tool_configuration_forms/docker_cli/DockerCliStepConfiguration";
+import SnykStepConfiguration from "./step_tool_configuration_forms/snyk/SnykStepConfiguration";
+import AquasecStepConfiguration from "./step_tool_configuration_forms/aquasec/AquasecStepConfiguration";
 import UserActionsPipelineStepEditorPanel
   from "components/workflow/plan/step/user_actions/UserActionsPipelineStepEditorPanel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import HelmStepConfiguration from "./step_tool_configuration_forms/helm/HelmStepConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -860,6 +863,20 @@ function StepToolConfiguration({
             closeEditorPanel={closeEditorPanel}
           />
         );
+      case "helm": 
+        return (
+          <HelmStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_VCS: 
         return (
           <TerraformVcsStepConfiguration
@@ -1440,8 +1457,32 @@ function StepToolConfiguration({
               stepTool={stepTool}
               parentCallback={callbackFunction}
               closeEditorPanel={closeEditorPanel}
+              pipelineStep={pipelineStep}
             />
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK:
+        return (
+            <SnykStepConfiguration
+              pipelineId={pipeline._id}
+              plan={pipeline.workflow.plan}
+              stepId={stepId}
+              stepTool={stepTool}
+              parentCallback={callbackFunction}
+              closeEditorPanel={closeEditorPanel}
+            />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
+        return (
+          <AquasecStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            closeEditorPanel={closeEditorPanel}
+            createJob={createTwistlockJob}
+          />
+        );        
     }
   };
 

@@ -39,6 +39,11 @@ const LiquibaseMetadata = {
       },
       maxLength: 200,
     },
+    {
+      label: "Liquibase Pro license",
+      id: "licenseKey",
+      maxLength: 2096,
+    },    
   ],
   newObjectFields:
   {
@@ -48,6 +53,7 @@ const LiquibaseMetadata = {
     accountUsername: "",
     accountPassword: "",
     service: "",
+    licenseKey: "",
   }
 };
 

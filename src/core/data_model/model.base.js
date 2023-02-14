@@ -1,32 +1,28 @@
-import { modelValidation, validateData, validateField, validatePotentialValue } from "core/data_model/modelValidation";
+import {
+  modelValidation,
+  validateData,
+  validateField,
+  validatePotentialValue,
+} from "core/data_model/modelValidation";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
 
 export const DataState = {
   LOADED: 0,
   CHANGED: 1,
   NEW: 2,
-  DELETED: 3
+  DELETED: 3,
 };
 
 // TODO: After converting table to use Models instead of raw objects, the removal of these can probably happen
-export const temporaryObjectProperties = [
-  "$height",
-  "id",
-  "__v"
-];
+export const temporaryObjectProperties = ["$height", "id", "__v"];
 
 // TODO: Investigate making this a hook
 export default class ModelBase {
-  constructor(
-    data,
-    metaData,
-    newModel,
-    setStateFunction,
-    loadDataFunction,
-  ) {
-    this.metaData = DataParsingHelper.cloneDeep({...metaData});
-    this.data = {...this.getNewObjectFields(), ...data};
+  constructor(data, metaData, newModel, setStateFunction, loadDataFunction) {
+    this.metaData = DataParsingHelper.cloneDeep({ ...metaData });
+    this.data = { ...this.getNewObjectFields(), ...data };
     this.originalData = DataParsingHelper.cloneDeep(this.data);
     this.newModel = newModel;
     this.id = data?._id;
@@ -41,6 +37,31 @@ export default class ModelBase {
     this.roleDefinitions = {};
     this.userData = undefined;
   }
+
+  // TODO: This causes numerous problems and should be removed asap
+  initializeObjectProperties = (metaData) => {
+    const fields = metaData?.fields;
+    if (Array.isArray(fields)) {
+      for (const field of fields) {
+        if (field.id === "data") {
+          continue;
+        }
+
+        let id = field.id;
+
+        Object.defineProperty(this, id, {
+          get: () => {
+            return this.getData(id);
+          },
+          set: (newValue) => {
+            if (this.getData(id) !== newValue) {
+              this.setData(id, newValue);
+            }
+          },
+        });
+      }
+    }
+  };
 
   getData = (fieldName) => {
     if (hasStringValue(fieldName) !== true) {
@@ -62,14 +83,23 @@ export default class ModelBase {
     this.setData(fieldName, array);
   };
 
-  setData = (fieldName, newValue, addToChangeMap = true, refreshState = false) => {
+  setData = (
+    fieldName,
+    newValue,
+    addToChangeMap = true,
+    refreshState = false,
+  ) => {
     const oldValue = this.getData(fieldName);
 
     if (addToChangeMap !== false) {
       this.propertyChange(fieldName, newValue, oldValue);
     }
 
-    this.data = DataParsingHelper.safeObjectPropertySetter(this.data, fieldName, newValue);
+    this.data = DataParsingHelper.safeObjectPropertySetter(
+      this.data,
+      fieldName,
+      newValue,
+    );
     this.updateState();
   };
 
@@ -148,8 +178,7 @@ export default class ModelBase {
     if (field) {
       if (field.lowercase === true) {
         newValue = newValue.toLowerCase();
-      }
-      else if (field.uppercase === true) {
+      } else if (field.uppercase === true) {
         newValue = newValue.toUpperCase();
       }
 
@@ -160,7 +189,7 @@ export default class ModelBase {
         let format = field.inputMaskRegex;
         let meetsRegex = format.test(newValue);
 
-        if (newValue !== '' && !meetsRegex) {
+        if (newValue !== "" && !meetsRegex) {
           return;
         }
       }
@@ -208,7 +237,11 @@ export default class ModelBase {
   };
 
   getPotentialFieldValidationError = (potentialValue, fieldName) => {
-    const errorMessages = validatePotentialValue(potentialValue, this, this.getFieldById(fieldName));
+    const errorMessages = validatePotentialValue(
+      potentialValue,
+      this,
+      this.getFieldById(fieldName),
+    );
 
     if (Array.isArray(errorMessages) !== true || errorMessages.length === 0) {
       return null;
@@ -218,7 +251,11 @@ export default class ModelBase {
   };
 
   isPotentialFieldValid = (potentialValue, fieldName) => {
-    const errorMessages = validatePotentialValue(potentialValue, this, this.getFieldById(fieldName));
+    const errorMessages = validatePotentialValue(
+      potentialValue,
+      this,
+      this.getFieldById(fieldName),
+    );
     return Array.isArray(errorMessages) !== true || errorMessages.length === 0;
   };
 
@@ -247,13 +284,14 @@ export default class ModelBase {
       if (this.dataState !== DataState.NEW) {
         this.dataState = DataState.CHANGED;
       }
-    }
-    else if (newChangeMap.get(id) === newValue
-         || (newChangeMap.get(id) === null && newValue === null)) {
+    } else if (
+      newChangeMap.get(id) === newValue ||
+      (newChangeMap.get(id) === null && newValue === null)
+    ) {
       newChangeMap.delete(id);
 
       if (newChangeMap.size === 0 && this.dataState === DataState.CHANGED) {
-        this.dataState  = DataState.LOADED;
+        this.dataState = DataState.LOADED;
       }
     }
 
@@ -275,6 +313,21 @@ export default class ModelBase {
     return this.originalData;
   };
 
+  replaceOriginalData = (newOriginalData) => {
+    const parsedNewOriginalData =
+      DataParsingHelper.parseObject(newOriginalData);
+
+    if (
+      parsedNewOriginalData &&
+      ObjectHelper.areObjectsEqualLodash(
+        this.originalData,
+        parsedNewOriginalData,
+      ) !== true
+    ) {
+      this.originalData = parsedNewOriginalData;
+    }
+  };
+
   getCurrentData = () => {
     return this.data;
   };
@@ -284,16 +337,15 @@ export default class ModelBase {
 
     // TODO: this is only at the top level, add support for trimming inner objects
     try {
-      Object.keys(data).forEach(key => {
-        if (typeof data[key] == 'string') {
+      Object.keys(data).forEach((key) => {
+        if (typeof data[key] == "string") {
           data[key] = data[key].trim();
         }
       });
 
       // save trimmed strings in data
       this.data = data;
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Could not parse object's strings. Sending unparsed data.");
       return this.data;
     }
@@ -311,14 +363,12 @@ export default class ModelBase {
       });
 
       this.data = data;
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Could not remove temporary object properties.");
       return this.data;
     }
 
     return data;
-
   };
 
   isNew = () => {
@@ -344,7 +394,7 @@ export default class ModelBase {
 
   updateState = () => {
     if (this.setStateFunction) {
-      this.setStateFunction({...this});
+      this.setStateFunction({ ...this });
     }
   };
 
@@ -421,7 +471,9 @@ export default class ModelBase {
   getLabel = (fieldName) => {
     let fields = this.metaData.fields;
     // TODO: Replace with metadata helper call once finished
-    let field = fields.find(field => { return field.id === fieldName;});
+    let field = fields.find((field) => {
+      return field.id === fieldName;
+    });
     return field ? field.label : "No label found in metadata";
   };
 
@@ -453,7 +505,6 @@ export default class ModelBase {
     return this.getData("_id");
   };
 
-
   getFields = () => {
     return this.metaData?.fields;
   };
@@ -481,7 +532,9 @@ export default class ModelBase {
 
   getFieldById = (id) => {
     const fields = this.getFields();
-    return fields?.find(field => {return field.id === id; });
+    return fields?.find((field) => {
+      return field.id === id;
+    });
   };
 
   getDefaultValue = (fieldName) => {
@@ -491,8 +544,11 @@ export default class ModelBase {
 
   // TODO: Should we make view definitions?
   getNewObjectFields = () => {
-    const newObjectFields = DataParsingHelper.parseObject(this.metaData?.newObjectFields, {});
-    return {...DataParsingHelper.cloneDeep(newObjectFields)};
+    const newObjectFields = DataParsingHelper.parseObject(
+      this.metaData?.newObjectFields,
+      {},
+    );
+    return { ...DataParsingHelper.cloneDeep(newObjectFields) };
   };
 
   clone = () => {
@@ -500,10 +556,13 @@ export default class ModelBase {
   };
 
   getNewInstance = (newData = this.getNewObjectFields()) => {
-    const parsedData = DataParsingHelper.parseObject(newData, this.getNewObjectFields());
-    const newInstance = this;
-    newInstance.data = { ...parsedData };
-    return newInstance;
+    const parsedData = DataParsingHelper.parseObject(
+      newData,
+      this.getNewObjectFields(),
+    );
+    this.replaceOriginalData(parsedData);
+    this.replaceData(parsedData);
+    return this;
   };
 
   canUpdate = () => {
@@ -526,5 +585,3 @@ export default class ModelBase {
     throw "This action is not supported yet";
   };
 }
-
-

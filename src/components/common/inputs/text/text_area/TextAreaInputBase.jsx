@@ -6,6 +6,7 @@ import {parseError} from "components/common/helpers/error-helpers";
 import InfoContainer from "components/common/containers/InfoContainer";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function TextAreaInputBase(
   {
@@ -25,7 +26,11 @@ function TextAreaInputBase(
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    setField(model?.getFieldById(fieldName));
+    const newField = DataParsingHelper.parseObject(model?.getFieldById(fieldName));
+
+    if (newField) {
+      setField({...newField});
+    }
   }, [fieldName]);
 
   useEffect(() => {

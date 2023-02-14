@@ -7,7 +7,7 @@ import StandaloneTextFieldBase from "components/common/fields/text/standalone/St
 import LdapGroupMembersTable from "components/settings/ldap_groups/LdapGroupMembersTable";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
 
-function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData }) {
+function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData, isLoading }) {
   if (ldapGroupData == null) {
     return <></>;
   }
@@ -35,6 +35,7 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData }) {
         loadData={loadData}
         orgDomain={domain}
         userData={ldapGroupData.getData("members")}
+        isLoading={isLoading}
       />
     </SummaryPanelContainer>
   );
@@ -43,7 +44,8 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData }) {
 LdapGroupSummaryPanel.propTypes = {
   ldapGroupData: PropTypes.object,
   domain: PropTypes.string,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  isLoading: PropTypes.bool,
 };
 
 

@@ -3,6 +3,7 @@ export const kpiIdentifierConstants = {};
 
 kpiIdentifierConstants.KPI_IDENTIFIERS = {
   ADOPTION_PERCENTAGE: "adoption-percentage",
+  APPROVAL_GATES: "approval-gates",
 
   // Github Actions
   ALL_GITHUB_ACTIONS_DATA_BLOCK: "all-github-actions-data-block",
@@ -71,9 +72,11 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
     "gitlab-time-taken-to-complete-merge-request-review",
   GITLAB_TOTAL_COMMITS_BY_PROJECT: "gitlab-total-commits-by-project",
   GITLAB_DEPLOYMENT_FREQUENCY: "gitlab-deployment-frequency",
-  GITLAB_LEAD_TIME: "gitlab-lead-time",
   GITLAB_PIPELINE_STATISTICS: "gitlab-pipeline-statistics",
   GITLAB_MERGE_STATISTICS: "gitlab-merge-requests-statistics",
+  GITLAB_LEAD_TIME: "gitlab-lead-time",
+  GITLAB_LEAD_TIME_V2: "gitlab-lead-time-v2",
+  GITLAB_DEPLOYMENT_FREQUENCY_V2: "gitlab-deployment-frequency-v2",
 
   // Jenkins
   JENKINS_BUILD_DURATION: "jenkins-build-duration",
@@ -184,3 +187,13 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   //DORA
   DORA_JIRA_GITLAB_ROLLED_UP: "dora-jira-gitlab-rolled-up",
 };
+
+kpiIdentifierConstants.SUPPORTED_ANALYTICS_DATA_ENTRY_IDENTIFIERS = [
+  kpiIdentifierConstants.KPI_IDENTIFIERS.QA_MANUAL_TEST,
+  kpiIdentifierConstants.KPI_IDENTIFIERS.FIRST_PASS_YIELD,
+  kpiIdentifierConstants.KPI_IDENTIFIERS.CUMULATIVE_OPEN_DEFECTS,
+  kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATION_PERCENTAGE,
+  kpiIdentifierConstants.KPI_IDENTIFIERS.ADOPTION_PERCENTAGE,
+  kpiIdentifierConstants.KPI_IDENTIFIERS.AUTOMATED_TEST_RESULTS,
+  kpiIdentifierConstants.KPI_IDENTIFIERS.DEFECT_REMOVAL_EFFICIENCY,
+];

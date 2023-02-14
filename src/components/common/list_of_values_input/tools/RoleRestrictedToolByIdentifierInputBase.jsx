@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {faExclamationCircle, faTools} from "@fortawesome/pro-light-svg-icons";
 import {Link} from "react-router-dom";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import RegistryToolInfoOverlay from "components/common/list_of_values_input/tools/RegistryToolInfoOverlay";
@@ -15,7 +14,6 @@ function RoleRestrictedToolByIdentifierInputBase(
   {
     toolIdentifier,
     toolFriendlyName,
-    placeholderText,
     visible,
     fieldName,
     model,
@@ -33,7 +31,6 @@ function RoleRestrictedToolByIdentifierInputBase(
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [toolMetadata, setToolMetadata] = useState(undefined);
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -86,7 +83,6 @@ function RoleRestrictedToolByIdentifierInputBase(
     const tools = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(tools)) {
-      setToolMetadata(response?.data?.metadata);
       if (filterDataFunction) {
         const filteredTools = filterDataFunction(tools);
         // TODO: This is a safeguard temporarily but won't be forever
@@ -137,7 +133,6 @@ function RoleRestrictedToolByIdentifierInputBase(
           selectedToolId={model?.getData(fieldName)}
           tools={tools}
           loadData={loadData}
-          toolMetadata={toolMetadata}
           isMounted={isMounted}
           isLoading={isLoading}
           model={model}
@@ -163,7 +158,6 @@ function RoleRestrictedToolByIdentifierInputBase(
         textField={textField}
         visible={visible}
         error={error}
-        placeholderText={placeholderText}
         clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading}
         detailViewLink={getDetailViewToolUrl()}
@@ -171,6 +165,9 @@ function RoleRestrictedToolByIdentifierInputBase(
         infoOverlay={getInfoOverlay()}
         linkTooltipText={`Load Tool Registry`}
         linkIcon={faTools}
+        loadDataFunction={loadData}
+        singularTopic={"Tool"}
+        pluralTopic={"Tools"}
       />
       {getErrorMessage()}
     </>

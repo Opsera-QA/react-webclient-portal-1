@@ -10,7 +10,7 @@ function BoomiSuccessPercentageDataBlock({ data, dataPoint, lastScore, icon, cla
                 className={`${className} p-2 h-70`}
                 icon={icon}
                 percentage={data}
-                bottomText={"Previous: " + lastScore}
+                bottomText={`Previous: ${lastScore || lastScore === 0? lastScore : "NA"}`}
                 topText={"Successful Execution Rate"}
                 dataPoint={dataPoint}
             />

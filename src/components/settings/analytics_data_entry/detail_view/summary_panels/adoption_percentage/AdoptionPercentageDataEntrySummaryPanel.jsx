@@ -5,6 +5,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import AnalyticsDataEntrySummaryPanel from "components/settings/analytics_data_entry/detail_view/summary_panels/AnalyticsDataEntrySummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import GenericItemField from "components/common/fields/multiple_items/GenericItemField";
+import PipelineIdField from "components/common/fields/pipelines/PipelineIdField";
 
 function AdoptionPercentageDataEntrySummaryPanel({ analyticsDataEntry, adoptionPercentageData, setActiveTab }) {
   if (analyticsDataEntry == null) {
@@ -22,7 +23,10 @@ function AdoptionPercentageDataEntrySummaryPanel({ analyticsDataEntry, adoptionP
         <GenericItemField dataObject={adoptionPercentageData} fieldName={"project"} />
       </Col>
       <Col lg={6}>
-        <TextFieldBase dataObject={adoptionPercentageData} fieldName={"pipeline_id"} />
+        <PipelineIdField
+          model={adoptionPercentageData}
+          fieldName={"pipeline_id"}
+        />
       </Col>
       <Col lg={6}>
         <TextFieldBase dataObject={adoptionPercentageData} fieldName={"total_executed"} />

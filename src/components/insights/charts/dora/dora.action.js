@@ -70,4 +70,40 @@ doraActions.jiraGitlabRolledUp = async (
   );
 };
 
+doraActions.doraJiraActionableDashboards = async (
+    getAccessToken,
+    cancelTokenSource,
+    kpiConfiguration,
+    tableFilterDto,
+    org
+) => {
+  const apiUrl = doraBaseURL + "doraJiraActionableDashboards";
+  const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  let tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  const startDate = new Date(dateRange?.start);
+  const endDate = new Date(dateRange?.end);
+
+  // Checking the use kpi tags toggle
+  const useKpiTags = getUseKpiTagsFromKpiConfiguration(kpiConfiguration);
+
+  if (!useKpiTags) {
+    tags = null;
+  }
+
+  const postBody = {
+    startDate: startDate.toISOString(),
+    endDate: endDate.toISOString(),
+    tags: tags,
+    page: tableFilterDto?.getData("currentPage") ? tableFilterDto?.getData("currentPage") : 1,
+    size: tableFilterDto?.getData("pageSize") ? tableFilterDto?.getData("pageSize") : 5,
+    org: org,
+  };
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+      getAccessToken,
+      cancelTokenSource,
+      apiUrl,
+      postBody,
+  );
+};
+
 export default doraActions;

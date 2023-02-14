@@ -12,7 +12,7 @@ export default function IdRevisionField(
     className,
     showLabel,
   }) {
-  const revision = DateFormatHelper.formatDateAsRevisionId(model?.getData(fieldName), "");
+  const revision = DateFormatHelper.parseMongoDbIdIntoRevisionId(model?.getData(fieldName), "");
 
   const getClipboardButton = () => {
     return (

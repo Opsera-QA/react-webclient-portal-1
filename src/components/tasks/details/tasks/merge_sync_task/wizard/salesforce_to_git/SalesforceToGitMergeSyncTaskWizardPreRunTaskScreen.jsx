@@ -9,10 +9,6 @@ import ButtonContainerBase from "components/common/buttons/saving/containers/But
 import {
   mergeSyncTaskGitConfigurationMetadata
 } from "components/tasks/details/tasks/merge_sync_task/git_to_git/mergeSyncTaskGitConfiguration.metadata";
-import SalesforceToGitMergeSyncTaskWizardConfirmRepositorySettingsButton
-  from "components/tasks/details/tasks/merge_sync_task/wizard/salesforce_to_git/SalesforceToGitMergeSyncTaskWizardConfirmRepositorySettingsButton";
-import SalesforceToGitMergeSyncTaskBitbucketWorkspaceSelectInput
-  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskBitbucketWorkspaceSelectInput";
 import SalesforceToGitMergeSyncTaskRepositorySelectInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskRepositorySelectInput";
 import SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput
@@ -24,6 +20,8 @@ import SalesforceToGitMergeSyncTaskTargetBranchSelectInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskTargetBranchSelectInput";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
+import TaskWizardConfirmRepositorySettingsButton
+  from "components/tasks/wizard/TaskWizardConfirmRepositorySettingsButton";
 
 export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
   {
@@ -47,6 +45,12 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
     }
   }, [taskModel]);
 
+  const setModelFunction = (newModel) => {
+    setGitConfigurationModel({...newModel});
+    taskModel?.setData("configuration.git", newModel?.getPersistData());
+    setTaskModel({...taskModel});
+  };
+
   const getDestinationBranchInputs = () => {
     if (gitConfigurationModel?.getData("isNewBranch") === true) {
       return (
@@ -54,13 +58,13 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
           <Col lg={12}>
             <SalesforceToGitMergeSyncTaskUpstreamBranchSelectInput
               model={gitConfigurationModel}
-              setModel={setGitConfigurationModel}
+              setModel={setModelFunction}
             />
           </Col>
           <Col lg={12}>
             <TextInputBase
               dataObject={gitConfigurationModel}
-              setDataObject={setGitConfigurationModel}
+              setDataObject={setModelFunction}
               fieldName={"targetBranch"}
             />
           </Col>
@@ -72,7 +76,7 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
       <Col lg={12}>
         <SalesforceToGitMergeSyncTaskTargetBranchSelectInput
           model={gitConfigurationModel}
-          setModel={setGitConfigurationModel}
+          setModel={setModelFunction}
         />
       </Col>
     );
@@ -108,31 +112,26 @@ export default function SalesforceToGitMergeSyncTaskWizardPreRunTaskScreen(
       <div>Please select the repository and branch you wish to use for this Salesforce workflow</div>
       <Row>
         <Col lg={12}>
-          <SalesforceToGitMergeSyncTaskBitbucketWorkspaceSelectInput
-            model={gitConfigurationModel}
-            setModel={setGitConfigurationModel}
-          />
-        </Col>
-        <Col lg={12}>
           <SalesforceToGitMergeSyncTaskRepositorySelectInput
             model={gitConfigurationModel}
-            setModel={setGitConfigurationModel}
+            setModel={setModelFunction}
           />
         </Col>
         <Col lg={12}>
           <SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput
             model={gitConfigurationModel}
-            setModel={setGitConfigurationModel}
+            setModel={setModelFunction}
           />
         </Col>
         {getDestinationBranchInputs()}
       </Row>
       <ButtonContainerBase>
-        <SalesforceToGitMergeSyncTaskWizardConfirmRepositorySettingsButton
+        <TaskWizardConfirmRepositorySettingsButton
           taskModel={taskModel}
-          setTaskModel={setTaskModel}
-          gitConfigurationModel={gitConfigurationModel}
           setCurrentScreen={setCurrentScreen}
+          disabled={
+            gitConfigurationModel?.checkCurrentValidity() !== true
+          }
         />
       </ButtonContainerBase>
     </div>
