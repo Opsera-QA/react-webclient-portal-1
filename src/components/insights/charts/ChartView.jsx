@@ -162,6 +162,9 @@ import CoverityIssuesByCategory from "./coverity/CoverityIssuesByCategory/Coveri
 // Boomi KPIs
 import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
 
+// Aquasec Security Insights KPIs
+import AquasecSecurityInsightsBySeverity from "./aquasec_security_insights/AquasecSecurityInsightsBySeverity";
+
 import {
   getDateObjectFromKpiConfiguration,
   getTagsFromKpiConfiguration,
@@ -1775,6 +1778,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col md={12} className="p-2">
             <ApprovalGatesMetrics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.AQUASEC_SECURITY_INSIGHTS_BY_SEVERITY:
+        return (
+          <Col md={12} className="p-2">
+            <AquasecSecurityInsightsBySeverity
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}

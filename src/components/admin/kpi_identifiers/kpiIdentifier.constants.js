@@ -168,6 +168,9 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
 
   // Coverity
   COVERITY_ISSUES_BY_CATEGORY_TREND: "coverity-issues-by-category-trend",
+
+  // Aquasec Security Insights
+  AQUASEC_SECURITY_INSIGHTS_BY_SEVERITY: "aquasec-security-insights-by-severity"
 };
 
 kpiIdentifierConstants.SUPPORTED_ANALYTICS_DATA_ENTRY_IDENTIFIERS = [
