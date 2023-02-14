@@ -335,7 +335,7 @@ function KpiSettingsForm({
     "github-commit-statistics",
     "deployment-analytics",
     "gitlab-merge-requests-statistics",
-    kpiIdentifierConstants.KPI_IDENTIFIERS.AQUASEC_SECURITY_INSIGHTS_BY_SEVERITY,
+    kpiIdentifierConstants.KPI_IDENTIFIERS.AQUASEC_ISSUES_BY_SEVERITY,
   ];
 
   const getKpiFilters = (filter) => {

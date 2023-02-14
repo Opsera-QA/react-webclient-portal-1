@@ -1,6 +1,6 @@
 const AquasecActionableInsightsMetadata = {
   idProperty: "_id",
-  type: "Aquasec Security Insights Table Report",
+  type: "Aquasec Issues Table Report",
   fields: [
     {
       label: "Project Key",

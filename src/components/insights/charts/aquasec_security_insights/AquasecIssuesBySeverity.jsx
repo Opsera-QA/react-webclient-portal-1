@@ -20,7 +20,7 @@ import CoverityIssuesOverallHighTrendDataBlock from "components/insights/charts/
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import IconBase from "components/common/icons/IconBase";
 
-function AquasecSecurityInsightsBySeverity({
+function AquasecIssuesBySeverity({
   kpiConfiguration,
   setKpiConfiguration,
   dashboardData,
@@ -338,7 +338,7 @@ function AquasecSecurityInsightsBySeverity({
         )}
       />
       <ModalLogs
-        header="Aquasec Security Insights By Severity"
+        header="Aquasec Issues By Severity"
         size="lg"
         jsonMessage={metrics}
         dataType="bar"
@@ -349,7 +349,7 @@ function AquasecSecurityInsightsBySeverity({
   );
 }
 
-AquasecSecurityInsightsBySeverity.propTypes = {
+AquasecIssuesBySeverity.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -357,4 +357,4 @@ AquasecSecurityInsightsBySeverity.propTypes = {
   setKpis: PropTypes.func,
 };
 
-export default AquasecSecurityInsightsBySeverity;
+export default AquasecIssuesBySeverity;
