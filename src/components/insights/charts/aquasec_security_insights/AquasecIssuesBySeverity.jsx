@@ -18,6 +18,12 @@ import AquasecIssuesOverallTrendDataBlock from "./AquasecIssuesOverallTrendDataB
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import IconBase from "components/common/icons/IconBase";
 
+const ISSUE_TYPE = Object.freeze({
+  HIGH: 'High',
+  MEDIUM: 'Medium',
+  LOW: 'Low'
+});
+
 function AquasecIssuesBySeverity({
   kpiConfiguration,
   setKpiConfiguration,
@@ -193,56 +199,37 @@ function AquasecIssuesBySeverity({
     }
   };
 
-  const projectsWithHighIssues = (issueType) => {
-    let topThreeIssues = [];
-
-    if (issueType === "High") {
-      topThreeIssues =
-        metrics[0]?.highIssues?.length > 0
-          ? metrics[0]?.highIssues?.slice(0, 1)
-          : [];
-    } else if (issueType === "Medium") {
-      topThreeIssues =
-        metrics[0]?.mediumIssues?.length > 0
-          ? metrics[0]?.mediumIssues?.slice(0, 1)
-          : [];
-    } else {
-      topThreeIssues =
-        metrics[0]?.lowIssues?.length > 0
-          ? metrics[0]?.lowIssues?.slice(0, 1)
-          : [];
-    }
-
-    if (!Array.isArray(topThreeIssues) || topThreeIssues.length === 0) {
+  const projectsByIssueType = (issueType, issues) => {
+    if (!Array.isArray(issues) || issues.length === 0) {
       return null;
     }
 
+    const topIssues = issues.slice(0, 1);
+
     return (
       <HorizontalDataBlocksContainer
-        title={"Top Project with " + issueType + " Issues"}
+        title={`Top Project with ${issueType} Issues`}
         borderColor={issueType}
       >
-        {topThreeIssues.map((doc, index) => (
-          <>
-            <span style={{ paddingLeft: "11px" }}></span>
-            <Row
-              className="p-1"
-              key={index}
-            >
-              <Col lg={12}>
-                {(getIcon(doc?.projectTotalIssuesTrend) !== "Neutral") !=
-                  null && (
-                  <IconBase
-                    icon={getIcon(doc?.projectTotalIssuesTrend)}
-                    iconColor={getIconColor(doc?.projectTotalIssuesTrend)}
-                    iconTitle={getIconTitle(doc?.projectTotalIssuesTrend)}
-                  />
-                )}
-                <span style={{ paddingLeft: "2px" }}></span>
-                {doc?.coverityStreamName}
-              </Col>
-            </Row>
-          </>
+        {topIssues.map((doc, index) => (
+          <Row
+            className="p-1"
+            key={index}
+            style={{ paddingLeft: "11px" }}
+          >
+            <Col lg={12}>
+              {(getIcon(doc?.projectTotalIssuesTrend) !== "Neutral") !=
+                null && (
+                <IconBase
+                  icon={getIcon(doc?.projectTotalIssuesTrend)}
+                  iconColor={getIconColor(doc?.projectTotalIssuesTrend)}
+                  iconTitle={getIconTitle(doc?.projectTotalIssuesTrend)}
+                />
+              )}
+              <span style={{ paddingLeft: "2px" }}></span>
+              {doc?.coverityStreamName}
+            </Col>
+          </Row>
         ))}
       </HorizontalDataBlocksContainer>
     );
@@ -271,10 +258,10 @@ function AquasecIssuesBySeverity({
                     ? dataMetrics?.lowIssues[0]?.DataBlocks[0]?.totalIssues
                     : 0
                 }
-                severity={"Low"}
+                severity={ISSUE_TYPE.LOW}
                 icon={getIcon(metrics[0].overallLowTrend)}
                 className={getIconColor(metrics[0].overallLowTrend)}
-                onSelect={() => onRowSelect("Low")}
+                onSelect={() => onRowSelect(ISSUE_TYPE.LOW)}
                 lastScore={metrics[0].previousTotalLow}
                 iconOverlayBody={getDescription(metrics[0].overallLowTrend)}
               />
@@ -286,10 +273,10 @@ function AquasecIssuesBySeverity({
                     ? dataMetrics?.mediumIssues[0]?.DataBlocks[0]?.totalIssues
                     : 0
                 }
-                severity="Medium"
+                severity={ISSUE_TYPE.MEDIUM}
                 icon={getIcon(metrics[0].overallMediumTrend)}
                 className={getIconColor(metrics[0].overallMediumTrend)}
-                onSelect={() => onRowSelect("Medium")}
+                onSelect={() => onRowSelect(ISSUE_TYPE.MEDIUM)}
                 lastScore={metrics[0].previousTotalMedium}
                 iconOverlayBody={getDescription(metrics[0].overallMediumTrend)}
               />
@@ -301,19 +288,19 @@ function AquasecIssuesBySeverity({
                     ? dataMetrics?.highIssues[0]?.DataBlocks[0]?.totalIssues
                     : 0
                 }
-                severity="High"
+                severity={ISSUE_TYPE.HIGH}
                 icon={getIcon(metrics[0].overallHighTrend)}
                 className={getIconColor(metrics[0].overallHighTrend)}
-                onSelect={() => onRowSelect("High")}
+                onSelect={() => onRowSelect(ISSUE_TYPE.HIGH)}
                 lastScore={metrics[0].previousTotalHigh}
                 iconOverlayBody={getDescription(metrics[0].overallHighTrend)}
               />
             </Col>
           </Row>
           <div className={"mt-3"}>
-            {projectsWithHighIssues("High")}
-            {projectsWithHighIssues("Medium")}
-            {projectsWithHighIssues("Low")}
+            {projectsByIssueType(ISSUE_TYPE.HIGH, metrics[0]?.highIssues)}
+            {projectsByIssueType(ISSUE_TYPE.MEDIUM, metrics[0]?.mediumIssues)}
+            {projectsByIssueType(ISSUE_TYPE.LOW, metrics[0]?.lowIssues)}
           </div>
         </Container>
       </div>
