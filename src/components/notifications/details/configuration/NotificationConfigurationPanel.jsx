@@ -31,24 +31,24 @@ export default function NotificationConfigurationPanel(
         return (
           <AuditLogNotificationConfigurationPanel
             notificationModel={notificationModel}
-            setNotificationConfigurationModel={updateModelFunction}
             notificationConfigurationModel={notificationConfigurationModel}
+            setNotificationConfigurationModel={updateModelFunction}
           />
         );
       case NOTIFICATION_TYPES.METRIC:
         return (
           <MetricNotificationConfigurationPanel
-            notificationDataDto={notificationModel}
-            setNotificationConfigurationModel={updateModelFunction}
+            notificationModel={notificationModel}
             notificationConfigurationModel={notificationConfigurationModel}
+            setNotificationConfigurationModel={updateModelFunction}
           />
         );
       case NOTIFICATION_TYPES.PIPELINE:
         return (
           <PipelineNotificationEditorPanel
             notificationDataDto={notificationModel}
-            setNotificationConfigurationModel={updateModelFunction}
             notificationConfigurationModel={notificationConfigurationModel}
+            setNotificationConfigurationModel={updateModelFunction}
           />
         );
       default:

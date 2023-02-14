@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
-import pipelineNotificationConfigurationMetadata
-  from "components/notifications/details/configuration/pipeline/pipeline-notification-configuration-metadata";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import auditLogsNotificationConfigurationMetadata
+  from "components/notifications/details/configuration/audit_log/auditLogsNotificationConfiguration.metadata";
 
 // TODO: If this is used in multiple spots, we should rename it. If it just has trigger, I would suggest TriggerNotificationEditorPanel
 export default function AuditLogNotificationConfigurationPanel(
@@ -18,7 +18,7 @@ export default function AuditLogNotificationConfigurationPanel(
   useEffect(() => {loadData();}, []);
 
   const loadData = async () => {
-    const configurationData = modelHelpers.getToolConfigurationModel(notificationModel.getData("configuration"), pipelineNotificationConfigurationMetadata);
+    const configurationData = modelHelpers.getToolConfigurationModel(notificationModel.getData("configuration"), auditLogsNotificationConfigurationMetadata);
     setNotificationConfigurationModel({...configurationData});
   };
 

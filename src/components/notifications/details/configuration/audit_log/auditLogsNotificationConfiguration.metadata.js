@@ -1,6 +1,5 @@
 const auditLogsNotificationConfigurationMetadata = {
-  type: "Pipeline Notification Configuration",
-  // TODO: Faseeh, I don't know what the actual fields are so these will need to be changed.
+  type: "Audit Log Notification Configuration",
   fields: [
     {
       label: "Notification Trigger",
@@ -8,10 +7,9 @@ const auditLogsNotificationConfigurationMetadata = {
       isRequired: true
     },
   ],
-  newObjectFields:
-    {
+  newObjectFields: {
       trigger: "",
-    }
+  },
 };
 
 export default auditLogsNotificationConfigurationMetadata;
