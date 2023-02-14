@@ -117,7 +117,6 @@ function GitlabDeploymentFrequency({
       }
     }
   };
-  console.log("preavchart" , prevChartData);
 
   const loadDataPoints = async () => {
     const dataPoints = kpiConfiguration?.dataPoints;

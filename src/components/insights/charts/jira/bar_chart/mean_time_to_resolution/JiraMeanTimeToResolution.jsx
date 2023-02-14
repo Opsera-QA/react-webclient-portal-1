@@ -32,7 +32,6 @@ import JiraMeanTimeToResolutionLineChart from "./JiraMeanTimeToResolutionLineCha
 import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import JiraMeanTimeToResolutionMaturityScoreInsights from "./JiraMeanTimeToResolutionMaturityScoreInsights";
-import {parseInt} from "lodash";
 
 function JiraMeanTimeToResolution({
   kpiConfiguration,
@@ -96,7 +95,6 @@ function JiraMeanTimeToResolution({
           dashboardOrgs,
         );
       const responseData = response?.data;
-      console.log("responseData", responseData);
 
       setDataBlock(responseData);
 
