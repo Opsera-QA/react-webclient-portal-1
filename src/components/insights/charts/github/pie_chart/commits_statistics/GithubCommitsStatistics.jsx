@@ -172,17 +172,6 @@ function GithubCommitsStatistics({
     );
   };
 
-  const showGithubApprovedPullRequestModal = (node) => {
-    toastContext.showOverlayPanel(
-      <GithubApprovedPullRequestActionableInsightOverlay
-        kpiConfiguration={kpiConfiguration}
-        dashboardData={dashboardData}
-        highestMergesMetric={highestMergesMetric}
-        repository={node?.id}
-      />,
-    );
-  };
-
   const showGithubDeclinedPullRequestModal = (node) => {
     toastContext.showOverlayPanel(
       <GithubDeclinedPullRequestActionableInsightOverlay

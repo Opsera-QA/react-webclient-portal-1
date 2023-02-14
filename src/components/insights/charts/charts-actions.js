@@ -881,6 +881,7 @@ chartsActions.getGithubListOfRepositories = async (
   cancelTokenSource,
   kpiConfiguration,
   dashboardTags,
+  dashboardFilters,
   dashboardOrgs,
   tableFilterDto,
 ) => {
