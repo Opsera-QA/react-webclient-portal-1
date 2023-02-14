@@ -13,6 +13,7 @@ import useExternalToolPropertyCacheEntry from "hooks/cache/external_tools/useExt
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import _ from "lodash";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import FieldLabel from "components/common/fields/FieldLabel";
 
 export default function InlineSelectInputBase(
   {
@@ -57,6 +58,7 @@ export default function InlineSelectInputBase(
     externalCacheToolIdentifier,
     supportSearchLookup,
     handleSaveFunction,
+    getLabelFunction,
   }) {
   const field = model?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
@@ -350,10 +352,36 @@ export default function InlineSelectInputBase(
     }
   };
 
+  // TODO: Use Field Label when everything is consistent
+  const getFieldLabel = () => {
+    return (
+      //<FieldLabel field={field} />
+      <div className={"text-muted mr-2 mt-auto"}>
+        {field?.label}:
+      </div>
+    );
+  };
+
   const getInput = () => {
     if (inEditMode !== true) {
+      if (typeof getLabelFunction === "function") {
+        return (
+          <div className={"d-flex"}>
+            {getFieldLabel()}
+            <div className={"my-auto"}>
+              {getLabelFunction(model?.getData(fieldName))}
+            </div>
+          </div>
+        );
+      }
+
       return (
-        <div>{model?.getData(fieldName)}</div>
+        <div className={"d-flex"}>
+          {getFieldLabel()}
+          <div className={"my-auto"}>
+            {model?.getData(fieldName)}
+          </div>
+        </div>
       );
     }
 
@@ -372,6 +400,10 @@ export default function InlineSelectInputBase(
   };
 
   const getLabel = () => {
+    if (inEditMode !== true) {
+      return;
+    }
+
     return (
       <InputLabel
         model={model}
@@ -402,7 +434,10 @@ export default function InlineSelectInputBase(
   }
 
   return (
-    <InputContainer className={className} fieldName={fieldName}>
+    <InputContainer
+      className={className}
+      fieldName={fieldName}
+    >
       {getLabel()}
       <div className={"d-flex w-100"}>
         {getInput()}
@@ -466,4 +501,5 @@ InlineSelectInputBase.propTypes = {
   externalCacheToolIdentifier: PropTypes.string,
   supportSearchLookup: PropTypes.bool,
   handleSaveFunction: PropTypes.func,
+  getLabelFunction: PropTypes.func,
 };

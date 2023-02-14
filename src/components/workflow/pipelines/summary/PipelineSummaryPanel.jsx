@@ -35,6 +35,7 @@ import OwnerNameField from "components/common/fields/text/general/OwnerNameField
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import PipelineNameTextInput from "components/workflow/pipelines/summary/inputs/PipelineNameTextInput";
+import PipelineTypeSelectInput from "components/workflow/pipelines/summary/inputs/type/PipelineTypeSelectInput";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -58,7 +59,6 @@ function PipelineSummaryPanel(
   const contextType = useContext(AuthContext);
   const [editDescription, setEditDescription] = useState(false);
   const [editTags, setEditTags] = useState(false);
-  const [editType, setEditType] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [pipelineModel, setPipelineModel] = useState(new Model(pipeline, pipelineMetadata, false));
   const {
@@ -88,13 +88,6 @@ function PipelineSummaryPanel(
             "tags": pipeline.tags,
           };
           setEditTags(false);
-          break;
-        case "type":
-          pipeline.type = value.type;
-          postBody = {
-            "type": value.type,
-          };
-          setEditType(false);
           break;
       }
 
@@ -127,11 +120,6 @@ function PipelineSummaryPanel(
       case "tags":
         setEditTags(true);
         break;
-      case "type":
-        setEditType(true);
-        break;
-      default:
-        console.error("Missing value or type for edit field");
     }
   };
 
@@ -242,49 +230,39 @@ function PipelineSummaryPanel(
     }
   };
 
-  const getPipelineTitleField = () => {
-    return (
-      <PipelineNameTextInput
-        pipelineModel={pipelineModel}
-        setPipelineModel={setPipelineModel}
-        workflowStatus={parentWorkflowStatus}
-      />
-    );
-  };
-
-  const getPipelineTypeField = () => {
-    return (
-      <div className={"my-2"}>
-        <span className="text-muted mr-2">Type:</span>
-        {pipeline?.type && !editType && getPipelineTypeLabel(pipeline?.type[0])}
-        {PipelineRoleHelper.canEditPipelineAttributes(userData, pipeline)
-        && parentWorkflowStatus !== "running" && !editType
-          ? getEditIcon("type")
-          : null}
-        {editType &&
-          <div className="d-flex mt-1">
-            <div className="w-75">
-              <StandaloneSelectInput
-                selectOptions={PIPELINE_TYPE_SELECT_OPTIONS}
-                defaultValue={pipeline?.type[0]}
-                valueField={"value"}
-                textField={"text"}
-                setDataFunction={e => {
-                  let type = formData.type;
-                  type[0] = e.value;
-                  setFormData({ ...formData, type: type });
-                }}
-              />
-            </div>
-            <div className="px-2 pt-1">
-              {getSaveIcon("type")}
-              {getCancelIcon(setEditType)}
-            </div>
-          </div>
-        }
-      </div>
-    );
-  };
+  // const getPipelineTypeField = () => {
+  //   return (
+      // <div className={"my-2"}>
+      //   <span className="text-muted mr-2">Type:</span>
+      //   {pipeline?.type && !editType && getPipelineTypeLabel(pipeline?.type[0])}
+      //   {PipelineRoleHelper.canEditPipelineAttributes(userData, pipeline)
+      //   && parentWorkflowStatus !== "running" && !editType
+      //     ? getEditIcon("type")
+      //     : null}
+      //   {editType &&
+      //     <div className="d-flex mt-1">
+      //       <div className="w-75">
+      //         <StandaloneSelectInput
+      //           selectOptions={PIPELINE_TYPE_SELECT_OPTIONS}
+      //           defaultValue={pipeline?.type[0]}
+      //           valueField={"value"}
+      //           textField={"text"}
+      //           setDataFunction={e => {
+      //             let type = formData.type;
+      //             type[0] = e.value;
+      //             setFormData({ ...formData, type: type });
+      //           }}
+      //         />
+      //       </div>
+      //       <div className="px-2 pt-1">
+      //         {getSaveIcon("type")}
+      //         {getCancelIcon(setEditType)}
+      //       </div>
+      //     </div>
+      //   }
+      // </div>
+    // );
+  // };
 
   const getDescriptionField = () => {
     if (editDescription === true) {
@@ -347,7 +325,11 @@ function PipelineSummaryPanel(
       <div className="pr-1">
         <Row>
           <Col sm={9}>
-            {getPipelineTitleField()}
+            <PipelineNameTextInput
+              pipelineModel={pipelineModel}
+              setPipelineModel={setPipelineModel}
+              workflowStatus={parentWorkflowStatus}
+            />
           </Col>
           <Col sm={3}>
             <PipelineSummaryActionBar
@@ -400,7 +382,11 @@ function PipelineSummaryPanel(
             />
           </Col>
           <Col xs={12} sm={6}>
-            {getPipelineTypeField()}
+            <PipelineTypeSelectInput
+              pipelineModel={pipelineModel}
+              setPipelineModel={setPipelineModel}
+              workflowStatus={parentWorkflowStatus}
+            />
           </Col>
           {getSchedulerField()}
           {getTagField()}
