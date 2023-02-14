@@ -78,10 +78,11 @@ mergeSyncTaskWizardActions.triggerSalesforceToGitSourceFilePull = async (
   const apiUrl = `/tasks/merge-sync-task/wizard/${taskWizardModel?.getData(
     "recordId",
   )}/salesforce-to-git/source-files`;
+  const componentTypes = taskWizardModel?.getData("isProfiles") ? [...taskWizardModel?.getArrayData("selectedComponentTypes"), "Profile"] : taskWizardModel?.getArrayData(
+    "selectedComponentTypes",
+  );
   const postBody = {
-    componentTypes: taskWizardModel?.getArrayData(
-      "selectedComponentTypes",
-    ),
+    componentTypes: componentTypes,
     taskId: taskWizardModel?.getData("taskId"),
     runCount: taskWizardModel?.getData("runCount"),
     lastCommitFromTimestamp: taskWizardModel?.getData(
