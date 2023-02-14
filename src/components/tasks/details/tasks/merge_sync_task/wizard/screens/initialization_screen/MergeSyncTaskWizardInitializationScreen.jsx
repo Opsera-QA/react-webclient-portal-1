@@ -6,6 +6,7 @@ import CancelButton from "components/common/buttons/CancelButton";
 import MergeSyncTaskWizardCreateNewRecordButton
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/initialization_screen/MergeSyncTaskWizardCreateNewRecordButton";
 import BooleanToggleInput from "../../../../../../../common/inputs/boolean/BooleanToggleInput";
+import { Row, Col } from "react-bootstrap";
 
 const MergeSyncTaskWizardInitializationScreen = ({
   wizardModel,
@@ -29,12 +30,18 @@ const MergeSyncTaskWizardInitializationScreen = ({
         <div className={"mt-2"}>
           {`Would you like to start a new ${mergeSyncType} Merge Sync Task Wizard Instance?`}
         </div>
+        <Row className="mx-0 mt-3 d-flex">
+          <div className="ml-auto d-flex">
+            <Col>
+              <BooleanToggleInput
+                fieldName={"isProfiles"}
+                dataObject={wizardModel}
+                setDataObject={setWizardModel}
+              />
+            </Col>
+          </div>
+        </Row>
         <SaveButtonContainer>
-          <BooleanToggleInput
-            fieldName={"isProfiles"}
-            dataObject={wizardModel}
-            setDataObject={setWizardModel}
-          />
           <MergeSyncTaskWizardCreateNewRecordButton
             wizardModel={wizardModel}
             setWizardModel={setWizardModel}
