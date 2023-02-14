@@ -42,6 +42,8 @@ function GitlabDeploymentFrequency({
     useState(undefined);
   const [chartData, setChartData] =
     useState(undefined);
+  const [prevChartData, setPrevChartData] =
+      useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -97,9 +99,11 @@ function GitlabDeploymentFrequency({
         if (isMounted?.current === true && metrics?.statisticsData?.step?.total) {
           setMetricData(metrics?.statisticsData);
           setChartData(metrics?.chartData);
+          setPrevChartData(metrics?.prevChartData);
         } else {
           setMetricData({});
           setChartData([]);
+          setPrevChartData([]);
         }
       }
     } catch (error) {
@@ -113,6 +117,7 @@ function GitlabDeploymentFrequency({
       }
     }
   };
+  console.log("preavchart" , prevChartData);
 
   const loadDataPoints = async () => {
     const dataPoints = kpiConfiguration?.dataPoints;
@@ -128,6 +133,23 @@ function GitlabDeploymentFrequency({
   toastContext.removeInlineMessage();
   toastContext.clearOverlayPanel();
 };
+
+ const getMedian = (data) => {
+   let vals = [];
+   for( const obj in data?.step){
+     vals.push(Number(data.step[obj].total));
+   }
+   vals.sort(function(a,b){
+     return a-b;
+   });
+   const half = Math.floor(vals.length / 2);
+   if (half.length % 2) {
+     return vals[half].toFixed(2);
+   }
+   else{
+     return ((vals[half - 1] + vals[half]) / 2.0).toFixed(2);
+   }
+ };
 
 const onRowSelect = () => {
   toastContext.showOverlayPanel(
@@ -217,13 +239,16 @@ const onRowSelect = () => {
               />
             </Col>
             <Col md={12} className={"px-1"}>
-              <GitlabDeploymentFrequencyDataBlock
-                value={metricData?.pipeline?.totalSuccess}
-                prevValue={
-                  metricData?.pipeline?.previousTotalSuccess
-                }
-                topText={"Total Pipeline Runs"}
-                bottomText={"Prev Runs: "}
+              <GitlabDeploymentFrequencyTrendDataBlock
+                  value={getMedian(chartData)}
+                  prevValue={
+                    getMedian(prevChartData)
+                  }
+                  trend={getTrend(getMedian(chartData),
+                      getMedian(prevChartData))}
+                  getTrendIcon={getTrendIcon}
+                  topText={"Median Daily Deployments"}
+                  bottomText={"Prev Median: "}
               />
             </Col>
             <Col md={12} className={"pl-1 pr-2"}>
@@ -240,6 +265,8 @@ const onRowSelect = () => {
           <Col md={12}>
             <div className={"d-flex md-2"}>
               <div className={'mr-4'}>
+                <b>Total Pipeline Runs:</b> {metricData?.pipeline?.totalSuccess || "NA"}
+                <div className="row"/>
                 <b>Recent Deployed Stage:</b> {metricData?.step?.stepName || "NA"}
                 <div className="row"/>
                 <b>Deployed on:</b> {recentStageDate}

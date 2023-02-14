@@ -32,6 +32,7 @@ import JiraMeanTimeToResolutionLineChart from "./JiraMeanTimeToResolutionLineCha
 import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import JiraMeanTimeToResolutionMaturityScoreInsights from "./JiraMeanTimeToResolutionMaturityScoreInsights";
+import {parseInt} from "lodash";
 
 function JiraMeanTimeToResolution({
   kpiConfiguration,
@@ -44,6 +45,7 @@ function JiraMeanTimeToResolution({
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
+  const [prevMetrics, setPrevMetrics] = useState([]);
   const [sevMetrics, setSevMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -94,10 +96,12 @@ function JiraMeanTimeToResolution({
           dashboardOrgs,
         );
       const responseData = response?.data;
+      console.log("responseData", responseData);
 
       setDataBlock(responseData);
 
       const dataObject = responseData?.docs;
+      const prevObject = responseData?.previousData;
       const barchart = responseData?.severityData;
 
       assignStandardColors(dataObject, true);
@@ -109,11 +113,13 @@ function JiraMeanTimeToResolution({
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         setSevMetrics(barchart);
+        setPrevMetrics(prevObject);
       }
 
       if (!dataObject) {
         setMetrics([]);
         setSevMetrics([]);
+        setPrevMetrics([]);
       }
 
       spaceOutServiceNowCountBySeverityLegend(barchart);
@@ -141,6 +147,24 @@ function JiraMeanTimeToResolution({
   const closeMaturityPanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
+  };
+
+  const getMedian = (data) => {
+    let vals = [];
+    for( const obj in data){
+      vals.push(Number(data[obj].y));
+    }
+    vals.sort(function(a,b){
+      return a-b;
+    });
+
+    const half = Math.floor(vals.length / 2);
+    if (half.length % 2) {
+      return vals[half].toFixed(2);
+    }
+    else{
+      return ((vals[half - 1] + vals[half]) / 2.0).toFixed(2);
+    }
   };
 
   const onRowSelect = () => {
@@ -251,19 +275,21 @@ function JiraMeanTimeToResolution({
               </Col>
               <Col md={12} className={"pl-1 pr-2"}>
                 <JiraMTTRDataBlock
-                  value={dataBlock.maxMTTR}
-                  previousValue={dataBlock.previousMaxMTTR}
-                  trend={getReverseTrend(dataBlock.maxMTTR,dataBlock.previousMaxMTTR)}
+                  value={getMedian(metrics)}
+                  previousValue={getMedian(prevMetrics)}
+                  trend={getReverseTrend(getMedian(metrics),getMedian(prevMetrics))}
                   getIcon = {getReverseTrendIcon}
-                  topText={"Max MTTR (Hours)"}
-                  bottomText={"Prev Max MTTR"}
+                  topText={"Median MTTR (Hours)"}
+                  bottomText={"Prev Median MTTR"}
                 />
               </Col>
             </Row>
             <Col md={12}>
               <div className={"d-flex md-2"}>
                 <div className={"mr-4"}>
-                  <b>`Minimum MTTR (Hours)` :</b> `${dataBlock?.minMTTR || "NA"}`
+                  <b>Max MTTR (Hours):</b> {dataBlock?.maxMTTR || "NA"}
+                  <div className="row"/>
+                  <b>Minimum MTTR (Hours) :</b> {dataBlock?.minMTTR || "NA"}
                 </div>
               </div>
             </Col>
