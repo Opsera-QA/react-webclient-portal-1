@@ -1708,7 +1708,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
       // Coverity
-      case "coverity-issues-by-category-trend":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.COVERITY_ISSUES_BY_CATEGORY_TREND:
         return (
           <Col xl={6} md={12} className="p-2">
             <CoverityIssuesByCategory

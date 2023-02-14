@@ -165,6 +165,9 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
 
   //DORA
   DORA_JIRA_GITLAB_ROLLED_UP:"dora-jira-gitlab-rolled-up",
+
+  // Coverity
+  COVERITY_ISSUES_BY_CATEGORY_TREND: "coverity-issues-by-category-trend",
 };
 
 kpiIdentifierConstants.SUPPORTED_ANALYTICS_DATA_ENTRY_IDENTIFIERS = [
