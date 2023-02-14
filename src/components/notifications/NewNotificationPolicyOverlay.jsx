@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import notificationsMetadata from "./notifications-metadata";
 import NotificationPolicyEditorPanel from "components/notifications/details/NotificationPolicyEditorPanel";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import useGetNewNotificationPolicyModel from "hooks/notification_policies/model/useGetNewNotificationPolicyModel";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import notificationPolicyMetadata
+  from "@opsera/definitions/constants/notification_policies/notificationPolicy.metadata";
 
 export default function NewNotificationPolicyOverlay({ loadData } ) {
   const { toastContext } = useComponentStateReference();
@@ -23,7 +24,7 @@ export default function NewNotificationPolicyOverlay({ loadData } ) {
   };
 
   return (
-    <CreateCenterPanel closePanel={closePanel} objectType={notificationsMetadata.type} loadData={loadData}>
+    <CreateCenterPanel closePanel={closePanel} objectType={notificationPolicyMetadata.type} loadData={loadData}>
       <NotificationPolicyEditorPanel
         notificationData={notificationPolicyModel}
         setNotificationData={setNotificationPolicyModel}

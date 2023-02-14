@@ -1,6 +1,5 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import notificationMetadata from "../notifications-metadata";
 import NotificationPolicyDetailPanel from "components/notifications/details/NotificationPolicyDetailPanel";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
@@ -11,6 +10,8 @@ import NotificationDetailViewHelpDocumentation
 import useGetNotificationPolicyModelById from "hooks/notification_policies/model/useGetNotificationPolicyModelById";
 import DeleteNotificationPolicyActionBarButton
   from "components/notifications/actions/DeleteNotificationPolicyActionBarButton";
+import notificationPolicyMetadata
+  from "@opsera/definitions/constants/notification_policies/notificationPolicy.metadata";
 
 function NotificationPolicyDetailView() {
   const { id } = useParams();
@@ -50,7 +51,7 @@ function NotificationPolicyDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"notificationDetailView"}
-      metadata={notificationMetadata}
+      metadata={notificationPolicyMetadata}
       navigationTabContainer={<NotificationPolicySubNavigationBar activeTab={"notificationViewer"} />}
       dataObject={notificationPolicyModel}
       isLoading={isLoading}

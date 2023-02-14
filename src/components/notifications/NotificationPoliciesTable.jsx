@@ -8,7 +8,6 @@ import {
   getTableDateColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
-import notificationsMetadata from "./notifications-metadata";
 import {useHistory} from "react-router-dom";
 import { getField } from "components/common/metadata/metadata-helpers";
 import {faFlag} from "@fortawesome/pro-light-svg-icons";
@@ -22,6 +21,8 @@ import NewNotificationPolicyOverlay from "components/notifications/NewNotificati
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {getNotificationTypeLabel} from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
 import {notificationPolicyHelper} from "hooks/notification_policies/notificationPolicy.helper";
+import notificationPolicyMetadata
+  from "@opsera/definitions/constants/notification_policies/notificationPolicy.metadata";
 
 function NotificationPoliciesTable(
   {
@@ -33,7 +34,7 @@ function NotificationPoliciesTable(
   }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
-  const fields = notificationsMetadata.fields;
+  const fields = notificationPolicyMetadata.fields;
 
   const rowStyling = (row) => {
     return !row["values"].active ? " inactive-row" : "";
