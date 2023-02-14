@@ -8,10 +8,10 @@ import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggle
 import NotificationConfigurationPanel
   from "components/notifications/details/configuration_forms/NotificationConfigurationPanel";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import TagManager from "components/common/inputs/tags/TagManager";
 import useNotificationPolicyActions from "hooks/notification_policies/useNotificationPolicyActions";
 import NotificationMethodEditorPanel from "components/notifications/details/notifications/NotificationMethodEditorPanel";
+import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 
 function NotificationPolicyEditorPanel({ notificationData, handleClose }) {
   const [notificationModel, setNotificationModel] = useState({...notificationData});
@@ -45,16 +45,32 @@ function NotificationPolicyEditorPanel({ notificationData, handleClose }) {
     >
       <Row>
         <Col lg={6}>
-          <TextInputBase setDataObject={setNotificationModel} dataObject={notificationModel} fieldName={"name"}/>
+          <TextInputBase
+            fieldName={"name"}
+            dataObject={notificationModel}
+            setDataObject={setNotificationModel}
+          />
         </Col>
         <Col lg={6}>
-          <ActivityToggleInput dataObject={notificationModel} setDataObject={setNotificationModel} fieldName={"active"} />
+          <ActivityToggleInput
+            fieldName={"active"}
+            dataObject={notificationModel}
+            setDataObject={setNotificationModel}
+          />
         </Col>
         <Col lg={12}>
-          <TextInputBase setDataObject={setNotificationModel} dataObject={notificationModel} fieldName={"description"}/>
+          <TextInputBase
+            fieldName={"description"}
+            dataObject={notificationModel}
+            setDataObject={setNotificationModel}
+          />
         </Col>
         <Col lg={12}>
-          <TagManager type={"notification"} setDataObject={setNotificationModel} dataObject={notificationModel}/>
+          <TagManager
+            type={"notification"}
+            dataObject={notificationModel}
+            setDataObject={setNotificationModel}
+          />
         </Col>
       </Row>
       <NotificationConfigurationPanel
@@ -67,8 +83,12 @@ function NotificationPolicyEditorPanel({ notificationData, handleClose }) {
         notificationModel={notificationModel}
         setNotificationModel={setNotificationModel}
       />
-      <Col lg={12} className={"px-0"}>
-        <TextAreaInput setDataObject={setNotificationModel} dataObject={notificationModel} fieldName={"nextSteps"}/>
+      <Col lg={12}>
+        <TextAreaInputBase
+          fieldName={"nextSteps"}
+          model={notificationModel}
+          setModel={setNotificationModel}
+        />
       </Col>
     </EditorPanelContainer>
   );

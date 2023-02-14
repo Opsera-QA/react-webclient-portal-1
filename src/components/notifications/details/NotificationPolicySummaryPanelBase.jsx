@@ -49,7 +49,7 @@ function NotificationPolicySummaryPanelBase({ notificationData, setActiveTab, no
           />
         </Col>
         <Col lg={12}>
-          <TagField 
+          <TagField
             dataObject={notificationData}
             fieldName={"tags"}
           />
