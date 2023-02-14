@@ -62,11 +62,10 @@ export default function NotificationConfigurationPanel(
 
   // TODO: This should be in a new select component made with NotificationTypeSelectInput
   const handleNotificationTypeChange = (fieldName, value) => {
-    let newDataObject = notificationModel;
     notificationModel.setData("type", value.value);
-    notificationModel.setData("configuration", {});
+    notificationModel.setDefaultValue("configuration");
     setNotificationConfigurationModel(undefined);
-    setNotificationModel({...newDataObject});
+    setNotificationModel({...notificationModel});
   };
 
   return (
@@ -75,13 +74,6 @@ export default function NotificationConfigurationPanel(
         <NotificationTypeSelectInput
           setDataFunction={handleNotificationTypeChange}
           model={notificationModel}
-          setModel={setNotificationModel}
-        />
-      </div>
-      <div>
-        <NotificationTypeSelectInput
-          setDataFunction={handleNotificationTypeChange}
-          model={notificationDataDto}
           setModel={setNotificationModel}
         />
       </div>
