@@ -13,7 +13,30 @@ function MicrosoftTeamsNotificationEditorPanel(
   {
     teamsNotificationModel,
     setTeamsNotificationModel,
+    showOrchestrationFields,
   }) {
+  const getOrchestrationFields = () => {
+    if (showOrchestrationFields !== false) {
+      return (
+        <>
+          <Col xs={12}>
+            <OrchestrationNotificationLevelSelectInput
+              model={teamsNotificationModel}
+              setModel={setTeamsNotificationModel}
+            />
+          </Col>
+          <Col xs={12}>
+            <BooleanToggleInput
+              dataObject={teamsNotificationModel}
+              setDataObject={setTeamsNotificationModel}
+              disabled={teamsNotificationModel?.getData("enabled") === false}
+              fieldName={"logEnabled"}
+            />
+          </Col>
+        </>
+      );
+    }
+  };
 
   if (teamsNotificationModel == null) {
     return null;
@@ -31,25 +54,12 @@ function MicrosoftTeamsNotificationEditorPanel(
         <ConnectToToolMessage toolFriendlyName={"Microsoft Teams"}/>
       </Col>
       <Col xs={12}>
-        <OrchestrationNotificationLevelSelectInput
-          model={teamsNotificationModel}
-          setModel={setTeamsNotificationModel}
-        />
-      </Col>
-      <Col xs={12}>
         <TeamsStepNotificationTeamsToolSelectInput
           model={teamsNotificationModel}
           setModel={setTeamsNotificationModel}
         />
       </Col>
-      <Col xs={12}>
-        <BooleanToggleInput
-          dataObject={teamsNotificationModel}
-          setDataObject={setTeamsNotificationModel}
-          disabled={teamsNotificationModel?.getData("enabled") === false}
-          fieldName={"logEnabled"}
-        />
-      </Col>
+      {getOrchestrationFields()}
     </Row>
 );
 }
@@ -57,6 +67,7 @@ function MicrosoftTeamsNotificationEditorPanel(
 MicrosoftTeamsNotificationEditorPanel.propTypes = {
   teamsNotificationModel: PropTypes.object,
   setTeamsNotificationModel: PropTypes.func,
+  showOrchestrationFields: PropTypes.bool,
 };
 
 export default MicrosoftTeamsNotificationEditorPanel;

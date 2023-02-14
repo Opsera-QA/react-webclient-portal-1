@@ -22,14 +22,40 @@ import JiraProjectWorkflowStepSelectInput
 import ConnectToToolMessage from "components/common/fields/inventory/messages/ConnectToToolMessage";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import OrchestrationNotificationLevelSelectInput
+  from "components/workflow/plan/step/notifications/OrchestrationNotificationLevelSelectInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function JiraNotificationEditorPanel(
   {
     jiraNotificationModel,
     setJiraNotificationModel,
     isApprovalStep,
+    showOrchestrationFields,
   }) {
-  
+  // const getOrchestrationFields = () => {
+  //   if (showOrchestrationFields !== false) {
+  //     return (
+  //       <>
+  //         <Col xs={12}>
+  //           <OrchestrationNotificationLevelSelectInput
+  //             model={slackNotificationModel}
+  //             setModel={setSlackNotificationModel}
+  //           />
+  //         </Col>
+  //         <Col xs={12}>
+  //           <BooleanToggleInput
+  //             dataObject={slackNotificationModel}
+  //             setDataObject={setSlackNotificationModel}
+  //             disabled={slackNotificationModel?.getData("enabled") === false}
+  //             fieldName={"logEnabled"}
+  //           />
+  //         </Col>
+  //       </>
+  //     );
+  //   }
+  // };
+
   const getDynamicFields = () => {
     if (isApprovalStep !== true) {
       return (
@@ -150,6 +176,7 @@ function JiraNotificationEditorPanel(
         />
       </Col>
       {getDynamicFields()}
+      {/*{getOrchestrationFields()}*/}
     </Row>
   );
 }
@@ -158,6 +185,7 @@ JiraNotificationEditorPanel.propTypes = {
   jiraNotificationModel: PropTypes.object,
   setJiraNotificationModel: PropTypes.func,
   isApprovalStep: PropTypes.bool,
+  showOrchestrationFields: PropTypes.bool,
 };
 
 export default JiraNotificationEditorPanel;

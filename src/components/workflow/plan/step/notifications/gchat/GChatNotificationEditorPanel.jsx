@@ -13,7 +13,30 @@ function GChatNotificationEditorPanel(
   {
     gChatNotificationModel,
     setGChatNotificationModel,
+    showOrchestrationFields,
   }) {
+  const getOrchestrationFields = () => {
+    if (showOrchestrationFields !== false) {
+      return (
+        <>
+          <Col xs={12}>
+            <OrchestrationNotificationLevelSelectInput
+              model={gChatNotificationModel}
+              setModel={setGChatNotificationModel}
+            />
+          </Col>
+          <Col xs={12}>
+            <BooleanToggleInput
+              dataObject={gChatNotificationModel}
+              setDataObject={setGChatNotificationModel}
+              disabled={gChatNotificationModel?.getData("enabled") === false}
+              fieldName={"logEnabled"}
+            />
+          </Col>
+        </>
+      );
+    }
+  };
 
   if (gChatNotificationModel == null) {
     return null;
@@ -31,25 +54,12 @@ function GChatNotificationEditorPanel(
         <ConnectToToolMessage toolFriendlyName={"Google Chat"}/>
       </Col>
       <Col xs={12}>
-        <OrchestrationNotificationLevelSelectInput
-          model={gChatNotificationModel}
-          setModel={setGChatNotificationModel}
-        />
-      </Col>
-      <Col xs={12}>
         <GChatStepNotificationToolSelectInput
           model={gChatNotificationModel}
           setModel={setGChatNotificationModel}
         />
       </Col>
-      <Col xs={12}>
-        <BooleanToggleInput
-          dataObject={gChatNotificationModel}
-          setDataObject={setGChatNotificationModel}
-          disabled={gChatNotificationModel?.getData("enabled") === false}
-          fieldName={"logEnabled"}
-        />
-      </Col>
+      {getOrchestrationFields()}
     </Row>
 );
 }
@@ -57,6 +67,7 @@ function GChatNotificationEditorPanel(
 GChatNotificationEditorPanel.propTypes = {
   gChatNotificationModel: PropTypes.object,
   setGChatNotificationModel: PropTypes.func,
+  showOrchestrationFields: PropTypes.bool,
 };
 
 export default GChatNotificationEditorPanel;

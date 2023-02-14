@@ -47,7 +47,6 @@ function ServiceNowNotificationEditorPanel(
       <Col xs={12}>
         <ConnectToToolMessage toolFriendlyName={"ServiceNow"}/>
       </Col>
-      {getOrchestrationFields()}
       <Col xs={12}>
         <ServiceNowStepNotificationToolSelectInput
           model={serviceNowNotificationModel}
@@ -70,6 +69,7 @@ function ServiceNowNotificationEditorPanel(
           setModel={setServiceNowNotificationModel}
         />
       </Col>
+      {getOrchestrationFields()}
     </Row>
   );
 }
