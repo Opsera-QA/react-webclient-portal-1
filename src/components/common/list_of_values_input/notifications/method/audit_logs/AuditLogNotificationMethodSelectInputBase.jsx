@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {NOTIFICATION_TYPE_SELECT_OPTIONS} from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
+import {
+  AUDIT_LOG_NOTIFICATION_METHOD_SELECT_OPTIONS
+} from "components/common/list_of_values_input/notifications/method/audit_logs/auditLogNotificationMethod.constants";
 
-function NotificationTypeSelectInput(
+export default function AuditLogNotificationMethodSelectInputBase(
   {
     fieldName,
     model,
@@ -16,7 +18,7 @@ function NotificationTypeSelectInput(
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={NOTIFICATION_TYPE_SELECT_OPTIONS}
+      selectOptions={AUDIT_LOG_NOTIFICATION_METHOD_SELECT_OPTIONS}
       setDataFunction={setDataFunction}
       valueField={"value"}
       textField={"text"}
@@ -25,16 +27,14 @@ function NotificationTypeSelectInput(
   );
 }
 
-NotificationTypeSelectInput.propTypes = {
+AuditLogNotificationMethodSelectInputBase.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
-  setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
+  setDataFunction: PropTypes.func,
 };
 
-NotificationTypeSelectInput.defaultProps = {
-  fieldName: "type"
+AuditLogNotificationMethodSelectInputBase.defaultProps = {
+  fieldName: "method"
 };
-
-export default NotificationTypeSelectInput;

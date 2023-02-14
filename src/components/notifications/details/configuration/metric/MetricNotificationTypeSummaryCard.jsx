@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import NotificationTypeSummaryCardContainer from "components/notifications/details/configuration_forms/NotificationTypeSummaryCardContainer";
+import NotificationTypeSummaryCardContainer from "components/notifications/details/configuration/NotificationTypeSummaryCardContainer";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 

@@ -11,7 +11,7 @@ import NotificationConditionSelectInput
 import  MetricDataPointTypeSelectInput
   from "components/common/list_of_values_input/insights/data_points/type/MetricDataPointTypeSelectInput";
 import MetricNotificationConfigurationCardContainer
-  from "components/notifications/details/configuration_forms/metric/MetricNotificationConfigurationCardContainer";
+  from "components/notifications/details/configuration/metric/MetricNotificationConfigurationCardContainer";
 
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 

@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import NotificationTypeSummaryCardContainer from "components/notifications/details/configuration_forms/NotificationTypeSummaryCardContainer";
+import NotificationTypeSummaryCardContainer from "components/notifications/details/configuration/NotificationTypeSummaryCardContainer";
 
-function PipelineNotificationTypeSummaryCard({ notificationData, notificationConfigurationData, isLoading }) {
+export default function AuditLogNotificationTypeSummaryCard({ notificationData, notificationConfigurationData, isLoading }) {
   if (isLoading) {
     return <NotificationTypeSummaryCardContainer isLoading={isLoading} />;
   }
@@ -17,10 +17,8 @@ function PipelineNotificationTypeSummaryCard({ notificationData, notificationCon
   );
 }
 
-PipelineNotificationTypeSummaryCard.propTypes = {
+AuditLogNotificationTypeSummaryCard.propTypes = {
   notificationData: PropTypes.object,
   notificationConfigurationData: PropTypes.object,
   isLoading: PropTypes.bool,
 };
-
-export default PipelineNotificationTypeSummaryCard;

@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import NotificationPolicySummaryPanelBase from "components/notifications/details/NotificationPolicySummaryPanelBase";
 import pipelineNotificationConfigurationMetadata
-  from "components/notifications/details/configuration_forms/pipeline/pipeline-notification-configuration-metadata";
+  from "components/notifications/details/configuration/pipeline/pipeline-notification-configuration-metadata";
 import metricNotificationConfigurationMetadata
-  from "components/notifications/details/configuration_forms/metric/metric-notification-configuration-metadata";
+  from "components/notifications/details/configuration/metric/metric-notification-configuration-metadata";
 import EmailNotificationMethodSummaryCard
   from "components/notifications/details/methods/email/EmailNotificationMethodSummaryCard";
 import emailNotificationMetadata
@@ -23,9 +23,9 @@ import jiraNotificationMetadata
 import SlackNotificationMethodSummaryCard
   from "components/notifications/details/methods/slack/SlackNotificationMethodSummaryCard";
 import MetricNotificationTypeSummaryCard
-  from "components/notifications/details/configuration_forms/metric/MetricNotificationTypeSummaryCard";
+  from "components/notifications/details/configuration/metric/MetricNotificationTypeSummaryCard";
 import PipelineNotificationTypeSummaryCard
-  from "components/notifications/details/configuration_forms/pipeline/PipelineNotificationTypeSummaryCard";
+  from "components/notifications/details/configuration/pipeline/PipelineNotificationTypeSummaryCard";
 import GChatNotificationMethodSummaryCard
   from "components/notifications/details/methods/gchat/GChatNotificationMethodSummaryCard";
 import gChatNotificationMetadata
