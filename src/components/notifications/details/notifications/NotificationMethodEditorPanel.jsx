@@ -27,7 +27,7 @@ export default function NotificationMethodEditorPanel(
     if (notificationModel) {
       setIsLoading(true);
 
-      const notifications = notificationModel?.getArrayData("notifications");
+      const notifications = notificationModel?.getArrayData("notification");
 
       const emailNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.EMAIL);
       setEmailNotificationModel(modelHelpers.parseObjectIntoModel(emailNotification, emailStepNotificationMetadata));
@@ -70,11 +70,12 @@ export default function NotificationMethodEditorPanel(
     setError(undefined);
     const notifications = notificationModel?.getArrayData("notification");
     const index = notifications?.findIndex((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.EMAIL);
+    const updatedData = newEmailNotificationModel?.getPersistData(false);
 
     if (index === -1) {
-      notifications.push(newEmailNotificationModel?.getPersistData(false));
+      notifications.push(updatedData);
     } else {
-      notifications[index] = newEmailNotificationModel?.getPersistData(false);
+      notifications[index] = updatedData;
     }
 
     const validatedNotificationsArray = notificationMethodHelper.getValidatedNotificationsArray(notifications);

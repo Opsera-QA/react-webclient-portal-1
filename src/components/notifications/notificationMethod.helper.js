@@ -18,7 +18,7 @@ import gChatStepNotificationMetadata
 // TODO: Move to Node so we can validate there.
 export const notificationMethodHelper = {};
 
-notificationMethodHelper.getValidatedNotificationsArray = async (notificationsArray) => {
+notificationMethodHelper.getValidatedNotificationsArray = (notificationsArray) => {
   const validatedNotificationsArray = [];
   const parsedNotificationsArray = DataParsingHelper.parseArray(notificationsArray);
 
