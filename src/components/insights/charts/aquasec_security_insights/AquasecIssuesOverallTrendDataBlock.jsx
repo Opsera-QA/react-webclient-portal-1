@@ -5,13 +5,13 @@ import ThreeLineScoreDataBlock from "components/common/metrics/score/ThreeLineSc
 import { ICON_CHARACTERISTICS } from "./constants";
 
 function AquasecIssuesOverallTrendDataBlock({ score, severity, trend, onSelect, lastScore }) {
-  const { icon, color, description } = ICON_CHARACTERISTICS[trend];
+  const displayScore = score || 0;
   
   return (
     <DataBlockBoxContainer showBorder={true} onClickFunction={() => onSelect(severity)}>
       <ThreeLineScoreDataBlock
         className={`${color} p-2`}
-        score={score}
+        score={displayScore}
         topText={severity}
         bottomText={`Last Scan: ${lastScore}`}
         icon={icon}

@@ -152,11 +152,7 @@ function AquasecIssuesBySeverity({
           <Row className="p-1 gray">
             <Col>
               <AquasecIssuesOverallTrendDataBlock
-                score={
-                  dataMetrics?.lowIssues[0]?.DataBlocks[0]?.totalIssues
-                    ? dataMetrics?.lowIssues[0]?.DataBlocks[0]?.totalIssues
-                    : 0
-                }
+                score={dataMetrics?.lowIssues[0]?.DataBlocks[0]?.totalIssues}
                 severity={ISSUE_TYPE.LOW}
                 trend={metrics[0].overallLowTrend}
                 onSelect={onRowSelect}
@@ -165,11 +161,7 @@ function AquasecIssuesBySeverity({
             </Col>
             <Col>
               <AquasecIssuesOverallTrendDataBlock
-                score={
-                  dataMetrics?.mediumIssues[0]?.DataBlocks[0]?.totalIssues
-                    ? dataMetrics?.mediumIssues[0]?.DataBlocks[0]?.totalIssues
-                    : 0
-                }
+                score={dataMetrics?.mediumIssues[0]?.DataBlocks[0]?.totalIssues}
                 severity={ISSUE_TYPE.MEDIUM}
                 trend={metrics[0].overallMediumTrend}
                 onSelect={onRowSelect}
@@ -178,11 +170,7 @@ function AquasecIssuesBySeverity({
             </Col>
             <Col>
               <AquasecIssuesOverallTrendDataBlock
-                score={
-                  dataMetrics?.highIssues[0]?.DataBlocks[0]?.totalIssues
-                    ? dataMetrics?.highIssues[0]?.DataBlocks[0]?.totalIssues
-                    : 0
-                }
+                score={dataMetrics?.highIssues[0]?.DataBlocks[0]?.totalIssues}
                 severity={ISSUE_TYPE.HIGH}
                 trend={metrics[0].overallHighTrend}
                 onSelect={onRowSelect}
