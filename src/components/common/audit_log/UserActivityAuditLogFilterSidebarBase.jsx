@@ -45,7 +45,7 @@ export default function UserActivityAuditLogFilterSidebarBase(
         setModel={setUserActivityAuditLogFilterModel}
         loadDataFunction={loadDataFunction}
         fieldName={"actions"}
-        type={userActivityAuditLogFilterModel?.getData("type")}
+        type={userActivityAuditLogFilterModel?.getType()}
       />
     </div>
   );
