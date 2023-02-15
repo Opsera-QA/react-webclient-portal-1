@@ -32,6 +32,9 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
   };
 
   const getCurrentView = () => {
+    if(!comparisonFileModel) {
+      return <div className={"m-2"}>unsupported file format</div>;
+    }
     if (destinationContent?.length < 1 && sourceContent?.length < 1) {
       return <div className={"m-2"}>No changes returned from the service</div>;
     }
