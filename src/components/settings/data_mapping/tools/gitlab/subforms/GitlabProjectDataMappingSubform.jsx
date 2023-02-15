@@ -5,12 +5,22 @@ import GitlabMonoRepoPathMultiSelectInput from "../inputs/GitlabMonoRepoPathMult
 import GitlabDeploymentStagesMultiSelectInput from "../inputs/GitlabDeploymentStagesMultiSelectInput";
 
 function GitlabProjectDataMappingSubform({ model, setModel }) {
+
+  const setDataFunction = (fieldName, newValue) => {
+    const newModel = {...model};
+    newModel?.setData(fieldName, newValue);
+    newModel?.setDefaultValue("monoRepoPath");
+    newModel?.setDefaultValue("deploymentStage");
+    setModel({...newModel});
+  };
+
   return (
     <>
       <BooleanToggleInput
         fieldName={"isMonoRepo"}
         dataObject={model}
         setDataObject={setModel}
+        setDataFunction={setDataFunction}
       />
       <GitlabMonoRepoPathMultiSelectInput 
         fieldName={"monoRepoPath"}
