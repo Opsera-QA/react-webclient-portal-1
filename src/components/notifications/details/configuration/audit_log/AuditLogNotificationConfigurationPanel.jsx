@@ -43,6 +43,7 @@ export default function AuditLogNotificationConfigurationPanel(
           fieldName={"events"}
           model={notificationConfigurationModel}
           setModel={setNotificationConfigurationModel}
+          type={notificationModel?.getData("method")}
         />
       </Col>
     </Row>

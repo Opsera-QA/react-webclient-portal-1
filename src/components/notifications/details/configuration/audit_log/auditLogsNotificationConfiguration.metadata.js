@@ -3,7 +3,7 @@ export const auditLogsNotificationConfigurationMetadata = {
   fields: [
     {
       label: "Notification Trigger",
-      id: "Events",
+      id: "events",
       isRequired: true
     },
   ],

@@ -31,6 +31,7 @@ export default function NotificationConfigurationPanel(
         return (
           <AuditLogNotificationConfigurationPanel
             notificationModel={notificationModel}
+            setNotificationModel={setNotificationModel}
             notificationConfigurationModel={notificationConfigurationModel}
             setNotificationConfigurationModel={updateModelFunction}
           />
