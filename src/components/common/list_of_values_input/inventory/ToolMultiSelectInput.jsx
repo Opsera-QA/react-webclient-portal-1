@@ -1,9 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faExclamationCircle, faTools} from "@fortawesome/free-solid-svg-icons";
-import {Link} from "react-router-dom";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
-import IconBase from "components/common/icons/IconBase";
 import useGetRegistryTools from "hooks/tools/useGetRegistryTools";
 
 export default function ToolMultiSelectInput(
