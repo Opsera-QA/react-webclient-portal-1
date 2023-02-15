@@ -39,6 +39,7 @@ function JiraChangeFailureRate({
   const [error, setError] = useState(undefined);
   const [metricData, setMetricData] = useState(undefined);
   const [chartData, setChartData] = useState(undefined);
+  const [prevChartData, setPrevChartData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -104,6 +105,7 @@ function JiraChangeFailureRate({
         if (isMounted?.current === true && Array.isArray(metrics?.chartData)) {
           setMetricData(metrics);
           setChartData(metrics?.chartData);
+          setPrevChartData(metrics?.previousData?.chartData);
         }
       } else {
         // This is required when there is no changeType selected but still need the chart to show no data
@@ -134,6 +136,24 @@ function JiraChangeFailureRate({
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
+  };
+
+  const getMedian = (data) => {
+    let vals = [];
+    for( const obj in data){
+      vals.push(Number(data[obj].y));
+    }
+    vals.sort(function(a,b){
+      return a-b;
+    });
+
+    const half = Math.floor(vals.length / 2);
+    if (half.length % 2) {
+      return vals[half].toFixed(2);
+    }
+    else{
+      return ((vals[half - 1] + vals[half]) / 2.0).toFixed(2);
+    }
   };
 
   const onRowSelect = () => {
@@ -239,11 +259,16 @@ function JiraChangeFailureRate({
               md={12}
               className={"px-1"}
             >
-              <JiraChangeFailureRateDataBlock
-                value={metricData?.total}
-                prevValue={metricData?.prevTotal}
-                topText={`Total Changes`}
-                bottomText={`Prev Total Changes: `}
+              <JiraChangeFailureRateTrendDataBlock
+                  value={getMedian(chartData)}
+                  prevValue={getMedian(prevChartData)}
+                  trend={getReverseTrend(
+                      getMedian(chartData),
+                      getMedian(prevChartData),
+                  )}
+                  getTrendIcon={getReverseTrendIcon}
+                  topText={"Median Change Failure Rate"}
+                  bottomText={"Prev Median: "}
               />
             </Col>
             <Col
@@ -258,6 +283,13 @@ function JiraChangeFailureRate({
               />
             </Col>
           </Row>
+          <Col md={12}>
+            <div className={"d-flex md-2"}>
+              <div className={"mr-4"}>
+                <b>Total Changes:</b> {4}
+              </div>
+            </div>
+          </Col>
           <Col
             md={12}
             className={"my-2 p-0 d-flex flex-column align-items-end"}
