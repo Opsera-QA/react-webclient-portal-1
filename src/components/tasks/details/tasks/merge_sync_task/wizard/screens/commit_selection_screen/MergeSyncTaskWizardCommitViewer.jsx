@@ -60,6 +60,11 @@ const MergeSyncTaskWizardCommitViewer = ({
   };
 
   const getDiffFileList = async () => {
+    // console.log(diffFile);
+    if (!diffFile?.whitelisted) {
+      setComparisonFileModel(undefined);
+      return;
+    }
     const response =
       await mergeSyncTaskWizardActions.retrieveSelectedFileContent(
         getAccessToken,
