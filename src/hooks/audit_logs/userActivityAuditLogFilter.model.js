@@ -111,8 +111,8 @@ export class UserActivityAuditLogFilterModel extends FilterModelBase {
     return activeFilters;
   };
 
-  getActionSelectOptionsForType = () => {
-    return auditLogActionConstants.getActionSelectOptionsForType(this.type);
+  getType = () => {
+    return this.type;
   };
 }
 

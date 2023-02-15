@@ -37,11 +37,6 @@ function NotificationPolicyEditorPanel({ notificationData, handleClose }) {
       createRecord={createNotification}
       updateRecord={updateNotification}
       setRecordDto={setNotificationModel}
-      lenient={true}
-      disable={
-        !notificationModel.checkCurrentValidity()
-        || (notificationConfigurationModel == null || !notificationConfigurationModel.checkCurrentValidity())
-      }
     >
       <Row>
         <Col lg={6}>
