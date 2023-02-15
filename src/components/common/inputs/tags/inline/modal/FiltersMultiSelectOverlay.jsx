@@ -16,6 +16,8 @@ import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
 import OrganizationMultiSelectInput from "components/common/list_of_values_input/settings/organizations/OrganizationMultiSelectInput";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import DashboardFiltersHelpDocumentation
+  from "../../../../help/documentation/insights/DashboardFiltersHelpDocumentation";
 
 function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFunction, type}) {
   const toastContext = useContext(DialogToastContext);
@@ -210,6 +212,7 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
     >
       <div className="m-3">
         {toastContext.getInlineBanner()}
+        <DashboardFiltersHelpDocumentation/>
         <div className="p-3">
           {getFiltersInput()}
         </div>
