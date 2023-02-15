@@ -149,8 +149,17 @@ function AquasecIssuesBySeverity({
         style={{ minHeight: "300px" }}
       >
         <Container>
-          <Row className="p-1 gray">
-            <Col>
+          <Row className="p-1 gray justify-content-center">
+            <Col xs={6} sm={4}>
+              <AquasecIssuesOverallTrendDataBlock
+                score={dataMetrics?.lowIssues[0]?.DataBlocks[0]?.totalIssues}
+                severity={ISSUE_TYPE.NEGLIGIBLE}
+                trend={metrics[0].overallLowTrend}
+                onSelect={onRowSelect}
+                lastScore={metrics[0].previousTotalLow}
+              />
+            </Col>
+            <Col xs={6} sm={4}>
               <AquasecIssuesOverallTrendDataBlock
                 score={dataMetrics?.lowIssues[0]?.DataBlocks[0]?.totalIssues}
                 severity={ISSUE_TYPE.LOW}
@@ -159,7 +168,7 @@ function AquasecIssuesBySeverity({
                 lastScore={metrics[0].previousTotalLow}
               />
             </Col>
-            <Col>
+            <Col xs={6} sm={4}>
               <AquasecIssuesOverallTrendDataBlock
                 score={dataMetrics?.mediumIssues[0]?.DataBlocks[0]?.totalIssues}
                 severity={ISSUE_TYPE.MEDIUM}
@@ -168,10 +177,21 @@ function AquasecIssuesBySeverity({
                 lastScore={metrics[0].previousTotalMedium}
               />
             </Col>
-            <Col>
+          </Row>
+          <Row className="justify-content-center">
+            <Col xs={6} sm={4}>
               <AquasecIssuesOverallTrendDataBlock
                 score={dataMetrics?.highIssues[0]?.DataBlocks[0]?.totalIssues}
                 severity={ISSUE_TYPE.HIGH}
+                trend={metrics[0].overallHighTrend}
+                onSelect={onRowSelect}
+                lastScore={metrics[0].previousTotalHigh}
+              />
+            </Col>
+            <Col xs={6} sm={4}>
+              <AquasecIssuesOverallTrendDataBlock
+                score={dataMetrics?.highIssues[0]?.DataBlocks[0]?.totalIssues}
+                severity={ISSUE_TYPE.CRITICAL}
                 trend={metrics[0].overallHighTrend}
                 onSelect={onRowSelect}
                 lastScore={metrics[0].previousTotalHigh}
