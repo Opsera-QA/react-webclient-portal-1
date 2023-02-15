@@ -138,73 +138,75 @@ function AquasecIssuesBySeverity({
     if (
       !Array.isArray(metrics) ||
       metrics.length === 0 ||
-      dataMetrics.length === 0
+      !dataMetrics ||
+      Object.keys(dataMetrics).length === 0
     ) {
       return null;
     }
 
+    const negligibleScore = dataMetrics.negligibleIssues?.length > 0 ? dataMetrics.negligibleIssues[0]?.DataBlocks[0]?.totalIssues : 0;
+    const lowScore = dataMetrics.lowIssues?.length > 0 ? dataMetrics.lowIssues[0]?.DataBlocks[0]?.totalIssues : 0;
+    const mediumScore = dataMetrics.mediumIssues?.length > 0 ? dataMetrics.mediumIssues[0]?.DataBlocks[0]?.totalIssues : 0;
+    const highScore = dataMetrics.highIssues?.length > 0 ? dataMetrics.highIssues[0]?.DataBlocks[0]?.totalIssues : 0;
+    const criticalScore = dataMetrics.criticalIssues?.length > 0 ? dataMetrics.criticalIssues[0]?.DataBlocks[0]?.totalIssues : 0;
+
     return (
-      <div
-        className="new-chart mb-3"
-        style={{ minHeight: "300px" }}
-      >
-        <Container>
-          <Row className="justify-content-center">
-            <Col xs={6} sm={4}>
-              <AquasecIssuesOverallTrendDataBlock
-                score={dataMetrics?.lowIssues[0]?.DataBlocks[0]?.totalIssues}
-                severity={ISSUE_TYPE.NEGLIGIBLE}
-                trend={metrics[0].overallLowTrend}
-                onSelect={onRowSelect}
-                lastScore={metrics[0].previousTotalLow}
-              />
-            </Col>
-            <Col xs={6} sm={4}>
-              <AquasecIssuesOverallTrendDataBlock
-                score={dataMetrics?.lowIssues[0]?.DataBlocks[0]?.totalIssues}
-                severity={ISSUE_TYPE.LOW}
-                trend={metrics[0].overallLowTrend}
-                onSelect={onRowSelect}
-                lastScore={metrics[0].previousTotalLow}
-              />
-            </Col>
-            <Col xs={6} sm={4}>
-              <AquasecIssuesOverallTrendDataBlock
-                score={dataMetrics?.mediumIssues[0]?.DataBlocks[0]?.totalIssues}
-                severity={ISSUE_TYPE.MEDIUM}
-                trend={metrics[0].overallMediumTrend}
-                onSelect={onRowSelect}
-                lastScore={metrics[0].previousTotalMedium}
-              />
-            </Col>
-          </Row>
-          <Row className="justify-content-center mt-3">
-            <Col xs={6} sm={4}>
-              <AquasecIssuesOverallTrendDataBlock
-                score={dataMetrics?.highIssues[0]?.DataBlocks[0]?.totalIssues}
-                severity={ISSUE_TYPE.HIGH}
-                trend={metrics[0].overallHighTrend}
-                onSelect={onRowSelect}
-                lastScore={metrics[0].previousTotalHigh}
-              />
-            </Col>
-            <Col xs={6} sm={4}>
-              <AquasecIssuesOverallTrendDataBlock
-                score={dataMetrics?.highIssues[0]?.DataBlocks[0]?.totalIssues}
-                severity={ISSUE_TYPE.CRITICAL}
-                trend={metrics[0].overallHighTrend}
-                onSelect={onRowSelect}
-                lastScore={metrics[0].previousTotalHigh}
-              />
-            </Col>
-          </Row>
-          <div className={"mt-3"}>
-            <AquasecTopProjectsByIssueType type={ISSUE_TYPE.HIGH} projects={metrics[0]?.highIssues} />
-            <AquasecTopProjectsByIssueType type={ISSUE_TYPE.MEDIUM} projects={metrics[0]?.mediumIssues} />
-            <AquasecTopProjectsByIssueType type={ISSUE_TYPE.LOW} projects={metrics[0]?.lowIssues} />
-          </div>
-        </Container>
-      </div>
+      <Container className="new-chart mb-3" style={{ minHeight: "300px" }}>
+        <Row className="justify-content-center">
+          <Col xs={6} sm={4}>
+            <AquasecIssuesOverallTrendDataBlock
+              score={negligibleScore}
+              severity={ISSUE_TYPE.NEGLIGIBLE}
+              trend={metrics[0].overallLowTrend}
+              onSelect={onRowSelect}
+              lastScore={metrics[0].prevNegligible}
+            />
+          </Col>
+          <Col xs={6} sm={4}>
+            <AquasecIssuesOverallTrendDataBlock
+              score={lowScore}
+              severity={ISSUE_TYPE.LOW}
+              trend={metrics[0].overallLowTrend}
+              onSelect={onRowSelect}
+              lastScore={metrics[0].previousTotalLow}
+            />
+          </Col>
+          <Col xs={6} sm={4}>
+            <AquasecIssuesOverallTrendDataBlock
+              score={mediumScore}
+              severity={ISSUE_TYPE.MEDIUM}
+              trend={metrics[0].overallMediumTrend}
+              onSelect={onRowSelect}
+              lastScore={metrics[0].previousTotalMedium}
+            />
+          </Col>
+        </Row>
+        <Row className="justify-content-center mt-3">
+          <Col xs={6} sm={4}>
+            <AquasecIssuesOverallTrendDataBlock
+              score={highScore}
+              severity={ISSUE_TYPE.HIGH}
+              trend={metrics[0].overallHighTrend}
+              onSelect={onRowSelect}
+              lastScore={metrics[0].previousTotalHigh}
+            />
+          </Col>
+          <Col xs={6} sm={4}>
+            <AquasecIssuesOverallTrendDataBlock
+              score={criticalScore}
+              severity={ISSUE_TYPE.CRITICAL}
+              trend={metrics[0].overallHighTrend}
+              onSelect={onRowSelect}
+              lastScore={metrics[0].prevCritical}
+            />
+          </Col>
+        </Row>
+        <div className={"mt-3"}>
+          <AquasecTopProjectsByIssueType type={ISSUE_TYPE.HIGH} projects={metrics[0]?.highIssues} />
+          <AquasecTopProjectsByIssueType type={ISSUE_TYPE.MEDIUM} projects={metrics[0]?.mediumIssues} />
+          <AquasecTopProjectsByIssueType type={ISSUE_TYPE.LOW} projects={metrics[0]?.lowIssues} />
+        </div>
+      </Container>
     );
   };
 
