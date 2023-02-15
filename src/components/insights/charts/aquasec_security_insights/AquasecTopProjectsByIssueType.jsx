@@ -3,7 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import IconBase from "components/common/icons/IconBase";
-import { ICON_CHARACTERISTICS } from "./constants";
+import { ICON_FROM_TREND } from "./constants";
 
 const AquasecTopProjectsByIssueType = ({ type, projects, projectsToDisplay }) => {
   if (!Array.isArray(projects) || projects.length === 0) {
@@ -18,7 +18,7 @@ const AquasecTopProjectsByIssueType = ({ type, projects, projectsToDisplay }) =>
       borderColor={type}
     >
       {topIssues.map(({ projectTotalIssuesTrend: trend, coverityStreamName: name }, index) => {
-        const { icon, color, title } = ICON_CHARACTERISTICS[trend];
+        const { icon, color, title } = ICON_FROM_TREND[trend];
         return (
           <Row
             className="p-1 pl-2"

@@ -10,7 +10,7 @@ export const ISSUE_TYPE = Object.freeze({
   LOW: 'Low'
 });
 
-export const ICON_CHARACTERISTICS = Object.freeze({
+export const ICON_FROM_TREND = Object.freeze({
   "Red": {
     icon: faArrowCircleUp,
     color: "red",
