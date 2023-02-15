@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import MultiSelectCheckboxInputBase from "components/common/inputs/boolean/checkbox/MultiSelectCheckboxInputBase";
+import auditLogActionConstants from "@opsera/definitions/constants/audit-logs/actions/auditLogAction.constants";
 
-export default function AuditLogActionsMutiSelectCheckboxInput(
+export default function AuditLogActionsMultiSelectCheckboxInput(
   { 
     model,
     setModel,
-    type, // TODO: Pass this in, wire up the function directly from the constants when ready
+    type,
     setDataFunction,
     className,
     visible,
@@ -17,7 +18,7 @@ export default function AuditLogActionsMutiSelectCheckboxInput(
       model={model}
       fieldName={fieldName}
       setDataFunction={setDataFunction}
-      checkboxOptions={model?.getActionSelectOptionsForType()}
+      checkboxOptions={auditLogActionConstants.getActionSelectOptionsForType(type)}
       setModel={setModel}
       className={className}
       visible={visible}
@@ -27,7 +28,7 @@ export default function AuditLogActionsMutiSelectCheckboxInput(
   );
 }
 
-AuditLogActionsMutiSelectCheckboxInput.propTypes = {
+AuditLogActionsMultiSelectCheckboxInput.propTypes = {
   model: PropTypes.object,
   type: PropTypes.string,
   setDataFunction: PropTypes.func,

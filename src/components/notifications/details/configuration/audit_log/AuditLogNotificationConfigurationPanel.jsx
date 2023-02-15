@@ -2,17 +2,14 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
-import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import auditLogsNotificationConfigurationMetadata
+import {auditLogsNotificationConfigurationMetadata}
   from "components/notifications/details/configuration/audit_log/auditLogsNotificationConfiguration.metadata";
 import AuditLogNotificationMethodSelectInput
   from "components/notifications/details/methods/AuditLogNotificationMethodSelectInput";
-import SiteRoleMultiSelectCheckboxInput
-  from "components/common/list_of_values_input/ldap/site_roles/SiteRoleMultiSelectCheckboxInput";
-import AuditLogActionsMutiSelectCheckboxInput
-  from "components/common/audit_log/inputs/AuditLogActionsMutiSelectCheckboxInput";
+import AuditLogActionsMultiSelectCheckboxInput
+  from "components/common/audit_log/inputs/AuditLogActionsMultiSelectCheckboxInput";
 
 // TODO: If this is used in multiple spots, we should rename it. If it just has trigger, I would suggest TriggerNotificationEditorPanel
 export default function AuditLogNotificationConfigurationPanel(
@@ -42,8 +39,8 @@ export default function AuditLogNotificationConfigurationPanel(
         />
       </Col>
       <Col lg={12}>
-        <AuditLogActionsMutiSelectCheckboxInput
-          fieldName={""}
+        <AuditLogActionsMultiSelectCheckboxInput
+          fieldName={"events"}
           model={notificationConfigurationModel}
           setModel={setNotificationConfigurationModel}
         />

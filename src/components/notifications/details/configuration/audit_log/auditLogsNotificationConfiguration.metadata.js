@@ -1,15 +1,13 @@
-const auditLogsNotificationConfigurationMetadata = {
+export const auditLogsNotificationConfigurationMetadata = {
   type: "Audit Log Notification Configuration",
   fields: [
     {
       label: "Notification Trigger",
-      id: "trigger",
+      id: "Events",
       isRequired: true
     },
   ],
   newObjectFields: {
-      trigger: "",
+    events: [],
   },
 };
-
-export default auditLogsNotificationConfigurationMetadata;
