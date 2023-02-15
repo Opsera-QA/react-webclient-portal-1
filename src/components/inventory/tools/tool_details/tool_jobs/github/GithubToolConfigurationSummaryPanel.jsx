@@ -19,6 +19,9 @@ function GithubToolConfigurationSummaryPanel({ githubToolConfigurationModel }) {
           <TextFieldBase dataObject={githubToolConfigurationModel} fieldName={"accountUsername"} />
         </Col>
         <Col lg={12}>
+          <TextFieldBase dataObject={githubToolConfigurationModel} fieldName={"url"} />
+        </Col>
+        <Col lg={12}>
           <BooleanField dataObject={githubToolConfigurationModel} fieldName={"twoFactorAuthentication"} />
         </Col>
         <Col lg={6}>
