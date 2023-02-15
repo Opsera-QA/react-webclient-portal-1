@@ -8,11 +8,15 @@ export default function AuditLogNotificationMethodSelectInput(
     fieldName,
     model,
     setModel,
+    notificationConfigurationModel,
+    setNotificationConfigurationModel,
     disabled,
   }) {
   const setDataFunction = (fieldName, selectedOption) => {
     model?.setData(fieldName, selectedOption?.value);
     model?.setDefaultValue("configuration");
+    notificationConfigurationModel.resetData();
+    setNotificationConfigurationModel({...notificationConfigurationModel});
     model?.setDefaultValue("target");
     setModel({...model});
   };
@@ -32,6 +36,8 @@ AuditLogNotificationMethodSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
+  notificationConfigurationModel: PropTypes.object,
+  setNotificationConfigurationModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 

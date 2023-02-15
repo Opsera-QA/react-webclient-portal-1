@@ -38,6 +38,8 @@ export default function AuditLogNotificationConfigurationPanel(
         <AuditLogNotificationMethodSelectInput
           model={notificationModel}
           setModel={setNotificationModel}
+          notificationConfigurationModel={notificationConfigurationModel}
+          setNotificationConfigurationModel={setNotificationConfigurationModel}
         />
       </Col>
       <Col lg={12}>

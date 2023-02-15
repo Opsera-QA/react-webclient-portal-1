@@ -29,7 +29,7 @@ export default function TaskMultiSelectInput(
       error={error}
       textField={textField}
       disabled={disabled}
-      pluralTopic={"Tools"}
+      pluralTopic={"Tasks"}
     />
   );
 }
