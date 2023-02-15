@@ -2,17 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import ThreeLineScoreDataBlock from "components/common/metrics/score/ThreeLineScoreDataBlock";
+import { ICON_CHARACTERISTICS } from "./constants";
 
-function AquasecIssuesOverallTrendDataBlock({ score, severity, icon, className, onSelect, lastScore, iconOverlayBody }) {
+function AquasecIssuesOverallTrendDataBlock({ score, severity, trend, onSelect, lastScore }) {
+  const { icon, color, description } = ICON_CHARACTERISTICS[trend];
+  
   return (
-    <DataBlockBoxContainer showBorder={true} onClickFunction={onSelect}>
+    <DataBlockBoxContainer showBorder={true} onClickFunction={() => onSelect(severity)}>
       <ThreeLineScoreDataBlock
-        className={`${className} p-2`}
+        className={`${color} p-2`}
         score={score}
         topText={severity}
-        bottomText={"Last Scan: " + lastScore}
+        bottomText={`Last Scan: ${lastScore}`}
         icon={icon}
-        iconOverlayBody={iconOverlayBody}
+        iconOverlayBody={description}
       />
     </DataBlockBoxContainer>
   );
@@ -21,11 +24,9 @@ function AquasecIssuesOverallTrendDataBlock({ score, severity, icon, className, 
 AquasecIssuesOverallTrendDataBlock.propTypes = {
   score: PropTypes.number,
   severity: PropTypes.string,
-  icon: PropTypes.object,
-  className: PropTypes.string,
-  onSelect: PropTypes.func,
+  trend: PropTypes.string,
+  onSelect: PropTypes.func.isRequired,
   lastScore: PropTypes.number,
-  iconOverlayBody: PropTypes.any,
 };
 
 export default AquasecIssuesOverallTrendDataBlock;

@@ -6,23 +6,12 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import {
-  faArrowCircleDown,
-  faArrowCircleUp,
-  faMinusCircle,
-} from "@fortawesome/free-solid-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import AquasecIssuesBySeverityHelpDocumentation from "components/common/help/documentation/insights/charts/AquasecIssuesBySeverityHelpDocumentation";
 import AquasecActionableInsightsOverlay from "./actionable_insights/AquasecActionableInsightsOverlay";
 import AquasecIssuesOverallTrendDataBlock from "./AquasecIssuesOverallTrendDataBlock";
-import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
-import IconBase from "components/common/icons/IconBase";
-
-const ISSUE_TYPE = Object.freeze({
-  HIGH: 'High',
-  MEDIUM: 'Medium',
-  LOW: 'Low'
-});
+import AquasecTopProjectsByIssueType from "./AquasecTopProjectsByIssueType";
+import { ISSUE_TYPE } from "./constants";
 
 function AquasecIssuesBySeverity({
   kpiConfiguration,
@@ -137,101 +126,11 @@ function AquasecIssuesBySeverity({
   const onRowSelect = (stat) => {
     toastContext.showOverlayPanel(
       <AquasecActionableInsightsOverlay
-        title={stat + " Severity Insights"}
+        title={`${stat} Severity Insights`}
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
         coveritySeverity={stat}
       />
-    );
-  };
-
-  const getIcon = (severity) => {
-    switch (severity) {
-      case "Red":
-        return faArrowCircleUp;
-      case "Green":
-        return faArrowCircleDown;
-      case "Neutral":
-        return faMinusCircle;
-      default:
-        break;
-    }
-  };
-
-  const getIconColor = (severity) => {
-    switch (severity) {
-      case "Red":
-        return "red";
-      case "Green":
-        return "green";
-      case "Neutral":
-        return "light-gray-text-secondary";
-      case "-":
-        return "black";
-      default:
-        break;
-    }
-  };
-
-  const getIconTitle = (severity) => {
-    switch (severity) {
-      case "Red":
-        return "Risk";
-      case "Green":
-        return "Success";
-      case "Neutral":
-        return "Same as Earlier";
-      case "-":
-        return "No Trend";
-      default:
-        break;
-    }
-  };
-
-  const getDescription = (severity) => {
-    switch (severity) {
-      case "Red":
-        return "This project's issues are trending upward";
-      case "Green":
-        return "This project's issues are trending downward";
-      case "Neutral":
-        return "Neutral: This project's issues have experienced no change";
-    }
-  };
-
-  const projectsByIssueType = (issueType, issues) => {
-    if (!Array.isArray(issues) || issues.length === 0) {
-      return null;
-    }
-
-    const topIssues = issues.slice(0, 1);
-
-    return (
-      <HorizontalDataBlocksContainer
-        title={`Top Project with ${issueType} Issues`}
-        borderColor={issueType}
-      >
-        {topIssues.map((doc, index) => (
-          <Row
-            className="p-1"
-            key={index}
-            style={{ paddingLeft: "11px" }}
-          >
-            <Col lg={12}>
-              {(getIcon(doc?.projectTotalIssuesTrend) !== "Neutral") !=
-                null && (
-                <IconBase
-                  icon={getIcon(doc?.projectTotalIssuesTrend)}
-                  iconColor={getIconColor(doc?.projectTotalIssuesTrend)}
-                  iconTitle={getIconTitle(doc?.projectTotalIssuesTrend)}
-                />
-              )}
-              <span style={{ paddingLeft: "2px" }}></span>
-              {doc?.coverityStreamName}
-            </Col>
-          </Row>
-        ))}
-      </HorizontalDataBlocksContainer>
     );
   };
 
@@ -259,11 +158,9 @@ function AquasecIssuesBySeverity({
                     : 0
                 }
                 severity={ISSUE_TYPE.LOW}
-                icon={getIcon(metrics[0].overallLowTrend)}
-                className={getIconColor(metrics[0].overallLowTrend)}
-                onSelect={() => onRowSelect(ISSUE_TYPE.LOW)}
+                trend={metrics[0].overallLowTrend}
+                onSelect={onRowSelect}
                 lastScore={metrics[0].previousTotalLow}
-                iconOverlayBody={getDescription(metrics[0].overallLowTrend)}
               />
             </Col>
             <Col>
@@ -274,11 +171,9 @@ function AquasecIssuesBySeverity({
                     : 0
                 }
                 severity={ISSUE_TYPE.MEDIUM}
-                icon={getIcon(metrics[0].overallMediumTrend)}
-                className={getIconColor(metrics[0].overallMediumTrend)}
-                onSelect={() => onRowSelect(ISSUE_TYPE.MEDIUM)}
+                trend={metrics[0].overallMediumTrend}
+                onSelect={onRowSelect}
                 lastScore={metrics[0].previousTotalMedium}
-                iconOverlayBody={getDescription(metrics[0].overallMediumTrend)}
               />
             </Col>
             <Col>
@@ -289,18 +184,16 @@ function AquasecIssuesBySeverity({
                     : 0
                 }
                 severity={ISSUE_TYPE.HIGH}
-                icon={getIcon(metrics[0].overallHighTrend)}
-                className={getIconColor(metrics[0].overallHighTrend)}
-                onSelect={() => onRowSelect(ISSUE_TYPE.HIGH)}
+                trend={metrics[0].overallHighTrend}
+                onSelect={onRowSelect}
                 lastScore={metrics[0].previousTotalHigh}
-                iconOverlayBody={getDescription(metrics[0].overallHighTrend)}
               />
             </Col>
           </Row>
           <div className={"mt-3"}>
-            {projectsByIssueType(ISSUE_TYPE.HIGH, metrics[0]?.highIssues)}
-            {projectsByIssueType(ISSUE_TYPE.MEDIUM, metrics[0]?.mediumIssues)}
-            {projectsByIssueType(ISSUE_TYPE.LOW, metrics[0]?.lowIssues)}
+            <AquasecTopProjectsByIssueType type={ISSUE_TYPE.HIGH} projects={metrics[0]?.highIssues} />
+            <AquasecTopProjectsByIssueType type={ISSUE_TYPE.MEDIUM} projects={metrics[0]?.mediumIssues} />
+            <AquasecTopProjectsByIssueType type={ISSUE_TYPE.LOW} projects={metrics[0]?.lowIssues} />
           </div>
         </Container>
       </div>
