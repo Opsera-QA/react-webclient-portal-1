@@ -66,6 +66,7 @@ export default function NotificationConfigurationPanel(
     notificationModel.setData("type", value.value);
     notificationModel.setDefaultValue("configuration");
     notificationModel.setDefaultValue("method");
+    notificationModel.setDefaultValue("target");
     setNotificationConfigurationModel(undefined);
     setNotificationModel({...notificationModel});
   };

@@ -7,9 +7,11 @@ import Col from "react-bootstrap/Col";
 import {auditLogNotificationConfigurationMetadata}
   from "components/notifications/details/configuration/audit_log/auditLogNotificationConfigurationMetadata";
 import AuditLogNotificationMethodSelectInput
-  from "components/notifications/details/methods/AuditLogNotificationMethodSelectInput";
+  from "components/notifications/details/configuration/audit_log/inputs/AuditLogNotificationMethodSelectInput";
 import AuditLogActionsMultiSelectCheckboxInput
   from "components/common/audit_log/inputs/AuditLogActionsMultiSelectCheckboxInput";
+import AuditLogNotificationTargetMultiSelectInput
+  from "components/notifications/details/configuration/audit_log/inputs/AuditLogNotificationTargetMultiSelectInput";
 
 // TODO: If this is used in multiple spots, we should rename it. If it just has trigger, I would suggest TriggerNotificationEditorPanel
 export default function AuditLogNotificationConfigurationPanel(
@@ -34,6 +36,12 @@ export default function AuditLogNotificationConfigurationPanel(
     <Row>
       <Col lg={12}>
         <AuditLogNotificationMethodSelectInput
+          model={notificationModel}
+          setModel={setNotificationModel}
+        />
+      </Col>
+      <Col lg={12}>
+        <AuditLogNotificationTargetMultiSelectInput
           model={notificationModel}
           setModel={setNotificationModel}
         />

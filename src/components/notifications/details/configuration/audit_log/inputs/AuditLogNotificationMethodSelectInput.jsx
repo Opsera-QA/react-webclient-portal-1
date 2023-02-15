@@ -13,6 +13,7 @@ export default function AuditLogNotificationMethodSelectInput(
   const setDataFunction = (fieldName, selectedOption) => {
     model?.setData(fieldName, selectedOption?.value);
     model?.setDefaultValue("configuration");
+    model?.setDefaultValue("target");
     setModel({...model});
   };
 
