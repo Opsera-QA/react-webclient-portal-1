@@ -3,7 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import HorizontalDataBlocksContainer from "components/common/metrics/data_blocks/horizontal/HorizontalDataBlocksContainer";
 import IconBase from "components/common/icons/IconBase";
-import { ICON_FROM_TREND } from "./constants";
+import { ICON_FROM_TREND } from "./aquasec.constants";
 
 const AquasecTopProjectsByIssueType = ({ type, projects, projectsToDisplay }) => {
   if (!Array.isArray(projects) || projects.length === 0) {

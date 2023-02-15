@@ -11,7 +11,7 @@ import AquasecIssuesBySeverityHelpDocumentation from "components/common/help/doc
 import AquasecActionableInsightsOverlay from "./actionable_insights/AquasecActionableInsightsOverlay";
 import AquasecIssuesOverallTrendDataBlock from "./AquasecIssuesOverallTrendDataBlock";
 import AquasecTopProjectsByIssueType from "./AquasecTopProjectsByIssueType";
-import { ISSUE_TYPE } from "./constants";
+import { ISSUE_TYPE } from "./aquasec.constants";
 
 function AquasecIssuesBySeverity({
   kpiConfiguration,
