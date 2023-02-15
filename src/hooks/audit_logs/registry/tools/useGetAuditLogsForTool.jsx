@@ -11,6 +11,7 @@ export default function useGetAuditLogsForTool(
   handleErrorFunction,
 ) {
   const [auditLogs, setAuditLogs] = useState([]);
+  const [tool, setTool] = useState(undefined);
   const [toolAuditLogFilterModel, setToolAuditLogFilterModel] = useState(new UserActivityAuditLogFilterModel());
   const {
     getAccessToken,
@@ -32,6 +33,7 @@ export default function useGetAuditLogsForTool(
   }, [toolId]);
 
   const getAuditLogsForPipeline = async (newFilterModel = toolAuditLogFilterModel) => {
+    setTool(undefined);
     if (isMongoDbId(toolId) !== true) {
       return;
     }
@@ -47,11 +49,13 @@ export default function useGetAuditLogsForTool(
     newFilterModel.setData("totalCount", response?.data?.count);
     newFilterModel.updateActiveFilters();
     setToolAuditLogFilterModel({...newFilterModel});
+    setTool(DataParsingHelper.parseNestedObject(response, "data.tool", {}));
   };
 
   return ({
     auditLogs: auditLogs,
     setAuditLogs: setAuditLogs,
+    tool: tool,
     toolAuditLogFilterModel: toolAuditLogFilterModel,
     setToolAuditLogFilterModel: setToolAuditLogFilterModel,
     loadData: () => loadData(getAuditLogsForPipeline, handleErrorFunction),
