@@ -185,8 +185,11 @@ const MergeSyncTaskWizardCommitViewer = ({
     );
   };
 
-  return (
+  if (diffFile && !diffFile?.whitelisted) {
+    return <div className={"m-2"}>Unsupported File Format</div>;
+  }
 
+  return (
     <div
       className={"mt-1 mx-3"}
       style={{ overflowX: "hidden" }}
