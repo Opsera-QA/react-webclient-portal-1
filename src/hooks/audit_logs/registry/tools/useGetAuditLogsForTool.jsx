@@ -5,6 +5,7 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import {UserActivityAuditLogFilterModel} from "hooks/audit_logs/userActivityAuditLogFilter.model";
 import {registryToolAuditLogActions} from "hooks/audit_logs/registry/tools/registryToolAuditLog.actions";
+import auditLogTypeConstants from "@opsera/definitions/constants/audit-logs/types/auditLogType.constants";
 
 export default function useGetAuditLogsForTool(
   toolId,
@@ -12,7 +13,7 @@ export default function useGetAuditLogsForTool(
 ) {
   const [auditLogs, setAuditLogs] = useState([]);
   const [tool, setTool] = useState(undefined);
-  const [toolAuditLogFilterModel, setToolAuditLogFilterModel] = useState(new UserActivityAuditLogFilterModel());
+  const [toolAuditLogFilterModel, setToolAuditLogFilterModel] = useState(new UserActivityAuditLogFilterModel(auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.TOOL_REGISTRY));
   const {
     getAccessToken,
     cancelTokenSource,
