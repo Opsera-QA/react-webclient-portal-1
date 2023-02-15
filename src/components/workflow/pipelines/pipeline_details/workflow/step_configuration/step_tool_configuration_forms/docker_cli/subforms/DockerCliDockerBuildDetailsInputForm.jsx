@@ -6,6 +6,8 @@ import EditableParameterMappingInput from "components/common/list_of_values_inpu
 import DockerTagTypeSelectionInput 
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/DockerTagTypeSelectionInput";
 import DockerCliCommandLineInputParameterInput from "../inputs/DockerCliCommandLineInputParameterInput";
+import PipelineStepParameterInputBase
+  from "../../../../../../../../common/list_of_values_input/parameters/pipeline/PipelineStepParameterInputBase";
 
 
 function DockerCliDockerBuildDetailsInputForm({ model, setModel, plan }) {
@@ -68,13 +70,16 @@ function DockerCliDockerBuildDetailsInputForm({ model, setModel, plan }) {
             dataObject={model}
             setDataObject={setModel}
           />
-          {getDockerTagInputs()}          
-          <DockerCliCommandLineInputParameterInput 
-            model={model} 
-            setModel={setModel} 
-            plan={plan} 
-            fieldName={"buildArguments"} 
-            subheaderText={"Build Arguments"} />
+          {getDockerTagInputs()}
+          <PipelineStepParameterInputBase
+            saveEnvironmentVariables={true}
+            environmentVariablesFieldName={"buildArguments"}
+            model={model}
+            setModel={setModel}
+            plan={plan}
+            allowTerraformParametersSync={true}
+            allowParameterMapping={true}
+          />
         </>
       );
     }

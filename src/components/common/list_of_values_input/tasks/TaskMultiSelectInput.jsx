@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
-import useGetRegistryTools from "hooks/tools/useGetRegistryTools";
+import useGetTasks from "hooks/workflow/tasks/useGetTasks";
 
-export default function ToolMultiSelectInput(
+export default function TaskMultiSelectInput(
   {
     fieldName,
     model,
@@ -15,26 +15,26 @@ export default function ToolMultiSelectInput(
   const {
     isLoading,
     error,
-    registryTools,
-  } = useGetRegistryTools();
+    tasks,
+  } = useGetTasks();
 
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={registryTools}
+      selectOptions={tasks}
       busy={isLoading}
       valueField={valueField}
       error={error}
       textField={textField}
       disabled={disabled}
-      pluralTopic={"Tools"}
+      pluralTopic={"Tasks"}
     />
   );
 }
 
-ToolMultiSelectInput.propTypes = {
+TaskMultiSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
@@ -43,7 +43,7 @@ ToolMultiSelectInput.propTypes = {
   valueField: PropTypes.string
 };
 
-ToolMultiSelectInput.defaultProps = {
+TaskMultiSelectInput.defaultProps = {
   valueField: "_id",
   textField: "name"
 };
