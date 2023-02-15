@@ -8,32 +8,36 @@ import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-// TODO: If this is used in multiple spots, we should rename it. If it just has trigger, I would suggest TriggerNotificationEditorPanel
-function PipelineNotificationEditorPanel({ notificationDataDto, notificationConfigurationData, setNotificationConfigurationData }) {
+function PipelineNotificationEditorPanel(
+  {
+    notificationModel,
+    notificationConfigurationModel,
+    setNotificationConfigurationModel,
+  }) {
   useEffect(() => {loadData();}, []);
 
   const loadData = async () => {
-    const configurationData = modelHelpers.getToolConfigurationModel(notificationDataDto.getData("configuration"), pipelineNotificationConfigurationMetadata);
-    setNotificationConfigurationData({...configurationData});
+    const configurationData = modelHelpers.getToolConfigurationModel(notificationModel.getData("configuration"), pipelineNotificationConfigurationMetadata);
+    setNotificationConfigurationModel({...configurationData});
   };
 
-  if (notificationDataDto == null || notificationConfigurationData == null) {
+  if (notificationModel == null || notificationConfigurationModel == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
   return (
     <Row>
       <Col lg={12}>
-        <TextAreaInput dataObject={notificationConfigurationData} setDataObject={setNotificationConfigurationData} fieldName={"trigger"} />
+        <TextAreaInput dataObject={notificationConfigurationModel} setDataObject={setNotificationConfigurationModel} fieldName={"trigger"} />
       </Col>
     </Row>
   );
 }
 
 PipelineNotificationEditorPanel.propTypes = {
-  notificationDataDto: PropTypes.object,
-  notificationConfigurationData: PropTypes.object,
-  setNotificationConfigurationData: PropTypes.func
+  notificationModel: PropTypes.object,
+  notificationConfigurationModel: PropTypes.object,
+  setNotificationConfigurationModel: PropTypes.func
 };
 
 export default PipelineNotificationEditorPanel;

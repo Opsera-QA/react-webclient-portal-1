@@ -46,7 +46,7 @@ export default function NotificationConfigurationPanel(
       case NOTIFICATION_TYPES.PIPELINE:
         return (
           <PipelineNotificationEditorPanel
-            notificationDataDto={notificationModel}
+            notificationModel={notificationModel}
             notificationConfigurationModel={notificationConfigurationModel}
             setNotificationConfigurationModel={updateModelFunction}
           />
