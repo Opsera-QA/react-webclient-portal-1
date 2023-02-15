@@ -30,51 +30,50 @@ import GChatNotificationMethodSummaryCard
   from "components/notifications/details/methods/gchat/GChatNotificationMethodSummaryCard";
 import gChatNotificationMetadata
   from "components/notifications/details/methods/gchat/gChatNotificationMetadata";
+import {ORCHESTRATION_NOTIFICATION_TYPES} from "components/common/fields/notifications/notificationTypes.constants";
+import modelHelpers from "components/common/model/modelHelpers";
+import AuditLogNotificationTypeSummaryCard
+  from "components/notifications/details/configuration/audit_log/AuditLogNotificationTypeSummaryCard";
+import {
+  auditLogNotificationConfigurationMetadata
+} from "components/notifications/details/configuration/audit_log/auditLogNotificationConfigurationMetadata";
 
 function NotificationPolicySummaryPanel({ notificationData, setActiveTab }) {
-  const wrapNotificationType = (metaData) => {
-    return new Model(notificationData.getData("configuration"), metaData, false);
-  };
-
-  const wrapNotificationMethod = (metaData) => {
-    return new Model(notificationData.getData("notification"), metaData, false);
-  };
-
   // TODO: Make these panels more similar to the pipeline summary cards
   const getNotificationMethodSummaryPanel = () => {
     switch (notificationData.getData("method")) {
-      case "email":
+      case ORCHESTRATION_NOTIFICATION_TYPES.EMAIL:
         return (
           <EmailNotificationMethodSummaryCard
-            notificationMethodData={wrapNotificationMethod(emailNotificationMetadata)}
+            notificationMethodData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), emailNotificationMetadata)}
             notificationData={notificationData}
           />
         );
-      case "slack":
+      case ORCHESTRATION_NOTIFICATION_TYPES.SLACK:
         return (
           <SlackNotificationMethodSummaryCard
-            notificationMethodData={wrapNotificationMethod(slackNotificationMetadata)}
+            notificationMethodData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), slackNotificationMetadata)}
             notificationData={notificationData}
           />
         );
-      case "teams":
+      case ORCHESTRATION_NOTIFICATION_TYPES.TEAMS:
         return (
           <TeamsNotificationMethodSummaryCard
-            notificationMethodData={wrapNotificationMethod(teamsNotificationMetadata)}
+            notificationMethodData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), teamsNotificationMetadata)}
             notificationData={notificationData}
           />
         );
-      case "jira":
+      case ORCHESTRATION_NOTIFICATION_TYPES.JIRA:
         return (
           <JiraNotificationMethodSummaryCard
-            notificationMethodData={wrapNotificationMethod(jiraNotificationMetadata)}
+            notificationMethodData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), jiraNotificationMetadata)}
             notificationData={notificationData}
           />
         );
-      case "gchat":
+      case ORCHESTRATION_NOTIFICATION_TYPES.GCHAT:
         return (
           <GChatNotificationMethodSummaryCard
-            notificationMethodData={wrapNotificationMethod(gChatNotificationMetadata)}
+            notificationMethodData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), gChatNotificationMetadata)}
             notificationData={notificationData}
           />
         );
@@ -86,17 +85,24 @@ function NotificationPolicySummaryPanel({ notificationData, setActiveTab }) {
   // TODO: Make these panels more similar to the pipeline summary cards
   const getNotificationTypeSummaryPanel = () => {
     switch (notificationData.getData("type")) {
+      case "audit_log":
+        return (
+          <AuditLogNotificationTypeSummaryCard
+            notificationConfigurationData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), auditLogNotificationConfigurationMetadata)}
+            notificationData={notificationData}
+          />
+        );
       case "metric":
         return (
           <MetricNotificationTypeSummaryCard
-            notificationConfigurationData={wrapNotificationType(metricNotificationConfigurationMetadata)}
+            notificationConfigurationData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), metricNotificationConfigurationMetadata)}
             notificationData={notificationData}
           />
         );
       case "pipeline":
         return (
           <PipelineNotificationTypeSummaryCard
-            notificationConfigurationData={wrapNotificationType(pipelineNotificationConfigurationMetadata)}
+            notificationConfigurationData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), pipelineNotificationConfigurationMetadata)}
             notificationData={notificationData}
           />
         );

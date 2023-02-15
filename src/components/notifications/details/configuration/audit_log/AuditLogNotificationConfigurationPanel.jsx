@@ -4,8 +4,8 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {auditLogsNotificationConfigurationMetadata}
-  from "components/notifications/details/configuration/audit_log/auditLogsNotificationConfiguration.metadata";
+import {auditLogNotificationConfigurationMetadata}
+  from "components/notifications/details/configuration/audit_log/auditLogNotificationConfigurationMetadata";
 import AuditLogNotificationMethodSelectInput
   from "components/notifications/details/methods/AuditLogNotificationMethodSelectInput";
 import AuditLogActionsMultiSelectCheckboxInput
@@ -22,7 +22,7 @@ export default function AuditLogNotificationConfigurationPanel(
   useEffect(() => {loadData();}, []);
 
   const loadData = async () => {
-    const configurationData = modelHelpers.getToolConfigurationModel(notificationModel.getData("configuration"), auditLogsNotificationConfigurationMetadata);
+    const configurationData = modelHelpers.getToolConfigurationModel(notificationModel.getData("configuration"), auditLogNotificationConfigurationMetadata);
     setNotificationConfigurationModel({...configurationData});
   };
 

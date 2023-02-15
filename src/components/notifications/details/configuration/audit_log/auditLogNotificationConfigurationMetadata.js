@@ -1,4 +1,4 @@
-export const auditLogsNotificationConfigurationMetadata = {
+export const auditLogNotificationConfigurationMetadata = {
   type: "Audit Log Notification Configuration",
   fields: [
     {
