@@ -13,6 +13,7 @@ function PipelineSchedulerField(
   {
     pipelineModel,
     canEditPipelineSchedule,
+    updatedAt,
     fieldName,
   }) {
   const toastContext = useContext(DialogToastContext);
@@ -45,7 +46,7 @@ function PipelineSchedulerField(
       source.cancel();
       isMounted.current = false;
     };
-  }, [pipelineModel]);
+  }, [updatedAt]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -109,6 +110,7 @@ PipelineSchedulerField.propTypes = {
   canEditPipelineSchedule: PropTypes.bool,
   pipelineModel: PropTypes.object,
   fieldName: PropTypes.string,
+  updatedAt: PropTypes.any,
 };
 
 PipelineSchedulerField.defaultProps = {
