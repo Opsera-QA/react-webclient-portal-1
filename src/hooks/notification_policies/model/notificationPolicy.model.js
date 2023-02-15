@@ -1,8 +1,8 @@
 import ModelBase from "core/data_model/model.base";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 import {notificationPolicyHelper} from "hooks/notification_policies/notificationPolicy.helper";
-import notificationsMetadata from "components/notifications/notifications-metadata";
+import notificationPolicyMetadata
+  from "@opsera/definitions/constants/notification_policies/notificationPolicy.metadata";
 
 export default class NotificationPolicyModel extends ModelBase {
   constructor(
@@ -11,13 +11,13 @@ export default class NotificationPolicyModel extends ModelBase {
   ) {
     super(
       data,
-      notificationsMetadata,
+      notificationPolicyMetadata,
       newModel,
     );
   }
 
   getDetailViewTitle = () => {
-    return policyConstants.getPolicyNameLabel(this.getData("name"));
+    return this.getData("name");
   };
 
   getDetailViewLink = () => {

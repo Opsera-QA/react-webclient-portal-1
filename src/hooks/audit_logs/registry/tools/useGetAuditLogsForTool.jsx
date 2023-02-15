@@ -5,13 +5,15 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import {UserActivityAuditLogFilterModel} from "hooks/audit_logs/userActivityAuditLogFilter.model";
 import {registryToolAuditLogActions} from "hooks/audit_logs/registry/tools/registryToolAuditLog.actions";
+import auditLogTypeConstants from "@opsera/definitions/constants/audit-logs/types/auditLogType.constants";
 
 export default function useGetAuditLogsForTool(
   toolId,
   handleErrorFunction,
 ) {
   const [auditLogs, setAuditLogs] = useState([]);
-  const [toolAuditLogFilterModel, setToolAuditLogFilterModel] = useState(new UserActivityAuditLogFilterModel());
+  const [tool, setTool] = useState(undefined);
+  const [toolAuditLogFilterModel, setToolAuditLogFilterModel] = useState(new UserActivityAuditLogFilterModel(auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.TOOL_REGISTRY));
   const {
     getAccessToken,
     cancelTokenSource,
@@ -32,6 +34,7 @@ export default function useGetAuditLogsForTool(
   }, [toolId]);
 
   const getAuditLogsForPipeline = async (newFilterModel = toolAuditLogFilterModel) => {
+    setTool(undefined);
     if (isMongoDbId(toolId) !== true) {
       return;
     }
@@ -47,11 +50,13 @@ export default function useGetAuditLogsForTool(
     newFilterModel.setData("totalCount", response?.data?.count);
     newFilterModel.updateActiveFilters();
     setToolAuditLogFilterModel({...newFilterModel});
+    setTool(DataParsingHelper.parseNestedObject(response, "data.tool", {}));
   };
 
   return ({
     auditLogs: auditLogs,
     setAuditLogs: setAuditLogs,
+    tool: tool,
     toolAuditLogFilterModel: toolAuditLogFilterModel,
     setToolAuditLogFilterModel: setToolAuditLogFilterModel,
     loadData: () => loadData(getAuditLogsForPipeline, handleErrorFunction),

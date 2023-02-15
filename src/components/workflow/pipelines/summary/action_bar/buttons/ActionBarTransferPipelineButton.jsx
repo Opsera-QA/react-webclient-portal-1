@@ -29,6 +29,8 @@ function ActionBarTransferPipelineButton(
     getAccessToken,
     toastContext,
     isSaasUser,
+    isFreeTrial,
+    isOpseraAdministrator,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -113,6 +115,7 @@ function ActionBarTransferPipelineButton(
 
   if (
     isSaasUser !== false
+    || (isFreeTrial === true && isOpseraAdministrator !== true)
     || pipeline == null
     || pipeline?.account == null
     || PipelineRoleHelper.canTransferPipelineOwnership(userData, pipeline) !== true) {

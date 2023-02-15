@@ -3,6 +3,12 @@ const githubConnectionMetadata = {
   idProperty: "_id",
   fields: [
     {
+      label: "Url",
+      id: "url",
+      isRequired: true,
+      isSecureUrl: true,
+    },
+    {
       label: "Username",
       id: "accountUsername",
       isRequired: true,
@@ -60,6 +66,7 @@ const githubConnectionMetadata = {
   ],
   newObjectFields:
     {
+      url: "https://api.github.com/",
       accountUsername: "",
       accountPassword: "",
       secretPrivateKey: "",

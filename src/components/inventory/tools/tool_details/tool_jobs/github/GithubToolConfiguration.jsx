@@ -64,6 +64,9 @@ function GithubToolConfiguration({ toolData }) {
       toolConnectionCheckName={"Github"}
     >
       <Col sm={12}>
+        <TextInputBase dataObject={githubConfigurationDto} setDataObject={setGithubConfigurationDto} fieldName={"url"}/>
+      </Col>
+      <Col sm={12}>
         <TextInputBase dataObject={githubConfigurationDto} setDataObject={setGithubConfigurationDto} fieldName={"accountUsername"}/>
       </Col>
       <Col sm={12}>
