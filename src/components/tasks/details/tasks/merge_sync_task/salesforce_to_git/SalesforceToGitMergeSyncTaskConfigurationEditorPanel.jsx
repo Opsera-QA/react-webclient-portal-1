@@ -112,6 +112,7 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
         <SalesforceToGitMergeSyncTaskTargetBranchSelectInput
           model={gitConfigurationModel}
           setModel={setGitModelFunction}
+          sourceBranch={gitConfigurationModel?.getData("sourceBranch")}
         />
       </Col>
     );
