@@ -17,7 +17,7 @@ function NotificationPolicyEditorPanel({ notificationData, handleClose }) {
   const [notificationModel, setNotificationModel] = useState({...notificationData});
   const [notificationConfigurationModel, setNotificationConfigurationModel] = useState(undefined);
   const notificationPolicyActions = useNotificationPolicyActions();
-  
+
   const createNotification = async () => {
     return await notificationPolicyActions.createNotificationPolicy(notificationModel);
   };
@@ -25,7 +25,7 @@ function NotificationPolicyEditorPanel({ notificationData, handleClose }) {
   const updateNotification = async () => {
     return await notificationPolicyActions.updateNotificationPolicy(notificationModel);
   };
-  
+
   if (notificationModel == null) {
     return (<LoadingDialog size="sm"/>);
   }

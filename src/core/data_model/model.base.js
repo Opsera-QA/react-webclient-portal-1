@@ -525,6 +525,10 @@ export default class ModelBase {
     return this.deleteAllowed === true;
   };
 
+  canViewAuditLogs = () => {
+    return false;
+  };
+
   canEditAccessRoles = () => {
     return this.canUpdate() === true && this.editAccessRolesAllowed === true;
   };
