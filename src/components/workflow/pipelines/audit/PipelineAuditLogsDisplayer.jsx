@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import useGetAuditLogsForPipeline from "hooks/audit_logs/pipelines/useGetAuditLogsForPipeline";
 import IndividualObjectAuditLogsDisplayer from "components/common/audit_log/IndividualObjectAuditLogsDisplayer";
-import auditLogTypeConstants from "@opsera/definitions/constants/audit-logs/types/auditLogType.constants";
 
 export default function PipelineAuditLogsDisplayer(
   {
