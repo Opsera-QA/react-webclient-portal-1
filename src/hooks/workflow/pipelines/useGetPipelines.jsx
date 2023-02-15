@@ -8,6 +8,7 @@ export default function useGetPipelines(
   handleErrorFunction,
 ) {
   const [pipelines, setPipelines] = useState([]);
+  const [subscribedPipelineIds, setSubscribedPipelineIds] = useState([]);
   const [pipelineFilterModel, setPipelineFilterModel] = useState(new PipelineFilterModel());
   const {
     isLoading,
@@ -18,7 +19,7 @@ export default function useGetPipelines(
   const pipelineActions = usePipelineActions();
 
   useEffect(() => {
-    setPipelines(undefined);
+    setPipelines([]);
 
     if (loadData) {
       loadData(getPipelines, handleErrorFunction).catch(() => {});
@@ -35,11 +36,12 @@ export default function useGetPipelines(
       fields,
       active,
     );
-    const newPipeline = DataParsingHelper.parseObject(response?.data?.data);
-
-    if (newPipeline) {
-      setPipelines(newPipeline);
-    }
+    const newPipelines = DataParsingHelper.parseNestedArray(response, "data.data", []);
+    setPipelines([...newPipelines]);
+    newFilterModel.updateTotalCount(DataParsingHelper.parseNestedInteger(response, "data.count", 0));
+    newFilterModel.updateActiveFilters();
+    setSubscribedPipelineIds(DataParsingHelper.parseNestedArray(response, "data.subscriptions", []));
+    setPipelineFilterModel({...newFilterModel});
   };
 
   return ({
@@ -47,6 +49,8 @@ export default function useGetPipelines(
     setPipelines: setPipelines,
     pipelineFilterModel: pipelineFilterModel,
     setPipelineFilterModel: setPipelineFilterModel,
+    subscribedPipelineIds: subscribedPipelineIds,
+    setSubscribedPipelineIds: setSubscribedPipelineIds,
     loadData: async (newFilterModel, fields, active) => loadData(async () => getPipelines(newFilterModel, fields, active), handleErrorFunction),
     isLoading: isLoading,
     error: error,
