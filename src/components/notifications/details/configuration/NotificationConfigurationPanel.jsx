@@ -65,6 +65,7 @@ export default function NotificationConfigurationPanel(
   const handleNotificationTypeChange = (fieldName, value) => {
     notificationModel.setData("type", value.value);
     notificationModel.setDefaultValue("configuration");
+    notificationModel.setDefaultValue("method");
     setNotificationConfigurationModel(undefined);
     setNotificationModel({...notificationModel});
   };
