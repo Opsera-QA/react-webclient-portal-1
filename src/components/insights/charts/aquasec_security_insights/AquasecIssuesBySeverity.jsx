@@ -149,7 +149,7 @@ function AquasecIssuesBySeverity({
         style={{ minHeight: "300px" }}
       >
         <Container>
-          <Row className="p-1 gray justify-content-center">
+          <Row className="justify-content-center">
             <Col xs={6} sm={4}>
               <AquasecIssuesOverallTrendDataBlock
                 score={dataMetrics?.lowIssues[0]?.DataBlocks[0]?.totalIssues}
@@ -178,7 +178,7 @@ function AquasecIssuesBySeverity({
               />
             </Col>
           </Row>
-          <Row className="justify-content-center">
+          <Row className="justify-content-center mt-3">
             <Col xs={6} sm={4}>
               <AquasecIssuesOverallTrendDataBlock
                 score={dataMetrics?.highIssues[0]?.DataBlocks[0]?.totalIssues}
