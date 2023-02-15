@@ -164,7 +164,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   BOOMI_PIPELINE_EXECUTIONS:"boomi-pipeline-executions",
 
   //DORA
-  DORA_JIRA_GITLAB_ROLLED_UP:"dora-jira-gitlab-rolled-up",
+  DORA_JIRA_GITLAB_ROLLED_UP: "dora-jira-gitlab-rolled-up",
 
   // Coverity
   COVERITY_ISSUES_BY_CATEGORY_TREND: "coverity-issues-by-category-trend",
