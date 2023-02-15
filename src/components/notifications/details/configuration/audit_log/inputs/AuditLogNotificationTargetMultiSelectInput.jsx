@@ -1,12 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AuditLogNotificationMethodSelectInputBase
-  from "components/common/list_of_values_input/notifications/method/audit_logs/AuditLogNotificationMethodSelectInputBase";
-import {hasStringValue} from "components/common/helpers/string-helpers";
 import auditLogTypeConstants from "@opsera/definitions/constants/audit-logs/types/auditLogType.constants";
 import PipelineMultiSelectInput
   from "components/common/list_of_values_input/workflow/pipelines/PipelineMultiSelectInput";
 import ToolMultiSelectInput from "components/common/list_of_values_input/inventory/ToolMultiSelectInput";
+import TaskMultiSelectInput from "components/common/list_of_values_input/tasks/TaskMultiSelectInput";
 
 export default function AuditLogNotificationTargetMultiSelectInput(
   {
@@ -18,7 +16,14 @@ export default function AuditLogNotificationTargetMultiSelectInput(
   const objectType = model?.getData("method");
 
   if (objectType === auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.TASK) {
-    return null;
+    return (
+      <TaskMultiSelectInput
+        model={model}
+        setModel={setModel}
+        fieldName={fieldName}
+        disabled={disabled}
+      />
+    );
   }
 
   if (objectType === auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.TOOL_REGISTRY) {
@@ -27,7 +32,7 @@ export default function AuditLogNotificationTargetMultiSelectInput(
         model={model}
         setModel={setModel}
         fieldName={fieldName}
-        visible={objectType === auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.PIPELINE}
+        disabled={disabled}
       />
     );
   }
@@ -38,7 +43,7 @@ export default function AuditLogNotificationTargetMultiSelectInput(
         model={model}
         setModel={setModel}
         fieldName={fieldName}
-        visible={objectType === auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.PIPELINE}
+        disabled={disabled}
       />
     );
   }
