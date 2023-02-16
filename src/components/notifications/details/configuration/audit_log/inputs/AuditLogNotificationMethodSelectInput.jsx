@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import AuditLogNotificationMethodSelectInputBase
   from "components/common/list_of_values_input/notifications/method/audit_logs/AuditLogNotificationMethodSelectInputBase";
+import auditLogActionConstants from "@opsera/definitions/constants/audit-logs/actions/auditLogAction.constants";
+import constantsHelper from "@opsera/definitions/constants/constants.helper";
 
 export default function AuditLogNotificationMethodSelectInput(
   {
@@ -13,9 +15,19 @@ export default function AuditLogNotificationMethodSelectInput(
     disabled,
   }) {
   const setDataFunction = (fieldName, selectedOption) => {
-    model?.setData(fieldName, selectedOption?.value);
+    const newObjectType = selectedOption?.value;
+    model?.setData(fieldName, newObjectType);
     model?.setDefaultValue("configuration");
     notificationConfigurationModel.resetData();
+
+    if (newObjectType) {
+      const eventSelectOptions = auditLogActionConstants.getActionSelectOptionsForType(newObjectType);
+      const valueArray = constantsHelper.getValuesForSelectOptionsArray(eventSelectOptions);
+      console.log("valueArray: " + JSON.stringify(valueArray));
+      notificationConfigurationModel?.setData("events", valueArray);
+      model?.setData("configuration.events", valueArray);
+    }
+
     setNotificationConfigurationModel({...notificationConfigurationModel});
     model?.setDefaultValue("target");
     setModel({...model});

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import MultiSelectCheckboxInputBase from "components/common/inputs/boolean/checkbox/MultiSelectCheckboxInputBase";
 import auditLogActionConstants from "@opsera/definitions/constants/audit-logs/actions/auditLogAction.constants";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 export default function AuditLogActionsMultiSelectCheckboxInput(
   { 
@@ -13,6 +14,10 @@ export default function AuditLogActionsMultiSelectCheckboxInput(
     visible,
     fieldName,
   }) {
+  if (hasStringValue(type) !== true) {
+    return null;
+  }
+
   return (
     <MultiSelectCheckboxInputBase
       model={model}
