@@ -62,40 +62,47 @@ function AquasecActionableInsightsOverlay({ title, severity, kpiConfiguration, d
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
-      let request = "coverityInsightsDatablocks";
+      let request = "aquasecSecurityInsightsActionableOne";
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken,
-        cancelSource,
-        request,
-        kpiConfiguration,
-        dashboardTags,
-        filterDto,
-        null,
-        dashboardOrgs,
-        null,
-        null,
-        null,
-        null,
-        severity
+          getAccessToken,
+          cancelSource,
+          request,
+          kpiConfiguration,
+          dashboardTags,
+          filterDto,
+          null,
+          dashboardOrgs,
+          null,
+          null,
+          null,
+          null,
+          severity
       );
-      let dataObject = response?.data ? response?.data?.data[0]?.coverityInsightsDatablocks?.data[0]?.data : [];
+      console.log("response", response);
+      let dataObject = response?.data ? response?.data?.data[0]?.aquasecSecurityInsightsActionableOne?.data[0]?.TableData[0]?.data : [];
       let dataCount = response?.data
-        ? response?.data?.data[0]?.coverityInsightsDatablocks?.data[0]?.count[0]?.count
-        : [];
+          ? response?.data?.data[0]?.aquasecSecurityInsightsActionableOne?.data[0]?.TableData[0]?.count[0]?.count
+          : [];
       let DataBlocks = response?.data
-        ? response?.data?.data[0]?.coverityInsightsDatablocks?.data[0]?.DataBlocks[0]
-        : [];
-      dataObject = dataObject.map((bd, index) => ({
-        ...bd,
-        _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
-      }));
+          ? response?.data?.data[0]?.aquasecSecurityInsightsActionableOne?.data[0]?.BlocksData[0]
+          : [];
+      console.log("dataObj", dataObject);
+      console.log("datablocks", DataBlocks);
+      // dataObject = dataObject.map((bd, index) => ({
+      //   ...bd,
+      //   _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
+      // }));
 
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataCount);
       setFilterModel({ ...newFilterDto });
-      if (isMounted?.current === true && dataObject) {
+      if (isMounted?.current === true) {
         setMetrics(dataObject);
         setDataBlockValues(DataBlocks);
+      }
+      else{
+        setMetrics([]);
+        setDataBlockValues({});
       }
     } catch (error) {
       if (isMounted?.current === true) {

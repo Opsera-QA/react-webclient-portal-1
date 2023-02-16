@@ -10,6 +10,7 @@ import {
   faSirenOn,
   faExclamation,
 } from "@fortawesome/pro-light-svg-icons";
+import {faCompass, faShieldCheck} from "@fortawesome/pro-thin-svg-icons";
 
 function AquasecActionableDataBlockContainers({ data, level }) {
   let className = `p-2 dark-gray-text-primary`;
@@ -22,62 +23,62 @@ function AquasecActionableDataBlockContainers({ data, level }) {
   };
 
   const getIcon = (level) => {
-    if (level == "Low") {
+    if (level == "low") {
       return faExclamation;
     }
-    if (level == "Medium") {
+    if (level == "medium") {
       return faExclamationTriangle;
     }
-    if (level == "High") {
+    if (level == "high") {
       return faSirenOn;
     }
   };
 
   return (
-    <div>
-      <Row className="justify-content-sm-center px-2">
-        <Col xl={2} lg={2} sm={4} className={"my-3"}>
-          <DataBlockBoxContainer showBorder={true}>
-            <TwoLineScoreDataBlock
-              className={`p-2 ${getColor(data?.totalIssues)}`}
-              score={data?.totalIssues}
-              icon={getIcon(level)}
-              subtitle={"Total Issues"}
-            />
-          </DataBlockBoxContainer>
-        </Col>
-        <Col xl={2} lg={2} sm={4} className={"my-3"}>
-          <DataBlockBoxContainer showBorder={true}>
-            <TwoLineScoreDataBlock
-              className={className}
-              score={data?.totalProjects}
-              icon={faFolders}
-              subtitle={"Total Projects"}
-            />
-          </DataBlockBoxContainer>
-        </Col>
-        <Col xl={2} lg={2} sm={4} className={"my-3"}>
-          <DataBlockBoxContainer showBorder={true}>
-            <TwoLineScoreDataBlock
-              className={className}
-              score={data?.totalScans}
-              icon={faCheckCircle}
-              subtitle={"Total Scans"}
-            />
-          </DataBlockBoxContainer>
-        </Col>
-        <Col xl={2} lg={2} sm={4} className={"my-3"}>
-          <DataBlockBoxContainer showBorder={true}>
-            <TwoLineScoreDataBlock
-              className={className}
-              score={data?.uniqueCVEs}
-              icon={faCheckCircle}
-              subtitle={"Unique CVEs"}
-            />
-          </DataBlockBoxContainer>
-        </Col>
-      </Row>
-    </div>
+      <div>
+        <Row className="justify-content-sm-center px-2">
+          <Col xl={3} lg={3} sm={4} className={"my-3"}>
+            <DataBlockBoxContainer showBorder={true}>
+              <TwoLineScoreDataBlock
+                  className={className}
+                  score={Array.isArray(data?.TotalIssues) ? data?.TotalIssues[0]?.issues : 0}
+                  icon={faCompass}
+                  subtitle={"Total Issues"}
+              />
+            </DataBlockBoxContainer>
+          </Col>
+          <Col xl={3} lg={3} sm={4} className={"my-3"}>
+            <DataBlockBoxContainer showBorder={true}>
+              <TwoLineScoreDataBlock
+                  className={className}
+                  score={Array.isArray(data?.TotalProjects) ? data?.TotalProjects[0]?.projects: 0}
+                  icon={faFolders}
+                  subtitle={"Total Projects"}
+              />
+            </DataBlockBoxContainer>
+          </Col>
+          <Col xl={3} lg={3} sm={4} className={"my-3"}>
+            <DataBlockBoxContainer showBorder={true}>
+              <TwoLineScoreDataBlock
+                  className={className}
+                  score={Array.isArray(data?.TotalScans) ? data?.TotalScans[0]?.scans: 0}
+                  icon={faCheckCircle}
+                  subtitle={"Total Scans"}
+              />
+            </DataBlockBoxContainer>
+          </Col>
+          <Col xl={3} lg={3} sm={4} className={"my-3"}>
+            <DataBlockBoxContainer showBorder={true}>
+              <TwoLineScoreDataBlock
+                  className={className}
+                  score={Array.isArray(data?.TotalCVEs) ? data?.TotalCVEs[0]?.cveNumber : 0}
+                  icon={faShieldCheck}
+                  subtitle={"Total CVEs"}
+              />
+            </DataBlockBoxContainer>
+          </Col>
+        </Row>
+      </div>
   );
 }
 
