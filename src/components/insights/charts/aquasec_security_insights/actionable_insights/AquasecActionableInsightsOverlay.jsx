@@ -15,7 +15,7 @@ import { getMetricFilterValue } from "components/common/helpers/metrics/metricFi
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import IconBase from "components/common/icons/IconBase";
 
-function AquasecActionableInsightsOverlay({ title, coveritySeverity, kpiConfiguration, dashboardData }) {
+function AquasecActionableInsightsOverlay({ title, severity, kpiConfiguration, dashboardData }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   const { getAccessToken } = useContext(AuthContext);
@@ -76,7 +76,7 @@ function AquasecActionableInsightsOverlay({ title, coveritySeverity, kpiConfigur
         null,
         null,
         null,
-        coveritySeverity
+        severity
       );
       let dataObject = response?.data ? response?.data?.data[0]?.coverityInsightsDatablocks?.data[0]?.data : [];
       let dataCount = response?.data
@@ -131,7 +131,7 @@ function AquasecActionableInsightsOverlay({ title, coveritySeverity, kpiConfigur
     >
       <div className={"p-3"}>
         {getDateRange()}
-        <AquasecActionableDataBlockContainers data={dataBlockValues} level={coveritySeverity} />
+        <AquasecActionableDataBlockContainers data={dataBlockValues} level={severity} />
         <AquasecActionableInsightsTable
           data={metrics}
           isLoading={isLoading}
@@ -147,7 +147,7 @@ function AquasecActionableInsightsOverlay({ title, coveritySeverity, kpiConfigur
 
 AquasecActionableInsightsOverlay.propTypes = {
   title: PropTypes.string,
-  coveritySeverity: PropTypes.string,
+  severity: PropTypes.string,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
 };

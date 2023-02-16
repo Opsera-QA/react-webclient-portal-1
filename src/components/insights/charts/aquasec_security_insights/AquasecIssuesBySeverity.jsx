@@ -100,7 +100,7 @@ function AquasecIssuesBySeverity({
         title={`${stat} Severity Insights`}
         kpiConfiguration={kpiConfiguration}
         dashboardData={dashboardData}
-        coveritySeverity={stat}
+        severity={stat}
       />
     );
   };
