@@ -34,6 +34,10 @@ import GitlabPipelineStatisticsEditorPanel from "../../charts/gitlab/line_chart/
 import DoraJiraGitlabRolledUpEditorPanel from "../../charts/dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpEditorPanel";
 import GitlabMergeRequestStatisticsEditorPanel from "../../charts/gitlab/merge_request_statistics/GitlabMergeRequestStatisticsEditorPanel";
 import GithubActionsWorkflowEditorPanel from "../../charts/github_actions/workflows/GithubActionsWorkflowEditorPanel";
+import GitlabMostActiveContributorsEditorPanel from "../../charts/gitlab/table/most_active_contributors/GitlabMostActiveContributorsEditorPanel";
+import GitlabTimeTakenToCompleteMergeRequestReviewEditorPanel from "../../charts/gitlab/bar_chart/time_taken_to_complete_merge_request_review/GitlabTimeTakenToCompleteMergeRequestReviewEditorPanel";
+import GitlabMergeRequestsByUserEditorPanel from "../../charts/gitlab/bar_chart/merge_requests_by_user/GitlabMergeRequestsByUserEditorPanel";
+import GitlabCommitsByAuthorEditorPanel from "../../charts/gitlab/calendar_chart/commits_by_author/GitlabCommitsByAuthorEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer({
@@ -324,6 +328,48 @@ function DashboardMetricOverlayContainer({
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITHUB_ACTIONS_WORKFLOW:
         return (
           <GithubActionsWorkflowEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS
+        .GITLAB_MOST_ACTIVE_CONTRIBUTOR:
+        return (
+          <GitlabMostActiveContributorsEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS
+        .GITLAB_TIME_TAKEN_TO_COMPLETE_MERGE_REQUEST_REVIEW:
+        return (
+          <GitlabTimeTakenToCompleteMergeRequestReviewEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_MERGE_REQUESTS_BY_USER:
+        return (
+          <GitlabMergeRequestsByUserEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_COMMITS_BY_AUTHOR:
+        return (
+          <GitlabCommitsByAuthorEditorPanel
             metricModel={metricModel}
             metricFilterModel={metricFilterModel}
             setMetricFilterModel={setMetricFilterModel}
