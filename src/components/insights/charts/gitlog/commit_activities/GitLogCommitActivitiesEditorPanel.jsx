@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import MetricTagFilterInput from "components/common/inputs/metric/filters/tags/MetricTagFilterInput";
 import MetricDateRangeFilterInput from "components/common/inputs/metric/filters/date/MetricDateRangeFilterInput";
 import modelHelpers from "components/common/model/modelHelpers";
-// import { doraJiraGitlabRolledUpMetadata } from "./doraJiraGitlabRolledUp.metadata";
 import MetricDeploymentStageFilterInput from "components/common/inputs/metric/filters/deployment-frequency/MetricsDeploymentStageFilterInput";
 import MetricGitLabProjectFilterInput from "components/common/inputs/metric/filters/deployment-frequency/MetricGitLabProjectFilterInput";
 import MetricJiraProjectsFilterInput from "../../../../common/inputs/metric/filters/jira/MetricJiraProjectsFilterInput";
@@ -11,11 +10,11 @@ import MetricJiraChangeTypesFilterInput from "../../../../common/inputs/metric/f
 import MetricJiraResolutionNamesFilterInput from "../../../../common/inputs/metric/filters/jira/MetricJiraResolutionNamesFilterInput";
 import {doraJiraGitlabRolledUpMetadata} from "../../dora/jira_gitlab_rolled_up/doraJiraGitlabRolledUp.metadata";
 function GitLogCommitActivitiesEditorPanel({
-                                               metricModel,
-                                               unpackedFilterData,
-                                               metricFilterModel,
-                                               setMetricFilterModel,
-                                           }) {
+   metricModel,
+   unpackedFilterData,
+   metricFilterModel,
+   setMetricFilterModel,
+}) {
     useEffect(() => {
         setMetricFilterModel(undefined);
 
@@ -40,32 +39,21 @@ function GitLogCommitActivitiesEditorPanel({
                 metricFilterModel={metricFilterModel}
                 setMetricFilterModel={setMetricFilterModel}
             />
-            <MetricDeploymentStageFilterInput
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-            />
-            <MetricGitLabProjectFilterInput
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-            />
-            <MetricJiraProjectsFilterInput
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-                metricModel={metricModel}
-                type="single"
-            />
-            <MetricJiraResolutionNamesFilterInput
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-                metricModel={metricModel}
-            />
-            <MetricJiraChangeTypesFilterInput
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-                metricModel={metricModel}
-            />
+            {/*<MetricDeploymentStageFilterInput*/}
+            {/*    metricModel={metricModel}*/}
+            {/*    metricFilterModel={metricFilterModel}*/}
+            {/*    setMetricFilterModel={setMetricFilterModel}*/}
+            {/*/>*/}
+            {/*<MetricGitLabProjectFilterInput*/}
+            {/*    metricModel={metricModel}*/}
+            {/*    metricFilterModel={metricFilterModel}*/}
+            {/*    setMetricFilterModel={setMetricFilterModel}*/}
+            {/*/>*/}
+            {/*<MetricJiraProjectsFilterInput*/}
+            {/*    metricFilterModel={metricFilterModel}*/}
+            {/*    setMetricFilterModel={setMetricFilterModel}*/}
+            {/*    metricModel={metricModel}*/}
+            {/*/>*/}
             <MetricDateRangeFilterInput
                 metricModel={metricModel}
                 metricFilterModel={metricFilterModel}

@@ -2250,7 +2250,6 @@ function ChartView({
             />
           </Col>
         );
-
       case kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
         return (
           <Col
@@ -2293,8 +2292,7 @@ function ChartView({
               />
             </Col>
           );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.APPROVAL_GATES:
-      case "approval-gates":
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.APPROVAL_GATES:
         return (
           <Col
             md={12}
