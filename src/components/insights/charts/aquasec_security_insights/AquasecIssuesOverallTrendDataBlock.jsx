@@ -4,7 +4,7 @@ import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlo
 import ThreeLineScoreDataBlock from "components/common/metrics/score/ThreeLineScoreDataBlock";
 import { getTrend, getTrendDescription, getTrendIcon } from "../charts-helpers";
 
-function AquasecIssuesOverallTrendDataBlock({ score, severity, trend, onSelect, lastScore }) {
+function AquasecIssuesOverallTrendDataBlock({ score, severity, onSelect, lastScore }) {
   const displayScore = score || 0;
   const color = getTrend(score, lastScore);
   const icon = getTrendIcon(color);
