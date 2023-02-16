@@ -1747,8 +1747,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-
-
       case  kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
         return (
           <Col md={12} className="p-2">
@@ -1761,7 +1759,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-<<<<<<< HEAD
       case kpiIdentifierConstants.KPI_IDENTIFIERS.DORA_JIRA_GITLAB_ROLLED_UP:
         return (
           <Col md={12} className="p-2">
@@ -1774,20 +1771,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.APPROVAL_GATES:
-=======
-        case kpiIdentifierConstants.KPI_IDENTIFIERS.DORA_JIRA_GITLAB_ROLLED_UP:
-            return (
-                <Col md={12} className="p-2">
-                    <DoraJiraGitlabRolledUpChart
-                        kpiConfiguration={kpiConfig}
-                        setKpiConfiguration={setKpiConfig}
-                        dashboardData={dashboardData}
-                        setKpis={setKpis}
-                        index={index}
-                    />
-                </Col>
-            );
         case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_COMMIT_ACTIVITIES:
             return (
                 <Col md={12} className="p-2">
@@ -1800,8 +1783,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
                     />
                 </Col>
             );
-      case "approval-gates":
->>>>>>> 75d3add26 (commit activities in progress)
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.APPROVAL_GATES:
         return (
           <Col md={12} className="p-2">
             <ApprovalGatesMetrics

@@ -25,7 +25,7 @@ function GitLogCommitActivities({
  }) {
     const { getAccessToken } = useContext(AuthContext);
     const [error, setError] = useState(undefined);
-    const [metricData, setMetricData] = useState([]);
+    const [metricData, setMetricData] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const isMounted = useRef(false);
     const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -64,30 +64,23 @@ function GitLogCommitActivities({
                         (obj) => obj.type === "organizations",
                     )
                     ]?.value;
-            const selectedDeploymentStages =
-                getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
-            const jiraResolutionNames = getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names');
-            const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
-            if(selectedDeploymentStages && jiraResolutionNames?.length && useDashboardTags && dashboardOrgs?.length) {
                 const response = await gitlogAction.getCommitActivities(
                     getAccessToken,
                     cancelSource,
                     kpiConfiguration,
                     dashboardTags,
                     dashboardOrgs,
-                    jiraResolutionNames
                 );
 
-                const metrics = response?.data?.data;
-
+                const metrics = response?.data?.gitLogCommitActivities?.data;
                 if (
-                    isMounted?.current === true && metrics?.length
+                    isMounted?.current === true && metrics?.chartData.length
                 ) {
                     setMetricData(metrics);
                 } else {
-                    setMetricData([]);
+
+                    setMetricData({});
                 }
-            }
         } catch (error) {
             if (isMounted?.current === true) {
                 console.error(error);
@@ -101,31 +94,9 @@ function GitLogCommitActivities({
     };
 
     const getChartBody = () => {
-        // const selectedDeploymentStages =
-        //     getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
-        // const jiraResolutionNames = getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names');
-        // const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
-        // let dashboardOrgs =
-        //     dashboardData?.data?.filters[
-        //         dashboardData?.data?.filters.findIndex(
-        //             (obj) => obj.type === "organizations",
-        //         )
-        //         ]?.value;
-        // if (!selectedDeploymentStages || !jiraResolutionNames?.length || !useDashboardTags || !dashboardOrgs?.length) {
-        //     return (
-        //         <div className="new-chart mb-3" style={{ height: "300px" }}>
-        //             <div className="max-content-width p-5 mt-5"
-        //                  style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-        //                 <InfoDialog message="Missing Required Filters. Dashboard Organization tags,Deployment Stages and Jira Resolution Names are Mandatory" />
-        //             </div>
-        //         </div>
-        //     );
-        // }
-        //
-        // if (metricData && !metricData.length) {
-        //     return null;
-        // }
-
+        if (metricData && !metricData?.chartData?.length) {
+            return null;
+        }
         return (
             <div
                 className="new-chart m-3 p-0"
@@ -136,7 +107,8 @@ function GitLogCommitActivities({
                     className={"my-2 p-0"}
                 >
                     <GitLogCommitActivitiesSwarmPlot
-                        chartData={[]}
+                        chartData={metricData}
+                        kpiConfiguration={kpiConfiguration}
                     />
                 </Col>
             </div>
@@ -146,7 +118,7 @@ function GitLogCommitActivities({
     return (
         <div>
             <VanityMetricContainer
-                title={"Dora Rolled up Chart"}
+                title={"Commit Activities"}
                 kpiConfiguration={kpiConfiguration}
                 setKpiConfiguration={setKpiConfiguration}
                 chart={getChartBody()}
