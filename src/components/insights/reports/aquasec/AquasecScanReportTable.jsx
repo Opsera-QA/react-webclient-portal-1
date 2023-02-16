@@ -4,9 +4,8 @@ import CustomTable from "components/common/table/CustomTable";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTally} from "@fortawesome/pro-light-svg-icons";
-import aquasecScanReportMetadata from "./aquasecScanReportMetadata.metadata";
-import ExportAquasecScanDetailsButton
-  from "components/insights/reports/aquasec/export/ExportAquasecScanDetailsButton";
+import aquasecScanReportMetadata from "./aquasecScanReportTable.metadata";
+import ExportAquasecScanDetailsButton from "./export/ExportAquasecScanDetailsButton";
 
 function AquasecScanReportTable(
   {
