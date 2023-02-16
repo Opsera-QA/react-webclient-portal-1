@@ -7,11 +7,8 @@ import {
   faCheckCircle,
   faExclamationTriangle,
   faFolders,
-  faLockOpenAlt,
-  faShieldCheck,
   faSirenOn,
   faExclamation,
-  faLock,
 } from "@fortawesome/pro-light-svg-icons";
 
 function AquasecActionableDataBlockContainers({ data, level }) {
@@ -34,13 +31,6 @@ function AquasecActionableDataBlockContainers({ data, level }) {
     if (level == "High") {
       return faSirenOn;
     }
-  };
-
-  const securityIcon = (metric) => {
-    if (metric > 0) {
-      return faLockOpenAlt;
-    }
-    return faLock;
   };
 
   return (
