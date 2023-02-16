@@ -17,11 +17,11 @@ import { useHistory } from "react-router-dom";
 function AquasecActionableInsightsTable({ data, isLoading, loadData, filterModel, setFilterModel, title }) {
   const toastContext = useContext(DialogToastContext);
   const fields = AquasecActionableInsightsMetadata.fields;
-  const tableTitle = "Coverity " + title + " Report";
-  const noDataMessage = "Coverity " + title + " report is currently unavailable at this time";
+  const tableTitle = "Aquasec " + title + " Report";
+  const noDataMessage = "Aquasec " + title + " report is currently unavailable at this time";
   let history = useHistory();
 
-  const getCoverityTableTextColumn = (field, block) => {
+  const getAquasecTableTextColumn = (field, block) => {
     return {
       Header: getCustomTableHeader(field),
       accessor: getCustomTableAccessor(field),
@@ -56,9 +56,9 @@ function AquasecActionableInsightsTable({ data, isLoading, loadData, filterModel
       getTableTextColumn(getField(fields, "run"), "run"),
       getTableDateTimeColumn(getField(fields, "timestamp"), "timestamp"),
       getChartTrendStatusColumn(getField(fields, "trend"), "trend"),
-      getCoverityTableTextColumn(getField(fields, "total_issues"), "total_issues"),
-      getCoverityTableTextColumn(getField(fields, "quality_issues"), "quality_issues"),
-      getCoverityTableTextColumn(getField(fields, "security_issues"), "security_issues"),
+      getAquasecTableTextColumn(getField(fields, "total_issues"), "total_issues"),
+      getAquasecTableTextColumn(getField(fields, "quality_issues"), "quality_issues"),
+      getAquasecTableTextColumn(getField(fields, "security_issues"), "security_issues"),
       getTableTextColumnWithoutField("Actions", "_blueprint", "text-center"),
     ],
     []
@@ -69,10 +69,10 @@ function AquasecActionableInsightsTable({ data, isLoading, loadData, filterModel
     const pipelineId = row?.pipeline;
     const projectName = row?.project;
     const runCount = row?.run;
-    const coveritySeverity = row?.coveritySeverity;
+    const severity = row?.severity;
 
     toastContext.clearOverlayPanel();
-    history.push(`/insights/reports/scans/coverity/${pipelineId}/${projectName}/${runCount}/${coveritySeverity}`);
+    history.push(`/insights/reports/scans/coverity/${pipelineId}/${projectName}/${runCount}/${severity}`);
   };
 
   const getTable = () => {
