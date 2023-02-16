@@ -3,8 +3,8 @@ const AquasecActionableInsightsMetadata = {
   type: "Aquasec Issues Table Report",
   fields: [
     {
-      label: "Project Key",
-      id: "project",
+      label: "Image Name",
+      id: "imageName",
     },
     {
       label: "Pipeline Name",
@@ -19,20 +19,12 @@ const AquasecActionableInsightsMetadata = {
       id: "timestamp",
     },
     {
-      label: "Trend",
-      id: "trend",
-    },
-    {
       label: "Total Issues",
       id: "total_issues",
     },
     {
-      label: "Quality",
-      id: "quality_issues",
-    },
-    {
-      label: "Security",
-      id: "security_issues",
+      label: "Total Components",
+      id: "total_components",
     }
   ],
   newObjectFields: {},

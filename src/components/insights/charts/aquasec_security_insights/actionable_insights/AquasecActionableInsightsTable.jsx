@@ -51,14 +51,12 @@ function AquasecActionableInsightsTable({ data, isLoading, loadData, filterModel
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "project"), "project"),
+      getTableTextColumn(getField(fields, "imageName"), "imageName"),
       getTableTextColumn(getField(fields, "pipelineName"), "pipelineName"),
       getTableTextColumn(getField(fields, "run"), "run"),
       getTableDateTimeColumn(getField(fields, "timestamp"), "timestamp"),
-      getChartTrendStatusColumn(getField(fields, "trend"), "trend"),
       getAquasecTableTextColumn(getField(fields, "total_issues"), "total_issues"),
-      getAquasecTableTextColumn(getField(fields, "quality_issues"), "quality_issues"),
-      getAquasecTableTextColumn(getField(fields, "security_issues"), "security_issues"),
+      getAquasecTableTextColumn(getField(fields, "total_components"), "total_components"),
       getTableTextColumnWithoutField("Actions", "_blueprint", "text-center"),
     ],
     []
