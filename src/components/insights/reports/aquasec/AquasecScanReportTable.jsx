@@ -20,15 +20,13 @@ function AquasecScanReportTable(
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "project";})),
-      getTableTextColumn(fields.find(field => { return field.id === "severity";})),
-      getTableTextColumn(fields.find(field => { return field.id === "owner";})),
-      getTableTextColumn(fields.find(field => { return field.id === "issue_category";})),
-      getTableTextColumn(fields.find(field => { return field.id === "issue_type";})),
-      getTableTextColumn(fields.find(field => { return field.id === "action";})),
-      getTableTextColumn(fields.find(field => { return field.id === "status";})),
-      getTableTextColumn(fields.find(field => { return field.id === "date";})),
-      getTableTextColumn(fields.find(field => { return field.id === "file";})),
+      getTableTextColumn(fields.find(field => field.id === "imageName")),
+      getTableTextColumn(fields.find(field => field.id === "componentName")),
+      getTableTextColumn(fields.find(field => field.id === "severity")),
+      getTableTextColumn(fields.find(field => field.id === "cve_id")),
+      getTableTextColumn(fields.find(field => field.id === "cve_score")),
+      getTableTextColumn(fields.find(field => field.id === "description")),
+      getTableTextColumn(fields.find(field => field.id === "action")),
     ],
     []
   );

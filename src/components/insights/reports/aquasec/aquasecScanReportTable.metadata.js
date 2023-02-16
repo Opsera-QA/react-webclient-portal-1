@@ -3,47 +3,41 @@ const aquasecScanReportMetadata = {
   type: "Aquasec Scan",
   fields: [
     {
-      label: "Project",
-      id: "project",
+      label: "Image Name",
+      id: "imageName",
+    },
+    {
+      label: "Component Name",
+      id: "componentName",
     },
     {
       label: "Severity",
       id: "severity",
     },
     {
-      label: "Owner",
-      id: "owner",
+      label: "CVE ID",
+      id: "cve_id",
     },
     {
-      label: "Issue Category",
-      id: "issue_category",
+      label: "CVE Score",
+      id: "cve_score",
+    },
+    {
+      label: "Description",
+      id: "description",
     },
     {
       label: "Action",
       id: "action",
     },
-    {
-      label: "Status",
-      id: "status",
-    },
-    {
-      label: "Date",
-      id: "date",
-    },
-    {
-      label: "File",
-      id: "file",
-    },
-    {
-      label: "Issue Type",
-      id: "issue_type",
-    },
   ],
   newObjectFields: {
-    project: "",
+    imageName: "",
+    componentName: "",
     severity:"",
-    line: "",
-    message:"",
+    cve_id: "",
+    cve_Score: "",
+    description: "",
   }
 };
 
