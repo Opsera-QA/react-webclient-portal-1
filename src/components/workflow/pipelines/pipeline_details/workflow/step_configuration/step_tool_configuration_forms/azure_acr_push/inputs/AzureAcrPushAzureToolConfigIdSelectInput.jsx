@@ -12,25 +12,23 @@ function AzureAcrPushAzureToolConfigIdSelectInput({
   service,
 }) {
   const setDataFunction = (fieldName, selectedOption) => {
-    let newModel = { ...model };
-    newModel.setData(fieldName, selectedOption._id);
-    newModel.setData("azureRegistryName", "");
-    newModel.setData("azureRepoName", "");
-    newModel.setData("acrLoginUrl", "");
-    newModel.setData("azureCredentialId", "");
-    newModel.setData("newRepo", false);
-    setModel({ ...newModel });
+    model.setData(fieldName, selectedOption._id);
+    model.setDefaultValue("azureRegistryName");
+    model.setDefaultValue("azureRepoName");
+    model.setDefaultValue("acrLoginUrl");
+    model.setDefaultValue("azureCredentialId");
+    model.setDefaultValue("newRepo");
+    setModel({ ...model });
   };
 
   const clearDataFunction = () => {
-    let newModel = { ...model };
-    newModel.setData(fieldName, "");
-    newModel.setData("azureRegistryName", "");
-    newModel.setData("azureRepoName", "");
-    newModel.setData("acrLoginUrl", "");
-    newModel.setData("azureCredentialId", "");
-    newModel.setData("newRepo", false);
-    setModel({ ...newModel });
+    model.setDefaultValue(fieldName);
+    model.setDefaultValue("azureRegistryName");
+    model.setDefaultValue("azureRepoName");
+    model.setDefaultValue("acrLoginUrl");
+    model.setDefaultValue("azureCredentialId");
+    model.setDefaultValue("newRepo");
+    setModel({ ...model });
   };
 
   return (
