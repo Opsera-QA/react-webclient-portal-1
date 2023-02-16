@@ -12,6 +12,7 @@ import argoFiltersMetadata from "../argo-filters-metadata";
 import Model from "core/data_model/model";
 import {stringIncludesValue} from "components/common/helpers/string-helpers";
 import {localFilterFunction} from "utils/tableHelpers";
+import _ from "lodash";
 
 // TODO: This whole section is very old and needs to be updated to current standards.
 function ArgoToolRepositoriesPanel({ toolId }) {
@@ -74,8 +75,9 @@ function ArgoToolRepositoriesPanel({ toolId }) {
     const repositories = response?.data?.data;
 
     if(isMounted?.current === true && Array.isArray(repositories)){
-      setArgoOriginalRepositories(repositories);
-      setArgoRepositories(localFilterFunction(searchFilter, repositories, filterModel, setFilterModel, prevSearchKeyword, setPrevSearchKeyword));
+      const sortedRepositories = _.sortBy(repositories, ["name", "project"]);
+      setArgoOriginalRepositories(sortedRepositories);
+      setArgoRepositories(localFilterFunction(searchFilter, sortedRepositories, filterModel, setFilterModel, prevSearchKeyword, setPrevSearchKeyword));
     }
   };
 
