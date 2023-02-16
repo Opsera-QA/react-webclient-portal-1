@@ -10,8 +10,8 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import AquasecIssuesBySeverityHelpDocumentation from "components/common/help/documentation/insights/charts/AquasecIssuesBySeverityHelpDocumentation";
 import AquasecActionableInsightsOverlay from "./actionable_insights/AquasecActionableInsightsOverlay";
 import AquasecIssuesOverallTrendDataBlock from "./AquasecIssuesOverallTrendDataBlock";
-import AquasecTopProjectsByIssueType from "./AquasecTopProjectsByIssueType";
 import { ISSUE_TYPE } from "./aquasec.constants";
+import {getTrend} from "../charts-helpers";
 
 function AquasecIssuesBySeverity({
   kpiConfiguration,
@@ -67,49 +67,20 @@ function AquasecIssuesBySeverity({
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
           getAccessToken,
           cancelSource,
-          "overallCoverityIssuesTrend",
+          "aquasecSecurityInsightsBaseKPI",
           kpiConfiguration,
           dashboardTags,
           null,
           null,
           dashboardOrgs,
-        ),
-        responseBaseKPIBlockValues =
-          await chartsActions.parseConfigurationAndGetChartMetrics(
-            getAccessToken,
-            cancelSource,
-            "coverityBaseKPIDataBlocks",
-            kpiConfiguration,
-            dashboardTags,
-            null,
-            null,
-            dashboardOrgs,
-          );
+      );
 
       const dataObject = response?.data
-          ? response?.data?.data[0]?.overallCoverityIssuesTrend?.data
-          : [],
-        dataObjectBaseKPIDataBlocks = responseBaseKPIBlockValues?.data
-          ? responseBaseKPIBlockValues?.data?.data[0]?.coverityBaseKPIDataBlocks
-              ?.data
+          ? response?.data?.data[0]?.aquasecSecurityInsightsBaseKPI?.data[0]?.BlocksData[0]
           : [];
 
-      if (
-        isMounted?.current === true &&
-        dataObject &&
-        dataObjectBaseKPIDataBlocks
-      ) {
-        dataObject[0]?.docs?.sort((a, b) =>
-          a.currentTotalIssues < b.currentTotalIssues
-            ? 1
-            : b.currentTotalIssues < a.currentTotalIssues
-            ? -1
-            : 0,
-        );
-        dataObject[0]?.docs?.slice(0, 2);
-
-        setMetrics(dataObject);
-        setDataMetrics(dataObjectBaseKPIDataBlocks);
+      if (isMounted?.current === true && dataObject) {
+        setDataMetrics(dataObject);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -136,76 +107,68 @@ function AquasecIssuesBySeverity({
 
   const getChartBody = () => {
     if (
-      !Array.isArray(metrics) ||
-      metrics.length === 0 ||
-      !dataMetrics ||
-      Object.keys(dataMetrics).length === 0
+      dataMetrics.length === 0 ||
+      !dataMetrics
     ) {
       return null;
     }
-
-    const negligibleScore = dataMetrics.negligibleIssues?.length > 0 ? dataMetrics.negligibleIssues[0]?.DataBlocks[0]?.totalIssues : 0;
-    const lowScore = dataMetrics.lowIssues?.length > 0 ? dataMetrics.lowIssues[0]?.DataBlocks[0]?.totalIssues : 0;
-    const mediumScore = dataMetrics.mediumIssues?.length > 0 ? dataMetrics.mediumIssues[0]?.DataBlocks[0]?.totalIssues : 0;
-    const highScore = dataMetrics.highIssues?.length > 0 ? dataMetrics.highIssues[0]?.DataBlocks[0]?.totalIssues : 0;
-    const criticalScore = dataMetrics.criticalIssues?.length > 0 ? dataMetrics.criticalIssues[0]?.DataBlocks[0]?.totalIssues : 0;
 
     return (
       <Container className="new-chart mb-3" style={{ minHeight: "300px" }}>
         <Row className="justify-content-center">
           <Col xs={6} sm={4}>
             <AquasecIssuesOverallTrendDataBlock
-              score={negligibleScore}
+              score={dataMetrics?.negligibleIssues}
               severity={ISSUE_TYPE.NEGLIGIBLE}
-              trend={metrics[0].overallLowTrend}
+              trend={getTrend(dataMetrics?.negligibleIssues, dataMetrics?.prevNegligible)}
               onSelect={onRowSelect}
-              lastScore={metrics[0].prevNegligible}
+              lastScore={dataMetrics.prevNegligible}
             />
           </Col>
           <Col xs={6} sm={4}>
             <AquasecIssuesOverallTrendDataBlock
-              score={lowScore}
+              score={dataMetrics?.lowIssues}
               severity={ISSUE_TYPE.LOW}
-              trend={metrics[0].overallLowTrend}
+              trend={getTrend(dataMetrics?.lowIssues, dataMetrics?.prevLow)}
               onSelect={onRowSelect}
-              lastScore={metrics[0].previousTotalLow}
+              lastScore={dataMetrics.prevLow}
             />
           </Col>
           <Col xs={6} sm={4}>
             <AquasecIssuesOverallTrendDataBlock
-              score={mediumScore}
+              score={dataMetrics?.mediumIssues}
               severity={ISSUE_TYPE.MEDIUM}
-              trend={metrics[0].overallMediumTrend}
+              trend={getTrend(dataMetrics?.mediumIssues, dataMetrics?.prevMedium)}
               onSelect={onRowSelect}
-              lastScore={metrics[0].previousTotalMedium}
+              lastScore={dataMetrics.prevMedium}
             />
           </Col>
         </Row>
         <Row className="justify-content-center mt-3">
           <Col xs={6} sm={4}>
             <AquasecIssuesOverallTrendDataBlock
-              score={highScore}
+              score={dataMetrics?.highIssues}
               severity={ISSUE_TYPE.HIGH}
-              trend={metrics[0].overallHighTrend}
+              trend={getTrend(dataMetrics?.highIssues, dataMetrics?.prevHigh)}
               onSelect={onRowSelect}
-              lastScore={metrics[0].previousTotalHigh}
+              lastScore={dataMetrics.prevHigh}
             />
           </Col>
           <Col xs={6} sm={4}>
             <AquasecIssuesOverallTrendDataBlock
-              score={criticalScore}
+              score={dataMetrics?.criticalIssues}
               severity={ISSUE_TYPE.CRITICAL}
-              trend={metrics[0].overallHighTrend}
+              trend={getTrend(dataMetrics?.criticalIssues, dataMetrics?.prevCritical)}
               onSelect={onRowSelect}
-              lastScore={metrics[0].prevCritical}
+              lastScore={dataMetrics.prevCritical}
             />
           </Col>
         </Row>
-        <div className={"mt-3"}>
-          <AquasecTopProjectsByIssueType type={ISSUE_TYPE.HIGH} projects={metrics[0]?.highIssues} />
-          <AquasecTopProjectsByIssueType type={ISSUE_TYPE.MEDIUM} projects={metrics[0]?.mediumIssues} />
-          <AquasecTopProjectsByIssueType type={ISSUE_TYPE.LOW} projects={metrics[0]?.lowIssues} />
-        </div>
+        {/*<div className={"mt-3"}>*/}
+        {/*  <AquasecTopProjectsByIssueType type={ISSUE_TYPE.HIGH} projects={metrics[0]?.highIssues} />*/}
+        {/*  <AquasecTopProjectsByIssueType type={ISSUE_TYPE.MEDIUM} projects={metrics[0]?.mediumIssues} />*/}
+        {/*  <AquasecTopProjectsByIssueType type={ISSUE_TYPE.LOW} projects={metrics[0]?.lowIssues} />*/}
+        {/*</div>*/}
       </Container>
     );
   };
