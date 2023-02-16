@@ -23,7 +23,6 @@ export default function AuditLogNotificationMethodSelectInput(
     if (newObjectType) {
       const eventSelectOptions = auditLogActionConstants.getActionSelectOptionsForType(newObjectType);
       const valueArray = constantsHelper.getValuesForSelectOptionsArray(eventSelectOptions);
-      console.log("valueArray: " + JSON.stringify(valueArray));
       notificationConfigurationModel?.setData("events", valueArray);
       model?.setData("configuration.events", valueArray);
     }
