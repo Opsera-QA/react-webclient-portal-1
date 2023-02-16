@@ -79,29 +79,10 @@ function AquasecActionableDataBlockContainers({ data, level }) {
         <Col xl={2} lg={2} sm={4} className={"my-3"}>
           <DataBlockBoxContainer showBorder={true}>
             <TwoLineScoreDataBlock
-              className={`p-2 ${getColor(data?.totalQuality)}`}
-              score={data?.totalQuality}
-              icon={faShieldCheck}
-              subtitle={"Total Quality Issues"}
-            />
-          </DataBlockBoxContainer>
-        </Col>
-        <Col xl={2} lg={2} sm={4} className={"my-3"}>
-          <DataBlockBoxContainer showBorder={true}>
-            <TwoLineScoreDataBlock
-              className={`p-2 ${getColor(data?.totalSecurity)}`}
-              score={data?.totalSecurity}
-              icon={securityIcon(data?.totalSecurity)}
-              subtitle={"Total Security Issues"}
-            />
-          </DataBlockBoxContainer>
-        </Col>
-        <Col xl={2} lg={2} sm={4} className={"my-3"}>
-          <DataBlockBoxContainer showBorder={true}>
-            <TwoLineScoreDataBlock
-              className={`p-2 ${getColor(data?.totalVarious)}`}
-              score={data?.totalVarious}
-              subtitle={"Total Various Issues"}
+              className={className}
+              score={data?.uniqueCVEs}
+              icon={faCheckCircle}
+              subtitle={"Unique CVEs"}
             />
           </DataBlockBoxContainer>
         </Col>
