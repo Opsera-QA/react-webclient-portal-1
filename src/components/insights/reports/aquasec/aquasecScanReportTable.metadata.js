@@ -1,6 +1,6 @@
 const aquasecScanReportMetadata = {
   idProperty: "_id",
-  type: "Sonar Scan",
+  type: "Aquasec Scan",
   fields: [
     {
       label: "Project",
