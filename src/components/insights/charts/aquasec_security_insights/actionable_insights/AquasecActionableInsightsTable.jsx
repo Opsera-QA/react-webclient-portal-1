@@ -72,7 +72,7 @@ function AquasecActionableInsightsTable({ data, isLoading, loadData, filterModel
     const severity = row?.severity;
 
     toastContext.clearOverlayPanel();
-    history.push(`/insights/reports/scans/coverity/${pipelineId}/${projectName}/${runCount}/${severity}`);
+    history.push(`/insights/reports/scans/aquasec/${pipelineId}/${projectName}/${runCount}/${severity}`);
   };
 
   const getTable = () => {
