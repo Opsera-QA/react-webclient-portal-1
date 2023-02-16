@@ -2,11 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import jsPDF from "jspdf";
 import ExportDataOverlay from "components/common/modal/export_data/ExportDataOverlay";
-
+import aquasecScanReportTableMetadata from "../aquasecScanReportTable.metadata";
 function ExportAquasecScanDataOverlay({ formattedData, rawData, isLoading }) {
   const getRawData = () => {
     return new Blob([rawData], { type: 'text/plain' });
   };
+
+  const columns = aquasecScanReportTableMetadata.fields.map(({ label }) => label);
+  const formattedDataValues = formattedData.map(item => [item.imageName, item.componentName, item.severity, item.cve_id, item.cve_score, item.description]);
 
   const getPdfExporter = () => {
     const pdfExporter = new jsPDF({ orientation: "landscape" });
@@ -16,28 +19,18 @@ function ExportAquasecScanDataOverlay({ formattedData, rawData, isLoading }) {
       showHead: "firstPage",
       headStyles: { fontSize: 8, minCellWidth: 24, fillColor: [54, 46, 84] },
       margin: { left: 2, right: 2 },
-      head: [["Project", "Severity", "Owner", "Issue Category", "Issue Type", "Action", "Status", "Date", "File"]],
-      body: formattedData.map(item => [item.project, item.severity, item.owner, item.issue_category, item.issue_type, item.action, item.status, item.date, item.file])
+      head: [columns],
+      body: formattedDataValues
     });
 
     return pdfExporter;
   };
 
   const getCsvData = () => {
-    return [["Project", "Severity", "Owner", "Issue Category", "Issue Type", "Action", "Status", "Date", "File"],
-    ...formattedData.map(item =>
-      [
-        item.project,
-        item.severity,
-        item.owner,
-        item.issue_category,
-        item.issue_type,
-        item.action,
-        item.status,
-        item.date,
-        item.file
-      ]
-    )];
+    return [
+      columns,
+     ...formattedDataValues
+    ];
   };
 
   return (

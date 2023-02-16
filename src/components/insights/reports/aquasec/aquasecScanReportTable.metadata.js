@@ -26,10 +26,6 @@ const aquasecScanReportMetadata = {
       label: "Description",
       id: "description",
     },
-    {
-      label: "Action",
-      id: "action",
-    },
   ],
   newObjectFields: {
     imageName: "",
