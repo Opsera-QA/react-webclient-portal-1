@@ -12,6 +12,7 @@ import AuditLogActionsMultiSelectCheckboxInput
   from "components/common/audit_log/inputs/AuditLogActionsMultiSelectCheckboxInput";
 import AuditLogNotificationTargetMultiSelectInput
   from "components/notifications/details/configuration/audit_log/inputs/AuditLogNotificationTargetMultiSelectInput";
+import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
 
 // TODO: If this is used in multiple spots, we should rename it. If it just has trigger, I would suggest TriggerNotificationEditorPanel
 export default function AuditLogNotificationConfigurationPanel(
@@ -40,6 +41,12 @@ export default function AuditLogNotificationConfigurationPanel(
           setModel={setNotificationModel}
           notificationConfigurationModel={notificationConfigurationModel}
           setNotificationConfigurationModel={setNotificationConfigurationModel}
+        />
+      </Col>
+      <Col lg={12}>
+        <WarningMessageFieldBase
+          className={"mt-2 mb-1"}
+          message={"Please Note: You can only subscribe to receive Notifications for items you have access to view"}
         />
       </Col>
       <Col lg={12}>
