@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import DataBlockBoxContainer from "components/common/metrics/data_blocks/DataBlockBoxContainer";
 import ThreeLineScoreDataBlock from "components/common/metrics/score/ThreeLineScoreDataBlock";
-import { getTrend, getTrendDescription, getTrendIcon } from "../charts-helpers";
+import { getReverseTrend, getReverseTrendIcon, getTrendDescription } from "../charts-helpers";
 
 function AquasecIssuesOverallTrendDataBlock({ score, severity, onSelect, lastScore }) {
   const displayScore = score || 0;
-  const color = getTrend(score, lastScore);
-  const icon = getTrendIcon(color);
+  const color = getReverseTrend(score, lastScore);
+  const icon = getReverseTrendIcon(color);
   const description = getTrendDescription(color);
   
   return (
