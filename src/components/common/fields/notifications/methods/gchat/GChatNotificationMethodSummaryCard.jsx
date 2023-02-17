@@ -5,16 +5,17 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import NotificationMethodSummaryCardContainer
   from "components/common/fields/notifications/methods/NotificationMethodSummaryCardContainer";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
-function GChatNotificationMethodSummaryCard({ notificationData, notificationMethodData }) {
+export default function GChatNotificationMethodSummaryCard({ gChatNotificationModel }) {
   return (
-    <NotificationMethodSummaryCardContainer notificationData={notificationData}>
+    <NotificationMethodSummaryCardContainer method={"GChat"}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={notificationMethodData} fieldName={"channel"} />
+          <TextFieldBase dataObject={gChatNotificationModel} fieldName={"channel"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={notificationMethodData} fieldName={"toolId"} />
+          <ToolNameField dataObject={gChatNotificationModel} fieldName={"toolId"} />
         </Col>
       </Row>
     </NotificationMethodSummaryCardContainer>
@@ -22,8 +23,5 @@ function GChatNotificationMethodSummaryCard({ notificationData, notificationMeth
 }
 
 GChatNotificationMethodSummaryCard.propTypes = {
-  notificationData: PropTypes.object,
-  notificationMethodData: PropTypes.object
+  gChatNotificationModel: PropTypes.object,
 };
-
-export default GChatNotificationMethodSummaryCard;

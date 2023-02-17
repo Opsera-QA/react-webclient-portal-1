@@ -5,19 +5,25 @@ import {ORCHESTRATION_NOTIFICATION_TYPES} from "components/common/fields/notific
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import EmailNotificationMethodSummaryCard
   from "components/common/fields/notifications/methods/email/EmailNotificationMethodSummaryCard";
-import emailNotificationMetadata from "components/common/fields/notifications/methods/email/emailNotificationMetadata";
 import SlackNotificationMethodSummaryCard
   from "components/common/fields/notifications/methods/slack/SlackNotificationMethodSummaryCard";
-import slackNotificationMetadata from "components/common/fields/notifications/methods/slack/slackNotificationMetadata";
 import TeamsNotificationMethodSummaryCard
   from "components/common/fields/notifications/methods/teams/TeamsNotificationMethodSummaryCard";
-import teamsNotificationMetadata from "components/common/fields/notifications/methods/teams/teamsNotificationMetadata";
 import JiraNotificationMethodSummaryCard
   from "components/common/fields/notifications/methods/jira/JiraNotificationMethodSummaryCard";
-import jiraNotificationMetadata from "components/common/fields/notifications/methods/jira/jiraNotificationMetadata";
 import GChatNotificationMethodSummaryCard
   from "components/common/fields/notifications/methods/gchat/GChatNotificationMethodSummaryCard";
-import gChatNotificationMetadata from "components/common/fields/notifications/methods/gchat/gChatNotificationMetadata";
+import emailStepNotificationMetadata
+  from "components/workflow/plan/step/notifications/email/emailStepNotification.metadata";
+import slackStepNotificationMetadata
+  from "components/workflow/plan/step/notifications/slack/slackStepNotificationMetadata";
+import teamsStepNotificationMetadata
+  from "components/workflow/plan/step/notifications/teams/teamsStepNotificationMetadata";
+import {
+  jiraStepNotificationMetadata
+} from "components/workflow/plan/step/notifications/jira/jiraStepNotification.metadata";
+import gChatStepNotificationMetadata
+  from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
 
 // TODO: Move the checks into the fields
 export default function NotificationsField(
@@ -26,8 +32,6 @@ export default function NotificationsField(
     fieldName,
   }) {
   const notifications = DataParsingHelper.parseArray(model?.getData(fieldName), []);
-  const serviceNowNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW);
-  const gChatNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.GCHAT);
 
   const getEmailNotificationMethodSummaryCard = () => {
     const emailNotification = DataParsingHelper.parseObject(notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.EMAIL));
@@ -35,7 +39,7 @@ export default function NotificationsField(
     if (emailNotification && emailNotification.enabled === true) {
       return (
         <EmailNotificationMethodSummaryCard
-          emailNotificationModel={modelHelpers.parseObjectIntoModel(emailNotification, emailNotificationMetadata)}
+          emailNotificationModel={modelHelpers.parseObjectIntoModel(emailNotification, emailStepNotificationMetadata)}
         />
       );
     }
@@ -47,7 +51,7 @@ export default function NotificationsField(
     if (slackNotification && slackNotification.enabled === true) {
       return (
         <SlackNotificationMethodSummaryCard
-          slackNotificationModel={modelHelpers.parseObjectIntoModel(slackNotification, slackNotificationMetadata)}
+          slackNotificationModel={modelHelpers.parseObjectIntoModel(slackNotification, slackStepNotificationMetadata)}
         />
       );
     }
@@ -59,7 +63,7 @@ export default function NotificationsField(
     if (teamsNotification && teamsNotification.enabled === true) {
       return (
         <TeamsNotificationMethodSummaryCard
-          teamsNotificationModel={modelHelpers.parseObjectIntoModel(teamsNotification, teamsNotificationMetadata)}
+          teamsNotificationModel={modelHelpers.parseObjectIntoModel(teamsNotification, teamsStepNotificationMetadata)}
         />
       );
     }
@@ -71,13 +75,32 @@ export default function NotificationsField(
     if (jiraNotification && jiraNotification.enabled === true) {
       return (
         <JiraNotificationMethodSummaryCard
-          notificationMethodData={modelHelpers.parseObjectIntoModel(jiraNotification, jiraNotificationMetadata)}
-          notificationData={notificationData}
+          jiraNotificationModel={modelHelpers.parseObjectIntoModel(jiraNotification, jiraStepNotificationMetadata)}
         />
       );
     }
   };
 
+  const getGChatNotificationMethodSummaryCard = () => {
+    const gChatNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.JIRA);
+
+    if (gChatNotification && gChatNotification.enabled === true) {
+      return (
+        <GChatNotificationMethodSummaryCard
+          jiraNotificationModel={modelHelpers.parseObjectIntoModel(gChatNotification, gChatStepNotificationMetadata)}
+        />
+      );
+    }
+  };
+
+  // TODO: When adding support for service now, add summary panel
+  const getServiceNowNotificationMethodSummaryCard = () => {
+    const serviceNowNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW);
+
+    if (serviceNowNotification && serviceNowNotification.enabled === true) {
+      return null;
+    }
+  };
 
   return (
     <div>
@@ -85,10 +108,8 @@ export default function NotificationsField(
       {getSlackNotificationMethodSummaryCard()}
       {getMicrosoftTeamsNotificationMethodSummaryCard()}
       {getJiraNotificationMethodSummaryCard()}
-      <GChatNotificationMethodSummaryCard
-        notificationMethodData={modelHelpers.parseObjectIntoModel(gChatNotification, gChatNotificationMetadata)}
-        notificationData={notificationData}
-      />
+      {getGChatNotificationMethodSummaryCard()}
+      {/*{getServiceNowNotificationMethodSummaryCard()}*/}
     </div>
   );
 }
