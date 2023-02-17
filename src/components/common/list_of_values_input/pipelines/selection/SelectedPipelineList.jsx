@@ -45,6 +45,7 @@ function SelectedPipelineList(
     fieldName,
     setModel,
     currentData,
+    disabled,
   }) {
   const {
     isLoading,
@@ -134,6 +135,7 @@ function SelectedPipelineList(
                 selectedPipelines={selectedPipelines}
                 setSelectedPipelines={setSelectedPipelines}
                 pipeline={pipeline}
+                disabled={disabled}
               />
             </div>
           );
@@ -143,7 +145,7 @@ function SelectedPipelineList(
   };
 
   const getButtons = () => {
-    if (isLoading === true) {
+    if (isLoading === true || disabled === true) {
       return null;
     }
 
@@ -258,6 +260,7 @@ function SelectedPipelineList(
           <div className={"my-auto"}><IconBase icon={faCompassDrafting} className={"mr-2"} />Selected Pipelines</div>
           <div className={"my-auto"}>{filteredPipelines.length} {filteredPipelines.length !== 1 ? "pipelines" : "pipeline"}</div>
         </div>
+        {getSearchBar()}
         {getPipelineCards()}
         {/*<div className="px-3 mt-2">*/}
         {/*  <ClientSideBottomPaginator*/}
@@ -277,7 +280,6 @@ function SelectedPipelineList(
 
   return (
     <div className={"ml-2"}>
-      {getSearchBar()}
       {getButtons()}
       {getBody()}
     </div>
@@ -289,6 +291,7 @@ SelectedPipelineList.propTypes = {
   fieldName: PropTypes.string,
   setModel: PropTypes.func,
   currentData: PropTypes.array,
+  disabled: PropTypes.bool,
 };
 
 export default SelectedPipelineList;

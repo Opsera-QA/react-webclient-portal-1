@@ -235,6 +235,7 @@ export default function PipelineSelectionList(
           <div className={"my-auto"}><IconBase icon={faCompassDrafting} className={"mr-2"} />Pipelines</div>
           <div className={"my-auto"}>{filteredPipelines.length} {filteredPipelines.length !== 1 ? "pipelines" : "pipeline"}</div>
         </div>
+        {getSearchBar()}
         {getPipelineCards()}
         {/*<div className="px-3 mt-2">*/}
         {/*  <ClientSideBottomPaginator*/}
@@ -254,7 +255,6 @@ export default function PipelineSelectionList(
 
   return (
     <div className={"mr-2"}>
-      {getSearchBar()}
       {getButtons()}
       {getBody()}
     </div>
