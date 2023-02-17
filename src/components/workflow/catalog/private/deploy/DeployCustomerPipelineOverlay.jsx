@@ -59,8 +59,6 @@ export default function DeployCustomerPipelineOverlay(
       titleIcon={faDraftingCompass}
       closePanel={closePanelFunction}
       buttonContainer={getButtonContainer()}
-      // TODO: Remove when allowing roles
-      size={CENTER_OVERLAY_SIZES.SMALL}
       bodyClassName={""}
     >
       <div className={"p-3"}>
