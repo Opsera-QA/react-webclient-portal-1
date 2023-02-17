@@ -10,7 +10,7 @@ import CreateArgoToolRepositoryOverlay
 import {getTableTextColumn, getArgoConnectionStatus} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 
-function ArgoToolRepositoriesTable({ toolId, argoRepositories, loadData, onRowSelect, isLoading }) {
+function ArgoToolRepositoriesTable({ toolId, argoRepositories, loadData, onRowSelect, isLoading, filterData, filterModel, setFilterModel }) {
   const toastContext = useContext(DialogToastContext);
   let fields = argoRepositoryMetadata.fields;
 
@@ -36,13 +36,17 @@ function ArgoToolRepositoriesTable({ toolId, argoRepositories, loadData, onRowSe
         data={argoRepositories}
         onRowSelect={onRowSelect}
         isLoading={isLoading}
+        paginationModel={filterModel}
+        setPaginationModel={setFilterModel}
+        loadData={filterData}
+        tableHeight={"350px"}
       />
     );
   };
 
   return (
     <FilterContainer
-      loadData={loadData}
+      loadData={filterData}
       isLoading={isLoading}
       title={"Argo Repositories"}
       type={"Argo Repositories"}
@@ -50,6 +54,9 @@ function ArgoToolRepositoriesTable({ toolId, argoRepositories, loadData, onRowSe
       addRecordFunction={createArgoRepository}
       body={getTable()}
       showBorder={false}
+      filterDto={filterModel}
+      setFilterDto={setFilterModel}
+      supportSearch={true}
     />
   );
 }
@@ -59,7 +66,10 @@ ArgoToolRepositoriesTable.propTypes = {
   loadData: PropTypes.func,
   onRowSelect: PropTypes.func,
   isLoading: PropTypes.bool,
-  argoRepositories: PropTypes.array
+  argoRepositories: PropTypes.array,
+  filterData: PropTypes.func,
+  setFilterModel: PropTypes.func,
+  filterModel: PropTypes.object,
 };
 
 export default ArgoToolRepositoriesTable;
