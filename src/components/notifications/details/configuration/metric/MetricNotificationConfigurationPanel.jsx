@@ -8,18 +8,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import MetricKpiConfigurationSelectInput
   from "components/notifications/details/configuration/metric/MetricKpiConfigurationSelectInput";
-<<<<<<< Updated upstream
-=======
 import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
->>>>>>> Stashed changes
 
 export default function MetricNotificationConfigurationPanel(
   {
     notificationModel,
-<<<<<<< Updated upstream
-=======
     setNotificationModel,
->>>>>>> Stashed changes
     notificationConfigurationModel,
     setNotificationConfigurationModel,
   }) {
@@ -37,9 +31,6 @@ export default function MetricNotificationConfigurationPanel(
   return (
     <Row>
       <Col lg={12}>
-<<<<<<< Updated upstream
-        <MetricKpiConfigurationSelectInput dataObject={notificationConfigurationModel} setDataObject={setNotificationConfigurationModel} fieldName={"kpi_identifier"} />
-=======
         <MetricKpiConfigurationSelectInput
           dataObject={notificationConfigurationModel}
           setDataObject={setNotificationConfigurationModel}
@@ -52,7 +43,6 @@ export default function MetricNotificationConfigurationPanel(
           model={notificationModel}
           setModel={setNotificationModel}
         />
->>>>>>> Stashed changes
       </Col>
     </Row>
   );
@@ -60,12 +50,7 @@ export default function MetricNotificationConfigurationPanel(
 
 MetricNotificationConfigurationPanel.propTypes = {
   notificationModel: PropTypes.object,
-<<<<<<< Updated upstream
-  notificationConfigurationModel: PropTypes.object,
-  setNotificationConfigurationModel: PropTypes.func
-=======
   setNotificationModel: PropTypes.func,
   notificationConfigurationModel: PropTypes.object,
   setNotificationConfigurationModel: PropTypes.func,
->>>>>>> Stashed changes
 };

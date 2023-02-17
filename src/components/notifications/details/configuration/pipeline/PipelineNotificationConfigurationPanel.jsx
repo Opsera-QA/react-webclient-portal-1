@@ -7,19 +7,12 @@ import pipelineNotificationConfigurationMetadata
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-<<<<<<< Updated upstream
-
-function PipelineNotificationEditorPanel(
-  {
-    notificationModel,
-=======
 import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 
 export default function PipelineNotificationEditorPanel(
   {
     notificationModel,
     setNotificationModel,
->>>>>>> Stashed changes
     notificationConfigurationModel,
     setNotificationConfigurationModel,
   }) {
@@ -39,8 +32,6 @@ export default function PipelineNotificationEditorPanel(
       <Col lg={12}>
         <TextAreaInput dataObject={notificationConfigurationModel} setDataObject={setNotificationConfigurationModel} fieldName={"trigger"} />
       </Col>
-<<<<<<< Updated upstream
-=======
       <Col lg={12}>
         <TextAreaInputBase
           fieldName={"nextSteps"}
@@ -48,24 +39,13 @@ export default function PipelineNotificationEditorPanel(
           setModel={setNotificationModel}
         />
       </Col>
->>>>>>> Stashed changes
     </Row>
   );
 }
 
 PipelineNotificationEditorPanel.propTypes = {
   notificationModel: PropTypes.object,
-<<<<<<< Updated upstream
-  notificationConfigurationModel: PropTypes.object,
-  setNotificationConfigurationModel: PropTypes.func
-};
-
-export default PipelineNotificationEditorPanel;
-
-
-=======
   setNotificationModel: PropTypes.func,
   notificationConfigurationModel: PropTypes.object,
   setNotificationConfigurationModel: PropTypes.func,
 };
->>>>>>> Stashed changes
