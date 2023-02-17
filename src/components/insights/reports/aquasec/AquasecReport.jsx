@@ -6,10 +6,10 @@ import { AuthContext } from "contexts/AuthContext";
 import actionableInsightsGenericChartFilterMetadata
   from "components/insights/charts/generic_filters/actionableInsightsGenericChartFilterMetadata";
 import Model from "core/data_model/model";
-import chartsActions from "components/insights/charts/charts-actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import PropTypes from "prop-types";
+import aquasecActions from "../../charts/aquasec_security_insights/aquasec.action";
 
 function AquasecReport({ kpiConfiguration, dashboardData }) {
   const { pipelineId, imageName, severity } = useParams();
@@ -58,29 +58,20 @@ function AquasecReport({ kpiConfiguration, dashboardData }) {
           dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
               ?.value;
 
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      const response = await aquasecActions.aquasecSecurityInsightsActionableTwo(
           getAccessToken,
           cancelSource,
-          "aquasecSecurityInsightsActionableTwo",
           kpiConfiguration,
           dashboardTags,
-          filterDto,
-          undefined,
           dashboardOrgs,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
+          filterDto,
           severity.toLowerCase(),
-          null,
-          null,
           imageName,
-          null,
           pipelineId
       );
 
       const data = response?.data && response?.status === 200 ?
-          response?.data?.data[0][0]?.data : [];
+          response?.data?.data[0]?.data : [];
       if (isMounted?.current === true && data) {
         setMetrics(data?.data);
         let newFilterDto = filterDto;

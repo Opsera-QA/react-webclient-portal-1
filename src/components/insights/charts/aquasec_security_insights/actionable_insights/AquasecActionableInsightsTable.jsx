@@ -53,7 +53,7 @@ function AquasecActionableInsightsTable({ data, isLoading, loadData, filterModel
     () => [
       getTableTextColumn(getField(fields, "imageName"), "imageName"),
       getTableTextColumn(getField(fields, "pipelineId"), "pipelineId"),
-      getTableTextColumn(getField(fields, "run"), "run"),
+      //getTableTextColumn(getField(fields, "run"), "run"),
       getTableDateTimeColumn(getField(fields, "timestamp"), "timestamp"),
       getAquasecTableTextColumn(getField(fields, "total_issues"), "total_issues"),
       getAquasecTableTextColumn(getField(fields, "total_components"), "total_components"),
