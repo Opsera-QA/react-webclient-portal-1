@@ -802,6 +802,14 @@ export const breadcrumbs = {
     linkText: "Coverity Reports",
     icon: faAnalytics
   },
+  aquasecReports: {
+    parent: undefined,
+    name: "aquasecReports",
+    path: paths.aquasecReports,
+    title: "Aquasec Reports",
+    linkText: "Aquasec Reports",
+    icon: faAnalytics
+  },
   gitscraperReports: {
     parent: undefined,
     name: "gitscraperReports",

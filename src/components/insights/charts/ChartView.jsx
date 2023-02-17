@@ -159,6 +159,9 @@ import CoverityIssuesByCategory from "./coverity/CoverityIssuesByCategory/Coveri
 // Boomi KPIs
 import BoomiBarChart from "./boomi/bar_chart/BoomiBarChart";
 
+// Aquasec Security Insights KPIs
+import AquasecIssuesBySeverity from "./aquasec_security_insights/AquasecIssuesBySeverity";
+
 import {
   getDateObjectFromKpiConfiguration,
   getTagsFromKpiConfiguration,
@@ -2198,7 +2201,7 @@ function ChartView({
           </Col>
         );
       // Coverity
-      case "coverity-issues-by-category-trend":
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.COVERITY_ISSUES_BY_CATEGORY_TREND:
         return (
           <Col
             xl={6}
@@ -2284,6 +2287,18 @@ function ChartView({
             className="p-2"
           >
             <ApprovalGatesMetrics
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.AQUASEC_ISSUES_BY_SEVERITY:
+        return (
+          <Col md={12} className="p-2">
+            <AquasecIssuesBySeverity
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}

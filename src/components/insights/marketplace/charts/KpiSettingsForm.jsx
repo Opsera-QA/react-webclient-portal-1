@@ -323,7 +323,7 @@ function KpiSettingsForm({
     "sonar-codesmells-metric-scorecard",
     "sonar-vulnerabilities-metric-scorecard",
     "sonar-reliability-remediation-agg-by-time",
-    "coverity-issues-by-category-trend",
+    kpiIdentifierConstants.KPI_IDENTIFIERS.COVERITY_ISSUES_BY_CATEGORY_TREND,
     "salesforce-duration-by-stage",
     "build-deployment-statistics",
     "sdlc-duration-statistics",
@@ -334,7 +334,8 @@ function KpiSettingsForm({
     "salesforce-components-chart",
     "github-commit-statistics",
     "deployment-analytics",
-    "gitlab-merge-requests-statistics"
+    "gitlab-merge-requests-statistics",
+    kpiIdentifierConstants.KPI_IDENTIFIERS.AQUASEC_ISSUES_BY_SEVERITY,
   ];
 
   const getKpiFilters = (filter) => {

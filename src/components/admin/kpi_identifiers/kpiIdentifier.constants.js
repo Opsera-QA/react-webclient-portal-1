@@ -177,6 +177,12 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
 
   //DORA
   DORA_JIRA_GITLAB_ROLLED_UP: "dora-jira-gitlab-rolled-up",
+
+  // Coverity
+  COVERITY_ISSUES_BY_CATEGORY_TREND: "coverity-issues-by-category-trend",
+
+  // Aquasec Security Insights
+  AQUASEC_ISSUES_BY_SEVERITY: "aquasec-issues-by-severity"
 };
 
 kpiIdentifierConstants.SUPPORTED_ANALYTICS_DATA_ENTRY_IDENTIFIERS = [
