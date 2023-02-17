@@ -27,5 +27,3 @@ export default function JiraNotificationMethodSummaryCard({ jiraNotificationMode
 JiraNotificationMethodSummaryCard.propTypes = {
   jiraNotificationModel: PropTypes.object,
 };
-
-export default JiraNotificationMethodSummaryCard
