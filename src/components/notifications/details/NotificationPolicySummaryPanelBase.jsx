@@ -8,8 +8,9 @@ import TagField from "components/common/fields/multiple_items/tags/TagField";
 import NotificationTypeField from "components/common/list_of_values_input/notifications/type/NotificationTypeField";
 import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
+import NotificationsField from "components/common/fields/notifications/NotificationsField";
 
-function NotificationPolicySummaryPanelBase({ notificationData, setActiveTab, notificationTypeSummaryCard, notificationMethodSummaryCard }) {
+function NotificationPolicySummaryPanelBase({ notificationData, setActiveTab, notificationTypeSummaryCard }) {
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
@@ -54,9 +55,16 @@ function NotificationPolicySummaryPanelBase({ notificationData, setActiveTab, no
             fieldName={"tags"}
           />
         </Col>
+        <Col lg={12}>
+          {notificationTypeSummaryCard}
+        </Col>
+        <Col lg={12}>
+          <NotificationsField
+            fieldName={"notifications"}
+            model={notificationData}
+          />
+        </Col>
       </Row>
-      <div>{notificationTypeSummaryCard}</div>
-      <div>{notificationMethodSummaryCard}</div>
     </SummaryPanelContainer>
   );
 }
@@ -65,7 +73,6 @@ NotificationPolicySummaryPanelBase.propTypes = {
   notificationData: PropTypes.object,
   setActiveTab: PropTypes.func,
   notificationTypeSummaryCard: PropTypes.object,
-  notificationMethodSummaryCard: PropTypes.object
 };
 
 export default NotificationPolicySummaryPanelBase;

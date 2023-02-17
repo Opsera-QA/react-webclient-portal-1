@@ -4,7 +4,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import NotificationMethodSummaryCardContainer
-  from "components/notifications/details/methods/NotificationMethodSummaryCardContainer";
+  from "components/common/fields/notifications/methods/NotificationMethodSummaryCardContainer";
 
 function GChatNotificationMethodSummaryCard({ notificationData, notificationMethodData }) {
   return (

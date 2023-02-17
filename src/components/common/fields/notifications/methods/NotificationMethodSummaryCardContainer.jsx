@@ -5,7 +5,7 @@ import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import IconBase from "components/common/icons/IconBase";
 
-function NotificationMethodSummaryCardContainer({ children, isLoading, notificationData }) {
+function NotificationMethodSummaryCardContainer({ children, isLoading, method }) {
   const getCardTitle = () => {
     if (isLoading) {
       return (<div className="ml-1"><LoadingIcon className={"mr-1"}/>Loading Notification Method</div>);
@@ -13,7 +13,7 @@ function NotificationMethodSummaryCardContainer({ children, isLoading, notificat
 
     return (
       <div className="w-100 mx-2">
-        <div><span><IconBase icon={faEnvelope} className={"mr-1"}/>Notification Method: {notificationData.getData("method")}</span></div>
+        <div><span><IconBase icon={faEnvelope} className={"mr-1"}/>Notification Method: {method}</span></div>
       </div>
     );
   };
@@ -43,7 +43,7 @@ function NotificationMethodSummaryCardContainer({ children, isLoading, notificat
 
 NotificationMethodSummaryCardContainer.propTypes = {
   children: PropTypes.any,
-  notificationData: PropTypes.object,
+  method: PropTypes.string,
   isLoading: PropTypes.bool
 };
 

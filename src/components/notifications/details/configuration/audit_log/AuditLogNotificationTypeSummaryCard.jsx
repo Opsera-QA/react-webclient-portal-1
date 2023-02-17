@@ -10,7 +10,10 @@ export default function AuditLogNotificationTypeSummaryCard({ notificationData, 
   }
 
   return (
-    <NotificationTypeSummaryCardContainer notificationData={notificationData} isLoading={isLoading}>
+    <NotificationTypeSummaryCardContainer
+      notificationData={notificationData}
+      isLoading={isLoading}
+    >
       <GenericItemField
         dataObject={notificationConfigurationData}
         fieldName={"events"}
