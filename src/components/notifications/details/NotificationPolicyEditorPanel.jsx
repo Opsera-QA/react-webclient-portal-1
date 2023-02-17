@@ -37,6 +37,7 @@ function NotificationPolicyEditorPanel({ notificationData, handleClose }) {
       createRecord={createNotification}
       updateRecord={updateNotification}
       setRecordDto={setNotificationModel}
+      className={"my-2"}
       lenient={true}
       disable={
         !notificationModel.checkCurrentValidity()
