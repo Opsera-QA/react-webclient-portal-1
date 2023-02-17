@@ -8,10 +8,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import MetricKpiConfigurationSelectInput
   from "components/notifications/details/configuration/metric/MetricKpiConfigurationSelectInput";
+import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 
 export default function MetricNotificationConfigurationPanel(
   {
     notificationModel,
+    setNotificationModel,
     notificationConfigurationModel,
     setNotificationConfigurationModel,
   }) {
@@ -29,7 +31,18 @@ export default function MetricNotificationConfigurationPanel(
   return (
     <Row>
       <Col lg={12}>
-        <MetricKpiConfigurationSelectInput dataObject={notificationConfigurationModel} setDataObject={setNotificationConfigurationModel} fieldName={"kpi_identifier"} />
+        <MetricKpiConfigurationSelectInput
+          dataObject={notificationConfigurationModel}
+          setDataObject={setNotificationConfigurationModel}
+          fieldName={"kpi_identifier"}
+        />
+      </Col>
+      <Col lg={12}>
+        <TextAreaInputBase
+          fieldName={"nextSteps"}
+          model={notificationModel}
+          setModel={setNotificationModel}
+        />
       </Col>
     </Row>
   );
@@ -37,6 +50,7 @@ export default function MetricNotificationConfigurationPanel(
 
 MetricNotificationConfigurationPanel.propTypes = {
   notificationModel: PropTypes.object,
+  setNotificationModel: PropTypes.func,
   notificationConfigurationModel: PropTypes.object,
-  setNotificationConfigurationModel: PropTypes.func
+  setNotificationConfigurationModel: PropTypes.func,
 };

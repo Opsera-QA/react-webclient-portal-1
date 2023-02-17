@@ -7,10 +7,12 @@ import pipelineNotificationConfigurationMetadata
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 
-function PipelineNotificationEditorPanel(
+export default function PipelineNotificationEditorPanel(
   {
     notificationModel,
+    setNotificationModel,
     notificationConfigurationModel,
     setNotificationConfigurationModel,
   }) {
@@ -30,16 +32,20 @@ function PipelineNotificationEditorPanel(
       <Col lg={12}>
         <TextAreaInput dataObject={notificationConfigurationModel} setDataObject={setNotificationConfigurationModel} fieldName={"trigger"} />
       </Col>
+      <Col lg={12}>
+        <TextAreaInputBase
+          fieldName={"nextSteps"}
+          model={notificationModel}
+          setModel={setNotificationModel}
+        />
+      </Col>
     </Row>
   );
 }
 
 PipelineNotificationEditorPanel.propTypes = {
   notificationModel: PropTypes.object,
+  setNotificationModel: PropTypes.func,
   notificationConfigurationModel: PropTypes.object,
-  setNotificationConfigurationModel: PropTypes.func
+  setNotificationConfigurationModel: PropTypes.func,
 };
-
-export default PipelineNotificationEditorPanel;
-
-

@@ -40,6 +40,7 @@ export default function NotificationConfigurationPanel(
         return (
           <MetricNotificationConfigurationPanel
             notificationModel={notificationModel}
+            setNotificationModel={setNotificationModel}
             notificationConfigurationModel={notificationConfigurationModel}
             setNotificationConfigurationModel={updateModelFunction}
           />
@@ -48,6 +49,7 @@ export default function NotificationConfigurationPanel(
         return (
           <PipelineNotificationEditorPanel
             notificationModel={notificationModel}
+            setNotificationModel={setNotificationModel}
             notificationConfigurationModel={notificationConfigurationModel}
             setNotificationConfigurationModel={updateModelFunction}
           />
