@@ -76,7 +76,7 @@ function AquasecIssuesBySeverity({
       );
 
       const dataObject = response?.data
-          ? response?.data?.data[0]?.aquasecSecurityInsightsBaseKPI?.data[0]?.BlocksData[0]
+          ? response?.data?.data[0][0]
           : [];
 
       if (isMounted?.current === true && dataObject) {

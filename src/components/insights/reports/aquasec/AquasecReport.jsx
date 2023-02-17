@@ -12,13 +12,11 @@ import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationB
 import PropTypes from "prop-types";
 
 function AquasecReport({ kpiConfiguration, dashboardData }) {
-  const { pipelineId, imageName, runCount, severity } = useParams();
-  console.log("imageNm", runCount);
+  const { pipelineId, imageName, severity } = useParams();
   const history = useHistory();
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
-  const [allIssues, setAllIssues] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -73,7 +71,7 @@ function AquasecReport({ kpiConfiguration, dashboardData }) {
           undefined,
           undefined,
           undefined,
-          severity,
+          severity.toLowerCase(),
           null,
           null,
           imageName,
@@ -82,15 +80,16 @@ function AquasecReport({ kpiConfiguration, dashboardData }) {
       );
       console.log("response", response);
 
-      const dataBlocks = response?.data && response?.status === 200 ?
-          response?.data?.data?.data : [];
+      const data = response?.data && response?.status === 200 ?
+          response?.data?.data[0][0]?.data : [];
+      console.log("data", data);
 
-      if (isMounted?.current === true && dataBlocks) {
-        setMetrics(dataBlocks[0].data);
+      if (isMounted?.current === true && data) {
+        setMetrics(data?.data);
         let newFilterDto = filterDto;
         newFilterDto.setData(
             "totalCount",
-            dataBlocks[0].count[0].count
+            data?.count[0]?.count
         );
         setFilterModel({ ...newFilterDto });
       }
@@ -106,6 +105,11 @@ function AquasecReport({ kpiConfiguration, dashboardData }) {
     }
   };
 
+  const temp = "Love";
+  console.log(" temp " , temp.toLowerCase());
+
+  console.log("metrics", metrics);
+
   return (
     <ScreenContainer
       navigationTabContainer={<InsightsSubNavigationBar currentTab={"reportsViewer"} />}
@@ -114,11 +118,13 @@ function AquasecReport({ kpiConfiguration, dashboardData }) {
     >
       <AquasecScanReportTable
         data={metrics}
-        allIssues={allIssues}
         isLoading={isLoading}
         loadData={loadData}
         filterModel={filterModel}
         setFilterModel={setFilterModel}
+        severity={severity}
+        pipelineId={pipelineId}
+        imageName={imageName}
       />
     </ScreenContainer>
   );

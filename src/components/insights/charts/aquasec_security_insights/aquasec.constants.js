@@ -5,11 +5,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export const ISSUE_TYPE = Object.freeze({
-  CRITICAL: 'critical',
-  HIGH: 'high',
-  MEDIUM: 'medium',
-  LOW: 'low',
-  NEGLIGIBLE: 'negligible'
+  CRITICAL: 'Critical',
+  HIGH: 'High',
+  MEDIUM: 'Medium',
+  LOW: 'Low',
+  NEGLIGIBLE: 'Negligible'
 });
 
 export const ICON_FROM_TREND = Object.freeze({

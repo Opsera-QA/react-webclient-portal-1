@@ -76,18 +76,16 @@ function AquasecActionableInsightsOverlay({ title, severity, kpiConfiguration, d
           null,
           null,
           null,
-          severity
+          severity.toLowerCase()
       );
       console.log("response", response);
-      let dataObject = response?.data ? response?.data?.data[0]?.aquasecSecurityInsightsActionableOne?.data[0]?.TableData[0]?.data : [];
+      let dataObject = response?.data ? response?.data?.data[0][0]?.TableData[0]?.data : [];
       let dataCount = response?.data
-          ? response?.data?.data[0]?.aquasecSecurityInsightsActionableOne?.data[0]?.TableData[0]?.count[0]?.count
+          ? response?.data?.data[0][0]?.TableData[0]?.count[0]?.count
           : [];
       let DataBlocks = response?.data
-          ? response?.data?.data[0]?.aquasecSecurityInsightsActionableOne?.data[0]?.BlocksData[0]
+          ? response?.data?.data[0][0]?.BlocksData[0]
           : [];
-      console.log("dataObj", dataObject);
-      console.log("datablocks", DataBlocks);
       // dataObject = dataObject.map((bd, index) => ({
       //   ...bd,
       //   _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
@@ -147,6 +145,8 @@ function AquasecActionableInsightsOverlay({ title, severity, kpiConfiguration, d
           setFilterModel={setFilterModel}
           title={title}
           severity={severity}
+          kpiConfiguration={kpiConfiguration}
+          dashboardData={dashboardData}
         />
       </div>
     </FullScreenCenterOverlayContainer>

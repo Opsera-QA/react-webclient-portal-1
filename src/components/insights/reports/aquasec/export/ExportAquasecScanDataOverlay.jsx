@@ -9,7 +9,7 @@ function ExportAquasecScanDataOverlay({ formattedData, rawData, isLoading }) {
   };
 
   const columns = aquasecScanReportTableMetadata.fields.map(({ label }) => label);
-  const formattedDataValues = formattedData.map(item => [item.imageName, item.componentName, item.severity, item.cve_id, item.cve_score, item.description]);
+  const formattedDataValues = formattedData.map(item => [ item.componentName, item.componentVersion, item.severity, item.identifier, item.score, item.description]);
 
   const getPdfExporter = () => {
     const pdfExporter = new jsPDF({ orientation: "landscape" });

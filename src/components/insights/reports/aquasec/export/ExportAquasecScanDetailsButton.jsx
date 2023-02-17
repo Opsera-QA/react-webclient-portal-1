@@ -5,35 +5,35 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import ExportDataButtonBase from "components/common/modal/export_data/ExportDataButtonBase";
 import ExportAquasecScanDataOverlay from "components/insights/reports/aquasec/export/ExportAquasecScanDataOverlay";
 
-function ExportAquasecScanDetailsButton({isLoading, className, allIssues}) {
+function ExportAquasecScanDetailsButton({isLoading, className, scanData}) {
   const toastContext = useContext(DialogToastContext);
 
   const launchOverlayFunction = () => {
     toastContext.showOverlayPanel(
       <ExportAquasecScanDataOverlay
         isLoading={isLoading}
-        formattedData={allIssues}
+        formattedData={scanData}
         rawData={rawDataResults()}
       />
     );
   };
 
   const rawDataResults = () =>{
-    return allIssues ? allIssues.map(item => JSON.stringify(item)) : "export failure";
+    return scanData ? scanData.map(item => JSON.stringify(item)) : "export failure";
   };
 
   return (
     <ExportDataButtonBase
       clasName={className}
       isLoading={isLoading}
-      allIssues={allIssues}
+      allIssues={scanData}
       launchOverlayFunction={launchOverlayFunction}
     />
   );
 }
 
 ExportAquasecScanDetailsButton.propTypes = {
-  allIssues: PropTypes.array,
+  scanData: PropTypes.array,
   isLoading: PropTypes.bool,
   className: PropTypes.string
 };

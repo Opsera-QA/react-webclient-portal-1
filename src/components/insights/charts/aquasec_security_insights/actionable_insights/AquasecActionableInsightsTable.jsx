@@ -14,12 +14,15 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import { useHistory } from "react-router-dom";
 
 // TODO: Convert to cards
-function AquasecActionableInsightsTable({ data, isLoading, loadData, filterModel, setFilterModel, title, severity }) {
+function AquasecActionableInsightsTable({ data, isLoading, loadData, filterModel, setFilterModel, title, severity, kpiConfiguration, dashboardData }) {
   const toastContext = useContext(DialogToastContext);
   const fields = AquasecActionableInsightsMetadata.fields;
   const tableTitle = "Aquasec " + title + " Report";
   const noDataMessage = "Aquasec " + title + " report is currently unavailable at this time";
   let history = useHistory();
+
+  console.log("kpi config insights", kpiConfiguration);
+  console.log("dashboard insights", dashboardData);
 
   const getAquasecTableTextColumn = (field, block) => {
     return {
@@ -70,7 +73,7 @@ function AquasecActionableInsightsTable({ data, isLoading, loadData, filterModel
     //const severity = row?.severity;
 
     toastContext.clearOverlayPanel();
-    history.push(`/insights/reports/scans/aquasec/${pipelineId}/${imageName}/${runCount}/${severity}`);
+    history.push(`/insights/reports/scans/aquasec/${pipelineId}/${imageName}/${severity}`);
   };
 
   const getTable = () => {
@@ -110,6 +113,8 @@ AquasecActionableInsightsTable.propTypes = {
   setFilterModel: PropTypes.func,
   title: PropTypes.string,
   severity: PropTypes.string,
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
 };
 
 export default AquasecActionableInsightsTable;

@@ -3,12 +3,12 @@ const aquasecScanReportMetadata = {
   type: "Aquasec Scan",
   fields: [
     {
-      label: "Image Name",
-      id: "imageName",
-    },
-    {
       label: "Component Name",
       id: "componentName",
+    },
+    {
+      label: "Component Version",
+      id: "componentVersion",
     },
     {
       label: "Severity",
@@ -16,11 +16,11 @@ const aquasecScanReportMetadata = {
     },
     {
       label: "CVE ID",
-      id: "cve_id",
+      id: "identifier",
     },
     {
       label: "CVE Score",
-      id: "cve_score",
+      id: "score",
     },
     {
       label: "Description",
