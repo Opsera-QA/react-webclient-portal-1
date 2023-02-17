@@ -16,9 +16,9 @@ export default function PipelineSelectionList(
     model,
     setModel,
     fieldName,
+    currentData,
   }) {
   const [selectedPipelines, setSelectedPipelines] = useState([]);
-  const currentData = DataParsingHelper.parseArray(model?.getData(fieldName), []);
   const [searchText, setSearchText] = useState("");
   const {
     isLoading,
@@ -41,8 +41,6 @@ export default function PipelineSelectionList(
         output.push(pipeline);
       }
     });
-
-    console.log("output: " + JSON.stringify(output));
 
     if (hasStringValue(searchText)) {
       const lowercaseSearchText = searchText.toLowerCase();
@@ -76,6 +74,9 @@ export default function PipelineSelectionList(
         output.push(pipeline._id);
       }
     });
+
+    model?.setData(fieldName, output);
+    setModel({...model});
     setSearchText("");
   };
 
@@ -86,6 +87,9 @@ export default function PipelineSelectionList(
         output.push(pipeline._id);
       }
     });
+
+    model?.setData(fieldName, output);
+    setModel({...model});
     setSearchText("");
   };
 
@@ -226,7 +230,7 @@ export default function PipelineSelectionList(
     return (
       <div className="content-card-1 content-container">
         <div className="p-2 d-flex content-block-header members-title justify-content-between">
-          <div className={"my-auto"}><IconBase icon={faCompassDrafting} className={"mr-2"} />Selected Pipelines</div>
+          <div className={"my-auto"}><IconBase icon={faCompassDrafting} className={"mr-2"} />Pipelines</div>
           <div className={"my-auto"}>{filteredPipelines.length} {filteredPipelines.length !== 1 ? "pipelines" : "pipeline"}</div>
         </div>
         {getPipelineCards()}
@@ -259,4 +263,5 @@ PipelineSelectionList.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   fieldName: PropTypes.string,
+  currentData: PropTypes.array,
 };

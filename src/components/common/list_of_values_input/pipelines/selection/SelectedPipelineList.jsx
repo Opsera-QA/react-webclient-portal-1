@@ -39,13 +39,12 @@ export const sortByName = (pipelines) => {
   return [];
 };
 
-
-// TODO: This needs to be rewritten
 function SelectedPipelineList(
   {
     model,
     fieldName,
     setModel,
+    currentData,
   }) {
   const {
     isLoading,
@@ -56,8 +55,7 @@ function SelectedPipelineList(
   );
   const [selectedPipelines, setSelectedPipelines] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const currentData = DataParsingHelper.parseArray(model?.getData(fieldName), []);
-  
+
   const getFilteredPipelines = useCallback(() => {
     const output = [];
 
@@ -99,20 +97,19 @@ function SelectedPipelineList(
       return shownPipelines.find((shownPipeline) => shownPipeline._id === pipelineId) == null;
     });
 
-    console.log("output: " + JSON.stringify(output));
     model?.setData(fieldName, output);
+    setModel({...model});
     setSelectedPipelines([]);
     setSearchText("");
   };
 
   const removeSelectedPipelines = () => {
-    const currentValue = DataParsingHelper.parseArray(model?.getData(fieldName), []);
-    const output = currentValue.filter((pipelineId) => {
+    const output = currentData.filter((pipelineId) => {
       return selectedPipelines.find((selectedPipeline) => selectedPipeline._id === pipelineId) == null;
     });
 
-    console.log("output: " + JSON.stringify(output));
     model?.setData(fieldName, output);
+    setModel({...model});
     setSelectedPipelines([]);
     setSearchText("");
   };
@@ -289,6 +286,7 @@ SelectedPipelineList.propTypes = {
   model: PropTypes.object,
   fieldName: PropTypes.string,
   setModel: PropTypes.func,
+  currentData: PropTypes.array,
 };
 
 export default SelectedPipelineList;
