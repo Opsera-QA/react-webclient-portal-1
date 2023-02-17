@@ -4,7 +4,8 @@ import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
 
-export default function useGetPipelines(
+// TODO: Temp workaround until finding better solution. Don't use this
+export default function useGetAllPipelines(
   fields,
   active,
   setUrlParameters = false,
@@ -23,6 +24,8 @@ export default function useGetPipelines(
 
   useEffect(() => {
     setPipelines([]);
+
+    pipelineFilterModel.setData("pageSize", 10000);
 
     if (loadData) {
       loadData(getPipelines, handleErrorFunction).catch(() => {});
