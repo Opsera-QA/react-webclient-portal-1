@@ -96,9 +96,11 @@ export default function PipelineSelectionList(
   const getPipelineCards = () => {
     if (filteredPipelines.length === 0) {
       return (
-        <div className="h-100 m-auto text-center">
-          <span>No Pipelines Found</span>
-        </div>
+        <ul className="list-group membership-list">
+          <div className="h-100 m-auto text-center">
+            <span>No Pipelines Found</span>
+          </div>
+        </ul>
       );
     }
 
@@ -154,7 +156,7 @@ export default function PipelineSelectionList(
               <div>
                 <IconBase icon={faArrowRight} fixedWidth/>
               </div>
-              <div className={"mx-2"}>
+              <div className={"mx-1"}>
                 Add Selected
               </div>
               <div>
@@ -176,7 +178,7 @@ export default function PipelineSelectionList(
               <div>
                 <IconBase icon={faPlusCircle}/>
               </div>
-              <div className={"mx-2"}>
+              <div className={"mx-1"}>
                 Add Shown
               </div>
               <div>

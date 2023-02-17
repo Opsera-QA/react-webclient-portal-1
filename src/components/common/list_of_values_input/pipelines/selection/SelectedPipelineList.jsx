@@ -117,14 +117,16 @@ function SelectedPipelineList(
   const getPipelineCards = () => {
     if (filteredPipelines.length === 0) {
       return (
-        <div className="h-100 m-auto text-center">
-          <span>No Pipelines Found</span>
-        </div>
+        <ul className={"list-group membership-list"}>
+          <div className={"h-100 m-auto text-center"}>
+            <span>No Pipelines Found</span>
+          </div>
+        </ul>
       );
     }
 
     return (
-      <ul className="list-group membership-list">
+      <ul className={"list-group membership-list"}>
         {filteredPipelines.map((pipeline, index) => {
           return (
             <div key={pipeline?._id} className={index % 2 === 0 ? "even-row" : "odd-row"}>
@@ -179,7 +181,7 @@ function SelectedPipelineList(
               <div>
                 <IconBase icon={faArrowLeft} />
               </div>
-              <div className={"mx-2"}>
+              <div className={"mx-1"}>
                 Remove Selected
               </div>
               <div>
@@ -201,7 +203,7 @@ function SelectedPipelineList(
               <div>
                 <IconBase icon={faMinusCircle} className={"mr-2"} />
               </div>
-              <div className={"mx-2"}>
+              <div className={"mx-1"}>
                 Remove Shown
               </div>
               <div>
