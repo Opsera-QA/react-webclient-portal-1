@@ -9,6 +9,7 @@ export function PipelineSelectionCard(
     pipeline, 
     selectedPipelines, 
     setSelectedPipelines,
+    disabled,
   }) {
   const [pipelineSelected, setPipelineSelected] = useState(false);
 
@@ -29,7 +30,11 @@ export function PipelineSelectionCard(
   };
 
   return (
-    <li key={pipeline._id} className={selectedPipelines.includes(pipeline) ? "p-1 member-list selected" : "p-1 member-list"} onClick={selectPipeline}>
+    <li
+      key={pipeline._id}
+      className={selectedPipelines.includes(pipeline) ? "p-1 member-list selected" : "p-1 member-list"}
+      onClick={disabled !== true ? selectPipeline : undefined}
+    >
       <Row className={"mx-0"}>
         <Col lg={12} xl={6} className={"no-wrap-inline"}>{truncateString(pipeline.name, 50)}</Col>
         <Col lg={12} xl={6} className={selectedPipelines.includes(pipeline) ? "d-flex w-100" : "d-flex w-100 text-muted"}>
@@ -44,4 +49,5 @@ PipelineSelectionCard.propTypes = {
   pipeline: PropTypes.object,
   selectedPipelines: PropTypes.array,
   setSelectedPipelines: PropTypes.func,
+  disabled: PropTypes.bool,
 };
