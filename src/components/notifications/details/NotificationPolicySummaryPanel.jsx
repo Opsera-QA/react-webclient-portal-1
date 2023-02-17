@@ -1,88 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Model from "core/data_model/model";
-import NotificationPolicySummaryPanelBase from "components/notifications/details/NotificationPolicySummaryPanelBase";
 import pipelineNotificationConfigurationMetadata
   from "components/notifications/details/configuration/pipeline/pipeline-notification-configuration-metadata";
 import metricNotificationConfigurationMetadata
   from "components/notifications/details/configuration/metric/metric-notification-configuration-metadata";
-import EmailNotificationMethodSummaryCard
-  from "components/notifications/details/methods/email/EmailNotificationMethodSummaryCard";
-import emailNotificationMetadata
-  from "components/notifications/details/methods/email/emailNotificationMetadata";
-import slackNotificationMetadata
-  from "components/notifications/details/methods/slack/slackNotificationMetadata";
-import TeamsNotificationMethodSummaryCard
-  from "components/notifications/details/methods/teams/TeamsNotificationMethodSummaryCard";
-import teamsNotificationMetadata
-  from "components/notifications/details/methods/teams/teamsNotificationMetadata";
-import JiraNotificationMethodSummaryCard
-  from "components/notifications/details/methods/jira/JiraNotificationMethodSummaryCard";
-import jiraNotificationMetadata
-  from "components/notifications/details/methods/jira/jiraNotificationMetadata";
-import SlackNotificationMethodSummaryCard
-  from "components/notifications/details/methods/slack/SlackNotificationMethodSummaryCard";
 import MetricNotificationTypeSummaryCard
   from "components/notifications/details/configuration/metric/MetricNotificationTypeSummaryCard";
 import PipelineNotificationTypeSummaryCard
   from "components/notifications/details/configuration/pipeline/PipelineNotificationTypeSummaryCard";
-import GChatNotificationMethodSummaryCard
-  from "components/notifications/details/methods/gchat/GChatNotificationMethodSummaryCard";
-import gChatNotificationMetadata
-  from "components/notifications/details/methods/gchat/gChatNotificationMetadata";
-import {ORCHESTRATION_NOTIFICATION_TYPES} from "components/common/fields/notifications/notificationTypes.constants";
 import modelHelpers from "components/common/model/modelHelpers";
 import AuditLogNotificationTypeSummaryCard
   from "components/notifications/details/configuration/audit_log/AuditLogNotificationTypeSummaryCard";
 import {
   auditLogNotificationConfigurationMetadata
 } from "components/notifications/details/configuration/audit_log/auditLogNotificationConfigurationMetadata";
+import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import {Col, Row} from "react-bootstrap";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import NotificationTypeField from "components/common/list_of_values_input/notifications/type/NotificationTypeField";
+import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
+import SmartIdField from "components/common/fields/text/id/SmartIdField";
+import DateFieldBase from "components/common/fields/date/DateFieldBase";
+import TagField from "components/common/fields/multiple_items/tags/TagField";
+import NotificationsField from "components/common/fields/notifications/NotificationsField";
 
 function NotificationPolicySummaryPanel({ notificationData, setActiveTab }) {
-  // TODO: Make these panels more similar to the pipeline summary cards
-  const getNotificationMethodSummaryPanel = () => {
-    switch (notificationData.getData("method")) {
-      case ORCHESTRATION_NOTIFICATION_TYPES.EMAIL:
-        return (
-          <EmailNotificationMethodSummaryCard
-            notificationMethodData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), emailNotificationMetadata)}
-            notificationData={notificationData}
-          />
-        );
-      case ORCHESTRATION_NOTIFICATION_TYPES.SLACK:
-        return (
-          <SlackNotificationMethodSummaryCard
-            notificationMethodData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), slackNotificationMetadata)}
-            notificationData={notificationData}
-          />
-        );
-      case ORCHESTRATION_NOTIFICATION_TYPES.TEAMS:
-        return (
-          <TeamsNotificationMethodSummaryCard
-            notificationMethodData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), teamsNotificationMetadata)}
-            notificationData={notificationData}
-          />
-        );
-      case ORCHESTRATION_NOTIFICATION_TYPES.JIRA:
-        return (
-          <JiraNotificationMethodSummaryCard
-            notificationMethodData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), jiraNotificationMetadata)}
-            notificationData={notificationData}
-          />
-        );
-      case ORCHESTRATION_NOTIFICATION_TYPES.GCHAT:
-        return (
-          <GChatNotificationMethodSummaryCard
-            notificationMethodData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), gChatNotificationMetadata)}
-            notificationData={notificationData}
-          />
-        );
-      default:
-        return (<div>No notification method associated with this Notification</div>);
-    }
-  };
-
-  // TODO: Make these panels more similar to the pipeline summary cards
   const getNotificationTypeSummaryPanel = () => {
     switch (notificationData.getData("type")) {
       case "audit_log":
@@ -112,12 +54,60 @@ function NotificationPolicySummaryPanel({ notificationData, setActiveTab }) {
   };
 
   return (
-    <NotificationPolicySummaryPanelBase
-      notificationData={notificationData}
-      setActiveTab={setActiveTab}
-      notificationTypeSummaryCard={getNotificationTypeSummaryPanel()}
-      notificationMethodSummaryCard={getNotificationMethodSummaryPanel()}
-    />
+    <SummaryPanelContainer setActiveTab={setActiveTab}>
+      <Row>
+        <Col lg={6}>
+          <TextFieldBase
+            dataObject={notificationData}
+            fieldName={"name"}
+          />
+        </Col>
+        <Col lg={6}>
+          <NotificationTypeField
+            model={notificationData}
+            fieldName={"type"}
+          />
+        </Col>
+        <Col lg={6}>
+          <SsoUserField
+            model={notificationData}
+            fieldName={"owner"}
+          />
+        </Col>
+        <Col lg={6}>
+          <SmartIdField
+            model={notificationData}
+          />
+        </Col>
+        <Col lg={12}>
+          <TextFieldBase
+            dataObject={notificationData}
+            fieldName={"description"}
+          />
+        </Col>
+        <Col lg={6}>
+          <DateFieldBase
+            dataObject={notificationData}
+            fieldName={"createdAt"}
+          />
+        </Col>
+        <Col lg={12}>
+          <TagField
+            dataObject={notificationData}
+            fieldName={"tags"}
+          />
+        </Col>
+        <Col lg={12}>
+          {getNotificationTypeSummaryPanel()}
+        </Col>
+        <Col lg={12}>
+          <NotificationsField
+            fieldName={"notifications"}
+            model={notificationData}
+          />
+        </Col>
+      </Row>
+    </SummaryPanelContainer>
   );
 }
 

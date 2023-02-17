@@ -39,13 +39,20 @@ export const sortByName = (pipelines) => {
   return [];
 };
 
+<<<<<<< Updated upstream
 
 // TODO: This needs to be rewritten
+=======
+>>>>>>> Stashed changes
 function SelectedPipelineList(
   {
     model,
     fieldName,
     setModel,
+<<<<<<< Updated upstream
+=======
+    currentData,
+>>>>>>> Stashed changes
   }) {
   const {
     isLoading,
@@ -56,8 +63,12 @@ function SelectedPipelineList(
   );
   const [selectedPipelines, setSelectedPipelines] = useState([]);
   const [searchText, setSearchText] = useState("");
+<<<<<<< Updated upstream
   const currentData = DataParsingHelper.parseArray(model?.getData(fieldName), []);
   
+=======
+
+>>>>>>> Stashed changes
   const getFilteredPipelines = useCallback(() => {
     const output = [];
 
@@ -99,13 +110,19 @@ function SelectedPipelineList(
       return shownPipelines.find((shownPipeline) => shownPipeline._id === pipelineId) == null;
     });
 
+<<<<<<< Updated upstream
     console.log("output: " + JSON.stringify(output));
     model?.setData(fieldName, output);
+=======
+    model?.setData(fieldName, output);
+    setModel({...model});
+>>>>>>> Stashed changes
     setSelectedPipelines([]);
     setSearchText("");
   };
 
   const removeSelectedPipelines = () => {
+<<<<<<< Updated upstream
     const currentValue = DataParsingHelper.parseArray(model?.getData(fieldName), []);
     const output = currentValue.filter((pipelineId) => {
       return selectedPipelines.find((selectedPipeline) => selectedPipeline._id === pipelineId) == null;
@@ -113,6 +130,14 @@ function SelectedPipelineList(
 
     console.log("output: " + JSON.stringify(output));
     model?.setData(fieldName, output);
+=======
+    const output = currentData.filter((pipelineId) => {
+      return selectedPipelines.find((selectedPipeline) => selectedPipeline._id === pipelineId) == null;
+    });
+
+    model?.setData(fieldName, output);
+    setModel({...model});
+>>>>>>> Stashed changes
     setSelectedPipelines([]);
     setSearchText("");
   };
@@ -120,14 +145,26 @@ function SelectedPipelineList(
   const getPipelineCards = () => {
     if (filteredPipelines.length === 0) {
       return (
+<<<<<<< Updated upstream
         <div className="h-100 m-auto text-center">
           <span>No Pipelines Found</span>
         </div>
+=======
+        <ul className={"list-group membership-list"}>
+          <div className={"h-100 m-auto text-center"}>
+            <span>No Pipelines Found</span>
+          </div>
+        </ul>
+>>>>>>> Stashed changes
       );
     }
 
     return (
+<<<<<<< Updated upstream
       <ul className="list-group membership-list">
+=======
+      <ul className={"list-group membership-list"}>
+>>>>>>> Stashed changes
         {filteredPipelines.map((pipeline, index) => {
           return (
             <div key={pipeline?._id} className={index % 2 === 0 ? "even-row" : "odd-row"}>
@@ -182,7 +219,11 @@ function SelectedPipelineList(
               <div>
                 <IconBase icon={faArrowLeft} />
               </div>
+<<<<<<< Updated upstream
               <div className={"mx-2"}>
+=======
+              <div className={"mx-1"}>
+>>>>>>> Stashed changes
                 Remove Selected
               </div>
               <div>
@@ -204,7 +245,11 @@ function SelectedPipelineList(
               <div>
                 <IconBase icon={faMinusCircle} className={"mr-2"} />
               </div>
+<<<<<<< Updated upstream
               <div className={"mx-2"}>
+=======
+              <div className={"mx-1"}>
+>>>>>>> Stashed changes
                 Remove Shown
               </div>
               <div>
@@ -289,6 +334,10 @@ SelectedPipelineList.propTypes = {
   model: PropTypes.object,
   fieldName: PropTypes.string,
   setModel: PropTypes.func,
+<<<<<<< Updated upstream
+=======
+  currentData: PropTypes.array,
+>>>>>>> Stashed changes
 };
 
 export default SelectedPipelineList;

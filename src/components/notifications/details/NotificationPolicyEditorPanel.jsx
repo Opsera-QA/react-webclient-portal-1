@@ -37,6 +37,7 @@ function NotificationPolicyEditorPanel({ notificationData, handleClose }) {
       createRecord={createNotification}
       updateRecord={updateNotification}
       setRecordDto={setNotificationModel}
+      className={"my-2"}
       lenient={true}
       disable={
         !notificationModel.checkCurrentValidity()
@@ -84,13 +85,6 @@ function NotificationPolicyEditorPanel({ notificationData, handleClose }) {
           <NotificationMethodEditorPanel
             notificationModel={notificationModel}
             setNotificationModel={setNotificationModel}
-          />
-        </Col>
-        <Col lg={12}>
-          <TextAreaInputBase
-            fieldName={"nextSteps"}
-            model={notificationModel}
-            setModel={setNotificationModel}
           />
         </Col>
       </Row>

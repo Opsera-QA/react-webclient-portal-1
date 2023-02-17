@@ -5,10 +5,11 @@ import DetailPanelContainer from "components/common/panels/detail_panel_containe
 import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
 import PipelineSelectionList from "components/common/list_of_values_input/pipelines/selection/PipelineSelectionList";
 import SelectedPipelineList from "components/common/list_of_values_input/pipelines/selection/SelectedPipelineList";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function PipelineSelectionPanel(
   {
-    model, 
+    model,
     setModel,
     fieldName,
   }) {
@@ -23,18 +24,20 @@ export default function PipelineSelectionPanel(
         </Col>
       </Row>
       <Row className={"mx-0"}>
-        {/*<Col xs={12} sm={6} className={"px-0 mt-2"}>*/}
-        {/*  <PipelineSelectionList*/}
-        {/*    model={model}*/}
-        {/*    setModel={setModel}*/}
-        {/*    fieldName={fieldName}*/}
-        {/*  />*/}
-        {/*</Col>*/}
+        <Col xs={12} sm={6} className={"px-0 mt-2"}>
+          <PipelineSelectionList
+            model={model}
+            setModel={setModel}
+            fieldName={fieldName}
+            currentData={DataParsingHelper.parseArray(model?.getData(fieldName), [])}
+          />
+        </Col>
         <Col xs={12} sm={6} className={"px-0 mt-2"}>
           <SelectedPipelineList
             model={model}
             setModel={setModel}
             fieldName={fieldName}
+            currentData={DataParsingHelper.parseArray(model?.getData(fieldName), [])}
           />
         </Col>
       </Row>
