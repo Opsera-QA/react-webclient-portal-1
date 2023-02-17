@@ -12,6 +12,7 @@ import AquasecActionableInsightsOverlay from "./actionable_insights/AquasecActio
 import AquasecIssuesOverallTrendDataBlock from "./AquasecIssuesOverallTrendDataBlock";
 import { ISSUE_TYPE } from "./aquasec.constants";
 import {getTrend} from "../charts-helpers";
+import aquasecActions from "./aqausec.action";
 
 function AquasecIssuesBySeverity({
   kpiConfiguration,
@@ -64,19 +65,16 @@ function AquasecIssuesBySeverity({
             (obj) => obj.type === "organizations",
           )
         ]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      const response = await aquasecActions.aquasecSecurityInsightsBaseKPI(
           getAccessToken,
           cancelSource,
-          "aquasecSecurityInsightsBaseKPI",
           kpiConfiguration,
           dashboardTags,
-          null,
-          null,
           dashboardOrgs,
       );
 
       const dataObject = response?.data
-          ? response?.data?.data[0][0]
+          ? response?.data?.data[0]
           : [];
 
       if (isMounted?.current === true && dataObject) {

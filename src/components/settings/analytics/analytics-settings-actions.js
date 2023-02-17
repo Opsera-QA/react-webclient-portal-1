@@ -35,7 +35,6 @@ analyticsActions.getAnalyticsToolsV2 = async (getAccessToken, cancelTokenSource)
     "cypress",
     "anchore",
     "selenium",
-    "aquasec"
   ];
 
   const urlParams = {

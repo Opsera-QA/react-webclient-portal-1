@@ -14,6 +14,7 @@ import actionableInsightsGenericChartFilterMetadata from "components/insights/ch
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import IconBase from "components/common/icons/IconBase";
+import aquasecActions from "../aqausec.action";
 
 function AquasecActionableInsightsOverlay({ title, severity, kpiConfiguration, dashboardData }) {
   const toastContext = useContext(DialogToastContext);
@@ -62,29 +63,22 @@ function AquasecActionableInsightsOverlay({ title, severity, kpiConfiguration, d
       let dashboardOrgs =
         dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
           ?.value;
-      let request = "aquasecSecurityInsightsActionableOne";
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+      const response = await aquasecActions.aquasecSecurityInsightsActionableOne(
           getAccessToken,
           cancelSource,
-          request,
           kpiConfiguration,
           dashboardTags,
-          filterDto,
-          null,
           dashboardOrgs,
-          null,
-          null,
-          null,
-          null,
+          filterDto,
           severity.toLowerCase()
       );
-      console.log("response", response);
-      let dataObject = response?.data ? response?.data?.data[0][0]?.TableData[0]?.data : [];
+
+      let dataObject = response?.data ? response?.data?.data[0]?.TableData[0]?.data : [];
       let dataCount = response?.data
-          ? response?.data?.data[0][0]?.TableData[0]?.count[0]?.count
+          ? response?.data?.data[0]?.TableData[0]?.count[0]?.count
           : [];
       let DataBlocks = response?.data
-          ? response?.data?.data[0][0]?.BlocksData[0]
+          ? response?.data?.data[0]?.BlocksData[0]
           : [];
       dataObject = dataObject.map((bd, index) => ({
         ...bd,
