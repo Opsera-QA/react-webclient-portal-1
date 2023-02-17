@@ -23,13 +23,13 @@ export default function PipelineSelectionPanel(
         </Col>
       </Row>
       <Row className={"mx-0"}>
-        {/*<Col xs={12} sm={6} className={"px-0 mt-2"}>*/}
-        {/*  <PipelineSelectionList*/}
-        {/*    model={model}*/}
-        {/*    setModel={setModel}*/}
-        {/*    fieldName={fieldName}*/}
-        {/*  />*/}
-        {/*</Col>*/}
+        <Col xs={12} sm={6} className={"px-0 mt-2"}>
+          <PipelineSelectionList
+            model={model}
+            setModel={setModel}
+            fieldName={fieldName}
+          />
+        </Col>
         <Col xs={12} sm={6} className={"px-0 mt-2"}>
           <SelectedPipelineList
             model={model}

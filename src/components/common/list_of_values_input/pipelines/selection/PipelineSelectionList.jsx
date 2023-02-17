@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from "react";
 import PropTypes from "prop-types";
-import {faArrowRight, faCompassDrafting, faPlusCircle, faUsers} from "@fortawesome/pro-light-svg-icons";
-import {Button, Row} from "react-bootstrap";
+import {faArrowRight, faCompassDrafting, faPlusCircle, faSearch, faUsers} from "@fortawesome/pro-light-svg-icons";
+import {Button, InputGroup, Row} from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
 import Col from "react-bootstrap/Col";
 import {PipelineSelectionCard} from "components/common/list_of_values_input/pipelines/selection/PipelineSelectionCard";
@@ -34,13 +34,15 @@ export default function PipelineSelectionList(
   const getFilteredPipelines = useCallback(() => {
     const output = [];
 
-    pipelines.forEach((pipelineId) => {
-      const foundPipeline = currentData.find((pipeline) => pipeline._id === pipelineId);
+    pipelines.forEach((pipeline) => {
+      const foundPipeline = currentData.find((pipelineId) => pipelineId === pipeline?._id);
 
       if (!foundPipeline) {
-        output.push(foundPipeline);
+        output.push(pipeline);
       }
     });
+
+    console.log("output: " + JSON.stringify(output));
 
     if (hasStringValue(searchText)) {
       const lowercaseSearchText = searchText.toLowerCase();
@@ -77,7 +79,7 @@ export default function PipelineSelectionList(
     setSearchText("");
   };
 
-  const addSelectedToMembers = () => {
+  const addSelectedPipelines = () => {
     const output = DataParsingHelper.parseArray(currentData, []);
     selectedPipelines.forEach((pipeline) => {
       if (output.includes(pipeline._id) !== true) {
@@ -88,17 +90,17 @@ export default function PipelineSelectionList(
   };
 
   const getPipelineCards = () => {
-    if (selectedPipelines.length === 0) {
+    if (filteredPipelines.length === 0) {
       return (
         <div className="h-100 m-auto text-center">
-          <span>No Records Found</span>
+          <span>No Pipelines Found</span>
         </div>
       );
     }
 
     return (
       <ul className="list-group membership-list">
-        {selectedPipelines.map((pipeline, index) => {
+        {filteredPipelines.map((pipeline, index) => {
           return (
             <div key={pipeline?._id} className={index % 2 === 0 ? "even-row" : "odd-row"}>
               <PipelineSelectionCard
@@ -142,7 +144,7 @@ export default function PipelineSelectionList(
             disabled={selectedPipelines.length === 0}
             size={"sm"}
             variant={"outline-primary"}
-            onClick={() => addSelectedToMembers()}
+            onClick={() => addSelectedPipelines()}
           >
             <div className={"d-flex justify-content-between no-wrap-inline"}>
               <div>
@@ -175,11 +177,38 @@ export default function PipelineSelectionList(
               </div>
               <div>
                 <span className={"badge badge-secondary"}>
-                  {selectedPipelines.length}
+                  {filteredPipelines.length}
                 </span>
               </div>
             </div>
           </Button>
+        </Col>
+      </Row>
+    );
+  };
+
+  const getSearchBar = () => {
+    return (
+      <Row>
+        <Col xs={12}>
+          <InputGroup className={"flex-nowrap my-2"}>
+            <InputGroup.Prepend>
+              <Button
+                disabled={isLoading}
+              >
+                <IconBase
+                  isLoading={isLoading}
+                  icon={faSearch}
+                />
+              </Button>
+            </InputGroup.Prepend>
+            <input
+              placeholder={"Search by Name or Email"}
+              value={searchText}
+              className={"form-control"}
+              onChange={event => setSearchText(event.target.value)}
+            />
+          </InputGroup>
         </Col>
       </Row>
     );
@@ -219,22 +248,9 @@ export default function PipelineSelectionList(
 
   return (
     <div className={"mr-2"}>
+      {getSearchBar()}
       {getButtons()}
-      <div className={"content-card-1 content-container"}>
-        <div className={"p-2 d-flex content-block-header justify-content-between"}>
-          <div className={"my-auto"}><IconBase icon={faUsers} className={"mr-2"}/>Not Members</div>
-          <div className={"my-auto"}>{pipelines.length} {pipelines.length !== 1 ? "users" : "user"}</div>
-        </div>
-        {getBody()}
-        {/*<div className="px-3 mt-2">*/}
-        {/*  <ClientSideBottomPaginator*/}
-        {/*    items={filteredPipelines}*/}
-        {/*    setShownItems={setSelectedPipelines}*/}
-        {/*    paginationStyle={"stacked"}*/}
-        {/*    pageSize={50}*/}
-        {/*  />*/}
-        {/*</div>*/}
-      </div>
+      {getBody()}
     </div>
   );
 }
