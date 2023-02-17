@@ -12,7 +12,8 @@ import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationB
 import PropTypes from "prop-types";
 
 function AquasecReport({ kpiConfiguration, dashboardData }) {
-  const { pipelineId, projectName, runCount, severity } = useParams();
+  const { pipelineId, imageName, runCount, severity } = useParams();
+  console.log("imageNm", runCount);
   const history = useHistory();
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -54,87 +55,44 @@ function AquasecReport({ kpiConfiguration, dashboardData }) {
     try {
       setIsLoading(true);
       let dashboardTags =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       let dashboardOrgs =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-          ?.value;
+          dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
+              ?.value;
+
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken,
-        cancelSource,
-        "coverityReportsTable",
-        kpiConfiguration,
-        dashboardTags,
-        filterDto,
-        undefined,
-        dashboardOrgs,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        severity,
-        null,
-        null,
-        projectName,
-        runCount,
-        pipelineId
+          getAccessToken,
+          cancelSource,
+          "aquasecSecurityInsightsActionableTwo",
+          kpiConfiguration,
+          dashboardTags,
+          filterDto,
+          undefined,
+          dashboardOrgs,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          severity,
+          null,
+          null,
+          imageName,
+          null,
+          pipelineId
       );
+      console.log("response", response);
 
-      const dataObject = response?.data.data[0].coverityReportsTable.data[0].tableData;
+      const dataBlocks = response?.data && response?.status === 200 ?
+          response?.data?.data?.data : [];
 
-      if (isMounted?.current === true && Array.isArray(dataObject)) {
-        setMetrics(dataObject);
-
+      if (isMounted?.current === true && dataBlocks) {
+        setMetrics(dataBlocks[0].data);
         let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", response?.data?.data[0]?.coverityReportsTable?.data[0]?.count[0]?.count);
+        newFilterDto.setData(
+            "totalCount",
+            dataBlocks[0].count[0].count
+        );
         setFilterModel({ ...newFilterDto });
-      }
-      await loadData2(cancelSource);
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.error(error);
-        setError(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-
-  const loadData2 = async (cancelSource = cancelTokenSource, filterDto = filterModel) => {
-    try {
-      setIsLoading(true);
-      let dashboardTags =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      let dashboardOrgs =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]
-          ?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken,
-        cancelSource,
-        "getAllCoverityReportsIssues",
-        kpiConfiguration,
-        dashboardTags,
-        filterDto,
-        undefined,
-        dashboardOrgs,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        severity,
-        null,
-        null,
-        projectName,
-        runCount,
-        pipelineId
-      );
-
-      const dataObject = response?.data.data[0].getAllCoverityReportsIssues.data[0].tableData;
-
-      if (isMounted?.current === true && Array.isArray(dataObject)) {
-        setAllIssues(dataObject);
       }
     } catch (error) {
       if (isMounted?.current === true) {

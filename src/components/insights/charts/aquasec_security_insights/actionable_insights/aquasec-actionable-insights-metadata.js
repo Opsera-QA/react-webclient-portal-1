@@ -7,8 +7,8 @@ const AquasecActionableInsightsMetadata = {
       id: "imageName",
     },
     {
-      label: "Pipeline Name",
-      id: "pipelineName",
+      label: "PipelineId",
+      id: "pipelineId",
     },
     {
       label: "Run Count",

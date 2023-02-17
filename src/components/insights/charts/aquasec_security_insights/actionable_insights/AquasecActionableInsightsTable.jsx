@@ -14,7 +14,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import { useHistory } from "react-router-dom";
 
 // TODO: Convert to cards
-function AquasecActionableInsightsTable({ data, isLoading, loadData, filterModel, setFilterModel, title }) {
+function AquasecActionableInsightsTable({ data, isLoading, loadData, filterModel, setFilterModel, title, severity }) {
   const toastContext = useContext(DialogToastContext);
   const fields = AquasecActionableInsightsMetadata.fields;
   const tableTitle = "Aquasec " + title + " Report";
@@ -52,7 +52,7 @@ function AquasecActionableInsightsTable({ data, isLoading, loadData, filterModel
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "imageName"), "imageName"),
-      getTableTextColumn(getField(fields, "pipelineName"), "pipelineName"),
+      getTableTextColumn(getField(fields, "pipelineId"), "pipelineId"),
       getTableTextColumn(getField(fields, "run"), "run"),
       getTableDateTimeColumn(getField(fields, "timestamp"), "timestamp"),
       getAquasecTableTextColumn(getField(fields, "total_issues"), "total_issues"),
@@ -64,13 +64,13 @@ function AquasecActionableInsightsTable({ data, isLoading, loadData, filterModel
 
   const onRowSelect = (rowData) => {
     const row = rowData?.original;
-    const pipelineId = row?.pipeline;
-    const projectName = row?.project;
+    const pipelineId = row?.pipelineId;
+    const imageName = row?.imageName;
     const runCount = row?.run;
-    const severity = row?.severity;
+    //const severity = row?.severity;
 
     toastContext.clearOverlayPanel();
-    history.push(`/insights/reports/scans/aquasec/${pipelineId}/${projectName}/${runCount}/${severity}`);
+    history.push(`/insights/reports/scans/aquasec/${pipelineId}/${imageName}/${runCount}/${severity}`);
   };
 
   const getTable = () => {
@@ -109,6 +109,7 @@ AquasecActionableInsightsTable.propTypes = {
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
   title: PropTypes.string,
+  severity: PropTypes.string,
 };
 
 export default AquasecActionableInsightsTable;

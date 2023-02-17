@@ -146,6 +146,7 @@ function AquasecActionableInsightsOverlay({ title, severity, kpiConfiguration, d
           filterModel={filterModel}
           setFilterModel={setFilterModel}
           title={title}
+          severity={severity}
         />
       </div>
     </FullScreenCenterOverlayContainer>
