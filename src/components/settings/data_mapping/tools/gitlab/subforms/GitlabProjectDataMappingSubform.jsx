@@ -14,7 +14,7 @@ function GitlabProjectDataMappingSubform({ model, setModel }) {
     setModel({...newModel});
   };
 
-  return (
+  return ( 
     <>
       <BooleanToggleInput
         fieldName={"isMonoRepo"}

@@ -331,6 +331,11 @@ export const KPI_FILTER_SELECT_OPTIONS = [
     value: [],
   },
   {
+    type: KPI_FILTER_TYPES.GITLAB_EXCLUDED_USERS,
+    text: KPI_FILTER_TYPE_LABELS.GITLAB_EXCLUDED_USERS,
+    value: [],
+  },
+  {
     type: KPI_FILTER_TYPES.JIRA_PRIORITIES,
     text: KPI_FILTER_TYPE_LABELS.JIRA_PRIORITIES,
     value: [],

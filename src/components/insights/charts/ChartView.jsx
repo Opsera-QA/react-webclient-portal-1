@@ -81,7 +81,6 @@ import GitLabLeadTimeChart from "./gitlab/line_chart/lead_time/GitLabLeadTimeCha
 import GitLabLeadTimeChartV2 from "./gitlab/line_chart/lead_time_v2/GitLabLeadTimeChart";
 
 import GitlabPipelineStatistics from "./gitlab/line_chart/pipeline-statistics/GitlabPipelineStatistics";
-import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/GitlabMergeRequestStatistics";
 
 //new
 import ProjectWiseUnitTestResults from "./unit_tests/project_wise_results/ProjectWiseUnitTestResults";
@@ -97,8 +96,8 @@ import GithubMergeRequestByMaximumTimeChart from "./github/bar_chart/merge_reque
 import GithubCommitsByAuthor from "./github/calendar_chart/commits_by_author/GithubCommitsByAuthor";
 import AllGithubActionsDataBlock from "./github_actions/data_blocks/AllGithubActions/AllGithubActionsDataBlock";
 import LeadTimeAndReleaseTraceabilityDataBlock from "./github_actions/data_blocks/LeadTimeAndReleaseTraceabilityDataBlock";
-import GithubPendingMergeRequests from "./github/table/pending_merge_requests/GithubPendingMergeRequests";
 import GithubActionsWorkflowChart from "./github_actions/workflows/GithubActionsWorkflowChart";
+import GithubPendingMergeRequests from "./github/table/pending_merge_requests/GithubPendingMergeRequests";
 
 // Bitbucket KPIs
 import BitbucketMostActiveContributors from "./bitbucket/table/bitbucket_most_active_contributors/BitbucketMostActiveContributors";
@@ -186,6 +185,7 @@ import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
 
 // Dora KPI
 import DoraJiraGitlabRolledUpChart from "./dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpChart";
+import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/GitlabMergeRequestStatistics";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({

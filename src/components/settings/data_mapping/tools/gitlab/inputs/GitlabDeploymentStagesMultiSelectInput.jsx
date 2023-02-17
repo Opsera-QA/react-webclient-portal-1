@@ -62,7 +62,7 @@ export default function GitlabMonoRepoPathMultiSelectInput({
     return null;
   }
 
-  return (
+  return ( 
     <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={model}
