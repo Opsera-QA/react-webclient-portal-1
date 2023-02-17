@@ -14,7 +14,7 @@ import actionableInsightsGenericChartFilterMetadata from "components/insights/ch
 import { getMetricFilterValue } from "components/common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "components/common/badges/date/metrics/MetricDateRangeBadge";
 import IconBase from "components/common/icons/IconBase";
-import aquasecActions from "../aqausec.action";
+import aquasecActions from "../aquasec.action";
 
 function AquasecActionableInsightsOverlay({ title, severity, kpiConfiguration, dashboardData }) {
   const toastContext = useContext(DialogToastContext);

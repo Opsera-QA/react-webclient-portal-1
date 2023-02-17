@@ -12,7 +12,7 @@ import AquasecActionableInsightsOverlay from "./actionable_insights/AquasecActio
 import AquasecIssuesOverallTrendDataBlock from "./AquasecIssuesOverallTrendDataBlock";
 import { ISSUE_TYPE } from "./aquasec.constants";
 import {getTrend} from "../charts-helpers";
-import aquasecActions from "./aqausec.action";
+import aquasecActions from "./aquasec.action";
 
 function AquasecIssuesBySeverity({
   kpiConfiguration,

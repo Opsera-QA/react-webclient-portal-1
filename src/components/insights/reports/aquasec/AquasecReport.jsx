@@ -9,7 +9,7 @@ import Model from "core/data_model/model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 import PropTypes from "prop-types";
-import aquasecActions from "../../charts/aquasec_security_insights/aqausec.action";
+import aquasecActions from "../../charts/aquasec_security_insights/aquasec.action";
 
 function AquasecReport({ kpiConfiguration, dashboardData }) {
   const { pipelineId, imageName, severity } = useParams();
