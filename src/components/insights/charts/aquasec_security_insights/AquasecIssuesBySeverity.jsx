@@ -11,7 +11,6 @@ import AquasecIssuesBySeverityHelpDocumentation from "components/common/help/doc
 import AquasecActionableInsightsOverlay from "./actionable_insights/AquasecActionableInsightsOverlay";
 import AquasecIssuesOverallTrendDataBlock from "./AquasecIssuesOverallTrendDataBlock";
 import { ISSUE_TYPE } from "./aquasec.constants";
-import {getTrend} from "../charts-helpers";
 import aquasecActions from "./aquasec.action";
 
 function AquasecIssuesBySeverity({
@@ -118,7 +117,6 @@ function AquasecIssuesBySeverity({
             <AquasecIssuesOverallTrendDataBlock
               score={dataMetrics?.negligibleIssues}
               severity={ISSUE_TYPE.NEGLIGIBLE}
-              trend={getTrend(dataMetrics?.negligibleIssues, dataMetrics?.prevNegligible)}
               onSelect={onRowSelect}
               lastScore={dataMetrics.prevNegligible}
             />
@@ -127,7 +125,6 @@ function AquasecIssuesBySeverity({
             <AquasecIssuesOverallTrendDataBlock
               score={dataMetrics?.lowIssues}
               severity={ISSUE_TYPE.LOW}
-              trend={getTrend(dataMetrics?.lowIssues, dataMetrics?.prevLow)}
               onSelect={onRowSelect}
               lastScore={dataMetrics.prevLow}
             />
@@ -136,7 +133,6 @@ function AquasecIssuesBySeverity({
             <AquasecIssuesOverallTrendDataBlock
               score={dataMetrics?.mediumIssues}
               severity={ISSUE_TYPE.MEDIUM}
-              trend={getTrend(dataMetrics?.mediumIssues, dataMetrics?.prevMedium)}
               onSelect={onRowSelect}
               lastScore={dataMetrics.prevMedium}
             />
@@ -147,7 +143,6 @@ function AquasecIssuesBySeverity({
             <AquasecIssuesOverallTrendDataBlock
               score={dataMetrics?.highIssues}
               severity={ISSUE_TYPE.HIGH}
-              trend={getTrend(dataMetrics?.highIssues, dataMetrics?.prevHigh)}
               onSelect={onRowSelect}
               lastScore={dataMetrics.prevHigh}
             />
@@ -156,7 +151,6 @@ function AquasecIssuesBySeverity({
             <AquasecIssuesOverallTrendDataBlock
               score={dataMetrics?.criticalIssues}
               severity={ISSUE_TYPE.CRITICAL}
-              trend={getTrend(dataMetrics?.criticalIssues, dataMetrics?.prevCritical)}
               onSelect={onRowSelect}
               lastScore={dataMetrics.prevCritical}
             />
