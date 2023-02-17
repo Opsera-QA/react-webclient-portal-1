@@ -149,8 +149,23 @@ function SelectInputBase(
     }
   };
 
+  const getInfoMessage = () => {
+    if (
+      disabled !== true
+      && busy !== true
+      && enabled === true
+      && hasStringValue(pluralTopic) === true
+      && (!Array.isArray(selectOptions) || selectOptions.length === 0)) {
+      return `No ${pluralTopic} found for the selected criteria`;
+    }
+
+    if (hasStringValue(customInfoTextMessage) === true) {
+      return customInfoTextMessage;
+    }
+  };
+
   const getPlaceholderText = () => {
-    if (disabled !== true && requireUserEnable === true && enabled === false) {
+    if (disabled !== true && requireUserEnable === true && enabled === false && hasStringValue(pluralTopic) === true) {
       return `Click to Load ${pluralTopic} and Enable Edit Mode`;
     }
 
@@ -289,7 +304,7 @@ function SelectInputBase(
         field={field}
         errorMessage={getErrorMessage()}
         hideRegexDefinitionText={true}
-        customMessage={customInfoTextMessage}
+        customMessage={getInfoMessage()}
       />
     </InputContainer>
   );
