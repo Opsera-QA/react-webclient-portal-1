@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import JiraPriorityField from "components/common/fields/inventory/tools/jira/JiraPriorityField";
 import JiraToolProjectField from "components/common/fields/inventory/tools/jira/JiraToolProjectField";
+import NotificationMethodSummaryCardContainer
+  from "components/common/fields/notifications/methods/NotificationMethodSummaryCardContainer";
 
 export default function JiraNotificationMethodSummaryCard({ jiraNotificationModel }) {
   return (
