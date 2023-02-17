@@ -39,10 +39,10 @@ function ToolDetailView() {
             toolModel={toolModel}
             loadTool={loadData}
           />
-          {/*<ActionBarViewToolAuditLogsButton*/}
-          {/*  className={"ml-3"}*/}
-          {/*  toolModel={toolModel}*/}
-          {/*/>*/}
+          <ActionBarViewToolAuditLogsButton
+            className={"ml-3"}
+            toolModel={toolModel}
+          />
           <ActionBarDeleteToolButton
             className={"ml-3"}
             toolModel={toolModel}

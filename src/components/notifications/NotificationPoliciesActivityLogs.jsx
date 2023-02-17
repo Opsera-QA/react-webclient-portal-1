@@ -4,12 +4,12 @@ import notificationsActions from "./notifications-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import NotificationSubNavigationBar from "components/notifications/NotificationSubNavigationBar";
+import NotificationPolicySubNavigationBar from "components/notifications/NotificationPolicySubNavigationBar";
 import axios from "axios";
 import NotificationActivityLogsTable
-  from "components/notifications/notification_details/activity_logs/NotificationActivityLogsTable";
+  from "components/notifications/activity_logs/NotificationActivityLogsTable";
 import notificationActivityLogFilterMetadata
-  from "components/notifications/notification_details/activity_logs/notifications-activity-log-filter-metadata";
+  from "components/notifications/activity_logs/notifications-activity-log-filter-metadata";
 
 function NotificationPoliciesActivityLogs() {
   const { getAccessToken } = useContext(AuthContext);
@@ -69,7 +69,7 @@ function NotificationPoliciesActivityLogs() {
     <ScreenContainer
       breadcrumbDestination={"notificationActivityLogs"}
       pageDescription={`View Notification Activity Logs`}
-      navigationTabContainer={<NotificationSubNavigationBar activeTab={"activity"} />}
+      navigationTabContainer={<NotificationPolicySubNavigationBar activeTab={"activity"} />}
     >
       <NotificationActivityLogsTable
         isLoading={isLoading}

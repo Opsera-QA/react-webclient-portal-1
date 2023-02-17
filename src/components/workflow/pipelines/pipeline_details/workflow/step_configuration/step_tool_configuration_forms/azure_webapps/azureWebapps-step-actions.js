@@ -19,4 +19,15 @@ azureWebappsActions.getAzureWebapps = async (getAccessToken, cancelTokenSource, 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+azureWebappsActions.getRollbackVersions = async (getAccessToken, cancelTokenSource, pipelineId, artifactStepId, extension, artifactType) => {
+  const apiUrl = "pipelines/azure-webapps/getVersions";
+  const postBody = {
+    pipelineId: pipelineId,
+    stepId: artifactStepId,
+    extension: extension,
+    artifactType: artifactType,
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default azureWebappsActions;

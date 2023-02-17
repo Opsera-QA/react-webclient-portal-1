@@ -1,24 +1,24 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
-import SlackStepNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/slack/SlackStepNotificationEditorPanel";
-import MicrosoftTeamsStepNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/teams/MicrosoftTeamsStepNotificationEditorPanel";
-import JiraStepNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/jira/JiraStepNotificationEditorPanel";
-import ServiceNowStepNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/servicenow/ServiceNowStepNotificationEditorPanel";
-import EmailStepNotificationEditorPanel
-  from "components/workflow/plan/step/notifications/email/EmailStepNotificationEditorPanel";
+import SlackNotificationEditorPanel
+  from "components/workflow/plan/step/notifications/slack/SlackNotificationEditorPanel";
+import MicrosoftTeamsNotificationEditorPanel
+  from "components/workflow/plan/step/notifications/teams/MicrosoftTeamsNotificationEditorPanel";
+import JiraNotificationEditorPanel
+  from "components/workflow/plan/step/notifications/jira/JiraNotificationEditorPanel";
+import ServiceNowNotificationEditorPanel
+  from "components/workflow/plan/step/notifications/servicenow/ServiceNowNotificationEditorPanel";
+import EmailNotificationEditorPanel
+  from "components/workflow/plan/step/notifications/email/EmailNotificationEditorPanel";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import VanitySetTabAndViewContainer, {
   DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT,
 } from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
 import TaskNotificationVerticalTabContainer
   from "components/tasks/details/tasks/notifications/TaskNotificationVerticalTabContainer";
-import GChatStepNotificationEditorPanel 
-  from "components/workflow/plan/step/notifications/gchat/GChatStepNotificationEditorPanel";
+import GChatNotificationEditorPanel
+  from "components/workflow/plan/step/notifications/gchat/GChatNotificationEditorPanel";
 
 const tabAndViewContainerHeight =`calc(${DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT} - 50px)`;
 
@@ -43,14 +43,14 @@ function TaskNotificationTabView(
     switch (activeTab) {
       case "email":
         return (
-          <EmailStepNotificationEditorPanel
+          <EmailNotificationEditorPanel
             emailNotificationModel={emailNotificationModel}
             setEmailNotificationModel={setEmailNotificationModel}
           />
         );
       case "jira":
         return (
-          <JiraStepNotificationEditorPanel
+          <JiraNotificationEditorPanel
             jiraNotificationModel={jiraNotificationModel}
             setJiraNotificationModel={setJiraNotificationModel}
             isApprovalStep={false}
@@ -58,28 +58,28 @@ function TaskNotificationTabView(
         );
       case "slack":
         return (
-          <SlackStepNotificationEditorPanel
+          <SlackNotificationEditorPanel
             slackNotificationModel={slackNotificationModel}
             setSlackNotificationModel={setSlackNotificationModel}
           />
         );
       case "service-now":
         return (
-          <ServiceNowStepNotificationEditorPanel
+          <ServiceNowNotificationEditorPanel
             serviceNowNotificationModel={serviceNowNotificationModel}
             setServiceNowNotificationModel={setServiceNowNotificationModel}
           />
         );
       case "teams":
         return (
-          <MicrosoftTeamsStepNotificationEditorPanel
+          <MicrosoftTeamsNotificationEditorPanel
             teamsNotificationModel={teamsNotificationModel}
             setTeamsNotificationModel={setTeamsNotificationModel}
           />
         );
       case "gchat":
         return (
-          <GChatStepNotificationEditorPanel
+          <GChatNotificationEditorPanel
             gChatNotificationModel={gChatNotificationModel}
             setGChatNotificationModel={setGChatNotificationModel}
           />

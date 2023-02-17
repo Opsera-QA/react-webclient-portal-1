@@ -69,7 +69,18 @@ const azureWebappsStepFormMetadata = {
     {
       label: "Clean Target",
       id: "webappCleanTargetPath",      
-    },            
+    },
+    {
+      label: "Rollback",
+      id: "rollbackEnabled"
+    },
+    {
+      label: "Rollback Version",
+      id: "rollbackVersion",
+      isRequiredFunction: (model) => {
+        return model?.getData("rollbackEnabled") === true;
+      },
+    },
   ],
   newObjectFields: {
     deploymentType: "",
@@ -85,6 +96,8 @@ const azureWebappsStepFormMetadata = {
     webappPackageType: "zip",
     webappTargetPath: "",
     webappCleanTargetPath: false,
+    rollbackEnabled: false,
+    rollbackVersion: "",
   }
 };
 

@@ -413,14 +413,12 @@ input[disabled] {
 
 .input-label label {
     margin-bottom: 0;
-    font-size: 1rem;
+    font-size: 1em;
 }
 
 .input-container label {
     margin-bottom: .25rem;
-    /*margin-left: .1rem;*/
-    font-size: 1rem;
-    /*letter-spacing: .1rem;*/
+    font-size: 1em;
 }
 
 .form-control:focus {

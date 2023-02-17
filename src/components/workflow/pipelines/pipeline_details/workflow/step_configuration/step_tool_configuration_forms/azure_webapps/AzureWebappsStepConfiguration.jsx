@@ -15,6 +15,7 @@ import AzureWebappPackageTypeSelectInput from "./inputs/AzureWebappPackageTypeSe
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import AzureWebappResourceGroupSelectInput from "./inputs/AzureWebappResourceGroupSelectInput";
+import AzureWebappsRollbackDetailsInput from "./inputs/AzureWebappsRollbackDetailsInput";
 
 function AzureWebappsStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan, stepId, pipelineId }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -131,6 +132,14 @@ function AzureWebappsStepConfiguration({ stepTool, closeEditorPanel, parentCallb
         plan={plan}
         stepId={stepId}
         deploymentType={azureWebappsModel?.getData("deploymentType")}
+      />
+      <AzureWebappsRollbackDetailsInput 
+        model={azureWebappsModel}
+        setModel={setAzureWebappsModel}
+        plan={plan}
+        pipelineId={pipelineId}
+        artifactStepId={azureWebappsModel?.getData("artifactStepId")}
+        extension={azureWebappsModel?.getData("webappPackageType")}
       />
     </PipelineStepEditorPanelContainer>
   );

@@ -126,7 +126,15 @@ function HeaderNavBar({ hideAuthComponents }) {
             {getPermissionsMessage()}
 
             <NavDropdown title={fullName} id="basic-nav-dropdown" className="top-nav-dropdown" alignRight>
-              <Link to={`/user/${USER_SETTINGS_PAGES.MY_USER_PROFILE}`} id="profile-button" className="dropdown-item nav-drop-down-item">Profile</Link>
+            <NavDropdown.Item 
+                as={Link}
+                to={`/user/${USER_SETTINGS_PAGES.MY_USER_PROFILE}`}
+                id="profile-button"
+                className="dropdown-item nav-drop-down-item"
+              >
+                Profile
+              </NavDropdown.Item>
+              
               {/*{isSaasUser === false && <Link to="/user/myUserRecord" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>}*/}
 
               <NavDropdown.Divider/>
