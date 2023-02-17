@@ -78,12 +78,9 @@ function AquasecReport({ kpiConfiguration, dashboardData }) {
           null,
           pipelineId
       );
-      console.log("response", response);
 
       const data = response?.data && response?.status === 200 ?
           response?.data?.data[0][0]?.data : [];
-      console.log("data", data);
-
       if (isMounted?.current === true && data) {
         setMetrics(data?.data);
         let newFilterDto = filterDto;
@@ -104,11 +101,6 @@ function AquasecReport({ kpiConfiguration, dashboardData }) {
       }
     }
   };
-
-  const temp = "Love";
-  console.log(" temp " , temp.toLowerCase());
-
-  console.log("metrics", metrics);
 
   return (
     <ScreenContainer

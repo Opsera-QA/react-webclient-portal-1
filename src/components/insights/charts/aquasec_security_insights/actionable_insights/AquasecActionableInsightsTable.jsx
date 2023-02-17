@@ -21,9 +21,6 @@ function AquasecActionableInsightsTable({ data, isLoading, loadData, filterModel
   const noDataMessage = "Aquasec " + title + " report is currently unavailable at this time";
   let history = useHistory();
 
-  console.log("kpi config insights", kpiConfiguration);
-  console.log("dashboard insights", dashboardData);
-
   const getAquasecTableTextColumn = (field, block) => {
     return {
       Header: getCustomTableHeader(field),

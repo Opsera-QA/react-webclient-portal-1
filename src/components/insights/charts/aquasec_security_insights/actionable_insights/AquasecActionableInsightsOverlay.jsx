@@ -86,10 +86,10 @@ function AquasecActionableInsightsOverlay({ title, severity, kpiConfiguration, d
       let DataBlocks = response?.data
           ? response?.data?.data[0][0]?.BlocksData[0]
           : [];
-      // dataObject = dataObject.map((bd, index) => ({
-      //   ...bd,
-      //   _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
-      // }));
+      dataObject = dataObject.map((bd, index) => ({
+        ...bd,
+        _blueprint: <IconBase icon={faExternalLink} className={"mr-2"} />,
+      }));
 
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataCount);
