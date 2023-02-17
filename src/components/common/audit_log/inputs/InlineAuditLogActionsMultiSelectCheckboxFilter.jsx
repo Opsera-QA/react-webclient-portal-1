@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AuditLogActionsMutiSelectCheckboxInput
-  from "components/common/audit_log/inputs/AuditLogActionsMutiSelectCheckboxInput";
+import AuditLogActionsMultiSelectCheckboxInput
+  from "components/common/audit_log/inputs/AuditLogActionsMultiSelectCheckboxInput";
 
-export default function InlineAuditLogActionsMutiSelectCheckboxFilter(
+export default function InlineAuditLogActionsMultiSelectCheckboxFilter(
   { 
     model,
     setModel,
@@ -19,7 +19,7 @@ export default function InlineAuditLogActionsMutiSelectCheckboxFilter(
   };
 
   return (
-    <AuditLogActionsMutiSelectCheckboxInput
+    <AuditLogActionsMultiSelectCheckboxInput
       model={model}
       fieldName={fieldName}
       setDataFunction={setDataFunction}
@@ -31,7 +31,7 @@ export default function InlineAuditLogActionsMutiSelectCheckboxFilter(
   );
 }
 
-InlineAuditLogActionsMutiSelectCheckboxFilter.propTypes = {
+InlineAuditLogActionsMultiSelectCheckboxFilter.propTypes = {
   model: PropTypes.object,
   type: PropTypes.string,
   loadDataFunction: PropTypes.func,
