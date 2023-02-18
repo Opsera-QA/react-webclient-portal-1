@@ -120,6 +120,15 @@ export default function SelectedPipelineList(
   };
 
   const getPipelineCards = () => {
+    if (isLoading === true) {
+      return (
+        <CenterLoadingIndicator
+          type={"Pipelines"}
+          minHeight={"370px"}
+        />
+      );
+    }
+
     if (filteredPipelines.length === 0) {
       return (
         <ul className={"list-group membership-list"}>
