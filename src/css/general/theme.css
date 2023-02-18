@@ -1061,11 +1061,11 @@ a.nav-link {
 }
 
 .odd-row-background-color {
-    background-color: rgba(201, 199, 207, .75);
+    background-color: white;
 }
 
 .even-row-background-color {
-    background-color: rgba(231, 229, 237, .75);
+    background-color: rgba(230, 229, 227, .5);
 }
 
 .even-row-background-color:hover, .odd-row-background-color:hover {
