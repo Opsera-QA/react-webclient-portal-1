@@ -6,9 +6,7 @@
 }
 
 .loader-container {
-    position: absolute;
     z-index: 9999;
-    background-color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
