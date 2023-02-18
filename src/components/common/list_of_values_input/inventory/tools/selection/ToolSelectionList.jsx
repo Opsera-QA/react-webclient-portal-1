@@ -28,7 +28,7 @@ export default function ToolSelectionList(
   const {
     isLoading,
     error,
-    tools,
+    registryTools,
     toolFilterModel,
     loadData,
   } = useGetRegistryTools(
@@ -41,7 +41,7 @@ export default function ToolSelectionList(
   const getUnselectedTools = () => {
     const output = [];
 
-    tools.forEach((tool) => {
+    registryTools.forEach((tool) => {
       const foundTool = currentData.find((toolId) => toolId === tool?._id);
 
       if (!foundTool) {
@@ -63,14 +63,14 @@ export default function ToolSelectionList(
     }
 
     return [...sortByName(output)];
-  }, [tools, currentData, searchText]);
+  }, [registryTools, currentData, searchText]);
 
   const filteredTools = getFilteredTools();
   const unselectedToolCount = getUnselectedTools()?.length;
 
   const addAllTools = () => {
     const output = DataParsingHelper.parseArray(currentData, []);
-    tools.forEach((tool) => {
+    registryTools.forEach((tool) => {
       if (output.includes(tool._id) !== true) {
         output.push(tool._id);
       }

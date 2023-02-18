@@ -24,7 +24,7 @@ export default function SelectedToolList(
   const {
     isLoading,
     error,
-    tools,
+    registryTools,
   } = useGetRegistryTools(
     ["name", "owner"],
     undefined,
@@ -39,7 +39,7 @@ export default function SelectedToolList(
     const output = [];
 
     currentData.forEach((toolId) => {
-      const foundTool = tools.find((tool) => tool._id === toolId);
+      const foundTool = registryTools.find((tool) => tool._id === toolId);
 
       if (foundTool) {
         output.push(foundTool);
@@ -60,7 +60,7 @@ export default function SelectedToolList(
     }
 
     return [...sortByName(output)];
-  }, [tools, currentData, searchText]);
+  }, [registryTools, currentData, searchText]);
 
   const filteredTools = getFilteredTools();
 

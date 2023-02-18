@@ -4,6 +4,7 @@ import auditLogTypeConstants from "@opsera/definitions/constants/audit-logs/type
 import ToolMultiSelectInput from "components/common/list_of_values_input/inventory/ToolMultiSelectInput";
 import PipelineSelectionPanel from "components/common/list_of_values_input/pipelines/selection/PipelineSelectionPanel";
 import TaskSelectionPanel from "components/common/list_of_values_input/tasks/selection/TaskSelectionPanel";
+import ToolSelectionPanel from "components/common/list_of_values_input/inventory/tools/selection/ToolSelectionPanel";
 
 export default function AuditLogNotificationTargetMultiSelectInput(
   {
@@ -29,7 +30,7 @@ export default function AuditLogNotificationTargetMultiSelectInput(
 
   if (objectType === auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.TOOL_REGISTRY) {
     return (
-      <ToolMultiSelectInput
+      <ToolSelectionPanel
         model={model}
         setModel={setModel}
         fieldName={fieldName}

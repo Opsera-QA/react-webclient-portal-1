@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import auditLogTypeConstants from "@opsera/definitions/constants/audit-logs/types/auditLogType.constants";
 import PipelineListFieldBase from "components/common/fields/pipelines/list/PipelineListFieldBase";
 import TaskListFieldBase from "components/common/fields/tasks/list/TaskListFieldBase";
+import ToolListFieldBase from "components/common/fields/inventory/tools/list/ToolListFieldBase";
 
 export default function AuditLogNotificationTargetField(
   {
@@ -20,17 +21,16 @@ export default function AuditLogNotificationTargetField(
       />
     );
   }
-  //
-  // if (objectType === auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.TOOL_REGISTRY) {
-  //   return (
-  //     <ToolMultiSelectInput
-  //       model={model}
-  //       setModel={setModel}
-  //       fieldName={fieldName}
-  //       disabled={disabled}
-  //     />
-  //   );
-  // }
+
+  if (objectType === auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.TOOL_REGISTRY) {
+    return (
+      <ToolListFieldBase
+        model={model}
+        fieldName={fieldName}
+        customTitle={"Notify on These Tools"}
+      />
+    );
+  }
 
   if (objectType === auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.PIPELINE) {
     return (
