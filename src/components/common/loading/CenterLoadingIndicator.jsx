@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import OpseraBirdLoadingImage from "temp-library-components/loader/OpseraBirdLoadingImage";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 export default function CenterLoadingIndicator(
   {
@@ -22,16 +23,21 @@ export default function CenterLoadingIndicator(
     <CenteredContentWrapper
       minHeight={minHeight}
     >
-      <OpseraBirdLoadingImage />
-      <div className={"d-flex"}>
-        <div
-          className={"my-auto"}
-          style={{
-            fontSize: "1.15rem",
-            letterSpacing: "2px",
-          }}
-        >
-          {getLoadingMessage()}
+      <div>
+        <div>
+          <OpseraBirdLoadingImage />
+        </div>
+        <div className={"d-flex"}>
+          <LoadingIcon iconSize={"xl"} className={"mr-3 my-auto"} />
+          <div
+            className={"my-auto"}
+            style={{
+              fontSize: "1.15rem",
+              letterSpacing: "2px",
+            }}
+          >
+            {getLoadingMessage()}
+          </div>
         </div>
       </div>
     </CenteredContentWrapper>

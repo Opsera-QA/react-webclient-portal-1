@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import OpseraBirdLoadingImage from "temp-library-components/loader/OpseraBirdLoadingImage";
 
-function LoadingDialog({ size, message }) {
+function LoadingDialog({size, message}) {
   const [type, setType] = useState({});
 
-  useEffect( () => {
+  useEffect(() => {
     setType(size);
   }, [size]);
 
@@ -14,24 +14,24 @@ function LoadingDialog({ size, message }) {
       return message;
     }
   };
-  
+
   if (type === "sm") {
     return (
-      <div className="row" style={{ height:"250px", width: "100%" }}>
+      <div className="row" style={{height: "250px", width: "100%"}}>
         <div className="col-sm-12 my-auto text-center text-muted" style={{fontSize: "larger"}}>
-          <OpseraBirdLoadingImage />
+          <OpseraBirdLoadingImage/>
           {getMessage()}
         </div>
-      </div>     
+      </div>
     );
   }
 
   //same layout as sm, but larger animated icon
   if (type === "md") {
     return (
-      <div className="row" style={{ height:"250px", width: "100%" }}>
+      <div className="row" style={{height: "250px", width: "100%"}}>
         <div className="col-sm-12 my-auto text-center text-muted" style={{fontSize: "1.3em"}}>
-          <OpseraBirdLoadingImage />
+          <OpseraBirdLoadingImage/>
           {getMessage()}
         </div>
       </div>
@@ -39,14 +39,12 @@ function LoadingDialog({ size, message }) {
   }
 
   return (
-      <div className="loading">
-        <div className="loader">
-          <OpseraBirdLoadingImage />
-        </div>
+    <div className={"loading d-flex"}>
+      <div className={"m-auto"}>
+        <OpseraBirdLoadingImage/>
       </div>
-    );
-
-
+    </div>
+  );
 }
 
 LoadingDialog.propTypes = {
