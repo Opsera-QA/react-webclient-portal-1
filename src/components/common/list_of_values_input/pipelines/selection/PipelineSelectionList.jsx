@@ -1,17 +1,17 @@
 import React, {useCallback, useState} from "react";
 import PropTypes from "prop-types";
-import {faArrowRight, faCompassDrafting, faPlusCircle, faSearch, faUsers} from "@fortawesome/pro-light-svg-icons";
-import {Button, InputGroup, Row} from "react-bootstrap";
-import IconBase from "components/common/icons/IconBase";
-import Col from "react-bootstrap/Col";
+import {faCompassDrafting} from "@fortawesome/pro-light-svg-icons";
+import {Row, Col} from "react-bootstrap";
 import {PipelineSelectionCard} from "components/common/list_of_values_input/pipelines/selection/PipelineSelectionCard";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {sortByName} from "components/common/list_of_values_input/pipelines/selection/SelectedPipelineList";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import useGetAllPipelines from "hooks/workflow/pipelines/useGetAllPipelines";
-import InfoText from "components/common/inputs/info_text/InfoText";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
+import AddAllButtonBase from "temp-library-components/button/general/add/AddAllButtonBase";
+import AddSelectedButtonBase from "temp-library-components/button/general/add/AddSelectedButtonBase";
+import AddShownButtonBase from "temp-library-components/button/general/add/AddShownButtonBase";
 
 export default function PipelineSelectionList(
   {
@@ -20,6 +20,7 @@ export default function PipelineSelectionList(
     fieldName,
     currentData,
     disabled,
+    className,
   }) {
   const [selectedPipelines, setSelectedPipelines] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -125,72 +126,35 @@ export default function PipelineSelectionList(
   };
 
   const getButtons = () => {
+    if (disabled === true) {
+      return null;
+    }
+
     return (
       <Row>
         <Col lg={12} xl={4} className={"my-2"}>
-          <Button
-            className={"w-100"}
-            size={"sm"}
-            variant={"success"}
-            onClick={addAllPipelines}
-          >
-            <div className={"d-flex justify-content-between no-wrap-inline"}>
-              <div>
-                <IconBase icon={faPlusCircle}/>
-              </div>
-              <div className={"mx-2"}>
-                Add All
-              </div>
-              <div>
-                <span className={"badge badge-secondary"}>{filteredPipelines.length}</span>
-              </div>
-            </div>
-          </Button>
+          <AddAllButtonBase
+            onClickFunction={addAllPipelines}
+            itemCount={pipelines.length}
+            buttonSize={"sm"}
+            disabled={isLoading}
+          />
         </Col>
         <Col lg={12} xl={4} className={"my-2"}>
-          <Button
-            className={"w-100"}
-            disabled={selectedPipelines.length === 0}
-            size={"sm"}
-            variant={"outline-primary"}
-            onClick={() => addSelectedPipelines()}
-          >
-            <div className={"d-flex justify-content-between no-wrap-inline"}>
-              <div>
-                <IconBase icon={faArrowRight} fixedWidth/>
-              </div>
-              <div className={"mx-1"}>
-                Add Selected
-              </div>
-              <div>
-                <span className={"badge badge-secondary"}>
-                  {selectedPipelines.length}
-                </span>
-              </div>
-            </div>
-          </Button>
+          <AddSelectedButtonBase
+            onClickFunction={addSelectedPipelines}
+            itemCount={selectedPipelines.length}
+            buttonSize={"sm"}
+            disabled={isLoading}
+          />
         </Col>
         <Col lg={12} xl={4} className={"my-2"}>
-          <Button
-            className={"w-100"}
-            size={"sm"}
-            variant={"outline-success"}
-            onClick={addAllShownPipelines}
-          >
-            <div className={"d-flex justify-content-between no-wrap-inline"}>
-              <div>
-                <IconBase icon={faPlusCircle}/>
-              </div>
-              <div className={"mx-1"}>
-                Add Shown
-              </div>
-              <div>
-                <span className={"badge badge-secondary"}>
-                  {filteredPipelines.length}
-                </span>
-              </div>
-            </div>
-          </Button>
+          <AddShownButtonBase
+            onClickFunction={addAllShownPipelines}
+            itemCount={filteredPipelines.length}
+            buttonSize={"sm"}
+            disabled={isLoading}
+          />
         </Col>
       </Row>
     );
@@ -235,16 +199,9 @@ export default function PipelineSelectionList(
   }
 
   return (
-    <div className={"mr-2"}>
+    <div className={className}>
       {getButtons()}
       {getBody()}
-
-      {/*<InfoText*/}
-      {/*  model={model}*/}
-      {/*  fieldName={fieldName}*/}
-      {/*  field={field}*/}
-      {/*  errorMessage={errorMessage}*/}
-      {/*/>*/}
     </div>
   );
 }
@@ -255,4 +212,5 @@ PipelineSelectionList.propTypes = {
   fieldName: PropTypes.string,
   currentData: PropTypes.array,
   disabled: PropTypes.bool,
+  className: PropTypes.string,
 };

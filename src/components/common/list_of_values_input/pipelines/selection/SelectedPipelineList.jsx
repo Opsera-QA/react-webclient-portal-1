@@ -1,15 +1,15 @@
 import React, {useCallback, useState} from "react";
 import PropTypes from "prop-types";
-import {faArrowLeft, faCompassDrafting, faMinusCircle, faSearch, faUsers} from "@fortawesome/pro-light-svg-icons";
-import {Button, InputGroup, Row} from "react-bootstrap";
-import IconBase from "components/common/icons/IconBase";
-import Col from "react-bootstrap/Col";
+import {faCompassDrafting} from "@fortawesome/pro-light-svg-icons";
+import {Col, Row} from "react-bootstrap";
 import useGetAllPipelines from "hooks/workflow/pipelines/useGetAllPipelines";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {PipelineSelectionCard} from "components/common/list_of_values_input/pipelines/selection/PipelineSelectionCard";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
+import RemoveAllButtonBase from "temp-library-components/button/general/remove/RemoveAllButtonBase";
+import RemoveSelectedButtonBase from "temp-library-components/button/general/remove/RemoveSelectedButtonBase";
+import RemoveShownButtonBase from "temp-library-components/button/general/remove/RemoveShownButtonBase";
 
 export const sortByName = (pipelines) => {
   if (Array.isArray(pipelines) && pipelines.length > 0) {
@@ -156,74 +156,35 @@ export default function SelectedPipelineList(
   };
 
   const getButtons = () => {
-    if (isLoading === true || disabled === true) {
+    if (disabled === true) {
       return null;
     }
 
     return (
       <Row>
         <Col lg={12} xl={4} className={"my-2"}>
-          <Button
-            className={"w-100"}
-            size={"sm"}
-            variant={"danger"}
-            onClick={removeAllPipelines}
-          >
-            <div className={"d-flex justify-content-between no-wrap-inline"}>
-              <div>
-                <IconBase icon={faMinusCircle} className={"mr-2"} />
-              </div>
-              <div className={"mx-2"}>
-                Remove All
-              </div>
-              <div>
-                <span className={"badge badge-secondary"}>{filteredPipelines.length}</span>
-              </div>
-            </div>
-          </Button>
+          <RemoveAllButtonBase
+            onClickFunction={removeAllPipelines}
+            itemCount={currentData.length}
+            buttonSize={"sm"}
+            disabled={isLoading}
+          />
         </Col>
         <Col lg={12} xl={4} className={"my-2"}>
-          <Button
-            className={"w-100"}
-            disabled={selectedPipelines.length === 0}
-            size={"sm"}
-            variant={"outline-primary"}
-            onClick={removeSelectedPipelines}
-          >
-            <div className={"d-flex justify-content-between no-wrap-inline"}>
-              <div>
-                <IconBase icon={faArrowLeft} />
-              </div>
-              <div className={"mx-1"}>
-                Remove Selected
-              </div>
-              <div>
-                <span className="badge badge-secondary">
-                  {selectedPipelines.length}
-                </span>
-              </div>
-            </div>
-          </Button>
+          <RemoveSelectedButtonBase
+            onClickFunction={removeSelectedPipelines}
+            itemCount={selectedPipelines.length}
+            buttonSize={"sm"}
+            disabled={isLoading}
+          />
         </Col>
         <Col lg={12} xl={4} className={"my-2"}>
-          <Button
-            className={"w-100"}
-            size={"sm"}
-            variant={"outline-danger"}
-            onClick={removeAllFilteredPipelines}
-          >
-            <div className={"d-flex justify-content-between no-wrap-inline"}>
-              <div>
-                <IconBase icon={faMinusCircle} className={"mr-2"} />
-              </div>
-              <div className={"mx-1"}>
-                Remove Shown
-              </div>
-              <div>
-                <span className={"badge badge-secondary"}>{filteredPipelines.length}</span>
-              </div>
-            </div>
-          </Button>
+          <RemoveShownButtonBase
+            onClickFunction={removeAllFilteredPipelines}
+            itemCount={filteredPipelines.length}
+            buttonSize={"sm"}
+            disabled={isLoading}
+          />
         </Col>
       </Row>
     );
