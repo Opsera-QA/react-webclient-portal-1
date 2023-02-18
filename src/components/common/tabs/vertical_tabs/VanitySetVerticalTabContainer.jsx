@@ -15,7 +15,8 @@ function VanitySetVerticalTabContainer(
     isLoading,
     supportSearch,
     loadData,
-    metadata
+    metadata,
+    width,
   }) {
   const getTitleBar = () => {
     if (title != null) {
@@ -44,7 +45,14 @@ function VanitySetVerticalTabContainer(
   };
 
   return (
-    <div className={className}>
+    <div
+      className={className}
+      style={{
+        minWidth: width,
+        width: width,
+        maxWidth: width,
+      }}
+    >
       <div className={"h-100 w-100"} style={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
         {getTitleBar()}
         {getSearchBar()}
@@ -73,6 +81,7 @@ VanitySetVerticalTabContainer.propTypes = {
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
   metadata: PropTypes.object,
+  width: PropTypes.string,
 };
 
 VanitySetVerticalTabContainer.defaultProps = {
