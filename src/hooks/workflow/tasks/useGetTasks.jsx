@@ -7,6 +7,7 @@ import TaskFilterModel from "components/tasks/task.filter.model";
 export default function useGetTasks(
   fields,
   active,
+  pageSize,
   handleErrorFunction,
 ) {
   const [tasks, setTasks] = useState([]);
@@ -21,6 +22,10 @@ export default function useGetTasks(
 
   useEffect(() => {
     setTasks([]);
+
+    if (pageSize) {
+      taskFilterModel.setData("pageSize", pageSize);
+    }
 
     if (loadData) {
       loadData(getTasks, handleErrorFunction).catch(() => {});

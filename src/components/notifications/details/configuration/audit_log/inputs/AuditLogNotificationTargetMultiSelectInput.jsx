@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import auditLogTypeConstants from "@opsera/definitions/constants/audit-logs/types/auditLogType.constants";
 import ToolMultiSelectInput from "components/common/list_of_values_input/inventory/ToolMultiSelectInput";
-import TaskMultiSelectInput from "components/common/list_of_values_input/tasks/TaskMultiSelectInput";
 import PipelineSelectionPanel from "components/common/list_of_values_input/pipelines/selection/PipelineSelectionPanel";
+import TaskSelectionPanel from "components/common/list_of_values_input/tasks/selection/TaskSelectionPanel";
 
 export default function AuditLogNotificationTargetMultiSelectInput(
   {
@@ -16,7 +16,7 @@ export default function AuditLogNotificationTargetMultiSelectInput(
 
   if (objectType === auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.TASK) {
     return (
-      <TaskMultiSelectInput
+      <TaskSelectionPanel
         model={model}
         setModel={setModel}
         fieldName={fieldName}

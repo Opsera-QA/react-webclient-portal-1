@@ -8,6 +8,7 @@ export default function useGetPipelines(
   fields,
   active,
   setUrlParameters = false,
+  pageSize,
   handleErrorFunction,
 ) {
   const [pipelines, setPipelines] = useState([]);
@@ -23,6 +24,10 @@ export default function useGetPipelines(
 
   useEffect(() => {
     setPipelines([]);
+
+    if (pageSize) {
+      pipelineFilterModel.setData("pageSize", pageSize);
+    }
 
     if (loadData) {
       loadData(getPipelines, handleErrorFunction).catch(() => {});
