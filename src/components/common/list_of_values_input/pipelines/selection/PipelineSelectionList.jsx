@@ -186,6 +186,11 @@ export default function PipelineSelectionList(
     );
   };
 
+  const handleLoadData = (newFilterModel) => {
+    setSelectedPipelines([]);
+    loadData(newFilterModel);
+  };
+
   const getBody = () => {
     return (
       <div>
@@ -227,7 +232,7 @@ export default function PipelineSelectionList(
               <PipelineVerticalTabContainer
                 isLoading={isLoading}
                 pipelineFilterModel={pipelineFilterModel}
-                loadData={loadData}
+                loadData={handleLoadData}
               />
             </div>
             <div

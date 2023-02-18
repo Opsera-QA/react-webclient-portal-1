@@ -183,6 +183,11 @@ export default function TaskSelectionList(
     );
   };
 
+  const handleLoadData = (newFilterModel) => {
+    setSelectedTasks([]);
+    loadData(newFilterModel);
+  };
+
   const getBody = () => {
     return (
       <div>
@@ -224,7 +229,7 @@ export default function TaskSelectionList(
               <TaskVerticalTabContainer
                 isLoading={isLoading}
                 taskFilterModel={taskFilterModel}
-                loadData={loadData}
+                loadData={handleLoadData}
               />
             </div>
             <div
