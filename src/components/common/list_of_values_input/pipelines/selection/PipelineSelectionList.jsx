@@ -12,6 +12,7 @@ import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import AddAllButtonBase from "temp-library-components/button/add/AddAllButtonBase";
 import AddSelectedButtonBase from "temp-library-components/button/add/AddSelectedButtonBase";
 import AddShownButtonBase from "temp-library-components/button/add/AddShownButtonBase";
+import PipelineVerticalTabContainer from "components/workflow/pipelines/PipelineVerticalTabContainer";
 
 export default function PipelineSelectionList(
   {
@@ -118,28 +119,29 @@ export default function PipelineSelectionList(
 
     if (filteredPipelines.length === 0) {
       return (
-        <ul className="list-group membership-list">
+        <div className={"list-group membership-list"}>
           <div className="h-100 m-auto text-center">
             <span>No Pipelines Found</span>
           </div>
-        </ul>
+        </div>
       );
     }
 
     return (
-      <ul className="list-group membership-list">
+      <div className={"membership-list"}>
         {filteredPipelines.map((pipeline, index) => {
           return (
-            <div key={pipeline?._id} className={index % 2 === 0 ? "even-row" : "odd-row"}>
+            <div key={pipeline?._id} className={index % 2 === 0 ? "even-row-background-color" : "odd-row-background-color"}>
               <PipelineSelectionCard
                 selectedPipelines={selectedPipelines}
                 setSelectedPipelines={setSelectedPipelines}
                 pipeline={pipeline}
+                stacked={true}
               />
             </div>
           );
         })}
-      </ul>
+      </div>
     );
   };
 
@@ -149,8 +151,8 @@ export default function PipelineSelectionList(
     }
 
     return (
-      <Row className={"my-2"}>
-        <Col lg={12} xl={4}>
+      <Row>
+        <Col lg={12} xl={4} className={"my-2"}>
           <AddAllButtonBase
             onClickFunction={addAllPipelines}
             itemCount={unselectedPipelineCount}
@@ -159,7 +161,7 @@ export default function PipelineSelectionList(
             disabled={isLoading}
           />
         </Col>
-        <Col lg={12} xl={4}>
+        <Col lg={12} xl={4} className={"my-2"}>
           <AddSelectedButtonBase
             onClickFunction={addSelectedPipelines}
             itemCount={selectedPipelines.length}
@@ -168,7 +170,7 @@ export default function PipelineSelectionList(
             disabled={isLoading}
           />
         </Col>
-        <Col lg={12} xl={4}>
+        <Col lg={12} xl={4} className={"my-2"}>
           <AddShownButtonBase
             onClickFunction={addAllShownPipelines}
             itemCount={filteredPipelines.length}
@@ -195,7 +197,12 @@ export default function PipelineSelectionList(
           field={field}
         />
         <div className="content-container">
-          <div className={"px-2 py-1 d-flex justify-content-between"}>
+          <div
+            className={"px-2 py-1 d-flex justify-content-between"}
+            style={{
+              borderBottom: "1px solid #E6E5E3",
+            }}
+          >
             <div className={"my-auto"}>
 
             </div>
@@ -203,7 +210,22 @@ export default function PipelineSelectionList(
               {filteredPipelines.length} {filteredPipelines.length !== 1 ? "Pipelines" : "Pipeline"}
             </div>
           </div>
-          {getPipelineCards()}
+          <div className={"d-flex"}>
+            <div
+              style={{
+                borderRight: "1px solid #E6E5E3",
+              }}
+            >
+              <PipelineVerticalTabContainer
+                isLoading={isLoading}
+                pipelineFilterModel={pipelineFilterModel}
+                loadData={loadData}
+              />
+            </div>
+            <div className={"w-100"}>
+              {getPipelineCards()}
+            </div>
+          </div>
         </div>
       </div>
     );
