@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import GenericItemField from "components/common/fields/multiple_items/GenericItemField";
 import AuditLogNotificationTargetField
   from "components/notifications/details/configuration/audit_log/fields/AuditLogNotificationTargetField";
 import { Row, Col } from "react-bootstrap";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
+import AuditLogActionListField from "temp-library-components/fields/audit_logs/AuditLogActionListField";
 
 export default function AuditLogNotificationTypeSummaryPanel(
   {
@@ -30,9 +30,10 @@ export default function AuditLogNotificationTypeSummaryPanel(
           />
         </Col>
         <Col xs={12} sm={6}>
-          <GenericItemField
-            dataObject={notificationConfigurationData}
+          <AuditLogActionListField
+            model={notificationConfigurationData}
             fieldName={"events"}
+            customTitle={"Notify For These Events"}
           />
         </Col>
       </Row>
