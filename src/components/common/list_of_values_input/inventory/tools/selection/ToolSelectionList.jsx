@@ -1,19 +1,18 @@
 import React, {useCallback, useState} from "react";
 import PropTypes from "prop-types";
 import {faCompassDrafting} from "@fortawesome/pro-light-svg-icons";
-import {PipelineSelectionCard} from "components/common/list_of_values_input/pipelines/selection/PipelineSelectionCard";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import {sortByName} from "components/common/list_of_values_input/pipelines/selection/SelectedPipelineList";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import AddAllButtonBase from "temp-library-components/button/add/AddAllButtonBase";
 import AddSelectedButtonBase from "temp-library-components/button/add/AddSelectedButtonBase";
 import AddShownButtonBase from "temp-library-components/button/add/AddShownButtonBase";
-import PipelineVerticalTabContainer from "components/workflow/pipelines/PipelineVerticalTabContainer";
-import useGetPipelines from "hooks/workflow/pipelines/useGetPipelines";
+import useGetRegistryTools from "hooks/tools/useGetRegistryTools";
+import {sortByName} from "components/common/list_of_values_input/pipelines/selection/SelectedPipelineList";
+import {ToolSelectionCard} from "components/common/list_of_values_input/inventory/tools/selection/ToolSelectionCard";
 
-export default function PipelineSelectionList(
+export default function ToolSelectionList(
   {
     model,
     setModel,
@@ -24,56 +23,56 @@ export default function PipelineSelectionList(
     customTitle,
   }) {
   const field = model?.getFieldById(fieldName);
-  const [selectedPipelines, setSelectedPipelines] = useState([]);
+  const [selectedTools, setSelectedTools] = useState([]);
   const [searchText, setSearchText] = useState("");
   const {
     isLoading,
     error,
-    pipelines,
-    pipelineFilterModel,
+    registryTools,
+    toolFilterModel,
     loadData,
-  } = useGetPipelines(
+  } = useGetRegistryTools(
     ["name", "owner"],
     undefined,
-    undefined,
     10000,
+    false,
   );
 
-  const getUnselectedPipelines = () => {
+  const getUnselectedTools = () => {
     const output = [];
 
-    pipelines.forEach((pipeline) => {
-      const foundPipeline = currentData.find((pipelineId) => pipelineId === pipeline?._id);
+    registryTools.forEach((tool) => {
+      const foundTool = currentData.find((toolId) => toolId === tool?._id);
 
-      if (!foundPipeline) {
-        output.push(pipeline);
+      if (!foundTool) {
+        output.push(tool);
       }
     });
 
     return output;
   };
 
-  const getFilteredPipelines = useCallback(() => {
-    const output = getUnselectedPipelines();
+  const getFilteredTools = useCallback(() => {
+    const output = getUnselectedTools();
 
     if (hasStringValue(searchText)) {
       const lowercaseSearchText = searchText.toLowerCase();
-      return output.filter((pipeline) => {
-        return pipeline.name.toLowerCase().includes(lowercaseSearchText) || pipeline.owner_name.toLowerCase().includes(lowercaseSearchText);
+      return output.filter((tool) => {
+        return tool.name.toLowerCase().includes(lowercaseSearchText) || tool.owner_name.toLowerCase().includes(lowercaseSearchText);
       });
     }
 
     return [...sortByName(output)];
-  }, [pipelines, currentData, searchText]);
+  }, [registryTools, currentData, searchText]);
 
-  const filteredPipelines = getFilteredPipelines();
-  const unselectedPipelineCount = getUnselectedPipelines()?.length;
+  const filteredTools = getFilteredTools();
+  const unselectedToolCount = getUnselectedTools()?.length;
 
-  const addAllPipelines = () => {
+  const addAllTools = () => {
     const output = DataParsingHelper.parseArray(currentData, []);
-    pipelines.forEach((pipeline) => {
-      if (output.includes(pipeline._id) !== true) {
-        output.push(pipeline._id);
+    registryTools.forEach((tool) => {
+      if (output.includes(tool._id) !== true) {
+        output.push(tool._id);
       }
     });
 
@@ -82,11 +81,11 @@ export default function PipelineSelectionList(
     setSearchText("");
   };
 
-  const addAllShownPipelines = () => {
+  const addAllShownTools = () => {
     const output = DataParsingHelper.parseArray(currentData, []);
-    filteredPipelines.forEach((pipeline) => {
-      if (output.includes(pipeline._id) !== true) {
-        output.push(pipeline._id);
+    filteredTools.forEach((tool) => {
+      if (output.includes(tool._id) !== true) {
+        output.push(tool._id);
       }
     });
 
@@ -95,11 +94,11 @@ export default function PipelineSelectionList(
     setSearchText("");
   };
 
-  const addSelectedPipelines = () => {
+  const addSelectedTools = () => {
     const output = DataParsingHelper.parseArray(currentData, []);
-    selectedPipelines.forEach((pipeline) => {
-      if (output.includes(pipeline._id) !== true) {
-        output.push(pipeline._id);
+    selectedTools.forEach((tool) => {
+      if (output.includes(tool._id) !== true) {
+        output.push(tool._id);
       }
     });
 
@@ -108,21 +107,21 @@ export default function PipelineSelectionList(
     setSearchText("");
   };
 
-  const getPipelineCards = () => {
+  const getToolCards = () => {
     if (isLoading === true) {
       return (
         <CenterLoadingIndicator
-          type={"Pipelines"}
+          type={"Tools"}
           minHeight={"370px"}
         />
       );
     }
 
-    if (filteredPipelines.length === 0) {
+    if (filteredTools.length === 0) {
       return (
         <div className={"list-group membership-list"}>
           <div className="h-100 m-auto text-center">
-            <span>No Pipelines Found</span>
+            <span>No Tools Found</span>
           </div>
         </div>
       );
@@ -130,13 +129,13 @@ export default function PipelineSelectionList(
 
     return (
       <div className={"membership-list"}>
-        {filteredPipelines.map((pipeline, index) => {
+        {filteredTools.map((tool, index) => {
           return (
-            <div key={pipeline?._id} className={index % 2 === 0 ? "even-row-background-color" : "odd-row-background-color"}>
-              <PipelineSelectionCard
-                selectedPipelines={selectedPipelines}
-                setSelectedPipelines={setSelectedPipelines}
-                pipeline={pipeline}
+            <div key={tool?._id} className={index % 2 === 0 ? "even-row-background-color" : "odd-row-background-color"}>
+              <ToolSelectionCard
+                selectedTools={selectedTools}
+                setSelectedTools={setSelectedTools}
+                tool={tool}
                 stacked={true}
               />
             </div>
@@ -159,24 +158,24 @@ export default function PipelineSelectionList(
         className={"w-100 p-3"}
       >
           <AddAllButtonBase
-            onClickFunction={addAllPipelines}
-            itemCount={unselectedPipelineCount}
+            onClickFunction={addAllTools}
+            itemCount={unselectedToolCount}
             buttonSize={"sm"}
             buttonClassName={"w-100"}
             className={"my-2"}
             disabled={isLoading}
           />
           <AddSelectedButtonBase
-            onClickFunction={addSelectedPipelines}
-            itemCount={selectedPipelines.length}
+            onClickFunction={addSelectedTools}
+            itemCount={selectedTools.length}
             buttonSize={"sm"}
             buttonClassName={"w-100"}
             className={"my-2"}
             disabled={isLoading}
           />
           <AddShownButtonBase
-            onClickFunction={addAllShownPipelines}
-            itemCount={filteredPipelines.length}
+            onClickFunction={addAllShownTools}
+            itemCount={filteredTools.length}
             buttonSize={"sm"}
             buttonClassName={"w-100"}
             className={"my-2"}
@@ -187,7 +186,7 @@ export default function PipelineSelectionList(
   };
 
   const handleLoadData = (newFilterModel) => {
-    setSelectedPipelines([]);
+    setSelectedTools([]);
     loadData(newFilterModel);
   };
 
@@ -217,31 +216,31 @@ export default function PipelineSelectionList(
 
             </div>
             <div className={"my-auto"}>
-              {filteredPipelines.length} {filteredPipelines.length !== 1 ? "Pipelines" : "Pipeline"}
+              {filteredTools.length} {filteredTools.length !== 1 ? "Tools" : "Tool"}
             </div>
           </div>
           <div className={"d-flex"}>
-            <div
-              style={{
-                borderRight: "1px solid #E6E5E3",
-                minWidth: "250px",
-                width: "250px",
-                maxWidth: "250px",
-              }}
-            >
-              <PipelineVerticalTabContainer
-                isLoading={isLoading}
-                pipelineFilterModel={pipelineFilterModel}
-                loadData={handleLoadData}
-              />
-            </div>
+            {/*<div*/}
+            {/*  style={{*/}
+            {/*    borderRight: "1px solid #E6E5E3",*/}
+            {/*    minWidth: "250px",*/}
+            {/*    width: "250px",*/}
+            {/*    maxWidth: "250px",*/}
+            {/*  }}*/}
+            {/*>*/}
+            {/*  <ToolVerticalTabContainer*/}
+            {/*    isLoading={isLoading}*/}
+            {/*    toolFilterModel={toolFilterModel}*/}
+            {/*    loadData={handleLoadData}*/}
+            {/*  />*/}
+            {/*</div>*/}
             <div
               className={"w-100"}
               style={{
                 overflowX: "auto",
               }}
             >
-              {getPipelineCards()}
+              {getToolCards()}
             </div>
           </div>
           {getButtons()}
@@ -257,7 +256,7 @@ export default function PipelineSelectionList(
   );
 }
 
-PipelineSelectionList.propTypes = {
+ToolSelectionList.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   fieldName: PropTypes.string,

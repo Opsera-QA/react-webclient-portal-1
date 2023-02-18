@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import auditLogTypeConstants from "@opsera/definitions/constants/audit-logs/types/auditLogType.constants";
-import ToolMultiSelectInput from "components/common/list_of_values_input/inventory/ToolMultiSelectInput";
-import TaskMultiSelectInput from "components/common/list_of_values_input/tasks/TaskMultiSelectInput";
-import PipelineSelectionPanel from "components/common/list_of_values_input/pipelines/selection/PipelineSelectionPanel";
-import PipelinesListFieldBase from "components/common/fields/pipelines/list/PipelinesListFieldBase";
+import PipelineListFieldBase from "components/common/fields/pipelines/list/PipelineListFieldBase";
+import TaskListFieldBase from "components/common/fields/tasks/list/TaskListFieldBase";
+import ToolListFieldBase from "components/common/fields/inventory/tools/list/ToolListFieldBase";
 
 export default function AuditLogNotificationTargetField(
   {
@@ -13,31 +12,29 @@ export default function AuditLogNotificationTargetField(
   }) {
   const objectType = model?.getData("method");
 
-  // if (objectType === auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.TASK) {
-  //   return (
-  //     <TaskMultiSelectInput
-  //       model={model}
-  //       setModel={setModel}
-  //       fieldName={fieldName}
-  //       disabled={disabled}
-  //     />
-  //   );
-  // }
-  //
-  // if (objectType === auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.TOOL_REGISTRY) {
-  //   return (
-  //     <ToolMultiSelectInput
-  //       model={model}
-  //       setModel={setModel}
-  //       fieldName={fieldName}
-  //       disabled={disabled}
-  //     />
-  //   );
-  // }
+  if (objectType === auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.TASK) {
+    return (
+      <TaskListFieldBase
+        model={model}
+        fieldName={fieldName}
+        customTitle={"Notify on These Tasks"}
+      />
+    );
+  }
+
+  if (objectType === auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.TOOL_REGISTRY) {
+    return (
+      <ToolListFieldBase
+        model={model}
+        fieldName={fieldName}
+        customTitle={"Notify on These Tools"}
+      />
+    );
+  }
 
   if (objectType === auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.PIPELINE) {
     return (
-      <PipelinesListFieldBase
+      <PipelineListFieldBase
         model={model}
         fieldName={fieldName}
         customTitle={"Notify on These Pipelines"}

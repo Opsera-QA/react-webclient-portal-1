@@ -2,44 +2,16 @@ import React, {useCallback, useState} from "react";
 import PropTypes from "prop-types";
 import {faCompassDrafting} from "@fortawesome/pro-light-svg-icons";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import {PipelineSelectionCard} from "components/common/list_of_values_input/pipelines/selection/PipelineSelectionCard";
+import {TaskSelectionCard} from "components/common/list_of_values_input/tasks/selection/TaskSelectionCard";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import RemoveAllButtonBase from "temp-library-components/button/remove/RemoveAllButtonBase";
 import RemoveSelectedButtonBase from "temp-library-components/button/remove/RemoveSelectedButtonBase";
 import RemoveShownButtonBase from "temp-library-components/button/remove/RemoveShownButtonBase";
-import useGetPipelines from "hooks/workflow/pipelines/useGetPipelines";
+import useGetTasks from "hooks/workflow/tasks/useGetTasks";
+import {sortByName} from "components/common/list_of_values_input/pipelines/selection/SelectedPipelineList";
 
-export const sortByName = (pipelines) => {
-  if (Array.isArray(pipelines) && pipelines.length > 0) {
-    let pipelinesCopy = [...pipelines];
-
-    pipelinesCopy?.sort((member1, member2) => {
-      const firstLetter1 = hasStringValue(member1?.name) ? member1?.name?.toLowerCase() : null;
-      const firstLetter2 = hasStringValue(member2.name) ? member2.name?.toLowerCase() : null;
-
-      if (firstLetter2 == null) {
-        return -1;
-      }
-
-      if (firstLetter1 == null) {
-        return 1;
-      }
-
-      if (firstLetter1 === firstLetter2) {
-        return 0;
-      }
-
-      return firstLetter1 > firstLetter2 ? 1 : -1;
-    });
-
-    return pipelinesCopy;
-  }
-
-  return [];
-};
-
-export default function SelectedPipelineList(
+export default function SelectedTaskList(
   {
     model,
     fieldName,
@@ -52,90 +24,90 @@ export default function SelectedPipelineList(
   const {
     isLoading,
     error,
-    pipelines,
-  } = useGetPipelines(
+    tasks,
+  } = useGetTasks(
     ["name", "owner"],
     undefined,
-    undefined,
+    false,
     10000,
   );
-  const [selectedPipelines, setSelectedPipelines] = useState([]);
+  const [selectedTasks, setSelectedTasks] = useState([]);
   const [searchText, setSearchText] = useState("");
   const field = model?.getFieldById(fieldName);
 
-  const getFilteredPipelines = useCallback(() => {
+  const getFilteredTasks = useCallback(() => {
     const output = [];
 
-    currentData.forEach((pipelineId) => {
-      const foundPipeline = pipelines.find((pipeline) => pipeline._id === pipelineId);
+    currentData.forEach((taskId) => {
+      const foundTask = tasks.find((task) => task._id === taskId);
 
-      if (foundPipeline) {
-        output.push(foundPipeline);
+      if (foundTask) {
+        output.push(foundTask);
       } else {
         output.push({
-          name: "Pipeline Not Found",
+          name: "Task Not Found",
           owner_name: "Unknown User",
-          _id: pipelineId,
+          _id: taskId,
         });
       }
     });
 
     if (hasStringValue(searchText)) {
       const lowercaseSearchText = searchText.toLowerCase();
-      return output.filter((pipeline) => {
-        return pipeline.name.toLowerCase().includes(lowercaseSearchText) || pipeline.owner_name.toLowerCase().includes(lowercaseSearchText);
+      return output.filter((task) => {
+        return task.name.toLowerCase().includes(lowercaseSearchText) || task.owner_name.toLowerCase().includes(lowercaseSearchText);
       });
     }
 
     return [...sortByName(output)];
-  }, [pipelines, currentData, searchText]);
+  }, [tasks, currentData, searchText]);
 
-  const filteredPipelines = getFilteredPipelines();
+  const filteredTasks = getFilteredTasks();
 
-  const removeAllPipelines = () => {
+  const removeAllTasks = () => {
     model?.setDefaultValue(fieldName);
     setModel({...model});
     setSearchText("");
   };
 
-  const removeAllFilteredPipelines = () => {
-    const shownPipelines = getFilteredPipelines();
-    const output = currentData.filter((pipelineId) => {
-      return shownPipelines.find((shownPipeline) => shownPipeline._id === pipelineId) == null;
+  const removeAllFilteredTasks = () => {
+    const shownTasks = getFilteredTasks();
+    const output = currentData.filter((taskId) => {
+      return shownTasks.find((shownTask) => shownTask._id === taskId) == null;
     });
 
     model?.setData(fieldName, output);
     setModel({...model});
-    setSelectedPipelines([]);
+    setSelectedTasks([]);
     setSearchText("");
   };
 
-  const removeSelectedPipelines = () => {
-    const output = currentData.filter((pipelineId) => {
-      return selectedPipelines.find((selectedPipeline) => selectedPipeline._id === pipelineId) == null;
+  const removeSelectedTasks = () => {
+    const output = currentData.filter((taskId) => {
+      return selectedTasks.find((selectedTask) => selectedTask._id === taskId) == null;
     });
 
     model?.setData(fieldName, output);
     setModel({...model});
-    setSelectedPipelines([]);
+    setSelectedTasks([]);
     setSearchText("");
   };
 
-  const getPipelineCards = () => {
+  const getTaskCards = () => {
     if (isLoading === true) {
       return (
         <CenterLoadingIndicator
-          type={"Pipelines"}
+          type={"Tasks"}
           minHeight={"370px"}
         />
       );
     }
 
-    if (filteredPipelines.length === 0) {
+    if (filteredTasks.length === 0) {
       return (
         <div className={"membership-list"}>
           <div className={"h-100 m-auto text-center"}>
-            <span>No Pipelines Found</span>
+            <span>No Tasks Found</span>
           </div>
         </div>
       );
@@ -143,13 +115,13 @@ export default function SelectedPipelineList(
 
     return (
       <div className={"membership-list"}>
-        {filteredPipelines.map((pipeline, index) => {
+        {filteredTasks.map((task, index) => {
           return (
-            <div key={pipeline?._id} className={index % 2 === 0 ? "even-row-background-color" : "odd-row-background-color"}>
-              <PipelineSelectionCard
-                selectedPipelines={selectedPipelines}
-                setSelectedPipelines={setSelectedPipelines}
-                pipeline={pipeline}
+            <div key={task?._id} className={index % 2 === 0 ? "even-row-background-color" : "odd-row-background-color"}>
+              <TaskSelectionCard
+                selectedTasks={selectedTasks}
+                setSelectedTasks={setSelectedTasks}
+                task={task}
                 disabled={disabled}
               />
             </div>
@@ -172,7 +144,7 @@ export default function SelectedPipelineList(
         className={"w-100 p-3"}
       >
         <RemoveAllButtonBase
-          onClickFunction={removeAllPipelines}
+          onClickFunction={removeAllTasks}
           itemCount={currentData.length}
           buttonSize={"sm"}
           buttonClassName={"w-100"}
@@ -180,16 +152,16 @@ export default function SelectedPipelineList(
           disabled={isLoading}
         />
         <RemoveSelectedButtonBase
-          onClickFunction={removeSelectedPipelines}
-          itemCount={selectedPipelines.length}
+          onClickFunction={removeSelectedTasks}
+          itemCount={selectedTasks.length}
           buttonSize={"sm"}
           buttonClassName={"w-100"}
           className={"my-2"}
           disabled={isLoading}
         />
         <RemoveShownButtonBase
-          onClickFunction={removeAllFilteredPipelines}
-          itemCount={filteredPipelines.length}
+          onClickFunction={removeAllFilteredTasks}
+          itemCount={filteredTasks.length}
           buttonSize={"sm"}
           buttonClassName={"w-100"}
           className={"my-2"}
@@ -228,7 +200,7 @@ export default function SelectedPipelineList(
 
             </div>
             <div className={"my-auto"}>
-              {filteredPipelines.length} {filteredPipelines.length !== 1 ? "Pipelines" : "Pipeline"}
+              {filteredTasks.length} {filteredTasks.length !== 1 ? "Tasks" : "Task"}
             </div>
           </div>
           <div
@@ -236,7 +208,7 @@ export default function SelectedPipelineList(
               overflowX: "auto",
             }}
           >
-            {getPipelineCards()}
+            {getTaskCards()}
           </div>
           {getButtons()}
         </div>
@@ -251,7 +223,7 @@ export default function SelectedPipelineList(
   );
 }
 
-SelectedPipelineList.propTypes = {
+SelectedTaskList.propTypes = {
   model: PropTypes.object,
   fieldName: PropTypes.string,
   setModel: PropTypes.func,
