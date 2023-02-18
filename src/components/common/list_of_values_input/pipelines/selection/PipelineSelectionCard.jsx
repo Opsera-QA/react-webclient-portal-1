@@ -30,10 +30,24 @@ export function PipelineSelectionCard(
     }
   };
 
+  const getClassNames = () => {
+    let classNames = "py-1";
+
+    if (selectedPipelines.includes(pipeline)) {
+      classNames += " selected";
+    }
+
+    if (disabled !== true) {
+      classNames += " pointer";
+    }
+
+    return classNames;
+  };
+
   return (
     <div
       key={pipeline._id}
-      className={selectedPipelines.includes(pipeline) ? "py-1 selected" : "py-1"}
+      className={getClassNames()}
       onClick={disabled !== true ? selectPipeline : undefined}
     >
       <Row className={"mx-0"}>
