@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import LoadingIcon from "components/common/icons/LoadingIcon";
+import OpseraBirdLoadingImage from "temp-library-components/loader/OpseraBirdLoadingImage";
 
 function LoadingDialog({ size, message }) {
   const [type, setType] = useState({});
@@ -19,7 +19,7 @@ function LoadingDialog({ size, message }) {
     return (
       <div className="row" style={{ height:"250px", width: "100%" }}>
         <div className="col-sm-12 my-auto text-center text-muted" style={{fontSize: "larger"}}>
-          <LoadingIcon className={"mr-2"}/>
+          <OpseraBirdLoadingImage />
           {getMessage()}
         </div>
       </div>     
@@ -31,7 +31,7 @@ function LoadingDialog({ size, message }) {
     return (
       <div className="row" style={{ height:"250px", width: "100%" }}>
         <div className="col-sm-12 my-auto text-center text-muted" style={{fontSize: "1.3em"}}>
-          <LoadingIcon className={"mr-2 mb-1 vertical-align-item"} />
+          <OpseraBirdLoadingImage />
           {getMessage()}
         </div>
       </div>
@@ -41,7 +41,7 @@ function LoadingDialog({ size, message }) {
   return (
       <div className="loading">
         <div className="loader">
-          <LoadingIcon iconSize="2x" />
+          <OpseraBirdLoadingImage />
         </div>
       </div>
     );
