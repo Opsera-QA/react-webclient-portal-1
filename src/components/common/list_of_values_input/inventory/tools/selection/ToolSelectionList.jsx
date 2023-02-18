@@ -8,12 +8,11 @@ import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import AddAllButtonBase from "temp-library-components/button/add/AddAllButtonBase";
 import AddSelectedButtonBase from "temp-library-components/button/add/AddSelectedButtonBase";
 import AddShownButtonBase from "temp-library-components/button/add/AddShownButtonBase";
-import {TaskSelectionCard} from "components/common/list_of_values_input/tasks/selection/TaskSelectionCard";
-import TaskVerticalTabContainer from "components/tasks/TaskVerticalTabContainer";
-import useGetTasks from "hooks/workflow/tasks/useGetTasks";
+import useGetRegistryTools from "hooks/tools/useGetRegistryTools";
 import {sortByName} from "components/common/list_of_values_input/pipelines/selection/SelectedPipelineList";
+import {ToolSelectionCard} from "components/common/list_of_values_input/inventory/tools/selection/ToolSelectionCard";
 
-export default function TaskSelectionList(
+export default function ToolSelectionList(
   {
     model,
     setModel,
@@ -24,56 +23,56 @@ export default function TaskSelectionList(
     customTitle,
   }) {
   const field = model?.getFieldById(fieldName);
-  const [selectedTasks, setSelectedTasks] = useState([]);
+  const [selectedTools, setSelectedTools] = useState([]);
   const [searchText, setSearchText] = useState("");
   const {
     isLoading,
     error,
-    tasks,
-    taskFilterModel,
+    tools,
+    toolFilterModel,
     loadData,
-  } = useGetTasks(
+  } = useGetRegistryTools(
     ["name", "owner"],
     undefined,
-    false,
     10000,
+    false,
   );
 
-  const getUnselectedTasks = () => {
+  const getUnselectedTools = () => {
     const output = [];
 
-    tasks.forEach((task) => {
-      const foundTask = currentData.find((taskId) => taskId === task?._id);
+    tools.forEach((tool) => {
+      const foundTool = currentData.find((toolId) => toolId === tool?._id);
 
-      if (!foundTask) {
-        output.push(task);
+      if (!foundTool) {
+        output.push(tool);
       }
     });
 
     return output;
   };
 
-  const getFilteredTasks = useCallback(() => {
-    const output = getUnselectedTasks();
+  const getFilteredTools = useCallback(() => {
+    const output = getUnselectedTools();
 
     if (hasStringValue(searchText)) {
       const lowercaseSearchText = searchText.toLowerCase();
-      return output.filter((task) => {
-        return task.name.toLowerCase().includes(lowercaseSearchText) || task.owner_name.toLowerCase().includes(lowercaseSearchText);
+      return output.filter((tool) => {
+        return tool.name.toLowerCase().includes(lowercaseSearchText) || tool.owner_name.toLowerCase().includes(lowercaseSearchText);
       });
     }
 
     return [...sortByName(output)];
-  }, [tasks, currentData, searchText]);
+  }, [tools, currentData, searchText]);
 
-  const filteredTasks = getFilteredTasks();
-  const unselectedTaskCount = getUnselectedTasks()?.length;
+  const filteredTools = getFilteredTools();
+  const unselectedToolCount = getUnselectedTools()?.length;
 
-  const addAllTasks = () => {
+  const addAllTools = () => {
     const output = DataParsingHelper.parseArray(currentData, []);
-    tasks.forEach((task) => {
-      if (output.includes(task._id) !== true) {
-        output.push(task._id);
+    tools.forEach((tool) => {
+      if (output.includes(tool._id) !== true) {
+        output.push(tool._id);
       }
     });
 
@@ -82,11 +81,11 @@ export default function TaskSelectionList(
     setSearchText("");
   };
 
-  const addAllShownTasks = () => {
+  const addAllShownTools = () => {
     const output = DataParsingHelper.parseArray(currentData, []);
-    filteredTasks.forEach((task) => {
-      if (output.includes(task._id) !== true) {
-        output.push(task._id);
+    filteredTools.forEach((tool) => {
+      if (output.includes(tool._id) !== true) {
+        output.push(tool._id);
       }
     });
 
@@ -95,11 +94,11 @@ export default function TaskSelectionList(
     setSearchText("");
   };
 
-  const addSelectedTasks = () => {
+  const addSelectedTools = () => {
     const output = DataParsingHelper.parseArray(currentData, []);
-    selectedTasks.forEach((task) => {
-      if (output.includes(task._id) !== true) {
-        output.push(task._id);
+    selectedTools.forEach((tool) => {
+      if (output.includes(tool._id) !== true) {
+        output.push(tool._id);
       }
     });
 
@@ -108,21 +107,21 @@ export default function TaskSelectionList(
     setSearchText("");
   };
 
-  const getTaskCards = () => {
+  const getToolCards = () => {
     if (isLoading === true) {
       return (
         <CenterLoadingIndicator
-          type={"Tasks"}
+          type={"Tools"}
           minHeight={"370px"}
         />
       );
     }
 
-    if (filteredTasks.length === 0) {
+    if (filteredTools.length === 0) {
       return (
         <div className={"list-group membership-list"}>
           <div className="h-100 m-auto text-center">
-            <span>No Tasks Found</span>
+            <span>No Tools Found</span>
           </div>
         </div>
       );
@@ -130,13 +129,13 @@ export default function TaskSelectionList(
 
     return (
       <div className={"membership-list"}>
-        {filteredTasks.map((task, index) => {
+        {filteredTools.map((tool, index) => {
           return (
-            <div key={task?._id} className={index % 2 === 0 ? "even-row-background-color" : "odd-row-background-color"}>
-              <TaskSelectionCard
-                selectedTasks={selectedTasks}
-                setSelectedTasks={setSelectedTasks}
-                task={task}
+            <div key={tool?._id} className={index % 2 === 0 ? "even-row-background-color" : "odd-row-background-color"}>
+              <ToolSelectionCard
+                selectedTools={selectedTools}
+                setSelectedTools={setSelectedTools}
+                tool={tool}
                 stacked={true}
               />
             </div>
@@ -159,24 +158,24 @@ export default function TaskSelectionList(
         className={"w-100 p-3"}
       >
           <AddAllButtonBase
-            onClickFunction={addAllTasks}
-            itemCount={unselectedTaskCount}
+            onClickFunction={addAllTools}
+            itemCount={unselectedToolCount}
             buttonSize={"sm"}
             buttonClassName={"w-100"}
             className={"my-2"}
             disabled={isLoading}
           />
           <AddSelectedButtonBase
-            onClickFunction={addSelectedTasks}
-            itemCount={selectedTasks.length}
+            onClickFunction={addSelectedTools}
+            itemCount={selectedTools.length}
             buttonSize={"sm"}
             buttonClassName={"w-100"}
             className={"my-2"}
             disabled={isLoading}
           />
           <AddShownButtonBase
-            onClickFunction={addAllShownTasks}
-            itemCount={filteredTasks.length}
+            onClickFunction={addAllShownTools}
+            itemCount={filteredTools.length}
             buttonSize={"sm"}
             buttonClassName={"w-100"}
             className={"my-2"}
@@ -187,7 +186,7 @@ export default function TaskSelectionList(
   };
 
   const handleLoadData = (newFilterModel) => {
-    setSelectedTasks([]);
+    setSelectedTools([]);
     loadData(newFilterModel);
   };
 
@@ -217,31 +216,31 @@ export default function TaskSelectionList(
 
             </div>
             <div className={"my-auto"}>
-              {filteredTasks.length} {filteredTasks.length !== 1 ? "Tasks" : "Task"}
+              {filteredTools.length} {filteredTools.length !== 1 ? "Tools" : "Tool"}
             </div>
           </div>
           <div className={"d-flex"}>
-            <div
-              style={{
-                borderRight: "1px solid #E6E5E3",
-                minWidth: "250px",
-                width: "250px",
-                maxWidth: "250px",
-              }}
-            >
-              <TaskVerticalTabContainer
-                isLoading={isLoading}
-                taskFilterModel={taskFilterModel}
-                loadData={handleLoadData}
-              />
-            </div>
+            {/*<div*/}
+            {/*  style={{*/}
+            {/*    borderRight: "1px solid #E6E5E3",*/}
+            {/*    minWidth: "250px",*/}
+            {/*    width: "250px",*/}
+            {/*    maxWidth: "250px",*/}
+            {/*  }}*/}
+            {/*>*/}
+            {/*  <ToolVerticalTabContainer*/}
+            {/*    isLoading={isLoading}*/}
+            {/*    toolFilterModel={toolFilterModel}*/}
+            {/*    loadData={handleLoadData}*/}
+            {/*  />*/}
+            {/*</div>*/}
             <div
               className={"w-100"}
               style={{
                 overflowX: "auto",
               }}
             >
-              {getTaskCards()}
+              {getToolCards()}
             </div>
           </div>
           {getButtons()}
@@ -257,7 +256,7 @@ export default function TaskSelectionList(
   );
 }
 
-TaskSelectionList.propTypes = {
+ToolSelectionList.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   fieldName: PropTypes.string,

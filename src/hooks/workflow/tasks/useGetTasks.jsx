@@ -7,11 +7,12 @@ import TaskFilterModel from "components/tasks/task.filter.model";
 export default function useGetTasks(
   fields,
   active,
+  setUrlParameters = false,
   pageSize,
   handleErrorFunction,
 ) {
   const [tasks, setTasks] = useState([]);
-  const [taskFilterModel, setTaskFilterModel] = useState(new TaskFilterModel());
+  const [taskFilterModel, setTaskFilterModel] = useState(new TaskFilterModel(undefined, undefined, undefined, setUrlParameters));
   const {
     isLoading,
     error,

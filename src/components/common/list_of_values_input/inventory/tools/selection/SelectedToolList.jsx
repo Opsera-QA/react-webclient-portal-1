@@ -2,16 +2,16 @@ import React, {useCallback, useState} from "react";
 import PropTypes from "prop-types";
 import {faCompassDrafting} from "@fortawesome/pro-light-svg-icons";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import {TaskSelectionCard} from "components/common/list_of_values_input/tasks/selection/TaskSelectionCard";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import RemoveAllButtonBase from "temp-library-components/button/remove/RemoveAllButtonBase";
 import RemoveSelectedButtonBase from "temp-library-components/button/remove/RemoveSelectedButtonBase";
 import RemoveShownButtonBase from "temp-library-components/button/remove/RemoveShownButtonBase";
-import useGetTasks from "hooks/workflow/tasks/useGetTasks";
+import useGetRegistryTools from "hooks/tools/useGetRegistryTools";
 import {sortByName} from "components/common/list_of_values_input/pipelines/selection/SelectedPipelineList";
+import {ToolSelectionCard} from "components/common/list_of_values_input/inventory/tools/selection/ToolSelectionCard";
 
-export default function SelectedTaskList(
+export default function SelectedToolList(
   {
     model,
     fieldName,
@@ -24,90 +24,90 @@ export default function SelectedTaskList(
   const {
     isLoading,
     error,
-    tasks,
-  } = useGetTasks(
+    tools,
+  } = useGetRegistryTools(
     ["name", "owner"],
     undefined,
-    false,
     10000,
+    false,
   );
-  const [selectedTasks, setSelectedTasks] = useState([]);
+  const [selectedTools, setSelectedTools] = useState([]);
   const [searchText, setSearchText] = useState("");
   const field = model?.getFieldById(fieldName);
 
-  const getFilteredTasks = useCallback(() => {
+  const getFilteredTools = useCallback(() => {
     const output = [];
 
-    currentData.forEach((taskId) => {
-      const foundTask = tasks.find((task) => task._id === taskId);
+    currentData.forEach((toolId) => {
+      const foundTool = tools.find((tool) => tool._id === toolId);
 
-      if (foundTask) {
-        output.push(foundTask);
+      if (foundTool) {
+        output.push(foundTool);
       } else {
         output.push({
-          name: "Task Not Found",
+          name: "Tool Not Found",
           owner_name: "Unknown User",
-          _id: taskId,
+          _id: toolId,
         });
       }
     });
 
     if (hasStringValue(searchText)) {
       const lowercaseSearchText = searchText.toLowerCase();
-      return output.filter((task) => {
-        return task.name.toLowerCase().includes(lowercaseSearchText) || task.owner_name.toLowerCase().includes(lowercaseSearchText);
+      return output.filter((tool) => {
+        return tool.name.toLowerCase().includes(lowercaseSearchText) || tool.owner_name.toLowerCase().includes(lowercaseSearchText);
       });
     }
 
     return [...sortByName(output)];
-  }, [tasks, currentData, searchText]);
+  }, [tools, currentData, searchText]);
 
-  const filteredTasks = getFilteredTasks();
+  const filteredTools = getFilteredTools();
 
-  const removeAllTasks = () => {
+  const removeAllTools = () => {
     model?.setDefaultValue(fieldName);
     setModel({...model});
     setSearchText("");
   };
 
-  const removeAllFilteredTasks = () => {
-    const shownTasks = getFilteredTasks();
-    const output = currentData.filter((taskId) => {
-      return shownTasks.find((shownTask) => shownTask._id === taskId) == null;
+  const removeAllFilteredTools = () => {
+    const shownTools = getFilteredTools();
+    const output = currentData.filter((toolId) => {
+      return shownTools.find((shownTool) => shownTool._id === toolId) == null;
     });
 
     model?.setData(fieldName, output);
     setModel({...model});
-    setSelectedTasks([]);
+    setSelectedTools([]);
     setSearchText("");
   };
 
-  const removeSelectedTasks = () => {
-    const output = currentData.filter((taskId) => {
-      return selectedTasks.find((selectedTask) => selectedTask._id === taskId) == null;
+  const removeSelectedTools = () => {
+    const output = currentData.filter((toolId) => {
+      return selectedTools.find((selectedTool) => selectedTool._id === toolId) == null;
     });
 
     model?.setData(fieldName, output);
     setModel({...model});
-    setSelectedTasks([]);
+    setSelectedTools([]);
     setSearchText("");
   };
 
-  const getTaskCards = () => {
+  const getToolCards = () => {
     if (isLoading === true) {
       return (
         <CenterLoadingIndicator
-          type={"Tasks"}
+          type={"Tools"}
           minHeight={"370px"}
         />
       );
     }
 
-    if (filteredTasks.length === 0) {
+    if (filteredTools.length === 0) {
       return (
         <div className={"membership-list"}>
           <div className={"h-100 m-auto text-center"}>
-            <span>No Tasks Found</span>
+            <span>No Tools Found</span>
           </div>
         </div>
       );
@@ -115,13 +115,13 @@ export default function SelectedTaskList(
 
     return (
       <div className={"membership-list"}>
-        {filteredTasks.map((task, index) => {
+        {filteredTools.map((tool, index) => {
           return (
-            <div key={task?._id} className={index % 2 === 0 ? "even-row-background-color" : "odd-row-background-color"}>
-              <TaskSelectionCard
-                selectedTasks={selectedTasks}
-                setSelectedTasks={setSelectedTasks}
-                task={task}
+            <div key={tool?._id} className={index % 2 === 0 ? "even-row-background-color" : "odd-row-background-color"}>
+              <ToolSelectionCard
+                selectedTools={selectedTools}
+                setSelectedTools={setSelectedTools}
+                tool={tool}
                 disabled={disabled}
               />
             </div>
@@ -144,7 +144,7 @@ export default function SelectedTaskList(
         className={"w-100 p-3"}
       >
         <RemoveAllButtonBase
-          onClickFunction={removeAllTasks}
+          onClickFunction={removeAllTools}
           itemCount={currentData.length}
           buttonSize={"sm"}
           buttonClassName={"w-100"}
@@ -152,16 +152,16 @@ export default function SelectedTaskList(
           disabled={isLoading}
         />
         <RemoveSelectedButtonBase
-          onClickFunction={removeSelectedTasks}
-          itemCount={selectedTasks.length}
+          onClickFunction={removeSelectedTools}
+          itemCount={selectedTools.length}
           buttonSize={"sm"}
           buttonClassName={"w-100"}
           className={"my-2"}
           disabled={isLoading}
         />
         <RemoveShownButtonBase
-          onClickFunction={removeAllFilteredTasks}
-          itemCount={filteredTasks.length}
+          onClickFunction={removeAllFilteredTools}
+          itemCount={filteredTools.length}
           buttonSize={"sm"}
           buttonClassName={"w-100"}
           className={"my-2"}
@@ -200,7 +200,7 @@ export default function SelectedTaskList(
 
             </div>
             <div className={"my-auto"}>
-              {filteredTasks.length} {filteredTasks.length !== 1 ? "Tasks" : "Task"}
+              {filteredTools.length} {filteredTools.length !== 1 ? "Tools" : "Tool"}
             </div>
           </div>
           <div
@@ -208,7 +208,7 @@ export default function SelectedTaskList(
               overflowX: "auto",
             }}
           >
-            {getTaskCards()}
+            {getToolCards()}
           </div>
           {getButtons()}
         </div>
@@ -223,7 +223,7 @@ export default function SelectedTaskList(
   );
 }
 
-SelectedTaskList.propTypes = {
+SelectedToolList.propTypes = {
   model: PropTypes.object,
   fieldName: PropTypes.string,
   setModel: PropTypes.func,

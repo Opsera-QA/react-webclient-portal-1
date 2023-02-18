@@ -20,6 +20,7 @@ export default function ToolMultiSelectInput(
     undefined,
     undefined,
     10000,
+    false,
   );
 
   return (

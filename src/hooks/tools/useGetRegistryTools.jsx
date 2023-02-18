@@ -8,10 +8,11 @@ export default function useGetRegistryTools(
   fields,
   active,
   pageSize,
+  setUrlParameters = false,
   handleErrorFunction,
 ) {
   const [registryTools, setRegistryTools] = useState([]);
-  const [registryToolFilterModel, setRegistryToolFilterModel] = useState(new ToolFilterModel());
+  const [registryToolFilterModel, setRegistryToolFilterModel] = useState(new ToolFilterModel(setUrlParameters));
   const {
     isLoading,
     error,

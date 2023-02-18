@@ -20,7 +20,12 @@ function PipelineMultiSelectInput(
     isLoading,
     error,
     pipelines,
-  } = useGetPipelines();
+  } = useGetPipelines(
+    ["name", "owner"],
+    undefined,
+    undefined,
+    10000,
+  );
 
   // TODO: Make pipeline list component with link to pipeline (open in new window)
   const getSelectedPipelineSummary = (selectedPipelineId) => {
