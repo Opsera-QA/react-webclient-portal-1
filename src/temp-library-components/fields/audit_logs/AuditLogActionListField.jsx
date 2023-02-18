@@ -24,6 +24,7 @@ export default function AuditLogActionListField(
 
     return actions.filter((action) => action.toLowerCase().includes(searchText.toLowerCase()));
   };
+  const filteredActions = getFilteredItems();
 
   const getActionCards = () => {
     if (actions.length === 0) {
@@ -38,7 +39,7 @@ export default function AuditLogActionListField(
 
     return (
       <ul className={"list-group membership-list"}>
-        {getFilteredItems().map((action, index) => {
+        {filteredActions.map((action, index) => {
           return (
             <div key={action} className={index % 2 === 0 ? "even-row" : "odd-row"}>
               <div className={"m-1"}>
@@ -67,7 +68,7 @@ export default function AuditLogActionListField(
 
           </div>
           <div className={"my-auto"}>
-            {actions.length} {actions.length !== 1 ? "Events" : "Event"}
+            {filteredActions.length} {filteredActions.length !== 1 ? "Events" : "Event"}
           </div>
         </div>
         {getActionCards()}
