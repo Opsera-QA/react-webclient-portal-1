@@ -22,6 +22,7 @@ export default function AuditLogNotificationTargetMultiSelectInput(
         fieldName={fieldName}
         disabled={disabled}
         selectedListTitle={"Notify on These Tasks"}
+        selectionListTitle={"Tasks"}
       />
     );
   }
@@ -34,6 +35,7 @@ export default function AuditLogNotificationTargetMultiSelectInput(
         fieldName={fieldName}
         disabled={disabled}
         selectedListTitle={"Notify on These Tools"}
+        selectionListTitle={"Tools"}
       />
     );
   }
@@ -46,6 +48,7 @@ export default function AuditLogNotificationTargetMultiSelectInput(
         fieldName={fieldName}
         disabled={disabled}
         selectedListTitle={"Notify on These Pipelines"}
+        selectionListTitle={"Pipelines"}
       />
     );
   }

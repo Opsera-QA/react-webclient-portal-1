@@ -19,7 +19,7 @@ export default function PipelineSelectionPanel(
   return (
     <DetailPanelContainer>
       <Row className={"mx-0"}>
-        <Col xs={12} sm={6}>
+        <Col xs={12} md={6}>
           <PipelineSelectionList
             model={model}
             setModel={setModel}
@@ -28,7 +28,7 @@ export default function PipelineSelectionPanel(
             customTitle={selectionListTitle}
           />
         </Col>
-        <Col xs={12} sm={6}>
+        <Col xs={12} md={6}>
           <SelectedPipelineList
             model={model}
             setModel={setModel}
