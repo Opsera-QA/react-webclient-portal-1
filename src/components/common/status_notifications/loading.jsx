@@ -44,7 +44,7 @@ function LoadingDialog({size, message}) {
         style={{
           position: "fixed",
           top: "calc(50vh - 150px)",
-          left: "calc(50vh + 75px)",
+          left: "calc(50vh + 100px)",
         }}
       >
         <OpseraBirdLoadingImage/>
