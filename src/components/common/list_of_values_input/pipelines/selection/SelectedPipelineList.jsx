@@ -210,7 +210,12 @@ export default function SelectedPipelineList(
           searchTerm={searchText}
           showSearchBar={true}
         />
-        <div className={"content-container"}>
+        <div
+          className={"content-container"}
+          style={{
+            overflowX: "auto",
+          }}
+        >
           <div className={"px-2 py-1 d-flex justify-content-between"}>
             <div className={"my-auto"}>
 
@@ -219,7 +224,13 @@ export default function SelectedPipelineList(
               {filteredPipelines.length} {filteredPipelines.length !== 1 ? "Pipelines" : "Pipeline"}
             </div>
           </div>
-          {getPipelineCards()}
+          <div
+            style={{
+              overflowX: "auto",
+            }}
+          >
+            {getPipelineCards()}
+          </div>
           {getButtons()}
         </div>
       </div>
