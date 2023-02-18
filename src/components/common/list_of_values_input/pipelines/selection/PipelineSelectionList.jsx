@@ -151,35 +151,37 @@ export default function PipelineSelectionList(
     }
 
     return (
-      <Row>
-        <Col lg={12} xl={4} className={"my-2"}>
+      <div
+        style={{
+          borderTop: "1px solid #E6E5E3",
+        }}
+        className={"w-100 p-3"}
+      >
           <AddAllButtonBase
             onClickFunction={addAllPipelines}
             itemCount={unselectedPipelineCount}
             buttonSize={"sm"}
             buttonClassName={"w-100"}
+            className={"my-2"}
             disabled={isLoading}
           />
-        </Col>
-        <Col lg={12} xl={4} className={"my-2"}>
           <AddSelectedButtonBase
             onClickFunction={addSelectedPipelines}
             itemCount={selectedPipelines.length}
             buttonSize={"sm"}
             buttonClassName={"w-100"}
+            className={"my-2"}
             disabled={isLoading}
           />
-        </Col>
-        <Col lg={12} xl={4} className={"my-2"}>
           <AddShownButtonBase
             onClickFunction={addAllShownPipelines}
             itemCount={filteredPipelines.length}
             buttonSize={"sm"}
             buttonClassName={"w-100"}
+            className={"my-2"}
             disabled={isLoading}
           />
-        </Col>
-      </Row>
+      </div>
     );
   };
 
@@ -229,6 +231,7 @@ export default function PipelineSelectionList(
               {getPipelineCards()}
             </div>
           </div>
+          {getButtons()}
         </div>
       </div>
     );
@@ -236,7 +239,6 @@ export default function PipelineSelectionList(
 
   return (
     <div className={className}>
-      {getButtons()}
       {getBody()}
     </div>
   );
