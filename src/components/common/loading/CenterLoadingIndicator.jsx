@@ -24,7 +24,11 @@ export default function CenterLoadingIndicator(
       minHeight={minHeight}
     >
       <div>
-        <div>
+        <div
+          style={{
+            marginTop: "-120px",
+          }}
+        >
           <OpseraBirdLoadingImage />
         </div>
         <div className={"d-flex"}>

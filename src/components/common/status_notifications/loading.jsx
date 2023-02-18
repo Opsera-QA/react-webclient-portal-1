@@ -40,7 +40,13 @@ function LoadingDialog({size, message}) {
 
   return (
     <div className={"loading d-flex"}>
-      <div className={"m-auto"}>
+      <div
+        style={{
+          position: "fixed",
+          top: "calc(50vh - 150px)",
+          left: "calc(50vh + 75px)",
+        }}
+      >
         <OpseraBirdLoadingImage/>
       </div>
     </div>
