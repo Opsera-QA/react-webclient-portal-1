@@ -214,6 +214,9 @@ export default function PipelineSelectionList(
             <div
               style={{
                 borderRight: "1px solid #E6E5E3",
+                minWidth: "250px",
+                width: "250px",
+                maxWidth: "250px",
               }}
             >
               <PipelineVerticalTabContainer
