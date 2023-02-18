@@ -12,6 +12,8 @@ export default function PipelineSelectionPanel(
     model, 
     setModel,
     fieldName,
+    selectionListTitle,
+    selectedListTitle,
   }) {
   const currentData = DataParsingHelper.parseArray(model?.getData(fieldName), []);
 
@@ -32,6 +34,7 @@ export default function PipelineSelectionPanel(
             setModel={setModel}
             fieldName={fieldName}
             currentData={currentData}
+            customTitle={selectionListTitle}
           />
         </Col>
         <Col xs={12} sm={6}>
@@ -40,6 +43,7 @@ export default function PipelineSelectionPanel(
             setModel={setModel}
             fieldName={fieldName}
             currentData={currentData}
+            customTitle={selectedListTitle}
           />
         </Col>
       </Row>
@@ -51,4 +55,6 @@ PipelineSelectionPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   fieldName: PropTypes.string,
+  selectionListTitle: PropTypes.string,
+  selectedListTitle: PropTypes.string,
 };

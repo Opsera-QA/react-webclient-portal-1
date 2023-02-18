@@ -6,7 +6,7 @@ export default function PipelinesListFieldBase(
   {
     model,
     fieldName,
-    title,
+    customTitle,
   }) {
   return (
     <SelectedPipelineList
@@ -14,7 +14,7 @@ export default function PipelinesListFieldBase(
       fieldName={fieldName}
       currentData={model?.getArrayData(fieldName)}
       disabled={true}
-      title={title}
+      customTitle={customTitle}
     />
   );
 }
@@ -22,5 +22,5 @@ export default function PipelinesListFieldBase(
 PipelinesListFieldBase.propTypes = {
   model: PropTypes.object,
   fieldName: PropTypes.string,
-  title: PropTypes.string,
+  customTitle: PropTypes.string,
 };

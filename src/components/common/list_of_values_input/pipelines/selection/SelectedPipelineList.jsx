@@ -47,7 +47,7 @@ export default function SelectedPipelineList(
     setModel,
     currentData,
     disabled,
-    title,
+    customTitle,
     className,
   }) {
   const {
@@ -202,7 +202,7 @@ export default function SelectedPipelineList(
           icon={faCompassDrafting}
           isLoading={isLoading}
           field={field}
-          customTitle={title}
+          customTitle={customTitle}
           setSearchTerm={setSearchText}
           searchTerm={searchText}
           showSearchBar={true}
@@ -238,10 +238,6 @@ SelectedPipelineList.propTypes = {
   setModel: PropTypes.func,
   currentData: PropTypes.array,
   disabled: PropTypes.bool,
-  title: PropTypes.string,
+  customTitle: PropTypes.string,
   className: PropTypes.string,
-};
-
-SelectedPipelineList.defaultProps = {
-
 };

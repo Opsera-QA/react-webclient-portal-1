@@ -21,7 +21,9 @@ export default function PipelineSelectionList(
     currentData,
     disabled,
     className,
+    customTitle,
   }) {
+  const field = model?.getFieldById(fieldName);
   const [selectedPipelines, setSelectedPipelines] = useState([]);
   const [searchText, setSearchText] = useState("");
   const {
@@ -185,10 +187,11 @@ export default function PipelineSelectionList(
           disabled={disabled}
           icon={faCompassDrafting}
           isLoading={isLoading}
-          customTitle={"Pipelines"}
+          customTitle={customTitle}
           setSearchTerm={setSearchText}
           searchTerm={searchText}
           showSearchBar={true}
+          field={field}
         />
 
         <div className={"px-2 py-1 d-flex justify-content-between"}>
@@ -223,4 +226,5 @@ PipelineSelectionList.propTypes = {
   currentData: PropTypes.array,
   disabled: PropTypes.bool,
   className: PropTypes.string,
+  customTitle: PropTypes.string,
 };

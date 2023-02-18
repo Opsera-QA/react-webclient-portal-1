@@ -18,8 +18,8 @@ export default function AuditLogActionListField(
   const getActionCards = () => {
     if (actions.length === 0) {
       return (
-        <ul className="list-group membership-list">
-          <div className="h-100 m-auto text-center">
+        <ul className={"list-group membership-list"}>
+          <div className={"h-100 m-auto text-center"}>
             <span>No Events Selected</span>
           </div>
         </ul>
@@ -27,7 +27,7 @@ export default function AuditLogActionListField(
     }
 
     return (
-      <ul className="list-group membership-list">
+      <ul className={"list-group membership-list"}>
         {actions.map((action, index) => {
           return (
             <div key={action} className={index % 2 === 0 ? "even-row" : "odd-row"}>
