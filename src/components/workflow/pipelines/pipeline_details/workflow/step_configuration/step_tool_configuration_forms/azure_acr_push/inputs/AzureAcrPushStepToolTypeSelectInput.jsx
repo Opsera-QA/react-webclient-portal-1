@@ -44,8 +44,8 @@ function AzureAcrPushStepToolTypeSelectInput(
   return (
     <SelectInputBase
       fieldName={"toolType"}
-      model={model}
-      setModel={setModel}
+      dataObject={model}
+      setDataObject={setModel}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
       selectOptions={ACTION_LIST}
