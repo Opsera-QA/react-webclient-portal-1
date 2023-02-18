@@ -13,6 +13,8 @@ export default function PipelineSelectionPanel(
     setModel,
     fieldName,
   }) {
+  const currentData = DataParsingHelper.parseArray(model?.getData(fieldName), []);
+
   return (
     <DetailPanelContainer>
       <Row>
@@ -24,20 +26,20 @@ export default function PipelineSelectionPanel(
         </Col>
       </Row>
       <Row className={"mx-0"}>
-        <Col xs={12} sm={6} className={"px-0 mt-2"}>
+        <Col xs={12} sm={6}>
           <PipelineSelectionList
             model={model}
             setModel={setModel}
             fieldName={fieldName}
-            currentData={DataParsingHelper.parseArray(model?.getData(fieldName), [])}
+            currentData={currentData}
           />
         </Col>
-        <Col xs={12} sm={6} className={"px-0 mt-2"}>
+        <Col xs={12} sm={6}>
           <SelectedPipelineList
             model={model}
             setModel={setModel}
             fieldName={fieldName}
-            currentData={DataParsingHelper.parseArray(model?.getData(fieldName), [])}
+            currentData={currentData}
           />
         </Col>
       </Row>

@@ -35,7 +35,7 @@ export default function PipelineSelectionList(
     ["name", "owner"],
   );
 
-  const getFilteredPipelines = useCallback(() => {
+  const getUnselectedPipelines = () => {
     const output = [];
 
     pipelines.forEach((pipeline) => {
@@ -45,6 +45,12 @@ export default function PipelineSelectionList(
         output.push(pipeline);
       }
     });
+
+    return output;
+  };
+
+  const getFilteredPipelines = useCallback(() => {
+    const output = getUnselectedPipelines();
 
     if (hasStringValue(searchText)) {
       const lowercaseSearchText = searchText.toLowerCase();
@@ -57,6 +63,7 @@ export default function PipelineSelectionList(
   }, [pipelines, currentData, searchText]);
 
   const filteredPipelines = getFilteredPipelines();
+  const unselectedPipelineCount = getUnselectedPipelines()?.length;
 
   const addAllPipelines = () => {
     const output = DataParsingHelper.parseArray(currentData, []);
@@ -131,28 +138,31 @@ export default function PipelineSelectionList(
     }
 
     return (
-      <Row>
-        <Col lg={12} xl={4} className={"my-2"}>
+      <Row className={"my-2"}>
+        <Col lg={12} xl={4}>
           <AddAllButtonBase
             onClickFunction={addAllPipelines}
-            itemCount={pipelines.length}
+            itemCount={unselectedPipelineCount}
             buttonSize={"sm"}
+            buttonClassName={"w-100"}
             disabled={isLoading}
           />
         </Col>
-        <Col lg={12} xl={4} className={"my-2"}>
+        <Col lg={12} xl={4}>
           <AddSelectedButtonBase
             onClickFunction={addSelectedPipelines}
             itemCount={selectedPipelines.length}
             buttonSize={"sm"}
+            buttonClassName={"w-100"}
             disabled={isLoading}
           />
         </Col>
-        <Col lg={12} xl={4} className={"my-2"}>
+        <Col lg={12} xl={4}>
           <AddShownButtonBase
             onClickFunction={addAllShownPipelines}
             itemCount={filteredPipelines.length}
             buttonSize={"sm"}
+            buttonClassName={"w-100"}
             disabled={isLoading}
           />
         </Col>

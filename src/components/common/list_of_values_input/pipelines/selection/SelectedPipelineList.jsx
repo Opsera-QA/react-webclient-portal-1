@@ -48,6 +48,7 @@ export default function SelectedPipelineList(
     currentData,
     disabled,
     title,
+    className,
   }) {
   const {
     isLoading,
@@ -167,6 +168,7 @@ export default function SelectedPipelineList(
             onClickFunction={removeAllPipelines}
             itemCount={currentData.length}
             buttonSize={"sm"}
+            buttonClassName={"w-100"}
             disabled={isLoading}
           />
         </Col>
@@ -175,6 +177,7 @@ export default function SelectedPipelineList(
             onClickFunction={removeSelectedPipelines}
             itemCount={selectedPipelines.length}
             buttonSize={"sm"}
+            buttonClassName={"w-100"}
             disabled={isLoading}
           />
         </Col>
@@ -183,6 +186,7 @@ export default function SelectedPipelineList(
             onClickFunction={removeAllFilteredPipelines}
             itemCount={filteredPipelines.length}
             buttonSize={"sm"}
+            buttonClassName={"w-100"}
             disabled={isLoading}
           />
         </Col>
@@ -221,7 +225,7 @@ export default function SelectedPipelineList(
   }
 
   return (
-    <div className={"ml-2"}>
+    <div className={className}>
       {getButtons()}
       {getBody()}
     </div>
@@ -235,6 +239,7 @@ SelectedPipelineList.propTypes = {
   currentData: PropTypes.array,
   disabled: PropTypes.bool,
   title: PropTypes.string,
+  className: PropTypes.string,
 };
 
 SelectedPipelineList.defaultProps = {

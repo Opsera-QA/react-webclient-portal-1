@@ -49,7 +49,7 @@ export default function VanityButtonBase(
   };
 
   const getCountBadge = () => {
-    if (badgeText) {
+    if (badgeText || badgeText === 0) {
      return (
        <div className={"badge badge-secondary ml-2"}>
          {badgeText}
@@ -82,6 +82,8 @@ export default function VanityButtonBase(
                 className={getLabel() != null ? "mr-2" : undefined}
                 iconClassName={iconClassName}
               />
+            </div>
+            <div>
               {getLabel()}
             </div>
             <div>

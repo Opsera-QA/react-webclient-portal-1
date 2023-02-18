@@ -16,6 +16,7 @@ export default function AddShownButtonBase(
     busyText,
     itemCount,
     buttonSize,
+    buttonClassName,
   }) {
   return (
     <VanityButtonBase
@@ -31,6 +32,7 @@ export default function AddShownButtonBase(
       normalText={normalText}
       buttonSize={buttonSize}
       badgeText={itemCount}
+      buttonClassName={buttonClassName}
     />
   );
 }
@@ -47,6 +49,7 @@ AddShownButtonBase.propTypes = {
   busyText: PropTypes.string,
   itemCount: PropTypes.number,
   buttonSize: PropTypes.string,
+  buttonClassName: PropTypes.string,
 };
 
 AddShownButtonBase.defaultProps = {

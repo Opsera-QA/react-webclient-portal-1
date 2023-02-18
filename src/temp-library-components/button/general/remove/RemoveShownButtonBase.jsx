@@ -16,6 +16,7 @@ export default function RemoveShownButtonBase(
     busyText,
     itemCount,
     buttonSize,
+    buttonClassName,
   }) {
   return (
     <VanityButtonBase
@@ -31,6 +32,7 @@ export default function RemoveShownButtonBase(
       normalText={normalText}
       buttonSize={buttonSize}
       badgeText={itemCount}
+      buttonClassName={buttonClassName}
     />
   );
 }
@@ -47,6 +49,7 @@ RemoveShownButtonBase.propTypes = {
   busyText: PropTypes.string,
   itemCount: PropTypes.number,
   buttonSize: PropTypes.string,
+  buttonClassName: PropTypes.string,
 };
 
 RemoveShownButtonBase.defaultProps = {
