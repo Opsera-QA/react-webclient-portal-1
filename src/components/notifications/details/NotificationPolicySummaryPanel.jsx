@@ -54,18 +54,22 @@ function NotificationPolicySummaryPanel({ notificationData, setActiveTab }) {
   };
 
   return (
-    <SummaryPanelContainer setActiveTab={setActiveTab}>
+    <SummaryPanelContainer
+      setActiveTab={setActiveTab}
+    >
       <Row>
         <Col lg={6}>
           <TextFieldBase
             dataObject={notificationData}
             fieldName={"name"}
+            className={"mb-2"}
           />
         </Col>
         <Col lg={6}>
           <NotificationTypeField
             model={notificationData}
             fieldName={"type"}
+            className={"mb-2"}
           />
         </Col>
         <Col lg={6}>
