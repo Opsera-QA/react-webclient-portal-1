@@ -7,9 +7,9 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import {PipelineSelectionCard} from "components/common/list_of_values_input/pipelines/selection/PipelineSelectionCard";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
-import RemoveAllButtonBase from "temp-library-components/button/general/remove/RemoveAllButtonBase";
-import RemoveSelectedButtonBase from "temp-library-components/button/general/remove/RemoveSelectedButtonBase";
-import RemoveShownButtonBase from "temp-library-components/button/general/remove/RemoveShownButtonBase";
+import RemoveAllButtonBase from "temp-library-components/button/remove/RemoveAllButtonBase";
+import RemoveSelectedButtonBase from "temp-library-components/button/remove/RemoveSelectedButtonBase";
+import RemoveShownButtonBase from "temp-library-components/button/remove/RemoveShownButtonBase";
 
 export const sortByName = (pipelines) => {
   if (Array.isArray(pipelines) && pipelines.length > 0) {

@@ -40,6 +40,7 @@ export default function AuditLogNotificationTargetField(
       <PipelinesListFieldBase
         model={model}
         fieldName={fieldName}
+        title={"Notify on These Pipelines"}
       />
     );
   }

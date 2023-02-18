@@ -9,9 +9,9 @@ import {sortByName} from "components/common/list_of_values_input/pipelines/selec
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import useGetAllPipelines from "hooks/workflow/pipelines/useGetAllPipelines";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
-import AddAllButtonBase from "temp-library-components/button/general/add/AddAllButtonBase";
-import AddSelectedButtonBase from "temp-library-components/button/general/add/AddSelectedButtonBase";
-import AddShownButtonBase from "temp-library-components/button/general/add/AddShownButtonBase";
+import AddAllButtonBase from "temp-library-components/button/add/AddAllButtonBase";
+import AddSelectedButtonBase from "temp-library-components/button/add/AddSelectedButtonBase";
+import AddShownButtonBase from "temp-library-components/button/add/AddShownButtonBase";
 
 export default function PipelineSelectionList(
   {
