@@ -198,7 +198,9 @@ export default function PipelineSelectionList(
           showSearchBar={true}
           field={field}
         />
-        <div className="content-container">
+        <div
+          className={"content-container"}
+        >
           <div
             className={"px-2 py-1 d-flex justify-content-between"}
             style={{
@@ -227,7 +229,12 @@ export default function PipelineSelectionList(
                 loadData={loadData}
               />
             </div>
-            <div className={"w-100"}>
+            <div
+              className={"w-100"}
+              style={{
+                overflowX: "auto",
+              }}
+            >
               {getPipelineCards()}
             </div>
           </div>

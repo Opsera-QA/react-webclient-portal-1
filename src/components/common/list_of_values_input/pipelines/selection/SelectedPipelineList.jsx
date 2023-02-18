@@ -131,19 +131,19 @@ export default function SelectedPipelineList(
 
     if (filteredPipelines.length === 0) {
       return (
-        <ul className={"list-group membership-list"}>
+        <div className={"membership-list"}>
           <div className={"h-100 m-auto text-center"}>
             <span>No Pipelines Found</span>
           </div>
-        </ul>
+        </div>
       );
     }
 
     return (
-      <ul className={"list-group membership-list"}>
+      <div className={"membership-list"}>
         {filteredPipelines.map((pipeline, index) => {
           return (
-            <div key={pipeline?._id} className={index % 2 === 0 ? "even-row" : "odd-row"}>
+            <div key={pipeline?._id} className={index % 2 === 0 ? "even-row-background-color" : "odd-row-background-color"}>
               <PipelineSelectionCard
                 selectedPipelines={selectedPipelines}
                 setSelectedPipelines={setSelectedPipelines}
@@ -153,7 +153,7 @@ export default function SelectedPipelineList(
             </div>
           );
         })}
-      </ul>
+      </div>
     );
   };
 
@@ -210,8 +210,18 @@ export default function SelectedPipelineList(
           searchTerm={searchText}
           showSearchBar={true}
         />
-        <div className={"content-container"}>
-          <div className={"px-2 py-1 d-flex justify-content-between"}>
+        <div
+          className={"content-container"}
+          style={{
+            overflowX: "auto",
+          }}
+        >
+          <div
+            className={"px-2 py-1 d-flex justify-content-between"}
+            style={{
+              borderBottom: "1px solid #E6E5E3",
+            }}
+          >
             <div className={"my-auto"}>
 
             </div>
@@ -219,7 +229,13 @@ export default function SelectedPipelineList(
               {filteredPipelines.length} {filteredPipelines.length !== 1 ? "Pipelines" : "Pipeline"}
             </div>
           </div>
-          {getPipelineCards()}
+          <div
+            style={{
+              overflowX: "auto",
+            }}
+          >
+            {getPipelineCards()}
+          </div>
           {getButtons()}
         </div>
       </div>
