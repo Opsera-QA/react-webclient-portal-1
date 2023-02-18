@@ -8,8 +8,8 @@ import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import RemoveAllButtonBase from "temp-library-components/button/remove/RemoveAllButtonBase";
 import RemoveSelectedButtonBase from "temp-library-components/button/remove/RemoveSelectedButtonBase";
 import RemoveShownButtonBase from "temp-library-components/button/remove/RemoveShownButtonBase";
-import {sortByName} from "components/common/list_of_values_input/tasks/selection/SelectedTaskList";
 import useGetTasks from "hooks/workflow/tasks/useGetTasks";
+import {sortByName} from "components/common/list_of_values_input/pipelines/selection/SelectedPipelineList";
 
 export default function SelectedTaskList(
   {
