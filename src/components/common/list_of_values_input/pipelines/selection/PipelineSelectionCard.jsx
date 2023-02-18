@@ -6,8 +6,8 @@ import {truncateString} from "components/common/helpers/string-helpers";
 
 export function PipelineSelectionCard(
   {
-    pipeline,
-    selectedPipelines,
+    pipeline, 
+    selectedPipelines, 
     setSelectedPipelines,
     disabled,
   }) {

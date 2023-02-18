@@ -9,8 +9,8 @@ import MetricNotificationTypeSummaryCard
 import PipelineNotificationTypeSummaryCard
   from "components/notifications/details/configuration/pipeline/PipelineNotificationTypeSummaryCard";
 import modelHelpers from "components/common/model/modelHelpers";
-import AuditLogNotificationTypeSummaryCard
-  from "components/notifications/details/configuration/audit_log/AuditLogNotificationTypeSummaryCard";
+import AuditLogNotificationTypeSummaryPanel
+  from "components/notifications/details/configuration/audit_log/AuditLogNotificationTypeSummaryPanel";
 import {
   auditLogNotificationConfigurationMetadata
 } from "components/notifications/details/configuration/audit_log/auditLogNotificationConfigurationMetadata";
@@ -29,7 +29,7 @@ function NotificationPolicySummaryPanel({ notificationData, setActiveTab }) {
     switch (notificationData.getData("type")) {
       case "audit_log":
         return (
-          <AuditLogNotificationTypeSummaryCard
+          <AuditLogNotificationTypeSummaryPanel
             notificationConfigurationData={modelHelpers.parseObjectIntoModel(notificationData.getData("configuration"), auditLogNotificationConfigurationMetadata)}
             notificationData={notificationData}
           />
@@ -54,18 +54,22 @@ function NotificationPolicySummaryPanel({ notificationData, setActiveTab }) {
   };
 
   return (
-    <SummaryPanelContainer setActiveTab={setActiveTab}>
+    <SummaryPanelContainer
+      setActiveTab={setActiveTab}
+    >
       <Row>
         <Col lg={6}>
           <TextFieldBase
             dataObject={notificationData}
             fieldName={"name"}
+            className={"mb-2"}
           />
         </Col>
         <Col lg={6}>
           <NotificationTypeField
             model={notificationData}
             fieldName={"type"}
+            className={"mb-2"}
           />
         </Col>
         <Col lg={6}>

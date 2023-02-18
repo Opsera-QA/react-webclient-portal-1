@@ -1,15 +1,17 @@
 import React, {useCallback, useState} from "react";
 import PropTypes from "prop-types";
-import {faArrowRight, faCompassDrafting, faPlusCircle, faSearch, faUsers} from "@fortawesome/pro-light-svg-icons";
-import {Button, InputGroup, Row} from "react-bootstrap";
-import IconBase from "components/common/icons/IconBase";
-import Col from "react-bootstrap/Col";
+import {faCompassDrafting} from "@fortawesome/pro-light-svg-icons";
+import {Row, Col} from "react-bootstrap";
 import {PipelineSelectionCard} from "components/common/list_of_values_input/pipelines/selection/PipelineSelectionCard";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {sortByName} from "components/common/list_of_values_input/pipelines/selection/SelectedPipelineList";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import useGetAllPipelines from "hooks/workflow/pipelines/useGetAllPipelines";
+import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
+import AddAllButtonBase from "temp-library-components/button/add/AddAllButtonBase";
+import AddSelectedButtonBase from "temp-library-components/button/add/AddSelectedButtonBase";
+import AddShownButtonBase from "temp-library-components/button/add/AddShownButtonBase";
 
 export default function PipelineSelectionList(
   {
@@ -17,7 +19,11 @@ export default function PipelineSelectionList(
     setModel,
     fieldName,
     currentData,
+    disabled,
+    className,
+    customTitle,
   }) {
+  const field = model?.getFieldById(fieldName);
   const [selectedPipelines, setSelectedPipelines] = useState([]);
   const [searchText, setSearchText] = useState("");
   const {
@@ -31,7 +37,7 @@ export default function PipelineSelectionList(
     ["name", "owner"],
   );
 
-  const getFilteredPipelines = useCallback(() => {
+  const getUnselectedPipelines = () => {
     const output = [];
 
     pipelines.forEach((pipeline) => {
@@ -41,6 +47,12 @@ export default function PipelineSelectionList(
         output.push(pipeline);
       }
     });
+
+    return output;
+  };
+
+  const getFilteredPipelines = useCallback(() => {
+    const output = getUnselectedPipelines();
 
     if (hasStringValue(searchText)) {
       const lowercaseSearchText = searchText.toLowerCase();
@@ -53,6 +65,7 @@ export default function PipelineSelectionList(
   }, [pipelines, currentData, searchText]);
 
   const filteredPipelines = getFilteredPipelines();
+  const unselectedPipelineCount = getUnselectedPipelines()?.length;
 
   const addAllPipelines = () => {
     const output = DataParsingHelper.parseArray(currentData, []);
@@ -94,6 +107,15 @@ export default function PipelineSelectionList(
   };
 
   const getPipelineCards = () => {
+    if (isLoading === true) {
+      return (
+        <CenterLoadingIndicator
+          type={"Pipelines"}
+          minHeight={"370px"}
+        />
+      );
+    }
+
     if (filteredPipelines.length === 0) {
       return (
         <ul className="list-group membership-list">
@@ -122,139 +144,73 @@ export default function PipelineSelectionList(
   };
 
   const getButtons = () => {
-    return (
-      <Row>
-        <Col lg={12} xl={4} className={"my-2"}>
-          <Button
-            className={"w-100"}
-            size={"sm"}
-            variant={"success"}
-            onClick={addAllPipelines}
-          >
-            <div className={"d-flex justify-content-between no-wrap-inline"}>
-              <div>
-                <IconBase icon={faPlusCircle}/>
-              </div>
-              <div className={"mx-2"}>
-                Add All
-              </div>
-              <div>
-                <span className={"badge badge-secondary"}>{filteredPipelines.length}</span>
-              </div>
-            </div>
-          </Button>
-        </Col>
-        <Col lg={12} xl={4} className={"my-2"}>
-          <Button
-            className={"w-100"}
-            disabled={selectedPipelines.length === 0}
-            size={"sm"}
-            variant={"outline-primary"}
-            onClick={() => addSelectedPipelines()}
-          >
-            <div className={"d-flex justify-content-between no-wrap-inline"}>
-              <div>
-                <IconBase icon={faArrowRight} fixedWidth/>
-              </div>
-              <div className={"mx-1"}>
-                Add Selected
-              </div>
-              <div>
-                <span className={"badge badge-secondary"}>
-                  {selectedPipelines.length}
-                </span>
-              </div>
-            </div>
-          </Button>
-        </Col>
-        <Col lg={12} xl={4} className={"my-2"}>
-          <Button
-            className={"w-100"}
-            size={"sm"}
-            variant={"outline-success"}
-            onClick={addAllShownPipelines}
-          >
-            <div className={"d-flex justify-content-between no-wrap-inline"}>
-              <div>
-                <IconBase icon={faPlusCircle}/>
-              </div>
-              <div className={"mx-1"}>
-                Add Shown
-              </div>
-              <div>
-                <span className={"badge badge-secondary"}>
-                  {filteredPipelines.length}
-                </span>
-              </div>
-            </div>
-          </Button>
-        </Col>
-      </Row>
-    );
-  };
+    if (disabled === true) {
+      return null;
+    }
 
-  const getSearchBar = () => {
     return (
-      <Row>
-        <Col xs={12}>
-          <InputGroup className={"flex-nowrap my-2"}>
-            <InputGroup.Prepend>
-              <Button
-                disabled={isLoading}
-              >
-                <IconBase
-                  isLoading={isLoading}
-                  icon={faSearch}
-                />
-              </Button>
-            </InputGroup.Prepend>
-            <input
-              placeholder={"Search by Name or Email"}
-              value={searchText}
-              className={"form-control"}
-              onChange={event => setSearchText(event.target.value)}
-            />
-          </InputGroup>
+      <Row className={"my-2"}>
+        <Col lg={12} xl={4}>
+          <AddAllButtonBase
+            onClickFunction={addAllPipelines}
+            itemCount={unselectedPipelineCount}
+            buttonSize={"sm"}
+            buttonClassName={"w-100"}
+            disabled={isLoading}
+          />
+        </Col>
+        <Col lg={12} xl={4}>
+          <AddSelectedButtonBase
+            onClickFunction={addSelectedPipelines}
+            itemCount={selectedPipelines.length}
+            buttonSize={"sm"}
+            buttonClassName={"w-100"}
+            disabled={isLoading}
+          />
+        </Col>
+        <Col lg={12} xl={4}>
+          <AddShownButtonBase
+            onClickFunction={addAllShownPipelines}
+            itemCount={filteredPipelines.length}
+            buttonSize={"sm"}
+            buttonClassName={"w-100"}
+            disabled={isLoading}
+          />
         </Col>
       </Row>
     );
   };
 
   const getBody = () => {
-    if (isLoading === true) {
-      return (
-        <CenterLoadingIndicator
-          type={"Pipelines"}
-        />
-      );
-    }
-
     return (
-      <div className="content-card-1 content-container">
-        <div className="p-2 d-flex content-block-header members-title justify-content-between">
-          <div className={"my-auto"}><IconBase icon={faCompassDrafting} className={"mr-2"} />Pipelines</div>
-          <div className={"my-auto"}>{filteredPipelines.length} {filteredPipelines.length !== 1 ? "pipelines" : "pipeline"}</div>
+      <div>
+        <InputTitleBar
+          disabled={disabled}
+          icon={faCompassDrafting}
+          isLoading={isLoading}
+          customTitle={customTitle}
+          setSearchTerm={setSearchText}
+          searchTerm={searchText}
+          showSearchBar={true}
+          field={field}
+        />
+        <div className="content-container">
+          <div className={"px-2 py-1 d-flex justify-content-between"}>
+            <div className={"my-auto"}>
+
+            </div>
+            <div className={"my-auto"}>
+              {filteredPipelines.length} {filteredPipelines.length !== 1 ? "Pipelines" : "Pipeline"}
+            </div>
+          </div>
+          {getPipelineCards()}
         </div>
-        {getPipelineCards()}
-        {/*<div className="px-3 mt-2">*/}
-        {/*  <ClientSideBottomPaginator*/}
-        {/*    items={filteredPipelines}*/}
-        {/*    setShownItems={setShownPipelines}*/}
-        {/*    paginationStyle={"stacked"}*/}
-        {/*    pageSize={50}*/}
-        {/*  />*/}
-        {/*</div>*/}
       </div>
     );
   };
 
-  if (pipelines == null) {
-    return <></>;
-  }
-
   return (
-    <div className={"mr-2"}>
-      {getSearchBar()}
+    <div className={className}>
       {getButtons()}
       {getBody()}
     </div>
@@ -266,4 +222,7 @@ PipelineSelectionList.propTypes = {
   setModel: PropTypes.func,
   fieldName: PropTypes.string,
   currentData: PropTypes.array,
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+  customTitle: PropTypes.string,
 };
