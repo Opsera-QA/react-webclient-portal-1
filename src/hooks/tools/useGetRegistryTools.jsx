@@ -7,6 +7,7 @@ import useRegistryToolActions from "hooks/tools/useRegistryToolActions";
 export default function useGetRegistryTools(
   fields,
   active,
+  pageSize,
   handleErrorFunction,
 ) {
   const [registryTools, setRegistryTools] = useState([]);
@@ -21,6 +22,10 @@ export default function useGetRegistryTools(
 
   useEffect(() => {
     setRegistryTools([]);
+
+    if (pageSize) {
+      registryToolFilterModel.setData("pageSize", pageSize);
+    }
 
     if (loadData) {
       loadData(getRegistryTools, handleErrorFunction).catch(() => {});
