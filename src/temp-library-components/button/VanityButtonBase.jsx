@@ -21,6 +21,7 @@ export default function VanityButtonBase(
     tooltip,
     buttonSize,
     buttonClassName,
+    badgeText,
   }) {
 
   const getLabel = () => {
@@ -47,6 +48,16 @@ export default function VanityButtonBase(
     );
   };
 
+  const getCountBadge = () => {
+    if (badgeText || badgeText === 0) {
+     return (
+       <div className={"badge badge-secondary ml-2"}>
+         {badgeText}
+       </div>
+     );
+    }
+  };
+
   if (onClickFunction == null && disabled !== true) {
     return null;
   }
@@ -63,15 +74,22 @@ export default function VanityButtonBase(
           size={buttonSize}
           className={buttonClassName}
         >
-          <span className={"no-wrap-inline"}>
-            <IconBase
-              isLoading={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY}
-              icon={getButtonIcon()}
-              className={getLabel() != null ? "mr-2" : undefined}
-              iconClassName={iconClassName}
-            />
-            {getLabel()}
-          </span>
+          <div className={"no-wrap-inline d-flex justify-content-between"}>
+            <div>
+              <IconBase
+                isLoading={buttonState === buttonLabelHelper.BUTTON_STATES.BUSY}
+                icon={getButtonIcon()}
+                className={getLabel() != null ? "mr-2" : undefined}
+                iconClassName={iconClassName}
+              />
+            </div>
+            <div>
+              {getLabel()}
+            </div>
+            <div>
+              {getCountBadge()}
+            </div>
+          </div>
         </Button>
       </ButtonTooltip>
     </div>
@@ -93,6 +111,7 @@ VanityButtonBase.propTypes = {
   tooltip: PropTypes.any,
   buttonSize: PropTypes.any,
   buttonClassName: PropTypes.string,
+  badgeText: PropTypes.any,
 };
 
 VanityButtonBase.defaultProps = {
