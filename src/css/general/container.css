@@ -199,8 +199,9 @@
 .object-properties-input .property-header, .input-title-bar {
     background-color: #E6E5E3;
     color: #3D3B36;
-    min-height: 49px;
     font-size: 1.1rem;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
 }
 
 .sub-input-title-bar {

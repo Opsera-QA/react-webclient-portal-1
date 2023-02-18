@@ -183,7 +183,7 @@ export default function PipelineSelectionList(
 
   const getBody = () => {
     return (
-      <div className="content-container">
+      <div>
         <InputTitleBar
           disabled={disabled}
           icon={faCompassDrafting}
@@ -194,16 +194,17 @@ export default function PipelineSelectionList(
           showSearchBar={true}
           field={field}
         />
+        <div className="content-container">
+          <div className={"px-2 py-1 d-flex justify-content-between"}>
+            <div className={"my-auto"}>
 
-        <div className={"px-2 py-1 d-flex justify-content-between"}>
-          <div className={"my-auto"}>
-
+            </div>
+            <div className={"my-auto"}>
+              {filteredPipelines.length} {filteredPipelines.length !== 1 ? "Pipelines" : "Pipeline"}
+            </div>
           </div>
-          <div className={"my-auto"}>
-            {filteredPipelines.length} {filteredPipelines.length !== 1 ? "Pipelines" : "Pipeline"}
-          </div>
+          {getPipelineCards()}
         </div>
-        {getPipelineCards()}
       </div>
     );
   };

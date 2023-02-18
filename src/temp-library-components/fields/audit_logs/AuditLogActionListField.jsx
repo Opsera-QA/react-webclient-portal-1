@@ -43,23 +43,23 @@ export default function AuditLogActionListField(
 
   return (
     <div className={className}>
-        <div className={"content-container"}>
-          <InputTitleBar
-            icon={faList}
-            field={field}
-            customTitle={customTitle}
-          />
-          <div className={"px-2 py-1 d-flex justify-content-between"}>
-            <div className={"my-auto"}>
+      <InputTitleBar
+        icon={faList}
+        field={field}
+        customTitle={customTitle}
+      />
+      <div className={"content-container"}>
+        <div className={"px-2 py-1 d-flex justify-content-between"}>
+          <div className={"my-auto"}>
 
-            </div>
-            <div className={"my-auto"}>
-              {actions.length} {actions.length !== 1 ? "Events" : "Event"}
-            </div>
           </div>
-          {getActionCards()}
+          <div className={"my-auto"}>
+            {actions.length} {actions.length !== 1 ? "Events" : "Event"}
+          </div>
         </div>
+        {getActionCards()}
       </div>
+    </div>
   );
 }
 
