@@ -14,6 +14,7 @@ import AuditLogNotificationTargetMultiSelectInput
   from "components/notifications/details/configuration/audit_log/inputs/AuditLogNotificationTargetMultiSelectInput";
 import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import auditLogTypeConstants from "@opsera/definitions/constants/audit-logs/types/auditLogType.constants";
 
 // TODO: If this is used in multiple spots, we should rename it. If it just has trigger, I would suggest TriggerNotificationEditorPanel
 export default function AuditLogNotificationConfigurationPanel(
@@ -36,7 +37,7 @@ export default function AuditLogNotificationConfigurationPanel(
         <Col lg={12}>
           <WarningMessageFieldBase
             className={"mt-2 mb-1"}
-            message={"Please Note: You can only subscribe to receive Notifications for items you have access to view"}
+            message={`Please Note: You can only subscribe to receive Notifications for ${auditLogTypeConstants.getUserActivityLogTypeLabel(notificationModel?.getData("method"))}s you have access to view`}
           />
         </Col>
       );

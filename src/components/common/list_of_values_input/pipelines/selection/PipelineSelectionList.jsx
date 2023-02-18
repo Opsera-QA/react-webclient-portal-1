@@ -173,14 +173,6 @@ export default function PipelineSelectionList(
   };
 
   const getBody = () => {
-    if (isLoading === true) {
-      return (
-        <CenterLoadingIndicator
-          type={"Pipelines"}
-        />
-      );
-    }
-
     return (
       <div className="content-container">
         <InputTitleBar
@@ -206,10 +198,6 @@ export default function PipelineSelectionList(
       </div>
     );
   };
-
-  if (pipelines == null) {
-    return <></>;
-  }
 
   return (
     <div className={className}>

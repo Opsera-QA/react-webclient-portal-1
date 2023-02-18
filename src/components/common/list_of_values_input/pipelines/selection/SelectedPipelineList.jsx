@@ -120,14 +120,6 @@ export default function SelectedPipelineList(
   };
 
   const getPipelineCards = () => {
-    if (isLoading === true) {
-      return (
-        <CenterLoadingIndicator
-          type={"Pipelines"}
-        />
-      );
-    }
-
     if (filteredPipelines.length === 0) {
       return (
         <ul className={"list-group membership-list"}>
@@ -219,10 +211,6 @@ export default function SelectedPipelineList(
       </div>
     );
   };
-
-  if (pipelines == null) {
-    return <></>;
-  }
 
   return (
     <div className={className}>
