@@ -24,16 +24,17 @@ export default function AuditLogNotificationTypeSummaryPanel(
         subheaderText={"Audit Log Notification Configuration"}
       />
       <Row>
-        <Col xs={12} sm={6}>
+        <Col lg={12} xl={6}>
           <AuditLogNotificationTargetField
             model={notificationData}
           />
         </Col>
-        <Col xs={12} sm={6}>
+        <Col lg={12} xl={6}>
           <AuditLogActionListField
             model={notificationConfigurationData}
             fieldName={"events"}
             customTitle={"Notify For These Events"}
+            className={"my-2"}
           />
         </Col>
       </Row>

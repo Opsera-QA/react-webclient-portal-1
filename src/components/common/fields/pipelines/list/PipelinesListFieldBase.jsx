@@ -15,6 +15,7 @@ export default function PipelinesListFieldBase(
       currentData={model?.getArrayData(fieldName)}
       disabled={true}
       customTitle={customTitle}
+      className={"my-2"}
     />
   );
 }

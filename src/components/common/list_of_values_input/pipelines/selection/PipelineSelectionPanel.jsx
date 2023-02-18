@@ -8,7 +8,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 
 export default function PipelineSelectionPanel(
   {
-    model, 
+    model,
     setModel,
     fieldName,
     selectionListTitle,
@@ -18,8 +18,8 @@ export default function PipelineSelectionPanel(
 
   return (
     <DetailPanelContainer>
-      <Row className={"mx-0"}>
-        <Col xs={12} md={6}>
+      <Row>
+        <Col lg={12} xl={6} className={"my-2"}>
           <PipelineSelectionList
             model={model}
             setModel={setModel}
@@ -28,7 +28,7 @@ export default function PipelineSelectionPanel(
             customTitle={selectionListTitle}
           />
         </Col>
-        <Col xs={12} md={6}>
+        <Col lg={12} xl={6} className={"my-2"}>
           <SelectedPipelineList
             model={model}
             setModel={setModel}

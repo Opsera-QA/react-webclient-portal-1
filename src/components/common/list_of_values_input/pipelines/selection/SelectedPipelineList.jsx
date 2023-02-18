@@ -163,35 +163,37 @@ export default function SelectedPipelineList(
     }
 
     return (
-      <Row>
-        <Col lg={12} xl={4} className={"my-2"}>
-          <RemoveAllButtonBase
-            onClickFunction={removeAllPipelines}
-            itemCount={currentData.length}
-            buttonSize={"sm"}
-            buttonClassName={"w-100"}
-            disabled={isLoading}
-          />
-        </Col>
-        <Col lg={12} xl={4} className={"my-2"}>
-          <RemoveSelectedButtonBase
-            onClickFunction={removeSelectedPipelines}
-            itemCount={selectedPipelines.length}
-            buttonSize={"sm"}
-            buttonClassName={"w-100"}
-            disabled={isLoading}
-          />
-        </Col>
-        <Col lg={12} xl={4} className={"my-2"}>
-          <RemoveShownButtonBase
-            onClickFunction={removeAllFilteredPipelines}
-            itemCount={filteredPipelines.length}
-            buttonSize={"sm"}
-            buttonClassName={"w-100"}
-            disabled={isLoading}
-          />
-        </Col>
-      </Row>
+      <div
+        style={{
+          borderTop: "1px solid #E6E5E3",
+        }}
+        className={"w-100 p-3"}
+      >
+        <RemoveAllButtonBase
+          onClickFunction={removeAllPipelines}
+          itemCount={currentData.length}
+          buttonSize={"sm"}
+          buttonClassName={"w-100"}
+          className={"my-2"}
+          disabled={isLoading}
+        />
+        <RemoveSelectedButtonBase
+          onClickFunction={removeSelectedPipelines}
+          itemCount={selectedPipelines.length}
+          buttonSize={"sm"}
+          buttonClassName={"w-100"}
+          className={"my-2"}
+          disabled={isLoading}
+        />
+        <RemoveShownButtonBase
+          onClickFunction={removeAllFilteredPipelines}
+          itemCount={filteredPipelines.length}
+          buttonSize={"sm"}
+          buttonClassName={"w-100"}
+          className={"my-2"}
+          disabled={isLoading}
+        />
+      </div>
     );
   };
 
@@ -218,6 +220,7 @@ export default function SelectedPipelineList(
             </div>
           </div>
           {getPipelineCards()}
+          {getButtons()}
         </div>
       </div>
     );
@@ -225,7 +228,6 @@ export default function SelectedPipelineList(
 
   return (
     <div className={className}>
-      {getButtons()}
       {getBody()}
     </div>
   );
