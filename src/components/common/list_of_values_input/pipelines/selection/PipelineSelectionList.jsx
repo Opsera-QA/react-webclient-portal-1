@@ -10,6 +10,8 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import {sortByName} from "components/common/list_of_values_input/pipelines/selection/SelectedPipelineList";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import useGetAllPipelines from "hooks/workflow/pipelines/useGetAllPipelines";
+import InfoText from "components/common/inputs/info_text/InfoText";
+import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 
 export default function PipelineSelectionList(
   {
@@ -17,6 +19,7 @@ export default function PipelineSelectionList(
     setModel,
     fieldName,
     currentData,
+    disabled,
   }) {
   const [selectedPipelines, setSelectedPipelines] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -193,33 +196,6 @@ export default function PipelineSelectionList(
     );
   };
 
-  const getSearchBar = () => {
-    return (
-      <Row>
-        <Col xs={12}>
-          <InputGroup className={"flex-nowrap my-2"}>
-            <InputGroup.Prepend>
-              <Button
-                disabled={isLoading}
-              >
-                <IconBase
-                  isLoading={isLoading}
-                  icon={faSearch}
-                />
-              </Button>
-            </InputGroup.Prepend>
-            <input
-              placeholder={"Search by Name or Email"}
-              value={searchText}
-              className={"form-control"}
-              onChange={event => setSearchText(event.target.value)}
-            />
-          </InputGroup>
-        </Col>
-      </Row>
-    );
-  };
-
   const getBody = () => {
     if (isLoading === true) {
       return (
@@ -230,21 +206,26 @@ export default function PipelineSelectionList(
     }
 
     return (
-      <div className="content-card-1 content-container">
-        <div className="p-2 d-flex content-block-header members-title justify-content-between">
-          <div className={"my-auto"}><IconBase icon={faCompassDrafting} className={"mr-2"} />Pipelines</div>
-          <div className={"my-auto"}>{filteredPipelines.length} {filteredPipelines.length !== 1 ? "pipelines" : "pipeline"}</div>
+      <div className="content-container">
+        <InputTitleBar
+          disabled={disabled}
+          icon={faCompassDrafting}
+          isLoading={isLoading}
+          customTitle={"Pipelines"}
+          setSearchTerm={setSearchText}
+          searchTerm={searchText}
+          showSearchBar={true}
+        />
+
+        <div className={"px-2 py-1 d-flex justify-content-between"}>
+          <div className={"my-auto"}>
+
+          </div>
+          <div className={"my-auto"}>
+            {filteredPipelines.length} {filteredPipelines.length !== 1 ? "Pipelines" : "Pipeline"}
+          </div>
         </div>
-        {getSearchBar()}
         {getPipelineCards()}
-        {/*<div className="px-3 mt-2">*/}
-        {/*  <ClientSideBottomPaginator*/}
-        {/*    items={filteredPipelines}*/}
-        {/*    setShownItems={setShownPipelines}*/}
-        {/*    paginationStyle={"stacked"}*/}
-        {/*    pageSize={50}*/}
-        {/*  />*/}
-        {/*</div>*/}
       </div>
     );
   };
@@ -257,6 +238,13 @@ export default function PipelineSelectionList(
     <div className={"mr-2"}>
       {getButtons()}
       {getBody()}
+
+      {/*<InfoText*/}
+      {/*  model={model}*/}
+      {/*  fieldName={fieldName}*/}
+      {/*  field={field}*/}
+      {/*  errorMessage={errorMessage}*/}
+      {/*/>*/}
     </div>
   );
 }
@@ -266,4 +254,5 @@ PipelineSelectionList.propTypes = {
   setModel: PropTypes.func,
   fieldName: PropTypes.string,
   currentData: PropTypes.array,
+  disabled: PropTypes.bool,
 };

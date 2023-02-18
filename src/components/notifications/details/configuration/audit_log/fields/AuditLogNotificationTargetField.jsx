@@ -4,7 +4,7 @@ import auditLogTypeConstants from "@opsera/definitions/constants/audit-logs/type
 import ToolMultiSelectInput from "components/common/list_of_values_input/inventory/ToolMultiSelectInput";
 import TaskMultiSelectInput from "components/common/list_of_values_input/tasks/TaskMultiSelectInput";
 import PipelineSelectionPanel from "components/common/list_of_values_input/pipelines/selection/PipelineSelectionPanel";
-import SelectedPipelinesField from "components/common/list_of_values_input/pipelines/selection/SelectedPipelinesField";
+import PipelinesListFieldBase from "components/common/fields/pipelines/list/PipelinesListFieldBase";
 
 export default function AuditLogNotificationTargetField(
   {
@@ -37,7 +37,7 @@ export default function AuditLogNotificationTargetField(
 
   if (objectType === auditLogTypeConstants.USER_ACTIVITY_LOG_TYPES.PIPELINE) {
     return (
-      <SelectedPipelinesField
+      <PipelinesListFieldBase
         model={model}
         fieldName={fieldName}
       />

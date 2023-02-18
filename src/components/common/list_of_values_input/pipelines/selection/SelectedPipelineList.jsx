@@ -9,6 +9,7 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {PipelineSelectionCard} from "components/common/list_of_values_input/pipelines/selection/PipelineSelectionCard";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 
 export const sortByName = (pipelines) => {
   if (Array.isArray(pipelines) && pipelines.length > 0) {
@@ -39,13 +40,14 @@ export const sortByName = (pipelines) => {
   return [];
 };
 
-function SelectedPipelineList(
+export default function SelectedPipelineList(
   {
     model,
     fieldName,
     setModel,
     currentData,
     disabled,
+    title,
   }) {
   const {
     isLoading,
@@ -56,6 +58,7 @@ function SelectedPipelineList(
   );
   const [selectedPipelines, setSelectedPipelines] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const field = model?.getFieldById(fieldName);
 
   const getFilteredPipelines = useCallback(() => {
     const output = [];
@@ -116,6 +119,14 @@ function SelectedPipelineList(
   };
 
   const getPipelineCards = () => {
+    if (isLoading === true) {
+      return (
+        <CenterLoadingIndicator
+          type={"Pipelines"}
+        />
+      );
+    }
+
     if (filteredPipelines.length === 0) {
       return (
         <ul className={"list-group membership-list"}>
@@ -218,58 +229,28 @@ function SelectedPipelineList(
     );
   };
 
-  const getSearchBar = () => {
-    return (
-      <Row>
-        <Col xs={12}>
-          <InputGroup className={"flex-nowrap my-2"}>
-            <InputGroup.Prepend>
-              <Button
-                disabled={isLoading}
-              >
-                <IconBase
-                  isLoading={isLoading}
-                  icon={faSearch}
-                />
-              </Button>
-            </InputGroup.Prepend>
-            <input
-              placeholder={"Search by Name or Email"}
-              value={searchText}
-              className={"form-control"}
-              onChange={event => setSearchText(event.target.value)}
-            />
-          </InputGroup>
-        </Col>
-      </Row>
-    );
-  };
-
   const getBody = () => {
-    if (isLoading === true) {
-      return (
-        <CenterLoadingIndicator
-          type={"Pipelines"}
-        />
-      );
-    }
-
     return (
-      <div className="content-card-1 content-container">
-        <div className="p-2 d-flex content-block-header members-title justify-content-between">
-          <div className={"my-auto"}><IconBase icon={faCompassDrafting} className={"mr-2"} />Selected Pipelines</div>
-          <div className={"my-auto"}>{filteredPipelines.length} {filteredPipelines.length !== 1 ? "pipelines" : "pipeline"}</div>
+      <div className="content-container">
+        <InputTitleBar
+          disabled={disabled}
+          icon={faCompassDrafting}
+          isLoading={isLoading}
+          field={field}
+          customTitle={title}
+          setSearchTerm={setSearchText}
+          searchTerm={searchText}
+          showSearchBar={true}
+        />
+        <div className={"px-2 py-1 d-flex justify-content-between"}>
+          <div className={"my-auto"}>
+
+          </div>
+          <div className={"my-auto"}>
+            {filteredPipelines.length} {filteredPipelines.length !== 1 ? "Pipelines" : "Pipeline"}
+          </div>
         </div>
-        {getSearchBar()}
         {getPipelineCards()}
-        {/*<div className="px-3 mt-2">*/}
-        {/*  <ClientSideBottomPaginator*/}
-        {/*    items={filteredPipelines}*/}
-        {/*    setShownItems={setShownPipelines}*/}
-        {/*    paginationStyle={"stacked"}*/}
-        {/*    pageSize={50}*/}
-        {/*  />*/}
-        {/*</div>*/}
       </div>
     );
   };
@@ -292,6 +273,9 @@ SelectedPipelineList.propTypes = {
   setModel: PropTypes.func,
   currentData: PropTypes.array,
   disabled: PropTypes.bool,
+  title: PropTypes.string,
 };
 
-export default SelectedPipelineList;
+SelectedPipelineList.defaultProps = {
+
+};
