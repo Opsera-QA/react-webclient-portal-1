@@ -1238,11 +1238,11 @@ div.data-blocks-ellipses {
 
 .shaded-panel {
     /*border-radius: 5px;*/
-    background-color: #FCFCFC;
+    background-color: #FFF;
 }
 
 .shaded-container {
-    background-color: #e6e5e3;
+    background-color: #FFF;
 }
 
 /* End Detail View Styling */
@@ -1323,7 +1323,7 @@ div.data-blocks-ellipses {
 }
 
 .filter-bg-white {
-    background-color: #F3F3F1;
+    background-color: #FFF;
 }
 
 .filter-title, .popover-title {
