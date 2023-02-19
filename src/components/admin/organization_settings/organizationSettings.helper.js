@@ -3,15 +3,15 @@ import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 export const organizationSettingsHelper = {};
 
 organizationSettingsHelper.getDetailViewLink = (
-  tagId,
+  organizationAccountId,
   ) => {
-  if (isMongoDbId(tagId) !== true) {
+  if (isMongoDbId(organizationAccountId) !== true) {
     return null;
   }
 
-  return `/settings/tags/${tagId}`;
+  return `admin/organization-settings/details/${organizationAccountId}`;
 };
 
 organizationSettingsHelper.getManagementScreenLink = () => {
-  return `/settings/tags/`;
+  return `admin/organization-settings`;
 };

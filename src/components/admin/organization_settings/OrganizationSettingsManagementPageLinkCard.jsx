@@ -13,7 +13,7 @@ export default function OrganizationSettingsManagementPageLinkCard() {
 
   return (
     <BreadcrumbPageLinkCard
-      breadcrumbDestination={"tagManagement"}
+      breadcrumbDestination={"ldapOrganizationSettingsManagement"}
     />
   );
 }

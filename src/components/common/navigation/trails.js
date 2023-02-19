@@ -59,6 +59,7 @@ import { pipelineSettingsTrails } from "components/settings/pipelines/pipelineSe
 import {userSettingsTrails} from "components/user/user_settings/userSettings.trails";
 import {pipelinesTrails} from "components/workflow/pipelines.trails";
 import {accountSettingsTrails} from "components/settings/accountSettings.trails";
+import {adminToolsTrails} from "components/admin/adminTools.trails";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
 export const breadcrumbs = {
@@ -1139,6 +1140,7 @@ export const breadcrumbs = {
   ...pipelinesTrails,
   ...userSettingsTrails,
   ...accountSettingsTrails,
+  ...adminToolsTrails,
 };
 
 export const getTrail = (breadcrumb) => {

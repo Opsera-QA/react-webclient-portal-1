@@ -2,57 +2,50 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import { faChartNetwork, faCogs, faTags } from "@fortawesome/pro-light-svg-icons";
+import {faArrowLeft, faCogs, faUserSecret} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
-import AccountSettingsSubNavigationBarBase from "components/settings/AccountSettingsSubNavigationBarBase";
+import {adminToolsTrails} from "components/admin/adminTools.trails";
 
-function OrganizationSettingsManagementSubNavigationBar({activeTab}) {
+export default function OrganizationSettingsManagementSubNavigationBar({activeTab}) {
   const history = useHistory();
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
 
-    if (tabSelection === activeTab) {
-      return;
-    }
-
     switch (tabSelection) {
-      case "tags":
-        history.push(`/settings/tags`);
+      case "adminTools":
+        history.push(`/admin`);
         return;
-    }
-  };
-
-  const getActiveViewerTab = () => {
-    switch (activeTab) {
-      case "tagViewer":
-        return (
-          <NavigationTab
-            icon={faTags}
-            tabName={"tagViewer"}
-            handleTabClick={handleTabClick}
-            activeTab={activeTab}
-            tabText={"Tag Viewer"}
-          />
-        );
-      default:
-        return null;
+      case adminToolsTrails.ldapOrganizationSettingsManagement.name:
+        history.push(`/admin/platform/system-parameters`);
+        return;
     }
   };
 
   return (
     <NavigationTabContainer>
-      <AccountSettingsSubNavigationBarBase
-        activeTab={activeTab}
-      />
       <NavigationTab
-        icon={faTags}
-        tabName={"tags"}
+        icon={faArrowLeft}
+        tabName={"adminTools"}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
-        tabText={"Tags"}
+        tabText={"Back to Admin Tools"}
       />
-      {getActiveViewerTab()}
+      <NavigationTab
+        icon={faUserSecret}
+        tabName={adminToolsTrails.ldapOrganizationSettingsManagement.name}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+        tabText={"Organization Settings Manager"}
+      />
+      <NavigationTab
+        icon={faUserSecret}
+        tabName={"ldapOrganizationSettingsViewer"}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+        tabText={"Organization Settings Viewer"}
+        visible={activeTab === "ldapOrganizationSettingsViewer"}
+      />
     </NavigationTabContainer>
   );
 }
@@ -60,5 +53,3 @@ function OrganizationSettingsManagementSubNavigationBar({activeTab}) {
 OrganizationSettingsManagementSubNavigationBar.propTypes = {
   activeTab: PropTypes.string,
 };
-
-export default OrganizationSettingsManagementSubNavigationBar;
