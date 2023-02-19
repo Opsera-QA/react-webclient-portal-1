@@ -31,6 +31,9 @@ export const KPI_FILTER_TYPES = {
   GITLAB_PROJECT: "gitlab-project",
   GITLAB_BRANCH: "gitlab-branch",
   GITLAB_EXCLUDED_USERS: "gitlab-excluded-users",
+  GITLOG_AUTHORS:"gitLog-authors",
+  GITLOG_REPOSITORIES:"gitLog-repositories",
+  GITLOG_BRANCHES:"gitLog-branches",
   JIRA_PRIORITIES: "jira-priorities",
   JIRA_PROJECTS: "jira-projects",
   JIRA_CHANGE_TYPES: "jira-change-types",
@@ -73,6 +76,9 @@ export const KPI_FILTER_TYPE_LABELS = {
   GITLAB_PROJECT: "Gitlab Repository",
   GITLAB_BRANCH: "Gitlab Branch",
   GITLAB_EXCLUDED_USERS: "Gitlab Excluded Users",
+  GITLOG_AUTHORS:"Authors",
+  GITLOG_REPOSITORIES:"Repositories",
+  GITLOG_BRANCHES:"Branches",
   JIRA_PRIORITIES: "Jira Priorities",
   JIRA_PROJECTS: "Jira Projects",
   JIRA_CHANGE_TYPES: "Jira Change Types",
@@ -148,6 +154,12 @@ export const getKpiFilterTypeLabel = (kpiFilterType) => {
       return KPI_FILTER_TYPE_LABELS.GITLAB_BRANCH;
     case KPI_FILTER_TYPES.GITLAB_EXCLUDED_USERS:
       return KPI_FILTER_TYPE_LABELS.GITLAB_EXCLUDED_USERS;
+    case KPI_FILTER_TYPES.GITLOG_AUTHORS:
+      return KPI_FILTER_TYPE_LABELS.GITLOG_AUTHORS;
+    case KPI_FILTER_TYPES.GITLOG_REPOSITORIES:
+      return KPI_FILTER_TYPE_LABELS.GITLOG_REPOSITORIES;
+    case KPI_FILTER_TYPES.GITLOG_BRANCHES:
+      return KPI_FILTER_TYPE_LABELS.GITLOG_BRANCHES;
     case KPI_FILTER_TYPES.JIRA_PRIORITIES:
       return KPI_FILTER_TYPE_LABELS.JIRA_PRIORITIES;
     case KPI_FILTER_TYPES.JIRA_PROJECTS:
@@ -333,6 +345,21 @@ export const KPI_FILTER_SELECT_OPTIONS = [
   {
     type: KPI_FILTER_TYPES.GITLAB_EXCLUDED_USERS,
     text: KPI_FILTER_TYPE_LABELS.GITLAB_EXCLUDED_USERS,
+    value: []
+  },
+  {
+    type: KPI_FILTER_TYPES.GITLOG_AUTHORS,
+    text: KPI_FILTER_TYPE_LABELS.GITLOG_AUTHORS,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.GITLOG_BRANCHES,
+    text: KPI_FILTER_TYPE_LABELS.GITLOG_BRANCHES,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.GITLOG_REPOSITORIES,
+    text: KPI_FILTER_TYPE_LABELS.GITLOG_REPOSITORIES,
     value: [],
   },
   {

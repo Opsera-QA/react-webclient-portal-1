@@ -189,6 +189,8 @@ import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
 // Dora KPI
 import DoraJiraGitlabRolledUpChart from "./dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpChart";
 import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/GitlabMergeRequestStatistics";
+import GitLogDeveloper360 from "./gitlog/commit_activities/GitLogDeveloper360";
+
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({
@@ -2280,7 +2282,19 @@ function ChartView({
             />
           </Col>
         );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.APPROVAL_GATES:
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_DEVELOPER_360:
+            return (
+                <Col md={6} className="p-2">
+                    <GitLogDeveloper360
+                        kpiConfiguration={kpiConfig}
+                        setKpiConfiguration={setKpiConfig}
+                        dashboardData={dashboardData}
+                        setKpis={setKpis}
+                        index={index}
+                    />
+                </Col>
+            );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.APPROVAL_GATES:
         return (
           <Col
             md={12}
