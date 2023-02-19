@@ -38,7 +38,7 @@ export default function CenterLoadingIndicator(
           <LoadingIcon iconSize={"xl"} className={"mr-3 my-auto"} />
           <div
             style={{
-              fontSize: "1.3rem",
+              fontSize: "1.2rem",
               letterSpacing: "2px",
             }}
           >
