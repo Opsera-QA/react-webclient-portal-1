@@ -136,7 +136,8 @@ export default function ToolSelectionList(
                 selectedTools={selectedTools}
                 setSelectedTools={setSelectedTools}
                 tool={tool}
-                stacked={true}
+                // TODO: Enable when vertical tab container is added
+                // stacked={true}
               />
             </div>
           );

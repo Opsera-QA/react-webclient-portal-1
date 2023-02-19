@@ -1069,7 +1069,7 @@ a.nav-link {
 }
 
 .even-row-background-color:hover, .odd-row-background-color:hover {
-    background-color: #E7E5ED;
+    filter: brightness(80%);
 }
 
 .content-card-1 .odd-row .selected, .odd-row-background-color .selected {
