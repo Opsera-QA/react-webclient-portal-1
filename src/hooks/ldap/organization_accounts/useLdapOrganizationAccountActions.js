@@ -8,7 +8,7 @@ export default function useLdapOrganizationAccountActions() {
     organizationDomain,
     organizationAccountName,
   ) => {
-    const apiUrl = `/ldap/organization-account/organization-settings/${organizationDomain}/${organizationAccountName}`;
+    const apiUrl = `/account/organization-account/organization-settings/${organizationDomain}/${organizationAccountName}`;
     return await apiService.handleApiGetRequest(
       apiUrl,
     );

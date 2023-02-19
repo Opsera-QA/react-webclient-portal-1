@@ -1,18 +1,14 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import tagMetadata from "components/settings/tags/tag.metadata";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import TagDetailPanel from "components/settings/tags/details/TagDetailPanel";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import TagSubscriptionIcon from "components/common/icons/subscription/TagSubscriptionIcon";
 import TagManagementSubNavigationBar from "components/settings/tags/TagManagementSubNavigationBar";
-import useGetTagModelById from "hooks/settings/tags/id/useGetTagModelById";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import DeleteTagActionBarButton from "components/settings/tags/actions/DeleteTagActionBarButton";
 import useGetLdapOrganizationAccountOrganizationSettings
   from "hooks/ldap/organization_accounts/useGetLdapOrganizationAccountOrganizationSettings";
+import {organizationSettingsHelper} from "components/admin/organization_settings/organizationSettings.helper";
 
 function OrganizationSettingsDetailView() {
   const { organizationDomain, organizationAccount, } = useParams();
@@ -20,8 +16,7 @@ function OrganizationSettingsDetailView() {
     accessRoleData,
   } = useComponentStateReference();
   const {
-    tagModel,
-    setTagModel,
+    organizationSettings,
     error,
     isLoading,
     loadData,
@@ -34,7 +29,7 @@ function OrganizationSettingsDetailView() {
     return (
       <ActionBarContainer>
         <div>
-          <ActionBarBackButton path={"/admin"}/>
+          <ActionBarBackButton path={organizationSettingsHelper.getManagementScreenLink()}/>
         </div>
         <div className="d-flex">
           {/*<TagSubscriptionIcon*/}
@@ -53,14 +48,15 @@ function OrganizationSettingsDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"tagDetailView"}
-      metadata={tagMetadata}
-      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       accessRoleData={accessRoleData}
       navigationTabContainer={<TagManagementSubNavigationBar activeTab={"tagViewer"} />}
-      dataObject={tagModel}
+      dataObject={organizationSettings}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      detailPanel={<TagDetailPanel setTagData={setTagModel} tagData={tagModel} accessRoleData={accessRoleData} />}
+      detailPanel={JSON.stringify(organizationSettings)
+      // <TagDetailPanel setTagData={setTagModel} tagData={tagModel} accessRoleData={accessRoleData} />
+    }
     />
   );
 }

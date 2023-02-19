@@ -43,7 +43,10 @@ export default function useGetLdapOrganizationAccountOrganizationSettings(
       return;
     }
 
-    const response = await ldapOrganizationAccountActions.getOrganizationSettingsForOrganizationAccount();
+    const response = await ldapOrganizationAccountActions.getOrganizationSettingsForOrganizationAccount(
+      organizationDomain,
+      organizationAccountName,
+    );
     const newOrganizationSettings = DataParsingHelper.parseNestedObject(response, "data.data");
 
     if (newOrganizationSettings) {
