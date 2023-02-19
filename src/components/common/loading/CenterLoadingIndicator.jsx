@@ -25,9 +25,9 @@ export default function CenterLoadingIndicator(
     >
       <div>
         <div
-          style={{
-            marginTop: "-120px",
-          }}
+          // style={{
+          //   marginTop: "-120px",
+          // }}
         >
           <OpseraBirdLoadingImage />
         </div>
@@ -36,7 +36,7 @@ export default function CenterLoadingIndicator(
           <div
             className={"my-auto"}
             style={{
-              fontSize: "1.15rem",
+              fontSize: "1.3rem",
               letterSpacing: "2px",
             }}
           >
