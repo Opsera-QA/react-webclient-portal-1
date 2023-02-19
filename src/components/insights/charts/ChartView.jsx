@@ -190,8 +190,7 @@ import ApprovalGatesMetrics from "./approval_gates/ApprovalGatesMetrics";
 
 // Dora KPI
 import DoraJiraGitlabRolledUpChart from "./dora/jira_gitlab_rolled_up/DoraJiraGitlabRolledUpChart";
-import GitLogCommitActivitiesEditorPanel from "./gitlog/commit_activities/GitLogCommitActivitiesEditorPanel";
-import GitLogCommitActivities from "./gitlog/commit_activities/GitLogCommitActivities";
+import GitLogDeveloper360 from "./gitlog/commit_activities/GitLogDeveloper360";
 
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
@@ -1771,10 +1770,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-        case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_COMMIT_ACTIVITIES:
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_DEVELOPER_360:
             return (
-                <Col md={12} className="p-2">
-                    <GitLogCommitActivities
+                <Col md={6} className="p-2">
+                    <GitLogDeveloper360
                         kpiConfiguration={kpiConfig}
                         setKpiConfiguration={setKpiConfig}
                         dashboardData={dashboardData}

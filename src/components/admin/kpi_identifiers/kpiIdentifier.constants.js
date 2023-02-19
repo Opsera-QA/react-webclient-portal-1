@@ -167,7 +167,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   DORA_JIRA_GITLAB_ROLLED_UP:"dora-jira-gitlab-rolled-up",
 
   //GIT-LOG
-  GIT_LOG_COMMIT_ACTIVITIES:"git-log-commit-activities",
+  GIT_LOG_DEVELOPER_360:"git-log-developer-360",
   GIT_LOG_TOTAL_LINES:"git-log-total-lines",
   GIT_LOG_COMMIT_TREND:"git-log-commit-trend",
   
