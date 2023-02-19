@@ -1,22 +1,14 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
-import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import axios from "axios";
-import {
-    getDeploymentStageFromKpiConfiguration, getResultFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration,
-} from "../../charts-helpers";
-
-import InfoDialog from "../../../../common/status_notifications/info";
 import gitlogAction from "../gitlog.action";
-import GitLogCommitActivitiesSwarmPlot from "./GitLogCommitActivitiesSwarmPlot";
-import JiraChangeFailureRateLineChartContainer
-    from "../../jira/line_chart/change_failure_rate/JiraChangeFailureRateLineChartContainer";
+import GitLogDeveloper360CirclePacking from "./GitLogDeveloper360CirclePacking";
 
 
-function GitLogCommitActivities({
+function GitLogDeveloper360({
     kpiConfiguration,
     setKpiConfiguration,
     dashboardData,
@@ -64,7 +56,7 @@ function GitLogCommitActivities({
                         (obj) => obj.type === "organizations",
                     )
                     ]?.value;
-                const response = await gitlogAction.getCommitActivities(
+                const response = await gitlogAction.getDeveloper360(
                     getAccessToken,
                     cancelSource,
                     kpiConfiguration,
@@ -72,9 +64,9 @@ function GitLogCommitActivities({
                     dashboardOrgs,
                 );
 
-                const metrics = response?.data?.gitLogCommitActivities?.data;
+                const metrics = response?.data?.gitLogDeveloper360?.data;
                 if (
-                    isMounted?.current === true && metrics?.chartData.length
+                    isMounted?.current === true && metrics?.chartData?.children?.length
                 ) {
                     setMetricData(metrics);
                 } else {
@@ -83,7 +75,6 @@ function GitLogCommitActivities({
                 }
         } catch (error) {
             if (isMounted?.current === true) {
-                console.error(error);
                 setError(error);
             }
         } finally {
@@ -94,19 +85,19 @@ function GitLogCommitActivities({
     };
 
     const getChartBody = () => {
-        if (metricData && !metricData?.chartData?.length) {
+        if (metricData && !metricData?.chartData?.children?.length) {
             return null;
         }
         return (
             <div
                 className="new-chart m-3 p-0"
-                style={{ minHeight: "450px"}}
+                style={{ height: "450px"}}
             >
                 <Col
                     md={12}
                     className={"my-2 p-0"}
                 >
-                    <GitLogCommitActivitiesSwarmPlot
+                    <GitLogDeveloper360CirclePacking
                         chartData={metricData}
                         kpiConfiguration={kpiConfiguration}
                     />
@@ -118,7 +109,7 @@ function GitLogCommitActivities({
     return (
         <div>
             <VanityMetricContainer
-                title={"Commit Activities"}
+                title={"Developer 360"}
                 kpiConfiguration={kpiConfiguration}
                 setKpiConfiguration={setKpiConfiguration}
                 chart={getChartBody()}
@@ -133,7 +124,7 @@ function GitLogCommitActivities({
     );
 }
 
-GitLogCommitActivities.propTypes = {
+GitLogDeveloper360.propTypes = {
     kpiConfiguration: PropTypes.object,
     dashboardData: PropTypes.object,
     index: PropTypes.number,
@@ -141,4 +132,4 @@ GitLogCommitActivities.propTypes = {
     setKpis: PropTypes.func,
 };
 
-export default GitLogCommitActivities;
+export default GitLogDeveloper360;

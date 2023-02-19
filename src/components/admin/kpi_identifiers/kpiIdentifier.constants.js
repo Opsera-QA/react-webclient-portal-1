@@ -185,7 +185,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   AQUASEC_ISSUES_BY_SEVERITY: "aquasec-issues-by-severity",
 
   //GIT-LOG
-  GIT_LOG_COMMIT_ACTIVITIES:"git-log-commit-activities",
+  GIT_LOG_DEVELOPER_360:"git-log-developer-360",
   GIT_LOG_TOTAL_LINES:"git-log-total-lines",
   GIT_LOG_COMMIT_TREND:"git-log-commit-trend",
   
