@@ -1302,7 +1302,7 @@ div.data-blocks-ellipses {
 }
 
 .filter-bar {
-    background-color: #E8E8E8;
+    background-color: rgba(230, 229, 227, .6);
 }
 
 .active-filter-bar {

@@ -28,13 +28,15 @@ export default function CenterLoadingIndicator(
           // style={{
           //   marginTop: "-120px",
           // }}
+          className={"d-flex"}
         >
-          <OpseraBirdLoadingImage />
+          <div className={"mx-auto"}>
+            <OpseraBirdLoadingImage />
+          </div>
         </div>
         <div className={"d-flex"}>
           <LoadingIcon iconSize={"xl"} className={"mr-3 my-auto"} />
           <div
-            className={"my-auto"}
             style={{
               fontSize: "1.3rem",
               letterSpacing: "2px",
