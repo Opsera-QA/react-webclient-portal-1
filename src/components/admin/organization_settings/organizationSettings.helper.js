@@ -1,17 +1,17 @@
-import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 export const organizationSettingsHelper = {};
 
 organizationSettingsHelper.getDetailViewLink = (
   organizationAccountId,
   ) => {
-  if (isMongoDbId(organizationAccountId) !== true) {
+  if (hasStringValue(organizationAccountId) !== true) {
     return null;
   }
 
-  return `admin/organization-settings/details/${organizationAccountId}`;
+  return `/admin/organization-settings/details/${organizationAccountId}`;
 };
 
 organizationSettingsHelper.getManagementScreenLink = () => {
-  return `admin/organization-settings`;
+  return `/admin/organization-settings`;
 };
