@@ -111,7 +111,7 @@ export default function AdminToolsRoutes() {
         roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       />
       <RoleRestrictedRoute
-        path={"/admin/organization-settings/details/:organizationAccount"}
+        path={"/admin/organization-settings/details/:organizationDomain/:organizationAccount"}
         exact={true}
         component={OrganizationSettingsDetailView}
         roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}

@@ -3,13 +3,14 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 export const organizationSettingsHelper = {};
 
 organizationSettingsHelper.getDetailViewLink = (
-  organizationAccountId,
+    organizationDomain,
+    organizationAccountId,
   ) => {
-  if (hasStringValue(organizationAccountId) !== true) {
+  if (hasStringValue(organizationAccountId) !== true || hasStringValue(organizationDomain) !== true) {
     return null;
   }
 
-  return `/admin/organization-settings/details/${organizationAccountId}`;
+  return `/admin/organization-settings/details/${organizationDomain}/${organizationAccountId}`;
 };
 
 organizationSettingsHelper.getManagementScreenLink = () => {

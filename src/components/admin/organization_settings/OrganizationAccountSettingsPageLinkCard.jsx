@@ -12,8 +12,7 @@ export default function OrganizationAccountSettingsPageLinkCard(
   const history = useHistory();
 
   const onClickFunction = () => {
-    console.log('organizationSettingsHelper.getDetailViewLink(organizationAccount?.name): ' + JSON.stringify(organizationSettingsHelper.getDetailViewLink(organizationAccount?.name)));
-    history.push(organizationSettingsHelper.getDetailViewLink(organizationAccount?.name));
+    history.push(organizationSettingsHelper.getDetailViewLink(organizationAccount?.orgDomain, organizationAccount?.name));
   };
 
   const getBody = () => {
@@ -28,7 +27,6 @@ export default function OrganizationAccountSettingsPageLinkCard(
   };
 
   if (organizationAccount == null) {
-    console.log("organization Account is null: " + JSON.stringify(organizationAccount));
     return null;
   }
 

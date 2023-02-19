@@ -11,9 +11,11 @@ import TagManagementSubNavigationBar from "components/settings/tags/TagManagemen
 import useGetTagModelById from "hooks/settings/tags/id/useGetTagModelById";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DeleteTagActionBarButton from "components/settings/tags/actions/DeleteTagActionBarButton";
+import useGetLdapOrganizationAccountOrganizationSettings
+  from "hooks/ldap/organization_accounts/useGetLdapOrganizationAccountOrganizationSettings";
 
 function OrganizationSettingsDetailView() {
-  const { id } = useParams();
+  const { organizationDomain, organizationAccount, } = useParams();
   const {
     accessRoleData,
   } = useComponentStateReference();
@@ -23,23 +25,26 @@ function OrganizationSettingsDetailView() {
     error,
     isLoading,
     loadData,
-  } = useGetTagModelById(id);
+  } = useGetLdapOrganizationAccountOrganizationSettings(
+    organizationDomain,
+    organizationAccount,
+  );
 
   const getActionBar = () => {
     return (
       <ActionBarContainer>
         <div>
-          <ActionBarBackButton path={"/settings/tags"}/>
+          <ActionBarBackButton path={"/admin"}/>
         </div>
         <div className="d-flex">
-          <TagSubscriptionIcon
-            tagModel={tagModel}
-            className={"ml-3"}
-          />
-          <DeleteTagActionBarButton
-            tagModel={tagModel}
-            className={"ml-3"}
-          />
+          {/*<TagSubscriptionIcon*/}
+          {/*  tagModel={tagModel}*/}
+          {/*  className={"ml-3"}*/}
+          {/*/>*/}
+          {/*<DeleteTagActionBarButton*/}
+          {/*  tagModel={tagModel}*/}
+          {/*  className={"ml-3"}*/}
+          {/*/>*/}
         </div>
       </ActionBarContainer>
     );
