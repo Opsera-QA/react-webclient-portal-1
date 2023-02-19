@@ -23,7 +23,7 @@ export default function useGetLdapOrganizations(handleErrorFunction) {
       loadData(getLdapUsersForDomain, handleErrorFunction).catch(() => {
       });
     }
-  }, []);
+  }, [isOpseraAdministrator]);
 
   const getLdapUsersForDomain = async () => {
     const response = await ldapOrganizationActions.getLdapOrganizations();
