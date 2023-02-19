@@ -38,7 +38,7 @@ import GitlabMostActiveContributorsEditorPanel from "../../charts/gitlab/table/m
 import GitlabTimeTakenToCompleteMergeRequestReviewEditorPanel from "../../charts/gitlab/bar_chart/time_taken_to_complete_merge_request_review/GitlabTimeTakenToCompleteMergeRequestReviewEditorPanel";
 import GitlabMergeRequestsByUserEditorPanel from "../../charts/gitlab/bar_chart/merge_requests_by_user/GitlabMergeRequestsByUserEditorPanel";
 import GitlabCommitsByAuthorEditorPanel from "../../charts/gitlab/calendar_chart/commits_by_author/GitlabCommitsByAuthorEditorPanel";
-import GitLogCommitActivitiesEditorPanel from "../../charts/gitlog/commit_activities/GitLogCommitActivitiesEditorPanel";
+import GitLogDeveloper360EditorPanel from "../../charts/gitlog/commit_activities/GitLogDeveloper360EditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer({
@@ -195,9 +195,9 @@ function DashboardMetricOverlayContainer({
             kpiConfiguration={kpiConfiguration}
           />
         );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_COMMIT_ACTIVITIES:
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_DEVELOPER_360:
         return (
-            <GitLogCommitActivitiesEditorPanel
+            <GitLogDeveloper360EditorPanel
                 metricModel={metricModel}
                 metricFilterModel={metricFilterModel}
                 setMetricFilterModel={setMetricFilterModel}
