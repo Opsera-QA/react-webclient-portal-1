@@ -88,13 +88,8 @@
     "lint": "eslint --fix --ext .js,.jsx .",
     "refresh-internal-libraries": "rm -rf node_modules/@opsera && npm install",
     "update-lock-file": "rm -rf node_modules/@opsera && rm -rf package-lock.json && npm install",
-<<<<<<< HEAD
     "start-linux-mac": "npm run refresh-internal-libraries && PORT=8080 FAST_REFRESH=false react-scripts start",
     "start-windows": "set PORT=8080 && set FAST_REFRESH=false && react-scripts start",
-=======
-    "start-linux-mac": "PORT=8080 react-scripts start",
-    "start-windows": "set PORT=8080 && react-scripts start",
->>>>>>> gitlog-kpi-poc
     "build:test": "env-cmd -f .env.test react-scripts build && mv build build-test",
     "build:staging": "env-cmd -f .env.staging react-scripts build && mv build build-staging",
     "build:freetrial": "env-cmd -f .env.freetrial react-scripts build && mv build build-freetrial",
