@@ -9,6 +9,7 @@ import CustomTab from "components/common/tabs/CustomTab";
 import {policyHelper} from "components/settings/organization_settings/policies/policy.helper";
 import OrganizationSettingsPoliciesPanel
   from "components/admin/organization_settings/details/policies/OrganizationSettingsPoliciesPanel";
+import {faFlag, faShieldCross} from "@fortawesome/pro-light-svg-icons";
 
 export default function OrganizationSettingsDetailPanel(
   {
@@ -36,8 +37,21 @@ export default function OrganizationSettingsDetailPanel(
           activeTab={activeTab}
           tabName={"policies"}
         />
-        {/*<CustomTab tabText={"Pipeline Usage"} handleTabClick={handleTabClick} icon={faDraftingCompass} activeTab={activeTab} tabName={"pipelines"} />*/}
-        {/*<CustomTab tabText={"Dashboard Usage"} handleTabClick={handleTabClick} icon={faChartNetwork} activeTab={activeTab} tabName={"dashboards"} />*/}
+        <CustomTab
+          tabText={"Feature Flags"}
+          handleTabClick={handleTabClick}
+          icon={faFlag}
+          activeTab={activeTab}
+          tabName={"featureFlags"}
+        />
+        <CustomTab
+          tabText={"Entitlements"}
+          handleTabClick={handleTabClick}
+          icon={faShieldCross}
+          activeTab={activeTab}
+          tabName={"entitlements"}
+          disabled={true}
+        />
       </CustomTabContainer>
     );
   };
