@@ -9,7 +9,7 @@ export default function useComponentStateReference() {
   const isMounted = useIsMountedStateReference();
   const {
     cancelTokenSource,
-    resetCancelToken,
+    getNewCancelToken,
   } = useAxiosCancelToken();
   const {
     getAccessToken,
@@ -37,7 +37,7 @@ export default function useComponentStateReference() {
   return ({
     isMounted: isMounted,
     cancelTokenSource: cancelTokenSource,
-    resetCancelToken: resetCancelToken,
+    getNewCancelToken: getNewCancelToken,
     getAccessToken: getAccessToken,
     toastContext: toastContext,
     accessRoleData: accessRoleData,

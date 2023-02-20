@@ -13,11 +13,11 @@ export default function useAxiosCancelToken() {
     };
   }, []);
 
-  const resetCancelToken = () => {
+  const getNewCancelToken = () => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
-    
+
     const source = axios.CancelToken.source();
     setCancelTokenSource({...source});
     return source;
@@ -25,6 +25,6 @@ export default function useAxiosCancelToken() {
 
   return {
     cancelTokenSource: cancelTokenSource,
-    resetCancelToken: resetCancelToken,
+    getNewCancelToken: getNewCancelToken,
   };
 }
