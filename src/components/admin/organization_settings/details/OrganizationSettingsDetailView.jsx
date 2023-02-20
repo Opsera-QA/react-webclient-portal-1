@@ -9,6 +9,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetLdapOrganizationAccountOrganizationSettings
   from "hooks/ldap/organization_accounts/useGetLdapOrganizationAccountOrganizationSettings";
 import {organizationSettingsHelper} from "components/admin/organization_settings/organizationSettings.helper";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 function OrganizationSettingsDetailView() {
   const { organizationDomain, organizationAccount, } = useParams();
@@ -45,20 +46,30 @@ function OrganizationSettingsDetailView() {
     );
   };
 
+  if (isLoading) {
+    return (
+      <CenterLoadingIndicator />
+    );
+  }
+
   return (
-    <DetailScreenContainer
-      breadcrumbDestination={"tagDetailView"}
-      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
-      accessRoleData={accessRoleData}
-      navigationTabContainer={<TagManagementSubNavigationBar activeTab={"tagViewer"} />}
-      dataObject={organizationSettings}
-      isLoading={isLoading}
-      actionBar={getActionBar()}
-      detailPanel={JSON.stringify(organizationSettings)
-      // <TagDetailPanel setTagData={setTagModel} tagData={tagModel} accessRoleData={accessRoleData} />
-    }
-    />
+    "orgsettings: " + JSON.stringify(organizationSettings)
   );
+
+  // return (
+  //   <DetailScreenContainer
+  //     breadcrumbDestination={"tagDetailView"}
+  //     roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
+  //     accessRoleData={accessRoleData}
+  //     navigationTabContainer={<TagManagementSubNavigationBar activeTab={"tagViewer"} />}
+  //     dataObject={organizationSettings}
+  //     isLoading={isLoading}
+  //     actionBar={getActionBar()}
+  //     detailPanel={JSON.stringify(organizationSettings)
+  //     // <TagDetailPanel setTagData={setTagModel} tagData={tagModel} accessRoleData={accessRoleData} />
+  //   }
+  //   />
+  // );
 }
 
 export default OrganizationSettingsDetailView;

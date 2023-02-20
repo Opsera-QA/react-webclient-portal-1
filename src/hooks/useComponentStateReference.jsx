@@ -2,12 +2,15 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import useIsMountedStateReference from "hooks/useIsMountedStateReference";
-import useCancelTokenStateReference from "hooks/useCancelTokenStateReference";
+import useAxiosCancelToken from "hooks/useAxiosCancelToken";
 import useAccessRoleData from "hooks/roles/useAccessRoleData";
 
 export default function useComponentStateReference() {
   const isMounted = useIsMountedStateReference();
-  const cancelTokenSource = useCancelTokenStateReference();
+  const {
+    cancelTokenSource,
+    resetCancelToken,
+  } = useAxiosCancelToken();
   const {
     getAccessToken,
     themeConstants,
@@ -34,6 +37,7 @@ export default function useComponentStateReference() {
   return ({
     isMounted: isMounted,
     cancelTokenSource: cancelTokenSource,
+    resetCancelToken: resetCancelToken,
     getAccessToken: getAccessToken,
     toastContext: toastContext,
     accessRoleData: accessRoleData,
