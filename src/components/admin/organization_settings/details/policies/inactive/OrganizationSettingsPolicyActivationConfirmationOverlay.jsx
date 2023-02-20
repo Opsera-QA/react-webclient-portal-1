@@ -12,7 +12,7 @@ import useGetNewPolicyModel from "hooks/settings/organization_settings/policies/
 import PolicyEditorPanelBase from "components/settings/organization_settings/policies/details/PolicyEditorPanelBase";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 
-export default function CustomerPolicyActivationConfirmationOverlay({ policyName }) {
+export default function OrganizationSettingsPolicyActivationConfirmationOverlay({ policyName }) {
   const {
     policyModel,
     setPolicyModel,
@@ -66,6 +66,6 @@ export default function CustomerPolicyActivationConfirmationOverlay({ policyName
   );
 }
 
-CustomerPolicyActivationConfirmationOverlay.propTypes = {
+OrganizationSettingsPolicyActivationConfirmationOverlay.propTypes = {
   policyName: PropTypes.string,
 };
