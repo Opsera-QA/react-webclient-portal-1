@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import TagSummaryPanel from "components/settings/tags/details/TagSummaryPanel";
-import TagEditorPanel from "components/settings/tags/details/TagEditorPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
-import CustomTab from "components/common/tabs/CustomTab";
-import {faChartNetwork, faDraftingCompass, faWrench} from "@fortawesome/pro-light-svg-icons";
-import SingleTagUsedInToolsField from "components/common/fields/tags/SingleTagUsedInToolsField";
-import SingleTagUsedInPipelinesField from "components/common/fields/tags/SingleTagUsedInPipelinesField";
-import SingleTagUsedInDashboardsField from "components/common/fields/tags/cloud/SingleTagUsedInDashboardsField";
+import OrganizationSettingsSummaryPanel
+  from "components/admin/organization_settings/details/OrganizationSettingsSummaryPanel";
 
-function OrganizationSettingsDetailPanel({ tagData, setTagData, accessRoleData }) {
+export default function OrganizationSettingsDetailPanel(
+  {
+    organizationSettingsModel,
+    setOrganizationSettingsModel,
+  }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -19,17 +18,13 @@ function OrganizationSettingsDetailPanel({ tagData, setTagData, accessRoleData }
     setActiveTab(activeTab);
   };
 
-  const toggleSummaryPanel = () => {
-    setActiveTab("summary");
-  };
-
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
         <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <CustomTab tabText={"Tool Usage"} handleTabClick={handleTabClick} icon={faWrench} activeTab={activeTab} tabName={"tools"} />
-        <CustomTab tabText={"Pipeline Usage"} handleTabClick={handleTabClick} icon={faDraftingCompass} activeTab={activeTab} tabName={"pipelines"} />
-        <CustomTab tabText={"Dashboard Usage"} handleTabClick={handleTabClick} icon={faChartNetwork} activeTab={activeTab} tabName={"dashboards"} />
+        {/*<CustomTab tabText={"Tool Usage"} handleTabClick={handleTabClick} icon={faWrench} activeTab={activeTab} tabName={"tools"} />*/}
+        {/*<CustomTab tabText={"Pipeline Usage"} handleTabClick={handleTabClick} icon={faDraftingCompass} activeTab={activeTab} tabName={"pipelines"} />*/}
+        {/*<CustomTab tabText={"Dashboard Usage"} handleTabClick={handleTabClick} icon={faChartNetwork} activeTab={activeTab} tabName={"dashboards"} />*/}
       </CustomTabContainer>
     );
   };
@@ -37,29 +32,27 @@ function OrganizationSettingsDetailPanel({ tagData, setTagData, accessRoleData }
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <TagSummaryPanel tagData={tagData} setActiveTab={setActiveTab} accessRoleData={accessRoleData} />;
+        return (
+          <OrganizationSettingsSummaryPanel
+            organizationSettingsModel={organizationSettingsModel}
+            setOrganizationSettingsModel={setOrganizationSettingsModel}
+          />
+        );
       case "settings":
-        return <TagEditorPanel setTagData={setTagData} tagData={tagData} handleClose={toggleSummaryPanel} />;
-      case "tools":
-        return <SingleTagUsedInToolsField tag={tagData?.getPersistData()} className={"m-2"} />;
-      case "pipelines":
-        return <SingleTagUsedInPipelinesField tag={tagData?.getPersistData()} className={"m-2"} />;
-      case "dashboards":
-        return <SingleTagUsedInDashboardsField tag={tagData?.getPersistData()} className={"m-2"} />;
       default:
         return null;
     }
   };
 
-  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
+  return (
+    <DetailTabPanelContainer
+      detailView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
+  );
 }
 
 OrganizationSettingsDetailPanel.propTypes = {
-  tagData: PropTypes.object,
-  setTagData: PropTypes.func,
-  accessRoleData: PropTypes.object
+  organizationSettingsModel: PropTypes.object,
+  setOrganizationSettingsModel: PropTypes.func,
 };
-
-export default OrganizationSettingsDetailPanel;
-
-

@@ -2,14 +2,19 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
-import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import TagManagementSubNavigationBar from "components/settings/tags/TagManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetLdapOrganizationAccountOrganizationSettings
   from "hooks/ldap/organization_accounts/useGetLdapOrganizationAccountOrganizationSettings";
 import {organizationSettingsHelper} from "components/admin/organization_settings/organizationSettings.helper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import OrganizationSettingsManagementSubNavigationBar
+  from "components/admin/organization_settings/OrganizationSettingsManagementSubNavigationBar";
+import OrganizationSettingsDetailPanel
+  from "components/admin/organization_settings/details/OrganizationSettingsDetailPanel";
+import useGetLdapOrganizationAccountOrganizationSettingsModel
+  from "hooks/ldap/organization_accounts/useGetLdapOrganizationAccountOrganizationSettingsModel";
 
 function OrganizationSettingsDetailView() {
   const { organizationDomain, organizationAccount, } = useParams();
@@ -17,11 +22,12 @@ function OrganizationSettingsDetailView() {
     accessRoleData,
   } = useComponentStateReference();
   const {
-    organizationSettings,
+    organizationSettingsModel,
+    setOrganizationSettingsModel,
     error,
     isLoading,
     loadData,
-  } = useGetLdapOrganizationAccountOrganizationSettings(
+  } = useGetLdapOrganizationAccountOrganizationSettingsModel(
     organizationDomain,
     organizationAccount,
   );
@@ -31,16 +37,6 @@ function OrganizationSettingsDetailView() {
       <ActionBarContainer>
         <div>
           <ActionBarBackButton path={organizationSettingsHelper.getManagementScreenLink()}/>
-        </div>
-        <div className="d-flex">
-          {/*<TagSubscriptionIcon*/}
-          {/*  tagModel={tagModel}*/}
-          {/*  className={"ml-3"}*/}
-          {/*/>*/}
-          {/*<DeleteTagActionBarButton*/}
-          {/*  tagModel={tagModel}*/}
-          {/*  className={"ml-3"}*/}
-          {/*/>*/}
         </div>
       </ActionBarContainer>
     );
@@ -53,23 +49,22 @@ function OrganizationSettingsDetailView() {
   }
 
   return (
-    "orgsettings: " + JSON.stringify(organizationSettings)
+    <DetailScreenContainer
+      breadcrumbDestination={"ldapOrganizationSettingsDetailView"}
+      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
+      accessRoleData={accessRoleData}
+      navigationTabContainer={<OrganizationSettingsManagementSubNavigationBar activeTab={"ldapOrganizationSettingsViewer"} />}
+      dataObject={organizationSettingsModel}
+      isLoading={isLoading}
+      actionBar={getActionBar()}
+      detailPanel={
+        <OrganizationSettingsDetailPanel
+          organizationSettingsModel={organizationSettingsModel}
+          setOrganizationSettingsModel={setOrganizationSettingsModel}
+        />
+      }
+    />
   );
-
-  // return (
-  //   <DetailScreenContainer
-  //     breadcrumbDestination={"tagDetailView"}
-  //     roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
-  //     accessRoleData={accessRoleData}
-  //     navigationTabContainer={<TagManagementSubNavigationBar activeTab={"tagViewer"} />}
-  //     dataObject={organizationSettings}
-  //     isLoading={isLoading}
-  //     actionBar={getActionBar()}
-  //     detailPanel={JSON.stringify(organizationSettings)
-  //     // <TagDetailPanel setTagData={setTagModel} tagData={tagModel} accessRoleData={accessRoleData} />
-  //   }
-  //   />
-  // );
 }
 
 export default OrganizationSettingsDetailView;
