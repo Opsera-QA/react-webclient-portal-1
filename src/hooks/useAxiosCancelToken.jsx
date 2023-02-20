@@ -15,7 +15,9 @@ export default function useAxiosCancelToken() {
 
   const resetCancelToken = () => {
     cancelTokenSource.cancel();
-    setCancelTokenSource({...axios.CancelToken.source()});
+    const source = axios.CancelToken.source();
+    setCancelTokenSource({...source});
+    return source;
   };
 
   return {
