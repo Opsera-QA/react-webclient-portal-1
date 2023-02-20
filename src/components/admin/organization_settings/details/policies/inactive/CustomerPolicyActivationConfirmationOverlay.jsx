@@ -5,8 +5,8 @@ import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import ActivatePolicyButton
-  from "components/settings/organization_settings/policies/cards/inactive/ActivatePolicyButton";
+import PolicyManagementActivatePolicyButton
+  from "components/settings/organization_settings/policies/cards/inactive/PolicyManagementActivatePolicyButton";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 import useGetNewPolicyModel from "hooks/settings/organization_settings/policies/useGetNewPolicyModel";
 import PolicyEditorPanelBase from "components/settings/organization_settings/policies/details/PolicyEditorPanelBase";
@@ -55,7 +55,7 @@ export default function CustomerPolicyActivationConfirmationOverlay({ policyName
             setPolicyModel={setPolicyModel}
           />
           <ButtonContainerBase>
-            <ActivatePolicyButton
+            <PolicyManagementActivatePolicyButton
               policyModel={policyModel}
               closeOverlayFunction={closeOverlayFunction}
             />

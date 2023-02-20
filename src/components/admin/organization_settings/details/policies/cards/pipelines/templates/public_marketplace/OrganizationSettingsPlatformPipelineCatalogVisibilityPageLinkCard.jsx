@@ -2,13 +2,13 @@ import React from "react";
 import PropType from "prop-types";
 import PolicyManagementPageLinkCardBase
   from "components/settings/organization_settings/policies/cards/PolicyManagementPageLinkCardBase";
-import InactivePlatformPipelineCatalogVisibilityPageLinkCard
-  from "components/settings/organization_settings/policies/cards/pipelines/templates/public_marketplace/InactivePlatformPipelineCatalogVisibilityPageLinkCard";
+import PolicyManagementInactivePlatformPipelineCatalogVisibilityPageLinkCard
+  from "components/settings/organization_settings/policies/cards/pipelines/templates/public_marketplace/PolicyManagementInactivePlatformPipelineCatalogVisibilityPageLinkCard";
 
 export default function OrganizationSettingsPlatformPipelineCatalogVisibilityPageLinkCard({ platformPipelineCatalogVisibilityPolicy }) {
   if (platformPipelineCatalogVisibilityPolicy == null) {
     return (
-      <InactivePlatformPipelineCatalogVisibilityPageLinkCard />
+      <PolicyManagementInactivePlatformPipelineCatalogVisibilityPageLinkCard />
     );
   }
 

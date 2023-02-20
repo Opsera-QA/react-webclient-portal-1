@@ -2,13 +2,13 @@ import React from "react";
 import PropType from "prop-types";
 import PolicyManagementPageLinkCardBase
   from "components/settings/organization_settings/policies/cards/PolicyManagementPageLinkCardBase";
-import InactivePipelineStepTagRequirementPolicyPageLinkCard
-  from "components/settings/organization_settings/policies/cards/pipelines/steps/tags/InactivePipelineStepTagRequirementPolicyPageLinkCard";
+import PolicyManagementInactivePipelineStepTagRequirementPolicyPageLinkCard
+  from "components/settings/organization_settings/policies/cards/pipelines/steps/tags/PolicyManagementInactivePipelineStepTagRequirementPolicyPageLinkCard";
 
 export default function OrganizationSettingsPipelineStepTagRequirementPolicyPageLinkCard({ pipelineStepTagRequirementPolicy, }) {
   if (pipelineStepTagRequirementPolicy == null) {
     return (
-      <InactivePipelineStepTagRequirementPolicyPageLinkCard />
+      <PolicyManagementInactivePipelineStepTagRequirementPolicyPageLinkCard />
     );
   }
 

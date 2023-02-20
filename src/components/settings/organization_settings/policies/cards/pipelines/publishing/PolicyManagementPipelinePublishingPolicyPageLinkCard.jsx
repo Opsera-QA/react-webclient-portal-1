@@ -5,7 +5,7 @@ import PolicyManagementInactivePipelinePublishingPolicyPageLinkCard
 import PolicyManagementPageLinkCardBase
   from "components/settings/organization_settings/policies/cards/PolicyManagementPageLinkCardBase";
 
-export default function OrganizationSettingsPipelinePublishingPolicyPageLinkCard({ pipelinePublishingRestrictionsPolicy, }) {
+export default function PolicyManagementPipelinePublishingPolicyPageLinkCard({ pipelinePublishingRestrictionsPolicy, }) {
   if (pipelinePublishingRestrictionsPolicy == null) {
     return (
       <PolicyManagementInactivePipelinePublishingPolicyPageLinkCard />
@@ -19,6 +19,6 @@ export default function OrganizationSettingsPipelinePublishingPolicyPageLinkCard
   );
 }
 
-OrganizationSettingsPipelinePublishingPolicyPageLinkCard.propTypes = {
+PolicyManagementPipelinePublishingPolicyPageLinkCard.propTypes = {
   pipelinePublishingRestrictionsPolicy: PropType.object,
 };
