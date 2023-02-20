@@ -1,46 +1,71 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
+import {Row, Col} from "react-bootstrap";
 import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import ActivityField from "components/common/fields/boolean/ActivityField";
-import DateFieldBase from "components/common/fields/date/DateFieldBase";
-import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import ConfigurationField from "components/common/fields/multiple_items/ConfigurationField";
-import TagRoleHelper from "@opsera/know-your-role/roles/settings/tags/tagRole.helper";
-import useComponentStateReference from "hooks/useComponentStateReference";
+import SmartIdField from "components/common/fields/text/id/SmartIdField";
+import JsonField from "components/common/fields/json/JsonField";
 
-function OrganizationSettingsSummaryPanel({ tagData, setActiveTab, accessRoleData }) {
-  const { userData } = useComponentStateReference();
-
-  if (tagData == null) {
-    return <LoadingDialog size="sm" />;
+// TODO: Make viewer fields for policies, entitlements, and features as needed
+export default function OrganizationSettingsSummaryPanel(
+  {
+    organizationSettingsModel,
+  }) {
+  if (organizationSettingsModel == null) {
+    return null;
   }
 
   return (
-    <SummaryPanelContainer
-      setActiveTab={TagRoleHelper.canUpdateTags(userData) === true ? setActiveTab : undefined}>
+    <SummaryPanelContainer>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={tagData} fieldName={"_id"}/>
+          <SmartIdField
+            model={organizationSettingsModel}
+          />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={tagData} fieldName={"account"}/>
+          <ActivityField
+            dataObject={organizationSettingsModel}
+          />
         </Col>
         <Col lg={6}>
-          <DateFieldBase dataObject={tagData} fieldName={"createdAt"}/>
+          <TextFieldBase
+            dataObject={organizationSettingsModel}
+            fieldName={"organizationAccountId"}
+            showClipboardButton={true}
+          />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={tagData} fieldName={"type"}/>
+          <TextFieldBase
+            dataObject={organizationSettingsModel}
+            fieldName={"organizationDomain"}
+            showClipboardButton={true}
+          />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={tagData} fieldName={"value"}/>
+          <JsonField
+            dataObject={organizationSettingsModel}
+            fieldName={"features"}
+          />
         </Col>
         <Col lg={6}>
-          <ActivityField dataObject={tagData} fieldName={"active"}/>
+          <JsonField
+            dataObject={organizationSettingsModel}
+            fieldName={"entitlement"}
+          />
         </Col>
-        <Col lg={12}>
-          <ConfigurationField dataObject={tagData} fieldName={"configuration"} />
+        <Col lg={6}>
+          <JsonField
+            dataObject={organizationSettingsModel}
+            fieldName={"policies"}
+          />
+        </Col>
+        <Col lg={6}>
+          <JsonField
+            dataObject={organizationSettingsModel}
+            fieldName={"parameters"}
+          />
         </Col>
       </Row>
     </SummaryPanelContainer>
@@ -48,10 +73,5 @@ function OrganizationSettingsSummaryPanel({ tagData, setActiveTab, accessRoleDat
 }
 
 OrganizationSettingsSummaryPanel.propTypes = {
-  tagData: PropTypes.object,
-  setActiveTab: PropTypes.func,
-  accessRoleData: PropTypes.object
+  organizationSettingsModel: PropTypes.object,
 };
-
-
-export default OrganizationSettingsSummaryPanel;
