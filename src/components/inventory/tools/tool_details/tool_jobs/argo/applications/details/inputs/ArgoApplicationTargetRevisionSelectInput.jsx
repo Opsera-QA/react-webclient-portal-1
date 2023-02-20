@@ -25,6 +25,8 @@ function ArgoApplicationTargetRevisionSelectInput(
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [singularTopic, setSingularTopic] = useState("Branch");
+  const [pluralTopic, setPluralTopic] = useState("Branches");
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -73,8 +75,15 @@ function ArgoApplicationTargetRevisionSelectInput(
     const response = await argoActions.getArgoRepositoryBranchesAndTags(getAccessToken, cancelSource, toolId, repoUrl);
     const refs = response?.data?.data;
     setCompleteRefs(refs);
-    const activeRefs = model?.getData("useTag") ? refs?.tags : refs.branches;
+    const activeRefs = model?.getData("useTag") ? refs?.tags : refs?.branches;
     if (isMounted?.current === true && Array.isArray(activeRefs)) {
+      if (model?.getData("useTag")) {
+        setSingularTopic("Tag");
+        setPluralTopic("Tags");
+      } else {
+        setSingularTopic("Branch");
+        setPluralTopic("Branches");
+      }
       setRefs(activeRefs);
     }
   };
@@ -83,11 +92,16 @@ function ArgoApplicationTargetRevisionSelectInput(
     const currentVal = model?.getData("useTag");
     if (!currentVal) {
       setRefs(completeRefs?.tags || []);
+      setSingularTopic("Tag");
+      setPluralTopic("Tags");
     } else {
       setRefs(completeRefs?.branches || []);
+      setSingularTopic("Branch");
+      setPluralTopic("Branches");
     }
     let newModel = {...model};
     newModel.setData("useTag", !currentVal);
+    newModel.setDefaultValue("branch");
     setModel({...newModel});
   };
 
@@ -112,6 +126,8 @@ function ArgoApplicationTargetRevisionSelectInput(
           disabled={disabled}
           error={error}
           visible={visible}
+          singularTopic={singularTopic}
+          pluralTopic={pluralTopic}
         />      
     </div>
     </>    
