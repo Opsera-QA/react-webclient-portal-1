@@ -1,14 +1,7 @@
 import { useEffect, useState } from "react";
-import useComponentStateReference from "hooks/useComponentStateReference";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import useLoadData from "temp-library-components/useLoadData/useLoadData";
-import {hasStringValue} from "components/common/helpers/string-helpers";
-import useLdapOrganizationAccountActions from "hooks/ldap/organization_accounts/useLdapOrganizationAccountActions";
 import useGetLdapOrganizationAccountOrganizationSettings
   from "hooks/ldap/organization_accounts/useGetLdapOrganizationAccountOrganizationSettings";
-import modelHelpers from "components/common/model/modelHelpers";
-import organizationSettingsMetadata
-  from "@opsera/definitions/constants/settings/organization-settings/organizationSettings.metadata";
+import OrganizationSettingsModel from "components/admin/organization_settings/organizationSettings.model";
 
 export default function useGetLdapOrganizationAccountOrganizationSettingsModel(
   organizationDomain,
@@ -31,7 +24,7 @@ export default function useGetLdapOrganizationAccountOrganizationSettingsModel(
     setOrganizationSettingsModel(undefined);
 
     if (organizationSettings) {
-      setOrganizationSettingsModel({...modelHelpers.parseObjectIntoModel(organizationSettings, organizationSettingsMetadata)});
+      setOrganizationSettingsModel({...new OrganizationSettingsModel(organizationSettings, false)});
     }
   }, [organizationSettings]);
 
