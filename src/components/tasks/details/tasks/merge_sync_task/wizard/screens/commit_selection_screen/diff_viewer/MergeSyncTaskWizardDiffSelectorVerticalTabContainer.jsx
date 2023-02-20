@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import { faBracketsCurly, faCheckCircle, faTrash } from "@fortawesome/pro-light-svg-icons";
+import { faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
 import {
   MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
@@ -23,20 +23,27 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
   destinationContent,
   theme,
   inlineDiff,
+  inJsonView,
+  setInJsonView,
 }) => {
-
   const onChangeHandler = (editedContent) => {
     const newComparisonFileModel = { ...comparisonFileModel };
     newComparisonFileModel?.setData("manualContent", editedContent);
     setComparisonFileModel({ ...newComparisonFileModel });
   };
 
+  console.log(inJsonView);
+
   const getCurrentView = () => {
-    if(!comparisonFileModel) {
+    if (!comparisonFileModel) {
       return <div className={"m-2"}>Unsupported File Format</div>;
     }
     if (destinationContent?.length < 1 && sourceContent?.length < 1) {
       return <div className={"m-2"}>No changes returned from the service</div>;
+    }
+
+    if (inJsonView) {
+      return <>{sourceContent}</>;
     }
 
     return (
@@ -93,7 +100,9 @@ MergeSyncTaskWizardDiffSelectorVerticalTabContainer.propTypes = {
   setWizardModel: PropTypes.func,
   file: PropTypes.object,
   theme: PropTypes.string,
-  inlineDiff: PropTypes.bool
+  inlineDiff: PropTypes.bool,
+  inJsonView: PropTypes.bool,
+  setInJsonView: PropTypes.func,
 };
 
 MergeSyncTaskWizardDiffSelectorVerticalTabContainer.defaultProps = {
