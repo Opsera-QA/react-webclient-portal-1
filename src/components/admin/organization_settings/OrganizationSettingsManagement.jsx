@@ -5,9 +5,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetLdapOrganizationAccounts from "hooks/ldap/organization_accounts/useGetLdapOrganizationAccounts";
 import OrganizationSettingsManagementSubNavigationBar
   from "components/admin/organization_settings/OrganizationSettingsManagementSubNavigationBar";
-import OrganizationAccountSettingsPageLinkCard
-  from "components/admin/organization_settings/OrganizationAccountSettingsPageLinkCard";
-import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import OrganizationSettingsTable from "components/admin/organization_settings/OrganizationSettingsTable";
 
 export default function OrganizationSettingsManagement() {
   const {
@@ -16,27 +14,8 @@ export default function OrganizationSettingsManagement() {
   const {
     ldapOrganizationAccounts,
     isLoading,
+    loadData,
   } = useGetLdapOrganizationAccounts();
-
-  const getCards = () => {
-    if (isLoading === true) {
-      return (
-        <CenterLoadingIndicator
-          type={"Organization Accounts"}
-        />
-      );
-    }
-
-    return ldapOrganizationAccounts.map((organizationAccount) => {
-      return (
-        <OrganizationAccountSettingsPageLinkCard
-          key={organizationAccount?.name}
-          organizationAccount={organizationAccount}
-          className={"m-2"}
-        />
-      );
-    });
-  };
 
   return (
     <ScreenContainer
@@ -46,7 +25,13 @@ export default function OrganizationSettingsManagement() {
       roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       navigationTabContainer={<OrganizationSettingsManagementSubNavigationBar activeTab={"ldapOrganizationSettingsManagement"} />}
     >
-      {getCards()}
+      <div className={"mx-2 mb-2"}>
+        <OrganizationSettingsTable
+          loadData={loadData}
+          isLoading={isLoading}
+          data={ldapOrganizationAccounts}
+        />
+      </div>
     </ScreenContainer>
   );
 }

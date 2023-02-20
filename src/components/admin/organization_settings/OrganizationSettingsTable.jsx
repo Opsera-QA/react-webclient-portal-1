@@ -1,76 +1,52 @@
-import React, {useContext, useMemo} from "react";
+import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import tagMetadata from "components/settings/tags/tag.metadata";
 import {
-  getTableBooleanIconColumn,
-  getTableDateColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
-import NewTagOverlay from "components/settings/tags/NewTagOverlay";
-import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faTags} from "@fortawesome/pro-light-svg-icons";
-import InlineTagTypeFilter from "components/common/filters/tags/tag_type/InlineTagTypeFilter";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import TagTypeFilter from "components/common/filters/tags/tag_type/TagTypeFilter";
+import {faSitemap} from "@fortawesome/pro-light-svg-icons";
+import {
+  ldapOrganizationAccountMetaData
+} from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-metadata";
+import {organizationSettingsHelper} from "components/admin/organization_settings/organizationSettings.helper";
 
-function OrganizationSettingsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, isMounted }) {
-  const toastContext = useContext(DialogToastContext);
+export default function OrganizationSettingsTable(
+  {
+    data,
+    loadData,
+    isLoading,
+  }) {
+  const fields = ldapOrganizationAccountMetaData.fields;
   const history = useHistory();
-  let fields = tagMetadata.fields;
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "type")),
-      getTableTextColumn(getField(fields, "value")),
-      getTableTextColumn(getField(fields, "_id")),
-      getTableBooleanIconColumn(getField(fields, "active")),
-      getTableDateColumn(getField(fields, "createdAt")),
+      getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "orgOwner")),
+      getTableTextColumn(getField(fields, "orgOwnerEmail")),
+      getTableTextColumn(getField(fields, "accountName")),
+      getTableTextColumn(getField(fields, "description")),
+      getTableTextColumn(getField(fields, "orgDomain")),
     ],
     []
   );
 
-  const onRowSelect = (rowData, type) => {
-    history.push("/settings/tags/" + rowData.original._id);
+
+  const onRowSelect = (rowData, organizationAccount) => {
+    history.push(organizationSettingsHelper.getDetailViewLink(organizationAccount?.orgDomain, organizationAccount?.name));
   };
 
-  const rowStyling = (row) => {
-    return !row["values"].active ? " inactive-row" : "";
-  };
-
-  const createTag = () => {
-    toastContext.showOverlayPanel(<NewTagOverlay loadData={loadData} isMounted={isMounted} />);
-  };
-
-  const getDropdownFilters = () => {
-    return (
-      <>
-        <TagTypeFilter filterModel={tagFilterDto} setFilterModel={setTagFilterDto} className={"mb-2"} />
-        <ActiveFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
-      </>
-    );
-  };
-
-  const getInlineFilters = () => {
-    return (
-      <InlineTagTypeFilter filterModel={tagFilterDto} setFilterModel={setTagFilterDto} loadData={loadData} className={"mr-2"} />
-    );
-  };
-
-  const getTagsTable = () => {
+  const getOrganizationAccountsTable = () => {
     return (
       <CustomTable
         onRowSelect={onRowSelect}
         data={data}
-        rowStyling={rowStyling}
         columns={columns}
         isLoading={isLoading}
         loadData={loadData}
-        paginationDto={tagFilterDto}
-        setPaginationDto={setTagFilterDto}
       />
     );
   };
@@ -78,18 +54,11 @@ function OrganizationSettingsTable({ data, loadData, isLoading, tagFilterDto, se
   return (
     <FilterContainer
       loadData={loadData}
-      filterDto={tagFilterDto}
-      setFilterDto={setTagFilterDto}
-      addRecordFunction={createTag}
-      supportSearch={true}
       isLoading={isLoading}
-      body={getTagsTable()}
-      inlineFilters={getInlineFilters()}
-      dropdownFilters={getDropdownFilters()}
-      metadata={tagMetadata}
-      titleIcon={faTags}
-      title={"Tags"}
-      className={"px-2 pb-2"}
+      body={getOrganizationAccountsTable()}
+      titleIcon={faSitemap}
+      title={"Organization Accounts"}
+      type={"Organization Account"}
     />
   );
 }
@@ -98,10 +67,4 @@ OrganizationSettingsTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  tagFilterDto: PropTypes.object,
-  activeTagFilterDto: PropTypes.object,
-  setTagFilterDto: PropTypes.func,
-  isMounted: PropTypes.object
 };
-
-export default OrganizationSettingsTable;
