@@ -109,24 +109,30 @@ function GitLogDeveloper360CirclePacking({ chartData }) {
             <div>
                 <Row>
                 <Col>
-                <div
-                    style={{ height: "450px"}}
-                >
-                    <ResponsiveCirclePackingCanvas
-                        data={chartData?.chartData}
-                        margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
-                        id="name"
-                        value="commitScore"
-                        padding={4}
-                        enableLabels={true}
-                        labelsFilter={filterLabel}
-                        colors={getColor}
-                        labelsSkipRadius={20}
-                        labelTextColor={"black"}
-                        zoomedId={zoomedId}
-                        onClick={onNodeSelect}
-                    />
-                </div>
+                    <div
+                        style={{ height: "450px"}}
+                    >
+                        <ResponsiveCirclePackingCanvas
+                            data={chartData?.chartData}
+                            margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
+                            id="identifier"
+                            value="commitScore"
+                            padding={4}
+                            enableLabels={true}
+                            label={(node)=> node?.data?.name}
+                            labelsFilter={filterLabel}
+                            colors={getColor}
+                            labelsSkipRadius={20}
+                            labelTextColor={"black"}
+                            zoomedId={zoomedId}
+                            onClick={onNodeSelect}
+                            tooltip={({ data}) => (
+                                <strong>
+                                    {data.name}: {data.commitsCount}
+                                </strong>
+                            )}
+                        />
+                    </div>
                 </Col>
                     <Col>
                        <CustomTable
