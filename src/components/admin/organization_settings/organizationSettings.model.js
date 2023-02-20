@@ -15,7 +15,7 @@ export default class OrganizationSettingsModel extends ModelBase {
   }
 
   getDetailViewTitle = () => {
-    return this.getData("organizationAccountId");
+    return `${this.getData("organizationAccountId")} Organization Account Settings`;
   };
 
   getType = () => {
