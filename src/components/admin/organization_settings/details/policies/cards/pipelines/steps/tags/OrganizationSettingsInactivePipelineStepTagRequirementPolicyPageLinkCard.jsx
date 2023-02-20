@@ -6,7 +6,7 @@ import PolicyActivationConfirmationOverlay
 import InactivePipelineStepTagRequirementPolicyPageLinkCardBase
   from "temp-library-components/cards/policies/pipelines/steps/tags/InactivePipelineStepTagRequirementPolicyPageLinkCardBase";
 
-export default function InactivePipelineStepTagRequirementPolicyPageLinkCard() {
+export default function OrganizationSettingsInactivePipelineStepTagRequirementPolicyPageLinkCard() {
   const {
     toastContext,
   } = useComponentStateReference();

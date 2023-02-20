@@ -3,10 +3,10 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 import PolicyActivationConfirmationOverlay
   from "components/settings/organization_settings/policies/cards/inactive/PolicyActivationConfirmationOverlay";
-import InactivePipelineStepTagRequirementPolicyPageLinkCardBase
-  from "temp-library-components/cards/policies/pipelines/steps/tags/InactivePipelineStepTagRequirementPolicyPageLinkCardBase";
+import InactivePlatformPipelineCatalogVisibilityPageLinkCardBase
+  from "temp-library-components/cards/policies/pipelines/templates/public_marketplace/InactivePlatformPipelineCatalogVisibilityPageLinkCardBase";
 
-export default function InactivePipelineStepTagRequirementPolicyPageLinkCard() {
+export default function OrganizationSettingsInactivePlatformPipelineCatalogVisibilityPageLinkCard() {
   const {
     toastContext,
   } = useComponentStateReference();
@@ -14,13 +14,13 @@ export default function InactivePipelineStepTagRequirementPolicyPageLinkCard() {
   const launchActivationConfirmationOverlay = () => {
     toastContext.showOverlayPanel(
       <PolicyActivationConfirmationOverlay
-        policyName={policyConstants.POLICY_NAMES.PIPELINE_STEP_TAG_REQUIREMENT}
+        policyName={policyConstants.POLICY_NAMES.PLATFORM_PIPELINE_CATALOG_VISIBILITY}
       />
     );
   };
 
   return (
-    <InactivePipelineStepTagRequirementPolicyPageLinkCardBase
+    <InactivePlatformPipelineCatalogVisibilityPageLinkCardBase
       onClickFunction={launchActivationConfirmationOverlay}
     />
   );
