@@ -119,6 +119,7 @@ function GitLogDeveloper360({
                 error={error}
                 setKpis={setKpis}
                 isLoading={isLoading}
+                isBeta={true}
             />
         </div>
     );
