@@ -27,8 +27,11 @@ mergeSyncTaskWizardActions.createNewRecordV2 = async (
 
 mergeSyncTaskWizardActions.updatePipelineStorageRecordV2 = async (getAccessToken, cancelTokenSource, taskWizardModel) => {
   const apiUrl = `/tasks/merge-sync-task/wizard/${taskWizardModel?.getData("recordId")}`;
+  const componentTypes = taskWizardModel?.getData("isProfiles") ? [...taskWizardModel?.getArrayData("selectedComponentTypes"), "Profile"] : taskWizardModel?.getArrayData(
+    "selectedComponentTypes",
+  );
   const postBody = {
-    selectedComponentTypes: taskWizardModel?.getArrayData("selectedComponentTypes"),
+    selectedComponentTypes: componentTypes,
     lastCommitFromTimeStamp: taskWizardModel?.getData("fromDate"),
     lastCommitToTimeStamp: taskWizardModel?.getData("toDate"),
   };
@@ -283,4 +286,27 @@ mergeSyncTaskWizardActions.runMergeSyncTask = async (getAccessToken, cancelToken
   );
 };
 
+mergeSyncTaskWizardActions.fileConvertView = async (
+  getAccessToken,
+  cancelTokenSource,
+  taskWizardModel,
+  fileContent,
+  conversionTypeFrom = "xml",
+  conversionTypeTo = "json"
+) => {
+  const apiUrl = `/tasks/merge-sync-task/wizard/file/convert`;
+  const postBody = {
+    taskId: taskWizardModel?.getData("taskId"),
+    fileContent: "",
+    conversionTypeFrom: conversionTypeFrom,
+    conversionTypeTo: conversionTypeTo
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
 export default mergeSyncTaskWizardActions;
