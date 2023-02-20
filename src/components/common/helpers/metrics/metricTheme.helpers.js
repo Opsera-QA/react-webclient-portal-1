@@ -45,15 +45,17 @@ export const METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY = [
 ];
 
 export const METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY_VNEXT = [
-  "#46376F",
   "#EBE4FA",
   "#BDA1FB",
-  '#FE8C83',
-  '#FFBE3F',
-  '#60A7AD',
   "#E5A158",
   "#7141DC",
+  "#EBE4FA",
+  '#FFBE3F',
+  '#FE8C83',
   '#CB4136',
+  "#46376F",
+  '#60A7AD',
+
 ];
 
 export const METRIC_THEME_CHART_FONT_CLASSES = {
