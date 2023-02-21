@@ -114,6 +114,7 @@ mergeSyncTaskWizardActions.triggerComparisonFilePull = async (
     params: {
       taskId: taskWizardModel?.getData("taskId"),
       runCount: taskWizardModel?.getData("runCount"),
+      isProfiles: taskWizardModel?.getData("isProfiles"),
     },
   };
 
