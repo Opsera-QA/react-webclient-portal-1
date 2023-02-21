@@ -10,7 +10,7 @@ import CreateArgoProjectOverlay
 import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 
-function ArgoToolProjectsTable({ toolId, argoProjects, loadData, onRowSelect, isLoading }) {
+function ArgoToolProjectsTable({ toolId, argoProjects, loadData, onRowSelect, isLoading, filterData, filterModel, setFilterModel }) {
   const toastContext = useContext(DialogToastContext);
   let fields = argoProjectMetadata.fields;
 
@@ -38,13 +38,17 @@ function ArgoToolProjectsTable({ toolId, argoProjects, loadData, onRowSelect, is
         data={argoProjects}
         onRowSelect={onRowSelect}
         isLoading={isLoading}
+        paginationModel={filterModel}
+        setPaginationModel={setFilterModel}
+        loadData={filterData}
+        tableHeight={"350px"}
       />
     );
   };
 
   return (
     <FilterContainer
-      loadData={loadData}
+      loadData={filterData}
       isLoading={isLoading}
       title={"Argo Projects"}
       type={"Argo Projects"}
@@ -52,6 +56,9 @@ function ArgoToolProjectsTable({ toolId, argoProjects, loadData, onRowSelect, is
       addRecordFunction={createArgoProject}
       body={getTable()}
       showBorder={false}
+      filterDto={filterModel}
+      setFilterDto={setFilterModel}
+      supportSearch={true}
     />
   );
 }
@@ -61,7 +68,10 @@ ArgoToolProjectsTable.propTypes = {
   loadData: PropTypes.func,
   onRowSelect: PropTypes.func,
   isLoading: PropTypes.bool,
-  argoProjects: PropTypes.array
+  argoProjects: PropTypes.array,
+  filterData: PropTypes.func,
+  setFilterModel: PropTypes.func,
+  filterModel: PropTypes.object,
 };
 
 export default ArgoToolProjectsTable;

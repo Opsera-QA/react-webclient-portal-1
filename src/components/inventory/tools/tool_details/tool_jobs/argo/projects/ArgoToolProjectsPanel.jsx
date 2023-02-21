@@ -9,16 +9,30 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
+import argoFiltersMetadata from "../argo-filters-metadata";
+import Model from "core/data_model/model";
+import {stringIncludesValue} from "components/common/helpers/string-helpers";
+import {localFilterFunction} from "utils/tableHelpers";
+import _ from "lodash";
 
 // TODO: This whole section is very old and needs to be updated to current standards.
 function ArgoToolProjectsPanel({ toolId }) {
   const [argoProjects, setArgoProjects] = useState([]);
+  const [argoOriginalProjects, setArgoOriginalProjects] = useState([]);
   const [argoModel, setArgoModel] = useState(undefined);
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [prevSearchKeyword, setPrevSearchKeyword] = useState("");
+  const [filterModel, setFilterModel] = useState(
+    new Model(
+      { ...argoFiltersMetadata.newObjectFields },
+      argoFiltersMetadata,
+      false
+    )
+  );
 
   useEffect(() => {
     if(cancelTokenSource) {
@@ -62,8 +76,22 @@ function ArgoToolProjectsPanel({ toolId }) {
     const projects = response?.data?.data;
 
     if(isMounted?.current === true && Array.isArray(projects)){
-      setArgoProjects(projects);
+      const sortedProjects = _.sortBy(projects, ["name"]);
+      setArgoOriginalProjects(sortedProjects);
+      setArgoProjects(localFilterFunction(searchFilter, sortedProjects, filterModel, setFilterModel, prevSearchKeyword, setPrevSearchKeyword));
     }
+  };
+
+  const searchFilter = (repository) => {
+    const searchTerm = filterModel?.getFilterValue("search");
+    return (
+         stringIncludesValue(repository?.name, searchTerm)
+      || stringIncludesValue(repository?.description, searchTerm)
+    );
+  };
+
+  const filterData = () => {
+    setArgoProjects(localFilterFunction(searchFilter, argoOriginalProjects, filterModel, setFilterModel, prevSearchKeyword, setPrevSearchKeyword));
   };
 
   const onRowSelect = async (grid, row) => {
@@ -117,6 +145,9 @@ function ArgoToolProjectsPanel({ toolId }) {
       loadData={loadData}
       onRowSelect={onRowSelect}
       argoProjects={argoProjects}
+      filterData={filterData}
+      filterModel={filterModel}
+      setFilterModel={setFilterModel}
     />
   );
 }
