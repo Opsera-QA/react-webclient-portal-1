@@ -1,31 +1,36 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import ArgoApplicationsTable from "./ArgoApplicationsTable";
 import PropTypes from "prop-types";
-import CreateArgoApplicationOverlay
-  from "components/inventory/tools/tool_details/tool_jobs/argo/applications/CreateArgoApplicationOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import argoActions from "components/inventory/tools/tool_details/tool_jobs/argo/argo-actions";
-import ParameterFilterModel from "components/inventory/parameters/parameter.filter.model";
 import {AuthContext} from "contexts/AuthContext";
-import modelHelpers from "components/common/model/modelHelpers";
-import argoApplicationsMetadata
-  from "components/inventory/tools/tool_details/tool_jobs/argo/applications/argo-application-metadata";
 import ArgoApplicationEditorPanel
   from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/ArgoApplicationEditorPanel";
+import argoFiltersMetadata from "../argo-filters-metadata";
+import Model from "core/data_model/model";
+import {stringIncludesValue} from "components/common/helpers/string-helpers";
+import {localFilterFunction} from "utils/tableHelpers";
+import _ from "lodash";
 
 function ArgoToolApplicationsPanel({ toolData }) {
-  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  // TODO: Replace with actual filter model for this area OR make generic one
-  const [parameterFilterModel, setParameterFilterModel] = useState(new ParameterFilterModel());
   const [isLoading, setIsLoading] = useState(false);
-  const [toolApplications, setToolApplications] = useState([]); // Could be removed in next iteration
   const [argoApplications, setArgoApplications] = useState([]);
+  const [argoOriginalApplications, setArgoOriginalApplications] = useState([]);
   const [selectedArgoApplication, setSelectedArgoApplication] = useState(undefined);
 
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [prevSearchKeyword, setPrevSearchKeyword] = useState("");
+  const [filterModel, setFilterModel] = useState(
+    new Model(
+      { ...argoFiltersMetadata.newObjectFields },
+      argoFiltersMetadata,
+      false
+    )
+  );
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -36,7 +41,7 @@ function ArgoToolApplicationsPanel({ toolData }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(parameterFilterModel, source).catch((error) => {
+    loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -48,10 +53,10 @@ function ArgoToolApplicationsPanel({ toolData }) {
     };
   }, []);
 
-  const loadData = async (filterDto = parameterFilterModel, cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getArgoApplications(filterDto, cancelSource);
+      await getArgoApplications(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -64,37 +69,27 @@ function ArgoToolApplicationsPanel({ toolData }) {
     }
   };
 
-  const getArgoApplications = async (filterDto = parameterFilterModel, cancelSource = cancelTokenSource) => {
+  const getArgoApplications = async (cancelSource = cancelTokenSource) => {
     const response = await argoActions.getArgoApplicationsV2(getAccessToken, cancelSource, toolData?.getData("_id"));
     const applications = response?.data?.data;
-    // const userRoleAccess = await getAccessRoleData();
 
     if (isMounted?.current === true && Array.isArray(applications)) {
-      setToolApplications([...applications]);
-      // unpackApplications(applications); // could be removed
-      setArgoApplications(applications);
-      let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", response.data.count);
-      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-      setParameterFilterModel({ ...newFilterDto });
+      const sortedApplications = _.sortBy(applications, ["name", "namespace"]);
+      setArgoOriginalApplications(sortedApplications);
+      setArgoApplications(localFilterFunction(searchFilter, sortedApplications, filterModel, setFilterModel, prevSearchKeyword, setPrevSearchKeyword));
     }
   };
 
-  // TODO: This is a current workaround until I can refactor the area further.
-  const unpackApplications = (toolApplications) => {
-    const newApplicationList = [];
+  const searchFilter = (application) => {
+    const searchTerm = filterModel?.getFilterValue("search");
+    return (
+         stringIncludesValue(application?.name, searchTerm)
+      || stringIncludesValue(application?.namespace, searchTerm)
+    );
+  };
 
-    //TODO: Don't unpack these objects and instead just use the main ones.
-    if (Array.isArray(toolApplications)) {
-      toolApplications.forEach((toolApplication, index) => {
-        let application = toolApplication?.configuration;
-        application = {...application, applicationId: toolApplication?._id};
-        application = {...application, index: index};
-        newApplicationList?.push(application);
-      });
-    }
-
-    setArgoApplications(newApplicationList);
+  const filterData = () => {
+    setArgoApplications(localFilterFunction(searchFilter, argoOriginalApplications, filterModel, setFilterModel, prevSearchKeyword, setPrevSearchKeyword));
   };
 
   const closeEditorPanel = async () => {
@@ -121,6 +116,9 @@ function ArgoToolApplicationsPanel({ toolData }) {
       loadData={loadData}
       argoApplications={argoApplications}
       setSelectedArgoApplication={setSelectedArgoApplication}
+      filterData={filterData}
+      filterModel={filterModel}
+      setFilterModel={setFilterModel}
     />
   );
 }
