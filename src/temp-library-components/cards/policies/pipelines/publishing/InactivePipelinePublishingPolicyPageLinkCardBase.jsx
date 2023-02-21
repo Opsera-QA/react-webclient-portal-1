@@ -1,16 +1,9 @@
 import React from "react";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import SelectionCardBase from "components/common/card/selection/SelectionCardBase";
-import {accountSettingsTrails} from "components/settings/accountSettings.trails";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
-import PolicyActivationConfirmationOverlay
-  from "components/settings/organization_settings/policies/cards/inactive/PolicyActivationConfirmationOverlay";
+import PropType from "prop-types";
 
-export default function InactivePipelinePublishingPolicyPageLinkCard() {
-  const {
-    toastContext,
-  } = useComponentStateReference();
-
+export default function InactivePipelinePublishingPolicyPageLinkCardBase({ onClickFunction, }) {
   const getBody = () => {
     return (
       <div>
@@ -26,21 +19,17 @@ export default function InactivePipelinePublishingPolicyPageLinkCard() {
     </div>
   );
 
-  const launchActivationConfirmationOverlay = () => {
-    toastContext.showOverlayPanel(
-      <PolicyActivationConfirmationOverlay
-        policyName={policyConstants.POLICY_NAMES.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS}
-      />
-    );
-  };
-
   return (
     <SelectionCardBase
       className={"my-3"}
       titleText={title}
       inactive={true}
       body={getBody()}
-      onClickFunction={launchActivationConfirmationOverlay}
+      onClickFunction={onClickFunction}
     />
   );
 }
+
+InactivePipelinePublishingPolicyPageLinkCardBase.propTypes = {
+  onClickFunction: PropType.func,
+};

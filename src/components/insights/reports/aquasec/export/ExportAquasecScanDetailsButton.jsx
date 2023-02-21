@@ -6,36 +6,36 @@ import ExportDataButtonBase from "components/common/modal/export_data/ExportData
 import ExportAquasecScanDataOverlay from "components/insights/reports/aquasec/export/ExportAquasecScanDataOverlay";
 
 function ExportAquasecScanDetailsButton({isLoading, className, scanData}) {
-  const toastContext = useContext(DialogToastContext);
+    const toastContext = useContext(DialogToastContext);
 
-  const launchOverlayFunction = () => {
-    toastContext.showOverlayPanel(
-      <ExportAquasecScanDataOverlay
-        isLoading={isLoading}
-        formattedData={scanData}
-        rawData={rawDataResults()}
-      />
+    const launchOverlayFunction = () => {
+        toastContext.showOverlayPanel(
+            <ExportAquasecScanDataOverlay
+                isLoading={isLoading}
+                formattedData={scanData}
+                rawData={rawDataResults()}
+            />
+        );
+    };
+
+    const rawDataResults = () =>{
+        return scanData ? scanData.map(item => JSON.stringify(item)) : "export failure";
+    };
+
+    return (
+        <ExportDataButtonBase
+            clasName={className}
+            isLoading={isLoading}
+            allIssues={scanData}
+            launchOverlayFunction={launchOverlayFunction}
+        />
     );
-  };
-
-  const rawDataResults = () =>{
-    return scanData ? scanData.map(item => JSON.stringify(item)) : "export failure";
-  };
-
-  return (
-    <ExportDataButtonBase
-      clasName={className}
-      isLoading={isLoading}
-      allIssues={scanData}
-      launchOverlayFunction={launchOverlayFunction}
-    />
-  );
 }
 
 ExportAquasecScanDetailsButton.propTypes = {
-  scanData: PropTypes.array,
-  isLoading: PropTypes.bool,
-  className: PropTypes.string
+    scanData: PropTypes.array,
+    isLoading: PropTypes.bool,
+    className: PropTypes.string
 };
 
 export default ExportAquasecScanDetailsButton;
