@@ -73,8 +73,8 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
   };
 
 
-  if (isLoading === true) {
-    return (<LoadingDialog size={"sm"} message={"Loading Selected File Changes"} />);
+  if (isJsonLoading || isLoading) {
+    return (<LoadingDialog size={"sm"} message={"Conversion in progress"} />);
   }
 
     return (
