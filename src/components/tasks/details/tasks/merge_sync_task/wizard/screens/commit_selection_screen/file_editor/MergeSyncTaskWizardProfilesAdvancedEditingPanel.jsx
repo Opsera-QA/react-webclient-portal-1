@@ -116,8 +116,8 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
             wizardModel={wizardModel}
             comparisonFileModel={comparisonFileModel}
             setComparisonFileModel={setComparisonFileModel}
-            modifiedContentJson={modifiedContentJson}
-            originalContentJson={originalContentJson}
+            modifiedApexClassJson={modifiedContentJson?.classAccesses}
+            originalApexClassJson={originalContentJson?.classAccesses}
           />
         );
       case "customMetadataTypeAccesses":

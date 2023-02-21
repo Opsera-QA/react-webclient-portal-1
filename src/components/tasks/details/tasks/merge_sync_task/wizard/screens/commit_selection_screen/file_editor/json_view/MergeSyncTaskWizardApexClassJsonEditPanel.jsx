@@ -9,8 +9,8 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = (
     wizardModel,
     comparisonFileModel,
     setComparisonFileModel,
-    modifiedContentJson,
-    originalContentJson,
+    modifiedApexClassJson,
+    originalApexClassJson,
     isLoading
   }) => {
 
@@ -20,15 +20,12 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = (
 
   return (
     <div className={"m-2"}>
-      {/*{JSON.stringify(originalContentJson?.classAccesses, null, 2)}*/}
-      {/*<br></br>*/}
-      {/*{JSON.stringify(modifiedContentJson?.classAccesses, null, 2)}*/}
       <Row>
         <Col>
-
+          {JSON.stringify(modifiedApexClassJson, null, 2)}
         </Col>
         <Col>
-
+          {JSON.stringify(originalApexClassJson, null, 2)}
         </Col>
       </Row>
       </div>
@@ -40,8 +37,8 @@ MergeSyncTaskWizardApexClassJsonEditPanel.propTypes = {
   comparisonFileModel: PropTypes.object,
   setComparisonFileModel: PropTypes.func,
   isLoading: PropTypes.bool,
-  modifiedContentJson: PropTypes.object,
-  originalContentJson: PropTypes.object,
+  modifiedApexClassJson: PropTypes.array,
+  originalApexClassJson: PropTypes.array,
 };
 
 export default MergeSyncTaskWizardApexClassJsonEditPanel;
