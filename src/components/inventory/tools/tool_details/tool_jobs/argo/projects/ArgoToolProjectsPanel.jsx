@@ -82,11 +82,11 @@ function ArgoToolProjectsPanel({ toolId }) {
     }
   };
 
-  const searchFilter = (repository) => {
+  const searchFilter = (project) => {
     const searchTerm = filterModel?.getFilterValue("search");
     return (
-         stringIncludesValue(repository?.name, searchTerm)
-      || stringIncludesValue(repository?.description, searchTerm)
+         stringIncludesValue(project?.name, searchTerm)
+      || stringIncludesValue(project?.description, searchTerm)
     );
   };
 
