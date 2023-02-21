@@ -25,11 +25,13 @@ export default function NewNotificationPolicyOverlay({ loadData } ) {
 
   return (
     <CreateCenterPanel closePanel={closePanel} objectType={notificationPolicyMetadata.type} loadData={loadData}>
-      <NotificationPolicyEditorPanel
-        notificationData={notificationPolicyModel}
-        setNotificationData={setNotificationPolicyModel}
-        handleClose={closePanel}
-      />
+      <div className={"m-3"}>
+        <NotificationPolicyEditorPanel
+          notificationData={notificationPolicyModel}
+          setNotificationData={setNotificationPolicyModel}
+          handleClose={closePanel}
+        />
+      </div>
     </CreateCenterPanel>
   );
 }
