@@ -182,7 +182,7 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   COVERITY_ISSUES_BY_CATEGORY_TREND: "coverity-issues-by-category-trend",
 
   //GIT-LOG
-  GIT_LOG_DEVELOPER_360:"git-log-developer-360"
+  GIT_LOG_DEVELOPER_360:"git-log-developer-360",
 
   // Aquasec Security Insights
   AQUASEC_ISSUES_BY_SEVERITY: "aquasec-issues-by-severity"
