@@ -1,19 +1,19 @@
 import React from "react";
 import PropType from "prop-types";
-import PolicyManagementInactivePipelinePublishingPolicyPageLinkCard
-  from "components/settings/organization_settings/policies/cards/pipelines/publishing/PolicyManagementInactivePipelinePublishingPolicyPageLinkCard";
-import PolicyManagementPageLinkCardBase
-  from "components/settings/organization_settings/policies/cards/PolicyManagementPageLinkCardBase";
+import OrganizationSettingsPolicyEditorPanelOverlay
+  from "components/admin/organization_settings/details/policies/OrganizationSettingsPolicyEditorPanelOverlay";
+import OrganizationSettingsInactivePipelinePublishingPolicyPageLinkCard
+  from "components/admin/organization_settings/details/policies/cards/pipelines/publishing/OrganizationSettingsInactivePipelinePublishingPolicyPageLinkCard";
 
 export default function OrganizationSettingsPipelinePublishingPolicyPageLinkCard({ pipelinePublishingRestrictionsPolicy, }) {
   if (pipelinePublishingRestrictionsPolicy == null) {
     return (
-      <PolicyManagementInactivePipelinePublishingPolicyPageLinkCard />
+      <OrganizationSettingsInactivePipelinePublishingPolicyPageLinkCard />
     );
   }
 
   return (
-    <PolicyManagementPageLinkCardBase
+    <OrganizationSettingsPolicyEditorPanelOverlay
       policy={pipelinePublishingRestrictionsPolicy}
     />
   );
