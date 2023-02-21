@@ -20,6 +20,8 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isJsonLoading, setIsJsonLoading] = useState(true);
+  const [modifiedContentJson, setModifiedContentJson] = useState(undefined);
+  const [originalContentJson, setOriginalContentJson] = useState(undefined);
   const { isMounted, cancelTokenSource } = useComponentStateReference();
 
   useEffect(() => {
@@ -39,8 +41,6 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
       // TODO : Convert both original and modified contents to JSON
 
       if(hasStringValue(originalContent)){
-        console.log(typeof originalContent);
-        console.log(originalContent.length);
         const jsonForOriginalContent = await mergeSyncTaskWizardActions.fileConvertView(
           getAccessToken,
           cancelTokenSource,
@@ -48,12 +48,10 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
           originalContent,
         );
         console.log(jsonForOriginalContent);
+        setOriginalContentJson(jsonForOriginalContent);
       }
 
-
       if(hasStringValue(modifiedContent)) {
-        console.log(typeof modifiedContent);
-        console.log(modifiedContent.length);
         const jsonForModifiedContent = await mergeSyncTaskWizardActions.fileConvertView(
           getAccessToken,
           cancelTokenSource,
@@ -61,6 +59,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
           modifiedContent,
         );
         console.log(jsonForModifiedContent);
+        setModifiedContentJson(jsonForModifiedContent);
       }
 
     } catch (error) {
@@ -78,6 +77,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
   }
 
     return (
+      // TODO : Create a new view for json selections
     <>{originalContent}</>
   );
 };
