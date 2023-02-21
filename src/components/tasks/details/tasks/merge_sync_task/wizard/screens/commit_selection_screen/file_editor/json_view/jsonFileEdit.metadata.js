@@ -39,7 +39,7 @@ export const dataCategoryJsonMetadata = {
   },
 };
 
-export const jsonFileEditMetadata = {
+export const apexClassFileJsonMetadata = {
   type: "Apex Class File",
   fields: [
     {
