@@ -11,6 +11,8 @@ import modelHelpers from "../../../../../../../../common/model/modelHelpers";
 import { comparisonFileMetadata } from "../comparisonFile.metadata";
 import { jsonViewFileMetadata } from "../jsonViewFile.metadata";
 import SelectInputBase from "../../../../../../../../common/inputs/select/SelectInputBase";
+import MergeSyncTaskWizardApexClassJsonEditPanel from "./json_view/MergeSyncTaskWizardApexClassJsonEditPanel";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const componentTypeOptions =[
   {name: "CustomApplication", value: "applicationVisibilities"},
@@ -71,7 +73,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
           originalContent,
         );
         console.log(jsonForOriginalContent);
-        setOriginalContentJson(jsonForOriginalContent);
+        setOriginalContentJson(DataParsingHelper.safeObjectPropertyParser(jsonForOriginalContent, "data.message"));
       }
 
       if(hasStringValue(modifiedContent)) {
@@ -82,7 +84,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
           modifiedContent,
         );
         console.log(jsonForModifiedContent);
-        setModifiedContentJson(jsonForModifiedContent);
+        setModifiedContentJson(DataParsingHelper.safeObjectPropertyParser(jsonForModifiedContent, "data.message"));
       }
 
       if (isMounted?.current === true) {
@@ -109,7 +111,15 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
       case "categoryGroupVisibilities":
         return <>categoryGroupVisibilities</>;
       case "classAccesses":
-        return <>classAccesses</>;
+        return (
+          <MergeSyncTaskWizardApexClassJsonEditPanel
+            wizardModel={wizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            modifiedContentJson={modifiedContentJson}
+            originalContentJson={originalContentJson}
+          />
+        );
       case "customMetadataTypeAccesses":
         return <>customMetadataTypeAccesses</>;
       case "customPermissions":
