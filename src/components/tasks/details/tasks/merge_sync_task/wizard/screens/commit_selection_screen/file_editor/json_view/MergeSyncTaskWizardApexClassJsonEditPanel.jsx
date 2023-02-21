@@ -14,7 +14,7 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
   originalApexClassJson,
   isLoading,
 }) => {
-  const newModifiedData = [
+  const mockData = [
     {
       apexClass: "newcreatePartnerLibraryTest",
       enabled: "false",
@@ -57,8 +57,8 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
   const modifiedApexClassEditView = () => {
     return (
       <Col>
-        {newModifiedData &&
-          newModifiedData.map((apexclass, idx) => (
+        {mockData &&
+          mockData.map((apexclass, idx) => (
             <>
               <ApexClassProfleEditorView
                 wizardModel={wizardModel}
@@ -77,8 +77,8 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
   const originalApexClassEditView = () => {
     return (
       <Col>
-        {newModifiedData &&
-          newModifiedData.map((apexclass, idx) => (
+        {mockData &&
+          mockData.map((apexclass, idx) => (
             <>
               <ApexClassProfleEditorView
                 wizardModel={wizardModel}
