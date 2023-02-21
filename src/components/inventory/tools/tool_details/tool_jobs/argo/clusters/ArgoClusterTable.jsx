@@ -17,6 +17,9 @@ function ArgoClusterTable(
     loadData,
     onRowSelect,
     isLoading,
+    filterData,
+    filterModel,
+    setFilterModel,
   }) {
   const toastContext = useContext(DialogToastContext);
   let fields = argoClusterMetadata.fields;
@@ -47,13 +50,17 @@ function ArgoClusterTable(
         data={argoClusters}
         onRowSelect={onRowSelect}
         isLoading={isLoading}
+        paginationModel={filterModel}
+        setPaginationModel={setFilterModel}
+        loadData={filterData}
+        tableHeight={"350px"}
       />
     );
   };
 
   return (
     <FilterContainer
-      loadData={loadData}
+      loadData={filterData}
       isLoading={isLoading}
       title={"Argo Clusters"}
       type={"Argo Cluster"}
@@ -61,6 +68,9 @@ function ArgoClusterTable(
       addRecordFunction={createArgoCluster}
       body={getTable()}
       showBorder={false}
+      filterDto={filterModel}
+      setFilterDto={setFilterModel}
+      supportSearch={true}
     />
   );
 }
@@ -71,6 +81,9 @@ ArgoClusterTable.propTypes = {
   onRowSelect: PropTypes.func,
   isLoading: PropTypes.bool,
   argoClusters: PropTypes.array,
+  filterData: PropTypes.func,
+  setFilterModel: PropTypes.func,
+  filterModel: PropTypes.object,
 };
 
 export default ArgoClusterTable;
