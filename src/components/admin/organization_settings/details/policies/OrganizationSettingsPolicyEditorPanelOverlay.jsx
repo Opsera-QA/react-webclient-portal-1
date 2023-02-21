@@ -1,17 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import useGetNewPolicyModel from "hooks/settings/organization_settings/policies/useGetNewPolicyModel";
 import PolicyEditorPanelBase from "components/settings/organization_settings/policies/details/PolicyEditorPanelBase";
 
 export default function OrganizationSettingsPolicyEditorPanelOverlay({ policyModel, }) {
-  const {
-    policyModel,
-    setPolicyModel,
-  } = useGetNewPolicyModel();
-  policyModel?.setData("name", policyName);
+  const [policyModelCopy, setPolicyModelCopy] = useState(policyModel);
   const {
     toastContext,
   } = useComponentStateReference();
@@ -19,6 +14,10 @@ export default function OrganizationSettingsPolicyEditorPanelOverlay({ policyMod
   const closeOverlayFunction = () => {
     toastContext.clearOverlayPanel();
   };
+
+  if (policyModelCopy == null) {
+    return null;
+  }
 
   return (
     <ConfirmationOverlay
@@ -31,8 +30,8 @@ export default function OrganizationSettingsPolicyEditorPanelOverlay({ policyMod
     >
       <div className={"mx-3 mb-3 mt-2"}>
         <PolicyEditorPanelBase
-          policyModel={policyModel}
-          setPolicyModel={setPolicyModel}
+          policyModel={policyModelCopy}
+          setPolicyModel={setPolicyModelCopy}
         />
       </div>
     </ConfirmationOverlay>
