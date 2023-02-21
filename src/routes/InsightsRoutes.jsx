@@ -13,7 +13,6 @@ import SonarPipelineScanReport from "components/insights/reports/sonar/SonarPipe
 import CoverityScanReport from "components/insights/reports/coverity/CoverityScanReport";
 import AquasecReport from "components/insights/reports/aquasec/AquasecReport";
 import GitScraperScanReport from "../components/insights/reports/git_scraper/GitScraperScanReport";
-import AquasecReport from "../components/insights/reports/aquasec/AquasecReport";
 
 export default function InsightsRoutes() {
   return (
