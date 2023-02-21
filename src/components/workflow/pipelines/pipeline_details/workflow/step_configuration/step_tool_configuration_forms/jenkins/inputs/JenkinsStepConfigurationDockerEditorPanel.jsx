@@ -8,6 +8,7 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import DockerTagTypeSelectionInput from "./DockerTagTypeSelectionInput";
 import ReactJson from "react-json-view";
 import DockerPreviousStepDataInputForm from "./DockerPreviousStepDataInputForm";
+import DockerNameInput from "./DockerNameInput";
 
 function JenkinsStepConfigurationDockerEditorPanel({model, setModel, buildType, plan, stepId}) {
   const [deleteDockerSecrets, setDeleteDockerSecrets] = useState(false);
@@ -67,6 +68,7 @@ function JenkinsStepConfigurationDockerEditorPanel({model, setModel, buildType, 
         dataObject={model}
         setDataObject={setModel}
       />
+      <DockerNameInput model={model} setModel={setModel} />
       {getDockerTagInputs()}
       <TextInputBase fieldName={"dockerPath"} dataObject={model} setDataObject={setModel}/>
       <JsonInput
