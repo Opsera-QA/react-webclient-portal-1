@@ -55,7 +55,18 @@ const jfrogStepFormMetadata = {
     {
       label : "Tool Registry Job Name",
       id: "toolJobName"
-    }
+    },
+    {
+      label : "Use Repository Sub Folder",
+      id: "useRepositorySubFolderName"
+    },
+    {
+      label : "Repository Sub Folder Name",
+      id: "repositorySubFolderName",
+      isRequiredFunction: (model) => {
+        return model?.getData("useRepositorySubFolderName") === true;
+      },
+    },
   ],
   fieldsAlt: [
     {
@@ -112,7 +123,20 @@ const jfrogStepFormMetadata = {
     {
       label : "Tool Registry Job",
       id: "toolJobName"
-    }
+    },
+    {
+      label : "Use Repository Sub Folder",
+      id: "useRepositorySubFolderName"
+    },
+    {
+      label : "Repository Sub Folder Name",
+      id: "repositorySubFolderName",
+      maxLength: 256,
+      regexDefinitionName: "generalTextWithSpacesSlash",
+      isRequiredFunction: (model) => {
+        return model?.getData("useRepositorySubFolderName") === true;
+      },
+    },
   ],
   newObjectFields: {
     jobType: "",
@@ -126,7 +150,9 @@ const jfrogStepFormMetadata = {
     type: "REPOPATHPREFIX",
     port:"",
     repositoryName : "",
-    jobDescription: ""
+    jobDescription: "",
+    useRepositorySubFolderName: false,
+    repositorySubFolderName: "",
   }
 };
 
