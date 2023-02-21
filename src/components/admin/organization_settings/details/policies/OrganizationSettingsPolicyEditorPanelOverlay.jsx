@@ -40,5 +40,5 @@ export default function OrganizationSettingsPolicyEditorPanelOverlay({ policyMod
 }
 
 OrganizationSettingsPolicyEditorPanelOverlay.propTypes = {
-  policyName: PropTypes.string,
+  policyModel: PropTypes.object,
 };
