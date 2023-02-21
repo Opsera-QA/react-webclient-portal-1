@@ -297,7 +297,7 @@ mergeSyncTaskWizardActions.fileConvertView = async (
   const apiUrl = `/tasks/merge-sync-task/wizard/file/convert`;
   const postBody = {
     taskId: taskWizardModel?.getData("taskId"),
-    fileContent: "",
+    fileContent: fileContent,
     conversionTypeFrom: conversionTypeFrom,
     conversionTypeTo: conversionTypeTo
   };

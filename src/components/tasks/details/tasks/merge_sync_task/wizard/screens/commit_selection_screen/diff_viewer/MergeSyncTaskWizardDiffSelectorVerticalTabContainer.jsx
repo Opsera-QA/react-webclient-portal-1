@@ -8,6 +8,8 @@ import {
 import MonacoEditorCodeDiffInputBase
   from "components/common/inputs/code/monaco/MonacoEditorCodeDiffInputBase";
 import MergeSyncTaskWizardSubmitEditedFileButton from "../file_editor/MergeSyncTaskWizardSubmitEditedFileButton";
+import MergeSyncTaskWizardProfilesAdvancedEditingPanel
+  from "../file_editor/MergeSyncTaskWizardProfilesAdvancedEditingPanel";
 
 const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
   file,
@@ -32,8 +34,6 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
     setComparisonFileModel({ ...newComparisonFileModel });
   };
 
-  console.log(inJsonView);
-
   const getCurrentView = () => {
     if (!comparisonFileModel) {
       return <div className={"m-2"}>Unsupported File Format</div>;
@@ -43,7 +43,19 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
     }
 
     if (inJsonView) {
-      return <>{sourceContent}</>;
+      return(
+        <MergeSyncTaskWizardProfilesAdvancedEditingPanel
+          wizardModel={wizardModel}
+          comparisonFileModel={comparisonFileModel}
+          setComparisonFileModel={setComparisonFileModel}
+          originalContent={destinationContent}
+          modifiedContent={sourceContent}
+          isLoading={isLoading}
+          height={
+            MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT
+          }
+        />
+      );
     }
 
     return (
