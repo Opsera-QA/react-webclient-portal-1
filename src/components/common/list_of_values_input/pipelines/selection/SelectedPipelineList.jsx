@@ -1,8 +1,6 @@
 import React, {useCallback, useState} from "react";
 import PropTypes from "prop-types";
 import {faCompassDrafting} from "@fortawesome/pro-light-svg-icons";
-import {Col, Row} from "react-bootstrap";
-import useGetAllPipelines from "hooks/workflow/pipelines/useGetAllPipelines";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {PipelineSelectionCard} from "components/common/list_of_values_input/pipelines/selection/PipelineSelectionCard";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
@@ -10,6 +8,7 @@ import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import RemoveAllButtonBase from "temp-library-components/button/remove/RemoveAllButtonBase";
 import RemoveSelectedButtonBase from "temp-library-components/button/remove/RemoveSelectedButtonBase";
 import RemoveShownButtonBase from "temp-library-components/button/remove/RemoveShownButtonBase";
+import useGetPipelines from "hooks/workflow/pipelines/useGetPipelines";
 
 export const sortByName = (pipelines) => {
   if (Array.isArray(pipelines) && pipelines.length > 0) {
@@ -54,8 +53,11 @@ export default function SelectedPipelineList(
     isLoading,
     error,
     pipelines,
-  } = useGetAllPipelines(
+  } = useGetPipelines(
     ["name", "owner"],
+    undefined,
+    undefined,
+    10000,
   );
   const [selectedPipelines, setSelectedPipelines] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -131,19 +133,19 @@ export default function SelectedPipelineList(
 
     if (filteredPipelines.length === 0) {
       return (
-        <ul className={"list-group membership-list"}>
+        <div className={"membership-list"}>
           <div className={"h-100 m-auto text-center"}>
             <span>No Pipelines Found</span>
           </div>
-        </ul>
+        </div>
       );
     }
 
     return (
-      <ul className={"list-group membership-list"}>
+      <div className={"membership-list"}>
         {filteredPipelines.map((pipeline, index) => {
           return (
-            <div key={pipeline?._id} className={index % 2 === 0 ? "even-row" : "odd-row"}>
+            <div key={pipeline?._id} className={index % 2 === 0 ? "even-row-background-color" : "odd-row-background-color"}>
               <PipelineSelectionCard
                 selectedPipelines={selectedPipelines}
                 setSelectedPipelines={setSelectedPipelines}
@@ -153,7 +155,7 @@ export default function SelectedPipelineList(
             </div>
           );
         })}
-      </ul>
+      </div>
     );
   };
 
@@ -210,8 +212,18 @@ export default function SelectedPipelineList(
           searchTerm={searchText}
           showSearchBar={true}
         />
-        <div className={"content-container"}>
-          <div className={"px-2 py-1 d-flex justify-content-between"}>
+        <div
+          className={"content-container"}
+          style={{
+            overflowX: "auto",
+          }}
+        >
+          <div
+            className={"px-2 py-1 d-flex justify-content-between"}
+            style={{
+              borderBottom: "1px solid #E6E5E3",
+            }}
+          >
             <div className={"my-auto"}>
 
             </div>
@@ -219,7 +231,13 @@ export default function SelectedPipelineList(
               {filteredPipelines.length} {filteredPipelines.length !== 1 ? "Pipelines" : "Pipeline"}
             </div>
           </div>
-          {getPipelineCards()}
+          <div
+            style={{
+              overflowX: "auto",
+            }}
+          >
+            {getPipelineCards()}
+          </div>
           {getButtons()}
         </div>
       </div>

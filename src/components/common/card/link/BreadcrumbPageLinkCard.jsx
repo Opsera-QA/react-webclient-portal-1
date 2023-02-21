@@ -30,6 +30,14 @@ export default function BreadcrumbPageLinkCard(
     return null;
   }
 
+  const getLink = () => {
+    if (breadcrumbPath.startsWith("/") !== true) {
+      return `/${breadcrumbPath}`;
+    }
+
+    return breadcrumbPath;
+  };
+
   if (hasStringValue(breadcrumbPath) !== true) {
     return null;
   }
@@ -38,7 +46,7 @@ export default function BreadcrumbPageLinkCard(
     <PageLinkCard
       linkText={breadcrumb?.linkText}
       icon={breadcrumb?.icon}
-      link={`/${breadcrumbPath}`}
+      link={getLink()}
       visible={visible}
       pageDescription={breadcrumb?.pageDescription}
       className={className}

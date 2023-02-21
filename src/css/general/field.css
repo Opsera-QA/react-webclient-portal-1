@@ -99,10 +99,8 @@ pre {
 .membership-list {
     min-height: 370px;
     max-height: 370px;
-    background-color: #E7E5ED;
     list-style-type: none;
     overflow-y: auto;
-    border-bottom: 1px solid #E6E5E3;
 }
 
 .text-input-list {
@@ -442,3 +440,10 @@ input[disabled] {
     pointer-events: none;
 }
 /* End Vanity Set V3 Component CSS */
+
+.text-input-icon {
+    position: absolute;
+    right: 20px;
+    top: 40px;
+    font-size: 1.2rem;
+}

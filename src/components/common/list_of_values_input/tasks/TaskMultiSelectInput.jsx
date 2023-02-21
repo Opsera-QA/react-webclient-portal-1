@@ -16,7 +16,12 @@ export default function TaskMultiSelectInput(
     isLoading,
     error,
     tasks,
-  } = useGetTasks();
+  } = useGetTasks(
+    ["name", "owner"],
+    undefined,
+    false,
+    10000,
+  );
 
   return (
     <MultiSelectInputBase

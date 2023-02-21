@@ -8,7 +8,7 @@ import usePolicyActions from "hooks/settings/organization_settings/policies/useP
 import {policyHelper} from "components/settings/organization_settings/policies/policy.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-export default function ActivatePolicyButton(
+export default function PolicyManagementActivatePolicyButton(
   {
     policyModel,
     closeOverlayFunction,
@@ -55,7 +55,7 @@ export default function ActivatePolicyButton(
   );
 }
 
-ActivatePolicyButton.propTypes = {
+PolicyManagementActivatePolicyButton.propTypes = {
   policyModel: PropTypes.object,
   closeOverlayFunction: PropTypes.func,
   className: PropTypes.string,

@@ -30,14 +30,28 @@ export function PipelineSelectionCard(
     }
   };
 
+  const getClassNames = () => {
+    let classNames = "py-1";
+
+    if (selectedPipelines.includes(pipeline)) {
+      classNames += " selected";
+    }
+
+    if (disabled !== true) {
+      classNames += " pointer";
+    }
+
+    return classNames;
+  };
+
   return (
     <div
       key={pipeline._id}
-      className={selectedPipelines.includes(pipeline) ? "py-1 member-list selected" : "py-1 member-list"}
+      className={getClassNames()}
       onClick={disabled !== true ? selectPipeline : undefined}
     >
       <Row className={"mx-0"}>
-        <Col lg={12} xl={stacked !== true ? 6 : 12} className={"no-wrap-inline"}>{truncateString(pipeline.name, 50)}</Col>
+        <Col lg={12} xl={stacked !== true ? 6 : 12}>{truncateString(pipeline.name, 50)}</Col>
         <Col lg={12} xl={stacked !== true ? 6 : 12} className={selectedPipelines.includes(pipeline) ? "d-flex w-100" : "d-flex w-100"}>
           <div>{pipeline.owner_name}</div>
         </Col>

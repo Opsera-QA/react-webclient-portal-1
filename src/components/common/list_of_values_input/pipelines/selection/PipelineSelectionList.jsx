@@ -1,18 +1,17 @@
 import React, {useCallback, useState} from "react";
 import PropTypes from "prop-types";
 import {faCompassDrafting} from "@fortawesome/pro-light-svg-icons";
-import {Row, Col} from "react-bootstrap";
 import {PipelineSelectionCard} from "components/common/list_of_values_input/pipelines/selection/PipelineSelectionCard";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {sortByName} from "components/common/list_of_values_input/pipelines/selection/SelectedPipelineList";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import useGetAllPipelines from "hooks/workflow/pipelines/useGetAllPipelines";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import AddAllButtonBase from "temp-library-components/button/add/AddAllButtonBase";
 import AddSelectedButtonBase from "temp-library-components/button/add/AddSelectedButtonBase";
 import AddShownButtonBase from "temp-library-components/button/add/AddShownButtonBase";
 import PipelineVerticalTabContainer from "components/workflow/pipelines/PipelineVerticalTabContainer";
+import useGetPipelines from "hooks/workflow/pipelines/useGetPipelines";
 
 export default function PipelineSelectionList(
   {
@@ -32,10 +31,12 @@ export default function PipelineSelectionList(
     error,
     pipelines,
     pipelineFilterModel,
-    setPipelineFilterModel,
     loadData,
-  } = useGetAllPipelines(
+  } = useGetPipelines(
     ["name", "owner"],
+    undefined,
+    undefined,
+    10000,
   );
 
   const getUnselectedPipelines = () => {
@@ -185,6 +186,11 @@ export default function PipelineSelectionList(
     );
   };
 
+  const handleLoadData = (newFilterModel) => {
+    setSelectedPipelines([]);
+    loadData(newFilterModel);
+  };
+
   const getBody = () => {
     return (
       <div>
@@ -198,7 +204,9 @@ export default function PipelineSelectionList(
           showSearchBar={true}
           field={field}
         />
-        <div className="content-container">
+        <div
+          className={"content-container"}
+        >
           <div
             className={"px-2 py-1 d-flex justify-content-between"}
             style={{
@@ -224,10 +232,15 @@ export default function PipelineSelectionList(
               <PipelineVerticalTabContainer
                 isLoading={isLoading}
                 pipelineFilterModel={pipelineFilterModel}
-                loadData={loadData}
+                loadData={handleLoadData}
               />
             </div>
-            <div className={"w-100"}>
+            <div
+              className={"w-100"}
+              style={{
+                overflowX: "auto",
+              }}
+            >
               {getPipelineCards()}
             </div>
           </div>
