@@ -287,7 +287,7 @@ export const getTableCreatedAtColumn = (
     Header: header,
     accessor: "createdAt",
     Cell: function parseDateTime(row) {
-      return row.value ? DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(row.value)) : emptyValuePlaceholder;
+      return row.value ? DateFormatHelper.formatDate(new Date(row.value)) : emptyValuePlaceholder;
     },
     class: className,
   };
