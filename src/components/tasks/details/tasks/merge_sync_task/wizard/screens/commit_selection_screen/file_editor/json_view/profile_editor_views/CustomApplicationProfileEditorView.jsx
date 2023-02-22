@@ -9,7 +9,7 @@ import { jsonViewFileMetadata } from "../../../jsonViewFile.metadata";
 import TextFieldBase from "../../../../../../../../../../common/fields/text/TextFieldBase";
 import { customApplicationJsonMetadata } from "../jsonFileEdit.metadata";
 
-const CustomApplicationProfleEditorView = ({
+const CustomApplicationProfileEditorView = ({
   customAppData,
   setCustomAppJson,
   isLoading,
@@ -69,10 +69,10 @@ const CustomApplicationProfleEditorView = ({
 };
 
 
-CustomApplicationProfleEditorView.propTypes = {
+CustomApplicationProfileEditorView.propTypes = {
   setCustomAppJson: PropTypes.func,
   isLoading: PropTypes.bool,
   customAppData: PropTypes.object,
 };
 
-export default CustomApplicationProfleEditorView;
+export default CustomApplicationProfileEditorView;

@@ -3,16 +3,15 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ApexClassProfleEditorView from "./profile_editor_views/ApexClassProfleEditorView";
+import DataCategoryProfileEditorView from "./profile_editor_views/DataCategoryProfileEditorView";
 import { DividerWithCenteredText } from "../../../../../../../../../../temp-library-components/divider/DividerWithCenteredText";
-import CustomApplicationProfileEditorView from "./profile_editor_views/CustomApplicationProfileEditorView";
 
-const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
+const MergeSyncTaskWizardDataCategoryJsonEditPanel = ({
   wizardModel,
   // comparisonFileModel,
   // setComparisonFileModel,
-  modifiedCustomAppJson,
-  originalCustomAppJson,
+  modifiedDataCategoryJson,
+  originalDataCategoryJson,
   modifiedContentJson,
   originalContentJson,
   setModifiedContentJson,
@@ -27,29 +26,28 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
       />
     );
   }
-  const setCustomAppJson = (modifiedValue) => {
+  const setDataCategoryJson = (modifiedValue) => {
     let newModifiedJson = { ...modifiedContentJson };
-    let modifiedItem = newModifiedJson?.applicationVisibilities.find(
-      (appVisibility) =>
-        appVisibility.application === modifiedValue.application,
+    let modifiedItem = newModifiedJson?.categoryGroupVisibilities.find(
+      (groupVisibility) =>
+        groupVisibility.dataCategoryGroup === modifiedValue.dataCategoryGroup,
     );
     if (modifiedItem) {
-      modifiedItem.default = modifiedValue.default;
-      modifiedItem.visible = modifiedValue.visible;
+      modifiedItem.visibility = modifiedValue.visibility;
     }
     setModifiedContentJson(newModifiedJson);
   };
 
-  const modifiedAppVisibilityEditView = () => {
+  const modifiedDataCategoryEditView = () => {
     return (
       <Col>
         <span className="h5">Source Profiles</span>
-        {modifiedCustomAppJson &&
-          modifiedCustomAppJson.map((customApp, idx, { length }) => (
+        {modifiedDataCategoryJson &&
+          modifiedDataCategoryJson.map((dataCategory, idx, { length }) => (
             <div key={idx}>
-              <CustomApplicationProfileEditorView
-                customAppData={customApp}
-                setCustomAppJson={setCustomAppJson}
+              <DataCategoryProfileEditorView
+                dataCategory={dataCategory}
+                setDataCategoryJson={setDataCategoryJson}
                 isLoading={isLoading}
               />
               {idx + 1 !== length && (
@@ -61,16 +59,16 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
     );
   };
 
-  const originalAppVisibilityEditView = () => {
+  const originalDataCategoryEditView = () => {
     return (
       <Col>
         <span className="h5">Target Profiles</span>
-        {originalCustomAppJson &&
-          originalCustomAppJson.map((customApp, idx, { length }) => (
+        {originalDataCategoryJson &&
+          originalDataCategoryJson.map((dataCategory, idx, { length }) => (
             <div key={idx}>
-              <CustomApplicationProfileEditorView
-                customAppData={customApp}
-                setCustomAppJson={setCustomAppJson}
+              <DataCategoryProfileEditorView
+                dataCategory={dataCategory}
+                setDataCategoryJson={setDataCategoryJson}
                 isLoading={isLoading}
               />
               {idx + 1 !== length && (
@@ -84,24 +82,24 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
   return (
     <div className={"mt-4"}>
       <Row>
-        {originalAppVisibilityEditView()}
-        {modifiedAppVisibilityEditView()}
+        {originalDataCategoryEditView()}
+        {modifiedDataCategoryEditView()}
       </Row>
     </div>
   );
 };
 
-MergeSyncTaskWizardCustomApplicationJsonEditPanel.propTypes = {
+MergeSyncTaskWizardDataCategoryJsonEditPanel.propTypes = {
   wizardModel: PropTypes.object,
   // comparisonFileModel: PropTypes.object,
   // setComparisonFileModel: PropTypes.func,
   isLoading: PropTypes.bool,
-  modifiedCustomAppJson: PropTypes.array,
-  originalCustomAppJson: PropTypes.array,
+  modifiedDataCategoryJson: PropTypes.array,
+  originalDataCategoryJson: PropTypes.array,
   modifiedContentJson: PropTypes.object,
   originalContentJson: PropTypes.object,
   setModifiedContentJson: PropTypes.func,
   setOriginalContentJson: PropTypes.func,
 };
 
-export default MergeSyncTaskWizardCustomApplicationJsonEditPanel;
+export default MergeSyncTaskWizardDataCategoryJsonEditPanel;

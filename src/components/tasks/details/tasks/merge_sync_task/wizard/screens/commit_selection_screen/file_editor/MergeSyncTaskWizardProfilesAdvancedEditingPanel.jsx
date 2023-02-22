@@ -15,6 +15,7 @@ import MergeSyncTaskWizardApexClassJsonEditPanel from "./json_view/MergeSyncTask
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import MergeSyncTaskWizardCustomApplicationJsonEditPanel
   from "./json_view/MergeSyncTaskWizardCustomApplicationJsonEditPanel";
+import MergeSyncTaskWizardDataCategoryJsonEditPanel from "./json_view/MergeSyncTaskWizardDataCategoryJsonEditPanel";
 
 const componentTypeOptions =[
   {name: "CustomApplication", value: "applicationVisibilities"},
@@ -136,7 +137,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
     },
       {
         "dataCategoryGroup": "new_User_Roles1",
-        "visibility": "ALL"
+        "visibility": "NONE"
       },
       {
         "dataCategoryGroup": "new_User_Roles2",
@@ -144,7 +145,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
       },
       {
         "dataCategoryGroup": "new_User_Roles3",
-        "visibility": "ALL"
+        "visibility": "CUSTOM"
       },{
         "dataCategoryGroup": "new_User_Roles4",
         "visibility": "ALL"
@@ -390,7 +391,20 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
           />
         );
       case "categoryGroupVisibilities":
-        return <>categoryGroupVisibilities</>;
+        return (
+          <MergeSyncTaskWizardDataCategoryJsonEditPanel
+            // comparisonFileModel={comparisonFileModel}
+            // setComparisonFileModel={setComparisonFileModel}
+            // modifiedDataCategoryJson={modifiedContentJson?.categoryGroupVisibilities}
+            // originalDataCategoryJson={originalContentJson?.categoryGroupVisibilities}
+            modifiedDataCategoryJson={mockData?.categoryGroupVisibilities}
+            originalDataCategoryJson={mockData?.categoryGroupVisibilities}
+            modifiedContentJson={modifiedContentJson}
+            originalContentJson={originalContentJson}
+            setModifiedContentJson={setModifiedContentJson}
+            setOriginalContentJson={setOriginalContentJson}
+          />
+        );
       case "classAccesses":
         return (
           <MergeSyncTaskWizardApexClassJsonEditPanel

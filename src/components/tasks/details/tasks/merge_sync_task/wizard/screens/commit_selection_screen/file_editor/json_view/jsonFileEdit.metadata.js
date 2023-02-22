@@ -21,7 +21,7 @@ export const customApplicationJsonMetadata = {
   },
 };
 
-export const dataCategoryJsonMetadata = {
+export const dataCategoryGrpJsonMetadata = {
   type: "DataCategoryGroup",
   fields: [
     {
