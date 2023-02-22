@@ -7,6 +7,9 @@ import policyConstants from "@opsera/definitions/constants/settings/organization
 import useGetPolicyModel from "hooks/settings/organization_settings/policies/useGetPolicyModel";
 import PolicyParametersSummaryPanel
   from "components/settings/organization_settings/policies/details/PolicyParametersSummaryPanel";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import OrganizationSettingsPolicyEditorPanelOverlay
+  from "components/admin/organization_settings/details/policies/OrganizationSettingsPolicyEditorPanelOverlay";
 
 export default function OrganizationSettingsCustomerPolicyPageLinkCardBase(
   {
@@ -18,10 +21,18 @@ export default function OrganizationSettingsCustomerPolicyPageLinkCardBase(
   }) {
   const { getPolicyModel } = useGetPolicyModel();
   const policyModel = getPolicyModel(policy);
-  const history = useHistory();
+  const {
+    toastContext,
+  } = useComponentStateReference();
 
   const handleOnClickFunction = () => {
-    history.push(policyHelper.getDetailViewLink(policy?._id));
+    toastContext.showOverlayPanel(
+      <OrganizationSettingsPolicyEditorPanelOverlay
+        organizationDomain={organizationDomain}
+        organizationAccountId={organizationAccountId}
+        policyModel={policyModel}
+      />
+    );
   };
 
   const getTitle = () => {
