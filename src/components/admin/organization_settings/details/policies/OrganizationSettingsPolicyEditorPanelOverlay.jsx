@@ -21,12 +21,15 @@ export default function OrganizationSettingsPolicyEditorPanelOverlay(
   } = useComponentStateReference();
 
   const updatePolicy = async () => {
-    return await policyAdministrationActions.updatePolicy(
+    const response = await policyAdministrationActions.updatePolicy(
       policyModel?.getMongoDbId(),
       policyModel?.getPersistData(),
       organizationDomain,
       organizationAccountId,
     );
+
+    handleCloseFunction();
+    return response;
   };
 
   const handleCloseFunction = () => {
