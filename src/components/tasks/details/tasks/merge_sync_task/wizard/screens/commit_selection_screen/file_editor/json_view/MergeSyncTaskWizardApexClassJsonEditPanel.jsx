@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ApexClassProfleEditorView from "./apex_class/ApexClassProfleEditorView";
+import ApexClassProfleEditorView from "./profile_editor_views/ApexClassProfleEditorView";
 import { DividerWithCenteredText } from "../../../../../../../../../../temp-library-components/divider/DividerWithCenteredText";
 
 const MergeSyncTaskWizardApexClassJsonEditPanel = ({
