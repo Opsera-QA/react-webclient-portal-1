@@ -11,7 +11,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import FileReaderInputBase from "components/common/inputs/file/FileReaderInputBase";
 
-function CoverityToolConfiguration({ toolData }) {
+function CoverityToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [coverityConfigurationDto, setCoverityConfigurationDto] = useState(undefined);
 
@@ -31,7 +31,8 @@ function CoverityToolConfiguration({ toolData }) {
     newConfiguration.license = await toolsActions.savePasswordToVault(toolData, coverityConfigurationDto, "license", newConfiguration.license, getAccessToken);
 
     const item = {configuration: newConfiguration};
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   return (
@@ -55,6 +56,8 @@ function CoverityToolConfiguration({ toolData }) {
 }
 CoverityToolConfiguration.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default CoverityToolConfiguration;

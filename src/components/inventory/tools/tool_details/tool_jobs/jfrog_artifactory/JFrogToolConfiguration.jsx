@@ -11,7 +11,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 
-function JFrogToolConfiguration({ toolData }) {
+function JFrogToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [jFrogToolConfigurationModel, setJFrogToolConfigurationModel] = useState(undefined);
 
@@ -27,7 +27,8 @@ function JFrogToolConfiguration({ toolData }) {
     let newConfiguration = jFrogToolConfigurationModel.getPersistData();
     newConfiguration.accountPassword = await toolsActions.savePasswordToVault(toolData, jFrogToolConfigurationModel,"accountPassword", newConfiguration.accountPassword, getAccessToken);
     const item = { configuration: newConfiguration };
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   return (
@@ -65,7 +66,9 @@ JFrogToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId:  PropTypes.string,
   fnSaveChanges: PropTypes.func,
-  fnSaveToVault: PropTypes.func
+  fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default JFrogToolConfiguration;

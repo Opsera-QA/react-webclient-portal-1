@@ -13,7 +13,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
-function AzureDevopsToolConfiguration({ toolData }) {
+function AzureDevopsToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [azureDevOpsConfigurationModel, setAzureDevOpsConfigurationModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -48,7 +48,8 @@ function AzureDevopsToolConfiguration({ toolData }) {
     const newConfiguration = azureDevOpsConfigurationModel?.getPersistData();
     newConfiguration.accountPassword = await toolsActions.saveThreePartToolPasswordToVaultV3(getAccessToken, cancelTokenSource, toolData?.getData("_id"), toolData?.getData("tool_identifier"), "accountPassword", newConfiguration?.accessToken);
     newConfiguration.accessToken = await toolsActions.saveThreePartToolPasswordToVaultV2(getAccessToken, cancelTokenSource, toolData, azureDevOpsConfigurationModel, "accessToken", newConfiguration?.accessToken);
-    return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
+    await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   return (
@@ -81,7 +82,9 @@ AzureDevopsToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId: PropTypes.string,
   saveToolConfiguration: PropTypes.func,
-  fnSaveToVault: PropTypes.func
+  fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func,
 };
 
 export default AzureDevopsToolConfiguration;

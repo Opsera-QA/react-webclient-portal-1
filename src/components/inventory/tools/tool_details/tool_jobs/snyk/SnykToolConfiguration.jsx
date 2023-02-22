@@ -10,7 +10,7 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import SnykConnectivityTypeSelectInput from "components/inventory/tools/tool_details/tool_jobs/snyk/inputs/SnykConnectivityTypeSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
-function SnykToolConfiguration({ toolData }) {
+function SnykToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [snykConfigurationModel, setSnykConfigurationModel] = useState(undefined);
 
@@ -43,11 +43,8 @@ function SnykToolConfiguration({ toolData }) {
     );
 
     const item = { configuration: newConfiguration };
-    return await toolsActions.saveToolConfiguration(
-      toolData,
-      item,
-      getAccessToken,
-    );
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   if (snykConfigurationModel == null) {
@@ -93,6 +90,8 @@ SnykToolConfiguration.propTypes = {
   toolId: PropTypes.string,
   saveToolConfiguration: PropTypes.func,
   fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default SnykToolConfiguration;
