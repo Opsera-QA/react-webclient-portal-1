@@ -6,12 +6,12 @@ import DeleteConfirmationOverlay from "components/common/overlays/center/delete/
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PolicyRoleHelper from "@opsera/know-your-role/roles/settings/policies/policyRole.helper";
 import {useHistory} from "react-router-dom";
-import usePolicyAdministrationActions
-  from "hooks/settings/organization_settings/policies/usePolicyAdministrationActions";
+import useFeatureFlagAdministrationActions
+  from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
 
 export default function DeleteOrganizationAccountFeatureFlagActionBarButton(
   {
-    policyModel,
+    featureFlagModel,
     organizationDomain,
     organizationAccountId,
     className,
@@ -21,11 +21,11 @@ export default function DeleteOrganizationAccountFeatureFlagActionBarButton(
     toastContext,
   } = useComponentStateReference();
   const history = useHistory();
-  const policyAdministrationActions = usePolicyAdministrationActions();
+  const featureFlagAdministrationActions = useFeatureFlagAdministrationActions();
 
   const handleDeleteFunction = async () => {
-    return await policyAdministrationActions.deletePolicy(
-      policyModel?.getMongoDbId(),
+    return await featureFlagAdministrationActions.deleteFeatureFlag(
+      featureFlagModel?.getMongoDbId(),
       organizationDomain,
       organizationAccountId,
     );
@@ -41,10 +41,6 @@ export default function DeleteOrganizationAccountFeatureFlagActionBarButton(
     );
   };
 
-  if (PolicyRoleHelper.canEditPolicies(userData) !== true) {
-    return null;
-  }
-
   return (
     <ActionBarButton
       action={showOverlayFunction}
@@ -57,7 +53,7 @@ export default function DeleteOrganizationAccountFeatureFlagActionBarButton(
 }
 
 DeleteOrganizationAccountFeatureFlagActionBarButton.propTypes = {
-  policyModel: PropTypes.object,
+  featureFlagModel: PropTypes.object,
   organizationDomain: PropTypes.string,
   organizationAccountId: PropTypes.string,
   className: PropTypes.string,

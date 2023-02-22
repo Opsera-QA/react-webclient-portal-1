@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
-import OrganizationSettingsPipelinePublishingPolicyPageLinkCard
-  from "components/admin/organization_settings/details/policies/cards/pipelines/publishing/OrganizationSettingsPipelinePublishingPolicyPageLinkCard";
+import featureFlagConstants
+  from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
+import OrganizationSettingsVnextSidebarLinkFeatureFlagPageLinkCard
+  from "components/admin/organization_settings/details/features/analytics/vnext/OrganizationSettingsVnextSidebarLinkFeatureFlagPageLinkCard";
 
 // TODO: Make constants
 export default function OrganizationSettingsFeatureFlagsPanel(
@@ -13,7 +14,7 @@ export default function OrganizationSettingsFeatureFlagsPanel(
     organizationAccountId,
   }) {
   const parsedFeatures = DataParsingHelper.parseArray(organizationSettingsModel?.getData("features"), []);
-  const pipelinePublishingRestrictionsPolicy = parsedFeatures.find((siteRole) => siteRole.name === policyConstants.POLICY_NAMES.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS);
+  const showInsightsVnextSidebarLinkFeatureFlag = parsedFeatures.find((featureFlag) => featureFlag.name === featureFlagConstants.FEATURE_FLAG_NAMES.SHOW_INSIGHTS_VNEXT_SIDEBAR_LINK);
 
   if (!parsedFeatures) {
     return null;
@@ -21,8 +22,8 @@ export default function OrganizationSettingsFeatureFlagsPanel(
 
   return (
     <div className={"mx-3"}>
-      <OrganizationSettingsPipelinePublishingPolicyPageLinkCard
-        pipelinePublishingRestrictionsPolicy={pipelinePublishingRestrictionsPolicy}
+      <OrganizationSettingsVnextSidebarLinkFeatureFlagPageLinkCard
+        featureFlag={showInsightsVnextSidebarLinkFeatureFlag}
         organizationDomain={organizationDomain}
         organizationAccountId={organizationAccountId}
       />

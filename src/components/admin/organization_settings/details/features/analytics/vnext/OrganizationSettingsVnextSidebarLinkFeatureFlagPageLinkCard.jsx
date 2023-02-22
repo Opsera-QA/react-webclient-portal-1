@@ -1,19 +1,19 @@
 import React from "react";
 import PropType from "prop-types";
-import OrganizationSettingsInactivePipelinePublishingPolicyPageLinkCard
-  from "components/admin/organization_settings/details/policies/cards/pipelines/publishing/OrganizationSettingsInactivePipelinePublishingPolicyPageLinkCard";
-import OrganizationSettingsCustomerPolicyPageLinkCardBase
-  from "components/admin/organization_settings/details/policies/OrganizationSettingsCustomerPolicyPageLinkCardBase";
+import OrganizationSettingsInactiveVnextSidebarLinkFeatureFlagPageLinkCard
+  from "components/admin/organization_settings/details/features/analytics/vnext/OrganizationSettingsInactiveVnextSidebarLinkFeatureFlagPageLinkCard";
+import OrganizationSettingsFeatureFlagsPageLinkCardBase
+  from "components/admin/organization_settings/details/features/OrganizationSettingsFeatureFlagsPageLinkCardBase";
 
 export default function OrganizationSettingsVnextSidebarLinkFeatureFlagPageLinkCard(
   {
-    pipelinePublishingRestrictionsPolicy,
+    featureFlag,
     organizationDomain,
     organizationAccountId,
   }) {
-  if (pipelinePublishingRestrictionsPolicy == null) {
+  if (featureFlag == null) {
     return (
-      <OrganizationSettingsInactivePipelinePublishingPolicyPageLinkCard
+      <OrganizationSettingsInactiveVnextSidebarLinkFeatureFlagPageLinkCard
         organizationDomain={organizationDomain}
         organizationAccountId={organizationAccountId}
       />
@@ -21,8 +21,8 @@ export default function OrganizationSettingsVnextSidebarLinkFeatureFlagPageLinkC
   }
 
   return (
-    <OrganizationSettingsCustomerPolicyPageLinkCardBase
-      policy={pipelinePublishingRestrictionsPolicy}
+    <OrganizationSettingsFeatureFlagsPageLinkCardBase
+      featureFlag={featureFlag}
       organizationDomain={organizationDomain}
       organizationAccountId={organizationAccountId}
     />

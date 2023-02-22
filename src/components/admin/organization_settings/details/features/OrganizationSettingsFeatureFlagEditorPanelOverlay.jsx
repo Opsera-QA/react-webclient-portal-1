@@ -10,6 +10,8 @@ import usePolicyAdministrationActions
 import DeleteOrganizationAccountPolicyActionBarButton
   from "components/admin/organization_settings/details/policies/DeleteOrganizationAccountPolicyActionBarButton";
 import {useHistory} from "react-router-dom";
+import DeleteOrganizationAccountFeatureFlagActionBarButton
+  from "components/admin/organization_settings/details/features/DeleteOrganizationAccountFeatureFlagActionBarButton";
 
 export default function OrganizationSettingsFeatureFlagEditorPanelOverlay(
   {
@@ -49,7 +51,7 @@ export default function OrganizationSettingsFeatureFlagEditorPanelOverlay(
     <ConfirmationOverlay
       closePanel={handleCloseFunction}
       showPanel={true}
-      titleText={`Edit Policy?`}
+      titleText={`Edit Feature Flag?`}
       titleIcon={faQuestionCircle}
       showToasts={true}
       showCloseButton={false}
@@ -62,7 +64,7 @@ export default function OrganizationSettingsFeatureFlagEditorPanelOverlay(
         recordDto={policyModelCopy}
         setRecordDto={setPolicyModelCopy}
         extraButtons={
-          <DeleteOrganizationAccountPolicyActionBarButton
+          <DeleteOrganizationAccountFeatureFlagActionBarButton
             policyModel={policyModelCopy}
             organizationDomain={organizationDomain}
             organizationAccountId={organizationAccountId}
