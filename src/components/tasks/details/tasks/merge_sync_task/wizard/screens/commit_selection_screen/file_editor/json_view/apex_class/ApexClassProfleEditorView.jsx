@@ -10,10 +10,8 @@ import TextFieldBase from "../../../../../../../../../../common/fields/text/Text
 import { apexClassFileJsonMetadata } from "../jsonFileEdit.metadata";
 
 const ApexClassProfleEditorView = ({
-  wizardModel,
-  comparisonFileModel,
-  setComparisonFileModel,
   apexClassData,
+  setApexClassJson,
   isLoading,
 }) => {
   const [apexClassJsonMetadata, setApexClassJsonMetadata] = useState(undefined);
@@ -35,6 +33,13 @@ const ApexClassProfleEditorView = ({
     );
   }
 
+  const setDataFunction = (fieldName, newValue) => {
+    const newModel = { ...apexClassJsonMetadata };
+    newModel?.setData("enabled", newValue);
+    setApexClassJsonMetadata({ ...newModel });
+    setApexClassJson(newModel.getPersistData());
+  };
+
   return (
     <div>
       <Col>
@@ -48,6 +53,7 @@ const ApexClassProfleEditorView = ({
           fieldName={"enabled"}
           model={apexClassJsonMetadata}
           setModel={setApexClassJsonMetadata}
+          setDataFunction={setDataFunction}
         />
       </Col>
     </div>
@@ -56,9 +62,7 @@ const ApexClassProfleEditorView = ({
 
 
 ApexClassProfleEditorView.propTypes = {
-  wizardModel: PropTypes.object,
-  comparisonFileModel: PropTypes.object,
-  setComparisonFileModel: PropTypes.func,
+  setApexClassJson: PropTypes.func,
   isLoading: PropTypes.bool,
   apexClassData: PropTypes.object,
 };

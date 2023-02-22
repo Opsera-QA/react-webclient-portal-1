@@ -8,42 +8,16 @@ import { DividerWithCenteredText } from "../../../../../../../../../../temp-libr
 
 const MergeSyncTaskWizardApexClassJsonEditPanel = ({
   wizardModel,
-  comparisonFileModel,
-  setComparisonFileModel,
+  // comparisonFileModel,
+  // setComparisonFileModel,
   modifiedApexClassJson,
   originalApexClassJson,
+  modifiedContentJson,
+  originalContentJson,
+  setModifiedContentJson,
+  setOriginalContentJson,
   isLoading,
 }) => {
-  const mockData = [
-    {
-      apexClass: "newcreatePartnerLibraryTest",
-      enabled: "false",
-    },
-    {
-      apexClass: "newcreatePartnerLibraryTest",
-      enabled: "false",
-    },
-    {
-      apexClass: "newcreatePartnerLibraryTest",
-      enabled: "false",
-    },
-    {
-      apexClass: "newcreatePartnerLibraryTest",
-      enabled: "false",
-    },
-    {
-      apexClass: "newcreatePartnerLibraryTest",
-      enabled: "false",
-    },
-    {
-      apexClass: "newcreatePartnerLibraryTest",
-      enabled: "false",
-    },
-    {
-      apexClass: "newcreatePartnerLibraryTest",
-      enabled: "false",
-    },
-  ];
 
   if (isLoading) {
     return (
@@ -53,22 +27,28 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
       />
     );
   }
+  const setApexClassJson = (modifiedValue) => {
+    let newModifiedJson = {...modifiedContentJson};
+    let modifiedItem = newModifiedJson?.classAccesses.find(apexClassItem => apexClassItem.apexClass == modifiedValue.apexClass);
+    if (modifiedItem) {
+      modifiedItem.enabled = modifiedValue.enabled;
+    }
+    setModifiedContentJson(newModifiedJson);
+  };
 
   const modifiedApexClassEditView = () => {
     return (
       <Col>
-        {mockData &&
-          mockData.map((apexclass, idx) => (
-            <>
+        {modifiedApexClassJson &&
+          modifiedApexClassJson.map((apexclass, idx) => (
+            <div key={idx}>
               <ApexClassProfleEditorView
-                wizardModel={wizardModel}
-                comparisonFileModel={comparisonFileModel}
-                setComparisonFileModel={setComparisonFileModel}
                 apexClassData={apexclass}
+                setApexClassJson={setApexClassJson}
                 isLoading={isLoading}
               />
               <DividerWithCenteredText className={"m-4"} />
-            </>
+            </div>
           ))}
       </Col>
     );
@@ -77,14 +57,12 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
   const originalApexClassEditView = () => {
     return (
       <Col>
-        {mockData &&
-          mockData.map((apexclass, idx) => (
+        {originalApexClassJson &&
+          originalApexClassJson.map((apexclass, idx) => (
             <>
               <ApexClassProfleEditorView
-                wizardModel={wizardModel}
-                comparisonFileModel={comparisonFileModel}
-                setComparisonFileModel={setComparisonFileModel}
                 apexClassData={apexclass}
+                setApexClassJson={setApexClassJson}
                 isLoading={isLoading}
               />
               <DividerWithCenteredText className={"m-4"} />
@@ -105,11 +83,15 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
 
 MergeSyncTaskWizardApexClassJsonEditPanel.propTypes = {
   wizardModel: PropTypes.object,
-  comparisonFileModel: PropTypes.object,
-  setComparisonFileModel: PropTypes.func,
+  // comparisonFileModel: PropTypes.object,
+  // setComparisonFileModel: PropTypes.func,
   isLoading: PropTypes.bool,
   modifiedApexClassJson: PropTypes.array,
   originalApexClassJson: PropTypes.array,
+  modifiedContentJson: PropTypes.object,
+  originalContentJson: PropTypes.object,
+  setModifiedContentJson: PropTypes.func,
+  setOriginalContentJson: PropTypes.func,
 };
 
 export default MergeSyncTaskWizardApexClassJsonEditPanel;
