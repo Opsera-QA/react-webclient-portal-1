@@ -5,14 +5,19 @@ import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import PolicyManagementActivatePolicyButton
-  from "components/settings/organization_settings/policies/cards/inactive/PolicyManagementActivatePolicyButton";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 import useGetNewPolicyModel from "hooks/settings/organization_settings/policies/useGetNewPolicyModel";
 import PolicyEditorPanelBase from "components/settings/organization_settings/policies/details/PolicyEditorPanelBase";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import OrganizationSettingsActivatePolicyButton
+  from "components/admin/organization_settings/details/policies/inactive/OrganizationSettingsActivatePolicyButton";
 
-export default function OrganizationSettingsPolicyActivationConfirmationOverlay({ policyName }) {
+export default function OrganizationSettingsPolicyActivationConfirmationOverlay(
+  {
+    policyName,
+    organizationDomain,
+    organizationAccountName,
+  }) {
   const {
     policyModel,
     setPolicyModel,
@@ -55,8 +60,10 @@ export default function OrganizationSettingsPolicyActivationConfirmationOverlay(
             setPolicyModel={setPolicyModel}
           />
           <ButtonContainerBase>
-            <PolicyManagementActivatePolicyButton
+            <OrganizationSettingsActivatePolicyButton
               policyModel={policyModel}
+              organizationDomain={organizationDomain}
+              organizationAccountName={organizationAccountName}
               closeOverlayFunction={closeOverlayFunction}
             />
           </ButtonContainerBase>
@@ -68,4 +75,6 @@ export default function OrganizationSettingsPolicyActivationConfirmationOverlay(
 
 OrganizationSettingsPolicyActivationConfirmationOverlay.propTypes = {
   policyName: PropTypes.string,
+  organizationDomain: PropTypes.string,
+  organizationAccountName: PropTypes.string,
 };

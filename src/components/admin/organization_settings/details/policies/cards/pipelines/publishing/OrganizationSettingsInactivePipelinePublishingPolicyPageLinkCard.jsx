@@ -5,8 +5,13 @@ import InactivePipelinePublishingPolicyPageLinkCardBase
   from "temp-library-components/cards/policies/pipelines/publishing/InactivePipelinePublishingPolicyPageLinkCardBase";
 import OrganizationSettingsPolicyActivationConfirmationOverlay
   from "components/admin/organization_settings/details/policies/inactive/OrganizationSettingsPolicyActivationConfirmationOverlay";
+import PropType from "prop-types";
 
-export default function OrganizationSettingsInactivePipelinePublishingPolicyPageLinkCard() {
+export default function OrganizationSettingsInactivePipelinePublishingPolicyPageLinkCard(
+  {
+    organizationDomain,
+   organizationAccountId,
+  }) {
   const {
     toastContext,
   } = useComponentStateReference();
@@ -15,6 +20,8 @@ export default function OrganizationSettingsInactivePipelinePublishingPolicyPage
     toastContext.showOverlayPanel(
       <OrganizationSettingsPolicyActivationConfirmationOverlay
         policyName={policyConstants.POLICY_NAMES.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS}
+        organizationDomain={organizationDomain}
+        organizationAccountName={organizationAccountId}
       />
     );
   };
@@ -25,3 +32,8 @@ export default function OrganizationSettingsInactivePipelinePublishingPolicyPage
     />
   );
 }
+
+OrganizationSettingsInactivePipelinePublishingPolicyPageLinkCard.propTypes = {
+  organizationDomain: PropType.string,
+  organizationAccountId: PropType.string,
+};

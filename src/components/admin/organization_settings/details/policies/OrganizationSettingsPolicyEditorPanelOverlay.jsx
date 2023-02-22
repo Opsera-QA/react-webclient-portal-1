@@ -4,8 +4,14 @@ import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PolicyEditorPanelBase from "components/settings/organization_settings/policies/details/PolicyEditorPanelBase";
+import PropType from "prop-types";
 
-export default function OrganizationSettingsPolicyEditorPanelOverlay({ policyModel, }) {
+export default function OrganizationSettingsPolicyEditorPanelOverlay(
+  {
+    policyModel,
+    organizationDomain,
+    organizationAccountId,
+  }) {
   const [policyModelCopy, setPolicyModelCopy] = useState(policyModel);
   const {
     toastContext,
@@ -40,4 +46,6 @@ export default function OrganizationSettingsPolicyEditorPanelOverlay({ policyMod
 
 OrganizationSettingsPolicyEditorPanelOverlay.propTypes = {
   policyModel: PropTypes.object,
+  organizationDomain: PropType.string,
+  organizationAccountId: PropType.string,
 };

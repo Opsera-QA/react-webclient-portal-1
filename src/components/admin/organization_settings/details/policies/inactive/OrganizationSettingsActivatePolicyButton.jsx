@@ -4,13 +4,16 @@ import PropTypes from "prop-types";
 import useButtonState from "hooks/general/buttons/useButtonState";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import {useHistory} from "react-router-dom";
-import usePolicyActions from "hooks/settings/organization_settings/policies/usePolicyActions";
 import {policyHelper} from "components/settings/organization_settings/policies/policy.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import usePolicyAdministrationActions
+  from "hooks/settings/organization_settings/policies/usePolicyAdministrationActions";
 
 export default function OrganizationSettingsActivatePolicyButton(
   {
     policyModel,
+    organizationDomain,
+    organizationAccountName,
     closeOverlayFunction,
     className,
   }) {
@@ -22,12 +25,16 @@ export default function OrganizationSettingsActivatePolicyButton(
     buttonState,
     buttonStateFunctions,
   } = useButtonState();
-  const policyActions = usePolicyActions();
+  const policyAdministrationActions = usePolicyAdministrationActions();
 
   const activateSiteRole = async () => {
     try {
       buttonStateFunctions.setBusyState();
-      const response = await policyActions.activatePolicy(policyModel?.getPersistData());
+      const response = await policyAdministrationActions.activatePolicy(
+        policyModel?.getPersistData(),
+        organizationDomain,
+        organizationAccountName,
+      );
       const policy = DataParsingHelper.parseNestedObject(response, "data.data");
 
       if (policy) {
@@ -57,6 +64,8 @@ export default function OrganizationSettingsActivatePolicyButton(
 
 OrganizationSettingsActivatePolicyButton.propTypes = {
   policyModel: PropTypes.object,
+  organizationDomain: PropTypes.string,
+  organizationAccountName: PropTypes.string,
   closeOverlayFunction: PropTypes.func,
   className: PropTypes.string,
 };

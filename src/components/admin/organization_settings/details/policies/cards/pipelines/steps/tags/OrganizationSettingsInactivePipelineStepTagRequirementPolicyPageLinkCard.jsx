@@ -5,8 +5,13 @@ import InactivePipelineStepTagRequirementPolicyPageLinkCardBase
   from "temp-library-components/cards/policies/pipelines/steps/tags/InactivePipelineStepTagRequirementPolicyPageLinkCardBase";
 import OrganizationSettingsPolicyActivationConfirmationOverlay
   from "components/admin/organization_settings/details/policies/inactive/OrganizationSettingsPolicyActivationConfirmationOverlay";
+import PropType from "prop-types";
 
-export default function OrganizationSettingsInactivePipelineStepTagRequirementPolicyPageLinkCard() {
+export default function OrganizationSettingsInactivePipelineStepTagRequirementPolicyPageLinkCard(
+  {
+    organizationDomain,
+    organizationAccountId,
+  }) {
   const {
     toastContext,
   } = useComponentStateReference();
@@ -15,6 +20,8 @@ export default function OrganizationSettingsInactivePipelineStepTagRequirementPo
     toastContext.showOverlayPanel(
       <OrganizationSettingsPolicyActivationConfirmationOverlay
         policyName={policyConstants.POLICY_NAMES.PIPELINE_STEP_TAG_REQUIREMENT}
+        organizationDomain={organizationDomain}
+        organizationAccountName={organizationAccountId}
       />
     );
   };
@@ -25,3 +32,8 @@ export default function OrganizationSettingsInactivePipelineStepTagRequirementPo
     />
   );
 }
+
+OrganizationSettingsInactivePipelineStepTagRequirementPolicyPageLinkCard.propTypes = {
+  organizationDomain: PropType.string,
+  organizationAccountId: PropType.string,
+};

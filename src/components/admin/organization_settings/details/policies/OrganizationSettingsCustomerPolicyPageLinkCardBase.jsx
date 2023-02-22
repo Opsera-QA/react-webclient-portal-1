@@ -13,6 +13,8 @@ export default function OrganizationSettingsCustomerPolicyPageLinkCardBase(
     policy,
     description,
     icon,
+    organizationDomain,
+    organizationAccountId,
   }) {
   const { getPolicyModel } = useGetPolicyModel();
   const policyModel = getPolicyModel(policy);
@@ -58,4 +60,6 @@ OrganizationSettingsCustomerPolicyPageLinkCardBase.propTypes = {
   policy: PropType.object,
   description: PropType.any,
   icon: PropType.object,
+  organizationDomain: PropType.string,
+  organizationAccountId: PropType.string,
 };

@@ -5,10 +5,18 @@ import OrganizationSettingsInactivePipelineStepTagRequirementPolicyPageLinkCard
 import OrganizationSettingsCustomerPolicyPageLinkCardBase
   from "components/admin/organization_settings/details/policies/OrganizationSettingsCustomerPolicyPageLinkCardBase";
 
-export default function OrganizationSettingsPipelineStepTagRequirementPolicyPageLinkCard({ pipelineStepTagRequirementPolicy, }) {
+export default function OrganizationSettingsPipelineStepTagRequirementPolicyPageLinkCard(
+  {
+    pipelineStepTagRequirementPolicy,
+    organizationDomain,
+    organizationAccountId,
+  }) {
   if (pipelineStepTagRequirementPolicy == null) {
     return (
-      <OrganizationSettingsInactivePipelineStepTagRequirementPolicyPageLinkCard />
+      <OrganizationSettingsInactivePipelineStepTagRequirementPolicyPageLinkCard
+        organizationAccountId={organizationAccountId}
+        organizationDomain={organizationDomain}
+      />
     );
   }
 
@@ -25,10 +33,14 @@ export default function OrganizationSettingsPipelineStepTagRequirementPolicyPage
     <OrganizationSettingsCustomerPolicyPageLinkCardBase
       policy={pipelineStepTagRequirementPolicy}
       description={getDescription()}
+      organizationAccountId={organizationAccountId}
+      organizationDomain={organizationDomain}
     />
   );
 }
 
 OrganizationSettingsPipelineStepTagRequirementPolicyPageLinkCard.propTypes = {
   pipelineStepTagRequirementPolicy: PropType.object,
+  organizationDomain: PropType.string,
+  organizationAccountId: PropType.string,
 };
