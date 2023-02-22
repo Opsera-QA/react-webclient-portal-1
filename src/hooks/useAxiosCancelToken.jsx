@@ -2,16 +2,9 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 
 export default function useAxiosCancelToken() {
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [cancelTokenSource, setCancelTokenSource] = useState(axios.CancelToken.source());
 
-  useEffect(() => {
-    const source = axios.CancelToken.source();
-    setCancelTokenSource({...source});
-
-    return () => {
-      source.cancel();
-    };
-  }, []);
+  useEffect(() => {}, []);
 
   const getNewCancelToken = () => {
     if (cancelTokenSource) {

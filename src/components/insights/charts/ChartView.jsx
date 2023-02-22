@@ -189,6 +189,7 @@ import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/Gitl
 import AquasecIssuesBySeverity from "./aquasec_security_insights/AquasecIssuesBySeverity";
 import GitLogDeveloper360 from "./gitlog/commit_activities/GitLogDeveloper360";
 
+
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({
   kpiConfiguration,
@@ -2248,7 +2249,6 @@ function ChartView({
             />
           </Col>
         );
-
       case kpiIdentifierConstants.KPI_IDENTIFIERS.BOOMI_PIPELINE_EXECUTIONS:
         return (
           <Col
@@ -2279,7 +2279,19 @@ function ChartView({
             />
           </Col>
         );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.APPROVAL_GATES:
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_DEVELOPER_360:
+          return (
+            <Col md={6} className="p-2">
+              <GitLogDeveloper360
+                kpiConfiguration={kpiConfig}
+                setKpiConfiguration={setKpiConfig}
+                dashboardData={dashboardData}
+                setKpis={setKpis}
+                index={index}
+              />
+            </Col>
+          );
+        case kpiIdentifierConstants.KPI_IDENTIFIERS.APPROVAL_GATES:
         return (
           <Col
             md={12}
@@ -2305,18 +2317,6 @@ function ChartView({
                   index={index}
               />
             </Col>
-        );
-      case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_DEVELOPER_360:
-        return (
-          <Col md={12} className="p-2">
-            <GitLogDeveloper360
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
         );
       default:
         return null;

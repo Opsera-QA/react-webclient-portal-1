@@ -363,6 +363,21 @@ export const KPI_FILTER_SELECT_OPTIONS = [
     value: [],
   },
   {
+    type: KPI_FILTER_TYPES.GITLOG_AUTHORS,
+    text: KPI_FILTER_TYPE_LABELS.GITLOG_AUTHORS,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.GITLOG_BRANCHES,
+    text: KPI_FILTER_TYPE_LABELS.GITLOG_BRANCHES,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.GITLOG_REPOSITORIES,
+    text: KPI_FILTER_TYPE_LABELS.GITLOG_REPOSITORIES,
+    value: [],
+  },
+  {
     type: KPI_FILTER_TYPES.JIRA_PRIORITIES,
     text: KPI_FILTER_TYPE_LABELS.JIRA_PRIORITIES,
     value: [],
