@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
-import gitlabAction from "../../../../../insights/charts/gitlab/gitlab.action";
+import gitlogAction from "../../../../../insights/charts/gitlog/gitlog.action";
 
-function DeploymentFrequencyConfigurationItemsSelectInputV2({
+function GitLogAuthorsList({
   placeholderText,
   valueField,
   textField,
@@ -60,12 +60,12 @@ function DeploymentFrequencyConfigurationItemsSelectInputV2({
     };
 
     const loadStages = async (cancelSource = cancelTokenSource) => {
-        const response = await gitlabAction.gitlabDeploymentStagesListV2(
+        const response = await gitlogAction.getAuthorsList(
             getAccessToken,
             cancelSource,
         );
         if (response?.data != null) {
-            setStages(response?.data?.data?.gitlabDeploymentStagesList?.data);
+            setStages(response?.data?.gitLogCommitAuthorList?.data);
         }
     };
     return (
@@ -81,12 +81,12 @@ function DeploymentFrequencyConfigurationItemsSelectInputV2({
             textField={textField}
             placeholderText={placeholderText}
             disabled={disabled || isLoading}
-            pluralTopic={"Stages"}
+            pluralTopic={"Authors"}
         />
     );
 }
 
-DeploymentFrequencyConfigurationItemsSelectInputV2.propTypes = {
+GitLogAuthorsList.propTypes = {
     placeholderText: PropTypes.string,
     fieldName: PropTypes.string,
     textField: PropTypes.string,
@@ -98,9 +98,9 @@ DeploymentFrequencyConfigurationItemsSelectInputV2.propTypes = {
     visible: PropTypes.bool,
 };
 
-DeploymentFrequencyConfigurationItemsSelectInputV2.defaultProps = {
+GitLogAuthorsList.defaultProps = {
     textField: "text",
     valueField: "value",
 };
 
-export default DeploymentFrequencyConfigurationItemsSelectInputV2;
+export default GitLogAuthorsList;
