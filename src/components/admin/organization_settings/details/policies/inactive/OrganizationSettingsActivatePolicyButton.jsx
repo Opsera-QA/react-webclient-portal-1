@@ -40,7 +40,7 @@ export default function OrganizationSettingsActivatePolicyButton(
       if (policy) {
         toastContext.showInformationToast("The Policy has been successfully activated.");
         buttonStateFunctions.setSuccessState();
-        history.push(policyHelper.getDetailViewLink(policy?._id));
+        history.push(history.location);
         closeOverlayFunction();
       }
     } catch (error) {

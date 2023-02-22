@@ -9,6 +9,7 @@ import usePolicyAdministrationActions
   from "hooks/settings/organization_settings/policies/usePolicyAdministrationActions";
 import DeletePolicyActionBarButton
   from "components/admin/organization_settings/details/policies/DeleteOrganizationAccountPolicyActionBarButton";
+import {useHistory} from "react-router-dom";
 
 export default function OrganizationSettingsPolicyEditorPanelOverlay(
   {
@@ -16,6 +17,7 @@ export default function OrganizationSettingsPolicyEditorPanelOverlay(
     organizationDomain,
     organizationAccountId,
   }) {
+  const history = useHistory();
   const [policyModelCopy, setPolicyModelCopy] = useState(policyModel);
   const policyAdministrationActions = usePolicyAdministrationActions();
   const {
@@ -36,6 +38,7 @@ export default function OrganizationSettingsPolicyEditorPanelOverlay(
 
   const handleCloseFunction = () => {
     toastContext.clearOverlayPanel();
+    history.push(history.location);
   };
 
   if (policyModelCopy == null) {
