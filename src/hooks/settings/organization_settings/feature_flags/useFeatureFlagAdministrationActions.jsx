@@ -5,7 +5,7 @@ export default function useFeatureFlagAdministrationActions() {
   const featureFlagAdministrationActions = {};
 
   featureFlagAdministrationActions.getPolicies = async () => {
-    const apiUrl = `/administration/organization-settings/featureFlags`;
+    const apiUrl = `/administration/organization-settings/features`;
     return await apiService.handleApiGetRequest(
       apiUrl,
     );
@@ -16,7 +16,7 @@ export default function useFeatureFlagAdministrationActions() {
     organizationDomain,
     organizationAccountId,
   ) => {
-    const apiUrl = `/administration/organization-settings/featureFlags/${organizationDomain}/${organizationAccountId}/${featureFlagId}`;
+    const apiUrl = `/administration/organization-settings/features/${organizationDomain}/${organizationAccountId}/${featureFlagId}`;
     return await apiService.handleApiGetRequest(
       apiUrl,
     );
@@ -27,7 +27,7 @@ export default function useFeatureFlagAdministrationActions() {
     organizationDomain,
     organizationAccountId,
   ) => {
-    const apiUrl = `/administration/organization-settings/featureFlags/name/${organizationDomain}/${organizationAccountId}/${featureFlagName}`;
+    const apiUrl = `/administration/organization-settings/features/name/${organizationDomain}/${organizationAccountId}/${featureFlagName}`;
     return await apiService.handleApiGetRequest(
       apiUrl,
     );
@@ -38,7 +38,7 @@ export default function useFeatureFlagAdministrationActions() {
     organizationDomain,
     organizationAccountId,
   ) => {
-    const apiUrl = `/administration/organization-settings/featureFlags/${organizationDomain}/${organizationAccountId}/`;
+    const apiUrl = `/administration/organization-settings/features/${organizationDomain}/${organizationAccountId}/`;
     return await apiService.handleApiPostRequest(
       apiUrl,
       featureFlag,
@@ -51,7 +51,7 @@ export default function useFeatureFlagAdministrationActions() {
     organizationDomain,
     organizationAccountId,
   ) => {
-    const apiUrl = `/administration/organization-settings/featureFlags/${organizationDomain}/${organizationAccountId}/${featureFlagId}`;
+    const apiUrl = `/administration/organization-settings/features/${organizationDomain}/${organizationAccountId}/${featureFlagId}`;
     return await apiService.handleApiPutRequest(
       apiUrl,
       updatedFeatureFlag,
@@ -63,7 +63,7 @@ export default function useFeatureFlagAdministrationActions() {
     organizationDomain,
     organizationAccountId,
   ) => {
-    const apiUrl = `/administration/organization-settings/featureFlags/${organizationDomain}/${organizationAccountId}/${featureFlagId}`;
+    const apiUrl = `/administration/organization-settings/features/${organizationDomain}/${organizationAccountId}/${featureFlagId}`;
     return await apiService.handleApiDeleteRequest(
       apiUrl,
     );
