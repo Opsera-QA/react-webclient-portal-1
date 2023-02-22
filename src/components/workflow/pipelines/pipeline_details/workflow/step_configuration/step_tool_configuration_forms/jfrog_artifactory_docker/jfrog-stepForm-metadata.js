@@ -31,7 +31,6 @@ const jfrogStepFormMetadata = {
     {
       label: "Repository Name",
       id: "repositoryName",
-      isRequired: true
     },
     {
       label: "Job Description",
