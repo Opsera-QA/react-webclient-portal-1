@@ -45,6 +45,6 @@ export default function OrganizationSettingsPolicyEditorPanelOverlay(
 
 OrganizationSettingsPolicyEditorPanelOverlay.propTypes = {
   policyModel: PropTypes.object,
-  organizationDomain: PropType.string,
-  organizationAccountId: PropType.string,
+  organizationDomain: PropTypes.string,
+  organizationAccountId: PropTypes.string,
 };
