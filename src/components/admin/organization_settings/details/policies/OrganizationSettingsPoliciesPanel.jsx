@@ -12,6 +12,8 @@ import OrganizationSettingsPipelineStepTagRequirementPolicyPageLinkCard
 export default function OrganizationSettingsPoliciesPanel(
   {
     organizationSettingsModel,
+    organizationDomain,
+    organizationAccountId,
   }) {
   const parsedPolicies = DataParsingHelper.parseArray(organizationSettingsModel?.getData("policies"), []);
   const pipelinePublishingRestrictionsPolicy = parsedPolicies.find((siteRole) => siteRole.name === policyConstants.POLICY_NAMES.PIPELINE_PRIVATE_CATALOG_PUBLISHING_RESTRICTIONS);
@@ -26,12 +28,18 @@ export default function OrganizationSettingsPoliciesPanel(
     <div className={"mx-3"}>
       <OrganizationSettingsPipelinePublishingPolicyPageLinkCard
         pipelinePublishingRestrictionsPolicy={pipelinePublishingRestrictionsPolicy}
+        organizationDomain={organizationDomain}
+        organizationAccountId={organizationAccountId}
       />
       <OrganizationSettingsPlatformPipelineCatalogVisibilityPageLinkCard
         platformPipelineCatalogVisibilityPolicy={platformPipelineCatalogVisibilityPolicy}
+        organizationDomain={organizationDomain}
+        organizationAccountId={organizationAccountId}
       />
       <OrganizationSettingsPipelineStepTagRequirementPolicyPageLinkCard
         pipelineStepTagRequirementPolicy={pipelineStepTagRequirementPolicy}
+        organizationDomain={organizationDomain}
+        organizationAccountId={organizationAccountId}
       />
     </div>
   );
@@ -39,4 +47,6 @@ export default function OrganizationSettingsPoliciesPanel(
 
 OrganizationSettingsPoliciesPanel.propTypes = {
   organizationSettingsModel: PropTypes.object,
+  organizationDomain: PropTypes.string,
+  organizationAccountId: PropTypes.string,
 };

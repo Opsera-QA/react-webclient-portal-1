@@ -15,6 +15,8 @@ export default function OrganizationSettingsDetailPanel(
   {
     organizationSettingsModel,
     setOrganizationSettingsModel,
+    organizationDomain,
+    organizationAccountId,
   }) {
   const [activeTab, setActiveTab] = useState("summary");
 
@@ -69,6 +71,8 @@ export default function OrganizationSettingsDetailPanel(
         return (
           <OrganizationSettingsPoliciesPanel
             organizationSettingsModel={organizationSettingsModel}
+            organizationDomain={organizationDomain}
+            organizationAccountId={organizationAccountId}
           />
         );
       default:
@@ -87,4 +91,6 @@ export default function OrganizationSettingsDetailPanel(
 OrganizationSettingsDetailPanel.propTypes = {
   organizationSettingsModel: PropTypes.object,
   setOrganizationSettingsModel: PropTypes.func,
+  organizationDomain: PropTypes.string,
+  organizationAccountId: PropTypes.string,
 };
