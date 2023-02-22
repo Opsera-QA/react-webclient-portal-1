@@ -7,6 +7,8 @@ import PolicyEditorPanelBase from "components/settings/organization_settings/pol
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import usePolicyAdministrationActions
   from "hooks/settings/organization_settings/policies/usePolicyAdministrationActions";
+import DeletePolicyActionBarButton
+  from "components/admin/organization_settings/details/policies/DeleteOrganizationAccountPolicyActionBarButton";
 
 export default function OrganizationSettingsPolicyEditorPanelOverlay(
   {
@@ -57,6 +59,13 @@ export default function OrganizationSettingsPolicyEditorPanelOverlay(
         recordDto={policyModelCopy}
         setRecordDto={setPolicyModelCopy}
       >
+        <div className={"ml-auto"}>
+          <DeletePolicyActionBarButton
+            policyModel={policyModelCopy}
+            organizationDomain={organizationDomain}
+            organizationAccountId={organizationAccountId}
+          />
+        </div>
         <PolicyEditorPanelBase
           policyModel={policyModelCopy}
           setPolicyModel={setPolicyModelCopy}
