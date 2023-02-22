@@ -13,6 +13,8 @@ import { jsonViewFileMetadata } from "../jsonViewFile.metadata";
 import SelectInputBase from "../../../../../../../../common/inputs/select/SelectInputBase";
 import MergeSyncTaskWizardApexClassJsonEditPanel from "./json_view/MergeSyncTaskWizardApexClassJsonEditPanel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import MergeSyncTaskWizardCustomApplicationJsonEditPanel
+  from "./json_view/MergeSyncTaskWizardCustomApplicationJsonEditPanel";
 
 const componentTypeOptions =[
   {name: "CustomApplication", value: "applicationVisibilities"},
@@ -107,7 +109,16 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
   const getJsonDiffView = () => {
     switch (jsonViewModel?.getData("componentType")) {
       case "applicationVisibilities":
-        return <>applicationVisibilities</>;
+        return (
+          <MergeSyncTaskWizardCustomApplicationJsonEditPanel
+            modifiedCustomAppJson={modifiedContentJson?.applicationVisibilities}
+            originalCustomAppJson={originalContentJson?.applicationVisibilities}
+            modifiedContentJson={modifiedContentJson}
+            originalContentJson={originalContentJson}
+            setModifiedContentJson={setModifiedContentJson}
+            setOriginalContentJson={setOriginalContentJson}
+          />
+        );
       case "categoryGroupVisibilities":
         return <>categoryGroupVisibilities</>;
       case "classAccesses":
