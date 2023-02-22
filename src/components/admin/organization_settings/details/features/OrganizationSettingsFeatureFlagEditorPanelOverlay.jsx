@@ -15,12 +15,12 @@ import DeleteOrganizationAccountFeatureFlagActionBarButton
 
 export default function OrganizationSettingsFeatureFlagEditorPanelOverlay(
   {
-    policyModel,
+    featureFlagModel,
     organizationDomain,
     organizationAccountId,
   }) {
   const history = useHistory();
-  const [policyModelCopy, setPolicyModelCopy] = useState(policyModel);
+  const [featureFlagModelCopy, setFeatureFlagModelCopy] = useState(featureFlagModel);
   const policyAdministrationActions = usePolicyAdministrationActions();
   const {
     toastContext,
@@ -28,8 +28,8 @@ export default function OrganizationSettingsFeatureFlagEditorPanelOverlay(
 
   const updatePolicy = async () => {
     const response = await policyAdministrationActions.updatePolicy(
-      policyModel?.getMongoDbId(),
-      policyModel?.getPersistData(),
+      featureFlagModel?.getMongoDbId(),
+      featureFlagModel?.getPersistData(),
       organizationDomain,
       organizationAccountId,
     );
@@ -43,7 +43,7 @@ export default function OrganizationSettingsFeatureFlagEditorPanelOverlay(
     history.push(history.location);
   };
 
-  if (policyModelCopy == null) {
+  if (featureFlagModelCopy == null) {
     return null;
   }
 
@@ -61,27 +61,27 @@ export default function OrganizationSettingsFeatureFlagEditorPanelOverlay(
         addAnotherOption={false}
         className={"p-2"}
         updateRecord={updatePolicy}
-        recordDto={policyModelCopy}
-        setRecordDto={setPolicyModelCopy}
+        recordDto={featureFlagModelCopy}
+        setRecordDto={setFeatureFlagModelCopy}
         extraButtons={
           <DeleteOrganizationAccountFeatureFlagActionBarButton
-            policyModel={policyModelCopy}
+            featureFlagModel={featureFlagModelCopy}
             organizationDomain={organizationDomain}
             organizationAccountId={organizationAccountId}
           />
         }
       >
-        <PolicyEditorPanelBase
-          policyModel={policyModelCopy}
-          setPolicyModel={setPolicyModelCopy}
-        />
+        {/*<PolicyEditorPanelBase*/}
+        {/*  featureFlagModel={featureFlagModelCopy}*/}
+        {/*  setPolicyModel={setFeatureFlagModelCopy}*/}
+        {/*/>*/}
       </EditorPanelContainer>
     </ConfirmationOverlay>
   );
 }
 
 OrganizationSettingsFeatureFlagEditorPanelOverlay.propTypes = {
-  policyModel: PropTypes.object,
+  featureFlagModel: PropTypes.object,
   organizationDomain: PropTypes.string,
   organizationAccountId: PropTypes.string,
 };

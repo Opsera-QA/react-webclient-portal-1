@@ -7,6 +7,10 @@ import OrganizationSettingsFeatureFlagEditorPanelOverlay
   from "components/admin/organization_settings/details/features/OrganizationSettingsFeatureFlagEditorPanelOverlay";
 import featureFlagConstants
   from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
+import DeleteConfirmationOverlay from "components/common/overlays/center/delete/DeleteConfirmationOverlay";
+import useFeatureFlagAdministrationActions
+  from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
+import {useHistory} from "react-router-dom";
 
 export default function OrganizationSettingsFeatureFlagsPageLinkCardBase(
   {
@@ -17,18 +21,33 @@ export default function OrganizationSettingsFeatureFlagsPageLinkCardBase(
     organizationAccountId,
   }) {
   const { getFeatureFlagModel } = useGetFeatureFlagModel();
+  const featureFlagAdministrationActions = useFeatureFlagAdministrationActions();
   const featureFlagModel = getFeatureFlagModel(featureFlag);
+  const history = useHistory();
   const {
     toastContext,
   } = useComponentStateReference();
 
+  const handleDeleteFunction = async () => {
+    return await featureFlagAdministrationActions.deleteFeatureFlag(
+      featureFlagModel?.getMongoDbId(),
+      organizationDomain,
+      organizationAccountId,
+    );
+  };
+
   const handleOnClickFunction = () => {
     toastContext.showOverlayPanel(
-      <OrganizationSettingsFeatureFlagEditorPanelOverlay
-        organizationDomain={organizationDomain}
-        organizationAccountId={organizationAccountId}
-        featureFlagModel={featureFlagModel}
+      <DeleteConfirmationOverlay
+        type={"Feature Flag"}
+        handleDeleteFunction={handleDeleteFunction}
+        afterDeleteFunction={() => history.push(history.location)}
       />
+      // <OrganizationSettingsFeatureFlagEditorPanelOverlay
+      //   organizationDomain={organizationDomain}
+      //   organizationAccountId={organizationAccountId}
+      //   featureFlagModel={featureFlagModel}
+      // />
     );
   };
 

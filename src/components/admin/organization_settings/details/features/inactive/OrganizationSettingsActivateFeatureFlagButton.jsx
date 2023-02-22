@@ -34,9 +34,9 @@ export default function OrganizationSettingsActivateFeatureFlagButton(
         organizationDomain,
         organizationAccountName,
       );
-      const policy = DataParsingHelper.parseNestedObject(response, "data.data");
+      const featureFlag = DataParsingHelper.parseNestedObject(response, "data.data");
 
-      if (policy) {
+      if (featureFlag) {
         toastContext.showInformationToast("The Feature Flag has been successfully activated.");
         buttonStateFunctions.setSuccessState();
         history.push(history.location);
