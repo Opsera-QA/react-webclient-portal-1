@@ -65,7 +65,7 @@ function AzureApplications({ toolData, loadData, toolApplications }) {
     if (Array.isArray(toolApplications)) {
       toolApplications.forEach((toolAction, index) => {
         let application = toolAction?.configuration;
-        application = {...application, applicationId: toolAction?._id, index: index, connectionState: statusArray.find(status => status.applicationId === toolAction?._id)};        
+        application = {...application, applicationId: toolAction?._id, index: index, connectionState: statusArray?.find(status => status.applicationId === toolAction?._id)};
         newApplicationList?.push(application);
       });
     }
