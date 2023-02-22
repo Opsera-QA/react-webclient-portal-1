@@ -11,7 +11,7 @@ import DeleteOrganizationAccountPolicyActionBarButton
   from "components/admin/organization_settings/details/policies/DeleteOrganizationAccountPolicyActionBarButton";
 import {useHistory} from "react-router-dom";
 
-export default function OrganizationSettingsPolicyEditorPanelOverlay(
+export default function OrganizationSettingsFeatureFlagEditorPanelOverlay(
   {
     policyModel,
     organizationDomain,
@@ -78,7 +78,7 @@ export default function OrganizationSettingsPolicyEditorPanelOverlay(
   );
 }
 
-OrganizationSettingsPolicyEditorPanelOverlay.propTypes = {
+OrganizationSettingsFeatureFlagEditorPanelOverlay.propTypes = {
   policyModel: PropTypes.object,
   organizationDomain: PropTypes.string,
   organizationAccountId: PropTypes.string,

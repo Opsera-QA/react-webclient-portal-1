@@ -9,7 +9,7 @@ import {useHistory} from "react-router-dom";
 import usePolicyAdministrationActions
   from "hooks/settings/organization_settings/policies/usePolicyAdministrationActions";
 
-export default function DeleteOrganizationAccountPolicyActionBarButton(
+export default function DeleteOrganizationAccountFeatureFlagActionBarButton(
   {
     policyModel,
     organizationDomain,
@@ -34,7 +34,7 @@ export default function DeleteOrganizationAccountPolicyActionBarButton(
   const showOverlayFunction = async () => {
     toastContext.showOverlayPanel(
       <DeleteConfirmationOverlay
-        type={"Policy"}
+        type={"Feature Flag"}
         handleDeleteFunction={handleDeleteFunction}
         afterDeleteFunction={() => history.push(history.location)}
       />
@@ -50,13 +50,13 @@ export default function DeleteOrganizationAccountPolicyActionBarButton(
       action={showOverlayFunction}
       icon={faTrash}
       iconClasses={"danger-red"}
-      popoverText={`Delete this Policy`}
+      popoverText={`Delete this Feature flag`}
       className={className}
     />
   );
 }
 
-DeleteOrganizationAccountPolicyActionBarButton.propTypes = {
+DeleteOrganizationAccountFeatureFlagActionBarButton.propTypes = {
   policyModel: PropTypes.object,
   organizationDomain: PropTypes.string,
   organizationAccountId: PropTypes.string,
