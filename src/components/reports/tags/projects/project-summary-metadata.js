@@ -24,11 +24,11 @@ const projectSummaryMetadata = {
       id: "value",
     },
     {
-      label: "Created",
+      label: "Created On",
       id: "createdAt",
     },
     {
-      label: "Updated",
+      label: "Updated On",
       id: "updatedAt",
     },
   ]
