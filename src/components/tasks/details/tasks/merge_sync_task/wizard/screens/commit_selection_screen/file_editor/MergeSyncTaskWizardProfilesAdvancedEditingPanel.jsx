@@ -16,6 +16,8 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import MergeSyncTaskWizardCustomApplicationJsonEditPanel
   from "./json_view/MergeSyncTaskWizardCustomApplicationJsonEditPanel";
 import MergeSyncTaskWizardDataCategoryJsonEditPanel from "./json_view/MergeSyncTaskWizardDataCategoryJsonEditPanel";
+import CustomMetadataProfileEditorView from "./json_view/profile_editor_views/CustomMetadataProfileEditorView";
+import MergeSyncTaskWizardCustomMetadataJsonEditPanel from "./json_view/MergeSyncTaskWizardCustomMetadataJsonEditPanel";
 
 const componentTypeOptions =[
   {name: "CustomApplication", value: "applicationVisibilities"},
@@ -422,7 +424,21 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
           />
         );
       case "customMetadataTypeAccesses":
-        return <>customMetadataTypeAccesses</>;
+        return (
+          <MergeSyncTaskWizardCustomMetadataJsonEditPanel
+            wizardModel={wizardModel}
+            // comparisonFileModel={comparisonFileModel}
+            // setComparisonFileModel={setComparisonFileModel}
+            // modifiedCustomMetaJson={modifiedContentJson?.customMetadataTypeAccesses}
+            // originalCustomMetaJson={originalContentJson?.customMetadataTypeAccesses}
+            modifiedCustomMetaJson={mockData?.customMetadataTypeAccesses}
+            originalCustomMetaJson={mockData?.customMetadataTypeAccesses}
+            modifiedContentJson={modifiedContentJson}
+            originalContentJson={originalContentJson}
+            setModifiedContentJson={setModifiedContentJson}
+            setOriginalContentJson={setOriginalContentJson}
+          />
+        );
       case "customPermissions":
         return <>customPermissions</>;
       case "customSettingAccesses":
