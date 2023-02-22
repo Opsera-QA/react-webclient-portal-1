@@ -12,7 +12,7 @@ import CustomTable from "components/common/table/CustomTable";
 function GitlabDeploymentActionablePipelinesTable({ data, isLoading, loadData, filterModel, setFilterModel, tableTitleIcon, count, range}) {
     const fields = GitlabDeploymentFrequencyActionableMetadata.fields;
     const tableTitle = "Pipelines Report";
-    const noDataMessage = "No report found";
+    const noDataMessage = "No data available";
 
 
 
