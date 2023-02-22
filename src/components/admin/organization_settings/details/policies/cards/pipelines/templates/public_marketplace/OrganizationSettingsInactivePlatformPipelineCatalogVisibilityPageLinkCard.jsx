@@ -20,7 +20,7 @@ export default function OrganizationSettingsInactivePlatformPipelineCatalogVisib
     toastContext.showOverlayPanel(
       <OrganizationSettingsPolicyActivationConfirmationOverlay
         policyName={policyConstants.POLICY_NAMES.PLATFORM_PIPELINE_CATALOG_VISIBILITY}
-        organizationAccountId={organizationAccountId}
+        organizationAccountName={organizationAccountId}
         organizationDomain={organizationDomain}
       />
     );
@@ -29,8 +29,6 @@ export default function OrganizationSettingsInactivePlatformPipelineCatalogVisib
   return (
     <InactivePlatformPipelineCatalogVisibilityPageLinkCardBase
       onClickFunction={launchActivationConfirmationOverlay}
-      organizationAccountId={organizationAccountId}
-      organizationDomain={organizationDomain}
     />
   );
 }
