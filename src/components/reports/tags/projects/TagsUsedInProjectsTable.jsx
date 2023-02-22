@@ -10,7 +10,7 @@ import {
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
-import ExportTagReportButton from 'components/common/buttons/export/reports/ExportTagReportButton';
+import ExportProjectsByTagsReportButton from 'components/common/buttons/export/reports/ExportProjectsByTagsReportButton';
 
 function TagsUsedInProjectsTable({ data, loadData, isLoading}) {
   let fields = projectSummaryMetadata.fields;
@@ -54,7 +54,7 @@ function TagsUsedInProjectsTable({ data, loadData, isLoading}) {
       titleIcon={faDraftingCompass}
       title={"Projects"}
       className={"px-2 pb-2"}
-      exportButton={<ExportTagReportButton className={"ml-2"} isLoading={isLoading} tagData={data} />}
+      exportButton={<ExportProjectsByTagsReportButton className={"ml-2"} isLoading={isLoading} tagData={data} />}
     />
   );
 }
