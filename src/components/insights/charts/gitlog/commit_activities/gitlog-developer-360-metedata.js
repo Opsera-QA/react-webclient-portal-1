@@ -25,10 +25,6 @@ const gitLogDeveloperActivitiesMetaData = {
             id: "gitLog-branches",
         },
         {
-            label: "Gitlab Project",
-            id: "gitLog-repositories",
-        },
-        {
             label: "Date Range",
             id: "date",
         },
