@@ -12,7 +12,7 @@ const projectSummaryMetadata = {
       isRequired: true
     },
     {
-      label: "Updated By",
+      label: "Created By",
       id: "owner",
     },
     {
