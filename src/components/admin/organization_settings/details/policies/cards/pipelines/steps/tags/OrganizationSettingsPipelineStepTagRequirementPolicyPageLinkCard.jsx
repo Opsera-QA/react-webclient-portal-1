@@ -1,14 +1,22 @@
 import React from "react";
 import PropType from "prop-types";
-import PolicyManagementPageLinkCardBase
-  from "components/settings/organization_settings/policies/cards/PolicyManagementPageLinkCardBase";
-import PolicyManagementInactivePipelineStepTagRequirementPolicyPageLinkCard
-  from "components/settings/organization_settings/policies/cards/pipelines/steps/tags/PolicyManagementInactivePipelineStepTagRequirementPolicyPageLinkCard";
+import OrganizationSettingsInactivePipelineStepTagRequirementPolicyPageLinkCard
+  from "components/admin/organization_settings/details/policies/cards/pipelines/steps/tags/OrganizationSettingsInactivePipelineStepTagRequirementPolicyPageLinkCard";
+import OrganizationSettingsCustomerPolicyPageLinkCardBase
+  from "components/admin/organization_settings/details/policies/OrganizationSettingsCustomerPolicyPageLinkCardBase";
 
-export default function OrganizationSettingsPipelineStepTagRequirementPolicyPageLinkCard({ pipelineStepTagRequirementPolicy, }) {
+export default function OrganizationSettingsPipelineStepTagRequirementPolicyPageLinkCard(
+  {
+    pipelineStepTagRequirementPolicy,
+    organizationDomain,
+    organizationAccountId,
+  }) {
   if (pipelineStepTagRequirementPolicy == null) {
     return (
-      <PolicyManagementInactivePipelineStepTagRequirementPolicyPageLinkCard />
+      <OrganizationSettingsInactivePipelineStepTagRequirementPolicyPageLinkCard
+        organizationAccountId={organizationAccountId}
+        organizationDomain={organizationDomain}
+      />
     );
   }
 
@@ -22,13 +30,17 @@ export default function OrganizationSettingsPipelineStepTagRequirementPolicyPage
   };
 
   return (
-    <PolicyManagementPageLinkCardBase
+    <OrganizationSettingsCustomerPolicyPageLinkCardBase
       policy={pipelineStepTagRequirementPolicy}
       description={getDescription()}
+      organizationAccountId={organizationAccountId}
+      organizationDomain={organizationDomain}
     />
   );
 }
 
 OrganizationSettingsPipelineStepTagRequirementPolicyPageLinkCard.propTypes = {
   pipelineStepTagRequirementPolicy: PropType.object,
+  organizationDomain: PropType.string,
+  organizationAccountId: PropType.string,
 };

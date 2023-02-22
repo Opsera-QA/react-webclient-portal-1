@@ -4,14 +4,13 @@ import PropTypes from "prop-types";
 import useButtonState from "hooks/general/buttons/useButtonState";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import {useHistory} from "react-router-dom";
-import {policyHelper} from "components/settings/organization_settings/policies/policy.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import usePolicyAdministrationActions
-  from "hooks/settings/organization_settings/policies/usePolicyAdministrationActions";
+import useFeatureFlagAdministrationActions
+  from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
 
-export default function OrganizationSettingsActivatePolicyButton(
+export default function OrganizationSettingsActivateFeatureFlagButton(
   {
-    policyModel,
+    featureFlagModel,
     organizationDomain,
     organizationAccountName,
     closeOverlayFunction,
@@ -25,26 +24,26 @@ export default function OrganizationSettingsActivatePolicyButton(
     buttonState,
     buttonStateFunctions,
   } = useButtonState();
-  const policyAdministrationActions = usePolicyAdministrationActions();
+  const featureFlagAdministrationActions = useFeatureFlagAdministrationActions();
 
   const activateSiteRole = async () => {
     try {
       buttonStateFunctions.setBusyState();
-      const response = await policyAdministrationActions.activatePolicy(
-        policyModel?.getPersistData(),
+      const response = await featureFlagAdministrationActions.activateFeatureFlag(
+        featureFlagModel?.getPersistData(),
         organizationDomain,
         organizationAccountName,
       );
-      const policy = DataParsingHelper.parseNestedObject(response, "data.data");
+      const featureFlag = DataParsingHelper.parseNestedObject(response, "data.data");
 
-      if (policy) {
-        toastContext.showInformationToast("The Policy has been successfully activated.");
+      if (featureFlag) {
+        toastContext.showInformationToast("The Feature Flag has been successfully activated.");
         buttonStateFunctions.setSuccessState();
         history.push(history.location);
         closeOverlayFunction();
       }
     } catch (error) {
-      toastContext.showFormErrorToast(error, `Error activating Policy:`);
+      toastContext.showFormErrorToast(error, `Error activating Feature Flag:`);
       buttonStateFunctions.setErrorState();
     }
   };
@@ -53,17 +52,17 @@ export default function OrganizationSettingsActivatePolicyButton(
     <VanityButtonBase
       buttonState={buttonState}
       className={className}
-      normalText={"Activate Policy"}
-      busyText={"Activating Policy"}
-      errorText={"Error Activating Policy!"}
-      successText={"Successfully Activated Policy!"}
+      normalText={"Activate Feature Flag"}
+      busyText={"Activating Feature Flag"}
+      errorText={"Error Activating Feature Flag!"}
+      successText={"Successfully Activated Feature Flag!"}
       onClickFunction={activateSiteRole}
     />
   );
 }
 
-OrganizationSettingsActivatePolicyButton.propTypes = {
-  policyModel: PropTypes.object,
+OrganizationSettingsActivateFeatureFlagButton.propTypes = {
+  featureFlagModel: PropTypes.object,
   organizationDomain: PropTypes.string,
   organizationAccountName: PropTypes.string,
   closeOverlayFunction: PropTypes.func,

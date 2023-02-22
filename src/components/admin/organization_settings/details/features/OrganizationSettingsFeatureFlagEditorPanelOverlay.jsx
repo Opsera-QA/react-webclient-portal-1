@@ -10,15 +10,17 @@ import usePolicyAdministrationActions
 import DeleteOrganizationAccountPolicyActionBarButton
   from "components/admin/organization_settings/details/policies/DeleteOrganizationAccountPolicyActionBarButton";
 import {useHistory} from "react-router-dom";
+import DeleteOrganizationAccountFeatureFlagActionBarButton
+  from "components/admin/organization_settings/details/features/DeleteOrganizationAccountFeatureFlagActionBarButton";
 
-export default function OrganizationSettingsPolicyEditorPanelOverlay(
+export default function OrganizationSettingsFeatureFlagEditorPanelOverlay(
   {
-    policyModel,
+    featureFlagModel,
     organizationDomain,
     organizationAccountId,
   }) {
   const history = useHistory();
-  const [policyModelCopy, setPolicyModelCopy] = useState(policyModel);
+  const [featureFlagModelCopy, setFeatureFlagModelCopy] = useState(featureFlagModel);
   const policyAdministrationActions = usePolicyAdministrationActions();
   const {
     toastContext,
@@ -26,8 +28,8 @@ export default function OrganizationSettingsPolicyEditorPanelOverlay(
 
   const updatePolicy = async () => {
     const response = await policyAdministrationActions.updatePolicy(
-      policyModel?.getMongoDbId(),
-      policyModel?.getPersistData(),
+      featureFlagModel?.getMongoDbId(),
+      featureFlagModel?.getPersistData(),
       organizationDomain,
       organizationAccountId,
     );
@@ -41,7 +43,7 @@ export default function OrganizationSettingsPolicyEditorPanelOverlay(
     history.push(history.location);
   };
 
-  if (policyModelCopy == null) {
+  if (featureFlagModelCopy == null) {
     return null;
   }
 
@@ -49,7 +51,7 @@ export default function OrganizationSettingsPolicyEditorPanelOverlay(
     <ConfirmationOverlay
       closePanel={handleCloseFunction}
       showPanel={true}
-      titleText={`Edit Policy?`}
+      titleText={`Edit Feature Flag?`}
       titleIcon={faQuestionCircle}
       showToasts={true}
       showCloseButton={false}
@@ -59,27 +61,27 @@ export default function OrganizationSettingsPolicyEditorPanelOverlay(
         addAnotherOption={false}
         className={"p-2"}
         updateRecord={updatePolicy}
-        recordDto={policyModelCopy}
-        setRecordDto={setPolicyModelCopy}
+        recordDto={featureFlagModelCopy}
+        setRecordDto={setFeatureFlagModelCopy}
         extraButtons={
-          <DeleteOrganizationAccountPolicyActionBarButton
-            policyModel={policyModelCopy}
+          <DeleteOrganizationAccountFeatureFlagActionBarButton
+            featureFlagModel={featureFlagModelCopy}
             organizationDomain={organizationDomain}
             organizationAccountId={organizationAccountId}
           />
         }
       >
-        <PolicyEditorPanelBase
-          policyModel={policyModelCopy}
-          setPolicyModel={setPolicyModelCopy}
-        />
+        {/*<PolicyEditorPanelBase*/}
+        {/*  featureFlagModel={featureFlagModelCopy}*/}
+        {/*  setPolicyModel={setFeatureFlagModelCopy}*/}
+        {/*/>*/}
       </EditorPanelContainer>
     </ConfirmationOverlay>
   );
 }
 
-OrganizationSettingsPolicyEditorPanelOverlay.propTypes = {
-  policyModel: PropTypes.object,
+OrganizationSettingsFeatureFlagEditorPanelOverlay.propTypes = {
+  featureFlagModel: PropTypes.object,
   organizationDomain: PropTypes.string,
   organizationAccountId: PropTypes.string,
 };
