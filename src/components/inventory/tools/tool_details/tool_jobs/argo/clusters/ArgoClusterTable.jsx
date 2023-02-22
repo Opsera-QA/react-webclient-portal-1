@@ -7,7 +7,7 @@ import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateArgoClusterOverlay
   from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/CreateArgoClusterOverlay";
-import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
+import {getTableTextColumn, getConnectionStatus} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 
 function ArgoClusterTable(
@@ -38,7 +38,7 @@ function ArgoClusterTable(
     () => [
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "server")),
-      // getArgoConnectionStatus(getField(fields, "connectionState")),
+      getConnectionStatus(getField(fields, "connectionState")),
     ],
     []
   );

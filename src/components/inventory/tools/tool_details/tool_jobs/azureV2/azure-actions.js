@@ -60,4 +60,9 @@ azureActions.getReviewers = async (getAccessToken, cancelTokenSource, toolId, pr
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParams);
 };
 
+azureActions.getAzureApplicationStatus = async (getAccessToken, cancelTokenSource, toolId) => {
+  const apiUrl = `/tools/${toolId}/azure/tokenStatus`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 export default azureActions;
