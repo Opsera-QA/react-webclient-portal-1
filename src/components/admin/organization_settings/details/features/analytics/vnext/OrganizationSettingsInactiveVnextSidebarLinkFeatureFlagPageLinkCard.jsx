@@ -5,9 +5,6 @@ import featureFlagConstants
   from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
 import OrganizationSettingsFeatureFlagActivationConfirmationOverlay
   from "components/admin/organization_settings/details/features/inactive/OrganizationSettingsFeatureFlagActivationConfirmationOverlay";
-import OrganizationSettingsVnextSidebarLinkFeatureFlagPageLinkCard
-  from "components/admin/organization_settings/details/features/analytics/vnext/OrganizationSettingsVnextSidebarLinkFeatureFlagPageLinkCard";
-import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 import SelectionCardBase from "components/common/card/selection/SelectionCardBase";
 
 export default function OrganizationSettingsInactiveVnextSidebarLinkFeatureFlagPageLinkCard(
@@ -22,7 +19,7 @@ export default function OrganizationSettingsInactiveVnextSidebarLinkFeatureFlagP
   const launchActivationConfirmationOverlay = () => {
     toastContext.showOverlayPanel(
       <OrganizationSettingsFeatureFlagActivationConfirmationOverlay
-        policyName={featureFlagConstants.FEATURE_FLAG_NAMES.SHOW_INSIGHTS_VNEXT_SIDEBAR_LINK}
+        featureFlagName={featureFlagConstants.FEATURE_FLAG_NAMES.SHOW_INSIGHTS_VNEXT_SIDEBAR_LINK}
         organizationDomain={organizationDomain}
         organizationAccountName={organizationAccountId}
       />
