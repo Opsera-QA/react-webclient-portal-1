@@ -1,36 +1,33 @@
 import React from "react";
 import PropType from "prop-types";
-import {useHistory} from "react-router-dom";
 import SelectionCardBase from "components/common/card/selection/SelectionCardBase";
-import {policyHelper} from "components/settings/organization_settings/policies/policy.helper";
-import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
-import useGetPolicyModel from "hooks/settings/organization_settings/policies/useGetPolicyModel";
-import PolicyParametersSummaryPanel
-  from "components/settings/organization_settings/policies/details/PolicyParametersSummaryPanel";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import OrganizationSettingsPolicyEditorPanelOverlay
-  from "components/admin/organization_settings/details/policies/OrganizationSettingsPolicyEditorPanelOverlay";
+import useGetFeatureFlagModel from "hooks/settings/organization_settings/feature_flags/useGetFeatureFlagModel";
+import OrganizationSettingsFeatureFlagEditorPanelOverlay
+  from "components/admin/organization_settings/details/features/OrganizationSettingsFeatureFlagEditorPanelOverlay";
+import featureFlagConstants
+  from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
 
 export default function OrganizationSettingsFeatureFlagsPageLinkCardBase(
   {
-    policy,
+    featureFlag,
     description,
     icon,
     organizationDomain,
     organizationAccountId,
   }) {
-  const { getPolicyModel } = useGetPolicyModel();
-  const policyModel = getPolicyModel(policy);
+  const { getFeatureFlagModel } = useGetFeatureFlagModel();
+  const featureFlagModel = getFeatureFlagModel(featureFlag);
   const {
     toastContext,
   } = useComponentStateReference();
 
   const handleOnClickFunction = () => {
     toastContext.showOverlayPanel(
-      <OrganizationSettingsPolicyEditorPanelOverlay
+      <OrganizationSettingsFeatureFlagEditorPanelOverlay
         organizationDomain={organizationDomain}
         organizationAccountId={organizationAccountId}
-        policyModel={policyModel}
+        featureFlagModel={featureFlagModel}
       />
     );
   };
@@ -38,12 +35,12 @@ export default function OrganizationSettingsFeatureFlagsPageLinkCardBase(
   const getTitle = () => {
     return (
       <div className={"w-100"}>
-        <div>{policyConstants.getPolicyNameLabel(policy?.name)}</div>
-        <div>
-          <PolicyParametersSummaryPanel
-            policyModel={policyModel}
-          />
-        </div>
+        <div>{featureFlagConstants.getFeatureFlagNameLabel(featureFlag?.name)}</div>
+        {/*<div>*/}
+        {/*  <FeatureFlagParametersSummaryPanel*/}
+        {/*    featureFlagModel={featureFlagModel}*/}
+        {/*  />*/}
+        {/*</div>*/}
       </div>
     );
   };
@@ -68,7 +65,7 @@ export default function OrganizationSettingsFeatureFlagsPageLinkCardBase(
 }
 
 OrganizationSettingsFeatureFlagsPageLinkCardBase.propTypes = {
-  policy: PropType.object,
+  featureFlag: PropType.object,
   description: PropType.any,
   icon: PropType.object,
   organizationDomain: PropType.string,
