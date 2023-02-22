@@ -30,7 +30,7 @@ export default function OrganizationSettingsVnextSidebarLinkFeatureFlagPageLinkC
 }
 
 OrganizationSettingsVnextSidebarLinkFeatureFlagPageLinkCard.propTypes = {
-  pipelinePublishingRestrictionsPolicy: PropType.object,
+  featureFlag: PropType.object,
   organizationDomain: PropType.string,
   organizationAccountId: PropType.string,
 };

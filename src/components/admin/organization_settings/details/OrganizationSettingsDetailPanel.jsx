@@ -10,6 +10,8 @@ import {policyHelper} from "components/settings/organization_settings/policies/p
 import OrganizationSettingsPoliciesPanel
   from "components/admin/organization_settings/details/policies/OrganizationSettingsPoliciesPanel";
 import {faFlag, faShieldCross} from "@fortawesome/pro-light-svg-icons";
+import OrganizationSettingsFeatureFlagsPanel
+  from "components/admin/organization_settings/details/features/OrganizationSettingsFeatureFlagsPanel";
 
 export default function OrganizationSettingsDetailPanel(
   {
@@ -70,6 +72,14 @@ export default function OrganizationSettingsDetailPanel(
       case "policies":
         return (
           <OrganizationSettingsPoliciesPanel
+            organizationSettingsModel={organizationSettingsModel}
+            organizationDomain={organizationDomain}
+            organizationAccountId={organizationAccountId}
+          />
+        );
+      case "featureFlags":
+        return (
+          <OrganizationSettingsFeatureFlagsPanel
             organizationSettingsModel={organizationSettingsModel}
             organizationDomain={organizationDomain}
             organizationAccountId={organizationAccountId}
