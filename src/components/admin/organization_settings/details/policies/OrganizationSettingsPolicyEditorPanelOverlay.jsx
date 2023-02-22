@@ -4,6 +4,9 @@ import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PolicyEditorPanelBase from "components/settings/organization_settings/policies/details/PolicyEditorPanelBase";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import usePolicyAdministrationActions
+  from "hooks/settings/organization_settings/policies/usePolicyAdministrationActions";
 
 export default function OrganizationSettingsPolicyEditorPanelOverlay(
   {
@@ -12,11 +15,21 @@ export default function OrganizationSettingsPolicyEditorPanelOverlay(
     organizationAccountId,
   }) {
   const [policyModelCopy, setPolicyModelCopy] = useState(policyModel);
+  const policyAdministrationActions = usePolicyAdministrationActions();
   const {
     toastContext,
   } = useComponentStateReference();
 
-  const closeOverlayFunction = () => {
+  const updatePolicy = async () => {
+    return await policyAdministrationActions.updatePolicy(
+      policyModel?.getMongoDbId(),
+      policyModel?.getPersistData(),
+      organizationDomain,
+      organizationAccountId,
+    );
+  };
+
+  const handleCloseFunction = () => {
     toastContext.clearOverlayPanel();
   };
 
@@ -26,19 +39,26 @@ export default function OrganizationSettingsPolicyEditorPanelOverlay(
 
   return (
     <ConfirmationOverlay
-      closePanel={closeOverlayFunction}
+      closePanel={handleCloseFunction}
       showPanel={true}
       titleText={`Edit Policy?`}
       titleIcon={faQuestionCircle}
       showToasts={true}
       showCloseButton={false}
     >
-      <div className={"mx-3 mb-3 mt-2"}>
+      <EditorPanelContainer
+        handleClose={handleCloseFunction}
+        addAnotherOption={false}
+        className={"mx-2 mb-2"}
+        updateRecord={updatePolicy}
+        recordDto={policyModelCopy}
+        setRecordDto={setPolicyModelCopy}
+      >
         <PolicyEditorPanelBase
           policyModel={policyModelCopy}
           setPolicyModel={setPolicyModelCopy}
         />
-      </div>
+      </EditorPanelContainer>
     </ConfirmationOverlay>
   );
 }
