@@ -106,13 +106,283 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
     }
   };
 
+  const mockData = {
+    "applicationVisibilities": [{
+      "application": "new__Content",
+      "default": "false",
+      "visible": "true"
+    },
+      {
+        "application": "new__Content1",
+        "default": "false",
+        "visible": "true"
+      },
+      {
+        "application": "new__Content2",
+        "default": "false",
+        "visible": "true"
+      },{
+        "application": "new__Content3",
+        "default": "false",
+        "visible": "true"
+      },{
+        "application": "new__Content4",
+        "default": "false",
+        "visible": "true"
+      }],
+    "categoryGroupVisibilities": [{
+      "dataCategoryGroup": "new_User_Roles",
+      "visibility": "ALL"
+    },
+      {
+        "dataCategoryGroup": "new_User_Roles1",
+        "visibility": "ALL"
+      },
+      {
+        "dataCategoryGroup": "new_User_Roles2",
+        "visibility": "ALL"
+      },
+      {
+        "dataCategoryGroup": "new_User_Roles3",
+        "visibility": "ALL"
+      },{
+        "dataCategoryGroup": "new_User_Roles4",
+        "visibility": "ALL"
+      }],
+    "classAccesses": [{
+      "apexClass": "newcreatePartnerLibraryTest",
+      "enabled": "false"
+    },{
+      "apexClass": "newcreatePartnerLibraryTest1",
+      "enabled": "false"
+    },{
+      "apexClass": "newcreatePartnerLibraryTest2",
+      "enabled": "false"
+    },{
+      "apexClass": "newcreatePartnerLibraryTest3",
+      "enabled": "false"
+    },{
+      "apexClass": "newcreatePartnerLibraryTes4t",
+      "enabled": "false"
+    },{
+      "apexClass": "newcreatePartnerLibraryTest5",
+      "enabled": "false"
+    },{
+      "apexClass": "newcreatePartnerLibraryTest6",
+      "enabled": "false"
+    }],
+    "customMetadataTypeAccesses": [{
+      "enabled": "true",
+      "name": "Nokia_CPQ_Maintenance_new__mdt"
+    },{
+      "enabled": "true",
+      "name": "Nokia_CPQ_Maintenance_new__mdt1"
+    },{
+      "enabled": "true",
+      "name": "Nokia_CPQ_Maintenance_new__mdt2"
+    },{
+      "enabled": "true",
+      "name": "Nokia_CPQ_Maintenance_new__mdt3"
+    },{
+      "enabled": "true",
+      "name": "Nokia_CPQ_Maintenance_new__mdt4"
+    },{
+      "enabled": "true",
+      "name": "Nokia_CPQ_Maintenance_new__mdt5"
+    }],
+    "customPermissions": [{
+      "enabled": "true",
+      "name": "ZZZSWX_CCRE_Proposal_Manager"
+    },{
+      "enabled": "true",
+      "name": "ZZZSWX_CCRE_Proposal_Manager1"
+    },{
+      "enabled": "true",
+      "name": "ZZZSWX_CCRE_Proposal_Manager2"
+    },{
+      "enabled": "true",
+      "name": "ZZZSWX_CCRE_Proposal_Manager3"
+    }],
+    "customSettingAccesses": [{
+      "enabled": "true",
+      "name": "1Account_Market__c"
+    },{
+      "enabled": "true",
+      "name": "1Account_Market__c1"
+    },{
+      "enabled": "true",
+      "name": "1Account_Market__c2"
+    },{
+      "enabled": "true",
+      "name": "1Account_Market__c3"
+    },{
+      "enabled": "true",
+      "name": "1Account_Market__c4"
+    }],
+    "externalDataSourceAccesses": [{
+      "enabled": "true",
+      "externalDataSource": "XYZQuip"
+    },{
+      "enabled": "true",
+      "externalDataSource": "XYZQuip1"
+    },{
+      "enabled": "true",
+      "externalDataSource": "XYZQuip2"
+    },{
+      "enabled": "true",
+      "externalDataSource": "XYZQuip3"
+    },{
+      "enabled": "true",
+      "externalDataSource": "XYZQuip4"
+    }],
+    "fieldPermissions": [{
+      "editable": "false",
+      "field": "Case.LE_GEOLevel2Name__c",
+      "readable": "false"
+    },{
+      "editable": "false",
+      "field": "Case.LE_GEOLevel2Name__c1",
+      "readable": "false"
+    },{
+      "editable": "false",
+      "field": "Case.LE_GEOLevel2Name__c2",
+      "readable": "false"
+    },{
+      "editable": "false",
+      "field": "Case.LE_GEOLevel2Name__c3",
+      "readable": "false"
+    },{
+      "editable": "false",
+      "field": "Case.LE_GEOLevel2Name__c4",
+      "readable": "false"
+    }],
+    "layoutAssignments": [{
+      "layout": "Accreditation__c-Accreditation 1 Layout",
+      "recordType": "Accreditation__c.Distributor_GPP_0_0"
+    },{
+      "layout": "Accreditation__c-Accreditation 1 Layout1",
+      "recordType": "Accreditation__c.Distributor_GPP_0_0"
+    },{
+      "layout": "Accreditation__c-Accreditation 1 Layout2",
+      "recordType": "Accreditation__c.Distributor_GPP_0_0"
+    },{
+      "layout": "Accreditation__c-Accreditation 1 Layout3",
+      "recordType": "Accreditation__c.Distributor_GPP_0_0"
+    },{
+      "layout": "Accreditation__c-Accreditation 1 Layout4",
+      "recordType": "Accreditation__c.Distributor_GPP_0_0"
+    }],
+    "objectPermissions": [{
+      "allowCreate": "false",
+      "allowDelete": "false",
+      "allowEdit": "false",
+      "allowRead": "true",
+      "modifyAllRecords": "false",
+      "object": "NewAbs_Role_History__c1",
+      "viewAllRecords": "false"
+    },{
+      "allowCreate": "false",
+      "allowDelete": "false",
+      "allowEdit": "false",
+      "allowRead": "true",
+      "modifyAllRecords": "false",
+      "object": "NewAbs_Role_History__c2",
+      "viewAllRecords": "false"
+    },{
+      "allowCreate": "false",
+      "allowDelete": "false",
+      "allowEdit": "false",
+      "allowRead": "true",
+      "modifyAllRecords": "false",
+      "object": "NewAbs_Role_History__c3",
+      "viewAllRecords": "false"
+    },{
+      "allowCreate": "false",
+      "allowDelete": "false",
+      "allowEdit": "false",
+      "allowRead": "true",
+      "modifyAllRecords": "false",
+      "object": "NewAbs_Role_History__c4",
+      "viewAllRecords": "false"
+    },{
+      "allowCreate": "false",
+      "allowDelete": "false",
+      "allowEdit": "false",
+      "allowRead": "true",
+      "modifyAllRecords": "false",
+      "object": "NewAbs_Role_History__c5",
+      "viewAllRecords": "false"
+    }],
+    "pageAccesses": [{
+      "apexPage": "ABCCustomMetadataLoader",
+      "enabled": "false"
+    },{
+      "apexPage": "ABCCustomMetadataLoader1",
+      "enabled": "false"
+    },{
+      "apexPage": "ABCCustomMetadataLoader2",
+      "enabled": "false"
+    },{
+      "apexPage": "ABCCustomMetadataLoader3",
+      "enabled": "false"
+    },{
+      "apexPage": "ABCCustomMetadataLoader4",
+      "enabled": "false"
+    },{
+      "apexPage": "ABCCustomMetadataLoader5",
+      "enabled": "false"
+    }],
+    "recordTypeVisibilities": [{
+      "default": "false",
+      "recordType": "ZZSurround_CQ_Reporting__c.Surround_CQ_Reporting_Record_Type",
+      "visible": "false"
+    },{
+      "default": "false",
+      "recordType": "ZZSurround_CQ_Reporting__c.Surround_CQ_Reporting_Record_Type1",
+      "visible": "false"
+    },{
+      "default": "false",
+      "recordType": "ZZSurround_CQ_Reporting__c.Surround_CQ_Reporting_Record_Type2",
+      "visible": "false"
+    },{
+      "default": "false",
+      "recordType": "ZZSurround_CQ_Reporting__c.Surround_CQ_Reporting_Record_Type3",
+      "visible": "false"
+    },{
+      "default": "false",
+      "recordType": "ZZSurround_CQ_Reporting__c.Surround_CQ_Reporting_Record_Type4",
+      "visible": "false"
+    }],
+    "tabVisibilities": [{
+      "tab": "NewUser_Story__c",
+      "visibility": "Hidden"
+    },{
+      "tab": "NewUser_Story__c1",
+      "visibility": "Hidden"
+    },{
+      "tab": "NewUser_Story__c2",
+      "visibility": "Hidden"
+    },{
+      "tab": "NewUser_Story__c3",
+      "visibility": "Hidden"
+    },{
+      "tab": "NewUser_Story__c4",
+      "visibility": "Hidden"
+    },{
+      "tab": "NewUser_Story__c5",
+      "visibility": "Hidden"
+    }]
+  };
+
   const getJsonDiffView = () => {
     switch (jsonViewModel?.getData("componentType")) {
       case "applicationVisibilities":
         return (
           <MergeSyncTaskWizardCustomApplicationJsonEditPanel
-            modifiedCustomAppJson={modifiedContentJson?.applicationVisibilities}
-            originalCustomAppJson={originalContentJson?.applicationVisibilities}
+            // modifiedCustomAppJson={modifiedContentJson?.applicationVisibilities}
+            // originalCustomAppJson={originalContentJson?.applicationVisibilities}
+            modifiedCustomAppJson={mockData?.applicationVisibilities}
+            originalCustomAppJson={mockData?.applicationVisibilities}
             modifiedContentJson={modifiedContentJson}
             originalContentJson={originalContentJson}
             setModifiedContentJson={setModifiedContentJson}
@@ -127,8 +397,10 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
             wizardModel={wizardModel}
             // comparisonFileModel={comparisonFileModel}
             // setComparisonFileModel={setComparisonFileModel}
-            modifiedApexClassJson={modifiedContentJson?.classAccesses}
-            originalApexClassJson={originalContentJson?.classAccesses}
+            // modifiedApexClassJson={modifiedContentJson?.classAccesses}
+            // originalApexClassJson={originalContentJson?.classAccesses}
+            modifiedApexClassJson={mockData?.classAccesses}
+            originalApexClassJson={mockData?.classAccesses}
             modifiedContentJson={modifiedContentJson}
             originalContentJson={originalContentJson}
             setModifiedContentJson={setModifiedContentJson}
@@ -169,7 +441,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
 
     return (
       // TODO : Create a new view for json selections
-      <div className={"m-2"}>
+      <div className={"justify-content-md-center"}>
         <SelectInputBase
           fieldName={"componentType"}
           selectOptions={componentTypeOptions}

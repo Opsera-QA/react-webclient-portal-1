@@ -18,7 +18,6 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
   setOriginalContentJson,
   isLoading,
 }) => {
-
   if (isLoading) {
     return (
       <LoadingDialog
@@ -28,8 +27,10 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
     );
   }
   const setApexClassJson = (modifiedValue) => {
-    let newModifiedJson = {...modifiedContentJson};
-    let modifiedItem = newModifiedJson?.classAccesses.find(apexClassItem => apexClassItem.apexClass === modifiedValue.apexClass);
+    let newModifiedJson = { ...modifiedContentJson };
+    let modifiedItem = newModifiedJson?.classAccesses.find(
+      (apexClassItem) => apexClassItem.apexClass === modifiedValue.apexClass,
+    );
     if (modifiedItem) {
       modifiedItem.enabled = modifiedValue.enabled;
     }
@@ -39,15 +40,18 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
   const modifiedApexClassEditView = () => {
     return (
       <Col>
+        <span className="h5">Source Profiles</span>
         {modifiedApexClassJson &&
-          modifiedApexClassJson.map((apexclass, idx) => (
+          modifiedApexClassJson.map((apexclass, idx, { length }) => (
             <div key={idx}>
               <ApexClassProfleEditorView
                 apexClassData={apexclass}
                 setApexClassJson={setApexClassJson}
                 isLoading={isLoading}
               />
-              <DividerWithCenteredText className={"m-4"} />
+              {idx + 1 !== length && (
+                <DividerWithCenteredText className={"m-4"} />
+              )}
             </div>
           ))}
       </Col>
@@ -57,22 +61,25 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
   const originalApexClassEditView = () => {
     return (
       <Col>
+        <span className="h5">Target Profiles</span>
         {originalApexClassJson &&
-          originalApexClassJson.map((apexclass, idx) => (
-            <>
+          originalApexClassJson.map((apexclass, idx, { length }) => (
+            <div key={idx}>
               <ApexClassProfleEditorView
                 apexClassData={apexclass}
                 setApexClassJson={setApexClassJson}
                 isLoading={isLoading}
               />
-              <DividerWithCenteredText className={"m-4"} />
-            </>
+              {idx + 1 !== length && (
+                <DividerWithCenteredText className={"m-4"} />
+              )}
+            </div>
           ))}
       </Col>
     );
   };
   return (
-    <div className={"m-2"}>
+    <div className={"mt-4"}>
       <Row>
         {originalApexClassEditView()}
         {modifiedApexClassEditView()}

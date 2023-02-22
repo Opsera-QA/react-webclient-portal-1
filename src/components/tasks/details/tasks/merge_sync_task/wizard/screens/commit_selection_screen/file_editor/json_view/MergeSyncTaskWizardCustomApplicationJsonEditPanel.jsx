@@ -19,7 +19,6 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
   setOriginalContentJson,
   isLoading,
 }) => {
-
   if (isLoading) {
     return (
       <LoadingDialog
@@ -29,8 +28,11 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
     );
   }
   const setCustomAppJson = (modifiedValue) => {
-    let newModifiedJson = {...modifiedContentJson};
-    let modifiedItem = newModifiedJson?.applicationVisibilities.find(appVisibility => appVisibility.application === modifiedValue.application);
+    let newModifiedJson = { ...modifiedContentJson };
+    let modifiedItem = newModifiedJson?.applicationVisibilities.find(
+      (appVisibility) =>
+        appVisibility.application === modifiedValue.application,
+    );
     if (modifiedItem) {
       modifiedItem.default = modifiedValue.default;
       modifiedItem.visible = modifiedValue.visible;
@@ -41,15 +43,18 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
   const modifiedAppVisibilityEditView = () => {
     return (
       <Col>
+        <span className="h5">Source Profiles</span>
         {modifiedCustomAppJson &&
-          modifiedCustomAppJson.map((customApp, idx) => (
+          modifiedCustomAppJson.map((customApp, idx, { length }) => (
             <div key={idx}>
-              <ApexClassProfleEditorView
+              <CustomApplicationProfleEditorView
                 customAppData={customApp}
                 setCustomAppJson={setCustomAppJson}
                 isLoading={isLoading}
               />
-              <DividerWithCenteredText className={"m-4"} />
+              {idx + 1 !== length && (
+                <DividerWithCenteredText className={"m-4"} />
+              )}
             </div>
           ))}
       </Col>
@@ -59,22 +64,25 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
   const originalAppVisibilityEditView = () => {
     return (
       <Col>
+        <span className="h5">Target Profiles</span>
         {originalCustomAppJson &&
-          originalCustomAppJson.map((customApp, idx) => (
+          originalCustomAppJson.map((customApp, idx, { length }) => (
             <div key={idx}>
               <CustomApplicationProfleEditorView
                 customAppData={customApp}
                 setCustomAppJson={setCustomAppJson}
                 isLoading={isLoading}
               />
-              <DividerWithCenteredText className={"m-4"} />
+              {idx + 1 !== length && (
+                <DividerWithCenteredText className={"m-4"} />
+              )}
             </div>
           ))}
       </Col>
     );
   };
   return (
-    <div className={"m-2"}>
+    <div className={"mt-4"}>
       <Row>
         {originalAppVisibilityEditView()}
         {modifiedAppVisibilityEditView()}
