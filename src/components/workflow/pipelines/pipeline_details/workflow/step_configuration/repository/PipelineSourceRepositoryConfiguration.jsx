@@ -89,6 +89,7 @@ function PipelineSourceRepositoryConfiguration(
         prCreatedEvent,
         prApprovedEvent,
         allowDynamicSettingsInUi,
+        enableBranchSwitch,
       } = persistData;
 
       const item = {
@@ -114,6 +115,7 @@ function PipelineSourceRepositoryConfiguration(
         gitExportPath: gitExportPath,
         dynamicSettings: dynamicSettings,
         allowDynamicSettingsInUi: allowDynamicSettingsInUi,
+        enableBranchSwitch: enableBranchSwitch,
       };
       // console.log("saving config: " + JSON.stringify(item));
       //console.log("saving getPersistData: " + JSON.stringify(sourceRepositoryModel?.getPersistData()));
