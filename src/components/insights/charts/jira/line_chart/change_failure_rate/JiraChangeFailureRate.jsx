@@ -138,8 +138,9 @@ function JiraChangeFailureRate({
     toastContext.clearOverlayPanel();
   };
 
-  const getMedian = (data) => {
+  const getMedian = (data, data2) => {
     let vals = [];
+    let median = '';
     for( const obj in data){
       vals.push(Number(data[obj].y));
     }
@@ -149,10 +150,16 @@ function JiraChangeFailureRate({
 
     const half = Math.floor(vals.length / 2);
     if (half.length % 2) {
-      return vals[half].toFixed(2);
+      median= vals[half].toFixed(2);
     }
     else{
-      return ((vals[half - 1] + vals[half]) / 2.0).toFixed(2);
+      median= ((vals[half - 1] + vals[half]) / 2.0).toFixed(2);
+    }
+    if(median == 0){
+      return median;
+    }
+    else {
+      return ((median/data2)/100).toFixed(2);
     }
   };
 
@@ -260,8 +267,8 @@ function JiraChangeFailureRate({
               className={"px-1"}
             >
               <JiraChangeFailureRateTrendDataBlock
-                  value={getMedian(chartData)}
-                  prevValue={getMedian(prevChartData)}
+                  value={getMedian(chartData, metricData?.total)}
+                  prevValue={getMedian(prevChartData, metricData?.prevTotal) + "%"}
                   trend={getReverseTrend(
                       getMedian(chartData),
                       getMedian(prevChartData),
@@ -286,7 +293,7 @@ function JiraChangeFailureRate({
           <Col md={12}>
             <div className={"d-flex md-2"}>
               <div className={"mr-4"}>
-                <b>Total Changes:</b> {4}
+                <b>Total Changes:</b> {metricData?.total}
               </div>
             </div>
           </Col>
