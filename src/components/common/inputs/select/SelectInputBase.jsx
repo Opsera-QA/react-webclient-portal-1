@@ -53,6 +53,7 @@ function SelectInputBase(
     externalCacheToolId,
     externalCacheToolIdentifier,
     supportSearchLookup,
+    noDataText,
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
@@ -289,6 +290,7 @@ function SelectInputBase(
           disabled={disabled || (requireUserEnable === true && enabled === false)}
           onSearchFunction={supportSearchLookup === true && typeof loadDataFunction === "function" ? onSearchFunction : undefined}
           onClickFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
+          noDataText={noDataText}
         />
         <NewRecordButton
           addRecordFunction={handleCreateFunction}
@@ -360,6 +362,7 @@ SelectInputBase.propTypes = {
   externalCacheToolId: PropTypes.string,
   externalCacheToolIdentifier: PropTypes.string,
   supportSearchLookup: PropTypes.bool,
+  noDataText: PropTypes.string,
 };
 
 SelectInputBase.defaultProps = {

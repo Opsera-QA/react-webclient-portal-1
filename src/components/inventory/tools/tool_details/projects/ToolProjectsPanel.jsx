@@ -20,7 +20,7 @@ function ToolProjectsPanel({ toolData, loadData, isLoading }) {
         />
       );
     case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
-      return <ArgoToolProjectsPanel isLoading={isLoading} toolData={toolData} toolActions={toolData?.getData("projects")} loadData={loadData}/>;
+      return <ArgoToolProjectsPanel toolId={toolData?.getData("_id")} />;
     case toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC:
       return <SnaplogicProjectsPanel isLoading={isLoading} toolData={toolData} toolActions={toolData?.getData("projects")} loadData={loadData}/>;
     default:

@@ -22,7 +22,7 @@ function ArgoRepositorySummaryPanel({ argoRepositoryData } ) {
             <TextFieldBase dataObject={argoRepositoryData} fieldName={"repository"} />
           </Col>
           <Col lg={6}>
-            <TextFieldBase dataObject={argoRepositoryData} fieldName={"repositoryType"} />
+            <TextFieldBase dataObject={argoRepositoryData} fieldName={"type"} />
           </Col>
         </Row>
       </div>
