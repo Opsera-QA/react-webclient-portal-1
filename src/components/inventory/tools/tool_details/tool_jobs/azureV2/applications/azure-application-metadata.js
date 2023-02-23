@@ -26,6 +26,10 @@ const azureApplicationsMetadata = {
       label: "Active",
       id: "active",
     },
+    {
+      label: "Connection Status",
+      id: "connectionState",
+    },
   ],
   newObjectFields: {
     _id: "",
@@ -34,6 +38,7 @@ const azureApplicationsMetadata = {
     clientSecret: "",
     resource: "https://management.azure.com",
     active: true,
+    connectionState: {},
   }
 };
 
