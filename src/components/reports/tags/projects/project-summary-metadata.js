@@ -12,8 +12,8 @@ const projectSummaryMetadata = {
       isRequired: true
     },
     {
-      label: "Owner",
-      id: "owner",
+      label: "Created By",
+      id: "owner_name",
     },
     {
       label: "Tool Type",
@@ -24,11 +24,11 @@ const projectSummaryMetadata = {
       id: "value",
     },
     {
-      label: "Created",
+      label: "Created On",
       id: "createdAt",
     },
     {
-      label: "Updated",
+      label: "Updated On",
       id: "updatedAt",
     },
   ]
