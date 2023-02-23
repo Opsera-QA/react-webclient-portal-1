@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import EventBasedTriggerDetails from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/EventBasedTriggerDetails";
 import PipelineSourceRepositorySecretInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySecretInput";
-import IconBase from "../../../../../../common/icons/IconBase";
+import IconBase from "components/common/icons/IconBase";
 import { faTriangleExclamation } from "@fortawesome/pro-light-svg-icons";
 
 function PipelineSourceRepositoryEventBasedTriggerInput({
