@@ -85,6 +85,8 @@ function ArgoToolApplicationsPanel({ toolData }) {
     return (
          stringIncludesValue(application?.name, searchTerm)
       || stringIncludesValue(application?.namespace, searchTerm)
+      || stringIncludesValue(application?.syncStatus, searchTerm)
+      || stringIncludesValue(application?.healthStatus, searchTerm)
     );
   };
 
