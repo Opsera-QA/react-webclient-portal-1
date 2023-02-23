@@ -4,8 +4,8 @@ import RegisterSourceRepositoryHookButton from "components/workflow/pipelines/pi
 import FieldContainer from "components/common/fields/FieldContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import CheckboxInputBase from "../../../../../../common/inputs/boolean/CheckboxInputBase";
-import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
-import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
+import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
+import { NODE_API_ORCHESTRATOR_SERVER_URL } from "config";
 import { faClipboardList } from "@fortawesome/pro-light-svg-icons";
 import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboardIconBase";
 
@@ -34,7 +34,7 @@ function EventBasedTriggerDetails({
 
   const EventTriggerOptions = () => {
     return (
-      <div className={"d-flex justify-content-between"}>
+      <div>
         <div>
           <CheckboxInputBase
             fieldName={"isPushEvent"}
@@ -56,30 +56,33 @@ function EventBasedTriggerDetails({
   };
 
   const PrEventOptions = () => {
-      if(model?.getData("isPrEvent") === true) {
-          return (
-              <div className={"d-flex justify-content-between"}>
-                  <div>
-                      <CheckboxInputBase
-                          fieldName={"prCreatedEvent"}
-                          model={model}
-                          setModel={setModel}
-                          setDataFunction={setDataFunction}
-                          // disabled={disabled}
-                      />
-                  </div>
-                  <div>
-                      <CheckboxInputBase
-                          fieldName={"prApprovedEvent"}
-                          model={model}
-                          setModel={setModel}
-                          setDataFunction={setDataFunction}
-                          disabled={model.getData("service") === toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS}
-                      />
-                  </div>
-              </div>
-          );
-      }
+    if (model?.getData("isPrEvent") === true) {
+      return (
+        <div>
+          <div>
+            <CheckboxInputBase
+              fieldName={"prCreatedEvent"}
+              model={model}
+              setModel={setModel}
+              setDataFunction={setDataFunction}
+              // disabled={disabled}
+            />
+          </div>
+          <div>
+            <CheckboxInputBase
+              fieldName={"prApprovedEvent"}
+              model={model}
+              setModel={setModel}
+              setDataFunction={setDataFunction}
+              disabled={
+                model.getData("service") ===
+                toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS
+              }
+            />
+          </div>
+        </div>
+      );
+    }
   };
 
   return (
