@@ -13,7 +13,7 @@ const projectSummaryMetadata = {
     },
     {
       label: "Created By",
-      id: "owner",
+      id: "owner_name",
     },
     {
       label: "Tool Type",
