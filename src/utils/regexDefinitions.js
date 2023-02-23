@@ -286,4 +286,10 @@ regexDefinitions.numbersOnly = {
   errorFormText: "Only whole positive numbers are allowed",
 };
 
+regexDefinitions.argoParameterInputRules = {
+  regex: /^[A-Za-z0-9'\-,._&+*:()/[\]! ]*$/,
+  formText: "Spaces, letters, numbers, underscores, dashes, forward slashes, periods, commas, parentheses, brackets, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
+  errorFormText: "Only spaces, letters, numbers, underscores, dashes, forward slashes, periods, commas, parentheses, brackets, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
+};
+
 export default regexDefinitions;

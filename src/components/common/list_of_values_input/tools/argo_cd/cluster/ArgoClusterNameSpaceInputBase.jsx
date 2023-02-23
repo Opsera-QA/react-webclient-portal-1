@@ -82,7 +82,7 @@ function ArgoClusterNameSpaceInputBase({dataObject, setDataObject, fieldName, di
     let newPropertyList = properties;
     let index = newPropertyList.indexOf(row);
     // TODO : Finalize regex
-    let format = regexDefinitions?.expandedTextAndSymbolsWithSpaces?.regex;
+    let format = regexDefinitions?.argoParameterInputRules?.regex;
     let meetsRegex = format.test(newValue);
 
     if (newValue !== '' && !meetsRegex) {
