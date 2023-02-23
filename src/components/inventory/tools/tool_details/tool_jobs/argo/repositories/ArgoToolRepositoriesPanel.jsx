@@ -87,6 +87,7 @@ function ArgoToolRepositoriesPanel({ toolId }) {
          stringIncludesValue(repository?.name, searchTerm)
       || stringIncludesValue(repository?.project, searchTerm)
       || stringIncludesValue(repository?.repo, searchTerm)
+      || stringIncludesValue(repository?.connectionState?.status, searchTerm)
     );
   };
 

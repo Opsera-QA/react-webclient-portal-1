@@ -86,6 +86,7 @@ function ArgoToolClustersPanel({ toolId }) {
     return (
          stringIncludesValue(cluster?.name, searchTerm)
       || stringIncludesValue(cluster?.server, searchTerm)
+      || stringIncludesValue(cluster?.connectionState?.status, searchTerm)
     );
   };
 
