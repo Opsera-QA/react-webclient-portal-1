@@ -19,6 +19,7 @@ import sessionHelper from "utils/session.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import GitCustodianSidebarNavigationLink from "components/sidebar/links/GitCustodianSidebarNavigationLink";
 import useLocationReference from "hooks/useLocationReference";
+import InnovationLabsNavigationLinks from "components/sidebar/links/InnovationLabsNavigationLinks";
 
 export default function Sidebar({ hideSideBar }) {
   const { userData } = useComponentStateReference();
@@ -52,6 +53,9 @@ export default function Sidebar({ hideSideBar }) {
           isSidebarCollapsed={isSidebarCollapsed}
         />
 
+        <InnovationLabsNavigationLinks
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
         <SidebarSubheaderText
           isSidebarCollapsed={isSidebarCollapsed}
           subheaderText={"Operations"}
