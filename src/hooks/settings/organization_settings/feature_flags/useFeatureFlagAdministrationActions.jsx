@@ -27,7 +27,7 @@ export default function useFeatureFlagAdministrationActions() {
     organizationDomain,
     organizationAccountId,
   ) => {
-    const apiUrl = `/administration/organization-settings/features/name/${organizationDomain}/${organizationAccountId}/${featureFlagName}`;
+    const apiUrl = `/administration/organization-settings/features/name/${featureFlagName}`;
     return await apiService.handleApiGetRequest(
       apiUrl,
     );
