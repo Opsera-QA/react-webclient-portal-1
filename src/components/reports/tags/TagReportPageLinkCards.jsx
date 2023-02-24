@@ -2,6 +2,7 @@ import React from "react";
 import TagsUsedInPipelinesPageLinkCard from "./pipelines/TagsUsedInPipelinesPageLinkCard";
 import TagsUsedInDashboardsPageLinkCard from "./dashboards/TagsUsedInDashboardsPageLinkCard";
 import TagsUsedInToolsPageLinkCard from "./tools/TagsUsedInToolsPageLinkCard";
+import TagsUsedInProjectsPageLinkCard from "./projects/TagsUsedInProjectsPageLinkCard";
 
 export default function TagReportPageLinkCards() {
   return (
@@ -9,6 +10,7 @@ export default function TagReportPageLinkCards() {
       <TagsUsedInPipelinesPageLinkCard />
       <TagsUsedInDashboardsPageLinkCard />
       <TagsUsedInToolsPageLinkCard />
+      <TagsUsedInProjectsPageLinkCard />
     </div>
   );
 }

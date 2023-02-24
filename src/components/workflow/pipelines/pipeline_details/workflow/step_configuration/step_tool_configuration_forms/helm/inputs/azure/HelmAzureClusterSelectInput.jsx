@@ -88,7 +88,7 @@ function HelmAzureClusterSelectInput(
     />
   );
 }
- 
+
 HelmAzureClusterSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,

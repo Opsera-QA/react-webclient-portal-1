@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import LoadingIcon from "components/common/icons/LoadingIcon";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import OpseraBirdLoadingImage from "temp-library-components/loader/OpseraBirdLoadingImage";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 export default function CenterLoadingIndicator(
   {
@@ -22,16 +23,27 @@ export default function CenterLoadingIndicator(
     <CenteredContentWrapper
       minHeight={minHeight}
     >
-      <div className={"d-flex"}>
-        <LoadingIcon iconSize={"xl"} className={"mr-3 my-auto"} />
+      <div>
         <div
-          className={"my-auto"}
-          style={{
-            fontSize: "1.15rem",
-            letterSpacing: "2px",
-          }}
+          // style={{
+          //   marginTop: "-120px",
+          // }}
+          className={"d-flex"}
         >
-          {getLoadingMessage()}
+          <div className={"mx-auto"}>
+            <OpseraBirdLoadingImage />
+          </div>
+        </div>
+        <div className={"d-flex"}>
+          <LoadingIcon iconSize={"xl"} className={"mr-3 my-auto"} />
+          <div
+            style={{
+              fontSize: "1.2rem",
+              letterSpacing: "2px",
+            }}
+          >
+            {getLoadingMessage()}
+          </div>
         </div>
       </div>
     </CenteredContentWrapper>

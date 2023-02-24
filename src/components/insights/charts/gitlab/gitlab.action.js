@@ -4,11 +4,11 @@ import {
   getDateObjectFromKpiConfiguration,
   getDeploymentStageFromKpiConfiguration,
   getGitlabProjectFromKpiConfiguration,
+  getGitlabExcludedUsersFromKpiConfiguration,
   getResultFromKpiConfiguration,
   getTagsFromKpiConfiguration,
   getUseKpiTagsFromKpiConfiguration,
   getUseDashboardTagsFromKpiConfiguration,
-  getGitlabExcludedUsersFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 
 const gitlabBaseURL = "analytics/gitlab/v1/";

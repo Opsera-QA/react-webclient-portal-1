@@ -46,17 +46,18 @@ const argoApplicationsMetadata = {
       isRequired: true
     },
     {
-      label: "Branch Name",
+      label: "Use Tag",
+      id: "useTag",      
+    },
+    {
+      label: "Target Revision",
       id: "branch",
       isRequired: true,
-      maxLength: 28,
-      regexDefinitionName: "generalText",
     },
     {
       label: "Git URL",
       id: "repoUrl",
       isRequired: true,
-      maxLength: 256,
     },
     {
       label: "Type",
@@ -171,7 +172,8 @@ const argoApplicationsMetadata = {
     projectName: "",
     branchName: "",
     active: true,
-    autoSync: false
+    autoSync: false,
+    useTag: false,
   }
 };
 

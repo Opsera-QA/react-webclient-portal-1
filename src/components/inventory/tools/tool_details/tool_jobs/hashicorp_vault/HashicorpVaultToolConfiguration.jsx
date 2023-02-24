@@ -12,7 +12,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import WarningDialog from "../../../../../common/status_notifications/WarningDialog";
 
-function HashicorpVaultToolConfiguration({ toolData }) {
+function HashicorpVaultToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [hashicorpVaultConfigurationDto, setHashicorpVaultConfigurationDto] = useState(undefined);
 
@@ -49,7 +49,8 @@ function HashicorpVaultToolConfiguration({ toolData }) {
     newConfiguration.vaultPath = await toolsActions.savePasswordToVault(toolData, hashicorpVaultConfigurationDto, "vaultPath", newConfiguration.vaultPath, getAccessToken);
 
     const item = {configuration: newConfiguration};
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   return (
@@ -79,7 +80,9 @@ HashicorpVaultToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId: PropTypes.string,
   saveToolConfiguration: PropTypes.func,
-  fnSaveToVault: PropTypes.func
+  fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default HashicorpVaultToolConfiguration;

@@ -53,6 +53,7 @@ function SelectInputBase(
     externalCacheToolId,
     externalCacheToolIdentifier,
     supportSearchLookup,
+    noDataText,
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
@@ -149,8 +150,23 @@ function SelectInputBase(
     }
   };
 
+  const getInfoMessage = () => {
+    if (
+      disabled !== true
+      && busy !== true
+      && enabled === true
+      && hasStringValue(pluralTopic) === true
+      && (!Array.isArray(selectOptions) || selectOptions.length === 0)) {
+      return `No ${pluralTopic} found for the selected criteria`;
+    }
+
+    if (hasStringValue(customInfoTextMessage) === true) {
+      return customInfoTextMessage;
+    }
+  };
+
   const getPlaceholderText = () => {
-    if (disabled !== true && requireUserEnable === true && enabled === false) {
+    if (disabled !== true && requireUserEnable === true && enabled === false && hasStringValue(pluralTopic) === true) {
       return `Click to Load ${pluralTopic} and Enable Edit Mode`;
     }
 
@@ -274,6 +290,7 @@ function SelectInputBase(
           disabled={disabled || (requireUserEnable === true && enabled === false)}
           onSearchFunction={supportSearchLookup === true && typeof loadDataFunction === "function" ? onSearchFunction : undefined}
           onClickFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
+          noDataText={noDataText}
         />
         <NewRecordButton
           addRecordFunction={handleCreateFunction}
@@ -289,7 +306,7 @@ function SelectInputBase(
         field={field}
         errorMessage={getErrorMessage()}
         hideRegexDefinitionText={true}
-        customMessage={customInfoTextMessage}
+        customMessage={getInfoMessage()}
       />
     </InputContainer>
   );
@@ -345,6 +362,7 @@ SelectInputBase.propTypes = {
   externalCacheToolId: PropTypes.string,
   externalCacheToolIdentifier: PropTypes.string,
   supportSearchLookup: PropTypes.bool,
+  noDataText: PropTypes.string,
 };
 
 SelectInputBase.defaultProps = {

@@ -12,7 +12,6 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import IconBase from "components/common/icons/IconBase";
-import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 
 function GitlabMostActiveContributors({
   kpiConfiguration,

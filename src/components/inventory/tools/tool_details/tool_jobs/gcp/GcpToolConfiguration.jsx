@@ -9,7 +9,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import FileReaderInputBase from "components/common/inputs/file/FileReaderInputBase";
 
-function GcpToolConfiguration({ toolData }) {
+function GcpToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [gcpConfigurationDto, setGCPConfigurationDto] = useState(undefined);
 
@@ -28,7 +28,8 @@ function GcpToolConfiguration({ toolData }) {
     newConfiguration.gcpConfigFile = await toolsActions.savePasswordToVault(toolData, gcpConfigurationDto, "gcpConfigFile", newConfiguration.gcpConfigFile, getAccessToken);
 
     const item = {configuration: newConfiguration};
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("tool_detail");
   };
 
   return (
@@ -49,6 +50,8 @@ function GcpToolConfiguration({ toolData }) {
 }
 GcpToolConfiguration.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default GcpToolConfiguration;

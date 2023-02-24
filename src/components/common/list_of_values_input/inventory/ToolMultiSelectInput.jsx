@@ -16,7 +16,12 @@ export default function ToolMultiSelectInput(
     isLoading,
     error,
     registryTools,
-  } = useGetRegistryTools();
+  } = useGetRegistryTools(
+    undefined,
+    undefined,
+    10000,
+    false,
+  );
 
   return (
     <MultiSelectInputBase

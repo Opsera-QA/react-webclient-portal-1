@@ -4,6 +4,7 @@ import {faExclamationCircle, faTriangleExclamation} from "@fortawesome/pro-light
 import IconBase from "components/common/icons/IconBase";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import {errorHelpers} from "components/common/helpers/error-helpers";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 // TODO: Fix so when passing in height the height doesn't change after the table loads
 function TableBodyLoadingWrapper(
@@ -15,14 +16,6 @@ function TableBodyLoadingWrapper(
     tableHeight,
     error,
   }) {
-  const getNoDataMessage = () => {
-    if (isLoading === true) {
-      return ("Loading Data");
-    }
-
-    return noDataMessage;
-  };
-
   if (error) {
     return (
       <CenteredContentWrapper minHeight={tableHeight}>
@@ -40,6 +33,14 @@ function TableBodyLoadingWrapper(
   }
 
   if (!Array.isArray(data) || data.length === 0) {
+    if (isLoading === true) {
+      return (
+        <CenterLoadingIndicator
+          minHeight={tableHeight}
+        />
+      );
+    }
+
     return (
       <CenteredContentWrapper minHeight={tableHeight}>
         <div className={"info-text-alt mx-3"}>
@@ -49,7 +50,7 @@ function TableBodyLoadingWrapper(
             isLoading={isLoading}
             className={"mr-2"}
           />
-          {getNoDataMessage()}
+          {noDataMessage}
         </div>
       </CenteredContentWrapper>
     );

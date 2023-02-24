@@ -12,7 +12,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
-function AquasecToolConfiguration({ toolData }) {
+function AquasecToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [aquasecConfigurationModel, setAquasecConfigurationModel] = useState(undefined);
 
@@ -29,7 +29,8 @@ function AquasecToolConfiguration({ toolData }) {
     const vaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
     newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(aquasecConfigurationModel, "accountPassword", newConfiguration.accountPassword, vaultKey, getAccessToken, toolData.getData("_id"));
     const item = {configuration: newConfiguration};
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   return (
@@ -53,6 +54,8 @@ function AquasecToolConfiguration({ toolData }) {
 
 AquasecToolConfiguration.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default AquasecToolConfiguration;

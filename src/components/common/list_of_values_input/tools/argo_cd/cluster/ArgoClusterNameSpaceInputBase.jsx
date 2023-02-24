@@ -24,9 +24,9 @@ function ArgoClusterNameSpaceInputBase({dataObject, setDataObject, fieldName, di
 
     let items = Array.isArray(currentData) && currentData.length > 0 ? currentData : [];
 
-    if (items.length === 0) {
-      items.push({server: "", namespace: ""});
-    }
+    // if (items.length === 0) {
+    //   items.push({server: "", namespace: ""});
+    // }
 
     setProperties([...items]);
   };
@@ -68,7 +68,7 @@ function ArgoClusterNameSpaceInputBase({dataObject, setDataObject, fieldName, di
       }
     }
 
-    newPropertyList.push({server: "", namespace: ""});
+    newPropertyList.push({server: "*", namespace: "*"});
     setProperties([...newPropertyList]);
   };
 
@@ -82,7 +82,7 @@ function ArgoClusterNameSpaceInputBase({dataObject, setDataObject, fieldName, di
     let newPropertyList = properties;
     let index = newPropertyList.indexOf(row);
     // TODO : Finalize regex
-    let format = regexDefinitions?.expandedTextAndSymbolsWithSpaces?.regex;
+    let format = regexDefinitions?.argoParameterInputRules?.regex;
     let meetsRegex = format.test(newValue);
 
     if (newValue !== '' && !meetsRegex) {

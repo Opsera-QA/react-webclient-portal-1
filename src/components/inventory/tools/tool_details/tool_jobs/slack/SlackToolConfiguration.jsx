@@ -9,7 +9,7 @@ import ErrorDialog from "components/common/status_notifications/error";
 import axios from "axios";
 import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 
-function SlackToolConfiguration({ toolData }) {
+function SlackToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [token, setToken] = useState(undefined);
@@ -145,7 +145,9 @@ function SlackToolConfiguration({ toolData }) {
 
 
 SlackToolConfiguration.propTypes = {
-  toolData: PropTypes.object
+  toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default SlackToolConfiguration;

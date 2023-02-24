@@ -20,6 +20,7 @@ function EmailNotificationToggle({ fieldName, model, setModel, disabled }) {
       setDataObject={setModel}
       disabled={disabled}
       id={"email"}
+      className={"mt-2"}
     />
   );
 }

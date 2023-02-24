@@ -15,7 +15,7 @@ import SfdcAuthTypeSelectInput from "./inputs/SfdcAuthTypeSelectInput";
 import SfdcOAuthConnectButton from "./inputs/SfdcOAuthConnectButton";
 import axios from "axios";
 
-function SfdcToolConfiguration({ toolData }) {
+function SfdcToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [sfdcConfigurationDto, setSfdcConfigurationDto] = useState(undefined);
   const isMounted = useRef(false);
@@ -68,7 +68,8 @@ function SfdcToolConfiguration({ toolData }) {
     }
 
     const item = { configuration: newConfiguration };
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   const getDynamicFields = () => {
@@ -91,6 +92,7 @@ function SfdcToolConfiguration({ toolData }) {
       persistRecord={saveSfdcToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Sfdc"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -113,6 +115,8 @@ function SfdcToolConfiguration({ toolData }) {
 
 SfdcToolConfiguration.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default SfdcToolConfiguration;

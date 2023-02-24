@@ -35,7 +35,6 @@ export default class ModelBase {
     this.setStateFunction = setStateFunction;
     this.loadDataFunction = loadDataFunction;
     this.changeMap = new Map();
-    this.initializeObjectProperties({...metaData});
     this.isLoading = false;
     this.updateAllowed = false;
     this.deleteAllowed = false;
@@ -43,31 +42,6 @@ export default class ModelBase {
     this.roleDefinitions = {};
     this.userData = undefined;
   }
-
-  // TODO: This causes numerous problems and should be removed asap
-  initializeObjectProperties = (metaData) => {
-    const fields = metaData?.fields;
-    if (Array.isArray(fields)) {
-      for (const field of fields) {
-        if (field.id === "data") {
-          continue;
-        }
-
-        let id = field.id;
-
-        Object.defineProperty(this, id, {
-          get: () => {
-            return this.getData(id);
-          },
-          set: (newValue) => {
-            if (this.getData(id) !== newValue) {
-              this.setData(id, newValue);
-            }
-          },
-        });
-      }
-    }
-  };
 
   getData = (fieldName) => {
     if (hasStringValue(fieldName) !== true) {
@@ -380,19 +354,19 @@ export default class ModelBase {
   };
 
   updateState = () => {
-    if (this.setStateFunction) {
+    if (typeof this.setStateFunction === "function") {
       this.setStateFunction({...this});
     }
   };
 
   unselectModel = () => {
-    if (this.setStateFunction) {
+    if (typeof this.setStateFunction === "function") {
       this.setStateFunction(undefined);
     }
   };
 
   setSetStateFunction = (setStateFunction) => {
-    if (setStateFunction) {
+    if (typeof setStateFunction === "function") {
       this.setStateFunction = setStateFunction;
     }
   };
@@ -551,8 +525,12 @@ export default class ModelBase {
     return this.deleteAllowed === true;
   };
 
+  canViewAuditLogs = () => {
+    return false;
+  };
+
   canEditAccessRoles = () => {
-    return this.canUpdate() === true;
+    return this.canUpdate() === true && this.editAccessRolesAllowed === true;
   };
 
   canTransferOwnership = () => {

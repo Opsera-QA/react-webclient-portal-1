@@ -22,6 +22,9 @@ import PlatformSystemParameterManagementPageLinkCard
   from "components/admin/system_parameters/PlatformSystemParameterManagementPageLinkCard";
 import PlatformSettingsManagementPageLinkCard
   from "components/admin/platform_settings/PlatformSettingsManagementPageLinkCard";
+import RemoteApplicationManagementPageLinkCard from "./remote_applications/RemoteApplicationManagementPageLinkCard";
+import OrganizationSettingsManagementPageLinkCard
+  from "components/admin/organization_settings/OrganizationSettingsManagementPageLinkCard";
 
 function AdminToolsPageLinkCards({accessRoleData}) {
   return (
@@ -41,6 +44,7 @@ function AdminToolsPageLinkCards({accessRoleData}) {
       <LdapOrganizationManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
+      <OrganizationSettingsManagementPageLinkCard />
       <PipelineStorageManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
@@ -57,6 +61,9 @@ function AdminToolsPageLinkCards({accessRoleData}) {
       <PlatformSystemParameterManagementPageLinkCard />
       <TaskTemplateManagementPageLinkCard />
       <ToolManagementPageLinkCard
+        accessRoleData={accessRoleData}
+      />
+      <RemoteApplicationManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
 

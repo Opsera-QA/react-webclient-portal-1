@@ -48,7 +48,7 @@ function VanityCreateButton(
       await persistNewRecordAndClose(model, toastContext, showSuccessToasts, handleClose);
     }
     else {
-      await persistNewRecord(model, toastContext, showSuccessToasts);
+      await persistNewRecord(model, toastContext, showSuccessToasts, undefined, undefined, setModel);
     }
 
     if (isMounted?.current === true) {

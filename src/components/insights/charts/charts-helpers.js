@@ -404,6 +404,19 @@ export const getTrendIcon = (severity) => {
   }
 };
 
+export const getTrendDescription = (iconColor) => {
+  switch (iconColor) {
+    case "red":
+      return "This project's issues are trending upward";
+    case "green":
+      return "This project's issues are trending downward";
+    case "light-gray-text-secondary":
+      return "Neutral: This project's issues have experienced no change";
+    default:
+      return "No Trend";
+  }
+};
+
 /*
  * Converts minutes in to Days Hours Minutes
  * @param mins Minutes

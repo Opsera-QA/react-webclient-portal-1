@@ -59,6 +59,7 @@ import { pipelineSettingsTrails } from "components/settings/pipelines/pipelineSe
 import {userSettingsTrails} from "components/user/user_settings/userSettings.trails";
 import {pipelinesTrails} from "components/workflow/pipelines.trails";
 import {accountSettingsTrails} from "components/settings/accountSettings.trails";
+import {adminToolsTrails} from "components/admin/adminTools.trails";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
 export const breadcrumbs = {
@@ -329,6 +330,24 @@ export const breadcrumbs = {
     title: "Pipeline Storage Record Details",
     linkText: "Pipeline Storage Record Details",
     icon: faFileArchive
+  },
+
+  remoteApplications: {
+    parent: "admin",
+    name: "remoteApplications",
+    path: paths.remoteApplications,
+    title: "Remote Application Management",
+    linkText: "Remote Application Management",
+    icon: faServer,
+    pageDescription: "View/Manage version and telemetry information generation from remote applications.",
+  },
+  remoteApplicationsDetailView: {
+    parent: "remoteApplications",
+    name: "remoteApplicationsDetailView",
+    path: paths.remoteApplicationDetailView,
+    title: "Remote Application Telemetry Record Details",
+    linkText: "Remote Application Telemetry Record Details",
+    icon: faServer
   },
 
 
@@ -784,6 +803,14 @@ export const breadcrumbs = {
     linkText: "Coverity Reports",
     icon: faAnalytics
   },
+  aquasecReports: {
+    parent: undefined,
+    name: "aquasecReports",
+    path: paths.aquasecReports,
+    title: "Aquasec Reports",
+    linkText: "Aquasec Reports",
+    icon: faAnalytics
+  },
   gitscraperReports: {
     parent: undefined,
     name: "gitscraperReports",
@@ -853,6 +880,15 @@ export const breadcrumbs = {
     linkText: "Dashboards by Tags",
     icon: faChartNetwork,
     pageDescription: "View Dashboards based on the selected Tags.",
+  },
+  tagsUsedInProjectsReport: {
+    parent: "tagReports",
+    name: "tagsUsedInProjectsReport",
+    path: paths.tagsUsedInProjectsReport,
+    title: "Projects by Tags",
+    linkText: "Projects by Tags",
+    icon: faTags,
+    pageDescription: "View Projects based on the selected Tags.",
   },
 
   userReports: {
@@ -1131,6 +1167,7 @@ export const breadcrumbs = {
   ...pipelinesTrails,
   ...userSettingsTrails,
   ...accountSettingsTrails,
+  ...adminToolsTrails,
 };
 
 export const getTrail = (breadcrumb) => {

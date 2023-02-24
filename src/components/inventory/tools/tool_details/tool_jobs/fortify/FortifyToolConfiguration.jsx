@@ -14,7 +14,7 @@ import { toolIdentifierConstants } from "components/admin/tools/identifiers/tool
 import FortifyScanToolSelectInput from "./inputs/FortifyScanToolSelectInput";
 import FortifyPortalSelectInput from "./inputs/FortifyPortalSelectInput";
 
-const FortifyToolConfiguration = ({ toolData }) => {
+const FortifyToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [fortifyConfigurationModel, setFortifyConfigurationModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -91,7 +91,8 @@ const FortifyToolConfiguration = ({ toolData }) => {
       default:
         break;
     }    
-    return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
+    await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   const getFortifyOnDemandFields = () => {
@@ -195,6 +196,8 @@ const FortifyToolConfiguration = ({ toolData }) => {
 
 FortifyToolConfiguration.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default FortifyToolConfiguration;

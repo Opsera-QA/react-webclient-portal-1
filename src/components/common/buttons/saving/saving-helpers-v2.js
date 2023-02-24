@@ -82,6 +82,7 @@ export async function persistNewRecord(
   showSuccessToasts,
   showErrorToastsInline = true,
   isIncomplete,
+  setModel
   ) {
   try {
     let isModelValid = model.isModelValid();
@@ -98,6 +99,12 @@ export async function persistNewRecord(
     }
 
     let response = await model.createModel();
+
+    if (setModel) {
+      const newData = response?.data?.data ? response?.data?.data : response?.data;
+      model.replaceData(newData);
+      setModel(model);
+    }
 
     if (showSuccessToasts) {
       if (isIncomplete === true || (model.isLenient() === true && !isModelValid)) {

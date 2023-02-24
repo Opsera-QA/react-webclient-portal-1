@@ -29,8 +29,8 @@ function DetailScreenContainer(
     helpComponent,
     isBeta,
   }) {
-  const [breadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
-  const [parentBreadcrumb] = useState(getParentBreadcrumb(breadcrumbDestination));
+  const breadcrumb = getBreadcrumb(breadcrumbDestination);
+  const parentBreadcrumb = getParentBreadcrumb(breadcrumbDestination);
   const activeField = dataObject?.getActiveField();
 
   const getTopNavigation = () => {

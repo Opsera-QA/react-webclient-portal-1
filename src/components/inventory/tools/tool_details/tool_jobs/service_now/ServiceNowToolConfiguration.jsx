@@ -11,7 +11,7 @@ import ToolConfigurationEditorPanelContainer
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
-function ServiceNowToolConfiguration({ toolData }) {
+function ServiceNowToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [serviceNowConfigurationDto, setServiceNowConfigurationDto] = useState(undefined);
 
@@ -29,7 +29,8 @@ function ServiceNowToolConfiguration({ toolData }) {
     const vaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
     newConfiguration.secretKey = await toolsActions.saveKeyPasswordToVault(serviceNowConfigurationDto,"secretKey", newConfiguration.secretKey, vaultKey, getAccessToken, toolData.getData("_id"));
     const item = { configuration: newConfiguration };
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   if (serviceNowConfigurationDto == null) {
@@ -61,6 +62,8 @@ function ServiceNowToolConfiguration({ toolData }) {
 
 ServiceNowToolConfiguration.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default ServiceNowToolConfiguration;

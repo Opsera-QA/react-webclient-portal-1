@@ -13,6 +13,8 @@ export default function ActionBarViewPipelineAuditLogsButton(
   const {
     userData,
     toastContext,
+    isFreeTrial,
+    isOpseraAdministrator,
   } = useComponentStateReference();
 
   const openOverlay = () => {
@@ -23,7 +25,10 @@ export default function ActionBarViewPipelineAuditLogsButton(
     );
   };
 
-  if (PipelineRoleHelper.canViewPipelineConfiguration(userData, pipeline) !== true) {
+  if (
+    PipelineRoleHelper.canViewPipelineConfiguration(userData, pipeline) !== true
+    || (isFreeTrial === true && isOpseraAdministrator !== true)
+  ) {
     return null;
   }
 

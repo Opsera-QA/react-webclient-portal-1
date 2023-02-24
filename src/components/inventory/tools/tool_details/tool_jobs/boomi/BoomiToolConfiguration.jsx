@@ -11,7 +11,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ApiTypeSelectInput from "./inputs/ApiTypeSelectInput";
 
-function BoomiToolConfiguration({ toolData }) {
+function BoomiToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [boomiConfigurationDto, setBoomiConfigurationDto] = useState(undefined);
 
@@ -56,11 +56,8 @@ function BoomiToolConfiguration({ toolData }) {
     }
 
     const item = { configuration: newConfiguration };
-    return await toolsActions.saveToolConfiguration(
-      toolData,
-      item,
-      getAccessToken,
-    );
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   const getOauthFields = () => {
@@ -137,6 +134,8 @@ BoomiToolConfiguration.propTypes = {
   toolId: PropTypes.string,
   saveToolConfiguration: PropTypes.func,
   fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default BoomiToolConfiguration;

@@ -11,6 +11,7 @@ import ConnectedAssets from "components/insights/connectedAssets/ConnectedAssets
 import GitCustodian from "components/insights/gitCustodian/GitCustodian";
 import SonarPipelineScanReport from "components/insights/reports/sonar/SonarPipelineScanReport";
 import CoverityScanReport from "components/insights/reports/coverity/CoverityScanReport";
+import AquasecReport from "components/insights/reports/aquasec/AquasecReport";
 import GitScraperScanReport from "../components/insights/reports/git_scraper/GitScraperScanReport";
 
 export default function InsightsRoutes() {
@@ -32,8 +33,10 @@ export default function InsightsRoutes() {
                    component={SonarPipelineScanReport} />
       <SecureRoute path="/insights/reports/scans/coverity/:pipelineId/:projectName/:runCount/:coveritySeverity"
                    component={CoverityScanReport} />
+      <SecureRoute path="/insights/reports/scans/aquasec/:pipelineId/:imageName/:severity" component={AquasecReport} />
       <SecureRoute path="/insights/reports/scans/gitscraper/:repository/:branch"
                    component={GitScraperScanReport} />
+        <SecureRoute path="/insights/reports/scans/aquasec/:pipelineId/:imageName/:severity" component={AquasecReport} />
     </>
   );
 }

@@ -250,10 +250,10 @@ import AzureZipDeploymentStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_zip_deployment/AzureZipDeploymentStepConfigurationSummaryPanel";
 import SnykPipelineStepConfigurationSummary from "./step_tool_configuration_forms/snyk/inputs/SnykPipelineStepConfigurationSummary";
 import snykStepFormMetadata from "./step_tool_configuration_forms/snyk/snyk-stepForm-metadata";
-import AquasecPipelineStepConfigurationSummary from "./step_tool_configuration_forms/aquasec/AquasecPipelineStepConfigurationSummary";
-import AquasecStepFormMetadata from "./step_tool_configuration_forms/aquasec/aquasec-stepForm-metadata";
 import HelmPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/helm/HelmPipelineStepConfigurationSummaryPanel";
 import helmStepFormMetadata from "./step_tool_configuration_forms/helm/helm-stepForm-metadata";
+import AquasecPipelineStepConfigurationSummary from "./step_tool_configuration_forms/aquasec/AquasecPipelineStepConfigurationSummary";
+import AquasecStepFormMetadata from "./step_tool_configuration_forms/aquasec/aquasec-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,

@@ -12,7 +12,7 @@ import axios from "axios";
 import BlackduckMetadata from "./blackduck-tool-metadata";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
-const BlackduckToolConfiguration = ({ toolData }) => {
+const BlackduckToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [blackDuckConfigurationModel, setBlackDuckConfigurationModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -53,7 +53,8 @@ const BlackduckToolConfiguration = ({ toolData }) => {
       "token",
       newConfiguration?.token
     );
-    return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
+    await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   if (blackDuckConfigurationModel == null) {
@@ -88,6 +89,8 @@ const BlackduckToolConfiguration = ({ toolData }) => {
 
 BlackduckToolConfiguration.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default BlackduckToolConfiguration;

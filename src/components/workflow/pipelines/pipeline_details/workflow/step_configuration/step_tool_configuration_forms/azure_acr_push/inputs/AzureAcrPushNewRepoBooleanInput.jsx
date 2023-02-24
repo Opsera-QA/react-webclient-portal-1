@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function AzureAcrPushNewRepoBooleanInput({dataObject, setDataObject, disabled}) {
-
-
   const setDataFunction = (fieldName, value) => {
     let newDataObject = {...dataObject};
     newDataObject.setData(fieldName, value);

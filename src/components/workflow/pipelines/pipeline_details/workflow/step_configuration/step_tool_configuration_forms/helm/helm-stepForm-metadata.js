@@ -97,7 +97,7 @@ const helmStepFormMetadata = {
       id: "workspaceName",
     },
     {
-      label: "Azure Credential", 
+      label: "Azure Credential",
       id: "azureCredentialId",
     },
     {

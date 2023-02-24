@@ -122,6 +122,13 @@ export const sourceRepositoryConfigurationMetadata = {
         If this setting is enabled, users of this Pipeline will be able to set its Dynamic Settings in the UI at runtime. 
       `
     },
+    {
+      label: "Enable Branch Switching",
+      id: "enableBranchSwitch",
+      formText: `
+        If this setting is enabled, users of this Pipeline will be able to set Dynamic Branch at runtime. 
+      `
+    },
   ],
   dbSupportedFieldNames: [
     "name",
@@ -146,6 +153,7 @@ export const sourceRepositoryConfigurationMetadata = {
     "gitExportPath",
     "dynamicSettings",
     "allowDynamicSettingsInUi",
+    "enableBranchSwitch",
   ],
   newObjectFields: {
     name: "",
@@ -166,5 +174,6 @@ export const sourceRepositoryConfigurationMetadata = {
     prCreatedEvent: true,
     prApprovedEvent: false,
     dynamicSettings: false,
+    enableBranchSwitch: false,
   },
 };

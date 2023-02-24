@@ -7,10 +7,10 @@ import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateArgoToolRepositoryOverlay
   from "components/inventory/tools/tool_details/tool_jobs/argo/repositories/CreateArgoToolRepositoryOverlay";
-import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
+import {getTableTextColumn, getConnectionStatus} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 
-function ArgoToolRepositoriesTable({ toolId, argoRepositories, loadData, onRowSelect, isLoading, hasConfigurationDetails }) {
+function ArgoToolRepositoriesTable({ toolId, argoRepositories, loadData, onRowSelect, isLoading, filterData, filterModel, setFilterModel }) {
   const toastContext = useContext(DialogToastContext);
   let fields = argoRepositoryMetadata.fields;
 
@@ -20,10 +20,11 @@ function ArgoToolRepositoriesTable({ toolId, argoRepositories, loadData, onRowSe
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "service")),
-      getTableTextColumn(getField(fields, "repositoryName")),
-      getTableTextColumn(getField(fields, "repositoryType")),
+      getTableTextColumn(getField(fields, "name"), null, 300),
+      getTableTextColumn(getField(fields, "type"), null, 140),
+      getTableTextColumn(getField(fields, "repo")),
+      getTableTextColumn(getField(fields, "project"), null, 200),
+      getConnectionStatus(getField(fields, "connectionState")),
     ],
     []
   );
@@ -35,31 +36,40 @@ function ArgoToolRepositoriesTable({ toolId, argoRepositories, loadData, onRowSe
         data={argoRepositories}
         onRowSelect={onRowSelect}
         isLoading={isLoading}
+        paginationModel={filterModel}
+        setPaginationModel={setFilterModel}
+        loadData={filterData}
+        tableHeight={"350px"}
       />
     );
   };
 
   return (
     <FilterContainer
-      loadData={loadData}
+      loadData={filterData}
       isLoading={isLoading}
       title={"Argo Repositories"}
       type={"Argo Repositories"}
       titleIcon={faBrowser}
-      addRecordFunction={hasConfigurationDetails === true ? createArgoRepository : undefined}
+      addRecordFunction={createArgoRepository}
       body={getTable()}
       showBorder={false}
+      filterDto={filterModel}
+      setFilterDto={setFilterModel}
+      supportSearch={true}
     />
   );
 }
 
 ArgoToolRepositoriesTable.propTypes = {
-  toolId: PropTypes.string,
-  hasConfigurationDetails: PropTypes.bool,
+  toolId: PropTypes.string,  
   loadData: PropTypes.func,
   onRowSelect: PropTypes.func,
   isLoading: PropTypes.bool,
-  argoRepositories: PropTypes.array
+  argoRepositories: PropTypes.array,
+  filterData: PropTypes.func,
+  setFilterModel: PropTypes.func,
+  filterModel: PropTypes.object,
 };
 
 export default ArgoToolRepositoriesTable;

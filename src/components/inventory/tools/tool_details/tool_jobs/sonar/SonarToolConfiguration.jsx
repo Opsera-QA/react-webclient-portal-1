@@ -12,7 +12,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import SonarEditionSelectInput from "components/common/list_of_values_input/tools/code_scan/SonarEditionSelectInput";
 
-function SonarToolConfiguration( { toolData }) {
+function SonarToolConfiguration( { toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [sonarConfigurationDto, setSonarConfigurationDto] = useState(undefined);
 
@@ -29,7 +29,8 @@ function SonarToolConfiguration( { toolData }) {
     const vaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
     newConfiguration.sonarAuthToken = await toolsActions.saveKeyPasswordToVault(sonarConfigurationDto,"sonarAuthToken", newConfiguration.sonarAuthToken, vaultKey, getAccessToken, toolData.getData("_id"));
     const item = { configuration: newConfiguration };
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   return (
@@ -39,6 +40,7 @@ function SonarToolConfiguration( { toolData }) {
       persistRecord={saveSonarToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Sonarqube"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -55,6 +57,8 @@ function SonarToolConfiguration( { toolData }) {
 
 SonarToolConfiguration.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default SonarToolConfiguration;

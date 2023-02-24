@@ -5,11 +5,15 @@ import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 import PipelineFilterModel from "components/workflow/pipelines/pipeline.filter.model";
 
 export default function useGetPipelines(
+  fields,
+  active,
+  setUrlParameters = false,
+  pageSize,
   handleErrorFunction,
 ) {
   const [pipelines, setPipelines] = useState([]);
   const [subscribedPipelineIds, setSubscribedPipelineIds] = useState([]);
-  const [pipelineFilterModel, setPipelineFilterModel] = useState(new PipelineFilterModel());
+  const [pipelineFilterModel, setPipelineFilterModel] = useState(new PipelineFilterModel(setUrlParameters));
   const {
     isLoading,
     error,
@@ -21,16 +25,16 @@ export default function useGetPipelines(
   useEffect(() => {
     setPipelines([]);
 
+    if (pageSize) {
+      pipelineFilterModel.setData("pageSize", pageSize);
+    }
+
     if (loadData) {
       loadData(getPipelines, handleErrorFunction).catch(() => {});
     }
   }, []);
 
-  const getPipelines = async (
-    newFilterModel = pipelineFilterModel,
-    fields,
-    active,
-  ) => {
+  const getPipelines = async (newFilterModel = pipelineFilterModel) => {
     const response = await pipelineActions.getPipelines(
       newFilterModel,
       fields,
