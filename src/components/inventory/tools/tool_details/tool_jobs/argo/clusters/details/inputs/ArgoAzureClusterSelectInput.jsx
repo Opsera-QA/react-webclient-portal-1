@@ -42,7 +42,7 @@ function ArgoAzureClusterSelectInput(
     try {
       setIsLoading(true);
       await loadAzureClusters(cancelSource);
-    } catch (error) {      
+    } catch (error) {
       setErrorMessage(error);      
       console.error(error);
     } finally {

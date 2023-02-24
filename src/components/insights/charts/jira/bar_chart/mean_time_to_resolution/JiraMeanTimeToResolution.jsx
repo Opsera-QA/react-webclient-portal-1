@@ -44,8 +44,8 @@ function JiraMeanTimeToResolution({
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
-  const [prevMetrics, setPrevMetrics] = useState([]);
   const [sevMetrics, setSevMetrics] = useState([]);
+  const [prevMetrics, setPrevMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
@@ -146,6 +146,7 @@ function JiraMeanTimeToResolution({
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
   };
+
 
   const getMedian = (data) => {
     let vals = [];
@@ -273,12 +274,12 @@ function JiraMeanTimeToResolution({
               </Col>
               <Col md={12} className={"pl-1 pr-2"}>
                 <JiraMTTRDataBlock
-                  value={getMedian(metrics)}
-                  previousValue={getMedian(prevMetrics)}
-                  trend={getReverseTrend(getMedian(metrics),getMedian(prevMetrics))}
-                  getIcon = {getReverseTrendIcon}
-                  topText={"Median MTTR (Hours)"}
-                  bottomText={"Prev Median MTTR"}
+                    value={getMedian(metrics)}
+                    previousValue={getMedian(prevMetrics)}
+                    trend={getReverseTrend(getMedian(metrics),getMedian(prevMetrics))}
+                    getIcon = {getReverseTrendIcon}
+                    topText={"Median MTTR (Hours)"}
+                    bottomText={"Prev Median MTTR"}
                 />
               </Col>
             </Row>

@@ -5,30 +5,30 @@ import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import ConfirmationOverlay from "components/common/overlays/center/ConfirmationOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
-import useGetNewPolicyModel from "hooks/settings/organization_settings/policies/useGetNewPolicyModel";
-import PolicyEditorPanelBase from "components/settings/organization_settings/policies/details/PolicyEditorPanelBase";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import OrganizationSettingsActivatePolicyButton
-  from "components/admin/organization_settings/details/policies/inactive/OrganizationSettingsActivatePolicyButton";
+import featureFlagConstants
+  from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
+import useGetNewFeatureFlagModel from "hooks/settings/organization_settings/feature_flags/useGetNewFeatureFlagModel";
+import OrganizationSettingsActivateFeatureFlagButton
+  from "components/admin/organization_settings/details/features/inactive/OrganizationSettingsActivateFeatureFlagButton";
 
-export default function OrganizationSettingsPolicyActivationConfirmationOverlay(
+export default function OrganizationSettingsFeatureFlagActivationConfirmationOverlay(
   {
-    policyName,
+    featureFlagName,
     organizationDomain,
     organizationAccountName,
   }) {
   const {
-    policyModel,
-    setPolicyModel,
-  } = useGetNewPolicyModel();
-  policyModel?.setData("name", policyName);
+    featureFlagModel,
+    setFeatureFlagModel,
+  } = useGetNewFeatureFlagModel();
+  featureFlagModel?.setData("name", featureFlagName);
   const {
     toastContext,
   } = useComponentStateReference();
 
   const getFormattedRoleLabel = () => {
-    const label = DataParsingHelper.parseString(policyConstants.getPolicyNameLabel(policyName));
+    const label = DataParsingHelper.parseString(featureFlagConstants.getFeatureFlagNameLabel(featureFlagName));
 
     if (label) {
       return (
@@ -45,7 +45,7 @@ export default function OrganizationSettingsPolicyActivationConfirmationOverlay(
     <ConfirmationOverlay
       closePanel={closeOverlayFunction}
       showPanel={true}
-      titleText={`Activate Policy?`}
+      titleText={`Activate Feature Flag?`}
       titleIcon={faQuestionCircle}
       showToasts={true}
       showCloseButton={false}
@@ -54,14 +54,10 @@ export default function OrganizationSettingsPolicyActivationConfirmationOverlay(
         hideCloseButton={true}
       >
         <div className={"mx-3 mb-3 mt-2"}>
-          <div>Are you sure you would like to activate the {getFormattedRoleLabel()} Policy?</div>
-          <PolicyEditorPanelBase
-            policyModel={policyModel}
-            setPolicyModel={setPolicyModel}
-          />
+          <div>Are you sure you would like to activate the {getFormattedRoleLabel()} Feature Flag?</div>
           <ButtonContainerBase>
-            <OrganizationSettingsActivatePolicyButton
-              policyModel={policyModel}
+            <OrganizationSettingsActivateFeatureFlagButton
+              featureFlagModel={featureFlagModel}
               organizationDomain={organizationDomain}
               organizationAccountName={organizationAccountName}
               closeOverlayFunction={closeOverlayFunction}
@@ -73,8 +69,8 @@ export default function OrganizationSettingsPolicyActivationConfirmationOverlay(
   );
 }
 
-OrganizationSettingsPolicyActivationConfirmationOverlay.propTypes = {
-  policyName: PropTypes.string,
+OrganizationSettingsFeatureFlagActivationConfirmationOverlay.propTypes = {
+  featureFlagName: PropTypes.string,
   organizationDomain: PropTypes.string,
   organizationAccountName: PropTypes.string,
 };

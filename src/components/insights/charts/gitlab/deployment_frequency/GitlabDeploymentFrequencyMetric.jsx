@@ -40,10 +40,10 @@ function GitlabDeploymentFrequency({
   const [error, setError] = useState(undefined);
   const [metricData, setMetricData] =
     useState(undefined);
-  const [chartData, setChartData] =
-    useState(undefined);
   const [prevChartData, setPrevChartData] =
       useState(undefined);
+  const [chartData, setChartData] =
+    useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -133,22 +133,22 @@ function GitlabDeploymentFrequency({
   toastContext.clearOverlayPanel();
 };
 
- const getMedian = (data) => {
-   let vals = [];
-   for( const obj in data?.step){
-     vals.push(Number(data.step[obj].total));
-   }
-   vals.sort(function(a,b){
-     return a-b;
-   });
-   const half = Math.floor(vals.length / 2);
-   if (half.length % 2) {
-     return vals[half].toFixed(2);
-   }
-   else{
-     return ((vals[half - 1] + vals[half]) / 2.0).toFixed(2);
-   }
- };
+const getMedian = (data) => {
+  let vals = [];
+  for( const obj in data?.step){
+    vals.push(Number(data.step[obj].total));
+  }
+  vals.sort(function(a,b){
+    return a-b;
+  });
+  const half = Math.floor(vals.length / 2);
+  if (half.length % 2) {
+    return vals[half].toFixed(2);
+  }
+  else{
+    return ((vals[half - 1] + vals[half]) / 2.0).toFixed(2);
+  }
+};
 
 const onRowSelect = () => {
   toastContext.showOverlayPanel(

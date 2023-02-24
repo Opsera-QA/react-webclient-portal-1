@@ -10,11 +10,15 @@ import {policyHelper} from "components/settings/organization_settings/policies/p
 import OrganizationSettingsPoliciesPanel
   from "components/admin/organization_settings/details/policies/OrganizationSettingsPoliciesPanel";
 import {faFlag, faShieldCross} from "@fortawesome/pro-light-svg-icons";
+import OrganizationSettingsFeatureFlagsPanel
+  from "components/admin/organization_settings/details/features/OrganizationSettingsFeatureFlagsPanel";
 
 export default function OrganizationSettingsDetailPanel(
   {
     organizationSettingsModel,
     setOrganizationSettingsModel,
+    organizationDomain,
+    organizationAccountId,
   }) {
   const [activeTab, setActiveTab] = useState("summary");
 
@@ -69,6 +73,16 @@ export default function OrganizationSettingsDetailPanel(
         return (
           <OrganizationSettingsPoliciesPanel
             organizationSettingsModel={organizationSettingsModel}
+            organizationDomain={organizationDomain}
+            organizationAccountId={organizationAccountId}
+          />
+        );
+      case "featureFlags":
+        return (
+          <OrganizationSettingsFeatureFlagsPanel
+            organizationSettingsModel={organizationSettingsModel}
+            organizationDomain={organizationDomain}
+            organizationAccountId={organizationAccountId}
           />
         );
       default:
@@ -87,4 +101,6 @@ export default function OrganizationSettingsDetailPanel(
 OrganizationSettingsDetailPanel.propTypes = {
   organizationSettingsModel: PropTypes.object,
   setOrganizationSettingsModel: PropTypes.func,
+  organizationDomain: PropTypes.string,
+  organizationAccountId: PropTypes.string,
 };

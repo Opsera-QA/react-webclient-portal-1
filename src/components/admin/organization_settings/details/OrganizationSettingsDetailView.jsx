@@ -62,6 +62,8 @@ function OrganizationSettingsDetailView() {
         <OrganizationSettingsDetailPanel
           organizationSettingsModel={organizationSettingsModel}
           setOrganizationSettingsModel={setOrganizationSettingsModel}
+          organizationDomain={organizationDomain}
+          organizationAccountId={organizationAccount}
         />
       }
     />

@@ -24,8 +24,10 @@ export default function useFeatureFlagAdministrationActions() {
 
   featureFlagAdministrationActions.getFeatureFlagByName = async (
     featureFlagName,
+    organizationDomain,
+    organizationAccountId,
   ) => {
-    const apiUrl = `/administration/organization-settings/features/flags/name/${featureFlagName}`;
+    const apiUrl = `/administration/organization-settings/features/name/${organizationDomain}/${organizationAccountId}/${featureFlagName}`;
     return await apiService.handleApiGetRequest(
       apiUrl,
     );
