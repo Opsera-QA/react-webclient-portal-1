@@ -55,6 +55,11 @@ export default function OrganizationSettingsFeatureFlagActivationConfirmationOve
       >
         <div className={"mx-3 mb-3 mt-2"}>
           <div>Are you sure you would like to activate the {getFormattedRoleLabel()} Feature Flag?</div>
+          <div
+            style={{
+              marginTop: "200px",
+            }}
+          />
           <ButtonContainerBase>
             <OrganizationSettingsActivateFeatureFlagButton
               featureFlagModel={featureFlagModel}
