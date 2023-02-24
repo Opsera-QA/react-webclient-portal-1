@@ -14,6 +14,7 @@ import VaultTextInput from "../../../../../../../common/inputs/text/VaultTextInp
 import toolsActions from "../../../../../tools-actions";
 import DeleteButtonWithInlineConfirmation
   from "../../../../../../../common/buttons/delete/DeleteButtonWithInlineConfirmation";
+import { generateUUID, hasStringValue } from "components/common/helpers/string-helpers";
 
 function AzureApplicationEditorPanel({ azureApplicationData, toolData, applicationId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -23,7 +24,6 @@ function AzureApplicationEditorPanel({ azureApplicationData, toolData, applicati
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-console.log(azureApplicationData);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -57,17 +57,29 @@ console.log(azureApplicationData);
 
   const createApplication = async () => {
     let newConfiguration = azureApplicationModel.getPersistData();
-    newConfiguration.clientId = await toolsActions.savePasswordToVault(toolData, azureApplicationModel, "clientId", newConfiguration.clientId, getAccessToken);
-    newConfiguration.clientSecret = await toolsActions.savePasswordToVault(toolData, azureApplicationModel, "clientSecret", newConfiguration.clientSecret, getAccessToken);
+    const azureAppId = generateUUID();
+    const vaultKeyPrefix = `${azureAppId}-${toolData?.getData("tool_identifier")}`;    
+    newConfiguration.azureAppId = azureAppId;
+    newConfiguration.clientId = await toolsActions.saveKeyPasswordToVault(azureApplicationModel, "clientId", 
+      newConfiguration.clientId, `${vaultKeyPrefix}-clientId`, getAccessToken, toolData?.getData("_id"));
+    newConfiguration.clientSecret = await toolsActions.saveKeyPasswordToVault(azureApplicationModel, "clientSecret", 
+      newConfiguration.clientSecret, `${vaultKeyPrefix}-clientSecret`, getAccessToken, toolData?.getData("_id"));
 
     return await azureActions.createAzureCredential(getAccessToken, cancelTokenSource, toolData?.getData("_id"), newConfiguration);
   };
 
   const updateApplication = async () => {
     let newConfiguration = azureApplicationModel.getPersistData();
-    newConfiguration.clientId = await toolsActions.savePasswordToVault(toolData, azureApplicationModel, "clientId", newConfiguration.clientId, getAccessToken);
-    newConfiguration.clientSecret = await toolsActions.savePasswordToVault(toolData, azureApplicationModel, "clientSecret", newConfiguration.clientSecret, getAccessToken);
-
+    // for existing applications
+    if (!hasStringValue(newConfiguration?.azureAppId)) {
+      const azureAppId = generateUUID();
+      newConfiguration.azureAppId = azureAppId;
+    }
+    const vaultKeyPrefix = `${newConfiguration.azureAppId}-${toolData?.getData("tool_identifier")}`;
+    newConfiguration.clientId = await toolsActions.saveKeyPasswordToVault(azureApplicationModel, "clientId", 
+      newConfiguration.clientId, `${vaultKeyPrefix}-clientId`, getAccessToken, toolData?.getData("_id"));
+    newConfiguration.clientSecret = await toolsActions.saveKeyPasswordToVault(azureApplicationModel, "clientSecret", 
+      newConfiguration.clientSecret, `${vaultKeyPrefix}-clientSecret`, getAccessToken, toolData?.getData("_id"));
     return await azureActions.updateAzureCredential(getAccessToken, cancelTokenSource, toolData?.getData("_id"), applicationId, newConfiguration);
   };
 
