@@ -13,7 +13,6 @@ export default function useGetFeatureFlagModelByName(
 ) {
   const [featureFlagModel, setFeatureFlagModel] = useState(undefined);
   const { getFeatureFlagModel } = useGetFeatureFlagModel();
-  const { isSaasUser } = useComponentStateReference();
   const {
     isLoading,
     error,
@@ -25,7 +24,7 @@ export default function useGetFeatureFlagModelByName(
   useEffect(() => {
     setFeatureFlagModel(undefined);
 
-    if (featureFlagConstants.isFeatureFlagNameValid(featureFlagName) === true && isSaasUser === false) {
+    if (featureFlagConstants.isFeatureFlagNameValid(featureFlagName) === true) {
       loadData(getFeatureFlag).catch(() => {
       });
     }
