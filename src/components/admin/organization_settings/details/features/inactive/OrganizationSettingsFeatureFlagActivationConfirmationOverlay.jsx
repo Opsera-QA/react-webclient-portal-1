@@ -57,7 +57,7 @@ export default function OrganizationSettingsFeatureFlagActivationConfirmationOve
           <div>Are you sure you would like to activate the {getFormattedRoleLabel()} Feature Flag?</div>
           <div
             style={{
-              marginTop: "200px",
+              marginTop: "150px",
             }}
           />
           <ButtonContainerBase>
