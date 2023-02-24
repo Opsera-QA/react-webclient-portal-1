@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
-import gitlabAction from "../../../../../insights/charts/gitlab/gitlab.action";
+import gitlogAction from "../../../../../insights/charts/gitlog/gitlog.action";
 
-function DeploymentFrequencyConfigurationItemsSelectInputV2({
+function GitLogRepositoriesList({
   placeholderText,
   valueField,
   textField,
@@ -17,7 +17,7 @@ function DeploymentFrequencyConfigurationItemsSelectInputV2({
 }) {
     const [field] = useState(model?.getFieldById(fieldName));
     const { getAccessToken } = useContext(AuthContext);
-    const [stages, setStages] = useState([]);
+    const [repositories, setRepositories] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(undefined);
     const isMounted = useRef(false);
@@ -60,12 +60,12 @@ function DeploymentFrequencyConfigurationItemsSelectInputV2({
     };
 
     const loadStages = async (cancelSource = cancelTokenSource) => {
-        const response = await gitlabAction.gitlabDeploymentStagesListV2(
+        const response = await gitlogAction.getRepositoriesList(
             getAccessToken,
             cancelSource,
         );
         if (response?.data != null) {
-            setStages(response?.data?.data?.gitlabDeploymentStagesList?.data);
+            setRepositories(response?.data?.gitLogRepositoriesList?.data);
         }
     };
     return (
@@ -74,19 +74,19 @@ function DeploymentFrequencyConfigurationItemsSelectInputV2({
             dataObject={model}
             setDataObject={setModel}
             setDataFunction={setDataFunction}
-            selectOptions={stages}
+            selectOptions={repositories}
             busy={isLoading}
             valueField={valueField}
             error={error}
             textField={textField}
             placeholderText={placeholderText}
             disabled={disabled || isLoading}
-            pluralTopic={"Stages"}
+            pluralTopic={"Repositories"}
         />
     );
 }
 
-DeploymentFrequencyConfigurationItemsSelectInputV2.propTypes = {
+GitLogRepositoriesList.propTypes = {
     placeholderText: PropTypes.string,
     fieldName: PropTypes.string,
     textField: PropTypes.string,
@@ -98,9 +98,9 @@ DeploymentFrequencyConfigurationItemsSelectInputV2.propTypes = {
     visible: PropTypes.bool,
 };
 
-DeploymentFrequencyConfigurationItemsSelectInputV2.defaultProps = {
+GitLogRepositoriesList.defaultProps = {
     textField: "text",
     valueField: "value",
 };
 
-export default DeploymentFrequencyConfigurationItemsSelectInputV2;
+export default GitLogRepositoriesList;
