@@ -12,7 +12,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 const getVnextLink = () => {
   const nodeUrl = DataParsingHelper.parseString(`https://api.opsera-dev.opsera.io`, "");
   const parsedUrl = nodeUrl.substring(nodeUrl.indexOf(".") + 1);
-  return `vnext.${parsedUrl}`;
+  return `https://vnext.${parsedUrl}`;
 };
 
 export default function InnovationLabsNavigationLinks({ isSidebarCollapsed, }) {
@@ -27,6 +27,7 @@ export default function InnovationLabsNavigationLinks({ isSidebarCollapsed, }) {
         label={"Insights NxGen (Beta)"}
         icon={faChartNetwork}
         isSidebarCollapsed={isSidebarCollapsed}
+        isExternalLink={true}
       />
     </>
   );
