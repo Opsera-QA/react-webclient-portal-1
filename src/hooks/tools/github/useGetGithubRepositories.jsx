@@ -51,10 +51,6 @@ export default function useGetGithubRepositories(
     if (response) {
       setIsLoading(false);
     }
-    
-        return () => {
-      source.cancel();
-    };
   };
 
   return ({
