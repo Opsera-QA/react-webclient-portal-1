@@ -139,9 +139,7 @@ function ToolDetailPanel(
         return (
           <ToolRepositoriesPanel
             toolData={toolModel}
-            setToolData={setToolModel}
-            loadData={loadData}
-            isLoading={isLoading}
+            setToolData={setToolModel}            
           />
         );
       case TOOL_DETAIL_PANEL_TABS.SETTINGS:

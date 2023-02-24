@@ -9,15 +9,29 @@ import modelHelpers from "components/common/model/modelHelpers";
 import argoClusterMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/argo-cluster-metadata";
 import ArgoClusterEditorPanel
   from "components/inventory/tools/tool_details/tool_jobs/argo/clusters/details/ArgoClusterEditorPanel";
+import argoFiltersMetadata from "../argo-filters-metadata";
+import Model from "core/data_model/model";
+import {stringIncludesValue} from "components/common/helpers/string-helpers";
+import {localFilterFunction} from "utils/tableHelpers";
+import _ from "lodash";
 
 function ArgoToolClustersPanel({ toolId }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [argoClusters, setArgoClusters] = useState([]);
+  const [argoOriginalClusters, setArgoOriginalClusters] = useState([]);
   const [selectedArgoCluster, setSelectedArgoCluster] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [prevSearchKeyword, setPrevSearchKeyword] = useState("");
+  const [filterModel, setFilterModel] = useState(
+    new Model(
+      { ...argoFiltersMetadata.newObjectFields },
+      argoFiltersMetadata,
+      false
+    )
+  );
 
   useEffect(() => {
     if(cancelTokenSource) {
@@ -61,8 +75,23 @@ function ArgoToolClustersPanel({ toolId }) {
     const clusters = response?.data?.data;
 
     if(isMounted?.current === true && Array.isArray(clusters)){
-      setArgoClusters(clusters);
+      const sortedClusters = _.sortBy(clusters, ["name"]);
+      setArgoOriginalClusters(sortedClusters);
+      setArgoClusters(localFilterFunction(searchFilter, sortedClusters, filterModel, setFilterModel, prevSearchKeyword, setPrevSearchKeyword));
     }
+  };
+
+  const searchFilter = (cluster) => {
+    const searchTerm = filterModel?.getFilterValue("search");
+    return (
+         stringIncludesValue(cluster?.name, searchTerm)
+      || stringIncludesValue(cluster?.server, searchTerm)
+      || stringIncludesValue(cluster?.connectionState?.status, searchTerm)
+    );
+  };
+
+  const filterData = () => {
+    setArgoClusters(localFilterFunction(searchFilter, argoOriginalClusters, filterModel, setFilterModel, prevSearchKeyword, setPrevSearchKeyword));
   };
 
   const onRowSelect = (grid, row) => {
@@ -103,6 +132,9 @@ function ArgoToolClustersPanel({ toolId }) {
       loadData={loadData}
       onRowSelect={onRowSelect}
       argoClusters={argoClusters}
+      filterData={filterData}
+      filterModel={filterModel}
+      setFilterModel={setFilterModel}
     />
   );
 }
