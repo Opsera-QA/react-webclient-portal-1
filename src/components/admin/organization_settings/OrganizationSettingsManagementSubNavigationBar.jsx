@@ -17,7 +17,7 @@ export default function OrganizationSettingsManagementSubNavigationBar({activeTa
         history.push(`/admin`);
         return;
       case adminToolsTrails.ldapOrganizationSettingsManagement.name:
-        history.push(`/admin/platform/system-parameters`);
+        history.push(`/admin/organization-settings`);
         return;
     }
   };
