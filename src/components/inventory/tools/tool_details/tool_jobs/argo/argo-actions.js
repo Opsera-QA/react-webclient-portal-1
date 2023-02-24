@@ -145,4 +145,73 @@ argoActions.getIAMRoles = async (getAccessToken, cancelTokenSource, awsToolId) =
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+argoActions.getArgoRepositories = async (getAccessToken, cancelTokenSource, toolId) => {
+  const apiUrl = `/tools/${toolId}/argo/v2/repositories`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+argoActions.createArgoRepositoryV2 = async (getAccessToken, cancelTokenSource, toolId, argoRepositoryModel) => {
+  const apiUrl = `/tools/${toolId}/argo/v2/repository/create`;
+  const postBody = {
+    ...argoRepositoryModel.getPersistData(),
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+argoActions.deleteArgoRepositoryV2 = async (getAccessToken, cancelTokenSource, toolId, repoUrl) => {
+  const postBody = {
+    repoUrl: repoUrl
+  };
+  const apiUrl = `/tools/${toolId}/argo/v2/repository/delete`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+argoActions.getArgoProjectDetails = async (getAccessToken, cancelTokenSource, toolId, projectName) => {
+  const apiUrl = `/tools/${toolId}/argo/v2/project/${projectName}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+argoActions.createArgoProjectV2 = async (getAccessToken, cancelTokenSource, toolId, argoProjectModel) => {
+  const apiUrl = `/tools/${toolId}/argo/v2/project`;
+  const postBody = {
+    ...argoProjectModel.getPersistData(),
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+argoActions.updateArgoProjectV2 = async (getAccessToken, cancelTokenSource, toolId, argoProjectModel) => {
+  const apiUrl = `/tools/${toolId}/argo/v2/project`;
+  const postBody = {
+    ...argoProjectModel.getPersistData(),
+  };
+
+  return await baseActions.apiPutCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+argoActions.deleteArgoProjectV2 = async (getAccessToken, cancelTokenSource, toolId, projectName) => {
+  const apiUrl = `/tools/${toolId}/argo/v2/project/${projectName}`;
+  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+argoActions.getArgoRepositoryBranchesAndTags = async (getAccessToken, cancelTokenSource, toolId, repoUrl) => {
+  const apiUrl = `/tools/${toolId}/argo/v2/repositories/refs`;
+  const postBody = {
+    repoUrl: repoUrl,
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+argoActions.validateApplicationPath = async (getAccessToken, cancelTokenSource, toolId, data) => {
+  const apiUrl = `/tools/${toolId}/argo/applications/validatePath`;
+  const postBody = {
+    name: data?.name,
+    path: data?.path,
+    branch: data?.branch,
+    repoUrl: data?.repoUrl,
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default argoActions;
