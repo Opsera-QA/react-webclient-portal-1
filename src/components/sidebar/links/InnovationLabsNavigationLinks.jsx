@@ -16,14 +16,6 @@ const getVnextLink = () => {
 };
 
 export default function InnovationLabsNavigationLinks({ isSidebarCollapsed, }) {
-  const {
-    featureFlagModel,
-  } = useGetFeatureFlagModelByName(featureFlagConstants.FEATURE_FLAG_NAMES.SHOW_INSIGHTS_VNEXT_SIDEBAR_LINK);
-
-  if (featureFlagModel == null || featureFlagModel?.getData("active") !== true) {
-    return null;
-  }
-
   return (
     <>
       <SidebarSubheaderText

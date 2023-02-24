@@ -20,11 +20,40 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import GitCustodianSidebarNavigationLink from "components/sidebar/links/GitCustodianSidebarNavigationLink";
 import useLocationReference from "hooks/useLocationReference";
 import InnovationLabsNavigationLinks from "components/sidebar/links/InnovationLabsNavigationLinks";
+import useGetFeatureFlagModelByName
+  from "hooks/settings/organization_settings/feature_flags/useGetFeatureFlagModelByName";
+import featureFlagConstants
+  from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
 
 export default function Sidebar({ hideSideBar }) {
   const { userData } = useComponentStateReference();
   const { isPublicPathState } = useLocationReference();
+  const {
+    featureFlagModel,
+  } = useGetFeatureFlagModelByName(featureFlagConstants.FEATURE_FLAG_NAMES.SHOW_INSIGHTS_VNEXT_SIDEBAR_LINK);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(DataParsingHelper.parseBooleanV2(sessionHelper.getStoredSessionValueByKey("SIDEBAR_COLLAPSED"), false));
+
+  const getVnextSidebarLink = () => {
+    if (featureFlagModel?.getData("active") === true) {
+      return (
+        <InnovationLabsNavigationLinks
+          isSidebarCollapsed={isSidebarCollapsed}
+        />
+      );
+    }
+  };
+
+  const getClassNames = () => {
+    if (isSidebarCollapsed === true) {
+      return "d-block sidebar-container";
+    }
+
+    if (featureFlagModel?.getData("active") === true) {
+      return "temp-sidebar-width d-block sidebar-container";
+    }
+
+    return "w-20 d-block sidebar-container";
+  };
 
   if (userData == null || hideSideBar === true || isPublicPathState === true) {
     return null;
@@ -32,7 +61,7 @@ export default function Sidebar({ hideSideBar }) {
 
   return (
     <div
-      className={isSidebarCollapsed === true ? "d-block sidebar-container" : "w-20 d-block sidebar-container"}
+      className={getClassNames()}
     >
       <div className={"sticky-top py-5 sidebar-menu"}>
         <HomeSidebarNavigationLink
@@ -53,9 +82,7 @@ export default function Sidebar({ hideSideBar }) {
           isSidebarCollapsed={isSidebarCollapsed}
         />
 
-        <InnovationLabsNavigationLinks
-          isSidebarCollapsed={isSidebarCollapsed}
-        />
+        {getVnextSidebarLink()}
         <SidebarSubheaderText
           isSidebarCollapsed={isSidebarCollapsed}
           subheaderText={"Operations"}
