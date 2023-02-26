@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { useHistory } from "react-router-dom";
@@ -13,6 +13,9 @@ import ToolBasicInfo from "./views/ToolBasicInfo";
 import ToolConnectionPanel from "../ToolConnectionPanel";
 import ToolConnectionCheck from "./views/ToolConnectionCheck";
 import ToolEditorPanel from "../ToolEditorPanel";
+import {capitalizeFirstLetter} from "../../../../common/helpers/string-helpers";
+import OverlayWizardButtonContainerBase
+  from "../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
 export const REGISTRY_WIZARD_SCREENS = {
   MODE_SELECT: "mode_select",
@@ -32,6 +35,40 @@ export default function CreateToolRegistryWizard({ loadData }) {
   const [setUpMode, setSetupMode] = useState(undefined);
   const { toolModel, setToolModel } = useGetNewRegistryToolModel();
   const { isMounted, toastContext } = useComponentStateReference();
+
+  const REGISTRY_WIZARD_TITLES = {
+    MODE_SELECT: "Step 1: Select tool creation method",
+    TOOL_IDENTIFIER_SELECT: "Step 2: Select Tool",
+    BASIC_TOOL_INFO: "Step 3: Enter Basic tool information",
+    CONNECTION_INFO: `Step 4: Configure ${capitalizeFirstLetter(toolModel?.getData("tool_identifier"))} connection information`,
+    CONNECTION_TEST: `Step 5: Validate ${capitalizeFirstLetter(toolModel?.getData("tool_identifier"))} connection information`,
+  };
+  const [overlayTitle, setOverlayTitle] = useState(REGISTRY_WIZARD_TITLES.MODE_SELECT);
+
+  useEffect(() => {
+    switch (currentScreen) {
+      case REGISTRY_WIZARD_SCREENS.MODE_SELECT:
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.MODE_SELECT);
+        return;
+      case REGISTRY_WIZARD_SCREENS.TOOL_IDENTIFIER_SELECT:
+        if (
+          toolModel?.getData("tool_identifier") == null ||
+          toolModel?.getData("tool_identifier") === ""
+        ) {
+          setOverlayTitle(REGISTRY_WIZARD_TITLES.TOOL_IDENTIFIER_SELECT);
+          return;
+        }
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.BASIC_TOOL_INFO);
+        return;
+      case REGISTRY_WIZARD_SCREENS.CONNECTION_INFO:
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.CONNECTION_INFO);
+        return;
+      case REGISTRY_WIZARD_SCREENS.CONNECTION_TEST:
+        setOverlayTitle(REGISTRY_WIZARD_TITLES.CONNECTION_TEST);
+        return;
+    }
+  }, [currentScreen, toolModel?.getData("tool_identifier")]);
+
 
   const closeOverlayFunction = () => {
     if (isMounted?.current === true) {
@@ -75,18 +112,11 @@ export default function CreateToolRegistryWizard({ loadData }) {
             <ToolIdentifierSelectionScreen
               toolModel={toolModel}
               setToolModel={setToolModel}
+              setButtonContainer={setButtonContainer}
+              setCurrentScreen={setCurrentScreen}
               closePanel={closeOverlayFunction}
             />
           </div>
-          <Row className={"mx-0"}>
-            <div className={"ml-auto"}>
-              <CancelButton
-                size={"md"}
-                className={"mx-2 mb-2"}
-                cancelFunction={closeOverlayFunction}
-              />
-            </div>
-          </Row>
         </div>
       );
     }
@@ -95,6 +125,7 @@ export default function CreateToolRegistryWizard({ loadData }) {
       return (
         <ToolBasicInfo
           setToolData={setToolModel}
+          setButtonContainer={setButtonContainer}
           handleClose={closeOverlayFunction}
           toolData={toolModel}
           setCurrentScreen={setCurrentScreen}
@@ -106,6 +137,9 @@ export default function CreateToolRegistryWizard({ loadData }) {
       <ToolEditorPanel
         handleClose={closeOverlayFunction}
         toolData={toolModel}
+        setCurrentScreen={setCurrentScreen}
+        setButtonContainer={setButtonContainer}
+        setToolData={setToolModel}
       />
     );
   };
@@ -152,7 +186,7 @@ export default function CreateToolRegistryWizard({ loadData }) {
   return (
     <CenterOverlayContainer
       closePanel={closeOverlayFunction}
-      titleText={"Create a new Tool"}
+      titleText={overlayTitle}
       buttonContainer={buttonContainer}
       showCloseButton={false}
     >
