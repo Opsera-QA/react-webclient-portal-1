@@ -16,6 +16,7 @@ export default function useLoadData() {
 
         if (response) {
           setIsLoading(false);
+          return response;
         }
       }
     } catch (error) {
