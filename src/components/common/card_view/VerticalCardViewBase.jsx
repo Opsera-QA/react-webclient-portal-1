@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {Col} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
+import SelectionCardColumn from "temp-library-components/cards/SelectionCardColumn";
 
 function VerticalCardViewBase({ data, getCardFunction, noDataMessage }) {
   if (!Array.isArray(data) || data.length === 0) {
@@ -15,13 +16,15 @@ function VerticalCardViewBase({ data, getCardFunction, noDataMessage }) {
   }
 
   return (
-    <Row className={"mx-0"}>
-      {data.map((toolData, index) => (
-        <Col key={index} className={"m-2 px-0"}>
-          {getCardFunction(toolData)}
-        </Col>
-      ))}
-    </Row>
+      <Row className={"mx-0 p-2"}>
+        {data.map((toolData, index) => (
+            <SelectionCardColumn
+                key={index}
+            >
+              {getCardFunction(toolData)}
+            </SelectionCardColumn>
+        ))}
+      </Row>
   );
 }
 
