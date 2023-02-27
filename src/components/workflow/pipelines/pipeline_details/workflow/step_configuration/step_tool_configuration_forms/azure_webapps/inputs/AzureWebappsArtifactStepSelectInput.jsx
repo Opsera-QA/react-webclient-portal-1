@@ -48,7 +48,7 @@ function AzureWebappsArtifactStepSelectInput({
   const fetchDockerStepDetails = async () => {
     try {
       if (plan && stepId) {
-        const dockerSteps = getArtifactorySteps(plan, stepId, [toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_ACR_PUSH]);
+        const dockerSteps = getArtifactorySteps(plan, stepId, [toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_ACR_PUSH], false);
         if (dockerSteps.length === 0) {
           let newDataObject = { ...model };
           newDataObject.setData("artifactStepId", "");
@@ -68,7 +68,7 @@ function AzureWebappsArtifactStepSelectInput({
   const fetchPackageStepDetails = async () => {
     try {
       if (plan && stepId) {
-        const packageSteps = getArtifactorySteps(plan, stepId, [toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_ZIP_DEPLOYMENT, toolIdentifierConstants.TOOL_IDENTIFIERS.JFROG_ARTIFACTORY_MAVEN, toolIdentifierConstants.TOOL_IDENTIFIERS.NEXUS]);
+        const packageSteps = getArtifactorySteps(plan, stepId, [toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_ZIP_DEPLOYMENT, toolIdentifierConstants.TOOL_IDENTIFIERS.JFROG_ARTIFACTORY_MAVEN, toolIdentifierConstants.TOOL_IDENTIFIERS.NEXUS], false);
         if (packageSteps.length === 0) {
           let newDataObject = { ...model };
           newDataObject.setData("artifactStepId", "");
