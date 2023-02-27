@@ -558,6 +558,11 @@ a.text-primary:hover, a.text-primary:focus {
     background-color: rgba(207, 148, 12, .05);
 }
 
+.success-message-field {
+    border: 1px solid #019171;
+    background-color: rgba(1, 145, 113, .05);
+}
+
 /* Custom modal styling */
 /* TODO: apply class to modal */
 div.modal-body {
