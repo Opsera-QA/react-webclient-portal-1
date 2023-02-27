@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
@@ -11,6 +11,8 @@ import IconBase from "../../../../../common/icons/IconBase";
 import { faGear, faWandMagicSparkles } from "@fortawesome/pro-light-svg-icons";
 import SelectionCardColumn from "../../../../../../temp-library-components/cards/SelectionCardColumn";
 import OpseraInfinityLogo from "../../../../../logo/OpseraInfinityLogo";
+import OverlayWizardButtonContainerBase
+  from "../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
 export const TOOL_CREATION_OPTIONS = {
   WIZARD: "wizard",
@@ -31,6 +33,15 @@ function ToolSetupModeSelect({
   REGISTRY_WIZARD_SCREENS,
 }) {
   const { themeConstants } = useComponentStateReference();
+
+  useEffect(() => {
+    if (setButtonContainer && setCurrentScreen) {
+      setButtonContainer(
+          <OverlayWizardButtonContainerBase
+          />
+      );
+    }
+  }, []);
 
   const setDataFunction = (newValue) => {
     setSetupMode(newValue);

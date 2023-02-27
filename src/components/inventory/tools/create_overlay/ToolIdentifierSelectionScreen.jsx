@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {toolIdentifierActions} from "components/admin/tools/identifiers/toolIdentifier.actions";
-import {faTools} from "@fortawesome/pro-light-svg-icons";
+import {faTools, faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import ToolIdentifierSelectionCardView from "components/admin/tools/identifiers/ToolIdentifierSelectionCardView";
 import toolIdentifierMetadata from "components/admin/tools/identifiers/toolIdentifier.metadata";
@@ -11,8 +11,11 @@ import {hasStringValue, stringIncludesValue} from "components/common/helpers/str
 import ToolIdentifierSelectionTable from "components/admin/tools/identifiers/ToolIdentifierSelectionTable";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {CreateToolFilterModel} from "components/inventory/tools/create_overlay/createTool.filter.model";
+import OverlayWizardButtonContainerBase
+  from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import VanityButtonBase from "../../../../temp-library-components/button/VanityButtonBase";
 
-function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
+function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel, setButtonContainer, setCurrentScreen}) {
   const [isLoading, setLoading] = useState(false);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
   const [toolIdentifierFilterModel, setToolIdentifierFilterModel] = useState(new CreateToolFilterModel());
@@ -24,6 +27,15 @@ function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel}) {
   } = useComponentStateReference();
 
   useEffect(() => {
+    if (setButtonContainer && setCurrentScreen) {
+      setButtonContainer(
+        <OverlayWizardButtonContainerBase
+          backButtonFunction={() => {
+            setCurrentScreen("mode_select");
+          }}
+        />,
+      );
+    }
     loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -152,6 +164,8 @@ ToolIdentifierSelectionScreen.propTypes = {
   toolModel: PropTypes.object,
   setToolModel: PropTypes.func,
   closePanel: PropTypes.func,
+  setButtonContainer: PropTypes.func,
+  setCurrentScreen: PropTypes.func
 };
 
 export default ToolIdentifierSelectionScreen;
