@@ -13,11 +13,8 @@ export default function useLoadData() {
 
       if (loadDataFunction) {
         const response = await loadDataFunction();
-
-        if (response) {
-          setIsLoading(false);
-          return response;
-        }
+        setIsLoading(false);
+        return response;
       }
     } catch (error) {
       if (handleErrorFunction) {
