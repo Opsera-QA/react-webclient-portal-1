@@ -81,6 +81,14 @@ const jenkinsPipelineStepConfigurationMetadata = {
       formText:"Lowercase alphanumeric characters and underscore, period, and dash are allowed"
     },
     {
+      label: "Use Dynamic Docker Name",
+      id: "useDockerDynamicName"
+    },
+    {
+      label: "Docker Dynamic Name",
+      id: "dockerDynamicName"
+    },
+    {
       label: "Docker Tag",
       id: "dockerTagName",
       regexDefinitionName: "dockerName",
@@ -280,6 +288,8 @@ const jenkinsPipelineStepConfigurationMetadata = {
     projectId: "",
     defaultBranch: "",
     dockerName: "",
+    useDockerDynamicName: false,
+    dockerDynamicName: "",
     dockerTagName: "",
     dockerPath: "",
     buildType: "gradle", //hardcoded now but needs to get it from a dropdown

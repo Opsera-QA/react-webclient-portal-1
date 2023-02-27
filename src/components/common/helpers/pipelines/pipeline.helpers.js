@@ -58,7 +58,7 @@ pipelineHelpers.findFirstStepWithIdentifier = (pipeline, toolIdentifier) => {
   return pipelineSteps?.find((step) => step?.active && step?.tool?.tool_identifier === toolIdentifier);
 };
 
-export const getArtifactorySteps = (plan, stepId, toolIdentifierArray) => {
+export const getArtifactorySteps = (plan, stepId, toolIdentifierArray, activeFilter=true) => {
 
   const elegibleSteps = plan.slice(
     0,
@@ -70,7 +70,7 @@ export const getArtifactorySteps = (plan, stepId, toolIdentifierArray) => {
   }
 
   if (toolIdentifierArray && toolIdentifierArray.length > 0) {
-    return elegibleSteps?.filter((step) => step?.active && toolIdentifierArray.includes(step?.tool?.tool_identifier));
+    return elegibleSteps?.filter((step) => (!activeFilter || step?.active) && toolIdentifierArray.includes(step?.tool?.tool_identifier));
   }
 
   return elegibleSteps;
