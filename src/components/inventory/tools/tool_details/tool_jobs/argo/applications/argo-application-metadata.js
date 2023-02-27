@@ -46,7 +46,11 @@ const argoApplicationsMetadata = {
       isRequired: true
     },
     {
-      label: "Branch Name",
+      label: "Use Tag",
+      id: "useTag",      
+    },
+    {
+      label: "Target Revision",
       id: "branch",
       isRequired: true,
       maxLength: 28,
@@ -171,7 +175,8 @@ const argoApplicationsMetadata = {
     projectName: "",
     branchName: "",
     active: true,
-    autoSync: false
+    autoSync: false,
+    useTag: false,
   }
 };
 
