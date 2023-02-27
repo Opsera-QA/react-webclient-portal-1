@@ -3,10 +3,8 @@ import { Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import argoActions from "../../argo-actions";
-import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ArgoClusterSelectInput from "components/common/list_of_values_input/tools/argo_cd/cluster/ArgoClusterSelectInput";
-import ArgoProjectSelectInput from "components/common/list_of_values_input/tools/argo_cd/projects/ArgoProjectSelectInput";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -19,6 +17,9 @@ import MultiTextInputBase from "../../../../../../../common/inputs/text/MultiTex
 import SelectInputBase from "../../../../../../../common/inputs/select/SelectInputBase";
 import {ARGO_APPLICATION_TYPE_CONSTANTS} from "../argo-application-type-constants";
 import TextAreaInput from "../../../../../../../common/inputs/text/TextAreaInput";
+import ArgoApplicationGitUrlSelectInput from "./inputs/ArgoApplicationGitUrlSelectInput";
+import ArgoApplicationTargetRevisionSelectInput from "./inputs/ArgoApplicationTargetRevisionSelectInput";
+import TextInputWithValidationBase from "components/common/inputs/text/TextInputWithValidationBase";
 
 function ArgoApplicationEditorPanel({ argoApplicationData, toolData, applicationName, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -27,6 +28,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [isValidPath, setIsValidPath] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -75,6 +77,21 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
     const response = await argoActions.deleteArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?.getData("_id"), applicationName);
     handleClose();
     return response;
+  };
+
+  const validatePathFunction = async () => {
+    try {
+      await argoActions.validateApplicationPath(
+        getAccessToken,
+        cancelTokenSource,
+        toolData?.getData("_id"),
+        argoApplicationModel.getPersistData(),
+      );
+      setIsValidPath(true);
+    } catch (error) {
+      console.error(error);
+      setIsValidPath(false);
+    }
   };
 
   if (isLoading || argoApplicationModel == null) {
@@ -233,28 +250,34 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
             />
           </Col>
           <Col lg={12}>
-            <TextInputBase
+            <ArgoApplicationGitUrlSelectInput
+              fieldName={"repoUrl"}
+              model={argoApplicationModel}
+              setModel={setArgoApplicationModel}
+              disabled={!argoApplicationData?.isNew()}
+              toolId={toolData?.getData("_id")}
+            />
+          </Col>
+          <Col lg={12}>
+            <ArgoApplicationTargetRevisionSelectInput
+              fieldName={"branch"}
+              model={argoApplicationModel}
+              setModel={setArgoApplicationModel}
+              disabled={!argoApplicationData?.isNew() || !argoApplicationModel?.getData("repoUrl")}
+              toolId={toolData?.getData("_id")}
+              repoUrl={argoApplicationModel?.getData("repoUrl")}
+            />
+          </Col>
+          <Col lg={12}>
+            <TextInputWithValidationBase
               dataObject={argoApplicationModel}
               fieldName={"path"}
               setDataObject={setArgoApplicationModel}
               disabled={!argoApplicationData?.isNew()}
-            />
-          </Col>
-          <Col lg={12}>
-            <TextInputBase
-              dataObject={argoApplicationModel}
-              fieldName={"repoUrl"}
-              setDataObject={setArgoApplicationModel}
-              disabled={!argoApplicationData?.isNew()}
-            />
-          </Col>
-          <Col lg={12}>
-            <TextInputBase
-              dataObject={argoApplicationModel}
-              fieldName={"branch"}
-              setDataObject={setArgoApplicationModel}
-              disabled={!argoApplicationData?.isNew()}
-            />
+              validateDataFunction={validatePathFunction}
+              isValid={isValidPath}
+              clearIsValidFunction={() => {setIsValidPath(undefined);}}
+            />          
           </Col>
           {getTypeField()}
           {getDynamicFieldsForType(argoApplicationModel.getData("type"))}
