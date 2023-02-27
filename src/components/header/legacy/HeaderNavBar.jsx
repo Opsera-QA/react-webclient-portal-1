@@ -105,13 +105,11 @@ function HeaderNavBar({ hideAuthComponents }) {
   const getUserDetails = () => {
     if (userData) {
       return (
-        <div className={"py-2 px-3"}>
-          <div>
-            {`${userData?.email} at ${userData?.ldap?.accountName}`}
+        <div>
+          <div className={"italic py-1 px-4"}>
+            {`${userData?.email} at ${userData?.ldap?.accountName} as ${SiteRoleHelper.getFormattedSiteRoleLevel(userData)}`}
           </div>
-          <div>
-            {`${userData?.firstName} ${userData?.lastName} as ${SiteRoleHelper.getFormattedSiteRoleLevel(userData)}`}
-          </div>
+          <NavDropdown.Divider/>
         </div>
       );
     }
