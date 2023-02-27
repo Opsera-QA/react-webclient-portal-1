@@ -25,6 +25,7 @@ export default function useLoadData() {
       }
 
       setError(error);
+      setIsLoading(false);
     }
   }, []);
 
