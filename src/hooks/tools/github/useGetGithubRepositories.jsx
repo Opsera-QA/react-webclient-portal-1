@@ -1,10 +1,8 @@
-import { useEffect, useState, useContext } from "react";
-import {AuthContext} from "contexts/AuthContext";
+import { useEffect, useState } from "react";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import useGithubActions from "hooks/tools/github/useGithubActions";
-import axios from "axios";
 
 export default function useGetGithubRepositories(
   inEditMode = true,
@@ -12,10 +10,12 @@ export default function useGetGithubRepositories(
   handleErrorFunction,
 ) {
   const [githubRepositories, setGithubRepositories] = useState([]);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const {getAccessToken} = useContext(AuthContext);
-  const { error, setError, loadData } = useLoadData();
+  const {
+    error,
+    setError,
+    loadData,
+  } = useLoadData();
   const githubActions = useGithubActions();
 
   useEffect(() => {
@@ -27,21 +27,12 @@ export default function useGetGithubRepositories(
   }, [inEditMode, toolId]);
 
   const getRepositories = async (searchTerm = "") => {
-    setIsLoading(true);
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
     if (isMongoDbId(toolId) !== true) {
       return;
     }
 
+    setIsLoading(true);
     const response = await githubActions.getGithubRepositories(
-      getAccessToken, 
-      source,
       toolId,
       searchTerm,
     );
@@ -56,7 +47,7 @@ export default function useGetGithubRepositories(
   return ({
     githubRepositories: githubRepositories,
     setGithubRepositories: setGithubRepositories,
-    loadData: (searchTerm, cancelSource) => loadData(() => getRepositories(searchTerm, cancelSource), handleErrorFunction),
+    loadData: (searchTerm) => loadData(() => getRepositories(searchTerm), handleErrorFunction),
     isLoading: isLoading,
     error: error,
     setError: setError,
