@@ -23,8 +23,7 @@ function ToolApplicationsPanel({ toolData, setToolData, loadData, isLoading }) {
       case "azure":
         return (
           <AzureApplications
-            toolApplications={toolData?.getData("applications")}
-            isLoading={isLoading}
+            toolApplications={toolData?.getData("applications")}            
             toolData={toolData}
             loadData={loadData}
           />
