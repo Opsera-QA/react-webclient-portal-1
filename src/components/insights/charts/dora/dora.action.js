@@ -63,6 +63,7 @@ doraActions.jiraGitlabRolledUp = async (
     jiraProjectsCFR,
     jiraChangeTypes: getResultFromKpiConfiguration(kpiConfiguration, KPI_FILTER_TYPES.JIRA_CHANGE_TYPES),
     jiraResolutionNames,
+    jiraExcludedResolutionNames: getResultFromKpiConfiguration(kpiConfiguration, KPI_FILTER_TYPES.JIRA_EXCLUDED_RESOLUTION_NAMES),
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
