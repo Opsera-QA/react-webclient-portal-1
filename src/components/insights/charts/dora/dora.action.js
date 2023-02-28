@@ -40,6 +40,12 @@ doraActions.jiraGitlabRolledUp = async (
     dashboardTags = null;
     dashboardOrgs = null;
   }
+
+  let jiraProjectsMTTR = getResultFromKpiConfiguration(kpiConfiguration, "jira-projects-mttr");
+  jiraProjectsMTTR = jiraProjectsMTTR ? [jiraProjectsMTTR] : null;
+  let jiraProjectsCFR = getResultFromKpiConfiguration(kpiConfiguration, "jira-projects-cfr");
+  jiraProjectsCFR = jiraProjectsCFR ? [jiraProjectsCFR] : null;
+
   const postBody = {
     startDate: startDate.toISOString(),
     endDate: endDate.toISOString(),
