@@ -47,6 +47,7 @@ function AzureAcrPushStepRegistryNameSelectInput(
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      setError("");
       await loadAzureRegistries(cancelSource);
     } catch (error) {
       setError(error);
