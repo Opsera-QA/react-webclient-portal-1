@@ -16,11 +16,11 @@ export const doraJiraGitlabRolledUpMetadata = {
       id: "gitlab-project",
     },
     {
-      label: "Jira Projects for MTTR",
+      label: "Jira Project for MTTR",
       id: "jira-projects-mttr",
     },
     {
-      label: "Jira Projects for CFR",
+      label: "Jira Project for CFR",
       id: "jira-projects-cfr",
     },
     {
