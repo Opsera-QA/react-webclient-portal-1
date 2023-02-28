@@ -2,9 +2,8 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
-import chartsActions from "components/insights/charts/charts-actions";
 import axios from "axios";
-import jiraAction from "../../../../../insights/charts/jira/jira.action";
+import jiraAction from "components/insights/charts/jira/jira.action";
 
 function JiraChangeTypesFilterSelectInput({
   placeholderText,
@@ -70,7 +69,7 @@ function JiraChangeTypesFilterSelectInput({
       setChangeTypes(response?.data?.data?.jiraChangeTypesList?.data);
     }
   };
-  const disabled = model.getArrayData('jira-projects').length === 0;
+  const disabled = !project || project.length === 0;
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
