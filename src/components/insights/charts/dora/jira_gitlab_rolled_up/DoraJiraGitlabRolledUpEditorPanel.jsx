@@ -9,6 +9,7 @@ import MetricGitLabProjectFilterInput from "components/common/inputs/metric/filt
 import MetricJiraProjectsFilterInput from "../../../../common/inputs/metric/filters/jira/MetricJiraProjectsFilterInput";
 import MetricJiraChangeTypesFilterInput from "../../../../common/inputs/metric/filters/jira/MetricJiraChangeTypesFilterInput";
 import MetricJiraResolutionNamesFilterInput from "../../../../common/inputs/metric/filters/jira/MetricJiraResolutionNamesFilterInput";
+import MetricExcludedJiraResolutionNamesFilterInput from "components/common/inputs/metric/filters/jira/MetricJiraExcludedResolutionNamesFilterInput";
 function DoraJiraGitlabRolledUpEditorPanel({
   metricModel,
   unpackedFilterData,
@@ -67,11 +68,19 @@ function DoraJiraGitlabRolledUpEditorPanel({
         metricFilterModel={metricFilterModel}
         setMetricFilterModel={setMetricFilterModel}
         metricModel={metricModel}
+        projectFieldName="jira-projects-cfr"
+      />
+      <MetricExcludedJiraResolutionNamesFilterInput
+        metricFilterModel={metricFilterModel}
+        setMetricFilterModel={setMetricFilterModel}
+        metricModel={metricModel}
+        projectFieldName="jira-projects-cfr"
       />
       <MetricJiraChangeTypesFilterInput
         metricFilterModel={metricFilterModel}
         setMetricFilterModel={setMetricFilterModel}
         metricModel={metricModel}
+        projectFieldName="jira-projects-cfr"
       />
       <MetricDateRangeFilterInput
         metricModel={metricModel}
