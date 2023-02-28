@@ -14,8 +14,12 @@ export const doraJiraGitlabRolledUpMetadata = {
       id: "gitlab-project",
     },
     {
-      label: "Jira Projects",
-      id: "jira-projects",
+      label: "Jira Projects for MTTR",
+      id: "jira-projects-mttr",
+    },
+    {
+      label: "Jira Projects for CFR",
+      id: "jira-projects-cfr",
     },
     {
       label: "Exclude Jira Change Types (Values will be excluded from results)",
