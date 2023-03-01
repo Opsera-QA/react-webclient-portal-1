@@ -1,12 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
-import {errorHelpers, parseError} from "components/common/helpers/error-helpers";
+import {errorHelpers} from "components/common/helpers/error-helpers";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useExternalToolPropertyCacheEntry from "hooks/cache/external_tools/useExternalToolPropertyCache";
+import _ from "lodash";
 
 function SelectInputBase(
   {
@@ -27,7 +30,6 @@ function SelectInputBase(
     getCurrentValue,
     showLabel,
     className,
-    onSearchFunction,
     requireClearDataConfirmation,
     clearDataDetails,
     linkTooltipText,
@@ -48,11 +50,26 @@ function SelectInputBase(
     requireUserEnable,
     ellipsisOnClickFunction,
     onEnableEditFunction,
-}) {
+    externalCacheToolId,
+    externalCacheToolIdentifier,
+    supportSearchLookup,
+    noDataText,
+  }) {
   const field = dataObject?.getFieldById(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
   const [internalErrorMessage, setInternalErrorMessage] = useState("");
   const [enabled, setEnabled] = useState(undefined);
+  const {
+    cachedEntry,
+    setCachedValue,
+    isHandlingCache,
+    isCachedEntryRelevant,
+  } = useExternalToolPropertyCacheEntry(
+    requireUserEnable === true,
+    dataObject?.getData(fieldName),
+    externalCacheToolId,
+    externalCacheToolIdentifier,
+  );
 
   useEffect(() => {
     setEnabled(requireUserEnable !== true);
@@ -74,10 +91,23 @@ function SelectInputBase(
   };
 
   const updateValue = (newValue) => {
+    const parsedNewValue = DataParsingHelper.parseObject(newValue);
+    const parsedValueField = DataParsingHelper.parseString(valueField);
+
+    if (parsedNewValue && parsedValueField && (externalCacheToolIdentifier || externalCacheToolId)) {
+      const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
+      parameters.cache = newValue;
+
+      if (typeof textField === "string") {
+        parameters.textField = textField;
+      }
+
+      setCachedValue(parsedNewValue[parsedValueField], parameters);
+    }
+
     if (setDataFunction) {
       setDataFunction(field?.id, newValue);
-    }
-    else {
+    } else {
       const parsedValue = typeof newValue === "string" ? newValue : newValue[valueField];
       validateAndSetData(field?.id, parsedValue);
     }
@@ -86,8 +116,7 @@ function SelectInputBase(
   const clearValue = () => {
     if (!setDataFunction && !clearDataFunction) {
       validateAndSetData(field?.id, "");
-    }
-    else if (clearDataFunction) {
+    } else if (clearDataFunction) {
       clearDataFunction(field?.id);
     }
   };
@@ -121,8 +150,23 @@ function SelectInputBase(
     }
   };
 
+  const getInfoMessage = () => {
+    if (
+      disabled !== true
+      && busy !== true
+      && enabled === true
+      && hasStringValue(pluralTopic) === true
+      && (!Array.isArray(selectOptions) || selectOptions.length === 0)) {
+      return `No ${pluralTopic} found for the selected criteria`;
+    }
+
+    if (hasStringValue(customInfoTextMessage) === true) {
+      return customInfoTextMessage;
+    }
+  };
+
   const getPlaceholderText = () => {
-    if (disabled !== true && requireUserEnable === true && enabled === false) {
+    if (disabled !== true && requireUserEnable === true && enabled === false && hasStringValue(pluralTopic) === true) {
       return `Click to Load ${pluralTopic} and Enable Edit Mode`;
     }
 
@@ -148,6 +192,62 @@ function SelectInputBase(
       onEnableEditFunction();
     }
   };
+
+  const getFormattedLabelForValue = (value) => {
+    const parsedValueObject = DataParsingHelper.parseObject(value);
+
+    if (typeof textField === "function") {
+      return textField(value);
+    } else if (parsedValueObject && typeof textField === "string") {
+      return parsedValueObject[textField];
+    }
+
+    return value;
+  };
+
+  const handleTextFieldFunction = (foundValue) => {
+    let formattedValue;
+    const parsedFoundValueObject = DataParsingHelper.parseObject(foundValue);
+    const currentValue = DataParsingHelper.parseString(dataObject?.getData(fieldName));
+    const isCacheRelevant = isCachedEntryRelevant(foundValue, valueField);
+
+    if (isCacheRelevant === true && currentValue) {
+      if (parsedFoundValueObject) {
+        const parameters = DataParsingHelper.parseNestedObject(cachedEntry, "parameters", {});
+        parameters.cache = parsedFoundValueObject;
+        formattedValue = getFormattedLabelForValue(parsedFoundValueObject);
+
+        if (typeof textField === "string") {
+          parameters.textField = textField;
+        }
+
+        setCachedValue(parsedFoundValueObject[valueField], parameters);
+      }
+
+      const parsedCache = DataParsingHelper.parseNestedObject(cachedEntry, "parameters.cache");
+
+      if (!formattedValue && parsedCache) {
+        const parsedCacheTextField = DataParsingHelper.parseNestedString(cachedEntry, "parameters.textField");
+
+        if (textField) {
+          formattedValue = getFormattedLabelForValue(parsedCache);
+        } else if (parsedCacheTextField) {
+          formattedValue = parsedCache[parsedCacheTextField];
+        }
+      }
+    }
+
+    if (formattedValue) {
+      return formattedValue;
+    }
+
+    return getFormattedLabelForValue(foundValue);
+  };
+
+  const onSearchFunction = useCallback(
+    loadDataFunction ? _.debounce(loadDataFunction, 600) : undefined,
+    [loadDataFunction],
+  );
 
   if (field == null || visible === false) {
     return null;
@@ -181,15 +281,16 @@ function SelectInputBase(
           hasErrorState={hasStringValue(getErrorMessage()) === true}
           selectOptions={selectOptions}
           valueField={valueField}
-          textField={textField}
+          textField={externalCacheToolId || externalCacheToolIdentifier ? handleTextFieldFunction : textField}
           groupBy={groupBy}
           value={findCurrentValue()}
-          busy={busy}
+          busy={busy || isHandlingCache === true}
           placeholderText={getPlaceholderText()}
           setDataFunction={(newValue) => updateValue(newValue)}
           disabled={disabled || (requireUserEnable === true && enabled === false)}
-          onSearchFunction={onSearchFunction}
+          onSearchFunction={supportSearchLookup === true && typeof loadDataFunction === "function" ? onSearchFunction : undefined}
           onClickFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
+          noDataText={noDataText}
         />
         <NewRecordButton
           addRecordFunction={handleCreateFunction}
@@ -205,7 +306,7 @@ function SelectInputBase(
         field={field}
         errorMessage={getErrorMessage()}
         hideRegexDefinitionText={true}
-        customMessage={customInfoTextMessage}
+        customMessage={getInfoMessage()}
       />
     </InputContainer>
   );
@@ -238,7 +339,6 @@ SelectInputBase.propTypes = {
   getCurrentValue: PropTypes.func,
   showLabel: PropTypes.bool,
   className: PropTypes.string,
-  onSearchFunction: PropTypes.func,
   requireClearDataConfirmation: PropTypes.bool,
   clearDataDetails: PropTypes.any,
   linkTooltipText: PropTypes.string,
@@ -259,6 +359,10 @@ SelectInputBase.propTypes = {
   requireUserEnable: PropTypes.bool,
   ellipsisOnClickFunction: PropTypes.func,
   onEnableEditFunction: PropTypes.func,
+  externalCacheToolId: PropTypes.string,
+  externalCacheToolIdentifier: PropTypes.string,
+  supportSearchLookup: PropTypes.bool,
+  noDataText: PropTypes.string,
 };
 
 SelectInputBase.defaultProps = {

@@ -21,9 +21,9 @@ function StandaloneSelectInput(
     className,
     onToggleFunction,
     hasErrorState,
-    lazyLoad,
     dropUp,
     onClickFunction,
+    filterOption
   }) {
   const getPlaceholderText = () => {
     if (!Array.isArray(selectOptions)) {
@@ -46,7 +46,7 @@ function StandaloneSelectInput(
         textField={textField}
         groupBy={groupBy}
         value={value}
-        filter={"contains"}
+        filter={filterOption}
         busy={busy}
         defaultValue={defaultValue}
         onCreate={onCreate}
@@ -54,7 +54,7 @@ function StandaloneSelectInput(
         dropUp={dropUp}
         placeholder={getPlaceholderText()}
         onChange={(newValue) => setDataFunction(newValue)}
-        disabled={disabled || (lazyLoad !== true && (!Array.isArray(selectOptions) || selectOptions.length === 0))}
+        disabled={disabled || (onSearchFunction == null && (!Array.isArray(selectOptions) || selectOptions?.length === 0 || busy))}
         onSearch={onSearchFunction}
         allowCreate={allowCreate}
       />
@@ -90,13 +90,14 @@ StandaloneSelectInput.propTypes = {
   noDataText: PropTypes.string,
   defaultValue: PropTypes.any,
   hasErrorState: PropTypes.bool,
-  lazyLoad: PropTypes.bool,
   dropUp: PropTypes.bool,
   onClickFunction: PropTypes.func,
+  filterOption: PropTypes.string
 };
 
 StandaloneSelectInput.defaultProps = {
-  placeholderText: "Select One"
+  placeholderText: "Select One",
+  filterOption: "contains"
 };
 
 export default StandaloneSelectInput;

@@ -97,6 +97,13 @@ export class TaskModel extends ModelBase {
     );
   };
 
+  canViewAuditLogs = () => {
+    return TaskRoleHelper.canViewAuditLogs(
+      this.userData,
+      this.data,
+    );
+  };
+
   getDetailViewLink = () => {
     return taskHelper.getModelDetailViewLink(this);
   };

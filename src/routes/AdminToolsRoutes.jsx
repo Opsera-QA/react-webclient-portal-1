@@ -44,6 +44,11 @@ import PlatformSystemParameterDetailView
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PlatformSettingsManagement from "components/admin/platform_settings/PlatformSettingsManagement";
 import PlatformSettingsDetailView from "components/admin/platform_settings/details/PlatformSettingsDetailView";
+import OrganizationSettingsManagement from "components/admin/organization_settings/OrganizationSettingsManagement";
+import OrganizationSettingsDetailView
+  from "components/admin/organization_settings/details/OrganizationSettingsDetailView";
+import RoleRestrictedRoute from "temp-library-components/routes/RoleRestrictedRoute";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 export default function AdminToolsRoutes() {
   const {
@@ -98,6 +103,19 @@ export default function AdminToolsRoutes() {
 
       <SecureRoute path="/admin/platform/settings" exact component={PlatformSettingsManagement} />
       <SecureRoute path="/admin/platform/settings/details/:settingsId" exact component={PlatformSettingsDetailView} />
+
+      <RoleRestrictedRoute
+        path={"/admin/organization-settings"}
+        exact={true}
+        component={OrganizationSettingsManagement}
+        roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
+      />
+      <RoleRestrictedRoute
+        path={"/admin/organization-settings/details/:organizationDomain/:organizationAccount"}
+        exact={true}
+        component={OrganizationSettingsDetailView}
+        roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
+      />
 
       <SecureRoute path="/admin/platform/system-parameters" exact component={PlatformSystemParameterManagement} />
       <SecureRoute path="/admin/platform/system-parameters/details/:systemParameterId" exact

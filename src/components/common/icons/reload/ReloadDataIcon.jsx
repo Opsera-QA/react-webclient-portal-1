@@ -9,6 +9,7 @@ export default function ReloadDataIcon(
     disabled,
     isLoading,
     className,
+    visible,
   }) {
   const handleLoadData = async () => {
     if (disabled === true || isLoading === true) {
@@ -23,7 +24,7 @@ export default function ReloadDataIcon(
       return "Loading Data";
     }
 
-    return "Reload Data";
+    return "Reload";
   };
 
   const getClassName = () => {
@@ -42,7 +43,7 @@ export default function ReloadDataIcon(
     }
   };
 
-  if (loadDataFunction == null) {
+  if (loadDataFunction == null || visible === false || disabled === true) {
     return null;
   }
 
@@ -71,4 +72,5 @@ ReloadDataIcon.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,
   isLoading: PropTypes.bool,
+  visible: PropTypes.bool,
 };

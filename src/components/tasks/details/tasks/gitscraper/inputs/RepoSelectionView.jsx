@@ -20,6 +20,7 @@ import { faArrowDown } from "@fortawesome/pro-light-svg-icons";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import { parseError } from "components/common/helpers/error-helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import azureActions from "components/inventory/tools/tool_details/tool_jobs/azureV2/azure-actions";
 
 // TODO: This and the service work need to be completely refactored.
 //  We should not be manipulating objects on the front end.
@@ -87,6 +88,8 @@ const RepoSelectionView = ({
           return await loadGitlabRepositories(cancelSource);
         case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB:
           return await loadGithubRepositories(cancelSource);
+        case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS:
+          return await loadAzureRepositories(cancelSource);
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -106,7 +109,7 @@ const RepoSelectionView = ({
           repository: selectedOption?.name,
           nameSpacedPath: selectedOption?.nameSpacedPath || selectedOption?.name,
           repoId: selectedOption?.id || selectedOption?.repositoryId || "",
-          projectId: selectedOption?.id || selectedOption?.repositoryId || "",
+          projectId: selectedOption?.projectId || selectedOption?.id || selectedOption?.repositoryId || "",
           sshUrl: selectedOption?.sshUrl || "",
           gitUrl: selectedOption?.httpUrl || selectedOption?.remoteUrl || "",
         }
@@ -165,6 +168,26 @@ const RepoSelectionView = ({
       searchTerm,
       gitToolId,
       100,
+    );
+
+    if (response == null) {
+      return false;
+    }
+
+    const repositories = response?.data?.data;
+
+    if (isMounted?.current === true && Array.isArray(repositories)) {
+      setRepositories([...await formatRepoData(repositories)]);
+    }
+  };
+
+  const loadAzureRepositories = async (cancelSource) => {
+    const response = await azureActions.getRepositoriesFromAzureInstanceV2(
+        getAccessToken,
+        cancelSource,
+        gitToolId,
+        searchTerm,
+        100,
     );
 
     if (response == null) {

@@ -5,6 +5,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import toolsActions from "components/inventory/tools/tools-actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function AzureToolApplicationSelectInput({ azureToolId, fieldName, model, setModel, setDataFunction, clearDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
@@ -52,12 +53,10 @@ function AzureToolApplicationSelectInput({ azureToolId, fieldName, model, setMod
   };
 
   const loadApplications = async (cancelSource = cancelTokenSource) => {
-    // TODO: This route should send back just the tool NOT an array with the tool in it
-    const response = await toolsActions.getRoleLimitedToolByIdV2(getAccessToken, cancelSource, azureToolId);
-    const tool = response?.data?.data[0];
+    const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, azureToolId);
+    const tool = DataParsingHelper.parseNestedObject(response, "data.data");
 
     // TODO: We should probably add some way to verify credentials.
-    //  I should probably also make an RBAC Tool Application Base select input
     if (isMounted?.current === true && tool != null) {
       const applications = tool?.applications;
 
@@ -79,6 +78,8 @@ function AzureToolApplicationSelectInput({ azureToolId, fieldName, model, setMod
       busy={isLoading}
       valueField={"_id"}
       textField={'name'}
+      pluralTopic={"Azure Credentials"}
+      singularTopic={"Azure Credential"}
     />
   );
 }

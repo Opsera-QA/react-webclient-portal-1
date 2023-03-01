@@ -293,9 +293,9 @@ export default class ModelBase {
   };
 
   // TODO: Only send changemap for updates after getting everything else working
-  getPersistData = () => {
+  getPersistData = (updateData) => {
     this.removeTemporaryObjectProperties();
-    return this.trimStrings();
+    return this.trimStrings(updateData);
   };
 
   getOriginalData = () => {
@@ -314,7 +314,7 @@ export default class ModelBase {
     return this.data;
   };
 
-  trimStrings = () => {
+  trimStrings = (updateData = true) => {
     let data = this.data;
 
     // TODO: this is only at the top level, add support for trimming inner objects
@@ -325,8 +325,10 @@ export default class ModelBase {
         }
       });
 
-      // save trimmed strings in data
-      this.data = data;
+      if (updateData !== false) {
+        // save trimmed strings in data
+        this.data = data;
+      }
     }
     catch (error) {
       console.error("Could not parse object's strings. Sending unparsed data.");
@@ -547,6 +549,10 @@ export default class ModelBase {
 
   canDelete = () => {
     return this.deleteAllowed === true;
+  };
+
+  canViewAuditLogs = () => {
+    return false;
   };
 
   canEditAccessRoles = () => {

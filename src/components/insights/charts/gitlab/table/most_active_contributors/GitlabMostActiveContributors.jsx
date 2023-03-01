@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState, useMemo, useRef } from "react";
 import CustomTable from "components/common/table/CustomTable";
 import { AuthContext } from "contexts/AuthContext";
-import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import PropTypes from "prop-types";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
@@ -14,7 +14,13 @@ import genericChartFilterMetadata from "components/insights/charts/generic_filte
 import IconBase from "components/common/icons/IconBase";
 import { METRIC_CHART_STANDARD_HEIGHT } from "components/common/helpers/metrics/metricTheme.helpers";
 
-function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function GitlabMostActiveContributors({
+  kpiConfiguration,
+  setKpiConfiguration,
+  dashboardData,
+  index,
+  setKpis,
+}) {
   const fields = gitlabMostActiveContributorsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -23,7 +29,11 @@ function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
+    new Model(
+      { ...genericChartFilterMetadata.newObjectFields },
+      genericChartFilterMetadata,
+      false,
+    ),
   );
 
   const noDataMessage = "No Data is available for this chart at this time";
@@ -38,7 +48,10 @@ function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
           return (
             <div style={{ display: "flex", flexWrap: "nowrap" }}>
               <div>
-                <IconBase icon={faStar} className={"cell-icon green"} />
+                <IconBase
+                  icon={faStar}
+                  className={"cell-icon green"}
+                />
               </div>
               <div className="ml-1">{row.value}</div>
             </div>
@@ -47,7 +60,7 @@ function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
       },
       getTableTextColumn(getField(fields, "commitCount")),
     ],
-    []
+    [],
   );
 
   useEffect(() => {
@@ -71,25 +84,33 @@ function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
+  const loadData = async (
+    cancelSource = cancelTokenSource,
+    filterDto = tableFilterDto,
+  ) => {
     try {
       setIsLoading(true);
       let dashboardTags =
-        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+        ]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "gitlabMostActiveUsers",
         kpiConfiguration,
         dashboardTags,
-        filterDto
+        filterDto,
       );
       let dataObject = response?.data?.data[0]?.gitlabMostActiveUsers?.data;
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", response?.data?.data[0]?.gitlabMostActiveUsers?.count);
+        newFilterDto.setData(
+          "totalCount",
+          response?.data?.data[0]?.gitlabMostActiveUsers?.count,
+        );
         setTableFilterDto({ ...newFilterDto });
       }
     } catch (error) {
@@ -105,7 +126,7 @@ function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
   };
 
   const getChartTable = () => {
-    return (      
+    return (
       <CustomTable
         columns={columns}
         data={metrics}
@@ -114,13 +135,13 @@ function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
-      />      
+      />
     );
   };
 
   return (
     <div>
-      <ChartContainer
+      <VanityMetricContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
         chart={getChartTable()}

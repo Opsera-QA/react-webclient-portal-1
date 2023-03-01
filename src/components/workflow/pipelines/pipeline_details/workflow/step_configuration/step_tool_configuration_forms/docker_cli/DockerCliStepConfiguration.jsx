@@ -10,10 +10,20 @@ import DockerCliDependenciesInputForm from "./subforms/DockerCliDependenciesInpu
 import DockerCliDockerBuildDetailsInputForm from "./subforms/DockerCliDockerBuildDetailsInputForm";
 import DockerCliDockerPushDetailsInputForm from "./subforms/DockerCliDockerPushDetailsInputForm";
 import DockerCliScmDetailsInputForm from "./subforms/DockerCliScmDetailsInputForm";
+import DockerCliOutputVariablesInputForm from "./subforms/DockerCliOutputVariablesInputForm";
+import pipelineActions from "components/workflow/pipeline-actions";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import thresholdMetadata from "components/common/metadata/pipelines/thresholdMetadata";
 
-function DockerCliStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan, parentCallback }) {
+function DockerCliStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan, parentCallback, pipelineStep }) {
   const [isLoading, setIsLoading] = useState(false);
   const [dockerCliStepConfigurationDataDto, setDockerCliStepConfigurationDataDto] = useState(undefined);
+  const [thresholdModel, setThresholdModel] = useState(undefined);
+  const {
+    cancelTokenSource,
+    toastContext,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
     loadData();
@@ -25,21 +35,32 @@ function DockerCliStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
 
     setDockerCliStepConfigurationDataDto(dockerCliConfigurationData);
 
+    const thresholdModel = modelHelpers.parseObjectIntoModel(pipelineStep?.threshold, thresholdMetadata);
+
+    setThresholdModel(thresholdModel);
+
     setIsLoading(false);
   };
 
-  const handleSaveStepConfig = async () => {
-    await callbackFunction();
-    closeEditorPanel();
-  };
-
-  const callbackFunction = async () => {
-    let newDataObject = dockerCliStepConfigurationDataDto;
-    setDockerCliStepConfigurationDataDto({ ...newDataObject });
-    const item = {
-      configuration: dockerCliStepConfigurationDataDto.getPersistData(),
-    };
-    await parentCallback(item);
+  const saveRecord = async () => {
+    const newPipelineStep = pipelineStep;
+    newPipelineStep.tool.configuration = {...dockerCliStepConfigurationDataDto.getPersistData()};
+    newPipelineStep.threshold = {...thresholdModel.getPersistData()};
+  
+    const response = await pipelineActions.updatePipelineStepByIdV2(
+      getAccessToken,
+      cancelTokenSource,
+      pipelineId,
+      pipelineStep?._id,
+      newPipelineStep,
+    );
+  
+    // TODO: This check is probably not necessary but leaving it in for safety for now.
+    if (response?.status === 200) {
+      closeEditorPanel();
+    }
+  
+    return response;
   };
 
   if (isLoading || dockerCliStepConfigurationDataDto == null) {
@@ -50,7 +71,7 @@ function DockerCliStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
       recordDto={dockerCliStepConfigurationDataDto}
-      persistRecord={handleSaveStepConfig}
+      persistRecord={saveRecord}
       isLoading={isLoading}
     >
       <DockerCliScmDetailsInputForm 
@@ -65,11 +86,17 @@ function DockerCliStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       <DockerCliDockerBuildDetailsInputForm
         model={dockerCliStepConfigurationDataDto}
         setModel={setDockerCliStepConfigurationDataDto}
+        plan={plan}
       />
       <DockerCliDockerPushDetailsInputForm
         model={dockerCliStepConfigurationDataDto}
         setModel={setDockerCliStepConfigurationDataDto}
         stepId={stepId}
+        plan={plan}
+      />
+      <DockerCliOutputVariablesInputForm 
+        model={dockerCliStepConfigurationDataDto}
+        setModel={setDockerCliStepConfigurationDataDto}
         plan={plan}
       />
     </PipelineStepEditorPanelContainer>
@@ -84,6 +111,9 @@ DockerCliStepConfiguration.propTypes = {
   closeEditorPanel: PropTypes.func,
   plan: PropTypes.array,
   parentCallback: PropTypes.func,
+  pipelineStep: PropTypes.object,
+  thresholdModel: PropTypes.object,
+
 };
 
 export default DockerCliStepConfiguration;

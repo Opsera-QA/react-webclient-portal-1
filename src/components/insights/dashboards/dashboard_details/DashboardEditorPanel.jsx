@@ -135,12 +135,6 @@ function DashboardEditorPanel({
               setDataObject={setDashboardDataDto}
             />
           </Col>
-          <Col md={6}>
-            <DashboardPersonaSelectInput
-              dataObject={dashboardAttributesDataDto}
-              setDataObject={setDashboardAttributesDataDto}
-            />
-          </Col>
           {/*<Col md={6}>*/}
           {/*  <DashboardAccessSelectInput dataObject={dashboardDataDto} setDataObject={setDashboardDataDto} disabled={["public"]}/>*/}
           {/*</Col>*/}

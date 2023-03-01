@@ -1,10 +1,34 @@
 import useApiService from "hooks/api/service/useApiService";
-import baseActions from "utils/actionsBase";
-import pipelineActions from "components/workflow/pipeline-actions";
 
 export default function usePipelineActions() {
   const apiService = useApiService();
   const pipelineActions = {};
+
+  pipelineActions.getPipelines = async (
+    pipelineFilterModel,
+    fields,
+    active = true,
+ ) => {
+    const apiUrl = `/pipelines/v2`;
+    const sortOption = pipelineFilterModel?.getData("sortOption");
+    const queryParameters = {
+      sort: sortOption?.value,
+      order: sortOption?.order,
+      size: pipelineFilterModel?.getData("pageSize"),
+      page: pipelineFilterModel?.getData("currentPage"),
+      type: pipelineFilterModel?.getFilterValue("type"),
+      search: pipelineFilterModel?.getFilterValue("search"),
+      owner: pipelineFilterModel?.getFilterValue("owner"),
+      tag: pipelineFilterModel?.getFilterValue("tag"),
+      active: active,
+      fields: fields,
+    };
+
+    return await apiService.handleApiGetRequest(
+      apiUrl,
+      queryParameters,
+    );
+  };
 
   pipelineActions.getPipelineNameById = async (
     pipelineId,
@@ -99,6 +123,16 @@ export default function usePipelineActions() {
 
   pipelineActions.getUniqueAppliedTagsForPipelineFilter = async () => {
     const apiUrl = `/workflow/pipelines/filters/tags`;
+    return await apiService.handleApiGetRequest(apiUrl);
+  };
+
+  pipelineActions.getUniqueToolIdentifiersByPipelineUsageForFilter = async () => {
+    const apiUrl = `/workflow/pipelines/filters/tool-identifiers`;
+    return await apiService.handleApiGetRequest(apiUrl);
+  };
+
+  pipelineActions.getUniqueAppliedTagsForPipelineFilter = async (toolIdentifier) => {
+    const apiUrl = `/workflow/pipelines/filters/${toolIdentifier}`;
     return await apiService.handleApiGetRequest(apiUrl);
   };
 

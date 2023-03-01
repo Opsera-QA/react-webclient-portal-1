@@ -6,6 +6,7 @@ import { AuthContext } from "contexts/AuthContext";
 import azureFunctionsActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_functions/azure-functions-step-actions";
 import toolsActions from "components/inventory/tools/tools-actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function AzureRegionSelectInput(
   {
@@ -62,9 +63,8 @@ function AzureRegionSelectInput(
   };
 
   const loadAzureTool = async (cancelSource = cancelTokenSource) => {
-    // TODO: This route should send back just the tool NOT an array with the tool in it
-    const response = await toolsActions.getRoleLimitedToolByIdV2(getAccessToken, cancelSource, azureToolId);
-    const azureTool = response?.data?.data[0];
+    const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, azureToolId);
+    const azureTool = DataParsingHelper.parseNestedObject(response, "data.data");
 
     // TODO: We should probably add some way to verify credentials.
     //  I should probably also make an RBAC Tool Application Base select input

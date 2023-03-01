@@ -63,14 +63,17 @@ const taskFilterMetadata = {
 };
 
 export class TaskFilterModel extends FilterModelBase {
-  constructor(getAccessToken, cancelTokenSource, loadData) {
+  constructor(getAccessToken, cancelTokenSource, loadData, useUrlParameters = true) {
     super(taskFilterMetadata);
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;
-    this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.TASK_FILTER_MODEL_DATA;
-    this.enableUrlUpdatesWithQueryParameters();
-    this.unpackUrlParameters();
+
+    if (useUrlParameters !== false) {
+      this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.TASK_FILTER_MODEL_DATA;
+      this.enableUrlUpdatesWithQueryParameters();
+      this.unpackUrlParameters();
+    }
   }
 
   canSearch = () => {

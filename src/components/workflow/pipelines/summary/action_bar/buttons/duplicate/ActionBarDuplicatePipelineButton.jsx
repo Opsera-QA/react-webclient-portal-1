@@ -10,6 +10,8 @@ export default function ActionBarDuplicatePipelineButton({pipelineModel}) {
   const {
     toastContext,
     userData,
+    isOpseraAdministrator,
+    isFreeTrial,
   } = useComponentStateReference();
 
   const launchDuplicationConfirmationOverlay = () => {
@@ -20,7 +22,12 @@ export default function ActionBarDuplicatePipelineButton({pipelineModel}) {
     );
   };
 
-  if (pipelineModel == null || PipelineRoleHelper.canDuplicatePipeline(userData, pipelineModel?.getCurrentData()) !== true) {
+  if (
+    pipelineModel == null
+    ||  (isFreeTrial === true && isOpseraAdministrator !== true)
+    || PipelineRoleHelper.canCreatePipeline(userData) !== true
+    || PipelineRoleHelper.canDuplicatePipeline(userData, pipelineModel?.getCurrentData()) !== true
+  ) {
     return null;
   }
 

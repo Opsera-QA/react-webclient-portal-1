@@ -12,6 +12,7 @@ import axios from "axios";
 import LiquibaseMetadata from "./liquibase-tool-metadata";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import LiquibaseDatabaseTypeSelectInput from "./inputs/LiquibaseDatabaseTypeSelectInput";
+import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
 
 const LiquibaseToolConfiguration = ({ toolData }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -53,6 +54,14 @@ const LiquibaseToolConfiguration = ({ toolData }) => {
       toolData.getData("tool_identifier"),
       "accountPassword",
       newConfiguration?.accountPassword
+    );
+    newConfiguration.licenseKey = await toolsActions.saveThreePartToolPasswordToVaultV3(
+      getAccessToken,
+      cancelTokenSource,
+      toolData?.getMongoDbId(),
+      toolData.getData("tool_identifier"),
+      "licenseKey",
+      newConfiguration?.licenseKey
     );
     return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
   };
@@ -107,6 +116,11 @@ const LiquibaseToolConfiguration = ({ toolData }) => {
             setDataObject={setLiquibaseConfigurationModel}
             fieldName={"accountPassword"}
           />
+          <VaultTextAreaInput
+            dataObject={liquibaseConfigurationModel}
+            setDataObject={setLiquibaseConfigurationModel}
+            fieldName={"licenseKey"}
+          />          
           {getDynamicFields()}
         </Col>
       </Row>

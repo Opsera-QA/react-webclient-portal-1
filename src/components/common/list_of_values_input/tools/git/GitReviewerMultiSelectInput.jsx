@@ -5,6 +5,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
 import axios from "axios";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function GitReviewerMultiSelectInput(
   {
@@ -73,9 +74,9 @@ function GitReviewerMultiSelectInput(
   };
 
   const getReviewers = async (cancelSource = cancelTokenSource) => {
-    const response = await toolsActions.getRoleLimitedToolByIdV2(getAccessToken, cancelSource, gitToolId);
-    const tools = response?.data?.data;
-    const accounts = Array.isArray(tools) && tools.length > 0 ? tools[0]?.accounts : undefined;
+    const response = await toolsActions.getRoleLimitedToolByIdV3(getAccessToken, cancelSource, gitToolId);
+    const tool = DataParsingHelper.parseNestedObject(response, "data.data");
+    const accounts = tool?.accounts;
 
     if(Array.isArray(accounts) && accounts.length > 0){
       setAllReviewers(accounts);

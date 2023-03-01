@@ -7,7 +7,7 @@ import LdapOrganizationEditorPanel
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function CreateLdapOrganizationOverlay({ isMounted, loadData }) {
+function CreateLdapOrganizationOverlay({ loadData }) {
   const toastContext = useContext(DialogToastContext);
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
 
@@ -17,10 +17,7 @@ function CreateLdapOrganizationOverlay({ isMounted, loadData }) {
 
 
   const closePanel = () => {
-    if (isMounted?.current === true) {
-      loadData();
-    }
-
+    loadData();
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
   };
@@ -44,9 +41,7 @@ function CreateLdapOrganizationOverlay({ isMounted, loadData }) {
 }
 
 CreateLdapOrganizationOverlay.propTypes = {
-  isMounted: PropTypes.object,
   loadData: PropTypes.func,
-  authorizedActions: PropTypes.array
 };
 
 export default CreateLdapOrganizationOverlay;

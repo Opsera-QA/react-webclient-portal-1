@@ -48,19 +48,19 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
   }, []);
 
   const loadData = async () => {
-    const configurationData = modelHelpers.getToolConfigurationModel(
+    const configurationData = modelHelpers.parseObjectIntoModel(
       taskModel?.getData("configuration"),
       mergeSyncTaskConfigurationMetadata,
     );
     configurationData?.setData("jobType", TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC);
     setTaskConfigurationModel({ ...configurationData });
-    const newSalesforceSyncModel = modelHelpers.getToolConfigurationModel(
+    const newSalesforceSyncModel = modelHelpers.parseObjectIntoModel(
       configurationData?.getData("sfdc"),
       mergeSyncTaskSalesforceConfigurationMetadata,
     );
     newSalesforceSyncModel?.setData("jobType", TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC);
     setSalesforceConfigurationModel({...newSalesforceSyncModel});
-    const newGitSyncModel = modelHelpers.getToolConfigurationModel(
+    const newGitSyncModel = modelHelpers.parseObjectIntoModel(
       configurationData?.getData("git"),
       mergeSyncTaskGitConfigurationMetadata,
     );
@@ -106,6 +106,7 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
         <SalesforceToGitMergeSyncTaskTargetBranchSelectInput
           model={gitConfigurationModel}
           setModel={setGitModelFunction}
+          sourceBranch={gitConfigurationModel?.getData("sourceBranch")}
         />
       </Col>
     );

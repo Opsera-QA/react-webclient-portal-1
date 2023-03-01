@@ -208,6 +208,13 @@ export default class ToolModel extends ModelBase {
     );
   };
 
+  canViewAuditLogs = () => {
+    return RegistryToolRoleHelper.canViewAuditLogs(
+      this.userData,
+      this.data,
+    );
+  };
+
   clone = () => {
     return new ToolModel(DataParsingHelper.cloneDeep(
         { ...this.data }),

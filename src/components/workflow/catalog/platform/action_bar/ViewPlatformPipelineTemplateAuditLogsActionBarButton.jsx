@@ -13,6 +13,7 @@ export default function ViewPlatformPipelineTemplateAuditLogsActionBarButton(
   const {
     userData,
     toastContext,
+    isOpseraAdministrator,
   } = useComponentStateReference();
 
   const openOverlay = () => {
@@ -22,6 +23,10 @@ export default function ViewPlatformPipelineTemplateAuditLogsActionBarButton(
       />
     );
   };
+
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
 
   return (
     <ActionBarPopoverButton
