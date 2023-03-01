@@ -8,6 +8,7 @@ import VanityEditorPanelContainer from "components/common/panels/detail_panel_co
 import ParameterVaultEnabledToggle from "components/inventory/parameters/details/ParameterVaultEnabledToggle";
 import TogglePasswordTextAreaInput from "components/common/inputs/textarea/password/TogglePasswordTextAreaInput";
 import ParameterValueTextAreaInput from "components/inventory/parameters/details/ParameterValueTextAreaInput";
+import regexDefinitions from "utils/regexDefinitions";
 
 export default function ParametersEditorPanel(
   {
@@ -34,6 +35,7 @@ export default function ParametersEditorPanel(
         setModel={setParameterModel}
         fieldName={"value"}
         disabled={parameterModel?.isNew() === false && parameterModel?.canUpdate() !== true}
+        customFormTextMessage={regexDefinitions.customParameterValueRegex.formText}
       />
     );
   };

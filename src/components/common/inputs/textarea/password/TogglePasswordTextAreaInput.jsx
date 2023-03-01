@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
@@ -16,22 +16,11 @@ function TogglePasswordTextAreaInput(
     inputHelpOverlay,
     infoOverlay,
     helpTooltipText,
+    customFormTextMessage,
   }) {
-  const [field, setField] = useState(model?.getFieldById(fieldName));
+  const field = model?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
   const [valueShown, setValueShown] = useState(false);
-  const isMounted = useRef(false);
-
-  useEffect(() => {
-    isMounted.current = true;
-
-    setValueShown(false);
-    setField(model?.getFieldById(fieldName));
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, [fieldName]);
 
   const validateAndSetData = (value) => {
     let newDataObject = model;
@@ -117,6 +106,7 @@ function TogglePasswordTextAreaInput(
       <InfoText
         errorMessage={errorMessage}
         field={field}
+        customMessage={customFormTextMessage}
       />
     </InputContainer>
   );
@@ -130,6 +120,7 @@ TogglePasswordTextAreaInput.propTypes = {
   infoOverlay: PropTypes.any,
   inputHelpOverlay: PropTypes.any,
   helpTooltipText: PropTypes.string,
+  customFormTextMessage: PropTypes.string,
 };
 
 export default TogglePasswordTextAreaInput;
