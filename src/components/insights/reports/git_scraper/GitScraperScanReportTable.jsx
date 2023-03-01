@@ -1,7 +1,7 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import {getTableTextColumn} from "components/common/table/table-column-helpers";
+import {getTableTextColumn, getTableDateTimeColumn} from "components/common/table/table-column-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTally} from "@fortawesome/pro-light-svg-icons";
 import gitScraperScanReportMetadata from "./gitScraperReportTable.metadata";
@@ -25,7 +25,7 @@ function GitScraperScanReportTable(
             getTableTextColumn(fields.find(field => { return field.id === "author";})),
             getTableTextColumn(fields.find(field => { return field.id === "lineNumber";})),
             getTableTextColumn(fields.find(field => { return field.id === "commit";})),
-            getTableTextColumn(fields.find(field => { return field.id === "commitDate";})),
+            getTableDateTimeColumn(fields.find(field => { return field.id === "commitDate";})),
             getTableTextColumn(fields.find(field => { return field.id === "reason";})),
         ],
         []
