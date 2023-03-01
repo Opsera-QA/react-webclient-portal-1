@@ -23,6 +23,9 @@ function ArgoApplicationsTable(
     loadData,
     isLoading,
     setSelectedArgoApplication,
+    filterData,
+    filterModel,
+    setFilterModel,
   }) {
   const toastContext = useContext(DialogToastContext);
   let fields = argoApplicationsMetadata.fields;
@@ -61,13 +64,17 @@ function ArgoApplicationsTable(
         data={argoApplications}
         onRowSelect={onRowSelect}
         isLoading={isLoading}
+        paginationModel={filterModel}
+        setPaginationModel={setFilterModel}
+        loadData={filterData}
+        tableHeight={"350px"}
       />
     );
   };
 
   return (
     <FilterContainer
-      loadData={loadData}
+      loadData={filterData}
       isLoading={isLoading}
       title={"Argo Applications"}
       type={"Argo Application"}
@@ -75,6 +82,9 @@ function ArgoApplicationsTable(
       addRecordFunction={toolData?.data?.configuration ? createArgoApplication : undefined}
       body={getTable()}
       showBorder={false}
+      filterDto={filterModel}
+      setFilterDto={setFilterModel}
+      supportSearch={true}
     />
   );
 }
@@ -86,6 +96,9 @@ ArgoApplicationsTable.propTypes = {
   isLoading: PropTypes.bool,
   argoApplications: PropTypes.array,
   setSelectedArgoApplication: PropTypes.func,
+  filterData: PropTypes.func,
+  setFilterModel: PropTypes.func,
+  filterModel: PropTypes.object,
 };
 
 export default ArgoApplicationsTable;

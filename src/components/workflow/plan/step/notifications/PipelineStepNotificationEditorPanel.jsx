@@ -185,7 +185,7 @@ function PipelineStepNotificationEditorPanel(
         jiraNotificationModel={jiraNotificationModel}
         setJiraNotificationModel={setJiraNotificationModel}
         serviceNowNotificationModel={serviceNowNotificationModel}
-        setServiceNowNotificationModel={setJiraNotificationModel}
+        setServiceNowNotificationModel={setServiceNowNotificationModel}
         emailNotificationModel={emailNotificationModel}
         setEmailNotificationModel={setEmailNotificationModel}
         gChatNotificationModel={gChatNotificationModel}

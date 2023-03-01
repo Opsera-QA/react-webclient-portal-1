@@ -57,6 +57,7 @@ function UserMappingSourceControlUserSelectInput({ fieldName, dataObject, setDat
       textField={textField}
       placeholderText={"Select a user"}
       disabled={disabled || isLoading || scmUsers.length === 0}
+      externalCacheToolId={tool_id}
     />
   );
 }

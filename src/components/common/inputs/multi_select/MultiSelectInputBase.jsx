@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
@@ -6,6 +6,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {errorHelpers} from "components/common/helpers/error-helpers";
+import _ from "lodash";
 
 function MultiSelectInputBase(
   {
@@ -29,7 +30,7 @@ function MultiSelectInputBase(
     linkTooltipText,
     detailViewLink,
     infoOverlay,
-    onSearchFunction,
+    supportSearchLookup,
     formatDataFunction,
     parseValueFunction,
     error,
@@ -150,6 +151,17 @@ function MultiSelectInputBase(
     }
   };
 
+  const getInfoMessage = () => {
+    if (
+      disabled !== true
+      && busy !== true
+      && enabled === true
+      && hasStringValue(pluralTopic) === true
+      && (!Array.isArray(selectOptions) || selectOptions.length === 0)) {
+      return `No ${pluralTopic} found for the selected criteria`;
+    }
+  };
+
   const getErrorMessage = () => {
     if (hasStringValue(internalErrorMessage) === true) {
       return internalErrorMessage;
@@ -188,6 +200,11 @@ function MultiSelectInputBase(
     }
   };
 
+  const onSearchFunction = useCallback(
+    loadDataFunction ? _.debounce(loadDataFunction, 600) : undefined,
+    [loadDataFunction],
+  );
+
   if (field == null || visible === false) {
     return null;
   }
@@ -222,7 +239,7 @@ function MultiSelectInputBase(
         placeholderText={getPlaceholderText()}
         disabled={disabled || (requireUserEnable === true && enabled === false)}
         setDataFunction={updateValue}
-        onSearchFunction={onSearchFunction}
+        onSearchFunction={supportSearchLookup === true && typeof loadDataFunction === "function" ? onSearchFunction : undefined}
         onClickFunction={requireUserEnable === true && enabled === false ? enableEditingFunction : undefined}
       />
       <InfoText
@@ -231,6 +248,7 @@ function MultiSelectInputBase(
         field={field}
         errorMessage={getErrorMessage()}
         hideRegexDefinitionText={true}
+        customMessage={getInfoMessage()}
       />
     </InputContainer>
   );
@@ -270,7 +288,6 @@ MultiSelectInputBase.propTypes = {
   inputHelpOverlay: PropTypes.any,
   formatDataFunction: PropTypes.func,
   parseValueFunction: PropTypes.func,
-  onSearchFunction: PropTypes.func,
   error: PropTypes.any,
   pluralTopic: PropTypes.string,
   visible: PropTypes.bool,
@@ -278,6 +295,7 @@ MultiSelectInputBase.propTypes = {
   loadDataFunction: PropTypes.func,
   requireUserEnable: PropTypes.bool,
   onEnableEditFunction: PropTypes.func,
+  supportSearchLookup: PropTypes.bool,
 };
 
 export default MultiSelectInputBase;

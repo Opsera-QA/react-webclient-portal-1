@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
-import chartsActions from "components/insights/charts/charts-actions";
 import axios from "axios";
 import gitlabAction from "../../../../../insights/charts/gitlab/gitlab.action";
 

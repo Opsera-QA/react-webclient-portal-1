@@ -5,6 +5,7 @@ import { faChartNetwork, faClipboardList, faDraftingCompass, faQuestion } from "
 import PipelinesFrequentlyAskedQuestions from "components/about/faq/PipelinesFrequentlyAskedQuestions";
 import InsightsFrequentlyAskedQuestions from "./InsightsFrequentlyAskedQuestions";
 import ToolRegistryFrequentlyAskedQuestions from "./ToolRegistryFrequentlyAskedQuestions";
+import GeneralFrequentlyAskedQuestions from "./GeneralFrequentlyAskedQuestions";
 import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
 
@@ -44,6 +45,13 @@ function FrequentlyAskedQuestionsVerticalTabContainer() {
             handleTabClick={handleTabClick}
             activeTab={activeTab}
           />
+          <VanitySetVerticalTab
+            tabText={"General FAQs"}
+            tabName={"general"}
+            icon={faQuestion}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+          />
         </div>
       </VanitySetVerticalTabContainer>
     );
@@ -62,6 +70,10 @@ function FrequentlyAskedQuestionsVerticalTabContainer() {
       case "toolRegistry":
         return (
           <ToolRegistryFrequentlyAskedQuestions />
+        );
+      case "general":
+        return (
+          <GeneralFrequentlyAskedQuestions />
         );
     }
   };

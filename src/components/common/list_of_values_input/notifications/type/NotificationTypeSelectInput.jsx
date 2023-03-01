@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {NOTIFICATION_TYPE_SELECT_OPTIONS} from "components/common/list_of_values_input/notifications/type/notificationTypes.constants";
 
-// TODO: Remove the disabled items from here when done
 function NotificationTypeSelectInput(
   {
     fieldName,
@@ -21,7 +20,7 @@ function NotificationTypeSelectInput(
       setDataFunction={setDataFunction}
       valueField={"value"}
       textField={"text"}
-      disabled={[{text: "Metric", value: "metric"}]}
+      disabled={disabled}
     />
   );
 }

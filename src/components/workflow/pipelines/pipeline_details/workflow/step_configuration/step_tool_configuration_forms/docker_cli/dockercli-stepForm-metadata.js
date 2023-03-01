@@ -70,6 +70,11 @@ const dockerCliStepFormMetadata = {
       maxItems: 15,      
     },
     {
+      label: "Custom Parameters",
+      id:"customParameters",
+      maxItems: 15,
+    },
+    {
       label: "Enable Docker Build",
       id: "enableDockerBuild"
     },
@@ -115,6 +120,7 @@ const dockerCliStepFormMetadata = {
     {
       label: "Build Arguments",
       id: "buildArguments",
+      maxItems: 15,
     },
     {
       label: "Enable Docker Push",
@@ -213,7 +219,16 @@ const dockerCliStepFormMetadata = {
       isRequiredFunction: (model) => {
         return model?.getData("registryType") === "nexus";
       },
-    },    
+    },
+    {
+      label: "Output Variables",
+      id: "outputCustomParameters",
+      maxItems: 15
+    },
+    {
+      label: "Enable Output Variables",
+      id: "enableOutputVariables",
+    }    
   ],
   newObjectFields: {
     service: "",
@@ -254,6 +269,7 @@ const dockerCliStepFormMetadata = {
     port: "",
     nexusToolConfigId: "",    
     dockerPort: "",
+    enableOutputVariables: false
   }
 };
 

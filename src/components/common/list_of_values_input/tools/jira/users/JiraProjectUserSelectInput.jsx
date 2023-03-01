@@ -6,6 +6,7 @@ import axios from "axios";
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {jiraActions} from "components/common/list_of_values_input/tools/jira/jira.actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function JiraProjectUserSelectInput(
   {
@@ -74,10 +75,10 @@ function JiraProjectUserSelectInput(
       jiraToolId,
       jiraProject,
     );
-    const jiraProjects = response?.data?.data;
+    const jiraUsers = DataParsingHelper.parseNestedArray(response, "data.data");
 
-    if (isMounted?.current === true && Array.isArray(jiraProjects)) {
-      setUsers(jiraProjects);
+    if (isMounted?.current === true && Array.isArray(jiraUsers)) {
+      setUsers([...jiraUsers]);
     }
   };
 
@@ -94,6 +95,9 @@ function JiraProjectUserSelectInput(
       textField={"displayName"}
       disabled={disabled}
       visible={visible}
+      externalCacheToolId={jiraToolId}
+      singularTopic={"Jira User"}
+      pluralTopic={"Jira Users"}
     />
   );
 }

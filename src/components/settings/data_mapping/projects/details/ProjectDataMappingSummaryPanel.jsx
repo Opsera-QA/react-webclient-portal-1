@@ -7,6 +7,7 @@ import TagField from "components/common/fields/multiple_items/tags/TagField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
+import ExternalToolPropertyCacheField from "components/common/fields/cache/ExternalToolPropertyCacheField";
 
 function ProjectDataMappingSummaryPanel(
   {
@@ -28,7 +29,11 @@ function ProjectDataMappingSummaryPanel(
           <ToolNameField model={projectDataMappingModel} fieldName={"tool_id"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={projectDataMappingModel} fieldName={"key"}/>
+          <ExternalToolPropertyCacheField
+            model={projectDataMappingModel}
+            fieldName={"key"}
+            toolIdFieldName={"tool_id"}
+          />
         </Col>
         <Col lg={6}>
           <ActivityField dataObject={projectDataMappingModel} fieldName={"active"}/>

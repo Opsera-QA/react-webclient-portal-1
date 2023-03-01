@@ -51,7 +51,6 @@ function PaginationContainer(
       return (
         <CenterLoadingIndicator
           message={loadingMessage}
-          size={"sm"}
         />
       );
     }

@@ -14,18 +14,18 @@ export default function useGetPolicies() {
 
   useEffect(() => {
     setPolicies([]);
-    loadData(getPipelineInstructions).catch(() => {});
+    loadData(getPolicies).catch(() => {});
   }, []);
 
-  const getPipelineInstructions = async () => {
+  const getPolicies = async () => {
     const response = await policyActions.getPolicies();
-    setPolicies([...DataParsingHelper.parseArray(response?.data?.data, [])]);
+    setPolicies([...DataParsingHelper.parseNestedArray(response, "data.data", [])]);
   };
 
   return ({
     policies: policies,
     setPolicies: setPolicies,
-    loadData: () => loadData(getPipelineInstructions),
+    loadData: () => loadData(getPolicies),
     isLoading: isLoading,
     error: error,
   });

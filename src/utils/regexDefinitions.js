@@ -213,6 +213,12 @@ regexDefinitions.localVariableValue = {
   errorFormText: "Values can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : , ; |",
 };
 
+regexDefinitions.environmentVariableName = {
+  regex: /^[-._a-zA-Z][-._a-zA-Z0-9]*$/,
+  formText: "Alphabetic characters, digits, ‘_’, ‘-’, or ‘.’ are allowed, starting with a digit is not allowed",
+  errorFormText: "Alphabetic characters, digits, ‘_’, ‘-’, or ‘.’ are allowed, starting with a digit is not allowed",
+};
+
 regexDefinitions.dockerName = {
   regex: /^[a-z0-9_.-]*$/,
   formText: "Accepts lowercase alphanumeric characters, periods, dashes, and underscores without spaces.",
@@ -278,6 +284,12 @@ regexDefinitions.numbersOnly = {
   regex: /[0-9]\d*$/,
   formText: "Whole positive numbers are allowed",
   errorFormText: "Only whole positive numbers are allowed",
+};
+
+regexDefinitions.argoParameterInputRules = {
+  regex: /^[A-Za-z0-9'\-,._&+*:()/[\]! ]*$/,
+  formText: "Spaces, letters, numbers, underscores, dashes, forward slashes, periods, commas, parentheses, brackets, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
+  errorFormText: "Only spaces, letters, numbers, underscores, dashes, forward slashes, periods, commas, parentheses, brackets, plus symbols, asterisks, ampersands, and exclamation marks are allowed",
 };
 
 export default regexDefinitions;

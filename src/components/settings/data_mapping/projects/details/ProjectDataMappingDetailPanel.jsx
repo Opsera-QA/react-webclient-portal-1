@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import ProjectDataMappingEditorPanel from "components/settings/data_mapping/projects/details/ProjectDataMappingEditorPanel";
-import ProjectMappingSummaryPanel from "components/settings/data_mapping/projects/details/ProjectDataMappingSummaryPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
+import ProjectDataMappingSummaryPanel
+  from "components/settings/data_mapping/projects/details/ProjectDataMappingSummaryPanel";
 
 function ProjectDataMappingDetailPanel(
   {
@@ -28,7 +29,7 @@ function ProjectDataMappingDetailPanel(
     switch (activeTab) {
       case "summary":
         return (
-          <ProjectMappingSummaryPanel
+          <ProjectDataMappingSummaryPanel
             projectDataMappingModel={projectDataMappingModel}
             setActiveTab={setActiveTab}
           />

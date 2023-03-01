@@ -180,6 +180,7 @@ function JenkinsRegistryToolJobSelectInput(
       infoOverlay={renderOverlayTrigger()}
       clearDataFunction={clearDataFunction}
       disabled={disabled || jenkinsToolId === ""}
+      externalCacheToolId={jenkinsToolId}
     />
   );
 }

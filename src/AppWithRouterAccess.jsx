@@ -10,7 +10,7 @@ import LoginForm from "components/login/LoginForm";
 import Logout from "components/login/Logout";
 import OpseraFooter from "components/footer/OpseraFooter";
 import useLocationReference from "hooks/useLocationReference";
-import useCancelTokenStateReference from "hooks/useCancelTokenStateReference";
+import useAxiosCancelToken from "hooks/useAxiosCancelToken";
 import userActions from "components/user/user-actions";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
@@ -28,7 +28,7 @@ const AppWithRouterAccess = () => {
   const [userData, setUserData] = useState(null);
   const history = useHistory();
   const { isPublicPathState } = useLocationReference();
-  const { cancelTokenSource } = useCancelTokenStateReference();
+  const { cancelTokenSource } = useAxiosCancelToken();
 
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
     history.replace(toRelativeUrl(originalUri ? originalUri : "/", window.location.origin));

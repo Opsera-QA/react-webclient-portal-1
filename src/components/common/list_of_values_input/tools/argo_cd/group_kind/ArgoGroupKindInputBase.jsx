@@ -23,9 +23,9 @@ function ArgoGroupKindInputBase({dataObject, setDataObject, fieldName, disabledF
 
     let items = Array.isArray(currentData) && currentData.length > 0 ? currentData : [];
 
-    if (items.length === 0) {
-      items.push({group: "", kind: ""});
-    }
+    // if (items.length === 0) {
+    //   items.push({group: "", kind: ""});
+    // }
 
     setProperties([...items]);
   };
@@ -67,7 +67,7 @@ function ArgoGroupKindInputBase({dataObject, setDataObject, fieldName, disabledF
       }
     }
 
-    newPropertyList.push({group: "", kind: ""});
+    newPropertyList.push({group: "*", kind: "*"});
     setProperties([...newPropertyList]);
   };
 
@@ -81,7 +81,7 @@ function ArgoGroupKindInputBase({dataObject, setDataObject, fieldName, disabledF
     let newPropertyList = properties;
     let index = newPropertyList.indexOf(row);
     // TODO : Finalize regex
-    let format = regexDefinitions?.expandedTextAndSymbolsWithSpaces?.regex;
+    let format = regexDefinitions?.argoParameterInputRules?.regex;
     let meetsRegex = format.test(newValue);
 
     if (newValue !== '' && !meetsRegex) {

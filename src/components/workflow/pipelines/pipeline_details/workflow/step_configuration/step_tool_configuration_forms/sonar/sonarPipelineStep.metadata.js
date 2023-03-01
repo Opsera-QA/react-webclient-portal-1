@@ -165,6 +165,15 @@ const sonarPipelineStepMetadata = {
       label: "Rating Threshold",
       id: "thresholdRating",
     },
+    {
+      label: "Sonar Custom Parameters Mapping",
+      id: "saveSonarParameters"
+    },
+    {
+      label: "Sonar Parameters",
+      id: "sonarCustomParameters",
+      maxItems: 15,
+    },
   ],
   newObjectFields: {
     jobType: "",
@@ -208,6 +217,8 @@ const sonarPipelineStepMetadata = {
     clientSideThreshold: false,
     thresholdCompliance: [],
     thresholdRating: [],
+    saveSonarParameters: false,
+    sonarCustomParameters: [],
   }
 };
 
