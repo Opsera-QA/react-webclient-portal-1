@@ -39,6 +39,10 @@ primary analytics font*/
     font-weight: bold;
 }
 
+.temp-sidebar-width {
+    min-width: 210px;
+}
+
 .connected-assets-modal-body {
     min-height: 10rem;
     overflow: scroll;
