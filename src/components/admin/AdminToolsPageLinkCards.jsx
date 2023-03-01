@@ -22,6 +22,8 @@ import PlatformSystemParameterManagementPageLinkCard
   from "components/admin/system_parameters/PlatformSystemParameterManagementPageLinkCard";
 import PlatformSettingsManagementPageLinkCard
   from "components/admin/platform_settings/PlatformSettingsManagementPageLinkCard";
+import OrganizationSettingsManagementPageLinkCard
+  from "components/admin/organization_settings/OrganizationSettingsManagementPageLinkCard";
 
 function AdminToolsPageLinkCards({accessRoleData}) {
   return (
@@ -41,6 +43,7 @@ function AdminToolsPageLinkCards({accessRoleData}) {
       <LdapOrganizationManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
+      <OrganizationSettingsManagementPageLinkCard />
       <PipelineStorageManagementPageLinkCard
         accessRoleData={accessRoleData}
       />

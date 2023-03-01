@@ -10,7 +10,7 @@ import {faSitemap} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function LdapOrganizationsTable({organizations, isLoading, loadData, isMounted}) {
+function LdapOrganizationsTable({organizations, isLoading, loadData}) {
   const toastContext = useContext(DialogToastContext);
   const fields = ldapOrganizationMetaData.fields;
   const history = useHistory();
@@ -44,7 +44,6 @@ function LdapOrganizationsTable({organizations, isLoading, loadData, isMounted})
   const createOrganization = () => {
     toastContext.showOverlayPanel(
       <CreateLdapOrganizationOverlay
-        isMounted={isMounted}
         loadData={loadData}
       />
     );
@@ -66,10 +65,8 @@ function LdapOrganizationsTable({organizations, isLoading, loadData, isMounted})
 
 LdapOrganizationsTable.propTypes = {
   organizations: PropTypes.array,
-  isMounted: PropTypes.object,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
-  authorizedActions: PropTypes.array
 };
 
 export default LdapOrganizationsTable;
