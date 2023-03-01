@@ -16,11 +16,6 @@ import EditTagModal from "components/workflow/EditTagModal";
 import pipelineActions from "components/workflow/pipeline-actions";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
-import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
-import {
-  getPipelineTypeLabel,
-  PIPELINE_TYPE_SELECT_OPTIONS
-} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import PipelineDurationMetricsStandaloneField
   from "components/common/fields/pipelines/metrics/PipelineDurationMetricsStandaloneField";
 import IconBase from "components/common/icons/IconBase";
