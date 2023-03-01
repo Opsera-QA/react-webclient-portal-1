@@ -103,7 +103,7 @@ const pipelineMetadata = {
       id: "active",
     },
     {
-      label: "Roles",
+      label: "Access Rules",
       id: "roles",
     },
     {
