@@ -59,7 +59,7 @@ function GitScraperScanReportTable(
                 isLoading={isLoading}
                 body={getGitScraperScanReportTable()}
                 titleIcon={faTally}
-                title={"Git Scraper Vulnerabilities Report"}
+                title={"Git Custodian Vulnerabilities Report"}
                 className={"px-2 pb-2"}
                 exportButton={<ExportGitScraperScanDetailsButton className={"ml-2"} isLoading={isLoading} scanData={data} />}
             />

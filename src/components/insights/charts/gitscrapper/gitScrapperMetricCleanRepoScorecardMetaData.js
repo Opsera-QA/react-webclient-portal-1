@@ -1,6 +1,6 @@
 const GitScrapperMetricCleanRepoScorecardMetaData = {
     idProperty: "_id",
-    type: "Git Scrapper Metric Scorecard",
+    type: "Git Custodian Metric Scorecard",
     fields: [
       {
         label: "Run Count",
