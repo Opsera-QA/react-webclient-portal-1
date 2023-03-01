@@ -116,6 +116,7 @@ function TogglePasswordTextAreaInput(
       </div>
       <InfoText
         errorMessage={errorMessage}
+        field={field}
       />
     </InputContainer>
   );
