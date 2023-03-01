@@ -70,27 +70,27 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
       setIsJsonLoading(true);
       // TODO : Convert both original and modified contents to JSON
 
-      if(hasStringValue(originalContent)){
-        const jsonForOriginalContent = await mergeSyncTaskWizardActions.fileConvertView(
-          getAccessToken,
-          cancelTokenSource,
-          wizardModel,
-          originalContent,
-        );
-        console.log(jsonForOriginalContent);
-        setOriginalContentJson(DataParsingHelper.safeObjectPropertyParser(jsonForOriginalContent, "data.message"));
-      }
-
-      if(hasStringValue(modifiedContent)) {
-        const jsonForModifiedContent = await mergeSyncTaskWizardActions.fileConvertView(
-          getAccessToken,
-          cancelTokenSource,
-          wizardModel,
-          modifiedContent,
-        );
-        console.log(jsonForModifiedContent);
-        setModifiedContentJson(DataParsingHelper.safeObjectPropertyParser(jsonForModifiedContent, "data.message"));
-      }
+      // if(hasStringValue(originalContent)){
+      //   const jsonForOriginalContent = await mergeSyncTaskWizardActions.fileConvertView(
+      //     getAccessToken,
+      //     cancelTokenSource,
+      //     wizardModel,
+      //     originalContent,
+      //   );
+      //   console.log(jsonForOriginalContent);
+      //   setOriginalContentJson(DataParsingHelper.safeObjectPropertyParser(jsonForOriginalContent, "data.message"));
+      // }
+      //
+      // if(hasStringValue(modifiedContent)) {
+      //   const jsonForModifiedContent = await mergeSyncTaskWizardActions.fileConvertView(
+      //     getAccessToken,
+      //     cancelTokenSource,
+      //     wizardModel,
+      //     modifiedContent,
+      //   );
+      //   console.log(jsonForModifiedContent);
+      //   setModifiedContentJson(DataParsingHelper.safeObjectPropertyParser(jsonForModifiedContent, "data.message"));
+      // }
 
       if (isMounted?.current === true) {
         const newJsonView = modelHelpers.parseObjectIntoModel(
@@ -411,16 +411,9 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
         return (
           <MergeSyncTaskWizardApexClassJsonEditPanel
             wizardModel={wizardModel}
-            // comparisonFileModel={comparisonFileModel}
-            // setComparisonFileModel={setComparisonFileModel}
-            // modifiedApexClassJson={modifiedContentJson?.classAccesses}
-            // originalApexClassJson={originalContentJson?.classAccesses}
-            modifiedApexClassJson={mockData?.classAccesses}
-            originalApexClassJson={mockData?.classAccesses}
-            modifiedContentJson={modifiedContentJson}
-            originalContentJson={originalContentJson}
-            setModifiedContentJson={setModifiedContentJson}
-            setOriginalContentJson={setOriginalContentJson}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName ={comparisonFileModel?.getData("file")}
           />
         );
       case "customMetadataTypeAccesses":

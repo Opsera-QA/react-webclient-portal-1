@@ -13,9 +13,6 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import MergeSyncTaskWizardAdvancedEditingModePanel from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/file_editor/MergeSyncTaskWizardAdvancedEditingModePanel";
 import MergeSyncTaskWizardSubmitEditedFileButton from "./file_editor/MergeSyncTaskWizardSubmitEditedFileButton";
 import RefreshButton from "../../../../../../../common/buttons/data/RefreshButton";
-import MergeSyncTaskWizardConvertFileViewButton from "./file_editor/MergeSyncTaskWizardConvertFileViewButton";
-import ActionBarButton from "../../../../../../../common/actions/buttons/ActionBarButton";
-import { faSearchPlus } from "@fortawesome/pro-light-svg-icons";
 import ToggleJsonViewIconButton from "../../../../../../../common/buttons/toggle/ToggleJsonViewIconButton";
 
 const MergeSyncTaskWizardCommitViewer = ({
