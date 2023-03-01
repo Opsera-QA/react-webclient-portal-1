@@ -8,6 +8,17 @@ import NotificationTabView from "components/notifications/details/notifications/
 import InfoText from "components/common/inputs/info_text/InfoText";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import {notificationMethodHelper} from "components/notifications/notificationMethod.helper";
+import slackStepNotificationMetadata
+  from "components/workflow/plan/step/notifications/slack/slackStepNotificationMetadata";
+import teamsStepNotificationMetadata
+  from "components/workflow/plan/step/notifications/teams/teamsStepNotificationMetadata";
+import {
+  jiraStepNotificationMetadata
+} from "components/workflow/plan/step/notifications/jira/jiraStepNotification.metadata";
+import serviceNowStepNotificationMetadata
+  from "components/workflow/plan/step/notifications/servicenow/serviceNowStepNotificationMetadata";
+import gChatStepNotificationMetadata
+  from "components/workflow/plan/step/notifications/gchat/gChatStepNotificationMetadata";
 
 export default function NotificationMethodEditorPanel(
   {
@@ -32,20 +43,20 @@ export default function NotificationMethodEditorPanel(
       const emailNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.EMAIL);
       setEmailNotificationModel(modelHelpers.parseObjectIntoModel(emailNotification, emailStepNotificationMetadata));
 
-      // const slackNotification = notifications.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SLACK);
-      // setSlackNotificationModel(modelHelpers.parseObjectIntoModel(slackNotification, slackStepNotificationMetadata));
+      const slackNotification = notifications.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SLACK);
+      setSlackNotificationModel(modelHelpers.parseObjectIntoModel(slackNotification, slackStepNotificationMetadata));
 
-      // const teamsNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.TEAMS);
-      // setTeamsNotificationModel(modelHelpers.parseObjectIntoModel(teamsNotification, teamsStepNotificationMetadata));
+      const teamsNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.TEAMS);
+      setTeamsNotificationModel(modelHelpers.parseObjectIntoModel(teamsNotification, teamsStepNotificationMetadata));
 
-      // const jiraNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.JIRA);
-      // setJiraNotificationModel(modelHelpers.parseObjectIntoModel(jiraNotification, jiraStepNotificationMetadata));
+      const jiraNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.JIRA);
+      setJiraNotificationModel(modelHelpers.parseObjectIntoModel(jiraNotification, jiraStepNotificationMetadata));
 
-      // const serviceNowNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW);
-      // setServiceNowNotificationModel(modelHelpers.parseObjectIntoModel(serviceNowNotification, serviceNowStepNotificationMetadata));
+      const serviceNowNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW);
+      setServiceNowNotificationModel(modelHelpers.parseObjectIntoModel(serviceNowNotification, serviceNowStepNotificationMetadata));
 
-      // const gChatNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.GCHAT);
-      // setGChatNotificationModel(modelHelpers.parseObjectIntoModel(gChatNotification, gChatStepNotificationMetadata));
+      const gChatNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.GCHAT);
+      setGChatNotificationModel(modelHelpers.parseObjectIntoModel(gChatNotification, gChatStepNotificationMetadata));
 
       setIsLoading(false);
     }
