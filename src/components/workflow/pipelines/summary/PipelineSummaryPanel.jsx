@@ -333,6 +333,14 @@ function PipelineSummaryPanel(
               loadPipeline={fetchPlan}
             />
           </Col>
+          <Col xs={12}>
+            <PipelineRoleAccessInput
+              loadData={fetchPlan}
+              pipelineModel={pipelineModel}
+              setPipelineModel={setPipelineModel}
+              disabled={parentWorkflowStatus === "running"}
+            />
+          </Col>
           <Col xs={12} sm={6}>
             <OwnerNameField
               model={pipelineModel}
@@ -341,14 +349,6 @@ function PipelineSummaryPanel(
           <Col sm={12} md={6}>
             <SmartIdField
               model={pipelineModel}
-            />
-          </Col>
-          <Col xs={12}>
-            <PipelineRoleAccessInput
-              loadData={fetchPlan}
-              pipelineModel={pipelineModel}
-              setPipelineModel={setPipelineModel}
-              disabled={parentWorkflowStatus === "running"}
             />
           </Col>
           <Col sm={12} md={6}>
