@@ -5,6 +5,8 @@ export default function OpseraBirdLoadingImage() {
     <img
       alt={"loader-img"}
       src={"/img/opsera-bird-loading.gif"}
+      height={153}
+      width={147}
     />
   );
 }
