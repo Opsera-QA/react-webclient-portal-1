@@ -5,10 +5,17 @@ export default function useGetNotificationPolicyModel() {
     notificationPolicy,
     isNew,
   ) => {
-    return new NotificationPolicyModel(
+    const notificationPolicyModel = new NotificationPolicyModel(
       notificationPolicy,
       isNew,
     );
+
+    // TODO: This is currently used for feature flagging the work. Remove when complete
+    if (isNew === true) {
+      notificationPolicyModel?.setData("type", "");
+    }
+
+    return notificationPolicyModel;
   };
 
   return ({
