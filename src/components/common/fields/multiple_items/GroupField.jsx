@@ -1,12 +1,21 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 import {faUserFriends} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
+import HelpDocumentationLink from "components/common/links/HelpDocumentationLink";
 
-function GroupField({dataObject, fieldName, className}) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
+export const ROLE_HELP_DOCUMENTATION_LINK = "https://opsera.atlassian.net/wiki/spaces/OE/pages/1330970654/Role+Based+Access+-+Pipelines+Tool+Registry#Platform-Roles";
+
+export default function GroupField(
+  {
+    dataObject,
+    fieldName,
+    className,
+    showExternalHelpDocumentationLink,
+  }) {
+  const field = dataObject?.getFieldById(fieldName);
 
   const getGroups = () => {
     const groups = dataObject.getData(fieldName);
@@ -26,12 +35,26 @@ function GroupField({dataObject, fieldName, className}) {
     );
   };
 
+  const getHelpDocumentationLinkIcon = () => {
+    if (showExternalHelpDocumentationLink === true) {
+      return (
+        <HelpDocumentationLink
+          link={ROLE_HELP_DOCUMENTATION_LINK}
+          className={"ml-2"}
+        />
+      );
+    }
+  };
+
   return (
     <FieldContainer className={className}>
-      <FieldLabel fieldName={fieldName} field={field}/>
-      <span className="item-field">
-        {getGroups()}
-      </span>
+      <div className={"d-flex"}>
+        <FieldLabel fieldName={fieldName} field={field}/>
+        <div className={"item-field"}>
+          {getGroups()}
+        </div>
+        {getHelpDocumentationLinkIcon()}
+      </div>
     </FieldContainer>
   );
 }
@@ -39,7 +62,6 @@ function GroupField({dataObject, fieldName, className}) {
 GroupField.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
-  className: PropTypes.string
+  className: PropTypes.string,
+  showExternalHelpDocumentationLink: PropTypes.bool,
 };
-
-export default GroupField;

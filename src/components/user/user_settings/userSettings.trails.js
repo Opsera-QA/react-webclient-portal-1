@@ -7,13 +7,13 @@ userSettingsTrails.myUserProfile = {
   parent: undefined,
   name: "myUserProfile",
   path: userSettingsPaths.myUserProfile,
-  title: "My User Profile",
-  linkText: "My User Profile",
+  title: "My Profile",
+  linkText: "My Profile",
   icon: faIdCard,
-  pageDescription: `
-      Review and manage your user profile information as well as platform settings from this page. 
-      Please note, profile details are stored in your identify provider so some changes may not be possible from this portal at this time.
-    `,
+  // pageDescription: `
+  //     Review and manage your user profile information as well as platform settings from this page.
+  //     Please note, profile details are stored in your identify provider so some changes may not be possible from this portal at this time.
+  //   `,
 };
 
 userSettingsTrails.myUserRecord = {

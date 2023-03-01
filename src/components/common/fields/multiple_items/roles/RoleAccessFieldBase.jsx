@@ -7,6 +7,8 @@ import VanityInlineError from "temp-library-components/fields/info/VanityInlineE
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
 import VanityInlineWarning from "temp-library-components/fields/info/VanityInlineWarning";
 import useGetUserById from "components/user/hooks/useGetUserById";
+import IconBase from "components/common/icons/IconBase";
+import {faUnlock} from "@fortawesome/pro-light-svg-icons";
 
 function RoleAccessFieldBase({model, fieldName, noDataMessage, className}) {
   const field = model?.getFieldById(fieldName);
@@ -18,10 +20,13 @@ function RoleAccessFieldBase({model, fieldName, noDataMessage, className}) {
   const getDisplayer = () => {
     if (ObjectAccessRoleHelper.doesObjectHaveRbacApplied(currentData) !== true) {
       return (
-        <VanityInlineError
-          className={"my-auto"}
-          text={`Warning, this ${model.getType()} does not have Access Roles applied, so anyone can see and use it.`}
-        />
+        <>
+          <IconBase className={"mr-1"} icon={faUnlock} />
+          <VanityInlineError
+            className={"my-auto"}
+            text={`Warning, this ${model.getType()} does not have Access Roles applied, so anyone can see and use it.`}
+          />
+        </>
       );
     }
 
@@ -38,6 +43,7 @@ function RoleAccessFieldBase({model, fieldName, noDataMessage, className}) {
       <AccessRoleDisplayerField
         roles={model?.getArrayData(fieldName)}
         noDataMessage={noDataMessage}
+        item={model?.getCurrentData()}
       />
     );
   };
