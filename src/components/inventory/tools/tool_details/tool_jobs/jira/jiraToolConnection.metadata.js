@@ -25,6 +25,7 @@ export const jiraToolConnectionMetadata = {
       label: "Jira API Token",
       id: "vaultSecretKey",
       isRequired: true,
+      maxLength: 5000,
     },
   ],
   newObjectFields: {
