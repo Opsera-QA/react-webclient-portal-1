@@ -84,7 +84,7 @@ export const KPI_FILTER_TYPE_LABELS = {
   JIRA_CHANGE_TYPES: "Jira Change Types",
   JIRA_SERVICE_COMPONENTS: "Jira Service Components",
   JIRA_RESOLUTION_NAMES: "Jira Resolution Names",
-  JIRA_EXCLUDED_RESOLUTION_NAMES: "Jira Excluded Resolution Names",
+  JIRA_EXCLUDED_RESOLUTION_NAMES: "Exclude Jira Resolution Names (Values will be excluded from results)",
   JIRA_TEAM_NAMES: "Jira Team Names",
 };
 

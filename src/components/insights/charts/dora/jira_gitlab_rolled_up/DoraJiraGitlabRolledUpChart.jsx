@@ -8,14 +8,11 @@ import axios from "axios";
 import {
   getDeploymentStageFromKpiConfiguration, getResultFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration,
 } from "../../charts-helpers";
-
 import InfoDialog from "../../../../common/status_notifications/info";
 import doraAction from "../dora.action";
 import DoraJiraGitlabRolledUpColumnDataBlock from "./DoraJiraGitlabRolledUpColumnDataBlock";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import BoomiActionableTabOverlay from "../../boomi/actionable_insights/BoomiActionableTabOverlay";
 import DoraJiraOrgsActionableOverlay from "./actionable_insights/DoraJiraOrgsActionableOverlay";
-
 
 function DoraJiraGitlabRolledUpChart({
   kpiConfiguration,
