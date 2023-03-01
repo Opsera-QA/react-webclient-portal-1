@@ -8,7 +8,7 @@ import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/o
 import VanityInlineWarning from "temp-library-components/fields/info/VanityInlineWarning";
 import useGetUserById from "components/user/hooks/useGetUserById";
 import IconBase from "components/common/icons/IconBase";
-import {faUnlock} from "@fortawesome/pro-light-svg-icons";
+import {faLock, faUnlock} from "@fortawesome/pro-light-svg-icons";
 
 function RoleAccessFieldBase({model, fieldName, noDataMessage, className}) {
   const field = model?.getFieldById(fieldName);
@@ -32,10 +32,13 @@ function RoleAccessFieldBase({model, fieldName, noDataMessage, className}) {
 
     if (ObjectAccessRoleHelper.doesOnlyOwnerHaveAccessToObject(user?.email, currentData) === true) {
       return (
-        <VanityInlineWarning
-          className={"my-auto"}
-          text={`Warning, only the owner ${user?.firstName} ${user?.lastName} (${user?.email}) has access to this ${model.getType()}. Please adjust access rules if this ${model.getType()} is to be used by others.`}
-        />
+        <>
+          <IconBase className={"mr-1"} icon={faLock}/>
+          <VanityInlineWarning
+            className={"my-auto"}
+            text={`Warning, only the owner ${user?.firstName} ${user?.lastName} (${user?.email}) has access to this ${model.getType()}. Please adjust access rules if this ${model.getType()} is to be used by others.`}
+          />
+        </>
       );
     }
 
