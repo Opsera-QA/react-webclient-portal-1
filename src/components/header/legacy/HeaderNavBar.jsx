@@ -15,6 +15,7 @@ import OpseraHeaderIcon from "components/header/OpseraHeaderIcon";
 import userActions from "components/user/user-actions";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 export const EXTERNAL_LINKS = {
   FREE_TRIAL_KNOWLEDGE_BASE: `https://docs.opsera.io/getting-started-with-free-trial`,
@@ -103,11 +104,13 @@ function HeaderNavBar({ hideAuthComponents }) {
   };
 
   const getUserDetails = () => {
+    const accountNameText = isSaasUser === true || hasStringValue(userData?.ldap?.accountName) !== true ? "" : `at ${userData?.ldap?.accountName} `;
+
     if (userData) {
       return (
         <div>
           <div className={"italic py-1 px-4"}>
-            {`${userData?.email} at ${userData?.ldap?.accountName} as ${SiteRoleHelper.getFormattedSiteRoleLevel(userData)}`}
+            {`${userData?.email} ${accountNameText}as ${SiteRoleHelper.getFormattedSiteRoleLevel(userData)}`}
           </div>
           <NavDropdown.Divider/>
         </div>
