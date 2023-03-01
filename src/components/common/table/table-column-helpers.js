@@ -272,7 +272,7 @@ export const getTableDateTimeColumn = (field, className, emptyValuePlaceholder =
     Header: getCustomTableHeader(field),
     accessor: getCustomTableAccessor(field),
     Cell: function parseDateTime(row) {
-      return row.value ? DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(row.value)) : emptyValuePlaceholder;
+      return row.value ? DateFormatHelper.formatDateAsTimestamp(new Date(row.value)) : emptyValuePlaceholder;
     },
     class: className ? className : "no-wrap-inline"
   };
@@ -287,7 +287,7 @@ export const getTableCreatedAtColumn = (
     Header: header,
     accessor: "createdAt",
     Cell: function parseDateTime(row) {
-      return row.value ? DateFormatHelper.formatDateAsTimestamp(new Date(row.value)) : emptyValuePlaceholder;
+      return row.value ? DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(row.value)) : emptyValuePlaceholder;
     },
     class: className,
   };
