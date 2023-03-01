@@ -1,6 +1,6 @@
 const gitScrapperPipelineFilterMetadata = {
     idProperty: "_id",
-    type: "Git Scrapper Chart Filter Metadata",
+    type: "Git Custodian Chart Filter Metadata",
     fields: [
       {
         label: "Page Size",

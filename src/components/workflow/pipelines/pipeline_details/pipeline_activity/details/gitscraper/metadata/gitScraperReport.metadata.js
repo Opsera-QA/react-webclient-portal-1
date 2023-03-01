@@ -1,5 +1,5 @@
 const gitScraperReportMetaData = {
-  type: "Git Scraper Summary Log Result Metadata",
+  type: "Git Custodian Summary Log Result Metadata",
   fields: [
     {
       label: "Author",
