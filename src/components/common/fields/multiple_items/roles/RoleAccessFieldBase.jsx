@@ -62,6 +62,7 @@ function RoleAccessFieldBase(
         roles={model?.getArrayData(fieldName)}
         noDataMessage={noDataMessage}
         item={model?.getCurrentData()}
+        handleEditFunction={disabled !== true ? handleEditFunction : undefined}
       />
     );
   };
