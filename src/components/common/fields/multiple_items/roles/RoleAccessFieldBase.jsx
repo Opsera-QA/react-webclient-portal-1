@@ -29,7 +29,7 @@ function RoleAccessFieldBase(
       return (
         <>
           <IconBase
-            className={"mr-1"}
+            className={"mr-1 danger-red"}
             icon={faUnlock}
             onClickFunction={disabled !== true ? handleEditFunction : undefined}
           />
@@ -45,7 +45,7 @@ function RoleAccessFieldBase(
       return (
         <>
           <IconBase
-            className={"mr-1"}
+            className={"mr-1 opsera-primary"}
             icon={faLock}
             onClickFunction={disabled !== true ? handleEditFunction : undefined}
           />

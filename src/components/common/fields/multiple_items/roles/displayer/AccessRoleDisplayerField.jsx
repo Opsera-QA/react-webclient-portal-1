@@ -81,7 +81,7 @@ export default function AccessRoleDisplayerField(
       <span className={className}>
         <span>
           <IconBase
-            className={"mr-1"}
+            className={"mr-1 opsera-primary"}
             icon={faLock}
             onClickFunction={handleEditFunction}
           />
