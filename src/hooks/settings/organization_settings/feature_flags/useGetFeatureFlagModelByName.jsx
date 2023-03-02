@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetFeatureFlagModel from "hooks/settings/organization_settings/feature_flags/useGetFeatureFlagModel";
 import useFeatureFlagAdministrationActions
   from "hooks/settings/organization_settings/feature_flags/useFeatureFlagAdministrationActions";
@@ -13,7 +12,6 @@ export default function useGetFeatureFlagModelByName(
 ) {
   const [featureFlagModel, setFeatureFlagModel] = useState(undefined);
   const { getFeatureFlagModel } = useGetFeatureFlagModel();
-  const { isSaasUser } = useComponentStateReference();
   const {
     isLoading,
     error,
@@ -25,7 +23,7 @@ export default function useGetFeatureFlagModelByName(
   useEffect(() => {
     setFeatureFlagModel(undefined);
 
-    if (featureFlagConstants.isFeatureFlagNameValid(featureFlagName) === true && isSaasUser === false) {
+    if (featureFlagConstants.isFeatureFlagNameValid(featureFlagName) === true) {
       loadData(getFeatureFlag).catch(() => {
       });
     }

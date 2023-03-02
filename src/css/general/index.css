@@ -39,6 +39,10 @@ primary analytics font*/
     font-weight: bold;
 }
 
+.temp-sidebar-width {
+    min-width: 210px;
+}
+
 .connected-assets-modal-body {
     min-height: 10rem;
     overflow: scroll;
@@ -1015,6 +1019,6 @@ a:hover, .active, .link-text:hover {
 }
 
 /*Tooltip z-index fix for overlays*/
-.bs-tooltip-top {
+.bs-tooltip-top, .bs-tooltip-bottom, .bs-tooltip-left, .bs-tooltip-right {
     z-index: 10000;
 }

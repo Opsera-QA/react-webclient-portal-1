@@ -58,6 +58,7 @@ export default function TooltipWrapper(
           minHeight: overlayHeight,
           minWidth: overlayWidth,
         }}
+        placement={placement}
       >
         {getPopoverTitle()}
         <Popover.Content>

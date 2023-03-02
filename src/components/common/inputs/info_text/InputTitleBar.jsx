@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 import RefreshButton from "components/common/buttons/data/RefreshButton";
+import {Button, InputGroup} from "react-bootstrap";
+import {faSearch} from "@fortawesome/pro-light-svg-icons";
 
 function InputTitleBar(
   {
@@ -54,13 +56,26 @@ function InputTitleBar(
   const getSearchBar = () => {
     if (showSearchBar) {
       return (
-        <input
-          placeholder={"Search"}
-          disabled={disableSearch}
-          value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
-          className={"input-search-filter"}
-        />
+        // <InputGroup className={"flex-nowrap"}>
+        //   <InputGroup.Prepend>
+        //     <Button
+        //       disabled={isLoading}
+        //       size={"sm"}
+        //     >
+        //       <IconBase
+        //         isLoading={isLoading}
+        //         icon={faSearch}
+        //       />
+        //     </Button>
+        //   </InputGroup.Prepend>
+          <input
+            placeholder={"Search"}
+            disabled={disableSearch}
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            className={"input-search-filter"}
+          />
+        // </InputGroup>
       );
     }
   };
@@ -109,7 +124,7 @@ InputTitleBar.propTypes = {
 };
 
 InputTitleBar.defaultProps = {
-  className: "input-title-bar p-2",
+  className: "input-title-bar py-1",
 };
 
 export default InputTitleBar;

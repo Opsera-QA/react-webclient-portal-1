@@ -2,7 +2,7 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faArrowLeft, faCogs, faUserSecret} from "@fortawesome/pro-light-svg-icons";
+import {faArrowLeft, faFolderGear} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import {adminToolsTrails} from "components/admin/adminTools.trails";
 
@@ -17,7 +17,7 @@ export default function OrganizationSettingsManagementSubNavigationBar({activeTa
         history.push(`/admin`);
         return;
       case adminToolsTrails.ldapOrganizationSettingsManagement.name:
-        history.push(`/admin/platform/system-parameters`);
+        history.push(`/admin/organization-settings`);
         return;
     }
   };
@@ -32,14 +32,14 @@ export default function OrganizationSettingsManagementSubNavigationBar({activeTa
         tabText={"Back to Admin Tools"}
       />
       <NavigationTab
-        icon={faUserSecret}
+        icon={faFolderGear}
         tabName={adminToolsTrails.ldapOrganizationSettingsManagement.name}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
         tabText={"Organization Settings Manager"}
       />
       <NavigationTab
-        icon={faUserSecret}
+        icon={faFolderGear}
         tabName={"ldapOrganizationSettingsViewer"}
         handleTabClick={handleTabClick}
         activeTab={activeTab}
