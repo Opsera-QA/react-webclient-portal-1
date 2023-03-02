@@ -90,8 +90,6 @@ function PipelineActionControls(
       setStopPipeline(true);
       await PipelineActions.stopPipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
       await PipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
-      // TODO: Remove
-      await fetchData();
     }
     catch (error) {
       setStopPipeline(true);
@@ -113,8 +111,6 @@ function PipelineActionControls(
     try {
       setResetPipeline(true);
       await PipelineActions.resetPipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
-      // TODO: Remove
-      await fetchData();
     }
     catch (error) {
       setResetPipeline(false);
@@ -127,7 +123,6 @@ function PipelineActionControls(
       if (isMounted?.current === true) {
         setStopPipeline(false);
         setStartPipeline(false);
-        setResetPipeline(false);
       }
     }
   };
