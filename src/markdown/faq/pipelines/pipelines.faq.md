@@ -210,12 +210,13 @@
 ##### Related Articles
 
 
-[**Approval Gate Setup Help**](https://docs.opsera.io/approval-gate)  
-[**Configure Single Pipeline for Multiple Webhook Help**](https://docs.opsera.io/webhook-integration/how-to-configure-a-pipeline-for-multiple-webhook-events)   
+[**Approval Gate Setup**](https://docs.opsera.io/approval-gate)  
+[**Configure Single Pipeline for Multiple Webhook**](https://docs.opsera.io/webhook-integration/how-to-configure-a-pipeline-for-multiple-webhook-events)   
 [**Building a Declarative Pipeline**](https://docs.opsera.io/create-and-manage-pipelines)  
-[**Pipeline Notifications Help**](https://docs.opsera.io/notifications/pipeline-notifications#configure-pipeline-notifications)
+[**Pipeline Notifications**](https://docs.opsera.io/notifications/pipeline-notifications#configure-pipeline-notifications)
 
-[**Policy Management Help**](https://docs.opsera.io/role-based-access-pipelines-and-tool-registry/set-policies-for-user)
+[**Policy Management**](https://docs.opsera.io/role-based-access-pipelines-and-tool-registry/set-policies-for-user)
 
+[**Parent-Child Pipelines**](https://docs.opsera.io/create-and-manage-pipelines/parent-child-pipelines)
 
 
