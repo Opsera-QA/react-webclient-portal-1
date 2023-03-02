@@ -9,6 +9,7 @@ import {
   getTagsFromKpiConfiguration,
   getResultFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
+import { KPI_FILTER_TYPES } from "components/common/list_of_values_input/admin/kpi_configurations/filters/kpiFilter.types";
 
 const doraBaseURL = "analytics/dora/v1/";
 
@@ -40,6 +41,12 @@ doraActions.jiraGitlabRolledUp = async (
     dashboardTags = null;
     dashboardOrgs = null;
   }
+
+  let jiraProjectsMTTR = getResultFromKpiConfiguration(kpiConfiguration, "jira-projects-mttr");
+  jiraProjectsMTTR = jiraProjectsMTTR ? [jiraProjectsMTTR] : null;
+  let jiraProjectsCFR = getResultFromKpiConfiguration(kpiConfiguration, "jira-projects-cfr");
+  jiraProjectsCFR = jiraProjectsCFR ? [jiraProjectsCFR] : null;
+
   const postBody = {
     startDate: startDate.toISOString(),
     endDate: endDate.toISOString(),
@@ -49,17 +56,14 @@ doraActions.jiraGitlabRolledUp = async (
         : dashboardTags?.length > 0
         ? dashboardTags
         : tags,
-    dashboardOrgs: dashboardOrgs,
+    dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
-    jiraProjects: [
-      getResultFromKpiConfiguration(kpiConfiguration, "jira-projects"),
-    ],
-    jiraChangeTypes: getResultFromKpiConfiguration(
-      kpiConfiguration,
-      "jira-change-types",
-    ),
-    jiraResolutionNames: jiraResolutionNames,
+    jiraProjectsMTTR,
+    jiraProjectsCFR,
+    jiraChangeTypes: getResultFromKpiConfiguration(kpiConfiguration, KPI_FILTER_TYPES.JIRA_CHANGE_TYPES),
+    jiraResolutionNames,
+    jiraExcludedResolutionNames: getResultFromKpiConfiguration(kpiConfiguration, KPI_FILTER_TYPES.JIRA_EXCLUDED_RESOLUTION_NAMES),
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(

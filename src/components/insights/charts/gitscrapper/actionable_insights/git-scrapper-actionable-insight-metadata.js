@@ -1,6 +1,6 @@
 const GitScrapperActionableMetadata = {
     idProperty: "_id",
-    type: "Git Scrapper Issues Table Report",
+    type: "Git Custodian Issues Table Report",
     fields: [
       {
         label: "Project Key",

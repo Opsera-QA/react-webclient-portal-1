@@ -16,11 +16,6 @@ import EditTagModal from "components/workflow/EditTagModal";
 import pipelineActions from "components/workflow/pipeline-actions";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
-import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
-import {
-  getPipelineTypeLabel,
-  PIPELINE_TYPE_SELECT_OPTIONS
-} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import PipelineDurationMetricsStandaloneField
   from "components/common/fields/pipelines/metrics/PipelineDurationMetricsStandaloneField";
 import IconBase from "components/common/icons/IconBase";
@@ -338,6 +333,14 @@ function PipelineSummaryPanel(
               loadPipeline={fetchPlan}
             />
           </Col>
+          <Col xs={12}>
+            <PipelineRoleAccessInput
+              loadData={fetchPlan}
+              pipelineModel={pipelineModel}
+              setPipelineModel={setPipelineModel}
+              disabled={parentWorkflowStatus === "running"}
+            />
+          </Col>
           <Col xs={12} sm={6}>
             <OwnerNameField
               model={pipelineModel}
@@ -346,14 +349,6 @@ function PipelineSummaryPanel(
           <Col sm={12} md={6}>
             <SmartIdField
               model={pipelineModel}
-            />
-          </Col>
-          <Col xs={12}>
-            <PipelineRoleAccessInput
-              loadData={fetchPlan}
-              pipelineModel={pipelineModel}
-              setPipelineModel={setPipelineModel}
-              disabled={parentWorkflowStatus === "running"}
             />
           </Col>
           <Col sm={12} md={6}>

@@ -5,9 +5,20 @@ import CloseIcon from "components/common/icons/general/CloseIcon";
 import PageLinkIcon from "components/common/icons/general/PageLinkIcon";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import IconBase from "components/common/icons/IconBase";
+import HelpDocumentationLink from "components/common/links/HelpDocumentationLink";
+import {ROLE_HELP_DOCUMENTATION_LINK} from "components/common/fields/multiple_items/GroupField";
 
 // TODO: Cleanup
-function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose, pageLink, linkTooltipText }) {
+function OverlayTitleBar(
+  {
+    titleText,
+    titleIcon,
+    isLoading,
+    handleClose,
+    pageLink,
+    linkTooltipText,
+    externalHelpPageLink,
+  }) {
   const getTitleIcon = () => {
     if (titleIcon) {
       return (
@@ -22,6 +33,11 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose, pageLin
         <div className={"d-flex justify-content-between my-auto w-100"}>
           <div><span><LoadingIcon className="mr-2"/>Loading Data</span></div>
           <div className={"d-flex"}>
+            <HelpDocumentationLink
+              link={externalHelpPageLink}
+              className={"mr-2"}
+              tooltipPlacement={"bottom"}
+            />
             <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
             <CloseIcon handleCloseFunction={handleClose} />
           </div>
@@ -34,6 +50,11 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose, pageLin
     return (
       <Row className={"title-text-header-1 w-100 p-2 mx-0 bg-white d-flex"}>
         <div className={"ml-auto dark-grey d-flex my-auto"}>
+          <HelpDocumentationLink
+            link={externalHelpPageLink}
+            className={"mr-2"}
+            tooltipPlacement={"bottom"}
+          />
           <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
           <CloseIcon handleCloseFunction={handleClose} />
         </div>
@@ -46,6 +67,11 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose, pageLin
       <div className={"d-flex justify-content-between my-auto w-100"}>
         <div><span>{getTitleIcon()}{titleText}</span></div>
         <div className={"d-flex"}>
+          <HelpDocumentationLink
+            link={externalHelpPageLink}
+            className={"mr-2"}
+            tooltipPlacement={"bottom"}
+          />
           <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
           <CloseIcon handleCloseFunction={handleClose} />
         </div>
@@ -61,7 +87,8 @@ OverlayTitleBar.propTypes = {
   handleClose: PropTypes.func,
   isLoading: PropTypes.bool,
   pageLink: PropTypes.string,
-  linkTooltipText: PropTypes.string
+  linkTooltipText: PropTypes.string,
+  externalHelpPageLink: PropTypes.string,
 };
 
 export default OverlayTitleBar;

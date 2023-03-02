@@ -52,6 +52,13 @@ function FrequentlyAskedQuestionsVerticalTabContainer() {
             handleTabClick={handleTabClick}
             activeTab={activeTab}
           />
+          <VanitySetVerticalTab
+            tabText={"General FAQs"}
+            tabName={"general"}
+            icon={faQuestion}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+          />
         </div>
       </VanitySetVerticalTabContainer>
     );

@@ -1,6 +1,6 @@
 const GitScraperActionableInsightsMetaData = {
   idProperty: "_id",
-  type: "Git Scraper Actionable Insights",
+  type: "Git Custodian Actionable Insights",
   fields: [
     {
       label: "Author",

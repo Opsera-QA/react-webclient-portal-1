@@ -12,6 +12,10 @@
   color: #fef7fd !important;
 }
 
+.authentication-dropdown {
+    width: 300px;
+}
+
 .nav-bar .header-text {
   /*font-size: 1.7rem;*/
   /*margin-left:-3px;*/
