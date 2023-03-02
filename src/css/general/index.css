@@ -1002,6 +1002,6 @@ a:hover, .active, .link-text:hover {
 }
 
 /*Tooltip z-index fix for overlays*/
-.bs-tooltip-top {
+.bs-tooltip-top, .bs-tooltip-bottom, .bs-tooltip-left, .bs-tooltip-right {
     z-index: 10000;
 }
