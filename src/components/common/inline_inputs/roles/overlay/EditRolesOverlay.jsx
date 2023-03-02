@@ -15,6 +15,7 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import StandaloneSaveButton from "components/common/buttons/saving/StandaloneSaveButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 import {useHistory} from "react-router-dom";
+import {ROLE_HELP_DOCUMENTATION_LINK} from "components/common/fields/multiple_items/GroupField";
 
 function EditRolesOverlay(
   {
@@ -95,6 +96,7 @@ function EditRolesOverlay(
       titleIcon={faEdit}
       showToasts={true}
       showCloseButton={false}
+      externalHelpPageLink={ROLE_HELP_DOCUMENTATION_LINK}
     >
       <div className={"mx-3 mb-3 mt-2"}>
         <div className="text-color mb-2">Access Rules define who has privileges to interact with a resource.
