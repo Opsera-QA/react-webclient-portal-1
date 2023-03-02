@@ -22,7 +22,7 @@ export default function FieldLabelBase(
   }
 
   return (
-    <label className="mb-0 mr-2 text-muted">
+    <label className={"mb-0 mr-2 text-muted no-wrap-inline"}>
       <span>{label}:</span>
       {getLoadingIcon()}
     </label>
