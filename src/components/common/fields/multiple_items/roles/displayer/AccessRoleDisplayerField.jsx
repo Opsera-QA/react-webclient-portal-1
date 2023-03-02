@@ -15,6 +15,7 @@ export default function AccessRoleDisplayerField(
     className,
     noDataMessage,
     item,
+    handleEditFunction,
   }) {
   const parsedRoles = DataParsingHelper.parseArray(roles, []);
   const {
@@ -24,7 +25,7 @@ export default function AccessRoleDisplayerField(
   const getObjectAccessRoleText = () => {
     const accessRole = ObjectAccessRoleHelper.getUserAccessRole(userData, roles);
 
-    if (accessRole) {
+    if (accessRole && accessRole !== ObjectAccessRoleHelper.ACCESS_ROLES.NO_ROLES_ASSIGNED) {
       const accessRoleLabel = ObjectAccessRoleHelper.getLabelForAccessRole(accessRole);
       return `the ${accessRoleLabel} Access Role granted to you in addition to those granted to `;
     }
@@ -79,7 +80,11 @@ export default function AccessRoleDisplayerField(
     >
       <span className={className}>
         <span>
-          <IconBase className={"mr-1"} icon={faLock} />
+          <IconBase
+            className={"mr-1"}
+            icon={faLock}
+            onClickFunction={handleEditFunction}
+          />
           {`${roles.length} Access Role${roles.length !== 1 ? "s" : ""} Applied. ${getAccessInformation()}`}
         </span>
       </span>
@@ -92,6 +97,7 @@ AccessRoleDisplayerField.propTypes = {
   className: PropTypes.string,
   noDataMessage: PropTypes.any,
   item: PropTypes.object,
+  handleEditFunction: PropTypes.func,
 };
 
 AccessRoleDisplayerField.defaultProps = {

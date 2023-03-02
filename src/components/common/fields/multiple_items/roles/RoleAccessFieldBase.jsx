@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 import AccessRoleDisplayerField from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayerField";
 import VanityInlineError from "temp-library-components/fields/info/VanityInlineError";
@@ -10,7 +9,15 @@ import useGetUserById from "components/user/hooks/useGetUserById";
 import IconBase from "components/common/icons/IconBase";
 import {faLock, faUnlock} from "@fortawesome/pro-light-svg-icons";
 
-function RoleAccessFieldBase({model, fieldName, noDataMessage, className}) {
+function RoleAccessFieldBase(
+  {
+    model,
+    fieldName,
+    noDataMessage,
+    className,
+    handleEditFunction,
+    disabled,
+  }) {
   const field = model?.getFieldById(fieldName);
   const currentData = model?.getCurrentData();
   const {
@@ -21,7 +28,11 @@ function RoleAccessFieldBase({model, fieldName, noDataMessage, className}) {
     if (ObjectAccessRoleHelper.doesObjectHaveRbacApplied(currentData) !== true) {
       return (
         <>
-          <IconBase className={"mr-1"} icon={faUnlock} />
+          <IconBase
+            className={"mr-1"}
+            icon={faUnlock}
+            onClickFunction={disabled !== true ? handleEditFunction : undefined}
+          />
           <VanityInlineError
             className={"my-auto"}
             text={`Warning, this ${model.getType()} does not have Access Roles applied, so anyone can see and use it.`}
@@ -33,7 +44,11 @@ function RoleAccessFieldBase({model, fieldName, noDataMessage, className}) {
     if (ObjectAccessRoleHelper.doesOnlyOwnerHaveAccessToObject(user?.email, currentData) === true) {
       return (
         <>
-          <IconBase className={"mr-1"} icon={faLock}/>
+          <IconBase
+            className={"mr-1"}
+            icon={faLock}
+            onClickFunction={disabled !== true ? handleEditFunction : undefined}
+          />
           <VanityInlineWarning
             className={"my-auto"}
             text={`Warning, only the owner ${user?.firstName} ${user?.lastName} (${user?.email}) has access to this ${model.getType()}. Please adjust access rules if this ${model.getType()} is to be used by others.`}
@@ -47,11 +62,12 @@ function RoleAccessFieldBase({model, fieldName, noDataMessage, className}) {
         roles={model?.getArrayData(fieldName)}
         noDataMessage={noDataMessage}
         item={model?.getCurrentData()}
+        handleEditFunction={disabled !== true ? handleEditFunction : undefined}
       />
     );
   };
 
-  if (field == null) {
+  if (field == null || currentData == null) {
     return null;
   }
 
@@ -72,7 +88,9 @@ RoleAccessFieldBase.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   noDataMessage: PropTypes.any,
-  className: PropTypes.string
+  className: PropTypes.string,
+  handleEditFunction: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 RoleAccessFieldBase.defaultProps = {
