@@ -36,6 +36,7 @@ function OverlayTitleBar(
             <HelpDocumentationLink
               link={externalHelpPageLink}
               className={"mr-2"}
+              tooltipPlacement={"bottom"}
             />
             <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
             <CloseIcon handleCloseFunction={handleClose} />
@@ -52,6 +53,7 @@ function OverlayTitleBar(
           <HelpDocumentationLink
             link={externalHelpPageLink}
             className={"mr-2"}
+            tooltipPlacement={"bottom"}
           />
           <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
           <CloseIcon handleCloseFunction={handleClose} />
@@ -68,6 +70,7 @@ function OverlayTitleBar(
           <HelpDocumentationLink
             link={externalHelpPageLink}
             className={"mr-2"}
+            tooltipPlacement={"bottom"}
           />
           <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
           <CloseIcon handleCloseFunction={handleClose} />
