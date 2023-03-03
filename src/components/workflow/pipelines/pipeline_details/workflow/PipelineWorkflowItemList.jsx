@@ -10,6 +10,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
+import IconBase from "components/common/icons/IconBase";
 
 function PipelineWorkflowItemList(
   {
@@ -42,6 +43,10 @@ function PipelineWorkflowItemList(
     });
   }, []);
 
+  const delayedRefresh = async () => {
+    await fetchPlan();
+  };
+
   const loadData = async () => {
     try {
       setIsLoading(true);
@@ -71,9 +76,9 @@ function PipelineWorkflowItemList(
   const handleAddStep = async (itemId, index) => {
     setIsSaving(true);
     await pipelineActions.addPipelineStepAtIndex(pipelineId, index + 1);
+    await delayedRefresh();
     setIsSaving(false);
   };
-
 
   const handleCopyStep = async (item, index) => {
     const steps = plan;
@@ -164,7 +169,7 @@ function PipelineWorkflowItemList(
     if (editWorkflow) {
       return (
         <div
-          className={"text-center d-flex step-plus-" + index}
+          className={`text-center d-flex step-plus-${index}`}
           style={{
             height: "42px",
           }}
@@ -174,7 +179,7 @@ function PipelineWorkflowItemList(
               icon={faCaretSquareUp}
               iconSize={"lg"}
               className={index === 0 ? "fa-disabled" : "pointer dark-grey"}
-              onClickFunction={() => handleMoveStep(item._id, index, "up")}
+              onClickFunction={isSaving !== true ? () => handleMoveStep(item._id, index, "up") : undefined}
               overlayBody={"Move lower step up one position"}
             />
             <OverlayIconBase
@@ -184,6 +189,7 @@ function PipelineWorkflowItemList(
               onClickFunction={() => handleAddStep(item._id, index)}
               overlayBody={"Add new step here"}
             />
+            <IconBase isLoading={isLoading || isSaving} />
             <OverlayIconBase
               icon={faCopy}
               iconSize={"lg"}
