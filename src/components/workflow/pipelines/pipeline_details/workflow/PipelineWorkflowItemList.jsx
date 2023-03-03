@@ -74,10 +74,15 @@ function PipelineWorkflowItemList(
   };
 
   const handleAddStep = async (itemId, index) => {
-    setIsSaving(true);
-    await pipelineActions.addPipelineStepAtIndex(pipelineId, index + 1);
-    await delayedRefresh();
-    setIsSaving(false);
+    try {
+      setIsSaving(true);
+      await pipelineActions.addPipelineStepAtIndex(pipelineId, index + 1);
+      await delayedRefresh();
+    } catch (error) {
+      toastContext.showCreateFailureResultDialog("Pipeline Step", error);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleCopyStep = async (item, index) => {
@@ -186,7 +191,7 @@ function PipelineWorkflowItemList(
               icon={faPlusSquare}
               iconSize={"lg"}
               className={"green pointer ml-2 mr-1"}
-              onClickFunction={() => handleAddStep(item._id, index)}
+              onClickFunction={isSaving !== true ? () => handleAddStep(item._id, index, "up") : undefined}
               overlayBody={"Add new step here"}
             />
             <IconBase isLoading={isLoading || isSaving} />
@@ -194,14 +199,14 @@ function PipelineWorkflowItemList(
               icon={faCopy}
               iconSize={"lg"}
               className={"yellow pointer ml-1 mr-2"}
-              onClickFunction={() => handleCopyStep(item, index)}
+              onClickFunction={isSaving !== true ? () => handleCopyStep(item, index, "up") : undefined}
               overlayBody={"Copy previous step"}
             />
             <OverlayIconBase
               icon={faCaretSquareDown}
               iconSize={"lg"}
               className={index === plan.length - 1 ? "fa-disabled" : "pointer dark-grey"}
-              onClickFunction={() => handleMoveStep(item._id, index, "down")}
+              onClickFunction={isSaving !== true ? () => handleMoveStep(item._id, index, "down") : undefined}
               overlayBody={"Move upper step down one position"}
             />
           </div>
