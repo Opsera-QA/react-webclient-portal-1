@@ -47,7 +47,7 @@ pipelineHelpers.getPendingApprovalStep = (pipeline) => {
     const pipelineStep = DataParsingHelper.parseObject(pipeline?.workflow?.plan[stepArrayIndex], {});
     const toolIdentifier = DataParsingHelper.parseNestedString(pipelineStep, "tool.tool_identifier");
 
-    if ([toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL, toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION].includes(toolIdentifier) === true) {
+    if ([toolIdentifierConstants.TOOL_IDENTIFIERS.APPROVAL, toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION, toolIdentifierConstants.TOOL_IDENTIFIERS.SERVICE_NOW].includes(toolIdentifier) === true) {
       return pipelineStep;
     }
   }
