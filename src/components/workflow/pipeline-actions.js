@@ -173,11 +173,6 @@ pipelineActions.stopPipelineV2 = async (getAccessToken, cancelTokenSource, pipel
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-pipelineActions.resetPipelineV2 = async (getAccessToken, cancelTokenSource, pipelineId) => {
-  const apiUrl = `/pipelines/${pipelineId}/reset/`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
 pipelineActions.updatePipeline = async (pipelineId, postBody, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/${pipelineId}/update/`;   
