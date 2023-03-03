@@ -11,10 +11,12 @@ export default function ExternalPageLink(
     icon,
     className,
     tooltip,
+    tooltipPlacement,
   }) {
   return (
     <TooltipWrapper
       innerText={tooltip}
+      placement={tooltipPlacement}
     >
       <div className={className}>
         <div className={"pointer"} onClick={() => window.open(link)}>
@@ -32,6 +34,7 @@ ExternalPageLink.propTypes = {
   className: PropTypes.string,
   icon: PropTypes.object,
   tooltip: PropTypes.any,
+  tooltipPlacement: PropTypes.string,
 };
 
 ExternalPageLink.defaultProps = {

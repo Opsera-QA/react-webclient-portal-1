@@ -187,11 +187,11 @@ regexDefinitions.octopusFileList = {
 };
 
 regexDefinitions.customParameterValueRegex = {
-  regex: /^[a-zA-Z0-9-+|!.$@&:_,; [\]\\/]*$/,
-  formText: "Values are visible to all users if no Access Roles are assigned to this record. Value can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : , ; |",
-  errorFormText: "Values are visible to all users if no Access Roles are assigned to this record. Value can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : , ; |",
+  regex: /^[a-zA-Z0-9-+|!.*$@&:_,; [\]\\/]*$/,
+  formText: "Values are visible to all users if no Access Roles are assigned to this record. Value can be up to 16,000 characters and contain alphanumeric characters, spaces, and these symbols: @ ! & + * - _ / \\ . $ [ ] : , ; |",
+  errorFormText: "Values are visible to all users if no Access Roles are assigned to this record. Value can be up to 16,000 characters and contain alphanumeric characters, spaces, and these symbols: @ ! & + * - _ / \\ . $ [ ] : , ; |",
   isRequiredFunction: (model) => {
-    return (model?.getData("vaultEnabled") !== true);
+    return (model != null && model.getData("vaultEnabled") !== true);
   },
 };
 
@@ -208,7 +208,7 @@ regexDefinitions.localVariableName = {
 };
 
 regexDefinitions.localVariableValue = {
-  regex: /^[a-zA-Z0-9-+|!.$@&:_,; [\]\\/]*$/,
+  regex: /^[a-zA-Z0-9-+|!.*$@&:_,; [\]\\/]*$/,
   formText: "Values can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : , ; |",
   errorFormText: "Values can contain alphanumeric characters, spaces, and these symbols: @ ! & + - _ / \\ . $ [ ] : , ; |",
 };
