@@ -26,7 +26,7 @@ function RoleAccessInlineInputBase(
     isSassUser,
   } = useComponentStateReference();
 
-  const showEditor = () => {
+  const handleEditFunction = () => {
     if (!disabled) {
       toastContext.showOverlayPanel(
         <EditRolesOverlay
@@ -53,12 +53,14 @@ function RoleAccessInlineInputBase(
             <RoleAccessFieldBase
               model={model}
               fieldName={fieldName}
+              handleEditFunction={handleEditFunction}
+              disabled={disabled}
             />
           </div>
           <div className={"edit-button d-flex"}>
             <EditIcon
               className={"ml-2 text-muted"}
-              handleEditFunction={showEditor}
+              handleEditFunction={handleEditFunction}
               disabled={disabled}
               tooltipBody={"Edit Access Rules"}
               iconTransformProperties={"shrink-5"}
