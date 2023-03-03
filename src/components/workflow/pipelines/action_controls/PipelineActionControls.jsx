@@ -32,6 +32,7 @@ import {pipelineHelper} from "components/workflow/pipeline.helper";
 import {buttonLabelHelper} from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import PipelineActionControlButtonBase
   from "components/workflow/pipelines/action_controls/PipelineActionControlButtonBase";
+import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 
 const PIPELINE_ACTION_STATES = {
   READY: "ready",
@@ -65,6 +66,13 @@ function PipelineActionControls(
     orchestrationFeatureFlags,
     enabledServices,
   } = useGetFeatureFlags();
+  const pipelineActionsHook = usePipelineActions();
+
+  const delayedRefresh = async () => {
+    setTimeout(async () => {
+      await fetchData();
+    }, 2500);
+  };
 
   useEffect(() => {
     if (workflowStatus !== "stopped") {
@@ -90,8 +98,7 @@ function PipelineActionControls(
       setStopPipeline(true);
       await PipelineActions.stopPipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
       await PipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
-      // TODO: Remove
-      await fetchData();
+      await delayedRefresh();
     }
     catch (error) {
       setStopPipeline(true);
@@ -109,12 +116,14 @@ function PipelineActionControls(
     }
   };
 
-  const resetPipelineState = async () => {
+  const resetPipelineState = async (silentReset) => {
     try {
       setResetPipeline(true);
-      await PipelineActions.resetPipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
-      // TODO: Remove
-      await fetchData();
+      await pipelineActionsHook.resetPipeline(
+        pipeline?._id,
+        silentReset,
+      );
+      await delayedRefresh();
     }
     catch (error) {
       setResetPipeline(false);
@@ -169,6 +178,7 @@ function PipelineActionControls(
 
       if (hasStringValue(message) === true) {
         toastContext.showInformationToast(message, 20);
+        await delayedRefresh();
       }
     }
     catch (error) {
@@ -299,7 +309,7 @@ function PipelineActionControls(
       await runPipeline(pipeline?._id);
     } else {
       console.log("clearing pipeline activity and then starting over");
-      await resetPipelineState();
+      await resetPipelineState(true);
       await runPipeline(pipeline?._id);
     }
   };
@@ -346,7 +356,7 @@ function PipelineActionControls(
           await runPipeline(pipelineId, pipelineRunSettingsModel);
         } else {
           console.log("clearing pipeline activity and then starting over");
-          await resetPipelineState();
+          await resetPipelineState(true);
           await runPipeline(pipelineId, pipelineRunSettingsModel);
         }
       }
