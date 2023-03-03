@@ -64,6 +64,14 @@ export default function usePipelineActions() {
     );
   };
 
+  pipelineActions.addPipelineStepAtIndex = async (
+    pipelineId,
+    index,
+  ) => {
+    const apiUrl = `/workflow/pipelines/${pipelineId}/steps/index/${index}`;
+    return await apiService.handleApiPostRequest(apiUrl);
+  };
+
   pipelineActions.deletePipelineStepById = async (
     pipelineId,
     pipelineStepId,

@@ -9,6 +9,7 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 
 function PipelineWorkflowItemList(
   {
@@ -31,6 +32,7 @@ function PipelineWorkflowItemList(
     getAccessToken,
     toastContext,
   } = useComponentStateReference();
+  const pipelineActions = usePipelineActions();
 
   useEffect(() => {
     loadData().catch((error) => {
@@ -67,21 +69,8 @@ function PipelineWorkflowItemList(
   };
 
   const handleAddStep = async (itemId, index) => {
-    const steps = plan;
-
     setIsSaving(true);
-
-    const newStep = {
-      "trigger": [],
-      "type": [],
-      "notification": [],
-      "name": "",
-      "description": "",
-      "active": true,
-    };
-    steps.splice(index + 1, 0, newStep);
-    await quietSavePlan(steps);
-
+    await pipelineActions.addPipelineStepAtIndex(pipelineId, index + 1);
     setIsSaving(false);
   };
 

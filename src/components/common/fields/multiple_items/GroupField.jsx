@@ -6,7 +6,7 @@ import {faUserFriends} from "@fortawesome/pro-light-svg-icons";
 import IconBase from "components/common/icons/IconBase";
 import HelpDocumentationLink from "components/common/links/HelpDocumentationLink";
 
-export const ROLE_HELP_DOCUMENTATION_LINK = "https://opsera.atlassian.net/wiki/spaces/OE/pages/1330970654/Role+Based+Access+-+Pipelines+Tool+Registry#Platform-Roles";
+export const ROLE_HELP_DOCUMENTATION_LINK = "https://docs.opsera.io/role-based-access-pipelines-and-tool-registry";
 
 export default function GroupField(
   {
