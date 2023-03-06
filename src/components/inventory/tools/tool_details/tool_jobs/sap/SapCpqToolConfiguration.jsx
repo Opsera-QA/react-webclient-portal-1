@@ -38,6 +38,7 @@ function SapCpqToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       persistRecord={saveSapToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"sap-cpq"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>

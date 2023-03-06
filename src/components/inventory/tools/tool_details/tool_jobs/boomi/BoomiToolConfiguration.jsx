@@ -91,6 +91,7 @@ function BoomiToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       persistRecord={saveBoomiToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"boomi"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>

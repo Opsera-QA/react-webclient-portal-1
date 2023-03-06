@@ -38,6 +38,7 @@ function JFrogToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       persistRecord={saveJFrogToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"jfrog"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>

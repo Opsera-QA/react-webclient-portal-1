@@ -39,6 +39,7 @@ function KafkaConnectToolConfiguration({ toolData , setUpMode, setCurrentScreen 
       persistRecord={saveKafkaConnectToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"kafka_connect"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>

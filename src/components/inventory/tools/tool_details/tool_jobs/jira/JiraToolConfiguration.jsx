@@ -12,7 +12,7 @@ import {AuthContext} from "contexts/AuthContext";
 import modelHelpers from "components/common/model/modelHelpers";
 import { jiraToolConnectionMetadata } from "components/inventory/tools/tool_details/tool_jobs/jira/jiraToolConnection.metadata";
 
-function JiraToolConfiguration({ toolData }) {
+function JiraToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [jiraConfigurationDto, setJiraConfigurationDto] = useState(undefined);
 
@@ -25,7 +25,8 @@ function JiraToolConfiguration({ toolData }) {
     const vaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}-secretKey`;
     newConfiguration.vaultSecretKey = await toolsActions.saveKeyPasswordToVault(jiraConfigurationDto, "vaultSecretKey", newConfiguration.vaultSecretKey, vaultKey, getAccessToken, toolData.getData("_id"));
     const item = { configuration: newConfiguration };
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("tool_detail");
   };
 
   return (
@@ -57,7 +58,9 @@ function JiraToolConfiguration({ toolData }) {
 JiraToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   fnSaveChanges: PropTypes.func,
-  fnSaveToVault: PropTypes.func
+  fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default JiraToolConfiguration;

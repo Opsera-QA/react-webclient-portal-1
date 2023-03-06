@@ -42,6 +42,7 @@ function CoverityToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       persistRecord={saveCoverityConfigurationDto}
       toolData={toolData}
       toolConnectionCheckName={"coverity"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>

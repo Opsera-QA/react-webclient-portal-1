@@ -62,6 +62,7 @@ function HashicorpVaultToolConfiguration({ toolData, setUpMode, setCurrentScreen
       persistRecord={saveHashicorpVaultToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"vault"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>

@@ -38,6 +38,7 @@ function MongodbRealmToolConfiguration({ toolData, setUpMode, setCurrentScreen }
       persistRecord={saveMongodbRealmToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"mongodb_realm"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>

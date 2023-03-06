@@ -58,6 +58,7 @@ function TerraformCloudToolConfiguration({ toolData, setUpMode, setCurrentScreen
       persistRecord={saveTerraformCloudToolConfiguration}
       toolConnectionCheckName={"customer_terraform"}
       toolData={toolData}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>

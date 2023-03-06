@@ -11,7 +11,7 @@ import ToolConfigurationEditorPanelContainer
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 
-function OctopusToolConfiguration({ toolData }) {
+function OctopusToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [octopusConfigurationDto, setOctopusConfigurationDto] = useState(undefined);
 
@@ -28,7 +28,8 @@ function OctopusToolConfiguration({ toolData }) {
     const octopusApiVaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}-secretKey`;
     newConfiguration.octopusApiKey = await toolsActions.saveKeyPasswordToVault(octopusConfigurationDto, "octopusApiKey", newConfiguration.octopusApiKey, octopusApiVaultKey, getAccessToken, toolData.getData("_id"));
     const item = { configuration: newConfiguration };
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   return (
@@ -38,6 +39,7 @@ function OctopusToolConfiguration({ toolData }) {
       persistRecord={saveOctopusToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Octopus"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -52,6 +54,8 @@ function OctopusToolConfiguration({ toolData }) {
 
 OctopusToolConfiguration.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default OctopusToolConfiguration;

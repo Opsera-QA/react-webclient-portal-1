@@ -58,6 +58,7 @@ function SnykToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       persistRecord={saveSnykToolConfiguration}
       toolConnectionCheckName={"snyk"}
       toolData={toolData}
+      setUpMode={setUpMode}
     >
       <Col sm={12}>
         <SnykConnectivityTypeSelectInput

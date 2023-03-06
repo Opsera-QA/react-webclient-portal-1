@@ -44,6 +44,7 @@ function GChatToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       persistRecord={saveGChatToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"gchat"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>

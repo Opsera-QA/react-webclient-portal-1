@@ -44,6 +44,7 @@ function ServiceNowToolConfiguration({ toolData, setUpMode, setCurrentScreen }) 
       persistRecord={saveServiceNowToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"servicenow"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>

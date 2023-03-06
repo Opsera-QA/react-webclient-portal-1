@@ -40,6 +40,7 @@ function InformaticaToolConfiguration({ toolData , setUpMode, setCurrentScreen }
       persistRecord={saveInformaticaToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"informatica"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>

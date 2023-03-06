@@ -40,6 +40,7 @@ function AquasecToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       persistRecord={saveAquasecToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
