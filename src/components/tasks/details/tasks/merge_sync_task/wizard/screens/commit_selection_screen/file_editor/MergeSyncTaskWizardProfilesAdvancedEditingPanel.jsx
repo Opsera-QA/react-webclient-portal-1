@@ -22,6 +22,7 @@ import MergeSyncTaskWizardExternalDataSourceJsonEditPanel from "./json_view/Merg
 import MergeSyncTaskWizardLayoutJsonEditPanel from "./json_view/MergeSyncTaskWizardLayoutJsonEditPanel";
 import MergeSyncTaskWizardCustomFieldJsonEditPanel from "./json_view/MergeSyncTaskWizardCustomFieldJsonEditPanel";
 import MergeSyncTaskWizardFlowJsonEditPanel from "./json_view/MergeSyncTaskWizardFlowJsonEditPanel";
+import MergeSyncTaskWizardCustomObjectJsonEditPanel from "./json_view/MergeSyncTaskWizardCustomObjectJsonEditPanel";
 
 const componentTypeOptions = [
   { name: "CustomApplication", value: "applicationVisibilities" },
@@ -570,7 +571,14 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
           />
         );
       case "objectPermissions":
-        return <>objectPermissions</>;
+        return (
+          <MergeSyncTaskWizardCustomObjectJsonEditPanel
+            wizardModel={wizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName={comparisonFileModel?.getData("file")}
+          />
+        );
       case "pageAccesses":
         return <>pageAccesses</>;
       case "recordTypeVisibilities":
