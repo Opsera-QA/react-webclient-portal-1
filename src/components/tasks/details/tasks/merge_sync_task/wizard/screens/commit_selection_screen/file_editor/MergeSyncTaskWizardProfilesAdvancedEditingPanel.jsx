@@ -382,29 +382,19 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
       case "applicationVisibilities":
         return (
           <MergeSyncTaskWizardCustomApplicationJsonEditPanel
-            // modifiedCustomAppJson={modifiedContentJson?.applicationVisibilities}
-            // originalCustomAppJson={originalContentJson?.applicationVisibilities}
-            modifiedCustomAppJson={mockData?.applicationVisibilities}
-            originalCustomAppJson={mockData?.applicationVisibilities}
-            modifiedContentJson={modifiedContentJson}
-            originalContentJson={originalContentJson}
-            setModifiedContentJson={setModifiedContentJson}
-            setOriginalContentJson={setOriginalContentJson}
+            wizardModel={wizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName ={comparisonFileModel?.getData("file")}
           />
         );
       case "categoryGroupVisibilities":
         return (
           <MergeSyncTaskWizardDataCategoryJsonEditPanel
-            // comparisonFileModel={comparisonFileModel}
-            // setComparisonFileModel={setComparisonFileModel}
-            // modifiedDataCategoryJson={modifiedContentJson?.categoryGroupVisibilities}
-            // originalDataCategoryJson={originalContentJson?.categoryGroupVisibilities}
-            modifiedDataCategoryJson={mockData?.categoryGroupVisibilities}
-            originalDataCategoryJson={mockData?.categoryGroupVisibilities}
-            modifiedContentJson={modifiedContentJson}
-            originalContentJson={originalContentJson}
-            setModifiedContentJson={setModifiedContentJson}
-            setOriginalContentJson={setOriginalContentJson}
+            wizardModel={wizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName ={comparisonFileModel?.getData("file")}
           />
         );
       case "classAccesses":
@@ -420,16 +410,9 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
         return (
           <MergeSyncTaskWizardCustomMetadataJsonEditPanel
             wizardModel={wizardModel}
-            // comparisonFileModel={comparisonFileModel}
-            // setComparisonFileModel={setComparisonFileModel}
-            // modifiedCustomMetaJson={modifiedContentJson?.customMetadataTypeAccesses}
-            // originalCustomMetaJson={originalContentJson?.customMetadataTypeAccesses}
-            modifiedCustomMetaJson={mockData?.customMetadataTypeAccesses}
-            originalCustomMetaJson={mockData?.customMetadataTypeAccesses}
-            modifiedContentJson={modifiedContentJson}
-            originalContentJson={originalContentJson}
-            setModifiedContentJson={setModifiedContentJson}
-            setOriginalContentJson={setOriginalContentJson}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName ={comparisonFileModel?.getData("file")}
           />
         );
       case "customPermissions":
