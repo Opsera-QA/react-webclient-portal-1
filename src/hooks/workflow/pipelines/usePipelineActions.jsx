@@ -83,6 +83,18 @@ export default function usePipelineActions() {
     return await apiService.handleApiPostRequest(apiUrl);
   };
 
+  pipelineActions.duplicatePipelineStepAtIndex = async (
+    pipelineId,
+    pipelineStepId,
+    index,
+  ) => {
+    const apiUrl = `/workflow/pipelines/${pipelineId}/steps/${pipelineStepId}/index/${index}`;
+    console.log("apiUrl: " + JSON.stringify(apiUrl));
+    return await apiService.handleApiPostRequest(
+      apiUrl,
+    );
+  };
+
   pipelineActions.deletePipelineStepById = async (
     pipelineId,
     pipelineStepId,

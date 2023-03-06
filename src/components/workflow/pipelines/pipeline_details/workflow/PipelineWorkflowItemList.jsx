@@ -86,24 +86,19 @@ function PipelineWorkflowItemList(
   };
 
   const handleCopyStep = async (item, index) => {
-    const steps = plan;
-
-    setIsSaving(true);
-
-    const newStep = {
-      "trigger": item.trigger,
-      "type": item.type,
-      "tool": item.tool,
-      "notification": item.notification,
-      "name": "Copy of " + item.name,
-      "description": item.description,
-      "active": true,
-    };
-    steps.splice(index + 1, 0, newStep);
-
-    await quietSavePlan(steps);
-
-    setIsSaving(false);
+    try {
+      setIsSaving(true);
+      await pipelineActions.duplicatePipelineStepAtIndex(
+        pipelineId,
+        item?._id,
+        index,
+      );
+      await delayedRefresh();
+    } catch (error) {
+      toastContext.showSystemErrorToast(error, "Could not duplicate Pipeline Step:");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleMoveStep = async (itemId, index, direction) => {
