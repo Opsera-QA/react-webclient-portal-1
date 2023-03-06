@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import CodeInput from "components/common/inputs/code/CodeInput";
 import {getScriptLanguageDisplayMode} from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
 import PullScriptValueButton from "components/inventory/scripts/details/PullScriptValueButton";
 import MonacoCodeInput from "../../../common/inputs/code/monaco/MonacoCodeInput";

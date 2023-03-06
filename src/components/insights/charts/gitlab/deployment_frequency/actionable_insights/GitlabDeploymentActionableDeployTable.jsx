@@ -12,7 +12,7 @@ import CustomTable from "components/common/table/CustomTable";
 function GitlabDeploymentActionableDeployTable({ data, isLoading, loadData, filterModel, setFilterModel, tableTitleIcon, count, range }) {
     const fields = GitlabDeploymentFrequencyActionableMetadata.fields;
     const tableTitle = "Deployments Report";
-    const noDataMessage = "No report found";
+    const noDataMessage = "No data available";
 
     const columns = useMemo(
         () => [

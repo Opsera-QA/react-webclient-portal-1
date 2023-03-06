@@ -151,6 +151,17 @@ function MultiSelectInputBase(
     }
   };
 
+  const getInfoMessage = () => {
+    if (
+      disabled !== true
+      && busy !== true
+      && enabled === true
+      && hasStringValue(pluralTopic) === true
+      && (!Array.isArray(selectOptions) || selectOptions.length === 0)) {
+      return `No ${pluralTopic} found for the selected criteria`;
+    }
+  };
+
   const getErrorMessage = () => {
     if (hasStringValue(internalErrorMessage) === true) {
       return internalErrorMessage;
@@ -237,6 +248,7 @@ function MultiSelectInputBase(
         field={field}
         errorMessage={getErrorMessage()}
         hideRegexDefinitionText={true}
+        customMessage={getInfoMessage()}
       />
     </InputContainer>
   );

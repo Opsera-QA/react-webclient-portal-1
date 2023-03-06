@@ -1,4 +1,5 @@
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
+import {faIdBadge} from "@fortawesome/pro-light-svg-icons";
 
 export const policyHelper = {};
 
@@ -14,4 +15,8 @@ policyHelper.getDetailViewLink = (
 
 policyHelper.getManagementScreenLink = () => {
   return `/settings/organization-settings/policies/`;
+};
+
+policyHelper.getPolicyIcon = () => {
+  return faIdBadge;
 };

@@ -19,37 +19,7 @@ export class Model {
     this.newModel = newModel;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
     this.changeMap = new Map();
-    this.loadData();
   }
-
-  loadData = () => {
-    if (this.metaData != null && this.data && this.data instanceof Object) {
-      // console.log("This.metadata: " + JSON.stringify(Object.keys(this.metaData.fields)));
-      // this.id = this.metaData.idProperty;
-      for (const field of this.metaData.fields) {
-        if (field.id === "data") {
-          continue;
-        }
-
-        let id = field.id;
-        this.defineProperty(id);
-      }
-    }
-  };
-
-  defineProperty = (id) => {
-    Object.defineProperty(this, id, {
-      get: () => {
-        return this.getData(id);
-      },
-      set: (newValue) => {
-        if (this.getData(id) !== newValue) {
-          this.propertyChange(id, newValue, this.getData(id));
-          this.data[id] = newValue;
-        }
-      },
-    });
-  };
 
   getData = (fieldName) => {
     if (hasStringValue(fieldName) !== true) {
@@ -249,8 +219,8 @@ export class Model {
   };
 
   // TODO: Only send changemap for updates after getting everything else working
-  getPersistData = () => {
-    return this.trimStrings();
+  getPersistData = (updateData) => {
+    return this.trimStrings(updateData);
   };
 
   getOriginalData = () => {
@@ -269,7 +239,7 @@ export class Model {
     return this.data;
   };
 
-  trimStrings = () => {
+  trimStrings = (updateData = true) => {
     let data = this.data;
 
     // TODO: this is only at the top level, add support for trimming inner objects
@@ -280,8 +250,10 @@ export class Model {
         }
       });
 
-      // save trimmed strings in data
-      this.data = data;
+      if (updateData !== false) {
+        // save trimmed strings in data
+        this.data = data;
+      }
     }
     catch (error) {
       console.error("Could not parse object's strings. Sending unparsed data.");

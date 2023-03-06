@@ -100,7 +100,7 @@ function GitScraperScanReport({ kpiConfiguration, dashboardData }) {
     return (
         <ScreenContainer
             navigationTabContainer={<InsightsSubNavigationBar currentTab={"reportsViewer"} />}
-            pageDescription={`Downloadable Report for Git Scraper`}
+            pageDescription={`Downloadable Report for Git Custodian`}
             breadcrumbDestination={"gitscraperReports"}
         >
             <GitScraperScanReportTable

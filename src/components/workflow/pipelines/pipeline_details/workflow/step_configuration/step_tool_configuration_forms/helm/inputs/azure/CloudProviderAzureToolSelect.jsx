@@ -24,7 +24,7 @@ function CloudProviderAzureToolSelect({ fieldName, model, setModel, disabled, te
         newModel.setDefaultValue("resourceGroup");
         setModel({...newModel});
     };
- 
+
     return (
         <RoleRestrictedAzureToolSelectInput
             fieldName={fieldName}

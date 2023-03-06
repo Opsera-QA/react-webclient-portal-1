@@ -10,7 +10,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
-function SpinnakerToolConfiguration({ toolData }) {
+function SpinnakerToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [spinnakerConfigurationDto, setSpinnakerConfigurationDto] = useState(undefined);
 
@@ -25,7 +25,8 @@ function SpinnakerToolConfiguration({ toolData }) {
   const saveSpinnakerToolConfiguration = async () => {
     let newConfiguration = spinnakerConfigurationDto.getPersistData();
     const item = { configuration: newConfiguration };
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   return (
@@ -35,6 +36,7 @@ function SpinnakerToolConfiguration({ toolData }) {
       persistRecord={saveSpinnakerToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Spinnaker"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -47,6 +49,8 @@ function SpinnakerToolConfiguration({ toolData }) {
 
 SpinnakerToolConfiguration.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default SpinnakerToolConfiguration;

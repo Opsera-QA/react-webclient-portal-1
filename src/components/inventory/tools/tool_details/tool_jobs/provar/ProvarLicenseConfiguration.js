@@ -10,7 +10,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import ProvarLicenseTypeSelectInput from "./ProvarLicenseTypeSelectInput";
 import VaultTextAreaInput from "../../../../../common/inputs/text/VaultTextAreaInput";
 
-function ProvarLicenseConfiguration({ toolData }) {
+function ProvarLicenseConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [provarConfigurationDto, setProvarConfigurationDto] =
     useState(undefined);
@@ -39,11 +39,12 @@ function ProvarLicenseConfiguration({ toolData }) {
     );
 
     const item = { configuration: newConfiguration };
-    return await toolsActions.saveToolConfiguration(
+    await toolsActions.saveToolConfiguration(
       toolData,
       item,
       getAccessToken,
     );
+    if (setUpMode === "wizard") setCurrentScreen("tool_detail");
   };
 
   return (
@@ -78,6 +79,8 @@ ProvarLicenseConfiguration.propTypes = {
   toolId: PropTypes.string,
   saveToolConfiguration: PropTypes.func,
   fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default ProvarLicenseConfiguration;

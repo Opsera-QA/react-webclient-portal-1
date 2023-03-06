@@ -12,6 +12,8 @@ export default function ViewTaskAuditLogsActionBarButton(
   }) {
   const {
     toastContext,
+    isFreeTrial,
+    isOpseraAdministrator,
   } = useComponentStateReference();
 
   const openOverlay = () => {
@@ -22,8 +24,7 @@ export default function ViewTaskAuditLogsActionBarButton(
     );
   };
 
-  // TODO: Add RBAC check?
-  if (taskModel == null) {
+  if (taskModel?.canViewAuditLogs() !== true || (isFreeTrial === true && isOpseraAdministrator !== true)) {
     return null;
   }
 

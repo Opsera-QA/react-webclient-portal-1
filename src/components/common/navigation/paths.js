@@ -59,6 +59,9 @@ paths.apiConnectionTest = paths.admin + "/demo/api";
 paths.kpiManagement = paths.admin + "/kpis";
 paths.kpiDetailView = paths.kpiManagement;
 
+paths.remoteApplications = paths.admin + "/remote-applications";
+paths.remoteApplicationDetailView = paths.remoteApplications + "/details/";
+
 // Insights Paths
 paths.insights = "insights/dashboards";
 paths.dashboardDetails = paths.insights;
@@ -119,6 +122,7 @@ paths.tagReports = paths.reports + "/tags";
 paths.tagsUsedInPipelineReport = paths.tagReports + "/tags-used-in-pipeline";
 paths.tagsUsedInToolsReport = paths.tagReports + "/tags-used-in-tools";
 paths.tagsUsedInDashboardsReport = paths.tagReports + "/tags-used-in-dashboards";
+paths.tagsUsedInProjectsReport = paths.tagReports + "/tags-used-in-projects";
 paths.userReports = paths.reports + "/users";
 paths.groupMembershipReport = paths.userReports + "/group-membership";
 paths.pipelineOwnershipReport = paths.userReports + "/pipeline-ownership";

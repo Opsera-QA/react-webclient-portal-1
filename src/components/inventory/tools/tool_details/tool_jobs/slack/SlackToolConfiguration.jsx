@@ -8,8 +8,12 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import axios from "axios";
 import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
+import OverlayWizardButtonContainerBase
+  from "../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import VanityButtonBase from "../../../../../../temp-library-components/button/VanityButtonBase";
+import {faArrowRight} from "@fortawesome/pro-light-svg-icons";
 
-function SlackToolConfiguration({ toolData }) {
+function SlackToolConfiguration({ toolData, setUpMode, setCurrentScreen, setButtonContainer, handleClose  }) {
   const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [token, setToken] = useState(undefined);
@@ -32,6 +36,24 @@ function SlackToolConfiguration({ toolData }) {
         throw error;
       }
     });
+
+    if (setUpMode && setCurrentScreen) {
+      setButtonContainer(
+          <OverlayWizardButtonContainerBase>
+            <VanityButtonBase
+                normalText={"View Tool Details"}
+                disabled={false}
+                buttonState={"ready"}
+                onClickFunction={() => {
+                  handleClose();
+                  setCurrentScreen("tool_detail");
+                }}
+                variant={"outline-secondary"}
+                icon={faArrowRight}
+            />
+          </OverlayWizardButtonContainerBase>,
+      );
+    }
 
     return () => {
       source.cancel();
@@ -145,7 +167,11 @@ function SlackToolConfiguration({ toolData }) {
 
 
 SlackToolConfiguration.propTypes = {
-  toolData: PropTypes.object
+  toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func,
+  setButtonContainer: PropTypes.func,
+  handleClose: PropTypes.func
 };
 
 export default SlackToolConfiguration;

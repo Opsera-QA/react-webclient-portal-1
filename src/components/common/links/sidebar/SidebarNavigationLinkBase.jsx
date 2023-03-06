@@ -14,6 +14,7 @@ export default function SidebarNavigationLinkBase(
     exact,
     isSidebarCollapsed,
     className,
+    isExternalLink,
   }) {
   const getLabel = () => {
     if (isSidebarCollapsed !== true && hasStringValue(label) === true) {
@@ -34,8 +35,9 @@ export default function SidebarNavigationLinkBase(
       <NavLink
         className={"nav-link"}
         activeClassName={"chosen"}
-        to={link}
+        to={isExternalLink === true ? {pathname: link} : link}
         exact={exact}
+        target={isExternalLink === true ? "_blank" : undefined}
       >
         <div className={"d-flex"}>
           <OverlayIconBase
@@ -57,4 +59,5 @@ SidebarNavigationLinkBase.propTypes = {
   exact: PropTypes.bool,
   isSidebarCollapsed: PropTypes.bool,
   className: PropTypes.string,
+  isExternalLink: PropTypes.bool,
 };

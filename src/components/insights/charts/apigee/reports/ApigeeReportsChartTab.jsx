@@ -101,7 +101,7 @@ function ApigeeReportsChartTab({ kpiConfiguration, setKpiConfiguration, dashboar
     }
   };
 
-  const getTabContentContainer = () => {
+  const getTabContentContainer = () => {    
     if(responseData.length > 0) {
       const pipeline = responseData.filter(item => {
         return item.pipelineId == activeTab;

@@ -240,7 +240,7 @@ function GitScrapperMetrics({
         // )}
       />
       <ModalLogs
-        header="Git Scrapper Metrics"
+        header="Git Custodian Metrics"
         size="lg"
         jsonMessage={metrics}
         dataType="bar"

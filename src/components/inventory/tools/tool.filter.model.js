@@ -70,11 +70,14 @@ const toolFilterMetadata = {
 };
 
 export class ToolFilterModel extends FilterModelBase {
-  constructor() {
+  constructor(useUrlParameters = true) {
     super(toolFilterMetadata);
-    this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.TOOL_FILTER_MODEL_DATA;
-    this.enableUrlUpdatesWithQueryParameters();
-    this.unpackUrlParameters();
+
+    if (useUrlParameters !== false) {
+      this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.TOOL_FILTER_MODEL_DATA;
+      this.enableUrlUpdatesWithQueryParameters();
+      this.unpackUrlParameters();
+    }
   }
 
   canSearch = () => {

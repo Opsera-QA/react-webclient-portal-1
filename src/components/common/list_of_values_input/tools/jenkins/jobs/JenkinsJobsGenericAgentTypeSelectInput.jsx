@@ -12,7 +12,7 @@ export const JENKINS_JOBS_GENERIC_AGENT_TYPES = [
     "name": "Windows Agent",
     "env" : "windows",
     "value": "generic-windows",
-  }
+  },
 ];
 
 function JenkinsJobsGenericAgentTypeSelectInput({ fieldName, model, setModel, setDataFunction, agentList }) {

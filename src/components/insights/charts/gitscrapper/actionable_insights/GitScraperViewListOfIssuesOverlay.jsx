@@ -154,7 +154,7 @@ function GitScraperViewListOfIssuesOverlay({ dataObject, kpiConfiguration, dashb
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={"Git Scraper Issues"}
+      titleText={"Git Custodian Issues"}
       showToasts={true}
       titleIcon={faTable}
       isLoading={isLoading}

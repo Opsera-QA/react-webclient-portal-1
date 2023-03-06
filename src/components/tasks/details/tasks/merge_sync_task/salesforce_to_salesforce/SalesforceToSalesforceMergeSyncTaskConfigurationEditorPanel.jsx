@@ -26,7 +26,7 @@ function SalesforceToSalesforceMergeSyncTaskConfigurationEditorPanel({
   }, []);
 
   const loadData = async () => {
-    const configurationData = modelHelpers.getToolConfigurationModel(
+    const configurationData = modelHelpers.parseObjectIntoModel(
       taskModel?.getData("configuration"),
       mergeSyncTaskConfigurationMetadata,
     );

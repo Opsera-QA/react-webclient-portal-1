@@ -14,6 +14,8 @@ import {USER_SETTINGS_PAGES} from "components/user/user_settings/userSettings.pa
 import OpseraHeaderIcon from "components/header/OpseraHeaderIcon";
 import userActions from "components/user/user-actions";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 export const EXTERNAL_LINKS = {
   FREE_TRIAL_KNOWLEDGE_BASE: `https://docs.opsera.io/getting-started-with-free-trial`,
@@ -101,6 +103,21 @@ function HeaderNavBar({ hideAuthComponents }) {
     );
   };
 
+  const getUserDetails = () => {
+    const accountNameText = isSaasUser === true || hasStringValue(userData?.ldap?.accountName) !== true ? "" : `at ${userData?.ldap?.accountName} `;
+
+    if (userData) {
+      return (
+        <div>
+          <div className={"italic py-1 px-4"}>
+            {`${userData?.email} ${accountNameText}as ${SiteRoleHelper.getFormattedSiteRoleLevel(userData)}`}
+          </div>
+          <NavDropdown.Divider/>
+        </div>
+      );
+    }
+  };
+
   const getHelpDocumentationLink = () => {
     if (featureFlagHideItemInProd() === false && featureFlagHideItemInTest() === false) {
       return (
@@ -126,52 +143,62 @@ function HeaderNavBar({ hideAuthComponents }) {
             {getPermissionsMessage()}
 
             <NavDropdown title={fullName} id="basic-nav-dropdown" className="top-nav-dropdown" alignRight>
-              <Link to={`/user/${USER_SETTINGS_PAGES.MY_USER_PROFILE}`} id="profile-button" className="dropdown-item nav-drop-down-item">Profile</Link>
-              {/*{isSaasUser === false && <Link to="/user/myUserRecord" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>}*/}
-
-              <NavDropdown.Divider/>
-
+              <div className={"authentication-dropdown"}>
+              {getUserDetails()}
               <NavDropdown.Item
-                active={false}
-                href={EXTERNAL_LINKS.KNOWLEDGE_BASE}
-                target={"_blank"}
-                className={"nav-drop-down-item"}
-                id={"kb-button"}
-              >
-                KnowledgeBase
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                active={false}
-                href={EXTERNAL_LINKS.REQUEST_HELP_LINK}
-                target={"_blank"}
-                className={"nav-drop-down-item"}
-                id={"request-help-button"}
-              >
-                Request Help
-              </NavDropdown.Item>
-              {getFrequentlyAskedQuestionsLink()}
-              {getHelpDocumentationLink()}
-              <NavDropdown.Divider/>
+                  as={Link}
+                  to={`/user/${USER_SETTINGS_PAGES.MY_USER_PROFILE}`}
+                  id="profile-button"
+                  className="dropdown-item nav-drop-down-item"
+                >
+                  Profile
+                </NavDropdown.Item>
 
-              <NavDropdown.Item
-                href={"https://opsera.io/"}
-                target={"_blank"}
-                className={"nav-drop-down-item"}
-                id={"about-opsera"}
-                active={false}
-              >
-                Opsera.io
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                href={""}
-                onClick={logout}
-                className={"nav-drop-down-item"}
-                id={"logout-button"}
-              >
-                Logout
-              </NavDropdown.Item>
-            </NavDropdown>
+                {/*{isSaasUser === false && <Link to="/user/myUserRecord" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>}*/}
 
+                <NavDropdown.Divider/>
+
+                <NavDropdown.Item
+                  active={false}
+                  href={EXTERNAL_LINKS.KNOWLEDGE_BASE}
+                  target={"_blank"}
+                  className={"nav-drop-down-item"}
+                  id={"kb-button"}
+                >
+                  KnowledgeBase
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  active={false}
+                  href={EXTERNAL_LINKS.REQUEST_HELP_LINK}
+                  target={"_blank"}
+                  className={"nav-drop-down-item"}
+                  id={"request-help-button"}
+                >
+                  Request Help
+                </NavDropdown.Item>
+                {getFrequentlyAskedQuestionsLink()}
+                {getHelpDocumentationLink()}
+                <NavDropdown.Divider/>
+
+                <NavDropdown.Item
+                  href={"https://opsera.io/"}
+                  target={"_blank"}
+                  className={"nav-drop-down-item"}
+                  id={"about-opsera"}
+                  active={false}
+                >
+                  Opsera.io
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  href={""}
+                  onClick={logout}
+                  className={"nav-drop-down-item"}
+                  id={"logout-button"}
+                >
+                  Logout
+                </NavDropdown.Item>
+              </div>
+              </NavDropdown>
           </>}
         </Nav>}
 

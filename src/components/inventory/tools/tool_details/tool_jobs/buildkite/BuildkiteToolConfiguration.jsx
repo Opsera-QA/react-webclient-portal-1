@@ -11,7 +11,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
 import axios from "axios";
 
-function BuildkiteToolConfiguration({ toolData }) {
+function BuildkiteToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [buildkiteConfigurationDto, setBuildkiteConfigurationDto] = useState(undefined);
   const isMounted = useRef(false);
@@ -54,7 +54,8 @@ function BuildkiteToolConfiguration({ toolData }) {
       "publicKey",
       newConfiguration.publicKey
     );
-    return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
+    await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   return (
@@ -64,6 +65,7 @@ function BuildkiteToolConfiguration({ toolData }) {
       persistRecord={saveBuildkiteToolConfiguration}
       toolConnectionCheckName={"buildkite"}
       toolData={toolData}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -98,6 +100,8 @@ BuildkiteToolConfiguration.propTypes = {
   toolId: PropTypes.string,
   saveToolConfiguration: PropTypes.func,
   fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default BuildkiteToolConfiguration;

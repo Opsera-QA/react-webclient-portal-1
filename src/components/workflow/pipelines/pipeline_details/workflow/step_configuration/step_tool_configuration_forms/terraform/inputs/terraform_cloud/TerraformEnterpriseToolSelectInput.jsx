@@ -18,10 +18,6 @@ function TerraformEnterpriseToolSelectInput({ fieldName, model, setModel, disabl
     setModel({ ...newModel });
   };
 
-  const filterDataFunction = (tools) => {    
-    return tools.filter(tool => tool?.configuration && tool?.configuration?.terraformEnterpriseFlag);
-  };
-
   return (
     <RoleRestrictedToolByIdentifierInputBase
       toolIdentifier={"terraform-cloud"}
@@ -35,7 +31,6 @@ function TerraformEnterpriseToolSelectInput({ fieldName, model, setModel, disabl
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
       disabled={disabled}
-      filterDataFunction={filterDataFunction}
     />
   );
 }

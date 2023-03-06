@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import BitbucketWorkspaceInput from "components/common/list_of_values_input/tools/bitbucket/workspaces/BitbucketWorkspaceInput";
 
 function SalesforceBulkMigrationTaskBitbucketWorkspaceSelectInput({model, setModel, disabled}) {
-  const setWorkspace = (fieldName, selectedOption) => {
+  const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("workspace", selectedOption?.key);
     newModel.setData("workspaceName", selectedOption?.name);
     setModel({...newModel});
   };
 
-  const clearData = () => {
+  const clearDataFunction = () => {
     let newModel = {...model};
     newModel.setDefaultValue("workspace");
     newModel.setData("workspaceName");
@@ -27,9 +27,9 @@ function SalesforceBulkMigrationTaskBitbucketWorkspaceSelectInput({model, setMod
       gitToolId={model?.getData("gitToolId")}
       dataObject={model}
       setDataObject={setModel}
-      setDataFunction={setWorkspace}
+      setDataFunction={setDataFunction}
       disabled={disabled}
-      clearDataFunction={clearData}
+      clearDataFunction={clearDataFunction}
     />
   );
 }

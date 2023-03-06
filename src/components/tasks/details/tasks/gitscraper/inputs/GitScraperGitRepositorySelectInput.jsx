@@ -18,6 +18,7 @@ function GitScraperGitRepositorySelectInput({model, setModel, disabled, service,
   return (
      <RepositorySelectInput
        fieldName={"repository"}
+       valueField={"name"}
        service={service}
        gitToolId={gitToolId}
        workspace={model?.getData("workspace")}

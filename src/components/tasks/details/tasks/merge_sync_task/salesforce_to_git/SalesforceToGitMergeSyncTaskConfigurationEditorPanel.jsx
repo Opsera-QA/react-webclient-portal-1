@@ -33,6 +33,12 @@ import SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskCreateNewTargetBranchToggleInput";
 import SalesforceToGitMergeSyncTaskIncludePackageXmlToggleInput
   from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceToGitMergeSyncTaskIncludePackageXmlToggleInput";
+import SalesforceMergeSyncTaskJiraToolSelectInput 
+  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceMergeSyncTaskJiraToolSelectInput";
+import SalesforceMergeSyncTaskJiraProjectSelectInput 
+  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceMergeSyncTaskJiraProjectSelectInput";
+import SalesforceMergeSyncTaskJiraIssueSelectInput 
+  from "components/tasks/details/tasks/merge_sync_task/salesforce_to_git/inputs/SalesforceMergeSyncTaskJiraIssueSelectInput";
 
 function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
   {
@@ -48,19 +54,19 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
   }, []);
 
   const loadData = async () => {
-    const configurationData = modelHelpers.getToolConfigurationModel(
+    const configurationData = modelHelpers.parseObjectIntoModel(
       taskModel?.getData("configuration"),
       mergeSyncTaskConfigurationMetadata,
     );
     configurationData?.setData("jobType", TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC);
     setTaskConfigurationModel({ ...configurationData });
-    const newSalesforceSyncModel = modelHelpers.getToolConfigurationModel(
+    const newSalesforceSyncModel = modelHelpers.parseObjectIntoModel(
       configurationData?.getData("sfdc"),
       mergeSyncTaskSalesforceConfigurationMetadata,
     );
     newSalesforceSyncModel?.setData("jobType", TASK_TYPES.SALESFORCE_TO_GIT_MERGE_SYNC);
     setSalesforceConfigurationModel({...newSalesforceSyncModel});
-    const newGitSyncModel = modelHelpers.getToolConfigurationModel(
+    const newGitSyncModel = modelHelpers.parseObjectIntoModel(
       configurationData?.getData("git"),
       mergeSyncTaskGitConfigurationMetadata,
     );
@@ -106,8 +112,37 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
         <SalesforceToGitMergeSyncTaskTargetBranchSelectInput
           model={gitConfigurationModel}
           setModel={setGitModelFunction}
+          sourceBranch={gitConfigurationModel?.getData("sourceBranch")}
         />
       </Col>
+    );
+  };
+
+  const getJiraInputs = () => {
+    return (
+      <>
+        <Col lg={12}>
+          <SalesforceMergeSyncTaskJiraToolSelectInput
+            model={salesforceConfigurationModel}
+            setModel={setSalesforceConfigurationModel}
+          />
+        </Col>
+        <Col lg={12}>
+          <SalesforceMergeSyncTaskJiraProjectSelectInput
+            model={salesforceConfigurationModel}
+            setModel={setSalesforceConfigurationModel}
+            jiraToolId={salesforceConfigurationModel?.getData("jiraToolId")}
+          />
+        </Col>
+        <Col lg={12}>
+          <SalesforceMergeSyncTaskJiraIssueSelectInput
+            model={salesforceConfigurationModel}
+            setModel={setSalesforceConfigurationModel}
+            jiraToolId={salesforceConfigurationModel?.getData("jiraToolId")}
+            jiraProjectKey={salesforceConfigurationModel?.getData("jiraProjectKey")}
+          />
+        </Col>        
+      </>
     );
   };
 
@@ -156,6 +191,7 @@ function SalesforceToGitMergeSyncTaskConfigurationEditorPanel(
         />
       </Col>
       {getDestinationBranchInputs()}
+      {getJiraInputs()}
       <Col lg={12}>
         <SalesforceToGitMergeSyncTaskIncludePackageXmlToggleInput
           model={salesforceConfigurationModel}

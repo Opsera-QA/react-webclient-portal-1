@@ -14,6 +14,7 @@ function JiraProjectSelectInput(
     model,
     setModel,
     setDataFunction,
+    clearDataFunction,
     disabled,
     valueField,
     textField,
@@ -82,6 +83,7 @@ function JiraProjectSelectInput(
       dataObject={model}
       setDataObject={setModel}
       setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
       selectOptions={projects}
       busy={isLoading}
       valueField={valueField}
@@ -98,6 +100,7 @@ JiraProjectSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
+  clearDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   jiraToolId: PropTypes.string,

@@ -11,7 +11,7 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
-function KafkaConnectToolConfiguration({ toolData }) {
+function KafkaConnectToolConfiguration({ toolData , setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [kafkaConnectConfigurationDto, setKafkaConnectConfigurationDto] = useState(undefined);
 
@@ -28,7 +28,8 @@ function KafkaConnectToolConfiguration({ toolData }) {
     newConfiguration.password = await toolsActions.savePasswordToVault(toolData, kafkaConnectConfigurationDto, "password", newConfiguration.password, getAccessToken);
 
     const item = {configuration: newConfiguration};
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   return (
@@ -38,6 +39,7 @@ function KafkaConnectToolConfiguration({ toolData }) {
       persistRecord={saveKafkaConnectToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"kafka_connect"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -54,7 +56,9 @@ KafkaConnectToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId: PropTypes.string,
   saveToolConfiguration: PropTypes.func,
-  fnSaveToVault: PropTypes.func
+  fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default KafkaConnectToolConfiguration;

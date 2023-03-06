@@ -15,6 +15,7 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import MessageField from "components/common/fields/text/message/MessageField";
 import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
+import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
 
 export default function SiteRoleManagement() {
   const history = useHistory();
@@ -78,6 +79,14 @@ export default function SiteRoleManagement() {
     if (isLoading === true) {
       return (
         <CenterLoadingIndicator type={"Site Roles"} />
+      );
+    }
+
+    if (siteRoles?.length === 0) {
+      return (
+        <WarningMessageFieldBase
+          message={"There was an error loading Site Roles."}
+        />
       );
     }
 

@@ -252,7 +252,7 @@ toolsActions.saveThreePartToolPasswordToVaultV2 = async (getAccessToken, cancelT
 };
 
 // TODO: Use this going forward
-toolsActions.saveThreePartToolPasswordToVaultV3 = async (getAccessToken, cancelTokenSource, toolId, toolIdentifier, fieldName, newValue) => {
+toolsActions.saveThreePartToolPasswordToVaultV3 = async (getAccessToken, cancelTokenSource, toolId, toolIdentifier, fieldName, newValue, defaultValue={}) => {
   if (hasStringValue(newValue) === true) {
     const keyName = `${toolId}-${toolIdentifier}-${fieldName}`;
     const postBody = {
@@ -267,7 +267,7 @@ toolsActions.saveThreePartToolPasswordToVaultV3 = async (getAccessToken, cancelT
   }
 
   // Faseeh says all vault values MUST be objects and not strings
-  return typeof newValue === "string" ? {} : newValue;
+  return typeof newValue === "string" ? defaultValue : newValue;
 };
 
 toolsActions.saveKeyPasswordToVault = async (toolConfigurationData, fieldName, value, key, getAccessToken, toolId) => {

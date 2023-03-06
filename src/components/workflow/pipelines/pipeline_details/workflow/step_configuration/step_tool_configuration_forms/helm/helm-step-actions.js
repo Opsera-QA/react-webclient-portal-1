@@ -1,6 +1,6 @@
 import baseActions from "utils/actionsBase";
 const helmStepActions = {};
- 
+
 helmStepActions.getAzureClusters = async (getAccessToken, cancelTokenSource, config, applicationData) => {
   const apiUrl = `tools/azure/management/clusterNames`;
   const cfg = config?.configuration;

@@ -11,6 +11,7 @@ import JfrogRepoSelectInput from "./inputs/JfrogRepoSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import jfrogStepFormMetadata from "./jfrog-stepForm-metadata";
 import JFrogRepositoryTypeSelectInput from "./inputs/JFrogRepositoryTypeSelectInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function JFrogDockerStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -85,6 +86,19 @@ function JFrogDockerStepConfiguration({ pipelineId, stepTool, stepId, createJob,
     }
   };
 
+
+  const getSubFolderInput = () => {
+    if (jfrogStepConfigurationDto.getData("useRepositorySubFolderName") === true) {
+      return (
+        <TextInputBase 
+          fieldName="repositorySubFolderName"
+          dataObject={jfrogStepConfigurationDto}
+          setDataObject={setJFrogStepConfigurationDataDto}          
+        />
+      );
+    }
+  };
+
   if (isLoading || jfrogStepConfigurationDto == null) {
     return <DetailPanelLoadingDialog />;
   }
@@ -137,6 +151,12 @@ function JFrogDockerStepConfiguration({ pipelineId, stepTool, stepId, createJob,
           }
         />
       }
+      <BooleanToggleInput
+        fieldName={"useRepositorySubFolderName"}
+        dataObject={jfrogStepConfigurationDto}
+        setDataObject={setJFrogStepConfigurationDataDto}
+      />
+      {getSubFolderInput()}
     </PipelineStepEditorPanelContainer>
   );
 }

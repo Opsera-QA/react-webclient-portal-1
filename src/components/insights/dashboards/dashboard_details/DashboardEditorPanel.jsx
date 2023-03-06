@@ -6,7 +6,6 @@ import dashboardsActions from "components/insights/dashboards/dashboards-actions
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DashboardTypeSelectInput from "components/common/list_of_values_input/insights/dashboards/types/DashboardTypeSelectInput";
-import DashboardPersonaSelectInput from "components/common/list_of_values_input/insights/dashboards/DashboardPersonaSelectInput";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import { dashboardAttributesMetadata } from "components/insights/dashboards/dashboard-metadata";
 import TagManager from "components/common/inputs/tags/TagManager";

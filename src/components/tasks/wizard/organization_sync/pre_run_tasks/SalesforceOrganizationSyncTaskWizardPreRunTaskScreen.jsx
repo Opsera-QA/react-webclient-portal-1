@@ -16,8 +16,8 @@ import SalesforceOrganizationSyncTaskGitBranchSelectInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchSelectInput";
 import SalesforceOrganizationSyncTaskNewBranchToggleInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskNewBranchToggleInput";
-import SalesforceOrganizationSyncTaskWizardConfirmRepositorySettingsButton
-  from "components/tasks/wizard/organization_sync/pre_run_tasks/SalesforceOrganizationSyncTaskWizardConfirmRepositorySettingsButton";
+import TaskWizardConfirmRepositorySettingsButton
+  from "components/tasks/wizard/TaskWizardConfirmRepositorySettingsButton";
 import SalesforceOrganizationSyncTaskGitBranchTextInput
   from "components/tasks/details/tasks/sfdc-org-sync/inputs/SalesforceOrganizationSyncTaskGitBranchTextInput";
 import SalesforceOrganizationSyncTaskUpstreamBranchSelectInput
@@ -38,7 +38,7 @@ export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
   useEffect(() => {
     if (taskModel) {
       try {
-        const configurationModel = modelHelpers.getToolConfigurationModel(taskModel?.getData("configuration"), salesforceOrganizationSyncTaskConfigurationMetadata);
+        const configurationModel = modelHelpers.parseObjectIntoModel(taskModel?.getData("configuration"), salesforceOrganizationSyncTaskConfigurationMetadata);
         setTaskConfigurationModel({...configurationModel});
       }
       catch (error) {
@@ -46,6 +46,12 @@ export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
       }
     }
   }, [taskModel]);
+
+  const setModelFunction = (newModel) => {
+    setTaskConfigurationModel({...newModel});
+    taskModel?.setData("configuration", newModel?.getPersistData());
+    setTaskModel({...taskModel});
+  };
 
   const getDynamicFields = () => {
     if (taskConfigurationModel?.getData("isNewBranch") === true) {
@@ -55,13 +61,13 @@ export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
             <SalesforceOrganizationSyncTaskGitBranchTextInput
               fieldName={"gitBranch"}
               model={taskConfigurationModel}
-              setModel={setTaskConfigurationModel}
+              setModel={setModelFunction}
             />
           </Col>
           <Col lg={12}>
             <SalesforceOrganizationSyncTaskUpstreamBranchSelectInput
               model={taskConfigurationModel}
-              setModel={setTaskConfigurationModel}
+              setModel={setModelFunction}
             />
           </Col>
         </>
@@ -101,36 +107,35 @@ export default function SalesforceOrganizationSyncTaskWizardPreRunTaskScreen(
         <Col lg={12}>
           <SalesforceOrganizationSyncTaskBitbucketWorkspaceSelectInput
             model={taskConfigurationModel}
-            setModel={setTaskConfigurationModel}
+            setModel={setModelFunction}
           />
         </Col>
         <Col lg={12}>
           <SalesforceOrganizationSyncTaskRepositorySelectInput
             model={taskConfigurationModel}
-            setModel={setTaskConfigurationModel}
+            setModel={setModelFunction}
           />
         </Col>
         <Col lg={12}>
           <SalesforceOrganizationSyncTaskGitBranchSelectInput
             model={taskConfigurationModel}
-            setModel={setTaskConfigurationModel}
+            setModel={setModelFunction}
             visible={taskConfigurationModel?.getData("isNewBranch") !== true}
           />
         </Col>
         <Col lg={12}>
           <SalesforceOrganizationSyncTaskNewBranchToggleInput
             model={taskConfigurationModel}
-            setModel={setTaskConfigurationModel}
+            setModel={setModelFunction}
           />
         </Col>
         {getDynamicFields()}
       </Row>
       <ButtonContainerBase>
-        <SalesforceOrganizationSyncTaskWizardConfirmRepositorySettingsButton
+        <TaskWizardConfirmRepositorySettingsButton
           taskModel={taskModel}
-          setTaskModel={setTaskModel}
-          taskConfigurationModel={taskConfigurationModel}
           setCurrentScreen={setCurrentScreen}
+          disabled={taskConfigurationModel?.checkCurrentValidity() !== true}
         />
       </ButtonContainerBase>
     </div>
