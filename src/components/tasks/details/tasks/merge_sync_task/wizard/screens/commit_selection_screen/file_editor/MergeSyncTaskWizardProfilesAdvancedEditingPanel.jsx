@@ -24,6 +24,7 @@ import MergeSyncTaskWizardCustomFieldJsonEditPanel from "./json_view/MergeSyncTa
 import MergeSyncTaskWizardFlowJsonEditPanel from "./json_view/MergeSyncTaskWizardFlowJsonEditPanel";
 import MergeSyncTaskWizardCustomObjectJsonEditPanel from "./json_view/MergeSyncTaskWizardCustomObjectJsonEditPanel";
 import MergeSyncTaskWizardApexPageJsonEditPanel from "./json_view/MergeSyncTaskWizardApexPageJsonEditPanel";
+import MergeSyncTaskWizardRecordTypeJsonEditPanel from "./json_view/MergeSyncTaskWizardRecordTypeJsonEditPanel";
 
 const componentTypeOptions = [
   { name: "CustomApplication", value: "applicationVisibilities" },
@@ -590,7 +591,14 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
           />
         );
       case "recordTypeVisibilities":
-        return <>recordTypeVisibilities</>;
+        return (
+          <MergeSyncTaskWizardRecordTypeJsonEditPanel
+            wizardModel={wizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName={comparisonFileModel?.getData("file")}
+          />
+        );
       case "tabVisibilities":
         return <>tabVisibilities</>;
 
