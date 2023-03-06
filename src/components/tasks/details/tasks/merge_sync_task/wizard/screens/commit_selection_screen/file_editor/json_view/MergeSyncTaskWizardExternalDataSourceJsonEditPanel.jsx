@@ -15,13 +15,15 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import CustomSettingssProfileEditorView from "./profile_editor_views/CustomSettingssProfileEditorView";
 import ExternalDataSourceProfileEditorView from "./profile_editor_views/ExternalDataSourceProfileEditorView";
 import { mockData } from "../MergeSyncTaskWizardProfilesAdvancedEditingPanel";
+import IconBase from "../../../../../../../../../common/icons/IconBase";
+import { faSearch } from "@fortawesome/pro-light-svg-icons";
 
 const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
-                                                          wizardModel,
-                                                          comparisonFileModel,
-                                                          setComparisonFileModel,
-                                                          fileName,
-                                                          isLoading,
+  wizardModel,
+  comparisonFileModel,
+  setComparisonFileModel,
+  fileName,
+  isLoading,
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [isJsonLoading, setIsJsonLoading] = useState(true);
@@ -30,9 +32,10 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
 
   const [modifiedContentJson, setModifiedContentJson] = useState(undefined);
   const [originalContentJson, setOriginalContentJson] = useState(undefined);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    if (hasStringValue(fileName) ) {
+    if (hasStringValue(fileName)) {
       loadJsonData().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -47,29 +50,29 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
       // TODO : Convert both original and modified contents to JSON
 
       const jsonContent = mockData;
-        // await mergeSyncTaskWizardActions.componentTypeConvertView(
-        //   getAccessToken,
-        //   cancelTokenSource,
-        //   wizardModel,
-        //   fileName,
-        //   "ExternalDataSource",
-        // );
+      // await mergeSyncTaskWizardActions.componentTypeConvertView(
+      //   getAccessToken,
+      //   cancelTokenSource,
+      //   wizardModel,
+      //   fileName,
+      //   "ExternalDataSource",
+      // );
 
       if (isMounted?.current === true) {
         setModifiedContentJson(
           // JSON.parse(
-            DataParsingHelper.safeObjectPropertyParser(
-              jsonContent,
-              "data.message.sourceContent",
-            ),
+          DataParsingHelper.safeObjectPropertyParser(
+            jsonContent,
+            "data.message.sourceContent",
+          ),
           // ),
         );
         setOriginalContentJson(
           // JSON.parse(
-            DataParsingHelper.safeObjectPropertyParser(
-              jsonContent,
-              "data.message.destinationContent",
-            ),
+          DataParsingHelper.safeObjectPropertyParser(
+            jsonContent,
+            "data.message.destinationContent",
+          ),
           // ),
         );
       }
@@ -90,10 +93,31 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
       />
     );
   }
+  const updateSearchText = (value) => {
+    setSearchText(value);
+  };
+  const getSearchBar = () => {
+    return (
+      <div className="membership-search d-flex mx-auto">
+        <IconBase
+          icon={faSearch}
+          iconClassName={"mr-2 opsera-dark-purple h-100"}
+        />
+        <input
+          placeholder="Search"
+          value={searchText}
+          className="form-control"
+          onChange={(event) => updateSearchText(event.target.value)}
+        />
+      </div>
+    );
+  };
   const setExternalSourceDataJson = (modifiedValue) => {
     let newModifiedJson = { ...modifiedContentJson };
     let modifiedItem = newModifiedJson?.externalDataSourceAccesses.find(
-      (externalDataSourceData) => externalDataSourceData.externalDataSource === modifiedValue.externalDataSource,
+      (externalDataSourceData) =>
+        externalDataSourceData.externalDataSource ===
+        modifiedValue.externalDataSource,
     );
     if (modifiedItem) {
       modifiedItem.enabled = modifiedValue.enabled;
@@ -107,18 +131,24 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
         <span className="h5">Source Profiles</span>
         {modifiedContentJson &&
           Object.keys(modifiedContentJson).length > 0 &&
-          modifiedContentJson?.externalDataSourceAccesses?.map((externalDataSourceData, idx, { length }) => (
-            <div key={idx}>
-              <ExternalDataSourceProfileEditorView
-                externalDataSourceData={externalDataSourceData}
-                setExternalSourceDataJson={setExternalSourceDataJson}
-                isLoading={isLoading}
-              />
-              {idx + 1 !== length && (
-                <DividerWithCenteredText className={"m-4"} />
-              )}
-            </div>
-          ))}
+          modifiedContentJson?.externalDataSourceAccesses
+            ?.filter((obj) => {
+              return obj?.externalDataSource
+                ?.toLowerCase()
+                .includes(searchText.toLowerCase());
+            })
+            .map((externalDataSourceData, idx, { length }) => (
+              <div key={idx}>
+                <ExternalDataSourceProfileEditorView
+                  externalDataSourceData={externalDataSourceData}
+                  setExternalSourceDataJson={setExternalSourceDataJson}
+                  isLoading={isLoading}
+                />
+                {idx + 1 !== length && (
+                  <DividerWithCenteredText className={"m-4"} />
+                )}
+              </div>
+            ))}
       </Col>
     );
   };
@@ -128,24 +158,31 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
       <Col>
         <span className="h5">Target Profiles</span>
         {originalContentJson &&
-        Object.keys(originalContentJson).length > 0 &&
-          originalContentJson?.externalDataSourceAccesses?.map((externalDataSourceData, idx, { length }) => (
-            <div key={idx}>
-              <ExternalDataSourceProfileEditorView
-                externalDataSourceData={externalDataSourceData}
-                setExternalSourceDataJson={setExternalSourceDataJson}
-                isLoading={isLoading}
-              />
-              {idx + 1 !== length && (
-                <DividerWithCenteredText className={"m-4"} />
-              )}
-            </div>
-          ))}
+          Object.keys(originalContentJson).length > 0 &&
+          originalContentJson?.externalDataSourceAccesses
+            ?.filter((obj) => {
+              return obj?.externalDataSource
+                ?.toLowerCase()
+                .includes(searchText.toLowerCase());
+            })
+            .map((externalDataSourceData, idx, { length }) => (
+              <div key={idx}>
+                <ExternalDataSourceProfileEditorView
+                  externalDataSourceData={externalDataSourceData}
+                  setExternalSourceDataJson={setExternalSourceDataJson}
+                  isLoading={isLoading}
+                />
+                {idx + 1 !== length && (
+                  <DividerWithCenteredText className={"m-4"} />
+                )}
+              </div>
+            ))}
       </Col>
     );
   };
   return (
     <div className={"mt-4"}>
+      <Row className={"mb-4"}>{getSearchBar()}</Row>
       <Row>
         {originalCustomMetaEditView()}
         {modifiedCustomMetaEditView()}

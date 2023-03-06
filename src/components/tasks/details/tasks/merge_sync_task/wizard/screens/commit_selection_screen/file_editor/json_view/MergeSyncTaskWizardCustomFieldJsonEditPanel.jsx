@@ -16,13 +16,15 @@ import CustomSettingssProfileEditorView from "./profile_editor_views/CustomSetti
 import ExternalDataSourceProfileEditorView from "./profile_editor_views/ExternalDataSourceProfileEditorView";
 import CustomFieldProfileEditorView from "./profile_editor_views/CustomFieldProfileEditorView";
 import { mockData } from "../MergeSyncTaskWizardProfilesAdvancedEditingPanel";
+import IconBase from "../../../../../../../../../common/icons/IconBase";
+import { faSearch } from "@fortawesome/pro-light-svg-icons";
 
 const MergeSyncTaskWizardCustomFieldJsonEditPanel = ({
-                                                          wizardModel,
-                                                          comparisonFileModel,
-                                                          setComparisonFileModel,
-                                                          fileName,
-                                                          isLoading,
+  wizardModel,
+  comparisonFileModel,
+  setComparisonFileModel,
+  fileName,
+  isLoading,
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [isJsonLoading, setIsJsonLoading] = useState(true);
@@ -31,9 +33,10 @@ const MergeSyncTaskWizardCustomFieldJsonEditPanel = ({
 
   const [modifiedContentJson, setModifiedContentJson] = useState(undefined);
   const [originalContentJson, setOriginalContentJson] = useState(undefined);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    if (hasStringValue(fileName) ) {
+    if (hasStringValue(fileName)) {
       loadJsonData().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -48,29 +51,29 @@ const MergeSyncTaskWizardCustomFieldJsonEditPanel = ({
       // TODO : Convert both original and modified contents to JSON
 
       const jsonContent = mockData;
-        // await mergeSyncTaskWizardActions.componentTypeConvertView(
-        //   getAccessToken,
-        //   cancelTokenSource,
-        //   wizardModel,
-        //   fileName,
-        //   "CustomField",
-        // );
+      // await mergeSyncTaskWizardActions.componentTypeConvertView(
+      //   getAccessToken,
+      //   cancelTokenSource,
+      //   wizardModel,
+      //   fileName,
+      //   "CustomField",
+      // );
 
       if (isMounted?.current === true) {
         setModifiedContentJson(
           // JSON.parse(
-            DataParsingHelper.safeObjectPropertyParser(
-              jsonContent,
-              "data.message.sourceContent",
-            ),
+          DataParsingHelper.safeObjectPropertyParser(
+            jsonContent,
+            "data.message.sourceContent",
+          ),
           // ),
         );
         setOriginalContentJson(
           // JSON.parse(
-            DataParsingHelper.safeObjectPropertyParser(
-              jsonContent,
-              "data.message.destinationContent",
-            ),
+          DataParsingHelper.safeObjectPropertyParser(
+            jsonContent,
+            "data.message.destinationContent",
+          ),
           // ),
         );
       }
@@ -91,6 +94,25 @@ const MergeSyncTaskWizardCustomFieldJsonEditPanel = ({
       />
     );
   }
+  const updateSearchText = (value) => {
+    setSearchText(value);
+  };
+  const getSearchBar = () => {
+    return (
+      <div className="membership-search d-flex mx-auto">
+        <IconBase
+          icon={faSearch}
+          iconClassName={"mr-2 opsera-dark-purple h-100"}
+        />
+        <input
+          placeholder="Search"
+          value={searchText}
+          className="form-control"
+          onChange={(event) => updateSearchText(event.target.value)}
+        />
+      </div>
+    );
+  };
   const setCustomFieldDataJson = (modifiedValue) => {
     let newModifiedJson = { ...modifiedContentJson };
     let modifiedItem = newModifiedJson?.fieldPermissions.find(
@@ -109,18 +131,24 @@ const MergeSyncTaskWizardCustomFieldJsonEditPanel = ({
         <span className="h5">Source Profiles</span>
         {modifiedContentJson &&
           Object.keys(modifiedContentJson).length > 0 &&
-          modifiedContentJson?.fieldPermissions?.map((fieldPermissionsData, idx, { length }) => (
-            <div key={idx}>
-              <CustomFieldProfileEditorView
-                fieldPermissionsData={fieldPermissionsData}
-                setCustomFieldDataJson={setCustomFieldDataJson}
-                isLoading={isLoading}
-              />
-              {idx + 1 !== length && (
-                <DividerWithCenteredText className={"m-4"} />
-              )}
-            </div>
-          ))}
+          modifiedContentJson?.fieldPermissions
+            ?.filter((obj) => {
+              return obj?.field
+                ?.toLowerCase()
+                .includes(searchText.toLowerCase());
+            })
+            .map((fieldPermissionsData, idx, { length }) => (
+              <div key={idx}>
+                <CustomFieldProfileEditorView
+                  fieldPermissionsData={fieldPermissionsData}
+                  setCustomFieldDataJson={setCustomFieldDataJson}
+                  isLoading={isLoading}
+                />
+                {idx + 1 !== length && (
+                  <DividerWithCenteredText className={"m-4"} />
+                )}
+              </div>
+            ))}
       </Col>
     );
   };
@@ -130,24 +158,31 @@ const MergeSyncTaskWizardCustomFieldJsonEditPanel = ({
       <Col>
         <span className="h5">Target Profiles</span>
         {originalContentJson &&
-        Object.keys(originalContentJson).length > 0 &&
-          originalContentJson?.fieldPermissions?.map((fieldPermissionsData, idx, { length }) => (
-            <div key={idx}>
-              <CustomFieldProfileEditorView
-                fieldPermissionsData={fieldPermissionsData}
-                setCustomFieldDataJson={setCustomFieldDataJson}
-                isLoading={isLoading}
-              />
-              {idx + 1 !== length && (
-                <DividerWithCenteredText className={"m-4"} />
-              )}
-            </div>
-          ))}
+          Object.keys(originalContentJson).length > 0 &&
+          originalContentJson?.fieldPermissions
+            ?.filter((obj) => {
+              return obj?.field
+                ?.toLowerCase()
+                .includes(searchText.toLowerCase());
+            })
+            .map((fieldPermissionsData, idx, { length }) => (
+              <div key={idx}>
+                <CustomFieldProfileEditorView
+                  fieldPermissionsData={fieldPermissionsData}
+                  setCustomFieldDataJson={setCustomFieldDataJson}
+                  isLoading={isLoading}
+                />
+                {idx + 1 !== length && (
+                  <DividerWithCenteredText className={"m-4"} />
+                )}
+              </div>
+            ))}
       </Col>
     );
   };
   return (
     <div className={"mt-4"}>
+      <Row className={"mb-4"}>{getSearchBar()}</Row>
       <Row>
         {originalCustomMetaEditView()}
         {modifiedCustomMetaEditView()}

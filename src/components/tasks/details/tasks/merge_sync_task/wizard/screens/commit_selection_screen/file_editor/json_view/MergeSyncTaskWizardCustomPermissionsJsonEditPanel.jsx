@@ -14,13 +14,15 @@ import mergeSyncTaskWizardActions from "../../../../mergeSyncTaskWizard.actions"
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import CustomPermissionsProfileEditorView from "./profile_editor_views/CustomPermissionsProfileEditorView";
 import { mockData } from "../MergeSyncTaskWizardProfilesAdvancedEditingPanel";
+import IconBase from "../../../../../../../../../common/icons/IconBase";
+import { faSearch } from "@fortawesome/pro-light-svg-icons";
 
 const MergeSyncTaskWizardCustomPermissionsJsonEditPanel = ({
-                                                          wizardModel,
-                                                          comparisonFileModel,
-                                                          setComparisonFileModel,
-                                                          fileName,
-                                                          isLoading,
+  wizardModel,
+  comparisonFileModel,
+  setComparisonFileModel,
+  fileName,
+  isLoading,
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [isJsonLoading, setIsJsonLoading] = useState(true);
@@ -29,9 +31,10 @@ const MergeSyncTaskWizardCustomPermissionsJsonEditPanel = ({
 
   const [modifiedContentJson, setModifiedContentJson] = useState(undefined);
   const [originalContentJson, setOriginalContentJson] = useState(undefined);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    if (hasStringValue(fileName) ) {
+    if (hasStringValue(fileName)) {
       loadJsonData().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -46,29 +49,29 @@ const MergeSyncTaskWizardCustomPermissionsJsonEditPanel = ({
       // TODO : Convert both original and modified contents to JSON
 
       const jsonContent = mockData;
-        // await mergeSyncTaskWizardActions.componentTypeConvertView(
-        //   getAccessToken,
-        //   cancelTokenSource,
-        //   wizardModel,
-        //   fileName,
-        //   "CustomPermission",
-        // );
+      // await mergeSyncTaskWizardActions.componentTypeConvertView(
+      //   getAccessToken,
+      //   cancelTokenSource,
+      //   wizardModel,
+      //   fileName,
+      //   "CustomPermission",
+      // );
 
       if (isMounted?.current === true) {
         setModifiedContentJson(
           // JSON.parse(
-            DataParsingHelper.safeObjectPropertyParser(
-              jsonContent,
-              "data.message.sourceContent",
-            ),
+          DataParsingHelper.safeObjectPropertyParser(
+            jsonContent,
+            "data.message.sourceContent",
+          ),
           // ),
         );
         setOriginalContentJson(
           // JSON.parse(
-            DataParsingHelper.safeObjectPropertyParser(
-              jsonContent,
-              "data.message.destinationContent",
-            ),
+          DataParsingHelper.safeObjectPropertyParser(
+            jsonContent,
+            "data.message.destinationContent",
+          ),
           // ),
         );
       }
@@ -89,10 +92,30 @@ const MergeSyncTaskWizardCustomPermissionsJsonEditPanel = ({
       />
     );
   }
+  const updateSearchText = (value) => {
+    setSearchText(value);
+  };
+  const getSearchBar = () => {
+    return (
+      <div className="membership-search d-flex mx-auto">
+        <IconBase
+          icon={faSearch}
+          iconClassName={"mr-2 opsera-dark-purple h-100"}
+        />
+        <input
+          placeholder="Search"
+          value={searchText}
+          className="form-control"
+          onChange={(event) => updateSearchText(event.target.value)}
+        />
+      </div>
+    );
+  };
   const setCustomPermissionJson = (modifiedValue) => {
     let newModifiedJson = { ...modifiedContentJson };
     let modifiedItem = newModifiedJson?.customPermissions.find(
-      (customPermissionsData) => customPermissionsData.name === modifiedValue.name,
+      (customPermissionsData) =>
+        customPermissionsData.name === modifiedValue.name,
     );
     if (modifiedItem) {
       modifiedItem.enabled = modifiedValue.enabled;
@@ -106,18 +129,24 @@ const MergeSyncTaskWizardCustomPermissionsJsonEditPanel = ({
         <span className="h5">Source Profiles</span>
         {modifiedContentJson &&
           Object.keys(modifiedContentJson).length > 0 &&
-          modifiedContentJson?.customPermissions?.map((customPermissionsData, idx, { length }) => (
-            <div key={idx}>
-              <CustomPermissionsProfileEditorView
-                customPermissionsData={customPermissionsData}
-                setCustomPermissionJson={setCustomPermissionJson}
-                isLoading={isLoading}
-              />
-              {idx + 1 !== length && (
-                <DividerWithCenteredText className={"m-4"} />
-              )}
-            </div>
-          ))}
+          modifiedContentJson?.customPermissions
+            ?.filter((obj) => {
+              return obj?.name
+                ?.toLowerCase()
+                .includes(searchText.toLowerCase());
+            })
+            .map((customPermissionsData, idx, { length }) => (
+              <div key={idx}>
+                <CustomPermissionsProfileEditorView
+                  customPermissionsData={customPermissionsData}
+                  setCustomPermissionJson={setCustomPermissionJson}
+                  isLoading={isLoading}
+                />
+                {idx + 1 !== length && (
+                  <DividerWithCenteredText className={"m-4"} />
+                )}
+              </div>
+            ))}
       </Col>
     );
   };
@@ -127,24 +156,31 @@ const MergeSyncTaskWizardCustomPermissionsJsonEditPanel = ({
       <Col>
         <span className="h5">Target Profiles</span>
         {originalContentJson &&
-        Object.keys(originalContentJson).length > 0 &&
-          originalContentJson?.customPermissions?.map((customPermissionsData, idx, { length }) => (
-            <div key={idx}>
-              <CustomPermissionsProfileEditorView
-                customPermissionsData={customPermissionsData}
-                setCustomPermissionJson={setCustomPermissionJson}
-                isLoading={isLoading}
-              />
-              {idx + 1 !== length && (
-                <DividerWithCenteredText className={"m-4"} />
-              )}
-            </div>
-          ))}
+          Object.keys(originalContentJson).length > 0 &&
+          originalContentJson?.customPermissions
+            ?.filter((obj) => {
+              return obj?.name
+                ?.toLowerCase()
+                .includes(searchText.toLowerCase());
+            })
+            .map((customPermissionsData, idx, { length }) => (
+              <div key={idx}>
+                <CustomPermissionsProfileEditorView
+                  customPermissionsData={customPermissionsData}
+                  setCustomPermissionJson={setCustomPermissionJson}
+                  isLoading={isLoading}
+                />
+                {idx + 1 !== length && (
+                  <DividerWithCenteredText className={"m-4"} />
+                )}
+              </div>
+            ))}
       </Col>
     );
   };
   return (
     <div className={"mt-4"}>
+      <Row className={"mb-4"}>{getSearchBar()}</Row>
       <Row>
         {originalCustomMetaEditView()}
         {modifiedCustomMetaEditView()}

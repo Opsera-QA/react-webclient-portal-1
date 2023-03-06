@@ -14,6 +14,8 @@ import mergeSyncTaskWizardActions from "../../../../mergeSyncTaskWizard.actions"
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import CustomSettingssProfileEditorView from "./profile_editor_views/CustomSettingssProfileEditorView";
 import { mockData } from "../MergeSyncTaskWizardProfilesAdvancedEditingPanel";
+import IconBase from "../../../../../../../../../common/icons/IconBase";
+import { faSearch } from "@fortawesome/pro-light-svg-icons";
 
 const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
                                                           wizardModel,
@@ -29,6 +31,7 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
 
   const [modifiedContentJson, setModifiedContentJson] = useState(undefined);
   const [originalContentJson, setOriginalContentJson] = useState(undefined);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     if (hasStringValue(fileName) ) {
@@ -89,6 +92,25 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
       />
     );
   }
+  const updateSearchText = (value) => {
+    setSearchText(value);
+  };
+  const getSearchBar = () => {
+    return (
+      <div className="membership-search d-flex mx-auto">
+        <IconBase
+          icon={faSearch}
+          iconClassName={"mr-2 opsera-dark-purple h-100"}
+        />
+        <input
+          placeholder="Search"
+          value={searchText}
+          className="form-control"
+          onChange={(event) => updateSearchText(event.target.value)}
+        />
+      </div>
+    );
+  };
   const setCustomSettingsJson = (modifiedValue) => {
     let newModifiedJson = { ...modifiedContentJson };
     let modifiedItem = newModifiedJson?.customSettingAccesses.find(
@@ -106,7 +128,11 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
         <span className="h5">Source Profiles</span>
         {modifiedContentJson &&
           Object.keys(modifiedContentJson).length > 0 &&
-          modifiedContentJson?.customSettingAccesses?.map((customSettingsData, idx, { length }) => (
+          modifiedContentJson?.customSettingAccesses?.filter((obj) => {
+            return obj?.name
+              ?.toLowerCase()
+              .includes(searchText.toLowerCase());
+          }).map((customSettingsData, idx, { length }) => (
             <div key={idx}>
               <CustomSettingssProfileEditorView
                 customSettingsData={customSettingsData}
@@ -128,7 +154,11 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
         <span className="h5">Target Profiles</span>
         {originalContentJson &&
         Object.keys(originalContentJson).length > 0 &&
-          originalContentJson?.customSettingAccesses?.map((customSettingsData, idx, { length }) => (
+          originalContentJson?.customSettingAccesses?.filter((obj) => {
+            return obj?.name
+              ?.toLowerCase()
+              .includes(searchText.toLowerCase());
+          }).map((customSettingsData, idx, { length }) => (
             <div key={idx}>
               <CustomSettingssProfileEditorView
                 customSettingsData={customSettingsData}
@@ -145,6 +175,7 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
   };
   return (
     <div className={"mt-4"}>
+      <Row className={"mb-4"}>{getSearchBar()}</Row>
       <Row>
         {originalCustomMetaEditView()}
         {modifiedCustomMetaEditView()}

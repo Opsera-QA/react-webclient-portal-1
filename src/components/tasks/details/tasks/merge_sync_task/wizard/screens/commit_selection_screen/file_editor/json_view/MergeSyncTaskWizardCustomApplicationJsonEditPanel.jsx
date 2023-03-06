@@ -12,6 +12,8 @@ import { hasStringValue } from "../../../../../../../../../common/helpers/string
 import mergeSyncTaskWizardActions from "../../../../mergeSyncTaskWizard.actions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import { mockData } from "../MergeSyncTaskWizardProfilesAdvancedEditingPanel";
+import IconBase from "../../../../../../../../../common/icons/IconBase";
+import { faSearch } from "@fortawesome/pro-light-svg-icons";
 
 const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
   wizardModel,
@@ -27,6 +29,7 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
 
   const [modifiedContentJson, setModifiedContentJson] = useState(undefined);
   const [originalContentJson, setOriginalContentJson] = useState(undefined);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     if (hasStringValue(fileName)) {
@@ -44,29 +47,29 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
       // TODO : Convert both original and modified contents to JSON
 
       const jsonContent = mockData;
-        // await mergeSyncTaskWizardActions.componentTypeConvertView(
-        //   getAccessToken,
-        //   cancelTokenSource,
-        //   wizardModel,
-        //   fileName,
-        //   "CustomApplication",
-        // );
+      // await mergeSyncTaskWizardActions.componentTypeConvertView(
+      //   getAccessToken,
+      //   cancelTokenSource,
+      //   wizardModel,
+      //   fileName,
+      //   "CustomApplication",
+      // );
 
       if (isMounted?.current === true) {
         setModifiedContentJson(
           // JSON.parse(
-            DataParsingHelper.safeObjectPropertyParser(
-              jsonContent,
-              "data.message.sourceContent",
-            ),
+          DataParsingHelper.safeObjectPropertyParser(
+            jsonContent,
+            "data.message.sourceContent",
+          ),
           // ),
         );
         setOriginalContentJson(
           // JSON.parse(
-            DataParsingHelper.safeObjectPropertyParser(
-              jsonContent,
-              "data.message.destinationContent",
-            ),
+          DataParsingHelper.safeObjectPropertyParser(
+            jsonContent,
+            "data.message.destinationContent",
+          ),
           // ),
         );
       }
@@ -87,6 +90,25 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
       />
     );
   }
+  const updateSearchText = (value) => {
+    setSearchText(value);
+  };
+  const getSearchBar = () => {
+    return (
+      <div className="membership-search d-flex mx-auto">
+        <IconBase
+          icon={faSearch}
+          iconClassName={"mr-2 opsera-dark-purple h-100"}
+        />
+        <input
+          placeholder="Search"
+          value={searchText}
+          className="form-control"
+          onChange={(event) => updateSearchText(event.target.value)}
+        />
+      </div>
+    );
+  };
 
   const setCustomAppJson = (modifiedValue) => {
     console.log(modifiedValue);
@@ -108,8 +130,13 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
         <span className="h5">Source Profiles</span>
         {modifiedContentJson &&
           Object.keys(modifiedContentJson).length > 0 &&
-          modifiedContentJson?.applicationVisibilities?.map(
-            (customApp, idx, { length }) => (
+          modifiedContentJson?.applicationVisibilities
+            ?.filter((obj) => {
+              return obj?.application
+                ?.toLowerCase()
+                .includes(searchText.toLowerCase());
+            })
+            .map((customApp, idx, { length }) => (
               <div key={idx}>
                 <CustomApplicationProfileEditorView
                   customAppData={customApp}
@@ -120,8 +147,7 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
                   <DividerWithCenteredText className={"m-4"} />
                 )}
               </div>
-            ),
-          )}
+            ))}
       </Col>
     );
   };
@@ -132,8 +158,13 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
         <span className="h5">Source Profiles</span>
         {originalContentJson &&
           Object.keys(originalContentJson).length > 0 &&
-          originalContentJson?.applicationVisibilities?.map(
-            (customApp, idx, { length }) => (
+          originalContentJson?.applicationVisibilities
+            ?.filter((obj) => {
+              return obj?.application
+                ?.toLowerCase()
+                .includes(searchText.toLowerCase());
+            })
+            .map((customApp, idx, { length }) => (
               <div key={idx}>
                 <CustomApplicationProfileEditorView
                   customAppData={customApp}
@@ -144,14 +175,14 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
                   <DividerWithCenteredText className={"m-4"} />
                 )}
               </div>
-            ),
-          )}
+            ))}
       </Col>
     );
   };
 
   return (
     <div className={"mt-4"}>
+      <Row className={"mb-4"}>{getSearchBar()}</Row>
       <Row>
         {originalAppVisibilityEditView()}
         {modifiedAppVisibilityEditView()}
