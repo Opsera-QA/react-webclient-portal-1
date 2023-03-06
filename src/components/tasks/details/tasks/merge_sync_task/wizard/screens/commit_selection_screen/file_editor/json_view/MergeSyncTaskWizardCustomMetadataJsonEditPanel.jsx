@@ -15,6 +15,8 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import { mockData } from "../MergeSyncTaskWizardProfilesAdvancedEditingPanel";
 import IconBase from "../../../../../../../../../common/icons/IconBase";
 import { faSearch } from "@fortawesome/pro-light-svg-icons";
+import InlineWarning from "../../../../../../../../../common/status_notifications/inline/InlineWarning";
+import StandaloneSaveButton from "../../../../../../../../../common/buttons/saving/StandaloneSaveButton";
 
 const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
   wizardModel,
@@ -31,6 +33,7 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
   const [modifiedContentJson, setModifiedContentJson] = useState(undefined);
   const [originalContentJson, setOriginalContentJson] = useState(undefined);
   const [searchText, setSearchText] = useState("");
+  const [showUnsavedChangesMessage, setShowUnsavedChangesMessage] = useState(false);
 
   useEffect(() => {
     if (hasStringValue(fileName)) {
@@ -47,31 +50,31 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
       setIsJsonLoading(true);
       // TODO : Convert both original and modified contents to JSON
 
-      const jsonContent = mockData;
-      // await mergeSyncTaskWizardActions.componentTypeConvertView(
-      //   getAccessToken,
-      //   cancelTokenSource,
-      //   wizardModel,
-      //   fileName,
-      //   "CustomMetadata",
-      // );
+      const jsonContent =
+      await mergeSyncTaskWizardActions.componentTypeConvertView(
+        getAccessToken,
+        cancelTokenSource,
+        wizardModel,
+        fileName,
+        "CustomMetadata",
+      );
 
       if (isMounted?.current === true) {
         setModifiedContentJson(
-          // JSON.parse(
+          JSON.parse(
           DataParsingHelper.safeObjectPropertyParser(
             jsonContent,
             "data.message.sourceContent",
           ),
-          // ),
+          ),
         );
         setOriginalContentJson(
-          // JSON.parse(
+          JSON.parse(
           DataParsingHelper.safeObjectPropertyParser(
             jsonContent,
             "data.message.destinationContent",
           ),
-          // ),
+          ),
         );
       }
     } catch (error) {
@@ -91,6 +94,52 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
       />
     );
   }
+
+  const saveModifiedContent = async () => {
+    try {
+      const response = await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
+        getAccessToken,
+        cancelTokenSource,
+        wizardModel,
+        fileName,
+        modifiedContentJson,
+        "CustomMetadata",
+      );
+      console.log(response);
+      if(response && response.status === 200){
+        setShowUnsavedChangesMessage(false);
+        return;
+      }
+      return;
+    } catch (error) {
+      console.error(error);
+      toastContext.showLoadingErrorDialog(error);
+    }
+  };
+
+  const getWarningMessage = () => {
+    if (showUnsavedChangesMessage) {
+      return <InlineWarning warningMessage={"You must hit save before changes will take effect"} />;
+    }
+  };
+
+  const getButtonContainer = () => {
+    return (
+      <div className="w-100 d-flex justify-content-between py-2 mx-4">
+        <div></div>
+        <div>{getSearchBar()}</div>
+        <div>
+          <StandaloneSaveButton
+            saveFunction={saveModifiedContent}
+            type={"Profile"}
+            showToasts={false}
+            disable={!showUnsavedChangesMessage}
+          />
+        </div>
+      </div>
+    );
+  };
+
   const updateSearchText = (value) => {
     setSearchText(value);
   };
@@ -111,6 +160,7 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
     );
   };
   const setCustomMetaJson = (modifiedValue) => {
+    setShowUnsavedChangesMessage(true);
     let newModifiedJson = { ...modifiedContentJson };
     let modifiedItem = newModifiedJson?.customMetadataTypeAccesses.find(
       (customMetaData) => customMetaData.name === modifiedValue.name,
@@ -177,8 +227,11 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
     );
   };
   return (
-    <div className={"mt-4"}>
-      <Row className={"mb-4"}>{getSearchBar()}</Row>
+    <div>
+      <Row className={"ml-2"}>{getWarningMessage()}</Row>
+      <Row>
+        {getButtonContainer()}
+      </Row>
       <Row>
         {originalCustomMetaEditView()}
         {modifiedCustomMetaEditView()}

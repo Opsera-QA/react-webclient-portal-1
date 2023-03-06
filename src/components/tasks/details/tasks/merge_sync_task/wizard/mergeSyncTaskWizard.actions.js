@@ -337,4 +337,33 @@ mergeSyncTaskWizardActions.componentTypeConvertView = async (
     postBody,
   );
 };
+
+mergeSyncTaskWizardActions.saveComponentConvertViewJson = async (
+  getAccessToken,
+  cancelTokenSource,
+  taskWizardModel,
+  fileName,
+  fileContent,
+  conversionComponentType,
+  conversionTypeFrom = "json",
+  conversionTypeTo = "xml"
+) => {
+  const apiUrl = `/tasks/merge-sync-task/wizard/file/component/convert/save`;
+  const postBody = {
+    taskId: taskWizardModel?.getData("taskId"),
+    fileName: fileName,
+    fileContent: fileContent,
+    conversionComponentType: conversionComponentType,
+    runCount: taskWizardModel?.getData("runCount"),
+    conversionTypeFrom: conversionTypeFrom,
+    conversionTypeTo: conversionTypeTo
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
 export default mergeSyncTaskWizardActions;
