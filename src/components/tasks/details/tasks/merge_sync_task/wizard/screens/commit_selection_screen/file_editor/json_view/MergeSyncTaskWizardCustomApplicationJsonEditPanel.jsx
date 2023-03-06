@@ -11,6 +11,7 @@ import useComponentStateReference from "../../../../../../../../../../hooks/useC
 import { hasStringValue } from "../../../../../../../../../common/helpers/string-helpers";
 import mergeSyncTaskWizardActions from "../../../../mergeSyncTaskWizard.actions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import { mockData } from "../MergeSyncTaskWizardProfilesAdvancedEditingPanel";
 
 const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
   wizardModel,
@@ -42,31 +43,31 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
       setIsJsonLoading(true);
       // TODO : Convert both original and modified contents to JSON
 
-      const jsonContent =
-        await mergeSyncTaskWizardActions.componentTypeConvertView(
-          getAccessToken,
-          cancelTokenSource,
-          wizardModel,
-          fileName,
-          "CustomApplication",
-        );
+      const jsonContent = mockData;
+        // await mergeSyncTaskWizardActions.componentTypeConvertView(
+        //   getAccessToken,
+        //   cancelTokenSource,
+        //   wizardModel,
+        //   fileName,
+        //   "CustomApplication",
+        // );
 
       if (isMounted?.current === true) {
         setModifiedContentJson(
-          JSON.parse(
+          // JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.sourceContent",
             ),
-          ),
+          // ),
         );
         setOriginalContentJson(
-          JSON.parse(
+          // JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.destinationContent",
             ),
-          ),
+          // ),
         );
       }
     } catch (error) {

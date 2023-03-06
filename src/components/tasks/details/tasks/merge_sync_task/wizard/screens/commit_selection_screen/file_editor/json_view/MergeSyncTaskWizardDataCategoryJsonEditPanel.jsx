@@ -11,15 +11,15 @@ import useComponentStateReference from "../../../../../../../../../../hooks/useC
 import { hasStringValue } from "../../../../../../../../../common/helpers/string-helpers";
 import mergeSyncTaskWizardActions from "../../../../mergeSyncTaskWizard.actions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import { mockData } from "../MergeSyncTaskWizardProfilesAdvancedEditingPanel";
 
 const MergeSyncTaskWizardDataCategoryJsonEditPanel = ({
-                                                        wizardModel,
-                                                        comparisonFileModel,
-                                                        setComparisonFileModel,
-                                                        fileName,
-                                                        isLoading,
+  wizardModel,
+  comparisonFileModel,
+  setComparisonFileModel,
+  fileName,
+  isLoading,
 }) => {
-
   const { getAccessToken } = useContext(AuthContext);
   const [isJsonLoading, setIsJsonLoading] = useState(true);
   const toastContext = useContext(DialogToastContext);
@@ -29,7 +29,7 @@ const MergeSyncTaskWizardDataCategoryJsonEditPanel = ({
   const [originalContentJson, setOriginalContentJson] = useState(undefined);
 
   useEffect(() => {
-    if (hasStringValue(fileName) ) {
+    if (hasStringValue(fileName)) {
       loadJsonData().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -43,31 +43,31 @@ const MergeSyncTaskWizardDataCategoryJsonEditPanel = ({
       setIsJsonLoading(true);
       // TODO : Convert both original and modified contents to JSON
 
-      const jsonContent =
-        await mergeSyncTaskWizardActions.componentTypeConvertView(
-          getAccessToken,
-          cancelTokenSource,
-          wizardModel,
-          fileName,
-          "DataCategoryGroup",
-        );
+      const jsonContent = mockData;
+        // await mergeSyncTaskWizardActions.componentTypeConvertView(
+        //   getAccessToken,
+        //   cancelTokenSource,
+        //   wizardModel,
+        //   fileName,
+        //   "DataCategoryGroup",
+        // );
 
       if (isMounted?.current === true) {
         setModifiedContentJson(
-          JSON.parse(
+          // JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.sourceContent",
             ),
-          ),
+          // ),
         );
         setOriginalContentJson(
-          JSON.parse(
+          // JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.destinationContent",
             ),
-          ),
+          // ),
         );
       }
     } catch (error) {
@@ -105,18 +105,20 @@ const MergeSyncTaskWizardDataCategoryJsonEditPanel = ({
         <span className="h5">Source Profiles</span>
         {modifiedContentJson &&
           Object.keys(modifiedContentJson).length > 0 &&
-          modifiedContentJson?.categoryGroupVisibilities?.map((dataCategory, idx, { length }) => (
-            <div key={idx}>
-              <DataCategoryProfileEditorView
-                dataCategory={dataCategory}
-                setDataCategoryJson={setDataCategoryJson}
-                isLoading={isLoading}
-              />
-              {idx + 1 !== length && (
-                <DividerWithCenteredText className={"m-4"} />
-              )}
-            </div>
-          ))}
+          modifiedContentJson?.categoryGroupVisibilities?.map(
+            (dataCategory, idx, { length }) => (
+              <div key={idx}>
+                <DataCategoryProfileEditorView
+                  dataCategory={dataCategory}
+                  setDataCategoryJson={setDataCategoryJson}
+                  isLoading={isLoading}
+                />
+                {idx + 1 !== length && (
+                  <DividerWithCenteredText className={"m-4"} />
+                )}
+              </div>
+            ),
+          )}
       </Col>
     );
   };
@@ -127,18 +129,20 @@ const MergeSyncTaskWizardDataCategoryJsonEditPanel = ({
         <span className="h5">Target Profiles</span>
         {originalContentJson &&
           Object.keys(originalContentJson).length > 0 &&
-          originalContentJson?.categoryGroupVisibilities?.map((dataCategory, idx, { length }) => (
-            <div key={idx}>
-              <DataCategoryProfileEditorView
-                dataCategory={dataCategory}
-                setDataCategoryJson={setDataCategoryJson}
-                isLoading={isLoading}
-              />
-              {idx + 1 !== length && (
-                <DividerWithCenteredText className={"m-4"} />
-              )}
-            </div>
-          ))}
+          originalContentJson?.categoryGroupVisibilities?.map(
+            (dataCategory, idx, { length }) => (
+              <div key={idx}>
+                <DataCategoryProfileEditorView
+                  dataCategory={dataCategory}
+                  setDataCategoryJson={setDataCategoryJson}
+                  isLoading={isLoading}
+                />
+                {idx + 1 !== length && (
+                  <DividerWithCenteredText className={"m-4"} />
+                )}
+              </div>
+            ),
+          )}
       </Col>
     );
   };

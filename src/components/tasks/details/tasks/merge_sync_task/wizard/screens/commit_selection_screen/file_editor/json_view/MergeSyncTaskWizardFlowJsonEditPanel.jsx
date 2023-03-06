@@ -16,6 +16,7 @@ import CustomSettingssProfileEditorView from "./profile_editor_views/CustomSetti
 import ExternalDataSourceProfileEditorView from "./profile_editor_views/ExternalDataSourceProfileEditorView";
 import LayoutProfileEditorView from "./profile_editor_views/LayoutProfileEditorView";
 import FlowProfileEditorView from "./profile_editor_views/FlowProfileEditorView";
+import { mockData } from "../MergeSyncTaskWizardProfilesAdvancedEditingPanel";
 
 const MergeSyncTaskWizardFlowJsonEditPanel = ({
                                                           wizardModel,
@@ -47,31 +48,31 @@ const MergeSyncTaskWizardFlowJsonEditPanel = ({
       setIsJsonLoading(true);
       // TODO : Convert both original and modified contents to JSON
 
-      const jsonContent =
-        await mergeSyncTaskWizardActions.componentTypeConvertView(
-          getAccessToken,
-          cancelTokenSource,
-          wizardModel,
-          fileName,
-          "Flow",
-        );
+      const jsonContent = mockData;
+        // await mergeSyncTaskWizardActions.componentTypeConvertView(
+        //   getAccessToken,
+        //   cancelTokenSource,
+        //   wizardModel,
+        //   fileName,
+        //   "Flow",
+        // );
 
       if (isMounted?.current === true) {
         setModifiedContentJson(
-          JSON.parse(
+          // JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.sourceContent",
             ),
-          ),
+          // ),
         );
         setOriginalContentJson(
-          JSON.parse(
+          // JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.destinationContent",
             ),
-          ),
+          // ),
         );
       }
     } catch (error) {

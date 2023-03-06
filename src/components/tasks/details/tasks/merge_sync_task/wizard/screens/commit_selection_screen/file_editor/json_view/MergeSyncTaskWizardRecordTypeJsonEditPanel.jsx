@@ -18,6 +18,7 @@ import LayoutProfileEditorView from "./profile_editor_views/LayoutProfileEditorV
 import FlowProfileEditorView from "./profile_editor_views/FlowProfileEditorView";
 import ApexPageProfileEditorView from "./profile_editor_views/ApexPageProfileEditorView";
 import RecordTypeProfileEditorView from "./profile_editor_views/RecordTypeProfileEditorView";
+import { mockData } from "../MergeSyncTaskWizardProfilesAdvancedEditingPanel";
 
 const MergeSyncTaskWizardRecordTypeJsonEditPanel = ({
                                                           wizardModel,
@@ -49,31 +50,31 @@ const MergeSyncTaskWizardRecordTypeJsonEditPanel = ({
       setIsJsonLoading(true);
       // TODO : Convert both original and modified contents to JSON
 
-      const jsonContent =
-        await mergeSyncTaskWizardActions.componentTypeConvertView(
-          getAccessToken,
-          cancelTokenSource,
-          wizardModel,
-          fileName,
-          "RecordType",
-        );
+      const jsonContent = mockData;
+        // await mergeSyncTaskWizardActions.componentTypeConvertView(
+        //   getAccessToken,
+        //   cancelTokenSource,
+        //   wizardModel,
+        //   fileName,
+        //   "RecordType",
+        // );
 
       if (isMounted?.current === true) {
         setModifiedContentJson(
-          JSON.parse(
+          // JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.sourceContent",
             ),
-          ),
+          // ),
         );
         setOriginalContentJson(
-          JSON.parse(
+          // JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.destinationContent",
             ),
-          ),
+          // ),
         );
       }
     } catch (error) {

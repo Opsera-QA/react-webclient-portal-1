@@ -70,6 +70,7 @@ const CustomObjectProfileEditorView = ({
           newModel?.setDefaultValue("modifyAllRecords");
           newModel?.setDefaultValue("viewAllRecords");
         }
+        newModel?.setData(fieldName, newValue);
         break;
       case "modifyAllRecords":
         if (
