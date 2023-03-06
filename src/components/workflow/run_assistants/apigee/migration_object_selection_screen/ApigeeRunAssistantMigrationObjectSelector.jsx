@@ -15,6 +15,9 @@ import ApigeeRunAssistantSubmitMigrationObjectsButton
   from "components/workflow/run_assistants/apigee/migration_object_selection_screen/ApigeeRunAssistantSubmitMigrationObjectsButton";
 import BackButton from "components/common/buttons/back/BackButton";
 import ApigeeMigrationObjectVersionSelectionPanel from "./ApigeeMigrationObjectVersionSelectionPanel";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import {UPDATE_MODE_VALUES} from "./apigeeMigrationObject.constants";
+import ApigeeMigrationObjectKvmEntriesPanel from "./ApigeeMigrationObjectKvmEntriesPanel";
 
 const ApigeeRunAssistantMigrationObjectSelector = (
   { 
@@ -32,7 +35,7 @@ const ApigeeRunAssistantMigrationObjectSelector = (
   const [migrationObjectPullCompleted, setMigrationObjectPullCompleted] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [updateVersionMode, setUpdateVersionMode] = useState(false);
+  const [updateModeValue, setUpdateModeValue] = useState("");
   const [migrationObject, setMigrationObject] = useState(null);
 
   let timerIds = [];
@@ -122,25 +125,51 @@ const ApigeeRunAssistantMigrationObjectSelector = (
     return data?.data;
   };
 
-  const updateHandler = (newOption) => {
+  const updateVersionHandler = (newOption) => {
     const dataObj = {...apigeeRunParametersModel};
     const migrationObjArray = apigeeRunParametersModel.getData("selectedMigrationObjects");
     migrationObjArray.push(newOption);
     dataObj.setData("selectedMigrationObjects", migrationObjArray);
     setApigeeRunParametersModel({...dataObj});
-    setUpdateVersionMode(false);
+    setUpdateModeValue("");
+  };
+
+  const updateKvmEntriesHandler = (kvmEntries) => {
+    const dataObj = {...apigeeRunParametersModel};
+    const migrationObjArray = apigeeRunParametersModel.getData("selectedMigrationObjects");
+    let newMigrationObject = {...migrationObject};
+    newMigrationObject.kvmEntries = kvmEntries;
+    setMigrationObject({...newMigrationObject});
+    migrationObjArray.push(newMigrationObject);
+    dataObj.setData("selectedMigrationObjects", migrationObjArray);
+    setApigeeRunParametersModel({...dataObj});
+    setUpdateModeValue("");
   };
 
   const cancelHandler = () => {
-    setUpdateVersionMode(false);
+    setUpdateModeValue("");
   };
 
   const getVersionSelectForm = () => {
-    if (updateVersionMode) {
+    if (hasStringValue(updateModeValue) && updateModeValue === UPDATE_MODE_VALUES.VERSION) {
       return (
         <ApigeeMigrationObjectVersionSelectionPanel 
           toolId={apigeeRunParametersModel?.getData("toolId")}
-          handler={updateHandler}
+          handler={updateVersionHandler}
+          cancelHandler={cancelHandler}
+          migrationObject={migrationObject}
+          setMigrationObject={setMigrationObject}
+        />
+      );
+    }
+  };
+
+  const getKvmEntriesForm = () => {
+    if (hasStringValue(updateModeValue) && updateModeValue === UPDATE_MODE_VALUES.KVM) {
+      return (
+        <ApigeeMigrationObjectKvmEntriesPanel 
+          toolId={apigeeRunParametersModel?.getData("toolId")}
+          handler={updateKvmEntriesHandler}
           cancelHandler={cancelHandler}
           migrationObject={migrationObject}
           setMigrationObject={setMigrationObject}
@@ -152,6 +181,7 @@ const ApigeeRunAssistantMigrationObjectSelector = (
   return (
     <div>
       {getVersionSelectForm()}
+      {getKvmEntriesForm()}
       <InlineWarning warningMessage={migrationObjectErrorMessage} className="pl-3" />
       <ApigeeRunAssistantMigrationObjectList
         migrationObjects={migrationObjects}
@@ -160,8 +190,8 @@ const ApigeeRunAssistantMigrationObjectSelector = (
         loadDataFunction={loadData}
         isLoading={isLoading}
         migrationObjectPullCompleted={migrationObjectPullCompleted}
-        updateVersionMode={updateVersionMode}
-        setUpdateVersionMode={setUpdateVersionMode}
+        updateModeValue={updateModeValue}
+        setUpdateModeValue={setUpdateModeValue}
         migrationObject={migrationObject}
         setMigrationObject={setMigrationObject}
       />
