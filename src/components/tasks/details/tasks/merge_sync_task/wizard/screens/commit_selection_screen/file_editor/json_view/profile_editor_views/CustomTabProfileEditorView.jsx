@@ -1,17 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
-import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import CheckboxInputBase from "../../../../../../../../../../common/inputs/boolean/CheckboxInputBase";
 import modelHelpers from "../../../../../../../../../../common/model/modelHelpers";
-import { jsonViewFileMetadata } from "../../../jsonViewFile.metadata";
 import TextFieldBase from "../../../../../../../../../../common/fields/text/TextFieldBase";
 import { customTabJsonMetadata } from "../jsonFileEdit.metadata";
+import SelectInputBase from "../../../../../../../../../../common/inputs/select/SelectInputBase";
+
+const tabVisibilityOptions = [
+  { name: "Hidden", value: "Hidden" },
+  { name: "Default On", value: "DefaultOn" },
+  { name: "Default Off", value: "DefaultOff" },
+];
 
 const CustomTabProfileEditorView = ({
-                                      customTabData,
-                                      setCustomTabDataJson,
+  customTabData,
+  setCustomTabDataJson,
   isLoading,
 }) => {
   const [customMetaJsonMetadata, setCustomMetaJsonMetadata] =
@@ -50,11 +54,16 @@ const CustomTabProfileEditorView = ({
         />
       </Col>
       <Col>
-        <CheckboxInputBase
+        <SelectInputBase
           fieldName={"visibility"}
-          model={customMetaJsonMetadata}
-          setModel={setCustomMetaJsonMetadata}
+          selectOptions={tabVisibilityOptions}
+          dataObject={customMetaJsonMetadata}
+          setDataObject={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
+          valueField={"value"}
+          textField={"name"}
+          busy={isLoading}
+          placeholderText={"Select Tab Group Visibility"}
         />
       </Col>
     </div>
