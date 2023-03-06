@@ -92,7 +92,7 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
   const setExternalSourceDataJson = (modifiedValue) => {
     let newModifiedJson = { ...modifiedContentJson };
     let modifiedItem = newModifiedJson?.externalDataSourceAccesses.find(
-      (externalDataSource) => externalDataSource.name === modifiedValue.name,
+      (externalDataSourceData) => externalDataSourceData.externalDataSource === modifiedValue.externalDataSource,
     );
     if (modifiedItem) {
       modifiedItem.enabled = modifiedValue.enabled;
@@ -106,10 +106,10 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
         <span className="h5">Source Profiles</span>
         {modifiedContentJson &&
           Object.keys(modifiedContentJson).length > 0 &&
-          modifiedContentJson?.externalDataSourceAccesses?.map((externalDataSource, idx, { length }) => (
+          modifiedContentJson?.externalDataSourceAccesses?.map((externalDataSourceData, idx, { length }) => (
             <div key={idx}>
               <ExternalDataSourceProfileEditorView
-                externalDataSourceData={externalDataSource}
+                externalDataSourceData={externalDataSourceData}
                 setExternalSourceDataJson={setExternalSourceDataJson}
                 isLoading={isLoading}
               />
@@ -128,10 +128,10 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
         <span className="h5">Target Profiles</span>
         {originalContentJson &&
         Object.keys(originalContentJson).length > 0 &&
-          originalContentJson?.externalDataSourceAccesses?.map((externalDataSource, idx, { length }) => (
+          originalContentJson?.externalDataSourceAccesses?.map((externalDataSourceData, idx, { length }) => (
             <div key={idx}>
               <ExternalDataSourceProfileEditorView
-                externalDataSourceData={externalDataSource}
+                externalDataSourceData={externalDataSourceData}
                 setExternalSourceDataJson={setExternalSourceDataJson}
                 isLoading={isLoading}
               />

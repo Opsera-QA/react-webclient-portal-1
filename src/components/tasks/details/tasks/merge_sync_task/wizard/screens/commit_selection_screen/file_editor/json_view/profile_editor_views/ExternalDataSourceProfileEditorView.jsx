@@ -46,7 +46,7 @@ const ExternalDataSourceProfileEditorView = ({
       <Col>
         <TextFieldBase
           dataObject={customMetaJsonMetadata}
-          fieldName={"name"}
+          fieldName={"externalDataSource"}
         />
       </Col>
       <Col>
