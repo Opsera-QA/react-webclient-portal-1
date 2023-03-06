@@ -91,6 +91,7 @@ const LiquibaseToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) =
       persistRecord={saveLiquibaseToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>

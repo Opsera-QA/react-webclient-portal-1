@@ -39,6 +39,7 @@ function TwistlockToolConfiguration({ toolData , setUpMode, setCurrentScreen }) 
       persistRecord={saveTwistlockToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"twistlock"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>

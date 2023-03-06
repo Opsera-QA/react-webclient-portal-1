@@ -38,6 +38,7 @@ function NexusToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       persistRecord={saveNexusToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Nexus"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>

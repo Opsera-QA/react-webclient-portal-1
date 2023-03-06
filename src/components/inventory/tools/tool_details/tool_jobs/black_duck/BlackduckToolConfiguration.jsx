@@ -68,6 +68,7 @@ const BlackduckToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) =
       persistRecord={saveBlackduckToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>          

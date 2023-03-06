@@ -65,6 +65,7 @@ function BuildkiteToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
       persistRecord={saveBuildkiteToolConfiguration}
       toolConnectionCheckName={"buildkite"}
       toolData={toolData}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>

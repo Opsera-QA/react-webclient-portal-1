@@ -180,6 +180,7 @@ const FortifyToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) => 
       persistRecord={saveFortifyToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>

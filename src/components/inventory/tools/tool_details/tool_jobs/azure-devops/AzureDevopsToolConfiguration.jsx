@@ -58,6 +58,7 @@ function AzureDevopsToolConfiguration({ toolData, setUpMode, setCurrentScreen })
       setModel={setAzureDevOpsConfigurationModel}
       persistRecord={saveAzureDevopsToolConfiguration}
       toolData={toolData}
+      setUpMode={setUpMode}
       toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS}
     >
       <Row>
