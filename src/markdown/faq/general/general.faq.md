@@ -17,7 +17,7 @@
 
 ----
 
-##### Popular Topics
+##### Popular Articles
 
 
 [**Redshift and SQL Plus Integration in Liquibase**](https://docs.opsera.io/database-migration/liquibase/redshift-and-sql-plus-integration-in-liquibase)  
@@ -26,3 +26,5 @@
 [**Aqua Security Scan Integration**](https://docs.opsera.io/quality-and-security-scan/aqua-security-scan-integration)
 
 [**Policy Management**](https://docs.opsera.io/role-based-access-pipelines-and-tool-registry/set-policies-for-user)
+
+[**Parent-Child Pipelines**](https://docs.opsera.io/create-and-manage-pipelines/parent-child-pipelines)

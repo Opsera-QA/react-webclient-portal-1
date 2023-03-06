@@ -1,4 +1,4 @@
-##### Opsera General FAQs
+##### Tool Registry FAQs
 
 
 <details>
