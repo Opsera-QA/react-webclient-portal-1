@@ -78,9 +78,9 @@ function GitlabLeadTimeScatterPlotContainer({ chartData, kpiConfiguration }) {
 
   const onNodeSelect = (node) => {
       if(node?.data?.type === "deploy"){
-        setShowModal(true);
-        setModalData(node?.data?.commits || []);
-    }
+          setShowModal(true);
+          setModalData(node?.data?.commits || []);
+      }
   };
 
   const onCloseModal = () => {
