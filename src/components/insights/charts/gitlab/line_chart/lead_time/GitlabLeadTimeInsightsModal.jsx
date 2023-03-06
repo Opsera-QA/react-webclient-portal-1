@@ -9,8 +9,6 @@ import CustomTable from "../../../../../common/table/CustomTable";
 function GitlabLeadTimeInsightsModal({ visible, onHide, data }) {
   const fields = gitlabLeadTimeMetadata.commitFields;
 
-  console.log("data", data);
-
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "authorName")),

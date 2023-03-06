@@ -10,11 +10,11 @@ import GitlabLeadTimeInsightsModal from "./GitlabLeadTimeInsightsModal";
 import {getDateObjectFromKpiConfiguration, getTimeDisplay} from "../../../charts-helpers";
 function GitlabLeadTimeScatterPlotContainer({ chartData, kpiConfiguration }) {
 
-const [showModal, setShowModal] = useState(false);
-const [modalData, setModalData] = useState([]);
-const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
-const maxDate = new Date(dateRange?.end);
-const getScatterPlotsFromTimeStamp = (commit) => {
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState([]);
+  const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const maxDate = new Date(dateRange?.end);
+  const getScatterPlotsFromTimeStamp = (commit) => {
     const timestamp = commit["commitTimeStamp"];
     const hoursFraction = (timestamp.substr(11, 5).split(":")[1] / 60) * 100;
 
@@ -77,9 +77,9 @@ const getScatterPlotsFromTimeStamp = (commit) => {
   );
 
   const onNodeSelect = (node) => {
-    if(node?.data?.type === "deploy"){
-      setShowModal(true);
-      setModalData(node?.data?.commits || []);
+      if(node?.data?.type === "deploy"){
+        setShowModal(true);
+        setModalData(node?.data?.commits || []);
     }
   };
 
