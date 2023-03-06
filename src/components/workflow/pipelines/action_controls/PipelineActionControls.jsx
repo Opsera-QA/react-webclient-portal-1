@@ -33,6 +33,7 @@ import {buttonLabelHelper} from "temp-library-components/helpers/label/button/bu
 import PipelineActionControlButtonBase
   from "components/workflow/pipelines/action_controls/PipelineActionControlButtonBase";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
+import {sleep} from "utils/helpers";
 
 const PIPELINE_ACTION_STATES = {
   READY: "ready",
@@ -69,9 +70,8 @@ function PipelineActionControls(
   const pipelineActionsHook = usePipelineActions();
 
   const delayedRefresh = async () => {
-    setTimeout(async () => {
-      await fetchData();
-    }, 2500);
+    await sleep(5000);
+    await fetchData();
   };
 
   useEffect(() => {
@@ -200,6 +200,7 @@ function PipelineActionControls(
       setStartPipeline(true);
       toastContext.showInformationToast("A request to re-start this pipeline has been added to the queue.  Upon successful completion of this pipeline run, the pipeline will start again.", 20);
       await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
+      await delayedRefresh();
     }
     catch (error) {
       setStartPipeline(false);
@@ -214,6 +215,7 @@ function PipelineActionControls(
       setStartPipeline(true);
       toastContext.showInformationToast("A request to start this pipeline from the start has been submitted.  Resetting pipeline status and then the pipeline will begin momentarily.", 20);
       await PipelineActions.triggerPipelineNewStartV2(getAccessToken, cancelTokenSource, pipeline?._id);
+      await delayedRefresh();
     }
     catch (error) {
       setStartPipeline(false);
@@ -228,6 +230,7 @@ function PipelineActionControls(
       setStartPipeline(true);
       toastContext.showInformationToast("A request to resume this pipeline has been submitted.  It will begin shortly.", 20);
       await PipelineActions.resumePipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      await delayedRefresh();
     }
     catch (error) {
       setStartPipeline(false);
