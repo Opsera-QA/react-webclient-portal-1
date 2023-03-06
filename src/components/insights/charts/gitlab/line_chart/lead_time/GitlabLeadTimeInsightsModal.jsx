@@ -11,16 +11,6 @@ function GitlabLeadTimeInsightsModal({ visible, onHide, data }) {
 
   console.log("data", data);
 
-  data = [{"authorName":"Suriya Prakash",
-    "branch": "develop",
-    "checkoutSha" :"b41f957297e7ea9bd80348f59ba40a0a734e7f74",
-    "commitTimeStamp":"2022-12-22T12:02:56.000Z",
-    "commitTitle":"test data 2",
-    "leadTime":"1.85",
-    "repositoryName":"gitlab-pipelines",
-    "repositoryUrl":"https://gitlab.com/gitlab-suriya/gitlab-pipelines",
-    "stepId":3513455955}];
-
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "authorName")),

@@ -1,19 +1,25 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import FilterContainer from "components/common/table/FilterContainer";
+import { Modal } from "react-bootstrap";
+import {getTableDurationTextColumn, getTableTextColumn} from "../../../../../common/table/table-column-helpers";
+import { getField } from "../../../../../common/metadata/metadata-helpers";
 import { gitlabLeadTimeMetadata } from "./gitlabLeadTime.metadata";
-import {
-     getTableDurationTextColumn,
-    getTableTextColumn,
-} from "components/common/table/table-column-helpers";
-import { getField } from "components/common/metadata/metadata-helpers";
-import CustomTable from "components/common/table/CustomTable";
-import {faTable} from "@fortawesome/pro-light-svg-icons";
+import CustomTable from "../../../../../common/table/CustomTable";
 
-function GitlabLeadTimeInsightsModal({ data, isLoading, loadData, filterModel, setFilterModel, tableTitleIcon, count, range }) {
+function GitlabLeadTimeInsightsModal({ visible, onHide, data }) {
     const fields = gitlabLeadTimeMetadata.commitFields;
-    const tableTitle = "Deployments Report";
-    const noDataMessage = "No data available";
+
+    console.log("data", data);
+
+    // data = [{"authorName":"Suriya Prakash",
+    //     "branch": "develop",
+    //     "checkoutSha" :"b41f957297e7ea9bd80348f59ba40a0a734e7f74",
+    //     "commitTimeStamp":"2022-12-22T12:02:56.000Z",
+    //     "commitTitle":"test data 2",
+    //     "leadTime":"1.85",
+    //     "repositoryName":"gitlab-pipelines",
+    //     "repositoryUrl":"https://gitlab.com/gitlab-suriya/gitlab-pipelines",
+    //     "stepId":3513455955}];
 
     const columns = useMemo(
         () => [
@@ -25,51 +31,39 @@ function GitlabLeadTimeInsightsModal({ data, isLoading, loadData, filterModel, s
             getTableTextColumn(getField(fields, "repositoryUrl")),
             getTableTextColumn(getField(fields, "stepId")),
         ],
-        []
+        [],
     );
-
-    const getTable = () => {
-        return (
-            <CustomTable
-                // isLoading={isLoading}
-                // loadData={loadData}
-                columns={columns}
-                data={data}
-                noDataMessage={noDataMessage}
-                paginationDto={filterModel}
-                setPaginationDto={setFilterModel}
-            />
-        );
-    };
-
     return (
-        <div>
-            {/*show={visible}*/}
-            {/*onHide={() => onHide()}*/}
-            <FilterContainer
-                //isLoading={isLoading}
-                title={tableTitle}
-                titleIcon={faTable}
-                body={getTable()}
-                className={"px-2 pb-2"}
-                // loadData={loadData}
-                // setFilterDto={setFilterModel}
-                // filterDto={filterModel}
-            />
-        </div>
+        <>
+            <Modal
+                size="lg"
+                show={visible}
+                onHide={() => onHide()}
+                className="tag-modal"
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Commits</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {/*TODO Move this to separate component using static data pagination options*/}
+                    <CustomTable
+                        nextGeneration={true}
+                        columns={columns}
+                        data={data}
+                    />
+                </Modal.Body>
+                <Modal.Footer></Modal.Footer>
+            </Modal>
+        </>
     );
 }
 
 GitlabLeadTimeInsightsModal.propTypes = {
+    visible: PropTypes.bool,
+    onHide: PropTypes.func,
+    onClick: PropTypes.func,
     data: PropTypes.array,
-    isLoading: PropTypes.bool,
-    loadData: PropTypes.func,
-    filterModel: PropTypes.object,
-    setFilterModel: PropTypes.func,
-    priority: PropTypes.number,
-    tableTitleIcon: PropTypes.object,
-    count: PropTypes.number,
-    range: PropTypes.string,
+    setData: PropTypes.func,
 };
 
 export default GitlabLeadTimeInsightsModal;

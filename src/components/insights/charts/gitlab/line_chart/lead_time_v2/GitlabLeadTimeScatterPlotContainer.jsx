@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 
 import PropTypes from "prop-types";
 import { METRIC_THEME_CHART_PALETTE_COLORS } from "components/common/helpers/metrics/metricTheme.helpers";
@@ -8,18 +8,13 @@ import { faSquare } from "@fortawesome/pro-solid-svg-icons";
 import config from "./GitlabLeadTimeChartConfig";
 import GitlabLeadTimeInsightsModal from "./GitlabLeadTimeInsightsModal";
 import {getDateObjectFromKpiConfiguration, getTimeDisplay} from "../../../charts-helpers";
-import GitlabDeploymentFreqActionableMasterTab
-    from "../../deployment_frequency/actionable_insights/tabs/GitlabDeploymentFreqActionableMasterTab";
-
-import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 function GitlabLeadTimeScatterPlotContainer({ chartData, kpiConfiguration }) {
 
-  const [showModal, setShowModal] = useState(false);
-  const [modalData, setModalData] = useState([]);
-    const toastContext = useContext(DialogToastContext);
-  const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
-  const maxDate = new Date(dateRange?.end);
-  const getScatterPlotsFromTimeStamp = (commit) => {
+const [showModal, setShowModal] = useState(false);
+const [modalData, setModalData] = useState([]);
+const dateRange = getDateObjectFromKpiConfiguration(kpiConfiguration);
+const maxDate = new Date(dateRange?.end);
+const getScatterPlotsFromTimeStamp = (commit) => {
     const timestamp = commit["commitTimeStamp"];
     const hoursFraction = (timestamp.substr(11, 5).split(":")[1] / 60) * 100;
 
@@ -82,15 +77,10 @@ function GitlabLeadTimeScatterPlotContainer({ chartData, kpiConfiguration }) {
   );
 
   const onNodeSelect = (node) => {
-      if(node?.data?.type === "deploy"){
-          toastContext.showOverlayPanel(
-              <GitlabLeadTimeInsightsModal
-                  data={node?.data?.commits || []}
-                  // filterModel={filterModel}
-                  // setFilterModel={setFilterModel}
-              />
-          );
-      }
+    if(node?.data?.type === "deploy"){
+      setShowModal(true);
+      setModalData(node?.data?.commits || []);
+    }
   };
 
   const onCloseModal = () => {
@@ -176,11 +166,11 @@ function GitlabLeadTimeScatterPlotContainer({ chartData, kpiConfiguration }) {
           }}
           markers={markers}
         />
-        {/*<GitlabLeadTimeInsightsModal*/}
-        {/*  visible={showModal}*/}
-        {/*  data={modalData}*/}
-        {/*  onHide={onCloseModal}*/}
-        {/*/>*/}
+        <GitlabLeadTimeInsightsModal
+          visible={showModal}
+          data={modalData}
+          onHide={onCloseModal}
+        />
       </>
     );
   };
