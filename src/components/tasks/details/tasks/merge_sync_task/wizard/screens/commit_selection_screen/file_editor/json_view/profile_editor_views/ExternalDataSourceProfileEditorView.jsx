@@ -10,9 +10,10 @@ import TextFieldBase from "../../../../../../../../../../common/fields/text/Text
 import { externalDataSourceJsonMetadata } from "../jsonFileEdit.metadata";
 
 const ExternalDataSourceProfileEditorView = ({
-                                               externalDataSourceData,
-                                               setExternalSourceDataJson,
+  externalDataSourceData,
+  setExternalSourceDataJson,
   isLoading,
+  disabled,
 }) => {
   const [customMetaJsonMetadata, setCustomMetaJsonMetadata] =
     useState(undefined);
@@ -55,6 +56,7 @@ const ExternalDataSourceProfileEditorView = ({
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
     </div>
@@ -65,6 +67,7 @@ ExternalDataSourceProfileEditorView.propTypes = {
   setExternalSourceDataJson: PropTypes.func,
   isLoading: PropTypes.bool,
   externalDataSourceData: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default ExternalDataSourceProfileEditorView;

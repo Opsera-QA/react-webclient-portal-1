@@ -220,6 +220,7 @@ const MergeSyncTaskWizardCustomFieldJsonEditPanel = ({
                   fieldPermissionsData={fieldPermissionsData}
                   setCustomFieldDataJson={setCustomFieldDataJson}
                   isLoading={isLoading}
+                  disabled={true}
                 />
                 {idx + 1 !== length && (
                   <DividerWithCenteredText className={"m-4"} />

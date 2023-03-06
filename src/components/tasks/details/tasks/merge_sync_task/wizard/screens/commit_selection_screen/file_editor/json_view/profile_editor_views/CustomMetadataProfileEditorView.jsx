@@ -13,6 +13,7 @@ const CustomMetadataProfileEditorView = ({
   customMetadataData,
   setCustomMetaJson,
   isLoading,
+  disabled,
 }) => {
   const [customMetaJsonMetadata, setCustomMetaJsonMetadata] =
     useState(undefined);
@@ -55,6 +56,7 @@ const CustomMetadataProfileEditorView = ({
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
     </div>
@@ -65,6 +67,7 @@ CustomMetadataProfileEditorView.propTypes = {
   setCustomMetaJson: PropTypes.func,
   isLoading: PropTypes.bool,
   customMetadataData: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default CustomMetadataProfileEditorView;

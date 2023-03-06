@@ -212,6 +212,7 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
                 customSettingsData={customSettingsData}
                 setCustomSettingsJson={setCustomSettingsJson}
                 isLoading={isLoading}
+                disabled={true}
               />
               {idx + 1 !== length && (
                 <DividerWithCenteredText className={"m-4"} />

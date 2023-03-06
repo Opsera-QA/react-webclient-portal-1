@@ -13,6 +13,7 @@ const CustomObjectProfileEditorView = ({
   objectPermissionData,
   setCustomObjDataJson,
   isLoading,
+  disabled,
 }) => {
   const [customMetaJsonMetadata, setCustomMetaJsonMetadata] =
     useState(undefined);
@@ -113,6 +114,7 @@ const CustomObjectProfileEditorView = ({
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
       <Col>
@@ -121,6 +123,7 @@ const CustomObjectProfileEditorView = ({
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
       <Col>
@@ -129,6 +132,7 @@ const CustomObjectProfileEditorView = ({
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
       <Col>
@@ -137,6 +141,7 @@ const CustomObjectProfileEditorView = ({
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
       <Col>
@@ -145,6 +150,7 @@ const CustomObjectProfileEditorView = ({
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
       <Col>
@@ -153,6 +159,7 @@ const CustomObjectProfileEditorView = ({
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
     </div>
@@ -163,6 +170,7 @@ CustomObjectProfileEditorView.propTypes = {
   setCustomObjDataJson: PropTypes.func,
   isLoading: PropTypes.bool,
   objectPermissionData: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default CustomObjectProfileEditorView;

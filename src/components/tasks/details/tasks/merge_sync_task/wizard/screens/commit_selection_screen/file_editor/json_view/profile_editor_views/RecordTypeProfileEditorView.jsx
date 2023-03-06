@@ -10,9 +10,10 @@ import TextFieldBase from "../../../../../../../../../../common/fields/text/Text
 import { recordTypeJsonMetadata } from "../jsonFileEdit.metadata";
 
 const RecordTypeProfileEditorView = ({
-                                       recordTypeData,
-                                       setRecordTypeDataJson,
+  recordTypeData,
+  setRecordTypeDataJson,
   isLoading,
+  disabled,
 }) => {
   const [customMetaJsonMetadata, setCustomMetaJsonMetadata] =
     useState(undefined);
@@ -55,6 +56,7 @@ const RecordTypeProfileEditorView = ({
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
       <Col>
@@ -63,6 +65,7 @@ const RecordTypeProfileEditorView = ({
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
     </div>
@@ -73,6 +76,7 @@ RecordTypeProfileEditorView.propTypes = {
   setRecordTypeDataJson: PropTypes.func,
   isLoading: PropTypes.bool,
   recordTypeData: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default RecordTypeProfileEditorView;

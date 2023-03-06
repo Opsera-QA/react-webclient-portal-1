@@ -20,6 +20,7 @@ const DataCategoryProfileEditorView = ({
   dataCategory,
   setDataCategoryJson,
   isLoading,
+  disabled,
 }) => {
   const [dataCategoryJsonMetadata, setDataCategoryJsonMetadata] =
     useState(undefined);
@@ -67,6 +68,7 @@ const DataCategoryProfileEditorView = ({
           textField={"name"}
           busy={isLoading}
           placeholderText={"Select Category Group Visibility"}
+          disabled={disabled}
         />
       </Col>
     </div>
@@ -77,6 +79,7 @@ DataCategoryProfileEditorView.propTypes = {
   setDataCategoryJson: PropTypes.func,
   isLoading: PropTypes.bool,
   dataCategory: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default DataCategoryProfileEditorView;

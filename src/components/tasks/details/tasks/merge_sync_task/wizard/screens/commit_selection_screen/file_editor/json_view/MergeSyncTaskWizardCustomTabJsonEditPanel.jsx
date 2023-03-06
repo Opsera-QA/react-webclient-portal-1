@@ -218,6 +218,7 @@ const MergeSyncTaskWizardCustomTabJsonEditPanel = ({
                   customTabData={customTabData}
                   setCustomTabDataJson={setCustomTabDataJson}
                   isLoading={isLoading}
+                  disabled={true}
                 />
                 {idx + 1 !== length && (
                   <DividerWithCenteredText className={"m-4"} />

@@ -13,6 +13,7 @@ const ApexClassProfleEditorView = ({
   apexClassData,
   setApexClassJson,
   isLoading,
+  disabled,
 }) => {
   const [apexClassJsonMetadata, setApexClassJsonMetadata] = useState(undefined);
 
@@ -54,6 +55,7 @@ const ApexClassProfleEditorView = ({
           model={apexClassJsonMetadata}
           setModel={setApexClassJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
     </div>
@@ -65,6 +67,7 @@ ApexClassProfleEditorView.propTypes = {
   setApexClassJson: PropTypes.func,
   isLoading: PropTypes.bool,
   apexClassData: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default ApexClassProfleEditorView;

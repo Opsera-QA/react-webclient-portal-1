@@ -17,6 +17,7 @@ const CustomTabProfileEditorView = ({
   customTabData,
   setCustomTabDataJson,
   isLoading,
+  disabled,
 }) => {
   const [customMetaJsonMetadata, setCustomMetaJsonMetadata] =
     useState(undefined);
@@ -64,6 +65,7 @@ const CustomTabProfileEditorView = ({
           textField={"name"}
           busy={isLoading}
           placeholderText={"Select Tab Group Visibility"}
+          disabled={disabled}
         />
       </Col>
     </div>
@@ -74,6 +76,7 @@ CustomTabProfileEditorView.propTypes = {
   setCustomTabDataJson: PropTypes.func,
   isLoading: PropTypes.bool,
   customTabData: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default CustomTabProfileEditorView;

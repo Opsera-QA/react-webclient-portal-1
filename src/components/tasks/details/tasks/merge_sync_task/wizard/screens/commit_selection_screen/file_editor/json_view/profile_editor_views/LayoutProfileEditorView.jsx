@@ -10,9 +10,10 @@ import TextFieldBase from "../../../../../../../../../../common/fields/text/Text
 import { layoutJsonMetadata } from "../jsonFileEdit.metadata";
 
 const LayoutProfileEditorView = ({
-                                   layoutData,
-                                   setLayoutDataJson,
+  layoutData,
+  setLayoutDataJson,
   isLoading,
+  disabled,
 }) => {
   const [customMetaJsonMetadata, setCustomMetaJsonMetadata] =
     useState(undefined);
@@ -63,6 +64,7 @@ LayoutProfileEditorView.propTypes = {
   setLayoutDataJson: PropTypes.func,
   isLoading: PropTypes.bool,
   layoutData: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default LayoutProfileEditorView;

@@ -11,8 +11,9 @@ import { flowJsonMetadata } from "../jsonFileEdit.metadata";
 
 const FlowProfileEditorView = ({
   flowData,
-                                 setFlowDataJson,
+  setFlowDataJson,
   isLoading,
+  disabled,
 }) => {
   const [customMetaJsonMetadata, setCustomMetaJsonMetadata] =
     useState(undefined);
@@ -55,6 +56,7 @@ const FlowProfileEditorView = ({
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
     </div>
@@ -65,6 +67,7 @@ FlowProfileEditorView.propTypes = {
   setFlowDataJson: PropTypes.func,
   isLoading: PropTypes.bool,
   flowData: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default FlowProfileEditorView;

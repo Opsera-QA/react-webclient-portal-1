@@ -13,6 +13,7 @@ const CustomPermissionsProfileEditorView = ({
   customPermissionsData,
   setCustomPermissionJson,
   isLoading,
+  disabled,
 }) => {
   const [customMetaJsonMetadata, setCustomMetaJsonMetadata] =
     useState(undefined);
@@ -55,6 +56,7 @@ const CustomPermissionsProfileEditorView = ({
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
     </div>
@@ -65,6 +67,7 @@ CustomPermissionsProfileEditorView.propTypes = {
   setCustomPermissionJson: PropTypes.func,
   isLoading: PropTypes.bool,
   customPermissionsData: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default CustomPermissionsProfileEditorView;

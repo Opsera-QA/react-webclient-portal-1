@@ -216,6 +216,7 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
                   apexClassData={apexclass}
                   setApexClassJson={setApexClassJson}
                   isLoading={isLoading}
+                  disabled={true}
                 />
                 {idx + 1 !== length && (
                   <DividerWithCenteredText className={"m-4"} />

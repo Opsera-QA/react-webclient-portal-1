@@ -217,6 +217,7 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
                   customMetadataData={customMetaData}
                   setCustomMetaJson={setCustomMetaJson}
                   isLoading={isLoading}
+                  disabled={true}
                 />
                 {idx + 1 !== length && (
                   <DividerWithCenteredText className={"m-4"} />

@@ -218,6 +218,7 @@ const MergeSyncTaskWizardLayoutJsonEditPanel = ({
                   layoutData={layoutData}
                   setLayoutDataJson={setLayoutDataJson}
                   isLoading={isLoading}
+                  disabled={true}
                 />
                 {idx + 1 !== length && (
                   <DividerWithCenteredText className={"m-4"} />

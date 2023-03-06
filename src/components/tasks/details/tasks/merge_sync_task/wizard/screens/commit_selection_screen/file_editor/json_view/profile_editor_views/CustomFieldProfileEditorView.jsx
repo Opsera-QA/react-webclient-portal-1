@@ -10,9 +10,10 @@ import TextFieldBase from "../../../../../../../../../../common/fields/text/Text
 import { customFieldJsonMetadata } from "../jsonFileEdit.metadata";
 
 const CustomFieldProfileEditorView = ({
-                                        fieldPermissionsData,
-                                        setCustomFieldDataJson,
+  fieldPermissionsData,
+  setCustomFieldDataJson,
   isLoading,
+  disabled,
 }) => {
   const [customMetaJsonMetadata, setCustomMetaJsonMetadata] =
     useState(undefined);
@@ -37,7 +38,7 @@ const CustomFieldProfileEditorView = ({
   const setDataFunction = (fieldName, newValue) => {
     const newModel = { ...customMetaJsonMetadata };
     newModel?.setData(fieldName, newValue);
-    if(fieldName === "readable" && !newValue) {
+    if (fieldName === "readable" && !newValue) {
       newModel?.setData("editable", false);
     }
     setCustomMetaJsonMetadata({ ...newModel });
@@ -58,6 +59,7 @@ const CustomFieldProfileEditorView = ({
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
       <Col>
@@ -66,7 +68,7 @@ const CustomFieldProfileEditorView = ({
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
-          disabled={!customMetaJsonMetadata?.getData("readable")}
+          disabled={disabled || !customMetaJsonMetadata?.getData("readable")}
         />
       </Col>
     </div>
@@ -77,6 +79,7 @@ CustomFieldProfileEditorView.propTypes = {
   setCustomFieldDataJson: PropTypes.func,
   isLoading: PropTypes.bool,
   fieldPermissionsData: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default CustomFieldProfileEditorView;

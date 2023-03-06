@@ -10,9 +10,10 @@ import TextFieldBase from "../../../../../../../../../../common/fields/text/Text
 import { customSettingJsonMetadata } from "../jsonFileEdit.metadata";
 
 const CustomSettingssProfileEditorView = ({
-                                            customSettingsData,
-                                            setCustomSettingsJson,
+  customSettingsData,
+  setCustomSettingsJson,
   isLoading,
+  disabled,
 }) => {
   const [customMetaJsonMetadata, setCustomMetaJsonMetadata] =
     useState(undefined);
@@ -55,6 +56,7 @@ const CustomSettingssProfileEditorView = ({
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
     </div>
@@ -65,6 +67,7 @@ CustomSettingssProfileEditorView.propTypes = {
   setCustomSettingsJson: PropTypes.func,
   isLoading: PropTypes.bool,
   customSettingsData: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default CustomSettingssProfileEditorView;

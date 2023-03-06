@@ -222,6 +222,7 @@ const MergeSyncTaskWizardCustomObjectJsonEditPanel = ({
                   objectPermissionData={objectPermissionData}
                   setCustomObjDataJson={setCustomObjDataJson}
                   isLoading={isLoading}
+                  disabled={true}
                 />
                 {idx + 1 !== length && (
                   <DividerWithCenteredText className={"m-4"} />

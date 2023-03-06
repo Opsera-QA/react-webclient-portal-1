@@ -10,8 +10,9 @@ import TextFieldBase from "../../../../../../../../../../common/fields/text/Text
 import { apexPageJsonMetadata } from "../jsonFileEdit.metadata";
 
 const ApexPageProfileEditorView = ({
-                                     pageAccessData,
-                                     setPageAccessDataJson,
+  pageAccessData,
+  setPageAccessDataJson,
+  disabled,
   isLoading,
 }) => {
   const [customMetaJsonMetadata, setCustomMetaJsonMetadata] =
@@ -55,6 +56,7 @@ const ApexPageProfileEditorView = ({
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
     </div>
@@ -65,6 +67,7 @@ ApexPageProfileEditorView.propTypes = {
   setPageAccessDataJson: PropTypes.func,
   isLoading: PropTypes.bool,
   pageAccessData: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default ApexPageProfileEditorView;

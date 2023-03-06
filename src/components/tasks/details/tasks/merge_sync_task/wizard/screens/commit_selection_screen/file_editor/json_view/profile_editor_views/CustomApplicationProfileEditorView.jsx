@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
@@ -13,6 +13,7 @@ const CustomApplicationProfileEditorView = ({
   customAppData,
   setCustomAppJson,
   isLoading,
+  disabled,
 }) => {
   const [customAppJsonMetadata, setCustomAppJsonMetadata] = useState(undefined);
 
@@ -54,6 +55,7 @@ const CustomApplicationProfileEditorView = ({
           model={customAppJsonMetadata}
           setModel={setCustomAppJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
       <Col>
@@ -62,17 +64,18 @@ const CustomApplicationProfileEditorView = ({
           model={customAppJsonMetadata}
           setModel={setCustomAppJsonMetadata}
           setDataFunction={setDataFunction}
+          disabled={disabled}
         />
       </Col>
     </div>
   );
 };
 
-
 CustomApplicationProfileEditorView.propTypes = {
   setCustomAppJson: PropTypes.func,
   isLoading: PropTypes.bool,
   customAppData: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default CustomApplicationProfileEditorView;
