@@ -25,6 +25,7 @@ import MergeSyncTaskWizardFlowJsonEditPanel from "./json_view/MergeSyncTaskWizar
 import MergeSyncTaskWizardCustomObjectJsonEditPanel from "./json_view/MergeSyncTaskWizardCustomObjectJsonEditPanel";
 import MergeSyncTaskWizardApexPageJsonEditPanel from "./json_view/MergeSyncTaskWizardApexPageJsonEditPanel";
 import MergeSyncTaskWizardRecordTypeJsonEditPanel from "./json_view/MergeSyncTaskWizardRecordTypeJsonEditPanel";
+import MergeSyncTaskWizardCustomTabJsonEditPanel from "./json_view/MergeSyncTaskWizardCustomTabJsonEditPanel";
 
 const componentTypeOptions = [
   { name: "CustomApplication", value: "applicationVisibilities" },
@@ -600,7 +601,14 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
           />
         );
       case "tabVisibilities":
-        return <>tabVisibilities</>;
+        return (
+          <MergeSyncTaskWizardCustomTabJsonEditPanel
+            wizardModel={wizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName={comparisonFileModel?.getData("file")}
+          />
+        );
 
       default:
         return <>Please select a component type</>;
