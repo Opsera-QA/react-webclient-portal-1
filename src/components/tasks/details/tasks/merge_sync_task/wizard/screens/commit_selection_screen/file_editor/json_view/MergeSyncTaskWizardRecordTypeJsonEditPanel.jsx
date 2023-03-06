@@ -24,11 +24,12 @@ import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import InlineWarning from "../../../../../../../../../common/status_notifications/inline/InlineWarning";
 import CancelButton from "../../../../../../../../../common/buttons/CancelButton";
 import StandaloneSaveButton from "../../../../../../../../../common/buttons/saving/StandaloneSaveButton";
-import sfdcPipelineActions
-  from "../../../../../../../../../workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
+import sfdcPipelineActions from "../../../../../../../../../workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
+import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
 
 const MergeSyncTaskWizardRecordTypeJsonEditPanel = ({
   wizardModel,
+  setWizardModel,
   comparisonFileModel,
   setComparisonFileModel,
   fileName,
@@ -42,7 +43,8 @@ const MergeSyncTaskWizardRecordTypeJsonEditPanel = ({
   const [modifiedContentJson, setModifiedContentJson] = useState(undefined);
   const [originalContentJson, setOriginalContentJson] = useState(undefined);
   const [searchText, setSearchText] = useState("");
-  const [showUnsavedChangesMessage, setShowUnsavedChangesMessage] = useState(false);
+  const [showUnsavedChangesMessage, setShowUnsavedChangesMessage] =
+    useState(false);
 
   useEffect(() => {
     if (hasStringValue(fileName)) {
@@ -60,29 +62,29 @@ const MergeSyncTaskWizardRecordTypeJsonEditPanel = ({
       // TODO : Convert both original and modified contents to JSON
 
       const jsonContent =
-      await mergeSyncTaskWizardActions.componentTypeConvertView(
-        getAccessToken,
-        cancelTokenSource,
-        wizardModel,
-        fileName,
-        "RecordType",
-      );
+        await mergeSyncTaskWizardActions.componentTypeConvertView(
+          getAccessToken,
+          cancelTokenSource,
+          wizardModel,
+          fileName,
+          "RecordType",
+        );
 
       if (isMounted?.current === true) {
         setModifiedContentJson(
           JSON.parse(
-          DataParsingHelper.safeObjectPropertyParser(
-            jsonContent,
-            "data.message.sourceContent",
-          ),
+            DataParsingHelper.safeObjectPropertyParser(
+              jsonContent,
+              "data.message.sourceContent",
+            ),
           ),
         );
         setOriginalContentJson(
           JSON.parse(
-          DataParsingHelper.safeObjectPropertyParser(
-            jsonContent,
-            "data.message.destinationContent",
-          ),
+            DataParsingHelper.safeObjectPropertyParser(
+              jsonContent,
+              "data.message.destinationContent",
+            ),
           ),
         );
       }
@@ -105,19 +107,30 @@ const MergeSyncTaskWizardRecordTypeJsonEditPanel = ({
   }
   const saveModifiedContent = async () => {
     try {
-      const response = await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
-        getAccessToken,
-        cancelTokenSource,
-        wizardModel,
-        fileName,
-        modifiedContentJson,
-        "RecordType",
-      );
+      const response =
+        await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
+          getAccessToken,
+          cancelTokenSource,
+          wizardModel,
+          fileName,
+          modifiedContentJson,
+          "RecordType",
+        );
       console.log(response);
-      if(response && response.status === 200){
-        setShowUnsavedChangesMessage(false);
+      if (response && response.status !== 200) {
+        toastContext.showLoadingErrorDialog(response?.data?.message);
         return;
       }
+
+      const newWizardModel = { ...wizardModel };
+      let newFileList = newWizardModel.getData("updatedFileList");
+      newFileList.push({ fileName: fileName });
+      newWizardModel?.setData(
+        "updatedFileList",
+        getUniqueListBy(newFileList, "fileName"),
+      );
+      setWizardModel({ ...newWizardModel });
+      setShowUnsavedChangesMessage(false);
       return;
     } catch (error) {
       console.error(error);
@@ -127,7 +140,11 @@ const MergeSyncTaskWizardRecordTypeJsonEditPanel = ({
 
   const getWarningMessage = () => {
     if (showUnsavedChangesMessage) {
-      return <InlineWarning warningMessage={"You must hit save before changes will take effect"} />;
+      return (
+        <InlineWarning
+          warningMessage={"You must hit save before changes will take effect"}
+        />
+      );
     }
   };
 
@@ -239,9 +256,7 @@ const MergeSyncTaskWizardRecordTypeJsonEditPanel = ({
   return (
     <div>
       <Row className={"ml-2"}>{getWarningMessage()}</Row>
-      <Row>
-        {getButtonContainer()}
-      </Row>
+      <Row>{getButtonContainer()}</Row>
       <Row>
         {originalCustomMetaEditView()}
         {modifiedCustomMetaEditView()}
@@ -252,6 +267,7 @@ const MergeSyncTaskWizardRecordTypeJsonEditPanel = ({
 
 MergeSyncTaskWizardRecordTypeJsonEditPanel.propTypes = {
   wizardModel: PropTypes.object,
+  setWizardModel: PropTypes.func,
   comparisonFileModel: PropTypes.object,
   setComparisonFileModel: PropTypes.func,
   fileName: PropTypes.string,

@@ -46,6 +46,7 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
       return(
         <MergeSyncTaskWizardProfilesAdvancedEditingPanel
           wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
           comparisonFileModel={comparisonFileModel}
           setComparisonFileModel={setComparisonFileModel}
           originalContent={destinationContent}

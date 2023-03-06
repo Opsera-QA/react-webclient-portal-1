@@ -18,13 +18,15 @@ import IconBase from "../../../../../../../../../common/icons/IconBase";
 import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import InlineWarning from "../../../../../../../../../common/status_notifications/inline/InlineWarning";
 import StandaloneSaveButton from "../../../../../../../../../common/buttons/saving/StandaloneSaveButton";
+import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
 
 const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
-                                                          wizardModel,
-                                                          comparisonFileModel,
-                                                          setComparisonFileModel,
-                                                          fileName,
-                                                          isLoading,
+  wizardModel,
+  setWizardModel,
+  comparisonFileModel,
+  setComparisonFileModel,
+  fileName,
+  isLoading,
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [isJsonLoading, setIsJsonLoading] = useState(true);
@@ -34,10 +36,11 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
   const [modifiedContentJson, setModifiedContentJson] = useState(undefined);
   const [originalContentJson, setOriginalContentJson] = useState(undefined);
   const [searchText, setSearchText] = useState("");
-  const [showUnsavedChangesMessage, setShowUnsavedChangesMessage] = useState(false);
+  const [showUnsavedChangesMessage, setShowUnsavedChangesMessage] =
+    useState(false);
 
   useEffect(() => {
-    if (hasStringValue(fileName) ) {
+    if (hasStringValue(fileName)) {
       loadJsonData().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -97,19 +100,30 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
   }
   const saveModifiedContent = async () => {
     try {
-      const response = await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
-        getAccessToken,
-        cancelTokenSource,
-        wizardModel,
-        fileName,
-        modifiedContentJson,
-        "CustomSetting",
-      );
+      const response =
+        await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
+          getAccessToken,
+          cancelTokenSource,
+          wizardModel,
+          fileName,
+          modifiedContentJson,
+          "CustomSetting",
+        );
       console.log(response);
-      if(response && response.status === 200){
-        setShowUnsavedChangesMessage(false);
+      if (response && response.status !== 200) {
+        toastContext.showLoadingErrorDialog(response?.data?.message);
         return;
       }
+
+      const newWizardModel = { ...wizardModel };
+      let newFileList = newWizardModel.getData("updatedFileList");
+      newFileList.push({ fileName: fileName });
+      newWizardModel?.setData(
+        "updatedFileList",
+        getUniqueListBy(newFileList, "fileName"),
+      );
+      setWizardModel({ ...newWizardModel });
+      setShowUnsavedChangesMessage(false);
       return;
     } catch (error) {
       console.error(error);
@@ -119,7 +133,11 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
 
   const getWarningMessage = () => {
     if (showUnsavedChangesMessage) {
-      return <InlineWarning warningMessage={"You must hit save before changes will take effect"} />;
+      return (
+        <InlineWarning
+          warningMessage={"You must hit save before changes will take effect"}
+        />
+      );
     }
   };
 
@@ -176,22 +194,24 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
         <span className="h5">Source Profiles</span>
         {modifiedContentJson &&
           Object.keys(modifiedContentJson).length > 0 &&
-          modifiedContentJson?.customSettingAccesses?.filter((obj) => {
-            return obj?.name
-              ?.toLowerCase()
-              .includes(searchText.toLowerCase());
-          }).map((customSettingsData, idx, { length }) => (
-            <div key={idx}>
-              <CustomSettingssProfileEditorView
-                customSettingsData={customSettingsData}
-                setCustomSettingsJson={setCustomSettingsJson}
-                isLoading={isLoading}
-              />
-              {idx + 1 !== length && (
-                <DividerWithCenteredText className={"m-4"} />
-              )}
-            </div>
-          ))}
+          modifiedContentJson?.customSettingAccesses
+            ?.filter((obj) => {
+              return obj?.name
+                ?.toLowerCase()
+                .includes(searchText.toLowerCase());
+            })
+            .map((customSettingsData, idx, { length }) => (
+              <div key={idx}>
+                <CustomSettingssProfileEditorView
+                  customSettingsData={customSettingsData}
+                  setCustomSettingsJson={setCustomSettingsJson}
+                  isLoading={isLoading}
+                />
+                {idx + 1 !== length && (
+                  <DividerWithCenteredText className={"m-4"} />
+                )}
+              </div>
+            ))}
       </Col>
     );
   };
@@ -201,33 +221,33 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
       <Col>
         <span className="h5">Target Profiles</span>
         {originalContentJson &&
-        Object.keys(originalContentJson).length > 0 &&
-          originalContentJson?.customSettingAccesses?.filter((obj) => {
-            return obj?.name
-              ?.toLowerCase()
-              .includes(searchText.toLowerCase());
-          }).map((customSettingsData, idx, { length }) => (
-            <div key={idx}>
-              <CustomSettingssProfileEditorView
-                customSettingsData={customSettingsData}
-                setCustomSettingsJson={setCustomSettingsJson}
-                isLoading={isLoading}
-                disabled={true}
-              />
-              {idx + 1 !== length && (
-                <DividerWithCenteredText className={"m-4"} />
-              )}
-            </div>
-          ))}
+          Object.keys(originalContentJson).length > 0 &&
+          originalContentJson?.customSettingAccesses
+            ?.filter((obj) => {
+              return obj?.name
+                ?.toLowerCase()
+                .includes(searchText.toLowerCase());
+            })
+            .map((customSettingsData, idx, { length }) => (
+              <div key={idx}>
+                <CustomSettingssProfileEditorView
+                  customSettingsData={customSettingsData}
+                  setCustomSettingsJson={setCustomSettingsJson}
+                  isLoading={isLoading}
+                  disabled={true}
+                />
+                {idx + 1 !== length && (
+                  <DividerWithCenteredText className={"m-4"} />
+                )}
+              </div>
+            ))}
       </Col>
     );
   };
   return (
     <div>
       <Row className={"ml-2"}>{getWarningMessage()}</Row>
-      <Row>
-        {getButtonContainer()}
-      </Row>
+      <Row>{getButtonContainer()}</Row>
       <Row>
         {originalCustomMetaEditView()}
         {modifiedCustomMetaEditView()}
@@ -238,6 +258,7 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
 
 MergeSyncTaskWizardCustomSettingJsonEditPanel.propTypes = {
   wizardModel: PropTypes.object,
+  setWizardModel: PropTypes.func,
   comparisonFileModel: PropTypes.object,
   setComparisonFileModel: PropTypes.func,
   fileName: PropTypes.string,

@@ -787,6 +787,7 @@ export const mockData = {
 
 const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
   wizardModel,
+  setWizardModel,
   comparisonFileModel,
   setComparisonFileModel,
   originalContent,
@@ -814,30 +815,6 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
   const loadJsonData = async () => {
     try {
       setIsJsonLoading(true);
-      // TODO : Convert both original and modified contents to JSON
-
-      // if(hasStringValue(originalContent)){
-      //   const jsonForOriginalContent = await mergeSyncTaskWizardActions.fileConvertView(
-      //     getAccessToken,
-      //     cancelTokenSource,
-      //     wizardModel,
-      //     originalContent,
-      //   );
-      //   console.log(jsonForOriginalContent);
-      //   setOriginalContentJson(DataParsingHelper.safeObjectPropertyParser(jsonForOriginalContent, "data.message"));
-      // }
-      //
-      // if(hasStringValue(modifiedContent)) {
-      //   const jsonForModifiedContent = await mergeSyncTaskWizardActions.fileConvertView(
-      //     getAccessToken,
-      //     cancelTokenSource,
-      //     wizardModel,
-      //     modifiedContent,
-      //   );
-      //   console.log(jsonForModifiedContent);
-      //   setModifiedContentJson(DataParsingHelper.safeObjectPropertyParser(jsonForModifiedContent, "data.message"));
-      // }
-
       if (isMounted?.current === true) {
         const newJsonView = modelHelpers.parseObjectIntoModel(
           {},
@@ -860,6 +837,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
         return (
           <MergeSyncTaskWizardCustomApplicationJsonEditPanel
             wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
             comparisonFileModel={comparisonFileModel}
             setComparisonFileModel={setComparisonFileModel}
             fileName={comparisonFileModel?.getData("file")}
@@ -869,6 +847,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
         return (
           <MergeSyncTaskWizardDataCategoryJsonEditPanel
             wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
             comparisonFileModel={comparisonFileModel}
             setComparisonFileModel={setComparisonFileModel}
             fileName={comparisonFileModel?.getData("file")}
@@ -878,6 +857,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
         return (
           <MergeSyncTaskWizardApexClassJsonEditPanel
             wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
             comparisonFileModel={comparisonFileModel}
             setComparisonFileModel={setComparisonFileModel}
             fileName={comparisonFileModel?.getData("file")}
@@ -887,6 +867,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
         return (
           <MergeSyncTaskWizardCustomMetadataJsonEditPanel
             wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
             comparisonFileModel={comparisonFileModel}
             setComparisonFileModel={setComparisonFileModel}
             fileName={comparisonFileModel?.getData("file")}
@@ -896,6 +877,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
         return (
           <MergeSyncTaskWizardCustomPermissionsJsonEditPanel
             wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
             comparisonFileModel={comparisonFileModel}
             setComparisonFileModel={setComparisonFileModel}
             fileName={comparisonFileModel?.getData("file")}
@@ -905,6 +887,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
         return (
           <MergeSyncTaskWizardCustomSettingJsonEditPanel
             wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
             comparisonFileModel={comparisonFileModel}
             setComparisonFileModel={setComparisonFileModel}
             fileName={comparisonFileModel?.getData("file")}
@@ -914,6 +897,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
         return (
           <MergeSyncTaskWizardExternalDataSourceJsonEditPanel
             wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
             comparisonFileModel={comparisonFileModel}
             setComparisonFileModel={setComparisonFileModel}
             fileName={comparisonFileModel?.getData("file")}
@@ -923,6 +907,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
         return (
           <MergeSyncTaskWizardCustomFieldJsonEditPanel
             wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
             comparisonFileModel={comparisonFileModel}
             setComparisonFileModel={setComparisonFileModel}
             fileName={comparisonFileModel?.getData("file")}
@@ -932,6 +917,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
         return (
           <MergeSyncTaskWizardFlowJsonEditPanel
             wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
             comparisonFileModel={comparisonFileModel}
             setComparisonFileModel={setComparisonFileModel}
             fileName={comparisonFileModel?.getData("file")}
@@ -941,6 +927,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
         return (
           <MergeSyncTaskWizardLayoutJsonEditPanel
             wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
             comparisonFileModel={comparisonFileModel}
             setComparisonFileModel={setComparisonFileModel}
             fileName={comparisonFileModel?.getData("file")}
@@ -950,6 +937,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
         return (
           <MergeSyncTaskWizardCustomObjectJsonEditPanel
             wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
             comparisonFileModel={comparisonFileModel}
             setComparisonFileModel={setComparisonFileModel}
             fileName={comparisonFileModel?.getData("file")}
@@ -959,6 +947,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
         return (
           <MergeSyncTaskWizardApexPageJsonEditPanel
             wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
             comparisonFileModel={comparisonFileModel}
             setComparisonFileModel={setComparisonFileModel}
             fileName={comparisonFileModel?.getData("file")}
@@ -968,6 +957,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
         return (
           <MergeSyncTaskWizardRecordTypeJsonEditPanel
             wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
             comparisonFileModel={comparisonFileModel}
             setComparisonFileModel={setComparisonFileModel}
             fileName={comparisonFileModel?.getData("file")}
@@ -977,6 +967,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
         return (
           <MergeSyncTaskWizardCustomTabJsonEditPanel
             wizardModel={wizardModel}
+            setWizardModel={setWizardModel}
             comparisonFileModel={comparisonFileModel}
             setComparisonFileModel={setComparisonFileModel}
             fileName={comparisonFileModel?.getData("file")}
@@ -1017,6 +1008,7 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
 
 MergeSyncTaskWizardProfilesAdvancedEditingPanel.propTypes = {
   wizardModel: PropTypes.object,
+  setWizardModel: PropTypes.func,
   comparisonFileModel: PropTypes.object,
   setComparisonFileModel: PropTypes.func,
   isLoading: PropTypes.bool,
