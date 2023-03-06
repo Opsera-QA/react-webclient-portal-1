@@ -48,7 +48,7 @@ function TerraformCloudToolConfiguration({ toolData, setUpMode, setCurrentScreen
     const newConfiguration = terraformCloudConfigurationDto.getPersistData();
     newConfiguration.token = await toolsActions.saveThreePartToolPasswordToVaultV2(getAccessToken, cancelTokenSource, toolData, terraformCloudConfigurationDto, "token", newConfiguration.token);
     await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
-    if (setUpMode === "wizard") setCurrentScreen("connection_test");
+    if (setUpMode === "wizard") setCurrentScreen("tool_detail");
   };
 
   return (

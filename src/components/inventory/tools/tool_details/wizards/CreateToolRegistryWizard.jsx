@@ -166,6 +166,8 @@ export default function CreateToolRegistryWizard({ loadData }) {
             setToolData={setToolModel}
             setUpMode={setUpMode}
             setCurrentScreen={setCurrentScreen}
+            setButtonContainer={setButtonContainer}
+            handleClose={closeOverlayFunction}
           />
         );
       case REGISTRY_WIZARD_SCREENS.CONNECTION_TEST:

@@ -26,6 +26,18 @@ function OverlayTitleBar(
       );
     }
   };
+  
+  const getHelpIcon = () => {
+    if (externalHelpPageLink) {
+      return (
+        <HelpDocumentationLink
+          link={externalHelpPageLink}
+          className={"mr-2"}
+          tooltipPlacement={"bottom"}
+        />
+      );
+    }
+  };
 
   if (isLoading) {
     return (
@@ -33,11 +45,7 @@ function OverlayTitleBar(
         <div className={"d-flex justify-content-between my-auto w-100"}>
           <div><span><LoadingIcon className="mr-2"/>Loading Data</span></div>
           <div className={"d-flex"}>
-            <HelpDocumentationLink
-              link={externalHelpPageLink}
-              className={"mr-2"}
-              tooltipPlacement={"bottom"}
-            />
+            {getHelpIcon()}
             <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
             <CloseIcon handleCloseFunction={handleClose} />
           </div>
@@ -50,11 +58,7 @@ function OverlayTitleBar(
     return (
       <Row className={"title-text-header-1 w-100 p-2 mx-0 bg-white d-flex"}>
         <div className={"ml-auto dark-grey d-flex my-auto"}>
-          <HelpDocumentationLink
-            link={externalHelpPageLink}
-            className={"mr-2"}
-            tooltipPlacement={"bottom"}
-          />
+          {getHelpIcon()}
           <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
           <CloseIcon handleCloseFunction={handleClose} />
         </div>
@@ -67,11 +71,7 @@ function OverlayTitleBar(
       <div className={"d-flex justify-content-between my-auto w-100"}>
         <div><span>{getTitleIcon()}{titleText}</span></div>
         <div className={"d-flex"}>
-          <HelpDocumentationLink
-            link={externalHelpPageLink}
-            className={"mr-2"}
-            tooltipPlacement={"bottom"}
-          />
+          {getHelpIcon()}
           <PageLinkIcon handleClose={handleClose} className={"mr-2"} pageLink={pageLink} linkTooltipText={linkTooltipText} />
           <CloseIcon handleCloseFunction={handleClose} />
         </div>
