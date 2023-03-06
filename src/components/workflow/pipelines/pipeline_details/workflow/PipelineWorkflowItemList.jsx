@@ -9,6 +9,8 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
+import IconBase from "components/common/icons/IconBase";
 
 function PipelineWorkflowItemList(
   {
@@ -31,6 +33,7 @@ function PipelineWorkflowItemList(
     getAccessToken,
     toastContext,
   } = useComponentStateReference();
+  const pipelineActions = usePipelineActions();
 
   useEffect(() => {
     loadData().catch((error) => {
@@ -39,6 +42,10 @@ function PipelineWorkflowItemList(
       }
     });
   }, []);
+
+  const delayedRefresh = async () => {
+    await fetchPlan();
+  };
 
   const loadData = async () => {
     try {
@@ -67,24 +74,16 @@ function PipelineWorkflowItemList(
   };
 
   const handleAddStep = async (itemId, index) => {
-    const steps = plan;
-
-    setIsSaving(true);
-
-    const newStep = {
-      "trigger": [],
-      "type": [],
-      "notification": [],
-      "name": "",
-      "description": "",
-      "active": true,
-    };
-    steps.splice(index + 1, 0, newStep);
-    await quietSavePlan(steps);
-
-    setIsSaving(false);
+    try {
+      setIsSaving(true);
+      await pipelineActions.addPipelineStepAtIndex(pipelineId, index + 1);
+      await delayedRefresh();
+    } catch (error) {
+      toastContext.showCreateFailureResultDialog("Pipeline Step", error);
+    } finally {
+      setIsSaving(false);
+    }
   };
-
 
   const handleCopyStep = async (item, index) => {
     const steps = plan;
@@ -175,7 +174,7 @@ function PipelineWorkflowItemList(
     if (editWorkflow) {
       return (
         <div
-          className={"text-center d-flex step-plus-" + index}
+          className={`text-center d-flex step-plus-${index}`}
           style={{
             height: "42px",
           }}
@@ -185,28 +184,29 @@ function PipelineWorkflowItemList(
               icon={faCaretSquareUp}
               iconSize={"lg"}
               className={index === 0 ? "fa-disabled" : "pointer dark-grey"}
-              onClickFunction={() => handleMoveStep(item._id, index, "up")}
+              onClickFunction={isSaving !== true ? () => handleMoveStep(item._id, index, "up") : undefined}
               overlayBody={"Move lower step up one position"}
             />
             <OverlayIconBase
               icon={faPlusSquare}
               iconSize={"lg"}
               className={"green pointer ml-2 mr-1"}
-              onClickFunction={() => handleAddStep(item._id, index)}
+              onClickFunction={isSaving !== true ? () => handleAddStep(item._id, index, "up") : undefined}
               overlayBody={"Add new step here"}
             />
+            <IconBase isLoading={isLoading || isSaving} />
             <OverlayIconBase
               icon={faCopy}
               iconSize={"lg"}
               className={"yellow pointer ml-1 mr-2"}
-              onClickFunction={() => handleCopyStep(item, index)}
+              onClickFunction={isSaving !== true ? () => handleCopyStep(item, index, "up") : undefined}
               overlayBody={"Copy previous step"}
             />
             <OverlayIconBase
               icon={faCaretSquareDown}
               iconSize={"lg"}
               className={index === plan.length - 1 ? "fa-disabled" : "pointer dark-grey"}
-              onClickFunction={() => handleMoveStep(item._id, index, "down")}
+              onClickFunction={isSaving !== true ? () => handleMoveStep(item._id, index, "down") : undefined}
               overlayBody={"Move upper step down one position"}
             />
           </div>
