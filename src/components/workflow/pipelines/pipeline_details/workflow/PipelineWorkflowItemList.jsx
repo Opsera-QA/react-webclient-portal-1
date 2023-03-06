@@ -85,12 +85,12 @@ function PipelineWorkflowItemList(
     }
   };
 
-  const handleCopyStep = async (item, index) => {
+  const handleCopyStep = async (itemId, index) => {
     try {
       setIsSaving(true);
       await pipelineActions.duplicatePipelineStepAtIndex(
         pipelineId,
-        item?._id,
+        itemId,
         index,
       );
       await delayedRefresh();
@@ -119,6 +119,36 @@ function PipelineWorkflowItemList(
       steps.splice(index + 1, 0, cutOut);
 
       await quietSavePlan(steps);
+      setIsSaving(false);
+    }
+  };
+
+  const moveStepUp = async (itemId) => {
+    try {
+      setIsSaving(true);
+      await pipelineActions.movePipelineStepUp(
+        pipelineId,
+        itemId,
+      );
+      await delayedRefresh();
+    } catch (error) {
+      toastContext.showSystemErrorToast(error, "Could not move Pipeline Step:");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const moveStepDown = async (itemId) => {
+    try {
+      setIsSaving(true);
+      await pipelineActions.movePipelineStepDown(
+        pipelineId,
+        itemId,
+      );
+      await delayedRefresh();
+    } catch (error) {
+      toastContext.showSystemErrorToast(error, "Could not move Pipeline Step:");
+    } finally {
       setIsSaving(false);
     }
   };
@@ -179,7 +209,7 @@ function PipelineWorkflowItemList(
               icon={faCaretSquareUp}
               iconSize={"lg"}
               className={index === 0 ? "fa-disabled" : "pointer dark-grey"}
-              onClickFunction={isSaving !== true ? () => handleMoveStep(item._id, index, "up") : undefined}
+              onClickFunction={isSaving !== true && index !== 0 ? () => moveStepUp(item._id) : undefined}
               overlayBody={"Move lower step up one position"}
             />
             <OverlayIconBase
@@ -194,14 +224,14 @@ function PipelineWorkflowItemList(
               icon={faCopy}
               iconSize={"lg"}
               className={"yellow pointer ml-1 mr-2"}
-              onClickFunction={isSaving !== true ? () => handleCopyStep(item, index, "up") : undefined}
+              onClickFunction={isSaving !== true ? () => handleCopyStep(item._id, index, "up") : undefined}
               overlayBody={"Copy previous step"}
             />
             <OverlayIconBase
               icon={faCaretSquareDown}
               iconSize={"lg"}
               className={index === plan.length - 1 ? "fa-disabled" : "pointer dark-grey"}
-              onClickFunction={isSaving !== true ? () => handleMoveStep(item._id, index, "down") : undefined}
+              onClickFunction={isSaving !== true && index >= plan.length - 1 ? () => moveStepDown(item._id) : undefined}
               overlayBody={"Move upper step down one position"}
             />
           </div>

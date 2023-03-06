@@ -89,8 +89,27 @@ export default function usePipelineActions() {
     index,
   ) => {
     const apiUrl = `/workflow/pipelines/${pipelineId}/steps/${pipelineStepId}/index/${index}`;
-    console.log("apiUrl: " + JSON.stringify(apiUrl));
     return await apiService.handleApiPostRequest(
+      apiUrl,
+    );
+  };
+
+  pipelineActions.movePipelineStepUp = async (
+    pipelineId,
+    pipelineStepId,
+  ) => {
+    const apiUrl = `/workflow/pipelines/${pipelineId}/steps/${pipelineStepId}/up`;
+    return await apiService.handleApiPatchRequest(
+      apiUrl,
+    );
+  };
+
+  pipelineActions.movePipelineStepDown = async (
+    pipelineId,
+    pipelineStepId,
+  ) => {
+    const apiUrl = `/workflow/pipelines/${pipelineId}/steps/${pipelineStepId}/down`;
+    return await apiService.handleApiPatchRequest(
       apiUrl,
     );
   };
