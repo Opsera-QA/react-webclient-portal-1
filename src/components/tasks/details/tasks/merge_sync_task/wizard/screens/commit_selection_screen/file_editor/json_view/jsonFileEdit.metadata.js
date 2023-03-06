@@ -172,11 +172,11 @@ export const layoutJsonMetadata = {
   type: "Layout",
   fields: [
     {
-      label: "Flow",
+      label: "Layout",
       id: "layout",
     },
     {
-      label: "enabled",
+      label: "Record Type",
       id: "recordType",
     },
   ],

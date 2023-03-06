@@ -14,9 +14,8 @@ import mergeSyncTaskWizardActions from "../../../../mergeSyncTaskWizard.actions"
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import CustomSettingssProfileEditorView from "./profile_editor_views/CustomSettingssProfileEditorView";
 import ExternalDataSourceProfileEditorView from "./profile_editor_views/ExternalDataSourceProfileEditorView";
-import CustomFieldProfileEditorView from "./profile_editor_views/CustomFieldProfileEditorView";
 
-const MergeSyncTaskWizardCustomFieldJsonEditPanel = ({
+const MergeSyncTaskWizardLayoutJsonEditPanel = ({
                                                           wizardModel,
                                                           comparisonFileModel,
                                                           setComparisonFileModel,
@@ -52,7 +51,7 @@ const MergeSyncTaskWizardCustomFieldJsonEditPanel = ({
           cancelTokenSource,
           wizardModel,
           fileName,
-          "CustomField",
+          "Layout",
         );
 
       if (isMounted?.current === true) {
@@ -90,14 +89,13 @@ const MergeSyncTaskWizardCustomFieldJsonEditPanel = ({
       />
     );
   }
-  const setCustomFieldDataJson = (modifiedValue) => {
+  const setLayoutDataJson = (modifiedValue) => {
     let newModifiedJson = { ...modifiedContentJson };
-    let modifiedItem = newModifiedJson?.fieldPermissions.find(
-      (fieldPermissions) => fieldPermissions.field === modifiedValue.field,
+    let modifiedItem = newModifiedJson?.layoutAssignments.find(
+      (layoutData) => layoutData.layout === modifiedValue.layout,
     );
     if (modifiedItem) {
-      modifiedItem.editable = modifiedValue.editable;
-      modifiedItem.readable = modifiedValue.readable;
+      modifiedItem.recordType = modifiedValue.recordType;
     }
     setModifiedContentJson(newModifiedJson);
   };
@@ -108,11 +106,11 @@ const MergeSyncTaskWizardCustomFieldJsonEditPanel = ({
         <span className="h5">Source Profiles</span>
         {modifiedContentJson &&
           Object.keys(modifiedContentJson).length > 0 &&
-          modifiedContentJson?.fieldPermissions?.map((fieldPermissionsData, idx, { length }) => (
+          modifiedContentJson?.layoutAssignments?.map((layoutData, idx, { length }) => (
             <div key={idx}>
-              <CustomFieldProfileEditorView
-                fieldPermissionsData={fieldPermissionsData}
-                setCustomFieldDataJson={setCustomFieldDataJson}
+              <ExternalDataSourceProfileEditorView
+                layoutData={layoutData}
+                setLayoutDataJson={setLayoutDataJson}
                 isLoading={isLoading}
               />
               {idx + 1 !== length && (
@@ -130,11 +128,11 @@ const MergeSyncTaskWizardCustomFieldJsonEditPanel = ({
         <span className="h5">Target Profiles</span>
         {originalContentJson &&
         Object.keys(originalContentJson).length > 0 &&
-          originalContentJson?.fieldPermissions?.map((fieldPermissionsData, idx, { length }) => (
+          originalContentJson?.layoutAssignments?.map((layoutData, idx, { length }) => (
             <div key={idx}>
-              <CustomFieldProfileEditorView
-                fieldPermissionsData={fieldPermissionsData}
-                setCustomFieldDataJson={setCustomFieldDataJson}
+              <ExternalDataSourceProfileEditorView
+                layoutData={layoutData}
+                setLayoutDataJson={setLayoutDataJson}
                 isLoading={isLoading}
               />
               {idx + 1 !== length && (
@@ -155,7 +153,7 @@ const MergeSyncTaskWizardCustomFieldJsonEditPanel = ({
   );
 };
 
-MergeSyncTaskWizardCustomFieldJsonEditPanel.propTypes = {
+MergeSyncTaskWizardLayoutJsonEditPanel.propTypes = {
   wizardModel: PropTypes.object,
   comparisonFileModel: PropTypes.object,
   setComparisonFileModel: PropTypes.func,
@@ -163,4 +161,4 @@ MergeSyncTaskWizardCustomFieldJsonEditPanel.propTypes = {
   isLoading: PropTypes.bool,
 };
 
-export default MergeSyncTaskWizardCustomFieldJsonEditPanel;
+export default MergeSyncTaskWizardLayoutJsonEditPanel;
