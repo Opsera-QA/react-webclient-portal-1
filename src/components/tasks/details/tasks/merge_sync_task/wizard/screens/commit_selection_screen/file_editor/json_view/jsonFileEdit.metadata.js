@@ -195,14 +195,17 @@ export const customObjectJsonMetadata = {
     {
       label: "Allow Create",
       id: "allowCreate",
+      formText: "Can be set true only if Read is set as true.",
     },
     {
       label: "Allow Delete",
       id: "allowDelete",
+      formText: "Can be set true only if Read and Edit is set as true.",
     },
     {
       label: "Allow Edit",
       id: "allowEdit",
+      formText: "Can be set true only if Read is set as true.",
     },
     {
       label: "Allow Read",
@@ -211,10 +214,12 @@ export const customObjectJsonMetadata = {
     {
       label: "Modify All Records",
       id: "modifyAllRecords",
+      formText: "Can be set true only if Read, Edit, Delete and View all Records are set as true.",
     },
     {
       label: "View All Records",
       id: "viewAllRecords",
+      formText: "Can be set true only if Read is set as true.",
     },
   ],
   newObjectFields: {
