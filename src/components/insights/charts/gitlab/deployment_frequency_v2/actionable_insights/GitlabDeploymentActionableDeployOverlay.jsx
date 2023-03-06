@@ -61,7 +61,7 @@ function GitlabDeploymentActionableDeployOverlay({
             let dashboardTags = dashboardMetricFilter?.tags;
             let dashboardOrgs = dashboardMetricFilter?.organizations;
 
-            const response = await gitlabAction.getActionableDeploymentsChartData(
+            const response = await gitlabAction.getActionableDeploymentsChartDataV2(
                 getAccessToken,
                 cancelSource,
                 kpiConfiguration,
