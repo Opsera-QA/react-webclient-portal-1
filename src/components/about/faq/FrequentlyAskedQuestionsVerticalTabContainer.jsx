@@ -83,7 +83,7 @@ function FrequentlyAskedQuestionsVerticalTabContainer() {
       <div>
         <div className={"mt-3 ml-4"}>
           <div><>This page provides help with our most frequently asked questions. To view questions, expand a topic below. For more information, visit <b><a href="https://docs.opsera.io/" target="_blank" rel="noreferrer">Opsera&rsquo;s Help Documentation</a>.</b></></div>
-          <div><>Have a question? Contact <b><a id="mailto" href="mailto:support@opsera.io" target="_blank" rel="noreferrer">Opsera Support</a></b>.</></div>
+          <div><>Have a question? Contact <b><a href="https://opsera.atlassian.net/servicedesk/customer/portal/2" target="_blank" rel="noreferrer">Customer Support</a></b>.</></div>
         </div>
         {getCurrentScreen()}
       </div>
