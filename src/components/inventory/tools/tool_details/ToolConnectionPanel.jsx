@@ -102,7 +102,7 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC,
 ];
 
-function ToolConnectionPanel({ toolData, setToolData, setUpMode, setCurrentScreen }) {
+function ToolConnectionPanel({ toolData, setToolData, setUpMode, setCurrentScreen, setButtonContainer, handleClose }) {
   const getConnectionPanel = () => {
     if (toolData == null) {
       return <></>;
@@ -151,7 +151,7 @@ function ToolConnectionPanel({ toolData, setToolData, setUpMode, setCurrentScree
       case "octopus":
         return <OctopusToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "slack":
-        return <SlackToolConfiguration toolData={toolData}/>;
+        return <SlackToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen} setButtonContainer={setButtonContainer} handleClose={handleClose}/>;
       case "azure_account":
         return <AzureToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "jfrog_artifactory_maven":
@@ -226,6 +226,8 @@ ToolConnectionPanel.propTypes = {
   setToolData: PropTypes.func,
   setUpMode: PropTypes.string,
   setCurrentScreen: PropTypes.func,
+  setButtonContainer: PropTypes.func,
+  handleClose: PropTypes.func,
 };
 
 

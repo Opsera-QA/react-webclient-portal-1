@@ -1,4 +1,6 @@
 import useApiService from "hooks/api/service/useApiService";
+import baseActions from "utils/actionsBase";
+import pipelineActions from "components/workflow/pipeline-actions";
 
 export default function usePipelineActions() {
   const apiService = useApiService();
@@ -50,6 +52,15 @@ export default function usePipelineActions() {
     );
   };
 
+  pipelineActions.resetPipeline = async (pipelineId, silentReset = false) => {
+    const apiUrl = `/pipelines/${pipelineId}/reset/`;
+    const queryParameters = {
+      silentReset: silentReset,
+    };
+
+    return await apiService.handleApiGetRequest(apiUrl, queryParameters);
+  };
+
   pipelineActions.updatePipelineActionRoles = async (
     pipelineId,
     roles,
@@ -62,6 +73,14 @@ export default function usePipelineActions() {
       apiUrl,
       postBody,
     );
+  };
+
+  pipelineActions.addPipelineStepAtIndex = async (
+    pipelineId,
+    index,
+  ) => {
+    const apiUrl = `/workflow/pipelines/${pipelineId}/steps/index/${index}`;
+    return await apiService.handleApiPostRequest(apiUrl);
   };
 
   pipelineActions.deletePipelineStepById = async (

@@ -22,9 +22,14 @@ export default function ToolConnectionCheck({
   const onSuccessFunction = () => {
     handleClose();
     history.push(`/inventory/tools/details/${toolData?.getData("_id")}`);
+  };
+
+  const onSkipFunction = () => {
+    handleClose();
+    history.push(`/inventory/tools/details/${toolData?.getData("_id")}`);
     toastContext.showCreateFailureResultDialog(
-      toolData.getType(),
-      "The tool will not be usable in Pipelines and Tasks until the connection is resolved.",
+        toolData.getType(),
+        "The tool will not be usable in Pipelines and Tasks until the connection is resolved.",
     );
   };
 
@@ -35,7 +40,7 @@ export default function ToolConnectionCheck({
           normalText={"Skip Connection Test"}
           disabled={false}
           buttonState={"ready"}
-          onClickFunction={onSuccessFunction}
+          onClickFunction={onSkipFunction}
           tooltip={
             "The tool will not be usable in Pipelines and Tasks until the connection is resolved."
           }
