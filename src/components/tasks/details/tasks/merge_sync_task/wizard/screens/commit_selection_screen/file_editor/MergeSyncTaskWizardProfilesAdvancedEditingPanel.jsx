@@ -22,6 +22,8 @@ import MergeSyncTaskWizardCustomPermissionsJsonEditPanel
   from "./json_view/MergeSyncTaskWizardCustomPermissionsJsonEditPanel";
 import MergeSyncTaskWizardCustomSettingJsonEditPanel
   from "./json_view/MergeSyncTaskWizardCustomSettingJsonEditPanel";
+import MergeSyncTaskWizardExternalDataSourceJsonEditPanel
+  from "./json_view/MergeSyncTaskWizardExternalDataSourceJsonEditPanel";
 
 const componentTypeOptions =[
   {name: "CustomApplication", value: "applicationVisibilities"},
@@ -438,7 +440,14 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
           />
         );
       case "externalDataSourceAccesses":
-        return <>externalDataSourceAccesses</>;
+        return (
+          <MergeSyncTaskWizardExternalDataSourceJsonEditPanel
+            wizardModel={wizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName ={comparisonFileModel?.getData("file")}
+          />
+        );
       case "fieldPermissions":
         return <>fieldPermissions</>;
       case "flowAccesses":
