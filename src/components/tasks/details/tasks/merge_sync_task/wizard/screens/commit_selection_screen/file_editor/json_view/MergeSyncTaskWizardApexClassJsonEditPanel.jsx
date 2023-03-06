@@ -8,8 +8,6 @@ import { DividerWithCenteredText } from "../../../../../../../../../../temp-libr
 import { AuthContext } from "../../../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../../../contexts/DialogToastContext";
 import useComponentStateReference from "../../../../../../../../../../hooks/useComponentStateReference";
-import modelHelpers from "../../../../../../../../../common/model/modelHelpers";
-import { jsonViewFileMetadata } from "../../jsonViewFile.metadata";
 import mergeSyncTaskWizardActions from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";

@@ -3,31 +3,92 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ApexClassProfleEditorView from "./profile_editor_views/ApexClassProfleEditorView";
 import { DividerWithCenteredText } from "../../../../../../../../../../temp-library-components/divider/DividerWithCenteredText";
 import CustomApplicationProfileEditorView from "./profile_editor_views/CustomApplicationProfileEditorView";
+import { AuthContext } from "../../../../../../../../../../contexts/AuthContext";
+import { DialogToastContext } from "../../../../../../../../../../contexts/DialogToastContext";
+import useComponentStateReference from "../../../../../../../../../../hooks/useComponentStateReference";
+import { hasStringValue } from "../../../../../../../../../common/helpers/string-helpers";
+import mergeSyncTaskWizardActions from "../../../../mergeSyncTaskWizard.actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
   wizardModel,
-  // comparisonFileModel,
-  // setComparisonFileModel,
-  modifiedCustomAppJson,
-  originalCustomAppJson,
-  modifiedContentJson,
-  originalContentJson,
-  setModifiedContentJson,
-  setOriginalContentJson,
+  comparisonFileModel,
+  setComparisonFileModel,
+  fileName,
   isLoading,
 }) => {
-  if (isLoading) {
+  const { getAccessToken } = useContext(AuthContext);
+  const [isJsonLoading, setIsJsonLoading] = useState(true);
+  const toastContext = useContext(DialogToastContext);
+  const { isMounted, cancelTokenSource } = useComponentStateReference();
+
+  const [modifiedContentJson, setModifiedContentJson] = useState(undefined);
+  const [originalContentJson, setOriginalContentJson] = useState(undefined);
+
+  useEffect(() => {
+    if (hasStringValue(fileName)) {
+      loadJsonData().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
+  }, [fileName]);
+
+  const loadJsonData = async () => {
+    try {
+      setIsJsonLoading(true);
+      // TODO : Convert both original and modified contents to JSON
+
+      const jsonContent =
+        await mergeSyncTaskWizardActions.componentTypeConvertView(
+          getAccessToken,
+          cancelTokenSource,
+          wizardModel,
+          fileName,
+          "CustomApplication",
+        );
+
+      if (isMounted?.current === true) {
+        setModifiedContentJson(
+          JSON.parse(
+            DataParsingHelper.safeObjectPropertyParser(
+              jsonContent,
+              "data.message.sourceContent",
+            ),
+          ),
+        );
+        setOriginalContentJson(
+          JSON.parse(
+            DataParsingHelper.safeObjectPropertyParser(
+              jsonContent,
+              "data.message.destinationContent",
+            ),
+          ),
+        );
+      }
+    } catch (error) {
+      toastContext.showInlineErrorMessage(error);
+    } finally {
+      if (isMounted?.current === true) {
+        setIsJsonLoading(false);
+      }
+    }
+  };
+
+  if (isJsonLoading || isLoading) {
     return (
       <LoadingDialog
         size={"sm"}
-        message={"Loading"}
+        message={"Conversion in progress"}
       />
     );
   }
+
   const setCustomAppJson = (modifiedValue) => {
+    console.log(modifiedValue);
     let newModifiedJson = { ...modifiedContentJson };
     let modifiedItem = newModifiedJson?.applicationVisibilities.find(
       (appVisibility) =>
@@ -44,19 +105,22 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
     return (
       <Col>
         <span className="h5">Source Profiles</span>
-        {modifiedCustomAppJson &&
-          modifiedCustomAppJson.map((customApp, idx, { length }) => (
-            <div key={idx}>
-              <CustomApplicationProfileEditorView
-                customAppData={customApp}
-                setCustomAppJson={setCustomAppJson}
-                isLoading={isLoading}
-              />
-              {idx + 1 !== length && (
-                <DividerWithCenteredText className={"m-4"} />
-              )}
-            </div>
-          ))}
+        {modifiedContentJson &&
+          Object.keys(modifiedContentJson).length > 0 &&
+          modifiedContentJson?.applicationVisibilities?.map(
+            (customApp, idx, { length }) => (
+              <div key={idx}>
+                <CustomApplicationProfileEditorView
+                  customAppData={customApp}
+                  setCustomAppJson={setCustomAppJson}
+                  isLoading={isLoading}
+                />
+                {idx + 1 !== length && (
+                  <DividerWithCenteredText className={"m-4"} />
+                )}
+              </div>
+            ),
+          )}
       </Col>
     );
   };
@@ -64,23 +128,27 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
   const originalAppVisibilityEditView = () => {
     return (
       <Col>
-        <span className="h5">Target Profiles</span>
-        {originalCustomAppJson &&
-          originalCustomAppJson.map((customApp, idx, { length }) => (
-            <div key={idx}>
-              <CustomApplicationProfileEditorView
-                customAppData={customApp}
-                setCustomAppJson={setCustomAppJson}
-                isLoading={isLoading}
-              />
-              {idx + 1 !== length && (
-                <DividerWithCenteredText className={"m-4"} />
-              )}
-            </div>
-          ))}
+        <span className="h5">Source Profiles</span>
+        {originalContentJson &&
+          Object.keys(originalContentJson).length > 0 &&
+          originalContentJson?.applicationVisibilities?.map(
+            (customApp, idx, { length }) => (
+              <div key={idx}>
+                <CustomApplicationProfileEditorView
+                  customAppData={customApp}
+                  setCustomAppJson={setCustomAppJson}
+                  isLoading={isLoading}
+                />
+                {idx + 1 !== length && (
+                  <DividerWithCenteredText className={"m-4"} />
+                )}
+              </div>
+            ),
+          )}
       </Col>
     );
   };
+
   return (
     <div className={"mt-4"}>
       <Row>
@@ -93,15 +161,10 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
 
 MergeSyncTaskWizardCustomApplicationJsonEditPanel.propTypes = {
   wizardModel: PropTypes.object,
-  // comparisonFileModel: PropTypes.object,
-  // setComparisonFileModel: PropTypes.func,
+  comparisonFileModel: PropTypes.object,
+  setComparisonFileModel: PropTypes.func,
+  fileName: PropTypes.string,
   isLoading: PropTypes.bool,
-  modifiedCustomAppJson: PropTypes.array,
-  originalCustomAppJson: PropTypes.array,
-  modifiedContentJson: PropTypes.object,
-  originalContentJson: PropTypes.object,
-  setModifiedContentJson: PropTypes.func,
-  setOriginalContentJson: PropTypes.func,
 };
 
 export default MergeSyncTaskWizardCustomApplicationJsonEditPanel;

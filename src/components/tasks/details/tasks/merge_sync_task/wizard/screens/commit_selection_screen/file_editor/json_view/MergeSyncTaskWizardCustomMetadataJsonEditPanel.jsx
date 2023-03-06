@@ -6,24 +6,84 @@ import Col from "react-bootstrap/Col";
 import ApexClassProfleEditorView from "./profile_editor_views/ApexClassProfleEditorView";
 import { DividerWithCenteredText } from "../../../../../../../../../../temp-library-components/divider/DividerWithCenteredText";
 import CustomMetadataProfileEditorView from "./profile_editor_views/CustomMetadataProfileEditorView";
+import { AuthContext } from "../../../../../../../../../../contexts/AuthContext";
+import { DialogToastContext } from "../../../../../../../../../../contexts/DialogToastContext";
+import useComponentStateReference from "../../../../../../../../../../hooks/useComponentStateReference";
+import { hasStringValue } from "../../../../../../../../../common/helpers/string-helpers";
+import mergeSyncTaskWizardActions from "../../../../mergeSyncTaskWizard.actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
-  wizardModel,
-  // comparisonFileModel,
-  // setComparisonFileModel,
-  modifiedCustomMetaJson,
-  originalCustomMetaJson,
-  modifiedContentJson,
-  originalContentJson,
-  setModifiedContentJson,
-  setOriginalContentJson,
-  isLoading,
+                                                          wizardModel,
+                                                          comparisonFileModel,
+                                                          setComparisonFileModel,
+                                                          fileName,
+                                                          isLoading,
 }) => {
-  if (isLoading) {
+  const { getAccessToken } = useContext(AuthContext);
+  const [isJsonLoading, setIsJsonLoading] = useState(true);
+  const toastContext = useContext(DialogToastContext);
+  const { isMounted, cancelTokenSource } = useComponentStateReference();
+
+  const [modifiedContentJson, setModifiedContentJson] = useState(undefined);
+  const [originalContentJson, setOriginalContentJson] = useState(undefined);
+
+  useEffect(() => {
+    if (hasStringValue(fileName) ) {
+      loadJsonData().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
+  }, [fileName]);
+
+  const loadJsonData = async () => {
+    try {
+      setIsJsonLoading(true);
+      // TODO : Convert both original and modified contents to JSON
+
+      const jsonContent =
+        await mergeSyncTaskWizardActions.componentTypeConvertView(
+          getAccessToken,
+          cancelTokenSource,
+          wizardModel,
+          fileName,
+          "CustomMetadata",
+        );
+
+      if (isMounted?.current === true) {
+        setModifiedContentJson(
+          JSON.parse(
+            DataParsingHelper.safeObjectPropertyParser(
+              jsonContent,
+              "data.message.sourceContent",
+            ),
+          ),
+        );
+        setOriginalContentJson(
+          JSON.parse(
+            DataParsingHelper.safeObjectPropertyParser(
+              jsonContent,
+              "data.message.destinationContent",
+            ),
+          ),
+        );
+      }
+    } catch (error) {
+      toastContext.showInlineErrorMessage(error);
+    } finally {
+      if (isMounted?.current === true) {
+        setIsJsonLoading(false);
+      }
+    }
+  };
+
+  if (isJsonLoading || isLoading) {
     return (
       <LoadingDialog
         size={"sm"}
-        message={"Loading"}
+        message={"Conversion in progress"}
       />
     );
   }
@@ -42,8 +102,9 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
     return (
       <Col>
         <span className="h5">Source Profiles</span>
-        {modifiedCustomMetaJson &&
-          modifiedCustomMetaJson.map((customMetaData, idx, { length }) => (
+        {modifiedContentJson &&
+          Object.keys(modifiedContentJson).length > 0 &&
+          modifiedContentJson?.customMetadataTypeAccesses?.map((customMetaData, idx, { length }) => (
             <div key={idx}>
               <CustomMetadataProfileEditorView
                 customMetadataData={customMetaData}
@@ -63,8 +124,9 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
     return (
       <Col>
         <span className="h5">Target Profiles</span>
-        {originalCustomMetaJson &&
-          originalCustomMetaJson.map((customMetaData, idx, { length }) => (
+        {originalContentJson &&
+        Object.keys(originalContentJson).length > 0 &&
+          originalContentJson?.customMetadataTypeAccesses?.map((customMetaData, idx, { length }) => (
             <div key={idx}>
               <CustomMetadataProfileEditorView
                 customMetadataData={customMetaData}
@@ -91,15 +153,10 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
 
 MergeSyncTaskWizardCustomMetadataJsonEditPanel.propTypes = {
   wizardModel: PropTypes.object,
-  // comparisonFileModel: PropTypes.object,
-  // setComparisonFileModel: PropTypes.func,
+  comparisonFileModel: PropTypes.object,
+  setComparisonFileModel: PropTypes.func,
+  fileName: PropTypes.string,
   isLoading: PropTypes.bool,
-  modifiedCustomMetaJson: PropTypes.array,
-  originalCustomMetaJson: PropTypes.array,
-  modifiedContentJson: PropTypes.object,
-  originalContentJson: PropTypes.object,
-  setModifiedContentJson: PropTypes.func,
-  setOriginalContentJson: PropTypes.func,
 };
 
 export default MergeSyncTaskWizardCustomMetadataJsonEditPanel;
