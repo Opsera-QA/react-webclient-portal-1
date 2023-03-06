@@ -88,10 +88,10 @@ const MergeSyncTaskWizardCustomPermissionsJsonEditPanel = ({
       />
     );
   }
-  const setCustomMetaJson = (modifiedValue) => {
+  const setCustomPermissionJson = (modifiedValue) => {
     let newModifiedJson = { ...modifiedContentJson };
     let modifiedItem = newModifiedJson?.customPermissions.find(
-      (apexClassItem) => apexClassItem.name === modifiedValue.name,
+      (customPermissionsData) => customPermissionsData.name === modifiedValue.name,
     );
     if (modifiedItem) {
       modifiedItem.enabled = modifiedValue.enabled;
@@ -105,11 +105,11 @@ const MergeSyncTaskWizardCustomPermissionsJsonEditPanel = ({
         <span className="h5">Source Profiles</span>
         {modifiedContentJson &&
           Object.keys(modifiedContentJson).length > 0 &&
-          modifiedContentJson?.customPermissions?.map((customMetaData, idx, { length }) => (
+          modifiedContentJson?.customPermissions?.map((customPermissionsData, idx, { length }) => (
             <div key={idx}>
               <CustomPermissionsProfileEditorView
-                customMetadataData={customMetaData}
-                setCustomMetaJson={setCustomMetaJson}
+                customPermissionsData={customPermissionsData}
+                setCustomPermissionJson={setCustomPermissionJson}
                 isLoading={isLoading}
               />
               {idx + 1 !== length && (
@@ -127,11 +127,11 @@ const MergeSyncTaskWizardCustomPermissionsJsonEditPanel = ({
         <span className="h5">Target Profiles</span>
         {originalContentJson &&
         Object.keys(originalContentJson).length > 0 &&
-          originalContentJson?.customPermissions?.map((customMetaData, idx, { length }) => (
+          originalContentJson?.customPermissions?.map((customPermissionsData, idx, { length }) => (
             <div key={idx}>
-              <CustomMetadataProfileEditorView
-                customMetadataData={customMetaData}
-                setCustomMetaJson={setCustomMetaJson}
+              <CustomPermissionsProfileEditorView
+                customPermissionsData={customPermissionsData}
+                setCustomPermissionJson={setCustomPermissionJson}
                 isLoading={isLoading}
               />
               {idx + 1 !== length && (

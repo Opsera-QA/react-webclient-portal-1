@@ -20,6 +20,8 @@ import CustomMetadataProfileEditorView from "./json_view/profile_editor_views/Cu
 import MergeSyncTaskWizardCustomMetadataJsonEditPanel from "./json_view/MergeSyncTaskWizardCustomMetadataJsonEditPanel";
 import MergeSyncTaskWizardCustomPermissionsJsonEditPanel
   from "./json_view/MergeSyncTaskWizardCustomPermissionsJsonEditPanel";
+import MergeSyncTaskWizardCustomSettingJsonEditPanel
+  from "./json_view/MergeSyncTaskWizardCustomSettingJsonEditPanel";
 
 const componentTypeOptions =[
   {name: "CustomApplication", value: "applicationVisibilities"},
@@ -427,7 +429,14 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = (
           />
         );
       case "customSettingAccesses":
-        return <>customSettingAccesses</>;
+        return (
+          <MergeSyncTaskWizardCustomSettingJsonEditPanel
+            wizardModel={wizardModel}
+            comparisonFileModel={comparisonFileModel}
+            setComparisonFileModel={setComparisonFileModel}
+            fileName ={comparisonFileModel?.getData("file")}
+          />
+        );
       case "externalDataSourceAccesses":
         return <>externalDataSourceAccesses</>;
       case "fieldPermissions":

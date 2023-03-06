@@ -12,8 +12,9 @@ import useComponentStateReference from "../../../../../../../../../../hooks/useC
 import { hasStringValue } from "../../../../../../../../../common/helpers/string-helpers";
 import mergeSyncTaskWizardActions from "../../../../mergeSyncTaskWizard.actions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import CustomSettingssProfileEditorView from "./profile_editor_views/CustomSettingssProfileEditorView";
 
-const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
+const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
                                                           wizardModel,
                                                           comparisonFileModel,
                                                           setComparisonFileModel,
@@ -49,7 +50,7 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
           cancelTokenSource,
           wizardModel,
           fileName,
-          "CustomMetadata",
+          "CustomSetting",
         );
 
       if (isMounted?.current === true) {
@@ -87,10 +88,10 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
       />
     );
   }
-  const setCustomMetaJson = (modifiedValue) => {
+  const setCustomSettingsJson = (modifiedValue) => {
     let newModifiedJson = { ...modifiedContentJson };
-    let modifiedItem = newModifiedJson?.customMetadataTypeAccesses.find(
-      (customMetaData) => customMetaData.name === modifiedValue.name,
+    let modifiedItem = newModifiedJson?.customSettingAccesses.find(
+      (customSettingsData) => customSettingsData.name === modifiedValue.name,
     );
     if (modifiedItem) {
       modifiedItem.enabled = modifiedValue.enabled;
@@ -104,11 +105,11 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
         <span className="h5">Source Profiles</span>
         {modifiedContentJson &&
           Object.keys(modifiedContentJson).length > 0 &&
-          modifiedContentJson?.customMetadataTypeAccesses?.map((customMetaData, idx, { length }) => (
+          modifiedContentJson?.customSettingAccesses?.map((customSettingsData, idx, { length }) => (
             <div key={idx}>
-              <CustomMetadataProfileEditorView
-                customMetadataData={customMetaData}
-                setCustomMetaJson={setCustomMetaJson}
+              <CustomSettingssProfileEditorView
+                customSettingsData={customSettingsData}
+                setCustomSettingsJson={setCustomSettingsJson}
                 isLoading={isLoading}
               />
               {idx + 1 !== length && (
@@ -126,11 +127,11 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
         <span className="h5">Target Profiles</span>
         {originalContentJson &&
         Object.keys(originalContentJson).length > 0 &&
-          originalContentJson?.customMetadataTypeAccesses?.map((customMetaData, idx, { length }) => (
+          originalContentJson?.customSettingAccesses?.map((customSettingsData, idx, { length }) => (
             <div key={idx}>
-              <CustomMetadataProfileEditorView
-                customMetadataData={customMetaData}
-                setCustomMetaJson={setCustomMetaJson}
+              <CustomSettingssProfileEditorView
+                customSettingsData={customSettingsData}
+                setCustomSettingsJson={setCustomSettingsJson}
                 isLoading={isLoading}
               />
               {idx + 1 !== length && (
@@ -151,7 +152,7 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
   );
 };
 
-MergeSyncTaskWizardCustomMetadataJsonEditPanel.propTypes = {
+MergeSyncTaskWizardCustomSettingJsonEditPanel.propTypes = {
   wizardModel: PropTypes.object,
   comparisonFileModel: PropTypes.object,
   setComparisonFileModel: PropTypes.func,
@@ -159,4 +160,4 @@ MergeSyncTaskWizardCustomMetadataJsonEditPanel.propTypes = {
   isLoading: PropTypes.bool,
 };
 
-export default MergeSyncTaskWizardCustomMetadataJsonEditPanel;
+export default MergeSyncTaskWizardCustomSettingJsonEditPanel;
