@@ -11,7 +11,7 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
 
-function AzureToolConfiguration({ toolData }) {
+function AzureToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [azureConfigurationDto, setAzureConfigurationDto] = useState(undefined);
 
@@ -32,7 +32,8 @@ function AzureToolConfiguration({ toolData }) {
     newConfiguration.applicationId = await toolsActions.savePasswordToVault(toolData, azureConfigurationDto, "applicationId", newConfiguration.applicationId, getAccessToken);
 
     const item = {configuration: newConfiguration};
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("tool_detail");
   };
 
   return (
@@ -42,6 +43,7 @@ function AzureToolConfiguration({ toolData }) {
       persistRecord={saveAzureToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"azure"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -60,7 +62,9 @@ AzureToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId: PropTypes.string,
   saveToolConfiguration: PropTypes.func,
-  fnSaveToVault: PropTypes.func
+  fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default AzureToolConfiguration;
