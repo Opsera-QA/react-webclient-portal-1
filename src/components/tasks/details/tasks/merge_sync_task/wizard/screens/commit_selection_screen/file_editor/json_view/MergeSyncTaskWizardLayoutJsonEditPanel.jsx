@@ -14,6 +14,7 @@ import mergeSyncTaskWizardActions from "../../../../mergeSyncTaskWizard.actions"
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import CustomSettingssProfileEditorView from "./profile_editor_views/CustomSettingssProfileEditorView";
 import ExternalDataSourceProfileEditorView from "./profile_editor_views/ExternalDataSourceProfileEditorView";
+import LayoutProfileEditorView from "./profile_editor_views/LayoutProfileEditorView";
 
 const MergeSyncTaskWizardLayoutJsonEditPanel = ({
                                                           wizardModel,
@@ -108,7 +109,7 @@ const MergeSyncTaskWizardLayoutJsonEditPanel = ({
           Object.keys(modifiedContentJson).length > 0 &&
           modifiedContentJson?.layoutAssignments?.map((layoutData, idx, { length }) => (
             <div key={idx}>
-              <ExternalDataSourceProfileEditorView
+              <LayoutProfileEditorView
                 layoutData={layoutData}
                 setLayoutDataJson={setLayoutDataJson}
                 isLoading={isLoading}
@@ -130,7 +131,7 @@ const MergeSyncTaskWizardLayoutJsonEditPanel = ({
         Object.keys(originalContentJson).length > 0 &&
           originalContentJson?.layoutAssignments?.map((layoutData, idx, { length }) => (
             <div key={idx}>
-              <ExternalDataSourceProfileEditorView
+              <LayoutProfileEditorView
                 layoutData={layoutData}
                 setLayoutDataJson={setLayoutDataJson}
                 isLoading={isLoading}
