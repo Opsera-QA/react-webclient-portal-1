@@ -4,6 +4,8 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import CancelButton from "components/common/buttons/CancelButton";
 import MergeSyncTaskWizardCreateNewRecordButton
   from "components/tasks/details/tasks/merge_sync_task/wizard/screens/initialization_screen/MergeSyncTaskWizardCreateNewRecordButton";
+import BooleanToggleInput from "../../../../../../../common/inputs/boolean/BooleanToggleInput";
+import { Row, Col } from "react-bootstrap";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
@@ -47,6 +49,17 @@ const MergeSyncTaskWizardInitializationScreen = ({
             </CenteredContentWrapper>
           </div>
         </div>
+        <Row className="mx-0 mt-3 d-flex">
+          <div className="ml-auto d-flex">
+            <Col>
+              <BooleanToggleInput
+                fieldName={"isProfiles"}
+                dataObject={wizardModel}
+                setDataObject={setWizardModel}
+              />
+            </Col>
+          </div>
+        </Row>
         <SaveButtonContainer>
           <MergeSyncTaskWizardCreateNewRecordButton
             wizardModel={wizardModel}

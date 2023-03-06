@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import VanitySetTabAndViewContainer from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import { faBracketsCurly, faCheckCircle, faTrash } from "@fortawesome/pro-light-svg-icons";
+import { faBracketsCurly } from "@fortawesome/pro-light-svg-icons";
 import {
   MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS
 } from "components/tasks/details/tasks/merge_sync_task/wizard/screens/commit_selection_screen/mergeSyncTaskWizardCommitSelectorContainer.heights";
 import MonacoEditorCodeDiffInputBase
   from "components/common/inputs/code/monaco/MonacoEditorCodeDiffInputBase";
 import MergeSyncTaskWizardSubmitEditedFileButton from "../file_editor/MergeSyncTaskWizardSubmitEditedFileButton";
+import MergeSyncTaskWizardProfilesAdvancedEditingPanel
+  from "../file_editor/MergeSyncTaskWizardProfilesAdvancedEditingPanel";
 
 const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
   file,
@@ -23,8 +25,9 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
   destinationContent,
   theme,
   inlineDiff,
+  inJsonView,
+  setInJsonView,
 }) => {
-
   const onChangeHandler = (editedContent) => {
     const newComparisonFileModel = { ...comparisonFileModel };
     newComparisonFileModel?.setData("manualContent", editedContent);
@@ -32,8 +35,28 @@ const MergeSyncTaskWizardDiffSelectorVerticalTabContainer = ({
   };
 
   const getCurrentView = () => {
+    if (!comparisonFileModel) {
+      return <div className={"m-2"}>Unsupported File Format</div>;
+    }
     if (destinationContent?.length < 1 && sourceContent?.length < 1) {
       return <div className={"m-2"}>No changes returned from the service</div>;
+    }
+
+    if (inJsonView) {
+      return(
+        <MergeSyncTaskWizardProfilesAdvancedEditingPanel
+          wizardModel={wizardModel}
+          setWizardModel={setWizardModel}
+          comparisonFileModel={comparisonFileModel}
+          setComparisonFileModel={setComparisonFileModel}
+          originalContent={destinationContent}
+          modifiedContent={sourceContent}
+          isLoading={isLoading}
+          height={
+            MERGE_SYNC_TASK_WIZARD_COMMIT_SELECTOR_CONTAINER_HEIGHTS.DIFF_FILE_CONTAINER_HEIGHT
+          }
+        />
+      );
     }
 
     return (
@@ -90,7 +113,9 @@ MergeSyncTaskWizardDiffSelectorVerticalTabContainer.propTypes = {
   setWizardModel: PropTypes.func,
   file: PropTypes.object,
   theme: PropTypes.string,
-  inlineDiff: PropTypes.bool
+  inlineDiff: PropTypes.bool,
+  inJsonView: PropTypes.bool,
+  setInJsonView: PropTypes.func,
 };
 
 MergeSyncTaskWizardDiffSelectorVerticalTabContainer.defaultProps = {
