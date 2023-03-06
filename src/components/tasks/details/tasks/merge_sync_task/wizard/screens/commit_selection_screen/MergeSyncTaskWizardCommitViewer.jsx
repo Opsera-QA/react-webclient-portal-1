@@ -33,6 +33,7 @@ const MergeSyncTaskWizardCommitViewer = ({
   useEffect(() => {
     setComparisonFileModel(undefined);
     setInEditingMode(false);
+    setInJsonView(false);
 
     if (hasStringValue(diffFile?.committedFile)) {
       loadData().catch((error) => {
