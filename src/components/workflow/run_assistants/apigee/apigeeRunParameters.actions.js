@@ -61,3 +61,14 @@ apigeeRunParametersActions.getMigrationObjectDependencies = async (getAccessToke
   };
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
+
+apigeeRunParametersActions.getKvmEntries = async (getAccessToken, cancelTokenSource, toolId, dataObject) => {
+  const apiUrl = `/pipelines/apigee/run-parameters/kvm/entries`;
+  const postBody = {
+    toolId: toolId,
+    name: dataObject.name,
+    type: dataObject.type,
+    environment: dataObject.environment,
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
