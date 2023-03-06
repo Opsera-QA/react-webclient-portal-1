@@ -52,31 +52,31 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
       setIsJsonLoading(true);
       // TODO : Convert both original and modified contents to JSON
 
-      const jsonContent =
-        await mergeSyncTaskWizardActions.componentTypeConvertView(
-          getAccessToken,
-          cancelTokenSource,
-          wizardModel,
-          fileName,
-          "CustomApplication",
-        );
+      const jsonContent = mockData;
+        // await mergeSyncTaskWizardActions.componentTypeConvertView(
+        //   getAccessToken,
+        //   cancelTokenSource,
+        //   wizardModel,
+        //   fileName,
+        //   "CustomApplication",
+        // );
 
       if (isMounted?.current === true) {
         setModifiedContentJson(
-          JSON.parse(
+          // JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.sourceContent",
             ),
-          ),
+          // ),
         );
         setOriginalContentJson(
-          JSON.parse(
+          // JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.destinationContent",
             ),
-          ),
+          // ),
         );
       }
     } catch (error) {
@@ -221,7 +221,7 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
   const originalAppVisibilityEditView = () => {
     return (
       <Col>
-        <span className="h5">Source Profiles</span>
+        <span className="h5">Target Profiles</span>
         {originalContentJson &&
           Object.keys(originalContentJson).length > 0 &&
           originalContentJson?.applicationVisibilities

@@ -54,31 +54,31 @@ const MergeSyncTaskWizardCustomPermissionsJsonEditPanel = ({
       setIsJsonLoading(true);
       // TODO : Convert both original and modified contents to JSON
 
-      const jsonContent =
-        await mergeSyncTaskWizardActions.componentTypeConvertView(
-          getAccessToken,
-          cancelTokenSource,
-          wizardModel,
-          fileName,
-          "CustomPermission",
-        );
+      const jsonContent = mockData;
+        // await mergeSyncTaskWizardActions.componentTypeConvertView(
+        //   getAccessToken,
+        //   cancelTokenSource,
+        //   wizardModel,
+        //   fileName,
+        //   "CustomPermission",
+        // );
 
       if (isMounted?.current === true) {
         setModifiedContentJson(
-          JSON.parse(
+          // JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.sourceContent",
             ),
-          ),
+          // ),
         );
         setOriginalContentJson(
-          JSON.parse(
+          // JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.destinationContent",
             ),
-          ),
+          // ),
         );
       }
     } catch (error) {
