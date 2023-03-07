@@ -22,7 +22,7 @@ function ScriptsHelpDocumentation() {
         <div className={"mt-2 ml-4"}><b>To create a new script:</b>
           <ol>
             <li>Select the <b>+New Script</b> button.</li>
-            <li>Complete the <b>Create New Script</b> form including <b>Name</b>, <b>Language</b>, <b>Script</b> and apply any access roles.</li>
+            <li>Complete the <b>Create New Script</b> form including <b>Name</b>, <b>Language</b>, <b>Script</b> and apply any access rules.</li>
             <li>Select <b>Create</b> button to save the new script in the Opsera Scripts Library. The script can now be referenced in a pipeline.</li>
           </ol>
           <div className={"mb-1"}>For more detailed information on Script creation and how to configure a script in Opsera pipelines,

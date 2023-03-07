@@ -59,7 +59,7 @@ export default function PipelineInstructionsFieldBase(
         <AccessRoleDisplayer
           className={"mt-3"}
           roles={pipelineInstructionsModel?.getArrayData("roles")}
-          noDataMessage={"This set of Pipeline Instructions does not have Access Roles applied, so anyone can see and use it."}
+          noDataMessage={"This set of Pipeline Instructions does not have Access Rules applied, so anyone can see and use it."}
         />
       );
     }

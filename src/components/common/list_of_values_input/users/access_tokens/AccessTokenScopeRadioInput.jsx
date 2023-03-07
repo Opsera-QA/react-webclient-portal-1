@@ -17,7 +17,7 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             disabled={disabled}
             value={"api"}
             label={<span>API Access</span>}
-            description={"Grants complete read/write access to the API, including all Pipeline and Tool Registry routes based on individual resource access roles."}
+            description={"Grants complete read/write access to the API, including all Pipeline and Tool Registry routes based on individual resource access rules."}
           />
         </Col>
         <Col xs={12} md={6} className={"d-flex pl-2 py-2"}>
@@ -28,7 +28,7 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             disabled={disabled}
             value={"api-readonly"}
             label={<span>API Access (Read Only)</span>}
-            description={"Grants complete read access to the API, including all Pipeline and Tool Registry routes based on individual resource access roles."}
+            description={"Grants complete read access to the API, including all Pipeline and Tool Registry routes based on individual resource access rules."}
           />
         </Col>
         <Col xs={12} md={6} className={"d-flex pr-2 py-2"}>

@@ -28,7 +28,7 @@ function TaskCreationHelpDocumentation({closeHelpPanel}) {
             </ul></li>
         <li><b>Tags</b> - Select any tags to be associated with your Task. Applying tags at this level will associate that tag with this Task.</li>
         <li><b>Description</b> - Provide a description for the Task.</li>
-        <li><b>Roles</b> - Assign access roles for the Task by selecting Group or User, an Assignee and Access Type.</li>
+        <li><b>Roles</b> - Assign access rules for the Task by selecting Group or User, an Assignee and Access Type.</li>
       </ul>
         </li>
       <li>Select <b>Create</b> to save. Following save, a Task may require run.</li>
