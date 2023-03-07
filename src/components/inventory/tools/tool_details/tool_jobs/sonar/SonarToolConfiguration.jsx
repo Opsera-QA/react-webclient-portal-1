@@ -30,7 +30,7 @@ function SonarToolConfiguration( { toolData, setUpMode, setCurrentScreen }) {
     newConfiguration.sonarAuthToken = await toolsActions.saveKeyPasswordToVault(sonarConfigurationDto,"sonarAuthToken", newConfiguration.sonarAuthToken, vaultKey, getAccessToken, toolData.getData("_id"));
     const item = { configuration: newConfiguration };
     await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
-    if (setUpMode === "wizard") setCurrentScreen("connection_test");
+    if (setUpMode === "wizard") setCurrentScreen("tool_detail");
   };
 
   return (
