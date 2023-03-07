@@ -24,7 +24,7 @@ function ParametersHelpDocumentation() {
                 <li><b>Name</b> - Set a unique name for the parameter. Name must begin with <b>opsera-</b> and contain lowercase letters, numbers, dashes and periods.</li>
                 <li><b>Secured in Vault</b> - Toggle is enabled by default. If you wish to disable, the parameter will not be secured in the vault. Once this value is set and the form is saved it cannot be changed.</li>
                 <li><b>Value</b> - Value by default will be hidden. To view, click on the eye icon.</li>
-                <li><b>Roles</b> - Set any access roles by Assignee and Access Type. Select <b>Add Role</b> to save.</li>
+                <li><b>Roles</b> - Set any access rules by Assignee and Access Type. Select <b>Add Role</b> to save.</li>
               </ul></li>
             <li>Select <b>Create</b> button to save the parameter. The parameter can now be referenced in a pipeline.</li>
           </ol>

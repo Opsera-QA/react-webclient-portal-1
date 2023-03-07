@@ -92,7 +92,7 @@ function AzureAcrPushRepositoryNameSelectInput({
         setPlaceholderText("Error Pulling Clusters!");
         setErrorMessage(`
         The selected Application was not found. 
-        It may have been deleted, or the Tool's access roles may have been updated.
+        It may have been deleted, or the Tool's access rules may have been updated.
         Please select another Application or create another in the Tool Registry.
       `);
         return;
