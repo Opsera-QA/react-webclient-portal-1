@@ -74,7 +74,7 @@ export default function AccessRoleDisplayerField(
   return (
     <TooltipWrapper
       innerText={<AccessRoleDisplayer roles={roles} />}
-      title={"Access Roles"}
+      title={"Access Rules"}
       showCloseButton={false}
       className={"popover-filter"}
     >
@@ -101,5 +101,5 @@ AccessRoleDisplayerField.propTypes = {
 };
 
 AccessRoleDisplayerField.defaultProps = {
-  noDataMessage: "No Access Roles Applied",
+  noDataMessage: "No Access Rules Applied",
 };
