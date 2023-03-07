@@ -101,28 +101,6 @@ function PipelineWorkflowItemList(
     }
   };
 
-  const handleMoveStep = async (itemId, index, direction) => {
-    const steps = plan;
-
-    if (direction === "up" && index > 0) {
-      setIsSaving(true);
-      let cutOut = steps.splice(index, 1) [0];
-      steps.splice(index - 1, 0, cutOut);
-
-      await quietSavePlan(steps);
-      setIsSaving(false);
-
-    } else if (direction === "down" && index < steps.length - 1) {
-      setIsSaving(true);
-
-      let cutOut = steps.splice(index, 1) [0];
-      steps.splice(index + 1, 0, cutOut);
-
-      await quietSavePlan(steps);
-      setIsSaving(false);
-    }
-  };
-
   const moveStepUp = async (itemId) => {
     try {
       setIsSaving(true);
@@ -216,7 +194,7 @@ function PipelineWorkflowItemList(
               icon={faPlusSquare}
               iconSize={"lg"}
               className={"green pointer ml-2 mr-1"}
-              onClickFunction={isSaving !== true ? () => handleAddStep(item._id, index, "up") : undefined}
+              onClickFunction={isSaving !== true ? () => handleAddStep(item._id, index) : undefined}
               overlayBody={"Add new step here"}
             />
             <IconBase isLoading={isLoading || isSaving} />
@@ -224,14 +202,14 @@ function PipelineWorkflowItemList(
               icon={faCopy}
               iconSize={"lg"}
               className={"yellow pointer ml-1 mr-2"}
-              onClickFunction={isSaving !== true ? () => handleCopyStep(item._id, index, "up") : undefined}
+              onClickFunction={isSaving !== true ? () => handleCopyStep(item._id, index) : undefined}
               overlayBody={"Copy previous step"}
             />
             <OverlayIconBase
               icon={faCaretSquareDown}
               iconSize={"lg"}
-              className={index === plan.length - 1 ? "fa-disabled" : "pointer dark-grey"}
-              onClickFunction={isSaving !== true && index >= plan.length - 1 ? () => moveStepDown(item._id) : undefined}
+              className={index >= plan.length - 1 ? "fa-disabled" : "pointer dark-grey"}
+              onClickFunction={isSaving !== true && index < plan.length - 1 ? () => moveStepDown(item._id) : undefined}
               overlayBody={"Move upper step down one position"}
             />
           </div>
