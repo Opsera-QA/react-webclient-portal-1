@@ -31,7 +31,7 @@ function ArgoToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
     newConfiguration.secretAccessTokenKey = await toolsActions.savePasswordToVault(toolData, argoConfigurationDto,"secretAccessTokenKey", newConfiguration.secretAccessTokenKey, getAccessToken);
     const item = { configuration: newConfiguration };
     await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
-    if (setUpMode === "wizard") setCurrentScreen("connection_test");
+    if (setUpMode === "wizard") setCurrentScreen("tool_detail");
   };
 
   const getDynamicFields = () => {
