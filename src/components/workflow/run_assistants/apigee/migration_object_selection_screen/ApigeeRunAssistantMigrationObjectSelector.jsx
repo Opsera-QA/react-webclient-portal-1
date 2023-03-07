@@ -138,9 +138,9 @@ const ApigeeRunAssistantMigrationObjectSelector = (
     const dataObj = {...apigeeRunParametersModel};
     const migrationObjArray = apigeeRunParametersModel.getData("selectedMigrationObjects");
     let newMigrationObject = {...migrationObject};
-    newMigrationObject.kvmEntries = kvmEntries;
+    newMigrationObject.setData("kvmEntries", kvmEntries);
     setMigrationObject({...newMigrationObject});
-    migrationObjArray.push(newMigrationObject);
+    migrationObjArray.push(newMigrationObject.getPersistData());
     dataObj.setData("selectedMigrationObjects", migrationObjArray);
     setApigeeRunParametersModel({...dataObj});
     setUpdateModeValue("");
