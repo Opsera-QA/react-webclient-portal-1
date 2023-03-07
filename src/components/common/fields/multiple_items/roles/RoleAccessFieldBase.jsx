@@ -35,7 +35,7 @@ function RoleAccessFieldBase(
           />
           <VanityInlineError
             className={"my-auto"}
-            text={`Warning, this ${model.getType()} does not have Access Roles applied, so anyone can see and use it.`}
+            text={`Warning, this ${model.getType()} does not have Access Rules applied, so anyone can see and use it.`}
           />
         </>
       );

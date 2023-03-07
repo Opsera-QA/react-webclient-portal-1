@@ -23,7 +23,7 @@ export default function RbacWarningField({ model }) {
     return (
       <VanityInlineError
         className={"my-2"}
-        text={`Warning, this ${model.getType()} does not have Access Roles applied, so anyone can see and use it.`}
+        text={`Warning, this ${model.getType()} does not have Access Rules applied, so anyone can see and use it.`}
       />
     );
   }

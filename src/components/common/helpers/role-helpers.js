@@ -108,7 +108,7 @@ export const isUserOrSassUser = (accessRoleData) => {
 export const ACCESS_ROLE_PERMISSION_MESSAGES = {
   ADMINISTRATOR: "Site Administrator User Role: Your account has full access to the Opsera platform and its settings.",
   POWER_USER: "Power User Role: Your account has elevated privileges to the Opsera platform.",
-  USER: "Standard User Role: Your account has standard user access to the Opsera platform and inherits access based on individual item access roles.",
+  USER: "Standard User Role: Your account has standard user access to the Opsera platform and inherits access based on individual item access rules.",
   SECURITY_MANAGER: "Security Manager User Role: Your account has read access to Tools, Tasks, and Pipelines in the Opsera platform and write access to security-owned items.",
   AUDITOR: "Auditor User Role: Your account has full read access to Tools, Tasks, and Pipelines im the Opsera platform.",
   GUEST: "Guest User Role: Your account does not have any privileges associated with the Opsera platform and can only view and edit some data.",
@@ -117,7 +117,7 @@ export const ACCESS_ROLE_PERMISSION_MESSAGES = {
 export const ACCESS_ROLE_PERMISSION_MESSAGES_WITHOUT_ROLE = {
   ADMINISTRATOR: "Your account has full access to the Opsera platform and its settings.",
   POWER_USER: "Your account has elevated privileges to the Opsera platform.",
-  USER: "Your account has standard user access to the Opsera platform and inherits access based on individual item access roles.",
+  USER: "Your account has standard user access to the Opsera platform and inherits access based on individual item access rules.",
   SECURITY_MANAGER: "Your account has full read access to the Opsera platform and write access to security-owned items.",
   AUDITOR: "Your account has full read access to the Opsera platform.",
   GUEST: "Your account does not have any privileges associated with the Opsera platform and can only view and edit some data.",

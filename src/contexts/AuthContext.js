@@ -39,7 +39,7 @@ const AuthContextProvider = (
         setUserAccessRoles(newUserAccessRoles);
       }).catch((error) => {
         if (isMounted?.current === true) {
-          console.error("Could not set User access roles: " + JSON.stringify(error));
+          console.error("Could not set User access rules: " + JSON.stringify(error));
           setUserAccessRoles({});
           throw error;
         }

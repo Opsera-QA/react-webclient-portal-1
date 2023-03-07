@@ -180,7 +180,7 @@ export default function FreeTrialInsightsLanding() {
         },
         "edit_access_roles": {
             "id": "edit_access_roles",
-            "description": "Able to update a Dashboard's Access Roles",
+            "description": "Able to update a Dashboard's Access Rules",
             "allowedRoles": [
                 "opsera_administrator",
                 "site_administrator",

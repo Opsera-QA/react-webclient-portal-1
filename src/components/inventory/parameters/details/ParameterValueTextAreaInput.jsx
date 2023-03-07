@@ -43,7 +43,7 @@ function ParameterValueTextAreaInput(
     const isRequiredFunction = regexDefinition?.isRequiredFunction;
 
     if (isRequiredFunction != null && isRequiredFunction(model) === false) {
-      return ("Values are visible to all users if no Access Roles are assigned to this record. Value can be up to 16,000 characters and contain alphanumeric characters, spaces, and these symbols: @ ! & + * - _ / \\ . $ [ ] : , ; |");
+      return ("Values are visible to all users if no Access Rules are assigned to this record. Value can be up to 16,000 characters and contain alphanumeric characters, spaces, and these symbols: @ ! & + * - _ / \\ . $ [ ] : , ; |");
     }
   };
 
