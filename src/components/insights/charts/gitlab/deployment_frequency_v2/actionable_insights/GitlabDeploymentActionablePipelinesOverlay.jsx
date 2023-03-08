@@ -57,7 +57,7 @@ function GitlabDeploymentActionablePipelinesOverlay({ kpiConfiguration, dashboar
             let dashboardTags = dashboardMetricFilter?.tags;
             let dashboardOrgs = dashboardMetricFilter?.organizations;
 
-            const response = await gitlabAction.getActionablePipelinesChartData(
+            const response = await gitlabAction.getActionablePipelinesChartDataV2(
                 getAccessToken,
                 cancelSource,
                 kpiConfiguration,
