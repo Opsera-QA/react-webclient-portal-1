@@ -168,6 +168,10 @@ primary analytics font*/
     color: #3D3B36;
 }
 
+.background-white {
+    background-color: #FFF;
+}
+
 .background-shading {
     background-color: #FCFCFC;
 }

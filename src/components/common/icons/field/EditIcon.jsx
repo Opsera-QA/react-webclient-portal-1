@@ -12,6 +12,7 @@ function EditIcon(
     disabled,
     iconClassName,
     iconTransformProperties,
+    iconSize,
   }) {
 
   if (disabled === true || handleEditFunction == null) {
@@ -24,6 +25,7 @@ function EditIcon(
         <IconBase
           onClickFunction={() => {handleEditFunction();}}
           icon={faPencilAlt}
+          iconSize={iconSize}
           className={"pointer"}
           iconTransformProperties={iconTransformProperties}
           iconClassName={iconClassName}
@@ -40,6 +42,7 @@ EditIcon.propTypes = {
   disabled: PropTypes.bool,
   iconClassName: PropTypes.string,
   iconTransformProperties: PropTypes.any,
+  iconSize: PropTypes.string,
 };
 
 export default EditIcon;
