@@ -73,7 +73,7 @@ function DoraJiraGitlabRolledUpColumnDataBlock({
         <Row
             className={`ml-3 w-100 h-100 text-center maturity-rolled-up-border ${maturityColor}`}
         >
-          <div style={{ minHeight: "400px" }}>{getOrgData(overlayData)}</div>
+          <div style={{ minHeight: "3rem" }}>{getOrgData(overlayData)}</div>
         </Row>
       </div>
   );
