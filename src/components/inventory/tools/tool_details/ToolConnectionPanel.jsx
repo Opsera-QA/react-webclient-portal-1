@@ -102,7 +102,7 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC,
 ];
 
-function ToolConnectionPanel({ toolData, setToolData }) {
+function ToolConnectionPanel({ toolData, setToolData, setUpMode, setCurrentScreen, setButtonContainer, handleClose }) {
   const getConnectionPanel = () => {
     if (toolData == null) {
       return <></>;
@@ -119,96 +119,96 @@ function ToolConnectionPanel({ toolData, setToolData }) {
           </div>
         );
       case "jenkins":
-        return <JenkinsToolConfiguration toolData={toolData} />;
+        return <JenkinsToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "jira":
-        return <JiraToolConfiguration toolData={toolData} />;
+        return <JiraToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "github":
-        return <GithubToolConfiguration toolData={toolData} />;
+        return <GithubToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "gitlab":
-        return <GitlabToolConfiguration toolData={toolData} />;
+        return <GitlabToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "bitbucket":
-        return <BitbucketToolConfiguration toolData={toolData} />;
+        return <BitbucketToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "spinnaker":
-        return <SpinnakerToolConfiguration toolData={toolData} />;
+        return <SpinnakerToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "cypress":
-        return <CypressToolConfiguration toolData={toolData} />;
+        return <CypressToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
-        return <ArgoToolConfiguration toolData={toolData} />;
+        return <ArgoToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "anchore-scan":
-        return <AnchoreScanToolConfiguration toolData={toolData} />;
+        return <AnchoreScanToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "anchore-integrator":
-        return <AnchoreIntegratorToolConfiguration toolData={toolData} />;
+        return <AnchoreIntegratorToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "sonar":
-        return <SonarToolConfiguration toolData={toolData} />;
+        return <SonarToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "aws_account":
-        return <AwsToolConfiguration toolData={toolData} />;
+        return <AwsToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR:
-        return <SfdcToolConfiguration toolData={toolData} />;
+        return <SfdcToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "nexus":
-        return <NexusToolConfiguration toolData={toolData} />;
+        return <NexusToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "teams":
-        return <TeamsToolConfiguration toolData={toolData} />;
+        return <TeamsToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "octopus":
-        return <OctopusToolConfiguration toolData={toolData} />;
+        return <OctopusToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "slack":
-        return <SlackToolConfiguration toolData={toolData}/>;
+        return <SlackToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen} setButtonContainer={setButtonContainer} handleClose={handleClose}/>;
       case "azure_account":
-        return <AzureToolConfiguration toolData={toolData} />;
+        return <AzureToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "jfrog_artifactory_maven":
       case "jfrog_artifactory_docker":
-        return <JFrogToolConfiguration toolData={toolData} />;
+        return <JFrogToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "servicenow":
-        return <ServiceNowToolConfiguration toolData={toolData} /> ;
+        return <ServiceNowToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/> ;
       case "azure-devops":
-        return <AzureDevopsToolConfiguration toolData={toolData} />;
+        return <AzureDevopsToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "hashicorp_vault":
-        return <HashicorpVaultToolConfiguration toolData={toolData} />;
+        return <HashicorpVaultToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "kafka_connect":
-        return <KafkaConnectToolConfiguration toolData={toolData} />;
+        return <KafkaConnectToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "coverity":
-        return <CoverityToolConfiguration toolData={toolData} />;
+        return <CoverityToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "twistlock":
-        return <TwistlockToolConfiguration toolData={toolData} />;
+        return <TwistlockToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "azure":
-        return <AzureV2ToolConfiguration toolData={toolData} />;
+        return <AzureV2ToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "ansible":
-        return <AnsibleToolConfiguration toolData={toolData} />;
+        return <AnsibleToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "mongodb_realm":        
-        return <MongodbRealmToolConfiguration toolData={toolData} />;
+        return <MongodbRealmToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR:
-        return <FlywayDatabaseToolConnectionEditorPanel toolData={toolData} />;
+        return <FlywayDatabaseToolConnectionEditorPanel toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "informatica":
-        return <InformaticaToolConfiguration toolData={toolData} />;
+        return <InformaticaToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "terraform-cloud":
-        return <TerraformCloudToolConfiguration toolData={toolData} />;
+        return <TerraformCloudToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "buildkite":
-        return <BuildkiteToolConfiguration toolData={toolData} />;
+        return <BuildkiteToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "gcp_account":
-        return <GcpToolConfiguration toolData={toolData} />;
+        return <GcpToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB_DEPLOY_KEY:
         return <GithubDeploykeysToolConfigurationPanel toolData={toolData} />;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE:
-        return <ApigeeToolConnectionEditorPanel toolData={toolData} />;
+        return <ApigeeToolConnectionEditorPanel toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC:
-        return <SnaplogicToolConfiguration toolData={toolData} />;
+        return <SnaplogicToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ:
-        return <SapCpqToolConfiguration toolData={toolData} />;
+        return <SapCpqToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.BOOMI:
-        return <BoomiToolConfiguration toolData={toolData} />;
+        return <BoomiToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case "informatica-idq":
-        return <InformaticaIdqToolConfiguration toolData={toolData} />;
+        return <InformaticaIdqToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE:
-        return <LiquibaseToolConfiguration toolData={toolData} />;
+        return <LiquibaseToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK:
-        return <BlackduckToolConfiguration toolData={toolData} />;
+        return <BlackduckToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.GCHAT:
-        return <GChatToolConfiguration toolData={toolData} />;
+        return <GChatToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY:
-        return <FortifyToolConfiguration toolData={toolData} />;
+        return <FortifyToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK:
-        return <SnykToolConfiguration toolData={toolData} />;
+        return <SnykToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
-        return <AquasecToolConfiguration toolData={toolData} />;
+        return <AquasecToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       default:
         return <div className="text-center p-5 text-muted mt-5">Connection configuration is not currently available for this tool.</div>;
     }
@@ -224,6 +224,10 @@ function ToolConnectionPanel({ toolData, setToolData }) {
 ToolConnectionPanel.propTypes = {
   toolData: PropTypes.object,
   setToolData: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func,
+  setButtonContainer: PropTypes.func,
+  handleClose: PropTypes.func,
 };
 
 

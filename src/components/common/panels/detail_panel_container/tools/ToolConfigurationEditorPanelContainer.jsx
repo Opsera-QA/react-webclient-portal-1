@@ -17,9 +17,10 @@ function ToolConfigurationEditorPanelContainer(
     toolConnectionCheckName,
     toolData,
     leftSideButtons,
+    setUpMode
   }) {
   const getToolConnectionCheckButton = () => {
-    if (toolConnectionCheckName != null && toolData != null) {
+    if (toolConnectionCheckName != null && toolData != null && !setUpMode) {
      return (
         <TestToolConnectionButton
           toolModel={toolData}
@@ -64,6 +65,7 @@ ToolConfigurationEditorPanelContainer.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   leftSideButtons: PropTypes.any,
+  setUpMode: PropTypes.string
 };
 
 ToolConfigurationEditorPanelContainer.defaultProps = {

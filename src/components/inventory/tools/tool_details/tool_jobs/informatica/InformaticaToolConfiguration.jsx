@@ -12,7 +12,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import InformaticaRegionSelectInput from "components/common/list_of_values_input/tools/informatica/InformaticaRegionSelectInput";
 
-function InformaticaToolConfiguration({ toolData }) {
+function InformaticaToolConfiguration({ toolData , setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [informaticaConfigurationDto, setInformaticaConfigurationDto] = useState(undefined);
 
@@ -29,7 +29,8 @@ function InformaticaToolConfiguration({ toolData }) {
     newConfiguration.password = await toolsActions.savePasswordToVault(toolData, informaticaConfigurationDto, "password", newConfiguration.password, getAccessToken);
 
     const item = {configuration: newConfiguration};
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   return (
@@ -39,6 +40,7 @@ function InformaticaToolConfiguration({ toolData }) {
       persistRecord={saveInformaticaToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"informatica"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -55,7 +57,9 @@ InformaticaToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId: PropTypes.string,
   saveToolConfiguration: PropTypes.func,
-  fnSaveToVault: PropTypes.func
+  fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default InformaticaToolConfiguration;

@@ -13,7 +13,7 @@ import ToolConfigurationEditorPanelContainer
 import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
 import ArgoToolSecretTokenToggleInput from "./ArgoToolSecretTokenToggleInput";
 
-function ArgoToolConfiguration({ toolData }) {
+function ArgoToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [argoConfigurationDto, setArgoConfigurationDto] = useState(undefined);
 
@@ -30,7 +30,8 @@ function ArgoToolConfiguration({ toolData }) {
     newConfiguration.accountPassword = await toolsActions.savePasswordToVault(toolData, argoConfigurationDto,"accountPassword", newConfiguration.accountPassword, getAccessToken);
     newConfiguration.secretAccessTokenKey = await toolsActions.savePasswordToVault(toolData, argoConfigurationDto,"secretAccessTokenKey", newConfiguration.secretAccessTokenKey, getAccessToken);
     const item = { configuration: newConfiguration };
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("tool_detail");
   };
 
   const getDynamicFields = () => {
@@ -52,6 +53,7 @@ function ArgoToolConfiguration({ toolData }) {
       persistRecord={saveArgoToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Argocd"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -66,6 +68,8 @@ function ArgoToolConfiguration({ toolData }) {
 
 ArgoToolConfiguration.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default ArgoToolConfiguration;

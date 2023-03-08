@@ -10,7 +10,7 @@ import {AuthContext} from "contexts/AuthContext";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 
-function CypressToolConfiguration({ toolData }) {
+function CypressToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [cypressConfigurationDto, setCypressConfigurationDto] = useState(undefined);
 
@@ -27,7 +27,8 @@ function CypressToolConfiguration({ toolData }) {
     const vaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
     newConfiguration.jAuthToken = await toolsActions.saveKeyPasswordToVault(cypressConfigurationDto, "jAuthToken", newConfiguration.jAuthToken, vaultKey, getAccessToken, toolData.getData("_id"));
     const item = { configuration: newConfiguration };
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("tool_detail");
   };
 
   return (
@@ -57,7 +58,9 @@ CypressToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId:  PropTypes.string,
   fnSaveChanges: PropTypes.func,
-  fnSaveToVault: PropTypes.func
+  fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default CypressToolConfiguration;

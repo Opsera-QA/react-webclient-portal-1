@@ -12,7 +12,7 @@ import axios from "axios";
 import SnaplogicMetadata from "./snaplogic-tool-metadata";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 
-const SnaplogicToolConfiguration = ({ toolData }) => {
+const SnaplogicToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [snaplogicConfigurationModel, setSnaplogicConfigurationModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -63,7 +63,8 @@ const SnaplogicToolConfiguration = ({ toolData }) => {
       newConfiguration?.metaSnapToken
     );
 
-    return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
+    await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   if (snaplogicConfigurationModel == null) {
@@ -77,6 +78,7 @@ const SnaplogicToolConfiguration = ({ toolData }) => {
       persistRecord={saveSnaplogicToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>          
@@ -113,6 +115,8 @@ const SnaplogicToolConfiguration = ({ toolData }) => {
 
 SnaplogicToolConfiguration.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default SnaplogicToolConfiguration;

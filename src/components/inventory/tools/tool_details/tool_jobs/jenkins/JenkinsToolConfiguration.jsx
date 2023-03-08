@@ -15,7 +15,7 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import RotateJenkinsKeyButton from "components/common/buttons/inventory/RotateJenkinsKeyButton";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 
-function JenkinsToolConfiguration({ toolData }) {
+function JenkinsToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [jenkinsConfigurationDto, setJenkinsConfigurationDto] = useState(undefined);
 
@@ -39,7 +39,8 @@ function JenkinsToolConfiguration({ toolData }) {
     newConfiguration.jPassword = await toolsActions.savePasswordToVault(toolData, jenkinsConfigurationDto, "jPassword", newConfiguration.jPassword, getAccessToken);
     newConfiguration.proxyPassword = await toolsActions.savePasswordToVault(toolData, jenkinsConfigurationDto, "proxyPassword", newConfiguration.proxyPassword, getAccessToken);
     const item = { configuration: newConfiguration };
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   const getRotateJenkinsKeyButton = () => {
@@ -80,6 +81,7 @@ function JenkinsToolConfiguration({ toolData }) {
       persistRecord={saveJenkinsToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Jenkins"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -97,6 +99,8 @@ function JenkinsToolConfiguration({ toolData }) {
 
 JenkinsToolConfiguration.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default JenkinsToolConfiguration;

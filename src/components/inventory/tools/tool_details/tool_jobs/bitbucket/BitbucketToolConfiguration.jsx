@@ -23,7 +23,7 @@ const bitBucketApiTypeArray = [
     "value": "server"
   }
 ];
-function BitbucketToolConfiguration({ toolData }) {
+function BitbucketToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [bitbucketConfigurationDto, setBitbucketConfigurationDto] = useState(undefined);
 
@@ -50,7 +50,8 @@ function BitbucketToolConfiguration({ toolData }) {
     const secretAccessTokenVaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}-secretAccessTokenKey`;
     newConfiguration.secretAccessTokenKey = await toolsActions.saveKeyPasswordToVault(bitbucketConfigurationDto,"secretAccessTokenKey", newConfiguration.secretAccessTokenKey, secretAccessTokenVaultKey, getAccessToken, toolData.getData("_id"));
     const item = {configuration: newConfiguration};
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   const getDynamicFields = () => {
@@ -76,6 +77,7 @@ function BitbucketToolConfiguration({ toolData }) {
       persistRecord={saveBitbucketToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Bitbucket"}
+      setUpMode={setUpMode}
     >
       <Col sm={12}>
         <TextInputBase dataObject={bitbucketConfigurationDto} setDataObject={setBitbucketConfigurationDto} fieldName={"url"}/>
@@ -109,7 +111,9 @@ BitbucketToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId:  PropTypes.string,
   saveToolConfiguration: PropTypes.func,
-  fnSaveToVault: PropTypes.func
+  fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default BitbucketToolConfiguration;

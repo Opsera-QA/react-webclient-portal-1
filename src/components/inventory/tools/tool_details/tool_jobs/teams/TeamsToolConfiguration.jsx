@@ -10,7 +10,7 @@ import ToolConfigurationEditorPanelContainer
   from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 
-function TeamsToolConfiguration({ toolData }) {
+function TeamsToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [teamsConfigurationDto, setTeamsConfigurationDto] = useState(undefined);
 
@@ -29,7 +29,9 @@ function TeamsToolConfiguration({ toolData }) {
     const vaultKey = toolData.getData("_id");
     newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(teamsConfigurationDto,"webhookUrl", newConfiguration.webhookUrl, vaultKey, getAccessToken, toolData.getData("_id"));
     const item = { configuration: newConfiguration };
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
+
   };
 
   if (teamsConfigurationDto == null) {
@@ -43,6 +45,7 @@ function TeamsToolConfiguration({ toolData }) {
       persistRecord={saveTeamsToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Teams"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -55,6 +58,8 @@ function TeamsToolConfiguration({ toolData }) {
 
 TeamsToolConfiguration.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default TeamsToolConfiguration;
