@@ -11,7 +11,7 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
-function TwistlockToolConfiguration({ toolData }) {
+function TwistlockToolConfiguration({ toolData , setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [twistlockConfigurationDto, setTwistlockConfigurationDto] = useState(undefined);
 
@@ -28,7 +28,8 @@ function TwistlockToolConfiguration({ toolData }) {
     newConfiguration.accountPassword = await toolsActions.savePasswordToVault(toolData, twistlockConfigurationDto, "accountPassword", newConfiguration.accountPassword, getAccessToken);
 
     const item = {configuration: newConfiguration};
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   return (
@@ -38,6 +39,7 @@ function TwistlockToolConfiguration({ toolData }) {
       persistRecord={saveTwistlockToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"twistlock"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -54,7 +56,9 @@ TwistlockToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId: PropTypes.string,
   saveToolConfiguration: PropTypes.func,
-  fnSaveToVault: PropTypes.func
+  fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default TwistlockToolConfiguration;

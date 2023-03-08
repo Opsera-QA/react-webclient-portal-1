@@ -9,12 +9,28 @@ import TagManager from "components/common/inputs/tags/TagManager";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import OverlayWizardButtonContainerBase
+  from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
-function ToolEditorPanel({ toolData, handleClose }) {
+function ToolEditorPanel({ toolData, handleClose, setButtonContainer, setCurrentScreen, setToolData }) {
   const [toolDataDto, setToolDataDto] = useState(undefined);
   const {
     isSaasUser,
   } = useComponentStateReference();
+
+  useEffect(() => {
+    if (setButtonContainer && setCurrentScreen) {
+      setButtonContainer(
+          <OverlayWizardButtonContainerBase
+              backButtonFunction={() => {
+                toolData?.setData("tool_identifier", "");
+                setToolData({...toolData});
+                setCurrentScreen("tool_identifier_select");
+              }}
+          />,
+      );
+    }
+  }, []);
 
   useEffect(() => {
     setToolDataDto(toolData);
@@ -52,7 +68,7 @@ function ToolEditorPanel({ toolData, handleClose }) {
       model={toolDataDto}
       setModel={setToolDataDto}
       showBooleanToggle={true}
-      handleClose={handleClose}
+      // handleClose={handleClose}
       className={"mx-3 mb-2"}
     >
       <Row>
@@ -84,7 +100,9 @@ function ToolEditorPanel({ toolData, handleClose }) {
 ToolEditorPanel.propTypes = {
   toolData: PropTypes.object,
   setToolData: PropTypes.func,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
+  setButtonContainer: PropTypes.func,
+  setCurrentScreen: PropTypes.func
 };
 
 export default ToolEditorPanel;

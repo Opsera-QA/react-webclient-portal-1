@@ -10,7 +10,7 @@ import {AuthContext} from "contexts/AuthContext";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 
-function MongodbRealmToolConfiguration({ toolData }) {
+function MongodbRealmToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [mongodbRealmConfigurationDto, setMongodbRealmConfigurationDto] = useState(undefined);
 
@@ -27,7 +27,8 @@ function MongodbRealmToolConfiguration({ toolData }) {
     newConfiguration.accessKey = await toolsActions.savePasswordToVault(toolData, mongodbRealmConfigurationDto, "accessKey", newConfiguration.accessKey, getAccessToken);
     newConfiguration.secretKey = await toolsActions.savePasswordToVault(toolData, mongodbRealmConfigurationDto, "secretKey", newConfiguration.secretKey, getAccessToken);    
     const item = {configuration: newConfiguration};
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
   
   return (
@@ -37,6 +38,7 @@ function MongodbRealmToolConfiguration({ toolData }) {
       persistRecord={saveMongodbRealmToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"mongodb_realm"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -52,7 +54,9 @@ MongodbRealmToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId: PropTypes.string,
   saveToolConfiguration: PropTypes.func,
-  fnSaveToVault: PropTypes.func
+  fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default MongodbRealmToolConfiguration;

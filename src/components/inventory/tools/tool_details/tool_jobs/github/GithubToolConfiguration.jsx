@@ -11,7 +11,7 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import toolsActions from "components/inventory/tools/tools-actions";
 
-function GithubToolConfiguration({ toolData }) {
+function GithubToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [githubConfigurationDto, setGithubConfigurationDto] = useState(undefined);
 
@@ -36,7 +36,8 @@ function GithubToolConfiguration({ toolData }) {
     newConfiguration.secretPrivateKey = await toolsActions.savePasswordToVault(toolData, githubConfigurationDto, "secretPrivateKey", newConfiguration.secretPrivateKey, getAccessToken, toolData.getData("_id"));
     newConfiguration.secretAccessTokenKey = await toolsActions.savePasswordToVault(toolData, githubConfigurationDto, "secretAccessTokenKey", newConfiguration.secretAccessTokenKey, getAccessToken, toolData.getData("_id"));
     const item = { configuration: newConfiguration };
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   const getDynamicFields = () => {
@@ -62,6 +63,7 @@ function GithubToolConfiguration({ toolData }) {
       persistRecord={saveGithubToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Github"}
+      setUpMode={setUpMode}
     >
       <Col sm={12}>
         <TextInputBase dataObject={githubConfigurationDto} setDataObject={setGithubConfigurationDto} fieldName={"url"}/>
@@ -81,6 +83,8 @@ function GithubToolConfiguration({ toolData }) {
 
 GithubToolConfiguration.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default GithubToolConfiguration;

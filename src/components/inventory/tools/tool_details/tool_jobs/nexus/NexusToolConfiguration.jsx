@@ -11,7 +11,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 
-function NexusToolConfiguration({ toolData }) {
+function NexusToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [nexusConfigurationDto, setNexusConfigurationDto] = useState(undefined);
 
@@ -27,7 +27,8 @@ function NexusToolConfiguration({ toolData }) {
     let newConfiguration = nexusConfigurationDto.getPersistData();
     newConfiguration.secretKey = await toolsActions.savePasswordToVault(toolData, nexusConfigurationDto,"secretKey", newConfiguration.secretKey, getAccessToken);
     const item = { configuration: newConfiguration };
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   return (
@@ -37,6 +38,7 @@ function NexusToolConfiguration({ toolData }) {
       persistRecord={saveNexusToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Nexus"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -53,7 +55,9 @@ NexusToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId:  PropTypes.string,
   fnSaveChanges: PropTypes.func,
-  fnSaveToVault: PropTypes.func
+  fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default NexusToolConfiguration;

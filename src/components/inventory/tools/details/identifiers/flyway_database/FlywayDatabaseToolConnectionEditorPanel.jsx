@@ -16,7 +16,7 @@ import {
 } from "components/inventory/tools/details/identifiers/flyway_database/flywayDatabaseToolConnection.metadata";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 
-function FlywayDatabaseToolConnectionEditorPanel({ toolData }) {
+function FlywayDatabaseToolConnectionEditorPanel({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [flywayConfigurationModel, setFlywayConfigurationModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -58,7 +58,8 @@ function FlywayDatabaseToolConnectionEditorPanel({ toolData }) {
       newConfiguration?.password
     );
 
-    return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData,newConfiguration);
+    await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData,newConfiguration);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   const getDynamicFields = () => {
@@ -121,6 +122,8 @@ function FlywayDatabaseToolConnectionEditorPanel({ toolData }) {
 
 FlywayDatabaseToolConnectionEditorPanel.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default FlywayDatabaseToolConnectionEditorPanel;

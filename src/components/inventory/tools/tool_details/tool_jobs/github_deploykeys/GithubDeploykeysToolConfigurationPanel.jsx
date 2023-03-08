@@ -8,7 +8,7 @@ import githubDeployKeyMetadata from "components/inventory/tools/tool_details/too
 import modelHelpers from "components/common/model/modelHelpers";
 import useGetRegistryToolModelById from "components/inventory/tools/hooks/useGetRegistryToolModelById";
 
-function GithubDeploykeysToolConfigurationPanel({ toolData }) {
+function GithubDeploykeysToolConfigurationPanel({ toolData, setUpMode, setCurrentScreen }) {
   const { id } = useParams();
   const [githubDeployKeyData, setGithubDeployKeyData] = useState(undefined);
   const [selectedDeployKeysData, setSelectedDeployKeysData] = useState(undefined);
@@ -92,6 +92,8 @@ GithubDeploykeysToolConfigurationPanel.propTypes = {
   toolData: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  toolActions: PropTypes.array
+  toolActions: PropTypes.array,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 export default GithubDeploykeysToolConfigurationPanel;

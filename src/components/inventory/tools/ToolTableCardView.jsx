@@ -13,6 +13,7 @@ import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
+import CreateToolRegistryWizard from "./tool_details/wizards/CreateToolRegistryWizard";
 
 function ToolTableCardView(
   {
@@ -29,9 +30,7 @@ function ToolTableCardView(
 
   const createNewTool = () => {
     toastContext.showOverlayPanel(
-      <NewToolOverlay
-        loadData={loadData}
-      />
+        <CreateToolRegistryWizard loadData={loadData}/>
     );
   };
 
