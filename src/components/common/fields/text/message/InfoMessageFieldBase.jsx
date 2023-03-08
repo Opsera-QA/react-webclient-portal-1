@@ -2,21 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import {faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
+import {faCircleInfo} from "@fortawesome/pro-light-svg-icons";
 
-export default function WarningMessageFieldBase(
+export default function InfoMessageFieldBase(
   {
     label,
     message,
     className,
-    showWarningLabel,
+    showInformationLabel,
   }) {
   const parsedMessage = DataParsingHelper.parseString(message);
 
   const getLabel = () => {
-    if (showWarningLabel !== false) {
+    if (showInformationLabel !== false) {
       return (
-        <strong className={"mr-2"}>Warning:</strong>
+        <strong className={"mr-2"}>Info:</strong>
       );
     }
   };
@@ -38,15 +38,15 @@ export default function WarningMessageFieldBase(
       className={className}
       label={label}
       message={getMessage()}
-      icon={faTriangleExclamation}
-      messageFieldClassName={"warning-message-field"}
+      icon={faCircleInfo}
+      messageFieldClassName={"info-message-field"}
     />
   );
 }
 
-WarningMessageFieldBase.propTypes = {
+InfoMessageFieldBase.propTypes = {
   label: PropTypes.string,
   message: PropTypes.string,
   className: PropTypes.string,
-  showWarningLabel: PropTypes.bool,
+  showInformationLabel: PropTypes.bool,
 };
