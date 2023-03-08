@@ -83,6 +83,37 @@ export default function usePipelineActions() {
     return await apiService.handleApiPostRequest(apiUrl);
   };
 
+  pipelineActions.duplicatePipelineStepAtIndex = async (
+    pipelineId,
+    pipelineStepId,
+    index,
+  ) => {
+    const apiUrl = `/workflow/pipelines/${pipelineId}/steps/${pipelineStepId}/index/${index}`;
+    return await apiService.handleApiPostRequest(
+      apiUrl,
+    );
+  };
+
+  pipelineActions.movePipelineStepUp = async (
+    pipelineId,
+    pipelineStepId,
+  ) => {
+    const apiUrl = `/workflow/pipelines/${pipelineId}/steps/${pipelineStepId}/up`;
+    return await apiService.handleApiPatchRequest(
+      apiUrl,
+    );
+  };
+
+  pipelineActions.movePipelineStepDown = async (
+    pipelineId,
+    pipelineStepId,
+  ) => {
+    const apiUrl = `/workflow/pipelines/${pipelineId}/steps/${pipelineStepId}/down`;
+    return await apiService.handleApiPatchRequest(
+      apiUrl,
+    );
+  };
+
   pipelineActions.deletePipelineStepById = async (
     pipelineId,
     pipelineStepId,

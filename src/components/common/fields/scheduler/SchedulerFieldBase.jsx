@@ -31,12 +31,12 @@ function SchedulerFieldBase(
     }
 
     if (scheduledTaskCount === 0) {
-      return "No scheduled tasks";
+      return "No Scheduled Tasks";
     }
 
-    const taskLabel = scheduledTaskCount === 1 ? "task" : "tasks";
+    const taskLabel = scheduledTaskCount === 1 ? "Task" : "Tasks";
 
-    return `${scheduledTaskCount} ${taskLabel} scheduled`;
+    return `${scheduledTaskCount} ${taskLabel} Scheduled`;
   };
 
   const getScheduleIcon = () => {
@@ -60,7 +60,6 @@ function SchedulerFieldBase(
         icon={faPencilAlt}
         className={"ml-2 text-muted pointer"}
         iconSize={iconSize}
-        iconTransformProperties={"shrink-5"}
         onClickFunction={showSchedulerOverlayFunction}
       />
     );
@@ -96,6 +95,10 @@ SchedulerFieldBase.propTypes = {
   error: PropTypes.any,
   isLoading: PropTypes.bool,
   iconSize: PropTypes.string,
+};
+
+SchedulerFieldBase.defaultProps = {
+  iconSize: "sm",
 };
 
 export default SchedulerFieldBase;

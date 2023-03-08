@@ -14,6 +14,7 @@ export default function PipelineNameTextInput(
     visible,
     disabled,
     className,
+    fieldClassName,
   }) {
   const {
     userData,
@@ -37,6 +38,7 @@ export default function PipelineNameTextInput(
       visible={visible}
       className={className}
       handleSaveFunction={handleSaveFunction}
+      fieldClassName={fieldClassName}
     />
   );
 }
@@ -50,6 +52,7 @@ PipelineNameTextInput.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,
   workflowStatus: PropTypes.string,
+  fieldClassName: PropTypes.string,
 };
 
 PipelineNameTextInput.defaultProps = {

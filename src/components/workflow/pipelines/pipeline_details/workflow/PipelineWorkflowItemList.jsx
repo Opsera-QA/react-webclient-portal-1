@@ -85,45 +85,48 @@ function PipelineWorkflowItemList(
     }
   };
 
-  const handleCopyStep = async (item, index) => {
-    const steps = plan;
-
-    setIsSaving(true);
-
-    const newStep = {
-      "trigger": item.trigger,
-      "type": item.type,
-      "tool": item.tool,
-      "notification": item.notification,
-      "name": "Copy of " + item.name,
-      "description": item.description,
-      "active": true,
-    };
-    steps.splice(index + 1, 0, newStep);
-
-    await quietSavePlan(steps);
-
-    setIsSaving(false);
+  const handleCopyStep = async (itemId, index) => {
+    try {
+      setIsSaving(true);
+      await pipelineActions.duplicatePipelineStepAtIndex(
+        pipelineId,
+        itemId,
+        index,
+      );
+      await delayedRefresh();
+    } catch (error) {
+      toastContext.showSystemErrorToast(error, "Could not duplicate Pipeline Step:");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
-  const handleMoveStep = async (itemId, index, direction) => {
-    const steps = plan;
-
-    if (direction === "up" && index > 0) {
+  const moveStepUp = async (itemId) => {
+    try {
       setIsSaving(true);
-      let cutOut = steps.splice(index, 1) [0];
-      steps.splice(index - 1, 0, cutOut);
-
-      await quietSavePlan(steps);
+      await pipelineActions.movePipelineStepUp(
+        pipelineId,
+        itemId,
+      );
+      await delayedRefresh();
+    } catch (error) {
+      toastContext.showSystemErrorToast(error, "Could not move Pipeline Step:");
+    } finally {
       setIsSaving(false);
+    }
+  };
 
-    } else if (direction === "down" && index < steps.length - 1) {
+  const moveStepDown = async (itemId) => {
+    try {
       setIsSaving(true);
-
-      let cutOut = steps.splice(index, 1) [0];
-      steps.splice(index + 1, 0, cutOut);
-
-      await quietSavePlan(steps);
+      await pipelineActions.movePipelineStepDown(
+        pipelineId,
+        itemId,
+      );
+      await delayedRefresh();
+    } catch (error) {
+      toastContext.showSystemErrorToast(error, "Could not move Pipeline Step:");
+    } finally {
       setIsSaving(false);
     }
   };
@@ -184,14 +187,14 @@ function PipelineWorkflowItemList(
               icon={faCaretSquareUp}
               iconSize={"lg"}
               className={index === 0 ? "fa-disabled" : "pointer dark-grey"}
-              onClickFunction={isSaving !== true ? () => handleMoveStep(item._id, index, "up") : undefined}
+              onClickFunction={isSaving !== true && index !== 0 ? () => moveStepUp(item._id) : undefined}
               overlayBody={"Move lower step up one position"}
             />
             <OverlayIconBase
               icon={faPlusSquare}
               iconSize={"lg"}
               className={"green pointer ml-2 mr-1"}
-              onClickFunction={isSaving !== true ? () => handleAddStep(item._id, index, "up") : undefined}
+              onClickFunction={isSaving !== true ? () => handleAddStep(item._id, index) : undefined}
               overlayBody={"Add new step here"}
             />
             <IconBase isLoading={isLoading || isSaving} />
@@ -199,14 +202,14 @@ function PipelineWorkflowItemList(
               icon={faCopy}
               iconSize={"lg"}
               className={"yellow pointer ml-1 mr-2"}
-              onClickFunction={isSaving !== true ? () => handleCopyStep(item, index, "up") : undefined}
+              onClickFunction={isSaving !== true ? () => handleCopyStep(item._id, index) : undefined}
               overlayBody={"Copy previous step"}
             />
             <OverlayIconBase
               icon={faCaretSquareDown}
               iconSize={"lg"}
-              className={index === plan.length - 1 ? "fa-disabled" : "pointer dark-grey"}
-              onClickFunction={isSaving !== true ? () => handleMoveStep(item._id, index, "down") : undefined}
+              className={index >= plan.length - 1 ? "fa-disabled" : "pointer dark-grey"}
+              onClickFunction={isSaving !== true && index < plan.length - 1 ? () => moveStepDown(item._id) : undefined}
               overlayBody={"Move upper step down one position"}
             />
           </div>

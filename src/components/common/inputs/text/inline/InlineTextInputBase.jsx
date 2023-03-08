@@ -33,6 +33,7 @@ export default function InlineTextInputBase(
     visible,
     helpTooltipText,
     handleSaveFunction,
+    fieldClassName,
   }) {
   const field = model?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
@@ -201,7 +202,7 @@ export default function InlineTextInputBase(
   const getInput = () => {
     if (inEditMode !== true) {
       return (
-        <div>{model?.getData(fieldName)}</div>
+        <div className={fieldClassName}>{model?.getData(fieldName)}</div>
       );
     }
 
@@ -287,4 +288,5 @@ InlineTextInputBase.propTypes = {
   visible: PropTypes.bool,
   helpTooltipText: PropTypes.string,
   handleSaveFunction: PropTypes.func,
+  fieldClassName: PropTypes.string,
 };
