@@ -751,7 +751,7 @@ a.nav-link {
 
 
 .alternate-tabs .nav-tabs > li a {
-    padding: 10px 15px;
+    padding: 6px 10px;
     border-bottom: 5px solid #3D3B36;
     background: rgba(0, 0, 0, .05);
     color: #3D3B36;

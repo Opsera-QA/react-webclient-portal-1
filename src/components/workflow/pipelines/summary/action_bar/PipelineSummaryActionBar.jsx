@@ -23,12 +23,11 @@ function PipelineSummaryActionBar({pipelineModel, pipeline, loadPipeline}) {
   };
 
   return (
-    <div className={"text-muted action-bar justify-content-end d-flex pb-2 pt-2"}>
+    <div className={"text-muted action-bar py-2 d-flex"}>
       <PipelineSubscriptionIcon
         pipelineModel={pipelineModel}
         pipelineId={pipeline?._id}
         pullSubscriptionStatus={true}
-        className={"ml-3"}
       />
       <ActionBarViewPipelineAuditLogsButton
         pipeline={pipeline}

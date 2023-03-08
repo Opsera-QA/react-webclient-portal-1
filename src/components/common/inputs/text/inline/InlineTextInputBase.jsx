@@ -130,8 +130,8 @@ export default function InlineTextInputBase(
       return (
         <IconBase
           icon={faPencilAlt}
+          iconSize={"sm"}
           className={"ml-2 my-auto text-muted pointer"}
-          iconTransformProperties={"shrink-5"}
           onClickFunction={() => setInEditMode(true)}
         />
       );

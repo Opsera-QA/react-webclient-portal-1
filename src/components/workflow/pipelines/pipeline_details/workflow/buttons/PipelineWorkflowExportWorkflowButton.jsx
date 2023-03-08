@@ -44,6 +44,7 @@ export default function PipelineWorkflowExportWorkflowButton(
     return (
       <VanityButtonBase
         className={"mr-1"}
+        buttonClassName={"background-white"}
         icon={faGitAlt}
         buttonSize={"sm"}
         tooltip={"In the main Opsera offering you can export the current version of the Pipeline's configuration to your Git repository."}
@@ -57,6 +58,7 @@ export default function PipelineWorkflowExportWorkflowButton(
   return (
     <VanityButtonBase
       className={"mr-1"}
+      buttonClassName={"background-white"}
       icon={faGitAlt}
       buttonSize={"sm"}
       tooltip={tooltip}

@@ -509,10 +509,8 @@ function PipelineActionControls(
   //  and wire up the functions inside those components to clean up PipelineActionControls
   return (
     <>
-      <div className="d-flex flex-fill">
-
+      <div className={"d-flex"}>
         {getWarningMessage()}
-        <div className="flex-fill p-2"></div>
         <div className="text-right btn-group btn-group-sized">
           {getRunPipelineButton()}
           {getStopButton()}
@@ -545,7 +543,7 @@ function PipelineActionControls(
                       }}
                       disabled={PipelineRoleHelper.canStartPipeline(userData, pipeline) !== true || startPipeline || stopPipeline || resetPipeline}>
                 <IconBase isLoading={startPipeline} icon={faRedo} className={ "mr-1"} />
-                <span className="d-none d-md-inline">Resume</span></Button>
+                <span className="d-none d-sm-inline d-md-inline">Resume</span></Button>
             </OverlayTrigger>}
 
           {
@@ -562,7 +560,7 @@ function PipelineActionControls(
                       }}
                       disabled={PipelineRoleHelper.canResetPipeline(userData, pipeline) !== true || startPipeline || stopPipeline || resetPipeline}>
                 <IconBase isLoading={resetPipeline} icon={faRedo} fixedWidth className="mr-1" />
-                <span className="d-none d-md-inline">Reset Pipeline</span></Button>
+                <span className="d-none d-sm-inline d-md-inline">Reset Pipeline</span></Button>
             </OverlayTrigger>
           }
           <PipelineActionControlsRefreshButton

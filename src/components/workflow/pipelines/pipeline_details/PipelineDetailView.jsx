@@ -12,6 +12,13 @@ import PipelineWorkflowTabBar from "components/workflow/pipelines/pipeline_detai
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetPollingPipelineOrchestrationStatusById
   from "hooks/workflow/pipelines/orchestration/useGetPollingPipelineOrchestrationStatusById";
+import PipelineSummaryActionBar from "components/workflow/pipelines/summary/action_bar/PipelineSummaryActionBar";
+import Model from "core/data_model/model";
+import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
+import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
+import PipelineNameTextInput from "components/workflow/pipelines/summary/inputs/PipelineNameTextInput";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const refreshInterval = 15000;
 const pausedMessage = "This Pipeline has been paused. Please check the activity logs for details.";
@@ -28,6 +35,7 @@ function PipelineDetailView() {
   const [softLoading, setSoftLoading] = useState(false);
   const [editItem, setEditItem] = useState(false);
   const [isPipelineRunning, setIsPipelineRunning] = useState(false);
+  const [pipelineModel, setPipelineModel] = useState(undefined);
   const {
     getAccessToken,
     toastContext,
@@ -84,6 +92,7 @@ function PipelineDetailView() {
       if (isMounted?.current === true) {
         if (newPipeline) {
           setPipeline({...newPipeline});
+          setPipelineModel({...new Model(newPipeline, pipelineMetadata, false)});
         } else {
           toastContext.showLoadingErrorDialog("Pipeline not found");
         }
@@ -124,26 +133,37 @@ function PipelineDetailView() {
   const getCurrentView = () => {
     if (currentTab === "model") {
       return (
-        <PipelineWorkflowView
-          pipelineStatus={status}
-          pipeline={pipeline}
-          setPipeline={setPipeline}
-          editItem={editItem}
-          setEditItem={setEditItem}
-          fetchPlan={fetchPlan}
-          softLoading={softLoading}
-          isQueued={isQueued}
-          lastStep={lastStep}
-          runCount={runCount}
-        />
+        <div
+          className={"max-content-width content-block-no-height mb-2"}
+        >
+          <PipelineWorkflowView
+            pipelineStatus={status}
+            pipeline={pipeline}
+            setPipeline={setPipeline}
+            editItem={editItem}
+            setEditItem={setEditItem}
+            fetchPlan={fetchPlan}
+            softLoading={softLoading}
+            isQueued={isQueued}
+            lastStep={lastStep}
+            runCount={runCount}
+          />
+        </div>
       );
     }
 
     return (
       <div>
         <div
-          className="max-content-width content-block-no-height p-2 mb-2"
-          style={{width: "80vw", border: "1px solid #d2d2d2", borderRadius: "0"}}
+          className={"max-content-width content-block-no-height mb-2"}
+          style={{
+            // width: "80vw",
+            border: "1px solid #d2d2d2",
+            borderTopLeftRadius: "0",
+            borderBottomLeftRadius: "1rem",
+            borderBottomRightRadius: "1rem",
+            borderTopRightRadius: "1rem",
+        }}
         >
           <PipelineSummaryPanel
             pipeline={pipeline}
@@ -165,6 +185,35 @@ function PipelineDetailView() {
             loadPipelineFunction={fetchPlan}
           />
         </div>
+      </div>
+    );
+  };
+
+  const getPipelineActionControls = () => {
+    return (
+      <div className={"my-auto"}>
+        <PipelineActionControls
+          pipeline={pipeline}
+          disabledActionState={false}
+          fetchData={fetchPlan}
+          setPipeline={setPipeline}
+          isLoading={isLoading}
+          isQueued={isQueued}
+          workflowStatus={status}
+          runCount={runCount}
+        />
+      </div>
+    );
+  };
+
+  const getPipelineSummaryActionBar = () => {
+    return (
+      <div className={"mt-auto"}>
+        <PipelineSummaryActionBar
+          pipeline={pipeline}
+          pipelineModel={pipelineModel}
+          loadPipeline={fetchPlan}
+        />
       </div>
     );
   };
@@ -191,15 +240,36 @@ function PipelineDetailView() {
 
     return (
       <div>
-        <div className="h4 mt-3 mb-2">
-          {pipeline?.name}
+        <div>
+          <PipelineNameTextInput
+            pipelineModel={pipelineModel}
+            setPipelineModel={setPipelineModel}
+            workflowStatus={status}
+            fieldClassName={"h4 mt-1"}
+          />
         </div>
-        <PipelineWorkflowTabBar
-          currentTab={currentTab}
-          setCurrentTab={setCurrentTab}
-          getPipeline={getPipeline}
-          pipelineId={id}
-        />
+        <div className={"d-xs-block d-sm-block d-md-block d-lg-none"}>
+          {getPipelineActionControls()}
+          {getPipelineSummaryActionBar()}
+        </div>
+        <div className={"max-content-width d-flex justify-content-between"}>
+          <PipelineWorkflowTabBar
+            currentTab={currentTab}
+            setCurrentTab={setCurrentTab}
+            getPipeline={getPipeline}
+            pipelineId={id}
+          />
+          <div className={"mr-3 d-none d-xs-none d-sm-none d-md-none d-lg-block"}>
+            <div className={"d-flex h-100"}>
+              {getPipelineActionControls()}
+            </div>
+          </div>
+          <div className={"mr-3 d-none d-xs-none d-sm-none d-md-none d-lg-block"}>
+            <div className={"d-flex h-100"}>
+              {getPipelineSummaryActionBar()}
+            </div>
+          </div>
+        </div>
         {getCurrentView()}
       </div>
     );

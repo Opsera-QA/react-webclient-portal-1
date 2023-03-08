@@ -42,11 +42,12 @@ export default function PipelineWorkflowWorkflowEditingToggleButton(
   if (isFreeTrial === true && isOpseraAdministrator !== true) {
     return (
       <VanityButtonBase
+        className={"mr-1"}
+        buttonClassName={"background-white"}
         tooltip={"In the main Opsera offering you can add, update, or remove Pipeline steps to meet your exact needs."}
         disabled={true}
         icon={faPen}
         variant={"outline-secondary"}
-        className={"mr-1"}
         buttonSize={"sm"}
         normalText={"Edit Workflow"}
       />
@@ -55,10 +56,11 @@ export default function PipelineWorkflowWorkflowEditingToggleButton(
 
   return (
     <VanityButtonBase
+      className={"mr-1"}
+      buttonClassName={"background-white"}
       tooltip={"Edit Pipeline Workflow: add or remove steps, edit step names and set tools for individual steps"}
       icon={faPen}
       variant={"outline-secondary"}
-      className={"mr-1"}
       buttonSize={"sm"}
       normalText={"Edit Workflow"}
       onClickFunction={() => setEditingWorkflow(true)}
