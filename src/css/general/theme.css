@@ -550,7 +550,13 @@ a.text-primary:hover, a.text-primary:focus {
 }
 
 .info-message-field, .pipeline-task-message {
-    background-color: #f2f4f8;
+    border: 1px solid #1578dc;
+    background-color: rgba(21, 120, 220, .05);
+}
+
+.error-message-field {
+    border: 1px solid #dc3545;
+    background-color: rgba(220, 53, 69, .05);
 }
 
 .warning-message-field {
