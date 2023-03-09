@@ -100,13 +100,14 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
 
   const saveModifiedContent = async () => {
     try {
+      const modifiedFileContent = {"customMetadataTypeAccesses": [...modifiedContentJson?.customMetadataTypeAccesses]};
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           fileName,
-          modifiedContentJson,
+          modifiedFileContent,
           "CustomMetadata",
         );
       console.log(response);

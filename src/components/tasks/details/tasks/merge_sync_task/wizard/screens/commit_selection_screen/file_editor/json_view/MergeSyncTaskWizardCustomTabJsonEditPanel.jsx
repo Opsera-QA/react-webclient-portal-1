@@ -106,13 +106,14 @@ const MergeSyncTaskWizardCustomTabJsonEditPanel = ({
   }
   const saveModifiedContent = async () => {
     try {
+      const modifiedFileContent = {"tabVisibilities": [...modifiedContentJson?.tabVisibilities]};
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           fileName,
-          modifiedContentJson,
+          modifiedFileContent,
           "CustomTab",
         );
       console.log(response);

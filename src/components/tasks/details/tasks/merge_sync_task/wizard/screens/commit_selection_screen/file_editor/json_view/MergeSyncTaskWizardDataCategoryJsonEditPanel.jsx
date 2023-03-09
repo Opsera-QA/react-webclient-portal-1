@@ -98,13 +98,14 @@ const MergeSyncTaskWizardDataCategoryJsonEditPanel = ({
   }
   const saveModifiedContent = async () => {
     try {
+      const modifiedFileContent = {"categoryGroupVisibilities": [...modifiedContentJson?.categoryGroupVisibilities]};
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           fileName,
-          modifiedContentJson,
+          modifiedFileContent,
           "DataCategoryGroup",
         );
       console.log(response);

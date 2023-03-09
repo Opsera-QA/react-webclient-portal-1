@@ -100,13 +100,14 @@ const MergeSyncTaskWizardCustomObjectJsonEditPanel = ({
 
   const saveModifiedContent = async () => {
     try {
+      const modifiedFileContent = {"objectPermissions": [...modifiedContentJson?.objectPermissions]};
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           fileName,
-          modifiedContentJson,
+          modifiedFileContent,
           "CustomObject",
         );
       console.log(response);

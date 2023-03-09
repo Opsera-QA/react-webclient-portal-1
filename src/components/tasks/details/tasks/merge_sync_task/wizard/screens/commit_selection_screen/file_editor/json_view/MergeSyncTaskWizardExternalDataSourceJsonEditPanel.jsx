@@ -101,13 +101,14 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
   }
   const saveModifiedContent = async () => {
     try {
+      const modifiedFileContent = {"externalDataSourceAccesses": [...modifiedContentJson?.externalDataSourceAccesses]};
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           fileName,
-          modifiedContentJson,
+          modifiedFileContent,
           "ExternalDataSource",
         );
       console.log(response);

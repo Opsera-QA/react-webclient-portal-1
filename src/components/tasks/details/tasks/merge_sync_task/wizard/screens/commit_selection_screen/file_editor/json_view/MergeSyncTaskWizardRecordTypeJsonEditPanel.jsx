@@ -107,13 +107,14 @@ const MergeSyncTaskWizardRecordTypeJsonEditPanel = ({
   }
   const saveModifiedContent = async () => {
     try {
+      const modifiedFileContent = {"recordTypeVisibilities": [...modifiedContentJson?.recordTypeVisibilities]};
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           fileName,
-          modifiedContentJson,
+          modifiedFileContent,
           "RecordType",
         );
       console.log(response);

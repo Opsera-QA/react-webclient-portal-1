@@ -103,13 +103,14 @@ const MergeSyncTaskWizardFlowJsonEditPanel = ({
   }
   const saveModifiedContent = async () => {
     try {
+      const modifiedFileContent = {"flowAccesses": [...modifiedContentJson?.flowAccesses]};
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           fileName,
-          modifiedContentJson,
+          modifiedFileContent,
           "Flow",
         );
       console.log(response);

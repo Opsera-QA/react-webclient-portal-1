@@ -105,13 +105,14 @@ const MergeSyncTaskWizardApexPageJsonEditPanel = ({
 
   const saveModifiedContent = async () => {
     try {
+      const modifiedFileContent = {"pageAccesses": [...modifiedContentJson?.pageAccesses]};
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           fileName,
-          modifiedContentJson,
+          modifiedFileContent,
           "ApexPage",
         );
       console.log(response);

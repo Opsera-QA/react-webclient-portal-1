@@ -100,13 +100,14 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
 
   const saveModifiedContent = async () => {
     try {
+      const modifiedFileContent = {"classAccesses": [...modifiedContentJson?.classAccesses]};
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           fileName,
-          modifiedContentJson,
+          modifiedFileContent,
           "ApexClass",
         );
       console.log(response);

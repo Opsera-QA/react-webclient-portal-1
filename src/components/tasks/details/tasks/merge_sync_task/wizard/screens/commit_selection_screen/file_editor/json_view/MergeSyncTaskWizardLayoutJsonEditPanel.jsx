@@ -102,13 +102,14 @@ const MergeSyncTaskWizardLayoutJsonEditPanel = ({
   }
   const saveModifiedContent = async () => {
     try {
+      const modifiedFileContent = {"layoutAssignments": [...modifiedContentJson?.layoutAssignments]};
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           fileName,
-          modifiedContentJson,
+          modifiedFileContent,
           "Layout",
         );
       console.log(response);

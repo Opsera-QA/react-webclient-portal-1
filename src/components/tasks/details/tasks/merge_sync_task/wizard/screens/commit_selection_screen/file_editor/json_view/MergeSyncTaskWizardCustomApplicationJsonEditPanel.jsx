@@ -99,13 +99,14 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
 
   const saveModifiedContent = async () => {
     try {
+      const modifiedFileContent = {"applicationVisibilities": [...modifiedContentJson?.applicationVisibilities]};
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           fileName,
-          modifiedContentJson,
+          modifiedFileContent,
           "CustomApplication",
         );
       console.log(response);
