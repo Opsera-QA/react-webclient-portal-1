@@ -19,6 +19,7 @@ import PipelineActionControls from "components/workflow/pipelines/action_control
 import PipelineNameTextInput from "components/workflow/pipelines/summary/inputs/PipelineNameTextInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import PipelinePausedWarningMessage from "components/workflow/pipelines/PipelinePausedWarningMessage";
 
 const refreshInterval = 15000;
 const pausedMessage = "This Pipeline has been paused. Please check the activity logs for details.";
@@ -246,11 +247,18 @@ function PipelineDetailView() {
             setPipelineModel={setPipelineModel}
             workflowStatus={status}
             fieldClassName={"h4 mt-1"}
+            className={"mt-2"}
           />
         </div>
+        <PipelinePausedWarningMessage
+          workflowStatus={status}
+          className={"mb-2"}
+        />
         <div className={"d-xs-block d-sm-block d-md-block d-lg-none"}>
-          {getPipelineActionControls()}
-          {getPipelineSummaryActionBar()}
+          <div className={"mt-2"}>
+            {getPipelineActionControls()}
+            {getPipelineSummaryActionBar()}
+          </div>
         </div>
         <div className={"max-content-width d-flex justify-content-between"}>
           <PipelineWorkflowTabBar

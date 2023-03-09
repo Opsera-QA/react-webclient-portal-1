@@ -366,31 +366,6 @@ function PipelineActionControls(
     }
   };
 
-  const getWarningMessage = () => {
-    if (workflowStatus === "paused") {
-      return (
-        <div
-          className={"warning-text-alt text-left"}
-          style={{cursor: "help"}}
-        >
-          <OverlayTrigger
-            placement="top"
-            delay={{show: 250, hide: 400}}
-            overlay={renderTooltip({message: "A paused pipeline requires a user to review and either approve or acknowledge completed actions in order to proceed."})}>
-            <div>
-              <IconBase
-                icon={faInfoCircle}
-                className={"mr-1"}
-                iconSize={"lg"}
-              />
-              {"This pipeline is currently paused awaiting user response"}
-            </div>
-          </OverlayTrigger>
-        </div>
-      );
-    }
-  };
-
   //TODO: Do the workflow status check inside the component and move inline.
   // Separating out for now to avoid causing unexpected issues.
   const getStopButton = () => {
@@ -510,7 +485,6 @@ function PipelineActionControls(
   return (
     <>
       <div className={"d-flex"}>
-        {getWarningMessage()}
         <div className="text-right btn-group btn-group-sized">
           {getRunPipelineButton()}
           {getStopButton()}
