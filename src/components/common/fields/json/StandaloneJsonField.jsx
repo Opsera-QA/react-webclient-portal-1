@@ -36,7 +36,7 @@ function StandaloneJsonField(
       return (
         <div className={"d-flex"}>
           <CopyToClipboardButton
-            copyString={JSON.stringify(copiedJson)}
+            copyString={JSON.stringify(copiedJson, undefined, 2)}
             size={"sm"}
             className={"ml-3"}
           />
