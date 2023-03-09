@@ -55,20 +55,20 @@ function PipelineWorkflowView(
     <div className="workflow-view h-100">
       {getPipelineWorkflowEditor(editItem)}
 
-      <div className="py-1 text-right" style={{minHeight: "42px"}}>
-        {!editItem && <div className="float-right pt-1 mr-2">
-          <PipelineActionControls
-            pipeline={pipeline}
-            fetchData={fetchPlan}
-            setPipeline={setPipeline}
-            workflowStatus={pipelineStatus}
-            isLoading={softLoading}
-            isQueued={isQueued}
-            runCount={runCount}
-          />
-        </div>}
-      </div>
-      <div style={{minWidth: "740px"}}>
+      {/*<div className="py-1 text-right" style={{minHeight: "42px"}}>*/}
+        {/*{!editItem && <div className="float-right pt-1 mr-2">*/}
+        {/*  <PipelineActionControls*/}
+        {/*    pipeline={pipeline}*/}
+        {/*    fetchData={fetchPlan}*/}
+        {/*    setPipeline={setPipeline}*/}
+        {/*    workflowStatus={pipelineStatus}*/}
+        {/*    isLoading={softLoading}*/}
+        {/*    isQueued={isQueued}*/}
+        {/*    runCount={runCount}*/}
+        {/*  />*/}
+        {/*</div>}*/}
+      {/*</div>*/}
+      <div>
         <PipelineWorkflow
           pipeline={pipeline}
           fetchPlan={fetchPlan}

@@ -12,7 +12,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import {pipelineTypeMetadata} from "components/workflow/pipelines/summary/inputs/type/pipelineType.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 
-export default function PipelineTypeSelectInput(
+export default function InlinePipelineTypeSelectInput(
   {
     fieldName,
     pipelineModel,
@@ -67,7 +67,7 @@ export default function PipelineTypeSelectInput(
   );
 }
 
-PipelineTypeSelectInput.propTypes = {
+InlinePipelineTypeSelectInput.propTypes = {
   fieldName: PropTypes.string,
   pipelineModel: PropTypes.object,
   setPipelineModel: PropTypes.func,
@@ -77,6 +77,6 @@ PipelineTypeSelectInput.propTypes = {
   workflowStatus: PropTypes.string,
 };
 
-PipelineTypeSelectInput.defaultProps = {
+InlinePipelineTypeSelectInput.defaultProps = {
   fieldName: "type",
 };

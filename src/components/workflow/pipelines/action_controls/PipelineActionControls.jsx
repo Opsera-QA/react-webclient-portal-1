@@ -366,31 +366,6 @@ function PipelineActionControls(
     }
   };
 
-  const getWarningMessage = () => {
-    if (workflowStatus === "paused") {
-      return (
-        <div
-          className={"warning-text-alt text-left"}
-          style={{cursor: "help"}}
-        >
-          <OverlayTrigger
-            placement="top"
-            delay={{show: 250, hide: 400}}
-            overlay={renderTooltip({message: "A paused pipeline requires a user to review and either approve or acknowledge completed actions in order to proceed."})}>
-            <div>
-              <IconBase
-                icon={faInfoCircle}
-                className={"mr-1"}
-                iconSize={"lg"}
-              />
-              {"This pipeline is currently paused awaiting user response"}
-            </div>
-          </OverlayTrigger>
-        </div>
-      );
-    }
-  };
-
   //TODO: Do the workflow status check inside the component and move inline.
   // Separating out for now to avoid causing unexpected issues.
   const getStopButton = () => {
@@ -509,10 +484,7 @@ function PipelineActionControls(
   //  and wire up the functions inside those components to clean up PipelineActionControls
   return (
     <>
-      <div className="d-flex flex-fill">
-
-        {getWarningMessage()}
-        <div className="flex-fill p-2"></div>
+      <div className={"d-flex"}>
         <div className="text-right btn-group btn-group-sized">
           {getRunPipelineButton()}
           {getStopButton()}
@@ -545,7 +517,7 @@ function PipelineActionControls(
                       }}
                       disabled={PipelineRoleHelper.canStartPipeline(userData, pipeline) !== true || startPipeline || stopPipeline || resetPipeline}>
                 <IconBase isLoading={startPipeline} icon={faRedo} className={ "mr-1"} />
-                <span className="d-none d-md-inline">Resume</span></Button>
+                <span className="d-none d-sm-inline d-md-inline">Resume</span></Button>
             </OverlayTrigger>}
 
           {
@@ -562,7 +534,7 @@ function PipelineActionControls(
                       }}
                       disabled={PipelineRoleHelper.canResetPipeline(userData, pipeline) !== true || startPipeline || stopPipeline || resetPipeline}>
                 <IconBase isLoading={resetPipeline} icon={faRedo} fixedWidth className="mr-1" />
-                <span className="d-none d-md-inline">Reset Pipeline</span></Button>
+                <span className="d-none d-sm-inline d-md-inline">Reset Pipeline</span></Button>
             </OverlayTrigger>
           }
           <PipelineActionControlsRefreshButton

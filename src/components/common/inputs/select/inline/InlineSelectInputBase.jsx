@@ -61,6 +61,7 @@ export default function InlineSelectInputBase(
     getLabelFunction,
   }) {
   const field = model?.getFieldById(fieldName);
+  const value = model?.getData(fieldName);
   const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
   const [internalErrorMessage, setInternalErrorMessage] = useState("");
   const [enabled, setEnabled] = useState(undefined);
@@ -274,7 +275,7 @@ export default function InlineSelectInputBase(
         <IconBase
           icon={faPencilAlt}
           className={"ml-2 my-auto text-muted pointer"}
-          iconTransformProperties={"shrink-5"}
+          iconSize={"sm"}
           onClickFunction={() => setInEditMode(true)}
         />
       );
