@@ -33,7 +33,7 @@ const pipelineMetadata = {
       id: "last_run",
     },
     {
-      label: "Organization Account",
+      label: "Account",
       id: "account",
     },
     {

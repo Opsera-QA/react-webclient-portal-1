@@ -44,7 +44,7 @@ export const getPipelineTypeLabel = (pipelineType) => {
     case PIPELINE_TYPES.SOFTWARE_DEVELOPMENT:
       return PIPELINE_TYPE_LABELS.SOFTWARE_DEVELOPMENT;
     default:
-      return "";
+      return "No Pipeline Type Applied";
   }
 };
 
