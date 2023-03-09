@@ -26,18 +26,23 @@ const ServiceNowPipelineStepConfigurationMetadata = {
       id: "changeRequestSysId",
     },
     {
+      label: "Short Description",
       id: "changeRequestShortDescription",
     },
     {
+      label: "Approval",
       id: "changeRequestApproval",
     },
     {
+      label: "Start Date",
       id: "changeRequestStartDate",
     },
     {
+      label: "End Date",
       id: "changeRequestEndDate",
     },
     {
+      label: "State",
       id: "changeRequestState",
     },
     {

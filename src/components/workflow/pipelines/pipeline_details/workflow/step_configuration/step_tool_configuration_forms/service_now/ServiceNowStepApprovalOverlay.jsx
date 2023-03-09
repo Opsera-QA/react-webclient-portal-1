@@ -271,7 +271,6 @@ function ServiceNowStepApprovalOverlay(
       if (type === "approve") {
         setIsSaving(true);
         const validationResponse = await validateChangeRequest(approvalStep);
-        console.log({validationResponse});
         if (validationResponse?.data?.valid !== true) {
           toastContext.showLoadingErrorDialog(validationResponse?.data?.message);
           setIsSaving(false);

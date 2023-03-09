@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {
-  faCodeBranch,
+  faCodeBranch, faInfoCircle
 } from "@fortawesome/pro-light-svg-icons";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
@@ -20,6 +20,7 @@ import PipelineWorkflowStepToolIdentifierField
   from "components/workflow/pipelines/pipeline_details/workflow/fields/PipelineWorkflowStepToolIdentifierField";
 import ParallelProcessorPipelineStepWorkflowItemBody
   from "components/workflow/plan/step/parallel_processor/ParallelProcessorPipelineStepWorkflowItemBody";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 // TODO: Use the workflow item step field instead of hardcoding these for consistency,
 //  wire up fields based on the tool identifier (pull through metadata based on dynamic field type set)
@@ -85,6 +86,53 @@ export default function PipelineStepWorkflowItemBody(
     }
   };
 
+  const getServiceNowFields = () => {    
+    if (toolIdentifier?.identifier !== toolIdentifierConstants.TOOL_IDENTIFIERS.SERVICE_NOW) {
+      return null;
+    }
+
+    const stepConfiguration = DataParsingHelper.parseNestedObject(step, "tool.configuration", {});
+    
+    const {changeRequestNumber, changeRequestApproval, changeRequestState, changeRequestStartDate, changeRequestEndDate} = stepConfiguration;
+
+    return (
+      <>
+        {hasStringValue(changeRequestNumber) === true && 
+          <PipelineWorkflowItemFieldBase
+            className={"pl-1 pt-1"}
+            icon={faInfoCircle}
+            label={"Number"}
+            value={changeRequestNumber}
+          />
+        }
+        {hasStringValue(changeRequestApproval) === true && 
+          <PipelineWorkflowItemFieldBase
+            className={"pl-1 pt-1"}
+            icon={faInfoCircle}
+            label={"Approval"}
+            value={changeRequestApproval}
+          />
+        }
+        {hasStringValue(changeRequestState) === true && 
+          <PipelineWorkflowItemFieldBase
+            className={"pl-1 pt-1"}
+            icon={faInfoCircle}
+            label={"State"}
+            value={changeRequestState}
+          />
+        }
+        {hasStringValue(changeRequestStartDate) === true && hasStringValue(changeRequestEndDate) === true &&
+          <PipelineWorkflowItemFieldBase
+            className={"pl-1 pt-1"}
+            icon={faInfoCircle}
+            label={"Window"}
+            value={`${DateFormatHelper.formatDate(changeRequestStartDate)} to ${DateFormatHelper.formatDate(changeRequestEndDate)}`}
+          />
+        }
+      </>
+    );
+  };
+
 
   if (pipeline == null || step == null) {
     return null;
@@ -125,6 +173,7 @@ export default function PipelineStepWorkflowItemBody(
         />
         {getRepositoryField()}
         {getBranchField()}
+        {getServiceNowFields()}
       </>
     );
   };
