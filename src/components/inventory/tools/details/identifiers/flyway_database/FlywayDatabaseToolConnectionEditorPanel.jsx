@@ -85,6 +85,7 @@ function FlywayDatabaseToolConnectionEditorPanel({ toolData, setUpMode, setCurre
       persistRecord={saveFlywayToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
