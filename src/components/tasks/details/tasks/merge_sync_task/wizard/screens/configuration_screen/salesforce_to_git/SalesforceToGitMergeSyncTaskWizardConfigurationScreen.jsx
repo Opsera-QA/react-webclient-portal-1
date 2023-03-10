@@ -24,8 +24,6 @@ const SalesforceToGitMergeSyncTaskWizardConfigurationScreen = ({
     return null;
   }
 
-  console.log(wizardModel.getPersistData());
-
   return (
     <div>
       <div className="h5">
