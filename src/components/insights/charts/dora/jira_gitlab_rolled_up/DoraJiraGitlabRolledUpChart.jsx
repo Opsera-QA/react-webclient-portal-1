@@ -15,6 +15,7 @@ import DoraJiraGitlabRolledUpColumnDataBlock from "./DoraJiraGitlabRolledUpColum
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import BoomiActionableTabOverlay from "../../boomi/actionable_insights/BoomiActionableTabOverlay";
 import DoraJiraOrgsActionableOverlay from "./actionable_insights/DoraJiraOrgsActionableOverlay";
+import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
 
 
 function DoraJiraGitlabRolledUpChart({
