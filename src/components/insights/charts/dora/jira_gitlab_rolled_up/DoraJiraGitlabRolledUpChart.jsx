@@ -189,29 +189,29 @@ function DoraJiraGitlabRolledUpChart({
             <Col md={12} className={"mb-2"}>
               <DoraJiraGitlabRolledUpColumnDataBlock
                   onSelect={() => onRowSelect("elite")}
-                  maturityScoreText = {'elite'}
-                  overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'elite')}
+                  maturityScoreText={'elite'}
+                  overlayData={coloredMetricData}
               />
             </Col>
             <Col md={12} className={"mb-2"}>
               <DoraJiraGitlabRolledUpColumnDataBlock
                   onSelect={() => onRowSelect("high")}
-                  maturityScoreText = {'high'}
-                  overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'high')}
+                  maturityScoreText={'high'}
+                  overlayData={coloredMetricData}
               />
             </Col>
             <Col md={12} className={"mb-2"}>
               <DoraJiraGitlabRolledUpColumnDataBlock
                   onSelect={() => onRowSelect("medium")}
-                  maturityScoreText = {'medium'}
-                  overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'medium')}
+                  maturityScoreText={'medium'}
+                  overlayData={coloredMetricData}
               />
             </Col>
             <Col md={12}>
               <DoraJiraGitlabRolledUpColumnDataBlock
                   onSelect={() => onRowSelect("low")}
-                  maturityScoreText = {'low'}
-                  overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'low')}
+                  maturityScoreText={'low'}
+                  overlayData={coloredMetricData}
               />
             </Col>
           </Row>
