@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import axios from "axios";
 import {
-  getDeploymentStageFromKpiConfiguration, getResultFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration,
+  getDeploymentStageFromKpiConfiguration, getResultFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration, MATURITY_SCORE_TEXT
 } from "../../charts-helpers";
 import InfoDialog from "../../../../common/status_notifications/info";
 import doraAction from "../dora.action";
