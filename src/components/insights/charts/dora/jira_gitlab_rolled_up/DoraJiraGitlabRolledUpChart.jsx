@@ -141,6 +141,43 @@ function DoraJiraGitlabRolledUpChart({
       return null;
     }
 
+    // add color to each org tag (cycling through 5 NIVO theme colors and sorted by category, then alphabetrically)
+    const coloredMetricData = [...metricData]
+    .sort((
+      { name: nameA, overallMaturityScoreText: scoreA },
+      { name: nameB, overallMaturityScoreText: scoreB }
+    ) => {
+      if (scoreA === scoreB) {
+        // equal score, sort alphabetically, ascending
+        if (nameA === nameB) {
+          return 0;
+        }
+        return nameA < nameB ? -1 : 1;
+      }
+
+      switch (scoreA) {
+        case MATURITY_SCORE_TEXT.ELITE:
+          return -1;
+        case MATURITY_SCORE_TEXT.HIGH:
+          if (scoreB === MATURITY_SCORE_TEXT.ELITE) {
+            return 1;
+          }
+          return -1;
+        case MATURITY_SCORE_TEXT.MEDIUM:
+          if (scoreB === MATURITY_SCORE_TEXT.LOW) {
+            return -1;
+          }
+          return 1;
+        case MATURITY_SCORE_TEXT.LOW:
+          return 1;
+        default:
+          return 0;
+      }
+    }).map((data, index) => ({
+      ...data,
+      color: METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY[index % 5]
+    }));
+
     return (
         <div
             className="m-3"
