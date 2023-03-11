@@ -185,28 +185,28 @@ function DoraJiraGitlabRolledUpChart({
           >
             <Col md={12} className={"mb-2"}>
               <DoraJiraGitlabRolledUpColumnDataBlock
-                  onSelect={() => onRowSelect("elite")}
+                  onSelect={onRowSelect}
                   maturityScoreText={'elite'}
                   overlayData={coloredMetricData}
               />
             </Col>
             <Col md={12} className={"mb-2"}>
               <DoraJiraGitlabRolledUpColumnDataBlock
-                  onSelect={() => onRowSelect("high")}
+                  onSelect={onRowSelect}
                   maturityScoreText={'high'}
                   overlayData={coloredMetricData}
               />
             </Col>
             <Col md={12} className={"mb-2"}>
               <DoraJiraGitlabRolledUpColumnDataBlock
-                  onSelect={() => onRowSelect("medium")}
+                  onSelect={onRowSelect}
                   maturityScoreText={'medium'}
                   overlayData={coloredMetricData}
               />
             </Col>
             <Col md={12}>
               <DoraJiraGitlabRolledUpColumnDataBlock
-                  onSelect={() => onRowSelect("low")}
+                  onSelect={onRowSelect}
                   maturityScoreText={'low'}
                   overlayData={coloredMetricData}
               />

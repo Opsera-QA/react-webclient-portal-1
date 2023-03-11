@@ -71,7 +71,7 @@ function DoraJiraGitlabRolledUpColumnDataBlock({
               className={
                 "d-flex pr-1 dark-gray-text-primary metric-block-content-text font-inter-light-500 pointer"
               }
-              onClick={onSelect}
+              onClick={() => onSelect(maturityScoreText)}
           >
             {maturityScore}
           </div>
