@@ -451,6 +451,13 @@ export const getTimeDisplay = (mins) => {
   return [arrayToDisplay.slice(0, 2).join(", "), arrayToDisplay.join(", ")];
 };
 
+export const MATURITY_SCORE_TEXT = Object.freeze({
+  ELITE: 'elite',
+  HIGH: 'high',
+  MEDIUM: 'medium',
+  LOW: 'low'
+});
+
 /**
  * Get score text for given value
  * @param maturityScore string

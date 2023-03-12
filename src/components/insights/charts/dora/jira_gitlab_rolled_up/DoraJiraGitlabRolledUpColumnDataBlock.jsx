@@ -15,45 +15,51 @@ function DoraJiraGitlabRolledUpColumnDataBlock({
 }) {
   const maturityScore = getMaturityScoreText(maturityScoreText);
   const maturityColor = getMaturityColorClass(maturityScoreText);
-  const getOrgData = (overlayData) => {
-    return overlayData?.map((data, i) => (
-      <Col
-        key={i}
-        xs={12}
-      >
-        <OverlayTrigger
-          rootClose
-          placement="top"
-          overlay={
-            <Popover
-              id="popover-basic"
-              style={{ maxWidth: "500px" }}
-            >
-              <Popover.Content>
-                <div className="text-muted mb-2">
-                  Deployment Frequency:{" "}
-                  {data?.deploymentFrequencyMaturityScoreText}
-                </div>
-                <div className="text-muted mb-2">
-                  Lead Time For Changes:{" "}
-                  {data?.leadTimeForChangesMaturityScoreText}
-                </div>
-                <div className="text-muted mb-2">
-                  Change Failure Rate:{" "}
-                  {data?.changeFailureRateMaturityScoreText}
-                </div>
-                <div className="text-muted mb-2">
-                  Mean Time To Resolution:{" "}
-                  {data?.meanTimeToResolutionMaturityScoreText}
-                </div>
-              </Popover.Content>
-            </Popover>
-          }
+  const getOrgData = () => {
+    if (!overlayData) { 
+      return null;
+    }
+
+    return overlayData
+      .filter(({ overallMaturityScoreText }) => overallMaturityScoreText === maturityScoreText)
+      .map((data, i) => (
+        <Col
+          key={i}
+          xs={12}
         >
-          <div className={"maturity-rolled-up-text"}>{data.name}</div>
-        </OverlayTrigger>
-      </Col>
-    ));
+          <OverlayTrigger
+            rootClose
+            placement="top"
+            overlay={
+              <Popover
+                id="popover-basic"
+                style={{ maxWidth: "500px" }}
+              >
+                <Popover.Content>
+                  <div className="text-muted mb-2">
+                    Deployment Frequency:{" "}
+                    {data?.deploymentFrequencyMaturityScoreText}
+                  </div>
+                  <div className="text-muted mb-2">
+                    Lead Time For Changes:{" "}
+                    {data?.leadTimeForChangesMaturityScoreText}
+                  </div>
+                  <div className="text-muted mb-2">
+                    Change Failure Rate:{" "}
+                    {data?.changeFailureRateMaturityScoreText}
+                  </div>
+                  <div className="text-muted mb-2">
+                    Mean Time To Resolution:{" "}
+                    {data?.meanTimeToResolutionMaturityScoreText}
+                  </div>
+                </Popover.Content>
+              </Popover>
+            }
+          >
+            <div className={"maturity-rolled-up-text"} style={{ color: data.color }}>{data.name}</div>
+          </OverlayTrigger>
+        </Col>
+      ));
   };
 
   return (
@@ -65,7 +71,7 @@ function DoraJiraGitlabRolledUpColumnDataBlock({
               className={
                 "d-flex pr-1 dark-gray-text-primary metric-block-content-text font-inter-light-500 pointer"
               }
-              onClick={onSelect}
+              onClick={() => onSelect(maturityScoreText)}
           >
             {maturityScore}
           </div>
@@ -73,7 +79,7 @@ function DoraJiraGitlabRolledUpColumnDataBlock({
         <Row
             className={`ml-3 w-100 h-100 text-center maturity-rolled-up-border ${maturityColor}`}
         >
-          <div style={{ minHeight: "3rem" }}>{getOrgData(overlayData)}</div>
+          <div style={{ minHeight: "3rem" }}>{getOrgData()}</div>
         </Row>
       </div>
   );
