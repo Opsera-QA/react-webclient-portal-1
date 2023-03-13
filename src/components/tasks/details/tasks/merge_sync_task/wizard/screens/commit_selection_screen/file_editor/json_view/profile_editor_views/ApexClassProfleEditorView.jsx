@@ -42,14 +42,14 @@ const ApexClassProfleEditorView = ({
   };
 
   return (
-    <div>
-      <Col>
+    <Row>
+      <Col lg={12}>
         <TextFieldBase
           dataObject={apexClassJsonMetadata}
           fieldName={"apexClass"}
         />
       </Col>
-      <Col>
+      <Col lg={6}>
         <CheckboxInputBase
           fieldName={"enabled"}
           model={apexClassJsonMetadata}
@@ -58,7 +58,7 @@ const ApexClassProfleEditorView = ({
           disabled={disabled}
         />
       </Col>
-    </div>
+    </Row>
   );
 };
 

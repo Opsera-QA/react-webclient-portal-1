@@ -42,32 +42,32 @@ const CustomApplicationProfileEditorView = ({
   };
 
   return (
-    <div>
-      <Col>
+    <Row>
+      <Col lg={12}>
         <TextFieldBase
           dataObject={customAppJsonMetadata}
           fieldName={"application"}
         />
       </Col>
-      <Col>
-        <CheckboxInputBase
-          fieldName={"default"}
-          model={customAppJsonMetadata}
-          setModel={setCustomAppJsonMetadata}
-          setDataFunction={setDataFunction}
-          disabled={disabled}
-        />
-      </Col>
-      <Col>
-        <CheckboxInputBase
-          fieldName={"visible"}
-          model={customAppJsonMetadata}
-          setModel={setCustomAppJsonMetadata}
-          setDataFunction={setDataFunction}
-          disabled={disabled}
-        />
-      </Col>
-    </div>
+        <Col lg={6}>
+          <CheckboxInputBase
+            fieldName={"default"}
+            model={customAppJsonMetadata}
+            setModel={setCustomAppJsonMetadata}
+            setDataFunction={setDataFunction}
+            disabled={disabled}
+          />
+        </Col>
+        <Col lg={6}>
+          <CheckboxInputBase
+            fieldName={"visible"}
+            model={customAppJsonMetadata}
+            setModel={setCustomAppJsonMetadata}
+            setDataFunction={setDataFunction}
+            disabled={disabled}
+          />
+        </Col>
+    </Row>
   );
 };
 

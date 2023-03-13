@@ -110,7 +110,7 @@ const CustomObjectProfileEditorView = ({
       </Col>
       <Col>
         <CheckboxInputBase
-          fieldName={"allowCreate"}
+          fieldName={"allowRead"}
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
@@ -119,7 +119,7 @@ const CustomObjectProfileEditorView = ({
       </Col>
       <Col>
         <CheckboxInputBase
-          fieldName={"allowDelete"}
+          fieldName={"allowCreate"}
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
@@ -137,16 +137,7 @@ const CustomObjectProfileEditorView = ({
       </Col>
       <Col>
         <CheckboxInputBase
-          fieldName={"allowRead"}
-          model={customMetaJsonMetadata}
-          setModel={setCustomMetaJsonMetadata}
-          setDataFunction={setDataFunction}
-          disabled={disabled}
-        />
-      </Col>
-      <Col>
-        <CheckboxInputBase
-          fieldName={"modifyAllRecords"}
+          fieldName={"allowDelete"}
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
@@ -156,6 +147,15 @@ const CustomObjectProfileEditorView = ({
       <Col>
         <CheckboxInputBase
           fieldName={"viewAllRecords"}
+          model={customMetaJsonMetadata}
+          setModel={setCustomMetaJsonMetadata}
+          setDataFunction={setDataFunction}
+          disabled={disabled}
+        />
+      </Col>
+      <Col>
+        <CheckboxInputBase
+          fieldName={"modifyAllRecords"}
           model={customMetaJsonMetadata}
           setModel={setCustomMetaJsonMetadata}
           setDataFunction={setDataFunction}
