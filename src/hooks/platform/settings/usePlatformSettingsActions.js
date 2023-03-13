@@ -60,7 +60,7 @@ export default function usePlatformSettingsActions() {
   platformSettingsActions.getPlatformSettingFeatureFlagByName = async (
     featureFlagName,
   ) => {
-    const apiUrl = `/configuration/platform/settings/${featureFlagName}`;
+    const apiUrl = `/configuration/platform/settings/features/${featureFlagName}`;
     return await apiService.handleApiGetRequest(
       apiUrl,
     );
