@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import DataCategoryProfileEditorView from "./profile_editor_views/DataCategoryProfileEditorView";
 import { DividerWithCenteredText } from "../../../../../../../../../../temp-library-components/divider/DividerWithCenteredText";
 import { AuthContext } from "../../../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../../../contexts/DialogToastContext";
@@ -54,31 +53,31 @@ const MergeSyncTaskWizardCustomObjectJsonEditPanel = ({
       setIsJsonLoading(true);
       // TODO : Convert both original and modified contents to JSON
 
-      const jsonContent = mockData;
-        // await mergeSyncTaskWizardActions.componentTypeConvertView(
-        //   getAccessToken,
-        //   cancelTokenSource,
-        //   wizardModel,
-        //   fileName,
-        //   "CustomObject",
-        // );
+      const jsonContent =
+        await mergeSyncTaskWizardActions.componentTypeConvertView(
+          getAccessToken,
+          cancelTokenSource,
+          wizardModel,
+          fileName,
+          "CustomObject",
+        );
 
       if (isMounted?.current === true) {
         setModifiedContentJson(
-          // JSON.parse(
+          JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.sourceContent",
             ),
-          // ),
+          ),
         );
         setOriginalContentJson(
-          // JSON.parse(
+          JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.destinationContent",
             ),
-          // ),
+          ),
         );
       }
     } catch (error) {

@@ -3,18 +3,13 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ApexClassProfleEditorView from "./profile_editor_views/ApexClassProfleEditorView";
 import { DividerWithCenteredText } from "../../../../../../../../../../temp-library-components/divider/DividerWithCenteredText";
-import CustomMetadataProfileEditorView from "./profile_editor_views/CustomMetadataProfileEditorView";
 import { AuthContext } from "../../../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../../../contexts/DialogToastContext";
 import useComponentStateReference from "../../../../../../../../../../hooks/useComponentStateReference";
 import { hasStringValue } from "../../../../../../../../../common/helpers/string-helpers";
 import mergeSyncTaskWizardActions from "../../../../mergeSyncTaskWizard.actions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import CustomSettingssProfileEditorView from "./profile_editor_views/CustomSettingssProfileEditorView";
-import ExternalDataSourceProfileEditorView from "./profile_editor_views/ExternalDataSourceProfileEditorView";
-import LayoutProfileEditorView from "./profile_editor_views/LayoutProfileEditorView";
 import FlowProfileEditorView from "./profile_editor_views/FlowProfileEditorView";
 import { mockData } from "../MergeSyncTaskWizardProfilesAdvancedEditingPanel";
 import IconBase from "../../../../../../../../../common/icons/IconBase";
@@ -58,31 +53,31 @@ const MergeSyncTaskWizardFlowJsonEditPanel = ({
       setIsJsonLoading(true);
       // TODO : Convert both original and modified contents to JSON
 
-      const jsonContent = mockData;
-        // await mergeSyncTaskWizardActions.componentTypeConvertView(
-        //   getAccessToken,
-        //   cancelTokenSource,
-        //   wizardModel,
-        //   fileName,
-        //   "Flow",
-        // );
+      const jsonContent =
+        await mergeSyncTaskWizardActions.componentTypeConvertView(
+          getAccessToken,
+          cancelTokenSource,
+          wizardModel,
+          fileName,
+          "Flow",
+        );
 
       if (isMounted?.current === true) {
         setModifiedContentJson(
-          // JSON.parse(
+          JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.sourceContent",
             ),
-          // ),
+          ),
         );
         setOriginalContentJson(
-          // JSON.parse(
+          JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.destinationContent",
             ),
-          // ),
+          ),
         );
       }
     } catch (error) {

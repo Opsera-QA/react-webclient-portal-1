@@ -11,7 +11,6 @@ import useComponentStateReference from "../../../../../../../../../../hooks/useC
 import mergeSyncTaskWizardActions from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import ButtonBase from "../../../../../../../../../common/buttons/ButtonBase";
 import { mockData } from "../MergeSyncTaskWizardProfilesAdvancedEditingPanel";
 import IconBase from "../../../../../../../../../common/icons/IconBase";
 import { faSearch } from "@fortawesome/pro-light-svg-icons";
@@ -54,31 +53,31 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
       setIsJsonLoading(true);
       // TODO : Convert both original and modified contents to JSON
 
-      const jsonContent = mockData;
-        // await mergeSyncTaskWizardActions.componentTypeConvertView(
-        //   getAccessToken,
-        //   cancelTokenSource,
-        //   wizardModel,
-        //   fileName,
-        //   "ApexClass",
-        // );
+      const jsonContent =
+        await mergeSyncTaskWizardActions.componentTypeConvertView(
+          getAccessToken,
+          cancelTokenSource,
+          wizardModel,
+          fileName,
+          "ApexClass",
+        );
 
       if (isMounted?.current === true) {
         setModifiedContentJson(
-          // JSON.parse(
+          JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.sourceContent",
             ),
-          // ),
+          ),
         );
         setOriginalContentJson(
-          // JSON.parse(
+          JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.destinationContent",
             ),
-          // ),
+          ),
         );
       }
     } catch (error) {
