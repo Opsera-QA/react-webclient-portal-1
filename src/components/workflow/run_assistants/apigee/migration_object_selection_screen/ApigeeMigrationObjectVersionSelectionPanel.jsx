@@ -11,7 +11,7 @@ import BackButton from "components/common/buttons/back/BackButton";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import ArrayToTextField from "components/common/fields/text/ArrayToTextField";
-
+import InfoContainer from "components/common/containers/InfoContainer";
 
 const ApigeeMigrationObjectVersionSelectionPanel = ({ toolId, cancelHandler, handler, migrationObject, setMigrationObject }) => {
 
@@ -131,19 +131,11 @@ const ApigeeMigrationObjectVersionSelectionPanel = ({ toolId, cancelHandler, han
   };
 
   return (
-    <div className="object-properties-input">
-      <div className="content-container">
-        <div className="property-header">
-          <h6 className="pl-2 pt-2">            
-            Select Version For Apigee Migration Object
-          </h6>
-        </div>
-        <div className="properties-body-alt">
-          {getInputFields()}
-        </div>
-      </div>
-    </div>
-    
+    <InfoContainer
+      titleText={"Select Version For Apigee Migration Object"}      
+    >
+      {getInputFields()}
+    </InfoContainer>
   );
 };
 

@@ -10,7 +10,7 @@ import BackButton from "components/common/buttons/back/BackButton";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import ApigeeMigrationObjectKvmEntryInputRow from "./inputs/ApigeeMigrationObjectKvmEntryInputRow";
-
+import InfoContainer from "components/common/containers/InfoContainer";
 
 const ApigeeMigrationObjectKvmEntriesPanel = ({ toolId, cancelHandler, handler, migrationObject, setMigrationObject }) => {
 
@@ -90,7 +90,7 @@ const ApigeeMigrationObjectKvmEntriesPanel = ({ toolId, cancelHandler, handler, 
 
   const getHeaderBar = () => {
     return (
-      <Row className="d-flex py-1 mx-0 justify-content-between property-header">        
+      <Row className="d-flex py-1 mx-0 justify-content-between property-header bold">        
         <Col sm={6}>
           Name
         </Col>
@@ -138,7 +138,7 @@ const ApigeeMigrationObjectKvmEntriesPanel = ({ toolId, cancelHandler, handler, 
             <TextFieldBase dataObject={migrationObject} fieldName={"environment"}/>
           </Col>
         </Row>
-        <div className="content-container">
+        <div className="container-border">
           <div className={"filter-bg-white"}>
             {getHeaderBar()}
           </div>
@@ -160,19 +160,11 @@ const ApigeeMigrationObjectKvmEntriesPanel = ({ toolId, cancelHandler, handler, 
   };
 
   return (
-    <div className="object-properties-input">
-      <div className="content-container">
-        <div className="property-header">
-          <h6 className="pl-2 pt-2">            
-            KVM Entries For Apigee Migration Object
-          </h6>
-        </div>
-        <div className="properties-body-alt">
-          {getInputFields()}
-        </div>
-      </div>
-    </div>
-    
+    <InfoContainer
+      titleText={"KVM Entries For Apigee Migration Object"}      
+    >
+      {getInputFields()}
+    </InfoContainer>
   );
 };
 
