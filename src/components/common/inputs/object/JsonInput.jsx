@@ -7,6 +7,7 @@ import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 import JSONInput from "react-json-editor-ajrm";
 import {objectHelpers} from "components/common/helpers/object/object.helpers";
+import InfoContainer from "components/common/containers/InfoContainer";
 
 // TODO: Rewrite and use json input base as base
 function JsonInput(
@@ -73,31 +74,34 @@ function JsonInput(
         width="100%"
       />
     );
-  };
+  };``
 
   return (
-    <div className={className}>
-      <div className="object-properties-input">
-        <div className="content-container">
-          <InputTitleBar
-            field={field}
-            icon={faBracketsCurly}
-            isLoading={isLoading}
-            customTitle={customTitle}
-            helpComponent={helpComponent}
-          />
-          <div>
-            {getBody()}
-          </div>
+    <>
+      <InfoContainer
+        isLoading={isLoading}
+        helpComponent={helpComponent}
+        field={field}
+        titleIcon={faBracketsCurly}
+        titleText={customTitle}
+        className={className}
+      >
+        <div
+          className={"pb-3"}
+          style={{
+            overflowX: "hidden",
+          }}
+        >
+          {getBody()}
         </div>
-        <InfoText
-          fieldName={fieldName}
-          model={model}
-          field={field}
-          errorMessage={errorMessage}
-        />
-      </div>
-    </div>
+      </InfoContainer>
+      <InfoText
+        fieldName={fieldName}
+        model={model}
+        field={field}
+        errorMessage={errorMessage}
+      />
+    </>
   );
 }
 
