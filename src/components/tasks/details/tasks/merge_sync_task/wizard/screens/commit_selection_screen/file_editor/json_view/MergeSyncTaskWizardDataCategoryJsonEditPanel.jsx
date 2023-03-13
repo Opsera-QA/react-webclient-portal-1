@@ -17,6 +17,7 @@ import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import InlineWarning from "../../../../../../../../../common/status_notifications/inline/InlineWarning";
 import StandaloneSaveButton from "../../../../../../../../../common/buttons/saving/StandaloneSaveButton";
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
+import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
 
 const MergeSyncTaskWizardDataCategoryJsonEditPanel = ({
   wizardModel,
@@ -98,13 +99,14 @@ const MergeSyncTaskWizardDataCategoryJsonEditPanel = ({
   }
   const saveModifiedContent = async () => {
     try {
+      const modifiedFileContent = {"categoryGroupVisibilities": [...modifiedContentJson?.categoryGroupVisibilities]};
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           fileName,
-          modifiedContentJson,
+          modifiedFileContent,
           "DataCategoryGroup",
         );
       console.log(response);
@@ -190,7 +192,14 @@ const MergeSyncTaskWizardDataCategoryJsonEditPanel = ({
   const modifiedDataCategoryEditView = () => {
     return (
       <Col>
-        <span className="h5">Source Profiles</span>
+        <span className="h5">
+          Source Profiles (
+          <ToolNameFieldDisplayer
+            toolId={wizardModel?.getData("sfdcToolId")}
+            loadToolInNewWindow={true}
+          />
+          )
+        </span>
         {modifiedContentJson &&
           Object.keys(modifiedContentJson).length > 0 &&
           modifiedContentJson?.categoryGroupVisibilities
@@ -207,7 +216,7 @@ const MergeSyncTaskWizardDataCategoryJsonEditPanel = ({
                   isLoading={isLoading}
                 />
                 {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
+                  <DividerWithCenteredText />
                 )}
               </div>
             ))}
@@ -218,7 +227,7 @@ const MergeSyncTaskWizardDataCategoryJsonEditPanel = ({
   const originalDataCategoryEditView = () => {
     return (
       <Col>
-        <span className="h5">Target Profiles</span>
+        <span className="h5">Target Branch ({wizardModel?.getData("targetBranch")})</span>
         {originalContentJson &&
           Object.keys(originalContentJson).length > 0 &&
           originalContentJson?.categoryGroupVisibilities
@@ -236,7 +245,7 @@ const MergeSyncTaskWizardDataCategoryJsonEditPanel = ({
                   disabled={true}
                 />
                 {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
+                  <DividerWithCenteredText />
                 )}
               </div>
             ))}

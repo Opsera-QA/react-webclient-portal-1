@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
-import Col from "react-bootstrap/Col";
+import { Col, Row } from "react-bootstrap";
 import modelHelpers from "../../../../../../../../../../common/model/modelHelpers";
 import TextFieldBase from "../../../../../../../../../../common/fields/text/TextFieldBase";
 import { customTabJsonMetadata } from "../jsonFileEdit.metadata";
@@ -47,14 +47,14 @@ const CustomTabProfileEditorView = ({
   };
 
   return (
-    <div>
-      <Col>
+    <Row>
+      <Col lg={12}>
         <TextFieldBase
           dataObject={customMetaJsonMetadata}
           fieldName={"tab"}
         />
       </Col>
-      <Col>
+      <Col lg={6}>
         <SelectInputBase
           fieldName={"visibility"}
           selectOptions={tabVisibilityOptions}
@@ -68,7 +68,7 @@ const CustomTabProfileEditorView = ({
           disabled={disabled}
         />
       </Col>
-    </div>
+    </Row>
   );
 };
 

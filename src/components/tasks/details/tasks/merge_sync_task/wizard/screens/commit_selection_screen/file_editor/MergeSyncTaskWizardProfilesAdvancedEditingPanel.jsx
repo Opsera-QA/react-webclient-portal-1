@@ -797,8 +797,6 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isJsonLoading, setIsJsonLoading] = useState(true);
-  const [modifiedContentJson, setModifiedContentJson] = useState(undefined);
-  const [originalContentJson, setOriginalContentJson] = useState(undefined);
   const [jsonViewModel, setJsonViewModel] = useState(undefined);
   const { isMounted, cancelTokenSource } = useComponentStateReference();
 
