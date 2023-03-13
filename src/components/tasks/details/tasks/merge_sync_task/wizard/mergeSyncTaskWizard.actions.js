@@ -31,6 +31,7 @@ mergeSyncTaskWizardActions.updatePipelineStorageRecordV2 = async (getAccessToken
     "selectedComponentTypes",
   );
   const postBody = {
+    isProfiles: taskWizardModel?.getData("isProfiles"),
     selectedComponentTypes: componentTypes,
     lastCommitFromTimeStamp: taskWizardModel?.getData("fromDate"),
     lastCommitToTimeStamp: taskWizardModel?.getData("toDate"),
@@ -86,6 +87,7 @@ mergeSyncTaskWizardActions.triggerSalesforceToGitSourceFilePull = async (
   );
   const postBody = {
     componentTypes: componentTypes,
+    isProfiles: taskWizardModel?.getData("isProfiles"),
     taskId: taskWizardModel?.getData("taskId"),
     runCount: taskWizardModel?.getData("runCount"),
     lastCommitFromTimestamp: taskWizardModel?.getData(
