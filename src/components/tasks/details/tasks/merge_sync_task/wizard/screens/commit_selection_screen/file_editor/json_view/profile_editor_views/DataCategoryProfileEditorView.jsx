@@ -50,14 +50,14 @@ const DataCategoryProfileEditorView = ({
   };
 
   return (
-    <div>
-      <Col>
+    <Row>
+      <Col lg={12}>
         <TextFieldBase
           dataObject={dataCategoryJsonMetadata}
           fieldName={"dataCategoryGroup"}
         />
       </Col>
-      <Col>
+      <Col lg={6}>
         <SelectInputBase
           fieldName={"visibility"}
           selectOptions={grpVisibilityOptions}
@@ -71,7 +71,7 @@ const DataCategoryProfileEditorView = ({
           disabled={disabled}
         />
       </Col>
-    </div>
+    </Row>
   );
 };
 

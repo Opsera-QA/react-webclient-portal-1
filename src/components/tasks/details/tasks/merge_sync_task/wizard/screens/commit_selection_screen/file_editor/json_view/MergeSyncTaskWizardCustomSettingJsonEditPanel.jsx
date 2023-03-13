@@ -19,6 +19,7 @@ import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import InlineWarning from "../../../../../../../../../common/status_notifications/inline/InlineWarning";
 import StandaloneSaveButton from "../../../../../../../../../common/buttons/saving/StandaloneSaveButton";
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
+import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
 
 const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
   wizardModel,
@@ -100,13 +101,14 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
   }
   const saveModifiedContent = async () => {
     try {
+      const modifiedFileContent = {"customSettingAccesses": [...modifiedContentJson?.customSettingAccesses]};
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           fileName,
-          modifiedContentJson,
+          modifiedFileContent,
           "CustomSetting",
         );
       console.log(response);
@@ -191,7 +193,14 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
   const modifiedCustomMetaEditView = () => {
     return (
       <Col>
-        <span className="h5">Source Profiles</span>
+        <span className="h5">
+          Source Profiles (
+          <ToolNameFieldDisplayer
+            toolId={wizardModel?.getData("sfdcToolId")}
+            loadToolInNewWindow={true}
+          />
+          )
+        </span>
         {modifiedContentJson &&
           Object.keys(modifiedContentJson).length > 0 &&
           modifiedContentJson?.customSettingAccesses
@@ -208,7 +217,7 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
                   isLoading={isLoading}
                 />
                 {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
+                  <DividerWithCenteredText />
                 )}
               </div>
             ))}
@@ -219,7 +228,7 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
   const originalCustomMetaEditView = () => {
     return (
       <Col>
-        <span className="h5">Target Profiles</span>
+        <span className="h5">Target Branch ({wizardModel?.getData("targetBranch")})</span>
         {originalContentJson &&
           Object.keys(originalContentJson).length > 0 &&
           originalContentJson?.customSettingAccesses
@@ -237,7 +246,7 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
                   disabled={true}
                 />
                 {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
+                  <DividerWithCenteredText />
                 )}
               </div>
             ))}

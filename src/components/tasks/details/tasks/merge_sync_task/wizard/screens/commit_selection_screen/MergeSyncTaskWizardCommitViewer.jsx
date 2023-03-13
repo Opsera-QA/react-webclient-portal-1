@@ -181,14 +181,16 @@ const MergeSyncTaskWizardCommitViewer = ({
             toggleView={toggleView}
             className={"mr-2 ml-2"}
           />
-          <MergeSyncTaskWizardSubmitEditedFileButton
-            fileName={comparisonFileModel?.getData("file")}
-            fileContent={comparisonFileModel?.getData("manualContent")}
-            comparisonFileModel={comparisonFileModel}
-            wizardModel={wizardModel}
-            setWizardModel={setWizardModel}
-            className={"ml-2 my-auto"}
-          />
+          {!inJsonView &&
+            <MergeSyncTaskWizardSubmitEditedFileButton
+              fileName={comparisonFileModel?.getData("file")}
+              fileContent={comparisonFileModel?.getData("manualContent")}
+              comparisonFileModel={comparisonFileModel}
+              wizardModel={wizardModel}
+              setWizardModel={setWizardModel}
+              className={"ml-2 my-auto"}
+            />
+          }
         </div>
       </div>
     );

@@ -17,6 +17,7 @@ import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import InlineWarning from "../../../../../../../../../common/status_notifications/inline/InlineWarning";
 import StandaloneSaveButton from "../../../../../../../../../common/buttons/saving/StandaloneSaveButton";
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
+import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
 
 const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
   wizardModel,
@@ -99,13 +100,14 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
 
   const saveModifiedContent = async () => {
     try {
+      const modifiedFileContent = {"applicationVisibilities": [...modifiedContentJson?.applicationVisibilities]};
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           fileName,
-          modifiedContentJson,
+          modifiedFileContent,
           "CustomApplication",
         );
       console.log(response);
@@ -193,7 +195,14 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
   const modifiedAppVisibilityEditView = () => {
     return (
       <Col>
-        <span className="h5">Source Profiles</span>
+        <span className="h5">
+          Source Profiles (
+          <ToolNameFieldDisplayer
+            toolId={wizardModel?.getData("sfdcToolId")}
+            loadToolInNewWindow={true}
+          />
+          )
+        </span>
         {modifiedContentJson &&
           Object.keys(modifiedContentJson).length > 0 &&
           modifiedContentJson?.applicationVisibilities
@@ -210,7 +219,7 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
                   isLoading={isLoading}
                 />
                 {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
+                  <DividerWithCenteredText />
                 )}
               </div>
             ))}
@@ -221,7 +230,7 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
   const originalAppVisibilityEditView = () => {
     return (
       <Col>
-        <span className="h5">Source Profiles</span>
+        <span className="h5">Target Branch ({wizardModel?.getData("targetBranch")})</span>
         {originalContentJson &&
           Object.keys(originalContentJson).length > 0 &&
           originalContentJson?.applicationVisibilities
@@ -239,7 +248,7 @@ const MergeSyncTaskWizardCustomApplicationJsonEditPanel = ({
                   disabled={true}
                 />
                 {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
+                  <DividerWithCenteredText />
                 )}
               </div>
             ))}

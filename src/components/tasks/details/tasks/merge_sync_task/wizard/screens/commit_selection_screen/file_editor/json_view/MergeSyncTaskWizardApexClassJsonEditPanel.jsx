@@ -11,13 +11,13 @@ import useComponentStateReference from "../../../../../../../../../../hooks/useC
 import mergeSyncTaskWizardActions from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.actions";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import ButtonBase from "../../../../../../../../../common/buttons/ButtonBase";
 import { mockData } from "../MergeSyncTaskWizardProfilesAdvancedEditingPanel";
 import IconBase from "../../../../../../../../../common/icons/IconBase";
 import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import InlineWarning from "../../../../../../../../../common/status_notifications/inline/InlineWarning";
 import StandaloneSaveButton from "../../../../../../../../../common/buttons/saving/StandaloneSaveButton";
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
+import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
 
 const MergeSyncTaskWizardApexClassJsonEditPanel = ({
   wizardModel,
@@ -100,13 +100,14 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
 
   const saveModifiedContent = async () => {
     try {
+      const modifiedFileContent = {"classAccesses": [...modifiedContentJson?.classAccesses]};
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           fileName,
-          modifiedContentJson,
+          modifiedFileContent,
           "ApexClass",
         );
       console.log(response);
@@ -191,7 +192,14 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
   const modifiedApexClassEditView = () => {
     return (
       <Col>
-        <span className="h5">Source Profiles</span>
+        <span className="h5">
+          Source Profiles (
+          <ToolNameFieldDisplayer
+            toolId={wizardModel?.getData("sfdcToolId")}
+            loadToolInNewWindow={true}
+          />
+          )
+        </span>
         {modifiedContentJson &&
           Object.keys(modifiedContentJson).length > 0 &&
           modifiedContentJson?.classAccesses
@@ -207,9 +215,7 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
                   setApexClassJson={setApexClassJson}
                   isLoading={isLoading}
                 />
-                {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
-                )}
+                {idx + 1 !== length && <DividerWithCenteredText />}
               </div>
             ))}
       </Col>
@@ -219,7 +225,7 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
   const originalApexClassEditView = () => {
     return (
       <Col>
-        <span className="h5">Target Profiles</span>
+        <span className="h5">Target Branch ({wizardModel?.getData("targetBranch")})</span>
         {originalContentJson &&
           Object.keys(originalContentJson).length > 0 &&
           originalContentJson?.classAccesses
@@ -237,7 +243,7 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
                   disabled={true}
                 />
                 {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
+                  <DividerWithCenteredText />
                 )}
               </div>
             ))}

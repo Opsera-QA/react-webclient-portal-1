@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import DataCategoryProfileEditorView from "./profile_editor_views/DataCategoryProfileEditorView";
 import { DividerWithCenteredText } from "../../../../../../../../../../temp-library-components/divider/DividerWithCenteredText";
 import { AuthContext } from "../../../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../../../contexts/DialogToastContext";
@@ -18,6 +17,7 @@ import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import InlineWarning from "../../../../../../../../../common/status_notifications/inline/InlineWarning";
 import StandaloneSaveButton from "../../../../../../../../../common/buttons/saving/StandaloneSaveButton";
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
+import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
 
 const MergeSyncTaskWizardCustomObjectJsonEditPanel = ({
   wizardModel,
@@ -100,13 +100,14 @@ const MergeSyncTaskWizardCustomObjectJsonEditPanel = ({
 
   const saveModifiedContent = async () => {
     try {
+      const modifiedFileContent = {"objectPermissions": [...modifiedContentJson?.objectPermissions]};
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           fileName,
-          modifiedContentJson,
+          modifiedFileContent,
           "CustomObject",
         );
       console.log(response);
@@ -197,7 +198,14 @@ const MergeSyncTaskWizardCustomObjectJsonEditPanel = ({
   const modifiedDataCategoryEditView = () => {
     return (
       <Col>
-        <span className="h5">Source Profiles</span>
+        <span className="h5">
+          Source Profiles (
+          <ToolNameFieldDisplayer
+            toolId={wizardModel?.getData("sfdcToolId")}
+            loadToolInNewWindow={true}
+          />
+          )
+        </span>
         {modifiedContentJson &&
           Object.keys(modifiedContentJson).length > 0 &&
           modifiedContentJson?.objectPermissions
@@ -225,7 +233,7 @@ const MergeSyncTaskWizardCustomObjectJsonEditPanel = ({
   const originalDataCategoryEditView = () => {
     return (
       <Col>
-        <span className="h5">Target Profiles</span>
+        <span className="h5">Target Branch ({wizardModel?.getData("targetBranch")})</span>
         {originalContentJson &&
           Object.keys(originalContentJson).length > 0 &&
           originalContentJson?.objectPermissions
