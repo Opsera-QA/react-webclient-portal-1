@@ -69,8 +69,6 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
     const sfdc = configuration?.sfdc;
     const git = configuration?.git;
 
-    console.log(git);
-
     if (dataParsingHelper.parseObject(sfdc)) {
       newWizardModel?.setData("sfdcToolId", sfdc?.sourceToolId);
     }
