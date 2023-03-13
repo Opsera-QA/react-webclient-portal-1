@@ -214,7 +214,7 @@ const MergeSyncTaskWizardApexPageJsonEditPanel = ({
                   isLoading={isLoading}
                 />
                 {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
+                  <DividerWithCenteredText />
                 )}
               </div>
             ))}
@@ -243,7 +243,7 @@ const MergeSyncTaskWizardApexPageJsonEditPanel = ({
                   disabled={true}
                 />
                 {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
+                  <DividerWithCenteredText />
                 )}
               </div>
             ))}

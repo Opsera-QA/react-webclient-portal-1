@@ -212,7 +212,7 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
                   isLoading={isLoading}
                 />
                 {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
+                  <DividerWithCenteredText />
                 )}
               </div>
             ))}
@@ -241,7 +241,7 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
                   disabled={true}
                 />
                 {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
+                  <DividerWithCenteredText />
                 )}
               </div>
             ))}

@@ -213,7 +213,7 @@ const MergeSyncTaskWizardCustomFieldJsonEditPanel = ({
                   isLoading={isLoading}
                 />
                 {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
+                  <DividerWithCenteredText />
                 )}
               </div>
             ))}
@@ -242,7 +242,7 @@ const MergeSyncTaskWizardCustomFieldJsonEditPanel = ({
                   disabled={true}
                 />
                 {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
+                  <DividerWithCenteredText />
                 )}
               </div>
             ))}

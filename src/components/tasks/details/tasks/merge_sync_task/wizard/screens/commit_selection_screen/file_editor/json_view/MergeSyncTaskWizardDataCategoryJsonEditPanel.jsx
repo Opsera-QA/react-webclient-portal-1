@@ -208,7 +208,7 @@ const MergeSyncTaskWizardDataCategoryJsonEditPanel = ({
                   isLoading={isLoading}
                 />
                 {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
+                  <DividerWithCenteredText />
                 )}
               </div>
             ))}
@@ -237,7 +237,7 @@ const MergeSyncTaskWizardDataCategoryJsonEditPanel = ({
                   disabled={true}
                 />
                 {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
+                  <DividerWithCenteredText />
                 )}
               </div>
             ))}

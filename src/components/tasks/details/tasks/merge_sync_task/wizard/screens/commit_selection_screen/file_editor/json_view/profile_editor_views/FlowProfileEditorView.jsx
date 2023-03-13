@@ -43,14 +43,14 @@ const FlowProfileEditorView = ({
   };
 
   return (
-    <div>
-      <Col>
+    <Row>
+      <Col lg={12}>
         <TextFieldBase
           dataObject={customMetaJsonMetadata}
           fieldName={"flow"}
         />
       </Col>
-      <Col>
+      <Col lg={6}>
         <CheckboxInputBase
           fieldName={"enabled"}
           model={customMetaJsonMetadata}
@@ -59,7 +59,7 @@ const FlowProfileEditorView = ({
           disabled={disabled}
         />
       </Col>
-    </div>
+    </Row>
   );
 };
 
