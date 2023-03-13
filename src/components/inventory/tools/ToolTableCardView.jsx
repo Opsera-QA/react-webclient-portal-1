@@ -2,6 +2,7 @@ import React from "react";
 import ToolsTable from "components/inventory/tools/ToolsTable";
 import TableCardView from "components/common/table/TableCardView";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
+import NewToolOverlay from "components/inventory/tools/create_overlay/NewToolOverlay";
 import PropTypes from "prop-types";
 import ToolCardView from "components/inventory/tools/ToolCardView";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -12,7 +13,10 @@ import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
-import CreateToolRegistryWizard from "components/inventory/tools/tool_details/wizards/CreateToolRegistryWizard";
+import CreateToolRegistryWizard from "./tool_details/wizards/CreateToolRegistryWizard";
+import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
+import platformSettingFeatureConstants
+  from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 
 function ToolTableCardView(
   {
@@ -26,11 +30,19 @@ function ToolTableCardView(
     userData,
     toastContext,
   } = useComponentStateReference();
+  // TODO: Implement when we want to turn on
+  const getPlatformSettingsFeatureFlagByName = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_WIZARDS_TOGGLE);
 
   const createNewTool = () => {
-    toastContext.showOverlayPanel(
-      <CreateToolRegistryWizard loadData={loadData}/>
-    );
+    if (getPlatformSettingsFeatureFlagByName?.platformSettingsFeatureFlag?.active === true) {
+      toastContext.showOverlayPanel(
+        <CreateToolRegistryWizard loadData={loadData}/>
+      );
+    } else {
+      toastContext.showOverlayPanel(
+        <NewToolOverlay loadData={loadData}/>
+      );
+    }
   };
 
   const getCreateNewToolFunction = () => {
@@ -88,7 +100,7 @@ function ToolTableCardView(
   const getTableView = () => {
     return (
       <ToolsTable
-        isLoading={isLoading}
+        isLoading={isLoading || getPlatformSettingsFeatureFlagByName.isLoading}
         loadData={loadData}
         data={tools}
         toolFilterDto={toolFilterDto}
