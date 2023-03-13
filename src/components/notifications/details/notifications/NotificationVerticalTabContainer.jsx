@@ -19,13 +19,13 @@ function NotificationVerticalTabContainer(
         handleTabClick={handleTabClickFunction}
         activeTab={activeTab}
       />
-      <VanitySetVerticalTab
-        icon={faJira}
-        tabText={"Jira"}
-        tabName={"jira"}
-        handleTabClick={handleTabClickFunction}
-        activeTab={activeTab}
-      />
+      {/*<VanitySetVerticalTab*/}
+      {/*  icon={faJira}*/}
+      {/*  tabText={"Jira"}*/}
+      {/*  tabName={"jira"}*/}
+      {/*  handleTabClick={handleTabClickFunction}*/}
+      {/*  activeTab={activeTab}*/}
+      {/*/>*/}
       <VanitySetVerticalTab
         icon={faMicrosoft}
         tabText={"Microsoft Teams"}
@@ -33,13 +33,13 @@ function NotificationVerticalTabContainer(
         handleTabClick={handleTabClickFunction}
         activeTab={activeTab}
       />
-      <VanitySetVerticalTab
-        icon={faEnvelope}
-        tabText={"Service Now"}
-        tabName={"service-now"}
-        handleTabClick={handleTabClickFunction}
-        activeTab={activeTab}
-      />
+      {/*<VanitySetVerticalTab*/}
+      {/*  icon={faEnvelope}*/}
+      {/*  tabText={"Service Now"}*/}
+      {/*  tabName={"service-now"}*/}
+      {/*  handleTabClick={handleTabClickFunction}*/}
+      {/*  activeTab={activeTab}*/}
+      {/*/>*/}
       <VanitySetVerticalTab
         icon={faSlack}
         tabText={"Slack"}

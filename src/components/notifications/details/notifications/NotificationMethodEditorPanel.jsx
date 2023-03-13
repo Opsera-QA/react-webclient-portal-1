@@ -49,11 +49,11 @@ export default function NotificationMethodEditorPanel(
       const teamsNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.TEAMS);
       setTeamsNotificationModel(modelHelpers.parseObjectIntoModel(teamsNotification, teamsStepNotificationMetadata));
 
-      const jiraNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.JIRA);
-      setJiraNotificationModel(modelHelpers.parseObjectIntoModel(jiraNotification, jiraStepNotificationMetadata));
-
-      const serviceNowNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW);
-      setServiceNowNotificationModel(modelHelpers.parseObjectIntoModel(serviceNowNotification, serviceNowStepNotificationMetadata));
+      // const jiraNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.JIRA);
+      // setJiraNotificationModel(modelHelpers.parseObjectIntoModel(jiraNotification, jiraStepNotificationMetadata));
+      //
+      // const serviceNowNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SERVICE_NOW);
+      // setServiceNowNotificationModel(modelHelpers.parseObjectIntoModel(serviceNowNotification, serviceNowStepNotificationMetadata));
 
       const gChatNotification = notifications?.find((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.GCHAT);
       setGChatNotificationModel(modelHelpers.parseObjectIntoModel(gChatNotification, gChatStepNotificationMetadata));
@@ -70,10 +70,11 @@ export default function NotificationMethodEditorPanel(
   //   );
   // };
 
+  // TODO: Do this in a smarter way
   const setEmailNotificationModelFunction = (newEmailNotificationModel) => {
     setEmailNotificationModel({...newEmailNotificationModel});
 
-    if (emailNotificationModel.getData("enabled") === true && !newEmailNotificationModel.isModelValid()) {
+    if (newEmailNotificationModel.getData("enabled") === true && !newEmailNotificationModel.isModelValid()) {
       setError("Error: Cannot enable Email notification without all required fields filled out.");
       return;
     }
@@ -82,6 +83,78 @@ export default function NotificationMethodEditorPanel(
     const notifications = notificationModel?.getArrayData("notification");
     const index = notifications?.findIndex((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.EMAIL);
     const updatedData = newEmailNotificationModel?.getPersistData(false);
+
+    if (index === -1) {
+      notifications.push(updatedData);
+    } else {
+      notifications[index] = updatedData;
+    }
+
+    const validatedNotificationsArray = notificationMethodHelper.getValidatedNotificationsArray(notifications);
+    notificationModel.setData("notification", validatedNotificationsArray);
+    setNotificationModel({...notificationModel});
+  };
+
+  const setSlackNotificationModelFunction = (newNotificationModel) => {
+    setSlackNotificationModel({...newNotificationModel});
+
+    if (newNotificationModel.getData("enabled") === true && !newNotificationModel.isModelValid()) {
+      setError("Error: Cannot enable Slack notification without all required fields filled out.");
+      return;
+    }
+
+    setError(undefined);
+    const notifications = notificationModel?.getArrayData("notification");
+    const index = notifications?.findIndex((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.SLACK);
+    const updatedData = newNotificationModel?.getPersistData(false);
+
+    if (index === -1) {
+      notifications.push(updatedData);
+    } else {
+      notifications[index] = updatedData;
+    }
+
+    const validatedNotificationsArray = notificationMethodHelper.getValidatedNotificationsArray(notifications);
+    notificationModel.setData("notification", validatedNotificationsArray);
+    setNotificationModel({...notificationModel});
+  };
+
+  const setGoogleChatNotificationModelFunction = (newNotificationModel) => {
+    setGChatNotificationModel({...newNotificationModel});
+
+    if (newNotificationModel.getData("enabled") === true && !newNotificationModel.isModelValid()) {
+      setError("Error: Cannot enable GChat notification without all required fields filled out.");
+      return;
+    }
+
+    setError(undefined);
+    const notifications = notificationModel?.getArrayData("notification");
+    const index = notifications?.findIndex((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.GCHAT);
+    const updatedData = newNotificationModel?.getPersistData(false);
+
+    if (index === -1) {
+      notifications.push(updatedData);
+    } else {
+      notifications[index] = updatedData;
+    }
+
+    const validatedNotificationsArray = notificationMethodHelper.getValidatedNotificationsArray(notifications);
+    notificationModel.setData("notification", validatedNotificationsArray);
+    setNotificationModel({...notificationModel});
+  };
+
+  const setMicrosoftTeamsNotificationModelFunction = (newNotificationModel) => {
+    setTeamsNotificationModel({...newNotificationModel});
+
+    if (newNotificationModel.getData("enabled") === true && !newNotificationModel.isModelValid()) {
+      setError("Error: Cannot enable Microsoft Teams notification without all required fields filled out.");
+      return;
+    }
+
+    setError(undefined);
+    const notifications = notificationModel?.getArrayData("notification");
+    const index = notifications?.findIndex((notification) => notification.type === ORCHESTRATION_NOTIFICATION_TYPES.TEAMS);
+    const updatedData = newNotificationModel?.getPersistData(false);
 
     if (index === -1) {
       notifications.push(updatedData);
@@ -106,9 +179,9 @@ export default function NotificationMethodEditorPanel(
     <div>
       <NotificationTabView
         slackNotificationModel={slackNotificationModel}
-        setSlackNotificationModel={setSlackNotificationModel}
+        setSlackNotificationModel={setSlackNotificationModelFunction}
         teamsNotificationModel={teamsNotificationModel}
-        setTeamsNotificationModel={setTeamsNotificationModel}
+        setTeamsNotificationModel={setMicrosoftTeamsNotificationModelFunction}
         jiraNotificationModel={jiraNotificationModel}
         setJiraNotificationModel={setJiraNotificationModel}
         serviceNowNotificationModel={serviceNowNotificationModel}
@@ -116,7 +189,7 @@ export default function NotificationMethodEditorPanel(
         emailNotificationModel={emailNotificationModel}
         setEmailNotificationModel={setEmailNotificationModelFunction}
         gChatNotificationModel={gChatNotificationModel}
-        setGChatNotificationModel={setGChatNotificationModel}
+        setGChatNotificationModel={setGoogleChatNotificationModelFunction}
       />
       <InfoText errorMessage={error} />
     </div>
