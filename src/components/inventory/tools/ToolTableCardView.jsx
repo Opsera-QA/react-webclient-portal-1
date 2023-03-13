@@ -13,10 +13,6 @@ import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
-import CreateToolRegistryWizard from "./tool_details/wizards/CreateToolRegistryWizard";
-import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
-import platformSettingFeatureConstants
-  from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 
 function ToolTableCardView(
   {
@@ -30,20 +26,6 @@ function ToolTableCardView(
     userData,
     toastContext,
   } = useComponentStateReference();
-  // TODO: Implement when we want to turn on
-  // const getPlatformSettingsFeatureFlagByName = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_WIZARDS_TOGGLE);
-  //
-  // const createNewTool = () => {
-  //   if (getPlatformSettingsFeatureFlagByName?.platformSettingsFeatureFlag?.active === true) {
-  //     toastContext.showOverlayPanel(
-  //       <CreateToolRegistryWizard loadData={loadData}/>
-  //     );
-  //   } else {
-  //     toastContext.showOverlayPanel(
-  //       <NewToolOverlay loadData={loadData}/>
-  //     );
-  //   }
-  // };
 
   const createNewTool = () => {
     toastContext.showOverlayPanel(
@@ -107,7 +89,6 @@ function ToolTableCardView(
     return (
       <ToolsTable
         isLoading={isLoading}
-        // isLoading={isLoading || getPlatformSettingsFeatureFlagByName.isLoading}
         loadData={loadData}
         data={tools}
         toolFilterDto={toolFilterDto}
