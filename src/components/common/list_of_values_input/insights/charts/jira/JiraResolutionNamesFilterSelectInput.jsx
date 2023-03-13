@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
-import jiraAction from "../../../../../insights/charts/jira/jira.action";
+import jiraAction from "components/insights/charts/jira/jira.action";
 
 function JiraResolutionNamesFilterSelectInput({
   placeholderText,
@@ -68,7 +68,7 @@ function JiraResolutionNamesFilterSelectInput({
       setResolutionNames(response?.data?.data);
     }
   };
-  const disabled = model.getArrayData('jira-projects').length === 0;
+  const disabled = !project || project.length === 0;
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
