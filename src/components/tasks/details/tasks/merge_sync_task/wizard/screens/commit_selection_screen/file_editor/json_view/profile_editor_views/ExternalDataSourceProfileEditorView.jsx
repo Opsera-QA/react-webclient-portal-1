@@ -43,14 +43,14 @@ const ExternalDataSourceProfileEditorView = ({
   };
 
   return (
-    <div>
-      <Col>
+    <Row>
+      <Col lg={12}>
         <TextFieldBase
           dataObject={customMetaJsonMetadata}
           fieldName={"externalDataSource"}
         />
       </Col>
-      <Col>
+      <Col lg={6}>
         <CheckboxInputBase
           fieldName={"enabled"}
           model={customMetaJsonMetadata}
@@ -59,7 +59,7 @@ const ExternalDataSourceProfileEditorView = ({
           disabled={disabled}
         />
       </Col>
-    </div>
+    </Row>
   );
 };
 

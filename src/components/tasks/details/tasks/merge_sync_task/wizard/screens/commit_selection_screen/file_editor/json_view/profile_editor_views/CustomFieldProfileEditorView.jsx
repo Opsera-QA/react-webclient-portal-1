@@ -46,14 +46,14 @@ const CustomFieldProfileEditorView = ({
   };
 
   return (
-    <div>
-      <Col>
+    <Row>
+      <Col lg={12}>
         <TextFieldBase
           dataObject={customMetaJsonMetadata}
           fieldName={"field"}
         />
       </Col>
-      <Col>
+      <Col lg={6}>
         <CheckboxInputBase
           fieldName={"readable"}
           model={customMetaJsonMetadata}
@@ -62,7 +62,7 @@ const CustomFieldProfileEditorView = ({
           disabled={disabled}
         />
       </Col>
-      <Col>
+      <Col lg={6}>
         <CheckboxInputBase
           fieldName={"editable"}
           model={customMetaJsonMetadata}
@@ -71,7 +71,7 @@ const CustomFieldProfileEditorView = ({
           disabled={disabled || !customMetaJsonMetadata?.getData("readable")}
         />
       </Col>
-    </div>
+    </Row>
   );
 };
 

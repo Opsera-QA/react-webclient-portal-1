@@ -3,17 +3,13 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import ApexClassProfleEditorView from "./profile_editor_views/ApexClassProfleEditorView";
 import { DividerWithCenteredText } from "../../../../../../../../../../temp-library-components/divider/DividerWithCenteredText";
-import CustomMetadataProfileEditorView from "./profile_editor_views/CustomMetadataProfileEditorView";
 import { AuthContext } from "../../../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../../../contexts/DialogToastContext";
 import useComponentStateReference from "../../../../../../../../../../hooks/useComponentStateReference";
 import { hasStringValue } from "../../../../../../../../../common/helpers/string-helpers";
 import mergeSyncTaskWizardActions from "../../../../mergeSyncTaskWizard.actions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import CustomSettingssProfileEditorView from "./profile_editor_views/CustomSettingssProfileEditorView";
-import ExternalDataSourceProfileEditorView from "./profile_editor_views/ExternalDataSourceProfileEditorView";
 import LayoutProfileEditorView from "./profile_editor_views/LayoutProfileEditorView";
 import { mockData } from "../MergeSyncTaskWizardProfilesAdvancedEditingPanel";
 import IconBase from "../../../../../../../../../common/icons/IconBase";
@@ -21,6 +17,7 @@ import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import InlineWarning from "../../../../../../../../../common/status_notifications/inline/InlineWarning";
 import StandaloneSaveButton from "../../../../../../../../../common/buttons/saving/StandaloneSaveButton";
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
+import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
 
 const MergeSyncTaskWizardLayoutJsonEditPanel = ({
   wizardModel,
@@ -102,13 +99,14 @@ const MergeSyncTaskWizardLayoutJsonEditPanel = ({
   }
   const saveModifiedContent = async () => {
     try {
+      const modifiedFileContent = {"layoutAssignments": [...modifiedContentJson?.layoutAssignments]};
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
           cancelTokenSource,
           wizardModel,
           fileName,
-          modifiedContentJson,
+          modifiedFileContent,
           "Layout",
         );
       console.log(response);
@@ -193,7 +191,14 @@ const MergeSyncTaskWizardLayoutJsonEditPanel = ({
   const modifiedCustomMetaEditView = () => {
     return (
       <Col>
-        <span className="h5">Source Profiles</span>
+        <span className="h5">
+          Source Profiles (
+          <ToolNameFieldDisplayer
+            toolId={wizardModel?.getData("sfdcToolId")}
+            loadToolInNewWindow={true}
+          />
+          )
+        </span>
         {modifiedContentJson &&
           Object.keys(modifiedContentJson).length > 0 &&
           modifiedContentJson?.layoutAssignments
@@ -210,7 +215,7 @@ const MergeSyncTaskWizardLayoutJsonEditPanel = ({
                   isLoading={isLoading}
                 />
                 {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
+                  <DividerWithCenteredText />
                 )}
               </div>
             ))}
@@ -221,7 +226,7 @@ const MergeSyncTaskWizardLayoutJsonEditPanel = ({
   const originalCustomMetaEditView = () => {
     return (
       <Col>
-        <span className="h5">Target Profiles</span>
+        <span className="h5">Target Branch ({wizardModel?.getData("targetBranch")})</span>
         {originalContentJson &&
           Object.keys(originalContentJson).length > 0 &&
           originalContentJson?.layoutAssignments
@@ -239,7 +244,7 @@ const MergeSyncTaskWizardLayoutJsonEditPanel = ({
                   disabled={true}
                 />
                 {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
+                  <DividerWithCenteredText />
                 )}
               </div>
             ))}

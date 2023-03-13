@@ -43,14 +43,14 @@ const CustomPermissionsProfileEditorView = ({
   };
 
   return (
-    <div>
-      <Col>
+    <Row>
+      <Col lg={12}>
         <TextFieldBase
           dataObject={customMetaJsonMetadata}
           fieldName={"name"}
         />
       </Col>
-      <Col>
+      <Col lg={6}>
         <CheckboxInputBase
           fieldName={"enabled"}
           model={customMetaJsonMetadata}
@@ -59,7 +59,7 @@ const CustomPermissionsProfileEditorView = ({
           disabled={disabled}
         />
       </Col>
-    </div>
+    </Row>
   );
 };
 

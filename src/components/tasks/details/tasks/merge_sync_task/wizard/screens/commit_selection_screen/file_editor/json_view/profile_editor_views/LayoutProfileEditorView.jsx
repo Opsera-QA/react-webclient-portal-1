@@ -43,20 +43,20 @@ const LayoutProfileEditorView = ({
   };
 
   return (
-    <div>
-      <Col>
+    <Row>
+      <Col lg={12}>
         <TextFieldBase
           dataObject={customMetaJsonMetadata}
           fieldName={"layout"}
         />
       </Col>
-      <Col>
+      <Col lg={12}>
         <TextFieldBase
           dataObject={customMetaJsonMetadata}
           fieldName={"recordType"}
         />
       </Col>
-    </div>
+    </Row>
   );
 };
 

@@ -43,14 +43,14 @@ const RecordTypeProfileEditorView = ({
   };
 
   return (
-    <div>
-      <Col>
+    <Row>
+      <Col lg={12}>
         <TextFieldBase
           dataObject={customMetaJsonMetadata}
           fieldName={"recordType"}
         />
       </Col>
-      <Col>
+      <Col lg={6}>
         <CheckboxInputBase
           fieldName={"default"}
           model={customMetaJsonMetadata}
@@ -59,7 +59,7 @@ const RecordTypeProfileEditorView = ({
           disabled={disabled}
         />
       </Col>
-      <Col>
+      <Col lg={6}>
         <CheckboxInputBase
           fieldName={"visible"}
           model={customMetaJsonMetadata}
@@ -68,7 +68,7 @@ const RecordTypeProfileEditorView = ({
           disabled={disabled}
         />
       </Col>
-    </div>
+    </Row>
   );
 };
 
