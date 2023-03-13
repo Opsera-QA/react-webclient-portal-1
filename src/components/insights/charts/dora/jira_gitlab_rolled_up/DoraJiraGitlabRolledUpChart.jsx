@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import axios from "axios";
 import {
-  getDeploymentStageFromKpiConfiguration, getResultFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration,
+  getDeploymentStageFromKpiConfiguration, getResultFromKpiConfiguration, getUseDashboardTagsFromKpiConfiguration, MATURITY_SCORE_TEXT
 } from "../../charts-helpers";
 
 import InfoDialog from "../../../../common/status_notifications/info";
@@ -15,6 +15,7 @@ import DoraJiraGitlabRolledUpColumnDataBlock from "./DoraJiraGitlabRolledUpColum
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import BoomiActionableTabOverlay from "../../boomi/actionable_insights/BoomiActionableTabOverlay";
 import DoraJiraOrgsActionableOverlay from "./actionable_insights/DoraJiraOrgsActionableOverlay";
+import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
 
 
 function DoraJiraGitlabRolledUpChart({
@@ -140,6 +141,43 @@ function DoraJiraGitlabRolledUpChart({
       return null;
     }
 
+    // add color to each org tag (cycling through 5 NIVO theme colors and sorted by category, then alphabetrically)
+    const coloredMetricData = [...metricData]
+    .sort((
+      { name: nameA, overallMaturityScoreText: scoreA },
+      { name: nameB, overallMaturityScoreText: scoreB }
+    ) => {
+      if (scoreA === scoreB) {
+        // equal score, sort alphabetically, ascending
+        if (nameA === nameB) {
+          return 0;
+        }
+        return nameA < nameB ? -1 : 1;
+      }
+
+      switch (scoreA) {
+        case MATURITY_SCORE_TEXT.ELITE:
+          return -1;
+        case MATURITY_SCORE_TEXT.HIGH:
+          if (scoreB === MATURITY_SCORE_TEXT.ELITE) {
+            return 1;
+          }
+          return -1;
+        case MATURITY_SCORE_TEXT.MEDIUM:
+          if (scoreB === MATURITY_SCORE_TEXT.LOW) {
+            return -1;
+          }
+          return 1;
+        case MATURITY_SCORE_TEXT.LOW:
+          return 1;
+        default:
+          return 0;
+      }
+    }).map((data, index) => ({
+      ...data,
+      color: METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY[index % 5]
+    }));
+
     return (
         <div
             className="m-3"
@@ -150,30 +188,30 @@ function DoraJiraGitlabRolledUpChart({
           >
             <Col md={12} className={"mb-2"}>
               <DoraJiraGitlabRolledUpColumnDataBlock
-                  onSelect={() => onRowSelect("elite")}
-                  maturityScoreText = {'elite'}
-                  overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'elite')}
+                  onSelect={onRowSelect}
+                  maturityScoreText={'elite'}
+                  overlayData={coloredMetricData}
               />
             </Col>
             <Col md={12} className={"mb-2"}>
               <DoraJiraGitlabRolledUpColumnDataBlock
-                  onSelect={() => onRowSelect("high")}
-                  maturityScoreText = {'high'}
-                  overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'high')}
+                  onSelect={onRowSelect}
+                  maturityScoreText={'high'}
+                  overlayData={coloredMetricData}
               />
             </Col>
             <Col md={12} className={"mb-2"}>
               <DoraJiraGitlabRolledUpColumnDataBlock
-                  onSelect={() => onRowSelect("medium")}
-                  maturityScoreText = {'medium'}
-                  overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'medium')}
+                  onSelect={onRowSelect}
+                  maturityScoreText={'medium'}
+                  overlayData={coloredMetricData}
               />
             </Col>
             <Col md={12}>
               <DoraJiraGitlabRolledUpColumnDataBlock
-                  onSelect={() => onRowSelect("low")}
-                  maturityScoreText = {'low'}
-                  overlayData={metricData?.filter(item=> item.overallMaturityScoreText == 'low')}
+                  onSelect={onRowSelect}
+                  maturityScoreText={'low'}
+                  overlayData={coloredMetricData}
               />
             </Col>
           </Row>
