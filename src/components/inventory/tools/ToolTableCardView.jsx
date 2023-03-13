@@ -2,7 +2,6 @@ import React from "react";
 import ToolsTable from "components/inventory/tools/ToolsTable";
 import TableCardView from "components/common/table/TableCardView";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
-import NewToolOverlay from "components/inventory/tools/create_overlay/NewToolOverlay";
 import PropTypes from "prop-types";
 import ToolCardView from "components/inventory/tools/ToolCardView";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -13,6 +12,7 @@ import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
+import CreateToolRegistryWizard from "components/inventory/tools/tool_details/wizards/CreateToolRegistryWizard";
 
 function ToolTableCardView(
   {
@@ -29,7 +29,7 @@ function ToolTableCardView(
 
   const createNewTool = () => {
     toastContext.showOverlayPanel(
-      <NewToolOverlay loadData={loadData}/>
+      <CreateToolRegistryWizard loadData={loadData}/>
     );
   };
 
