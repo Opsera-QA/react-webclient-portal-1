@@ -30,18 +30,25 @@ function ToolTableCardView(
     userData,
     toastContext,
   } = useComponentStateReference();
-  const getPlatformSettingsFeatureFlagByName = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_WIZARDS_TOGGLE);
+  // TODO: Implement when we want to turn on
+  // const getPlatformSettingsFeatureFlagByName = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_WIZARDS_TOGGLE);
+  //
+  // const createNewTool = () => {
+  //   if (getPlatformSettingsFeatureFlagByName?.platformSettingsFeatureFlag?.active === true) {
+  //     toastContext.showOverlayPanel(
+  //       <CreateToolRegistryWizard loadData={loadData}/>
+  //     );
+  //   } else {
+  //     toastContext.showOverlayPanel(
+  //       <NewToolOverlay loadData={loadData}/>
+  //     );
+  //   }
+  // };
 
   const createNewTool = () => {
-    if (getPlatformSettingsFeatureFlagByName?.platformSettingsFeatureFlag?.active === true) {
-      toastContext.showOverlayPanel(
-        <CreateToolRegistryWizard loadData={loadData}/>
-      );
-    } else {
-      toastContext.showOverlayPanel(
-        <NewToolOverlay loadData={loadData}/>
-      );
-    }
+    toastContext.showOverlayPanel(
+      <NewToolOverlay loadData={loadData}/>
+    );
   };
 
   const getCreateNewToolFunction = () => {
@@ -99,7 +106,8 @@ function ToolTableCardView(
   const getTableView = () => {
     return (
       <ToolsTable
-        isLoading={isLoading || getPlatformSettingsFeatureFlagByName.isLoading}
+        isLoading={isLoading}
+        // isLoading={isLoading || getPlatformSettingsFeatureFlagByName.isLoading}
         loadData={loadData}
         data={tools}
         toolFilterDto={toolFilterDto}
