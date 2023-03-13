@@ -74,7 +74,7 @@ function JsonInput(
         width="100%"
       />
     );
-  };``
+  };
 
   return (
     <>
