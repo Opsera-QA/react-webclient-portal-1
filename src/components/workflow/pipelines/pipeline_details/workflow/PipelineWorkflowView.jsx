@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import PipelineWorkflow from "./PipelineWorkflow";
 import PipelineWorkflowEditor from "./PipelineWorkflowItemEditor";
-import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
 import InformationDialog from "components/common/status_notifications/info";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
@@ -54,21 +53,7 @@ function PipelineWorkflowView(
   return (
     <div className="workflow-view h-100">
       {getPipelineWorkflowEditor(editItem)}
-
-      <div className="py-1 text-right" style={{minHeight: "42px"}}>
-        {!editItem && <div className="float-right pt-1 mr-2">
-          <PipelineActionControls
-            pipeline={pipeline}
-            fetchData={fetchPlan}
-            setPipeline={setPipeline}
-            workflowStatus={pipelineStatus}
-            isLoading={softLoading}
-            isQueued={isQueued}
-            runCount={runCount}
-          />
-        </div>}
-      </div>
-      <div style={{minWidth: "740px"}}>
+      <div>
         <PipelineWorkflow
           pipeline={pipeline}
           fetchPlan={fetchPlan}

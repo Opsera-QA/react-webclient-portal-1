@@ -77,14 +77,10 @@ export default function AccessRoleDisplayerField(
       title={"Access Rules"}
       showCloseButton={false}
       className={"popover-filter"}
+      placement={"bottom"}
     >
       <span className={className}>
         <span>
-          <IconBase
-            className={"mr-1 opsera-primary"}
-            icon={faLock}
-            onClickFunction={handleEditFunction}
-          />
           {`${roles.length} Access Role${roles.length !== 1 ? "s" : ""} Applied. ${getAccessInformation()}`}
         </span>
       </span>
