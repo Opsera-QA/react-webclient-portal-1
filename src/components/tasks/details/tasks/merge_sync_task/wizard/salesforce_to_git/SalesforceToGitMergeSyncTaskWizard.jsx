@@ -67,9 +67,15 @@ const SalesforceToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
 
     const configuration = taskModel?.getData("configuration");
     const sfdc = configuration?.sfdc;
+    const git = configuration?.git;
+
+    console.log(git);
 
     if (dataParsingHelper.parseObject(sfdc)) {
       newWizardModel?.setData("sfdcToolId", sfdc?.sourceToolId);
+    }
+    if (dataParsingHelper.parseObject(git)) {
+      newWizardModel?.setData("targetBranch", git?.targetBranch);
     }
 
     const runCount = taskModel?.getData("run_count");
