@@ -33,6 +33,7 @@ function GitScraperLogSummaryTable({ gitScraperObj, isLoading }) {
         getField(fields, "linkToSecret"),
       ),
       getTableTextColumn(getField(fields, "reason")),
+      getTableTextColumn(getField(fields, "severity")),
     ],
     [],
   );
