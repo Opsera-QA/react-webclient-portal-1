@@ -117,6 +117,7 @@ function PipelineWorkflow({
         <div className={getZoomClass(zoomValue)}>
           <PipelineWorkflowSourceRepositoryItem
             pipeline={pipeline}
+            fetchPlan={fetchPlan}
             status={status}
             softLoading={softLoading || updatingWorkflow}
           />
