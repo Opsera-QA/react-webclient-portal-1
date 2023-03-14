@@ -126,7 +126,7 @@ export default function PipelineStepWorkflowItemBody(
             className={"pl-1 pt-1"}
             icon={faInfoCircle}
             label={"Window"}
-            value={`${DateFormatHelper.formatDate(changeRequestStartDate)} to ${DateFormatHelper.formatDate(changeRequestEndDate)}`}
+            value={`${changeRequestStartDate} to ${changeRequestEndDate}`}
           />
         }
       </>

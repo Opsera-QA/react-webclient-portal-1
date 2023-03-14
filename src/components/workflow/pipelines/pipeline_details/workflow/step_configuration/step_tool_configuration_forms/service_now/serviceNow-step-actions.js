@@ -7,7 +7,7 @@ ServiceNowStepActions.getChangeRequests = async (getAccessToken, cancelTokenSour
   const queryParam = {
     search: search,
   };
-  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParam);
+  return baseActions.apiGetCallV3(getAccessToken, cancelTokenSource, apiUrl, queryParam);
 };
 
 ServiceNowStepActions.getAssignmentGroups = async (getAccessToken, cancelTokenSource, toolId) => {
@@ -15,10 +15,12 @@ ServiceNowStepActions.getAssignmentGroups = async (getAccessToken, cancelTokenSo
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-ServiceNowStepActions.validateChangeRequest = async (getAccessToken, cancelTokenSource, toolId, changeRequestSysId) => {
+ServiceNowStepActions.validateChangeRequest = async (getAccessToken, cancelTokenSource, toolId, changeRequestSysId, pipelineId, stepId) => {
   const apiUrl = `tools/${toolId}/serviceNow/changeRequest/validate`;  
   const postData = {
     changeRequestSysId: changeRequestSysId,
+    pipelineId: pipelineId, 
+    stepId: stepId,
   };
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
 };

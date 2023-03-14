@@ -260,17 +260,22 @@ function ServiceNowStepApprovalOverlay(
     toastContext.clearOverlayPanel();
   };
 
-  const validateChangeRequest = async (approvalStep) => {    
+  const validateChangeRequest = async (approvalStep, approvalPipeline) => {    
     return ServiceNowStepActions.validateChangeRequest(
-      getAccessToken, cancelTokenSource, approvalStep?.tool?.configuration?.serviceNowToolId, approvalStep?.tool?.configuration?.changeRequestSysId
-    );    
+      getAccessToken, 
+      cancelTokenSource, 
+      approvalStep?.tool?.configuration?.serviceNowToolId, 
+      approvalStep?.tool?.configuration?.changeRequestSysId, 
+      approvalPipeline._id, 
+      approvalStep._id,
+    );
   };
 
   const handleConfirm = async (type) => {
     if (approvalStep && approvalPipeline) {
       if (type === "approve") {
         setIsSaving(true);
-        const validationResponse = await validateChangeRequest(approvalStep);
+        const validationResponse = await validateChangeRequest(approvalStep, approvalPipeline);
         if (validationResponse?.data?.valid !== true) {
           toastContext.showLoadingErrorDialog(validationResponse?.data?.message);
           setIsSaving(false);

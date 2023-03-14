@@ -27,7 +27,7 @@ function ServiceNowChangeRequestSelectInput({ model, setModel, disabled, toolCon
 
     setErrorMessage("");
     if (hasStringValue(toolConfigId)) {
-      loadData(source).catch((error) => {
+      loadData("", source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -40,11 +40,11 @@ function ServiceNowChangeRequestSelectInput({ model, setModel, disabled, toolCon
     };
   }, [toolConfigId]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (searchTerm = "", cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       setChangeRequestsList([]);
-      await fetchChangeRequests(cancelSource);
+      await fetchChangeRequests(searchTerm, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         setErrorMessage(error);
@@ -55,12 +55,12 @@ function ServiceNowChangeRequestSelectInput({ model, setModel, disabled, toolCon
     }
   };
 
-  const fetchChangeRequests = async (cancelSource = cancelTokenSource) => {
-
+  const fetchChangeRequests = async (searchTerm, cancelSource = cancelTokenSource) => {
     const response = await ServiceNowStepActions.getChangeRequests(
       getAccessToken,
       cancelSource,
-      toolConfigId
+      toolConfigId,
+      searchTerm,
     );
 
     const result = response?.data?.data;
@@ -117,6 +117,8 @@ function ServiceNowChangeRequestSelectInput({ model, setModel, disabled, toolCon
         pluralTopic={"Change Requests"}
         error={errorMessage}
         setDataFunction={setDataFunction}
+        supportSearchLookup={true}
+        loadDataFunction={loadData}
       />
       {getAdditionalData()}
     </>    
