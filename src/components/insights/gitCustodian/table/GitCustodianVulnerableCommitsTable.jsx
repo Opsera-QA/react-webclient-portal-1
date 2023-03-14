@@ -32,10 +32,17 @@ import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTa
 const getGitCustodianExternalLinkIconOrCheckboxColumnDefinition = (
   selectedIssues,
   setDataFunction,
+  selectAllValue,
+  handleSelectAll,
   field,
   className,
 ) => {
   return {
+    Header: <TooltipWrapper innerText={`${selectAllValue ? "Unselect" : "Select" } all issues on this page`}>
+              <div className="mt-1">
+                <StandaloneCheckboxInput value={selectAllValue} setDataFunction={(newValue) => handleSelectAll(newValue)} />
+              </div>
+            </TooltipWrapper>,
     accessor: getCustomTableAccessor(field),
     Cell: function getIcon(row) {
       const issue = row?.row?.original;
@@ -62,6 +69,7 @@ const getGitCustodianExternalLinkIconOrCheckboxColumnDefinition = (
       );
     },
     class: className,
+    disableSortBy: true,
   };
 };
 
@@ -77,6 +85,24 @@ function GitCustodianVulnerableCommitsTable({
   const toastContext = useContext(DialogToastContext);
   const [selectedIssues, setSelectedIssues] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
+  const [selectAllValue, setSelectAllValue] = useState(false);
+
+  const handleSelectAll = (value) => {
+    if (value === true) {
+      setSelectedIssues(vulnerableCommits.filter(commit => commit.status !== "Commit Removed"));
+    } else {
+      setSelectedIssues([]);
+    }
+    setSelectAllValue(value);
+  };
+
+  const clearSelectAllAndLoadData = () => {
+    if (selectAllValue === true) {
+      setSelectAllValue(false);
+      setSelectedIssues([]);
+    }    
+    loadData();
+  };
 
   const setDataFunction = (issue, newValue) => {
     const issueId = issue?.issueId;
@@ -104,6 +130,8 @@ function GitCustodianVulnerableCommitsTable({
       getGitCustodianExternalLinkIconOrCheckboxColumnDefinition(
         selectedIssues,
         setDataFunction,
+        selectAllValue,
+        handleSelectAll,
         getField(fields, "jiraTicket"),
       ),
       getTableDateTimeColumn(getField(fields, "commitDate")),
@@ -122,7 +150,7 @@ function GitCustodianVulnerableCommitsTable({
       getTableTextColumn(getField(fields, "status")),
       getTableInfoIconColumn(showVulnerabilityDetails),
     ],
-    [selectedIssues],
+    [selectedIssues, vulnerableCommits],
   );
 
   const createNewJiraTicket = () => {
@@ -136,6 +164,8 @@ function GitCustodianVulnerableCommitsTable({
 
   const handleTabClick = (activeTab) => (e) => {
     e.preventDefault();
+    setSelectAllValue(false);
+    setSelectedIssues([]);
     const newFilterModel = { ...tableFilterModel };
     //     "Commit Removed"
     //     "False Positive"
@@ -223,7 +253,7 @@ function GitCustodianVulnerableCommitsTable({
       <CustomTable
         columns={columns}
         data={vulnerableCommits}
-        loadData={loadData}
+        loadData={clearSelectAllAndLoadData}
         paginationDto={tableFilterModel}
         setPaginationDto={setTableFilterModel}
         isLoading={isLoading}
