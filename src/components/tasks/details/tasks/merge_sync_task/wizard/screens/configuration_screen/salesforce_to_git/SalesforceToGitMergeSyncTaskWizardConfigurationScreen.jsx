@@ -39,22 +39,26 @@ const SalesforceToGitMergeSyncTaskWizardConfigurationScreen = ({
             ]}
           />
         </Col>
-        <Col xs={6}>
-          <DateTimeInputBase
-            dataObject={wizardModel}
-            setDataObject={setWizardModel}
-            fieldName={"fromDate"}
-            dropUp={true}
-          />
-        </Col>
-        <Col xs={6}>
-          <DateTimeInputBase
-            dataObject={wizardModel}
-            setDataObject={setWizardModel}
-            fieldName={"toDate"}
-            dropUp={true}
-          />
-        </Col>
+        {!wizardModel.getData("isProfiles") &&
+          <>
+            <Col xs={6}>
+              <DateTimeInputBase
+                dataObject={wizardModel}
+                setDataObject={setWizardModel}
+                fieldName={"fromDate"}
+                dropUp={true}
+              />
+            </Col>
+            <Col xs={6}>
+              <DateTimeInputBase
+                dataObject={wizardModel}
+                setDataObject={setWizardModel}
+                fieldName={"toDate"}
+                dropUp={true}
+              />
+            </Col>
+          </>
+        }
       </Row>
       <SaveButtonContainer>
         <BackButton
