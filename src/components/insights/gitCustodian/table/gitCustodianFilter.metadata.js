@@ -57,6 +57,10 @@ export const GitCustodianFilterMetadata = {
       id: "active",
     },
     {
+      label: "Severity",
+      id: "severity",
+    },
+    {
       label: "Status",
       id: "status",
     },

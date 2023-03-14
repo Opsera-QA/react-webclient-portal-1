@@ -118,6 +118,7 @@ function GitCustodianVulnerableCommitsTable({
       getGitCustodianOriginColumn(getField(fields, "service")),
       getDurationInDaysHours(getField(fields, "exposedHours")),
       getTableTextColumn(getField(fields, "type")),
+      getTableTextColumn(getField(fields, "severity")),
       getTableTextColumn(getField(fields, "status")),
       getTableInfoIconColumn(showVulnerabilityDetails),
     ],
