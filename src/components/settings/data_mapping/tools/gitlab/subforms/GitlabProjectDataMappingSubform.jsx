@@ -29,7 +29,7 @@ function GitlabProjectDataMappingSubform({ model, setModel }) {
         repoId={model?.getData("repoId")}
       />
       <GitlabPipelineStagesMultiSelectInput 
-        fieldName={"deploymentStage"}
+        fieldName={"pipelineStages"}
         model={model}
         setModel={setModel}
         repoId={model?.getData("repoId")}
