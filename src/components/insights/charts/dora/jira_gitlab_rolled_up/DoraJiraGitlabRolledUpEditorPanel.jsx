@@ -54,7 +54,6 @@ function DoraJiraGitlabRolledUpEditorPanel({
         metricFilterModel={metricFilterModel}
         setMetricFilterModel={setMetricFilterModel}
         metricModel={metricModel}
-        type="single"
         fieldName="jira-projects-mttr"
       />
       <MetricJiraProjectsFilterInput
