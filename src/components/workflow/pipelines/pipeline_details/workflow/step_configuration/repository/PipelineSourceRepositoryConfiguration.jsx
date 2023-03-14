@@ -33,6 +33,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 function PipelineSourceRepositoryConfiguration(
   {
     pipeline,
+    reloadParentPipeline,
     handleCloseClick,
   }) {
   const {
@@ -123,6 +124,8 @@ function PipelineSourceRepositoryConfiguration(
         pipeline?._id,
         item,
       );
+
+      await reloadParentPipeline();
       handleCloseClick();
     }
   };
@@ -253,6 +256,7 @@ function PipelineSourceRepositoryConfiguration(
 
 PipelineSourceRepositoryConfiguration.propTypes = {
   pipeline: PropTypes.object,
+  reloadParentPipeline: PropTypes.func,
   handleCloseClick: PropTypes.func,
 };
 

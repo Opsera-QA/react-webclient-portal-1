@@ -11,6 +11,7 @@ import OverlayIconBase from "components/common/icons/OverlayIconBase";
 export default function EditPipelineWorkflowSourceRepositoryIcon(
   {
     pipeline,
+    fetchPlan,
     status,
   }) {
   const {
@@ -22,6 +23,7 @@ export default function EditPipelineWorkflowSourceRepositoryIcon(
     toastContext.showOverlayPanel(
       <PipelineSourceRepositoryEditorOverlay
         pipeline={pipeline}
+        fetchPlan={fetchPlan}
       />
     );
   };
@@ -49,5 +51,6 @@ export default function EditPipelineWorkflowSourceRepositoryIcon(
 
 EditPipelineWorkflowSourceRepositoryIcon.propTypes = {
   pipeline: PropTypes.object,
+  fetchPlan: PropTypes.func,
   status: PropTypes.string,
 };
