@@ -6,7 +6,7 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-export default function GitlabMonoRepoPathMultiSelectInput({
+export default function GitlabPipelineStagesMultiSelectInput({
   fieldName,
   model, 
   setModel,
@@ -71,8 +71,8 @@ export default function GitlabMonoRepoPathMultiSelectInput({
       disabled={disabled}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
-      singularTopic={"Deployment Stage"}
-      pluralTopic={"Deployment Stages"}
+      singularTopic={"Pipeline Stage"}
+      pluralTopic={"Pipeline Stages"}
       error={error}
       busy={isLoading}
       loadDataFunction={loadData}
@@ -82,7 +82,7 @@ export default function GitlabMonoRepoPathMultiSelectInput({
   );
 }
 
-GitlabMonoRepoPathMultiSelectInput.propTypes = {
+GitlabPipelineStagesMultiSelectInput.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,
