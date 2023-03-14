@@ -25,9 +25,6 @@ function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobTypeData, setActiveT
             <Col lg={6}>
               <TextFieldBase dataObject={jenkinsJobTypeData} fieldName={"buildType"}/>
             </Col>
-            <Col lg={6}>
-              <TextFieldBase dataObject={jenkinsJobTypeData} fieldName={"agentLabels"}/>
-            </Col>
           </>
         );
       case "SFDC":
@@ -35,9 +32,6 @@ function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobTypeData, setActiveT
           <>
             <Col lg={6}>
               <TextFieldBase dataObject={jenkinsJobTypeData} fieldName={"jobType"}/>
-            </Col>
-            <Col lg={6}>
-              <TextFieldBase dataObject={jenkinsJobTypeData} fieldName={"agentLabels"}/>
             </Col>
           </>
         );
@@ -61,6 +55,9 @@ function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobTypeData, setActiveT
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={jenkinsJobData} fieldName={"description"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={jenkinsJobTypeData} fieldName={"agentLabels"}/>
         </Col>
         {getDynamicJobTypeSummaryPanel()}
       </Row>
