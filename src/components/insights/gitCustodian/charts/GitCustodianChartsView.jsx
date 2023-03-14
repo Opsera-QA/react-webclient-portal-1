@@ -98,31 +98,31 @@ function GitCustodianChartsView({ gitCustodianData }) {
         <div style={{display: 'flex', width: '100%'}}>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>CLEAN REPOSITORIES</div>
+              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>Clean vs Unclean Repositories</div>
               <GitCustodianTotalRepositoriesChart dashboardData={gitCustodianData} data={chartData?.cleanRepos ? chartData?.cleanRepos : []}/>
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>ISSUES</div>
+              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>Added vs Resolved Issues</div>
               <GitCustodianTimelineChart dashboardData={gitCustodianData} data={[timeLineData, resolvedTimeLineData]} />
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>VULNERABILITY TYPES</div>
+              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>Top 5 Vulnerability Types</div>
               <GitCustodianVulnerabilityTypesChart dashboardData={gitCustodianData} data={chartData?.vulnerability_types ? chartData?.vulnerability_types : []}/>
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>REPOSITORIES</div>
+              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>Top 5 Repositories with Open Issues</div>
               <GitCustodianTopRepositoriesChart dashboardData={gitCustodianData} data={chartData?.topRepos ? chartData?.topRepos : []}/>
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>TOP USERS</div>
+              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>Top 5 Authors with Open Issues</div>
               <GitCustodianTopAuthorsChart dashboardData={gitCustodianData} data={chartData?.topAuthors ? chartData?.topAuthors : []}/>
             </DataBlockBoxContainer>
           </Col>
