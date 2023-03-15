@@ -87,6 +87,7 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
       <div className="p-3 bg-white step-settings-container">
         <PipelineSourceRepositoryConfiguration
           pipeline={pipeline}
+          reloadParentPipeline={fetchPlan}
           handleCloseClick={handleCloseClick}/>
       </div>
     </>);

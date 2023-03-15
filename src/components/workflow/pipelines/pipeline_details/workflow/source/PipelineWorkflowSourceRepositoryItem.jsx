@@ -25,6 +25,7 @@ import EditPipelineWorkflowSourceRepositoryIcon
 export default function PipelineWorkflowSourceRepositoryItem(
   {
     pipeline,
+    fetchPlan,
     softLoading,
     status,
   }) {
@@ -115,6 +116,7 @@ export default function PipelineWorkflowSourceRepositoryItem(
 
           <EditPipelineWorkflowSourceRepositoryIcon
             pipeline={pipeline}
+            fetchPlan={fetchPlan}
             status={status}
           />
         </div>
@@ -127,5 +129,6 @@ PipelineWorkflowSourceRepositoryItem.propTypes = {
   pipeline: PropTypes.object,
   softLoading: PropTypes.bool,
   status: PropTypes.string,
+  fetchPlan: PropTypes.func,
   setInfoModal: PropTypes.func,
 };
