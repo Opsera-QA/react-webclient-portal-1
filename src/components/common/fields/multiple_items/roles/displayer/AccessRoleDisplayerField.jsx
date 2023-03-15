@@ -81,7 +81,7 @@ export default function AccessRoleDisplayerField(
     >
       <span className={className}>
         <span>
-          {`${roles.length} Access Role${roles.length !== 1 ? "s" : ""} Applied. ${getAccessInformation()}`}
+          {`${roles.length} Access Rule${roles.length !== 1 ? "s" : ""} Applied. ${getAccessInformation()}`}
         </span>
       </span>
     </TooltipWrapper>
