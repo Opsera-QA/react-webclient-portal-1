@@ -12,6 +12,7 @@ import AccessDeniedOverlayBase from "components/common/overlays/center/denied/Ac
 export default function PipelineSourceRepositoryEditorOverlay(
   {
     pipeline,
+    fetchPlan,
   }) {
   const {
     userData,
@@ -46,6 +47,7 @@ export default function PipelineSourceRepositoryEditorOverlay(
       <div className={"p-3"}>
         <PipelineSourceRepositoryConfiguration
           pipeline={pipeline}
+          reloadParentPipeline={fetchPlan}
           handleCloseClick={closePanel}
         />
       </div>
@@ -55,4 +57,5 @@ export default function PipelineSourceRepositoryEditorOverlay(
 
 PipelineSourceRepositoryEditorOverlay.propTypes = {
   pipeline: PropTypes.object,
+  fetchPlan: PropTypes.func,
 };
