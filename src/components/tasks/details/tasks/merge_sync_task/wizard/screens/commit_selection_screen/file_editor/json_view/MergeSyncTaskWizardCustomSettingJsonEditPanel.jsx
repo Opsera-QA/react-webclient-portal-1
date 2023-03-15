@@ -194,7 +194,7 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
     return (
       <Col>
         <span className="h5">
-          Source Profiles (
+          Source Salesforce Org (
           <ToolNameFieldDisplayer
             toolId={wizardModel?.getData("sfdcToolId")}
             loadToolInNewWindow={true}
@@ -228,7 +228,7 @@ const MergeSyncTaskWizardCustomSettingJsonEditPanel = ({
   const originalCustomMetaEditView = () => {
     return (
       <Col>
-        <span className="h5">Target Branch ({wizardModel?.getData("targetBranch")})</span>
+        <span className="h5">Target Git Branch ({wizardModel?.getData("targetBranch")})</span>
         {originalContentJson &&
           Object.keys(originalContentJson).length > 0 &&
           originalContentJson?.customSettingAccesses

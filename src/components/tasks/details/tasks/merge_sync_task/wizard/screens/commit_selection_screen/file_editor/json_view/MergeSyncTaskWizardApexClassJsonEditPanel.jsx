@@ -53,31 +53,31 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
       setIsJsonLoading(true);
       // TODO : Convert both original and modified contents to JSON
 
-      const jsonContent =
-        await mergeSyncTaskWizardActions.componentTypeConvertView(
-          getAccessToken,
-          cancelTokenSource,
-          wizardModel,
-          fileName,
-          "ApexClass",
-        );
+      const jsonContent = mockData;
+        // await mergeSyncTaskWizardActions.componentTypeConvertView(
+        //   getAccessToken,
+        //   cancelTokenSource,
+        //   wizardModel,
+        //   fileName,
+        //   "ApexClass",
+        // );
 
       if (isMounted?.current === true) {
         setModifiedContentJson(
-          JSON.parse(
+          // JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.sourceContent",
             ),
-          ),
+          // ),
         );
         setOriginalContentJson(
-          JSON.parse(
+          // JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.destinationContent",
             ),
-          ),
+          // ),
         );
       }
     } catch (error) {
@@ -193,7 +193,7 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
     return (
       <Col>
         <span className="h5">
-          Source Profiles (
+          Source Salesforce Org (
           <ToolNameFieldDisplayer
             toolId={wizardModel?.getData("sfdcToolId")}
             loadToolInNewWindow={true}
@@ -225,7 +225,7 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
   const originalApexClassEditView = () => {
     return (
       <Col>
-        <span className="h5">Target Branch ({wizardModel?.getData("targetBranch")})</span>
+        <span className="h5">Target Git Branch ({wizardModel?.getData("targetBranch")})</span>
         {originalContentJson &&
           Object.keys(originalContentJson).length > 0 &&
           originalContentJson?.classAccesses
