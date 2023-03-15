@@ -9,7 +9,6 @@ import { darkThemeConstants } from "temp-library-components/theme/dark.theme.con
 import ClientWebsocket from "core/websocket/client.websocket";
 import { DATE_FN_TIME_SCALES, handleDateAdditionForTimeScale } from "components/common/helpers/date/date.helpers";
 import MainViewContainer from "components/common/containers/MainViewContainer";
-import useIsMountedStateReference from "hooks/useIsMountedStateReference";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
 const websocketClient = new ClientWebsocket();
@@ -27,7 +26,6 @@ const AuthContextProvider = (
   const [viewMode, setViewMode] = useState(SITE_VIEW_MODES.BUSINESS);
   const [theme, setTheme] = useState(THEMES.LIGHT);
   const [backgroundColor, setBackgroundColor] = useState(lightThemeConstants.COLOR_PALETTE.WHITE);
-  const isMounted = useIsMountedStateReference();
   const [headerNavigationBar, setHeaderNavigationBar] = useState(undefined);
 
   useEffect(() => {
@@ -35,15 +33,11 @@ const AuthContextProvider = (
 
     if (userData) {
       // websocketClient?.initializeWebsocket(userData);
-      setAccessRoles(userData).then((newUserAccessRoles) => {
-        setUserAccessRoles(newUserAccessRoles);
-      }).catch((error) => {
-        if (isMounted?.current === true) {
-          console.error("Could not set User access rules: " + JSON.stringify(error));
-          setUserAccessRoles({});
-          throw error;
-        }
-      });
+      const newAccessRoles = SiteRoleHelper.getAccessRoles(userData);
+
+      if (newAccessRoles) {
+        setUserAccessRoles({...newAccessRoles});
+      }
     }
     // else {
     //   websocketClient?.closeWebsocket();
