@@ -13,6 +13,10 @@ export const apigeeMigrationObjectMetadata = {
             id: "type"
         },
         {
+            label: "Environment",
+            id: "environment"
+        },
+        {
             label: "Version",
             id: "version"            
         },
@@ -25,6 +29,7 @@ export const apigeeMigrationObjectMetadata = {
         id: "",
         name: "",
         type: "",
+        environment: "",
         version: "",
         dependencies: [],
     }

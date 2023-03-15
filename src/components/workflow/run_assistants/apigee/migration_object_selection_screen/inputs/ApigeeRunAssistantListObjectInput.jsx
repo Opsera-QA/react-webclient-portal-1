@@ -261,7 +261,7 @@ function ApigeeRunAssistantListObjectInput(
   // TODO: Pull out title bar and use on ListInput?
   return (
     <InputContainer className="list-input my-2">
-      <div className={"content-container"}>
+      <div className={"content-container-curved-top"}>
         <InputTitleBar
           disabled={disabled || selectOptions.length === 0}
           icon={icon}

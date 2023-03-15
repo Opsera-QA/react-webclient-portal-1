@@ -4,6 +4,8 @@ import {apigeeMigrationObjectMetadata} from "./apigeeMigrationObject.metadata";
 import Model from 'core/data_model/model';
 import ApigeeRunAssistantListObjectInput from "./inputs/ApigeeRunAssistantListObjectInput";
 import ApigeeMigrationObjectVersionSelectionPanel from "./ApigeeMigrationObjectVersionSelectionPanel";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import {UPDATE_MODE_VALUES} from "./apigeeMigrationObject.constants";
 
 const ApigeeRunAssistantMigrationObjectList = (
   { 
@@ -14,7 +16,7 @@ const ApigeeRunAssistantMigrationObjectList = (
     isLoading, 
     migrationObjectPullCompleted,
     updateVersionMode,
-    setUpdateVersionMode,
+    setUpdateModeValue,
     migrationObject,
     setMigrationObject
   }) => {
@@ -47,18 +49,14 @@ const ApigeeRunAssistantMigrationObjectList = (
   };
 
   const processSelectedData = (fieldName, selectedOption) => {
-    if (selectedOption.type === "keyValueMaps") {
-      const dataObj = {...apigeeRunParametersModel};
-      const selectedMigrationObjects = dataObj.getData("selectedMigrationObjects");
-      selectedMigrationObjects.push(selectedOption);
-      dataObj.setData("selectedMigrationObjects", selectedMigrationObjects);
-      setApigeeRunParametersModel({...dataObj});
-      return;
-    }
-
+    setUpdateModeValue("");
     const newRunParametersModel = new Model({ ...apigeeMigrationObjectMetadata.newObjectFields, ...selectedOption }, apigeeMigrationObjectMetadata, false);
     setMigrationObject({...newRunParametersModel});
-    setUpdateVersionMode(true);
+    if (selectedOption.type === "keyValueMaps") {
+      setUpdateModeValue(UPDATE_MODE_VALUES.KVM);
+      return;
+    }
+    setUpdateModeValue(UPDATE_MODE_VALUES.VERSION);
   };
 
   return (
@@ -75,7 +73,7 @@ const ApigeeRunAssistantMigrationObjectList = (
         isLoading={isLoading}
         valueField={"id"}
         noDataMessage={migrationObjectPullCompleted ? noDataFilesPulledMessage : noDataFilesNotPulledMessage}        
-        disabled={updateVersionMode}
+        disabled={hasStringValue(updateVersionMode)}
       />
   );
 
@@ -89,7 +87,7 @@ ApigeeRunAssistantMigrationObjectList.propTypes = {
   setApigeeRunParametersModel: PropTypes.func,
   migrationObjectPullCompleted: PropTypes.bool,
   updateVersionMode: PropTypes.bool,
-  setUpdateVersionMode: PropTypes.func,
+  setUpdateModeValue: PropTypes.func,
   migrationObject: PropTypes.object,
   setMigrationObject: PropTypes.func,
 };
