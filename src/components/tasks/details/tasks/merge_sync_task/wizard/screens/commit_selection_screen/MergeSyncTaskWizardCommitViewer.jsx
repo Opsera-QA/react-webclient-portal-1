@@ -35,8 +35,6 @@ const MergeSyncTaskWizardCommitViewer = ({
     setInEditingMode(false);
     setInJsonView(false);
 
-    console.log(diffFile);
-
     if (hasStringValue(diffFile?.committedFile)) {
       loadData().catch((error) => {
         if (isMounted?.current === true) {
@@ -62,7 +60,11 @@ const MergeSyncTaskWizardCommitViewer = ({
   const toggleView = async () => {
     const oldInJsonView = inJsonView;
     if(oldInJsonView && hasStringValue(diffFile?.committedFile)) {
-      await getDiffFileList();
+      await loadData().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
     }
     setInJsonView(!oldInJsonView);
   };
