@@ -15,9 +15,9 @@ import { mockData } from "../MergeSyncTaskWizardProfilesAdvancedEditingPanel";
 import IconBase from "../../../../../../../../../common/icons/IconBase";
 import { faSearch } from "@fortawesome/pro-light-svg-icons";
 import InlineWarning from "../../../../../../../../../common/status_notifications/inline/InlineWarning";
-import StandaloneSaveButton from "../../../../../../../../../common/buttons/saving/StandaloneSaveButton";
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
 import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
+import MergeSyncTaskWizardProfileSubmitFileButton from "../MergeSyncTaskWizardProfileSubmitFileButton";
 
 const MergeSyncTaskWizardApexPageJsonEditPanel = ({
   wizardModel,
@@ -148,11 +148,11 @@ const MergeSyncTaskWizardApexPageJsonEditPanel = ({
         <div></div>
         <div>{getSearchBar()}</div>
         <div>
-          <StandaloneSaveButton
-            saveFunction={saveModifiedContent}
-            type={"Profile"}
-            showToasts={false}
-            disable={!showUnsavedChangesMessage}
+          <MergeSyncTaskWizardProfileSubmitFileButton
+              saveFunction={saveModifiedContent}
+              type={"Profile"}
+              showToasts={false}
+              disable={!showUnsavedChangesMessage}
           />
         </div>
       </div>
@@ -254,7 +254,7 @@ const MergeSyncTaskWizardApexPageJsonEditPanel = ({
   };
   return (
     <div>
-      <Row className={"ml-2"}>{getWarningMessage()}</Row>
+      {/*<Row className={"ml-2"}>{getWarningMessage()}</Row>*/}
       <Row>{getButtonContainer()}</Row>
       <Row>
         {originalCustomMetaEditView()}

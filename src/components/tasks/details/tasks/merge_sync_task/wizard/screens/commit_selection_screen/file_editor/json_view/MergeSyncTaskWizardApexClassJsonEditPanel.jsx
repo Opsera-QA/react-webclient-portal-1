@@ -18,6 +18,7 @@ import InlineWarning from "../../../../../../../../../common/status_notification
 import StandaloneSaveButton from "../../../../../../../../../common/buttons/saving/StandaloneSaveButton";
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
 import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
+import MergeSyncTaskWizardProfileSubmitFileButton from "../MergeSyncTaskWizardProfileSubmitFileButton";
 
 const MergeSyncTaskWizardApexClassJsonEditPanel = ({
   wizardModel,
@@ -53,31 +54,31 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
       setIsJsonLoading(true);
       // TODO : Convert both original and modified contents to JSON
 
-      const jsonContent = mockData;
-        // await mergeSyncTaskWizardActions.componentTypeConvertView(
-        //   getAccessToken,
-        //   cancelTokenSource,
-        //   wizardModel,
-        //   fileName,
-        //   "ApexClass",
-        // );
+      const jsonContent =
+        await mergeSyncTaskWizardActions.componentTypeConvertView(
+          getAccessToken,
+          cancelTokenSource,
+          wizardModel,
+          fileName,
+          "ApexClass",
+        );
 
       if (isMounted?.current === true) {
         setModifiedContentJson(
-          // JSON.parse(
+          JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.sourceContent",
             ),
-          // ),
+          ),
         );
         setOriginalContentJson(
-          // JSON.parse(
+          JSON.parse(
             DataParsingHelper.safeObjectPropertyParser(
               jsonContent,
               "data.message.destinationContent",
             ),
-          // ),
+          ),
         );
       }
     } catch (error) {
@@ -148,7 +149,7 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
         <div></div>
         <div>{getSearchBar()}</div>
         <div>
-          <StandaloneSaveButton
+          <MergeSyncTaskWizardProfileSubmitFileButton
             saveFunction={saveModifiedContent}
             type={"Profile"}
             showToasts={false}
@@ -253,7 +254,7 @@ const MergeSyncTaskWizardApexClassJsonEditPanel = ({
 
   return (
     <div>
-      <Row className={"ml-2"}>{getWarningMessage()}</Row>
+      {/*<Row className={"ml-2"}>{getWarningMessage()}</Row>*/}
       <Row>{getButtonContainer()}</Row>
       <Row>
         {originalApexClassEditView()}

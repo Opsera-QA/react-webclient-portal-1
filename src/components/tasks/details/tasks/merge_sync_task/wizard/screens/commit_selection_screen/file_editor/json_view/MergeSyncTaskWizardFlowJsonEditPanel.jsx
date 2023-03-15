@@ -18,6 +18,7 @@ import InlineWarning from "../../../../../../../../../common/status_notification
 import StandaloneSaveButton from "../../../../../../../../../common/buttons/saving/StandaloneSaveButton";
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
 import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
+import MergeSyncTaskWizardProfileSubmitFileButton from "../MergeSyncTaskWizardProfileSubmitFileButton";
 
 const MergeSyncTaskWizardFlowJsonEditPanel = ({
   wizardModel,
@@ -147,7 +148,7 @@ const MergeSyncTaskWizardFlowJsonEditPanel = ({
         <div></div>
         <div>{getSearchBar()}</div>
         <div>
-          <StandaloneSaveButton
+          <MergeSyncTaskWizardProfileSubmitFileButton
             saveFunction={saveModifiedContent}
             type={"Profile"}
             showToasts={false}
@@ -253,7 +254,7 @@ const MergeSyncTaskWizardFlowJsonEditPanel = ({
   };
   return (
     <div>
-      <Row className={"ml-2"}>{getWarningMessage()}</Row>
+      {/*<Row className={"ml-2"}>{getWarningMessage()}</Row>*/}
       <Row>{getButtonContainer()}</Row>
       <Row>
         {originalCustomMetaEditView()}
