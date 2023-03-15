@@ -33,7 +33,6 @@ export default function EditPipelineWorkflowSourceRepositoryIcon(
       <OverlayIconBase
         icon={faCog}
         className={"text-muted not-allowed ml-2"}
-        onClickFunction={launchSourceRepositoryConfigurationOverlay}
         overlayBody={"Cannot access settings while pipeline is running"}
       />
     );
