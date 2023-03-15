@@ -16,7 +16,7 @@ import {
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import ApigeeVersionSelectInput from "components/common/list_of_values_input/tools/apigee/ApigeeVersionSelectInput";
 
-function ApigeeToolConnectionEditorPanel({ toolData }) {
+function ApigeeToolConnectionEditorPanel({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [apigeeConfigurationModel, setApigeeConfigurationModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -58,7 +58,8 @@ function ApigeeToolConnectionEditorPanel({ toolData }) {
       newConfiguration?.accountPassword
     );
 
-    return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
+    await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   if (apigeeConfigurationModel == null) {
@@ -72,6 +73,7 @@ function ApigeeToolConnectionEditorPanel({ toolData }) {
       persistRecord={saveApigeeToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.APIGEE}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -103,6 +105,8 @@ function ApigeeToolConnectionEditorPanel({ toolData }) {
 
 ApigeeToolConnectionEditorPanel.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default ApigeeToolConnectionEditorPanel;
