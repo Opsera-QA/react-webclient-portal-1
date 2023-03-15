@@ -24,7 +24,7 @@ export default function InnovationLabsNavigationLinks({ isSidebarCollapsed, }) {
       />
       <SidebarNavigationLinkBase
         link={getVnextLink()}
-        label={"Insights NxGen (Beta)"}
+        label={"Insights 2.0 (Beta)"}
         icon={faChartNetwork}
         isSidebarCollapsed={isSidebarCollapsed}
         isExternalLink={true}
