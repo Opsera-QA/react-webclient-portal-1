@@ -57,8 +57,15 @@ const MergeSyncTaskWizardCommitViewer = ({
     }
   };
 
-  const toggleView = () => {
+  const toggleView = async () => {
     const oldInJsonView = inJsonView;
+    if(oldInJsonView && hasStringValue(diffFile?.committedFile)) {
+      await loadData().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
     setInJsonView(!oldInJsonView);
   };
 
@@ -177,10 +184,12 @@ const MergeSyncTaskWizardCommitViewer = ({
             loadDataFunction={loadData}
             isLoading={isLoading}
           />
-          <ToggleJsonViewIconButton
-            toggleView={toggleView}
-            className={"mr-2 ml-2"}
-          />
+          {diffFile?.componentType === "Profile" &&
+            <ToggleJsonViewIconButton
+              toggleView={toggleView}
+              className={"mr-2 ml-2"}
+            />
+          }
           {!inJsonView &&
             <MergeSyncTaskWizardSubmitEditedFileButton
               fileName={comparisonFileModel?.getData("file")}

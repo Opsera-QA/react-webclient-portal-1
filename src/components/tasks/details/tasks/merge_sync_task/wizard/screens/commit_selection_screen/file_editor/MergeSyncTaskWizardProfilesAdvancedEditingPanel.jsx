@@ -33,7 +33,7 @@ const componentTypeOptions = [
   { name: "ApexClass", value: "classAccesses" },
   { name: "CustomMetadata", value: "customMetadataTypeAccesses" },
   { name: "CustomPermission", value: "customPermissions" },
-  { name: "CustomSetting (CustomObject)", value: "customSettingAccesses" },
+  { name: "CustomSetting", value: "customSettingAccesses" },
   { name: "ExternalDataSource", value: "externalDataSourceAccesses" },
   { name: "CustomField", value: "fieldPermissions" },
   { name: "Flow", value: "flowAccesses" },

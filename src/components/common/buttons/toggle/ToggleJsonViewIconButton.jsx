@@ -11,7 +11,7 @@ function ToggleJsonViewIconButton({ toggleView, className, size, variant}) {
   }
 
   return (
-    <TooltipWrapper innerText={"Toggle XML or JSON edit View"} >
+    <TooltipWrapper innerText={"Toggle View"} >
       <div className={className}>
         <Button variant={variant} size={size}  onClick={() => {toggleView();}}>
           <span><IconBase icon={faBracketsCurly}/></span>

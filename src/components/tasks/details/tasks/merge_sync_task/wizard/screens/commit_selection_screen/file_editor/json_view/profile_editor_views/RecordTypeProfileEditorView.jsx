@@ -37,6 +37,9 @@ const RecordTypeProfileEditorView = ({
 
   const setDataFunction = (fieldName, newValue) => {
     const newModel = { ...customMetaJsonMetadata };
+    if(fieldName === "default" && newValue) {
+      newModel?.setData("visible", newValue);
+    }
     newModel?.setData(fieldName, newValue);
     setCustomMetaJsonMetadata({ ...newModel });
     setRecordTypeDataJson(newModel.getPersistData());

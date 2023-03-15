@@ -18,6 +18,7 @@ import InlineWarning from "../../../../../../../../../common/status_notification
 import StandaloneSaveButton from "../../../../../../../../../common/buttons/saving/StandaloneSaveButton";
 import { getUniqueListBy } from "../../../../../../../../../common/helpers/array-helpers";
 import ToolNameFieldDisplayer from "../../../../../../../../../common/fields/inventory/name/ToolNameFieldDisplayer";
+import MergeSyncTaskWizardProfileSubmitFileButton from "../MergeSyncTaskWizardProfileSubmitFileButton";
 
 const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
   wizardModel,
@@ -148,7 +149,7 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
         <div></div>
         <div>{getSearchBar()}</div>
         <div>
-          <StandaloneSaveButton
+          <MergeSyncTaskWizardProfileSubmitFileButton
             saveFunction={saveModifiedContent}
             type={"Profile"}
             showToasts={false}
@@ -194,7 +195,7 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
     return (
       <Col>
         <span className="h5">
-          Source Profiles (
+          Source Salesforce Org (
           <ToolNameFieldDisplayer
             toolId={wizardModel?.getData("sfdcToolId")}
             loadToolInNewWindow={true}
@@ -228,7 +229,7 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
   const originalCustomMetaEditView = () => {
     return (
       <Col>
-        <span className="h5">Target Branch ({wizardModel?.getData("targetBranch")})</span>
+        <span className="h5">Target Git Branch ({wizardModel?.getData("targetBranch")})</span>
         {originalContentJson &&
           Object.keys(originalContentJson).length > 0 &&
           originalContentJson?.customMetadataTypeAccesses
@@ -255,7 +256,7 @@ const MergeSyncTaskWizardCustomMetadataJsonEditPanel = ({
   };
   return (
     <div>
-      <Row className={"ml-2"}>{getWarningMessage()}</Row>
+      {/*<Row className={"ml-2"}>{getWarningMessage()}</Row>*/}
       <Row>{getButtonContainer()}</Row>
       <Row>
         {originalCustomMetaEditView()}

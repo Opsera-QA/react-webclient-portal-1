@@ -36,6 +36,9 @@ const CustomApplicationProfileEditorView = ({
 
   const setDataFunction = (fieldName, newValue) => {
     const newModel = { ...customAppJsonMetadata };
+    if(fieldName === "default" && newValue) {
+      newModel?.setData("visible", newValue);
+    }
     newModel?.setData(fieldName, newValue);
     setCustomAppJsonMetadata({ ...newModel });
     setCustomAppJson(newModel.getPersistData());
