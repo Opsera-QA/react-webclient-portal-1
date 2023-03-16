@@ -29,7 +29,7 @@ const CustomApplicationProfileEditorView = ({
     return (
       <LoadingDialog
         size={"sm"}
-        message={"Loading"}
+        message={"Fetching Permissions"}
       />
     );
   }

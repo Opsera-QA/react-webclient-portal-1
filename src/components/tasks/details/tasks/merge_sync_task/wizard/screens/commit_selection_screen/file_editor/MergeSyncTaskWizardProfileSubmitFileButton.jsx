@@ -16,26 +16,37 @@ function MergeSyncTaskWizardProfileSubmitFileButton(
     icon,
   }) {
   const [isSaving, setIsSaving] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const {
     cancelTokenSource,
     isMounted,
     toastContext,
   } = useComponentStateReference();
 
+  useEffect(() => {
+    setIsSaving(false);
+  }, [disable]);
+
+
   const getLabel = () => {
+    if (!disable) {
+      return ("Unsaved Changes, Click to save.");
+    }
+    if (isSubmitted) {
+      return ("Saved");
+    }
     if (isSaving) {
       return ("Saving");
-    }
-    if (!disable) {
-      return ("Unsaved Changes, Please click here to save.");
     }
     return ("Save");
   };
 
   const getIcon = () => {
-
     if (!disable) {
       return faExclamationTriangle;
+    }
+    if (isSubmitted) {
+      return faCheckSquare;
     }
     return icon;
   };
@@ -44,6 +55,9 @@ function MergeSyncTaskWizardProfileSubmitFileButton(
     if (!disable) {
       return "warning";
     }
+    if (isSubmitted) {
+      return "success";
+    }
     return "primary";
   };
 
@@ -51,7 +65,7 @@ function MergeSyncTaskWizardProfileSubmitFileButton(
     try {
       setIsSaving(true);
       await saveFunction();
-
+      setIsSubmitted(true);
       if (showToasts !== false) {
         toastContext.showSaveSuccessToast(type);
       }
