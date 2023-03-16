@@ -9,6 +9,7 @@ import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 export default function PipelineWorkflowViewConfigurationButton(
   {
     pipeline,
+    className,
   }) {
   const {
     isOpseraAdministrator,
@@ -33,7 +34,7 @@ export default function PipelineWorkflowViewConfigurationButton(
   if (isFreeTrial === true && isOpseraAdministrator !== true) {
     return (
       <VanityButtonBase
-        className={"mr-1"}
+        className={className}
         buttonClassName={"background-white"}
         icon={faFileAlt}
         buttonSize={"sm"}
@@ -47,7 +48,7 @@ export default function PipelineWorkflowViewConfigurationButton(
 
   return (
     <VanityButtonBase
-      className={"mr-1"}
+      className={className}
       buttonClassName={"background-white"}
       icon={faFileAlt}
       buttonSize={"sm"}
@@ -61,4 +62,5 @@ export default function PipelineWorkflowViewConfigurationButton(
 
 PipelineWorkflowViewConfigurationButton.propTypes = {
   pipeline: PropTypes.object,
+  className: PropTypes.string,
 };

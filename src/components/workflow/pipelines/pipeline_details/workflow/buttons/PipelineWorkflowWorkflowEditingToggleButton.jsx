@@ -14,6 +14,7 @@ export default function PipelineWorkflowWorkflowEditingToggleButton(
     editingWorkflow,
     setEditingWorkflow,
     workflowStatus,
+    className,
   }) {
   const {
     isOpseraAdministrator,
@@ -24,7 +25,7 @@ export default function PipelineWorkflowWorkflowEditingToggleButton(
   if (editingWorkflow === true) {
     return (
       <VanityButtonBase
-        className={"mr-1"}
+        className={className}
         variant={"success"}
         buttonSize={"sm"}
         icon={faCheck}
@@ -42,7 +43,7 @@ export default function PipelineWorkflowWorkflowEditingToggleButton(
   if (isFreeTrial === true && isOpseraAdministrator !== true) {
     return (
       <VanityButtonBase
-        className={"mr-1"}
+        className={className}
         buttonClassName={"background-white"}
         tooltip={"In the main Opsera offering you can add, update, or remove Pipeline steps to meet your exact needs."}
         disabled={true}
@@ -56,7 +57,7 @@ export default function PipelineWorkflowWorkflowEditingToggleButton(
 
   return (
     <VanityButtonBase
-      className={"mr-1"}
+      className={className}
       buttonClassName={"background-white"}
       tooltip={"Edit Pipeline Workflow: add or remove steps, edit step names and set tools for individual steps"}
       icon={faPen}
@@ -74,4 +75,5 @@ PipelineWorkflowWorkflowEditingToggleButton.propTypes = {
   editingWorkflow: PropTypes.bool,
   setEditingWorkflow: PropTypes.func,
   workflowStatus: PropTypes.string,
+  className: PropTypes.string,
 };
