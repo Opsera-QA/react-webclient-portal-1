@@ -10,6 +10,8 @@ import PipelineActionControlButtonBase
   from "components/workflow/pipelines/action_controls/PipelineActionControlButtonBase";
 import { faFlag } from "@fortawesome/pro-light-svg-icons";
 import PipelineRoleHelper from "@opsera/know-your-role/roles/pipelines/pipelineRole.helper";
+import ServiceNowStepApprovalOverlay 
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/service_now/ServiceNowStepApprovalOverlay";
 
 export default function PipelineActionControlsUserApprovalButton(
   {
@@ -43,33 +45,54 @@ export default function PipelineActionControlsUserApprovalButton(
     );
   };
 
+  const handleServiceNowApprovalClick = () => {
+    toastContext.showOverlayPanel(
+      <ServiceNowStepApprovalOverlay
+        pipelineId={pipeline?._id}
+        setPipelineStarting={setPipelineStarting}        
+      />
+    );
+  };
+
   if (workflowStatus !== "paused") {
     return null;
   }
 
-  if (approvalStepToolIdentifier === toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION) {
-    return (
-      <PipelineActionControlButtonBase
-        icon={faFlag}
-        normalText={"Acknowledge Action"}
-        tooltipText={"A user action is required before this pipeline can proceed. Click here to see the instructions and complete the task."}
-        onClickFunction={handleAcknowledgementClick}
-        disabled={disabled}
-        variant={"warning"}
-      />
-    );
+  switch (approvalStepToolIdentifier) {
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
+      return (
+        <PipelineActionControlButtonBase
+          icon={faFlag}
+          normalText={"Acknowledge Action"}
+          tooltipText={"A user action is required before this pipeline can proceed. Click here to see the instructions and complete the task."}
+          onClickFunction={handleAcknowledgementClick}
+          disabled={disabled}
+          variant={"warning"}
+        />
+      );      
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.SERVICE_NOW:
+      return (
+        <PipelineActionControlButtonBase
+          icon={faFlag}
+          normalText={"Approve Run"}
+          tooltipText={"A user action is required before this pipeline can proceed. Click here to see the instructions and complete the task."}
+          onClickFunction={handleServiceNowApprovalClick}
+          disabled={disabled}
+          variant={"warning"}
+        />
+      );
+    default:
+      return (
+        <PipelineActionControlButtonBase
+          icon={faFlag}
+          normalText={"Approve Run"}
+          tooltipText={"Approve the current pipeline run in order for it to proceed. Only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action."}
+          onClickFunction={handleApprovalClick}
+          disabled={PipelineRoleHelper.canAuthorizeApprovalGate(userData, pipeline) !== true || disabled === true}
+          variant={"warning"}
+        />
+      );    
   }
-
-  return (
-    <PipelineActionControlButtonBase
-      icon={faFlag}
-      normalText={"Approve Run"}
-      tooltipText={"Approve the current pipeline run in order for it to proceed. Only Pipeline Admins and Managers (via Pipeline Access Rules) are permitted to perform this action."}
-      onClickFunction={handleApprovalClick}
-      disabled={PipelineRoleHelper.canAuthorizeApprovalGate(userData, pipeline) !== true || disabled === true}
-      variant={"warning"}
-    />
-  );
 }
 
 PipelineActionControlsUserApprovalButton.propTypes = {

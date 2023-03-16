@@ -9,13 +9,22 @@ export default function WarningMessageFieldBase(
     label,
     message,
     className,
+    showWarningLabel,
   }) {
   const parsedMessage = DataParsingHelper.parseString(message);
+
+  const getLabel = () => {
+    if (showWarningLabel !== false) {
+      return (
+        <strong className={"mr-2"}>Warning:</strong>
+      );
+    }
+  };
 
   const getMessage = () => {
     return (
       <div>
-        <strong className={"mr-2"}>Warning:</strong>{parsedMessage}
+        {getLabel()}{parsedMessage}
       </div>
     );
   };
@@ -39,4 +48,5 @@ WarningMessageFieldBase.propTypes = {
   label: PropTypes.string,
   message: PropTypes.string,
   className: PropTypes.string,
+  showWarningLabel: PropTypes.bool,
 };

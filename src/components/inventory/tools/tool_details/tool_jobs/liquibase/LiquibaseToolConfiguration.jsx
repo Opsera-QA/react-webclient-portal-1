@@ -14,7 +14,7 @@ import { toolIdentifierConstants } from "components/admin/tools/identifiers/tool
 import LiquibaseDatabaseTypeSelectInput from "./inputs/LiquibaseDatabaseTypeSelectInput";
 import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
 
-const LiquibaseToolConfiguration = ({ toolData }) => {
+const LiquibaseToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [liquibaseConfigurationModel, setLiquibaseConfigurationModel] = useState(undefined);
   const isMounted = useRef(false);
@@ -63,7 +63,8 @@ const LiquibaseToolConfiguration = ({ toolData }) => {
       "licenseKey",
       newConfiguration?.licenseKey
     );
-    return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
+    await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   const getDynamicFields = () => {
@@ -89,6 +90,7 @@ const LiquibaseToolConfiguration = ({ toolData }) => {
       persistRecord={saveLiquibaseToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={toolIdentifierConstants.TOOL_IDENTIFIERS.LIQUIBASE}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -130,6 +132,8 @@ const LiquibaseToolConfiguration = ({ toolData }) => {
 
 LiquibaseToolConfiguration.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default LiquibaseToolConfiguration;

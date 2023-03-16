@@ -94,14 +94,14 @@ export default function PlatformSettingFeatureEditorPanel(
       className={"mx-2 mt-2"}
     >
       <Row>
-        <Col xl={8} sm={6}>
+        <Col sm={12}>
           <PlatformSettingsFeatureNameComboBoxInput
             fieldName={"name"}
             model={platformSettingFeatureModel}
             setModel={setPlatformSettingFeatureModel}
           />
         </Col>
-        <Col lg={4} sm={6}>
+        <Col sm={6}>
           <BooleanToggleInput
             fieldName={"active"}
             dataObject={platformSettingFeatureModel}

@@ -62,7 +62,11 @@ function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString 
           <SiteRoleField />
         </Col>
         <Col lg={12}>
-          <GroupField fieldName={"groups"} dataObject={userData}/>
+          <GroupField
+            fieldName={"groups"}
+            dataObject={userData}
+            showExternalHelpDocumentationLink={true}
+          />
         </Col>
         {getConnectionString()}
       </Row>

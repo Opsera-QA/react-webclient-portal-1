@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ErrorDialog from "components/common/status_notifications/error";
-import LoadingDialog from "components/common/status_notifications/loading";
 import LogSearch from "components/logs/LogSearch";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -13,7 +12,7 @@ import TabPanelContainer from "components/common/panels/general/TabPanelContaine
 import {Row} from "react-bootstrap";
 import InfoDialog from "components/common/status_notifications/info";
 import LogsHelpDocumentation from "../common/help/documentation/logs/LogsHelpDocumentation";
-import BlueprintsHelpDocumentation from "../common/help/documentation/blueprints/BlueprintsHelpDocumentation";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 function Logs() {
   const {getAccessToken} = useContext(AuthContext);
@@ -99,7 +98,11 @@ function Logs() {
 
   const getBody = () => {
     if (isLoading) {
-      return <LoadingDialog size="sm" message="Loading..." />;
+      return (
+        <CenterLoadingIndicator
+          customMessage="Loading..."
+        />
+      );
     }
 
     if (error) {

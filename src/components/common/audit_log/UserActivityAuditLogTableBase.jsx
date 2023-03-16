@@ -1,14 +1,15 @@
 import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import {
+  getFormattedLabelWithFunctionColumnDefinition,
   getOwnerNameField,
   getTableCreatedAtColumn,
-  getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import userActivityAuditLogMetadata from "@opsera/definitions/constants/audit-logs/user/userActivityAuditLog.metadata";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import auditLogActionConstants from "@opsera/definitions/constants/audit-logs/actions/auditLogAction.constants";
 
 export default function UserActivityAuditLogTableBase(
   {
@@ -31,7 +32,7 @@ export default function UserActivityAuditLogTableBase(
 
       if (hasActionFilterValue !== true || actions.length !== -1) {
         if (actions.length !== 1) {
-          columns.push(getTableTextColumn(getField(fields, "action")));
+          columns.push(getFormattedLabelWithFunctionColumnDefinition(getField(fields, "action"), auditLogActionConstants.getUserActivityLogActionLabel),);
         }
       }
 

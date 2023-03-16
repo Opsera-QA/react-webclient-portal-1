@@ -13,7 +13,7 @@ import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
 import axios from "axios";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function TerraformCloudToolConfiguration({ toolData }) {
+function TerraformCloudToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [terraformCloudConfigurationDto, setTerraformCloudConfigurationDto] = useState(undefined);
   const isMounted = useRef(false);
@@ -47,7 +47,8 @@ function TerraformCloudToolConfiguration({ toolData }) {
   const saveTerraformCloudToolConfiguration = async () => {
     const newConfiguration = terraformCloudConfigurationDto.getPersistData();
     newConfiguration.token = await toolsActions.saveThreePartToolPasswordToVaultV2(getAccessToken, cancelTokenSource, toolData, terraformCloudConfigurationDto, "token", newConfiguration.token);
-    return await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
+    await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
+    if (setUpMode === "wizard") setCurrentScreen("tool_detail");
   };
 
   return (
@@ -57,6 +58,7 @@ function TerraformCloudToolConfiguration({ toolData }) {
       persistRecord={saveTerraformCloudToolConfiguration}
       toolConnectionCheckName={"customer_terraform"}
       toolData={toolData}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -73,7 +75,9 @@ TerraformCloudToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId: PropTypes.string,
   saveToolConfiguration: PropTypes.func,
-  fnSaveToVault: PropTypes.func
+  fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default TerraformCloudToolConfiguration;

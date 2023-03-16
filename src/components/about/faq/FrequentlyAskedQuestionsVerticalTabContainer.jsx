@@ -5,13 +5,14 @@ import { faChartNetwork, faClipboardList, faDraftingCompass, faQuestion } from "
 import PipelinesFrequentlyAskedQuestions from "components/about/faq/PipelinesFrequentlyAskedQuestions";
 import InsightsFrequentlyAskedQuestions from "./InsightsFrequentlyAskedQuestions";
 import ToolRegistryFrequentlyAskedQuestions from "./ToolRegistryFrequentlyAskedQuestions";
+import GeneralFrequentlyAskedQuestions from "./GeneralFrequentlyAskedQuestions";
 import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
 
 const FAQ_HEIGHT = `calc(${screenContainerHeights.SCREEN_CONTAINER_HEIGHT} - 72px)`;
 
 function FrequentlyAskedQuestionsVerticalTabContainer() {
-  const [activeTab, setActiveTab] = useState("pipelines");
+  const [activeTab, setActiveTab] = useState("general");
 
   const handleTabClick = (newTab) => {
     if (newTab !== activeTab) {
@@ -23,6 +24,13 @@ function FrequentlyAskedQuestionsVerticalTabContainer() {
     return (
       <VanitySetVerticalTabContainer>
         <div className={"tab-tree"}>
+          <VanitySetVerticalTab
+            tabText={"General"}
+            tabName={"general"}
+            icon={faQuestion}
+            handleTabClick={handleTabClick}
+            activeTab={activeTab}
+          />
           <VanitySetVerticalTab
             tabText={"Pipelines"}
             tabName={"pipelines"}
@@ -51,9 +59,9 @@ function FrequentlyAskedQuestionsVerticalTabContainer() {
 
   const getCurrentScreen = () => {
     switch (activeTab) {
-      case "pipelines":
+      case "general":
         return (
-          <PipelinesFrequentlyAskedQuestions />
+          <GeneralFrequentlyAskedQuestions />
         );
       case "insights":
         return (
@@ -63,6 +71,10 @@ function FrequentlyAskedQuestionsVerticalTabContainer() {
         return (
           <ToolRegistryFrequentlyAskedQuestions />
         );
+      case "pipelines":
+        return (
+          <PipelinesFrequentlyAskedQuestions />
+        );
     }
   };
 
@@ -70,8 +82,8 @@ function FrequentlyAskedQuestionsVerticalTabContainer() {
     return (
       <div>
         <div className={"mt-3 ml-4"}>
-          <div><h6>This page provides help with our most frequently asked questions. To view questions, expand a topic below. For more information, visit <b><a href="https://docs.opsera.io/" target="_blank" rel="noreferrer">Opsera&rsquo;s Help Documentation</a>.</b></h6></div>
-          <div><h6>Have a question? Contact <b><a id="mailto" href="mailto:support@opsera.io" target="_blank" rel="noreferrer">Opsera Support</a></b>.</h6></div>
+          <div><>This page provides help with our most frequently asked questions. To view questions, expand a topic below. For more information, visit <b><a href="https://docs.opsera.io/" target="_blank" rel="noreferrer">Opsera&rsquo;s Help Documentation</a>.</b></></div>
+          <div><>Have a question? Contact <b><a href="https://opsera.atlassian.net/servicedesk/customer/portal/2" target="_blank" rel="noreferrer">Customer Support</a></b>.</></div>
         </div>
         {getCurrentScreen()}
       </div>

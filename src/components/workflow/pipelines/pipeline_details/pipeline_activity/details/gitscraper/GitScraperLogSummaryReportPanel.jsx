@@ -98,7 +98,7 @@ function GitScraperLogSummaryReportPanel({ pipelineTaskData }) {
   return (
     <VanitySetTabAndViewContainer
       icon={faClipboardListCheck}
-      title={`Git Scraper Execution Summary`}
+      title={`Git Custodian Execution Summary`}
       defaultActiveKey={"summary"}
       verticalTabContainer={<GitScraperSummaryLogVerticalTabContainer />}
       currentView={getTabContentContainer()}

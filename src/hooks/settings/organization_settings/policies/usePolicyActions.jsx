@@ -25,7 +25,6 @@ export default function usePolicyActions() {
     );
   };
 
-
   policyActions.activatePolicy = async (policy) => {
     const apiUrl = `/settings/organization-settings/policies`;
     return await apiService.handleApiPostRequest(

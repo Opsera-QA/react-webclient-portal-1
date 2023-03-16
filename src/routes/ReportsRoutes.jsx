@@ -11,6 +11,7 @@ import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";
 import TagsUsedInPipelineReport from "components/reports/tags/pipelines/TagsUsedInPipelineReport";
 import TagsUsedInToolsReport from "components/reports/tags/tools/TagsUsedInToolsReport";
 import TagsUsedInDashboardsReport from "components/reports/tags/dashboards/TagsUsedInDashboardReport";
+import TagsUsedInProjectsReport from "components/reports/tags/projects/TagsUsedInProjectsReport";
 import UserGroupMembershipReport from "components/reports/users/groups/UserGroupMembershipReport";
 import UserPipelineOwnershipReport from "components/reports/users/pipelines/UserPipelineOwnershipReport";
 import UserToolOwnershipReport from "components/reports/users/tools/UserToolOwnershipReport";
@@ -53,6 +54,7 @@ export default function ReportsRoutes() {
       <SecureRoute path="/reports/tags/tags-used-in-tools" exact component={TagsUsedInToolsReport} />
       <SecureRoute path="/reports/tags/tags-used-in-dashboards" exact
                    component={TagsUsedInDashboardsReport} />
+      <SecureRoute path="/reports/tags/tags-used-in-projects" exact component={TagsUsedInProjectsReport} />
 
       <SecureRoute path="/reports/users/group-membership" exact component={UserGroupMembershipReport} />
       <SecureRoute path="/reports/users/pipeline-ownership" exact component={UserPipelineOwnershipReport} />

@@ -33,6 +33,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 function PipelineSourceRepositoryConfiguration(
   {
     pipeline,
+    reloadParentPipeline,
     handleCloseClick,
   }) {
   const {
@@ -89,6 +90,7 @@ function PipelineSourceRepositoryConfiguration(
         prCreatedEvent,
         prApprovedEvent,
         allowDynamicSettingsInUi,
+        enableBranchSwitch,
       } = persistData;
 
       const item = {
@@ -114,6 +116,7 @@ function PipelineSourceRepositoryConfiguration(
         gitExportPath: gitExportPath,
         dynamicSettings: dynamicSettings,
         allowDynamicSettingsInUi: allowDynamicSettingsInUi,
+        enableBranchSwitch: enableBranchSwitch,
       };
       // console.log("saving config: " + JSON.stringify(item));
       //console.log("saving getPersistData: " + JSON.stringify(sourceRepositoryModel?.getPersistData()));
@@ -121,6 +124,8 @@ function PipelineSourceRepositoryConfiguration(
         pipeline?._id,
         item,
       );
+
+      await reloadParentPipeline();
       handleCloseClick();
     }
   };
@@ -251,6 +256,7 @@ function PipelineSourceRepositoryConfiguration(
 
 PipelineSourceRepositoryConfiguration.propTypes = {
   pipeline: PropTypes.object,
+  reloadParentPipeline: PropTypes.func,
   handleCloseClick: PropTypes.func,
 };
 

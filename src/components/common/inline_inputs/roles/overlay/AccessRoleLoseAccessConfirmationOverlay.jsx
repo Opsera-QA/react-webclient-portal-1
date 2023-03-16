@@ -45,10 +45,10 @@ export default function AccessRoleLoseAccessConfirmationOverlay(
           icon={faCheckCircle}
           buttonState={buttonState}
           onClickFunction={saveAccessRoles}
-          normalText={`Save Access Roles`}
-          errorText={`Error Saving Access Roles`}
-          busyText={`Saving Access Roles`}
-          successText={`Successfully Saved Access Roles`}
+          normalText={`Save Access Rules`}
+          errorText={`Error Saving Access Rules`}
+          busyText={`Saving Access Rules`}
+          successText={`Successfully Saved Access Rules`}
           className={"ml-2"}
         />
       </ButtonContainerBase>

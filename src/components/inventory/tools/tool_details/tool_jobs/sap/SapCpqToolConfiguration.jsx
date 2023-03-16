@@ -11,7 +11,7 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
 
-function SapCpqToolConfiguration({ toolData }) {
+function SapCpqToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [sapCpqConfigurationDto, setSapCpqConfigurationDto] = useState(undefined);
 
@@ -27,7 +27,8 @@ function SapCpqToolConfiguration({ toolData }) {
     let newConfiguration = sapCpqConfigurationDto.getPersistData();
     newConfiguration.accountPassword = await toolsActions.savePasswordToVault(toolData, sapCpqConfigurationDto, "accountPassword", newConfiguration.accountPassword, getAccessToken);
     const item = {configuration: newConfiguration};
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
   
   return (
@@ -37,6 +38,7 @@ function SapCpqToolConfiguration({ toolData }) {
       persistRecord={saveSapToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"sap-cpq"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -54,7 +56,9 @@ SapCpqToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId: PropTypes.string,
   saveToolConfiguration: PropTypes.func,
-  fnSaveToVault: PropTypes.func
+  fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default SapCpqToolConfiguration;

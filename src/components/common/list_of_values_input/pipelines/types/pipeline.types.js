@@ -42,8 +42,9 @@ export const getPipelineTypeLabel = (pipelineType) => {
     case PIPELINE_TYPES.SALESFORCE:
       return PIPELINE_TYPE_LABELS.SALESFORCE;
     case PIPELINE_TYPES.SOFTWARE_DEVELOPMENT:
-    default:
       return PIPELINE_TYPE_LABELS.SOFTWARE_DEVELOPMENT;
+    default:
+      return "No Pipeline Type Applied";
   }
 };
 

@@ -35,7 +35,8 @@ export default function useGetGithubRepositories(
       toolId,
       searchTerm,
     );
-    setGithubRepositories([...DataParsingHelper.parseNestedObject(response, "data.data")]);
+    const repositories = DataParsingHelper.parseNestedArray(response, "data.data", []);
+    setGithubRepositories([...repositories]);
   };
 
   return ({

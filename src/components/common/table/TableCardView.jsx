@@ -14,9 +14,9 @@ function TableCardView(
   const getView = () => {
     if (isLoading === true && (!Array.isArray(data) || data.length === 0)) {
       return (
-        <div style={{height: tableHeight}}>
-          <CenterLoadingIndicator/>
-        </div>
+        <CenterLoadingIndicator
+          minHeight={tableHeight}
+        />
       );
     }
 

@@ -34,6 +34,7 @@ export default function PipelineWorkflowViewConfigurationButton(
     return (
       <VanityButtonBase
         className={"mr-1"}
+        buttonClassName={"background-white"}
         icon={faFileAlt}
         buttonSize={"sm"}
         tooltip={"In the main Opsera offering you can get an easy look at all of the configurations for an entire Pipeline."}
@@ -47,6 +48,7 @@ export default function PipelineWorkflowViewConfigurationButton(
   return (
     <VanityButtonBase
       className={"mr-1"}
+      buttonClassName={"background-white"}
       icon={faFileAlt}
       buttonSize={"sm"}
       tooltip={"View Pipeline Configuration"}

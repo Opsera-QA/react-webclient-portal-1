@@ -81,7 +81,11 @@ export default function MyUserProfile() {
   const getSyncButton = () => {
     return (
       <div className={"justify-content-between d-flex"}>
-        <SiteRoleField className={"mt-auto"} showDescription={true} />
+        <SiteRoleField
+          className={"mt-auto"}
+          showDescription={true}
+          showExternalHelpDocumentationLink={false}
+        />
         <SyncProfileButton />
       </div>
     );

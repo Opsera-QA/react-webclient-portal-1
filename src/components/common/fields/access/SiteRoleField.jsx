@@ -7,10 +7,14 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabelBase from "components/common/fields/FieldLabelBase";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import HelpDocumentationLink from "components/common/links/HelpDocumentationLink";
+
+export const SITE_ROLE_DOCUMENTATION_LINK = "https://opsera.atlassian.net/wiki/spaces/OE/pages/1330970654";
 
 export default function SiteRoleField(
   {
     showDescription,
+    showExternalHelpDocumentationLink,
     className,
   }) {
   const {
@@ -21,9 +25,25 @@ export default function SiteRoleField(
   const getDescription = () => {
     if (showDescription === true) {
       return (
-        <div className={"mt-1"}>
+        <div className={"mt-1 green"}>
           {getAccessRolePermissionMessageWithoutRole(accessRoleData)}
         </div>
+      // <SuccessMessageFieldBase
+      //   className={"mt-1"}
+      //   showSuccessLabel={false}
+      //   message={getAccessRolePermissionMessageWithoutRole(accessRoleData)}
+      // />
+      );
+    }
+  };
+
+  const getHelpDocumentationLinkIcon = () => {
+    if (showExternalHelpDocumentationLink !== false) {
+      return (
+        <HelpDocumentationLink
+          link={SITE_ROLE_DOCUMENTATION_LINK}
+          className={"ml-2"}
+        />
       );
     }
   };
@@ -36,7 +56,10 @@ export default function SiteRoleField(
     <FieldContainer className={className}>
       <div className={"w-100 d-flex"}>
         <FieldLabelBase label={"Site Role"} />
-        <span>{SiteRoleHelper.getFormattedSiteRoleLevel(userData)}</span>
+        <div>
+          {SiteRoleHelper.getFormattedSiteRoleLevel(userData)}
+        </div>
+        {getHelpDocumentationLinkIcon()}
       </div>
       {getDescription()}
     </FieldContainer>
@@ -46,4 +69,5 @@ export default function SiteRoleField(
 SiteRoleField.propTypes = {
   className: PropTypes.string,
   showDescription: PropTypes.bool,
+  showExternalHelpDocumentationLink: PropTypes.bool,
 };

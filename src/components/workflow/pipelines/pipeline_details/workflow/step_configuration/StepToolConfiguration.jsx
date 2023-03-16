@@ -109,6 +109,7 @@ import UserActionsPipelineStepEditorPanel
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import HelmStepConfiguration from "./step_tool_configuration_forms/helm/HelmStepConfiguration";
+import ServiceNowStepConfiguration from "./step_tool_configuration_forms/service_now/ServiceNowStepConfiguration";
 
 // TODO: This needs to be rewritten to follow current standards and to clean up tech debt
 function StepToolConfiguration({
@@ -1481,6 +1482,17 @@ function StepToolConfiguration({
             parentCallback={callbackFunction}
             closeEditorPanel={closeEditorPanel}
             createJob={createTwistlockJob}
+          />
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SERVICE_NOW:
+        return (
+          <ServiceNowStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            closeEditorPanel={closeEditorPanel}
           />
         );        
     }

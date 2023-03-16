@@ -7,7 +7,7 @@ import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import AzureApplicationOverlay
   from "components/inventory/tools/tool_details/tool_jobs/azureV2/applications/AzureApplicationOverlay";
-import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
+import {getTableBooleanIconColumn, getTableTextColumn, getConnectionStatus} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 
 function AzureApplicationsTable({ toolData, azureApplications, loadData, onRowSelect, isLoading }) {
@@ -22,7 +22,8 @@ function AzureApplicationsTable({ toolData, azureApplications, loadData, onRowSe
     () => [
       getTableTextColumn(getField(fields, "credentialName")),
       getTableTextColumn(getField(fields, "resource")),
-      getTableBooleanIconColumn(getField(fields, "active"))
+      getTableBooleanIconColumn(getField(fields, "active")),
+      getConnectionStatus(getField(fields, "connectionState")),
     ],
     []
   );

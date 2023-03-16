@@ -86,30 +86,38 @@ function PipelineWorkflow({
 
   return (
     <>
-      <div className={"pb-1 d-flex"}>
-        <PipelineWorkflowViewConfigurationButton
-          pipeline={pipeline}
-        />
-        <PipelineWorkflowWorkflowEditingToggleButton
-          pipeline={pipeline}
-          editingWorkflow={editWorkflow}
-          workflowStatus={status}
-          setEditingWorkflow={setEditWorkflow}
-        />
-        <PipelineWorkflowExportWorkflowButton
-          pipeline={pipeline}
-          editingWorkflow={editWorkflow}
-          gitExportEnabled={gitExportEnabled}
-          sourceRepositoryModel={sourceRepositoryModel}
-          workflowStatus={status}
-        />
-      </div>
-
       <div
-        className={"workflow-container p-2 dark-grey" + (zoomValue > 2 ? " scale-120-container" : "")}>
+        className={"workflow-container dark-grey" + (zoomValue > 2 ? " scale-120-container" : "")}
+        style={{
+          // border: "1px solid #d2d2d2",
+          borderTopLeftRadius: "0",
+          borderBottomLeftRadius: "1rem",
+          borderBottomRightRadius: "1rem",
+          borderTopRightRadius: "1rem",
+        }}
+      >
+        <div className={"m-2 d-flex"}>
+          <PipelineWorkflowViewConfigurationButton
+            pipeline={pipeline}
+          />
+          <PipelineWorkflowWorkflowEditingToggleButton
+            pipeline={pipeline}
+            editingWorkflow={editWorkflow}
+            workflowStatus={status}
+            setEditingWorkflow={setEditWorkflow}
+          />
+          <PipelineWorkflowExportWorkflowButton
+            pipeline={pipeline}
+            editingWorkflow={editWorkflow}
+            gitExportEnabled={gitExportEnabled}
+            sourceRepositoryModel={sourceRepositoryModel}
+            workflowStatus={status}
+          />
+        </div>
         <div className={getZoomClass(zoomValue)}>
           <PipelineWorkflowSourceRepositoryItem
             pipeline={pipeline}
+            fetchPlan={fetchPlan}
             status={status}
             softLoading={softLoading || updatingWorkflow}
           />

@@ -32,6 +32,8 @@ import {pipelineHelper} from "components/workflow/pipeline.helper";
 import {buttonLabelHelper} from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import PipelineActionControlButtonBase
   from "components/workflow/pipelines/action_controls/PipelineActionControlButtonBase";
+import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
+import {sleep} from "utils/helpers";
 
 const PIPELINE_ACTION_STATES = {
   READY: "ready",
@@ -65,6 +67,12 @@ function PipelineActionControls(
     orchestrationFeatureFlags,
     enabledServices,
   } = useGetFeatureFlags();
+  const pipelineActionsHook = usePipelineActions();
+
+  const delayedRefresh = async () => {
+    await sleep(5000);
+    await fetchData();
+  };
 
   useEffect(() => {
     if (workflowStatus !== "stopped") {
@@ -90,8 +98,7 @@ function PipelineActionControls(
       setStopPipeline(true);
       await PipelineActions.stopPipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
       await PipelineActions.deleteQueuedPipelineRequestV2(getAccessToken, cancelTokenSource, pipeline?._id);
-      // TODO: Remove
-      await fetchData();
+      await delayedRefresh();
     }
     catch (error) {
       setStopPipeline(true);
@@ -109,12 +116,14 @@ function PipelineActionControls(
     }
   };
 
-  const resetPipelineState = async () => {
+  const resetPipelineState = async (silentReset) => {
     try {
       setResetPipeline(true);
-      await PipelineActions.resetPipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
-      // TODO: Remove
-      await fetchData();
+      await pipelineActionsHook.resetPipeline(
+        pipeline?._id,
+        silentReset,
+      );
+      await delayedRefresh();
     }
     catch (error) {
       setResetPipeline(false);
@@ -169,6 +178,7 @@ function PipelineActionControls(
 
       if (hasStringValue(message) === true) {
         toastContext.showInformationToast(message, 20);
+        await delayedRefresh();
       }
     }
     catch (error) {
@@ -190,6 +200,7 @@ function PipelineActionControls(
       setStartPipeline(true);
       toastContext.showInformationToast("A request to re-start this pipeline has been added to the queue.  Upon successful completion of this pipeline run, the pipeline will start again.", 20);
       await PipelineActions.runPipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
+      await delayedRefresh();
     }
     catch (error) {
       setStartPipeline(false);
@@ -204,6 +215,7 @@ function PipelineActionControls(
       setStartPipeline(true);
       toastContext.showInformationToast("A request to start this pipeline from the start has been submitted.  Resetting pipeline status and then the pipeline will begin momentarily.", 20);
       await PipelineActions.triggerPipelineNewStartV2(getAccessToken, cancelTokenSource, pipeline?._id);
+      await delayedRefresh();
     }
     catch (error) {
       setStartPipeline(false);
@@ -218,6 +230,7 @@ function PipelineActionControls(
       setStartPipeline(true);
       toastContext.showInformationToast("A request to resume this pipeline has been submitted.  It will begin shortly.", 20);
       await PipelineActions.resumePipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      await delayedRefresh();
     }
     catch (error) {
       setStartPipeline(false);
@@ -284,10 +297,10 @@ function PipelineActionControls(
 
   const launchSapCpqRunAssistant = (pipelineOrientation) => {
     toastContext.showOverlayPanel(
-        <SapCpqPipelineRunAssistantOverlay
-            pipeline={pipeline}
-            startPipelineRunFunction={() => triggerInformaticaPipelineRun(pipelineOrientation, pipeline?._id)}
-        />
+      <SapCpqPipelineRunAssistantOverlay
+        pipeline={pipeline}
+        startPipelineRunFunction={() => triggerInformaticaPipelineRun(pipelineOrientation, pipeline?._id)}
+      />
     );
   };
 
@@ -299,7 +312,7 @@ function PipelineActionControls(
       await runPipeline(pipeline?._id);
     } else {
       console.log("clearing pipeline activity and then starting over");
-      await resetPipelineState();
+      await resetPipelineState(true);
       await runPipeline(pipeline?._id);
     }
   };
@@ -346,35 +359,10 @@ function PipelineActionControls(
           await runPipeline(pipelineId, pipelineRunSettingsModel);
         } else {
           console.log("clearing pipeline activity and then starting over");
-          await resetPipelineState();
+          await resetPipelineState(true);
           await runPipeline(pipelineId, pipelineRunSettingsModel);
         }
       }
-    }
-  };
-
-  const getWarningMessage = () => {
-    if (workflowStatus === "paused") {
-      return (
-        <div
-          className={"warning-text-alt text-left"}
-          style={{cursor: "help"}}
-        >
-          <OverlayTrigger
-            placement="top"
-            delay={{show: 250, hide: 400}}
-            overlay={renderTooltip({message: "A paused pipeline requires a user to review and either approve or acknowledge completed actions in order to proceed."})}>
-            <div>
-              <IconBase
-                icon={faInfoCircle}
-                className={"mr-1"}
-                iconSize={"lg"}
-              />
-              {"This pipeline is currently paused awaiting user response"}
-            </div>
-          </OverlayTrigger>
-        </div>
-      );
     }
   };
 
@@ -409,16 +397,16 @@ function PipelineActionControls(
           pipelineOrientation={pipelineHelper.getPipelineOrientation(pipeline)}
         />
       );
-    // } else if (stopPipeline) {
-    //   return (
-    //     <PipelineActionControlButtonBase
-    //       normalText={"Stopping Pipeline"}
-    //       busyText={"Stopping Pipeline"}
-    //       buttonState={buttonLabelHelper.BUTTON_STATES.BUSY}
-    //       disabled={true}
-    //       variant={"outline-danger"}
-    //     />
-    //   );
+      // } else if (stopPipeline) {
+      //   return (
+      //     <PipelineActionControlButtonBase
+      //       normalText={"Stopping Pipeline"}
+      //       busyText={"Stopping Pipeline"}
+      //       buttonState={buttonLabelHelper.BUTTON_STATES.BUSY}
+      //       disabled={true}
+      //       variant={"outline-danger"}
+      //     />
+      //   );
     } else if (startPipeline) {
       return (
         <PipelineActionControlButtonBase
@@ -429,16 +417,16 @@ function PipelineActionControls(
           variant={"outline-dark"}
         />
       );
-    // } else if (resetPipeline) {
-    //   return (
-    //     <PipelineActionControlButtonBase
-    //       normalText={"Resetting Pipeline"}
-    //       busyText={"Resetting Pipeline"}
-    //       buttonState={buttonLabelHelper.BUTTON_STATES.BUSY}
-    //       disabled={true}
-    //       variant={"outline-dark"}
-    //     />
-    //   );
+      // } else if (resetPipeline) {
+      //   return (
+      //     <PipelineActionControlButtonBase
+      //       normalText={"Resetting Pipeline"}
+      //       busyText={"Resetting Pipeline"}
+      //       buttonState={buttonLabelHelper.BUTTON_STATES.BUSY}
+      //       disabled={true}
+      //       variant={"outline-dark"}
+      //     />
+      //   );
     } else if (workflowStatus === "running") {
       return (
         <PipelineActionControlButtonBase
@@ -496,10 +484,7 @@ function PipelineActionControls(
   //  and wire up the functions inside those components to clean up PipelineActionControls
   return (
     <>
-      <div className="d-flex flex-fill">
-
-        {getWarningMessage()}
-        <div className="flex-fill p-2"></div>
+      <div className={"d-flex"}>
         <div className="text-right btn-group btn-group-sized">
           {getRunPipelineButton()}
           {getStopButton()}
@@ -516,24 +501,24 @@ function PipelineActionControls(
           {getQueueButton()}
 
           {((workflowStatus === "paused" && approvalGateIdentifiers.includes(PipelineHelpers.getPendingApprovalStepToolIdentifier(pipeline)) === false) ||
-            (workflowStatus === "stopped" &&
-              pipeline.workflow.last_run?.run_count &&
-              pipeline.workflow.run_count !== pipeline.workflow.last_run.run_count &&
-              pipeline.workflow.last_step?.step_id !== "")) &&
-          <OverlayTrigger
-            placement="top"
-            delay={{ show: 250, hide: 400 }}
-            overlay={renderTooltip({ message: "Will resume the pipeline on the next step.  It will not rerun the last step, even if that step failed. To clear a failed step, reset the pipeline and run it from the start." })}>
-            <Button variant="success"
-                    className="btn-default"
-                    size="sm"
-                    onClick={() => {
-                      handleResumeWorkflowClick(pipeline._id);
-                    }}
-                    disabled={PipelineRoleHelper.canStartPipeline(userData, pipeline) !== true || startPipeline || stopPipeline || resetPipeline}>
+              (workflowStatus === "stopped" &&
+                pipeline.workflow.last_run?.run_count &&
+                pipeline.workflow.run_count !== pipeline.workflow.last_run.run_count &&
+                pipeline.workflow.last_step?.step_id !== "")) &&
+            <OverlayTrigger
+              placement="top"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip({ message: "Will resume the pipeline on the next step.  It will not rerun the last step, even if that step failed. To clear a failed step, reset the pipeline and run it from the start." })}>
+              <Button variant="success"
+                      className="btn-default"
+                      size="sm"
+                      onClick={() => {
+                        handleResumeWorkflowClick(pipeline._id);
+                      }}
+                      disabled={PipelineRoleHelper.canStartPipeline(userData, pipeline) !== true || startPipeline || stopPipeline || resetPipeline}>
                 <IconBase isLoading={startPipeline} icon={faRedo} className={ "mr-1"} />
-              <span className="d-none d-md-inline">Resume</span></Button>
-          </OverlayTrigger>}
+                <span className="d-none d-sm-inline d-md-inline">Resume</span></Button>
+            </OverlayTrigger>}
 
           {
             workflowStatus !== "running" &&
@@ -548,8 +533,8 @@ function PipelineActionControls(
                         resetPipelineState();
                       }}
                       disabled={PipelineRoleHelper.canResetPipeline(userData, pipeline) !== true || startPipeline || stopPipeline || resetPipeline}>
-                  <IconBase isLoading={resetPipeline} icon={faRedo} fixedWidth className="mr-1" />
-                <span className="d-none d-md-inline">Reset Pipeline</span></Button>
+                <IconBase isLoading={resetPipeline} icon={faRedo} fixedWidth className="mr-1" />
+                <span className="d-none d-sm-inline d-md-inline">Reset Pipeline</span></Button>
             </OverlayTrigger>
           }
           <PipelineActionControlsRefreshButton

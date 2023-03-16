@@ -13,7 +13,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
 import vaultActions from "components/vault/vault.actions";
 
-function AnsibleToolConfiguration({ toolData }) {
+function AnsibleToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [ansibleConfigurationDto, setAnsibleConfigurationDto] = useState(undefined);
 
@@ -30,7 +30,8 @@ function AnsibleToolConfiguration({ toolData }) {
     newConfiguration.secretKey = await toolsActions.savePasswordToVault(toolData, ansibleConfigurationDto,"accountPassword", newConfiguration.accountPassword, getAccessToken);
     newConfiguration.secretPrivateKey = await toolsActions.savePasswordToVault(toolData, ansibleConfigurationDto,"secretPrivateKey", newConfiguration.secretPrivateKey, getAccessToken);    newConfiguration.publicKey = await toolsActions.savePasswordToVault(toolData, ansibleConfigurationDto, "publicKey", newConfiguration.publicKey, getAccessToken, toolData.getData("_id"));
     const item = { configuration: newConfiguration };
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("tool_detail");
   };
 
   return (
@@ -60,7 +61,9 @@ AnsibleToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId:  PropTypes.string,
   fnSaveChanges: PropTypes.func,
-  fnSaveToVault: PropTypes.func
+  fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default AnsibleToolConfiguration;

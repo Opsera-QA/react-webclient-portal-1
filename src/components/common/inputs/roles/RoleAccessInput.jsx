@@ -88,7 +88,7 @@ export default function RoleAccessInput(
       return (
         <div className={"my-3"}>
           <CenteredContentWrapper>
-            <div>No access roles have been added yet.</div>
+            <div>No access rules have been added yet.</div>
           </CenteredContentWrapper>
           <div className={"mx-3"}>
             <hr/>

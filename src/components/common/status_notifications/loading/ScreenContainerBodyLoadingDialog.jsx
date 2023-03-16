@@ -1,16 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Col, Row} from "react-bootstrap";
-import IconBase from "components/common/icons/IconBase";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
-function ScreenContainerBodyLoadingDialog({ message }) {
+export default function ScreenContainerBodyLoadingDialog({ message }) {
   return (
-    <Row className={"detail-container-body loading-dialog"}>
-      <Col xs={12} className="my-auto text-center text-muted">
-        <IconBase isLoading={true} className="mr-2 vertical-align-item"/>
-        {message}
-      </Col>
-    </Row>
+    <CenterLoadingIndicator
+      minHeight={"calc(100vh - 255px)"}
+      customMessage={message}
+    />
   );
 }
 
@@ -21,5 +18,3 @@ ScreenContainerBodyLoadingDialog.propTypes = {
 ScreenContainerBodyLoadingDialog.defaultProps = {
   message: "Loading Data",
 };
-
-export default ScreenContainerBodyLoadingDialog;

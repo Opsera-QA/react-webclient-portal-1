@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import EditRolesOverlay from "components/common/inline_inputs/roles/overlay/EditRolesOverlay";
 import RoleAccessFieldBase from "components/common/fields/multiple_items/roles/RoleAccessFieldBase";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
-import EditIcon from "components/common/icons/field/EditIcon";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import FieldContainer from "components/common/fields/FieldContainer";
@@ -26,7 +25,7 @@ function RoleAccessInlineInputBase(
     isSassUser,
   } = useComponentStateReference();
 
-  const showEditor = () => {
+  const handleEditFunction = () => {
     if (!disabled) {
       toastContext.showOverlayPanel(
         <EditRolesOverlay
@@ -53,20 +52,9 @@ function RoleAccessInlineInputBase(
             <RoleAccessFieldBase
               model={model}
               fieldName={fieldName}
-            />
-          </div>
-          <div className={"edit-button d-flex"}>
-            <EditIcon
-              className={"ml-2 text-muted"}
-              handleEditFunction={showEditor}
+              handleEditFunction={handleEditFunction}
               disabled={disabled}
-              tooltipBody={"Edit Access Rules"}
-              iconTransformProperties={"shrink-5"}
-            />
-            <LaunchHelpIcon
-              visible={disabled !== true}
               helpComponent={helpComponent}
-              className={"ml-2 text-muted"}
             />
           </div>
         </div>

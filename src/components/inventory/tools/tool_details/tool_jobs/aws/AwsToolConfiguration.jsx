@@ -12,7 +12,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import AwsCloudProviderRegionSelectInput
   from "components/common/list_of_values_input/aws/regions/AwsCloudProviderRegionSelectInput";
 
-function AwsToolConfiguration({ toolData }) {
+function AwsToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [awsConfigurationDto, setAwsConfigurationDto] = useState(undefined);
 
@@ -30,7 +30,8 @@ function AwsToolConfiguration({ toolData }) {
     newConfiguration.secretKey = await toolsActions.savePasswordToVault(toolData, awsConfigurationDto, "secretKey", newConfiguration.secretKey, getAccessToken);
     newConfiguration.awsAccountId = await toolsActions.savePasswordToVault(toolData, awsConfigurationDto, "awsAccountId", newConfiguration.awsAccountId, getAccessToken);
     const item = {configuration: newConfiguration};
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
   
   return (
@@ -40,6 +41,7 @@ function AwsToolConfiguration({ toolData }) {
       persistRecord={saveAwsToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"aws"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -57,7 +59,9 @@ AwsToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId: PropTypes.string,
   saveToolConfiguration: PropTypes.func,
-  fnSaveToVault: PropTypes.func
+  fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default AwsToolConfiguration;

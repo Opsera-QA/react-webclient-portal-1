@@ -154,6 +154,13 @@ function TaskSummaryPanel(
           <TextFieldBase dataObject={gitTasksData} fieldName={"name"} />
         </Col>
         {getOwnerNameField()}
+        <Col lg={12}>
+          <TaskRoleAccessInput
+            dataObject={gitTasksData}
+            setDataObject={setGitTasksData}
+            disabled={TaskRoleHelper.canEditAccessRoles(userData, gitTasksData?.getPersistData()) !== true}
+          />
+        </Col>
         <Col md={6}>
           <TaskStateField
             model={gitTasksData}
@@ -161,13 +168,6 @@ function TaskSummaryPanel(
         </Col>
         <Col md={6}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"run_count"} />
-        </Col>
-        <Col lg={12}>
-          <TaskRoleAccessInput
-            dataObject={gitTasksData}
-            setDataObject={setGitTasksData}
-            disabled={TaskRoleHelper.canEditAccessRoles(userData, gitTasksData?.getPersistData()) !== true}
-          />
         </Col>
         <Col md={6}>
           <TaskTypeField fieldName={"type"} model={gitTasksData} />

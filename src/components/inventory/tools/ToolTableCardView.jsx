@@ -29,9 +29,7 @@ function ToolTableCardView(
 
   const createNewTool = () => {
     toastContext.showOverlayPanel(
-      <NewToolOverlay
-        loadData={loadData}
-      />
+      <NewToolOverlay loadData={loadData}/>
     );
   };
 

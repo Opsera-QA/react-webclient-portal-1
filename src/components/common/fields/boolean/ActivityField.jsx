@@ -1,10 +1,10 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import FieldLabel from "components/common/fields/FieldLabel";
 import FieldContainer from "components/common/fields/FieldContainer";
 
-function ActivityField({dataObject, fieldName, className}) {
-  const [field] = useState(dataObject?.getFieldById(fieldName));
+export default function ActivityField({dataObject, fieldName, className}) {
+  const field = dataObject?.getFieldById(fieldName);
 
   if (dataObject == null) {
     return null;
@@ -12,8 +12,13 @@ function ActivityField({dataObject, fieldName, className}) {
 
   return (
     <FieldContainer className={className}>
-      <FieldLabel field={field}/>
-      <span>{dataObject?.getData(fieldName) ? "Active" : "Inactive"}</span>
+      <FieldLabel
+        customLabel={field == null ? "Active" : undefined}
+        field={field}
+      />
+      <span>
+        {dataObject?.getData(fieldName) ? "Active" : "Inactive"}
+      </span>
     </FieldContainer>
   );
 }
@@ -24,4 +29,6 @@ ActivityField.propTypes = {
   className: PropTypes.string
 };
 
-export default ActivityField;
+ActivityField.defaultProps = {
+  fieldName: "active",
+};

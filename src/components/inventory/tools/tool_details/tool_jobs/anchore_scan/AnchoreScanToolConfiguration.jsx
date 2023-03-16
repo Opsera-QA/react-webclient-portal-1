@@ -11,7 +11,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 
-function AnchoreScanToolConfiguration({ toolData }) {
+function AnchoreScanToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [anchoreScanConfigurationDto, setAnchoreScanConfigurationDto] = useState(undefined);
 
@@ -28,7 +28,8 @@ function AnchoreScanToolConfiguration({ toolData }) {
     const vaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
     newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(anchoreScanConfigurationDto, "accountPassword", newConfiguration.accountPassword, vaultKey, getAccessToken, toolData.getData("_id"));
     const item = {configuration: newConfiguration};
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("connection_test");
   };
 
   return (
@@ -38,6 +39,7 @@ function AnchoreScanToolConfiguration({ toolData }) {
       persistRecord={saveAnchoreScanToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Anchore"}
+      setUpMode={setUpMode}
     >
       <Row>
         <Col sm={12}>
@@ -52,6 +54,8 @@ function AnchoreScanToolConfiguration({ toolData }) {
 
 AnchoreScanToolConfiguration.propTypes = {
   toolData: PropTypes.object,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default AnchoreScanToolConfiguration;

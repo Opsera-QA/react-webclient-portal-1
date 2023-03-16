@@ -10,17 +10,10 @@ import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import { AuthContext } from "contexts/AuthContext";
 import InformationDialog from "components/common/status_notifications/info";
-import PipelineActionControls from "components/workflow/pipelines/action_controls/PipelineActionControls";
-import PipelineSummaryActionBar from "components/workflow/pipelines/summary/action_bar/PipelineSummaryActionBar";
 import EditTagModal from "components/workflow/EditTagModal";
 import pipelineActions from "components/workflow/pipeline-actions";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
-import StandaloneSelectInput from "components/common/inputs/select/StandaloneSelectInput";
-import {
-  getPipelineTypeLabel,
-  PIPELINE_TYPE_SELECT_OPTIONS
-} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import PipelineDurationMetricsStandaloneField
   from "components/common/fields/pipelines/metrics/PipelineDurationMetricsStandaloneField";
 import IconBase from "components/common/icons/IconBase";
@@ -34,7 +27,8 @@ import DateTimeField from "components/common/fields/date/DateTimeField";
 import OwnerNameField from "components/common/fields/text/general/OwnerNameField";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
-import PipelineNameTextInput from "components/workflow/pipelines/summary/inputs/PipelineNameTextInput";
+import InlinePipelineTypeSelectInput from "components/workflow/pipelines/summary/inputs/type/InlinePipelineTypeSelectInput";
+import {Divider} from "temp-library-components/divider/Divider";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -49,16 +43,10 @@ function PipelineSummaryPanel(
     pipeline,
     parentWorkflowStatus,
     fetchPlan,
-    setPipeline,
-    showActionControls,
-    isLoading,
-    isQueued,
-    runCount,
   }) {
   const contextType = useContext(AuthContext);
   const [editDescription, setEditDescription] = useState(false);
   const [editTags, setEditTags] = useState(false);
-  const [editType, setEditType] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [pipelineModel, setPipelineModel] = useState(new Model(pipeline, pipelineMetadata, false));
   const {
@@ -88,13 +76,6 @@ function PipelineSummaryPanel(
             "tags": pipeline.tags,
           };
           setEditTags(false);
-          break;
-        case "type":
-          pipeline.type = value.type;
-          postBody = {
-            "type": value.type,
-          };
-          setEditType(false);
           break;
       }
 
@@ -127,11 +108,6 @@ function PipelineSummaryPanel(
       case "tags":
         setEditTags(true);
         break;
-      case "type":
-        setEditType(true);
-        break;
-      default:
-        console.error("Missing value or type for edit field");
     }
   };
 
@@ -152,7 +128,7 @@ function PipelineSummaryPanel(
       <IconBase
         icon={faPencilAlt}
         className={"ml-2 text-muted pointer"}
-        iconTransformProperties={"shrink-5"}
+        iconSize={"sm"}
         onClickFunction={() => {
           handleEditPropertyClick(field);
         }} />
@@ -212,77 +188,15 @@ function PipelineSummaryPanel(
     // TODO: Move canEditPipelineSchedule inside field. Left it out for now.
     if (!Array.isArray(pipelineTypes) || (!pipelineTypes.includes("informatica") && !pipelineTypes.includes("sfdc"))) {
       return (
-        <Col xs={12} sm={6}>
+        <Col sm={12} md={6}>
           <PipelineSchedulerField
             pipelineModel={pipelineModel}
+            updatedAt={pipelineModel?.getData("updatedAt")}
             canEditPipelineSchedule={PipelineRoleHelper.canEditPipelineAttributes(userData, pipeline) && parentWorkflowStatus !== "running"}
           />
         </Col>
       );
     }
-  };
-
-  const getPipelineActionControls = () => {
-    if (showActionControls !== false) {
-      return (
-        <div className={"text-right py-2 pr-2"}>
-          <PipelineActionControls
-            pipeline={pipeline}
-            disabledActionState={false}
-            fetchData={fetchPlan}
-            setPipeline={setPipeline}
-            isLoading={isLoading}
-            isQueued={isQueued}
-            workflowStatus={parentWorkflowStatus}
-            runCount={runCount}
-          />
-        </div>
-      );
-    }
-  };
-
-  const getPipelineTitleField = () => {
-    return (
-      <PipelineNameTextInput
-        pipelineModel={pipelineModel}
-        setPipelineModel={setPipelineModel}
-        workflowStatus={parentWorkflowStatus}
-      />
-    );
-  };
-
-  const getPipelineTypeField = () => {
-    return (
-      <div className={"my-2"}>
-        <span className="text-muted mr-2">Type:</span>
-        {pipeline?.type && !editType && getPipelineTypeLabel(pipeline?.type[0])}
-        {PipelineRoleHelper.canEditPipelineAttributes(userData, pipeline)
-        && parentWorkflowStatus !== "running" && !editType
-          ? getEditIcon("type")
-          : null}
-        {editType &&
-          <div className="d-flex mt-1">
-            <div className="w-75">
-              <StandaloneSelectInput
-                selectOptions={PIPELINE_TYPE_SELECT_OPTIONS}
-                defaultValue={pipeline?.type[0]}
-                valueField={"value"}
-                textField={"text"}
-                setDataFunction={e => {
-                  let type = formData.type;
-                  type[0] = e.value;
-                  setFormData({ ...formData, type: type });
-                }}
-              />
-            </div>
-            <div className="px-2 pt-1">
-              {getSaveIcon("type")}
-              {getCancelIcon(setEditType)}
-            </div>
-          </div>
-        }
-      </div>
-    );
   };
 
   const getDescriptionField = () => {
@@ -341,21 +255,20 @@ function PipelineSummaryPanel(
 
   return (
     <>
-      {getPipelineActionControls()}
-
-      <div className="pr-1">
+      <div className={"mx-3 mb-3 mt-2"}>
         <Row>
-          <Col sm={9}>
-            {getPipelineTitleField()}
-          </Col>
-          <Col sm={3}>
-            <PipelineSummaryActionBar
-              pipeline={pipeline}
+          <Col xs={12}>
+            <PipelineRoleAccessInput
+              loadData={fetchPlan}
               pipelineModel={pipelineModel}
-              loadPipeline={fetchPlan}
+              setPipelineModel={setPipelineModel}
+              disabled={parentWorkflowStatus === "running"}
             />
           </Col>
-          <Col xs={12} sm={6}>
+          <div className={"d-flex my-1 mx-3 w-100"}>
+            <Divider className={"w-100"} />
+          </div>
+          <Col sm={12} md={6}>
             <OwnerNameField
               model={pipelineModel}
             />
@@ -365,41 +278,37 @@ function PipelineSummaryPanel(
               model={pipelineModel}
             />
           </Col>
-          <Col xs={12}>
-            <PipelineRoleAccessInput
-              loadData={fetchPlan}
-              pipelineModel={pipelineModel}
-              setPipelineModel={setPipelineModel}
-              disabled={parentWorkflowStatus === "running"}
-            />
-          </Col>
           <Col sm={12} md={6}>
             <TextFieldBase
               dataObject={pipelineModel}
               fieldName={"workflow.run_count"}
             />
           </Col>
-          <Col xs={12} sm={6}>
+          <Col sm={12} md={6}>
             <DateTimeField
               fieldName={"createdAt"}
               dataObject={pipelineModel}
             />
           </Col>
-          <Col xs={12} sm={6}>
+          <Col sm={12} md={6}>
             <TextFieldBase
               dataObject={pipelineModel}
               fieldName={"organizationName"}
               className={"my-2 upper-case-first"}
             />
           </Col>
-          <Col sm={6}>
+          <Col sm={12} md={6}>
             <TextFieldBase
               dataObject={pipelineModel}
               fieldName={"account"}
             />
           </Col>
-          <Col xs={12} sm={6}>
-            {getPipelineTypeField()}
+          <Col sm={12} md={6}>
+            <InlinePipelineTypeSelectInput
+              pipelineModel={pipelineModel}
+              setPipelineModel={setPipelineModel}
+              workflowStatus={parentWorkflowStatus}
+            />
           </Col>
           {getSchedulerField()}
           {getTagField()}
@@ -423,11 +332,6 @@ PipelineSummaryPanel.propTypes = {
   pipeline: PropTypes.object,
   parentWorkflowStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   fetchPlan: PropTypes.func,
-  setPipeline: PropTypes.func,
-  showActionControls: PropTypes.bool,
-  isLoading: PropTypes.bool,
-  isQueued: PropTypes.bool,
-  runCount: PropTypes.number,
 };
 
 export default PipelineSummaryPanel;

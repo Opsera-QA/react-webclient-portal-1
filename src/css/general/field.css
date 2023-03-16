@@ -99,10 +99,8 @@ pre {
 .membership-list {
     min-height: 370px;
     max-height: 370px;
-    background-color: #E7E5ED;
     list-style-type: none;
     overflow-y: auto;
-    border-bottom: 1px solid #E6E5E3;
 }
 
 .text-input-list {
@@ -413,14 +411,12 @@ input[disabled] {
 
 .input-label label {
     margin-bottom: 0;
-    font-size: 1rem;
+    font-size: 1em;
 }
 
 .input-container label {
     margin-bottom: .25rem;
-    /*margin-left: .1rem;*/
-    font-size: 1rem;
-    /*letter-spacing: .1rem;*/
+    font-size: 1em;
 }
 
 .form-control:focus {
@@ -444,3 +440,10 @@ input[disabled] {
     pointer-events: none;
 }
 /* End Vanity Set V3 Component CSS */
+
+.text-input-icon {
+    position: absolute;
+    right: 20px;
+    top: 40px;
+    font-size: 1.2rem;
+}

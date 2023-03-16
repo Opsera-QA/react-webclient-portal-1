@@ -275,7 +275,7 @@ function StepApprovalOverlay(
 
   const getButtonContainer = () => {
     return (
-      <ButtonContainerBase className={"mx-3"}>
+      <ButtonContainerBase className={"mx-3 mb-3"}>
         <OverlayTrigger
           placement="top"
           delay={{ show: 250, hide: 400 }}

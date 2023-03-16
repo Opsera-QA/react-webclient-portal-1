@@ -12,8 +12,8 @@ export const ORCHESTRATION_NOTIFICATION_TYPE_LABELS = {
   JIRA: "Jira",
   SERVICE_NOW: "Service Now",
   SLACK: "Slack",
-  TEAMS: "servicenow",
-  GCHAT: "GChat"
+  TEAMS: "Microsoft Teams",
+  GCHAT: "Google Chat"
 };
 
 export const ORCHESTRATION_NOTIFICATION_TYPE_SELECT_OPTIONS = [

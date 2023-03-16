@@ -28,14 +28,18 @@ function SmartIdField(
     }
   };
 
-  if (field == null) {
+  if (field == null && fieldName !== "_id") {
     return null;
   }
 
   return (
     <FieldContainer className={className}>
       <div className="w-100 d-flex">
-        <FieldLabel field={field} showLabel={showLabel}/>
+        <FieldLabel
+          customLabel={field == null ? "ID" : undefined}
+          field={field}
+          showLabel={showLabel}
+        />
         <span>{model.getData(fieldName)}</span>
         {getClipboardButton()}
         {getDetailLinkClipboardButton()}

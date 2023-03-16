@@ -35,6 +35,8 @@ import SonarStepRatingThresholdInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepRatingThresholdInput";
 import SonarStepThresholdToggleInput from 
   "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarStepThresholdToggleInput";
+import SonarCustomParametersToggle from 
+  "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/inputs/SonarCustomParametersToggle";
 
 function SonarStepConfiguration(
   {
@@ -190,6 +192,10 @@ function SonarStepConfiguration(
             setDataObject={setSonarStepModel}
           />
           {getBranchScanToggleOptionDynamicFields()}
+          <SonarCustomParametersToggle
+            model={sonarStepModel}
+            setModel={setSonarStepModel}
+          />
           <SonarStepSonarToolSelectInput
             model={sonarStepModel}
             setModel={setSonarStepModel}
@@ -208,13 +214,7 @@ function SonarStepConfiguration(
             fieldName={"workspaceDeleteFlag"}
             dataObject={sonarStepModel}
             setDataObject={setSonarStepModel}
-          />
-          <TextInputBase
-            fieldName={"successThreshold"}
-            dataObject={sonarStepModel}
-            setDataObject={setSonarStepModel}
-            disabled={true}
-          />
+          />          
           <TextAreaInput 
             dataObject={sonarStepModel}
             setDataObject={setSonarStepModel}

@@ -41,6 +41,7 @@ function CenterOverlayContainer(
     linkTooltipText,
     customLoadingMessage,
     size,
+    externalHelpPageLink,
   }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -96,6 +97,7 @@ function CenterOverlayContainer(
               titleText={titleText}
               titleIcon={titleIcon}
               pageLink={pageLink}
+              externalHelpPageLink={externalHelpPageLink}
               linkTooltipText={linkTooltipText}
             />
             {actionBar}
@@ -128,6 +130,7 @@ CenterOverlayContainer.propTypes = {
   linkTooltipText: PropTypes.string,
   size: PropTypes.string,
   customLoadingMessage: PropTypes.string,
+  externalHelpPageLink: PropTypes.string,
 };
 
 CenterOverlayContainer.defaultProps = {

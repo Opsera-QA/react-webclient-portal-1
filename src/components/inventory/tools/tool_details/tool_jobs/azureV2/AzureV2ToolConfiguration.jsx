@@ -11,7 +11,7 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
 
-function AzureV2ToolConfiguration({ toolData }) {
+function AzureV2ToolConfiguration({ toolData, setUpMode, setCurrentScreen }) {
   const { getAccessToken } = useContext(AuthContext);
   const [azureConfigurationDto, setAzureConfigurationDto] = useState(undefined);
 
@@ -25,7 +25,8 @@ function AzureV2ToolConfiguration({ toolData }) {
 
   const saveAzureToolConfiguration = async () => {
     const item = {configuration: azureConfigurationDto.getPersistData()};
-    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
+    if (setUpMode === "wizard") setCurrentScreen("tool_detail");
   };
 
   return (
@@ -50,7 +51,9 @@ AzureV2ToolConfiguration.propTypes = {
   toolData: PropTypes.object,
   toolId: PropTypes.string,
   saveToolConfiguration: PropTypes.func,
-  fnSaveToVault: PropTypes.func
+  fnSaveToVault: PropTypes.func,
+  setUpMode: PropTypes.string,
+  setCurrentScreen: PropTypes.func
 };
 
 export default AzureV2ToolConfiguration;

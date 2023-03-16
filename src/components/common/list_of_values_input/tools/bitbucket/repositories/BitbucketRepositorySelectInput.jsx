@@ -113,7 +113,7 @@ BitbucketRepositorySelectInput.propTypes = {
 };
 
 BitbucketRepositorySelectInput.defaultProps = {
-  valueField: "name",
+  valueField: "id",
   textField: "name",
 };
 

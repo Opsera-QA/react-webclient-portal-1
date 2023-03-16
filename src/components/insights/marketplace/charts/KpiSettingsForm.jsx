@@ -334,7 +334,8 @@ function KpiSettingsForm({
     "salesforce-components-chart",
     "github-commit-statistics",
     "deployment-analytics",
-    "gitlab-merge-requests-statistics"
+    "gitlab-merge-requests-statistics",
+    kpiIdentifierConstants.KPI_IDENTIFIERS.AQUASEC_ISSUES_BY_SEVERITY,
   ];
 
   const getKpiFilters = (filter) => {
