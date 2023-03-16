@@ -12,7 +12,8 @@ import GitCustodianStatusSelectInput from "./inputs/GitCustodianStatusSelectInpu
 function GitCustodianUpdateStatusEditorPanel({
   handleClose,
   selectedIssues,
-  setSelectedIssues
+  setSelectedIssues,
+  loadData,
 }) {
   const [dataModel, setDataModel] = useState(undefined);
   const {
@@ -44,6 +45,7 @@ function GitCustodianUpdateStatusEditorPanel({
     const response = await chartsActions.updateGitCustodianVulnerabilityStatus(getAccessToken, cancelTokenSource, dataModel.getPersistData());
     setSelectedIssues([]);
     handleClose();
+    loadData();
     return response;
   };
 
@@ -83,7 +85,8 @@ function GitCustodianUpdateStatusEditorPanel({
 GitCustodianUpdateStatusEditorPanel.propTypes = {
   handleClose: PropTypes.func,
   selectedIssues: PropTypes.array,
-  setSelectedIssues: PropTypes.func
+  setSelectedIssues: PropTypes.func,
+  loadData: PropTypes.func,
 };
 
 export default GitCustodianUpdateStatusEditorPanel;
