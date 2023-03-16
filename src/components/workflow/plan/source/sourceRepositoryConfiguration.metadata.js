@@ -18,7 +18,6 @@ export const sourceRepositoryConfigurationMetadata = {
     {
       label: "Username",
       id: "username",
-      isRequired: true,
     },
     {
       label: "Password",
