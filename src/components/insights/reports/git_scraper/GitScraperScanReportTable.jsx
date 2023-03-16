@@ -24,6 +24,7 @@ function GitScraperScanReportTable(
             getTableTextColumn(fields.find(field => { return field.id === "path";})),
             getTableTextColumn(fields.find(field => { return field.id === "author";})),
             getTableTextColumn(fields.find(field => { return field.id === "lineNumber";})),
+            getTableTextColumn(fields.find(field => { return field.id === "severity";})),
             getTableTextColumn(fields.find(field => { return field.id === "commit";})),
             getTableDateTimeColumn(fields.find(field => { return field.id === "commitDate";})),
             getTableTextColumn(fields.find(field => { return field.id === "reason";})),
