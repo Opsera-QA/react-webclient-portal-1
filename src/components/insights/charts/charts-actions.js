@@ -294,6 +294,9 @@ chartsActions.getGitCustodianChartsData = async (
       type: filterModel.getFilterValue("type")
         ? filterModel.getFilterValue("type")
         : [],
+      severity: filterModel.getFilterValue("severity")
+        ? filterModel.getFilterValue("severity")
+        : [],
     },
   };
   return await baseActions.handleNodeAnalyticsApiPostRequest(
@@ -340,6 +343,9 @@ chartsActions.getGitCustodianTableData = async (
       type: filterModel.getFilterValue("type")
         ? filterModel.getFilterValue("type")
         : [],
+      severity: filterModel.getFilterValue("severity")
+        ? filterModel.getFilterValue("severity")
+        : [],
     },
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
@@ -383,6 +389,9 @@ chartsActions.exportGitCustodianData = async (
         : [],
       type: filterModel.getFilterValue("type")
         ? filterModel.getFilterValue("type")
+        : [],
+      severity: filterModel.getFilterValue("severity")
+        ? filterModel.getFilterValue("severity")
         : [],
     },
   };

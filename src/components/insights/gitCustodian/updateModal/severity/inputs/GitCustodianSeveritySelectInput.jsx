@@ -6,6 +6,7 @@ const SEVERITY = [
   "Low",
   "Medium",
   "High",
+  "Critical",
 ];
 
 function GitCustodianSeveritySelectInput({ model, setModel, disabled }) {
