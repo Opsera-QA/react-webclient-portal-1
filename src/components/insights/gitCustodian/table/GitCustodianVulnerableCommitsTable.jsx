@@ -158,6 +158,7 @@ function GitCustodianVulnerableCommitsTable({
       <GitCustodianCreateJiraTicketOverlay
         selectedIssues={selectedIssues}
         setSelectedIssues={setSelectedIssues}
+        loadData={clearSelectAllAndLoadData}
       />,
     );
   };
@@ -279,7 +280,7 @@ function GitCustodianVulnerableCommitsTable({
         selectedIssues={selectedIssues}
         setSelectedIssues={setSelectedIssues}
         disabled={!(selectedIssues.length > 0)}
-        loadData={loadData}
+        loadData={clearSelectAllAndLoadData}
       />
     );
   };
