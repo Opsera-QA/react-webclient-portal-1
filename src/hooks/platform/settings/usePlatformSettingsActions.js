@@ -48,6 +48,13 @@ export default function usePlatformSettingsActions() {
     );
   };
 
+  platformSettingsActions.getActivePlatformSettings = async () => {
+    const apiUrl = "/configuration/platform/settings/active";
+    return await apiService.handleApiGetRequest(
+      apiUrl,
+    );
+  };
+
   platformSettingsActions.getPlatformSettingRecordById = async (
     systemParameterId,
   ) => {

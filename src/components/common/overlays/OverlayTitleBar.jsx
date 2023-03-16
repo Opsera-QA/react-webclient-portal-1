@@ -7,6 +7,8 @@ import LoadingIcon from "components/common/icons/LoadingIcon";
 import IconBase from "components/common/icons/IconBase";
 import HelpDocumentationLink from "components/common/links/HelpDocumentationLink";
 import {ROLE_HELP_DOCUMENTATION_LINK} from "components/common/fields/multiple_items/GroupField";
+import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
+import HelpIconBase from "components/common/icons/help/HelpIconBase";
 
 // TODO: Cleanup
 function OverlayTitleBar(
@@ -18,6 +20,8 @@ function OverlayTitleBar(
     pageLink,
     linkTooltipText,
     externalHelpPageLink,
+    setShowHelpPanel,
+    helpIsShown,
   }) {
   const getTitleIcon = () => {
     if (titleIcon) {
@@ -28,6 +32,16 @@ function OverlayTitleBar(
   };
   
   const getHelpIcon = () => {
+    if (setShowHelpPanel) {
+      return (
+        <HelpIconBase
+          onClickFunction={() => setShowHelpPanel(!helpIsShown)}
+          tooltipPlacement={"bottom"}
+          className={"mr-3"}
+        />
+      );
+    }
+
     if (externalHelpPageLink) {
       return (
         <HelpDocumentationLink
@@ -89,6 +103,8 @@ OverlayTitleBar.propTypes = {
   pageLink: PropTypes.string,
   linkTooltipText: PropTypes.string,
   externalHelpPageLink: PropTypes.string,
+  setShowHelpPanel: PropTypes.func,
+  helpIsShown: PropTypes.bool,
 };
 
 export default OverlayTitleBar;

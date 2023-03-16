@@ -97,22 +97,34 @@ function PipelineWorkflow({
         }}
       >
         <div className={"m-2 d-flex"}>
-          <PipelineWorkflowViewConfigurationButton
-            pipeline={pipeline}
-          />
-          <PipelineWorkflowWorkflowEditingToggleButton
-            pipeline={pipeline}
-            editingWorkflow={editWorkflow}
-            workflowStatus={status}
-            setEditingWorkflow={setEditWorkflow}
-          />
-          <PipelineWorkflowExportWorkflowButton
-            pipeline={pipeline}
-            editingWorkflow={editWorkflow}
-            gitExportEnabled={gitExportEnabled}
-            sourceRepositoryModel={sourceRepositoryModel}
-            workflowStatus={status}
-          />
+          <div
+            className={"workflow-module-container workflow-button-container"}
+            style={{
+              boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)",
+              borderRadius: ".30rem",
+            }}
+          >
+            <div className={"d-flex p-2"}>
+              <PipelineWorkflowViewConfigurationButton
+                pipeline={pipeline}
+              />
+              <PipelineWorkflowWorkflowEditingToggleButton
+                pipeline={pipeline}
+                editingWorkflow={editWorkflow}
+                workflowStatus={status}
+                setEditingWorkflow={setEditWorkflow}
+                className={"ml-2"}
+              />
+              <PipelineWorkflowExportWorkflowButton
+                pipeline={pipeline}
+                editingWorkflow={editWorkflow}
+                gitExportEnabled={gitExportEnabled}
+                sourceRepositoryModel={sourceRepositoryModel}
+                workflowStatus={status}
+                className={"ml-2"}
+              />
+            </div>
+          </div>
         </div>
         <div className={getZoomClass(zoomValue)}>
           <PipelineWorkflowSourceRepositoryItem

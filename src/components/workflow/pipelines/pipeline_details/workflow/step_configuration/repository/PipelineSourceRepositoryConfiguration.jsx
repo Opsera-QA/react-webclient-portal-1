@@ -143,12 +143,12 @@ function PipelineSourceRepositoryConfiguration(
     }
 
     if (pipeline?.workflow?.source?.trigger_active && !trigger_active) { //allows user to disable trigger
-      toastContext.showWarningDialog("WARNING! You are disabling the event triggering for this pipeline.  This pipeline will no longer start on Git Webhook Events.");
+      toastContext.showSystemWarningBanner("WARNING! You are disabling the event triggering for this pipeline.  This pipeline will no longer start on Git Webhook Events.");
       return true;
     }
 
-    if (branch?.length === 0 || accountId?.length === 0 || username?.length === 0 ) {
-      toastContext.showWarningDialog("WARNING! An incomplete configuration is being saved.  This step must be fully configured in order to use this feature.");
+    if (branch?.length === 0 || accountId?.length === 0) {
+      toastContext.showSystemWarningBanner("WARNING! An incomplete configuration is being saved.  This step must be fully configured in order to use this feature.");
       return true;
     }
 

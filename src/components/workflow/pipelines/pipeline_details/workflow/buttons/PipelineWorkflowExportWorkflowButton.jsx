@@ -14,6 +14,7 @@ export default function PipelineWorkflowExportWorkflowButton(
     gitExportEnabled,
     workflowStatus,
     sourceRepositoryModel,
+    className,
   }) {
   const {
     isOpseraAdministrator,
@@ -43,7 +44,7 @@ export default function PipelineWorkflowExportWorkflowButton(
   if (isFreeTrial === true && isOpseraAdministrator !== true) {
     return (
       <VanityButtonBase
-        className={"mr-1"}
+        className={className}
         buttonClassName={"background-white"}
         icon={faGitAlt}
         buttonSize={"sm"}
@@ -57,7 +58,7 @@ export default function PipelineWorkflowExportWorkflowButton(
 
   return (
     <VanityButtonBase
-      className={"mr-1"}
+      className={className}
       buttonClassName={"background-white"}
       icon={faGitAlt}
       buttonSize={"sm"}
@@ -76,4 +77,5 @@ PipelineWorkflowExportWorkflowButton.propTypes = {
   gitExportEnabled: PropTypes.bool,
   workflowStatus: PropTypes.string,
   sourceRepositoryModel: PropTypes.object,
+  className: PropTypes.string,
 };
