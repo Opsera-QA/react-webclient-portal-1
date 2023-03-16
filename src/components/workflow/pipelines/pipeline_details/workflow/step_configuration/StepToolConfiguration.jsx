@@ -1494,7 +1494,7 @@ function StepToolConfiguration({
             parentCallback={callbackFunction}
             closeEditorPanel={closeEditorPanel}
           />
-        );                
+        );
     }
   };
 

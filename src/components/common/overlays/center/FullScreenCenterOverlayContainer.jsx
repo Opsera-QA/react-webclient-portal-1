@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import OverlayTitleBar from "components/common/overlays/OverlayTitleBar";
@@ -22,8 +22,10 @@ function FullScreenCenterOverlayContainer(
     buttonContainer,
     pageLink,
     linkTooltipText,
+    getHelpComponentFunction,
   }) {
   const toastContext = useContext(DialogToastContext);
+  const [helpIsShown, setHelpIsShown] = useState(false);
 
   useEffect(() => {
     if (showToasts) {
@@ -64,6 +66,14 @@ function FullScreenCenterOverlayContainer(
       return (<LoadingDialog message={"Loading Data"} size={"sm"} />);
     }
 
+    if (helpIsShown === true && getHelpComponentFunction && getHelpComponentFunction(setHelpIsShown)) {
+      return (
+        <div className={"p-2"}>
+          {getHelpComponentFunction(setHelpIsShown)}
+        </div>
+      );
+    }
+
     return children;
   };
 
@@ -82,6 +92,8 @@ function FullScreenCenterOverlayContainer(
             titleIcon={titleIcon}
             pageLink={pageLink}
             linkTooltipText={linkTooltipText}
+            helpIsShown={helpIsShown}
+            setShowHelpPanel={getHelpComponentFunction && getHelpComponentFunction(setHelpIsShown) !== null ? setHelpIsShown : undefined}
           />
           <div>
             {actionBar}
@@ -115,6 +127,7 @@ FullScreenCenterOverlayContainer.propTypes = {
   pageLink: PropTypes.string,
   linkTooltipText: PropTypes.string,
   showCloseBackButton: PropTypes.bool,
+  getHelpComponentFunction: PropTypes.func,
 };
 
 FullScreenCenterOverlayContainer.defaultProps = {

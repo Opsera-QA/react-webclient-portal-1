@@ -814,7 +814,7 @@ function PipelineStepConfigurationSummary({
                 pipelineData={pipelineData}
                 serviceNowPipelineDataObject={getModelWrappedObject(ServiceNowPipelineStepConfigurationMetadata)}
             />
-        );        
+        );
       default:
         return (
           <SummaryPanelContainer>
