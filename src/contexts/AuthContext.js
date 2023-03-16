@@ -76,7 +76,7 @@ const AuthContextProvider = (
       if (organizationSettings) {
         setOrganizationSettingsRecord({...organizationSettings});
       }
-    }).catch(() => console.error("Could not pull platform settings record"));
+    }).catch(() => console.error("Could not pull organization settings record"));
   };
 
   const logoutUserContext = async () => {
