@@ -50,6 +50,7 @@ function ServiceNowGroupSelectInput(
   const loadGroups = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      setError("");
       const response = await serviceNowActions.getServiceNowGroups(getAccessToken, cancelSource, serviceNowId);
       const serviceNowGroups = response?.data?.data;
 
