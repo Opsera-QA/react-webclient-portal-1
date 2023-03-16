@@ -11,13 +11,14 @@ export default function HelpIconBase(
     helpOverlay,
     helpOverlayTitle,
     iconSize,
+    tooltipPlacement,
   }) {
   return (
     <div className={className}>
       <TooltipWrapper
         innerText={helpOverlay}
         title={helpOverlayTitle}
-        placement={"top"}
+        placement={tooltipPlacement}
       >
         <IconBase
           onClickFunction={onClickFunction}
@@ -36,4 +37,9 @@ HelpIconBase.propTypes = {
   helpOverlay: PropTypes.any,
   helpOverlayTitle: PropTypes.any,
   iconSize: PropTypes.string,
+  tooltipPlacement: PropTypes.string,
+};
+
+HelpIconBase.defaultProps = {
+  tooltipPlacement: "top",
 };

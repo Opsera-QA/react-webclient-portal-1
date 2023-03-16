@@ -95,10 +95,6 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
   };
 
   const getHelpComponent = () => {
-    if (type === "source") {
-      return <PipelineSourceRepositoryHelpDocumentation/>;
-    }
-
     if (type === "notification") {
       return null;
     }

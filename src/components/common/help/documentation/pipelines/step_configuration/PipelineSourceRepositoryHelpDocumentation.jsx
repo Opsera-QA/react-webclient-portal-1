@@ -1,14 +1,8 @@
-import React, { useContext } from "react";
-import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import React from "react";
+import PropType from "prop-types";
+import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
 
-function PipelineSourceRepositoryHelpDocumentation() {
-  const toastContext = useContext(DialogToastContext);
-
-  const closePanel = () => {
-    toastContext.clearOverlayPanel();
-  };
-
+function PipelineSourceRepositoryHelpDocumentation({ closeHelpPanel }) {
   const getHelpDocumentation = () => {
       return (
         <div>
@@ -41,14 +35,22 @@ function PipelineSourceRepositoryHelpDocumentation() {
       );
   };
 
+  if (closeHelpPanel == null) {
+    return null;
+  }
+
   return (
-    <HelpOverlayBase
-      closePanel={closePanel}
-      showPanel={true}
-      helpDocumentation={getHelpDocumentation()}
-      helpTopic={"Source Repository"}
-    />
+    <HelpDocumentationContainer
+      closeHelpPanel={closeHelpPanel}
+      helpTopic={"Opsera Pipeline Settings"}
+    >
+      {getHelpDocumentation()}
+    </HelpDocumentationContainer>
   );
 }
+
+PipelineSourceRepositoryHelpDocumentation.propTypes = {
+  closeHelpPanel: PropType.func,
+};
 
 export default React.memo(PipelineSourceRepositoryHelpDocumentation);
