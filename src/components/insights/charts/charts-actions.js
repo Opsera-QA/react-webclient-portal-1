@@ -935,4 +935,19 @@ chartsActions.updateGitCustodianVulnerabilityStatus = async (
   );
 };
 
+chartsActions.updateGitCustodianVulnerabilitySeverity = async (
+  getAccessToken,
+  cancelTokenSource,
+  postBody,
+) => {
+  delete postBody.issuesList;
+  const apiUrl = "/analytics/gitscraper/v1/dashboard/table/updateSeverity";
+  return await baseActions.handleNodeAnalyticsApiPostRequest(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
 export default chartsActions;
