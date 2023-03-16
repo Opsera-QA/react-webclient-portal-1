@@ -109,7 +109,7 @@ export default function PipelineStepWorkflowItemBody(
           <PipelineWorkflowItemFieldBase
             className={"pl-1 pt-1"}
             icon={faInfoCircle}
-            label={"Approval"}
+            label={"ServiceNow Approval"}
             value={changeRequestApproval}
           />
         }
@@ -126,7 +126,7 @@ export default function PipelineStepWorkflowItemBody(
             className={"pl-1 pt-1"}
             icon={faInfoCircle}
             label={"Window"}
-            value={`${changeRequestStartDate} to ${changeRequestEndDate}`}
+            value={`${changeRequestStartDate} to ${changeRequestEndDate} UTC`}
           />
         }
       </>
