@@ -20,11 +20,17 @@ export default function useGetActivePlatformSettingsRecord(
     setPlatformSettingsRecord(undefined);
     loadData(getActivePlatformSettingsRecord, handleErrorFunction).catch(() => {
     });
-  }, []);
+  }, [userData]);
 
   const getActivePlatformSettingsRecord = async () => {
     setPlatformSettingsRecord(undefined);
-    const response = await platformSettingsActions.getPlatformSettings();
+
+    if (userData == null) {
+      return null;
+    }
+
+    const response = await platformSettingsActions.getActivePlatformSettings();
+    console.log("response: " + JSON.stringify(response));
     const platformSettings = DataParsingHelper.parseNestedObject(response, "data.data", []);
 
     if (platformSettings) {

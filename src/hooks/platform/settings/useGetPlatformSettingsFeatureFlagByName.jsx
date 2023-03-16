@@ -1,43 +1,30 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import useLoadData from "temp-library-components/useLoadData/useLoadData";
-import usePlatformSettingsActions from "hooks/platform/settings/usePlatformSettingsActions";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import {AuthContext} from "contexts/AuthContext";
 
 export default function useGetPlatformSettingsFeatureFlagByName(
   name,
-  handleErrorFunction,
 ) {
   const [platformSettingsFeatureFlag, setPlatformSettingsFeatureFlag] = useState(undefined);
-  const platformSettingsActions = usePlatformSettingsActions();
-  const {
-    isLoading,
-    error,
-    setError,
-    loadData,
-  } = useLoadData();
+  const { platformSettingsRecord } = useContext(AuthContext);
 
   useEffect(() => {
     setPlatformSettingsFeatureFlag(undefined);
-    loadData(getPlatformSettingFeatureFlagByName, handleErrorFunction).catch(() => {
-    });
-  }, []);
 
-  const getPlatformSettingFeatureFlagByName = async () => {
-    setPlatformSettingsFeatureFlag(undefined);
-    const response = await platformSettingsActions.getPlatformSettingFeatureFlagByName(name);
-    const featureFlag = DataParsingHelper.parseNestedObject(response, "data.data", []);
+    if (hasStringValue(name) === true) {
+      const featureFlags = DataParsingHelper.parseNestedObject(platformSettingsRecord, "features", []);
+      const foundFeatureFlag = DataParsingHelper.parseObject(featureFlags.find((featureFlag) => featureFlag?.name === name));
 
-    if (featureFlag) {
-      setPlatformSettingsFeatureFlag({...featureFlag});
+      if (foundFeatureFlag) {
+        console.log("found feature flag: " + JSON.stringify(foundFeatureFlag));
+        setPlatformSettingsFeatureFlag({...foundFeatureFlag});
+      }
     }
-  };
+  }, [name, platformSettingsRecord]);
 
   return ({
     platformSettingsFeatureFlag: platformSettingsFeatureFlag,
     setPlatformSettingsFeatureFlag: setPlatformSettingsFeatureFlag,
-    loadData: () => loadData(getPlatformSettingFeatureFlagByName, handleErrorFunction),
-    isLoading: isLoading,
-    error: error,
-    setError: setError,
   });
 }
