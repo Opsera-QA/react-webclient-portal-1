@@ -94,13 +94,17 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
     return (
       <LoadingDialog
         size={"sm"}
-        message={"Conversion in progress"}
+        message={"Fetching Permissions"}
       />
     );
   }
   const saveModifiedContent = async () => {
     try {
-      const modifiedFileContent = {"externalDataSourceAccesses": [...modifiedContentJson?.externalDataSourceAccesses]};
+      const modifiedFileContent = {
+        externalDataSourceAccesses: [
+          ...modifiedContentJson?.externalDataSourceAccesses,
+        ],
+      };
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
@@ -145,16 +149,21 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
   const getButtonContainer = () => {
     return (
       <div className="w-100 d-flex justify-content-between py-2 mx-4">
-        <div></div>
-        <div>{getSearchBar()}</div>
-        <div>
+        <Col sm={3}></Col>
+        <Col
+          sm={6}
+          className="col-xs-12 col-sm-5"
+        >
+          {getSearchBar()}
+        </Col>
+        <Col sm={3}>
           <MergeSyncTaskWizardProfileSubmitFileButton
             saveFunction={saveModifiedContent}
             type={"Profile"}
             showToasts={false}
             disable={!showUnsavedChangesMessage}
           />
-        </div>
+        </Col>
       </div>
     );
   };
@@ -192,6 +201,14 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
   };
 
   const modifiedCustomMetaEditView = () => {
+    let filteredData =
+      modifiedContentJson &&
+      Object.keys(modifiedContentJson).length > 0 &&
+      modifiedContentJson?.externalDataSourceAccesses?.filter((obj) => {
+        return obj?.externalDataSource
+          ?.toLowerCase()
+          .includes(searchText.toLowerCase());
+      });
     return (
       <Col>
         <span className="h5">
@@ -202,62 +219,69 @@ const MergeSyncTaskWizardExternalDataSourceJsonEditPanel = ({
           />
           )
         </span>
-        {modifiedContentJson &&
-          Object.keys(modifiedContentJson).length > 0 &&
-          modifiedContentJson?.externalDataSourceAccesses
-            ?.filter((obj) => {
-              return obj?.externalDataSource
-                ?.toLowerCase()
-                .includes(searchText.toLowerCase());
-            })
-            .map((externalDataSourceData, idx, { length }) => (
-              <div key={idx}>
-                <ExternalDataSourceProfileEditorView
-                  externalDataSourceData={externalDataSourceData}
-                  setExternalSourceDataJson={setExternalSourceDataJson}
-                  isLoading={isLoading}
-                />
-                {idx + 1 !== length && (
-                  <DividerWithCenteredText />
-                )}
-              </div>
-            ))}
+        {filteredData && filteredData.length > 0 ? (
+          filteredData.map((externalDataSourceData, idx, { length }) => (
+            <div key={idx}>
+              <ExternalDataSourceProfileEditorView
+                externalDataSourceData={externalDataSourceData}
+                setExternalSourceDataJson={setExternalSourceDataJson}
+                isLoading={isLoading}
+              />
+              {idx + 1 !== length && <DividerWithCenteredText />}
+            </div>
+          ))
+        ) : (
+          <small className={"text-muted form-text mt-4"}>
+            <div>No permissions available for the selected Metadata Type</div>
+          </small>
+        )}
       </Col>
     );
   };
 
   const originalCustomMetaEditView = () => {
+    let filteredData =
+      originalContentJson &&
+      Object.keys(originalContentJson).length > 0 &&
+      originalContentJson?.externalDataSourceAccesses?.filter((obj) => {
+        return obj?.externalDataSource
+          ?.toLowerCase()
+          .includes(searchText.toLowerCase());
+      });
     return (
       <Col>
-        <span className="h5">Target Git Branch ({wizardModel?.getData("targetBranch")})</span>
-        {originalContentJson &&
-          Object.keys(originalContentJson).length > 0 &&
-          originalContentJson?.externalDataSourceAccesses
-            ?.filter((obj) => {
-              return obj?.externalDataSource
-                ?.toLowerCase()
-                .includes(searchText.toLowerCase());
-            })
-            .map((externalDataSourceData, idx, { length }) => (
-              <div key={idx}>
-                <ExternalDataSourceProfileEditorView
-                  externalDataSourceData={externalDataSourceData}
-                  setExternalSourceDataJson={setExternalSourceDataJson}
-                  isLoading={isLoading}
-                  disabled={true}
-                />
-                {idx + 1 !== length && (
-                  <DividerWithCenteredText />
-                )}
-              </div>
-            ))}
+        <span className="h5">
+          Target Git Branch ({wizardModel?.getData("targetBranch")})
+        </span>
+        {filteredData && filteredData.length > 0 ? (
+          filteredData.map((externalDataSourceData, idx, { length }) => (
+            <div key={idx}>
+              <ExternalDataSourceProfileEditorView
+                externalDataSourceData={externalDataSourceData}
+                setExternalSourceDataJson={setExternalSourceDataJson}
+                isLoading={isLoading}
+                disabled={true}
+              />
+              {idx + 1 !== length && <DividerWithCenteredText />}
+            </div>
+          ))
+        ) : (
+          <small className={"text-muted form-text mt-4"}>
+            <div>No permissions available for the selected Metadata Type</div>
+          </small>
+        )}
       </Col>
     );
   };
   return (
     <div>
       {/*<Row className={"ml-2"}>{getWarningMessage()}</Row>*/}
-      <Row>{getButtonContainer()}</Row>
+      <Row
+        style={{ backgroundColor: "white" }}
+        className={"sticky-top"}
+      >
+        {getButtonContainer()}
+      </Row>
       <Row>
         {originalCustomMetaEditView()}
         {modifiedCustomMetaEditView()}

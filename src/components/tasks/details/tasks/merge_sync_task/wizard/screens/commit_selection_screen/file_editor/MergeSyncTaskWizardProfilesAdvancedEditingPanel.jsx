@@ -989,16 +989,22 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
   return (
     // TODO : Create a new view for json selections
     <div className={"justify-content-md-center"}>
-      <SelectInputBase
-        fieldName={"componentType"}
-        selectOptions={componentTypeOptions}
-        dataObject={jsonViewModel}
-        setDataObject={setJsonViewModel}
-        valueField={"value"}
-        textField={"name"}
-        busy={isJsonLoading || isLoading}
-        placeholderText={"Select Component Type"}
-      />
+      <div className="row">
+        <div className="col-xs-10 col-sm-3 text-center mt-3"><h6>Component Type</h6></div>
+        <div className="col-xs-10 col-sm-7">
+          <SelectInputBase
+            showLabel={false}
+            fieldName={"componentType"}
+            selectOptions={componentTypeOptions}
+            dataObject={jsonViewModel}
+            setDataObject={setJsonViewModel}
+            valueField={"value"}
+            textField={"name"}
+            busy={isJsonLoading || isLoading}
+            placeholderText={"Select Component Type"}
+          />
+        </div>
+      </div>
       {getJsonDiffView()}
     </div>
   );

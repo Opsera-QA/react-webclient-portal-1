@@ -94,14 +94,16 @@ const MergeSyncTaskWizardCustomObjectJsonEditPanel = ({
     return (
       <LoadingDialog
         size={"sm"}
-        message={"Conversion in progress"}
+        message={"Fetching Permissions"}
       />
     );
   }
 
   const saveModifiedContent = async () => {
     try {
-      const modifiedFileContent = {"objectPermissions": [...modifiedContentJson?.objectPermissions]};
+      const modifiedFileContent = {
+        objectPermissions: [...modifiedContentJson?.objectPermissions],
+      };
       const response =
         await mergeSyncTaskWizardActions.saveComponentConvertViewJson(
           getAccessToken,
@@ -146,16 +148,21 @@ const MergeSyncTaskWizardCustomObjectJsonEditPanel = ({
   const getButtonContainer = () => {
     return (
       <div className="w-100 d-flex justify-content-between py-2 mx-4">
-        <div></div>
-        <div>{getSearchBar()}</div>
-        <div>
+        <Col sm={3}></Col>
+        <Col
+          sm={6}
+          className="col-xs-12 col-sm-5"
+        >
+          {getSearchBar()}
+        </Col>
+        <Col sm={3}>
           <MergeSyncTaskWizardProfileSubmitFileButton
             saveFunction={saveModifiedContent}
             type={"Profile"}
             showToasts={false}
             disable={!showUnsavedChangesMessage}
           />
-        </div>
+        </Col>
       </div>
     );
   };
@@ -197,6 +204,12 @@ const MergeSyncTaskWizardCustomObjectJsonEditPanel = ({
   };
 
   const modifiedDataCategoryEditView = () => {
+    let filteredData =
+      modifiedContentJson &&
+      Object.keys(modifiedContentJson).length > 0 &&
+      modifiedContentJson?.objectPermissions?.filter((obj) => {
+        return obj?.object?.toLowerCase().includes(searchText.toLowerCase());
+      });
     return (
       <Col>
         <span className="h5">
@@ -207,62 +220,71 @@ const MergeSyncTaskWizardCustomObjectJsonEditPanel = ({
           />
           )
         </span>
-        {modifiedContentJson &&
-          Object.keys(modifiedContentJson).length > 0 &&
-          modifiedContentJson?.objectPermissions
-            ?.filter((obj) => {
-              return obj?.object
-                ?.toLowerCase()
-                .includes(searchText.toLowerCase());
-            })
-            .map((objectPermissionData, idx, { length }) => (
-              <div key={idx}>
-                <CustomObjectProfileEditorView
-                  objectPermissionData={objectPermissionData}
-                  setCustomObjDataJson={setCustomObjDataJson}
-                  isLoading={isLoading}
-                />
-                {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
-                )}
-              </div>
-            ))}
+        {filteredData && filteredData.length > 0 ? (
+          filteredData.map((objectPermissionData, idx, { length }) => (
+            <div key={idx}>
+              <CustomObjectProfileEditorView
+                objectPermissionData={objectPermissionData}
+                setCustomObjDataJson={setCustomObjDataJson}
+                isLoading={isLoading}
+              />
+              {idx + 1 !== length && (
+                <DividerWithCenteredText className={"m-4"} />
+              )}
+            </div>
+          ))
+        ) : (
+          <small className={"text-muted form-text mt-4"}>
+            <div>No permissions available for the selected Metadata Type</div>
+          </small>
+        )}
       </Col>
     );
   };
 
   const originalDataCategoryEditView = () => {
+    let filteredData =
+      originalContentJson &&
+      Object.keys(originalContentJson).length > 0 &&
+      originalContentJson?.objectPermissions?.filter((obj) => {
+        return obj?.object?.toLowerCase().includes(searchText.toLowerCase());
+      });
     return (
       <Col>
-        <span className="h5">Target Git Branch ({wizardModel?.getData("targetBranch")})</span>
-        {originalContentJson &&
-          Object.keys(originalContentJson).length > 0 &&
-          originalContentJson?.objectPermissions
-            ?.filter((obj) => {
-              return obj?.object
-                ?.toLowerCase()
-                .includes(searchText.toLowerCase());
-            })
-            .map((objectPermissionData, idx, { length }) => (
-              <div key={idx}>
-                <CustomObjectProfileEditorView
-                  objectPermissionData={objectPermissionData}
-                  setCustomObjDataJson={setCustomObjDataJson}
-                  isLoading={isLoading}
-                  disabled={true}
-                />
-                {idx + 1 !== length && (
-                  <DividerWithCenteredText className={"m-4"} />
-                )}
-              </div>
-            ))}
+        <span className="h5">
+          Target Git Branch ({wizardModel?.getData("targetBranch")})
+        </span>
+        {filteredData && filteredData.length > 0 ? (
+          filteredData.map((objectPermissionData, idx, { length }) => (
+            <div key={idx}>
+              <CustomObjectProfileEditorView
+                objectPermissionData={objectPermissionData}
+                setCustomObjDataJson={setCustomObjDataJson}
+                isLoading={isLoading}
+                disabled={true}
+              />
+              {idx + 1 !== length && (
+                <DividerWithCenteredText className={"m-4"} />
+              )}
+            </div>
+          ))
+        ) : (
+          <small className={"text-muted form-text mt-4"}>
+            <div>No permissions available for the selected Metadata Type</div>
+          </small>
+        )}
       </Col>
     );
   };
   return (
     <div>
       {/*<Row className={"ml-2"}>{getWarningMessage()}</Row>*/}
-      <Row>{getButtonContainer()}</Row>
+      <Row
+        style={{ backgroundColor: "white" }}
+        className={"sticky-top"}
+      >
+        {getButtonContainer()}
+      </Row>
       <Row>
         {originalDataCategoryEditView()}
         {modifiedDataCategoryEditView()}
