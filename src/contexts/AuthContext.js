@@ -56,7 +56,7 @@ const AuthContextProvider = (
           if (platformSettings) {
             setPlatformSettingsRecord({...platformSettings});
           }
-        }).catch((error) => console.error("Could not pull platform settings record"));
+        }).catch(() => console.error("Could not pull platform settings record"));
       }).catch();
     }
     // else {
