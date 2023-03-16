@@ -10,10 +10,10 @@ import ClientWebsocket from "core/websocket/client.websocket";
 import { DATE_FN_TIME_SCALES, handleDateAdditionForTimeScale } from "components/common/helpers/date/date.helpers";
 import MainViewContainer from "components/common/containers/MainViewContainer";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
-import useGetActivePlatformSettingsRecord from "hooks/platform/useGetActivePlatformSettingsRecord";
 import {platformSettingsActions} from "components/admin/platform_settings/platformSettings.actions";
 import useAxiosCancelToken from "hooks/useAxiosCancelToken";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import organizationActions from "components/settings/organizations/organization-actions";
 
 const websocketClient = new ClientWebsocket();
 
@@ -32,37 +32,52 @@ const AuthContextProvider = (
   const [backgroundColor, setBackgroundColor] = useState(lightThemeConstants.COLOR_PALETTE.WHITE);
   const [headerNavigationBar, setHeaderNavigationBar] = useState(undefined);
   const [platformSettingsRecord, setPlatformSettingsRecord] = useState(undefined);
+  const [organizationSettingsRecord, setOrganizationSettingsRecord] = useState(undefined);
   const { cancelTokenSource } = useAxiosCancelToken();
 
   useEffect(() => {
     setUserAccessRoles(undefined);
     setPlatformSettingsRecord(undefined);
+    setOrganizationSettingsRecord(undefined);
 
     if (userData) {
       // websocketClient?.initializeWebsocket(userData);
-      const newAccessRoles = SiteRoleHelper.getAccessRoles(userData);
-
-      if (newAccessRoles) {
-        setUserAccessRoles({...newAccessRoles});
-      }
-
-      getAccessToken().then((token) => {
-        platformSettingsActions.getActivePlatformSettings(
-          getAccessToken,
-          cancelTokenSource,
-        ).then((response) => {
-          const platformSettings = DataParsingHelper.parseNestedObject(response, "data.data");
-
-          if (platformSettings) {
-            setPlatformSettingsRecord({...platformSettings});
-          }
-        }).catch(() => console.error("Could not pull platform settings record"));
-      }).catch();
+      initializeUserData();
     }
     // else {
     //   websocketClient?.closeWebsocket();
     // }
   }, [userData]);
+
+  const initializeUserData = () => {
+    const newAccessRoles = SiteRoleHelper.getAccessRoles(userData);
+
+    if (newAccessRoles) {
+      setUserAccessRoles({...newAccessRoles});
+    }
+
+    platformSettingsActions.getActivePlatformSettings(
+      getAccessToken,
+      cancelTokenSource,
+    ).then((response) => {
+      const platformSettings = DataParsingHelper.parseNestedObject(response, "data.data");
+
+      if (platformSettings) {
+        setPlatformSettingsRecord({...platformSettings});
+      }
+    }).catch(() => console.error("Could not pull platform settings record"));
+
+    organizationActions.getOrganizationSettings(
+      getAccessToken,
+      cancelTokenSource,
+    ).then((response) => {
+      const organizationSettings = DataParsingHelper.parseNestedObject(response, "data.data");
+
+      if (organizationSettings) {
+        setOrganizationSettingsRecord({...organizationSettings});
+      }
+    }).catch(() => console.error("Could not pull platform settings record"));
+  };
 
   const logoutUserContext = async () => {
     authClient.tokenManager.clear();
@@ -240,6 +255,7 @@ const AuthContextProvider = (
       backgroundColor: backgroundColor,
       setBackgroundColor: setBackgroundColor,
       platformSettingsRecord: platformSettingsRecord,
+      organizationSettingsRecord: organizationSettingsRecord,
     }}>
       <MainViewContainer
         isAuthenticated={isAuthenticated}

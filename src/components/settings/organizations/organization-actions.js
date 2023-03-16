@@ -26,6 +26,11 @@ organizationActions.getAllOrganizationsV2 = async (getAccessToken, cancelTokenSo
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+organizationActions.getOrganizationSettings = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = "/administration/organization-settings";
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 organizationActions.getOrganizationsV2 = async (getAccessToken, cancelTokenSource, organizationFilterDto) => {
   let sortOption = organizationFilterDto?.getData("sortOption");
   let status = organizationFilterDto.getData("status");

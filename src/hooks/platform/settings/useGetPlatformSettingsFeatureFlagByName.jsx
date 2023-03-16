@@ -17,7 +17,6 @@ export default function useGetPlatformSettingsFeatureFlagByName(
       const foundFeatureFlag = DataParsingHelper.parseObject(featureFlags.find((featureFlag) => featureFlag?.name === name));
 
       if (foundFeatureFlag) {
-        console.log("found feature flag: " + JSON.stringify(foundFeatureFlag));
         setPlatformSettingsFeatureFlag({...foundFeatureFlag});
       }
     }
