@@ -10,6 +10,10 @@ import ClientWebsocket from "core/websocket/client.websocket";
 import { DATE_FN_TIME_SCALES, handleDateAdditionForTimeScale } from "components/common/helpers/date/date.helpers";
 import MainViewContainer from "components/common/containers/MainViewContainer";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
+import useGetActivePlatformSettingsRecord from "hooks/platform/useGetActivePlatformSettingsRecord";
+import {platformSettingsActions} from "components/admin/platform_settings/platformSettings.actions";
+import useAxiosCancelToken from "hooks/useAxiosCancelToken";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const websocketClient = new ClientWebsocket();
 
@@ -27,9 +31,12 @@ const AuthContextProvider = (
   const [theme, setTheme] = useState(THEMES.LIGHT);
   const [backgroundColor, setBackgroundColor] = useState(lightThemeConstants.COLOR_PALETTE.WHITE);
   const [headerNavigationBar, setHeaderNavigationBar] = useState(undefined);
+  const [platformSettingsRecord, setPlatformSettingsRecord] = useState(undefined);
+  const { cancelTokenSource } = useAxiosCancelToken();
 
   useEffect(() => {
     setUserAccessRoles(undefined);
+    setPlatformSettingsRecord(undefined);
 
     if (userData) {
       // websocketClient?.initializeWebsocket(userData);
@@ -38,6 +45,19 @@ const AuthContextProvider = (
       if (newAccessRoles) {
         setUserAccessRoles({...newAccessRoles});
       }
+
+      getAccessToken().then((token) => {
+        platformSettingsActions.getActivePlatformSettings(
+          getAccessToken,
+          cancelTokenSource,
+        ).then((response) => {
+          const platformSettings = DataParsingHelper.parseNestedObject(response, "data.data");
+
+          if (platformSettings) {
+            setPlatformSettingsRecord({...platformSettings});
+          }
+        }).catch((error) => console.error("Could not pull platform settings record"));
+      }).catch();
     }
     // else {
     //   websocketClient?.closeWebsocket();
@@ -219,6 +239,7 @@ const AuthContextProvider = (
       setHeaderNavigationBar: setHeaderNavigationBar,
       backgroundColor: backgroundColor,
       setBackgroundColor: setBackgroundColor,
+      platformSettingsRecord: platformSettingsRecord,
     }}>
       <MainViewContainer
         isAuthenticated={isAuthenticated}

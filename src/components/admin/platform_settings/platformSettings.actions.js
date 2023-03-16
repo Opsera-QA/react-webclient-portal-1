@@ -63,6 +63,18 @@ platformSettingsActions.getPlatformSettings = async (
   );
 };
 
+platformSettingsActions.getActivePlatformSettings = async (
+  getAccessToken,
+  cancelTokenSource,
+) => {
+  const apiUrl = "/configuration/platform/settings/active";
+  return await baseActions.apiGetCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+  );
+};
+
 platformSettingsActions.getPlatformSettingRecordById = async (
   getAccessToken,
   cancelTokenSource,

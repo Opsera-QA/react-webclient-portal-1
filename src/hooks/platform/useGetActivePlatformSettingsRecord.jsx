@@ -30,7 +30,6 @@ export default function useGetActivePlatformSettingsRecord(
     }
 
     const response = await platformSettingsActions.getActivePlatformSettings();
-    console.log("response: " + JSON.stringify(response));
     const platformSettings = DataParsingHelper.parseNestedObject(response, "data.data", []);
 
     if (platformSettings) {
