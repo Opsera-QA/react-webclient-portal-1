@@ -144,6 +144,143 @@ SalesforceTaskHelper.configureSalesforceCertificateGenerationSyncTask = (
   return updatedTask;
 };
 
+// TODO: We shouldn't have to do this and instead should be setting fields directly on the models
+SalesforceTaskHelper.configureSalesforceBranchingStructureTask = (
+    task,
+    flow,
+    salesforceToolId,
+    gitToolId,
+    gitToolOption,
+    jenkinsToolId
+) => {
+  const parsedTask = DataParsingHelper.parseObject(task);
+
+  if (!parsedTask) {
+    throw ReactLoggingHandler.logErrorMessage(
+        "salesforceTaskWizard",
+        "configureSalesforceOrganizationSyncTask",
+        "Cannot configure Organization Sync Task:",
+        "Did not include the task to configure",
+    );
+  }
+
+  if (isMongoDbId(gitToolId) !== true) {
+    throw ReactLoggingHandler.logErrorMessage(
+        "salesforceTaskWizard",
+        "configureSalesforceOrganizationSyncTask",
+        "Cannot configure Organization Sync Task:",
+        "Invalid Git Tool ID given",
+    );
+  }
+
+  if (hasStringValue(gitToolOption) === false) {
+    throw ReactLoggingHandler.logErrorMessage(
+        "salesforceTaskWizard",
+        "configureSalesforceOrganizationSyncTask",
+        "Cannot configure Organization Sync Task:",
+        "Did not include the Git Service name",
+    );
+  }
+
+  if (isMongoDbId(gitToolId) !== true) {
+    throw ReactLoggingHandler.logErrorMessage(
+        "salesforceTaskWizard",
+        "configureSalesforceOrganizationSyncTask",
+        "Cannot configure Organization Sync Task:",
+        "The Git Tool ID was invalid",
+    );
+  }
+
+  let updatedTask = SalesforceTaskHelper.updateSfdcToolIdForSalesforceTask(task, salesforceToolId, flow);
+  updatedTask = SalesforceTaskHelper.updateGitToolIdForSalesforceTask(updatedTask, gitToolId, gitToolOption, flow);
+  updatedTask = SalesforceTaskHelper.updateJenkinsToolIdForSalesforceTask(updatedTask, jenkinsToolId, flow);
+  return updatedTask;
+};
+
+
+// TODO: We shouldn't have to do this and instead should be setting fields directly on the models
+SalesforceTaskHelper.configureSalesforceBulkMigrationTask = (
+    task,
+    flow,
+    salesforceToolId,
+    gitToolId,
+    gitToolOption,
+    jenkinsToolId
+) => {
+  const parsedTask = DataParsingHelper.parseObject(task);
+
+  if (!parsedTask) {
+    throw ReactLoggingHandler.logErrorMessage(
+        "salesforceTaskWizard",
+        "configureSalesforceOrganizationSyncTask",
+        "Cannot configure Organization Sync Task:",
+        "Did not include the task to configure",
+    );
+  }
+
+  if (isMongoDbId(gitToolId) !== true) {
+    throw ReactLoggingHandler.logErrorMessage(
+        "salesforceTaskWizard",
+        "configureSalesforceOrganizationSyncTask",
+        "Cannot configure Organization Sync Task:",
+        "Invalid Git Tool ID given",
+    );
+  }
+
+  if (hasStringValue(gitToolOption) === false) {
+    throw ReactLoggingHandler.logErrorMessage(
+        "salesforceTaskWizard",
+        "configureSalesforceOrganizationSyncTask",
+        "Cannot configure Organization Sync Task:",
+        "Did not include the Git Service name",
+    );
+  }
+
+  if (isMongoDbId(gitToolId) !== true) {
+    throw ReactLoggingHandler.logErrorMessage(
+        "salesforceTaskWizard",
+        "configureSalesforceOrganizationSyncTask",
+        "Cannot configure Organization Sync Task:",
+        "The Git Tool ID was invalid",
+    );
+  }
+
+  let updatedTask = SalesforceTaskHelper.updateSfdcToolIdForSalesforceTask(task, salesforceToolId, flow);
+  updatedTask = SalesforceTaskHelper.updateGitToolIdForSalesforceTask(updatedTask, gitToolId, gitToolOption, flow);
+  updatedTask = SalesforceTaskHelper.updateJenkinsToolIdForSalesforceTask(updatedTask, jenkinsToolId, flow);
+  return updatedTask;
+};
+
+// TODO: We shouldn't have to do this and instead should be setting fields directly on the models
+SalesforceTaskHelper.configureSalesforceQuickDeployTask = (
+    task,
+    flow,
+    salesforceToolId,
+) => {
+  const parsedTask = DataParsingHelper.parseObject(task);
+
+  if (!parsedTask) {
+    throw ReactLoggingHandler.logErrorMessage(
+        "salesforceTaskWizard",
+        "configureSalesforceOrganizationSyncTask",
+        "Cannot configure Organization Sync Task:",
+        "Did not include the task to configure",
+    );
+  }
+
+  if (isMongoDbId(salesforceToolId) !== true) {
+    throw ReactLoggingHandler.logErrorMessage(
+        "salesforceTaskWizard",
+        "configureSalesforceOrganizationSyncTask",
+        "Cannot configure Organization Sync Task:",
+        "Invalid Git Tool ID given",
+    );
+  }
+
+  let updatedTask = SalesforceTaskHelper.updateSfdcToolIdForSalesforceTask(task, salesforceToolId, flow);
+  return updatedTask;
+};
+
 SalesforceTaskHelper.updateGitToolIdForSalesforceTask = (task, gitToolId, service, flow) => {
   if (isMongoDbId(gitToolId) !== true) {
     throw "Invalid Git Tool ID given";
@@ -167,6 +304,8 @@ SalesforceTaskHelper.updateGitToolIdForSalesforceTask = (task, gitToolId, servic
       updatedTask.tool_identifier = service;
       return updatedTask;
     case TASK_TYPES.SYNC_SALESFORCE_REPO:
+    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+    case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
       updatedTask.configuration.gitToolId = gitToolId;
       updatedTask.configuration.gitCredential = gitToolId;
       updatedTask.configuration.service = service;
@@ -192,6 +331,9 @@ SalesforceTaskHelper.updateSfdcToolIdForSalesforceTask = (task, salesforceToolId
       updatedTask.configuration.sfdcToolId = salesforceToolId;
       return updatedTask;
     case TASK_TYPES.SYNC_SALESFORCE_REPO:
+    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+    case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
+    case TASK_TYPES.SALESFORCE_QUICK_DEPLOY:
       updatedTask.configuration.sfdcToolId = salesforceToolId;
       return updatedTask;
     default:
@@ -209,6 +351,8 @@ SalesforceTaskHelper.updateJenkinsToolIdForSalesforceTask = (task, jenkinsToolId
   switch (flow) {
     case TASK_TYPES.SYNC_SALESFORCE_REPO:
     case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
+    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+    case TASK_TYPES.SALESFORCE_BULK_MIGRATION:
       updatedTask.configuration.toolConfigId = jenkinsToolId;
       return updatedTask;
     default:

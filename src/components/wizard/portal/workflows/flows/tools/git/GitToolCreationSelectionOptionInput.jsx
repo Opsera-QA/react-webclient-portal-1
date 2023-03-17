@@ -69,11 +69,11 @@ function GitToolCreationSelectionOptionInput(
             titleBar={
               <IconTitleBar
                 className={""}
-                formattedIcon={
+                icon={
                   getLargeVendorIconFromToolIdentifier(toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB)
                 }
                 title={GIT_TOOL_CREATION_OPTION_LABELS.GITHUB}
-                titleClassName={"mx-auto"}
+                titleClassName={"mx-auto py-1"}
                 subTitleClassName={"mx-auto"}
               />
             }
@@ -88,11 +88,11 @@ function GitToolCreationSelectionOptionInput(
             titleBar={
               <IconTitleBar
                 className={""}
-                formattedIcon={
+                icon={
                   getLargeVendorIconFromToolIdentifier(toolIdentifierConstants.TOOL_IDENTIFIERS.GITLAB)
                 }
                 title={GIT_TOOL_CREATION_OPTION_LABELS.GITLAB}
-                titleClassName={"mx-auto"}
+                titleClassName={"mx-auto py-1"}
                 subTitleClassName={"mx-auto"}
               />
             }

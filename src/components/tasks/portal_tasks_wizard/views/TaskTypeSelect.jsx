@@ -10,6 +10,9 @@ import { TASK_TYPE_LABELS, TASK_TYPES } from "../../task.types";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import IconBase from "../../../common/icons/IconBase";
 import { WORKFLOW_OPTION_TYPES } from "../../../wizard/portal/workflows/flows/WorkflowOptionCardBase";
+import {getLargeVendorIconFromToolIdentifier} from "../../../common/helpers/icon-helpers";
+import {toolIdentifierConstants} from "../../../admin/tools/identifiers/toolIdentifier.constants";
+import IconTitleBar from "../../../common/fields/title/IconTitleBar";
 
 export default function TaskTypeSelect({
   className,
@@ -57,14 +60,15 @@ export default function TaskTypeSelect({
             option={TASK_TYPES.SALESFORCE_BULK_MIGRATION}
             handleFlowSelection={handleFlowSelection}
             selectedFlow={selectedFlow}
-            title={TASK_TYPE_LABELS.SALESFORCE_BULK_MIGRATION}
             icon={
-              <IconBase
-                icon={faSalesforce}
-                iconColor={"#1798c1"}
-                className={"mt-5"}
-                iconSize={"3x"}
-              />
+                <IconTitleBar
+                    icon={
+                        getLargeVendorIconFromToolIdentifier(toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR)
+                    }
+                    title={TASK_TYPE_LABELS.SALESFORCE_BULK_MIGRATION}
+                    titleClassName={"mx-auto"}
+                    subTitleClassName={"mx-auto"}
+                />
             }
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
@@ -74,14 +78,15 @@ export default function TaskTypeSelect({
             option={TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION}
             handleFlowSelection={handleFlowSelection}
             selectedFlow={selectedFlow}
-            title={TASK_TYPE_LABELS.SALESFORCE_CERTIFICATE_GENERATION}
             icon={
-              <IconBase
-                icon={faSalesforce}
-                iconColor={"#1798c1"}
-                className={"mt-5"}
-                iconSize={"3x"}
-              />
+                <IconTitleBar
+                    icon={
+                        getLargeVendorIconFromToolIdentifier(toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR)
+                    }
+                    title={TASK_TYPE_LABELS.SALESFORCE_CERTIFICATE_GENERATION}
+                    titleClassName={"mx-auto"}
+                    subTitleClassName={"mx-auto"}
+                />
             }
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
@@ -91,48 +96,51 @@ export default function TaskTypeSelect({
             option={TASK_TYPES.SALESFORCE_QUICK_DEPLOY}
             handleFlowSelection={handleFlowSelection}
             selectedFlow={selectedFlow}
-            title={TASK_TYPE_LABELS.SALESFORCE_QUICK_DEPLOY}
             icon={
-              <IconBase
-                icon={faSalesforce}
-                iconColor={"#1798c1"}
-                className={"mt-5"}
-                iconSize={"3x"}
-              />
+                <IconTitleBar
+                    icon={
+                        getLargeVendorIconFromToolIdentifier(toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR)
+                    }
+                    title={TASK_TYPE_LABELS.SALESFORCE_QUICK_DEPLOY}
+                    titleClassName={"mx-auto"}
+                    subTitleClassName={"mx-auto"}
+                />
             }
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
         </SelectionCardColumn>
-        <SelectionCardColumn>
-          <TaskCardBase
-            option={TASK_TYPES.GIT_TO_GIT_MERGE_SYNC}
-            handleFlowSelection={handleFlowSelection}
-            selectedFlow={selectedFlow}
-            title={TASK_TYPE_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC}
-            icon={
-              <IconBase
-                icon={faSalesforce}
-                iconColor={"#1798c1"}
-                className={"mt-5"}
-                iconSize={"3x"}
-              />
-            }
-            workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
-          />
-        </SelectionCardColumn>
+        {/*disabled for now need to activate later*/}
+        {/*<SelectionCardColumn>*/}
+        {/*  <TaskCardBase*/}
+        {/*    option={TASK_TYPES.GIT_TO_GIT_MERGE_SYNC}*/}
+        {/*    handleFlowSelection={handleFlowSelection}*/}
+        {/*    selectedFlow={selectedFlow}*/}
+        {/*    title={TASK_TYPE_LABELS.SALESFORCE_TO_GIT_MERGE_SYNC}*/}
+        {/*    icon={*/}
+        {/*      <IconBase*/}
+        {/*        icon={faSalesforce}*/}
+        {/*        iconColor={"#1798c1"}*/}
+        {/*        className={"mt-5"}*/}
+        {/*        iconSize={"3x"}*/}
+        {/*      />*/}
+        {/*    }*/}
+        {/*    workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}*/}
+        {/*  />*/}
+        {/*</SelectionCardColumn>*/}
         <SelectionCardColumn>
           <TaskCardBase
             option={TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE}
             handleFlowSelection={handleFlowSelection}
             selectedFlow={selectedFlow}
-            title={TASK_TYPE_LABELS.SYNC_SALESFORCE_BRANCH_STRUCTURE}
             icon={
-              <IconBase
-                icon={faSalesforce}
-                iconColor={"#1798c1"}
-                className={"mt-5"}
-                iconSize={"3x"}
-              />
+                <IconTitleBar
+                    icon={
+                        getLargeVendorIconFromToolIdentifier(toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR)
+                    }
+                    title={TASK_TYPE_LABELS.SYNC_SALESFORCE_BRANCH_STRUCTURE}
+                    titleClassName={"mx-auto"}
+                    subTitleClassName={"mx-auto"}
+                />
             }
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />
@@ -142,14 +150,15 @@ export default function TaskTypeSelect({
             option={TASK_TYPES.SYNC_SALESFORCE_REPO}
             handleFlowSelection={handleFlowSelection}
             selectedFlow={selectedFlow}
-            title={TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO}
             icon={
-              <IconBase
-                icon={faSalesforce}
-                iconColor={"#1798c1"}
-                className={"mt-5"}
-                iconSize={"3x"}
-              />
+                <IconTitleBar
+                    icon={
+                        getLargeVendorIconFromToolIdentifier(toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR)
+                    }
+                    title={TASK_TYPE_LABELS.SYNC_SALESFORCE_REPO}
+                    titleClassName={"mx-auto"}
+                    subTitleClassName={"mx-auto"}
+                />
             }
             workflowOptionType={WORKFLOW_OPTION_TYPES.TASK}
           />

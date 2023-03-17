@@ -7,7 +7,7 @@ import * as PropType from "prop-types";
 import CreateSalesforceOrganizationSyncTaskInitializationScreen from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/initialization/CreateSalesforceOrganizationSyncTaskInitializationScreen";
 import CreateWorkflowWizardTaskCompletionScreen from "components/wizard/portal/workflows/flows/tasks/completion/CreateWorkflowWizardTaskCompletionScreen";
 import CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/tools/git/connection/CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen";
-import CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/tools/salesforce/connection/CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen";
+import CreateSalesforceWizardTestSalesforceSourceToolConnectionScreen from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/tools/salesforce/connection/CreateSalesforceWizardTestSalesforceSourceToolConnectionScreen";
 import { salesforceWorkflowFlowConstants } from "components/wizard/portal/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
 import CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase from "components/wizard/portal/workflows/flows/tools/jenkins/CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase";
 import { CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES } from "../../../../tools/CreateWorkflowWizardRegisterToolHeaderText";
@@ -33,6 +33,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
   flow,
   setButtonContainer,
   backButtonFunction,
+  handleClose
 }) {
   const [currentScreen, setCurrentScreen] = useState(
     CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_SCREEN,
@@ -126,7 +127,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN:
         return (
-          <CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen
+          <CreateSalesforceWizardTestSalesforceSourceToolConnectionScreen
             setCurrentScreen={setCurrentScreen}
             salesforceToolId={salesforceSourceToolId}
             setButtonContainer={setButtonContainer}
@@ -211,6 +212,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
             )}
             flow={flow}
             setButtonContainer={setButtonContainer}
+            handleClose={handleClose}
           />
         );
     }
@@ -223,4 +225,5 @@ CreateSalesforceOrganizationSyncTaskWizard.propTypes = {
   flow: PropType.string,
   setButtonContainer: PropType.func,
   backButtonFunction: PropType.func,
+  handleClose: PropType.func,
 };

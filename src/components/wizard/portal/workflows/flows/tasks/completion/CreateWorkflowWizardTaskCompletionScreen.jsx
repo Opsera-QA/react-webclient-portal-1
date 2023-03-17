@@ -7,14 +7,12 @@ import taskActions from "components/tasks/task.actions";
 import modelHelpers from "components/common/model/modelHelpers";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
-import FreeTrialLaunchWorkflowButton
-  from "components/wizard/portal/workflows/flows/selection/FreeTrialLaunchWorkflowButton";
 import { workspaceConstants } from "components/workspace/workspace.constants";
 import OpseraInfinityLogoLarge from "components/logo/OpseraInfinityLogoLarge";
-import CancelOverlayButton from "components/common/buttons/cancel/overlay/CancelOverlayButton";
 import DoneOverlayButton from "components/common/buttons/done/overlay/DoneOverlayButton";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
+import PortalRouteToWorkflowButton from "./PortalRouteToWorkflowButton";
 
 const HEIGHT = "400px";
 
@@ -23,6 +21,7 @@ export default function CreateWorkflowWizardTaskCompletionScreen(
     task,
     workflowType,
     setButtonContainer,
+      handleClose
   }) {
   const [initializationState, setInitializationState] = useState(apiRequestHelper.API_REQUEST_STATES.READY);
   const {
@@ -94,9 +93,10 @@ export default function CreateWorkflowWizardTaskCompletionScreen(
                   <DoneOverlayButton
                     className={"mr-2"}
                   />
-                  <FreeTrialLaunchWorkflowButton
+                  <PortalRouteToWorkflowButton
                     workspaceItem={task}
                     workspaceType={workspaceConstants.WORKSPACE_ITEM_TYPES.TASK}
+                    handleClose={handleClose}
                   />
                 </ButtonContainerBase>
               </div>
@@ -122,5 +122,6 @@ CreateWorkflowWizardTaskCompletionScreen.propTypes = {
   task: PropTypes.object,
   workflowType: PropTypes.string,
   setButtonContainer: PropTypes.func,
+  handleClose: PropTypes.func,
 };
 

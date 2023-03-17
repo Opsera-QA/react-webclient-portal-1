@@ -115,11 +115,11 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
             highlightedBorderColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
             titleBar={
               <IconTitleBar
-                formattedIcon={
+                icon={
                   getLargeVendorIconFromToolIdentifier(toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR)
                 }
                 title={`Salesforce`}
-                titleClassName={"mx-auto"}
+                titleClassName={"mx-auto py-1"}
                 subTitleClassName={"mx-auto"}
               />
             }
