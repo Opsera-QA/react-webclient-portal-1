@@ -106,15 +106,15 @@ function MergeSyncTaskWizardSubmitEditedFileButton(
 
   const getLabel = () => {
     if (isSubmitted) {
-      return ("Saved Edited File");
+      return ("Saved File");
     }
     if (isSaving) {
-      return ("Saving Edited File");
+      return ("Saving File");
     }
     if (fileContent.length > 0) {
       return ("Unsaved File, Please click here to save.");
     }
-    return ("Save Edited File");
+    return ("Save");
   };
 
   if (hasStringValue(fileName) !== true) {

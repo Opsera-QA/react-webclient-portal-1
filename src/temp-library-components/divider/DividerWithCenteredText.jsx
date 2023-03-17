@@ -9,6 +9,21 @@ export function DividerWithCenteredText(
   }) {
   const { themeConstants } = useComponentStateReference();
 
+  const getDividerText = () => {
+    if(!text) return;
+    return(
+      <div
+        className={"mx-2"}
+        style={{
+          color: themeConstants.COLOR_PALETTE.BLACK,
+          whiteSpace: "nowrap",
+        }}
+      >
+        {text}
+      </div>
+    );
+  };
+
   return (
     <div className={className}>
       <div className={"d-flex mx-auto"}>
@@ -18,15 +33,7 @@ export function DividerWithCenteredText(
             border: `1px solid ${themeConstants.COLOR_PALETTE.BLACK}`,
           }}
         />
-        <div
-          className={"mx-2"}
-          style={{
-            color: themeConstants.COLOR_PALETTE.BLACK,
-            whiteSpace: "nowrap",
-          }}
-        >
-          {text}
-        </div>
+        {getDividerText()}
         <div
           className={"my-auto w-100"}
           style={{

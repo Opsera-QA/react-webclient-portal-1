@@ -7,12 +7,14 @@ mergeSyncTaskWizardActions.createNewRecordV2 = async (
   getAccessToken,
   cancelTokenSource,
   taskId,
-  runCount
+  runCount,
+  isProfiles
 ) => {
   const apiUrl = `/tasks/merge-sync-task/wizard/create-record`;
   const postBody = {
     taskId: taskId,
     runCount: runCount,
+    isProfiles: isProfiles,
   };
 
   return await baseActions.apiPostCallV2(
@@ -25,8 +27,12 @@ mergeSyncTaskWizardActions.createNewRecordV2 = async (
 
 mergeSyncTaskWizardActions.updatePipelineStorageRecordV2 = async (getAccessToken, cancelTokenSource, taskWizardModel) => {
   const apiUrl = `/tasks/merge-sync-task/wizard/${taskWizardModel?.getData("recordId")}`;
+  const componentTypes = taskWizardModel?.getData("isProfiles") ? [...taskWizardModel?.getArrayData("selectedComponentTypes"), "Profile"] : taskWizardModel?.getArrayData(
+    "selectedComponentTypes",
+  );
   const postBody = {
-    selectedComponentTypes: taskWizardModel?.getArrayData("selectedComponentTypes"),
+    isProfiles: taskWizardModel?.getData("isProfiles"),
+    selectedComponentTypes: componentTypes,
     lastCommitFromTimeStamp: taskWizardModel?.getData("fromDate"),
     lastCommitToTimeStamp: taskWizardModel?.getData("toDate"),
   };
@@ -76,10 +82,12 @@ mergeSyncTaskWizardActions.triggerSalesforceToGitSourceFilePull = async (
   const apiUrl = `/tasks/merge-sync-task/wizard/${taskWizardModel?.getData(
     "recordId",
   )}/salesforce-to-git/source-files`;
+  const componentTypes = taskWizardModel?.getData("isProfiles") ? [...taskWizardModel?.getArrayData("selectedComponentTypes"), "Profile"] : taskWizardModel?.getArrayData(
+    "selectedComponentTypes",
+  );
   const postBody = {
-    componentTypes: taskWizardModel?.getArrayData(
-      "selectedComponentTypes",
-    ),
+    componentTypes: componentTypes,
+    isProfiles: taskWizardModel?.getData("isProfiles"),
     taskId: taskWizardModel?.getData("taskId"),
     runCount: taskWizardModel?.getData("runCount"),
     lastCommitFromTimestamp: taskWizardModel?.getData(
@@ -108,6 +116,7 @@ mergeSyncTaskWizardActions.triggerComparisonFilePull = async (
     params: {
       taskId: taskWizardModel?.getData("taskId"),
       runCount: taskWizardModel?.getData("runCount"),
+      isProfiles: taskWizardModel?.getData("isProfiles"),
     },
   };
 
@@ -280,4 +289,83 @@ mergeSyncTaskWizardActions.runMergeSyncTask = async (getAccessToken, cancelToken
   );
 };
 
+mergeSyncTaskWizardActions.fileConvertView = async (
+  getAccessToken,
+  cancelTokenSource,
+  taskWizardModel,
+  fileContent,
+  conversionTypeFrom = "xml",
+  conversionTypeTo = "json"
+) => {
+  const apiUrl = `/tasks/merge-sync-task/wizard/file/convert`;
+  const postBody = {
+    taskId: taskWizardModel?.getData("taskId"),
+    fileContent: fileContent,
+    conversionTypeFrom: conversionTypeFrom,
+    conversionTypeTo: conversionTypeTo
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
+mergeSyncTaskWizardActions.componentTypeConvertView = async (
+  getAccessToken,
+  cancelTokenSource,
+  taskWizardModel,
+  fileName,
+  conversionComponentType,
+  conversionTypeFrom = "xml",
+  conversionTypeTo = "json"
+) => {
+  const apiUrl = `/tasks/merge-sync-task/wizard/file/component/convert`;
+  const postBody = {
+    taskId: taskWizardModel?.getData("taskId"),
+    fileName: fileName,
+    conversionComponentType: conversionComponentType,
+    runCount: taskWizardModel?.getData("runCount"),
+    conversionTypeFrom: conversionTypeFrom,
+    conversionTypeTo: conversionTypeTo
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
+
+mergeSyncTaskWizardActions.saveComponentConvertViewJson = async (
+  getAccessToken,
+  cancelTokenSource,
+  taskWizardModel,
+  fileName,
+  fileContent,
+  conversionComponentType,
+  conversionTypeFrom = "json",
+  conversionTypeTo = "xml"
+) => {
+  const apiUrl = `/tasks/merge-sync-task/wizard/file/component/convert/save`;
+  const postBody = {
+    taskId: taskWizardModel?.getData("taskId"),
+    fileName: fileName,
+    fileContent: fileContent,
+    conversionComponentType: conversionComponentType,
+    runCount: taskWizardModel?.getData("runCount"),
+    conversionTypeFrom: conversionTypeFrom,
+    conversionTypeTo: conversionTypeTo
+  };
+
+  return await baseActions.apiPostCallV2(
+    getAccessToken,
+    cancelTokenSource,
+    apiUrl,
+    postBody,
+  );
+};
 export default mergeSyncTaskWizardActions;

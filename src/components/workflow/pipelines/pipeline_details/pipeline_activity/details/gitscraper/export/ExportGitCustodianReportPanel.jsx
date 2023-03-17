@@ -36,6 +36,7 @@ console.log(gitCustodianData);
           "Path",
           "Line Number",
           "Reason",
+          "Severity",
         ],
       ],
       body: gitCustodianData.map((item) => [
@@ -45,6 +46,7 @@ console.log(gitCustodianData);
         item.path,
         item.lineNumber,
         item.reason,
+        item.severity,
       ]),
     });
 
@@ -61,6 +63,7 @@ console.log(gitCustodianData);
         "Line Number",
         "Link",
         "Reason",
+        "Severity",
       ],
       ...gitCustodianData.map((item) => [
         item.author,
@@ -70,6 +73,7 @@ console.log(gitCustodianData);
         item.lineNumber,
         item.linkToSecret,
         item.reason,
+        item.severity,
       ]),
     ];
   };

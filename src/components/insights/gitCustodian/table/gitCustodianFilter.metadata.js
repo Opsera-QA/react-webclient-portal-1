@@ -57,6 +57,10 @@ export const GitCustodianFilterMetadata = {
       id: "active",
     },
     {
+      label: "Severity",
+      id: "severity",
+    },
+    {
       label: "Status",
       id: "status",
     },
@@ -152,6 +156,14 @@ export const GitCustodianFilterMetadata = {
       activeFilters = [...activeFilters, ...filterDto.getData("status").map((filter, index) => ({
         filterId: "status",
         text: `Status: ${filter}`,
+        index: index,
+      }))];
+    }
+
+    if (filterDto.getData("severity") != null) {
+      activeFilters = [...activeFilters, ...filterDto.getData("severity").map((filter, index) => ({
+        filterId: "severity",
+        text: `severity: ${filter}`,
         index: index,
       }))];
     }

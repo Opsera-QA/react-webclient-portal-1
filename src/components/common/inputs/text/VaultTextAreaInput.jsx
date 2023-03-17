@@ -18,15 +18,15 @@ function VaultTextAreaInput({fieldName, dataObject, setDataObject, disabled, inp
 
   const isStoredInVault = () => {
     let currentValue = dataObject.getData(fieldName);
-    return typeof currentValue === "object" && Object.entries(currentValue).length > 0;
+    return currentValue != null && typeof currentValue === "object" && Object.entries(currentValue).length > 0;
   };
 
   const getCurrentValue = () => {
-    if (typeof dataObject.getData(fieldName) === "object") {
+    if (dataObject.getData(fieldName) != null && typeof dataObject.getData(fieldName) === "object") {
       return "*********************************";
     }
 
-    return dataObject.getData(fieldName);
+    return dataObject.getData(fieldName) || "";
   };
 
   return (

@@ -15,8 +15,7 @@ function GitCustodianUpdateStatusOverlay ({
 
   const closePanel = () => {
     toastContext.removeInlineMessage();
-    toastContext.clearOverlayPanel();
-    loadData();
+    toastContext.clearOverlayPanel();    
   };
 
   return (
@@ -29,6 +28,7 @@ function GitCustodianUpdateStatusOverlay ({
         handleClose={closePanel}
         selectedIssues={selectedIssues}
         setSelectedIssues={setSelectedIssues}
+        loadData={loadData}
       />
     </UpdateCenterPanelOverlayBase>
   );
