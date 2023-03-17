@@ -321,6 +321,13 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
             <div>For more information on how to register the <b>Slack</b> tool, view the <a href="https://docs.opsera.io/tool-registry/slack-tool-registration" target="_blank" rel="noreferrer"><b>Slack Tool Registration Help Documentation</b>.</a></div>
           </div>
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SONAR:
+        return (
+          <div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>SonarQube</b> tool, view the <a href="https://docs.opsera.io/tool-registry/sonarqube-tool-registration" target="_blank" rel="noreferrer"><b>SonarQube Tool Registration Help Documentation</b>.</a></div>
+          </div>
+        );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SNAPLOGIC:
         return (
           <div>
