@@ -41,7 +41,7 @@ const CustomTabProfileEditorView = ({
 
   const setDataFunction = (fieldName, newValue) => {
     const newModel = { ...customMetaJsonMetadata };
-    newModel?.setData(fieldName, newValue);
+    newModel?.setData(fieldName, newValue?.value);
     setCustomMetaJsonMetadata({ ...newModel });
     setCustomTabDataJson(newModel.getPersistData());
   };
