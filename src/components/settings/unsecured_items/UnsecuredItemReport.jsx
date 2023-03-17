@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import { unsecuredItemReportActions } from "components/settings/unsecured_items/unsecuredItemReport.actions";
 import Model from "core/data_model/model";
 import UnsecuredItemReportViews from "components/settings/unsecured_items/UnsecuredItemReportViews";
@@ -74,7 +73,6 @@ function UnsecuredItemReport() {
     <ScreenContainer
       breadcrumbDestination={"unsecuredItemReport"}
       accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
       navigationTabContainer={
         <UnsecuredItemReportSubNavigationBar activeTab={"unsecuredItemReport"} />
       }
