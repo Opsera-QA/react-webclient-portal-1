@@ -40,6 +40,14 @@ accountSettingsTrails.insightsSettings = {
   linkText: "Insights Settings",
   icon: faChartNetwork,
   pageDescription: "Manage analytics settings from this dashboard.",
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 accountSettingsTrails.freeTrialSettings = {
   parent: undefined,
@@ -47,7 +55,15 @@ accountSettingsTrails.freeTrialSettings = {
   path: accountSettingsPaths.accountSettings,
   title: "Free Trial Settings",
   linkText: "Free Trial Settings",
-  icon: faCogs
+  icon: faCogs,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 // Customer System Status
@@ -57,7 +73,15 @@ accountSettingsTrails.customerSystemStatus = {
   path: accountSettingsPaths.customerSystemStatus,
   title: "Platform Status",
   linkText: "Platform Status",
-  icon: faHeartbeat
+  icon: faHeartbeat,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 // Analytics Data Entry Management>
@@ -69,6 +93,14 @@ accountSettingsTrails.analyticsDataEntryManagement = {
   linkText: "Analytics Data Entry",
   icon: faUserChart,
   pageDescription: "Manage analytics data manually and see it reflected in corresponding dashboard KPIs for specific charts.",
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 accountSettingsTrails.analyticsDataEntryDetailView = {
   parent: "analyticsDataEntryManagement",
@@ -76,7 +108,15 @@ accountSettingsTrails.analyticsDataEntryDetailView = {
   path: accountSettingsPaths.analyticsDataEntryDetailView,
   title: "Analytics Data Entry Details",
   linkText: "Analytics Data Entry Details",
-  icon: faUserChart
+  icon: faUserChart,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 // LDAP Users Administration
@@ -86,7 +126,15 @@ accountSettingsTrails.ldapUserManagement = {
   path: accountSettingsPaths.ldapUserManagement,
   title: "User Management",
   linkText: "Users",
-  icon: faUser
+  icon: faUser,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 accountSettingsTrails.ldapUserDetailView = {
   parent: "ldapUserManagement",
@@ -94,7 +142,15 @@ accountSettingsTrails.ldapUserDetailView = {
   path: accountSettingsPaths.ldapUserDetailView,
   title: "User Details",
   linkText: "User Details",
-  icon: faUser
+  icon: faUser,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 accountSettingsTrails.ldapUserDetailViewLimited = {
   parent: "accountSettings",
@@ -102,7 +158,15 @@ accountSettingsTrails.ldapUserDetailViewLimited = {
   path: accountSettingsPaths.ldapUserDetailView,
   title: "My User Details",
   linkText: "My User Details",
-  icon: faUser
+  icon: faUser,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 // User Management
@@ -118,6 +182,14 @@ accountSettingsTrails.userManagement = {
       The New User form allows owners to create new User accounts with targeted Group access. 
       Users will receive an invitation email upon completion of the form.
     `,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 accountSettingsTrails.activeUserDetailView = {
   parent: "userManagement",
@@ -125,7 +197,15 @@ accountSettingsTrails.activeUserDetailView = {
   path: accountSettingsPaths.activeUserDetailView,
   title: "User Details",
   linkText: "User Details",
-  icon: faUser
+  icon: faUser,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 accountSettingsTrails.pendingUserDetailView = {
   parent: "userManagement",
@@ -133,7 +213,15 @@ accountSettingsTrails.pendingUserDetailView = {
   path: accountSettingsPaths.pendingUserDetailView,
   title: "Pending User Details",
   linkText: "Pending User Details",
-  icon: faUserHardHat
+  icon: faUserHardHat,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 // LDAP Groups Administration
@@ -144,7 +232,15 @@ accountSettingsTrails.ldapGroupManagement = {
   title: "Group Management",
   linkText: "Groups",
   icon: faUserFriends,
-  pageDescription: "Manage Groups and their Membership"
+  pageDescription: "Manage Groups and their Membership",
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 accountSettingsTrails.ldapGroupDetailView = {
   parent: "ldapGroupManagement",
@@ -152,7 +248,15 @@ accountSettingsTrails.ldapGroupDetailView = {
   path: accountSettingsPaths.ldapGroupDetailView,
   title: "Group Details",
   linkText: "Group Details",
-  icon: faUserFriends
+  icon: faUserFriends,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 // LDAP Departments Administration
@@ -163,7 +267,15 @@ accountSettingsTrails.ldapDepartmentManagement = {
   title: "Departments",
   linkText: "Departments",
   icon: faBuilding,
-  pageDescription: "Manage Departments and their Membership."
+  pageDescription: "Manage Departments and their Membership.",
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 accountSettingsTrails.ldapDepartmentDetailView = {
   parent: "ldapDepartmentManagement",
@@ -171,7 +283,15 @@ accountSettingsTrails.ldapDepartmentDetailView = {
   path: accountSettingsPaths.ldapDepartmentDetailView,
   title: "Department Details",
   linkText: "Department Details",
-  icon: faBuilding
+  icon: faBuilding,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 // Tag Management
@@ -183,6 +303,14 @@ accountSettingsTrails.tagManagement = {
   linkText: "Tags",
   icon: faTags,
   pageDescription: "Manage Tags and view their usage in Tools, Pipelines, and Dashboards.",
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 accountSettingsTrails.tagDetailView = {
   parent: "tagManagement",
@@ -190,7 +318,15 @@ accountSettingsTrails.tagDetailView = {
   path: accountSettingsPaths.tagDetailView,
   title: "Tag Details",
   linkText: "Tag Details",
-  icon: faTags
+  icon: faTags,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 // Audit Logging
@@ -201,7 +337,15 @@ accountSettingsTrails.logsExportManagement = {
   title: "Logs Export Options",
   linkText: "Logs Export Options",
   icon: faTags,
-  pageDescription: "Manage export of pipeline activity audit logs."
+  pageDescription: "Manage export of pipeline activity audit logs.",
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 // Unassigned Rules Items Report
@@ -213,6 +357,14 @@ accountSettingsTrails.unsecuredItemReport = {
   linkText: "Unsecured Items",
   icon: faShield,
   pageDescription: "View items that haven't been assigned access rules",
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 // Organization Management
@@ -223,7 +375,15 @@ accountSettingsTrails.organizationManagement = {
   title: "Analytics Data Mapping: Organization Management",
   linkText: "Analytics Data Mapping: Organizations",
   icon: faSitemap,
-  pageDescription: "Manage Organization Analytics Data Mappings"
+  pageDescription: "Manage Organization Analytics Data Mappings",
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 accountSettingsTrails.organizationDetailView = {
   parent: "organizationManagement",
@@ -231,7 +391,15 @@ accountSettingsTrails.organizationDetailView = {
   path: accountSettingsPaths.organizationDetailView,
   title: "Analytics Data Mapping: Organization Details",
   linkText: "Analytics Data Mapping: Organization Details",
-  icon: faSitemap
+  icon: faSitemap,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 // LDAP Site Roles Administration
@@ -249,6 +417,14 @@ accountSettingsTrails.ldapSiteRolesManagement = {
       If a user is not a member of any one of these roles they will be treated as a read-only user with very limited access.
       Some additional roles can be enabled here (by Administrators) to add more advanced security features.
     `,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 accountSettingsTrails.ldapSiteRoleDetailView = {
@@ -258,6 +434,14 @@ accountSettingsTrails.ldapSiteRoleDetailView = {
   title: "Site Role Details",
   linkText: "Site Role Details",
   icon: faServer,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 accountSettingsTrails.ldapAdministratorsSiteRoleDetailView = {
@@ -268,6 +452,14 @@ accountSettingsTrails.ldapAdministratorsSiteRoleDetailView = {
   title: "Administrators",
   linkText: "Administrators",
   pageDescription: siteRoleHelper.getSiteRolePermissionText("Administrators"),
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 accountSettingsTrails.ldapPowerUsersSiteRoleDetailView = {
@@ -278,6 +470,14 @@ accountSettingsTrails.ldapPowerUsersSiteRoleDetailView = {
   title: "Power Users",
   linkText: "Power Users",
   pageDescription: siteRoleHelper.getSiteRolePermissionText("PowerUsers"),
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 accountSettingsTrails.ldapUsersSiteRoleDetailView = {
@@ -288,6 +488,14 @@ accountSettingsTrails.ldapUsersSiteRoleDetailView = {
   title: "Users",
   linkText: "Users",
   pageDescription: siteRoleHelper.getSiteRolePermissionText("Users"),
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 accountSettingsTrails.ldapSecurityManagersSiteRoleDetailView = {
@@ -298,6 +506,14 @@ accountSettingsTrails.ldapSecurityManagersSiteRoleDetailView = {
   title: "Security Managers",
   linkText: "Security Managers",
   pageDescription: siteRoleHelper.getSiteRolePermissionText("SecurityManagers"),
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 accountSettingsTrails.ldapAuditorsSiteRoleDetailView = {
@@ -308,6 +524,14 @@ accountSettingsTrails.ldapAuditorsSiteRoleDetailView = {
   title: "Auditors",
   linkText: "Auditors",
   pageDescription: siteRoleHelper.getSiteRolePermissionText("Auditors"),
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 accountSettingsTrails.policyManagement = {
@@ -318,6 +542,14 @@ accountSettingsTrails.policyManagement = {
   linkText: "Policies",
   icon: faIdBadge,
   pageDescription: "Manage Organization Policies to tailor Opsera to your needs.",
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 accountSettingsTrails.policyDetailView = {
@@ -327,6 +559,14 @@ accountSettingsTrails.policyDetailView = {
   title: "Policy Details",
   linkText: "Policy Details",
   icon: faIdBadge,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 accountSettingsTrails.deleteTools = {
@@ -340,6 +580,14 @@ accountSettingsTrails.deleteTools = {
       Choose a registered application, view the active tools, and then delete them from the application.
       This will perform a complete end to end removal of all instances related to an application.
     `,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 //Analytics
@@ -351,6 +599,14 @@ accountSettingsTrails.analyticsProfile = {
   linkText: "Analytics Profile",
   icon: faChartNetwork,
   pageDescription: "Manage Opsera Analytics Engine settings.",
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 accountSettingsTrails.dataMappingManagement = {
   parent: "accountSettings",
@@ -360,6 +616,14 @@ accountSettingsTrails.dataMappingManagement = {
   linkText: "Analytics Data Mappings",
   icon: faProjectDiagram,
   pageDescription: "Apply and connect Tags to incoming external data with Opsera.",
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 accountSettingsTrails.projectTaggingDetailView = {
   parent: "dataMappingManagement",
@@ -367,7 +631,15 @@ accountSettingsTrails.projectTaggingDetailView = {
   path: accountSettingsPaths.projectTaggingDetailView,
   title: "Analytics Project Mapping Details",
   linkText: "Analytics Project Mapping Details",
-  icon: faProjectDiagram
+  icon: faProjectDiagram,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 accountSettingsTrails.pipelineDataMappingDetailView = {
   parent: "dataMappingManagement",
@@ -375,7 +647,15 @@ accountSettingsTrails.pipelineDataMappingDetailView = {
   path: accountSettingsPaths.pipelineDataMappingDetailView,
   title: "Analytics Pipeline Data Mapping Details",
   linkText: "Analytics Pipeline Data Mapping Details",
-  icon: faDraftingCompass
+  icon: faDraftingCompass,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 accountSettingsTrails.userTaggingDetailView = {
   parent: "dataMappingManagement",
@@ -383,5 +663,13 @@ accountSettingsTrails.userTaggingDetailView = {
   path: accountSettingsPaths.userTaggingDetailView,
   title: "Analytics User Mapping Details",
   linkText: "Analytics User Mapping Details",
-  icon: faUserTag
+  icon: faUserTag,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SAAS_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
