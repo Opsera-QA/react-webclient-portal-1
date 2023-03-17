@@ -281,7 +281,7 @@ export const customTabJsonMetadata = {
       id: "tab",
     },
     {
-      label: "visibility",
+      label: "Visibility",
       id: "visibility",
     },
   ],
