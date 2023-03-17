@@ -11,6 +11,8 @@ import UnsecuredItemReportSubNavigationBar
 import {
   unsecureItemsReportFilterMetadata
 } from "components/settings/unsecured_items/unsecuredItemReportFilter.metadata";
+import {accountSettingsTrails} from "components/settings/accountSettings.trails";
+import RoleHelper from "@opsera/know-your-role/roles/role.helper";
 
 function UnsecuredItemReport() {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,22 +22,23 @@ function UnsecuredItemReport() {
     new Model({ ...unsecureItemsReportFilterMetadata.newObjectFields }),
   );
   const {
+    userData,
     isMounted,
     cancelTokenSource,
     accessRoleData,
     toastContext,
-    isSiteAdministrator,
   } = useComponentStateReference();
+  const breadcrumb = accountSettingsTrails.unsecuredItemReport;
 
   useEffect(() => {
-    if (isSiteAdministrator === true) {
+    if (RoleHelper.doesUserMeetSiteRoleRequirements(userData, breadcrumb?.allowedRoles) === true) {
       loadData(itemFilterModel).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
       });
     }
-  }, [isSiteAdministrator]);
+  }, [userData]);
 
   const loadData = async (
     itemFilterModel,
@@ -64,10 +67,6 @@ function UnsecuredItemReport() {
       }
     }
   };
-
-  if (isSiteAdministrator !== true) {
-    return null;
-  }
 
   return (
     <ScreenContainer
