@@ -29,7 +29,7 @@ import MergeSyncTaskWizardCustomTabJsonEditPanel from "./json_view/MergeSyncTask
 
 const componentTypeOptions = [
   { name: "CustomApplication", value: "applicationVisibilities" },
-  { name: "DataCategoryGroup", value: "categoryGroupVisibilities" },
+  // { name: "DataCategoryGroup", value: "categoryGroupVisibilities" },
   { name: "ApexClass", value: "classAccesses" },
   { name: "CustomMetadata", value: "customMetadataTypeAccesses" },
   { name: "CustomPermission", value: "customPermissions" },
@@ -990,8 +990,8 @@ const MergeSyncTaskWizardProfilesAdvancedEditingPanel = ({
     // TODO : Create a new view for json selections
     <div className={"justify-content-md-center"}>
       <div className="row">
-        <div className="col-xs-10 col-sm-3 text-center mt-3"><h6>Component Type</h6></div>
-        <div className="col-xs-10 col-sm-7">
+        <div className="col-xs-10 col-sm-2 text-center mt-3"><h6>Component Type</h6></div>
+        <div className="col-xs-10 col-sm-10">
           <SelectInputBase
             showLabel={false}
             fieldName={"componentType"}
