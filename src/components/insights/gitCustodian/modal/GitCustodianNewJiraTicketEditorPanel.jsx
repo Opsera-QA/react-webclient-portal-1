@@ -15,7 +15,8 @@ import GitCustodianSelectedIssuesTable from "components/insights/gitCustodian/mo
 function GitCustodianNewJiraTicketEditorPanel({
   handleClose,
   selectedIssues,
-  setSelectedIssues
+  setSelectedIssues,
+  loadData,
 }) {
   const [createJiraTicketDataModel, setCreateJiraTicketDataModel] = useState(undefined);
   const {
@@ -51,6 +52,7 @@ function GitCustodianNewJiraTicketEditorPanel({
     const response = await chartsActions.createGitCustodianJiraTicket(getAccessToken, cancelTokenSource, createJiraTicketDataModel.getPersistData());
     setSelectedIssues([]);
     handleClose();
+    loadData();
     return response;
   };
 
@@ -98,7 +100,8 @@ function GitCustodianNewJiraTicketEditorPanel({
 GitCustodianNewJiraTicketEditorPanel.propTypes = {
   handleClose: PropTypes.func,
   selectedIssues: PropTypes.array,
-  setSelectedIssues: PropTypes.func
+  setSelectedIssues: PropTypes.func,
+  loadData: PropTypes.func,
 };
 
 export default GitCustodianNewJiraTicketEditorPanel;

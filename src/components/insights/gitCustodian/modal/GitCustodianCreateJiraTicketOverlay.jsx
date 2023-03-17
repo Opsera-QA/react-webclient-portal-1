@@ -7,7 +7,8 @@ import { CENTER_OVERLAY_SIZES } from "components/common/overlays/center/CenterOv
 
 function GitCustodianCreateJiraTicketOverlay ({
   selectedIssues,
-  setSelectedIssues
+  setSelectedIssues,
+  loadData,
 }) {
   
   const toastContext = useContext(DialogToastContext);
@@ -27,6 +28,7 @@ function GitCustodianCreateJiraTicketOverlay ({
         handleClose={closePanel}
         selectedIssues={selectedIssues}
         setSelectedIssues={setSelectedIssues}
+        loadData={loadData}
       />
     </CreateCenterPanel>
   );
@@ -34,7 +36,8 @@ function GitCustodianCreateJiraTicketOverlay ({
 
 GitCustodianCreateJiraTicketOverlay.propTypes = {
   selectedIssues: PropTypes.array,
-  setSelectedIssues: PropTypes.func
+  setSelectedIssues: PropTypes.func,
+  loadData: PropTypes.func,
 };
 
 export default GitCustodianCreateJiraTicketOverlay;
