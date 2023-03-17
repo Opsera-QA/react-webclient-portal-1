@@ -44,7 +44,7 @@ const DataCategoryProfileEditorView = ({
 
   const setDataFunction = (fieldName, newValue) => {
     const newModel = { ...dataCategoryJsonMetadata };
-    newModel?.setData(fieldName, newValue);
+    newModel?.setData(fieldName, newValue?.value);
     setDataCategoryJsonMetadata({ ...newModel });
     setDataCategoryJson(newModel.getPersistData());
   };
