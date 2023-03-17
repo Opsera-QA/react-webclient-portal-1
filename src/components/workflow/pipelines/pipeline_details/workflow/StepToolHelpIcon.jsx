@@ -24,6 +24,8 @@ import ApprovalGateStepConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/ApprovalGateStepConfigurationHelpDocumentation";
 import ExternalApiIntegratorHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/ExternalApiIntegratorHelpDocumentation";
+import SonarQubeStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/SonarQubeStepConfigurationHelpDocumentation";
 
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
   // TODO: Alphabetize when adding new help panels
@@ -51,6 +53,7 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
       case "junit":
       case "xunit":
       case "sonar":
+        return <SonarQubeStepConfigurationHelpDocumentation/>;
       case "command-line":
       case "npm":
       case "teamcity":
