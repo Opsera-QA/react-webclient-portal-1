@@ -33,6 +33,8 @@ import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import PipelinesSettingsRoutes from "components/settings/pipelines/PipelinesSettingsRoutes";
 import PolicyManagement from "components/settings/organization_settings/policies/PolicyManagement";
 import PolicyDetailView from "components/settings/organization_settings/policies/details/PolicyDetailView";
+import BreadcrumbRoute from "temp-library-components/routes/BreadcrumbRoute";
+import {breadcrumbs} from "components/common/navigation/trails";
 
 export default function SettingsRoutes() {
   const {
@@ -40,6 +42,8 @@ export default function SettingsRoutes() {
     isSiteAdministrator,
     isSassUser,
     isPowerUser,
+    isSecurityManager,
+    isAuditor,
   } = useComponentStateReference();
 
   if (
@@ -47,17 +51,20 @@ export default function SettingsRoutes() {
     && isSiteAdministrator !== true
     && isSassUser !== true
     && isPowerUser !== true
+    && isSecurityManager !== true
+    && isAuditor !== true
   ) {
     return null;
   }
 
+  //V2
   return (
     <>
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings"}
         exact={true}
         component={AccountSettingsView}
-        roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+        breadcrumb={breadcrumbs.accountSettings}
       />
       <RoleRestrictedRoute
         path={"/settings/insights"}
@@ -233,6 +240,190 @@ export default function SettingsRoutes() {
       <PipelinesSettingsRoutes />
     </>
   );
+
+
+  // return (
+  //   <>
+  //     <RoleRestrictedRoute
+  //       path={"/settings"}
+  //       exact={true}
+  //       component={AccountSettingsView}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+  //     />
+  //     <RoleRestrictedRoute
+  //       path={"/settings/insights"}
+  //       exact={true}
+  //       component={InsightsSettings}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+  //     />
+  //
+  //     <RoleRestrictedRoute
+  //       path={"/settings/delete"}
+  //       exact={true}
+  //       component={DeleteTools}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+  //     />
+  //
+  //     <RoleRestrictedRoute
+  //       path={"/settings/:orgDomain?/groups/"}
+  //       exact={true}
+  //       component={LdapGroupManagement}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS}
+  //     />
+  //     <RoleRestrictedRoute
+  //       path={"/settings/:orgDomain/groups/details/:groupName"}
+  //       exact={true}
+  //       component={LdapGroupDetailView}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS}
+  //     />
+  //
+  //     <RoleRestrictedRoute
+  //       path={"/settings/:orgDomain?/site-roles/"}
+  //       exact={true}
+  //       component={SiteRoleManagement}
+  //       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
+  //     />
+  //     <RoleRestrictedRoute
+  //       path="/settings/:orgDomain/site-roles/details/:groupName"
+  //       exact={true}
+  //       component={SiteRoleDetailView}
+  //       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
+  //     />
+  //
+  //     <RoleRestrictedRoute
+  //       path={"/settings/organization-settings/policies/"}
+  //       exact={true}
+  //       component={PolicyManagement}
+  //       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
+  //     />
+  //     <RoleRestrictedRoute
+  //       path={"/settings/organization-settings/policies/:policyId"}
+  //       exact={true}
+  //       component={PolicyDetailView}
+  //       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
+  //     />
+  //
+  //     <RoleRestrictedRoute
+  //       path={"/settings/:orgDomain?/departments"}
+  //       exact={true}
+  //       component={LdapDepartmentManagement}
+  //       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
+  //     />
+  //     <RoleRestrictedRoute
+  //       path={"/settings/:orgDomain/departments/details/:departmentName"}
+  //       exact={true}
+  //       component={LdapDepartmentDetailView}
+  //       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
+  //     />
+  //
+  //     <RoleRestrictedRoute
+  //       path={"/settings/organizations/"}
+  //       exact={true}
+  //       component={OrganizationManagement}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+  //     />
+  //     <RoleRestrictedRoute
+  //       path={"/settings/organizations/details/:id"}
+  //       exact={true}
+  //       component={OrganizationDetailView}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+  //     />
+  //
+  //     <RoleRestrictedRoute
+  //       path={"/settings/analytics-data-entries/"}
+  //       exact={true}
+  //       component={AnalyticsDataEntryManagement}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+  //     />
+  //     <RoleRestrictedRoute
+  //       path={"/settings/analytics-data-entries/details/:id"}
+  //       exact={true}
+  //       component={AnalyticsDataEntryDetailView}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+  //     />
+  //
+  //     <RoleRestrictedRoute
+  //       path={"/settings/user-management/"}
+  //       exact={true}
+  //       component={UserManagement}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS}
+  //     />
+  //     <RoleRestrictedRoute
+  //       path={"/settings/user-management/active/:orgDomain/:userEmail/details"}
+  //       exact={true}
+  //       component={UserDetailView}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS}
+  //     />
+  //     <RoleRestrictedRoute
+  //       path={"/settings/user-management/pending/:userId/details"}
+  //       exact={true}
+  //       component={SsoUserDetailView}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS}
+  //     />
+  //
+  //     <RoleRestrictedRoute
+  //       path="/settings/logs-export-management"
+  //       exact={true}
+  //       component={LogsExportManagement}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS}
+  //     />
+  //
+  //
+  //     <RoleRestrictedRoute
+  //       path="/settings/unsecured-items"
+  //       exact
+  //       component={UnsecuredItemReport}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS}
+  //     />
+  //
+  //     <RoleRestrictedRoute
+  //       path={"/settings/tags"}
+  //       exact={true}
+  //       component={TagEditor}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+  //     />
+  //     <RoleRestrictedRoute
+  //       path={"/settings/tags/:id"}
+  //       exact={true}
+  //       component={TagDetailView}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+  //     />
+  //
+  //     <RoleRestrictedRoute
+  //       path={"/settings/analytics-profile"}
+  //       exact={true}
+  //       component={AnalyticsProfileSettings}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+  //     />
+  //
+  //     <RoleRestrictedRoute
+  //       path={"/settings/data_mapping"}
+  //       exact={true}
+  //       component={DataMappingManagement}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+  //     />
+  //     <RoleRestrictedRoute
+  //       path={"/settings/data_mapping/projects/details/:projectMappingId"}
+  //       exact={true}
+  //       component={ProjectDataMappingDetailView}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+  //     />
+  //     <RoleRestrictedRoute
+  //       path={"/settings/data_mapping/pipeline/details/:pipelineDataMappingId"}
+  //       exact={true}
+  //       component={PipelineDataMappingDetailView}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+  //     />
+  //     <RoleRestrictedRoute
+  //       path={"/settings/data_mapping/user_mapping/details/:usersMappingId"}
+  //       exact={true}
+  //       component={UserDataMappingDetailView}
+  //       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+  //     />
+  //
+  //     <PipelinesSettingsRoutes />
+  //   </>
+  // );
 }
 
 SettingsRoutes.propTypes = {};
