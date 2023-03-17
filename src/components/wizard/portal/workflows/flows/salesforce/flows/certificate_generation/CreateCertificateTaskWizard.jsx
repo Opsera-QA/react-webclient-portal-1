@@ -9,9 +9,6 @@ import jenkinsConnectionMetadata from "../../../../../../../inventory/tools/tool
 import CreateWorkflowWizardTestJenkinsTool from "../../../tools/jenkins/CreateWorkflowWizardTestJenkinsTool";
 import CreateSalesforceCertificateGenerationTaskInitializationScreen
   from "./CreateSalesforceCertificateGenerationTaskInitializationScreen";
-import CreateSalesforceBulkMigrationInputFields
-  from "../salesforce_bulk_migration/CreateSalesforceBulkMigrationInputFields";
-import CreateSalesforceCertificateGenerationInputFields from "./CreateSalesforceCertificateGenerationInputFields";
 
 export const CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS = {
   REGISTER_GIT_ACCOUNT_SCREEN: "create_git_tool_screen",
@@ -25,14 +22,12 @@ export const CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS = {
   REGISTER_GIT_ACCOUNT_IN_JENKINS_SCREEN:
     "register_git_account_in_jenkins_screen",
   WORKFLOW_COMPLETION_SCREEN: "workflow_completion_screen",
-  EDIT_WORKFLOW_INPUT: "edit_workflow_input"
 };
 
 export default function CreateCertificateTaskWizard({
   flow,
   setButtonContainer,
   backButtonFunction,
-    handleClose
 }) {
   const [currentScreen, setCurrentScreen] = useState(
     CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_JENKINS_ACCOUNT_SCREEN,
@@ -43,8 +38,6 @@ export default function CreateCertificateTaskWizard({
   );
   const [jenkinsSourceToolId, setJenkinsSourceToolId] = useState(undefined);
   const [connectionFailure, setConnectionFailure] = useState(false);
-  const [failureCount, setConnectionFailureCount] = useState(0);
-
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
@@ -68,7 +61,6 @@ export default function CreateCertificateTaskWizard({
             setCurrentScreen={setCurrentScreen}
             onSkipConnectionTestFunction={() => {
               setConnectionFailure(false);
-              setConnectionFailureCount(connectionFailure + 1);
               setCurrentScreen(
                 CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN,
               );
@@ -94,19 +86,6 @@ export default function CreateCertificateTaskWizard({
             jenkinsToolId={jenkinsSourceToolId}
           />
         );
-      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT:
-        return (
-            <CreateSalesforceCertificateGenerationInputFields
-                taskModel={task}
-                setTaskModel={setTask}
-                onSuccessFunction={() =>
-                    setCurrentScreen(
-                        CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN,
-                    )
-                }
-                setButtonContainer={setButtonContainer}
-            />
-        );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
         return (
           <CreateWorkflowWizardTaskCompletionScreen
@@ -130,5 +109,4 @@ CreateCertificateTaskWizard.propTypes = {
   flow: PropType.string,
   setButtonContainer: PropType.func,
   backButtonFunction: PropType.func,
-  handleClose: PropType.func,
 };

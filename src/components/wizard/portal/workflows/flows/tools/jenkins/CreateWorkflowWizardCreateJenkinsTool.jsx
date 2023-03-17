@@ -172,11 +172,11 @@ export default function CreateWorkflowWizardCreateJenkinsTool({
             }
             titleBar={
               <IconTitleBar
-                icon={getLargeVendorIconFromToolIdentifier(
+                formattedIcon={getLargeVendorIconFromToolIdentifier(
                   toolIdentifierConstants.TOOL_IDENTIFIERS.JENKINS,
                 )}
                 title={`Jenkins`}
-                titleClassName={"mx-auto py-1"}
+                titleClassName={"mx-auto"}
                 subTitleClassName={"mx-auto"}
               />
             }

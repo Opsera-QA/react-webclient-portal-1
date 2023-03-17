@@ -51,22 +51,6 @@ export default function CreateWorkflowWizardTestGitToolConnectionScreen({
     );
   }
 
-  if (gitToolOption === toolIdentifierConstants.TOOL_IDENTIFIERS.BITBUCKET) {
-    return (
-        <WorkflowWizardToolConnectionScreenBase
-            className={className}
-            onSuccessFunction={onSuccessFunction}
-            toolId={gitToolId}
-            onFailureFunction={onFailureFunction}
-            toolName={capitalizeFirstLetter(gitToolOption)}
-            title={"Bitbucket Account Connection Test"}
-            setButtonContainer={setButtonContainer}
-            successText={successText}
-            failureText={failureText}
-        />
-    );
-  }
-
   return (
     <WorkflowWizardToolConnectionScreenBase
       className={className}

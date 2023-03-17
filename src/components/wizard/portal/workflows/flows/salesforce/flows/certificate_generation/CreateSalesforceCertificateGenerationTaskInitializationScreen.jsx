@@ -26,7 +26,7 @@ export default function CreateSalesforceCertificateGenerationTaskInitializationS
             jenkinsToolId
         );
         setTask({...updatedTask});
-        setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT);
+        setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN);
     };
 
     return (

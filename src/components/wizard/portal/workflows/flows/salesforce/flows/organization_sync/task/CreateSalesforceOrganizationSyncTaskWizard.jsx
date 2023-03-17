@@ -7,14 +7,13 @@ import * as PropType from "prop-types";
 import CreateSalesforceOrganizationSyncTaskInitializationScreen from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/initialization/CreateSalesforceOrganizationSyncTaskInitializationScreen";
 import CreateWorkflowWizardTaskCompletionScreen from "components/wizard/portal/workflows/flows/tasks/completion/CreateWorkflowWizardTaskCompletionScreen";
 import CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/tools/git/connection/CreateSalesforceOrganizationSyncTaskTestGitToolConnectionScreen";
-import CreateSalesforceWizardTestSalesforceSourceToolConnectionScreen from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/tools/salesforce/connection/CreateSalesforceWizardTestSalesforceSourceToolConnectionScreen";
+import CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen from "components/wizard/portal/workflows/flows/salesforce/flows/organization_sync/task/tools/salesforce/connection/CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen";
 import { salesforceWorkflowFlowConstants } from "components/wizard/portal/workflows/flows/salesforce/flows/salesforceWorkflowFlow.constants";
 import CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase from "components/wizard/portal/workflows/flows/tools/jenkins/CreateWorkflowWizardRegisterGitCredentialsInJenkinsToolScreenBase";
 import { CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES } from "../../../../tools/CreateWorkflowWizardRegisterToolHeaderText";
 import CreateWorkflowWizardCreateJenkinsTool from "../../../../tools/jenkins/CreateWorkflowWizardCreateJenkinsTool";
 import jenkinsConnectionMetadata from "../../../../../../../../inventory/tools/tool_details/tool_jobs/jenkins/jenkins-connection-metadata";
 import CreateWorkflowWizardTestJenkinsTool from "../../../../tools/jenkins/CreateWorkflowWizardTestJenkinsTool";
-import CreateSalesforceOrganizationSyncInputFields from "./CreateSalesforceOrganizationSyncInputFields";
 
 export const CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS = {
   REGISTER_GIT_ACCOUNT_SCREEN: "create_git_tool_screen",
@@ -28,14 +27,12 @@ export const CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS = {
   REGISTER_GIT_ACCOUNT_IN_JENKINS_SCREEN:
     "register_git_account_in_jenkins_screen",
   WORKFLOW_COMPLETION_SCREEN: "workflow_completion_screen",
-  EDIT_WORKFLOW_INPUT: "edit_workflow_input"
 };
 
 export default function CreateSalesforceOrganizationSyncTaskWizard({
   flow,
   setButtonContainer,
   backButtonFunction,
-  handleClose
 }) {
   const [currentScreen, setCurrentScreen] = useState(
     CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_GIT_ACCOUNT_SCREEN,
@@ -54,7 +51,6 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
   );
   const [jenkinsSourceToolId, setJenkinsSourceToolId] = useState(undefined);
   const [connectionFailure, setConnectionFailure] = useState(false);
-  const [failureCount, setConnectionFailureCount] = useState(0);
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
@@ -80,7 +76,6 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
             setConnectionFailure={setConnectionFailure}
             onSkipConnectionTestFunction={() => {
               setConnectionFailure(false);
-              setConnectionFailureCount(connectionFailure + 1);
               setCurrentScreen(
                 CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_SALESFORCE_ACCOUNT_SCREEN,
               );
@@ -123,7 +118,6 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
             setCurrentScreen={setCurrentScreen}
             onSkipConnectionTestFunction={() => {
               setConnectionFailure(false);
-              setConnectionFailureCount(connectionFailure + 1);
               setCurrentScreen(
                 CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_JENKINS_ACCOUNT_SCREEN,
               );
@@ -132,7 +126,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.TEST_SOURCE_SALESFORCE_TOOL_CONNECTION_SCREEN:
         return (
-          <CreateSalesforceWizardTestSalesforceSourceToolConnectionScreen
+          <CreateSalesforceOrganizationSyncTaskWizardTestSalesforceSourceToolConnectionScreen
             setCurrentScreen={setCurrentScreen}
             salesforceToolId={salesforceSourceToolId}
             setButtonContainer={setButtonContainer}
@@ -164,7 +158,6 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
             setCurrentScreen={setCurrentScreen}
             onSkipConnectionTestFunction={() => {
               setConnectionFailure(false);
-              setConnectionFailureCount(connectionFailure + 1);
               setCurrentScreen(
                 CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN,
               );
@@ -200,7 +193,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
             gitToolOption={gitToolOption}
             onSuccessFunction={() =>
               setCurrentScreen(
-                CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT,
+                CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN,
               )
             }
             onFailureFunction={() => {}}
@@ -208,19 +201,6 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
             className={"m-3"}
             setButtonContainer={setButtonContainer}
           />
-        );
-      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT:
-        return (
-            <CreateSalesforceOrganizationSyncInputFields
-                taskModel={task}
-                setTaskModel={setTask}
-                onSuccessFunction={() =>
-                    setCurrentScreen(
-                        CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN,
-                    )
-                }
-                setButtonContainer={setButtonContainer}
-            />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
         return (
@@ -231,7 +211,6 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
             )}
             flow={flow}
             setButtonContainer={setButtonContainer}
-            handleClose={handleClose}
           />
         );
     }
@@ -244,5 +223,4 @@ CreateSalesforceOrganizationSyncTaskWizard.propTypes = {
   flow: PropType.string,
   setButtonContainer: PropType.func,
   backButtonFunction: PropType.func,
-  handleClose: PropType.func,
 };

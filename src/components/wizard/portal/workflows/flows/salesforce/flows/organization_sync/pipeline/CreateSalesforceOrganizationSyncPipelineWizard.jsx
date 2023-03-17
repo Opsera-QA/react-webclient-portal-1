@@ -54,7 +54,6 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
   const [sourceSalesforceToolId, setSourceSalesforceToolId] = useState(undefined);
   const [destinationSalesforceToolModel, setDestinationSalesforceToolModel] = useState(modelHelpers.getNewModelForMetadata(sfdcConnectionMetadata));
   const [connectionFailure, setConnectionFailure] = useState(false);
-  const [failureCount, setConnectionFailureCount] = useState(0);
   const [destinationSalesforceToolId, setDestinationSalesforceToolId] = useState(undefined);
   const [pipeline, setPipeline] = useState(undefined);
 
@@ -78,7 +77,6 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
             setConnectionFailure={setConnectionFailure}
             onSkipConnectionTestFunction={() => {
               setConnectionFailure(false);
-              setConnectionFailureCount(connectionFailure + 1);
               setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.REGISTER_SOURCE_SALESFORCE_ACCOUNT_SCREEN);
             }}
           />
@@ -112,7 +110,6 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
             setCurrentScreen={setCurrentScreen}
             onSkipConnectionTestFunction={() => {
               setConnectionFailure(false);
-              setConnectionFailureCount(connectionFailure + 1);
               setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.REGISTER_DESTINATION_SALESFORCE_ACCOUNT_SCREEN);
             }}
           />
@@ -141,7 +138,6 @@ export default function CreateSalesforceOrganizationSyncPipelineWizard(
             connectionFailure={connectionFailure}
             onSkipConnectionTestFunction={() => {
               setConnectionFailure(false);
-              setConnectionFailureCount(connectionFailure + 1);
               setCurrentScreen(CREATE_SALESFORCE_ORGANIZATION_SYNC_PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);
             }}
             setConnectionFailure={setConnectionFailure}
