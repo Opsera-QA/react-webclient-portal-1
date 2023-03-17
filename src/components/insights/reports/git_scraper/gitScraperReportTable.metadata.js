@@ -26,6 +26,10 @@ const gitScraperScanReportMetadata = {
             label: "Reason",
             id: "reason",
         },
+        {
+            label: "Severity",
+            id: "severity",
+        },
     ],
     newObjectFields: {
         project: "",
