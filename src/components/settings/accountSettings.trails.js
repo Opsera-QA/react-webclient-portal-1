@@ -186,7 +186,6 @@ accountSettingsTrails.userManagement = {
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
-    SiteRoleHelper.SITE_ROLES.SAAS_USER,
     SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
     SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
@@ -202,7 +201,6 @@ accountSettingsTrails.activeUserDetailView = {
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
-    SiteRoleHelper.SITE_ROLES.SAAS_USER,
     SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
     SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
@@ -218,7 +216,6 @@ accountSettingsTrails.pendingUserDetailView = {
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
-    SiteRoleHelper.SITE_ROLES.SAAS_USER,
     SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
     SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
@@ -237,7 +234,6 @@ accountSettingsTrails.ldapGroupManagement = {
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
-    SiteRoleHelper.SITE_ROLES.SAAS_USER,
     SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
     SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
@@ -253,7 +249,6 @@ accountSettingsTrails.ldapGroupDetailView = {
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
-    SiteRoleHelper.SITE_ROLES.SAAS_USER,
     SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
     SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
@@ -271,8 +266,6 @@ accountSettingsTrails.ldapDepartmentManagement = {
   allowedRoles: [
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
-    SiteRoleHelper.SITE_ROLES.POWER_USER,
-    SiteRoleHelper.SITE_ROLES.SAAS_USER,
     SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
     SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
@@ -342,9 +335,6 @@ accountSettingsTrails.logsExportManagement = {
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
-    SiteRoleHelper.SITE_ROLES.SAAS_USER,
-    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 
@@ -361,7 +351,6 @@ accountSettingsTrails.unsecuredItemReport = {
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
-    SiteRoleHelper.SITE_ROLES.SAAS_USER,
     SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
     SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
@@ -420,8 +409,6 @@ accountSettingsTrails.ldapSiteRolesManagement = {
   allowedRoles: [
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
-    SiteRoleHelper.SITE_ROLES.POWER_USER,
-    SiteRoleHelper.SITE_ROLES.SAAS_USER,
     SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
     SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
@@ -437,8 +424,6 @@ accountSettingsTrails.ldapSiteRoleDetailView = {
   allowedRoles: [
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
-    SiteRoleHelper.SITE_ROLES.POWER_USER,
-    SiteRoleHelper.SITE_ROLES.SAAS_USER,
     SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
     SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
@@ -545,8 +530,6 @@ accountSettingsTrails.policyManagement = {
   allowedRoles: [
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
-    SiteRoleHelper.SITE_ROLES.POWER_USER,
-    SiteRoleHelper.SITE_ROLES.SAAS_USER,
     SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
     SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
@@ -562,8 +545,6 @@ accountSettingsTrails.policyDetailView = {
   allowedRoles: [
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
-    SiteRoleHelper.SITE_ROLES.POWER_USER,
-    SiteRoleHelper.SITE_ROLES.SAAS_USER,
     SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
     SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
@@ -585,8 +566,6 @@ accountSettingsTrails.deleteTools = {
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
     SiteRoleHelper.SITE_ROLES.SAAS_USER,
-    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 
@@ -604,8 +583,6 @@ accountSettingsTrails.analyticsProfile = {
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
     SiteRoleHelper.SITE_ROLES.SAAS_USER,
-    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 accountSettingsTrails.dataMappingManagement = {

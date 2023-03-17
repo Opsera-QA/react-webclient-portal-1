@@ -28,13 +28,11 @@ import PipelineDataMappingDetailView
 import UserDataMappingDetailView from "components/settings/data_mapping/users/details/UserDataMappingDetailView";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import InsightsSettings from "components/settings/insights/InsightsSettings";
-import RoleRestrictedRoute from "temp-library-components/routes/RoleRestrictedRoute";
-import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import PipelinesSettingsRoutes from "components/settings/pipelines/PipelinesSettingsRoutes";
 import PolicyManagement from "components/settings/organization_settings/policies/PolicyManagement";
 import PolicyDetailView from "components/settings/organization_settings/policies/details/PolicyDetailView";
 import BreadcrumbRoute from "temp-library-components/routes/BreadcrumbRoute";
-import {breadcrumbs} from "components/common/navigation/trails";
+import {accountSettingsTrails} from "components/settings/accountSettings.trails";
 
 export default function SettingsRoutes() {
   const {
@@ -64,177 +62,176 @@ export default function SettingsRoutes() {
         path={"/settings"}
         exact={true}
         component={AccountSettingsView}
-        breadcrumb={breadcrumbs.accountSettings}
+        breadcrumb={accountSettingsTrails.accountSettings}
       />
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/insights"}
         exact={true}
         component={InsightsSettings}
-        roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+        breadcrumb={accountSettingsTrails.insightsSettings}
       />
 
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/delete"}
         exact={true}
         component={DeleteTools}
-        roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+        breadcrumb={accountSettingsTrails.deleteTools}
       />
 
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/:orgDomain?/groups/"}
         exact={true}
         component={LdapGroupManagement}
-        roleRequirement={ROLE_LEVELS.POWER_USERS}
+        breadcrumb={accountSettingsTrails.ldapGroupManagement}
       />
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/:orgDomain/groups/details/:groupName"}
         exact={true}
         component={LdapGroupDetailView}
-        roleRequirement={ROLE_LEVELS.POWER_USERS}
+        breadcrumb={accountSettingsTrails.ldapGroupDetailView}
       />
 
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/:orgDomain?/site-roles/"}
         exact={true}
         component={SiteRoleManagement}
-        roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
+        breadcrumb={accountSettingsTrails.ldapSiteRolesManagement}
       />
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path="/settings/:orgDomain/site-roles/details/:groupName"
         exact={true}
         component={SiteRoleDetailView}
-        roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
+        breadcrumb={accountSettingsTrails.ldapSiteRoleDetailView}
       />
 
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/organization-settings/policies/"}
         exact={true}
         component={PolicyManagement}
-        roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
+        breadcrumb={accountSettingsTrails.policyManagement}
       />
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/organization-settings/policies/:policyId"}
         exact={true}
         component={PolicyDetailView}
-        roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
+        breadcrumb={accountSettingsTrails.policyDetailView}
       />
 
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/:orgDomain?/departments"}
         exact={true}
         component={LdapDepartmentManagement}
-        roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
+        breadcrumb={accountSettingsTrails.ldapDepartmentManagement}
       />
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/:orgDomain/departments/details/:departmentName"}
         exact={true}
         component={LdapDepartmentDetailView}
-        roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
+        breadcrumb={accountSettingsTrails.ldapDepartmentDetailView}
       />
 
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/organizations/"}
         exact={true}
         component={OrganizationManagement}
-        roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+        breadcrumb={accountSettingsTrails.organizationManagement}
       />
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/organizations/details/:id"}
         exact={true}
         component={OrganizationDetailView}
-        roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+        breadcrumb={accountSettingsTrails.organizationDetailView}
       />
 
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/analytics-data-entries/"}
         exact={true}
         component={AnalyticsDataEntryManagement}
-        roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+        breadcrumb={accountSettingsTrails.analyticsDataEntryManagement}
       />
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/analytics-data-entries/details/:id"}
         exact={true}
         component={AnalyticsDataEntryDetailView}
-        roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+        breadcrumb={accountSettingsTrails.analyticsDataEntryDetailView}
       />
 
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/user-management/"}
         exact={true}
         component={UserManagement}
-        roleRequirement={ROLE_LEVELS.POWER_USERS}
+        breadcrumb={accountSettingsTrails.userManagement}
       />
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/user-management/active/:orgDomain/:userEmail/details"}
         exact={true}
         component={UserDetailView}
-        roleRequirement={ROLE_LEVELS.POWER_USERS}
+        breadcrumb={accountSettingsTrails.activeUserDetailView}
       />
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/user-management/pending/:userId/details"}
         exact={true}
         component={SsoUserDetailView}
-        roleRequirement={ROLE_LEVELS.POWER_USERS}
+        breadcrumb={accountSettingsTrails.pendingUserDetailView}
       />
 
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path="/settings/logs-export-management"
         exact={true}
         component={LogsExportManagement}
-        roleRequirement={ROLE_LEVELS.POWER_USERS}
+        breadcrumb={accountSettingsTrails.logsExportManagement}
       />
 
-
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path="/settings/unsecured-items"
         exact
         component={UnsecuredItemReport}
-        roleRequirement={ROLE_LEVELS.POWER_USERS}
+        breadcrumb={accountSettingsTrails.unsecuredItemReport}
       />
 
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/tags"}
         exact={true}
         component={TagEditor}
-        roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+        breadcrumb={accountSettingsTrails.tagManagement}
       />
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/tags/:id"}
         exact={true}
         component={TagDetailView}
-        roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+        breadcrumb={accountSettingsTrails.tagDetailView}
       />
 
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/analytics-profile"}
         exact={true}
         component={AnalyticsProfileSettings}
-        roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+        breadcrumb={accountSettingsTrails.analyticsProfile}
       />
 
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/data_mapping"}
         exact={true}
         component={DataMappingManagement}
-        roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+        breadcrumb={accountSettingsTrails.dataMappingManagement}
       />
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/data_mapping/projects/details/:projectMappingId"}
         exact={true}
         component={ProjectDataMappingDetailView}
-        roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+        breadcrumb={accountSettingsTrails.projectTaggingDetailView}
       />
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/data_mapping/pipeline/details/:pipelineDataMappingId"}
         exact={true}
         component={PipelineDataMappingDetailView}
-        roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+        breadcrumb={accountSettingsTrails.pipelineDataMappingDetailView}
       />
-      <RoleRestrictedRoute
+      <BreadcrumbRoute
         path={"/settings/data_mapping/user_mapping/details/:usersMappingId"}
         exact={true}
         component={UserDataMappingDetailView}
-        roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+        breadcrumb={accountSettingsTrails.userTaggingDetailView}
       />
 
       <PipelinesSettingsRoutes />
