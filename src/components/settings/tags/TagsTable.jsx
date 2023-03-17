@@ -4,6 +4,7 @@ import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import tagMetadata from "components/settings/tags/tag.metadata";
 import {
+  getFormattedLabelWithFunctionColumnDefinition,
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn
@@ -16,9 +17,9 @@ import {faTags} from "@fortawesome/pro-light-svg-icons";
 import InlineTagTypeFilter from "components/common/filters/tags/tag_type/InlineTagTypeFilter";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import TagTypeFilter from "components/common/filters/tags/tag_type/TagTypeFilter";
-import TagRoleHelper from "@opsera/know-your-role/roles/settings/tags/tagRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
+import tagTypeConstants from "@opsera/definitions/constants/settings/tags/tagType.constants";
 
 function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, isMounted }) {
   const toastContext = useContext(DialogToastContext);
@@ -29,7 +30,7 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, i
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "type")),
+      getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), tagTypeConstants.getTagTypeLabel),
       getTableTextColumn(getField(fields, "value")),
       getTableTextColumn(getField(fields, "_id")),
       getTableBooleanIconColumn(getField(fields, "active")),
