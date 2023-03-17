@@ -16,11 +16,16 @@ import {faTags} from "@fortawesome/pro-light-svg-icons";
 import InlineTagTypeFilter from "components/common/filters/tags/tag_type/InlineTagTypeFilter";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import TagTypeFilter from "components/common/filters/tags/tag_type/TagTypeFilter";
+import TagRoleHelper from "@opsera/know-your-role/roles/settings/tags/tagRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 
 function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, isMounted }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
-  let fields = tagMetadata.fields;
+  const fields = tagMetadata.fields;
+  const { userData } = useComponentStateReference();
+  const siteRole = SiteRoleHelper.getSiteRoleLevel(userData);
 
   const columns = useMemo(
     () => [
@@ -80,7 +85,7 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, i
       loadData={loadData}
       filterDto={tagFilterDto}
       setFilterDto={setTagFilterDto}
-      addRecordFunction={createTag}
+      addRecordFunction={siteRole !== SiteRoleHelper.SITE_ROLES.AUDITOR && siteRole !== SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER ? createTag : undefined}
       supportSearch={true}
       isLoading={isLoading}
       body={getTagsTable()}
