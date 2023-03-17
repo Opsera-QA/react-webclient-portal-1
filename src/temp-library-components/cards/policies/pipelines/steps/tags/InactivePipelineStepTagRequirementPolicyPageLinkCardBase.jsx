@@ -2,8 +2,12 @@ import React from "react";
 import SelectionCardBase from "components/common/card/selection/SelectionCardBase";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
 import PropType from "prop-types";
+import PolicyRoleHelper from "@opsera/know-your-role/roles/settings/policies/policyRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function InactivePipelineStepTagRequirementPolicyPageLinkCardBase({ onClickFunction, }) {
+  const { userData } = useComponentStateReference();
+
   const getBody = () => {
     return (
       <div>
@@ -27,6 +31,7 @@ export default function InactivePipelineStepTagRequirementPolicyPageLinkCardBase
       inactive={true}
       body={getBody()}
       onClickFunction={onClickFunction}
+      disabled={PolicyRoleHelper.canEditPolicies(userData) !== true}
     />
   );
 }
