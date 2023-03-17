@@ -61,7 +61,8 @@ const LiquibaseToolConfiguration = ({ toolData, setUpMode, setCurrentScreen }) =
       toolData?.getMongoDbId(),
       toolData.getData("tool_identifier"),
       "licenseKey",
-      newConfiguration?.licenseKey
+      newConfiguration?.licenseKey,
+      null
     );
     await toolsActions.saveToolConfigurationV2(getAccessToken, cancelTokenSource, toolData, newConfiguration);
     if (setUpMode === "wizard") setCurrentScreen("connection_test");
