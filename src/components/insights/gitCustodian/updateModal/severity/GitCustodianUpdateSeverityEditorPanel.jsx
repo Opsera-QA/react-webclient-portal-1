@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import chartsActions from "../../charts/charts-actions";
-import gitCustodianUpdateStatusMetaData from "./gitCustodianUpdateStatusMetaData";
+import chartsActions from "components/insights/charts/charts-actions";
+import gitCustodianUpdateSeverityMetaData from "./gitCustodianUpdateSeverityMetaData";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import modelHelpers from "components/common/model/modelHelpers";
 import GitCustodianSelectedIssuesTable from "components/insights/gitCustodian/modal/GitCustodianSelectedIssuesTable";
-import GitCustodianStatusSelectInput from "./inputs/GitCustodianStatusSelectInput";
+import GitCustodianSeveritySelectInput from "./inputs/GitCustodianSeveritySelectInput";
 
-function GitCustodianUpdateStatusEditorPanel({
+function GitCustodianUpdateSeverityEditorPanel({
   handleClose,
   selectedIssues,
   setSelectedIssues,
@@ -36,13 +36,13 @@ function GitCustodianUpdateStatusEditorPanel({
     const newModel = modelHelpers.parseObjectIntoModel({
       issuesList: [...selectedIssues],
       issues: issueIds,
-    }, gitCustodianUpdateStatusMetaData);
+    }, gitCustodianUpdateSeverityMetaData);
 
     setDataModel({ ...newModel });
   };
 
-  const updateStatus = async () => {    
-    const response = await chartsActions.updateGitCustodianVulnerabilityStatus(getAccessToken, cancelTokenSource, dataModel.getPersistData());
+  const updateSeverity = async () => {    
+    const response = await chartsActions.updateGitCustodianVulnerabilitySeverity(getAccessToken, cancelTokenSource, dataModel.getPersistData());
     setSelectedIssues([]);
     handleClose();
     loadData();
@@ -58,15 +58,15 @@ function GitCustodianUpdateStatusEditorPanel({
       recordDto={dataModel}
       handleClose={handleClose}
       setRecordDto={setDataModel}
-      createRecord={updateStatus}
-      updateRecord={updateStatus}
+      createRecord={updateSeverity}
+      updateRecord={updateSeverity}
       addAnotherOption={false}
       disable={dataModel?.isModelValid() !== true}
     >
       <div className={"px-2"}>
         <Row>
           <Col md={12}>
-            <GitCustodianStatusSelectInput 
+            <GitCustodianSeveritySelectInput 
               model={dataModel}
               setModel={setDataModel}
             />
@@ -82,11 +82,11 @@ function GitCustodianUpdateStatusEditorPanel({
   );
 }
 
-GitCustodianUpdateStatusEditorPanel.propTypes = {
+GitCustodianUpdateSeverityEditorPanel.propTypes = {
   handleClose: PropTypes.func,
   selectedIssues: PropTypes.array,
   setSelectedIssues: PropTypes.func,
   loadData: PropTypes.func,
 };
 
-export default GitCustodianUpdateStatusEditorPanel;
+export default GitCustodianUpdateSeverityEditorPanel;

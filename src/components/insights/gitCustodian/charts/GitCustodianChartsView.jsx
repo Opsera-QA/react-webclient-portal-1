@@ -14,6 +14,9 @@ import GitCustodianTotalRepositoriesChart
   from "./pie_chart/git_custodian_top_clean_repositories_chart/gitCustodianTotalRepositoriesChart";
 import GitCustodianTimelineChart from "../charts/line_chart/git_custodian_timeline_chart/gitCustodianTimelineChart";
 import chartsActions from "../../charts/charts-actions";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import IconBase from "components/common/icons/IconBase";
+import {faCircleInfo} from "@fortawesome/pro-light-svg-icons";
 
 
 function GitCustodianChartsView({ gitCustodianData }) {
@@ -98,31 +101,56 @@ function GitCustodianChartsView({ gitCustodianData }) {
         <div style={{display: 'flex', width: '100%'}}>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>Clean vs Unclean Repositories</div>
+              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>
+                Clean vs Unclean Repositories
+                <TooltipWrapper innerText={"Total number of clean and unclean repositories. Repositories with no issues, all resolved, commit removed and false positive are considered for Clean."}>
+                  <span className="ml-1 mt-1"><IconBase icon={faCircleInfo} /></span>
+                </TooltipWrapper>
+              </div>
               <GitCustodianTotalRepositoriesChart dashboardData={gitCustodianData} data={chartData?.cleanRepos ? chartData?.cleanRepos : []}/>
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>Added vs Resolved Issues</div>
+              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>
+                Added vs Resolved Issues
+                <TooltipWrapper innerText={"Trend of Issues created vs Issues Resolved based on scanned date"}>
+                  <span className="ml-1 mt-1"><IconBase icon={faCircleInfo} /></span>
+                </TooltipWrapper>
+              </div>
               <GitCustodianTimelineChart dashboardData={gitCustodianData} data={[timeLineData, resolvedTimeLineData]} />
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>Top 5 Vulnerability Types</div>
+              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>
+                Top 5 Vulnerability Types
+                <TooltipWrapper innerText={"Top 5 Vulnerability Types with highest issues count"}>
+                  <span className="ml-1 mt-1"><IconBase icon={faCircleInfo} /></span>
+                </TooltipWrapper>
+              </div>
               <GitCustodianVulnerabilityTypesChart dashboardData={gitCustodianData} data={chartData?.vulnerability_types ? chartData?.vulnerability_types : []}/>
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>Top 5 Repositories with Open Issues</div>
+              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>
+                Top 5 Repositories with Highest Issues
+                <TooltipWrapper innerText={"Top 5 Repositories with highest issues count"}>
+                  <span className="ml-1 mt-1"><IconBase icon={faCircleInfo} /></span>
+                </TooltipWrapper>
+              </div>
               <GitCustodianTopRepositoriesChart dashboardData={gitCustodianData} data={chartData?.topRepos ? chartData?.topRepos : []}/>
             </DataBlockBoxContainer>
           </Col>
           <Col sm={6} md={4} className={'p-1'}>
             <DataBlockBoxContainer showBorder={true}>
-              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>Top 5 Authors with Open Issues</div>
+              <div className={"p-2 light-gray-text-secondary font-inter-light-300 metric-block-footer-text"}>
+                Top 5 Authors with Highest Issues
+                <TooltipWrapper innerText={"Top 5 Authors with highest issues count"}>
+                  <span className="ml-1 mt-1"><IconBase icon={faCircleInfo} /></span>
+                </TooltipWrapper>
+              </div>
               <GitCustodianTopAuthorsChart dashboardData={gitCustodianData} data={chartData?.topAuthors ? chartData?.topAuthors : []}/>
             </DataBlockBoxContainer>
           </Col>

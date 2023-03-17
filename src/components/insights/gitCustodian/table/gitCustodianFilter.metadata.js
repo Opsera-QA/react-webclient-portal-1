@@ -160,6 +160,14 @@ export const GitCustodianFilterMetadata = {
       }))];
     }
 
+    if (filterDto.getData("severity") != null) {
+      activeFilters = [...activeFilters, ...filterDto.getData("severity").map((filter, index) => ({
+        filterId: "severity",
+        text: `severity: ${filter}`,
+        index: index,
+      }))];
+    }
+
     if (filterDto.getData("service") != null) {
       activeFilters = [...activeFilters, ...filterDto.getData("service").map((filter, index) => ({
         filterId: "service",
