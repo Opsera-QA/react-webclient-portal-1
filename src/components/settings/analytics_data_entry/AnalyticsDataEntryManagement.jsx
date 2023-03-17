@@ -72,7 +72,6 @@ function AnalyticsDataEntryManagement() {
       isLoading={!accessRoleData}
       breadcrumbDestination={"analyticsDataEntryManagement"}
       accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       navigationTabContainer={<AnalyticsDataEntryManagementSubNavigationBar activeTab={"analyticsDataEntries"} />}
     >
       <AnalyticsDataEntryTable

@@ -9,6 +9,8 @@ import PolicyParametersSummaryPanel
 import {
   VALUE_SUPPORTED_POLICIES
 } from "components/settings/organization_settings/policies/details/inputs/PolicyValueTextInput";
+import PolicyRoleHelper from "@opsera/know-your-role/roles/settings/policies/policyRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function PolicySummaryPanel(
   {
@@ -16,6 +18,8 @@ export default function PolicySummaryPanel(
     setPolicyModel,
     setActiveTab,
   } ) {
+  const { userData } = useComponentStateReference();
+
   if (policyModel == null) {
     return <></>;
   }
@@ -23,6 +27,8 @@ export default function PolicySummaryPanel(
   return (
     <SummaryPanelContainer
       setActiveTab={setActiveTab}
+      editingAllowed={PolicyRoleHelper.canEditPolicies(userData, policyModel?.getCurrentData()) === true}
+      className={"mt-2"}
     >
       <Row>
         <Col lg={12}>
