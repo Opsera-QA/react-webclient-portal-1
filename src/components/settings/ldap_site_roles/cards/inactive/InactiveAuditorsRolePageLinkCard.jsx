@@ -8,10 +8,13 @@ import {accountSettingsTrails} from "components/settings/accountSettings.trails"
 import SiteRoleAccessRuleMatrixTable
   from "components/settings/ldap_site_roles/cards/inactive/SiteRoleAccessRuleMatrixTable";
 import HelpInfoOverlayIcon from "components/common/icons/general/HelpInfoOverlayIcon";
+import LdapSiteRoleGroupRoleHelper
+  from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
 
 export default function InactiveAuditorsRolePageLinkCard() {
   const {
     toastContext,
+    userData,
   } = useComponentStateReference();
 
   const getBody = () => {
@@ -63,6 +66,7 @@ export default function InactiveAuditorsRolePageLinkCard() {
       inactive={true}
       body={getBody()}
       onClickFunction={launchActivationConfirmationOverlay}
+      disabled={LdapSiteRoleGroupRoleHelper.canEnableSiteRoleGroup(userData) !== true}
     />
   );
 }

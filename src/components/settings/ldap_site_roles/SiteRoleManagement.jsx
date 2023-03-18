@@ -16,6 +16,8 @@ import MessageField from "components/common/fields/text/message/MessageField";
 import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
+import LdapSiteRoleGroupRoleHelper
+  from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
 
 export default function SiteRoleManagement() {
   const history = useHistory();
@@ -49,8 +51,12 @@ export default function SiteRoleManagement() {
 
   const loadData = async () => {
     try {
-      setIsLoading(true);
-      await getRoleGroups();
+      setSiteRoles([]);
+
+      if (LdapSiteRoleGroupRoleHelper.canGetSiteRoleGroups(userData) === true) {
+        setIsLoading(true);
+        await getRoleGroups();
+      }
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -97,7 +103,7 @@ export default function SiteRoleManagement() {
     );
   };
 
-  if (isSaasUser === true) {
+  if (LdapSiteRoleGroupRoleHelper.canGetSiteRoleGroups(userData) !== true) {
     return null;
   }
 
@@ -107,8 +113,6 @@ export default function SiteRoleManagement() {
       navigationTabContainer={<SiteRoleManagementSubNavigationBar activeTab={"siteRoles"} />}
       breadcrumbDestination={"ldapSiteRolesManagement"}
       helpComponent={<SiteRolesHelpDocumentation/>}
-      accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
     >
       <CenteredContentWrapper>
         <MessageFieldBase
