@@ -23,7 +23,6 @@ function ScreenContainer(
     accessDenied,
     showBreadcrumbTrail,
     navigationTabContainer,
-    accessRoleData,
     roleRequirement,
     titleActionBar,
     helpComponent,
@@ -37,6 +36,7 @@ function ScreenContainer(
     isOpseraAdministrator,
     isFreeTrial,
     userData,
+    accessRoleData,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -201,7 +201,6 @@ ScreenContainer.propTypes = {
   showBreadcrumbTrail: PropTypes.bool,
   navigationTabContainer: PropTypes.object,
   titleActionBar: PropTypes.object,
-  accessRoleData: PropTypes.object,
   roleRequirement: PropTypes.string,
   helpComponent: PropTypes.object,
   bodyClassName: PropTypes.string,
