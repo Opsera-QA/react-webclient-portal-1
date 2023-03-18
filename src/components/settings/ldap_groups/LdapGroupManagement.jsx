@@ -15,7 +15,6 @@ function LdapGroupManagement() {
   const [isLoading, setIsLoading] = useState(true);
   const [groupList, setGroupList] = useState([]);
   const [existingGroupNames, setExistingGroupNames] = useState([]);
-  const [ldapGroupMetadata, setLdapGroupMetadata] = useState(undefined);
   const {
     isMounted,
     cancelTokenSource,
@@ -72,8 +71,6 @@ function LdapGroupManagement() {
       const groups = DataParsingHelper.parseArray(response?.data?.data, []);
 
       if (isMounted?.current === true) {
-        const metadata = response?.data?.metadata;
-        setLdapGroupMetadata({ ...metadata });
         const existingGroupNames = groups.map((group) => {
           return group.name.toLowerCase();
         });
@@ -100,7 +97,6 @@ function LdapGroupManagement() {
         isLoading={isLoading}
         groupData={groupList}
         isMounted={isMounted}
-        ldapGroupMetadata={ldapGroupMetadata}
         loadData={loadData}
         orgDomain={orgDomain}
         existingGroupNames={existingGroupNames}
