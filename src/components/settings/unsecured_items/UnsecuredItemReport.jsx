@@ -11,8 +11,6 @@ import UnsecuredItemReportSubNavigationBar
 import {
   unsecureItemsReportFilterMetadata
 } from "components/settings/unsecured_items/unsecuredItemReportFilter.metadata";
-import {accountSettingsTrails} from "components/settings/accountSettings.trails";
-import RoleHelper from "@opsera/know-your-role/roles/role.helper";
 
 function UnsecuredItemReport() {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,10 +26,9 @@ function UnsecuredItemReport() {
     accessRoleData,
     toastContext,
   } = useComponentStateReference();
-  const breadcrumb = accountSettingsTrails.unsecuredItemReport;
 
   useEffect(() => {
-    if (RoleHelper.doesUserMeetSiteRoleRequirements(userData, breadcrumb?.allowedRoles) === true) {
+    if (UnsecuredItemReportRoleHelper.canGetUnsecuredItemsList(userData) === true) {
       loadData(itemFilterModel).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
