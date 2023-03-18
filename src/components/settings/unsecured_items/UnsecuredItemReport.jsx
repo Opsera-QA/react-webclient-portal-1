@@ -1,7 +1,6 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
-import { AuthContext } from "contexts/AuthContext";
+import React, { useState, useEffect } from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import { unsecuredItemReportActions } from "components/settings/unsecured_items/unsecuredItemReport.actions";
+import { useUnsecuredItemReportActions } from "components/settings/unsecured_items/useUnsecuredItemReportActions";
 import Model from "core/data_model/model";
 import UnsecuredItemReportViews from "components/settings/unsecured_items/UnsecuredItemReportViews";
 import useComponentStateReference from "hooks/useComponentStateReference";
@@ -11,10 +10,11 @@ import UnsecuredItemReportSubNavigationBar
 import {
   unsecureItemsReportFilterMetadata
 } from "components/settings/unsecured_items/unsecuredItemReportFilter.metadata";
+import UnsecuredItemReportRoleHelper
+  from "@opsera/know-your-role/roles/settings/unsecured_items/unsecuredItemReportRole.helper";
 
-function UnsecuredItemReport() {
+export default function UnsecuredItemReport() {
   const [isLoading, setIsLoading] = useState(false);
-  const { getAccessToken } = useContext(AuthContext);
   const [items, setItems] = useState([]);
   const [itemFilterModel, setItemFilterModel] = useState(
     new Model({ ...unsecureItemsReportFilterMetadata.newObjectFields }),
@@ -25,9 +25,11 @@ function UnsecuredItemReport() {
     cancelTokenSource,
     accessRoleData,
     toastContext,
+    getAccessToken,
   } = useComponentStateReference();
 
   useEffect(() => {
+    setItems([]);
     if (UnsecuredItemReportRoleHelper.canGetUnsecuredItemsList(userData) === true) {
       loadData(itemFilterModel).catch((error) => {
         if (isMounted?.current === true) {
@@ -44,7 +46,7 @@ function UnsecuredItemReport() {
       setItems([]);
       setIsLoading(true);
       const unassignedItemsData =
-        await unsecuredItemReportActions.getUnassingedRulesItems(
+        await useUnsecuredItemReportActions.getUnassingedRulesItems(
           getAccessToken,
           cancelTokenSource,
           itemFilterModel,
@@ -84,5 +86,3 @@ function UnsecuredItemReport() {
     </ScreenContainer>
   );
 }
-
-export default UnsecuredItemReport;
