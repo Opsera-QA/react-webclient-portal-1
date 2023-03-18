@@ -3,11 +3,12 @@ import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
   getTableTextColumn,
-  getTableDateTimeColumn,
+  getTableDateTimeColumn, getFormattedLabelWithFunctionColumnDefinition,
 } from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { unsecureItemsReportMetadata } from "components/settings/unsecured_items/unsecuredItemReport.metadata";
+import opseraResourceTypeConstants from "@opsera/definitions/constants/resources/opseraResourceType.constants";
 
 function UnsecuredItemReportTable({
   items,
@@ -62,10 +63,9 @@ function UnsecuredItemReportTable({
         undefined,
         getTooltipTemplate,
       ),
-      getTableTextColumn(
+      getFormattedLabelWithFunctionColumnDefinition(
         getField(fields, "object_type"),
-        "no-wrap-inline",
-        undefined,
+        opseraResourceTypeConstants.getResourceTypeLabel,
         undefined,
         getTooltipTemplate,
       ),
