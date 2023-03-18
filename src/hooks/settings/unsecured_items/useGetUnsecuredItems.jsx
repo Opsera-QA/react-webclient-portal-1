@@ -44,7 +44,7 @@ export default function useGetUnsecuredItems(handleErrorFunction) {
     const response = await unsecuredItemReportActions.getUnassignedRulesItems(
       newFilterModel,
     );
-    const items = DataParsingHelper.parseNestedArray(response, "data.message.data", []);
+    const items = DataParsingHelper.parseNestedArray(response, "data.data", []);
     setUnsecuredItems([...items]);
     setUnsecuredItemFilterModel({...newFilterModel});
   };
