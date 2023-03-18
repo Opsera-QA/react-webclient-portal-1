@@ -18,7 +18,6 @@ function LdapGroupsTable(
     orgDomain,
     isLoading,
     loadData,
-    currentUserEmail,
     existingGroupNames,
     className,
     isMounted,
@@ -53,7 +52,6 @@ function LdapGroupsTable(
         loadData={loadData}
         isMounted={isMounted}
         orgDomain={orgDomain}
-        currentUserEmail={currentUserEmail}
         existingGroupNames={existingGroupNames}
       />
     );
@@ -94,7 +92,6 @@ LdapGroupsTable.propTypes = {
   orgDomain: PropTypes.string,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
-  currentUserEmail: PropTypes.string,
   existingGroupNames: PropTypes.array,
   className: PropTypes.string,
   isMounted: PropTypes.object,

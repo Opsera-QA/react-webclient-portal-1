@@ -138,7 +138,6 @@ function LdapGroupDetailView() {
         <LdapGroupDetailPanel
           orgDomain={orgDomain}
           ldapGroupData={ldapGroupData}
-          currentUserEmail={userData?.email}
           setLdapGroupData={setLdapGroupData}
           loadData={loadData}
           isLoading={isLoading}

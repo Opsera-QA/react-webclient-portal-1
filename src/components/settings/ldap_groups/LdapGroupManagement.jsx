@@ -3,11 +3,11 @@ import {useHistory, useParams} from "react-router-dom";
 import LdapGroupsTable from "./LdapGroupsTable";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import GroupManagementSubNavigationBar from "components/settings/ldap_groups/GroupManagementSubNavigationBar";
 import GroupsHelpDocumentation from "../../common/help/documentation/settings/GroupsHelpDocumentation";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import LdapUserGroupRoleHelper from "@opsera/know-your-role/roles/accounts/groups/user/ldapUserGroupRole.helper";
 
 function LdapGroupManagement() {
   const history = useHistory();
@@ -24,11 +24,10 @@ function LdapGroupManagement() {
     getAccessToken,
     userData,
     isOpseraAdministrator,
-    isPowerUser,
-    isSiteAdministrator,
   } = useComponentStateReference();
 
   useEffect(() => {
+    setGroupList([]);
     const ldap = DataParsingHelper.parseObject(userData?.ldap, {});
 
     if (orgDomain == null || (ldap?.domain !== orgDomain && isOpseraAdministrator !== true)) {
@@ -43,15 +42,11 @@ function LdapGroupManagement() {
   }, [orgDomain]);
 
   const loadData = async () => {
+    setGroupList([]);
+
     try {
       setIsLoading(true);
-      if (
-        accessRoleData?.OpseraAdministrator
-        || accessRoleData?.Administrator
-        || accessRoleData?.PowerUser
-        || accessRoleData?.OrganizationOwner
-        || accessRoleData?.OrganizationAccountOwner
-      ) {
+      if (LdapUserGroupRoleHelper.canGetUserGroupsList(userData) === true) {
         await getGroupsByDomain();
       }
     }
@@ -88,11 +83,7 @@ function LdapGroupManagement() {
     }
   };
 
-  if (
-    isOpseraAdministrator !== true
-    && isPowerUser !== true
-    && isSiteAdministrator !== true
-  ) {
+  if (LdapUserGroupRoleHelper.canGetUserGroupsList(userData) !== true) {
     return null;
   }
 
@@ -103,8 +94,6 @@ function LdapGroupManagement() {
       breadcrumbDestination={"ldapGroupManagement"}
       pageDescription={"Group Management allows users to manage membership for existing groups and create new groups. These groups are the custom groups that users can create, manage and apply to individual items, like Pipelines and Tools."}
       helpComponent={<GroupsHelpDocumentation/>}
-      accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS}
     >
       <LdapGroupsTable
         className={"mx-2"}
@@ -115,7 +104,6 @@ function LdapGroupManagement() {
         loadData={loadData}
         orgDomain={orgDomain}
         existingGroupNames={existingGroupNames}
-        currentUserEmail={userData?.email}
       />
     </ScreenContainer>
   );

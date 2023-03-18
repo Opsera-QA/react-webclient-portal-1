@@ -87,7 +87,6 @@ function LdapOrganizationAccountGroupsPanel({ ldapOrganizationAccountData, curre
       <LdapGroupsTable
         orgDomain={organizationDomain}
         groupData={groupList}
-        currentUserEmail={currentUser?.email}
         existingGroupNames={existingGroupNames}
         ldapGroupMetadata={ldapGroupMetadata}
         loadData={loadData}

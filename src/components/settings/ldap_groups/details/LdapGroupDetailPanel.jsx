@@ -14,7 +14,6 @@ import LdapGroupAssignedRolesPanel from "components/settings/ldap_groups/details
 
 function LdapGroupDetailPanel(
   {
-    currentUserEmail,
     ldapGroupData,
     setLdapGroupData,
     orgDomain,
@@ -85,7 +84,6 @@ function LdapGroupDetailPanel(
         return (
           <LdapGroupEditorPanel
             handleClose={toggleSummaryPanel}
-            currentUserEmail={currentUserEmail}
             authorizedActions={authorizedActions}
             setLdapGroupData={setLdapGroupData}
             ldapGroupData={ldapGroupData}
@@ -115,7 +113,6 @@ LdapGroupDetailPanel.propTypes = {
   ldapGroupData: PropTypes.object,
   setLdapGroupData: PropTypes.func,
   orgDomain: PropTypes.string,
-  currentUserEmail: PropTypes.string,
   loadData: PropTypes.func,
   authorizedActions: PropTypes.array,
   isLoading: PropTypes.bool,
