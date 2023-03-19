@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import { useParams } from "react-router-dom";
 import Model from "core/data_model/model";
-import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {ldapUserMetadata} from "components/settings/ldap_users/ldapUser.metadata";
@@ -9,76 +8,48 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import LdapUserDetailPanel from "components/settings/ldap_users/users_detail_view/LdapUserDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
-import axios from "axios";
 import UserManagementSubNavigationBar from "components/settings/users/UserManagementSubNavigationBar";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import LdapUserRoleHelper from "@opsera/know-your-role/roles/accounts/users/ldapUserRole.helper";
 
 function UserDetailView() {
   const {userEmail, orgDomain} = useParams();
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [ldapUserData, setLdapUserData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [authorizedActions, setAuthorizedActions] = useState([]);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    accessRoleData,
+    cancelTokenSource,
+    isMounted,
+    userData,
+    getAccessToken,
+  } = useComponentStateReference();
+  const domain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
-      setIsLoading(true);
-      await getRoles(cancelSource);
-    }
-    catch (error) {
+      if ((accessRoleData.OpseraAdministrator === true || domain === orgDomain) && LdapUserRoleHelper.canGetUserDetails(userData) === true) {
+        setIsLoading(true);
+        await getLdapUser();
+      }
+    } catch (error) {
       toastContext.showLoadingErrorDialog(error);
-    }
-    finally {
+    } finally {
       setIsLoading(false);
     }
   };
 
-
-  const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-      let {ldap} = user;
-
-      if (userRoleAccess.OpseraAdministrator || ldap.domain === orgDomain)
-      {
-        let authorizedActions = await accountsActions.getAllowedUserActions(userRoleAccess, ldap.organization, userEmail, getUserRecord, getAccessToken);
-        setAuthorizedActions(authorizedActions);
-
-        if (authorizedActions.includes("get_user_details")) {
-          await getLdapUser(cancelSource, userEmail);
-        }
-      }
-    }
-  };
-
-  const getLdapUser = async (cancelSource = cancelTokenSource, userEmail) => {
-    const response = await accountsActions.getUserByEmailV2(getAccessToken, cancelSource, userEmail);
+  const getLdapUser = async () => {
+    const response = await accountsActions.getUserByEmailV2(getAccessToken, cancelTokenSource, userEmail);
 
     if (response?.data != null) {
       setLdapUserData(new Model(response.data, ldapUserMetadata, false));
@@ -99,11 +70,14 @@ function UserDetailView() {
     }
   };
 
+  if ((accessRoleData.OpseraAdministrator !== true && domain !== orgDomain) || LdapUserRoleHelper.canGetUserDetails(userData) !== true) {
+    return null;
+  }
+
   return (
     <DetailScreenContainer
       breadcrumbDestination={(accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator) ? "ldapUserDetailView" : "ldapUserDetailViewLimited"}
       metadata={ldapUserMetadata}
-      accessDenied={!authorizedActions?.includes("get_user_details")}
       dataObject={ldapUserData}
       isLoading={isLoading}
       actionBar={getActionBar()}
@@ -114,7 +88,6 @@ function UserDetailView() {
           setLdapUserData={setLdapUserData}
           orgDomain={orgDomain}
           ldapUserData={ldapUserData}
-          authorizedActions={authorizedActions}
         />
       }
     />
