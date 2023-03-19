@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useRef} from "react";
 import OrganizationsTable from "components/settings/organizations/OrganizationsTable";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import Model from "core/data_model/model";
 import organizationFilterMetadata from "components/settings/organizations/organization-filter-metadata";
 import OrganizationsSubNavigationBar from "components/settings/organizations/OrganizationsSubNavigationBar";
@@ -16,7 +15,6 @@ function OrganizationManagement() {
   const isMounted = useRef(false);
   const [organizationFilterModel, setOrganizationFilterModel] = useState(new Model({...organizationFilterMetadata.newObjectFields}, organizationFilterMetadata, false));
   const {
-    accessRoleData,
     toastContext,
     userData,
   } = useComponentStateReference();
