@@ -1,6 +1,5 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import Model from "core/data_model/model";
 import analyticsDataFilterMetadata from "components/settings/analytics_data_entry/analytics-data-filter-metadata";
 import AnalyticsDataEntryTable from "components/settings/analytics_data_entry/AnalyticsDataEntryTable";
@@ -9,37 +8,33 @@ import AnalyticsDataEntryManagementSubNavigationBar
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useAnalyticsDataEntryActions from "hooks/settings/insights/analytics_data_entries/useAnalyticsDataEntryActions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import AnalyticsDataEntryRoleHelper
+  from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
 
-function AnalyticsDataEntryManagement() {
+export default function AnalyticsDataEntryManagement() {
   const [isLoading, setIsLoading] = useState(true);
   const [analyticsDataEntries, setAnalyticsDataEntries] = useState([]);
-  const isMounted = useRef(false);
   const [analyticsDataEntryFilterModel, setAnalyticsDataEntryFilterModel] = useState(new Model({...analyticsDataFilterMetadata.newObjectFields}, analyticsDataFilterMetadata, false));
   const analyticsDataEntryActions = useAnalyticsDataEntryActions();
   const {
     accessRoleData,
     toastContext,
+    userData,
+    isMounted,
   } = useComponentStateReference();
 
   useEffect(() => {
-    isMounted.current = true;
-
     loadData(analyticsDataEntryFilterModel).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      isMounted.current = false;
-    };
   }, []);
 
   const loadData = async (filterModel = analyticsDataEntryFilterModel) => {
     try {
-      setIsLoading(true);
-
-      if (meetsRequirements(ROLE_LEVELS.POWER_USERS_AND_SASS, accessRoleData)) {
+      if (AnalyticsDataEntryRoleHelper.canGetAnalyticsDataEntryList(userData) === true) {
+        setIsLoading(true);
         await getAnalyticsDataEntries(filterModel);
       }
     }
@@ -67,11 +62,14 @@ function AnalyticsDataEntryManagement() {
     }
   };
 
+  if (AnalyticsDataEntryRoleHelper.canGetAnalyticsDataEntryList(userData) !== true) {
+    return null;
+  }
+
   return (
     <ScreenContainer
       isLoading={!accessRoleData}
       breadcrumbDestination={"analyticsDataEntryManagement"}
-      accessRoleData={accessRoleData}
       navigationTabContainer={<AnalyticsDataEntryManagementSubNavigationBar activeTab={"analyticsDataEntries"} />}
     >
       <AnalyticsDataEntryTable
@@ -85,6 +83,3 @@ function AnalyticsDataEntryManagement() {
     </ScreenContainer>
   );
 }
-
-
-export default AnalyticsDataEntryManagement;
