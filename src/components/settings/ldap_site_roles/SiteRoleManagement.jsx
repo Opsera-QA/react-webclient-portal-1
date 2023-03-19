@@ -87,6 +87,7 @@ export default function SiteRoleManagement() {
     if (siteRoles?.length === 0) {
       return (
         <WarningMessageFieldBase
+          className={"mx-2"}
           message={"There was an error loading Site Roles."}
         />
       );
