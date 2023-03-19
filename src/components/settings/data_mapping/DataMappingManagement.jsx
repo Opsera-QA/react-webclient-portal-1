@@ -1,56 +1,48 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
-import { AuthContext } from "contexts/AuthContext";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Button, Card } from "react-bootstrap";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import toolsActions from "components/inventory/tools/tools-actions";
-import axios from "axios";
 import DataMappingManagementSubNavigationBar
   from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
 import DataMappingManagementTabView from "components/settings/data_mapping/DataMappingManagementTabView";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import AnalyticsProjectDataMappingRoleHelper
+  from "@opsera/know-your-role/roles/settings/analytics_data_mappings/projects/analyticsProjectDataMappingRole.helper";
 
-function DataMappingManagement() {
-  const toastContext = useContext(DialogToastContext);
-  const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
+export default function DataMappingManagement() {
   const [isLoading, setIsLoading] = useState(true);
   const [projectTagCount, setProjectTagCount] = useState(0);
   const [toolCount, setToolCount] = useState(0);
   const history = useHistory();
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    toastContext,
+    getAccessToken,
+    userData,
+    isMounted,
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
-
+  const loadData = async () => {
     try {
+      if (AnalyticsProjectDataMappingRoleHelper.canGetAnalyticsProjectDataMappingList(userData) !== true) {
+        return;
+      }
+
       setIsLoading(true);
-      await getRoles(cancelSource);
+      await getProjectTags();
+      await getToolRegistryList();
     } catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     } finally {
@@ -60,24 +52,9 @@ function DataMappingManagement() {
     }
   };
 
-  const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (!userRoleAccess) {
-      setIsLoading(false);
-      toastContext.showLoadingErrorDialog("Unable to fetch access privileges");
-      return;
-    }
-
-    setAccessRoleData(userRoleAccess);
-    await getProjectTags(cancelSource);
-    await getToolRegistryList(cancelSource);
-  };
-
-  const getProjectTags = async (cancelSource = cancelTokenSource) => {
+  const getProjectTags = async () => {
     try {
-      const response = await adminTagsActions.getEstimatedTagCountV2(getAccessToken, cancelSource, "project");
+      const response = await adminTagsActions.getEstimatedTagCountV2(getAccessToken, cancelTokenSource, "project");
       const tagCount = response?.data?.count;
 
       if (tagCount && tagCount > 0) {
@@ -88,9 +65,9 @@ function DataMappingManagement() {
     }
   };
 
-  const getToolRegistryList = async (cancelSource = cancelTokenSource) => {
+  const getToolRegistryList = async () => {
     try {
-      const response = await toolsActions.getEstimatedToolRegistryCountV2(getAccessToken, cancelSource);
+      const response = await toolsActions.getEstimatedToolRegistryCountV2(getAccessToken, cancelTokenSource);
       const toolCount = response?.data?.count;
 
       if (toolCount && toolCount > 0) {
@@ -173,11 +150,14 @@ function DataMappingManagement() {
     );
   };
 
+  if (AnalyticsProjectDataMappingRoleHelper.canGetAnalyticsProjectDataMappingList(userData) !== true) {
+    return null;
+  }
+
   return (
     <ScreenContainer
       navigationTabContainer={<DataMappingManagementSubNavigationBar activeTab={"dataMappingManagement"} />}
       breadcrumbDestination={"dataMappingManagement"}
-      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       pageDescription={"Manage data mapping for the Opsera Analytics Engine."}
       isLoading={isLoading}
     >
@@ -185,5 +165,3 @@ function DataMappingManagement() {
     </ScreenContainer>
   );
 }
-
-export default DataMappingManagement;

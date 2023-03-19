@@ -19,6 +19,9 @@ import projectDataMappingMetadata
 import {
   analyticsProjectDataMappingHelper
 } from "components/settings/data_mapping/projects/analyticsProjectDataMapping.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import AnalyticsProjectDataMappingRoleHelper
+  from "@opsera/know-your-role/roles/settings/analytics_data_mappings/projects/analyticsProjectDataMappingRole.helper";
 
 function ProjectDataMappingsTable(
   {
@@ -31,7 +34,8 @@ function ProjectDataMappingsTable(
   }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
-  let fields = projectDataMappingMetadata.fields;
+  const fields = projectDataMappingMetadata.fields;
+  const { userData } = useComponentStateReference();
 
   const columns = useMemo(
     () => [
@@ -106,7 +110,7 @@ function ProjectDataMappingsTable(
       loadData={loadData}
       filterDto={toolFilterDto}
       setFilterDto={setToolFilterDto}
-      addRecordFunction={createProjectTag}
+      addRecordFunction={AnalyticsProjectDataMappingRoleHelper.canCreateAnalyticsProjectDataMapping(userData) === true ? createProjectTag : undefined}
       supportSearch={true}
       isLoading={isLoading}
       showBorder={false}
