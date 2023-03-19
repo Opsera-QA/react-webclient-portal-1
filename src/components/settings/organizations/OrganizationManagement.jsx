@@ -8,6 +8,7 @@ import OrganizationsSubNavigationBar from "components/settings/organizations/Org
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useOrganizationActions from "hooks/settings/insights/organizations/useOrganizationActions";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import OrganizationRoleHelper from "@opsera/know-your-role/roles/settings/organizations/organizationRole.helper";
 
 function OrganizationManagement() {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,6 +18,7 @@ function OrganizationManagement() {
   const {
     accessRoleData,
     toastContext,
+    userData,
   } = useComponentStateReference();
   const organizationActions = useOrganizationActions();
 
@@ -38,16 +40,14 @@ function OrganizationManagement() {
     try {
       setIsLoading(true);
 
-      if (meetsRequirements(ROLE_LEVELS.POWER_USERS_AND_SASS, accessRoleData)) {
-        await getOrganizations();
+      if (OrganizationRoleHelper.canGetOrganizationList(userData) === true) {
+        await getOrganizations(filterModel);
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -55,7 +55,7 @@ function OrganizationManagement() {
   };
 
   const getOrganizations = async (filterModel = organizationFilterModel) => {
-    let response = await organizationActions.getOrganizations(filterModel);
+    const response = await organizationActions.getOrganizations(filterModel);
     const organizationList = DataParsingHelper.parseNestedArray(response, "data.data");
 
     if (isMounted?.current === true && organizationList) {
@@ -66,12 +66,13 @@ function OrganizationManagement() {
     }
   };
 
+  if (OrganizationRoleHelper.canGetOrganizationList(userData) !== true) {
+    return null;
+  }
+
   return (
     <ScreenContainer
-      isLoading={!accessRoleData}
       breadcrumbDestination={"organizationManagement"}
-      accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       navigationTabContainer={<OrganizationsSubNavigationBar activeTab={"organizations"} />}
     >
       <OrganizationsTable
