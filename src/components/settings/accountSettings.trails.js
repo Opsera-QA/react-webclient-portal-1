@@ -98,8 +98,8 @@ accountSettingsTrails.analyticsDataEntryManagement = {
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
     SiteRoleHelper.SITE_ROLES.SAAS_USER,
-    // SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    // SiteRoleHelper.SITE_ROLES.AUDITOR,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 accountSettingsTrails.analyticsDataEntryDetailView = {
@@ -114,8 +114,8 @@ accountSettingsTrails.analyticsDataEntryDetailView = {
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
     SiteRoleHelper.SITE_ROLES.SAAS_USER,
-    // SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    // SiteRoleHelper.SITE_ROLES.AUDITOR,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 
@@ -301,8 +301,8 @@ accountSettingsTrails.tagManagement = {
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
     SiteRoleHelper.SITE_ROLES.SAAS_USER,
-    // SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    // SiteRoleHelper.SITE_ROLES.AUDITOR,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 accountSettingsTrails.tagDetailView = {
@@ -317,8 +317,8 @@ accountSettingsTrails.tagDetailView = {
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
     SiteRoleHelper.SITE_ROLES.SAAS_USER,
-    // SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    // SiteRoleHelper.SITE_ROLES.AUDITOR,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 
@@ -370,8 +370,8 @@ accountSettingsTrails.organizationManagement = {
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
     SiteRoleHelper.SITE_ROLES.SAAS_USER,
-    // SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    // SiteRoleHelper.SITE_ROLES.AUDITOR,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 accountSettingsTrails.organizationDetailView = {
@@ -386,8 +386,8 @@ accountSettingsTrails.organizationDetailView = {
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
     SiteRoleHelper.SITE_ROLES.SAAS_USER,
-    // SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    // SiteRoleHelper.SITE_ROLES.AUDITOR,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 
@@ -530,8 +530,8 @@ accountSettingsTrails.policyManagement = {
   allowedRoles: [
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
-    // SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    // SiteRoleHelper.SITE_ROLES.AUDITOR,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 
@@ -545,8 +545,8 @@ accountSettingsTrails.policyDetailView = {
   allowedRoles: [
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
-    // SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    // SiteRoleHelper.SITE_ROLES.AUDITOR,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 
@@ -598,8 +598,8 @@ accountSettingsTrails.dataMappingManagement = {
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
     SiteRoleHelper.SITE_ROLES.SAAS_USER,
-    // SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    // SiteRoleHelper.SITE_ROLES.AUDITOR,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 accountSettingsTrails.projectTaggingDetailView = {
@@ -614,8 +614,8 @@ accountSettingsTrails.projectTaggingDetailView = {
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
     SiteRoleHelper.SITE_ROLES.SAAS_USER,
-    // SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    // SiteRoleHelper.SITE_ROLES.AUDITOR,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 accountSettingsTrails.pipelineDataMappingDetailView = {
@@ -630,8 +630,8 @@ accountSettingsTrails.pipelineDataMappingDetailView = {
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
     SiteRoleHelper.SITE_ROLES.SAAS_USER,
-    // SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    // SiteRoleHelper.SITE_ROLES.AUDITOR,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 accountSettingsTrails.userTaggingDetailView = {
@@ -646,7 +646,7 @@ accountSettingsTrails.userTaggingDetailView = {
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
     SiteRoleHelper.SITE_ROLES.SAAS_USER,
-    // SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    // SiteRoleHelper.SITE_ROLES.AUDITOR,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
