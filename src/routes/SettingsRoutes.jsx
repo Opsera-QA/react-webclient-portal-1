@@ -32,6 +32,7 @@ import PipelinesSettingsRoutes from "components/settings/pipelines/PipelinesSett
 import PolicyManagement from "components/settings/organization_settings/policies/PolicyManagement";
 import PolicyDetailView from "components/settings/organization_settings/policies/details/PolicyDetailView";
 import {accountSettingsTrails} from "components/settings/accountSettings.trails";
+import BreadcrumbRoute from "temp-library-components/routes/BreadcrumbRoute";
 
 export default function SettingsRoutes() {
   const {
