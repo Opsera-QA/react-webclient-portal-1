@@ -11,8 +11,13 @@ import ExternalToolPropertyCacheField from "components/common/fields/cache/Exter
 import JiraProjectUserCacheField
   from "components/common/list_of_values_input/tools/jira/users/JiraProjectUserCacheField";
 import toolIdentifierConstants from "@opsera/definitions/constants/tool_identifiers/toolIdentifier.constants";
+import AnalyticsUserDataMappingRoleHelper
+  from "@opsera/know-your-role/roles/settings/analytics_data_mappings/users/analyticsUserDataMappingRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function UserDataMappingSummaryPanel({ userDataMappingModel, setActiveTab }) {
+  const { userData } = useComponentStateReference();
+
   const getUserField = () => {
     switch (userDataMappingModel?.getData("tool_identifier")) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.JIRA:
@@ -44,7 +49,9 @@ export default function UserDataMappingSummaryPanel({ userDataMappingModel, setA
   }
 
   return (
-    <SummaryPanelContainer setActiveTab={setActiveTab}>
+    <SummaryPanelContainer
+      setActiveTab={userDataMappingModel?.canUpdate() === true ? setActiveTab : undefined}
+    >
       <Row>
         <Col lg={6}>
           <ToolIdentifierNameField model={userDataMappingModel} fieldName={"tool_identifier"}/>

@@ -1,50 +1,43 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
-import { AuthContext } from "contexts/AuthContext";
+import React, {useState, useEffect, useContext} from "react";
 import Model from "core/data_model/model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import tagFilterMetadata from "components/settings/tags/tag-filter-metadata";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import TagsTable from "components/settings/tags/TagsTable";
-import axios from "axios";
-import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import TagManagementSubNavigationBar from "components/settings/tags/TagManagementSubNavigationBar";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import TagRoleHelper from "@opsera/know-your-role/roles/settings/tags/tagRole.helper";
 
 function TagManagement() {
-  const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [tagList, setTagList] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const [tagFilterDto, setTagFilterDto] = useState(new Model({...tagFilterMetadata.newObjectFields}, tagFilterMetadata, false));
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    userData,
+    accessRoleData,
+    getAccessToken,
+    cancelTokenSource,
+    isMounted,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(tagFilterDto, source).catch((error) => {
+    loadData(tagFilterDto).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
-  const loadData = async (filterDto = tagFilterDto, cancelSource = cancelTokenSource) => {
+  const loadData = async (filterDto = tagFilterDto) => {
     try {
-      setIsLoading(true);
-      await getRoles(filterDto, cancelSource);
+      setTagList([]);
+
+      if (TagRoleHelper.canGetTags(userData) === true) {
+        setIsLoading(true);
+        await getTags(filterDto);
+      }
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -58,10 +51,10 @@ function TagManagement() {
     }
   };
 
-  const getTags = async (filterDto = tagFilterDto, cancelSource = cancelTokenSource) => {
+  const getTags = async (filterDto = tagFilterDto) => {
     const response = await adminTagsActions.getTags(
       getAccessToken,
-      cancelSource,
+      cancelTokenSource,
       filterDto,
     );
     const tagList = response?.data?.data;
@@ -74,24 +67,11 @@ function TagManagement() {
     }
   };
 
-  const getRoles = async (filterDto = tagFilterDto, cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (isMounted?.current === true && userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-
-      if (meetsRequirements(ROLE_LEVELS.POWER_USERS_AND_SASS, userRoleAccess)) {
-        await getTags(filterDto, cancelSource);
-      }
-    }
-  };
-
   return (
     <ScreenContainer
       breadcrumbDestination={"tagManagement"}
       isLoading={!accessRoleData}
       accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       navigationTabContainer={<TagManagementSubNavigationBar activeTab={"tags"} />}
     >
       <TagsTable

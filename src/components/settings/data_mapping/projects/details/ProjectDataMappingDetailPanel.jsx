@@ -51,7 +51,12 @@ function ProjectDataMappingDetailPanel(
     return (
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SettingsTab
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          visible={projectDataMappingModel?.canUpdate() === true}
+          disabled={projectDataMappingModel?.canUpdate() !== true}
+        />
       </CustomTabContainer>
     );
   };

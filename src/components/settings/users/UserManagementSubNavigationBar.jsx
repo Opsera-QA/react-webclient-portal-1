@@ -2,7 +2,7 @@ import React from "react";
 import {useHistory} from "react-router-dom";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import { faUser } from "@fortawesome/pro-light-svg-icons";
+import {faUser, faUserHardHat} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import AccountSettingsSubNavigationBarBase from "components/settings/AccountSettingsSubNavigationBarBase";
 
@@ -23,23 +23,6 @@ function UserManagementSubNavigationBar({activeTab}) {
     }
   };
 
-  const getActiveViewerTab = () => {
-    switch (activeTab) {
-      case "userViewer":
-        return (
-          <NavigationTab
-            icon={faUser}
-            tabName={"userViewer"}
-            handleTabClick={handleTabClick}
-            activeTab={activeTab}
-            tabText={"User Viewer"}
-          />
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
     <NavigationTabContainer>
       <AccountSettingsSubNavigationBarBase
@@ -52,7 +35,22 @@ function UserManagementSubNavigationBar({activeTab}) {
         activeTab={activeTab}
         tabText={"Users"}
       />
-      {getActiveViewerTab()}
+      <NavigationTab
+        icon={faUser}
+        tabName={"userViewer"}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+        tabText={"User Viewer"}
+        visible={activeTab === "userViewer"}
+      />
+      <NavigationTab
+        icon={faUserHardHat}
+        tabName={"pendingUserViewer"}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+        tabText={"Pending User Viewer"}
+        visible={activeTab === "pendingUserViewer"}
+      />
     </NavigationTabContainer>
   );
 }

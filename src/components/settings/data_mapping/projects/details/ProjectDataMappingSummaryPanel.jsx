@@ -20,7 +20,9 @@ function ProjectDataMappingSummaryPanel(
   }
 
   return (
-    <SummaryPanelContainer setActiveTab={setActiveTab}>
+    <SummaryPanelContainer
+      setActiveTab={projectDataMappingModel?.canUpdate() === true ? setActiveTab : undefined}
+    >
       <Row>
         <Col lg={6}>
           <TextFieldBase dataObject={projectDataMappingModel} fieldName={"tool_identifier"}/>

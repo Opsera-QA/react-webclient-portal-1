@@ -12,7 +12,10 @@ function AdoptionPercentageDataEntrySummaryPanel({ analyticsDataEntry, adoptionP
     return <LoadingDialog size="sm" />;
   }
   return (
-    <AnalyticsDataEntrySummaryPanel setActiveTab={setActiveTab} analyticsDataEntry={analyticsDataEntry}>
+    <AnalyticsDataEntrySummaryPanel
+      setActiveTab={setActiveTab}
+      analyticsDataEntry={analyticsDataEntry}
+    >
       <Col lg={6}>
         <GenericItemField dataObject={adoptionPercentageData} fieldName={"sprint"} />
       </Col>

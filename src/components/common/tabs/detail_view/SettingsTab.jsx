@@ -9,7 +9,12 @@ export default function SettingsTab(
     handleTabClick,
     disabled,
     accessRestricted,
+    visible,
   }) {
+  if (visible === false) {
+    return null;
+  }
+
   return (
     <CustomTab
       activeTab={activeTab}
@@ -28,4 +33,5 @@ SettingsTab.propTypes = {
   handleTabClick: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   accessRestricted: PropTypes.bool,
+  visible: PropTypes.bool,
 };
