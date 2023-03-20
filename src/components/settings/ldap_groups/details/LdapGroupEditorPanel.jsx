@@ -9,6 +9,7 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 // Note this is lowercase intentionally, as Users cannot create groups with capital letters
 const reservedNames = ["administrators", "powerusers", "users"];
@@ -16,7 +17,6 @@ const reservedNames = ["administrators", "powerusers", "users"];
 function LdapGroupEditorPanel(
   {
     ldapGroupData,
-    currentUserEmail,
     orgDomain,
     handleClose,
     existingGroupNames
@@ -24,28 +24,18 @@ function LdapGroupEditorPanel(
   const {getAccessToken} = useContext(AuthContext);
   const [ldapGroupDataDto, setLdapGroupDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    userData,
+    cancelTokenSource,
+    isMounted,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, []);
 
   const loadData = async () => {
@@ -68,7 +58,7 @@ function LdapGroupEditorPanel(
       throw `[${ldapGroupDataDto.getData("name")}] is a reserved group name and cannot be used when creating a new group.`;
     }
 
-    return await accountsActions.createGroupV2(getAccessToken, cancelTokenSource, orgDomain, ldapGroupDataDto, currentUserEmail);
+    return await accountsActions.createGroupV2(getAccessToken, cancelTokenSource, orgDomain, ldapGroupDataDto, userData?.email);
   };
 
   const updateGroup = async () => {
@@ -126,7 +116,6 @@ function LdapGroupEditorPanel(
 }
 
 LdapGroupEditorPanel.propTypes = {
-  currentUserEmail: PropTypes.string,
   orgDomain: PropTypes.string,
   setLdapGroupData: PropTypes.func,
   ldapGroupData: PropTypes.object,

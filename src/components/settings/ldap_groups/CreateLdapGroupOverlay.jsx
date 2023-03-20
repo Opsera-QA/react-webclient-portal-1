@@ -10,7 +10,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 function CreateLdapGroupOverlay(
   {
     orgDomain,
-    currentUserEmail,
     loadData,
     existingGroupNames,
     isMounted,
@@ -35,7 +34,6 @@ function CreateLdapGroupOverlay(
       size={CENTER_OVERLAY_SIZES.SMALL}
     >
       <LdapGroupEditorPanel
-        currentUserEmail={currentUserEmail}
         ldapGroupData={ldapGroupData}
         handleClose={closePanel}
         orgDomain={orgDomain}
@@ -47,8 +45,6 @@ function CreateLdapGroupOverlay(
 
 CreateLdapGroupOverlay.propTypes = {
   orgDomain: PropTypes.string,
-  authorizedActions: PropTypes.array,
-  currentUserEmail: PropTypes.string,
   loadData: PropTypes.func,
   existingGroupNames: PropTypes.array,
   isMounted: PropTypes.object,

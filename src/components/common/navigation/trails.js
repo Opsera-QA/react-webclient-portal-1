@@ -1,7 +1,6 @@
 import paths from "./paths";
 import {
   faAnalytics,
-  faBuilding,
   faChartBar,
   faClipboardList,
   faCogs,
@@ -13,16 +12,13 @@ import {
   faSitemap,
   faStream,
   faTags,
-  faTimes,
   faUser,
   faUserCircle,
-  faUserFriends,
   faUserPlus,
   faWrench,
   faChartNetwork,
   faFlag,
   faEnvelope,
-  faUserTag,
   faProjectDiagram,
   faTally,
   faTools,
@@ -31,13 +27,11 @@ import {
   faHome,
   faListAlt,
   faFileArchive,
-  faUserChart,
   faRadar,
   faServer,
   faHandshake,
   faFileCode,
   faTasks,
-  faUserHardHat,
   faCircle,
   faQuestion,
   faBook,
@@ -52,7 +46,6 @@ import {
   faUserAltSlash,
   faUserCheck,
   faClipboardUser,
-  faShield,
 } from "@fortawesome/pro-light-svg-icons";
 import { taskTypeConstants } from "components/tasks/task.types";
 import { pipelineSettingsTrails } from "components/settings/pipelines/pipelineSettings.trails";
@@ -405,218 +398,6 @@ export const breadcrumbs = {
     pageDescription: "Run an API connection test against the server using the Okta Authentication Token and Axios.js",
   },
 
-  // Account settings
-  accountSettings: {
-    parent: undefined,
-    name: "accountSettings",
-    path: paths.accountSettings,
-    title: "Platform Settings",
-    linkText: "Platform Settings",
-    icon: faCogs,
-    pageDescription: "Manage account settings from this dashboard.",
-  },
-  insightsSettings: {
-    parent: undefined,
-    name: "insightsSettings",
-    path: paths.insightsSettings,
-    title: "Insights Settings",
-    linkText: "Insights Settings",
-    icon: faChartNetwork,
-    pageDescription: "Manage analytics settings from this dashboard.",
-  },
-  freeTrialSettings: {
-    parent: undefined,
-    name: "freeTrialSettings",
-    path: paths.accountSettings,
-    title: "Free Trial Settings",
-    linkText: "Free Trial Settings",
-    icon: faCogs
-  },
-
-  // Customer System Status
-  customerSystemStatus: {
-    parent: "accountSettings",
-    name: "customerSystemStatus",
-    path: paths.customerSystemStatus,
-    title: "Platform Status",
-    linkText: "Platform Status",
-    icon: faHeartbeat
-  },
-
-  // Analytics Data Entry Management>
-  analyticsDataEntryManagement: {
-    parent: "accountSettings",
-    name: "analyticsDataEntryManagement",
-    path: paths.analyticsDataEntryManagement,
-    title: "Analytics Data Entry Management",
-    linkText: "Analytics Data Entry",
-    icon: faUserChart,
-    pageDescription: "Manage analytics data manually and see it reflected in corresponding dashboard KPIs for specific charts.",
-  },
-  analyticsDataEntryDetailView: {
-    parent: "analyticsDataEntryManagement",
-    name: "analyticsDataEntryDetailView",
-    path: paths.analyticsDataEntryDetailView,
-    title: "Analytics Data Entry Details",
-    linkText: "Analytics Data Entry Details",
-    icon: faUserChart
-  },
-
-  // LDAP Users Administration
-  ldapUserManagement: {
-    parent: "accountSettings",
-    name: "ldapUserManagement",
-    path: paths.ldapUserManagement,
-    title: "User Management",
-    linkText: "Users",
-    icon: faUser
-  },
-  ldapUserDetailView: {
-    parent: "ldapUserManagement",
-    name: "ldapUserDetailView",
-    path: paths.ldapUserDetailView,
-    title: "User Details",
-    linkText: "User Details",
-    icon: faUser
-  },
-  ldapUserDetailViewLimited: {
-    parent: "accountSettings",
-    name: "ldapUserDetailViewLimited",
-    path: paths.ldapUserDetailView,
-    title: "My User Details",
-    linkText: "My User Details",
-    icon: faUser
-  },
-
-  // User Management
-  userManagement: {
-    parent: "accountSettings",
-    name: "userManagement",
-    path: paths.userManagement,
-    title: "User Management",
-    linkText: "Users",
-    icon: faUser,
-    pageDescription: `
-      Manage existing Users and register new Users for this account. 
-      The New User form allows owners to create new User accounts with targeted Group access. 
-      Users will receive an invitation email upon completion of the form.
-    `,
-  },
-  activeUserDetailView: {
-    parent: "userManagement",
-    name: "activeUserDetailView",
-    path: paths.activeUserDetailView,
-    title: "User Details",
-    linkText: "User Details",
-    icon: faUser
-  },
-  pendingUserDetailView: {
-    parent: "userManagement",
-    name: "pendingUserDetailView",
-    path: paths.pendingUserDetailView,
-    title: "Pending User Details",
-    linkText: "Pending User Details",
-    icon: faUserHardHat
-  },
-
-  // LDAP Groups Administration
-  ldapGroupManagement: {
-    parent: "accountSettings",
-    name: "ldapGroupManagement",
-    path: paths.ldapGroupManagement,
-    title: "Group Management",
-    linkText: "Groups",
-    icon: faUserFriends,
-    pageDescription: "Manage Groups and their Membership"
-  },
-  ldapGroupDetailView: {
-    parent: "ldapGroupManagement",
-    name: "ldapGroupDetailView",
-    path: paths.ldapGroupDetailView,
-    title: "Group Details",
-    linkText: "Group Details",
-    icon: faUserFriends
-  },
-
-  // LDAP Departments Administration
-  ldapDepartmentManagement: {
-    parent: "accountSettings",
-    name: "ldapDepartmentManagement",
-    path: paths.ldapDepartmentManagement,
-    title: "Departments",
-    linkText: "Departments",
-    icon: faBuilding,
-    pageDescription: "Manage Departments and their Membership."
-  },
-  ldapDepartmentDetailView: {
-    parent: "ldapDepartmentManagement",
-    name: "ldapDepartmentDetailView",
-    path: paths.ldapDepartmentDetailView,
-    title: "Department Details",
-    linkText: "Department Details",
-    icon: faBuilding
-  },
-
-  // Tag Management
-  tagManagement: {
-    parent: "accountSettings",
-    name: "tagManagement",
-    path: paths.tagManagement,
-    title: "Tag Management",
-    linkText: "Tags",
-    icon: faTags,
-    pageDescription: "Manage Tags and view their usage in Tools, Pipelines, and Dashboards.",
-  },
-  tagDetailView: {
-    parent: "tagManagement",
-    name: "tagDetailView",
-    path: paths.tagDetailView,
-    title: "Tag Details",
-    linkText: "Tag Details",
-    icon: faTags
-  },
-
-  // Audit Logging
-  logsExportManagement: {
-    parent: "accountSettings",
-    name: "logsExportManagement",
-    path: paths.logsExportManagement,
-    title: "Logs Export Options",
-    linkText: "Logs Export Options",
-    icon: faTags,
-    pageDescription: "Manage export of pipeline activity audit logs."
-  },
-
-  // Unassigned Rules Items Report
-  unsecuredItemReport: {
-    parent: "accountSettings",
-    name: "unsecuredItemReport",
-    path: paths.unsecuredItemReport,
-    title: "Unsecured Items",
-    linkText: "Unsecured Items",
-    icon: faShield,
-    pageDescription: "View items that haven't been assigned access rules",
-  },
-
-  // Organization Management
-  organizationManagement: {
-    parent: "accountSettings",
-    name: "organizationManagement",
-    path: paths.organizationManagement,
-    title: "Analytics Data Mapping: Organization Management",
-    linkText: "Analytics Data Mapping: Organizations",
-    icon: faSitemap,
-    pageDescription: "Manage Organization Analytics Data Mappings"
-  },
-  organizationDetailView: {
-    parent: "organizationManagement",
-    name: "organizationDetailView",
-    path: paths.organizationDetailView,
-    title: "Analytics Data Mapping: Organization Details",
-    linkText: "Analytics Data Mapping: Organization Details",
-    icon: faSitemap
-  },
-
   // Ldap Organizations Administration
   ldapOrganizationManagement: {
     parent: "admin",
@@ -662,19 +443,6 @@ export const breadcrumbs = {
     linkText: "Customer Onboarding",
     icon: faUserPlus,
     pageDescription: "Onboard a new customer to the Opsera Platform",
-  },
-
-  deleteTools: {
-    parent: "accountSettings",
-    name: "deleteTools",
-    path: paths.deleteTools,
-    title: "Delete Tool Chains",
-    linkText: "Delete Tool Chains",
-    icon: faTimes,
-    pageDescription: `
-      Choose a registered application, view the active tools, and then delete them from the application.
-      This will perform a complete end to end removal of all instances related to an application.
-    `,
   },
 
   //Insights
@@ -934,50 +702,6 @@ export const breadcrumbs = {
     title: "Pipeline Reports",
     linkText: "Pipeline Reports",
     icon: faDraftingCompass
-  },
-
-  //Analytics
-  analyticsProfile: {
-    parent: "accountSettings",
-    name: "analyticsProfile",
-    path: paths.analyticsProfile,
-    title: "Analytics Profile",
-    linkText: "Analytics Profile",
-    icon: faChartNetwork,
-    pageDescription: "Manage Opsera Analytics Engine settings.",
-  },
-  dataMappingManagement: {
-    parent: "accountSettings",
-    name: "dataMappingManagement",
-    path: paths.dataMappingManagement,
-    title: "Analytics Data Mappings",
-    linkText: "Analytics Data Mappings",
-    icon: faProjectDiagram,
-    pageDescription: "Apply and connect Tags to incoming external data with Opsera.",
-  },
-  projectTaggingDetailView: {
-    parent : "dataMappingManagement",
-    name: "projectTaggingDetailView",
-    path: paths.projectTaggingDetailView,
-    title: "Analytics Project Mapping Details",
-    linkText: "Analytics Project Mapping Details",
-    icon: faProjectDiagram
-  },
-  pipelineDataMappingDetailView: {
-    parent : "dataMappingManagement",
-    name: "pipelineDataMappingDetailView",
-    path: paths.pipelineDataMappingDetailView,
-    title: "Analytics Pipeline Data Mapping Details",
-    linkText: "Analytics Pipeline Data Mapping Details",
-    icon: faDraftingCompass
-  },
-  userTaggingDetailView: {
-    parent : "dataMappingManagement",
-    name: "userTaggingDetailView",
-    path: paths.userTaggingDetailView,
-    title: "Analytics User Mapping Details",
-    linkText: "Analytics User Mapping Details",
-    icon: faUserTag
   },
 
   //Notifications

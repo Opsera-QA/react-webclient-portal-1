@@ -5,7 +5,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import axios from "axios";
-import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faUserHardHat, faUsers} from "@fortawesome/pro-light-svg-icons";
@@ -167,7 +166,6 @@ function UserManagement() {
       breadcrumbDestination={"userManagement"}
       helpComponent={getHelpComponent()}
       isLoading={!accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS}
       accessRoleData={accessRoleData}
       navigationTabContainer={<UserManagementSubNavigationBar activeTab={"users"} />}
       pageDescription={"Manage existing users as well as register new users for this account.  The new user form allows owners to create new user accounts with targeted group access. Users will receive an invitation email upon completion of the form."}

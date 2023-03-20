@@ -8,9 +8,13 @@ import LdapGroupMembershipManagementPanel
   from "components/common/inputs/user/membership/manager/LdapGroupMembershipManagementPanel";
 import SiteRoleSummaryPanel from "components/settings/ldap_site_roles/details/SiteRoleSummaryPanel";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import LdapSiteRoleGroupRoleHelper
+  from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
 
 function SiteRoleDetailPanel({ldapGroupData, orgDomain, loadData, isLoading }) {
   const [activeTab, setActiveTab] = useState("summary");
+  const { userData } = useComponentStateReference();
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
@@ -29,6 +33,8 @@ function SiteRoleDetailPanel({ldapGroupData, orgDomain, loadData, isLoading }) {
           handleTabClick={handleTabClick}
           activeTab={activeTab}
           tabText={"Manage Members"}
+          visible={LdapSiteRoleGroupRoleHelper.canUpdateSiteRoleGroupMembership(userData, ldapGroupData?.getOriginalData()) === true}
+          disabled={LdapSiteRoleGroupRoleHelper.canUpdateSiteRoleGroupMembership(userData, ldapGroupData?.getOriginalData()) !== true}
         />
       </CustomTabContainer>
     );

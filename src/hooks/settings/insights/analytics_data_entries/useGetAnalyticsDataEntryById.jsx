@@ -4,6 +4,9 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
 import useAnalyticsDataEntryActions from "hooks/settings/insights/analytics_data_entries/useAnalyticsDataEntryActions";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import AnalyticsDataEntryRoleHelper
+  from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
 
 export default function useGetAnalyticsProjectDataMappingById(analyticsDataEntryId, handleErrorFunction) {
   const analyticsDataEntryActions = useAnalyticsDataEntryActions();
@@ -14,6 +17,7 @@ export default function useGetAnalyticsProjectDataMappingById(analyticsDataEntry
     setError,
     loadData,
   } = useLoadData();
+  const { userData } = useComponentStateReference();
 
   useEffect(() => {
     setAnalyticsDataEntry(undefined);
@@ -25,6 +29,11 @@ export default function useGetAnalyticsProjectDataMappingById(analyticsDataEntry
 
   const getAnalyticsDataEntryById = async () => {
     setAnalyticsDataEntry(undefined);
+
+    if (AnalyticsDataEntryRoleHelper.canGetAnalyticsDataEntryList(userData) !== true) {
+      return;
+    }
+
     const response = await analyticsDataEntryActions.getAnalyticsDataEntryById(analyticsDataEntryId);
     const newAnalyticsDataEntry = DataParsingHelper.parseNestedObject(response, "data.data");
 

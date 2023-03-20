@@ -11,10 +11,11 @@ import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTa
 import LdapGroupMembershipManagementPanel
   from "components/common/inputs/user/membership/manager/LdapGroupMembershipManagementPanel";
 import LdapGroupAssignedRolesPanel from "components/settings/ldap_groups/details/roles/LdapGroupAssignedRolesPanel";
+import LdapUserGroupRoleHelper from "@opsera/know-your-role/roles/accounts/groups/user/ldapUserGroupRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function LdapGroupDetailPanel(
   {
-    currentUserEmail,
     ldapGroupData,
     setLdapGroupData,
     orgDomain,
@@ -23,6 +24,7 @@ function LdapGroupDetailPanel(
     isLoading,
   }) {
   const [activeTab, setActiveTab] = useState("summary");
+  const { userData, } = useComponentStateReference();
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
@@ -48,6 +50,8 @@ function LdapGroupDetailPanel(
           handleTabClick={handleTabClick}
           activeTab={activeTab}
           tabText={"Manage Members"}
+          visible={LdapUserGroupRoleHelper.canUpdateGroupMembership(userData, ldapGroupData?.getOriginalData()) === true}
+          disabled={LdapUserGroupRoleHelper.canUpdateGroupMembership(userData, ldapGroupData?.getOriginalData()) !== true}
         />
         <CustomTab
           icon={faIdCard}
@@ -85,7 +89,6 @@ function LdapGroupDetailPanel(
         return (
           <LdapGroupEditorPanel
             handleClose={toggleSummaryPanel}
-            currentUserEmail={currentUserEmail}
             authorizedActions={authorizedActions}
             setLdapGroupData={setLdapGroupData}
             ldapGroupData={ldapGroupData}
@@ -115,7 +118,6 @@ LdapGroupDetailPanel.propTypes = {
   ldapGroupData: PropTypes.object,
   setLdapGroupData: PropTypes.func,
   orgDomain: PropTypes.string,
-  currentUserEmail: PropTypes.string,
   loadData: PropTypes.func,
   authorizedActions: PropTypes.array,
   isLoading: PropTypes.bool,

@@ -9,10 +9,11 @@ import PolicyManagementPageLinkCards
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import VanityInlineError from "temp-library-components/fields/info/VanityInlineError";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import PolicyRoleHelper from "@opsera/know-your-role/roles/settings/policies/policyRole.helper";
 
 export default function PolicyManagement() {
   const {
-    isSiteAdministrator,
+    userData,
   } = useComponentStateReference();
   const {
     policies,
@@ -46,7 +47,7 @@ export default function PolicyManagement() {
     );
   };
 
-  if (isSiteAdministrator !== true) {
+  if (PolicyRoleHelper.canGetPolicies(userData) !== true) {
     return null;
   }
 

@@ -15,6 +15,9 @@ import pipelineDataMappingMetadata
 import {
   analyticsPipelineDataMappingHelper
 } from "components/settings/data_mapping/pipelines/analyticsPipelineDataMapping.helper";
+import AnalyticsPipelineDataMappingRoleHelper
+  from "@opsera/know-your-role/roles/settings/analytics_data_mappings/pipelines/analyticsPipelineDataMappingRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function PipelineDataMappingsTable(
   {
@@ -25,7 +28,8 @@ function PipelineDataMappingsTable(
   }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
-  let fields = pipelineDataMappingMetadata.fields;
+  const fields = pipelineDataMappingMetadata.fields;
+  const { userData } = useComponentStateReference();
 
   const columns = useMemo(
     () => [
@@ -66,7 +70,7 @@ function PipelineDataMappingsTable(
   return (
     <FilterContainer
       loadData={loadData}
-      addRecordFunction={createProjectTag}
+      addRecordFunction={AnalyticsPipelineDataMappingRoleHelper.canCreateAnalyticsPipelineDataMapping(userData) ? createProjectTag : undefined}
       supportSearch={false}
       isLoading={isLoading}
       showBorder={false}

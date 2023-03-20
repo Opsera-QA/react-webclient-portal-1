@@ -141,7 +141,6 @@ export default function MultiSelectCheckboxInputBase(
         isLoading={isLoading}
         field={field}
         showLabel={showLabel}
-        className={"bold input-label"}
         clearDataFunction={clearData}
         selectAllFunction={selectAllFunction}
       />

@@ -12,6 +12,7 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 import {ssoUserMetadata} from "components/settings/users/ssoUser.metadata";
 import axios from "axios";
 import SsoUserDetailPanel from "components/settings/users/sso_user_details/SsoUserDetailPanel";
+import UserManagementSubNavigationBar from "components/settings/users/UserManagementSubNavigationBar";
 
 function SsoUserDetailView() {
   const {userId} = useParams();
@@ -100,6 +101,7 @@ function SsoUserDetailView() {
       dataObject={ssoUserData}
       isLoading={isLoading}
       actionBar={getActionBar()}
+      navigationTabContainer={<UserManagementSubNavigationBar activeTab={"pendingUserViewer"} />}
       detailPanel={
         <SsoUserDetailPanel hideSettings={true} ssoUserData={ssoUserData} />
       }

@@ -17,8 +17,10 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import {analyticsDataEntryHelper} from "components/settings/analytics_data_entry/analyticsDataEntry.helper";
 import DeleteAnalyticsDataEntryActionBarButton
   from "components/settings/analytics_data_entry/actions/DeleteAnalyticsDataEntryActionBarButton";
+import AnalyticsDataEntryRoleHelper
+  from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
 
-function AnalyticsDataEntryDetailView() {
+export default function AnalyticsDataEntryDetailView() {
   const {id} = useParams();
   const {
     analyticsDataEntryModel,
@@ -29,7 +31,7 @@ function AnalyticsDataEntryDetailView() {
     id,
   );
   const {
-    accessRoleData,
+    userData,
   } = useComponentStateReference();
 
   const getActionBar = () => {
@@ -64,8 +66,8 @@ function AnalyticsDataEntryDetailView() {
     );
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
+  if (AnalyticsDataEntryRoleHelper.canGetAnalyticsDataEntryList(userData) !== true) {
+    return null;
   }
 
   return (
@@ -75,12 +77,8 @@ function AnalyticsDataEntryDetailView() {
       dataObject={analyticsDataEntryModel}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS}
       navigationTabContainer={<AnalyticsDataEntryManagementSubNavigationBar activeTab={"analyticsDataEntryViewer"} />}
       detailPanel={getBody()}
     />
   );
 }
-
-export default AnalyticsDataEntryDetailView;

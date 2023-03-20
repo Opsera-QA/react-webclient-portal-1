@@ -1,35 +1,18 @@
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 import ProjectDataMappingManagement from "components/settings/data_mapping/projects/ProjectDataMappingManagement";
 import UserDataMappingManagement from "components/settings/data_mapping/users/UserDataMappingManagement";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
-import {faDraftingCompass, faProjectDiagram, faUser} from "@fortawesome/pro-light-svg-icons";
+import {faProjectDiagram, faUser} from "@fortawesome/pro-light-svg-icons";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
-import {AuthContext} from "contexts/AuthContext";
 import PipelineDataMappingManagement from "components/settings/data_mapping/pipelines/PipelineDataMappingManagement";
 
-function DataMappingManagementTabView() {
-  const { featureFlagHideItemInProd } = useContext(AuthContext);
+export default function DataMappingManagementTabView() {
   const [activeTab, setActiveTab] = useState("projects");
 
   const handleTabClick = (tabSelection) => (e) => {
     e.preventDefault();
     setActiveTab(tabSelection);
-  };
-
-  // TODO: Put inline in the tab container function when approved for deploy
-  const getPipelineDataMappingTab = () => {
-    if (featureFlagHideItemInProd() === false) {
-      return (
-        <CustomTab
-          icon={faDraftingCompass}
-          tabName={"pipeline"}
-          handleTabClick={handleTabClick}
-          activeTab={activeTab}
-          tabText={"Pipeline Data Mapping"}
-        />
-      );
-    }
   };
 
   const getTabContainer = () => {
@@ -49,7 +32,13 @@ function DataMappingManagementTabView() {
           activeTab={activeTab}
           tabText={"User Tags"}
         />
-        {getPipelineDataMappingTab()}
+        {/*<CustomTab*/}
+        {/*  icon={faDraftingCompass}*/}
+        {/*  tabName={"pipeline"}*/}
+        {/*  handleTabClick={handleTabClick}*/}
+        {/*  activeTab={activeTab}*/}
+        {/*  tabText={"Pipeline Data Mapping"}*/}
+        {/*/>*/}
       </CustomTabContainer>
     );
   };
@@ -84,5 +73,3 @@ function DataMappingManagementTabView() {
 }
 
 DataMappingManagementTabView.propTypes = {};
-
-export default DataMappingManagementTabView;

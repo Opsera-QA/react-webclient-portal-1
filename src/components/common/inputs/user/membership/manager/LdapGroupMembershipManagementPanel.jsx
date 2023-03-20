@@ -242,11 +242,14 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, set
         <div><h5>Add or remove Members from the {ldapGroupData.getData("name")} {type}</h5></div>
       </Row>
       <Row>
-        <MessageFieldBase
-          message={` 
+        <Col xs={12}>
+          <MessageFieldBase
+            message={` 
             Manage ${type} membership below by adding items from the left column into the right or removing members from the right column.  
             Changes must be saved before being complete. ${type} membership changes take effect after the User logs back in or upon profile Re-sync.
-          `} />
+          `}
+          />
+        </Col>
       </Row>
       <Row>
         {getSaveAndCancelButtonContainer()}

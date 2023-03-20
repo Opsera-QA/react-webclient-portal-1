@@ -4,6 +4,7 @@ import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import tagMetadata from "components/settings/tags/tag.metadata";
 import {
+  getFormattedLabelWithFunctionColumnDefinition,
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn
@@ -16,15 +17,20 @@ import {faTags} from "@fortawesome/pro-light-svg-icons";
 import InlineTagTypeFilter from "components/common/filters/tags/tag_type/InlineTagTypeFilter";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import TagTypeFilter from "components/common/filters/tags/tag_type/TagTypeFilter";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
+import tagTypeConstants from "@opsera/definitions/constants/settings/tags/tagType.constants";
 
 function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, isMounted }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
-  let fields = tagMetadata.fields;
+  const fields = tagMetadata.fields;
+  const { userData } = useComponentStateReference();
+  const siteRole = SiteRoleHelper.getSiteRoleLevel(userData);
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "type")),
+      getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), tagTypeConstants.getTagTypeLabel),
       getTableTextColumn(getField(fields, "value")),
       getTableTextColumn(getField(fields, "_id")),
       getTableBooleanIconColumn(getField(fields, "active")),
@@ -80,7 +86,7 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, i
       loadData={loadData}
       filterDto={tagFilterDto}
       setFilterDto={setTagFilterDto}
-      addRecordFunction={createTag}
+      addRecordFunction={siteRole !== SiteRoleHelper.SITE_ROLES.AUDITOR && siteRole !== SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER ? createTag : undefined}
       supportSearch={true}
       isLoading={isLoading}
       body={getTagsTable()}

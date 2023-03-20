@@ -9,7 +9,6 @@ import DataMappingManagementSubNavigationBar
 import DeleteAnalyticsUserDataMappingActionBarButton
   from "components/settings/data_mapping/users/actions/DeleteAnalyticsUserDataMappingActionBarButton";
 import {analyticsUserDataMappingHelper} from "components/settings/data_mapping/users/analyticsUserDataMapping.helper";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetAnalyticsUserDataMappingModelById
   from "hooks/settings/insights/analytics_data_mappings/users/useGetAnalyticsUserDataMappingModelById";
 import userDataMappingMetadata from "@opsera/definitions/constants/settings/data_mapping/user/userDataMapping.metadata";
@@ -22,9 +21,6 @@ function UserDataMappingDetailView() {
     error,
     isLoading,
   } = useGetAnalyticsUserDataMappingModelById(usersMappingId);
-  const {
-    accessRoleData,
-  } = useComponentStateReference();
 
   const getActionBar = () => {
     return (
@@ -49,7 +45,6 @@ function UserDataMappingDetailView() {
       breadcrumbDestination={"userTaggingDetailView"}
       metadata={userDataMappingMetadata}
       navigationTabContainer={<DataMappingManagementSubNavigationBar activeTab={"userTagViewer"} />}
-      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       dataObject={analyticsUserDataMappingModel}
       isLoading={isLoading}
       actionBar={getActionBar()}

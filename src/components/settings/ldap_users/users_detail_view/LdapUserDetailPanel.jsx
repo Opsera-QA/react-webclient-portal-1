@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-
 import LdapUserEditorPanel from "./LdapUserEditorPanel";
 import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
 import SummaryTab from "../../../common/tabs/detail_view/SummaryTab";
@@ -8,7 +7,7 @@ import LdapUserSummaryPanel from "./LdapUserSummaryPanel";
 import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
 import SettingsTab from "../../../common/tabs/detail_view/SettingsTab";
 
-function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, hideSettings }) {
+export default function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, hideSettings }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -60,9 +59,4 @@ LdapUserDetailPanel.propTypes = {
   setLdapUserData: PropTypes.func,
   hideSettings: PropTypes.bool,
   orgDomain: PropTypes.string,
-  authorizedActions: PropTypes.array
 };
-
-export default LdapUserDetailPanel;
-
-
