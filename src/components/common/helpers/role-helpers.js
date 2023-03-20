@@ -110,7 +110,7 @@ export const ACCESS_ROLE_PERMISSION_MESSAGES = {
   POWER_USER: "Power User Role: Your account has elevated privileges to the Opsera platform.",
   USER: "Standard User Role: Your account has standard user access to the Opsera platform and inherits access based on individual item access rules.",
   SECURITY_MANAGER: "Security Manager User Role: Your account has read access to Tools, Tasks, and Pipelines in the Opsera platform and write access to security-owned items.",
-  AUDITOR: "Auditor User Role: Your account has full read access to Tools, Tasks, and Pipelines im the Opsera platform.",
+  AUDITOR: "Auditor User Role: Your account has full read access to Tools, Tasks, and Pipelines in the Opsera platform.",
   GUEST: "Guest User Role: Your account does not have any privileges associated with the Opsera platform and can only view and edit some data.",
 };
 
