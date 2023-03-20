@@ -32,7 +32,7 @@ function PipelineSourceRepositoryHelpDocumentation({ closeHelpPanel }) {
               <li><b>Path</b> - Provide the path folder where version of pipeline will be published.</li>
             </ul>
             <h6>Dynamic Settings</h6>
-            <div> Dynamic Settings allow the user running a pipeline to change supported values in the pipeline at runtime. When this is enabled, a user will get a prompt to change the Git Branch for this pipeline before it starts, allowing them to target different branches without having to edit the pipeline.</div>
+            <div> Dynamic Settings allow the user running a pipeline to change supported values in the pipeline at runtime. When this is enabled, a user will get a prompt to change the Git Branch for this pipeline before it starts, allowing them to target different branches without having to edit the pipeline. Configure the Pipeline's Type to Software Development (SDLC) to enable this feature.</div>
             <ul style={{listStyleType: "none"}}>
               <li><b>Allow users to set Dynamic Settings when starting this Pipeline</b> - Enable to set pipeline Dynamic Settings in the UI at runtime.</li>
             </ul>
