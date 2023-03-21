@@ -11,7 +11,9 @@ function LdapUserSummaryPanel({ ldapUserData, setActiveTab } ) {
   }
 
   return (
-    <SummaryPanelContainer setActiveTab={setActiveTab}>
+    <SummaryPanelContainer
+      // setActiveTab={setActiveTab}
+    >
       <Row>
         <Col lg={6}>
           <TextFieldBase dataObject={ldapUserData} fieldName={"firstName"}/>

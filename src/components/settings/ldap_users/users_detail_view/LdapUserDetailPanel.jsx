@@ -35,7 +35,7 @@ export default function LdapUserDetailPanel({ ldapUserData, setLdapUserData, org
     return (
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        {getSettingsTab()}
+        {/*{getSettingsTab()}*/}
       </CustomTabContainer>
     );
   };
