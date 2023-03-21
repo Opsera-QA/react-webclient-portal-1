@@ -17,6 +17,7 @@ export default function PipelineActionControlsStartPipelineButton(
     pipelineIsStarting,
     hasQueuedRequest,
     dynamicSettingsEnabled,
+    pipelineOrientation,
     handleRunPipelineClick, // TODO: Move actual start functionality in here
   }) {
   const {
@@ -28,6 +29,7 @@ export default function PipelineActionControlsStartPipelineButton(
     // TODO: Allow middle of the pipeline to configure if they start over
     if (
       dynamicSettingsEnabled === true
+      && (pipelineOrientation === "start" || pipelineOrientation === "end")
       && pipelineValidationHelper.isPipelineSourceRepositoryValidForDynamicSettings(pipeline) === true
       && PipelineRoleHelper.canUpdatePipelineStepDetails(userData, pipeline) === true
     ) {
@@ -67,4 +69,5 @@ PipelineActionControlsStartPipelineButton.propTypes = {
   pipelineIsStarting: PropTypes.any,
   hasQueuedRequest: PropTypes.any,
   dynamicSettingsEnabled: PropTypes.bool,
+  pipelineOrientation: PropTypes.string,
 };

@@ -2,7 +2,6 @@ import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import {faWandMagic} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import ConfirmResumePipeline from "components/workflow/wizards/ConfirmResumePipeline";
 import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 
@@ -27,10 +26,6 @@ function PipelineStartWizard(
   };
 
   const getBody = () => {
-    if (pipelineType !== "sfdc" && pipelineOrientation === "middle") {
-      return (<ConfirmResumePipeline pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} />);
-    }
-
     if (pipelineType === "sfdc") {
       return (
         <SfdcPipelineWizard
