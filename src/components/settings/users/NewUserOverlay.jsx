@@ -32,7 +32,7 @@ export default function NewUserOverlay({ loadData } ) {
     setDomain(orgDomain);
     const token = apiTokenHelper.generateApiCallToken("orgRegistrationForm");
     const accountResponse = await userActions.getAccountInformationV2(cancelTokenSource, orgDomain, token);
-    const newUserModel = (new Model(usersMetadata.newObjectFields, usersMetadata, true));
+    const newUserModel = new Model(usersMetadata.newObjectFields, usersMetadata, true);
 
     if (accountResponse?.data) {
       if (accountResponse.data.idpBaseUrl && window.location.hostname.toLowerCase() !== accountResponse.data.idpBaseUrl.toLowerCase()) {
