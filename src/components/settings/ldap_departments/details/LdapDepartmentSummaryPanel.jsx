@@ -3,7 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import LdapUsersTable from "components/settings/ldap_users/LdapUsersTable";
+import LdapUsersTable from "components/admin/accounts/ldap/users/LdapUsersTable";
 
 function LdapDepartmentSummaryPanel({ ldapDepartmentData, orgDomain, setActiveTab }) {
   return (

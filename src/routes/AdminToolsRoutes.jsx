@@ -51,7 +51,7 @@ import OrganizationSettingsDetailView
   from "components/admin/organization_settings/details/OrganizationSettingsDetailView";
 import RoleRestrictedRoute from "temp-library-components/routes/RoleRestrictedRoute";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import LdapUserDetailView from "components/settings/ldap_users/users_detail_view/LdapUserDetailView";
+import LdapUserDetailView from "components/admin/accounts/ldap/users/details/LdapUserDetailView";
 
 export default function AdminToolsRoutes() {
   const {

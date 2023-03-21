@@ -1,7 +1,7 @@
 import React from "react";
 import {Row, Col} from "react-bootstrap";
 import PropTypes from "prop-types";
-import LdapUsersTable from "components/settings/ldap_users/LdapUsersTable";
+import LdapUsersTable from "components/admin/accounts/ldap/users/LdapUsersTable";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SiteRolePermissionsField from "components/settings/ldap_site_roles/details/SiteRolePermissionsField";
