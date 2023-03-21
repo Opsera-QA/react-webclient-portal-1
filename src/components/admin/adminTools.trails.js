@@ -8,15 +8,15 @@ import {
   faTools, faUserCircle, faUserPlus, faUsers, faWrench
 } from "@fortawesome/pro-light-svg-icons";
 import {organizationSettingsHelper} from "components/admin/organization_settings/organizationSettings.helper";
-import paths from "components/common/navigation/paths";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
+import {adminToolsPaths} from "components/admin/adminTools.paths";
 
 export const adminToolsTrails = {};
 
 adminToolsTrails.admin = {
   parent: undefined,
   name: "admin",
-  path: paths.admin,
+  path: adminToolsPaths.admin,
   linkText: "Administration Tools",
   title: "Administration Tools",
   icon: faTools,
@@ -51,7 +51,7 @@ adminToolsTrails.ldapOrganizationSettingsDetailView = {
 adminToolsTrails.customEnvironmentVariableManagement = {
   parent: "admin",
   name: "customEnvironmentVariableManagement",
-  path: paths.customEnviromentVariableManagement,
+  path: adminToolsPaths.customEnviromentVariableManagement,
   title: "Custom Environment Variable Management",
   linkText: "Custom Environment Variable Management",
   icon: faFileCode,
@@ -64,7 +64,7 @@ adminToolsTrails.customEnvironmentVariableManagement = {
 adminToolsTrails.systemStatus = {
   parent: "admin",
   name: "systemStatus",
-  path: paths.systemStatus,
+  path: adminToolsPaths.systemStatus,
   linkText: "System Status",
   title: "System Status",
   icon: faHeartbeat,
@@ -75,7 +75,7 @@ adminToolsTrails.systemStatus = {
 adminToolsTrails.systemHealthCheck = {
   parent: "admin",
   name: "systemHealthCheck",
-  path: paths.systemHealthCheck,
+  path: adminToolsPaths.systemHealthCheck,
   linkText: "System Health Check",
   title: "System Health Check",
   icon: faHeartbeat,
@@ -86,7 +86,7 @@ adminToolsTrails.systemHealthCheck = {
 adminToolsTrails.deprecatedReports = {
   parent: "admin",
   name: "deprecatedReports",
-  path: paths.deprecatedReports,
+  path: adminToolsPaths.deprecatedReports,
   linkText: "Reports",
   title: "Reports",
   icon: faLink,
@@ -97,7 +97,7 @@ adminToolsTrails.deprecatedReports = {
 adminToolsTrails.reportsRegistration = {
   parent: "admin",
   name: "reportsRegistration",
-  path: paths.reportsRegistration,
+  path: adminToolsPaths.reportsRegistration,
   linkText: "Reports Registration",
   title: "Reports Registration",
   icon: faChartBar,
@@ -108,7 +108,7 @@ adminToolsTrails.reportsRegistration = {
 adminToolsTrails.systemManagement = {
   parent: "admin",
   name: "systemManagement",
-  path: paths.systemManagement,
+  path: adminToolsPaths.systemManagement,
   title: "System Management",
   linkText: "System Management",
   icon: faEdit,
@@ -120,7 +120,7 @@ adminToolsTrails.systemManagement = {
 adminToolsTrails.siteNotificationManagement = {
   parent: "admin",
   name: "siteNotificationManagement",
-  path: paths.siteNotificationManagement,
+  path: adminToolsPaths.siteNotificationManagement,
   title: "Site Notification Management",
   linkText: "Site Notification Management",
   icon: faFlag,
@@ -131,7 +131,7 @@ adminToolsTrails.siteNotificationManagement = {
 adminToolsTrails.siteNotificationDetailView = {
   parent: "siteNotificationManagement",
   name: "siteNotificationDetailView",
-  path: paths.siteNotificationDetailView,
+  path: adminToolsPaths.siteNotificationDetailView,
   title: "Site Notification Detail View",
   linkText: "Site Notification Detail View",
   icon: faFlag,
@@ -142,7 +142,7 @@ adminToolsTrails.siteNotificationDetailView = {
 adminToolsTrails.siteNotificationManager = {
   parent: "admin",
   name: "siteNotificationManager",
-  path: paths.siteNotificationManager,
+  path: adminToolsPaths.siteNotificationManager,
   title: "Site Notification Manager",
   linkText: "Site Notification Manager",
   icon: faFlag,
@@ -155,7 +155,7 @@ adminToolsTrails.siteNotificationManager = {
 adminToolsTrails.platformSystemParameterManagement = {
   parent: "admin",
   name: "platformSystemParameterManagement",
-  path: paths.platformSystemParameterManagement,
+  path: adminToolsPaths.platformSystemParameterManagement,
   title: "Custom Parameters Management",
   linkText: "Custom Parameters Management",
   icon: faCogs,
@@ -167,7 +167,7 @@ adminToolsTrails.platformSystemParameterManagement = {
 adminToolsTrails.platformSystemParameterDetailView = {
   parent: "platformSystemParameterManagement",
   name: "platformSystemParameterDetailView",
-  path: paths.platformSystemParameterDetailView,
+  path: adminToolsPaths.platformSystemParameterDetailView,
   title: "Custom Parameter Details",
   linkText: "Custom Parameter Details",
   icon: faCogs,
@@ -179,7 +179,7 @@ adminToolsTrails.platformSystemParameterDetailView = {
 adminToolsTrails.platformSettingsManagement = {
   parent: "admin",
   name: "platformSettingsManagement",
-  path: paths.platformSettingsManagement,
+  path: adminToolsPaths.platformSettingsManagement,
   title: "Features Management",
   linkText: "Features Management",
   icon: faFlag,
@@ -191,7 +191,7 @@ adminToolsTrails.platformSettingsManagement = {
 adminToolsTrails.platformSettingsDetailView = {
   parent: "platformSettingsManagement",
   name: "platformSettingsDetailView",
-  path: paths.platformSettingsDetailView,
+  path: adminToolsPaths.platformSettingsDetailView,
   title: "Feature Details",
   linkText: "Feature Details",
   icon: faFolderCog,
@@ -203,7 +203,7 @@ adminToolsTrails.platformSettingsDetailView = {
 adminToolsTrails.freeTrialCustomerWorkspaceManagement = {
   parent: "admin",
   name: "freeTrialCustomerWorkspaceManagement",
-  path: paths.freeTrialCustomerWorkspaceManagement,
+  path: adminToolsPaths.freeTrialCustomerWorkspaceManagement,
   title: "Free Trial Customer Workspace Management",
   linkText: "Free Trial Customer Workspace Management",
   icon: faUsers,
@@ -215,7 +215,7 @@ adminToolsTrails.freeTrialCustomerWorkspaceManagement = {
 adminToolsTrails.freeTrialCustomerWorkspaceDetailView = {
   parent: "freeTrialCustomerWorkspaceManagement",
   name: "freeTrialCustomerWorkspaceDetailView",
-  path: paths.freeTrialCustomerWorkspaceDetailView,
+  path: adminToolsPaths.freeTrialCustomerWorkspaceDetailView,
   title: "Free Trial Customer Workspace Details",
   linkText: "Free Trial Customer Workspace Details",
   icon: faUsers,
@@ -227,7 +227,7 @@ adminToolsTrails.freeTrialCustomerWorkspaceDetailView = {
 adminToolsTrails.taskTemplateManagement = {
   parent: "admin",
   name: "taskTemplateManagement",
-  path: paths.taskTemplateManagement,
+  path: adminToolsPaths.taskTemplateManagement,
   title: "Task Template Management",
   linkText: "Task Template Management",
   icon: faStream,
@@ -241,7 +241,7 @@ adminToolsTrails.taskTemplateManagement = {
 adminToolsTrails.taskTemplateDetailView = {
   parent: "taskTemplateManagement",
   name: "taskTemplateDetailView",
-  path: paths.taskTemplateDetailView,
+  path: adminToolsPaths.taskTemplateDetailView,
   title: "Task emplate Details",
   linkText: "Task Template Details",
   icon: faStream,
@@ -253,7 +253,7 @@ adminToolsTrails.taskTemplateDetailView = {
 adminToolsTrails.templateManagement = {
   parent: "admin",
   name: "templateManagement",
-  path: paths.templateManagement,
+  path: adminToolsPaths.templateManagement,
   title: "Pipeline Template Management",
   linkText: "Pipeline Template Management",
   icon: faStream,
@@ -268,7 +268,7 @@ adminToolsTrails.templateManagement = {
 adminToolsTrails.templateDetailView = {
   parent: "templateManagement",
   name: "templateDetailView",
-  path: paths.templateDetailView,
+  path: adminToolsPaths.templateDetailView,
   title: "Template Details",
   linkText: "Template Details",
   icon: faStream,
@@ -280,7 +280,7 @@ adminToolsTrails.templateDetailView = {
 adminToolsTrails.pipelineStorageManagement = {
   parent: "admin",
   name: "pipelineStorageManagement",
-  path: paths.pipelineStorageManagement,
+  path: adminToolsPaths.pipelineStorageManagement,
   title: "Pipeline Storage Management",
   linkText: "Pipeline Storage Management",
   icon: faFileArchive,
@@ -292,7 +292,7 @@ adminToolsTrails.pipelineStorageManagement = {
 adminToolsTrails.pipelineStorageDetailView = {
   parent: "pipelineStorageManagement",
   name: "pipelineStorageDetailView",
-  path: paths.pipelineStorageDetailView,
+  path: adminToolsPaths.pipelineStorageDetailView,
   title: "Pipeline Storage Record Details",
   linkText: "Pipeline Storage Record Details",
   icon: faFileArchive,
@@ -304,7 +304,7 @@ adminToolsTrails.pipelineStorageDetailView = {
 adminToolsTrails.toolManagement = {
   parent: "admin",
   name: "toolManagement",
-  path: paths.toolManagement,
+  path: adminToolsPaths.toolManagement,
   title: "Tool Management",
   linkText: "Tool Management",
   icon: faWrench,
@@ -316,7 +316,7 @@ adminToolsTrails.toolManagement = {
 adminToolsTrails.toolCategoryDetailView = {
   parent: "toolManagement",
   name: "toolCategoryDetailView",
-  path: paths.toolCategoryDetailView,
+  path: adminToolsPaths.toolCategoryDetailView,
   title: "Tool Category Details",
   linkText: "Tool Category Details",
   icon: faWrench,
@@ -327,7 +327,7 @@ adminToolsTrails.toolCategoryDetailView = {
 adminToolsTrails.toolIdentifierDetailView = {
   parent: "toolManagement",
   name: "toolIdentifierDetailView",
-  path: paths.toolIdentifierDetailView,
+  path: adminToolsPaths.toolIdentifierDetailView,
   title: "Tool Identifier Details",
   linkText: "Tool Identifier Details",
   icon: faWrench,
@@ -339,7 +339,7 @@ adminToolsTrails.toolIdentifierDetailView = {
 adminToolsTrails.kpiManagement = {
   parent: "admin",
   name: "kpiManagement",
-  path: paths.kpiManagement,
+  path: adminToolsPaths.kpiManagement,
   title: "KPI Identifier Management",
   linkText: "KPI Identifier Management",
   icon: faFileInvoice,
@@ -351,7 +351,7 @@ adminToolsTrails.kpiManagement = {
 adminToolsTrails.kpiDetailView = {
   parent: "kpiManagement",
   name: "kpiDetailView",
-  path: paths.kpiManagement,
+  path: adminToolsPaths.kpiManagement,
   title: "KPI Identifier Details",
   linkText: "KPI Identifier Details",
   icon: faFileInvoice,
@@ -363,7 +363,7 @@ adminToolsTrails.kpiDetailView = {
 adminToolsTrails.registeredUsersManagement = {
   parent: "admin",
   name: "registeredUsersManagement",
-  path: paths.registeredUsersManagement,
+  path: adminToolsPaths.registeredUsersManagement,
   title: "Registered Users Management",
   linkText: "Registered Users Management",
   icon: faUserCircle,
@@ -375,7 +375,7 @@ adminToolsTrails.registeredUsersManagement = {
 adminToolsTrails.registeredUsersDetailView = {
   parent: "registeredUsersManagement",
   name: "registeredUsersDetailView",
-  path: paths.registeredUsersManagement,
+  path: adminToolsPaths.registeredUsersManagement,
   title: "Registered User Details",
   linkText: "Registered User Details",
   icon: faUserCircle,
@@ -387,7 +387,7 @@ adminToolsTrails.registeredUsersDetailView = {
 adminToolsTrails.apiConnectionTest = {
   parent: "admin",
   name: "apiConnectionTest",
-  path: paths.apiConnectionTest,
+  path: adminToolsPaths.apiConnectionTest,
   title: "API Connection Test",
   linkText: "API Connection Test",
   icon: faLink,
@@ -401,7 +401,7 @@ adminToolsTrails.apiConnectionTest = {
 adminToolsTrails.ldapOrganizationManagement = {
   parent: "admin",
   name: "ldapOrganizationManagement",
-  path: paths.ldapOrganizationManagement,
+  path: adminToolsPaths.ldapOrganizationManagement,
   title: "Organization Management",
   linkText: "Organization Management",
   icon: faSitemap,
@@ -413,7 +413,7 @@ adminToolsTrails.ldapOrganizationManagement = {
 adminToolsTrails.ldapOrganizationDetailView = {
   parent: "ldapOrganizationManagement",
   name: "ldapOrganizationDetailView",
-  path: paths.ldapOrganizationDetailView,
+  path: adminToolsPaths.ldapOrganizationDetailView,
   title: "Organization Details",
   linkText: "Organization Details",
   icon: faSitemap,
@@ -426,7 +426,7 @@ adminToolsTrails.ldapOrganizationDetailView = {
 adminToolsTrails.ldapOrganizationAccountManagement = {
   parent: "admin",
   name: "ldapOrganizationAccountManagement",
-  path: paths.ldapOrganizationAccountManagement,
+  path: adminToolsPaths.ldapOrganizationAccountManagement,
   title: "Organization Account Management",
   linkText: "Organization Account Management",
   icon: faSitemap,
@@ -437,7 +437,7 @@ adminToolsTrails.ldapOrganizationAccountManagement = {
 adminToolsTrails.ldapOrganizationAccountDetailView = {
   parent: "admin",
   name: "ldapOrganizationAccountDetailView",
-  path: paths.ldapOrganizationDetailView,
+  path: adminToolsPaths.ldapOrganizationDetailView,
   title: "Organization Account Details",
   linkText: "Organization Account Details",
   icon: faUsers,
@@ -449,7 +449,7 @@ adminToolsTrails.ldapOrganizationAccountDetailView = {
 adminToolsTrails.customerOnboarding = {
   parent: "admin",
   name: "customerOnboarding",
-  path: paths.customerOnboarding,
+  path: adminToolsPaths.customerOnboarding,
   title: "Customer Onboarding",
   linkText: "Customer Onboarding",
   icon: faUserPlus,
@@ -462,7 +462,7 @@ adminToolsTrails.customerOnboarding = {
 adminToolsTrails.remoteApplications = {
   parent: "admin",
   name: "remoteApplications",
-  path: paths.remoteApplications,
+  path: adminToolsPaths.remoteApplications,
   title: "Remote Application Management",
   linkText: "Remote Application Management",
   icon: faServer,
@@ -474,7 +474,7 @@ adminToolsTrails.remoteApplications = {
 adminToolsTrails.remoteApplicationsDetailView = {
   parent: "remoteApplications",
   name: "remoteApplicationsDetailView",
-  path: paths.remoteApplicationDetailView,
+  path: adminToolsPaths.remoteApplicationDetailView,
   title: "Remote Application Telemetry Record Details",
   linkText: "Remote Application Telemetry Record Details",
   icon: faServer,
