@@ -13,7 +13,7 @@ import {DialogToastContext} from "../../../../../../../contexts/DialogToastConte
 
 function SalesforceCodeAnalyserRuleActionableTwoTable({ data, isLoading, loadData, filterModel, setFilterModel, tableTitleIcon, kpiConfiguration, dashboardData }) {
     const fields = SalesforceCodeAnalyserActionableTwoMetadata.fields;
-    const tableTitle = "Salesforce Code Analyser Category Report";
+    const tableTitle = "Rule Issues Report";
     const noDataMessage = "No data available";
     const toastContext = useContext(DialogToastContext);
 
@@ -30,16 +30,6 @@ function SalesforceCodeAnalyserRuleActionableTwoTable({ data, isLoading, loadDat
         []
     );
 
-    const onRowSelect = (rowData) => {
-        toastContext.showOverlayPanel(
-            <BlueprintLogOverlay
-                kpiConfiguration={kpiConfiguration}
-                dashboardData={dashboardData}
-                category={rowData?.original?.category}
-            />
-        );
-    };
-
     const getTable = () => {
         return (
             <CustomTable
@@ -50,7 +40,6 @@ function SalesforceCodeAnalyserRuleActionableTwoTable({ data, isLoading, loadDat
                 noDataMessage={noDataMessage}
                 paginationDto={filterModel}
                 setPaginationDto={setFilterModel}
-                onRowSelect={onRowSelect}
             />
         );
     };

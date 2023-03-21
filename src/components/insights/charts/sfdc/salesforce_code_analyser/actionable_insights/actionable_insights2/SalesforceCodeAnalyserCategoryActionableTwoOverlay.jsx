@@ -12,7 +12,7 @@ import FullScreenCenterOverlayContainer from "../../../../../../common/overlays/
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import {getMetricFilterValue} from "../../../../../../common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "../../../../../../common/badges/date/metrics/MetricDateRangeBadge";
-import SalesforceCodeAnalyserCategoryActionableTwoTable from "./SalesforceCodeAnalyserRuleActionableTwoTable";
+import SalesforceCodeAnalyserCategoryActionableTwoTable from "./SalesforceCodeAnalyserCategoryActionableTwoTable";
 
 function SalesforceCodeAnalyserCategoryActionableTwoOverlay({
                                                              kpiConfiguration,
@@ -114,7 +114,7 @@ function SalesforceCodeAnalyserCategoryActionableTwoOverlay({
         <FullScreenCenterOverlayContainer
             closePanel={closePanel}
             showPanel={true}
-            titleText={"Salesforce Code Analyser Category Actionable Insights"}
+            titleText={"Category: " + category}
             showToasts={true}
             titleIcon={faTable}
             isLoading={isLoading}

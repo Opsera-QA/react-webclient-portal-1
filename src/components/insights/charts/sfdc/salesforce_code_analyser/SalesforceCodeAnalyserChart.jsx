@@ -191,20 +191,20 @@ function SalesforceCodeAnalyserChart({
             return (<><Row className={'pb-1'}>
                 <Col>
                         <SalesforceCodeAnalyserCategoryDataBlock
-                            data={dataBlockValues?.total}
-                            lastScore={ dataBlockValues?.prevTotal}
-                            icon={getIcon(dataBlockValues?.total, dataBlockValues?.prevTotal)}
-                            className={getIconColor(dataBlockValues?.total, dataBlockValues?.prevTotal)}
+                            data={dataBlockValues?.categories}
+                            lastScore={ dataBlockValues?.prevCategories}
+                            icon={getIcon(dataBlockValues?.categories, dataBlockValues?.prevCategories)}
+                            className={getIconColor(dataBlockValues?.categories, dataBlockValues?.prevCategories)}
                             onSelect={onRowSelect1}
                         />
                 </Col>
             </Row><Row className={'pb-1 pt-1'}>
                 <Col>
                         <SalesforceCodeAnalyserRuleDataBlock
-                            data={dataBlockValues?.total}
-                            lastScore={ dataBlockValues?.prevTotal}
-                            icon={getIcon(dataBlockValues?.total, dataBlockValues?.prevTotal)}
-                            className={getIconColor(dataBlockValues?.total, dataBlockValues?.prevTotal)}
+                            data={dataBlockValues?.rules}
+                            lastScore={ dataBlockValues?.prevRules}
+                            icon={getIcon(dataBlockValues?.rules, dataBlockValues?.prevRules)}
+                            className={getIconColor(dataBlockValues?.rules, dataBlockValues?.prevRules)}
                             onSelect={onRowSelect2}
                         />
                 </Col>

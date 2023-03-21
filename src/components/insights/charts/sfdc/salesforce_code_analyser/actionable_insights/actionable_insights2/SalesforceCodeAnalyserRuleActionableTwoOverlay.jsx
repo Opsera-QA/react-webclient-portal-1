@@ -99,7 +99,7 @@ function SalesforceCodeAnalyserRuleActionableTwoOverlay({
             }
         }
     };
-    console.log("rule", rule)
+    console.log("rule", rule);
 
     const closePanel = () => {
         toastContext.removeInlineMessage();
@@ -115,7 +115,7 @@ function SalesforceCodeAnalyserRuleActionableTwoOverlay({
         <FullScreenCenterOverlayContainer
             closePanel={closePanel}
             showPanel={true}
-            titleText={"Salesforce Code Analyser Category Actionable Insights"}
+            titleText={"Rule: " + rule}
             showToasts={true}
             titleIcon={faTable}
             isLoading={isLoading}

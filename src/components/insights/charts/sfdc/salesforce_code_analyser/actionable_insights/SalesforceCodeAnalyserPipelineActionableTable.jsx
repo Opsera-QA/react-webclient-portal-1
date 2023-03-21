@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import SalesforceCodeAnalyserActionableMetadata from "./SalesforceCodeAnalyserActionable.metadata";
@@ -8,22 +8,27 @@ import {
 } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import CustomTable from "components/common/table/CustomTable";
+import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import SalesforceCodeAnalyserRuleActionableTwoOverlay
+    from "./actionable_insights2/SalesforceCodeAnalyserRuleActionableTwoOverlay";
 
-function SalesforceCodeAnalyserPipelineActionableTable({ data, isLoading, loadData, filterModel, setFilterModel, tableTitleIcon }) {
+function SalesforceCodeAnalyserPipelineActionableTable({ data, isLoading, loadData, filterModel, setFilterModel, tableTitleIcon,kpiConfiguration,dashboardData }) {
     const fields = SalesforceCodeAnalyserActionableMetadata.fields;
-    const tableTitle = "Salesforce Code Analyser Pipeline Report";
+    const tableTitle = "Pipeline Report";
     const noDataMessage = "No data available";
+    const toastContext = useContext(DialogToastContext);
 
     const columns = useMemo(
         () => [
             getTableTextColumn(getField(fields, "pipeline"), "pipeline"),
             getTableTextColumn(getField(fields, "stepId"), "stepId"),
-            getTableDateTimeColumn(getField(fields, "jobType"), "jobType"),
+            getTableTextColumn(getField(fields, "jobType"), "jobType"),
             getTableTextColumn(getField(fields, "runCount"), "runCount"),
             getTableTextColumn(getField(fields, "totalCount"), "totalCount"),
         ],
         []
     );
+
 
     const getTable = () => {
         return (
@@ -63,6 +68,8 @@ SalesforceCodeAnalyserPipelineActionableTable.propTypes = {
     setFilterModel: PropTypes.func,
     priority: PropTypes.number,
     tableTitleIcon: PropTypes.object,
+    kpiConfiguration: PropTypes.object,
+    dashboardData: PropTypes.object,
 };
 
 export default SalesforceCodeAnalyserPipelineActionableTable;

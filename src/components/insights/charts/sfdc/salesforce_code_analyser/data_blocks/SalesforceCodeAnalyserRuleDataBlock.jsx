@@ -11,7 +11,7 @@ function SalesforceCodeAnalyserRuleDataBlock({ data, dataPoint, lastScore, icon,
                 icon={icon}
                 score={data}
                 bottomText={`Previous: ${lastScore || lastScore === 0? lastScore : "NA"}`}
-                topText={"Total Issues By Rule"}
+                topText={"Total Rules with Issues"}
                 dataPoint={dataPoint}
             />
         </DataBlockBoxContainer>

@@ -8,17 +8,16 @@ import actionableInsightsGenericChartFilterMetadata
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import {metricHelpers} from "../../../../metric.helpers";
 import chartsActions from "../../../charts-actions";
-import SalesforceCodeAnalyserPipelineActionableTable from "./SalesforceCodeAnalyserPipelineActionableTable";
-import {getMetricFilterValue} from "../../../../../common/helpers/metrics/metricFilter.helpers";
-import MetricDateRangeBadge from "../../../../../common/badges/date/metrics/MetricDateRangeBadge";
 import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
-import SalesforceCodeAnalyserCategoryActionableTable from "./SalesforceCodeAnalyserCategoryActionableTable";
+import {getMetricFilterValue} from "../../../../../common/helpers/metrics/metricFilter.helpers";
+import MetricDateRangeBadge from "../../../../../common/badges/date/metrics/MetricDateRangeBadge";
+import SalesforceCodeAnalyserPipelineActionableTable from "./SalesforceCodeAnalyserPipelineActionableTable";
 
-function SalesforceCodeAnalyserPipelineActionableOverlay({
-                                                     kpiConfiguration,
-                                                     dashboardData,
-                                                 }) {
+function SalesforceCodeAnalyserCategoryActionableOverlay({
+                                                             kpiConfiguration,
+                                                             dashboardData
+                                                         }) {
     const { getAccessToken } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
     const [error, setError] = useState(undefined);
@@ -114,7 +113,7 @@ function SalesforceCodeAnalyserPipelineActionableOverlay({
         <FullScreenCenterOverlayContainer
             closePanel={closePanel}
             showPanel={true}
-            titleText={"Actionable insights"}
+            titleText={"Salesforce Code Analyser Pipeline Actionable Insights"}
             showToasts={true}
             titleIcon={faTable}
             isLoading={isLoading}
@@ -128,15 +127,17 @@ function SalesforceCodeAnalyserPipelineActionableOverlay({
                     filterModel={filterModel}
                     setFilterModel={setFilterModel}
                     loadData={loadData}
+                    kpiConfiguration={kpiConfiguration}
+                    dashboardData={dashboardData}
                 />
             </div>
         </FullScreenCenterOverlayContainer>
     );
 }
 
-SalesforceCodeAnalyserPipelineActionableOverlay.propTypes = {
+SalesforceCodeAnalyserCategoryActionableOverlay.propTypes = {
     kpiConfiguration: PropTypes.object,
     dashboardData: PropTypes.object,
 };
 
-export default SalesforceCodeAnalyserPipelineActionableOverlay;
+export default SalesforceCodeAnalyserCategoryActionableOverlay;

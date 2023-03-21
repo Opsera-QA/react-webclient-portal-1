@@ -11,7 +11,7 @@ function SalesforceCodeAnalyserCategoryDataBlock({ data, dataPoint, lastScore, i
                 icon={icon}
                 score={data}
                 bottomText={`Previous: ${lastScore || lastScore === 0? lastScore : "NA"}`}
-                topText={"Total Issues By Category"}
+                topText={"Total Categories with Issues"}
                 dataPoint={dataPoint}
             />
         </DataBlockBoxContainer>
