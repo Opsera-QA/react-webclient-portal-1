@@ -115,7 +115,7 @@ export const sourceRepositoryConfigurationMetadata = {
       id: "dynamicSettings",
     },
     {
-      label: "Allow users to set Dynamic Settings when starting this Pipeline",
+      label: "Show Advanced Start Options Screen",
       id: "allowDynamicSettingsInUi",
       formText: `
         If this setting is enabled, users of this Pipeline will be able to set its Dynamic Settings in the UI at runtime. 
