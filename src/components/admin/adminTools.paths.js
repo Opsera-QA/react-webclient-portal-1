@@ -50,3 +50,6 @@ adminToolsPaths.apiConnectionTest = adminToolsPaths.admin + "/demo/api";
 
 adminToolsPaths.kpiManagement = adminToolsPaths.admin + "/kpis";
 adminToolsPaths.kpiDetailView = adminToolsPaths.kpiManagement;
+
+adminToolsPaths.remoteApplications = adminToolsPaths.admin + "/remote-applications";
+adminToolsPaths.remoteApplicationDetailView = adminToolsPaths.remoteApplications + "/details/";
