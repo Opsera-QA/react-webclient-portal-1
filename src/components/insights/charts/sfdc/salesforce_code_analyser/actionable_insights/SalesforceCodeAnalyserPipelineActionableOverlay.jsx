@@ -120,7 +120,6 @@ function SalesforceCodeAnalyserCategoryActionableOverlay({
             linkTooltipText={"View Full Blueprint"}
         >
             <div className={"p-3"}>
-                {getDateRange()}
                 <SalesforceCodeAnalyserPipelineActionableTable
                     isLoading={isLoading}
                     data={metrics}

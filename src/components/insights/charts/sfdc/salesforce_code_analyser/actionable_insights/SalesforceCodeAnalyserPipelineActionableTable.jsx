@@ -18,6 +18,12 @@ function SalesforceCodeAnalyserPipelineActionableTable({ data, isLoading, loadDa
     const noDataMessage = "No data available";
     const toastContext = useContext(DialogToastContext);
 
+    let total = null;
+    data.forEach((x) => {
+        total = total + x.totalCount;
+    });
+    console.log("total", total);
+
     const columns = useMemo(
         () => [
             getTableTextColumn(getField(fields, "pipeline"), "pipeline"),
@@ -46,6 +52,10 @@ function SalesforceCodeAnalyserPipelineActionableTable({ data, isLoading, loadDa
 
     return (
         <div>
+            <div className={'ml-4'}>
+                <b>Total Issues:</b> {total}
+            </div>
+            <div className="mb-3"/>
             <FilterContainer
                 isLoading={isLoading}
                 title={tableTitle}

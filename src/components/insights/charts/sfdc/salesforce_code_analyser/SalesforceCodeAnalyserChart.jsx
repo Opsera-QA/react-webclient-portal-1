@@ -227,7 +227,7 @@ function SalesforceCodeAnalyserChart({
                             )}
                             {...config()}
                             {...adjustBarWidth(metrics)}
-                            onClick={onNodeSelect}
+                            //onClick={onNodeSelect}
                             tooltip={({point, color}) => <ChartTooltip
                                 titles = {["Date", "Issues"]}
                                 values = {[String(point.data.xFormatted), point.data.y]}
@@ -264,7 +264,7 @@ function SalesforceCodeAnalyserChart({
                 setKpis={setKpis}
                 isLoading={isLoading}
                 showSettingsToggle={showSettingsToggle}
-                //launchActionableInsightsFunction={onNodeSelect}
+                launchActionableInsightsFunction={onNodeSelect}
                 chartHelpComponent={(closeHelpPanel) => (
                     <BoomiChartHelpDocumentation closeHelpPanel={closeHelpPanel} />
                 )}
