@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
-import {tagTypes} from "components/common/list_of_values_input/settings/tags/TagTypeSelectInput";
 
 function ToolTypeFilter({ fieldName, filterModel, setFilterModel, className, setDataFunction, inline}) {
     if (filterModel == null) {

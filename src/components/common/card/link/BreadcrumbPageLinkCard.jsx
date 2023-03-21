@@ -4,6 +4,8 @@ import {getBreadcrumb} from "components/common/navigation/trails";
 import PageLinkCard from "components/common/card/link/PageLinkCard";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import RoleHelper from "@opsera/know-your-role/roles/role.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 const getPathLink = (breadcrumb, pathParameter) => {
   const parsedBreadcrumb = DataParsingHelper.parseObject(breadcrumb, {});
@@ -22,6 +24,9 @@ export default function BreadcrumbPageLinkCard(
     pathParameter,
     className,
   }) {
+  const {
+    userData,
+  } = useComponentStateReference();
   const breadcrumb = getBreadcrumb(breadcrumbDestination);
   const breadcrumbPath = getPathLink(breadcrumb, pathParameter);
 
@@ -29,6 +34,8 @@ export default function BreadcrumbPageLinkCard(
     console.error(`Could not find breadcrumb for destination [${breadcrumbDestination}]`);
     return null;
   }
+
+  const allowedRoles = DataParsingHelper.parseArray(breadcrumb?.allowedRoles);
 
   const getLink = () => {
     if (breadcrumbPath.startsWith("/") !== true) {
@@ -38,7 +45,7 @@ export default function BreadcrumbPageLinkCard(
     return breadcrumbPath;
   };
 
-  if (hasStringValue(breadcrumbPath) !== true) {
+  if (hasStringValue(breadcrumbPath) !== true || (allowedRoles && RoleHelper.doesUserMeetSiteRoleRequirements(userData, allowedRoles) !== true)) {
     return null;
   }
 

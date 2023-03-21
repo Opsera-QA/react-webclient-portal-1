@@ -7,6 +7,7 @@ import useFeatureFlagAdministrationActions
 import featureFlagConstants
   from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
 
+// Unless you absolutely need to pull directly, use useGetOrganizationSettingsFeatureFlagModelByName instead
 export default function useGetFeatureFlagModelByName(
   featureFlagName,
 ) {

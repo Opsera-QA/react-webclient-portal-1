@@ -49,17 +49,19 @@ const MergeSyncTaskWizardInitializationScreen = ({
             </CenteredContentWrapper>
           </div>
         </div>
-        <Row className="mx-0 mt-3 d-flex">
-          <div className="ml-auto d-flex">
-            <Col>
-              <BooleanToggleInput
-                fieldName={"isProfiles"}
-                dataObject={wizardModel}
-                setDataObject={setWizardModel}
-              />
-            </Col>
-          </div>
-        </Row>
+        {wizardModel?.getData("taskType") === "SFDC_GIT_COMPARE_SYNC" &&
+          <Row className="mx-0 mt-3 d-flex">
+            <div className="ml-auto d-flex">
+              <Col>
+                <BooleanToggleInput
+                  fieldName={"isProfiles"}
+                  dataObject={wizardModel}
+                  setDataObject={setWizardModel}
+                />
+              </Col>
+            </div>
+          </Row>
+        }
         <SaveButtonContainer>
           <MergeSyncTaskWizardCreateNewRecordButton
             wizardModel={wizardModel}

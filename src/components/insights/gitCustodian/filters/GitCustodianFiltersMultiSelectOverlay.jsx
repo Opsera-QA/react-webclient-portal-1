@@ -27,6 +27,7 @@ function GitCustodianFiltersMultiSelectOverlay({ showModal, filterModel, setFilt
   const [statusFilterData, setStatusFilterData] = useState([]);
   const [emailFilterData, setEmailFilterData] = useState([]);
   const [typeFilterData, setTypeFilterData] = useState([]);
+  const [severityFilterData, setSeverityFilterData] = useState([]);
 
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
@@ -49,7 +50,8 @@ function GitCustodianFiltersMultiSelectOverlay({ showModal, filterModel, setFilt
       service: gitCustodianFilterModel.getData('service'),
       repositories: gitCustodianFilterModel.getData('respositories'),
       type: gitCustodianFilterModel.getData('type'),
-      status: gitCustodianFilterModel.getData('status')
+      status: gitCustodianFilterModel.getData('status'),
+      severity: gitCustodianFilterModel.getData('severity'),
     };
 
     if (JSON.stringify(previousFilter) !== JSON.stringify(filters)) {
@@ -102,12 +104,14 @@ function GitCustodianFiltersMultiSelectOverlay({ showModal, filterModel, setFilt
       const serviceData = filterResponseData?.service ? filterResponseData?.service : [];
       const emailData = filterResponseData?.email ? filterResponseData?.email : [];
       const typeData = filterResponseData?.type ? filterResponseData?.type : [];
+      const severityData = filterResponseData?.severity ? filterResponseData?.severity : [];
       setAuthorsFilterData(authorsData);
       setRepositoriesFilterData(repositoriesData);
       setStatusFilterData(statusData);
       setServicesFilterData(serviceData);
       setEmailFilterData(emailData);
       setTypeFilterData(typeData);
+      setSeverityFilterData(severityData);
     }
   };
 
@@ -118,7 +122,7 @@ function GitCustodianFiltersMultiSelectOverlay({ showModal, filterModel, setFilt
 
   const getFiltersInput = () => {
     if (isLoading) {
-      return (<LoadingDialog />);
+      return (<LoadingDialog size="md" message="Loading Filters" />);
     }
     return (
       <div>
@@ -182,6 +186,15 @@ function GitCustodianFiltersMultiSelectOverlay({ showModal, filterModel, setFilt
           selectOptions={statusFilterData}
           textField="status"
           valueField="status"
+        />
+        <MultiSelectInputBase
+          fieldName={"severity"}
+          placeholderText={"Filter by Severity"}
+          dataObject={gitCustodianFilterModel}
+          setDataObject={setGitCustodianFilterModel}          
+          selectOptions={severityFilterData}
+          textField="severity"
+          valueField="severity"
         />
         <div>
           <DateRangeInput dataObject={gitCustodianFilterModel} setDataObject={setGitCustodianFilterModel} fieldName={"date"} />

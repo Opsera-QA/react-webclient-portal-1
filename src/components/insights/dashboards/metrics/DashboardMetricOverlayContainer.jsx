@@ -39,6 +39,8 @@ import GitlabTimeTakenToCompleteMergeRequestReviewEditorPanel from "../../charts
 import GitlabMergeRequestsByUserEditorPanel from "../../charts/gitlab/bar_chart/merge_requests_by_user/GitlabMergeRequestsByUserEditorPanel";
 import GitlabCommitsByAuthorEditorPanel from "../../charts/gitlab/calendar_chart/commits_by_author/GitlabCommitsByAuthorEditorPanel";
 import GitLogDeveloper360EditorPanel from "../../charts/gitlog/commit_activities/GitLogDeveloper360EditorPanel";
+import SalesforceCodeAnalyserChartEditorPanel
+  from "../../charts/sfdc/salesforce_code_analyser/SalesforceCodeAnalyserChartEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer({
@@ -387,6 +389,16 @@ function DashboardMetricOverlayContainer({
             unpackedFilterData={unpackedFilterData}
             kpiConfiguration={kpiConfiguration}
           />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_CODE_ANALYSER:
+        return (
+            <SalesforceCodeAnalyserChartEditorPanel
+                metricModel={metricModel}
+                metricFilterModel={metricFilterModel}
+                setMetricFilterModel={setMetricFilterModel}
+                unpackedFilterData={unpackedFilterData}
+                kpiConfiguration={kpiConfiguration}
+            />
         );
     }
   };

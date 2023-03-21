@@ -46,7 +46,12 @@ function UserDataMappingDetailPanel({ userDataMappingModel, setUserDataMappingMo
     return (
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SettingsTab
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          visible={userDataMappingModel?.canUpdate() === true}
+          disabled={userDataMappingModel?.canUpdate() !== true}
+        />
       </CustomTabContainer>
     );
   };

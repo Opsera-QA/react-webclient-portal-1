@@ -7,14 +7,21 @@ import TagField from "components/common/fields/multiple_items/tags/TagField";
 import LeaderField from "components/common/fields/object/settings/organizations/LeaderField";
 import ActivityField from "components/common/fields/boolean/ActivityField";
 import SsoUserField from "components/common/list_of_values_input/users/sso/user/SsoUserField";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import OrganizationRoleHelper from "@opsera/know-your-role/roles/settings/organizations/organizationRole.helper";
 
 function OrganizationSummaryPanel({ organizationData, setActiveTab }) {
+  const {
+    userData,
+  } = useComponentStateReference();
   if (organizationData == null) {
     return <></>;
   }
 
   return (
-    <SummaryPanelContainer setActiveTab={setActiveTab}>
+    <SummaryPanelContainer
+      setActiveTab={OrganizationRoleHelper.canUpdateOrganization(userData) === true ? setActiveTab : undefined}
+    >
       <Row className={"mx-0 mb-2"}>
         <Col lg={6}>
           <TextFieldBase dataObject={organizationData} fieldName={"name"}/>

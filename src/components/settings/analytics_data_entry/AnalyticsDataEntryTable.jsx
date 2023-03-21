@@ -18,6 +18,9 @@ import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import KpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/KpiIdentifierFilter";
 import InlineKpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/InlineKpiIdentifierFilter";
 import {analyticsDataEntryHelper} from "components/settings/analytics_data_entry/analyticsDataEntry.helper";
+import AnalyticsDataEntryRoleHelper
+  from "@opsera/know-your-role/roles/settings/analytics_data_entries/analyticsDataEntryRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function AnalyticsDataEntryTable({
   analyticsDataEntries,
@@ -28,8 +31,9 @@ function AnalyticsDataEntryTable({
   setAnalyticsDataEntryFilterModel,
 }) {
   const toastContext = useContext(DialogToastContext);
-  let fields = analyticsDataEntryMetadata.fields;
+  const fields = analyticsDataEntryMetadata.fields;
   const history = useHistory();
+  const { userData } = useComponentStateReference();
 
   const columns = useMemo(
     () => [
@@ -93,7 +97,7 @@ function AnalyticsDataEntryTable({
   return (
     <FilterContainer
       loadData={loadData}
-      addRecordFunction={createAnalyticsDataEntry}
+      addRecordFunction={AnalyticsDataEntryRoleHelper.canCreateAnalyticsDataEntry(userData) === true ? createAnalyticsDataEntry : undefined}
       supportSearch={true}
       isLoading={isLoading}
       body={getAnalyticsDataEntryTable()}

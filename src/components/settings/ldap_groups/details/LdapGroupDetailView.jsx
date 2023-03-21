@@ -11,6 +11,7 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import GroupManagementSubNavigationBar from "components/settings/ldap_groups/GroupManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {roleGroups} from "components/settings/ldap_site_roles/details/SiteRoleDetailView";
+import LdapUserGroupRoleHelper from "@opsera/know-your-role/roles/accounts/groups/user/ldapUserGroupRole.helper";
 
 function LdapGroupDetailView() {
   const history = useHistory();
@@ -19,15 +20,12 @@ function LdapGroupDetailView() {
   const [isLoading, setIsLoading] = useState(true);
   const [canDelete, setCanDelete] = useState(false);
   const {
-    accessRoleData,
     getAccessToken,
     toastContext,
     cancelTokenSource,
     userData,
     isMounted,
     isOpseraAdministrator,
-    isSiteAdministrator,
-    isPowerUser,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -57,14 +55,9 @@ function LdapGroupDetailView() {
 
   const loadData = async () => {
     try {
+      setLdapGroupData(undefined);
       setIsLoading(true);
-      if (
-        accessRoleData?.OpseraAdministrator
-        || accessRoleData?.Administrator
-        || accessRoleData?.PowerUser
-        || accessRoleData?.OrganizationOwner
-        || accessRoleData?.OrganizationAccountOwner
-      ) {
+      if (LdapUserGroupRoleHelper.canGetUserGroupsList(userData) === true) {
         await getGroup();
       }
     }
@@ -118,11 +111,7 @@ function LdapGroupDetailView() {
     return accountsActions.deleteGroup(orgDomain, ldapGroupData, getAccessToken);
   };
 
-  if (
-    isSiteAdministrator !== true
-    && isOpseraAdministrator !== true
-    && isPowerUser !== true
-  ) {
+  if (LdapUserGroupRoleHelper.canGetUserGroupsList(userData) !== true) {
     return null;
   }
 
@@ -138,7 +127,6 @@ function LdapGroupDetailView() {
         <LdapGroupDetailPanel
           orgDomain={orgDomain}
           ldapGroupData={ldapGroupData}
-          currentUserEmail={userData?.email}
           setLdapGroupData={setLdapGroupData}
           loadData={loadData}
           isLoading={isLoading}
