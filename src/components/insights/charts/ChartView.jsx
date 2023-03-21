@@ -188,6 +188,7 @@ import DoraJiraGitlabRolledUpChart from "./dora/jira_gitlab_rolled_up/DoraJiraGi
 import GitlabMergeRequestStatistics from "./gitlab/merge_request_statistics/GitlabMergeRequestStatistics";
 import AquasecIssuesBySeverity from "./aquasec_security_insights/AquasecIssuesBySeverity";
 import GitLogDeveloper360 from "./gitlog/commit_activities/GitLogDeveloper360";
+import SalesforceCodeAnalyserChart from "./sfdc/salesforce_code_analyser/SalesforceCodeAnalyserChart";
 
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
@@ -2310,6 +2311,18 @@ function ChartView({
         return (
             <Col md={12} className="p-2">
               <AquasecIssuesBySeverity
+                  kpiConfiguration={kpiConfig}
+                  setKpiConfiguration={setKpiConfig}
+                  dashboardData={dashboardData}
+                  setKpis={setKpis}
+                  index={index}
+              />
+            </Col>
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_CODE_ANALYSER:
+        return (
+            <Col md={12} className="p-2">
+              <SalesforceCodeAnalyserChart
                   kpiConfiguration={kpiConfig}
                   setKpiConfiguration={setKpiConfig}
                   dashboardData={dashboardData}
