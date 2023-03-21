@@ -9,11 +9,14 @@ import VanityTable from "components/common/table/VanityTable";
 import {getField} from "components/common/metadata/metadata-helpers";
 import NewUserOverlay from "components/settings/users/NewUserOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import LdapUserRoleHelper from "@opsera/know-your-role/roles/accounts/users/ldapUserRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function UsersTable({ userData, orgDomain, isLoading, authorizedActions, loadData, isMounted }) {
+export default function UsersTable({ users, orgDomain, isLoading, loadData }) {
   const toastContext = useContext(DialogToastContext);
   const fields = usersMetadata.fields;
   const history = useHistory();
+  const { userData } = useComponentStateReference();
 
   const columns = useMemo(
     () => [
@@ -38,8 +41,6 @@ function UsersTable({ userData, orgDomain, isLoading, authorizedActions, loadDat
     toastContext.showOverlayPanel(
       <NewUserOverlay
         loadData={loadData}
-        isMounted={isMounted}
-        authorizedActions={authorizedActions}
       />
     );
   };
@@ -49,7 +50,7 @@ function UsersTable({ userData, orgDomain, isLoading, authorizedActions, loadDat
       <VanityTable
         isLoading={isLoading}
         onRowSelect={onRowSelect}
-        data={userData}
+        data={users}
         columns={columns}
       />
     );
@@ -58,7 +59,7 @@ function UsersTable({ userData, orgDomain, isLoading, authorizedActions, loadDat
   return (
     <FilterContainer
       loadData={loadData}
-      addRecordFunction={authorizedActions?.includes("create_user") ? createUser : null}
+      addRecordFunction={LdapUserRoleHelper.canCreateUser(userData) ? createUser : null}
       isLoading={isLoading}
       body={getUsersTable()}
       titleIcon={faUsers}
@@ -70,12 +71,8 @@ function UsersTable({ userData, orgDomain, isLoading, authorizedActions, loadDat
 }
 
 UsersTable.propTypes = {
-  userData: PropTypes.array,
+  users: PropTypes.array,
   orgDomain: PropTypes.string,
-  authorizedActions: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  isMounted: PropTypes.object,
 };
-
-export default UsersTable;
