@@ -55,7 +55,7 @@ function TagEditorPanel({ tagData, setTagData, handleClose }) {
       {getInlineWarning()}
       <Row>
         <Col md={tagModel?.isNew() === true ? 12 : 6}>
-          <TagTypeSelectInput dataObject={tagModel} setDataObject={setTagModel}/>
+          <TagTypeSelectInput model={tagModel} setModel={setTagModel}/>
           <TextInputBase fieldName={"value"} setDataObject={setTagModel} dataObject={tagModel}/>
           <ActivityToggleInput fieldName={"active"} setDataObject={setTagModel} dataObject={tagModel}/>
         </Col>

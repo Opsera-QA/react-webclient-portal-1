@@ -3,6 +3,9 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import useComponentStateReference from "hooks/useComponentStateReference";
 import axios from "axios";
 import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
+import useAxiosCancelToken from "hooks/useAxiosCancelToken";
+import {useContext} from "react";
+import {AuthContext} from "contexts/AuthContext";
 
 export const parseAxiosError = (error) => {
   if (!axios.isCancel(error)) {
@@ -43,10 +46,8 @@ const getAxiosInstance = (token, cancelToken) => {
 };
 
 export default function useApiService() {
-  const {
-    getAccessToken,
-    cancelTokenSource,
-  } = useComponentStateReference();
+  const { getAccessToken } = useContext(AuthContext);
+  const { cancelTokenSource } = useAxiosCancelToken();
 
   const apiService = {};
 

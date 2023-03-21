@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
-import {tagTypes} from "components/common/list_of_values_input/settings/tags/TagTypeSelectInput";
+import tagTypeConstants from "@opsera/definitions/constants/settings/tags/tagType.constants";
 
 function TagTypeFilter({ fieldName, filterModel, setFilterModel, className, setDataFunction, inline}) {
   if (filterModel == null) {
@@ -14,7 +14,7 @@ function TagTypeFilter({ fieldName, filterModel, setFilterModel, className, setD
       placeholderText={"Filter by Tag Type"}
       setDataObject={setFilterModel}
       dataObject={filterModel}
-      selectOptions={tagTypes}
+      selectOptions={tagTypeConstants.TAG_TYPE_SELECT_OPTIONS}
       className={className}
       setDataFunction={setDataFunction}
       inline={inline}

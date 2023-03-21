@@ -14,6 +14,7 @@ import {useParams} from "react-router-dom";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DeleteOrganizationActionBarButton
   from "components/settings/organizations/actions/DeleteOrganizationActionBarButton";
+import OrganizationRoleHelper from "@opsera/know-your-role/roles/settings/organizations/organizationRole.helper";
 
 export default function OrganizationDetailView() {
   const {id} = useParams();
@@ -23,12 +24,8 @@ export default function OrganizationDetailView() {
     isLoading,
   } = useGetOrganizationModelById(id);
   const {
-    accessRoleData,
+    userData,
   } = useComponentStateReference();
-
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
 
   const getActionBar = () => {
     return (
@@ -46,9 +43,9 @@ export default function OrganizationDetailView() {
     );
   };
 
-  const deleteOrganization = async () => {
-    return await organizationModel.deleteModel();
-  };
+  if (OrganizationRoleHelper.canGetOrganizationList(userData) !== true) {
+    return null;
+  }
 
   return (
     <DetailScreenContainer
@@ -58,8 +55,6 @@ export default function OrganizationDetailView() {
       navigationTabContainer={<OrganizationsSubNavigationBar activeTab={"organizationViewer"}/>}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       detailPanel={<OrganizationDetailPanel organizationData={organizationModel}/>}
     />
   );

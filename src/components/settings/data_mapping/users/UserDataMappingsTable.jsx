@@ -13,6 +13,9 @@ import {faTags} from "@fortawesome/pro-light-svg-icons";
 import {getField} from "components/common/metadata/metadata-helpers";
 import userDataMappingMetadata from "@opsera/definitions/constants/settings/data_mapping/user/userDataMapping.metadata";
 import {analyticsUserDataMappingHelper} from "components/settings/data_mapping/users/analyticsUserDataMapping.helper";
+import AnalyticsUserDataMappingRoleHelper
+  from "@opsera/know-your-role/roles/settings/analytics_data_mappings/users/analyticsUserDataMappingRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function UserDataMappingsTable(
   {
@@ -23,7 +26,8 @@ function UserDataMappingsTable(
   }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
-  let fields = userDataMappingMetadata.fields;
+  const fields = userDataMappingMetadata.fields;
+  const { userData } = useComponentStateReference();
 
   const columns = useMemo(
     () => [
@@ -45,7 +49,7 @@ function UserDataMappingsTable(
 
   const noDataMessage = "No User Data Mapping Tags have been configured";
 
-  const createToolType = () => {
+  const createUserDataMapping = () => {
     toastContext.showOverlayPanel(
       <NewUserDataMappingOverlay
         loadData={loadData}
@@ -70,7 +74,7 @@ function UserDataMappingsTable(
   return (
     <FilterContainer
       loadData={loadData}
-      addRecordFunction={createToolType}
+      addRecordFunction={AnalyticsUserDataMappingRoleHelper.canCreateAnalyticsUserDataMapping(userData) === true ? createUserDataMapping : undefined}
       supportSearch={false}
       isLoading={isLoading}
       body={getUsersTagsTable()}

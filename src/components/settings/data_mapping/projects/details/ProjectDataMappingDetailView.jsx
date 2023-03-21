@@ -6,7 +6,6 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import DataMappingManagementSubNavigationBar
   from "components/settings/data_mapping/DataMappingManagementSubNavigationBar";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetAnalyticsProjectDataMappingModelById
   from "hooks/settings/insights/analytics_data_mappings/projects/useGetAnalyticsProjectDataMappingModelById";
 import {
@@ -25,9 +24,6 @@ function ProjectDataMappingDetailView() {
     error,
     isLoading,
   } = useGetAnalyticsProjectDataMappingModelById(projectMappingId);
-  const {
-    accessRoleData,
-  } = useComponentStateReference();
 
   const getActionBar = () => {
     return (
@@ -51,7 +47,6 @@ function ProjectDataMappingDetailView() {
     <DetailScreenContainer
       navigationTabContainer={<DataMappingManagementSubNavigationBar activeTab={"projectTagViewer"} />}
       breadcrumbDestination={"projectTaggingDetailView"}
-      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       metadata={projectDataMappingMetadata}
       dataObject={analyticsProjectDataMappingModel}
       isLoading={isLoading}

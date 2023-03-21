@@ -31,15 +31,15 @@ function ExportGitCustodianVulnerabilitiesDataOverlay({ gitCustodianData }) {
       showHead: "firstPage",
       headStyles:{fontSize: 8, minCellWidth: 30, fillColor: [54, 46, 84]},
       margin: { left: 1, right: 1 },
-      head:[["Date Created", "Repository", "Author", "Path", "Line Number", "Origin", "Type", "Jira Ticket"]],
-      body: issuesData.map((item) => [item.commitDate.substring(0, 10), item.repository, item.author, item.path, item.lineNumber, item.service, item.type, item?.jiraTicket?.key])
+      head:[["Date Created", "Repository", "Author", "Path", "Line Number", "Origin", "Type", "Severity", "Status", "Jira Ticket"]],
+      body: issuesData.map((item) => [item.commitDate.substring(0, 10), item.repository, item.author, item.path, item.lineNumber, item.service, item.type, item.severity, item.status, item?.jiraTicket?.key])
     });
 
     return pdfExporter;
   };
 
   const getCsvData = () => {
-    return [["Date Created", "Repository", "Author", "Path", "Line Number", "Origin", "Type", "Jira Ticket"],
+    return [["Date Created", "Repository", "Author", "Path", "Line Number", "Origin", "Type", "Severity", "Status", "Jira Ticket"],
       ...issuesData.map((item) =>
         [
           item.commitDate.substring(0, 10),
@@ -49,6 +49,8 @@ function ExportGitCustodianVulnerabilitiesDataOverlay({ gitCustodianData }) {
           item.lineNumber,
           item.service,
           item.type,
+          item.severity,
+          item.status,
           item?.jiraTicket?.key]
       )];
   };

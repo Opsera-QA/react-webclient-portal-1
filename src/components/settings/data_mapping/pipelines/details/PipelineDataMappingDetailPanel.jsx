@@ -51,7 +51,12 @@ function PipelineDataMappingDetailPanel(
     return (
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SettingsTab
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          visible={pipelineDataMappingModel?.canUpdate() === true}
+          disabled={pipelineDataMappingModel?.canUpdate() !== true}
+        />
       </CustomTabContainer>
     );
   };

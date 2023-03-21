@@ -3,24 +3,16 @@ import { AuthContext } from "contexts/AuthContext";
 import SidebarNavigationLinkBase from "components/common/links/sidebar/SidebarNavigationLinkBase";
 import {faCogs} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import {breadcrumbs} from "components/common/navigation/trails";
+import RoleHelper from "@opsera/know-your-role/roles/role.helper";
 
 export default function SettingsSidebarNavigationLink({ isSidebarCollapsed, }) {
   const {
-    userAccessRoles,
-    isSassUser,
-    isOpseraAdministrator,
-    isPowerUser,
-    isSiteAdministrator,
+    userData,
   } = useContext(AuthContext);
+  const breadcrumb = breadcrumbs.accountSettings;
 
-  if (
-    userAccessRoles == null
-    || (
-      isSassUser() !== true
-      && isOpseraAdministrator() !== true
-      && isPowerUser !== true
-      && isSiteAdministrator !== true
-    )) {
+  if (breadcrumb == null || RoleHelper.doesUserMeetSiteRoleRequirements(userData, breadcrumb?.allowedRoles) !== true) {
     return null;
   }
 
