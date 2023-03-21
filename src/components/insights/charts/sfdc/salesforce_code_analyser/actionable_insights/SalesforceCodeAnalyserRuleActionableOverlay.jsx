@@ -14,6 +14,7 @@ import MetricDateRangeBadge from "../../../../../common/badges/date/metrics/Metr
 import FullScreenCenterOverlayContainer from "../../../../../common/overlays/center/FullScreenCenterOverlayContainer";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import SalesforceCodeAnalyserPipelineActionableTable from "./SalesforceCodeAnalyserPipelineActionableTable";
+import codeAnalyserActions from "../codeanalyser.action";
 
 function SalesforceCodeAnalyserRuleActionableOverlay({
                                                      kpiConfiguration,
@@ -65,27 +66,25 @@ function SalesforceCodeAnalyserRuleActionableOverlay({
             let dashboardTags = dashboardMetricFilter?.tags;
             let dashboardOrgs = dashboardMetricFilter?.organizations;
 
-            const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+            const response = await codeAnalyserActions.salesforceCodeAnalyserRuleActionable(
                 getAccessToken,
                 cancelSource,
-                "salesforceCodeAnalyserRuleActionable",
                 kpiConfiguration,
                 dashboardTags,
-                filterDto,
-                undefined,
                 dashboardOrgs,
+                filterDto,
             );
             console.log("rule", response);
 
-            let dataObject = response?.data ? response?.data?.data[0][0]?.tableData : [];
-            let totalCount = response?.data ? response?.data?.data[0][0]?.tableData?.length : [];
+            let dataObject = response?.data ? response?.data?.data[0]?.tableData : [];
+            let totalCount = response?.data ? response?.data?.data[0]?.tableData?.length : [];
 
             if (isMounted?.current === true && dataObject) {
                 setMetrics(dataObject);
                 setTotalCount(totalCount);
 
                 let newFilterDto = filterDto;
-                newFilterDto.setData("totalCount", response?.data?.data[0][0]?.tableData?.length);
+                newFilterDto.setData("totalCount", response?.data?.data[0]?.tableData?.length);
                 setFilterModel({ ...newFilterDto });
             }
         } catch (error) {

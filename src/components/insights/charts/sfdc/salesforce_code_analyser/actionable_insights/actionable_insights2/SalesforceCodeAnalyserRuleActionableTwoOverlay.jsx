@@ -13,6 +13,7 @@ import {faTable} from "@fortawesome/pro-light-svg-icons";
 import {getMetricFilterValue} from "../../../../../../common/helpers/metrics/metricFilter.helpers";
 import MetricDateRangeBadge from "../../../../../../common/badges/date/metrics/MetricDateRangeBadge";
 import SalesforceCodeAnalyserRuleActionableTwoTable from "./SalesforceCodeAnalyserRuleActionableTwoTable";
+import codeAnalyserActions from "../../codeanalyser.action";
 
 function SalesforceCodeAnalyserRuleActionableTwoOverlay({
                                                              kpiConfiguration,
@@ -64,28 +65,26 @@ function SalesforceCodeAnalyserRuleActionableTwoOverlay({
             let dashboardTags = dashboardMetricFilter?.tags;
             let dashboardOrgs = dashboardMetricFilter?.organizations;
 
-            const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+            const response = await codeAnalyserActions.salesforceCodeAnalyserRuleActionableTwo(
                 getAccessToken,
                 cancelSource,
-                "salesforceCodeAnalyserRuleActionableTwo",
                 kpiConfiguration,
                 dashboardTags,
-                filterDto,
-                undefined,
                 dashboardOrgs,
+                filterDto,
                 rule
             );
             console.log("rule second", response);
 
-            let dataObject = response?.data ? response?.data?.data[0][0]?.tableData : [];
-            let totalCount = response?.data ? response?.data?.data[0][0]?.count[0]?.count : [];
+            let dataObject = response?.data ? response?.data?.data[0]?.tableData : [];
+            let totalCount = response?.data ? response?.data?.data[0]?.count[0]?.count : [];
 
             if (isMounted?.current === true && dataObject) {
                 setMetrics(dataObject);
                 setTotalCount(totalCount);
 
                 let newFilterDto = filterDto;
-                newFilterDto.setData("totalCount", response?.data?.data[0][0]?.count[0]?.count);
+                newFilterDto.setData("totalCount", response?.data?.data[0]?.count[0]?.count);
                 setFilterModel({ ...newFilterDto });
             }
         } catch (error) {

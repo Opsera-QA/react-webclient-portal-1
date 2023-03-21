@@ -37,6 +37,8 @@ import SalesforceCodeAnalyserRuleActionableOverlay
     from "./actionable_insights/SalesforceCodeAnalyserRuleActionableOverlay";
 import SalesforceCodeAnalyserPipelineActionableOverlay
     from "./actionable_insights/SalesforceCodeAnalyserPipelineActionableOverlay";
+import aquasecActions from "../../aquasec_security_insights/aquasec.action";
+import codeAnalyserActions from "./codeanalyser.action";
 
 function SalesforceCodeAnalyserChart({
                            kpiConfiguration,
@@ -90,9 +92,17 @@ function SalesforceCodeAnalyserChart({
                     dashboardData?.data?.filters[
                         dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
                         ]?.value;
-            const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "salesforceCodeAnalyserBaseKPI", kpiConfiguration, dashboardTags, null, null, dashboardOrgs);
-            let dataObject = response?.data?.data[0]?.salesforceCodeAnalyserBaseKPI?.data[0].lineChart,
-                datablock = response?.data?.data[0]?.salesforceCodeAnalyserBaseKPI?.data[0]?.statisticsData;
+            const response = await codeAnalyserActions.salesforceCodeAnalyserBaseKPI(
+                getAccessToken,
+                cancelSource,
+                kpiConfiguration,
+                dashboardTags,
+                dashboardOrgs,
+            );
+            console.log("base kpi", response);
+
+            let dataObject = response?.data?.data[0]?.lineChart,
+                datablock = response?.data?.data[0]?.statisticsData;
 
             assignStandardColors(dataObject, true);
             spaceOutServiceNowCountBySeverityLegend(dataObject);

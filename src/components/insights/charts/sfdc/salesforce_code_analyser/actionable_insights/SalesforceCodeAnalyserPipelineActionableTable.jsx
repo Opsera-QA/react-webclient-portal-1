@@ -18,11 +18,10 @@ function SalesforceCodeAnalyserPipelineActionableTable({ data, isLoading, loadDa
     const noDataMessage = "No data available";
     const toastContext = useContext(DialogToastContext);
 
-    let total = null;
+    let total = "";
     data.forEach((x) => {
         total = total + x.totalCount;
     });
-    console.log("total", total);
 
     const columns = useMemo(
         () => [
