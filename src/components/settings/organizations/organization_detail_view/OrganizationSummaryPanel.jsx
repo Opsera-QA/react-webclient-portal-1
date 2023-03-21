@@ -20,7 +20,7 @@ function OrganizationSummaryPanel({ organizationData, setActiveTab }) {
 
   return (
     <SummaryPanelContainer
-      setActiveTab={OrganizationRoleHelper.canUpdateOrganization(userData) === true ? setActiveTab : undefined}
+      setActiveTab={OrganizationRoleHelper.canUpdateOrganization(userData, organizationData?.getOriginalData()) === true ? setActiveTab : undefined}
     >
       <Row className={"mx-0 mb-2"}>
         <Col lg={6}>
