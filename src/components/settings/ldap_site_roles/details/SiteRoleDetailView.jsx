@@ -42,11 +42,6 @@ export default function SiteRoleDetailView() {
     if (LdapSiteRoleGroupRoleHelper.canGetSiteRoleGroup(userData) === true) {
       const userDomain = userData?.ldap?.domain;
 
-      if (isOpseraAdministrator !== true && orgDomain !== userDomain) {
-        history.push(`/settings/${userDomain}/site-roles/details/${groupName}`);
-        return;
-      }
-
       if (groupName.startsWith("_dept")) {
         history.push(`/settings/${orgDomain}/departments/details/${groupName}`);
         return;
@@ -54,6 +49,11 @@ export default function SiteRoleDetailView() {
 
       if (!roleGroups.includes(groupName)) {
         history.push(`/settings/${orgDomain}/groups/details/${groupName}`);
+        return;
+      }
+
+      if (isOpseraAdministrator !== true && orgDomain !== userDomain) {
+        history.push(`/settings/${userDomain}/site-roles/details/${groupName}`);
         return;
       }
 
