@@ -5,14 +5,11 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import useLdapUserActions from "hooks/ldap/users/useLdapUserActions";
 
-// TODO: We should make one that just pulls the items based off the domain on the user object and reserve this just for admin use
-export default function useGetLdapUsersForDomain(domain, handleErrorFunction) {
+export default function useGetLdapUsersInCurrentUserDomain(handleErrorFunction) {
   const [users, setUsers] = useState([]);
   const ldapUserActions = useLdapUserActions();
   const {
-    userData,
     isSaasUser,
-    isOpseraAdministrator,
   } = useComponentStateReference();
   const {
     isLoading,
@@ -23,24 +20,21 @@ export default function useGetLdapUsersForDomain(domain, handleErrorFunction) {
   useEffect(() => {
     setUsers([]);
 
-    const ldapDomain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
-
-    if (
-      isSaasUser === false
-      && hasStringValue(domain) === true
-      && (ldapDomain === domain || isOpseraAdministrator === true)
-      && loadData
-    ) {
+    if (loadData) {
       loadData(getLdapUsersForDomain, handleErrorFunction).catch(() => {
       });
     }
   }, []);
 
   const getLdapUsersForDomain = async () => {
-    const response = await ldapUserActions.getLdapUsersWithDomain(
-      domain,
-    );
-    setUsers([...DataParsingHelper.parseNestedArray(response, "data", [])]);
+    setUsers([]);
+
+    if (isSaasUser !== false) {
+      return;
+    }
+
+    const response = await ldapUserActions.getLdapUsers();
+    setUsers([...DataParsingHelper.parseNestedArray(response, "data.data", [])]);
   };
 
   return ({

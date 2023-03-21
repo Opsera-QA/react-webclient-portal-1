@@ -14,12 +14,12 @@ import UserManagementSubNavigationBar from "components/settings/users/UserManage
 import UserManagementHelpDocumentation
   from "../../common/help/documentation/settings/UserManagementHelpDocumentation";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useGetLdapUsersInCurrentUserDomain from "hooks/ldap/users/useGetLdapUsersInCurrentUserDomain";
 
 function UserManagement() {
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [users, setUsers] = useState([]);
   const [pendingUsers, setPendingUsers] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const [authorizedActions, setAuthorizedActions] = useState([]);
@@ -27,6 +27,7 @@ function UserManagement() {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [activeTab, setActiveTab] = useState("users");
+  const getLdapUsersInCurrentUserDomain = useGetLdapUsersInCurrentUserDomain();
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -67,22 +68,6 @@ function UserManagement() {
     }
   };
 
-  const getUsersByDomain = async (ldapDomain, cancelSource = cancelTokenSource) => {
-    try {
-      const response = await accountsActions.getLdapUsersWithDomainV2(getAccessToken, cancelSource, ldapDomain);
-      const users = DataParsingHelper.parseArray(response?.data, []);
-
-      if (isMounted?.current === true) {
-        setUsers(users);
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
-      }
-    }
-  };
-
   const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const {ldap} = user;
@@ -94,7 +79,6 @@ function UserManagement() {
 
       let authorizedActions = await accountsActions.getAllowedUserActions(userRoleAccess, ldap.organization, undefined, getUserRecord, getAccessToken);
       setAuthorizedActions(authorizedActions);
-      await getUsersByDomain(ldap?.domain, cancelSource);
       await getPendingUsers(cancelSource, ldap?.domain, ldap?.account);
     }
   };
@@ -113,9 +97,9 @@ function UserManagement() {
     return (
       <UsersTable
         orgDomain={ldapDomain}
-        isLoading={isLoading}
-        userData={users}
-        loadData={loadData}
+        isLoading={getLdapUsersInCurrentUserDomain.isLoading}
+        userData={getLdapUsersInCurrentUserDomain.users}
+        loadData={getLdapUsersInCurrentUserDomain.loadData}
         authorizedActions={authorizedActions}
         isMounted={isMounted}
       />

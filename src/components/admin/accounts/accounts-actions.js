@@ -100,11 +100,8 @@ accountsActions.getUserDetailViewLink = async (getUserRecord) => {
 };
 
 accountsActions.getLdapUsersWithDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
-  const postBody = {
-    domain: domain
-  };
-  const apiUrl = "/users/account/users";
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  const apiUrl = `/account/users/${domain}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 accountsActions.getLdapGroupsWithEmail = async (emailAddress, getAccessToken) => {
