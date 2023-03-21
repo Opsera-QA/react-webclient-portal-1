@@ -17,11 +17,17 @@ export default function NewOrganizationAccountUserOverlay({ orgDomain, loadData 
   const [userModel, setUserModel] = useState(undefined);
   const [invalidHost, setInvalidHost] = useState(false);
   const [organization, setOrganization] = useState(undefined);
-  const { cancelTokenSource } = useComponentStateReference();
+  const {
+    cancelTokenSource,
+    isOpseraAdministrator,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    initializeData().catch(() => {});
-  }, []);
+    if (isOpseraAdministrator === true) {
+      initializeData().catch(() => {
+      });
+    }
+  }, [isOpseraAdministrator]);
 
   const initializeData = async () => {
     const token = apiTokenHelper.generateApiCallToken("orgRegistrationForm");
@@ -69,6 +75,10 @@ export default function NewOrganizationAccountUserOverlay({ orgDomain, loadData 
       />
     );
   };
+
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
 
   return (
     <CreateCenterPanel titleIcon={faUser} closePanel={handleClose} objectType={"User"} loadData={loadData}>
