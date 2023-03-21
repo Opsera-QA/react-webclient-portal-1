@@ -78,7 +78,6 @@ function SalesforceCodeAnalyserCategoryActionableOverlay({
                 dashboardOrgs,
                 filterDto,
             );
-            console.log("category one", response);
 
             let dataObject = response?.data ? response?.data?.data[0]?.tableData : [];
             let totalCount = response?.data ? response?.data?.data[0]?.count[0]?.count : [];

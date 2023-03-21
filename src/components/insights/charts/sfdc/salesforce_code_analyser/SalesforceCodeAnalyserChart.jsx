@@ -99,7 +99,6 @@ function SalesforceCodeAnalyserChart({
                 dashboardTags,
                 dashboardOrgs,
             );
-            console.log("base kpi", response);
 
             let dataObject = response?.data?.data[0]?.lineChart,
                 datablock = response?.data?.data[0]?.statisticsData;
