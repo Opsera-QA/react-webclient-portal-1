@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
@@ -6,7 +6,6 @@ import {ldapUserMetadata} from "components/settings/ldap_users/ldapUser.metadata
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faUser} from "@fortawesome/pro-light-svg-icons";
-import NewUserOverlay from "components/settings/users/NewUserOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import NewOrganizationAccountUserOverlay
   from "components/admin/accounts/ldap/organization_accounts/NewOrganizationAccountUserOverlay";
