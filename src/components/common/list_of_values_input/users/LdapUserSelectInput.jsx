@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import useGetLdapUsers from "components/settings/ldap_users/hooks/useGetLdapUsers";
+import useGetLdapUsers from "components/admin/accounts/ldap/users/hooks/useGetLdapUsers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function LdapUserSelectInput(

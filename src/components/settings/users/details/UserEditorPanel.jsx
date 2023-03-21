@@ -12,7 +12,7 @@ import userActions from "components/user/user-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
 import Model from "core/data_model/model";
-import {ldapUserMetadata} from "components/settings/ldap_users/ldapUser.metadata";
+import {ldapUserMetadata} from "components/admin/accounts/ldap/users/ldapUser.metadata";
 import {ssoUserMetadata} from "components/settings/users/ssoUser.metadata";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import LdapGroupMultiSelectInput
