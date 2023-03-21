@@ -4,7 +4,7 @@ import {
   faFileCode, faFileInvoice, faFlag, faFolderCog,
   faFolderGear,
   faHeartbeat,
-  faLink, faSitemap, faStream,
+  faLink, faServer, faSitemap, faStream,
   faTools, faUserCircle, faUserPlus, faUsers, faWrench
 } from "@fortawesome/pro-light-svg-icons";
 import {organizationSettingsHelper} from "components/admin/organization_settings/organizationSettings.helper";
@@ -148,8 +148,8 @@ adminToolsTrails.siteNotificationManager = {
   icon: faFlag,
   pageDescription: "Create personalized Site Notifications by Type, including System Maintenance, Service Outage, Success, or Informational Message that will be displayed across the site for every User",
   allowedRoles: [
-  SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
-],
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+  ],
 };
 
 adminToolsTrails.platformSystemParameterManagement = {
@@ -220,8 +220,8 @@ adminToolsTrails.freeTrialCustomerWorkspaceDetailView = {
   linkText: "Free Trial Customer Workspace Details",
   icon: faUsers,
   allowedRoles: [
-  SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
-],
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+  ],
 };
 
 adminToolsTrails.taskTemplateManagement = {
@@ -454,6 +454,30 @@ adminToolsTrails.customerOnboarding = {
   linkText: "Customer Onboarding",
   icon: faUserPlus,
   pageDescription: "Onboard a new customer to the Opsera Platform",
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+  ],
+};
+
+adminToolsTrails.remoteApplications = {
+  parent: "admin",
+  name: "remoteApplications",
+  path: paths.remoteApplications,
+  title: "Remote Application Management",
+  linkText: "Remote Application Management",
+  icon: faServer,
+  pageDescription: "View/Manage version and telemetry information generation from remote applications.",
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+  ],
+};
+adminToolsTrails.remoteApplicationsDetailView = {
+  parent: "remoteApplications",
+  name: "remoteApplicationsDetailView",
+  path: paths.remoteApplicationDetailView,
+  title: "Remote Application Telemetry Record Details",
+  linkText: "Remote Application Telemetry Record Details",
+  icon: faServer,
   allowedRoles: [
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
   ],
