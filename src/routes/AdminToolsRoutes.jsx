@@ -98,7 +98,7 @@ export default function AdminToolsRoutes() {
                    component={LdapOrganizationAccountDetailView} />
       <SecureRoute path="/admin/accounts/create" exact component={LdapCustomerOnboardView} />
       <SecureRoute
-        path={"/admin/organization-accounts/:organizationDomain/users/:emailAddress"}
+        path={"/admin/organization-accounts/:organizationDomain/users/:emailAddress/details"}
         exact
         component={LdapUserDetailView}
       />
