@@ -25,6 +25,8 @@ import PlatformSettingsManagementPageLinkCard
 import RemoteApplicationManagementPageLinkCard from "./remote_applications/RemoteApplicationManagementPageLinkCard";
 import OrganizationSettingsManagementPageLinkCard
   from "components/admin/organization_settings/OrganizationSettingsManagementPageLinkCard";
+import RemoteApplicationManagementPageLinkCard
+  from "components/admin/remote_applications/RemoteApplicationManagementPageLinkCard";
 
 function AdminToolsPageLinkCards({accessRoleData}) {
   return (
@@ -63,9 +65,7 @@ function AdminToolsPageLinkCards({accessRoleData}) {
       <ToolManagementPageLinkCard
         accessRoleData={accessRoleData}
       />
-      <RemoteApplicationManagementPageLinkCard
-        accessRoleData={accessRoleData}
-      />
+      <RemoteApplicationManagementPageLinkCard />
 
       {/*TODO: These are left here for legacy reasons but will need to be fixed and have cards created if we want them visible.*/}
       {/* <BreadcrumbPageLink breadcrumbDestination={"systemStatus"} /> */}
