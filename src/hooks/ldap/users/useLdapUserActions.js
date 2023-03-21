@@ -4,17 +4,19 @@ export default function useLdapUserActions() {
   const apiService = useApiService();
   const ldapUserActions = {};
 
-  ldapUserActions.getLdapUsersWithDomainV2 = async (
+  ldapUserActions.getLdapUsersWithDomain = async (
     domain,
   ) => {
-    const apiUrl = "/users/account/users";
-    const postBody = {
-      domain: domain
-    };
-
-    return await apiService.handleApiPostRequest(
+    const apiUrl = `/account/users/${domain}`;
+    return await apiService.handleApiGetRequest(
       apiUrl,
-      postBody,
+    );
+  };
+
+  ldapUserActions.getLdapUsers = async () => {
+    const apiUrl = "/account/users";
+    return await apiService.handleApiGetRequest(
+      apiUrl,
     );
   };
 

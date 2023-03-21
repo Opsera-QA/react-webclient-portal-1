@@ -11,5 +11,21 @@ export default function usePlatformUsersActions() {
     );
   };
 
+  platformUsersActions.getPendingUsers = async (
+    organizationDomain,
+    organizationAccount,
+  ) => {
+    const apiUrl = `/users/pending-users`;
+    const queryParameters = {
+      domain: organizationDomain,
+      account: organizationAccount,
+    };
+
+    return await apiService.handleApiGetRequest(
+      apiUrl,
+      queryParameters,
+    );
+  };
+
   return platformUsersActions;
 }

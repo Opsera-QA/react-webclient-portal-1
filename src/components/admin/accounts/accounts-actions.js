@@ -76,18 +76,6 @@ accountsActions.getAccountUsersV2 = async (getAccessToken, cancelTokenSource) =>
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-accountsActions.getPendingUsersV2 = async (getAccessToken, cancelTokenSource, organizationDomain, organizationAccount) => {
-  const apiUrl = `/users/pending-users`;
-  const urlParams = {
-    params: {
-      domain: organizationDomain,
-      account: organizationAccount,
-    },
-  };
-
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
-};
-
 accountsActions.getUserDetailViewLink = async (getUserRecord) => {
   const user = await getUserRecord();
   const {ldap} = user;
@@ -99,20 +87,9 @@ accountsActions.getUserDetailViewLink = async (getUserRecord) => {
   }
 };
 
-accountsActions.getLdapUsersWithEmail = async (emailAddress, getAccessToken) => {
-  const postBody = {
-    email: emailAddress
-  };
-  const apiUrl = "/users/account/users";
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
 accountsActions.getLdapUsersWithDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
-  const postBody = {
-    domain: domain
-  };
-  const apiUrl = "/users/account/users";
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  const apiUrl = `/account/users/${domain}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 accountsActions.getLdapGroupsWithEmail = async (emailAddress, getAccessToken) => {

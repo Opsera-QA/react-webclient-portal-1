@@ -28,7 +28,7 @@ function AnalyticsDataEntryDetailPanel({ analyticsDataEntry }) {
 
   // TODO: We should handle this inside the summary panels themselves
   const getActiveTabSetter = () => {
-    if (AnalyticsDataEntryRoleHelper.canUpdateAnalyticsDataEntry(userData) === true) {
+    if (AnalyticsDataEntryRoleHelper.canUpdateAnalyticsDataEntry(userData, analyticsDataEntry?.getOriginalData()) === true) {
       return setActiveTab;
     }
   };
@@ -40,8 +40,8 @@ function AnalyticsDataEntryDetailPanel({ analyticsDataEntry }) {
         <SettingsTab
           handleTabClick={handleTabClick}
           activeTab={activeTab}
-          visible={AnalyticsDataEntryRoleHelper.canUpdateAnalyticsDataEntry(userData) === true}
-          disabled={AnalyticsDataEntryRoleHelper.canUpdateAnalyticsDataEntry(userData) !== true}
+          visible={AnalyticsDataEntryRoleHelper.canUpdateAnalyticsDataEntry(userData, analyticsDataEntry?.getOriginalData()) === true}
+          disabled={AnalyticsDataEntryRoleHelper.canUpdateAnalyticsDataEntry(userData, analyticsDataEntry?.getOriginalData()) !== true}
         />
       </CustomTabContainer>
     );
