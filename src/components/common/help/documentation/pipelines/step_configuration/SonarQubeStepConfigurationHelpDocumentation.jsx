@@ -27,10 +27,10 @@ function SonarQubeStepConfigurationHelpDocumentation() {
                 <li><b>Branch</b> - Choose a branch in the chosen repository.</li>
                 <li><b>Sonar Source Path</b> - Enter the source path.</li>
                 <li><b>Sonar Credentials</b> - Choose the credentials from the drop-down. Confirm configuration in Connections is successful before proceeding with tool.</li>
+                <li><b>Sonar Custom Parameters Mapping</b> - Select Parameters defined under the Parameters tab in Tool Registry and enter the exact name of the output key from your script. </li>
                 <li><b>Project Key</b> - Enter the project key.</li>
                 <li><b>Project Name</b> - Enter the project name.</li>
                 <li><b>Delete Jenkins workspace before building</b></li>
-                <li><b>Success Threshold</b> </li>
                 <li><b>Commands</b> - Provide commands.</li>
                 <li><b>Enable Client Side Thresholds</b>:
                   <ul>
