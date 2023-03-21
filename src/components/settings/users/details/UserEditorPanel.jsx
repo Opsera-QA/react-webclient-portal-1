@@ -20,6 +20,9 @@ import LdapGroupMultiSelectInput
 import InlineActiveLogTerminalBase from "components/common/logging/InlineActiveLogTerminalBase";
 import {parseError} from "components/common/helpers/error-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import LdapGroupForDomainMultiSelectInput
+  from "components/common/list_of_values_input/settings/groups/LdapGroupForDomainMultiSelectInput";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function UserEditorPanel(
   {
@@ -36,6 +39,7 @@ function UserEditorPanel(
     isMounted,
     getAccessToken,
     toastContext,
+    isOpseraAdministrator,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -250,6 +254,29 @@ function UserEditorPanel(
     }, [setLogs]
   );
 
+  const getGroupMultiselectInput = () => {
+    if (isOpseraAdministrator === true && hasStringValue(orgDomain) === true) {
+      return (
+        <LdapGroupForDomainMultiSelectInput
+          disabled={isSaving === true}
+          setModel={setUserModel}
+          model={userModel}
+          fieldName={"groups"}
+          organizationDomain={orgDomain}
+        />
+      );
+    }
+
+    return (
+      <LdapGroupMultiSelectInput
+        disabled={isSaving === true}
+        setModel={setUserModel}
+        model={userModel}
+        fieldName={"groups"}
+      />
+    );
+  };
+
   const closeLogs = () => {
     if (isMounted?.current === true) {
       logs.current = [];
@@ -298,7 +325,7 @@ function UserEditorPanel(
               <TextInputBase disabled={isSaving === true} setDataObject={setUserModel} dataObject={userModel} fieldName={"site"}/>
             </Col>
             <Col lg={12}>
-              <LdapGroupMultiSelectInput disabled={isSaving === true} setModel={setUserModel} model={userModel} fieldName={"groups"}/>
+              {getGroupMultiselectInput()}
             </Col>
             <Col lg={12}>
               <BooleanToggleInput disabled={true} setDataObject={setUserModel} dataObject={userModel} fieldName={"localAuth"}/>
