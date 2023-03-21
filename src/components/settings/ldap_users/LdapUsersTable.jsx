@@ -4,12 +4,11 @@ import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import {ldapUserMetadata} from "components/settings/ldap_users/ldapUser.metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
-import NewLdapUserModal from "components/settings/ldap_users/NewLdapUserModal";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faUser} from "@fortawesome/pro-light-svg-icons";
+import NewUserOverlay from "components/settings/users/NewUserOverlay";
 
-function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loadData }) {
-  const [showCreateUserModal, setShowCreateUserModal] = useState(false);
+function LdapUsersTable({ userData, orgDomain, isLoading, loadData }) {
   const fields = ldapUserMetadata.fields;
   const history = useHistory();
 
@@ -34,7 +33,11 @@ function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loa
   };
 
   const createUser = () => {
-    setShowCreateUserModal(true);
+    toastContext.showOverlayPanel(
+      <NewUserOverlay
+        loadData={loadData}
+      />
+    );
   };
 
   const getUsersTable = () => {
@@ -49,31 +52,21 @@ function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loa
   };
 
   return (
-    <div>
-      <FilterContainer
-        loadData={loadData}
-        addRecordFunction={authorizedActions?.includes("create_user") ? createUser : null}
-        isLoading={isLoading}
-        body={getUsersTable()}
-        titleIcon={faUser}
-        title={"Users"}
-        type={"User"}
-      />
-      <NewLdapUserModal
-        authorizedActions={authorizedActions}
-        showModal={showCreateUserModal}
-        setShowModal={setShowCreateUserModal}
-        loadData={loadData}
-        orgDomain={orgDomain}
-      />
-    </div>
+    <FilterContainer
+      loadData={loadData}
+      addRecordFunction={createUser}
+      isLoading={isLoading}
+      body={getUsersTable()}
+      titleIcon={faUser}
+      title={"Users"}
+      type={"User"}
+    />
   );
 }
 
 LdapUsersTable.propTypes = {
   userData: PropTypes.array,
   orgDomain: PropTypes.string,
-  authorizedActions: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool
 };

@@ -76,7 +76,7 @@ function UserDetailView() {
 
   return (
     <DetailScreenContainer
-      breadcrumbDestination={(accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator) ? "ldapUserDetailView" : "ldapUserDetailViewLimited"}
+      breadcrumbDestination={(accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator) ? "activeUserDetailView" : "ldapUserDetailViewLimited"}
       metadata={ldapUserMetadata}
       dataObject={ldapUserData}
       isLoading={isLoading}

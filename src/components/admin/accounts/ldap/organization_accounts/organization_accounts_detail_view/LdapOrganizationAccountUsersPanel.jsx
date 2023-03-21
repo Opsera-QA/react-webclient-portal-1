@@ -13,7 +13,6 @@ function LdapOrganizationAccountUsersPanel({ ldapOrganizationAccountData, loadDa
       <LdapUsersTable
         orgDomain={ldapOrganizationAccountData?.getData("orgDomain")}
         userData={ldapOrganizationAccountData?.getData("users")}
-        authorizedActions={["create_user", "update_user"]}
         loadData={loadData}
       />
     </div>

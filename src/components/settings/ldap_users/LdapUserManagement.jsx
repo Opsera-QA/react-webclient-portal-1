@@ -6,7 +6,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import axios from "axios";
-import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 function LdapUserManagement() {
   const history = useHistory();
@@ -101,8 +100,6 @@ function LdapUserManagement() {
     <ScreenContainer
       breadcrumbDestination={"ldapUserManagement"}
       isLoading={!accessRoleData}
-      roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
-      accessRoleData={accessRoleData}
     >
       <LdapUsersTable
         orgDomain={orgDomain}
