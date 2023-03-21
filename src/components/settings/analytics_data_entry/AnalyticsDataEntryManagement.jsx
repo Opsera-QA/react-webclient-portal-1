@@ -52,9 +52,8 @@ export default function AnalyticsDataEntryManagement() {
 
   const getAnalyticsDataEntries = async (filterModel = analyticsDataEntryFilterModel) => {
     let response = await analyticsDataEntryActions.getAnalyticsDataEntries(filterModel);
-    const analyticsDataEntryList = DataParsingHelper.parseNestedArray(response, "data.data");
-
-    if (isMounted?.current === true && analyticsDataEntryList) {
+    const analyticsDataEntryList = DataParsingHelper.parseNestedArray(response, "data.data", []);
+    if (isMounted?.current === true && Array.isArray(analyticsDataEntryList)) {
       setAnalyticsDataEntries(analyticsDataEntryList);
       filterModel.setData("totalCount", response?.data?.count);
       filterModel.setData("activeFilters", filterModel.getActiveFilters());

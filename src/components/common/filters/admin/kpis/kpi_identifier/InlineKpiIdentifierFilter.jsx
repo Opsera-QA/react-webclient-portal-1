@@ -7,6 +7,7 @@ function InlineKpiIdentifierFilter({ fieldName, filterModel, setFilterModel, loa
     let newDataObject = filterModel;
     newDataObject.setData(fieldName, selectedOption?.identifier);
     newDataObject.setData("identifierName", selectedOption?.name);
+    newDataObject.setData("currentPage", 1);
     loadData(newDataObject);
   };
 
