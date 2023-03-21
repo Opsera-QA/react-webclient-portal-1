@@ -9,6 +9,7 @@ import {faUser} from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import NewOrganizationAccountUserOverlay
   from "components/admin/accounts/ldap/organization_accounts/NewOrganizationAccountUserOverlay";
+import {getField} from "components/common/metadata/metadata-helpers";
 
 function LdapUsersTable({ userData, orgDomain, isLoading, loadData }) {
   const fields = ldapUserMetadata.fields;
@@ -17,15 +18,15 @@ function LdapUsersTable({ userData, orgDomain, isLoading, loadData }) {
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "name";})),
-      getTableTextColumn(fields.find(field => { return field.id === "preferredName";})),
-      getTableTextColumn(fields.find(field => { return field.id === "firstName";})),
-      getTableTextColumn(fields.find(field => { return field.id === "lastName";})),
-      getTableTextColumn(fields.find(field => { return field.id === "emailAddress";})),
-      getTableTextColumn(fields.find(field => { return field.id === "title";})),
-      getTableTextColumn(fields.find(field => { return field.id === "departmentName";})),
-      getTableTextColumn(fields.find(field => { return field.id === "division";})),
-      getTableTextColumn(fields.find(field => { return field.id === "region";})),
+      getTableTextColumn(getField(fields, "name"),),
+      getTableTextColumn(getField(fields, "preferredName"),),
+      getTableTextColumn(getField(fields, "firstName"),),
+      getTableTextColumn(getField(fields, "lastName"),),
+      getTableTextColumn(getField(fields, "emailAddress"),),
+      getTableTextColumn(getField(fields, "title"),),
+      getTableTextColumn(getField(fields, "departmentName"),),
+      getTableTextColumn(getField(fields, "division"),),
+      getTableTextColumn(getField(fields, "region"),),
     ],
     [fields]
   );
