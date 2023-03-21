@@ -181,8 +181,8 @@ accountSettingsTrails.userManagement = {
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
-    // SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    // SiteRoleHelper.SITE_ROLES.AUDITOR,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 accountSettingsTrails.activeUserDetailView = {
@@ -196,8 +196,8 @@ accountSettingsTrails.activeUserDetailView = {
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
-    // SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    // SiteRoleHelper.SITE_ROLES.AUDITOR,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 accountSettingsTrails.pendingUserDetailView = {
@@ -211,8 +211,8 @@ accountSettingsTrails.pendingUserDetailView = {
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
     SiteRoleHelper.SITE_ROLES.POWER_USER,
-    // SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    // SiteRoleHelper.SITE_ROLES.AUDITOR,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 
