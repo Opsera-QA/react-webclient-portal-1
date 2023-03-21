@@ -1,17 +1,19 @@
-import React, {useMemo, useState} from "react";
+import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import {ldapUserMetadata} from "components/settings/ldap_users/ldapUser.metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
-import NewLdapUserModal from "components/settings/ldap_users/NewLdapUserModal";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faUser} from "@fortawesome/pro-light-svg-icons";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import NewOrganizationAccountUserOverlay
+  from "components/admin/accounts/ldap/organization_accounts/NewOrganizationAccountUserOverlay";
 
-function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loadData }) {
-  const [showCreateUserModal, setShowCreateUserModal] = useState(false);
+function LdapUsersTable({ userData, orgDomain, isLoading, loadData }) {
   const fields = ldapUserMetadata.fields;
   const history = useHistory();
+  const { toastContext } = useComponentStateReference();
 
   const columns = useMemo(
     () => [
@@ -30,11 +32,16 @@ function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loa
 
   const onRowSelect = (rowData) => {
     history.push(
-      `/settings/user-management/active/${orgDomain}/${rowData?.original?.emailAddress}/details`);
+      `/admin/organization-accounts/${orgDomain}/users/${rowData?.original?.emailAddress}/details`);
   };
 
   const createUser = () => {
-    setShowCreateUserModal(true);
+    toastContext.showOverlayPanel(
+      <NewOrganizationAccountUserOverlay
+        loadData={loadData}
+        orgDomain={orgDomain}
+      />
+    );
   };
 
   const getUsersTable = () => {
@@ -49,31 +56,21 @@ function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loa
   };
 
   return (
-    <div>
-      <FilterContainer
-        loadData={loadData}
-        addRecordFunction={authorizedActions?.includes("create_user") ? createUser : null}
-        isLoading={isLoading}
-        body={getUsersTable()}
-        titleIcon={faUser}
-        title={"Users"}
-        type={"User"}
-      />
-      <NewLdapUserModal
-        authorizedActions={authorizedActions}
-        showModal={showCreateUserModal}
-        setShowModal={setShowCreateUserModal}
-        loadData={loadData}
-        orgDomain={orgDomain}
-      />
-    </div>
+    <FilterContainer
+      loadData={loadData}
+      addRecordFunction={createUser}
+      isLoading={isLoading}
+      body={getUsersTable()}
+      titleIcon={faUser}
+      title={"Users"}
+      type={"User"}
+    />
   );
 }
 
 LdapUsersTable.propTypes = {
   userData: PropTypes.array,
   orgDomain: PropTypes.string,
-  authorizedActions: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool
 };

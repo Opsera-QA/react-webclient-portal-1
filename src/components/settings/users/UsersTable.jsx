@@ -12,7 +12,14 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import LdapUserRoleHelper from "@opsera/know-your-role/roles/accounts/users/ldapUserRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-export default function UsersTable({ users, orgDomain, isLoading, loadData }) {
+export default function UsersTable(
+  {
+    users,
+    orgDomain,
+    isLoading,
+    loadData,
+    allowUserCreation,
+  }) {
   const toastContext = useContext(DialogToastContext);
   const fields = usersMetadata.fields;
   const history = useHistory();
@@ -59,7 +66,7 @@ export default function UsersTable({ users, orgDomain, isLoading, loadData }) {
   return (
     <FilterContainer
       loadData={loadData}
-      addRecordFunction={LdapUserRoleHelper.canCreateUser(userData) ? createUser : null}
+      addRecordFunction={allowUserCreation !== false && LdapUserRoleHelper.canCreateUser(userData) === true ? createUser : null}
       isLoading={isLoading}
       body={getUsersTable()}
       titleIcon={faUsers}
@@ -75,4 +82,5 @@ UsersTable.propTypes = {
   orgDomain: PropTypes.string,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
+  allowUserCreation: PropTypes.bool,
 };

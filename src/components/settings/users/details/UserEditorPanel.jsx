@@ -21,7 +21,13 @@ import InlineActiveLogTerminalBase from "components/common/logging/InlineActiveL
 import {parseError} from "components/common/helpers/error-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
+function UserEditorPanel(
+  {
+    userData,
+    orgDomain,
+    handleClose,
+    organization,
+  }) {
   const [userModel, setUserModel] = useState(undefined);
   const [isSaving, setIsSaving] = useState(false);
   const [logs, setLogs] = useState([]);

@@ -12,25 +12,25 @@ import {usersMetadata} from "components/settings/users/users.metadata";
 import {apiTokenHelper} from "temp-library-components/helpers/api/token/apiToken.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-export default function NewUserOverlay({ loadData } ) {
-  const { getUserRecord } = useContext(AuthContext);
+export default function NewOrganizationAccountUserOverlay({ orgDomain, loadData } ) {
   const toastContext = useContext(DialogToastContext);
-  const [userData, setUserData] = useState(undefined);
+  const [userModel, setUserModel] = useState(undefined);
   const [invalidHost, setInvalidHost] = useState(false);
-  const [domain, setDomain] = useState(undefined);
   const [organization, setOrganization] = useState(undefined);
-  const { cancelTokenSource } = useComponentStateReference();
+  const {
+    cancelTokenSource,
+    isOpseraAdministrator,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    initializeData().catch(() => {});
-  }, []);
+    if (isOpseraAdministrator === true) {
+      initializeData().catch(() => {
+      });
+    }
+  }, [isOpseraAdministrator]);
 
   const initializeData = async () => {
     try {
-      const user = await getUserRecord();
-      const orgDomain = user?.ldap?.domain;
-      setOrganization(user?.ldap?.organization);
-      setDomain(orgDomain);
       const token = apiTokenHelper.generateApiCallToken("orgRegistrationForm");
       const accountResponse = await userActions.getAccountInformationV2(cancelTokenSource, orgDomain, token);
       const newUserModel = new Model(usersMetadata.newObjectFields, usersMetadata, true);
@@ -41,6 +41,7 @@ export default function NewUserOverlay({ loadData } ) {
           toastContext.showSystemErrorBanner("Warning!  You are attempting to create an account on the wrong Opsera Portal tenant.  Please check with your account owner or contact Opsera to get the proper to URL register accounts.");
         }
 
+        setOrganization(accountResponse?.data?.organization);
         newUserModel.setData("company", accountResponse.data?.orgName);
         newUserModel.setData("ldapOrgAccount", accountResponse.data?.name);
         newUserModel.setData("ldapOrgDomain", accountResponse.data?.orgDomain);
@@ -49,9 +50,9 @@ export default function NewUserOverlay({ loadData } ) {
         newUserModel.setData("localAuth", accountResponse?.data?.localAuth === "TRUE");
       }
 
-      setUserData({...newUserModel});
+      setUserModel({...newUserModel});
     } catch (error) {
-      toastContext.showInlineErrorMessage(error, "Error getting account information:");
+      toastContext.showInlineErrorMessage(error, "Error getting Organization Information:");
     }
   };
 
@@ -65,19 +66,23 @@ export default function NewUserOverlay({ loadData } ) {
   };
 
   const getBody = () => {
-    if (userData == null) {
+    if (userModel == null) {
       return (<LoadingDialog size={"sm"} message={"Loading User Creation Form"} />);
     }
 
     return (
       <UserEditorPanel
-        orgDomain={domain}
+        orgDomain={orgDomain}
         organization={organization}
-        userData={userData}
+        userData={userModel}
         handleClose={handleClose}
       />
     );
   };
+
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
 
   return (
     <CreateCenterPanel titleIcon={faUser} closePanel={handleClose} objectType={"User"} loadData={loadData}>
@@ -86,6 +91,7 @@ export default function NewUserOverlay({ loadData } ) {
   );
 }
 
-NewUserOverlay.propTypes = {
+NewOrganizationAccountUserOverlay.propTypes = {
   loadData: PropTypes.func,
+  orgDomain: PropTypes.string,
 };

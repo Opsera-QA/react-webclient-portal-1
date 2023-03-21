@@ -129,11 +129,6 @@ accountSettingsTrails.ldapUserManagement = {
   icon: faUser,
   allowedRoles: [
     SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
-    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
-    SiteRoleHelper.SITE_ROLES.POWER_USER,
-    SiteRoleHelper.SITE_ROLES.SAAS_USER,
-    // SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
-    // SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
 };
 accountSettingsTrails.ldapUserDetailView = {

@@ -9,24 +9,28 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import LdapUserDetailPanel from "components/settings/ldap_users/users_detail_view/LdapUserDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function LdapUserDetailView() {
-  const {userEmail, orgDomain} = useParams();
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
+  const {emailAddress, organizationDomain} = useParams();
   const [ldapUserData, setLdapUserData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [authorizedActions, setAuthorizedActions] = useState([]);
+  const {
+    isOpseraAdministrator,
+    toastContext,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    loadData();
+    if (isOpseraAdministrator === true) {
+      loadData();
+    }
   }, []);
 
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await getRoles();
+      await getLdapUser();
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -36,30 +40,11 @@ function LdapUserDetailView() {
     }
   };
 
-  const getLdapUser = async (userEmail) => {
-    const response = await accountsActions.getUserByEmail(userEmail, getAccessToken);
+  const getLdapUser = async () => {
+    const response = await accountsActions.getUserByEmail(emailAddress, getAccessToken);
 
     if (response?.data != null) {
       setLdapUserData(new Model(response.data, ldapUserMetadata, false));
-    }
-  };
-
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-      let {ldap} = user;
-
-      if (userRoleAccess.OpseraAdministrator || ldap.domain === orgDomain)
-      {
-        let authorizedActions = await accountsActions.getAllowedUserActions(userRoleAccess, ldap.organization, userEmail, getUserRecord, getAccessToken);
-        setAuthorizedActions(authorizedActions);
-
-        if (authorizedActions.includes("get_user_details")) {
-          await getLdapUser(userEmail);
-        }
-      }
     }
   };
 
@@ -68,7 +53,7 @@ function LdapUserDetailView() {
       return (
         <ActionBarContainer>
           <div>
-            {accessRoleData?.OpseraAdministrator && <ActionBarBackButton path={"/settings/users"} />}
+            <ActionBarBackButton path={`/admin/organization-accounts/${organizationDomain}/details`} />
           </div>
           <div>
           </div>
@@ -77,20 +62,22 @@ function LdapUserDetailView() {
     }
   };
 
+  if (isOpseraAdministrator !== true) {
+    return null;
+  }
+
   return (
     <DetailScreenContainer
-      breadcrumbDestination={(accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator) ? "ldapUserDetailView" : "ldapUserDetailViewLimited"}
+      breadcrumbDestination={"ldapUserDetailView"}
       metadata={ldapUserMetadata}
-      accessDenied={!authorizedActions?.includes("get_user_details")}
       dataObject={ldapUserData}
       isLoading={isLoading}
       actionBar={getActionBar()}
       detailPanel={
         <LdapUserDetailPanel
           setLdapUserData={setLdapUserData}
-          orgDomain={orgDomain}
+          orgDomain={organizationDomain}
           ldapUserData={ldapUserData}
-          authorizedActions={authorizedActions}
         />
       }
     />

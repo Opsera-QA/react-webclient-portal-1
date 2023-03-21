@@ -29,12 +29,7 @@ function LdapGroupDetailView() {
   } = useComponentStateReference();
 
   useEffect(() => {
-
     const userDomain = userData?.ldap?.domain;
-    if (isOpseraAdministrator !== true && orgDomain !== userDomain) {
-      history.push(`/settings/${orgDomain}/groups/details/${groupName}`);
-      return;
-    }
 
     if (roleGroups.includes(groupName)) {
       history.push(`/settings/${orgDomain}/site-roles/details/${groupName}`);
@@ -43,6 +38,11 @@ function LdapGroupDetailView() {
 
     if (groupName.startsWith("_dept")) {
       history.push(`/settings/${orgDomain}/departments/details/${groupName}`);
+      return;
+    }
+
+    if (isOpseraAdministrator !== true && orgDomain !== userDomain) {
+      history.push(`/settings/${orgDomain}/groups/details/${groupName}`);
       return;
     }
 

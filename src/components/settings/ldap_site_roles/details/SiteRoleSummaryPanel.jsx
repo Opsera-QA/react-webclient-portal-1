@@ -6,6 +6,7 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SiteRolePermissionsField from "components/settings/ldap_site_roles/details/SiteRolePermissionsField";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
+import UsersTable from "components/settings/users/UsersTable";
 
 function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData, isLoading }) {
   if (ldapGroupData == null) {
@@ -31,11 +32,12 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData, isLoading }) {
           <SiteRolePermissionsField model={ldapGroupData} />
         </Col>
       </Row>
-      <LdapUsersTable
+      <UsersTable
         loadData={loadData}
         orgDomain={domain}
-        userData={ldapGroupData.getData("members")}
+        users={ldapGroupData.getData("members")}
         isLoading={isLoading}
+        allowUserCreation={false}
       />
     </SummaryPanelContainer>
   );
