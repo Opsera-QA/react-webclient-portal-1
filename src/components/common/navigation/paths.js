@@ -73,45 +73,6 @@ paths.insightsSummary = "insights/summary";
 paths.connectedAssets = "insights/insightsConnectedAssets";
 paths.gitCustodian = "insights/insightsGitCustodian";
 
-// Settings Paths
-paths.freeTrialSettings = "/trial/settings";
-paths.accountSettings = "settings";
-paths.insightsSettings = "/settings/insights";
-paths.ldapUserManagement = paths.accountSettings + "/users";
-paths.ldapUserDetailView = paths.ldapUserManagement;
-paths.userManagement = paths.accountSettings + "/user-management";
-paths.logsExportManagement = paths.accountSettings + "/logs-export-management";
-paths.unsecuredItemReport = paths.accountSettings + "/unsecured-items";
-paths.activeUserDetailView = paths.userManagement;
-paths.pendingUserDetailView = paths.userManagement;
-paths.ldapGroupManagement = paths.accountSettings + "/groups";
-paths.ldapGroupDetailView = paths.ldapGroupManagement;
-paths.ldapSiteRoleManagement = paths.accountSettings + "/site-roles";
-paths.ldapSiteRoleDetailView = paths.ldapSiteRoleManagement;
-paths.ldapDepartmentManagement = paths.accountSettings + "/departments";
-paths.ldapDepartmentDetailView = paths.ldapDepartmentManagement;
-paths.tagManagement = paths.accountSettings + "/tags";
-paths.deleteTools = paths.accountSettings + "/delete/";
-paths.tagDetailView = paths.tagManagement + "/details/";
-paths.organizationManagement = paths.accountSettings + "/organizations";
-paths.organizationDetailView = paths.organizationManagement + "/details/";
-paths.customerSystemStatus = paths.accountSettings + "/customer-system-status";
-paths.analyticsProfile = paths.accountSettings + "/analytics-profile";
-paths.analyticsDataEntryManagement = paths.accountSettings + "/analytics-data-entries";
-paths.analyticsDataEntryDetailView = paths.analyticsDataEntryManagement + "/analytics-data-entries/details/";
-paths.dataMappingManagement = paths.accountSettings + "/data_mapping";
-paths.projectTaggingDetailView = paths.dataMappingManagement + "/projects/details/";
-paths.pipelineDataMappingDetailView = paths.dataMappingManagement + "/pipeline/details/";
-paths.userTaggingDetailView = paths.dataMappingManagement + "/users/details/";
-
-paths.freeTrialUserExpirationManagement = paths.accountSettings + "/trial/user-expiration-management";
-paths.freeTrialUserExtensionScreen = `${paths.freeTrialUserExpirationManagement}/extension`;
-paths.freeTrialUserRevocationScreen = `${paths.freeTrialUserExpirationManagement}/revocation`;
-paths.freeTrialUserReinstatementScreen = `${paths.freeTrialUserExpirationManagement}/reinstatement`;
-
-paths.freeTrialUserActivityReport = `${paths.accountSettings}/trial/user/activity-report`;
-paths.freeTrialUserExpirationManagement = paths.accountSettings + "/trial/user-expiration-management";
-
 //Reports
 paths.reports = "reports";
 paths.toolReports = paths.reports + "/tools";

@@ -1,23 +1,8 @@
-import React, {useContext} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import BreadcrumbPageLinkCard from "components/common/card/link/BreadcrumbPageLinkCard";
-import {AuthContext} from "contexts/AuthContext";
-import useComponentStateReference from "hooks/useComponentStateReference";
 
-function LdapSiteRoleManagementPageLinkCard({accessRoleData}) {
-  const {
-    isSiteAdministrator,
-    isOpseraAdministrator,
-    isSaasUser,
-  } = useComponentStateReference();
-
-  if (
-    (isSiteAdministrator !== true && isOpseraAdministrator !== true)
-    || isSaasUser !== false
-  ) {
-    return null;
-  }
-
+export default function LdapSiteRoleManagementPageLinkCard() {
   return (
     <BreadcrumbPageLinkCard
       breadcrumbDestination={"ldapSiteRolesManagement"}
@@ -28,5 +13,3 @@ function LdapSiteRoleManagementPageLinkCard({accessRoleData}) {
 LdapSiteRoleManagementPageLinkCard.propTypes = {
   accessRoleData: PropTypes.object,
 };
-
-export default LdapSiteRoleManagementPageLinkCard;

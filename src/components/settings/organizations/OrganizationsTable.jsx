@@ -14,11 +14,14 @@ import {organizationMetadata} from "components/settings/organizations/organizati
 import NewOrganizationOverlay from "components/settings/organizations/NewOrganizationOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {organizationHelper} from "components/settings/organizations/organization.helper";
+import OrganizationRoleHelper from "@opsera/know-your-role/roles/settings/organizations/organizationRole.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function OrganizationsTable({ organizations, isLoading, loadData, isMounted, organizationFilterModel, setOrganizationFilterModel }) {
   const toastContext = useContext(DialogToastContext);
-  let fields = organizationMetadata.fields;
+  const fields = organizationMetadata.fields;
   const history = useHistory();
+  const { userData } = useComponentStateReference();
 
   const columns = useMemo(
     () => [
@@ -53,7 +56,7 @@ function OrganizationsTable({ organizations, isLoading, loadData, isMounted, org
   return (
     <FilterContainer
       loadData={loadData}
-      addRecordFunction={createOrganization}
+      addRecordFunction={OrganizationRoleHelper.canCreateOrganization(userData) === true ? createOrganization : undefined}
       supportSearch={true}
       isLoading={isLoading}
       body={getOrganizationsTable()}

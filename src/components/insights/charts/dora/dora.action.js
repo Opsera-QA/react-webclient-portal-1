@@ -42,11 +42,6 @@ doraActions.jiraGitlabRolledUp = async (
     dashboardOrgs = null;
   }
 
-  let jiraProjectsMTTR = getResultFromKpiConfiguration(kpiConfiguration, "jira-projects-mttr");
-  jiraProjectsMTTR = jiraProjectsMTTR ? [jiraProjectsMTTR] : null;
-  let jiraProjectsCFR = getResultFromKpiConfiguration(kpiConfiguration, "jira-projects-cfr");
-  jiraProjectsCFR = jiraProjectsCFR ? [jiraProjectsCFR] : null;
-
   const postBody = {
     startDate: startDate.toISOString(),
     endDate: endDate.toISOString(),
@@ -59,8 +54,8 @@ doraActions.jiraGitlabRolledUp = async (
     dashboardOrgs,
     deploymentStages: getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects: getGitlabProjectFromKpiConfiguration(kpiConfiguration),
-    jiraProjectsMTTR,
-    jiraProjectsCFR,
+    jiraProjectsMTTR: getResultFromKpiConfiguration(kpiConfiguration, "jira-projects-mttr"),
+    jiraProjectsCFR: getResultFromKpiConfiguration(kpiConfiguration, "jira-projects-cfr"),
     jiraChangeTypes: getResultFromKpiConfiguration(kpiConfiguration, KPI_FILTER_TYPES.JIRA_CHANGE_TYPES),
     jiraResolutionNames,
     jiraExcludedResolutionNames: getResultFromKpiConfiguration(kpiConfiguration, KPI_FILTER_TYPES.JIRA_EXCLUDED_RESOLUTION_NAMES),

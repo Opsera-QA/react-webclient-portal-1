@@ -7,9 +7,14 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import OrganizationRoleHelper from "@opsera/know-your-role/roles/settings/organizations/organizationRole.helper";
 
 function OrganizationDetailPanel({organizationData }) {
   const [activeTab, setActiveTab] = useState("summary");
+  const {
+    userData,
+  } = useComponentStateReference();
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
@@ -26,7 +31,11 @@ function OrganizationDetailPanel({organizationData }) {
     return (
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SettingsTab
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          visible={OrganizationRoleHelper.canUpdateOrganization(userData) === true}
+        />
       </CustomTabContainer>
     );
   };

@@ -26,6 +26,7 @@ import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
 import { faFileAlt } from "@fortawesome/pro-light-svg-icons";
 import CustomTab from "../../../common/tabs/CustomTab";
 import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
+import UpdateGitCustodianVulnerabilitySeverityButton from "./UpdateGitCustodianVulnerabilitySeverityButton";
 
 // TODO: Leave here for now. If we reuse this concept in the future, I will make a generic version --Noah
 //  Anything context specific and not generic should be left in the context.
@@ -275,13 +276,22 @@ function GitCustodianVulnerableCommitsTable({
 
   const getInlineFilters = () => {
     return (
-      <UpdateGitCustodianVulnerabilityStatusButton
-        className={"mx-2"}
-        selectedIssues={selectedIssues}
-        setSelectedIssues={setSelectedIssues}
-        disabled={!(selectedIssues.length > 0)}
-        loadData={clearSelectAllAndLoadData}
-      />
+      <>
+        <UpdateGitCustodianVulnerabilityStatusButton
+          className={"mx-2"}
+          selectedIssues={selectedIssues}
+          setSelectedIssues={setSelectedIssues}
+          disabled={!(selectedIssues.length > 0)}
+          loadData={clearSelectAllAndLoadData}
+        />
+        <UpdateGitCustodianVulnerabilitySeverityButton
+          className={"mx-2"}
+          selectedIssues={selectedIssues}
+          setSelectedIssues={setSelectedIssues}
+          disabled={!(selectedIssues.length > 0)}
+          loadData={clearSelectAllAndLoadData}
+        />
+      </>      
     );
   };
 

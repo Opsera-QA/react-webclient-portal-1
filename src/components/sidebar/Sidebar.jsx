@@ -20,8 +20,8 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import GitCustodianSidebarNavigationLink from "components/sidebar/links/GitCustodianSidebarNavigationLink";
 import useLocationReference from "hooks/useLocationReference";
 import InnovationLabsNavigationLinks from "components/sidebar/links/InnovationLabsNavigationLinks";
-import useGetFeatureFlagModelByName
-  from "hooks/settings/organization_settings/feature_flags/useGetFeatureFlagModelByName";
+import useGetOrganizationSettingsFeatureFlagModelByName
+  from "hooks/settings/organization_settings/feature_flags/useGetOrganizationSettingsFeatureFlagModelByName";
 import featureFlagConstants
   from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
 
@@ -30,7 +30,7 @@ export default function Sidebar({ hideSideBar }) {
   const { isPublicPathState } = useLocationReference();
   const {
     featureFlagModel,
-  } = useGetFeatureFlagModelByName(featureFlagConstants.FEATURE_FLAG_NAMES.SHOW_INSIGHTS_VNEXT_SIDEBAR_LINK);
+  } = useGetOrganizationSettingsFeatureFlagModelByName(featureFlagConstants.FEATURE_FLAG_NAMES.SHOW_INSIGHTS_VNEXT_SIDEBAR_LINK);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(DataParsingHelper.parseBooleanV2(sessionHelper.getStoredSessionValueByKey("SIDEBAR_COLLAPSED"), false));
 
   const getVnextSidebarLink = () => {

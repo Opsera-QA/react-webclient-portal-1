@@ -16,7 +16,9 @@ function PipelineDataMappingSummaryPanel(
   }
 
   return (
-    <SummaryPanelContainer setActiveTab={setActiveTab}>
+    <SummaryPanelContainer
+      setActiveTab={pipelineDataMappingModel?.canUpdate() === true ? setActiveTab : undefined}
+    >
       <Row>
         <Col lg={6}>
           <TextFieldBase dataObject={pipelineDataMappingModel} fieldName={"name"}/>

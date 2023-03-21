@@ -1,45 +1,38 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import tagTypeConstants from "@opsera/definitions/constants/settings/tags/tagType.constants";
 
-export const tagTypes = [
-  {value: "pipeline", text: "Pipeline"},
-  {value: "application", text: "Application"},
-  {value: "project", text: "Project"},
-  {value: "release", text: "Release"},
-  {value: "tool", text: "Tool"},
-  {value: "custom", text: "Custom"},
-  {value: "template", text: "Template"},
-  {value: "notification", text: "Notification Policy"},
-  {value: "dashboard", text: "Dashboard"},
-  {value: "environment", text: "Environment"},
-];
-
-function TagTypeSelectInput({ fieldName, dataObject, setDataObject, disabled}) {
+export default function TagTypeSelectInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    setDataFunction,
+    disabled,
+  }) {
   return (
-    <div>
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        selectOptions={tagTypes}
-        valueField={"value"}
-        textField={"text"}
-        disabled={disabled}
-      />
-    </div>
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={model}
+      setDataObject={setModel}
+      selectOptions={tagTypeConstants.TAG_TYPE_SELECT_OPTIONS}
+      setDataFunction={setDataFunction}
+      valueField={"value"}
+      textField={"text"}
+      disabled={disabled}
+    />
   );
 }
 
 TagTypeSelectInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
+  setDataFunction: PropTypes.func,
 };
 
 TagTypeSelectInput.defaultProps = {
   fieldName: "type",
 };
-
-export default TagTypeSelectInput;

@@ -23,6 +23,8 @@ export default function PolicySummaryPanel(
   return (
     <SummaryPanelContainer
       setActiveTab={setActiveTab}
+      editingAllowed={policyModel.canUpdate() === true}
+      className={"mt-2"}
     >
       <Row>
         <Col lg={12}>

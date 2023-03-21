@@ -32,6 +32,7 @@ export default function PolicyDetailPanel(
         <SettingsTab
           handleTabClick={handleTabClick}
           activeTab={activeTab}
+          visible={policyModel.canUpdate() === true}
         />
       </CustomTabContainer>
     );

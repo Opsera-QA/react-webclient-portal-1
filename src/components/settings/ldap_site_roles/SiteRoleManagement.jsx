@@ -2,20 +2,18 @@ import React, {useState, useEffect} from "react";
 import {useHistory, useParams} from "react-router-dom";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import SiteRoleManagementSubNavigationBar from "components/settings/ldap_site_roles/SiteRoleManagementSubNavigationBar";
-import SiteRolesTable from "components/settings/ldap_site_roles/SiteRolesTable";
 import SiteRolesHelpDocumentation from "../../common/help/documentation/settings/SiteRolesHelpDocumentation";
-import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SiteRoleManagementPageLinkCards from "components/settings/ldap_site_roles/cards/SiteRoleManagementPageLinkCards";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import MessageField from "components/common/fields/text/message/MessageField";
 import MessageFieldBase from "components/common/fields/text/MessageFieldBase";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
+import LdapSiteRoleGroupRoleHelper
+  from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
 
 export default function SiteRoleManagement() {
   const history = useHistory();
@@ -49,8 +47,12 @@ export default function SiteRoleManagement() {
 
   const loadData = async () => {
     try {
-      setIsLoading(true);
-      await getRoleGroups();
+      setSiteRoles([]);
+
+      if (LdapSiteRoleGroupRoleHelper.canGetSiteRoleGroups(userData) === true) {
+        setIsLoading(true);
+        await getRoleGroups();
+      }
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -85,6 +87,7 @@ export default function SiteRoleManagement() {
     if (siteRoles?.length === 0) {
       return (
         <WarningMessageFieldBase
+          className={"mx-2"}
           message={"There was an error loading Site Roles."}
         />
       );
@@ -97,7 +100,7 @@ export default function SiteRoleManagement() {
     );
   };
 
-  if (isSaasUser === true) {
+  if (LdapSiteRoleGroupRoleHelper.canGetSiteRoleGroups(userData) !== true) {
     return null;
   }
 
@@ -107,8 +110,6 @@ export default function SiteRoleManagement() {
       navigationTabContainer={<SiteRoleManagementSubNavigationBar activeTab={"siteRoles"} />}
       breadcrumbDestination={"ldapSiteRolesManagement"}
       helpComponent={<SiteRolesHelpDocumentation/>}
-      accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
     >
       <CenteredContentWrapper>
         <MessageFieldBase
