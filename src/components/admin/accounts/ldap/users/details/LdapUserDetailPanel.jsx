@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import LdapUserEditorPanel from "./LdapUserEditorPanel";
-import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
-import SummaryTab from "../../../common/tabs/detail_view/SummaryTab";
-import LdapUserSummaryPanel from "./LdapUserSummaryPanel";
-import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
-import SettingsTab from "../../../common/tabs/detail_view/SettingsTab";
+import LdapUserEditorPanel from "components/admin/accounts/ldap/users/details/LdapUserEditorPanel";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
+import LdapUserSummaryPanel from "components/admin/accounts/ldap/users/details/LdapUserSummaryPanel";
+import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
+import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 
 export default function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, hideSettings }) {
   const [activeTab, setActiveTab] = useState("summary");

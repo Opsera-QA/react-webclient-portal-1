@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import LoadingDialog from "components/common/status_notifications/loading";

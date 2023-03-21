@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import {useHistory, useParams} from "react-router-dom";
-import LdapUsersTable from "./LdapUsersTable";
+import LdapUsersTable from "components/admin/accounts/ldap/users/LdapUsersTable";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
