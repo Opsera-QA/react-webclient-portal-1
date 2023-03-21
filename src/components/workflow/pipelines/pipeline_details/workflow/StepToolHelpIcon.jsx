@@ -15,8 +15,6 @@ import AzureAcrPushPipelineStepConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/AzureAcrPushPipelineStepConfigurationHelpDocumentation";
 import OctopusDeployStepConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/OctopusDeployStepConfigurationHelpDocumentation";
-import PipelineSourceRepositoryHelpDocumentation
-  from "../../../../common/help/documentation/pipelines/step_configuration/PipelineSourceRepositoryHelpDocumentation";
 import AnsibleStepConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/AnsibleStepConfigurationHelpDocumentation";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
@@ -24,6 +22,10 @@ import ApprovalGateStepConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/ApprovalGateStepConfigurationHelpDocumentation";
 import ExternalApiIntegratorHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/ExternalApiIntegratorHelpDocumentation";
+import SonarQubeStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/SonarQubeStepConfigurationHelpDocumentation";
+import ServiceNowHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/ServiceNowHelpDocumentation";
 
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
   // TODO: Alphabetize when adding new help panels
@@ -51,6 +53,7 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
       case "junit":
       case "xunit":
       case "sonar":
+        return <SonarQubeStepConfigurationHelpDocumentation/>;
       case "command-line":
       case "npm":
       case "teamcity":
@@ -63,6 +66,8 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
       case "databricks-notebook":
       case "ssh-upload":
       case "spinnaker":
+      case "servicenow":
+        return <ServiceNowHelpDocumentation/>;
       case "cypress":
       case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
       case "anchore-scan":
