@@ -34,7 +34,7 @@ function OrganizationDetailPanel({organizationData }) {
         <SettingsTab
           handleTabClick={handleTabClick}
           activeTab={activeTab}
-          visible={OrganizationRoleHelper.canUpdateOrganization(userData) === true}
+          visible={OrganizationRoleHelper.canUpdateOrganization(userData, organizationData?.getOriginalData()) === true}
         />
       </CustomTabContainer>
     );

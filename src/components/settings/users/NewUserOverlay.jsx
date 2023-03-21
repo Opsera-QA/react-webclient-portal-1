@@ -6,47 +6,32 @@ import {faUser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import UserEditorPanel from "components/settings/users/details/UserEditorPanel";
 import userActions from "components/user/user-actions";
-import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {usersMetadata} from "components/settings/users/users.metadata";
 import {apiTokenHelper} from "temp-library-components/helpers/api/token/apiToken.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
-function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
+export default function NewUserOverlay({ loadData } ) {
   const { getUserRecord } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [userData, setUserData] = useState(undefined);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [invalidHost, setInvalidHost] = useState(false);
   const [domain, setDomain] = useState(undefined);
   const [organization, setOrganization] = useState(undefined);
+  const { cancelTokenSource } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    initializeData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-    };
+    initializeData().catch(() => {});
   }, []);
 
-  const initializeData = async (cancelSource = cancelTokenSource) => {
+  const initializeData = async () => {
     const user = await getUserRecord();
     const orgDomain = user?.ldap?.domain;
     setOrganization(user?.ldap?.organization);
     setDomain(orgDomain);
     const token = apiTokenHelper.generateApiCallToken("orgRegistrationForm");
-    const accountResponse = await userActions.getAccountInformationV2(cancelSource, orgDomain, token);
+    const accountResponse = await userActions.getAccountInformationV2(cancelTokenSource, orgDomain, token);
     const newUserModel = (new Model(usersMetadata.newObjectFields, usersMetadata, true));
 
     if (accountResponse?.data) {
@@ -67,7 +52,7 @@ function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
   };
 
   const handleClose = () => {
-    if (isMounted?.current === true) {
+    if (loadData) {
       loadData();
     }
 
@@ -99,11 +84,4 @@ function NewUserOverlay({ isMounted, loadData, authorizedActions } ) {
 
 NewUserOverlay.propTypes = {
   loadData: PropTypes.func,
-  authorizedActions: PropTypes.array,
-  orgDomain: PropTypes.string,
-  isMounted: PropTypes.object,
 };
-
-export default NewUserOverlay;
-
-
