@@ -2,7 +2,7 @@ import React, {useState, useContext} from "react";
 import {Button, Modal, Popover, OverlayTrigger} from "react-bootstrap";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
-import LdapUserEditorPanel from "../../../../settings/ldap_users/users_detail_view/LdapUserEditorPanel";
+import LdapUserEditorPanel from "../users/details/LdapUserEditorPanel";
 
 const INITIAL_DATA = {
   name: "",

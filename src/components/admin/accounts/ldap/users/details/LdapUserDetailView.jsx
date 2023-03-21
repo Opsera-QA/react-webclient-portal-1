@@ -1,6 +1,7 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import Model from "core/data_model/model";
+import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {ldapUserMetadata} from "components/admin/accounts/ldap/users/ldapUser.metadata";
@@ -8,48 +9,39 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import LdapUserDetailPanel from "components/admin/accounts/ldap/users/details/LdapUserDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
-import UserManagementSubNavigationBar from "components/settings/users/UserManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import LdapUserRoleHelper from "@opsera/know-your-role/roles/accounts/users/ldapUserRole.helper";
 
-function UserDetailView() {
-  const {userEmail, orgDomain} = useParams();
-  const toastContext = useContext(DialogToastContext);
+function LdapUserDetailView() {
+  const {emailAddress, organizationDomain} = useParams();
   const [ldapUserData, setLdapUserData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const {
-    accessRoleData,
-    cancelTokenSource,
-    isMounted,
-    userData,
+    isOpseraAdministrator,
+    toastContext,
     getAccessToken,
   } = useComponentStateReference();
-  const domain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
 
   useEffect(() => {
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (isOpseraAdministrator === true) {
+      loadData();
+    }
   }, []);
 
   const loadData = async () => {
     try {
-      if ((accessRoleData.OpseraAdministrator === true || domain === orgDomain) && LdapUserRoleHelper.canGetUserDetails(userData) === true) {
-        setIsLoading(true);
-        await getLdapUser();
-      }
-    } catch (error) {
+      setIsLoading(true);
+      await getLdapUser();
+    }
+    catch (error) {
       toastContext.showLoadingErrorDialog(error);
-    } finally {
+    }
+    finally {
       setIsLoading(false);
     }
   };
 
   const getLdapUser = async () => {
-    const response = await accountsActions.getUserByEmailV2(getAccessToken, cancelTokenSource, userEmail);
+    const response = await accountsActions.getUserByEmail(emailAddress, getAccessToken);
 
     if (response?.data != null) {
       setLdapUserData(new Model(response.data, ldapUserMetadata, false));
@@ -61,7 +53,7 @@ function UserDetailView() {
       return (
         <ActionBarContainer>
           <div>
-            <ActionBarBackButton path={"/settings/user-management/"} />
+            <ActionBarBackButton path={`/admin/organization-accounts/${organizationDomain}/details`} />
           </div>
           <div>
           </div>
@@ -70,23 +62,21 @@ function UserDetailView() {
     }
   };
 
-  if ((accessRoleData.OpseraAdministrator !== true && domain !== orgDomain) || LdapUserRoleHelper.canGetUserDetails(userData) !== true) {
+  if (isOpseraAdministrator !== true) {
     return null;
   }
 
   return (
     <DetailScreenContainer
-      breadcrumbDestination={(accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator) ? "activeUserDetailView" : "ldapUserDetailViewLimited"}
+      breadcrumbDestination={"ldapUserDetailView"}
       metadata={ldapUserMetadata}
       dataObject={ldapUserData}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      navigationTabContainer={<UserManagementSubNavigationBar activeTab={"userViewer"} />}
       detailPanel={
         <LdapUserDetailPanel
-          hideSettings={true}
           setLdapUserData={setLdapUserData}
-          orgDomain={orgDomain}
+          orgDomain={organizationDomain}
           ldapUserData={ldapUserData}
         />
       }
@@ -94,4 +84,4 @@ function UserDetailView() {
   );
 }
 
-export default UserDetailView;
+export default LdapUserDetailView;

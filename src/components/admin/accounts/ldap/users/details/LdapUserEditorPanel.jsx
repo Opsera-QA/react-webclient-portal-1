@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import axios from "axios";
 
-function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authorizedActions, handleClose }) {
+function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [ldapUserDataDto, setLdapUserDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -61,10 +61,6 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authori
 
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
-  }
-
-  if (!authorizedActions.includes("update_user")) {
-    return <WarningDialog warningMessage={"You do not have the required permissions to update this user"} />;
   }
 
   return (

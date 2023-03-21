@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
-import LdapUsersTable from "components/settings/ldap_users/LdapUsersTable";
+import LdapUsersTable from "components/admin/accounts/ldap/users/LdapUsersTable";
 
 function LdapOrganizationAccountUsersPanel({ ldapOrganizationAccountData, loadData }) {
   if (ldapOrganizationAccountData == null) {
@@ -13,7 +13,6 @@ function LdapOrganizationAccountUsersPanel({ ldapOrganizationAccountData, loadDa
       <LdapUsersTable
         orgDomain={ldapOrganizationAccountData?.getData("orgDomain")}
         userData={ldapOrganizationAccountData?.getData("users")}
-        authorizedActions={["create_user", "update_user"]}
         loadData={loadData}
       />
     </div>
