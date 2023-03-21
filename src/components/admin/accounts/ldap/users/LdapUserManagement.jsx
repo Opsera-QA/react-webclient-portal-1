@@ -5,49 +5,41 @@ import LdapUsersTable from "components/admin/accounts/ldap/users/LdapUsersTable"
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import axios from "axios";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function LdapUserManagement() {
-  const history = useHistory();
+export default function LdapUserManagement() {
   const {orgDomain} = useParams();
-  const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [userList, setUserList] = useState([]);
-  const toastContext = useContext(DialogToastContext);
-  const [authorizedActions, setAuthorizedActions] = useState([]);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isOpseraAdministrator,
+    accessRoleData,
+    toastContext,
+    getAccessToken,
+    isMounted,
+    cancelTokenSource,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [orgDomain]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
-      setIsLoading(true);
-      await getRoles(cancelSource);
+      setUserList([]);
+
+      if (isOpseraAdministrator === true) {
+        setIsLoading(true);
+        await getUsersByDomain();
+      }
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     }
@@ -58,41 +50,12 @@ function LdapUserManagement() {
     }
   };
 
-  const getUsersByDomain = async (ldapDomain, cancelSource = cancelTokenSource) => {
-    try {
-      let organizationResponse = await accountsActions.getOrganizationAccountByDomainV2(getAccessToken, cancelSource, ldapDomain);
-      if (isMounted?.current === true && organizationResponse?.data?.users) {
-        setUserList(organizationResponse?.data?.users);
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
-      }
-    }
-  };
+  const getUsersByDomain = async () => {
+      const response = await accountsActions.getOrganizationAccountByDomainV2(getAccessToken, cancelTokenSource, ldapDomain);
+      const parsedUsers = DataParsingHelper.parseNestedArray(response, "data.users");
 
-  const getRoles = async (cancelSource = cancelTokenSource) => {
-    const user = await getUserRecord();
-    const {ldap, groups} = user;
-    const userRoleAccess = await setAccessRoles(user);
-
-    if (isMounted.current === true && userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-
-      let authorizedActions = await accountsActions.getAllowedUserActions(userRoleAccess, ldap.organization, undefined, getUserRecord, getAccessToken);
-      setAuthorizedActions(authorizedActions);
-
-      if (userRoleAccess?.OpseraAdministrator) {
-        if (orgDomain != null) {
-          await getUsersByDomain(orgDomain, cancelSource);
-        }
-        else {
-          history.push(`/settings/${ldap.domain}/users/`);
-        }
-      } else if (ldap?.organization != null && authorizedActions?.includes("get_users")) {
-        history.push(`/settings/${ldap.domain}/users/`);
-      }
+      if (isMounted?.current === true && parsedUsers) {
+        setUserList([...parsedUsers]);
     }
   };
 
@@ -106,11 +69,7 @@ function LdapUserManagement() {
         isLoading={isLoading}
         userData={userList}
         loadData={loadData}
-        authorizedActions={authorizedActions}
       />
     </ScreenContainer>
   );
 }
-
-
-export default LdapUserManagement;
