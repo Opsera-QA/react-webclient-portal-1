@@ -34,6 +34,7 @@ import PipelineActionControlButtonBase
   from "components/workflow/pipelines/action_controls/PipelineActionControlButtonBase";
 import usePipelineActions from "hooks/workflow/pipelines/usePipelineActions";
 import {sleep} from "utils/helpers";
+import PipelineStartConfirmationOverlay from "components/workflow/pipelines/PipelineStartConfirmationOverlay";
 
 const PIPELINE_ACTION_STATES = {
   READY: "ready",
@@ -225,11 +226,11 @@ function PipelineActionControls(
     }
   };
 
-  const handleResumeWorkflowClick = async (pipelineId) => {
+  const handleResumeWorkflowClick = async () => {
     try {
       setStartPipeline(true);
       toastContext.showInformationToast("A request to resume this pipeline has been submitted.  It will begin shortly.", 20);
-      await PipelineActions.resumePipelineV2(getAccessToken, cancelTokenSource, pipelineId);
+      await PipelineActions.resumePipelineV2(getAccessToken, cancelTokenSource, pipeline?._id);
       await delayedRefresh();
     }
     catch (error) {
@@ -352,7 +353,14 @@ function PipelineActionControls(
     } else {
       if (pipelineOrientation === "middle") {
         //this is the middle, so pop the new modal to confirm user wants to resume or offer reset/restart
-        launchPipelineStartWizard(pipelineOrientation, pipelineType, pipelineId);
+        toastContext.showOverlayPanel(
+          <PipelineStartConfirmationOverlay
+            pipeline={pipeline}
+            handlePipelineStartRequest={startNewPipelineRun}
+            handlePipelineResumeRequest={handleResumeWorkflowClick}
+            dynamicSettingsEnabled={enabledServices?.dynamicSettings === true}
+          />
+        );
       } else { //this is starting from beginning:
         if (pipelineOrientation === "start") {
           console.log("starting pipeline from scratch");
