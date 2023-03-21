@@ -7,10 +7,14 @@ import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faUser} from "@fortawesome/pro-light-svg-icons";
 import NewUserOverlay from "components/settings/users/NewUserOverlay";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import NewOrganizationAccountUserOverlay
+  from "components/admin/accounts/ldap/organization_accounts/NewOrganizationAccountUserOverlay";
 
 function LdapUsersTable({ userData, orgDomain, isLoading, loadData }) {
   const fields = ldapUserMetadata.fields;
   const history = useHistory();
+  const { toastContext } = useComponentStateReference();
 
   const columns = useMemo(
     () => [
@@ -34,8 +38,9 @@ function LdapUsersTable({ userData, orgDomain, isLoading, loadData }) {
 
   const createUser = () => {
     toastContext.showOverlayPanel(
-      <NewUserOverlay
+      <NewOrganizationAccountUserOverlay
         loadData={loadData}
+        orgDomain={orgDomain}
       />
     );
   };

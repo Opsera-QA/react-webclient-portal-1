@@ -37,6 +37,7 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData, isLoading }) {
         orgDomain={domain}
         users={ldapGroupData.getData("members")}
         isLoading={isLoading}
+        allowUserCreation={false}
       />
     </SummaryPanelContainer>
   );

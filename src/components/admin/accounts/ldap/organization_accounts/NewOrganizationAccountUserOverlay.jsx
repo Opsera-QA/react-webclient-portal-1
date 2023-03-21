@@ -13,11 +13,9 @@ import {apiTokenHelper} from "temp-library-components/helpers/api/token/apiToken
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function NewOrganizationAccountUserOverlay({ orgDomain, loadData } ) {
-  const { getUserRecord } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [userData, setUserData] = useState(undefined);
+  const [userModel, setUserModel] = useState(undefined);
   const [invalidHost, setInvalidHost] = useState(false);
-  const [domain, setDomain] = useState(undefined);
   const [organization, setOrganization] = useState(undefined);
   const { cancelTokenSource } = useComponentStateReference();
 
@@ -36,6 +34,7 @@ export default function NewOrganizationAccountUserOverlay({ orgDomain, loadData 
         toastContext.showSystemErrorBanner("Warning!  You are attempting to create an account on the wrong Opsera Portal tenant.  Please check with your account owner or contact Opsera to get the proper to URL register accounts.");
       }
 
+      setOrganization(accountResponse?.data?.organization);
       newUserModel.setData("company", accountResponse.data?.orgName);
       newUserModel.setData("ldapOrgAccount", accountResponse.data?.name);
       newUserModel.setData("ldapOrgDomain", accountResponse.data?.orgDomain);
@@ -44,7 +43,7 @@ export default function NewOrganizationAccountUserOverlay({ orgDomain, loadData 
       newUserModel.setData("localAuth", accountResponse?.data?.localAuth === "TRUE");
     }
 
-    setUserData({...newUserModel});
+    setUserModel({...newUserModel});
   };
 
   const handleClose = () => {
@@ -57,15 +56,15 @@ export default function NewOrganizationAccountUserOverlay({ orgDomain, loadData 
   };
 
   const getBody = () => {
-    if (userData == null) {
+    if (userModel == null) {
       return (<LoadingDialog size={"sm"} message={"Loading User Creation Form"} />);
     }
 
     return (
       <UserEditorPanel
-        orgDomain={domain}
+        orgDomain={orgDomain}
         organization={organization}
-        userData={userData}
+        userData={userModel}
         handleClose={handleClose}
       />
     );
