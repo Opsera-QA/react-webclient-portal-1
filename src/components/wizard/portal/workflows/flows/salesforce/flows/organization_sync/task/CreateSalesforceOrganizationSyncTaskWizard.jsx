@@ -14,6 +14,7 @@ import { CREATE_WORKFLOW_WIZARD_REGISTER_TOOL_TYPES } from "../../../../tools/Cr
 import CreateWorkflowWizardCreateJenkinsTool from "../../../../tools/jenkins/CreateWorkflowWizardCreateJenkinsTool";
 import jenkinsConnectionMetadata from "../../../../../../../../inventory/tools/tool_details/tool_jobs/jenkins/jenkins-connection-metadata";
 import CreateWorkflowWizardTestJenkinsTool from "../../../../tools/jenkins/CreateWorkflowWizardTestJenkinsTool";
+import CreateSalesforceOrganizationSyncInputFields from "./CreateSalesforceOrganizationSyncInputFields";
 
 export const CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS = {
   REGISTER_GIT_ACCOUNT_SCREEN: "create_git_tool_screen",
@@ -27,6 +28,7 @@ export const CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS = {
   REGISTER_GIT_ACCOUNT_IN_JENKINS_SCREEN:
     "register_git_account_in_jenkins_screen",
   WORKFLOW_COMPLETION_SCREEN: "workflow_completion_screen",
+  EDIT_WORKFLOW_INPUT: "edit_workflow_input"
 };
 
 export default function CreateSalesforceOrganizationSyncTaskWizard({
@@ -194,7 +196,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
             gitToolOption={gitToolOption}
             onSuccessFunction={() =>
               setCurrentScreen(
-                CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN,
+                CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT,
               )
             }
             onFailureFunction={() => {}}
@@ -202,6 +204,19 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
             className={"m-3"}
             setButtonContainer={setButtonContainer}
           />
+        );
+      case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.EDIT_WORKFLOW_INPUT:
+        return (
+            <CreateSalesforceOrganizationSyncInputFields
+                taskModel={task}
+                setTaskModel={setTask}
+                onSuccessFunction={() =>
+                    setCurrentScreen(
+                        CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN,
+                    )
+                }
+                setButtonContainer={setButtonContainer}
+            />
         );
       case CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.WORKFLOW_COMPLETION_SCREEN:
         return (
