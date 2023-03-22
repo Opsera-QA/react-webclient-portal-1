@@ -335,6 +335,7 @@ sfdcPipelineActions.createNewRecordV2 = async (getAccessToken, cancelTokenSource
     isTranslations: pipelineWizardModel.getData("isTranslations") === true,
     fromGitTasks: pipelineWizardModel.getData("fromGitTasks") === true,
     runCount: pipelineWizardModel.getData("run_count"),
+    ignoreWarning: pipelineWizardModel.getData("ignoreWarning") === true,
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/create_new_record`;
@@ -484,6 +485,15 @@ sfdcPipelineActions.checkTestClassesCount = async (getAccessToken, cancelTokenSo
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/check_unit_test_class_count`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+sfdcPipelineActions.updateIgnoreWarning = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const postBody = {
+    ignoreWarning: pipelineWizardModel.getData("ignoreWarning") === true,
+  };
+
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/update_ignore_warning`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
