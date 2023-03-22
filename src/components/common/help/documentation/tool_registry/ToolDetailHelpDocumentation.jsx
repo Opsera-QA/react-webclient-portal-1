@@ -174,6 +174,13 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
             <div>For more information on how to register the <b>External API Integrator</b> tool, view the <a href="https://docs.opsera.io/tool-registry/external-api-integrator-tool-registration" target="_blank" rel="noreferrer"><b>External API Integrator Tool Registration Help Documentation</b>.</a></div>
           </div>
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ANCHORE_INTEGRATOR:
+        return (
+          <div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>Anchore</b> tool, view the <a href="https://docs.opsera.io/tool-registry/anchore-tool-registration" target="_blank" rel="noreferrer"><b>Anchore Tool Registration Help Documentation</b>.</a></div>
+          </div>
+        );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.ANSIBLE:
         return (
           <div>
@@ -193,6 +200,13 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
           <div>
             <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
             <div>For more information on how to register the <b>Argo</b> tool, view the <a href="https://docs.opsera.io/tool-registry/argo-cd-tool-registration" target="_blank" rel="noreferrer"><b>Argo CD Tool Registration Help Documentation</b>.</a></div>
+          </div>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
+        return (
+          <div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>Aquasec</b> tool, view the <a href="https://docs.opsera.io/tool-registry/aqua-security-scan-tool-registration" target="_blank" rel="noreferrer"><b>Aqua Security Scan Tool Registration Help Documentation</b>.</a></div>
           </div>
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.AWS_ACCOUNT:
@@ -228,6 +242,13 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
           <div>
             <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
             <div>For more information on how to register the <b>Boomi</b> tool, view the <a href="https://docs.opsera.io/tool-registry/boomi-tool-registration" target="_blank" rel="noreferrer"><b>Boomi Tool Registration Help Documentation</b>.</a></div>
+          </div>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.COVERITY:
+        return (
+          <div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>Coverity</b> tool, view the <a href="https://docs.opsera.io/tool-registry/coverity-tool-registration" target="_blank" rel="noreferrer"><b>Coverity Tool Registration Help Documentation</b>.</a></div>
           </div>
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.FLYWAY_DATABASE_MIGRATOR:
@@ -300,6 +321,20 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
             <div>For more information on how to register the <b>Salesforce Code Analyzer</b> tool, view the <a href="https://docs.opsera.io/tool-registry/salesforce-code-analyzer-tool-registration" target="_blank" rel="noreferrer"><b>Salesforce Code Analyzer Tool Registration Help Documentation</b>.</a></div>
           </div>
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SAP_CPQ:
+        return (
+          <div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>SAP CPQ</b> tool, view the <a href="https://docs.opsera.io/tool-registry/sap-cpq-tool-registration" target="_blank" rel="noreferrer"><b>SAP CPQ Tool Registration Help Documentation</b>.</a></div>
+          </div>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SELENIUM:
+        return (
+          <div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>Selenium</b> tool, view the <a href="https://docs.opsera.io/tool-registry/selenium-framework-tool-registration" target="_blank" rel="noreferrer"><b>Selenium Tool Registration Help Documentation</b>.</a></div>
+          </div>
+        );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.SERVICE_NOW:
         return (
           <div>
@@ -335,11 +370,32 @@ function ToolDetailHelpDocumentation({toolIdentifier}) {
             <div>For more information on how to register the <b>Snaplogic</b> tool, view the <a href="https://docs.opsera.io/tool-registry/snaplogic-tool-registration" target="_blank" rel="noreferrer"><b>SnapLogic Tool Registration Help Documentation</b>.</a></div>
           </div>
         );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK:
+        return (
+          <div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>Snyk</b> tool, view the <a href="https://docs.opsera.io/tool-registry/snyk-tool-registration" target="_blank" rel="noreferrer"><b>Snyk Tool Registration Help Documentation</b>.</a></div>
+          </div>
+        );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_CLOUD:
         return (
           <div>
             <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
             <div>For more information on how to register the <b>Terraform Cloud</b> tool, view the <a href="https://docs.opsera.io/tool-registry/terraform-cloud-tool-registration" target="_blank" rel="noreferrer"><b>Terraform Cloud Tool Registration Help Documentation</b>.</a></div>
+          </div>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRASCAN:
+        return (
+          <div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>Terrascan</b> tool, view the <a href="https://docs.opsera.io/tool-registry/terrascan-tool-registration" target="_blank" rel="noreferrer"><b>Terrascan Tool Registration Help Documentation</b>.</a></div>
+          </div>
+        );
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.TWISTLOCK:
+        return (
+          <div>
+            <div>Register, track and configure your tool to orchestrate a chain of actions that help to achieve the continuous integration process. Each tool contains tabs unique to configuration needs.</div>
+            <div>For more information on how to register the <b>Twistlock</b> tool, view the <a href="https://docs.opsera.io/tool-registry/twistlock-tool-integration" target="_blank" rel="noreferrer"><b>Twistlock Tool Registration Help Documentation</b>.</a></div>
           </div>
         );
       case toolIdentifierConstants.TOOL_IDENTIFIERS.BLACKDUCK:
