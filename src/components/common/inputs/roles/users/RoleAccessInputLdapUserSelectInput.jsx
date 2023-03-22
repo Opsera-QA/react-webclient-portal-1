@@ -14,13 +14,13 @@ export default function RoleAccessInputLdapUserSelectInput(
     roles,
   }) {
   const {
-    users,
+    ldapUsers,
     isLoading,
     error,
   } = useGetLdapUsers();
 
   const getDisabledUsers = () => {
-    const userList = DataParsingHelper.parseArray(users, []);
+    const userList = DataParsingHelper.parseArray(ldapUsers, []);
 
     if (roles.length > 0) {
       const disabledUsers = [];
@@ -46,7 +46,7 @@ export default function RoleAccessInputLdapUserSelectInput(
       dataObject={model}
       setDataObject={setModel}
       fieldName={fieldName}
-      selectOptions={users}
+      selectOptions={ldapUsers}
       valueField={"emailAddress"}
       textField={(user) => user != null && typeof user === "object" ? `${user.name} (${user.emailAddress})` : user}
       busy={isLoading}
