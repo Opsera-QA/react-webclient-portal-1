@@ -15,20 +15,27 @@ import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 import PortalRouteToWorkflowButton from "./PortalRouteToWorkflowButton";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import RunTaskButton from "../../../../../../tasks/buttons/RunTaskButton";
+import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
+import TooltipWrapper from "../../../../../../common/tooltip/TooltipWrapper";
 
-const HEIGHT = "400px";
+const HEIGHT = "700px";
 
 export default function CreateWorkflowWizardTaskCompletionScreen({
   task,
   workflowType,
   setButtonContainer,
   handleClose,
+  connectionFailure,
 }) {
   const [initializationState, setInitializationState] = useState(
     apiRequestHelper.API_REQUEST_STATES.READY,
   );
-  const { getAccessToken, cancelTokenSource, isMounted, toastContext } =
+  const { getAccessToken, cancelTokenSource, isMounted, toastContext, userData } =
     useComponentStateReference();
+  const [taskData, setTaskData] = useState(
+    modelHelpers.parseObjectIntoModel(task, tasksMetadata),
+  );
 
   useEffect(() => {
     if (setButtonContainer) {
@@ -64,17 +71,6 @@ export default function CreateWorkflowWizardTaskCompletionScreen({
     }
   };
 
-  const titleText = () => {
-    return (
-        <>
-          You have successfully completed creating your new ${workflowType} Task!
-          <br />
-
-        </>
-
-    );
-  };
-
   const getBody = () => {
     switch (initializationState) {
       case apiRequestHelper.API_REQUEST_STATES.BUSY:
@@ -96,45 +92,71 @@ export default function CreateWorkflowWizardTaskCompletionScreen({
             <Row>
               <Col
                 lg={12}
-                className={"d-flex align-items-center justify-content-center"}
+                className={
+                  "d-flex align-items-center justify-content-center mt-3 mb-5"
+                }
               >
-                <OpseraInfinityLogoLarge scale={0.2} />
+                <OpseraInfinityLogoLarge scale={0.4} />
               </Col>
+              <br />
               <Col
                 lg={12}
                 className={"d-flex align-items-center justify-content-center"}
               >
-                <div>
-                  <H5FieldSubHeader
-                    subheaderText={`You have successfully completed creating your new ${workflowType} Task!`}
-                  />
-                </div>
-                <br />
-                <div>
-                  <H5FieldSubHeader
-                    subheaderText={`Now you can either return to the home page or start the Task.`}
-                  />
-                </div>
+                <H5FieldSubHeader
+                  subheaderText={`Congratulations! You have successfully created a new Opsera ${workflowType} Task!`}
+                />
+              </Col>
+              <Col
+                lg={12}
+                className={
+                  "d-flex align-items-center justify-content-center mb-3"
+                }
+              >
+                <H5FieldSubHeader
+                  subheaderText={`You can start using your task right away or come back to it later.`}
+                />
               </Col>
               <Col
                 lg={12}
                 className={"d-flex align-items-center justify-content-center"}
               >
                 <div className={"focusText"}>
-                  You can start your Task anytime you want from the Opsera home
-                  page.
+                  Your new task will also be available to view and run via the
+                  tasks page.
                 </div>
               </Col>
-              <div className={"d-flex"}>
-                <ButtonContainerBase className={"mt-5 ml-auto"}>
-                  <DoneOverlayButton className={"mr-2"} />
-                  <PortalRouteToWorkflowButton
-                    workspaceItem={task}
-                    workspaceType={workspaceConstants.WORKSPACE_ITEM_TYPES.TASK}
-                    handleClose={handleClose}
-                  />
-                </ButtonContainerBase>
-              </div>
+              <Col
+                lg={12}
+                className={"d-flex align-items-center justify-content-center"}
+              >
+                <div className={"d-flex"}>
+                  <ButtonContainerBase className={"mt-5 ml-auto"}>
+                    <DoneOverlayButton
+                      className={"mr-2"}
+                      style={{ width: "160px" }}
+                    />
+                    <PortalRouteToWorkflowButton
+                      workspaceItem={task}
+                      workspaceType={
+                        workspaceConstants.WORKSPACE_ITEM_TYPES.TASK
+                      }
+                      handleClose={handleClose}
+                      style={{ width: "160px" }}
+                      className={"mr-2"}
+                    />
+                    <RunTaskButton
+                        taskModel={taskData}
+                        setTaskModel={setTaskData}
+                        status={status}
+                        // disable={connectionFailure > 0}
+                        actionAllowed={TaskRoleHelper.canRunTask(userData, taskData?.getPersistData())}
+                        taskType={taskData?.getData("type")}
+                        style={{width: "160px"}}
+                    />
+                  </ButtonContainerBase>
+                </div>
+              </Col>
             </Row>
           </CenteredContentWrapper>
         );
@@ -158,4 +180,5 @@ CreateWorkflowWizardTaskCompletionScreen.propTypes = {
   workflowType: PropTypes.string,
   setButtonContainer: PropTypes.func,
   handleClose: PropTypes.func,
+  connectionFailure: PropTypes.number,
 };

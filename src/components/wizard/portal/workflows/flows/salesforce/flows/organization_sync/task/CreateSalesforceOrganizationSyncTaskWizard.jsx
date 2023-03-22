@@ -54,6 +54,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
   );
   const [jenkinsSourceToolId, setJenkinsSourceToolId] = useState(undefined);
   const [connectionFailure, setConnectionFailure] = useState(false);
+  const [failureCount, setConnectionFailureCount] = useState(0);
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
@@ -79,6 +80,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
             setConnectionFailure={setConnectionFailure}
             onSkipConnectionTestFunction={() => {
               setConnectionFailure(false);
+              setConnectionFailureCount(connectionFailure + 1);
               setCurrentScreen(
                 CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_SALESFORCE_ACCOUNT_SCREEN,
               );
@@ -121,6 +123,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
             setCurrentScreen={setCurrentScreen}
             onSkipConnectionTestFunction={() => {
               setConnectionFailure(false);
+              setConnectionFailureCount(connectionFailure + 1);
               setCurrentScreen(
                 CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.REGISTER_JENKINS_ACCOUNT_SCREEN,
               );
@@ -161,6 +164,7 @@ export default function CreateSalesforceOrganizationSyncTaskWizard({
             setCurrentScreen={setCurrentScreen}
             onSkipConnectionTestFunction={() => {
               setConnectionFailure(false);
+              setConnectionFailureCount(connectionFailure + 1);
               setCurrentScreen(
                 CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN,
               );

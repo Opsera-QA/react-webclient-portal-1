@@ -42,6 +42,8 @@ export default function CreateCertificateTaskWizard({
   );
   const [jenkinsSourceToolId, setJenkinsSourceToolId] = useState(undefined);
   const [connectionFailure, setConnectionFailure] = useState(false);
+  const [failureCount, setConnectionFailureCount] = useState(0);
+
 
   const getCurrentScreen = () => {
     switch (currentScreen) {
@@ -65,6 +67,7 @@ export default function CreateCertificateTaskWizard({
             setCurrentScreen={setCurrentScreen}
             onSkipConnectionTestFunction={() => {
               setConnectionFailure(false);
+              setConnectionFailureCount(connectionFailure + 1);
               setCurrentScreen(
                 CREATE_SALESFORCE_ORGANIZATION_SYNC_TASK_WIZARD_SCREENS.INITIALIZATION_SCREEN,
               );
