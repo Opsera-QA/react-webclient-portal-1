@@ -275,7 +275,7 @@ function StepApprovalOverlay(
 
   const getButtonContainer = () => {
     return (
-      <ButtonContainerBase className={"mx-3 mb-3"}>
+      <ButtonContainerBase className={"pb-3 px-3"}>
         <OverlayTrigger
           placement="top"
           delay={{ show: 250, hide: 400 }}
@@ -324,7 +324,7 @@ function StepApprovalOverlay(
       titleIcon={faFileCheck}
       buttonContainer={getButtonContainer()}
     >
-          <div className="m-3">
+          <div className="mx-3 mt-3">
 
             <div>
               Approval of this interaction is required in order for the pipeline to proceed. Please review the
