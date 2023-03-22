@@ -16,9 +16,9 @@ import SalesforceCodeAnalyserCategoryActionableTwoTable from "./SalesforceCodeAn
 import codeAnalyserActions from "../../codeanalyser.action";
 
 function SalesforceCodeAnalyserCategoryActionableTwoOverlay({
-                                                             kpiConfiguration,
-                                                             dashboardData, category
-                                                         }) {
+                                                                kpiConfiguration,
+                                                                dashboardData, category
+                                                            }) {
     const { getAccessToken } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
     const [error, setError] = useState(undefined);

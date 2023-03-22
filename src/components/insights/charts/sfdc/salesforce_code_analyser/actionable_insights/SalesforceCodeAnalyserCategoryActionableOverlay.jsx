@@ -21,9 +21,9 @@ import aquasecActions from "../../../aquasec_security_insights/aquasec.action";
 import codeAnalyserActions from "../codeanalyser.action";
 
 function SalesforceCodeAnalyserCategoryActionableOverlay({
-                                                     kpiConfiguration,
-                                                     dashboardData
-                                                 }) {
+                                                             kpiConfiguration,
+                                                             dashboardData
+                                                         }) {
     const { getAccessToken } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
     const [error, setError] = useState(undefined);
