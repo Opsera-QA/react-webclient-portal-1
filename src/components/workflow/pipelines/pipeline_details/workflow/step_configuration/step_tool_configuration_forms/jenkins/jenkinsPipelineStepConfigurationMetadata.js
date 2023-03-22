@@ -289,6 +289,10 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Enable Quick Deploy",
       id: "enableQuickDeploy",
+    },
+    {
+      label: "Ignore Warning",
+      id: "ignoreWarning"
     }
   ],
   newObjectFields: {
@@ -353,7 +357,8 @@ const jenkinsPipelineStepConfigurationMetadata = {
     buildStepId: "",
     commands: "",
     environmentVariables: [],
-    enableQuickDeploy: false
+    enableQuickDeploy: false,
+    ignoreWarning: false,
   }
 };
 
