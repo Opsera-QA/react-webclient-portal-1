@@ -20,6 +20,11 @@ export default function useLdapGroupActions() {
     );
   };
 
+  ldapGroupActions.getLdapUserGroups = async () => {
+    const apiUrl = `/account/groups`;
+    return await apiService.handleApiGetRequest( apiUrl);
+  };
+
   ldapGroupActions.getLdapUserGroupsWithDomain = async (
     domain,
   ) => {
