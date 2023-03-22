@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {useHistory, useParams} from "react-router-dom";
 import LdapGroupsTable from "./LdapGroupsTable";
-import accountsActions from "components/admin/accounts/accounts-actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import GroupManagementSubNavigationBar from "components/settings/ldap_groups/GroupManagementSubNavigationBar";
 import GroupsHelpDocumentation from "../../common/help/documentation/settings/GroupsHelpDocumentation";
@@ -16,10 +15,7 @@ function LdapGroupManagement() {
   const [existingGroupNames, setExistingGroupNames] = useState([]);
   const {
     isMounted,
-    cancelTokenSource,
     accessRoleData,
-    toastContext,
-    getAccessToken,
     userData,
     isOpseraAdministrator,
   } = useComponentStateReference();
