@@ -9,19 +9,47 @@ import DockerTagTypeSelectionInput from "./DockerTagTypeSelectionInput";
 import ReactJson from "react-json-view";
 import DockerPreviousStepDataInputForm from "./DockerPreviousStepDataInputForm";
 import DockerNameInput from "./DockerNameInput";
+import DockerCommitShaTrimDirectionSelectionInput from "./DockerCommitShaTrimDirectionSelectionInput";
 
 function JenkinsStepConfigurationDockerEditorPanel({model, setModel, buildType, plan, stepId}) {
   const [deleteDockerSecrets, setDeleteDockerSecrets] = useState(false);
 
-  const getDynamicTagNameField = () => {
-    if (model?.getData("dockerTagType") === "other") {
-      return (
-        <TextInputBase
-          dataObject={model}
-          setDataObject={setModel}
-          fieldName={"dockerDynamicTagName"}
-        />
-      );
+  const getDynamicTagFields = () => {
+
+    switch (model?.getData("dockerTagType")) {
+      case "other":
+        return (
+          <TextInputBase
+            dataObject={model}
+            setDataObject={setModel}
+            fieldName={"dockerDynamicTagName"}
+          />
+        );
+      case "commit_sha":
+        return (
+          <>
+            <BooleanToggleInput 
+              dataObject={model}
+              setDataObject={setModel}
+              fieldName={"specifyCommitIdChar"}
+            />
+            {model?.getData("specifyCommitIdChar") && (
+              <>                
+                <DockerCommitShaTrimDirectionSelectionInput 
+                  dataObject={model}
+                  setDataObject={setModel}
+                />
+                <TextInputBase
+                  dataObject={model}
+                  setDataObject={setModel}
+                  fieldName={"commitIdCharLimit"}
+                />
+              </>
+            )}            
+          </>          
+        );
+      default:
+        return null;
     }
   };
 
@@ -34,7 +62,7 @@ function JenkinsStepConfigurationDockerEditorPanel({model, setModel, buildType, 
             setDataObject={setModel}
             fieldName={"dockerTagType"}
           />
-          {getDynamicTagNameField()}
+          {getDynamicTagFields()}
         </>
       );
     } else {
