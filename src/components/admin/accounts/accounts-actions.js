@@ -75,7 +75,7 @@ accountsActions.getLdapGroupsWithDomainV2 = async (getAccessToken, cancelTokenSo
 };
 
 accountsActions.getLdapUserGroupsWithDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
-  const apiUrl = `/users/account/${domain}/user-groups`;
+  const apiUrl = `/account/groups/${domain}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

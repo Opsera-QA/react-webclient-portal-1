@@ -8,12 +8,11 @@ import GroupsHelpDocumentation from "../../common/help/documentation/settings/Gr
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import LdapUserGroupRoleHelper from "@opsera/know-your-role/roles/accounts/groups/user/ldapUserGroupRole.helper";
+import useGetLdapGroupsForDomain from "hooks/ldap/groups/useGetLdapGroupsForDomain";
 
 function LdapGroupManagement() {
   const history = useHistory();
   const {orgDomain} = useParams();
-  const [isLoading, setIsLoading] = useState(true);
-  const [groupList, setGroupList] = useState([]);
   const [existingGroupNames, setExistingGroupNames] = useState([]);
   const {
     isMounted,
@@ -24,61 +23,29 @@ function LdapGroupManagement() {
     userData,
     isOpseraAdministrator,
   } = useComponentStateReference();
+  const {
+    loadData,
+    groups,
+    isLoading,
+  } = useGetLdapGroupsForDomain(orgDomain);
 
   useEffect(() => {
-    setGroupList([]);
-    const ldap = DataParsingHelper.parseObject(userData?.ldap, {});
+    const domain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
 
-    if (orgDomain == null || (ldap?.domain !== orgDomain && isOpseraAdministrator !== true)) {
-      history.push(`/settings/${ldap.domain}/groups`);
-    } else {
-      loadData().catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
+    if (orgDomain == null || (domain !== orgDomain && isOpseraAdministrator !== true)) {
+      history.push(`/settings/${domain}/groups`);
     }
+
   }, [orgDomain]);
 
-  const loadData = async () => {
-    setGroupList([]);
+  useEffect(() => {
+    const existingGroupNames = groups.map((group) => {
+      return group.name.toLowerCase();
+    });
 
-    try {
-      setIsLoading(true);
-      if (LdapUserGroupRoleHelper.canGetUserGroupsList(userData) === true) {
-        await getGroupsByDomain();
-      }
-    }
-    catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    }
-    finally {
-      if (isMounted?.current === true && orgDomain != null) {
-        setIsLoading(false);
-      }
-    }
-  };
+    setExistingGroupNames(existingGroupNames);
 
-  const getGroupsByDomain = async () => {
-    if (orgDomain != null) {
-      const response = await accountsActions.getLdapUserGroupsWithDomainV2(
-        getAccessToken,
-        cancelTokenSource,
-        orgDomain,
-      );
-      const groups = DataParsingHelper.parseArray(response?.data?.data, []);
-
-      if (isMounted?.current === true) {
-        const existingGroupNames = groups.map((group) => {
-          return group.name.toLowerCase();
-        });
-        setExistingGroupNames(existingGroupNames);
-        setGroupList([...groups]);
-      }
-    }
-  };
+  }, [groups]);
 
   if (LdapUserGroupRoleHelper.canGetUserGroupsList(userData) !== true) {
     return null;
@@ -95,7 +62,7 @@ function LdapGroupManagement() {
       <LdapGroupsTable
         className={"mx-2"}
         isLoading={isLoading}
-        groupData={groupList}
+        groupData={groups}
         isMounted={isMounted}
         loadData={loadData}
         orgDomain={orgDomain}
