@@ -48,7 +48,7 @@ export default function RoleAccessInputLdapUserSelectInput(
       fieldName={fieldName}
       selectOptions={ldapUsers}
       valueField={"emailAddress"}
-      textField={(user) => user != null && typeof user === "object" ? `${user.name} (${user.emailAddress})` : user}
+      textField={"text"}
       busy={isLoading}
       disabled={disabled || getDisabledUsers()}
       error={error}
