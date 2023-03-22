@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import useGetLdapUsersForDomain from "hooks/ldap/users/useGetLdapUsersForDomain";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import useGetLdapUsers from "components/admin/accounts/ldap/users/hooks/useGetLdapUsers";
 
 export default function RoleAccessInputLdapUserSelectInput(
   {
@@ -14,18 +13,13 @@ export default function RoleAccessInputLdapUserSelectInput(
     roles,
   }) {
   const {
-    userData,
-  } = useComponentStateReference();
-  const {
-    users,
+    ldapUsers,
     isLoading,
     error,
-  } = useGetLdapUsersForDomain(
-    DataParsingHelper.parseNestedString(userData, "ldap.domain"),
-  );
+  } = useGetLdapUsers();
 
   const getDisabledUsers = () => {
-    const userList = DataParsingHelper.parseArray(users, []);
+    const userList = DataParsingHelper.parseArray(ldapUsers, []);
 
     if (roles.length > 0) {
       const disabledUsers = [];
@@ -51,9 +45,9 @@ export default function RoleAccessInputLdapUserSelectInput(
       dataObject={model}
       setDataObject={setModel}
       fieldName={fieldName}
-      selectOptions={users}
+      selectOptions={ldapUsers}
       valueField={"emailAddress"}
-      textField={(user) => user != null && typeof user === "object" ? `${user.name} (${user.emailAddress})` : user}
+      textField={"text"}
       busy={isLoading}
       disabled={disabled || getDisabledUsers()}
       error={error}

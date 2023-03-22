@@ -16,7 +16,6 @@ export const adminToolsTrails = {};
 adminToolsTrails.admin = {
   parent: undefined,
   name: "admin",
-  // eslint-disable-next-line no-undef
   path: adminToolsPaths.admin,
   linkText: "Administration Tools",
   title: "Administration Tools",
