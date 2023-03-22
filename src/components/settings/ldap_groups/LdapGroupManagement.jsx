@@ -40,7 +40,6 @@ function LdapGroupManagement() {
     });
 
     setExistingGroupNames(existingGroupNames);
-
   }, [groups]);
 
   if (LdapUserGroupRoleHelper.canGetUserGroupsList(userData) !== true) {
