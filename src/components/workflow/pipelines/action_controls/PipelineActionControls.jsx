@@ -324,23 +324,7 @@ function PipelineActionControls(
     //check type of pipeline to determine if pre-flight wizard is required
     //for now type is just the first entry
     const pipelineType = pipelineTypeConstants.getTypeForTypesArray(pipeline?.type);
-    const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
-    const pipelineStepCount = plan.length;
-
-    let pipelineOrientation = "start";
-    const stoppedStepId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.step_id");
-
-    // is pipeline at the beginning or stopped midway or end of prior?
-    //what step are we currently on in the pipeline: first, last or middle?
-    if (DataParsingHelper.isValidMongoDbId(stoppedStepId) === true) {
-      const stepIndex = PipelineHelpers.getStepIndex(pipeline, stoppedStepId);
-      console.log(`current resting step index: ${stepIndex} of ${pipelineStepCount}`);
-      if (stepIndex + 1 === pipelineStepCount) {
-        pipelineOrientation = "end";
-      } else {
-        pipelineOrientation = "middle";
-      }
-    }
+    const pipelineOrientation = pipelineHelper.getPipelineOrientation(pipeline);
 
     if (pipelineType === "sfdc") {
       launchPipelineStartWizard(pipelineOrientation, pipelineType, pipelineId);
