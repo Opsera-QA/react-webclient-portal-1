@@ -1,9 +1,7 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import { Row, Col, InputGroup, Button } from "react-bootstrap";
-import {AuthContext} from "contexts/AuthContext";
 import accountsActions from "components/admin/accounts/accounts-actions.js";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import CancelButton from "components/common/buttons/CancelButton";
 import StandaloneSaveButton from "components/common/buttons/saving/StandaloneSaveButton";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -14,66 +12,33 @@ import MembersPanel from "components/common/inputs/user/membership/manager/user_
 import NonMembersPanel
   from "components/common/inputs/user/membership/manager/user_panel/NonMembersPanel";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";
-import axios from "axios";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
+import useGetLdapUsersForDomain from "hooks/ldap/users/useGetLdapUsersForDomain";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
+// TODO: Split into two separate panels, one for admin section and just use targeted hook for a user's domain users
 function LdapGroupMembershipManagementPanel({ldapGroupData, type, orgDomain, setActiveTab, loadData}) {
-  const toastContext = useContext(DialogToastContext);
-  const {getAccessToken} = useContext(AuthContext);
   const [members, setMembers] = useState([]);
   const [nonMembers, setNonMembers] = useState([]);
   const [selectedMembers, setSelectedMembers] = useState([]);
-  const [ldapUsers, setLdapUsers] = useState([]);
   const [selectedNonMembers, setSelectedNonMembers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [showUnsavedChangesMessage, setShowUnsavedChangesMessage] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    users,
+    isLoading,
+  } = useGetLdapUsersForDomain(orgDomain);
+  const {
+    toastContext,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
+    loadMemberStatus();
+  }, [users]);
 
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    getLdapUsers(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, [orgDomain]);
-
-  // TODO: Sort users alphabetically
-  const getLdapUsers = async (cancelSource = cancelTokenSource) => {
-    if (orgDomain != null) {
-      try {
-        setIsLoading(true);
-        const response = await accountsActions.getLdapUsersWithDomainV2(getAccessToken, cancelSource, orgDomain);
-        let users = response?.data;
-
-        if (isMounted.current === true && Array.isArray(users)) {
-          setLdapUsers(users);
-          await loadMemberStatus(users);
-        }
-      } catch (error) {
-        toastContext.showLoadingErrorDialog(error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const loadMemberStatus = async (users = ldapUsers) => {
+  const loadMemberStatus = () => {
     const organizationUsers = Array.isArray(users) ? users : [];
     let unpackedMembers = [...ldapGroupData.getData("members")];
     let unpackedNonMembers = [];
