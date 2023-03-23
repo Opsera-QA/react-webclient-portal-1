@@ -4,7 +4,6 @@ import {faTrash} from "@fortawesome/pro-light-svg-icons";
 import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 import DeleteConfirmationOverlay from "components/common/overlays/center/delete/DeleteConfirmationOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {policyHelper} from "components/settings/organization_settings/policies/policy.helper";
 import {useHistory} from "react-router-dom";
 import LdapUserGroupRoleHelper from "@opsera/know-your-role/roles/accounts/groups/user/ldapUserGroupRole.helper";
 import useLdapGroupActions from "hooks/ldap/groups/useLdapGroupActions";
@@ -32,7 +31,7 @@ export default function DeleteGroupActionBarButton(
       <DeleteConfirmationOverlay
         type={"Policy"}
         handleDeleteFunction={handleDeleteFunction}
-        afterDeleteFunction={() => history.push(policyHelper.getManagementScreenLink())}
+        afterDeleteFunction={() => history.push(`settings/${orgDomain}/groups`)}
       />
     );
   };
