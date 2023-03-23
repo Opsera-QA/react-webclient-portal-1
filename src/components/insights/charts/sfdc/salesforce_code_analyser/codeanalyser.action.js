@@ -59,8 +59,8 @@ codeAnalyserActions.salesforceCodeAnalyserPipelineActionable = async (
     cancelTokenSource,
     kpiConfiguration,
     dashboardTags,
-    tableFilterDto,
     dashboardOrgs,
+    tableFilterDto,
 ) => {
     const apiUrl =
         codeAnalyserBaseURL + "salesforceCodeAnalyserPipelineActionable";
@@ -94,7 +94,7 @@ codeAnalyserActions.salesforceCodeAnalyserPipelineActionable = async (
             : 1,
         size: tableFilterDto?.getData("pageSize")
             ? tableFilterDto?.getData("pageSize")
-            : 10,
+            : 5,
         dashboardOrgs: dashboardOrgs,
     };
 
@@ -111,8 +111,8 @@ codeAnalyserActions.salesforceCodeAnalyserCategoryActionable = async (
     cancelTokenSource,
     kpiConfiguration,
     dashboardTags,
-    tableFilterDto,
     dashboardOrgs,
+    tableFilterDto,
 ) => {
     const apiUrl =
         codeAnalyserBaseURL + "salesforceCodeAnalyserCategoryActionable";
@@ -146,7 +146,7 @@ codeAnalyserActions.salesforceCodeAnalyserCategoryActionable = async (
             : 1,
         size: tableFilterDto?.getData("pageSize")
             ? tableFilterDto?.getData("pageSize")
-            : 10,
+            : 5,
         dashboardOrgs: dashboardOrgs,
     };
 
@@ -163,8 +163,8 @@ codeAnalyserActions.salesforceCodeAnalyserRuleActionable = async (
     cancelTokenSource,
     kpiConfiguration,
     dashboardTags,
-    tableFilterDto,
     dashboardOrgs,
+    tableFilterDto,
 ) => {
     const apiUrl =
         codeAnalyserBaseURL + "salesforceCodeAnalyserRuleActionable";
@@ -198,7 +198,7 @@ codeAnalyserActions.salesforceCodeAnalyserRuleActionable = async (
             : 1,
         size: tableFilterDto?.getData("pageSize")
             ? tableFilterDto?.getData("pageSize")
-            : 10,
+            : 5,
         dashboardOrgs: dashboardOrgs,
     };
 
@@ -215,8 +215,8 @@ codeAnalyserActions.salesforceCodeAnalyserCategoryActionableTwo = async (
     cancelTokenSource,
     kpiConfiguration,
     dashboardTags,
-    tableFilterDto,
     dashboardOrgs,
+    tableFilterDto,
     category
 ) => {
     const apiUrl =
@@ -251,7 +251,7 @@ codeAnalyserActions.salesforceCodeAnalyserCategoryActionableTwo = async (
             : 1,
         size: tableFilterDto?.getData("pageSize")
             ? tableFilterDto?.getData("pageSize")
-            : 10,
+            : 5,
         dashboardOrgs: dashboardOrgs,
         category: category,
     };
@@ -269,8 +269,8 @@ codeAnalyserActions.salesforceCodeAnalyserRuleActionableTwo = async (
     cancelTokenSource,
     kpiConfiguration,
     dashboardTags,
-    tableFilterDto,
     dashboardOrgs,
+    tableFilterDto,
     rule
 ) => {
     const apiUrl =
@@ -305,7 +305,7 @@ codeAnalyserActions.salesforceCodeAnalyserRuleActionableTwo = async (
             : 1,
         size: tableFilterDto?.getData("pageSize")
             ? tableFilterDto?.getData("pageSize")
-            : 10,
+            : 5,
         dashboardOrgs: dashboardOrgs,
         rule: rule,
     };
