@@ -2,7 +2,7 @@ import Model from "core/data_model/model";
 import ldapSiteRoleMetadata from "@opsera/definitions/constants/accounts/groups/role/ldapSiteRoles.metadata";
 
 export default function useGetSiteRoleModel() {
-  const getSiteRoleGroupModel = (
+  const getSiteRoleModel = (
     siteRole,
     isNew,
   ) => {
@@ -10,7 +10,7 @@ export default function useGetSiteRoleModel() {
   };
 
   return ({
-    getSiteRoleGroupModel: getSiteRoleGroupModel,
+    getSiteRoleModel: getSiteRoleModel,
   });
 }
 

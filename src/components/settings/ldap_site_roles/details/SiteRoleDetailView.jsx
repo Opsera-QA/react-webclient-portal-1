@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
 import {useHistory, useParams} from "react-router-dom";
-import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
@@ -11,6 +10,7 @@ import LdapSiteRoleGroupRoleHelper
   from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useGetLdapSiteRoleModelByNameForDomain from "hooks/ldap/site_roles/useGetLdapSiteRoleModelByNameForDomain";
+import ldapSiteRoleMetadata from "@opsera/definitions/constants/accounts/groups/role/ldapSiteRoles.metadata";
 
 // TODO: Move to know-your-role
 export const roleGroups = [
@@ -73,7 +73,7 @@ export default function SiteRoleDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"ldapSiteRoleDetailView"}
-      metadata={ldapGroupMetaData}
+      metadata={ldapSiteRoleMetadata}
       dataObject={siteRoleModel}
       isLoading={isLoading}
       navigationTabContainer={<SiteRoleManagementSubNavigationBar activeTab={"siteRoleViewer"}/>}

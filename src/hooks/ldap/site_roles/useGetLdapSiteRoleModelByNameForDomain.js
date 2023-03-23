@@ -25,7 +25,7 @@ export default function useGetLdapSiteRoleModelByNameForDomain(
     error,
     loadData,
   } = useLoadData();
-  const { getLdapSiteRoleModel } = useGetSiteRoleModel();
+  const { getSiteRoleModel } = useGetSiteRoleModel();
 
   const getLdapSiteRolesForDomain = async () => {
     setSiteRoleModel(undefined);
@@ -37,7 +37,7 @@ export default function useGetLdapSiteRoleModelByNameForDomain(
     const siteRole = DataParsingHelper.parseNestedObject(response, "data.data");
 
     if (siteRole) {
-      siteRoleModel({...getLdapSiteRoleModel(siteRole)});
+      setSiteRoleModel({...getSiteRoleModel(siteRole)});
     }
   };
 
