@@ -1,6 +1,7 @@
 import {useContext, useEffect} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function useAccessRoleData() {
   const {
@@ -17,5 +18,6 @@ export default function useAccessRoleData() {
     isSaasUser: SiteRoleHelper.isSaaSUser(userData),
     isSecurityManager: SiteRoleHelper.isSecurityManager(userData),
     isAuditor: SiteRoleHelper.isAuditor(userData),
+    domain: DataParsingHelper.parseNestedString(userData, "ldap.domain"),
   });
 }
