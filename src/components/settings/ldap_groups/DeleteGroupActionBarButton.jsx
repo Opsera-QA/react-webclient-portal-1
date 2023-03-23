@@ -20,6 +20,7 @@ export default function DeleteGroupActionBarButton(
   } = useComponentStateReference();
   const history = useHistory();
   const ldapGroupActions = useLdapGroupActions();
+  console.log("")
   const isOwner = userData?.email === groupModel?.getData("ownerEmail");
 
   const handleDeleteFunction = async () => {
@@ -36,7 +37,7 @@ export default function DeleteGroupActionBarButton(
     );
   };
 
-  if (LdapUserGroupRoleHelper.canDeleteGroup(userData, groupModel?.getOriginalData()) !== true || isOwner === true) {
+  if (LdapUserGroupRoleHelper.canDeleteGroup(userData, groupModel?.getOriginalData()) !== true && isOwner !== true) {
     return null;
   }
 
