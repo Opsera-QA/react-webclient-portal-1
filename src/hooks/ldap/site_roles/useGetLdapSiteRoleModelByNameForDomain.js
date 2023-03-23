@@ -29,8 +29,9 @@ export default function useGetLdapSiteRoleModelByNameForDomain(
 
   const getLdapSiteRolesForDomain = async () => {
     setSiteRoleModel(undefined);
-    const response = await ldapSiteRoleActions.getLdapSiteRolesWithDomain(
+    const response = await ldapSiteRoleActions.getLdapUserSiteRoleByNameWithDomain(
       domain,
+      groupName,
     );
 
     const siteRole = DataParsingHelper.parseNestedObject(response, "data.data");

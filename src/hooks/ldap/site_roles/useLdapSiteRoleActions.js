@@ -11,14 +11,13 @@ export default function useLdapSiteRoleActions() {
     return await apiService.handleApiGetRequest( apiUrl);
   };
 
-  // TODO: Implement
-  // ldapSiteRoleActions.getLdapUserSiteRoleByNameWithDomain = async (
-  //   domain,
-  //   groupName,
-  // ) => {
-  //   const apiUrl = `/account/site-roles/${domain}/name/${groupName}`;
-  //   return await apiService.handleApiGetRequest( apiUrl);
-  // };
+  ldapSiteRoleActions.getLdapUserSiteRoleByNameWithDomain = async (
+    domain,
+    groupName,
+  ) => {
+    const apiUrl = `/account/site-roles/${domain}/name/${groupName}`;
+    return await apiService.handleApiGetRequest( apiUrl);
+  };
 
   return ldapSiteRoleActions;
 }
