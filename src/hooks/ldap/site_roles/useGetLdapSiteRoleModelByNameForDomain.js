@@ -60,8 +60,8 @@ export default function useGetLdapSiteRoleModelByNameForDomain(
   }, []);
 
   return ({
-    groupModel: siteRoleModel,
-    setGroupModel: setSiteRoleModel,
+    siteRoleModel: siteRoleModel,
+    setSiteRoleModel: setSiteRoleModel,
     error: error,
     loadData: handleLoadData,
     isLoading: isLoading,
