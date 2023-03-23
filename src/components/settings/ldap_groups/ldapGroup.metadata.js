@@ -12,6 +12,10 @@ export const ldapGroupMetaData = {
       return "Power Users";
     }
 
+    if (name === "SecurityManagers") {
+      return "Power Users";
+    }
+
     return `${record?.getOriginalValue("name")}`;
   },
   fields: [
