@@ -32,7 +32,7 @@ export default function useLdapGroupActions() {
     return await apiService.handleApiGetRequest( apiUrl);
   };
 
-  ldapGroupActions.getLdapUserGroupByDomainWithDomain = async (
+  ldapGroupActions.getLdapUserGroupByNameWithDomain = async (
     domain,
     groupName,
   ) => {

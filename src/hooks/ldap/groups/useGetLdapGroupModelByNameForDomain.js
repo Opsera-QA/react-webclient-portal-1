@@ -44,8 +44,9 @@ export default function useGetLdapGroupModelByNameForDomain(
   const getLdapGroupByNameForDomain = async () => {
     setGroupModel(undefined);
 
-    const response = await ldapGroupActions.getLdapUserGroupsWithDomain(
+    const response = await ldapGroupActions.getLdapUserGroupByNameWithDomain(
       domain,
+      groupName,
     );
 
     const group = DataParsingHelper.parseNestedObject(response, "data.data");
