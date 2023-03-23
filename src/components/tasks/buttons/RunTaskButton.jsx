@@ -45,6 +45,7 @@ function RunTaskButton(
     taskType,
     status,
     runCount,
+    style
   }) {
   const [isStarting, setIsStarting] = useState(false);
   const {
@@ -79,6 +80,7 @@ function RunTaskButton(
     return (
       <Button
         variant={"success"}
+        style={style}
         disabled={status === "running" || disable || isStarting || actionAllowed !== true}
         onClick={() => {
           showTaskRunOverlay();
@@ -185,6 +187,7 @@ RunTaskButton.propTypes = {
   taskType: PropTypes.string,
   status: PropTypes.string,
   runCount: PropTypes.number,
+  style: PropTypes.object
 };
 
 export default RunTaskButton;
