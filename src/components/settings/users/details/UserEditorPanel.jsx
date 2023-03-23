@@ -23,6 +23,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import LdapGroupForDomainMultiSelectInput
   from "components/common/list_of_values_input/settings/groups/LdapGroupForDomainMultiSelectInput";
 import {hasStringValue} from "components/common/helpers/string-helpers";
+import useLdapGroupActions from "hooks/ldap/groups/useLdapGroupActions";
 
 function UserEditorPanel(
   {
@@ -41,6 +42,7 @@ function UserEditorPanel(
     toastContext,
     isOpseraAdministrator,
   } = useComponentStateReference();
+  const ldapGroupActions = useLdapGroupActions();
 
   useEffect(() => {
     setUserModel(userData);
@@ -201,7 +203,7 @@ function UserEditorPanel(
 
     for (let i = 0; i < groups.length; i++) {
       const group = groups[i];
-      const groupResponse = await accountsActions.getGroupV2(getAccessToken, cancelTokenSource, orgDomain, group);
+      const groupResponse = await ldapGroupActions.getLdapUserGroupByNameWithDomain(orgDomain, group);
       const existingGroup = groupResponse?.data;
       const members = existingGroup?.members;
 
