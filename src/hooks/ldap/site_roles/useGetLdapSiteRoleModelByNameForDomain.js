@@ -3,12 +3,17 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
-import useLdapSiteRoleActions from "hooks/ldap/site_roles/useLdapSiteRoleActions";
 import LdapSiteRoleGroupRoleHelper
   from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
+import useLdapSiteRoleActions from "hooks/ldap/site_roles/useLdapSiteRoleActions";
+import useGetSiteRoleModel from "hooks/ldap/site_roles/useGetSiteRoleModel";
 
-export default function useGetLdapSiteRolesForDomain(domain, handleErrorFunction) {
-  const [siteRoles, setSiteRoles] = useState([]);
+export default function useGetLdapSiteRoleModelByNameForDomain(
+  domain,
+  groupName,
+  handleErrorFunction,
+) {
+  const [siteRoleModel, setSiteRoleModel] = useState(undefined);
   const ldapSiteRoleActions = useLdapSiteRoleActions();
   const {
     userData,
@@ -20,22 +25,27 @@ export default function useGetLdapSiteRolesForDomain(domain, handleErrorFunction
     error,
     loadData,
   } = useLoadData();
+  const { getLdapSiteRoleModel } = useGetSiteRoleModel();
 
   const getLdapSiteRolesForDomain = async () => {
+    setSiteRoleModel(undefined);
     const response = await ldapSiteRoleActions.getLdapSiteRolesWithDomain(
       domain,
     );
 
-    setSiteRoles([...DataParsingHelper.parseArray(response?.data?.data, [])]);
+    const siteRole = DataParsingHelper.parseNestedObject(response, "data.data");
+
+    if (siteRole) {
+      siteRoleModel({...getLdapSiteRoleModel(siteRole)});
+    }
   };
 
   const handleLoadData = () => {
-    setSiteRoles([]);
     const ldapDomain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
 
     if (
       isSaasUser === false
-      && LdapSiteRoleGroupRoleHelper.canGetSiteRoleGroups(userData) === true
+      && LdapSiteRoleGroupRoleHelper.canGetSiteRoleGroup(userData) === true
       && hasStringValue(domain) === true
       && (ldapDomain === domain || isOpseraAdministrator === true)
       && loadData
@@ -45,14 +55,13 @@ export default function useGetLdapSiteRolesForDomain(domain, handleErrorFunction
   };
 
   useEffect(() => {
-    setSiteRoles([]);
-
+    setSiteRoleModel(undefined);
     handleLoadData();
   }, []);
 
   return ({
-    siteRoles: siteRoles,
-    setSiteRoles: setSiteRoles,
+    groupModel: siteRoleModel,
+    setGroupModel: setSiteRoleModel,
     error: error,
     loadData: handleLoadData,
     isLoading: isLoading,
