@@ -26,7 +26,7 @@ export default function LdapGroupDetailView() {
     setGroupModel,
     error,
     loadData,
-  } = useGetLdapGroupModelByNameForDomain(orgDomain, groupName,)
+  } = useGetLdapGroupModelByNameForDomain(orgDomain, groupName,);
 
   useEffect(() => {
     const userDomain = userData?.ldap?.domain;
