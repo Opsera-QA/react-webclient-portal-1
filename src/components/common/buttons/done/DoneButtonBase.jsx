@@ -10,6 +10,7 @@ export default function DoneButtonBase({
   className,
   buttonText,
   disabled,
+    style
 }) {
   if (onClickFunction == null && disabled !== true) {
     return null;
@@ -22,7 +23,8 @@ export default function DoneButtonBase({
         variant={"secondary"}
         disabled={disabled}
         onClick={onClickFunction}
-        className={"w-100"}
+        className={style ? undefined : "w-100"}
+        style={style}
       >
         <span>
           <IconBase
@@ -42,6 +44,7 @@ DoneButtonBase.propTypes = {
   disabled: PropTypes.bool,
   size: PropTypes.string,
   buttonText: PropTypes.string,
+  style: PropTypes.object,
 };
 
 DoneButtonBase.defaultProps = {

@@ -7,6 +7,8 @@ export default function DoneOverlayButton({
   className,
   buttonText,
   disabled,
+  style,
+  size,
 }) {
   const { toastContext } = useComponentStateReference();
 
@@ -17,6 +19,8 @@ export default function DoneOverlayButton({
 
   return (
     <DoneButtonBase
+      size={size}
+      style={style}
       onClickFunction={closeOverlayFunction}
       className={className}
       buttonText={buttonText}
@@ -29,4 +33,6 @@ DoneOverlayButton.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   buttonText: PropTypes.string,
+  style: PropTypes.object,
+  size: PropTypes.string,
 };
