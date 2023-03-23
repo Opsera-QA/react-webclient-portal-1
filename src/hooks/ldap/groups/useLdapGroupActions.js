@@ -32,5 +32,13 @@ export default function useLdapGroupActions() {
     return await apiService.handleApiGetRequest( apiUrl);
   };
 
+  ldapGroupActions.getLdapUserGroupByDomainWithDomain = async (
+    domain,
+    groupName,
+  ) => {
+    const apiUrl = `/account/groups/${domain}/${groupName}`;
+    return await apiService.handleApiGetRequest( apiUrl);
+  };
+
   return ldapGroupActions;
 }
