@@ -78,7 +78,6 @@ function UserGroupMembershipReportTable({ groups, isLoading, loadData, userDisti
 
 UserGroupMembershipReportTable.propTypes = {
   groups: PropTypes.array,
-  groupList: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
   userDistinguishedName: PropTypes.string,

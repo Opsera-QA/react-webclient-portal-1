@@ -4,10 +4,14 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import useLdapGroupActions from "hooks/ldap/groups/useLdapGroupActions";
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
+import useGetLdapGroupModel from "hooks/ldap/groups/useGetLdapGroupModel";
 
-// TODO: We should make one that just pulls the items based off the domain on the user object and reserve this just for admin use
-export default function useGetLdapGroupsForDomain(domain, handleErrorFunction) {
-  const [groups, setGroups] = useState([]);
+export default function useGetLdapGroupModelByNameForDomain(
+  domain,
+  groupName,
+  handleErrorFunction,
+) {
+  const [groupModel, setGroupModel] = useState(undefined);
   const ldapGroupActions = useLdapGroupActions();
   const {
     userData,
@@ -19,9 +23,10 @@ export default function useGetLdapGroupsForDomain(domain, handleErrorFunction) {
     error,
     loadData,
   } = useLoadData();
+  const { getLdapGroupModel } = useGetLdapGroupModel();
 
   useEffect(() => {
-    setGroups([]);
+    setGroupModel(undefined);
 
     const ldapDomain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
 
@@ -31,24 +36,31 @@ export default function useGetLdapGroupsForDomain(domain, handleErrorFunction) {
       && (ldapDomain === domain || isOpseraAdministrator === true)
       && loadData
     ) {
-      loadData(getLdapGroupsForDomain, handleErrorFunction).catch(() => {
+      loadData(getLdapGroupByNameForDomain, handleErrorFunction).catch(() => {
       });
     }
   }, []);
 
-  const getLdapGroupsForDomain = async () => {
-    const response = await ldapGroupActions.getLdapUserGroupsWithDomain(
+  const getLdapGroupByNameForDomain = async () => {
+    setGroupModel(undefined);
+
+    const response = await ldapGroupActions.getLdapUserGroupByNameWithDomain(
       domain,
+      groupName,
     );
 
-    setGroups([...DataParsingHelper.parseArray(response?.data?.data, [])]);
+    const group = DataParsingHelper.parseNestedObject(response, "data.data");
+
+    if (group) {
+      setGroupModel({...getLdapGroupModel(group, false)});
+    }
   };
 
   return ({
-    groups: groups,
-    setGroups: setGroups,
+    groupModel: groupModel,
+    setGroupModel: setGroupModel,
     error: error,
-    loadData: () => loadData(getLdapGroupsForDomain, handleErrorFunction),
+    loadData: () => loadData(getLdapGroupByNameForDomain, handleErrorFunction),
     isLoading: isLoading,
   });
 }
