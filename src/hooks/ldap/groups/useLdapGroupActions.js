@@ -40,5 +40,17 @@ export default function useLdapGroupActions() {
     return await apiService.handleApiGetRequest( apiUrl);
   };
 
+  ldapGroupActions.deleteLdapGroup = async (
+    domain,
+    groupName,
+  ) => {
+    const apiUrl = `/users/account/group/delete?domain=${domain}&name=${groupName}`;
+    // const queryParameters = {
+    //   domain: domain,
+    //   name: groupName,
+    // };
+    return await apiService.handleApiDeleteRequest( apiUrl);
+  };
+
   return ldapGroupActions;
 }

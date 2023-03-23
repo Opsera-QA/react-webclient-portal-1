@@ -333,12 +333,6 @@ accountsActions.createGroupV2 = async (getAccessToken, cancelTokenSource, orgDom
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
 };
 
-
-accountsActions.deleteGroup = async (orgDomain, ldapGroupDataDto, getAccessToken) => {
-  const apiUrl = `/users/account/group/delete?domain=${orgDomain}&name=${ldapGroupDataDto.getData("name")}`;
-  return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
-};
-
 accountsActions.syncMembership = async (orgDomain, groupName, emailList, getAccessToken) => {
   const postData = {
     domain: orgDomain,
