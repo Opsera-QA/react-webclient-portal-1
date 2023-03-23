@@ -14,22 +14,22 @@ import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import WarningMessageFieldBase from "components/common/fields/text/message/WarningMessageFieldBase";
 import LdapSiteRoleGroupRoleHelper
   from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
+import useGetLdapSiteRolesForDomain from "hooks/ldap/site_roles/useGetLdapSiteRolesForDomain";
 
 export default function SiteRoleManagement() {
   const history = useHistory();
   const {orgDomain} = useParams();
-  const [isLoading, setIsLoading] = useState(true);
-  const [siteRoles, setSiteRoles] = useState([]);
   const {
     accessRoleData,
     userData,
-    cancelTokenSource,
-    isMounted,
-    toastContext,
-    getAccessToken,
-    isSaasUser,
     isOpseraAdministrator,
   } = useComponentStateReference();
+  const {
+    isLoading,
+    siteRoles,
+    loadData,
+    error,
+  } = useGetLdapSiteRolesForDomain(orgDomain);
 
   useEffect(() => {
     const ldap = userData?.ldap;
@@ -38,44 +38,7 @@ export default function SiteRoleManagement() {
       history.push(`/settings/${ldap.domain}/site-roles`);
     }
 
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
   }, [orgDomain]);
-
-  const loadData = async () => {
-    try {
-      setSiteRoles([]);
-
-      if (LdapSiteRoleGroupRoleHelper.canGetSiteRoleGroups(userData) === true) {
-        setIsLoading(true);
-        await getRoleGroups();
-      }
-    }
-    catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    }
-    finally {
-      if (isMounted?.current === true && orgDomain != null) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getRoleGroups = async (cancelSource = cancelTokenSource) => {
-    if (orgDomain != null) {
-      const response = await accountsActions.getLdapRoleGroupsWithDomainV2(getAccessToken, cancelSource, orgDomain);
-      const roleGroups = DataParsingHelper.parseArray(response?.data?.data, []);
-
-      if (Array.isArray(roleGroups)) {
-        setSiteRoles(roleGroups);
-      }
-    }
-  };
 
   const getBody = () => {
     if (isLoading === true) {
@@ -110,6 +73,7 @@ export default function SiteRoleManagement() {
       navigationTabContainer={<SiteRoleManagementSubNavigationBar activeTab={"siteRoles"} />}
       breadcrumbDestination={"ldapSiteRolesManagement"}
       helpComponent={<SiteRolesHelpDocumentation/>}
+      error={error}
     >
       <CenteredContentWrapper>
         <MessageFieldBase
