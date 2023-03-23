@@ -58,14 +58,6 @@ accountsActions.getLdapUsersWithDomainV2 = async (getAccessToken, cancelTokenSou
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-accountsActions.getLdapGroupsWithEmail = async (emailAddress, getAccessToken) => {
-  const postBody = {
-    email: emailAddress
-  };
-  const apiUrl = "/users/account/groups";
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
 accountsActions.getLdapGroupsWithDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
   const postBody = {
     domain: domain

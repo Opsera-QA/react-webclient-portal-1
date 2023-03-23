@@ -20,7 +20,6 @@ export default function DeleteGroupActionBarButton(
   } = useComponentStateReference();
   const history = useHistory();
   const ldapGroupActions = useLdapGroupActions();
-  console.log("")
   const isOwner = userData?.email === groupModel?.getData("ownerEmail");
 
   const handleDeleteFunction = async () => {
@@ -30,9 +29,9 @@ export default function DeleteGroupActionBarButton(
   const showOverlayFunction = async () => {
     toastContext.showOverlayPanel(
       <DeleteConfirmationOverlay
-        type={"Policy"}
+        type={"Group"}
         handleDeleteFunction={handleDeleteFunction}
-        afterDeleteFunction={() => history.push(`settings/${orgDomain}/groups`)}
+        afterDeleteFunction={() => history.push(`/settings/${orgDomain}/groups`)}
       />
     );
   };
@@ -46,7 +45,7 @@ export default function DeleteGroupActionBarButton(
       action={showOverlayFunction}
       icon={faTrash}
       iconClasses={"danger-red"}
-      popoverText={`Delete this Policy`}
+      popoverText={`Delete this Group`}
       className={className}
     />
   );
