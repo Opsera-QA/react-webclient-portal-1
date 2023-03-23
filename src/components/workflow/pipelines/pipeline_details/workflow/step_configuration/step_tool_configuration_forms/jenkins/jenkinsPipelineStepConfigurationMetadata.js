@@ -126,9 +126,9 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Commit SHA Character Limit",
       id: "commitIdCharLimit",
-      formText: "The Commit SHA will be trimmed to the number of characters specified",
-      regexDefinitionName: "numericalField",
-      maxLength: 2,
+      formText: "The Commit SHA will be trimmed to the number of characters specified",      
+      minNumber: 1,
+      maxNumber: 40,
       isRequiredFunction: (model) => {
         return model?.getData("specifyCommitIdChar") === true;
       },
@@ -348,7 +348,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     dockerDynamicTagName:"",
     specifyCommitIdChar: false,
     commitIdCharDirection: "prefix",
-    commitIdCharLimit: "",
+    commitIdCharLimit: null,
     runtimeArguments: "",
     dependencies: {},
     dependencyType:"",

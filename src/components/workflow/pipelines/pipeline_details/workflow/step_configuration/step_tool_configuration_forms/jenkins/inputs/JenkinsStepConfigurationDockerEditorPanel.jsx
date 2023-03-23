@@ -10,6 +10,7 @@ import ReactJson from "react-json-view";
 import DockerPreviousStepDataInputForm from "./DockerPreviousStepDataInputForm";
 import DockerNameInput from "./DockerNameInput";
 import DockerCommitShaTrimDirectionSelectionInput from "./DockerCommitShaTrimDirectionSelectionInput";
+import NumberPickerInputBase from "components/common/inputs/number/picker/base/NumberPickerInputBase";
 
 function JenkinsStepConfigurationDockerEditorPanel({model, setModel, buildType, plan, stepId}) {
   const [deleteDockerSecrets, setDeleteDockerSecrets] = useState(false);
@@ -38,10 +39,10 @@ function JenkinsStepConfigurationDockerEditorPanel({model, setModel, buildType, 
                 <DockerCommitShaTrimDirectionSelectionInput 
                   dataObject={model}
                   setDataObject={setModel}
-                />
-                <TextInputBase
+                />                
+                <NumberPickerInputBase
                   dataObject={model}
-                  setDataObject={setModel}
+                  setDataObject={setModel}                  
                   fieldName={"commitIdCharLimit"}
                 />
               </>
