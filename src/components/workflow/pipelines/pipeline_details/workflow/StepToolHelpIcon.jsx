@@ -26,6 +26,22 @@ import SonarQubeStepConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/SonarQubeStepConfigurationHelpDocumentation";
 import ServiceNowHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/ServiceNowHelpDocumentation";
+import GitCustodianStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/GitCustodianStepConfigurationHelpDocumentation";
+import AquaSecStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/AquaSecStepConfigurationHelpDocumentation";
+import FortifyStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/FortifyStepConfigurationHelpDocumentation";
+import BlackDuckStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/BlackDuckStepConfigurationHelpDocumentation";
+import SnykStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/SnykStepConfigurationHelpDocumentation";
+import TwistlockStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/TwistlockStepConfigurationHelpDocumentation";
+import ChildStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/ChildStepConfigurationHelpDocumentation";
+import ParallelProcessorStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/ParallelProcessorStepConfigurationHelpDocumentation";
 
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
   // TODO: Alphabetize when adding new help panels
@@ -60,6 +76,7 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
       case "jmeter":
       case "selenium":
       case "twistlock":
+        return <TwistlockStepConfigurationHelpDocumentation/>;
       case "aws-deploy":
       case "gcp-deploy":
       case "s3":
@@ -78,8 +95,10 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
       case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_VCS:
       case "elastic-beanstalk":
       case "child-pipeline":
+        return <ChildStepConfigurationHelpDocumentation/>;
       case "mock-step":
       case "parallel-processor":
+        return <ParallelProcessorStepConfigurationHelpDocumentation/>;
       case "conditional-operator":
       case "powershell":
       case "dotnet":
@@ -93,6 +112,16 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
       case "jfrog_artifactory_maven":
       case "azure-functions":
       case "mongodb_realm":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
+        return <AquaSecStepConfigurationHelpDocumentation/>;
+      case "gitscraper":
+        return <GitCustodianStepConfigurationHelpDocumentation/>;
+      case "fortify":
+        return <FortifyStepConfigurationHelpDocumentation/>;
+      case "blackduck":
+        return <BlackDuckStepConfigurationHelpDocumentation/>;
+      case "snyk":
+        return <SnykStepConfigurationHelpDocumentation/>;
       default:
         return null;
     }
