@@ -14,6 +14,10 @@ import DoraJiraGitlabRolledUpColumnDataBlock from "./DoraJiraGitlabRolledUpColum
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import DoraJiraOrgsActionableOverlay from "./actionable_insights/DoraJiraOrgsActionableOverlay";
 import { METRIC_THEME_NIVO_CHART_PALETTE_COLORS_ARRAY } from "components/common/helpers/metrics/metricTheme.helpers";
+import CoverityIssuesByCategoryHelpDocumentation
+  from "../../../../common/help/documentation/insights/charts/CoverityIssuesByCategoryHelpDocumentation";
+import DoraJiraGitlabHelpDocumentation
+  from "../../../../common/help/documentation/insights/charts/DoraJiraGitlabHelpDocumentation";
 
 function DoraJiraGitlabRolledUpChart({
   kpiConfiguration,
@@ -229,6 +233,11 @@ function DoraJiraGitlabRolledUpChart({
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        chartHelpComponent={(closeHelpPanel) => (
+          <DoraJiraGitlabHelpDocumentation
+            closeHelpPanel={closeHelpPanel}
+            />
+        )}
       />
     </div>
   );

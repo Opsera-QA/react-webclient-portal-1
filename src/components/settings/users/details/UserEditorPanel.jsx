@@ -12,7 +12,7 @@ import userActions from "components/user/user-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
 import Model from "core/data_model/model";
-import {ldapUserMetadata} from "components/settings/ldap_users/ldapUser.metadata";
+import {ldapUserMetadata} from "components/admin/accounts/ldap/users/ldapUser.metadata";
 import {ssoUserMetadata} from "components/settings/users/ssoUser.metadata";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import LdapGroupMultiSelectInput
@@ -20,8 +20,17 @@ import LdapGroupMultiSelectInput
 import InlineActiveLogTerminalBase from "components/common/logging/InlineActiveLogTerminalBase";
 import {parseError} from "components/common/helpers/error-helpers";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import LdapGroupForDomainMultiSelectInput
+  from "components/common/list_of_values_input/settings/groups/LdapGroupForDomainMultiSelectInput";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
-function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
+function UserEditorPanel(
+  {
+    userData,
+    orgDomain,
+    handleClose,
+    organization,
+  }) {
   const [userModel, setUserModel] = useState(undefined);
   const [isSaving, setIsSaving] = useState(false);
   const [logs, setLogs] = useState([]);
@@ -30,6 +39,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
     isMounted,
     getAccessToken,
     toastContext,
+    isOpseraAdministrator,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -244,6 +254,29 @@ function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
     }, [setLogs]
   );
 
+  const getGroupMultiselectInput = () => {
+    if (isOpseraAdministrator === true && hasStringValue(orgDomain) === true) {
+      return (
+        <LdapGroupForDomainMultiSelectInput
+          disabled={isSaving === true}
+          setModel={setUserModel}
+          model={userModel}
+          fieldName={"groups"}
+          organizationDomain={orgDomain}
+        />
+      );
+    }
+
+    return (
+      <LdapGroupMultiSelectInput
+        disabled={isSaving === true}
+        setModel={setUserModel}
+        model={userModel}
+        fieldName={"groups"}
+      />
+    );
+  };
+
   const closeLogs = () => {
     if (isMounted?.current === true) {
       logs.current = [];
@@ -292,7 +325,7 @@ function UserEditorPanel({ userData, orgDomain, handleClose, organization }) {
               <TextInputBase disabled={isSaving === true} setDataObject={setUserModel} dataObject={userModel} fieldName={"site"}/>
             </Col>
             <Col lg={12}>
-              <LdapGroupMultiSelectInput disabled={isSaving === true} setModel={setUserModel} model={userModel} fieldName={"groups"}/>
+              {getGroupMultiselectInput()}
             </Col>
             <Col lg={12}>
               <BooleanToggleInput disabled={true} setDataObject={setUserModel} dataObject={userModel} fieldName={"localAuth"}/>

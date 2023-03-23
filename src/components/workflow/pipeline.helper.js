@@ -17,6 +17,20 @@ pipelineHelper.getDetailViewLink = (pipelineId, activeTab = "summary") => {
   return `/workflow/details/${pipelineId}/${activeTab}`;
 };
 
+pipelineHelper.getLastEnabledStepId = (pipelineSteps) => {
+  const parsedPipelineSteps = DataParsingHelper.parseArray(pipelineSteps, []);
+
+  let lastEnabledStepId = undefined;
+
+  parsedPipelineSteps.forEach((pipelineStep) => {
+    if (pipelineStep?.active === true) {
+      lastEnabledStepId = pipelineStep?._id;
+    }
+  });
+
+  return lastEnabledStepId;
+};
+
 pipelineHelper.getPipelineOrientation = (pipeline) => {
   const restingStepId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.step_id");
 
@@ -24,6 +38,11 @@ pipelineHelper.getPipelineOrientation = (pipeline) => {
     const stepIndex = PipelineHelpers.getStepIndex(pipeline, restingStepId);
     const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
     const stepCount = plan.length;
+    const lastEnabledStepId = pipelineHelper.getLastEnabledStepId(plan);
+
+    if (isMongoDbId(lastEnabledStepId) === true && lastEnabledStepId === restingStepId) {
+      return "end";
+    }
 
     if (stepIndex !== -1) {
       if (stepIndex + 1 === stepCount) {
