@@ -30,6 +30,7 @@ export default function useComponentStateReference() {
     accessRoleData,
     isSecurityManager,
     isAuditor,
+    domain,
   } = useAccessRoleData();
 
   useEffect(() => {}, []);
@@ -56,5 +57,6 @@ export default function useComponentStateReference() {
     backgroundColor: backgroundColor,
     isAuthenticated: isAuthenticated,
     isPowerUser: isPowerUser,
+    domain: domain,
   });
 }
