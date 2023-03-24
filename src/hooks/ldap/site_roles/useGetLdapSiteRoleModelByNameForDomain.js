@@ -37,7 +37,7 @@ export default function useGetLdapSiteRoleModelByNameForDomain(
     const siteRole = DataParsingHelper.parseNestedObject(response, "data.data");
 
     if (siteRole) {
-      setSiteRoleModel({...getSiteRoleModel(siteRole)});
+      setSiteRoleModel({...getSiteRoleModel(domain, siteRole, false)});
     }
   };
 

@@ -1,16 +1,15 @@
 import ModelBase from "core/data_model/model.base";
-import ldapGroupMetadata from "@opsera/definitions/constants/accounts/groups/user/ldapGroup.metadata";
-import {groupHelper} from "components/settings/ldap_groups/group.helper";
 import {siteRoleHelper} from "components/settings/ldap_site_roles/siteRole.helper";
+import ldapSiteRoleMetadata from "@opsera/definitions/constants/accounts/groups/role/ldapSiteRoles.metadata";
 
-export default class GroupModel extends ModelBase {
+export default class SiteRoleModel extends ModelBase {
   constructor(
     data,
     newModel,
   ) {
     super(
       data,
-      ldapGroupMetadata,
+      ldapSiteRoleMetadata,
       newModel,
     );
   }
