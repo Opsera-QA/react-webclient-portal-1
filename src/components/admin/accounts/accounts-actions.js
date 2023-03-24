@@ -58,11 +58,6 @@ accountsActions.getLdapUsersWithDomainV2 = async (getAccessToken, cancelTokenSou
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-accountsActions.getLdapRoleGroupsWithDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
-  const apiUrl = `/account/site-roles/${domain}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
 accountsActions.isFreeTrialAccountActive = async (cancelTokenSource, email) => {
   const token = apiTokenHelper.generateApiCallToken(routeTokenConstants.ROUTE_MIDDLEWARE_TOKEN_KEYS.IS_ACCOUNT_ACTIVE);
   const apiUrl = "/users/trial/is-account-active";
