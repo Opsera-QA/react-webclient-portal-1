@@ -1,4 +1,4 @@
-import GroupModel from "hooks/ldap/groups/group.model";
+import GroupModel from "components/settings/ldap_groups/group.model";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function useGetSiteRoleModel() {

@@ -1,6 +1,7 @@
 import ModelBase from "core/data_model/model.base";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import ldapGroupMetadata from "@opsera/definitions/constants/accounts/groups/user/ldapGroup.metadata";
+import {groupHelper} from "components/settings/ldap_groups/group.helper";
+import {siteRoleHelper} from "components/settings/ldap_site_roles/siteRole.helper";
 
 export default class GroupModel extends ModelBase {
   constructor(
@@ -22,18 +23,12 @@ export default class GroupModel extends ModelBase {
   //   return LdapUserGroupRoleHelper.canDeleteGroup(this.userData, this.getOriginalData());
   // };
 
+  getDetailViewLink = () => {
+    siteRoleHelper.getBaseDetailViewLink(this.organizationDomain, this.getData("name"));
+  };
+
   getDetailViewTitle = () => {
-    const name = DataParsingHelper.parseString(this.getOriginalValue("name"), []);
-
-    if (name === "PowerUsers") {
-      return "Power Users";
-    }
-
-    if (name === "SecurityManagers") {
-      return "Security Managers";
-    }
-
-    return name;
+    return siteRoleHelper.getFormattedSiteRoleName(this.getData("name"));
   };
 
   getType = () => {
