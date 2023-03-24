@@ -851,14 +851,10 @@ export const getUserObjectRoleLevelColumnDefinition = (userObject, className) =>
       }
 
       const parsedEmail = DataParsingHelper.parseEmailAddress(parsedUserObject.email);
-      const parsedUserGroups = DataParsingHelper.parseArray(parsedUserObject.groups);
-
       const object = getDataObjectFromTableRow(row);
-      const objectRoles = DataParsingHelper.parseArray(object?.roles, []);
-      const parsedRole = ObjectAccessRoleHelper.calculateUserObjectRole(
+      const parsedRole = ObjectAccessRoleHelper.getUserRoleLevel(
         parsedEmail,
-        parsedUserGroups,
-        objectRoles
+        object
       );
 
       return (DataParsingHelper.parseString(ObjectAccessRoleHelper.getLabelForAccessRole(parsedRole), ""));
