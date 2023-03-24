@@ -5,10 +5,10 @@ export default function useGetSiteRoleModel() {
   const { userData } = useComponentStateReference();
   const getSiteRoleModel = (
     organizationDomain,
-    group,
+    siteRole,
     isNew,
   ) => {
-    const newModel = new GroupModel(group, isNew);
+    const newModel = new GroupModel(siteRole, isNew);
     newModel.organizationDomain = organizationDomain;
     newModel.userData = userData;
 
