@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
   getuserRoleLevelColumnDefinition,
-  getTableTextColumn,
+  getTableTextColumn, getUserObjectRoleLevelColumnDefinition,
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import { dashboardHelper } from "components/insights/dashboards/dashboard.helper";
