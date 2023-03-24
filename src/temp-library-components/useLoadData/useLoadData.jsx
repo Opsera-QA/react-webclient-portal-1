@@ -12,9 +12,7 @@ export default function useLoadData() {
       setError(undefined);
 
       if (loadDataFunction) {
-        const response = await loadDataFunction();
-        setIsLoading(false);
-        return response;
+        await loadDataFunction();
       }
     } catch (error) {
       if (handleErrorFunction) {
@@ -22,6 +20,7 @@ export default function useLoadData() {
       }
 
       setError(error);
+    } finally {
       setIsLoading(false);
     }
   }, []);

@@ -341,9 +341,9 @@ function VanityMetricContainer(
         <div>
           {getDateBadge()}
         </div>
-        {/* <div className={"d-flex"}>
+        <div className={"d-flex"}>
           {getAllTags()}
-        </div> */}
+        </div>
       </div>
     </div>
   );

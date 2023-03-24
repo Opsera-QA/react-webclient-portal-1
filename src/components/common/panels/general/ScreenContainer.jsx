@@ -12,7 +12,6 @@ import ScreenContainerBodyLoadingDialog
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import RoleHelper from "@opsera/know-your-role/roles/role.helper";
 
 function ScreenContainer(
   {
@@ -23,6 +22,7 @@ function ScreenContainer(
     accessDenied,
     showBreadcrumbTrail,
     navigationTabContainer,
+    accessRoleData,
     roleRequirement,
     titleActionBar,
     helpComponent,
@@ -34,9 +34,7 @@ function ScreenContainer(
   const toastContext = useContext(DialogToastContext);
   const {
     isOpseraAdministrator,
-    isFreeTrial,
-    userData,
-    accessRoleData,
+    isFreeTrial
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -143,14 +141,6 @@ function ScreenContainer(
     );
   }
 
-  if (breadcrumb && Array.isArray(breadcrumb?.allowedRoles) && RoleHelper.doesUserMeetSiteRoleRequirements(userData, breadcrumb?.allowedRoles) !== true) {
-    return (
-      <AccessDeniedContainer
-        navigationTabContainer={navigationTabContainer}
-      />
-    );
-  }
-
   if (!isLoading && accessRoleData && roleRequirement && !meetsRequirements(roleRequirement, accessRoleData)) {
     return (
       <AccessDeniedContainer
@@ -201,6 +191,7 @@ ScreenContainer.propTypes = {
   showBreadcrumbTrail: PropTypes.bool,
   navigationTabContainer: PropTypes.object,
   titleActionBar: PropTypes.object,
+  accessRoleData: PropTypes.object,
   roleRequirement: PropTypes.string,
   helpComponent: PropTypes.object,
   bodyClassName: PropTypes.string,
