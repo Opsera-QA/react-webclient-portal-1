@@ -76,14 +76,14 @@ function SalesforceCodeAnalyserRuleActionableOverlay({
             );
 
             let dataObject = response?.data ? response?.data?.data[0]?.tableData : [];
-            let totalCount = response?.data ? response?.data?.data[0]?.tableData?.length : [];
+            let totalCount = response?.data ? response?.data?.data[0]?.count[0]?.count : [];
 
             if (isMounted?.current === true && dataObject) {
                 setMetrics(dataObject);
                 setTotalCount(totalCount);
 
                 let newFilterDto = filterDto;
-                newFilterDto.setData("totalCount", response?.data?.data[0]?.tableData?.length);
+                newFilterDto.setData("totalCount", response?.data?.data[0]?.count[0]?.count);
                 setFilterModel({ ...newFilterDto });
             }
         } catch (error) {
