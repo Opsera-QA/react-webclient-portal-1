@@ -49,7 +49,7 @@ export default function UserAssignedRolesPanel(
           items={assignedResources}
           isLoading={isLoading}
           loadData={loadData}
-          user={userModel?.getOriginalData()}
+          userEmailAddress={userModel?.getData("emailAddress")}
         />
       }
     />

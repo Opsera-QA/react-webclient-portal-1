@@ -18,7 +18,7 @@ import UserAssignedRolesTasksTable
 
 export default function UserAssignedRolesTableBase(
   {
-    user,
+    userEmailAddress,
     items,
     isLoading,
     loadData,
@@ -32,7 +32,7 @@ export default function UserAssignedRolesTableBase(
           <UserAssignedRolesDashboardsTable
             dashboards={items}
             isLoading={isLoading}
-            user={user}
+            userEmailAddress={userEmailAddress}
           />
         );
       case "parameters":
@@ -40,7 +40,7 @@ export default function UserAssignedRolesTableBase(
           <UserAssignedRolesParametersTable
             parameters={items}
             isLoading={isLoading}
-            user={user}
+            userEmailAddress={userEmailAddress}
           />
         );
       case "pipelines":
@@ -48,7 +48,7 @@ export default function UserAssignedRolesTableBase(
           <UserAssignedRolesPipelinesTable
             pipelines={items}
             isLoading={isLoading}
-            user={user}
+            userEmailAddress={userEmailAddress}
           />
         );
       case "pipeline_instructions":
@@ -56,7 +56,7 @@ export default function UserAssignedRolesTableBase(
           <UserAssignedRolesPipelineInstructionsTable
             pipelineInstructions={items}
             isLoading={isLoading}
-            user={user}
+            userEmailAddress={userEmailAddress}
           />
         );
       case "scripts":
@@ -64,7 +64,7 @@ export default function UserAssignedRolesTableBase(
           <UserAssignedRolesScriptsTable
             scripts={items}
             isLoading={isLoading}
-            user={user}
+            userEmailAddress={userEmailAddress}
           />
         );
       case "tools":
@@ -72,7 +72,7 @@ export default function UserAssignedRolesTableBase(
           <UserAssignedRolesToolsTable
             tools={items}
             isLoading={isLoading}
-            user={user}
+            userEmailAddress={userEmailAddress}
           />
         );
       case "tasks":
@@ -80,7 +80,7 @@ export default function UserAssignedRolesTableBase(
           <UserAssignedRolesTasksTable
             tasks={items}
             isLoading={isLoading}
-            user={user}
+            userEmailAddress={userEmailAddress}
           />
         );
     }
@@ -100,7 +100,7 @@ export default function UserAssignedRolesTableBase(
 }
 
 UserAssignedRolesTableBase.propTypes = {
-  user: PropTypes.object,
+  userEmailAddress: PropTypes.string,
   items: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,

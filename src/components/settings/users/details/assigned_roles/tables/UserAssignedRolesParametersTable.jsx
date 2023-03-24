@@ -10,7 +10,7 @@ import customParametersMetadata
 
 export default function UserAssignedRolesParametersTable(
   {
-    user,
+    userEmailAddress,
     parameters,
     isLoading,
   }) {
@@ -20,7 +20,7 @@ export default function UserAssignedRolesParametersTable(
     () => [
       getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "_id")),
-      getUserObjectRoleLevelColumnDefinition(user),
+      getUserObjectRoleLevelColumnDefinition(userEmailAddress),
     ],
     [fields],
   );
@@ -37,5 +37,5 @@ export default function UserAssignedRolesParametersTable(
 UserAssignedRolesParametersTable.propTypes = {
   parameters: PropTypes.array,
   isLoading: PropTypes.bool,
-  user: PropTypes.object,
+  userEmailAddress: PropTypes.string,
 };

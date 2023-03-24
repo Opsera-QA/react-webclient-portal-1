@@ -12,7 +12,7 @@ import pipelineInstructionsMetadata
 
 export default function UserAssignedRolesPipelineInstructionsTable(
   {
-    user,
+    userEmailAddress,
     pipelineInstructions,
     isLoading,
   }) {
@@ -23,7 +23,7 @@ export default function UserAssignedRolesPipelineInstructionsTable(
     () => [
       getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "_id")),
-      getUserObjectRoleLevelColumnDefinition(user),
+      getUserObjectRoleLevelColumnDefinition(userEmailAddress),
     ],
     [fields],
   );
@@ -45,5 +45,5 @@ export default function UserAssignedRolesPipelineInstructionsTable(
 UserAssignedRolesPipelineInstructionsTable.propTypes = {
   pipelineInstructions: PropTypes.array,
   isLoading: PropTypes.bool,
-  user: PropTypes.object,
+  userEmailAddress: PropTypes.string,
 };

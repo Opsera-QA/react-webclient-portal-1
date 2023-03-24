@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 
 export default function UserAssignedRolesTasksTable(
   {
-    user,
+    userEmailAddress,
     tasks,
     isLoading,
   }) {
@@ -22,7 +22,7 @@ export default function UserAssignedRolesTasksTable(
     () => [
       getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "_id")),
-      getUserObjectRoleLevelColumnDefinition(user),
+      getUserObjectRoleLevelColumnDefinition(userEmailAddress),
     ],
     [fields],
   );
@@ -44,5 +44,5 @@ export default function UserAssignedRolesTasksTable(
 UserAssignedRolesTasksTable.propTypes = {
   tasks: PropTypes.array,
   isLoading: PropTypes.bool,
-  user: PropTypes.object,
+  userEmailAddress: PropTypes.string,
 };

@@ -839,18 +839,17 @@ export const getGitCustodianExternalLinkIconColumnDefinition = (field, className
   };
 };
 
-export const getUserObjectRoleLevelColumnDefinition = (userObject, className) => {
+export const getUserObjectRoleLevelColumnDefinition = (emailAddress, className) => {
   return {
     Header: "Assigned Role",
     accessor: "row",
     Cell: function getPageLink(row){
-      const parsedUserObject = DataParsingHelper.parseObject(userObject);
+      const parsedEmail = DataParsingHelper.parseEmailAddress(emailAddress);
 
-      if (!parsedUserObject) {
+      if (!parsedEmail) {
         return "";
       }
 
-      const parsedEmail = DataParsingHelper.parseEmailAddress(parsedUserObject.email);
       const object = getDataObjectFromTableRow(row);
       const parsedRole = ObjectAccessRoleHelper.getUserRoleLevel(
         parsedEmail,

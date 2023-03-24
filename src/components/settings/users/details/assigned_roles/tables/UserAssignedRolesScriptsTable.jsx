@@ -36,5 +36,5 @@ export default function UserAssignedRolesScriptsTable(
 UserAssignedRolesScriptsTable.propTypes = {
   scripts: PropTypes.array,
   isLoading: PropTypes.bool,
-  userEmailAddress: PropTypes.object,
+  userEmailAddress: PropTypes.string,
 };

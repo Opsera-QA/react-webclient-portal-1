@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getuserRoleLevelColumnDefinition,
   getTableTextColumn, getUserObjectRoleLevelColumnDefinition,
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -12,7 +11,7 @@ import { useHistory } from "react-router-dom";
 
 export default function UserAssignedRolesDashboardsTable(
   {
-    user,
+    userEmailAddress,
     dashboards,
     isLoading,
   }) {
@@ -23,7 +22,7 @@ export default function UserAssignedRolesDashboardsTable(
     () => [
       getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "_id")),
-      getUserObjectRoleLevelColumnDefinition(user),
+      getUserObjectRoleLevelColumnDefinition(userEmailAddress),
     ],
     [fields],
   );
@@ -45,5 +44,5 @@ export default function UserAssignedRolesDashboardsTable(
 UserAssignedRolesDashboardsTable.propTypes = {
   dashboards: PropTypes.array,
   isLoading: PropTypes.bool,
-  user: PropTypes.object,
+  userEmailAddress: PropTypes.string,
 };
