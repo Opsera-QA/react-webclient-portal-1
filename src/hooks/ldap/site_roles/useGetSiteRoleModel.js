@@ -1,13 +1,17 @@
-import Model from "core/data_model/model";
-import ldapSiteRoleMetadata from "@opsera/definitions/constants/accounts/groups/role/ldapSiteRoles.metadata";
-import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
+import GroupModel from "components/settings/ldap_groups/group.model";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function useGetSiteRoleModel() {
+  const { userData } = useComponentStateReference();
   const getSiteRoleModel = (
     siteRole,
     isNew,
   ) => {
-    return new Model(siteRole, ldapGroupMetaData, isNew);
+    const newModel = new GroupModel(siteRole, isNew);
+
+    newModel.userData = userData;
+
+    return newModel;
   };
 
   return ({
