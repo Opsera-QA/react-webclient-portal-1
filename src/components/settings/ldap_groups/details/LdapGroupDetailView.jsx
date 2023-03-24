@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useHistory, useParams} from "react-router-dom";
 import Model from "core/data_model/model";
-import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
+import ldapGroupMetadata from "@opsera/definitions/constants/accounts/groups/user/ldapGroup.metadata";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import LdapGroupDetailPanel from "components/settings/ldap_groups/details/LdapGroupDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
@@ -77,7 +77,7 @@ function LdapGroupDetailView() {
     const response = await accountsActions.getGroupV2(getAccessToken, cancelTokenSource, orgDomain, groupName);
 
     if (isMounted.current === true && response?.data) {
-      setLdapGroupData(new Model(response.data, ldapGroupMetaData, false));
+      setLdapGroupData(new Model(response.data, ldapGroupMetadata, false));
       let isOwner = userData?.email === response.data["ownerEmail"];
 
       if (
@@ -118,7 +118,7 @@ function LdapGroupDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"ldapGroupDetailView"}
-      metadata={ldapGroupMetaData}
+      metadata={ldapGroupMetadata}
       dataObject={ldapGroupData}
       isLoading={isLoading && ldapGroupData == null}
       navigationTabContainer={<GroupManagementSubNavigationBar activeTab={"groupViewer"} />}
