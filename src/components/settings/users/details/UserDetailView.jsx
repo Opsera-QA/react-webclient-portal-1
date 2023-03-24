@@ -5,13 +5,13 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {ldapUserMetadata} from "components/admin/accounts/ldap/users/ldapUser.metadata";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import LdapUserDetailPanel from "components/admin/accounts/ldap/users/details/LdapUserDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import UserManagementSubNavigationBar from "components/settings/users/UserManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import LdapUserRoleHelper from "@opsera/know-your-role/roles/accounts/users/ldapUserRole.helper";
+import UserDetailPanel from "components/settings/users/details/UserDetailPanel";
 
 function UserDetailView() {
   const {userEmail, orgDomain} = useParams();
@@ -83,8 +83,7 @@ function UserDetailView() {
       actionBar={getActionBar()}
       navigationTabContainer={<UserManagementSubNavigationBar activeTab={"userViewer"} />}
       detailPanel={
-        <LdapUserDetailPanel
-          hideSettings={true}
+        <UserDetailPanel
           setLdapUserData={setLdapUserData}
           orgDomain={orgDomain}
           ldapUserData={ldapUserData}

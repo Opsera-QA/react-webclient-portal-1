@@ -26,7 +26,7 @@ function UserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, authorizedA
     return (
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} disabled={hideSettings} />
+        {/*<SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} disabled={hideSettings} />*/}
         <CustomTab
           icon={faIdCard}
           tabName={"assigned-roles"}
