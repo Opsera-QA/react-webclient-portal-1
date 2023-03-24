@@ -67,7 +67,7 @@ function UserGroupMembershipReportTable({ groups, isLoading, loadData, userDisti
       loadData={loadData}
       isLoading={isLoading}
       body={getGroupMembershipTable()}
-      metaData={ldapGroupMetaData}
+      metaData={ldapGroupMetadata}
       titleIcon={faUserFriends}
       title={"Group Membership"}
       className={"px-2 pb-2"}

@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from "react";
 import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faUserFriends, faSearch} from "@fortawesome/pro-light-svg-icons";
+import {faUserFriends} from "@fortawesome/pro-light-svg-icons";
 import {getTableTextColumn, getStaticInfoColumn} from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import InformationDialog from "components/common/status_notifications/info";
@@ -69,7 +69,7 @@ function UserGroupMembershipReportTable({ groups, isLoading, loadData, userDisti
     loadData={loadData}
     isLoading={isLoading}
     body={getGroupMembershipTable()}
-    metaData={ldapGroupMetaData}
+    metaData={ldapGroupMetadata}
     titleIcon={faUserFriends}
     title={"Group Membership"}
   />
