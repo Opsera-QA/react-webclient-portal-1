@@ -24,7 +24,7 @@ export default function UserAssignedRolesPanel(
     isLoading,
     loadData,
     error,
-  } = useGetResourcesByAssignedUser(userModel?.getData("email"));
+  } = useGetResourcesByAssignedUser(userModel?.getData("emailAddress"));
 
   return (
     <VanitySetTabAndViewContainer
