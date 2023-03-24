@@ -26,73 +26,121 @@ import SonarQubeStepConfigurationHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/SonarQubeStepConfigurationHelpDocumentation";
 import ServiceNowHelpDocumentation
   from "../../../../common/help/documentation/pipelines/step_configuration/ServiceNowHelpDocumentation";
+import GitCustodianStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/GitCustodianStepConfigurationHelpDocumentation";
+import AquaSecStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/AquaSecStepConfigurationHelpDocumentation";
+import FortifyStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/FortifyStepConfigurationHelpDocumentation";
+import BlackDuckStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/BlackDuckStepConfigurationHelpDocumentation";
+import SnykStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/SnykStepConfigurationHelpDocumentation";
+import TwistlockStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/TwistlockStepConfigurationHelpDocumentation";
+import ChildStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/ChildStepConfigurationHelpDocumentation";
+import ParallelProcessorStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/ParallelProcessorStepConfigurationHelpDocumentation";
+import AnchoreIntegratorConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/AnchoreIntegratorConfigurationHelpDocumentation";
+import TerraformStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/TerraformStepConfigurationHelpDocumentation";
+import AwsLambdaStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/AwsLambdaStepConfigurationHelpDocumentation";
+import CoverityStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/CoverityStepConfigurationHelpDocumentation";
+import SentinelStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/SentinelStepConfigurationHelpDocumentation";
+import TerrascanStepConfigurationHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/TerrascanStepConfigurationHelpDocumentation";
 
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
   // TODO: Alphabetize when adding new help panels
   const getToolHelpPanel = () => {
     switch (tool) {
-      case "azure-devops":
-        return <AzureDevopsPipelineStepConfigurationHelpDocumentation/>;
-      case "docker-push":
-        return <DockerEcrPushStepConfigurationHelpDocumentation/>;
+      case "ansible":
+        return <AnsibleStepConfigurationHelpDocumentation/>;
+      case "anchore-integrator":
+        return <AnchoreIntegratorConfigurationHelpDocumentation/>;
+      case "approval":
+        return <ApprovalGateStepConfigurationHelpDocumentation/>;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
+        return <AquaSecStepConfigurationHelpDocumentation/>;
       case "aws_ecs_deploy":
         return <AwsEcsDeployStepConfigurationHelpDocumentation/>;
+      case "aws_lambda":
+        return <AwsLambdaStepConfigurationHelpDocumentation/>;
+      case "azure-devops":
+        return <AzureDevopsPipelineStepConfigurationHelpDocumentation/>;
       case "azure_aks_deploy":
         return <AzureAksDeployPipelineStepConfigurationHelpDocumentation/>;
       case "azure_acr_push":
         return <AzureAcrPushPipelineStepConfigurationHelpDocumentation/>;
-      case "octopus":
-        return <OctopusDeployStepConfigurationHelpDocumentation/>;
-      case "ansible":
-        return <AnsibleStepConfigurationHelpDocumentation/>;
-      case "approval":
-        return <ApprovalGateStepConfigurationHelpDocumentation/>;
+      case "blackduck":
+        return <BlackDuckStepConfigurationHelpDocumentation/>;
+      case "coverity":
+        return <CoverityStepConfigurationHelpDocumentation/>;
+      case "child-pipeline":
+        return <ChildStepConfigurationHelpDocumentation/>;
+      case "docker-push":
+        return <DockerEcrPushStepConfigurationHelpDocumentation/>;
       case "external_rest_api_integration":
         return <ExternalApiIntegratorHelpDocumentation/>;
-      case "jenkins":
-      case "junit":
-      case "xunit":
+      case "fortify":
+        return <FortifyStepConfigurationHelpDocumentation/>;
+      case "gitscraper":
+        return <GitCustodianStepConfigurationHelpDocumentation/>;
+      case "octopus":
+        return <OctopusDeployStepConfigurationHelpDocumentation/>;
+      case "parallel-processor":
+        return <ParallelProcessorStepConfigurationHelpDocumentation/>;
       case "sonar":
         return <SonarQubeStepConfigurationHelpDocumentation/>;
-      case "command-line":
-      case "npm":
-      case "teamcity":
-      case "jmeter":
-      case "selenium":
-      case "twistlock":
-      case "aws-deploy":
-      case "gcp-deploy":
-      case "s3":
-      case "databricks-notebook":
-      case "ssh-upload":
-      case "spinnaker":
+      case "sentinel":
+        return <SentinelStepConfigurationHelpDocumentation/>;
       case "servicenow":
         return <ServiceNowHelpDocumentation/>;
-      case "cypress":
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
+      case "snyk":
+        return <SnykStepConfigurationHelpDocumentation/>;
+      case "twistlock":
+        return <TwistlockStepConfigurationHelpDocumentation/>;
       case "anchore-scan":
-      case "anchore-integrator":
-      case "sfdc-configurator":
-      case "nexus":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ARGO:
       case "terraform":
-      case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_VCS:
-      case "elastic-beanstalk":
-      case "child-pipeline":
-      case "mock-step":
-      case "parallel-processor":
+        return <TerraformStepConfigurationHelpDocumentation/>;
+      case "terrascan":
+        return <TerrascanStepConfigurationHelpDocumentation/>;
+      case "aws-deploy":
+      case "azure-functions":
+      case "command-line":
       case "conditional-operator":
-      case "powershell":
+      case "cypress":
+      case "databricks-notebook":
       case "dotnet":
       case "dotnet-cli":
-      case "nunit":
+      case "elastic-beanstalk":
+      case "gcp-deploy":
+      case "jenkins":
       case "jfrog_artifactory_docker":
-      case "terrascan":
-      case "kafka_connect":
-      case "aws_lambda":
-      case "coverity":
       case "jfrog_artifactory_maven":
-      case "azure-functions":
+      case "junit":
+      case "jmeter":
+      case "kafka_connect":
+      case "mock-step":
       case "mongodb_realm":
+      case "nexus":
+      case "npm":
+      case "nunit":
+      case "powershell":
+      case "selenium":
+      case "s3":
+      case "ssh-upload":
+      case "spinnaker":
+      case "sfdc-configurator":
+      case "teamcity":
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.TERRAFORM_VCS:
+      case "xunit":
       default:
         return null;
     }
