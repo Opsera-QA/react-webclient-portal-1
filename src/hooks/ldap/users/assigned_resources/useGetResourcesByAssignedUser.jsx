@@ -45,7 +45,6 @@ export default function useGetResourcesByAssignedUser(
       userEmailAddress,
       newFilterModel?.getData("type"),
     );
-    console.log("response: " + JSON.stringify(response));
 
     const resources = DataParsingHelper.parseArray(response?.data?.data, []);
     setAssignedResources([...resources]);
