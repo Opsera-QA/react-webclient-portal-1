@@ -9,8 +9,9 @@ import SettingsTab from "../../../common/tabs/detail_view/SettingsTab";
 import UserAssignedRolesPanel from "components/settings/users/details/assigned_roles/UserAssignedRolesPanel";
 import {faIdCard} from "@fortawesome/pro-light-svg-icons";
 import CustomTab from "components/common/tabs/CustomTab";
+import LdapUserEditorPanel from "components/admin/accounts/ldap/users/details/LdapUserEditorPanel";
 
-function UserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, authorizedActions, hideSettings }) {
+function UserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, hideSettings }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -41,9 +42,21 @@ function UserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, authorizedA
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <UserSummaryPanel ldapUserData={ldapUserData} setActiveTab={!hideSettings ? setActiveTab : null} />;
+        return (
+          <UserSummaryPanel
+            ldapUserData={ldapUserData}
+            setActiveTab={!hideSettings ? setActiveTab : null}
+          />
+        );
       case "settings":
-        return <UserEditorPanel setLdapUserData={setLdapUserData} authorizedActions={authorizedActions} ldapUserData={ldapUserData} orgDomain={orgDomain} handleClose={toggleSummaryPanel} />;
+        return (
+          <UserEditorPanel
+            // organization={}
+            userData={ldapUserData}
+            orgDomain={orgDomain}
+            handleClose={toggleSummaryPanel}
+          />
+        );
       case "assigned-roles":
         return (
           <UserAssignedRolesPanel
@@ -55,7 +68,12 @@ function UserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, authorizedA
     }
   };
 
-  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
+  return (
+    <DetailTabPanelContainer
+      detailView={getCurrentView()}
+      tabContainer={getTabContainer()}
+    />
+  );
 }
 
 UserDetailPanel.propTypes = {
@@ -63,7 +81,6 @@ UserDetailPanel.propTypes = {
   setLdapUserData: PropTypes.func,
   hideSettings: PropTypes.bool,
   orgDomain: PropTypes.string,
-  authorizedActions: PropTypes.array
 };
 
 export default UserDetailPanel;
