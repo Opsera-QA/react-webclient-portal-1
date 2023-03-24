@@ -16,7 +16,7 @@ const height = `calc(${DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT} - 110px)`;
 
 export default function UserAssignedRolesPanel(
   {
-    userModel,
+    userEmailAddress,
   }) {
   const {
     assignedResources,
@@ -24,7 +24,7 @@ export default function UserAssignedRolesPanel(
     isLoading,
     loadData,
     error,
-  } = useGetResourcesByAssignedUser(userModel?.getData("emailAddress"));
+  } = useGetResourcesByAssignedUser(userEmailAddress);
 
   return (
     <VanitySetTabAndViewContainer
@@ -49,7 +49,7 @@ export default function UserAssignedRolesPanel(
           items={assignedResources}
           isLoading={isLoading}
           loadData={loadData}
-          userEmailAddress={userModel?.getData("emailAddress")}
+          userEmailAddress={userEmailAddress}
         />
       }
     />
@@ -57,5 +57,5 @@ export default function UserAssignedRolesPanel(
 }
 
 UserAssignedRolesPanel.propTypes = {
-  userModel: PropTypes.object,
+  userEmailAddress: PropTypes.string,
 };

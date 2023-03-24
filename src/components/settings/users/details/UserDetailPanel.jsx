@@ -60,7 +60,7 @@ function UserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, hideSetting
       case "assigned-roles":
         return (
           <UserAssignedRolesPanel
-            userModel={ldapUserData}
+            userEmailAddress={ldapUserData?.getData("emailAddress")}
           />
         );
       default:
