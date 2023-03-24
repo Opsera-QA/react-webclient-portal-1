@@ -232,7 +232,7 @@ export default function CreateBranchingStructureTask({
               flow,
             )}
             flow={flow}
-            connectionFailure={connectionFailure}
+            connectionFailure={failureCount}
             setButtonContainer={setButtonContainer}
             handleClose={handleClose}
           />
