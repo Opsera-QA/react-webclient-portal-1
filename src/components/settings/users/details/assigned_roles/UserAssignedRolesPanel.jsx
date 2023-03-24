@@ -6,26 +6,25 @@ import {
 import VanitySetTabAndViewContainer, {
   DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT,
 } from "components/common/tabs/vertical_tabs/VanitySetTabAndViewContainer";
-import LdapGroupAssignedRolesTabContainer
-  from "components/settings/ldap_groups/details/roles/LdapGroupAssignedRolesTabContainer";
-import useGetResourcesByAssignedGroup
-  from "components/settings/ldap_groups/details/roles/hooks/useGetResourcesByAssignedGroup";
-import LdapGroupAssignedRolesTableBase
-  from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesTableBase";
+import useGetResourcesByAssignedUser from "hooks/ldap/users/assigned_resources/useGetResourcesByAssignedUser";
+import UserAssignedRolesTabContainer
+  from "components/settings/users/details/assigned_roles/UserAssignedRolesTabContainer";
+import UserAssignedRolesTableBase
+  from "components/settings/users/details/assigned_roles/tables/UserAssignedRolesTableBase";
 
 const height = `calc(${DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT} - 110px)`;
 
-export default function LdapGroupAssignedRolesPanel(
+export default function UserAssignedRolesPanel(
   {
-    groupModel,
+    userModel,
   }) {
   const {
     assignedResources,
-    assignedGroupResourcesFilterModel,
+    assignedUserResourcesFilterModel,
     isLoading,
     loadData,
     error,
-  } = useGetResourcesByAssignedGroup(groupModel?.getData("name"));
+  } = useGetResourcesByAssignedUser(userModel?.getData("email"));
 
   return (
     <VanitySetTabAndViewContainer
@@ -37,26 +36,26 @@ export default function LdapGroupAssignedRolesPanel(
       maximumHeight={height}
       tabColumnSize={3}
       verticalTabContainer={
-        <LdapGroupAssignedRolesTabContainer
+        <UserAssignedRolesTabContainer
           isLoading={isLoading}
           loadData={loadData}
-          assignedRoleFilterModel={assignedGroupResourcesFilterModel}
+          assignedRoleFilterModel={assignedUserResourcesFilterModel}
         />
       }
       isLoading={isLoading}
       currentView={
-        <LdapGroupAssignedRolesTableBase
-          assignedGroupResourcesFilterModel={assignedGroupResourcesFilterModel}
+        <UserAssignedRolesTableBase
+          assignedGroupResourcesFilterModel={assignedUserResourcesFilterModel}
           items={assignedResources}
           isLoading={isLoading}
           loadData={loadData}
-          group={groupModel?.getData("name")}
+          user={userModel?.getOriginalData()}
         />
       }
     />
   );
 }
 
-LdapGroupAssignedRolesPanel.propTypes = {
-  groupModel: PropTypes.object,
+UserAssignedRolesPanel.propTypes = {
+  userModel: PropTypes.object,
 };

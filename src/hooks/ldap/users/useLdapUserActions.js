@@ -20,5 +20,21 @@ export default function useLdapUserActions() {
     );
   };
 
+  ldapUserActions.getResourcesWithUserAssigned = async (
+    userEmail,
+    type,
+  ) => {
+    const apiUrl = `/account/groups/assigned-roles/resources/`;
+    const queryParameters = {
+      userEmail: userEmail,
+      type: type,
+    };
+
+    return await apiService.handleApiGetRequest(
+      apiUrl,
+      queryParameters,
+    );
+  };
+
   return ldapUserActions;
 }

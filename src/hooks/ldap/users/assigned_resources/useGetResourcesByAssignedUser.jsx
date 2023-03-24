@@ -1,32 +1,32 @@
 import { useEffect, useState } from "react";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useLdapUserActions from "hooks/ldap/users/useLdapUserActions";
 import AssignedRoleFilterModel from "components/settings/ldap_groups/details/roles/assignedRole.filter.model";
-import useLdapGroupActions from "hooks/ldap/groups/useLdapGroupActions";
 
-export default function useGetResourcesByAssignedGroup(
-  group,
+export default function useGetResourcesByAssignedUser(
+  userEmailAddress,
   onErrorFunction,
 ) {
   const [isLoading, setIsLoading] = useState(false);
-  const [assignedGroupResourcesFilterModel, setAssignedGroupRoleFilterModel] = useState(new AssignedRoleFilterModel());
+  const [assignedUserResourcesFilterModel, setAssignedUserRoleFilterModel] = useState(new AssignedRoleFilterModel());
   const [assignedResources, setAssignedResources] = useState([]);
   const [error, setError] = useState(undefined);
-  const ldapGroupActions = useLdapGroupActions();
+  const ldapUserActions = useLdapUserActions();
 
   useEffect(() => {
     setAssignedResources([]);
     setError(undefined);
 
-    if (hasStringValue(group) === true) {
+    if (hasStringValue(userEmailAddress) === true) {
       loadData().catch(() => {});
     }
-  }, [group]);
+  }, [userEmailAddress]);
 
-  const loadData = async (newFilterModel = assignedGroupResourcesFilterModel) => {
+  const loadData = async (newFilterModel = assignedUserResourcesFilterModel) => {
     try {
       setIsLoading(true);
-      await getGroupRoleAssignedTools(newFilterModel);
+      await getUserEmailAddressRoleAssignedTools(newFilterModel);
     } catch (error) {
       setError(error);
 
@@ -38,9 +38,9 @@ export default function useGetResourcesByAssignedGroup(
     }
   };
 
-  const getGroupRoleAssignedTools = async (newFilterModel = assignedGroupResourcesFilterModel) => {
-    const response = await ldapGroupActions.getResourcesWithGroupAssigned(
-      group,
+  const getUserEmailAddressRoleAssignedTools = async (newFilterModel = assignedUserResourcesFilterModel) => {
+    const response = await ldapUserActions.getResourcesWithUserAssigned(
+      userEmailAddress,
       newFilterModel?.getData("type"),
     );
 
@@ -51,8 +51,8 @@ export default function useGetResourcesByAssignedGroup(
   return ({
     assignedResources: assignedResources,
     setAssignedResources: setAssignedResources,
-    assignedGroupResourcesFilterModel: assignedGroupResourcesFilterModel,
-    setAssignedGroupRoleFilterModel: setAssignedGroupRoleFilterModel,
+    assignedUserResourcesFilterModel: assignedUserResourcesFilterModel,
+    setAssignedUserRoleFilterModel: setAssignedUserRoleFilterModel,
     error: error,
     loadData: loadData,
     isLoading: isLoading,
