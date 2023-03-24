@@ -24,7 +24,7 @@ export default function useLdapUserActions() {
     userEmail,
     type,
   ) => {
-    const apiUrl = `/account/groups/assigned-roles/resources/`;
+    const apiUrl = `/account/users/assigned-roles/resources/`;
     const queryParameters = {
       userEmail: userEmail,
       type: type,

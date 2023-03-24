@@ -26,7 +26,9 @@ export default function useGetResourcesByAssignedUser(
   const loadData = async (newFilterModel = assignedUserResourcesFilterModel) => {
     try {
       setIsLoading(true);
-      await getUserEmailAddressRoleAssignedTools(newFilterModel);
+      if (hasStringValue(userEmailAddress) === true) {
+        await getUserEmailAddressRoleAssignedTools(newFilterModel);
+      }
     } catch (error) {
       setError(error);
 
@@ -43,6 +45,7 @@ export default function useGetResourcesByAssignedUser(
       userEmailAddress,
       newFilterModel?.getData("type"),
     );
+    console.log("response: " + JSON.stringify(response));
 
     const resources = DataParsingHelper.parseArray(response?.data?.data, []);
     setAssignedResources([...resources]);
