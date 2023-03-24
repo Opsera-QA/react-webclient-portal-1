@@ -12,7 +12,7 @@ function BlackDuckStepConfigurationHelpDocumentation() {
   const getHelpDocumentation = () => {
     return (
       <div>
-        <div className={"ml-2 mb-2"}>Utlize Black Duck Integration in Opsera to scan and identify open source software throughout your code base. The scan&apos;s defect reports will be pushed to Black Duck server and Opsera&apos;s Insights. For more detailed information on the Black Duck workflow, view the <a href="https://docs.opsera.io/quality-and-security-scan/black-duck-integration" target="_blank" rel="noreferrer"><b>Black Duck Pipeline Help Documentation</b>. </a>
+        <div className={"ml-2 mb-2"}>Utilize Black Duck Integration in Opsera to scan and identify open source software throughout your code base. The scan&apos;s defect reports will be pushed to Black Duck server and Opsera&apos;s Insights. For more detailed information on the Black Duck workflow, view the <a href="https://docs.opsera.io/quality-and-security-scan/black-duck-integration" target="_blank" rel="noreferrer"><b>Black Duck Pipeline Help Documentation</b>. </a>
         </div>
         <div className={"ml-4"}>
           <ol>
