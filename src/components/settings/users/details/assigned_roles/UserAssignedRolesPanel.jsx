@@ -28,7 +28,7 @@ export default function UserAssignedRolesPanel(
 
   return (
     <VanitySetTabAndViewContainer
-      title={"Assigned Role Group Resources"}
+      title={"Assigned Role User Resources"}
       className={"mt-2"}
       icon={faIdCard}
       minimumHeight={height}
