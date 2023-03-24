@@ -149,7 +149,8 @@ export default function CreateWorkflowWizardTaskCompletionScreen({
                         taskModel={taskData}
                         setTaskModel={setTaskData}
                         status={status}
-                        // disable={connectionFailure > 0}
+                        disable={connectionFailure > 0}
+                        connectionFailure={connectionFailure > 0}
                         actionAllowed={TaskRoleHelper.canRunTask(userData, taskData?.getPersistData())}
                         taskType={taskData?.getData("type")}
                         style={{width: "160px"}}

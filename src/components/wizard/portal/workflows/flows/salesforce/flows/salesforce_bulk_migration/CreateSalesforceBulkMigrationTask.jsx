@@ -232,6 +232,7 @@ export default function CreateSalesforceBulkMigrationTask({
             flow={flow}
             setButtonContainer={setButtonContainer}
             handleClose={handleClose}
+            connectionFailure={failureCount}
           />
         );
     }
