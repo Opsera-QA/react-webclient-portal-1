@@ -1,12 +1,17 @@
-import Model from "core/data_model/model";
-import ldapGroupMetadata from "@opsera/definitions/constants/accounts/groups/user/ldapGroup.metadata";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import GroupModel from "hooks/ldap/groups/group.model";
 
 export default function useGetLdapGroupModel() {
+  const { userData } = useComponentStateReference();
   const getLdapGroupModel = (
     group,
     isNew,
   ) => {
-    return new Model(group, ldapGroupMetadata, isNew);
+    const newModel = new GroupModel(group, isNew);
+
+    newModel.userData = userData;
+
+    return newModel;
   };
 
   return ({
