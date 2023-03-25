@@ -17,7 +17,7 @@ import codeAnalyserActions from "../codeanalyser.action";
 
 function SalesforceCodeAnalyserCategoryActionableOverlay({
                                                              kpiConfiguration,
-                                                             dashboardData
+                                                             dashboardData, total
                                                          }) {
     const { getAccessToken } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
@@ -126,6 +126,7 @@ function SalesforceCodeAnalyserCategoryActionableOverlay({
                     loadData={loadData}
                     kpiConfiguration={kpiConfiguration}
                     dashboardData={dashboardData}
+                    total={total}
                 />
             </div>
         </FullScreenCenterOverlayContainer>
@@ -135,6 +136,7 @@ function SalesforceCodeAnalyserCategoryActionableOverlay({
 SalesforceCodeAnalyserCategoryActionableOverlay.propTypes = {
     kpiConfiguration: PropTypes.object,
     dashboardData: PropTypes.object,
+    total: PropTypes.number,
 };
 
 export default SalesforceCodeAnalyserCategoryActionableOverlay;
