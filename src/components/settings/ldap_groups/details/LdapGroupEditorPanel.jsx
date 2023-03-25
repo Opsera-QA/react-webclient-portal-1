@@ -5,14 +5,12 @@ import {AuthContext} from "contexts/AuthContext";
 import accountsActions from "components/admin/accounts/accounts-actions.js";
 import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
-import axios from "axios";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 // Note this is lowercase intentionally, as Users cannot create groups with capital letters
-const reservedNames = ["administrators", "powerusers", "users"];
+const reservedNames = ["administrators", "powerusers", "users", "securitymanagers", "auditors", "guests"];
 
 function LdapGroupEditorPanel(
   {

@@ -1,25 +1,25 @@
 import React, {useEffect, useMemo, useState} from "react";
 import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
-import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faUserFriends, faSearch} from "@fortawesome/pro-light-svg-icons";
+import {faUserFriends} from "@fortawesome/pro-light-svg-icons";
 import {getTableTextColumn, getStaticInfoColumn} from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import InformationDialog from "components/common/status_notifications/info";
-import {findUserGroupsByDistinguishedName} from "components/settings/ldap_groups/group-helpers";
+import {groupHelper} from "components/settings/ldap_groups/group.helper";
 import VanityTable from "components/common/table/VanityTable";
+import ldapGroupMetadata from "@opsera/definitions/constants/accounts/groups/user/ldapGroup.metadata";
 
 function UserGroupMembershipReportTable({ groups, isLoading, loadData, userDistinguishedName, domain }) {
   const history = useHistory();
-  const fields = ldapGroupMetaData.fields;
+  const fields = ldapGroupMetadata.fields;
   const [relevantGroups, setRelevantGroups] = useState([]);
 
   useEffect(() => {
     setRelevantGroups([]);
 
     if (userDistinguishedName && Array.isArray(groups)) {
-      const userGroups = findUserGroupsByDistinguishedName(groups, userDistinguishedName);
+      const userGroups = groupHelper.findUserGroupsByDistinguishedName(groups, userDistinguishedName);
       setRelevantGroups([...userGroups]);
     }
   }, [groups, userDistinguishedName]);
@@ -69,7 +69,7 @@ function UserGroupMembershipReportTable({ groups, isLoading, loadData, userDisti
     loadData={loadData}
     isLoading={isLoading}
     body={getGroupMembershipTable()}
-    metaData={ldapGroupMetaData}
+    metaData={ldapGroupMetadata}
     titleIcon={faUserFriends}
     title={"Group Membership"}
   />
