@@ -11,6 +11,9 @@ import DateTimeField from "components/common/fields/date/DateTimeField";
 import axios from "axios";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
+import RevokeLdapGroupMembershipButton from "components/common/buttons/ldap/RevokeLdapGroupMembershipButton";
+import RevokeLdapSiteRoleMembershipButton from "components/common/buttons/ldap/RevokeLdapSiteRoleMembershipButton";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 
 function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
   const [userLdapModel, setUserLdapModel] = useState(undefined);
@@ -45,7 +48,26 @@ function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
         <Row>
           <Col>
             <DateTimeField dataObject={userData} fieldName={"ldapSyncAt"}/>
-            <SyncLdapButton userData={userData} loadData={loadData} />
+            <ButtonContainerBase
+              className={"mt-3"}
+              leftSideButtons={
+                <SyncLdapButton
+                  userData={userData}
+                  loadData={loadData}
+                />
+              }
+            >
+              <RevokeLdapGroupMembershipButton
+                userModel={userData}
+                loadData={loadData}
+                className={"ml-3"}
+              />
+              <RevokeLdapSiteRoleMembershipButton
+                userModel={userData}
+                loadData={loadData}
+                className={"ml-3"}
+              />
+            </ButtonContainerBase>
           </Col>
         </Row>
       );

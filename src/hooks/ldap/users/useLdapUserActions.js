@@ -36,5 +36,32 @@ export default function useLdapUserActions() {
     );
   };
 
+  ldapUserActions.removeUserFromAssignedRules = async (
+    userEmail,
+  ) => {
+    const apiUrl = `/account/users/${userEmail}/assigned-roles`;
+    return await apiService.handleApiDeleteRequest(
+      apiUrl,
+    );
+  };
+
+  ldapUserActions.revokeUserGroupMembership = async (
+    userEmail,
+  ) => {
+    const apiUrl = `/account/users/${userEmail}/group-membership`;
+    return await apiService.handleApiDeleteRequest(
+      apiUrl,
+    );
+  };
+
+  ldapUserActions.revokeSiteRoleMembership = async (
+    userEmail,
+  ) => {
+    const apiUrl = `/account/users/${userEmail}/site-role-membership`;
+    return await apiService.handleApiDeleteRequest(
+      apiUrl,
+    );
+  };
+
   return ldapUserActions;
 }
