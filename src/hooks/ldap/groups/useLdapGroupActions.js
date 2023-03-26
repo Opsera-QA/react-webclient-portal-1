@@ -48,5 +48,13 @@ export default function useLdapGroupActions() {
     return await apiService.handleApiDeleteRequest( apiUrl);
   };
 
+  ldapGroupActions.revokeAssignedGroupAccessRules = async (
+    domain,
+    groupName,
+  ) => {
+    const apiUrl = `/account/groups/${domain}/name/${groupName}/assigned-roles`;
+    return await apiService.handleApiDeleteRequest( apiUrl);
+  };
+
   return ldapGroupActions;
 }

@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useApiState from "hooks/general/api/useApiState";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
-import usePlatformUsersActions from "hooks/platform/users/usePlatformUsersActions";
+import useLdapGroupActions from "hooks/ldap/groups/useLdapGroupActions";
 
-export default function DeactivateUserButton(
+export default function RevokeGroupAccessRulesButton(
   {
-    userModel,
+    groupModel,
+    domain,
     loadData,
     className,
   }) {
@@ -19,14 +21,20 @@ export default function DeactivateUserButton(
   const {
     isSiteAdministrator,
   } = useComponentStateReference();
-  const platformUsersActions = usePlatformUsersActions();
+  const ldapGroupActions = useLdapGroupActions();
 
   const revokeGroupMembership = async () => {
     try {
       apiStateFunctions.setBusyState();
-      await platformUsersActions.deactivateUserById(userModel?.getMongoDbId());
+      await ldapGroupActions.revokeAssignedGroupAccessRules(
+        domain,
+        groupModel?.getData("name"),
+      );
       apiStateFunctions.setSuccessState();
-      await loadData();
+
+      if (loadData) {
+        await loadData();
+      }
     }
     catch (error) {
       console.error(error);
@@ -34,7 +42,7 @@ export default function DeactivateUserButton(
     }
   };
 
-  if (isSiteAdministrator !== true) {
+  if (isSiteAdministrator !== true || hasStringValue(domain) !== true) {
     return null;
   }
 
@@ -42,10 +50,10 @@ export default function DeactivateUserButton(
     <VanityButtonBase
       variant={"danger"}
       onClickFunction={revokeGroupMembership}
-      normalText={"Deactivate User"}
-      busyText={"Deactivating User"}
-      errorText={"Failed to Deactivate User"}
-      successText={"Deactivated User"}
+      normalText={"Revoke Assigned Group Access Rules"}
+      busyText={"Revoking Assigned Group Access Rules"}
+      errorText={"Failed to Revoke Assigned Group Access Rules"}
+      successText={"Revoked Assigned Group Access Rules"}
       buttonState={apiState}
       className={className}
       icon={faTrash}
@@ -53,8 +61,9 @@ export default function DeactivateUserButton(
   );
 }
 
-DeactivateUserButton.propTypes = {
-  userModel: PropTypes.object,
+RevokeGroupAccessRulesButton.propTypes = {
+  groupModel: PropTypes.object,
+  domain: PropTypes.string,
   loadData: PropTypes.func,
   className: PropTypes.string,
 };
