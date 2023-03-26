@@ -26,9 +26,15 @@ export default function RevokeGroupAccessRulesButton(
   const revokeGroupMembership = async () => {
     try {
       apiStateFunctions.setBusyState();
-      await ldapGroupActions.revokeAssignedGroupAccessRules(groupModel?.getName());
+      await ldapGroupActions.revokeAssignedGroupAccessRules(
+        domain,
+        groupModel?.getData("name"),
+      );
       apiStateFunctions.setSuccessState();
-      await loadData();
+
+      if (loadData) {
+        await loadData();
+      }
     }
     catch (error) {
       console.error(error);

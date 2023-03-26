@@ -7,7 +7,12 @@ import RevokeGroupAccessRulesButton
   from "components/settings/ldap_groups/details/roles/revoke/RevokeGroupAccessRulesButton";
 import CancelButtonBase from "components/common/buttons/cancel/CancelButtonBase";
 
-export default function RevokeAssignedGroupAccessRulesOverlay({ groupModel, domain }) {
+export default function RevokeAssignedGroupAccessRulesOverlay(
+  {
+    groupModel,
+    domain,
+    loadData,
+  }) {
   const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
@@ -15,26 +20,17 @@ export default function RevokeAssignedGroupAccessRulesOverlay({ groupModel, doma
     toastContext.clearOverlayPanel();
   };
 
-  const getBody = () => {
-    return (
-      <div className={"mt-2"}>
-        <div>
-          <span>Are you sure you would like to revoke all access rules granted to the {groupModel?.getData("name")} group?</span>
-        </div>
-      </div>
-    );
-  };
-
   const getButtonContainer = () => {
     return (
-      <ButtonContainerBase>
+      <ButtonContainerBase className={"pb-3 px-3"}>
         <CancelButtonBase
-          className={"mr-2"}
+          className={"mr-3"}
           cancelFunction={closePanel}
         />
         <RevokeGroupAccessRulesButton
           groupModel={groupModel}
           domain={domain}
+          loadData={loadData}
         />
       </ButtonContainerBase>
     );
@@ -46,7 +42,11 @@ export default function RevokeAssignedGroupAccessRulesOverlay({ groupModel, doma
       closePanel={closePanel}
       buttonContainer={getButtonContainer()}
     >
-      {getBody()}
+      <div className={"pt-2 px-3"}>
+        <div>
+          <span>Are you sure you would like to revoke all access rules granted to the {groupModel?.getData("name")} group?</span>
+        </div>
+      </div>
     </ConfirmationOverlay>
   );
 }
@@ -54,4 +54,5 @@ export default function RevokeAssignedGroupAccessRulesOverlay({ groupModel, doma
 RevokeAssignedGroupAccessRulesOverlay.propTypes = {
   groupModel: PropTypes.object,
   domain: PropTypes.string,
+  loadData: PropTypes.func,
 };

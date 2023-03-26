@@ -24,6 +24,7 @@ export default function LaunchRevokeGroupAccessRulesOverlayButton(
       <RevokeAssignedGroupAccessRulesOverlay
         groupModel={groupModel}
         domain={domain}
+        loadData={loadData}
       />
     );
   };
