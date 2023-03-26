@@ -6,6 +6,9 @@ import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import LdapUserSummaryPanel from "components/admin/accounts/ldap/users/details/LdapUserSummaryPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
+import {faIdCard} from "@fortawesome/pro-light-svg-icons";
+import CustomTab from "components/common/tabs/CustomTab";
+import UserAssignedRolesPanel from "components/settings/users/details/assigned_roles/UserAssignedRolesPanel";
 
 export default function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, hideSettings }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -36,6 +39,13 @@ export default function LdapUserDetailPanel({ ldapUserData, setLdapUserData, org
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
         {/*{getSettingsTab()}*/}
+        <CustomTab
+          icon={faIdCard}
+          tabName={"assigned-roles"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Assigned Role Access"}
+        />
       </CustomTabContainer>
     );
   };
@@ -43,9 +53,27 @@ export default function LdapUserDetailPanel({ ldapUserData, setLdapUserData, org
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <LdapUserSummaryPanel ldapUserData={ldapUserData} setActiveTab={!hideSettings ? setActiveTab : null} />;
+        return (
+          <LdapUserSummaryPanel
+            ldapUserData={ldapUserData}
+            setActiveTab={!hideSettings ? setActiveTab : null}
+          />
+        );
       case "settings":
-        return <LdapUserEditorPanel setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} orgDomain={orgDomain} handleClose={toggleSummaryPanel} />;
+        return (
+          <LdapUserEditorPanel
+            setLdapUserData={setLdapUserData}
+            ldapUserData={ldapUserData}
+            orgDomain={orgDomain}
+            handleClose={toggleSummaryPanel}
+          />
+        );
+      case "assigned-roles":
+        return (
+          <UserAssignedRolesPanel
+            userEmailAddress={ldapUserData?.getData("emailAddress")}
+          />
+        );
       default:
         return null;
     }
