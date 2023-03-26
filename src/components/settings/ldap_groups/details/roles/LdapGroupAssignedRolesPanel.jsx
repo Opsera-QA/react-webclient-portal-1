@@ -58,7 +58,5 @@ export default function LdapGroupAssignedRolesPanel(
 }
 
 LdapGroupAssignedRolesPanel.propTypes = {
-  isLoading: PropTypes.bool,
   groupModel: PropTypes.object,
-  assignedRoleFilterModel: PropTypes.object,
 };

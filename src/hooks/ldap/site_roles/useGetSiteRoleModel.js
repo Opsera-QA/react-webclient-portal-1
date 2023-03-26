@@ -1,14 +1,14 @@
 import useComponentStateReference from "hooks/useComponentStateReference";
-import GroupModel from "components/settings/ldap_groups/group.model";
+import SiteRoleModel from "components/settings/ldap_site_roles/siteRole.model";
 
 export default function useGetSiteRoleModel() {
   const { userData } = useComponentStateReference();
   const getSiteRoleModel = (
     organizationDomain,
-    group,
+    siteRole,
     isNew,
   ) => {
-    const newModel = new GroupModel(group, isNew);
+    const newModel = new SiteRoleModel(siteRole, isNew);
     newModel.organizationDomain = organizationDomain;
     newModel.userData = userData;
 

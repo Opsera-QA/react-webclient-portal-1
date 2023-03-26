@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
@@ -10,6 +10,7 @@ import AccessRoleLevelField from "components/common/fields/access/AccessRoleLeve
 import ScreenContainerBodyLoadingDialog
   from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function DetailScreenContainer(
   {
@@ -19,10 +20,8 @@ function DetailScreenContainer(
     detailPanel,
     isLoading,
     accessDenied,
-    metadata,
     showBreadcrumbTrail,
     navigationTabContainer,
-    accessRoleData,
     roleRequirement,
     titleActionBar,
     objectRoles,
@@ -32,6 +31,7 @@ function DetailScreenContainer(
   const breadcrumb = getBreadcrumb(breadcrumbDestination);
   const parentBreadcrumb = getParentBreadcrumb(breadcrumbDestination);
   const activeField = dataObject?.getActiveField();
+  const { accessRoleData } = useComponentStateReference();
 
   const getTopNavigation = () => {
     if (showBreadcrumbTrail) {
@@ -182,8 +182,6 @@ DetailScreenContainer.propTypes = {
   actionBar: PropTypes.object,
   isLoading: PropTypes.bool,
   accessDenied: PropTypes.bool,
-  metadata: PropTypes.object,
-  accessRoleData: PropTypes.object,
   roleRequirement: PropTypes.string,
   titleActionBar: PropTypes.object,
   objectRoles: PropTypes.array,
