@@ -69,7 +69,11 @@ const registeredUsersMetadata = {
       label: "Last LDAP Sync",
       id: "ldapSyncAt",
     },
-  ]
+    {
+      label: "Active",
+      id: "active",
+    },
+  ],
 };
 
 export default registeredUsersMetadata;

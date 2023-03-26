@@ -14,6 +14,7 @@ import EmailAddressField from "components/common/fields/text/email/EmailAddressF
 import RevokeLdapGroupMembershipButton from "components/common/buttons/ldap/RevokeLdapGroupMembershipButton";
 import RevokeLdapSiteRoleMembershipButton from "components/common/buttons/ldap/RevokeLdapSiteRoleMembershipButton";
 import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import DeactivateUserButton from "components/common/buttons/user/DeactivateUserButton";
 
 function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
   const [userLdapModel, setUserLdapModel] = useState(undefined);
@@ -42,6 +43,20 @@ function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
     setIsLoading(false);
   };
 
+  const getUserActivationButton = () => {
+    // if (userData?.getData("active") === false) {
+    //
+    // }
+
+    return (
+      <DeactivateUserButton
+        userModel={userData}
+        loadData={loadData}
+        className={"ml-3"}
+      />
+    );
+  };
+
   const getSyncButton = () => {
     if (showSyncButton) {
       return (
@@ -67,6 +82,7 @@ function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
                 loadData={loadData}
                 className={"ml-3"}
               />
+              {getUserActivationButton()}
             </ButtonContainerBase>
           </Col>
         </Row>
