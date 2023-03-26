@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import AnalyticsProfileEditorPanel from "./analytics_profile/AnalyticsProfileEditorPanel";
-import {faClipboardList, faDatabase, faCogs, faUser} from "@fortawesome/pro-light-svg-icons";
+import {faClipboardList, faDatabase, faCogs, faUser, faIdCard} from "@fortawesome/pro-light-svg-icons";
 import CustomerDatabaseEditorPanel from "./customer_database/CustomerDatabaseEditorPanel";
 import RegisteredUserToolsPanel from "./tools/RegisteredUserToolsPanel";
 import RegisteredUserSummary from "./RegisteredUserSummary";
@@ -11,6 +11,7 @@ import CustomTab from "components/common/tabs/CustomTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import LdapSettingsPanel
   from "components/admin/registered_users/details/ldap_settings/LdapSettingsPanel";
+import UserAssignedRolesPanel from "components/settings/users/details/assigned_roles/UserAssignedRolesPanel";
 
 function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData, setAnalyticsProfileData, loadData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -29,6 +30,13 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
         <CustomTab icon={faCogs} tabName={"analyticsSettings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Analytics Profile"} />
         <CustomTab icon={faClipboardList} tabName={"tools"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tools"} />
         <CustomTab icon={faUser} activeTab={activeTab} tabText={"LDAP Settings"} tabName={"ldap"} handleTabClick={handleTabClick} />
+        <CustomTab
+          icon={faIdCard}
+          tabName={"assigned-roles"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Assigned Role Access"}
+        />
         {/*<SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />*/}
       </CustomTabContainer>
     );
@@ -46,6 +54,12 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
         return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
       case "ldap":
         return <LdapSettingsPanel userData={userData} ldapData={userData?.getData("ldap")} loadData={loadData} showSyncButton={true} />;
+      case "assigned-roles":
+        return (
+          <UserAssignedRolesPanel
+            userEmailAddress={userData?.getData("email")}
+          />
+        );
       // case "settings":
       // return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
       default:
