@@ -48,7 +48,7 @@ export default function RevokeAssignedUserAccessRulesOverlay(
     >
       <div className={"pt-2 px-3"}>
         <div>
-          <span>Are you sure you would like to revoke all access rules granted to the {userModel?.getData("name")} group?</span>
+          <span>Are you sure you would like to revoke all access rules granted to {userEmailAddress}?</span>
         </div>
       </div>
     </ConfirmationOverlay>
