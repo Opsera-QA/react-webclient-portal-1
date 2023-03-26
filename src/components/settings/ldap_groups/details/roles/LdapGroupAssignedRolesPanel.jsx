@@ -12,12 +12,15 @@ import useGetResourcesByAssignedGroup
   from "components/settings/ldap_groups/details/roles/hooks/useGetResourcesByAssignedGroup";
 import LdapGroupAssignedRolesTableBase
   from "components/settings/ldap_groups/details/roles/tables/LdapGroupAssignedRolesTableBase";
+import LaunchRevokeGroupAccessRulesOverlayButton
+  from "components/settings/ldap_groups/details/roles/revoke/LaunchRevokeGroupAccessRulesOverlayButton";
 
 const height = `calc(${DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT} - 110px)`;
 
 export default function LdapGroupAssignedRolesPanel(
   {
     groupModel,
+    domain,
   }) {
   const {
     assignedResources,
@@ -34,6 +37,13 @@ export default function LdapGroupAssignedRolesPanel(
       icon={faIdCard}
       minimumHeight={height}
       loadDataFunction={loadData}
+      titleRightSideButton={
+        <LaunchRevokeGroupAccessRulesOverlayButton
+          groupModel={groupModel}
+          domain={domain}
+          loadData={loadData}
+        />
+      }
       maximumHeight={height}
       tabColumnSize={3}
       verticalTabContainer={
@@ -59,4 +69,5 @@ export default function LdapGroupAssignedRolesPanel(
 
 LdapGroupAssignedRolesPanel.propTypes = {
   groupModel: PropTypes.object,
+  domain: PropTypes.string,
 };
