@@ -40,7 +40,7 @@ export default function RevokeGroupAccessRulesButton(
     }
     catch (error) {
       console.error(error);
-      toastContext.showInlineErrorMessage("Failed to Revoke Assigned Group Access Rules");
+      toastContext.showInlineErrorMessage(error, "Failed to Revoke Assigned Group Access Rules:");
       apiStateFunctions.setErrorState();
     }
   };
