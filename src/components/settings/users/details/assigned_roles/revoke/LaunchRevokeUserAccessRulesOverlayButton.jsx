@@ -10,7 +10,6 @@ import RevokeAssignedUserAccessRulesOverlay
 export default function LaunchRevokeUserAccessRulesOverlayButton(
   {
     userEmailAddress,
-    domain,
     loadData,
     className,
   }) {
@@ -23,13 +22,12 @@ export default function LaunchRevokeUserAccessRulesOverlayButton(
     toastContext.showOverlayPanel(
       <RevokeAssignedUserAccessRulesOverlay
         userEmailAddress={userEmailAddress}
-        domain={domain}
         loadData={loadData}
       />
     );
   };
 
-  if (isSiteAdministrator !== true || hasStringValue(domain) !== true) {
+  if (isSiteAdministrator !== true) {
     return null;
   }
 
@@ -47,7 +45,6 @@ export default function LaunchRevokeUserAccessRulesOverlayButton(
 
 LaunchRevokeUserAccessRulesOverlayButton.propTypes = {
   userEmailAddress: PropTypes.string,
-  domain: PropTypes.string,
   loadData: PropTypes.func,
   className: PropTypes.string,
 };
