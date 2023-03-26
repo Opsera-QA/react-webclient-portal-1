@@ -18,6 +18,10 @@ export default function RevokeAssignedGroupAccessRulesOverlay(
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
+
+    if (loadData) {
+      loadData();
+    }
   };
 
   const getButtonContainer = () => {
@@ -30,7 +34,7 @@ export default function RevokeAssignedGroupAccessRulesOverlay(
         <RevokeGroupAccessRulesButton
           groupModel={groupModel}
           domain={domain}
-          loadData={loadData}
+          loadData={closePanel}
         />
       </ButtonContainerBase>
     );
