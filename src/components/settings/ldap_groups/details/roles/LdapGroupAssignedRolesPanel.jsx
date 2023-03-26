@@ -21,7 +21,6 @@ export default function LdapGroupAssignedRolesPanel(
   {
     groupModel,
     domain,
-    loadData,
   }) {
   const {
     assignedResources,
@@ -71,5 +70,4 @@ export default function LdapGroupAssignedRolesPanel(
 LdapGroupAssignedRolesPanel.propTypes = {
   groupModel: PropTypes.object,
   domain: PropTypes.string,
-  loadData: PropTypes.func,
 };
