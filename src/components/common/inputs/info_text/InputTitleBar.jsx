@@ -101,8 +101,8 @@ function InputTitleBar(
         <div className={"my-auto"}>
           <LaunchHelpIcon helpComponent={helpComponent}/>
         </div>
-        {getLoadDataButton()}
         {getRightSideButton()}
+        {getLoadDataButton()}
       </div>
     </div>
   );

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useApiState from "hooks/general/api/useApiState";
-import {hasStringValue} from "components/common/helpers/string-helpers";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
 import usePlatformUsersActions from "hooks/platform/users/usePlatformUsersActions";
 
@@ -21,7 +20,6 @@ export default function DeactivateUserButton(
     isSiteAdministrator,
   } = useComponentStateReference();
   const platformUsersActions = usePlatformUsersActions();
-  const ldapDomain = userModel?.getData("ldap.domain");
 
   const revokeGroupMembership = async () => {
     try {
@@ -36,7 +34,7 @@ export default function DeactivateUserButton(
     }
   };
 
-  if (isSiteAdministrator !== true || hasStringValue(ldapDomain) !== true) {
+  if (isSiteAdministrator !== true) {
     return null;
   }
 

@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useApiState from "hooks/general/api/useApiState";
-import {faPlus} from "@fortawesome/pro-light-svg-icons";
-import usePlatformUsersActions from "hooks/platform/users/usePlatformUsersActions";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import {faTrash} from "@fortawesome/pro-light-svg-icons";
+import useLdapGroupActions from "hooks/ldap/groups/useLdapGroupActions";
 
-export default function ReactivateUserButton(
+export default function RevokeGroupAccessRulesButton(
   {
-    userModel,
+    groupModel,
+    domain,
     loadData,
     className,
   }) {
@@ -19,12 +21,12 @@ export default function ReactivateUserButton(
   const {
     isSiteAdministrator,
   } = useComponentStateReference();
-  const platformUsersActions = usePlatformUsersActions();
+  const ldapGroupActions = useLdapGroupActions();
 
   const revokeGroupMembership = async () => {
     try {
       apiStateFunctions.setBusyState();
-      await platformUsersActions.reinstateUserById(userModel?.getMongoDbId());
+      await ldapGroupActions.revokeAssignedGroupAccessRules(groupModel?.getName());
       apiStateFunctions.setSuccessState();
       await loadData();
     }
@@ -34,27 +36,28 @@ export default function ReactivateUserButton(
     }
   };
 
-  if (isSiteAdministrator !== true) {
+  if (isSiteAdministrator !== true || hasStringValue(domain) !== true) {
     return null;
   }
 
   return (
     <VanityButtonBase
-      variant={"success"}
+      variant={"danger"}
       onClickFunction={revokeGroupMembership}
-      normalText={"Reactivate User"}
-      busyText={"Reactivating User"}
-      errorText={"Failed to Reactivate User"}
-      successText={"Reactivated User"}
+      normalText={"Revoke Assigned Group Access Rules"}
+      busyText={"Revoking Assigned Group Access Rules"}
+      errorText={"Failed to Revoke Assigned Group Access Rules"}
+      successText={"Revoked Assigned Group Access Rules"}
       buttonState={apiState}
       className={className}
-      icon={faPlus}
+      icon={faTrash}
     />
   );
 }
 
-ReactivateUserButton.propTypes = {
-  userModel: PropTypes.object,
+RevokeGroupAccessRulesButton.propTypes = {
+  groupModel: PropTypes.object,
+  domain: PropTypes.string,
   loadData: PropTypes.func,
   className: PropTypes.string,
 };
