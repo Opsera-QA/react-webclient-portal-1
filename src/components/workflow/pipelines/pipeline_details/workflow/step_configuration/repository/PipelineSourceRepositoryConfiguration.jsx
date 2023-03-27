@@ -1,26 +1,13 @@
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import PipelineSourceRepositoryToolIdentifierSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryToolIdentifierSelectInput";
-import PipelineSourceRepositoryBitbucketWorkspaceSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryBitbucketWorkspaceSelectInput";
-import PipelineSourceRepositorySelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import PipelineStepEditorPanelContainer
   from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
-import PipelineSourceRepositoryPrimaryBranchSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryPrimaryBranchSelectInput";
-import PipelineSourceRepositoryEventBasedTriggerInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryTriggerInput";
+import PipelineSourceRepositoryWebhookInputPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryWebhookInputPanel";
 import LoadingDialog from "components/common/status_notifications/loading";
-import PipelineSourceRepositoryToolSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryToolSelectInput";
-import PipelineSourceRepositorySecondaryBranchesMultiSelectInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySecondaryBranchesMultiSelectInput";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import PipelineSourceRepositoryGitExportEnabledInput from "./PipelineSourceRepositoryGitExportEnabledInput";
-import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
   from "components/workflow/plan/source/PipelineSourceRepositoryDynamicSettingsBooleanToggleInput";
@@ -29,8 +16,8 @@ import {
 } from "components/workflow/plan/source/sourceRepositoryConfiguration.metadata";
 import usePipelineSourceRepositoryActions from "components/workflow/plan/source/usePipelineSourceRepositoryActions";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
-import {hasStringValue} from "components/common/helpers/string-helpers";
+import PipelineSourceRepositoryRepositoryInputPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryRepositoryInputPanel";
 
 function PipelineSourceRepositoryConfiguration(
   {
@@ -154,30 +141,6 @@ function PipelineSourceRepositoryConfiguration(
 
   };
 
-  const getRepositoryInfoMessage = () => {
-    const service = sourceRepositoryModel?.getData("service");
-    const workspace = sourceRepositoryModel?.getData("workspace");
-    const repository = sourceRepositoryModel?.getData("repoId");
-    const branch = sourceRepositoryModel?.getData("branch");
-
-    if (
-      hasStringValue(service) === true
-      && (service !== "bitbucket" || hasStringValue(workspace) === true)
-      && hasStringValue(repository) === true
-      && hasStringValue(branch) === true
-    ) {
-      return (
-        <InfoMessageFieldBase
-          message={`
-          Please note, individual pipeline steps still have their own Git Repo settings based
-          on the function of that step.  This value does NOT override those.
-        `}
-          className={"mt-3"}
-        />
-      );
-    }
-  };
-
   if (sourceRepositoryModel == null) {
      return <LoadingDialog message={"Loading Data"} />;
   }
@@ -195,60 +158,18 @@ function PipelineSourceRepositoryConfiguration(
         the top level Pipeline Git Repository settings are used to define webhook activity, dynamic settings controls and other pipeline level operations.
         It's advised that you always configure this for optimal access to pipeline settings.`}
       </div>
-      <H5FieldSubHeader
-        className={"text-muted mt-3"}
-        subheaderText={"Repository"}
+      <PipelineSourceRepositoryRepositoryInputPanel
+        sourceRepositoryModel={sourceRepositoryModel}
+        setSourceRepositoryModel={setSourceRepositoryModel}
+        className={"mt-5"}
       />
-      <PipelineSourceRepositoryToolIdentifierSelectInput
-        model={sourceRepositoryModel}
-        setModel={setSourceRepositoryModel}
-      />
-      <PipelineSourceRepositoryToolSelectInput
-        model={sourceRepositoryModel}
-        setModel={setSourceRepositoryModel}
-        sourceRepositoryToolIdentifier={sourceRepositoryModel?.getData("service")}
-      />
-      <PipelineSourceRepositoryBitbucketWorkspaceSelectInput
-        model={sourceRepositoryModel}
-        setModel={setSourceRepositoryModel}
-        accountId={sourceRepositoryModel?.getData("accountId")}
-        visible={sourceRepositoryModel?.getData("service") === "bitbucket"}
-      />
-      <PipelineSourceRepositorySelectInput
-        model={sourceRepositoryModel}
-        setModel={setSourceRepositoryModel}
-        service={sourceRepositoryModel?.getData("service")}
-        accountId={sourceRepositoryModel?.getData("accountId")}
-        workspace={sourceRepositoryModel?.getData("workspace")}
-        visible={
-          sourceRepositoryModel?.getData("service") != null
-          && sourceRepositoryModel?.getData("accountId") != null
-          && (sourceRepositoryModel?.getData("service") === "bitbucket" ? sourceRepositoryModel?.getData("workspace") != null && sourceRepositoryModel?.getData("workspace").length > 0 : true)}
-      />
-      <PipelineSourceRepositoryPrimaryBranchSelectInput
-        model={sourceRepositoryModel}
-        setModel={setSourceRepositoryModel}
-      />
-      <PipelineSourceRepositorySecondaryBranchesMultiSelectInput
-        model={sourceRepositoryModel}
-        setModel={setSourceRepositoryModel}
-        primaryBranch={sourceRepositoryModel?.getData("branch")}
-      />
-      {getRepositoryInfoMessage()}
-      <H5FieldSubHeader
-        className={"text-muted mt-5"}
-        subheaderText={"Webhook"}
-      />
-      <div>
-        Allow this pipeline to be started by a webhook event based on the repository settings above. Once enabled, copy the webhook URL supplied into your repository.
-      </div>
-      <PipelineSourceRepositoryEventBasedTriggerInput
+      <PipelineSourceRepositoryWebhookInputPanel
         model={sourceRepositoryModel}
         setModel={setSourceRepositoryModel}
         pipeline={pipeline}
         savePipelineFunction={callbackFunction}
+        className={"mt-5"}
       />
-
       {/*<hr />
       <div className="text-muted h5 mt-3">Dynamic Controls</div>
       <div className={"text-muted  mb-3"}>Enable YAML based pipeline settings to control variable
@@ -257,21 +178,18 @@ function PipelineSourceRepositoryConfiguration(
       <div className={"p-3"} >COMING SOON</div>
       
         <hr />*/}
-      <H5FieldSubHeader
-        className={"text-muted mt-5"}
-        subheaderText={"Pipeline Git Revisions"}
-      />
       <PipelineSourceRepositoryGitExportEnabledInput
         fieldName={"gitExportEnabled"}
         model={sourceRepositoryModel}
         setModel={setSourceRepositoryModel}
         disabled={sourceRepositoryModel.getData("service") !== "gitlab" && sourceRepositoryModel.getData("service") !== "github"}
+        className={"mt-5"}
       />
       <PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
-        className={sourceRepositoryModel}
         model={sourceRepositoryModel}
         setModel={setSourceRepositoryModel}
         pipelineType={pipelineTypeConstants.getTypeForTypesArray(pipeline?.type, false)}
+        className={"mt-5"}
       />
     </PipelineStepEditorPanelContainer>
   );

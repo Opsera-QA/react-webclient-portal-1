@@ -5,8 +5,9 @@ import EventBasedTriggerDetails from "components/workflow/pipelines/pipeline_det
 import PipelineSourceRepositorySecretInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySecretInput";
 import IconBase from "components/common/icons/IconBase";
 import { faTriangleExclamation } from "@fortawesome/pro-light-svg-icons";
+import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 
-function PipelineSourceRepositoryEventBasedTriggerInput({
+function PipelineSourceRepositoryWebhookInputPanel({
   className,
   model,
   setModel,
@@ -77,6 +78,13 @@ function PipelineSourceRepositoryEventBasedTriggerInput({
 
   return (
     <div className={className}>
+      <H5FieldSubHeader
+        className={"text-muted"}
+        subheaderText={"Webhook"}
+      />
+      <div>
+        Allow this pipeline to be started by a webhook event based on the repository settings above. Once enabled, copy the webhook URL supplied into your repository.
+      </div>
       <BooleanToggleInput
         dataObject={model}
         setDataFunction={enableWebhookTrigger}
@@ -89,7 +97,7 @@ function PipelineSourceRepositoryEventBasedTriggerInput({
   );
 }
 
-PipelineSourceRepositoryEventBasedTriggerInput.propTypes = {
+PipelineSourceRepositoryWebhookInputPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   savePipelineFunction: PropTypes.func,
@@ -98,4 +106,4 @@ PipelineSourceRepositoryEventBasedTriggerInput.propTypes = {
   pipeline: PropTypes.object,
 };
 
-export default PipelineSourceRepositoryEventBasedTriggerInput;
+export default PipelineSourceRepositoryWebhookInputPanel;

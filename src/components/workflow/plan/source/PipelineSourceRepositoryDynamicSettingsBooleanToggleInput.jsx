@@ -100,7 +100,7 @@ export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInpu
   return (
     <div className={className}>
       <H5FieldSubHeader
-        className={"text-muted mt-3"}
+        className={"text-muted mt-5"}
         subheaderText={"Dynamic Settings"}
       />
       <BooleanToggleInput
