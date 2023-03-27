@@ -50,6 +50,9 @@ function SalesforceLogSummaryExecutionOverview({ salesforceDeployResultsModel })
       <Col lg={6}>
         <BooleanField dataObject={salesforceDeployResultsModel} fieldName={"rollbackOnError"}/>
       </Col>
+      <Col lg={6}>
+        <BooleanField dataObject={salesforceDeployResultsModel} fieldName={"ignoreWarnings"}/>
+      </Col>
     </Row>
   );
 }

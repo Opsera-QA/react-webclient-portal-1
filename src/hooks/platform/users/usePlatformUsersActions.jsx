@@ -1,4 +1,6 @@
 import useApiService from "hooks/api/service/useApiService";
+import baseActions from "utils/actionsBase";
+import {platformUsersActions} from "components/settings/users/ssoUser.actions";
 
 export default function usePlatformUsersActions() {
   const apiService = useApiService();
@@ -25,6 +27,41 @@ export default function usePlatformUsersActions() {
       apiUrl,
       queryParameters,
     );
+  };
+
+  platformUsersActions.getPlatformUsers = async () => {
+    const apiUrl = `/users/platform`;
+    return await apiService.handleApiGetRequest(apiUrl);
+  };
+
+  platformUsersActions.getUserById = async (id,) => {
+    const apiUrl = `/users/user/${id}`;
+    return await apiService.handleApiGetRequest(apiUrl,);
+  };
+
+  platformUsersActions.getRevokedUsers = async () => {
+    const apiUrl = `/users/revoked`;
+    return await apiService.handleApiGetRequest(apiUrl,);
+  };
+
+  platformUsersActions.getActiveUsers = async () => {
+    const apiUrl = `/users/active`;
+    return await apiService.handleApiGetRequest(apiUrl,);
+  };
+
+  platformUsersActions.revokeUserById = async (userId,) => {
+    const apiUrl = `/users/${userId}/access/revoke`;
+    return await apiService.handleApiPatchRequest(apiUrl,);
+  };
+
+  platformUsersActions.reinstateUserById = async (userId,) => {
+    const apiUrl = `/users/${userId}/access/reinstate`;
+    return await apiService.handleApiPatchRequest(apiUrl,);
+  };
+
+  platformUsersActions.deactivateUserById = async (userId,) => {
+    const apiUrl = `/users/${userId}/deactivate`;
+    return await apiService.handleApiDeleteRequest(apiUrl,);
   };
 
   return platformUsersActions;
