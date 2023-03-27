@@ -1,8 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import PipelineSourceWebhookTriggerDetailsPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceWebhookTriggerDetailsPanel";
-import PipelineSourceRepositorySecretInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySecretInput";
+import PipelineSourceWebhookTriggerDetailsPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceWebhookTriggerDetailsPanel";
+import PipelineSourceRepositorySecretInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySecretInput";
 import IconBase from "components/common/icons/IconBase";
 import {faClipboardList, faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
@@ -20,20 +22,17 @@ function PipelineSourceRepositoryWebhookInputPanel({
   pipeline,
   savePipelineFunction,
 }) {
-  const apiUrl = NODE_API_ORCHESTRATOR_SERVER_URL;
-  const triggerUrl = `${apiUrl}/hooks/${pipeline?.owner}/${pipeline?._id}/source`;
+  const triggerUrl = `${NODE_API_ORCHESTRATOR_SERVER_URL}/hooks/${pipeline?.owner}/${pipeline?._id}/source`;
 
   const getDynamicText = () => {
     if (model?.getData("dynamicSettings") !== true) {
       return (
-        <div className={"d-flex mb-4 warning-text-alt"}>
-          <div>
-            <IconBase
-              icon={faTriangleExclamation}
-              className={"mr-1"}
-            />
-          </div>
-          {`Please enable Dynamic Settings on this pipeline to use this feature.`}
+        <div className={"d-flex warning-text-alt"}>
+          <IconBase
+            icon={faTriangleExclamation}
+            className={"mr-1"}
+          />
+          {`Please enable Dynamic Settings on this Pipeline to use this feature.`}
         </div>
       );
     }
@@ -55,6 +54,8 @@ function PipelineSourceRepositoryWebhookInputPanel({
             model={model}
             setModel={setModel}
           />
+          <div className={"text-muted"}>Dynamic Branch Switching</div>
+          {getDynamicText()}
           <BooleanToggleInput
             dataObject={model}
             setDataObject={setModel}
@@ -63,7 +64,6 @@ function PipelineSourceRepositoryWebhookInputPanel({
             helpTooltip={helpText()}
             disabled={!model?.getData("dynamicSettings")}
           />
-          {getDynamicText()}
           <PipelineSourceRepositorySecretInput
             model={model}
             setModel={setModel}

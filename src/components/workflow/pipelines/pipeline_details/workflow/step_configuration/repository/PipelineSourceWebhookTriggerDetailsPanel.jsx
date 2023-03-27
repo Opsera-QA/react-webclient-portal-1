@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
-import { NODE_API_ORCHESTRATOR_SERVER_URL } from "config";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function PipelineSourceWebhookTriggerDetailsPanel({
+export default function PipelineSourceWebhookTriggerDetailsPanel({
   model,
   setModel,
 }) {
@@ -55,5 +54,3 @@ PipelineSourceWebhookTriggerDetailsPanel.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
 };
-
-export default PipelineSourceWebhookTriggerDetailsPanel;
