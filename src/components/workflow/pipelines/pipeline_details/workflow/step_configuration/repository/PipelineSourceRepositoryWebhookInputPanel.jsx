@@ -27,7 +27,7 @@ function PipelineSourceRepositoryWebhookInputPanel({
   const getDynamicText = () => {
     if (model?.getData("dynamicSettings") !== true) {
       return (
-        <div className={"d-flex warning-text-alt"}>
+        <div className={"warning-text-alt ml-2"}>
           <IconBase
             icon={faTriangleExclamation}
             className={"mr-1"}
@@ -54,8 +54,12 @@ function PipelineSourceRepositoryWebhookInputPanel({
             model={model}
             setModel={setModel}
           />
-          <div className={"text-muted mt-2"}>Dynamic Branch Switching</div>
-          {getDynamicText()}
+          <div className={"d-flex mt-3"}>
+            <div className={"text-muted"}>
+              Dynamic Branch Switching
+            </div>
+            {getDynamicText()}
+          </div>
           <BooleanToggleInput
             dataObject={model}
             setDataObject={setModel}
@@ -69,21 +73,38 @@ function PipelineSourceRepositoryWebhookInputPanel({
             setModel={setModel}
             visible={model.getData("service") !== "bitbucket"}
           />
+          <div className={"text-muted"}>
+            Settings
+          </div>
           <div className={"d-flex"}>
-            <div className={"d-flex my-auto"}>
-              <FieldLabelBase
-                label={"Webhook URL"}
-              />
-              <div>
-                {triggerUrl}
-              </div>
-              <CopyToClipboardIconBase
-                className={"ml-2"}
-                copyString={triggerUrl}
-                copyIcon={faClipboardList}
-              />
-            </div>
             <div>
+              <div className={"d-flex"}>
+                <FieldLabelBase label={"Content Type"} />
+                <div>
+                  {`application/json`}
+                </div>
+              </div>
+              <div className={"d-flex"}>
+                <FieldLabelBase label={"SSL Verification"} />
+                <div>
+                  {`enabled`}
+                </div>
+              </div>
+              <div className={"d-flex my-auto"}>
+                <FieldLabelBase
+                  label={"Webhook URL"}
+                />
+                <div>
+                  {triggerUrl}
+                </div>
+                <CopyToClipboardIconBase
+                  className={"ml-2"}
+                  copyString={triggerUrl}
+                  copyIcon={faClipboardList}
+                />
+              </div>
+            </div>
+            <div className={"mt-auto"}>
               <RegisterSourceRepositoryHookButton
                 model={model}
                 savePipelineFunction={savePipelineFunction}
