@@ -91,7 +91,7 @@ function EventBasedTriggerDetails({
       {EventTriggerOptions()}
       {PrEventOptions()}
       <div className={"d-flex"}>
-        <div className={"d-flex"}>
+        <div className={"d-flex my-auto"}>
           <FieldLabelBase
             label={"Webhook URL"}
           />
@@ -109,6 +109,7 @@ function EventBasedTriggerDetails({
             model={model}
             savePipelineFunction={savePipelineFunction}
             pipeline={pipeline}
+            className={"ml-2"}
           />
         </div>
       </div>

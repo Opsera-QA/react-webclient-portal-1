@@ -182,7 +182,7 @@ function PipelineSourceRepositoryConfiguration(
         fieldName={"gitExportEnabled"}
         model={sourceRepositoryModel}
         setModel={setSourceRepositoryModel}
-        disabled={sourceRepositoryModel.getData("service") !== "gitlab" && sourceRepositoryModel.getData("service") !== "github"}
+        disabled={["gitlab", "github"].includes(sourceRepositoryModel.getData("service")) !== true}
         className={"mt-5"}
       />
       <PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
