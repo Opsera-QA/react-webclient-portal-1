@@ -50,18 +50,12 @@ export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInpu
 
   const getInfoText = () => {
     return (
-      <div>
-        {getDynamicText()}
-        Dynamic Settings allow the user running a pipeline to change supported values in the pipeline at runtime.
-        When this is enabled, a user will get a prompt to change the Git Branch for this pipeline before it starts,
-        allowing them to target different branches without having to edit the pipeline.
-        <div className={"mt-1"}>
-          <b>
-            Please note, any user who can run this pipeline can switch the branch ONLY. Do not
-            enable this feature if you do not want users being able to change what branch this pipeline runs
-            against.
-          </b>
-        </div>
+      <div className={"mt-1"}>
+        <b>
+          Please note, any user who can run this pipeline can switch the branch ONLY. Do not
+          enable this feature if you do not want users being able to change what branch this pipeline runs
+          against.
+        </b>
       </div>
     );
   };
@@ -103,6 +97,12 @@ export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInpu
         className={"text-muted mt-5"}
         subheaderText={"Dynamic Settings"}
       />
+      <div>
+        {getDynamicText()}
+        Dynamic Settings allow the user running a pipeline to change supported values in the pipeline at runtime.
+        When this is enabled, a user will get a prompt to change the Git Branch for this pipeline before it starts,
+        allowing them to target different branches without having to edit the pipeline.
+      </div>
       <BooleanToggleInput
         dataObject={model}
         setDataObject={setModel}
