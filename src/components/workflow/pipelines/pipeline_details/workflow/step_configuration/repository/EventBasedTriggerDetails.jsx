@@ -102,8 +102,6 @@ function EventBasedTriggerDetails({
             className={"ml-2"}
             copyString={triggerUrl}
             copyIcon={faClipboardList}
-            copyText={"Copy to Clipboard."}
-            copiedText={"Copied to Clipboard."}
           />
         </div>
         <div>
