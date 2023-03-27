@@ -13,6 +13,10 @@ import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 import RegistryToolRoleHelper from "@opsera/know-your-role/roles/registry/tools/registryToolRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
+import CreateToolRegistryWizard from "./tool_details/wizards/CreateToolRegistryWizard";
+import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
+import platformSettingFeatureConstants
+  from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 
 function ToolTableCardView(
   {
@@ -26,17 +30,24 @@ function ToolTableCardView(
     userData,
     toastContext,
   } = useComponentStateReference();
+  const getPlatformSettingsFeatureFlagByName = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_WIZARDS_TOGGLE);
 
   const createNewTool = () => {
-    toastContext.showOverlayPanel(
-      <NewToolOverlay loadData={loadData}/>
-    );
+    if (getPlatformSettingsFeatureFlagByName?.platformSettingsFeatureFlag?.active === true) {
+      toastContext.showOverlayPanel(
+        <CreateToolRegistryWizard loadData={loadData}/>
+      );
+    } else {
+      toastContext.showOverlayPanel(
+        <NewToolOverlay loadData={loadData}/>
+      );
+    }
   };
 
   const getCreateNewToolFunction = () => {
     const canCreate = RegistryToolRoleHelper.canCreateRegistryTool(userData);
     if (canCreate === true) {
-     return createNewTool;
+      return createNewTool;
     }
   };
 
@@ -88,7 +99,7 @@ function ToolTableCardView(
   const getTableView = () => {
     return (
       <ToolsTable
-        isLoading={isLoading}
+        isLoading={isLoading || getPlatformSettingsFeatureFlagByName.isLoading}
         loadData={loadData}
         data={tools}
         toolFilterDto={toolFilterDto}
@@ -110,22 +121,22 @@ function ToolTableCardView(
   };
 
   return (
-      <FilterContainer
-        loadData={loadData}
-        filterDto={toolFilterDto}
-        setFilterDto={setToolFilterDto}
-        addRecordFunction={getCreateNewToolFunction()}
-        supportSearch={true}
-        supportViewToggle={true}
-        isLoading={isLoading}
-        metadata={registryToolMetadata}
-        body={getTableCardView()}
-        dropdownFilters={getDropdownFilters()}
-        inlineFilters={getInlineFilters()}
-        titleIcon={faTools}
-        title={"Tools"}
-        className={"px-2 pb-2"}
-      />
+    <FilterContainer
+      loadData={loadData}
+      filterDto={toolFilterDto}
+      setFilterDto={setToolFilterDto}
+      addRecordFunction={getCreateNewToolFunction()}
+      supportSearch={true}
+      supportViewToggle={true}
+      isLoading={isLoading}
+      metadata={registryToolMetadata}
+      body={getTableCardView()}
+      dropdownFilters={getDropdownFilters()}
+      inlineFilters={getInlineFilters()}
+      titleIcon={faTools}
+      title={"Tools"}
+      className={"px-2 pb-2"}
+    />
   );
 }
 
