@@ -47,6 +47,7 @@ export default function PullScriptValueButton(
       className={className}
       buttonSize={"sm"}
       variant={"outline-primary"}
+      tooltip={"Pull Script from Database"}
     />
   );
 }
