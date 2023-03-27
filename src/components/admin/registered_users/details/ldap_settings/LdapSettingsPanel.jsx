@@ -11,6 +11,11 @@ import DateTimeField from "components/common/fields/date/DateTimeField";
 import axios from "axios";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
+import RevokeLdapGroupMembershipButton from "components/common/buttons/ldap/RevokeLdapGroupMembershipButton";
+import RevokeLdapSiteRoleMembershipButton from "components/common/buttons/ldap/RevokeLdapSiteRoleMembershipButton";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
+import DeactivateUserButton from "components/common/buttons/user/DeactivateUserButton";
+import ReactivateUserButton from "components/common/buttons/user/ReactivateUserButton";
 
 function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
   const [userLdapModel, setUserLdapModel] = useState(undefined);
@@ -39,13 +44,53 @@ function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
     setIsLoading(false);
   };
 
+  const getUserActivationButton = () => {
+    if (userData?.getData("active") === false) {
+      return (
+        <ReactivateUserButton
+          userModel={userData}
+          loadData={loadData}
+          className={"ml-3"}
+        />
+      );
+    }
+
+    return (
+      <DeactivateUserButton
+        userModel={userData}
+        loadData={loadData}
+        className={"ml-3"}
+      />
+    );
+  };
+
   const getSyncButton = () => {
     if (showSyncButton) {
       return (
         <Row>
           <Col>
             <DateTimeField dataObject={userData} fieldName={"ldapSyncAt"}/>
-            <SyncLdapButton userData={userData} loadData={loadData} />
+            <ButtonContainerBase
+              className={"mt-3"}
+              leftSideButtons={
+                <SyncLdapButton
+                  userData={userData}
+                  loadData={loadData}
+                />
+              }
+            >
+              <RevokeLdapGroupMembershipButton
+                userModel={userData}
+                loadData={loadData}
+                className={"ml-3"}
+              />
+              <RevokeLdapSiteRoleMembershipButton
+                userModel={userData}
+                loadData={loadData}
+                className={"ml-3"}
+              />
+              {/*{getUserActivationButton()}*/}
+            </ButtonContainerBase>
           </Col>
         </Row>
       );
