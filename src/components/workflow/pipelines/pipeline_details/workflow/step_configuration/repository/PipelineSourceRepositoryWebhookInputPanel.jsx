@@ -54,7 +54,7 @@ function PipelineSourceRepositoryWebhookInputPanel({
             model={model}
             setModel={setModel}
           />
-          <div className={"text-muted"}>Dynamic Branch Switching</div>
+          <div className={"text-muted mt-2"}>Dynamic Branch Switching</div>
           {getDynamicText()}
           <BooleanToggleInput
             dataObject={model}
