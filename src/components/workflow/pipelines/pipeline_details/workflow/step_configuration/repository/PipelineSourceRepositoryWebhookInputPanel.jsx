@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import EventBasedTriggerDetails from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/EventBasedTriggerDetails";
+import PipelineSourceWebhookTriggerDetailsPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceWebhookTriggerDetailsPanel";
 import PipelineSourceRepositorySecretInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySecretInput";
 import IconBase from "components/common/icons/IconBase";
 import { faTriangleExclamation } from "@fortawesome/pro-light-svg-icons";
@@ -43,7 +43,7 @@ function PipelineSourceRepositoryWebhookInputPanel({
     if (model?.getData("trigger_active") === true) {
       return (
         <>
-          <EventBasedTriggerDetails
+          <PipelineSourceWebhookTriggerDetailsPanel
             pipeline={pipeline}
             savePipelineFunction={savePipelineFunction}
             model={model}

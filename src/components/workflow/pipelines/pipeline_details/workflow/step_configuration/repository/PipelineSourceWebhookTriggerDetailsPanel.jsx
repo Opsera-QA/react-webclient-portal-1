@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import RegisterSourceRepositoryHookButton from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/RegisterSourceRepositoryHookButton";
-import FieldContainer from "components/common/fields/FieldContainer";
-import InfoText from "components/common/inputs/info_text/InfoText";
-import CheckboxInputBase from "../../../../../../common/inputs/boolean/CheckboxInputBase";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import { NODE_API_ORCHESTRATOR_SERVER_URL } from "config";
 import { faClipboardList } from "@fortawesome/pro-light-svg-icons";
 import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboardIconBase";
 import FieldLabelBase from "components/common/fields/FieldLabelBase";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-// TODO: Refactor
-function EventBasedTriggerDetails({
+function PipelineSourceWebhookTriggerDetailsPanel({
   pipeline,
   model,
   setModel,
@@ -33,63 +30,37 @@ function EventBasedTriggerDetails({
     setModel({ ...newModel });
   };
 
-  const EventTriggerOptions = () => {
-    return (
-      <div>
-        <div>
-          <CheckboxInputBase
-            fieldName={"isPushEvent"}
-            model={model}
-            setModel={setModel}
-            // disabled={disabled}
-          />
-        </div>
-        <div>
-          <CheckboxInputBase
-            fieldName={"isPrEvent"}
-            model={model}
-            setModel={setModel}
-            // disabled={disabled}
-          />
-        </div>
-      </div>
-    );
-  };
-
-  const PrEventOptions = () => {
-    if (model?.getData("isPrEvent") === true) {
-      return (
-        <div>
-          <div>
-            <CheckboxInputBase
-              fieldName={"prCreatedEvent"}
-              model={model}
-              setModel={setModel}
-              setDataFunction={setDataFunction}
-              // disabled={disabled}
-            />
-          </div>
-          <div>
-            <CheckboxInputBase
-              fieldName={"prApprovedEvent"}
-              model={model}
-              setModel={setModel}
-              setDataFunction={setDataFunction}
-              disabled={
-                model.getData("service") ===
-                toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS
-              }
-            />
-          </div>
-        </div>
-      );
-    }
-  };
-
   return (
-    <FieldContainer>
-      {EventTriggerOptions()}
-      {PrEventOptions()}
+    <div>
+      <BooleanToggleInput
+        className={"mt-2"}
+        fieldName={"isPushEvent"}
+        model={model}
+        setModel={setModel}
+      />
+      <BooleanToggleInput
+        className={""}
+        fieldName={"isPrEvent"}
+        model={model}
+        setModel={setModel}
+      />
+      <BooleanToggleInput
+        className={""}
+        fieldName={"prCreatedEvent"}
+        model={model}
+        setModel={setModel}
+        setDataFunction={setDataFunction}
+        visible={model?.getData("isPrEvent") === true}
+      />
+      <BooleanToggleInput
+        className={"mb-2"}
+        fieldName={"prApprovedEvent"}
+        model={model}
+        setModel={setModel}
+        setDataFunction={setDataFunction}
+        disabled={model.getData("service") === toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_DEVOPS}
+        visible={model?.getData("isPrEvent") === true}
+      />
       <div className={"d-flex"}>
         <div className={"d-flex my-auto"}>
           <FieldLabelBase
@@ -113,15 +84,15 @@ function EventBasedTriggerDetails({
           />
         </div>
       </div>
-    </FieldContainer>
+    </div>
   );
 }
 
-EventBasedTriggerDetails.propTypes = {
+PipelineSourceWebhookTriggerDetailsPanel.propTypes = {
   pipeline: PropTypes.object,
   model: PropTypes.object,
   savePipelineFunction: PropTypes.func,
   setModel: PropTypes.func,
 };
 
-export default EventBasedTriggerDetails;
+export default PipelineSourceWebhookTriggerDetailsPanel;
