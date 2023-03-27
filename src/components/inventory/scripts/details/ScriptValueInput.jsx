@@ -4,18 +4,27 @@ import {getScriptLanguageDisplayMode} from "components/common/list_of_values_inp
 import PullScriptValueButton from "components/inventory/scripts/details/PullScriptValueButton";
 import MonacoCodeInput from "../../../common/inputs/code/monaco/MonacoCodeInput";
 
-function ScriptValueInput({model, setModel, fieldName, className, disabled}) {
+function ScriptValueInput(
+  {
+    model,
+    setModel,
+    fieldName,
+    className,
+    disabled,
+  }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const getPullScriptIcon = () => {
-    return (
-      <PullScriptValueButton
-        setIsLoading={setIsLoading}
-        loadScriptFunction={model?.pullScriptFromDb}
-        setErrorMessage={setErrorMessage}
-      />
-    );
+    if (model?.isNew() === false) {
+      return (
+        <PullScriptValueButton
+          setIsLoading={setIsLoading}
+          loadScriptFunction={model?.pullScriptFromDb}
+          setErrorMessage={setErrorMessage}
+        />
+      );
+    }
   };
 
   return (
