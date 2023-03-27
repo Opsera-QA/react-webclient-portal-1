@@ -25,13 +25,12 @@ function PipelineSourceRepositoryConfiguration(
     reloadParentPipeline,
     handleCloseClick,
   }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [sourceRepositoryModel, setSourceRepositoryModel] = useState(undefined);
   const {
     toastContext,
   } = useComponentStateReference();
   const pipelineSourceRepositoryActions = usePipelineSourceRepositoryActions();
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [sourceRepositoryModel, setSourceRepositoryModel] = useState(undefined);
 
   useEffect(() => {
     setSourceRepositoryModel(undefined);

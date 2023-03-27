@@ -115,10 +115,10 @@ export const sourceRepositoryConfigurationMetadata = {
       `
     },
     {
-      label: "Enable Branch Switching",
+      label: "Allow Dynamic Branch Switching",
       id: "enableBranchSwitch",
       formText: `
-        If this setting is enabled, users of this Pipeline will be able to set Dynamic Branch at runtime. 
+        If this setting is enabled, the Webhook can trigger runs for branches other than the one selected in the Repository settings above. 
       `
     },
   ],

@@ -4,8 +4,13 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import PipelineSourceWebhookTriggerDetailsPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceWebhookTriggerDetailsPanel";
 import PipelineSourceRepositorySecretInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositorySecretInput";
 import IconBase from "components/common/icons/IconBase";
-import { faTriangleExclamation } from "@fortawesome/pro-light-svg-icons";
+import {faClipboardList, faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
+import FieldLabelBase from "components/common/fields/FieldLabelBase";
+import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboardIconBase";
+import RegisterSourceRepositoryHookButton
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/RegisterSourceRepositoryHookButton";
+import {NODE_API_ORCHESTRATOR_SERVER_URL} from "config";
 
 function PipelineSourceRepositoryWebhookInputPanel({
   className,
@@ -15,6 +20,9 @@ function PipelineSourceRepositoryWebhookInputPanel({
   pipeline,
   savePipelineFunction,
 }) {
+  const apiUrl = NODE_API_ORCHESTRATOR_SERVER_URL;
+  const triggerUrl = `${apiUrl}/hooks/${pipeline?.owner}/${pipeline?._id}/source`;
+
   const getDynamicText = () => {
     if (model?.getData("dynamicSettings") !== true) {
       return (
@@ -44,8 +52,6 @@ function PipelineSourceRepositoryWebhookInputPanel({
       return (
         <>
           <PipelineSourceWebhookTriggerDetailsPanel
-            pipeline={pipeline}
-            savePipelineFunction={savePipelineFunction}
             model={model}
             setModel={setModel}
           />
@@ -63,6 +69,29 @@ function PipelineSourceRepositoryWebhookInputPanel({
             setModel={setModel}
             visible={model.getData("service") !== "bitbucket"}
           />
+          <div className={"d-flex"}>
+            <div className={"d-flex my-auto"}>
+              <FieldLabelBase
+                label={"Webhook URL"}
+              />
+              <div>
+                {triggerUrl}
+              </div>
+              <CopyToClipboardIconBase
+                className={"ml-2"}
+                copyString={triggerUrl}
+                copyIcon={faClipboardList}
+              />
+            </div>
+            <div>
+              <RegisterSourceRepositoryHookButton
+                model={model}
+                savePipelineFunction={savePipelineFunction}
+                pipeline={pipeline}
+                className={"ml-2"}
+              />
+            </div>
+          </div>
         </>
       );
     }
