@@ -2,15 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
-import LoadingDialog from "components/common/status_notifications/loading";
 import { faTimes } from "@fortawesome/pro-light-svg-icons";
 import StepToolConfiguration from "./step_configuration/StepToolConfiguration";
 import PipelineStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepConfiguration";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
-import PipelineSourceRepositoryConfiguration
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryConfiguration";
 import IconBase from "components/common/icons/IconBase";
+import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 
 const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPlan }) => {
   const contextType = useContext(AuthContext);
@@ -78,17 +76,10 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
   };
 
   if (loading) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
-  if (editItem.type === "source") {
     return (<>
       {getTitleBar("Pipeline Settings")}
       <div className="p-3 bg-white step-settings-container">
-        <PipelineSourceRepositoryConfiguration
-          pipeline={pipeline}
-          reloadParentPipeline={fetchPlan}
-          handleCloseClick={handleCloseClick}/>
+        <CenterLoadingIndicator />
       </div>
     </>);
   }

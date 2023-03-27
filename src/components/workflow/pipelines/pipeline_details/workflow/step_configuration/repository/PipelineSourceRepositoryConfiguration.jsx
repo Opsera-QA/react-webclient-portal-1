@@ -29,6 +29,7 @@ import {
 } from "components/workflow/plan/source/sourceRepositoryConfiguration.metadata";
 import usePipelineSourceRepositoryActions from "components/workflow/plan/source/usePipelineSourceRepositoryActions";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
 
 function PipelineSourceRepositoryConfiguration(
   {
@@ -37,8 +38,6 @@ function PipelineSourceRepositoryConfiguration(
     handleCloseClick,
   }) {
   const {
-    getAccessToken,
-    cancelTokenSource,
     toastContext,
   } = useComponentStateReference();
   const pipelineSourceRepositoryActions = usePipelineSourceRepositoryActions();
@@ -70,8 +69,6 @@ function PipelineSourceRepositoryConfiguration(
         dynamicSettings,
         service,
         accountId,
-        username,
-        password,
         repository,
         branch,
         key,
@@ -132,7 +129,7 @@ function PipelineSourceRepositoryConfiguration(
 
   //TODO: we will allow impartial settings to be saved, BUT we want to show a warning to users.
   const validateRequiredFields = () => {
-    let { service, accountId, username, password, repository, branch, trigger_active } = sourceRepositoryModel?.getPersistData();
+    let { service, accountId, branch, trigger_active } = sourceRepositoryModel?.getPersistData();
 
     if (service.length === 0) {
       return false;
@@ -156,6 +153,18 @@ function PipelineSourceRepositoryConfiguration(
 
   };
 
+  const getRepositoryInfoMessage = () => {
+    return (
+      <InfoMessageFieldBase
+        message={`
+          Please note, individual pipeline steps still have their own Git Repo settings based
+          on the function of that step.  This value does NOT override those.
+        `}
+        className={"mt-3"}
+      />
+    );
+  };
+
   if (sourceRepositoryModel == null) {
      return <LoadingDialog message={"Loading Data"} />;
   }
@@ -168,17 +177,15 @@ function PipelineSourceRepositoryConfiguration(
       isLoading={isLoading}
       disableSaveButton={sourceRepositoryModel?.getData("service")?.length === 0}
     >
+      <div className={"mb-2"}>
+        {`Although individual pipeline steps can be configured with different Git repositories for individual operations,
+        the top level Pipeline Git Repository settings are used to define webhook activity, dynamic settings controls and other pipeline level operations.
+        It's advised that you always configure this for optimal access to pipeline settings.`}
+      </div>
       <H5FieldSubHeader
-        className={"text-muted"}
+        className={"text-muted mt-3"}
         subheaderText={"Repository"}
       />
-      <div className={"text-muted mb-2"}>
-        Opsera uses the pipeline level Git Repository settings to define webhook activity{/*, where to read
-        YAML settings from as well as for pipeline revision history*/}.  Configure
-        the default repository settings below and then enable the additional Git functionality required.
-        <div className={"small text-muted mb-3 mt-1"}>Please note, individual pipeline steps still have their own Git Repo settings based
-          on the function of that step.  This value does NOT override those.</div>
-      </div>
       <PipelineSourceRepositoryToolIdentifierSelectInput
         model={sourceRepositoryModel}
         setModel={setSourceRepositoryModel}
@@ -214,8 +221,9 @@ function PipelineSourceRepositoryConfiguration(
         setModel={setSourceRepositoryModel}
         primaryBranch={sourceRepositoryModel?.getData("branch")}
       />
+      {getRepositoryInfoMessage()}
       <H5FieldSubHeader
-        className={"text-muted mt-3"}
+        className={"text-muted mt-5"}
         subheaderText={"Webhook"}
       />
       <PipelineSourceRepositoryEventBasedTriggerInput
@@ -234,16 +242,15 @@ function PipelineSourceRepositoryConfiguration(
       
         <hr />*/}
       <H5FieldSubHeader
-        className={"text-muted mt-3"}
+        className={"text-muted mt-5"}
         subheaderText={"Pipeline Git Revisions"}
       />
-      <div className="text-muted h5 mt-3"></div>
-        <PipelineSourceRepositoryGitExportEnabledInput
-          fieldName={"gitExportEnabled"}
-          model={sourceRepositoryModel}
-          setModel={setSourceRepositoryModel}
-          disabled={sourceRepositoryModel.getData("service") !== "gitlab" && sourceRepositoryModel.getData("service") !== "github"}
-        />
+      <PipelineSourceRepositoryGitExportEnabledInput
+        fieldName={"gitExportEnabled"}
+        model={sourceRepositoryModel}
+        setModel={setSourceRepositoryModel}
+        disabled={sourceRepositoryModel.getData("service") !== "gitlab" && sourceRepositoryModel.getData("service") !== "github"}
+      />
       <PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
         className={sourceRepositoryModel}
         model={sourceRepositoryModel}
