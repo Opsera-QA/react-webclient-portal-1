@@ -280,9 +280,6 @@ function SalesforceCodeAnalyserChart({
                 isLoading={isLoading}
                 showSettingsToggle={showSettingsToggle}
                 launchActionableInsightsFunction={onNodeSelect}
-                chartHelpComponent={(closeHelpPanel) => (
-                    <BoomiChartHelpDocumentation closeHelpPanel={closeHelpPanel} />
-                )}
             />
             <ModalLogs
                 header="Mean Time to Resolution"
