@@ -10,7 +10,6 @@ import useLdapUserActions from "hooks/ldap/users/useLdapUserActions";
 export default function RevokeUserAccessRulesButton(
   {
     userEmailAddress,
-    domain,
     loadData,
     className,
   }) {
@@ -43,7 +42,7 @@ export default function RevokeUserAccessRulesButton(
     }
   };
 
-  if (isSiteAdministrator !== true || hasStringValue(domain) !== true) {
+  if (isSiteAdministrator !== true || hasStringValue(userEmailAddress) !== true) {
     return null;
   }
 

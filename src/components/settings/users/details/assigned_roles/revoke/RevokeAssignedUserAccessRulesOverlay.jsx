@@ -10,7 +10,6 @@ import RevokeUserAccessRulesButton
 export default function RevokeAssignedUserAccessRulesOverlay(
   {
     userEmailAddress,
-    domain,
     loadData,
   }) {
   const toastContext = useContext(DialogToastContext);
@@ -33,7 +32,6 @@ export default function RevokeAssignedUserAccessRulesOverlay(
         />
         <RevokeUserAccessRulesButton
           userEmailAddress={userEmailAddress}
-          domain={domain}
           loadData={closePanel}
         />
       </ButtonContainerBase>
@@ -57,6 +55,5 @@ export default function RevokeAssignedUserAccessRulesOverlay(
 
 RevokeAssignedUserAccessRulesOverlay.propTypes = {
   userEmailAddress: PropTypes.string,
-  domain: PropTypes.string,
   loadData: PropTypes.func,
 };

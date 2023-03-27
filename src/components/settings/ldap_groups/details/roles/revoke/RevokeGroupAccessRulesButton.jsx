@@ -20,6 +20,7 @@ export default function RevokeGroupAccessRulesButton(
   } = useApiState();
   const {
     isSiteAdministrator,
+    toastContext,
   } = useComponentStateReference();
   const ldapGroupActions = useLdapGroupActions();
 
@@ -31,13 +32,14 @@ export default function RevokeGroupAccessRulesButton(
         groupModel?.getData("name"),
       );
       apiStateFunctions.setSuccessState();
+      toastContext.showSystemSuccessToast("Successfully Revoked Assigned Group Access Rules");
 
       if (loadData) {
         await loadData();
       }
     }
     catch (error) {
-      console.error(error);
+      toastContext.showInlineErrorMessage(error, "Failed to Revoke Assigned Group Access Rules:");
       apiStateFunctions.setErrorState();
     }
   };

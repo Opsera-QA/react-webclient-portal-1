@@ -414,7 +414,9 @@ input[disabled] {
     font-size: 1em;
 }
 
-.input-container label {
+.input-container label,
+.custom-select-input label,
+.custom-multiselect-input label {
     margin-bottom: .25rem;
     font-size: 1em;
 }
