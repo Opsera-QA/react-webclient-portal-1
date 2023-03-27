@@ -72,9 +72,6 @@ export const sourceRepositoryConfigurationMetadata = {
     {
       label: "Enabled",
       id: "trigger_active",
-      formText: `
-        Allow this pipeline to be started by a webhook event based on above settings. Once enabled, copy the webhook URL supplied into your repository.
-      `,
     },
     {
       label: "Enabled",
@@ -91,24 +88,20 @@ export const sourceRepositoryConfigurationMetadata = {
       formText: "Do not include ending /"
     },
     {
-      label: "Push Events",
+      label: "Trigger This Pipeline On Push Events",
       id: "isPushEvent",
-      formText: "Enabling this will trigger this pipeline for push events only"
     },
     {
-      label: "PR Events",
+      label: "Trigger This Pipeline On Pull Request Events",
       id: "isPrEvent",
-      formText: "Enabling this will trigger this pipeline for PR events"
     },
     {
-      label: "PR Created",
+      label: "Trigger This Pipeline When A Pull Request Is Created",
       id: "prCreatedEvent",
-      formText: "Enable this if you want to trigger only once PR is created"
     },
     {
-      label: "PR Approved",
+      label: "Trigger This Pipeline When A Pull Request Is Approved",
       id: "prApprovedEvent",
-      formText: "Enable this if you want to trigger only if PR is approved"
     },
     {
       label: "Enabled",

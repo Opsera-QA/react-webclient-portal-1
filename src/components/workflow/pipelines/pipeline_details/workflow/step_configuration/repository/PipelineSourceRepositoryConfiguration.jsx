@@ -30,6 +30,7 @@ import {
 import usePipelineSourceRepositoryActions from "components/workflow/plan/source/usePipelineSourceRepositoryActions";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import InfoMessageFieldBase from "components/common/fields/text/message/InfoMessageFieldBase";
+import {hasStringValue} from "components/common/helpers/string-helpers";
 
 function PipelineSourceRepositoryConfiguration(
   {
@@ -154,15 +155,27 @@ function PipelineSourceRepositoryConfiguration(
   };
 
   const getRepositoryInfoMessage = () => {
-    return (
-      <InfoMessageFieldBase
-        message={`
+    const service = sourceRepositoryModel?.getData("service");
+    const workspace = sourceRepositoryModel?.getData("workspace");
+    const repository = sourceRepositoryModel?.getData("repoId");
+    const branch = sourceRepositoryModel?.getData("branch");
+
+    if (
+      hasStringValue(service) === true
+      && (service !== "bitbucket" || hasStringValue(workspace) === true)
+      && hasStringValue(repository) === true
+      && hasStringValue(branch) === true
+    ) {
+      return (
+        <InfoMessageFieldBase
+          message={`
           Please note, individual pipeline steps still have their own Git Repo settings based
           on the function of that step.  This value does NOT override those.
         `}
-        className={"mt-3"}
-      />
-    );
+          className={"mt-3"}
+        />
+      );
+    }
   };
 
   if (sourceRepositoryModel == null) {
@@ -226,6 +239,9 @@ function PipelineSourceRepositoryConfiguration(
         className={"text-muted mt-5"}
         subheaderText={"Webhook"}
       />
+      <div>
+        Allow this pipeline to be started by a webhook event based on the repository settings above. Once enabled, copy the webhook URL supplied into your repository.
+      </div>
       <PipelineSourceRepositoryEventBasedTriggerInput
         model={sourceRepositoryModel}
         setModel={setSourceRepositoryModel}

@@ -8,6 +8,7 @@ import { toolIdentifierConstants } from "components/admin/tools/identifiers/tool
 import { NODE_API_ORCHESTRATOR_SERVER_URL } from "config";
 import { faClipboardList } from "@fortawesome/pro-light-svg-icons";
 import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboardIconBase";
+import FieldLabelBase from "components/common/fields/FieldLabelBase";
 
 // TODO: Refactor
 function EventBasedTriggerDetails({
@@ -89,27 +90,29 @@ function EventBasedTriggerDetails({
     <FieldContainer>
       {EventTriggerOptions()}
       {PrEventOptions()}
-      <div className={"d-flex justify-content-between"}>
-        <div className={"no-wrap-inline mt-auto"}>
-          <h6 className={"mb-0"}>Webhook URL:</h6>
+      <div className={"d-flex"}>
+        <div className={"d-flex"}>
+          <FieldLabelBase
+            label={"Webhook URL"}
+          />
+          <div>
+            {triggerUrl}
+          </div>
+          <CopyToClipboardIconBase
+            className={"ml-2"}
+            copyString={triggerUrl}
+            copyIcon={faClipboardList}
+            copyText={"Copy to Clipboard."}
+            copiedText={"Copied to Clipboard."}
+          />
         </div>
-      </div>
-      <div className="ml-auto d-flex">
-        <InfoText customMessage={triggerUrl} />
-        <CopyToClipboardIconBase
-          className={"ml-2"}
-          copyString={triggerUrl}
-          copyIcon={faClipboardList}
-          copyText={"Copy to Clipboard."}
-          copiedText={"Copied to Clipboard."}
-        />
-      </div>
-      <div className={"d-flex justify-content-end mt-2"}>
-        <RegisterSourceRepositoryHookButton
-          model={model}
-          savePipelineFunction={savePipelineFunction}
-          pipeline={pipeline}
-        />
+        <div>
+          <RegisterSourceRepositoryHookButton
+            model={model}
+            savePipelineFunction={savePipelineFunction}
+            pipeline={pipeline}
+          />
+        </div>
       </div>
     </FieldContainer>
   );

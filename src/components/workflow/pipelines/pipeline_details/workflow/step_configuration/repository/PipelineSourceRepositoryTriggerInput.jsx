@@ -15,7 +15,7 @@ function PipelineSourceRepositoryEventBasedTriggerInput({
   savePipelineFunction,
 }) {
   const getDynamicText = () => {
-    if (!model?.getData("dynamicSettings")) {
+    if (model?.getData("dynamicSettings") !== true) {
       return (
         <div className={"d-flex mb-4 warning-text-alt"}>
           <div>
@@ -70,7 +70,7 @@ function PipelineSourceRepositoryEventBasedTriggerInput({
   const enableWebhookTrigger = (fieldName, newValue) => {
     const newModel = { ...model };
     newModel?.setData("trigger_active", newValue);
-    newModel?.setData("isPushEvent", newValue === true ? true : false);
+    newModel?.setData("isPushEvent", newValue === true);
     newModel?.setData("isPrEvent", false);
     setModel({ ...newModel });
   };
