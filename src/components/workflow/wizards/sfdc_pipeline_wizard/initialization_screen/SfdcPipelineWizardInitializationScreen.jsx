@@ -129,6 +129,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     const sfdcDestToolId = sfdcStep?.tool?.configuration?.sfdcDestToolId;
     const isOrgToOrg = sfdcStep?.tool?.configuration?.isOrgToOrg === true;
     const jobType = sfdcStep?.tool?.job_type;
+    const ignoreWarning = sfdcStep?.tool?.configuration?.ignoreWarning === true;
     const isProfiles = jobType === "sfdc-ant-profile" || jobType?.toUpperCase() === "SFDC PROFILE DEPLOY";
     const isTranslations = false;
 
@@ -161,6 +162,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     newPipelineWizardModel.setData("unitTestSteps", getCustomUnitTestSteps(steps));
     const isSfdx = await checkIfSfdx(cancelSource, sfdcToolId);
     newPipelineWizardModel.setData("isSfdx", isSfdx);
+    newPipelineWizardModel.setData("ignoreWarning", ignoreWarning);
     setPipelineWizardModel({...newPipelineWizardModel});
     return newPipelineWizardModel;
   };
@@ -203,6 +205,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       const newRecord = response?.data;
 
       if (newRecord) {
+        console.log(newRecord);
         newPipelineWizardModel.setData("recordId", newRecord._id);
         setPipelineWizardModel({...newPipelineWizardModel});
       }

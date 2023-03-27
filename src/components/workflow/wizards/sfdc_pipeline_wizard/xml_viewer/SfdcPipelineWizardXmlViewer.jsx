@@ -96,6 +96,17 @@ const SfdcPipelineWizardXmlViewer = (
     setActiveTab(tabSelection);        
   };
 
+  const saveAndTriggerPipeline = async () => {
+    try {
+      setIsSaving(true);
+      await sfdcPipelineActions.updateIgnoreWarning(getAccessToken, cancelTokenSource, pipelineWizardModel);
+      await createJenkinsJob();
+    } catch (error) {
+      console.log("Error saving and triggering pipeline: ", error);
+      setError(error);
+    }
+  };
+
   const createJenkinsJob = async () => {
     if(pipelineWizardModel.getData("fromGitTasks") === true) {
       await triggerGitTask();
@@ -177,6 +188,7 @@ const SfdcPipelineWizardXmlViewer = (
             isLoading={isLoading}
             isSaving={isSaving}
             pipelineWizardModel={pipelineWizardModel}
+            setPipelineWizardModel={setPipelineWizardModel}
           />
         );
       case "utc":
@@ -244,7 +256,7 @@ const SfdcPipelineWizardXmlViewer = (
             <IconBase icon={faArrowLeft} fixedWidth className="mr-2" />
             Back
           </Button>
-          <Button variant="success" size="sm" onClick={() => {createJenkinsJob();}} disabled={isSaving || (pipelineWizardModel.getData("isRollBack") && pipelineWizardModel.getData("destructiveXml")?.length === 0)}>
+          <Button variant="success" size="sm" onClick={() => {saveAndTriggerPipeline();}} disabled={isSaving || (pipelineWizardModel.getData("isRollBack") && pipelineWizardModel.getData("destructiveXml")?.length === 0)}>
             <IconBase className={"mr-2"} isLoading={isSaving} icon={faCheck} />
             Proceed
           </Button>
