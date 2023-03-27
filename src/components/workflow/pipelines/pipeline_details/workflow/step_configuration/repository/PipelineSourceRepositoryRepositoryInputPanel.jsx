@@ -37,7 +37,7 @@ export default function PipelineSourceRepositoryRepositoryInputPanel(
       return (
         <InfoMessageFieldBase
           message={`
-          Please note, individual pipeline steps still have their own Git Repo settings based
+          Please note, individual pipeline steps still have their own Git repository settings based
           on the function of that step.  This value does NOT override those.
         `}
           className={"mt-3"}
