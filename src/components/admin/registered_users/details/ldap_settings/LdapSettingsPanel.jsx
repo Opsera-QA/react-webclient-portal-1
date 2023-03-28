@@ -89,7 +89,7 @@ function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
                 loadData={loadData}
                 className={"ml-3"}
               />
-              {/*{getUserActivationButton()}*/}
+              {getUserActivationButton()}
             </ButtonContainerBase>
           </Col>
         </Row>
