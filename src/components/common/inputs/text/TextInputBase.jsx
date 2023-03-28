@@ -39,10 +39,9 @@ function TextInputBase(
   }, [error]);
 
   const validateAndSetData = (value) => {
-    let newDataObject = dataObject;
-    newDataObject.setTextData(fieldName, value);
-    setErrorMessage(newDataObject.getFieldError(fieldName));
-    setDataObject({...newDataObject});
+    dataObject.setTextData(fieldName, value);
+    setErrorMessage(dataObject.getFieldError(fieldName));
+    setDataObject({...dataObject});
   };
 
   const updateValue = (newValue) => {

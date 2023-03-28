@@ -48,6 +48,12 @@ regexDefinitions.imagePathField = {
   errorFormText: "Only links with valid image file extensions allowed",
 };
 
+regexDefinitions.tagValueField = {
+  regex: /^[A-Za-z0-9][A-Za-z0-9-_.]*$/,
+  formText: "This field must start with a letter or a number and can only contain lowercase letters, numbers, hyphens, underscores, and periods",
+  errorFormText: "This field must start and end with a letter and can only contain lowercase letters, numbers, hyphens, underscores, and periods",
+};
+
 regexDefinitions.uniqueIdentifier = {
   regex: /^[a-z0-9-_]*$/,
   formText: "Letters, numbers, dashes, and underscores are allowed",
