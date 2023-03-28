@@ -26,9 +26,14 @@ export const createPipelineFromTemplateMetadata = {
       isRequired: true,
       regexDefinitionName: "expandedTextAndSymbolsWithSpaces"
     },
+    {
+      label: "Access Rules",
+      id: "roles",
+    }
   ],
   newObjectFields: {
     name: "",
     description: "",
+    roles: [],
   },
 };
