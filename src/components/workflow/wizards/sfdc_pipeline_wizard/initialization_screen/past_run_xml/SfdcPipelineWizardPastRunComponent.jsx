@@ -130,9 +130,6 @@ function SfdcPipelineWizardPastRunComponent(
 
   return (
     <div>
-      <div className="my-2">
-        Select a past run to use its XML for deployment.
-      </div>
       {getBody()}
     </div>
   );
