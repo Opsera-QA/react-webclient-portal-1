@@ -121,8 +121,6 @@ function BooleanToggleInput(
   };
 
   if (field == null || visible === false) {
-    console.log("visible: " + JSON.stringify(visible));
-    console.log("field: " + JSON.stringify(field));
     return null;
   }
 
