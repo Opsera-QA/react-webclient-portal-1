@@ -90,6 +90,7 @@ function PipelineSourceRepositoryWebhookInputPanel({
                   {`enabled`}
                 </div>
               </div>
+              {/* Note from Todd, keep webhook url at the bottom*/}
               <div className={"d-flex my-auto"}>
                 <FieldLabelBase
                   label={"Webhook URL"}
