@@ -1,49 +1,38 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {AuthContext} from "contexts/AuthContext";
 import Model from "core/data_model/model";
-import axios from "axios";
 import DashboardSummaryCard from "components/common/fields/dashboards/DashboardSummaryCard";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import LoadingDialog from "components/common/status_notifications/loading";
 import IconBase from "components/common/icons/IconBase";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function SingleTagUsedInDashboardsField({ tag, closePanel, className }) {
-  const { getAccessToken } = useContext(AuthContext);
   const [dashboards, setDashboards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [tag]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
       setIsLoading(true);
-      await loadDashboards(cancelSource);
+      await loadDashboards();
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -57,12 +46,13 @@ function SingleTagUsedInDashboardsField({ tag, closePanel, className }) {
     }
   };
 
-  const loadDashboards = async (cancelSource = cancelTokenSource) => {
+  const loadDashboards = async () => {
     if (tag != null) {
-      const response = await dashboardsActions.getDashboardsByAppliedFilterTags(getAccessToken, cancelSource, [tag]);
+      const response = await dashboardsActions.getDashboardsByAppliedFilterTags(getAccessToken, cancelTokenSource, [tag]);
+      const foundDashboards = DataParsingHelper.parseNestedArray(response, "data.data");
 
-      if (isMounted?.current === true && response?.data != null) {
-        setDashboards(response?.data?.data);
+      if (isMounted?.current === true && foundDashboards) {
+        setDashboards([...foundDashboards]);
       }
     }
   };
