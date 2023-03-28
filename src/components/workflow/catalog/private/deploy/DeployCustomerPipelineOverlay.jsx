@@ -11,22 +11,23 @@ import Col from "react-bootstrap/Col";
 import CenterOverlayContainer, {CENTER_OVERLAY_SIZES} from "components/common/overlays/center/CenterOverlayContainer";
 import DeployCustomerPipelineButton from "components/workflow/catalog/private/deploy/DeployCustomerPipelineButton";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 
 export default function DeployCustomerPipelineOverlay(
   {
     customerPipelineTemplateModel,
   }) {
   const [pipelineTemplateModelCopy, setPipelineTemplateModelCopy] = useState(undefined);
+  const {
+    toastContext,
+  } = useComponentStateReference();
 
   useEffect(() => {
     if (customerPipelineTemplateModel) {
       setPipelineTemplateModelCopy({...customerPipelineTemplateModel.clone()});
     }
   }, [customerPipelineTemplateModel]);
-
-  const {
-    toastContext,
-  } = useComponentStateReference();
 
   const closePanelFunction = () => {
     toastContext.removeInlineMessage();
@@ -44,12 +45,20 @@ export default function DeployCustomerPipelineOverlay(
           />
           <DeployCustomerPipelineButton
             templateId={pipelineTemplateModelCopy?.getMongoDbId()}
-            roles={pipelineTemplateModelCopy?.getData("roles")}
+            pipelineTemplateModel={pipelineTemplateModelCopy}
+            disabled={
+              pipelineTemplateModelCopy?.isFieldValidV2("name") !== true
+              || pipelineTemplateModelCopy?.isFieldValidV2("description") !== true
+            }
           />
         </div>
       </ButtonContainerBase>
     );
   };
+
+  if (pipelineTemplateModelCopy == null) {
+    return null;
+  }
 
   return (
     <CenterOverlayContainer
@@ -74,9 +83,23 @@ export default function DeployCustomerPipelineOverlay(
         </div>
         <Row>
           <Col xs={12}>
+            <TextInputBase
+              dataObject={pipelineTemplateModelCopy}
+              setDataObject={setPipelineTemplateModelCopy}
+              fieldName={"name"}
+            />
+          </Col>
+          <Col xs={12}>
             <RoleAccessInput
               model={pipelineTemplateModelCopy}
               setModel={setPipelineTemplateModelCopy}
+            />
+          </Col>
+          <Col xs={12}>
+            <TextAreaInputBase
+              model={pipelineTemplateModelCopy}
+              setModel={setPipelineTemplateModelCopy}
+              fieldName={"description"}
             />
           </Col>
         </Row>

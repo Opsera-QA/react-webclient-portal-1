@@ -11,6 +11,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {truncateString} from "components/common/helpers/string-helpers";
 import ViewPlatformPipelineTemplateDetailsButton
   from "components/workflow/catalog/platform/ViewPlatformPipelineTemplateDetailsButton";
+import CreatePlatformPipelineButton from "components/workflow/catalog/platform/deploy/CreatePlatformPipelineButton";
 
 // TODO: This needs to be rewritten, I just copied what existed for the catalog work
 export default function PlatformPipelineTemplateCard(
@@ -32,8 +33,8 @@ export default function PlatformPipelineTemplateCard(
   const getBody = () => {
     return (
       <Col xs={6} className={"d-flex"}>
-        <CreateCustomerPipelineButton
-          customerPipelineTemplateModel={modelHelpers.parseObjectIntoModel(template, pipelineTemplateMetadata)}
+        <CreatePlatformPipelineButton
+          platformPipelineTemplateModel={modelHelpers.parseObjectIntoModel(template, pipelineTemplateMetadata)}
           className={"mr-2"}
         />
         <ViewPlatformPipelineTemplateDetailsButton
