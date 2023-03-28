@@ -4,13 +4,13 @@ import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {AuthContext} from "contexts/AuthContext";
-import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import Model from "core/data_model/model";
 import axios from "axios";
 import DashboardSummaryCard from "components/common/fields/dashboards/DashboardSummaryCard";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import LoadingDialog from "components/common/status_notifications/loading";
 import IconBase from "components/common/icons/IconBase";
+import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 
 function SingleTagUsedInDashboardsField({ tag, closePanel, className }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -59,7 +59,7 @@ function SingleTagUsedInDashboardsField({ tag, closePanel, className }) {
 
   const loadDashboards = async (cancelSource = cancelTokenSource) => {
     if (tag != null) {
-      const response = await adminTagsActions.getRelevantDashboardsV2(getAccessToken, cancelSource, [tag]);
+      const response = await dashboardsActions.getDashboardsByAppliedFilterTags(getAccessToken, cancelSource, [tag]);
 
       if (isMounted?.current === true && response?.data != null) {
         setDashboards(response?.data?.data);
@@ -100,7 +100,7 @@ function SingleTagUsedInDashboardsField({ tag, closePanel, className }) {
         <div className="text-muted mb-2">
           <div>
             <span><IconBase icon={faExclamationCircle} className={"text-muted mr-1"} />
-            This tag is not currently applied on any dashboard</span>
+            This tag is not currently applied on filters on any dashboard</span>
           </div>
         </div>
       </div>
@@ -110,7 +110,7 @@ function SingleTagUsedInDashboardsField({ tag, closePanel, className }) {
   return (
     <div className={className}>
       <div className="text-muted mb-2">
-        <span>This tag is applied on {dashboards.length} dashboard{dashboards?.length !== 1 ? 's' : ''}</span>
+        <span>This tag is applied on filters for {dashboards.length} dashboard{dashboards?.length !== 1 ? 's' : ''}</span>
       </div>
       {getDashboardCards()}
     </div>

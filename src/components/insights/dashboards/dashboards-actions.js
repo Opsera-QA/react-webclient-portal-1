@@ -109,4 +109,15 @@ dashboardsActions.updateFavorite = async(rowData, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
+dashboardsActions.getDashboardsByAppliedFilterTags = async(getAccessToken, cancelTokenSource, tags) => {
+  const apiUrl = `/analytics/dashboards/by/tags`;
+  const queryParameters = {
+    params: {
+      tags: tags,
+    },
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, queryParameters);
+};
+
 export default dashboardsActions;
