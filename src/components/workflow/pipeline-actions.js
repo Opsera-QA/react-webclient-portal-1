@@ -323,10 +323,14 @@ pipelineActions.deployTemplateV2 = async (
   cancelTokenSource,
   templateId,
   roles,
+  name,
+  description,
 ) => {
   const apiUrl = `/pipelines/deploy/${templateId}`;
   const postBody = {
     roles: roles,
+    name: name,
+    description: description,
   };
 
   return await baseActions.apiPostCallV2(

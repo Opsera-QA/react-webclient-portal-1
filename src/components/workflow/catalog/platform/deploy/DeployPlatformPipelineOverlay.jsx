@@ -8,26 +8,26 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import CenterOverlayContainer, {CENTER_OVERLAY_SIZES} from "components/common/overlays/center/CenterOverlayContainer";
-import DeployCustomerPipelineButton from "components/workflow/catalog/private/deploy/DeployCustomerPipelineButton";
+import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import DeployPlatformPipelineButton from "components/workflow/catalog/platform/deploy/DeployPlatformPipelineButton";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
 
 export default function DeployPlatformPipelineOverlay(
   {
     platformPipelineTemplateModel,
   }) {
   const [pipelineTemplateModelCopy, setPipelineTemplateModelCopy] = useState(undefined);
+  const {
+    toastContext,
+  } = useComponentStateReference();
 
   useEffect(() => {
     if (platformPipelineTemplateModel) {
       setPipelineTemplateModelCopy({...platformPipelineTemplateModel.clone()});
     }
   }, [platformPipelineTemplateModel]);
-
-  const {
-    toastContext,
-  } = useComponentStateReference();
 
   const closePanelFunction = () => {
     toastContext.removeInlineMessage();
@@ -45,12 +45,20 @@ export default function DeployPlatformPipelineOverlay(
           />
           <DeployPlatformPipelineButton
             templateId={pipelineTemplateModelCopy?.getMongoDbId()}
-            roles={pipelineTemplateModelCopy?.getData("roles")}
+            pipelineTemplateModel={pipelineTemplateModelCopy}
+            disabled={
+              pipelineTemplateModelCopy?.isFieldValidV2("name") !== true
+              || pipelineTemplateModelCopy?.isFieldValidV2("description") !== true
+            }
           />
         </div>
       </ButtonContainerBase>
     );
   };
+
+  if (pipelineTemplateModelCopy == null) {
+    return null;
+  }
 
   return (
     <CenterOverlayContainer
@@ -75,9 +83,23 @@ export default function DeployPlatformPipelineOverlay(
         </div>
         <Row>
           <Col xs={12}>
+            <TextInputBase
+              dataObject={pipelineTemplateModelCopy}
+              setDataObject={setPipelineTemplateModelCopy}
+              fieldName={"name"}
+            />
+          </Col>
+          <Col xs={12}>
             <RoleAccessInput
               model={pipelineTemplateModelCopy}
               setModel={setPipelineTemplateModelCopy}
+            />
+          </Col>
+          <Col xs={12}>
+            <TextAreaInputBase
+              model={pipelineTemplateModelCopy}
+              setModel={setPipelineTemplateModelCopy}
+              fieldName={"description"}
             />
           </Col>
         </Row>
