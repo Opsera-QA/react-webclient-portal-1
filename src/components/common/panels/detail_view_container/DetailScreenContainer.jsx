@@ -11,6 +11,7 @@ import ScreenContainerBodyLoadingDialog
   from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import RoleHelper from "@opsera/know-your-role/roles/role.helper";
 
 function DetailScreenContainer(
   {
@@ -31,7 +32,10 @@ function DetailScreenContainer(
   const breadcrumb = getBreadcrumb(breadcrumbDestination);
   const parentBreadcrumb = getParentBreadcrumb(breadcrumbDestination);
   const activeField = dataObject?.getActiveField();
-  const { accessRoleData } = useComponentStateReference();
+  const {
+    accessRoleData,
+    userData,
+  } = useComponentStateReference();
 
   const getTopNavigation = () => {
     if (showBreadcrumbTrail) {
@@ -123,6 +127,14 @@ function DetailScreenContainer(
     );
   }
 
+  if (breadcrumb && Array.isArray(breadcrumb?.allowedRoles) && RoleHelper.doesUserMeetSiteRoleRequirements(userData, breadcrumb?.allowedRoles) !== true) {
+    return (
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
+    );
+  }
+
   if (!isLoading && accessRoleData && roleRequirement && !meetsRequirements(roleRequirement, accessRoleData)) {
     return (
       <AccessDeniedContainer
@@ -130,6 +142,7 @@ function DetailScreenContainer(
       />
     );
   }
+
 
   if (!isLoading && dataObject == null) {
     return (
