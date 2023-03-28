@@ -1,11 +1,10 @@
 import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 import LdapGroupEditorPanel from "./details/LdapGroupEditorPanel";
-import Model from "core/data_model/model";
-import ldapGroupMetadata from "@opsera/definitions/constants/accounts/groups/user/ldapGroup.metadata";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import {CENTER_OVERLAY_SIZES} from "components/common/overlays/center/CenterOverlayContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import useGetLdapGroupModel from "hooks/ldap/groups/useGetLdapGroupModel";
 
 function CreateLdapGroupOverlay(
   {
@@ -15,7 +14,8 @@ function CreateLdapGroupOverlay(
     isMounted,
   }) {
   const toastContext = useContext(DialogToastContext);
-  const [ldapGroupData, setLdapGroupData] = useState(new Model({...ldapGroupMetadata.newObjectFields}, ldapGroupMetadata, true));
+  const { getLdapGroupModel, } = useGetLdapGroupModel(undefined, true);
+  const [groupModel] = useState(getLdapGroupModel(orgDomain, undefined, true));
 
   const closePanel = () => {
     if (isMounted?.current === true) {
@@ -34,7 +34,7 @@ function CreateLdapGroupOverlay(
       size={CENTER_OVERLAY_SIZES.SMALL}
     >
       <LdapGroupEditorPanel
-        ldapGroupData={ldapGroupData}
+        ldapGroupData={groupModel}
         handleClose={closePanel}
         orgDomain={orgDomain}
         existingGroupNames={existingGroupNames}

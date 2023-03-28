@@ -58,32 +58,6 @@ accountsActions.getLdapUsersWithDomainV2 = async (getAccessToken, cancelTokenSou
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-accountsActions.getLdapGroupsWithEmail = async (emailAddress, getAccessToken) => {
-  const postBody = {
-    email: emailAddress
-  };
-  const apiUrl = "/users/account/groups";
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
-accountsActions.getLdapGroupsWithDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
-  const postBody = {
-    domain: domain
-  };
-  const apiUrl = "/users/account/groups";
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-accountsActions.getLdapUserGroupsWithDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
-  const apiUrl = `/users/account/${domain}/user-groups`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-accountsActions.getLdapRoleGroupsWithDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
-  const apiUrl = `/account/site-roles/${domain}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
 accountsActions.isFreeTrialAccountActive = async (cancelTokenSource, email) => {
   const token = apiTokenHelper.generateApiCallToken(routeTokenConstants.ROUTE_MIDDLEWARE_TOKEN_KEYS.IS_ACCOUNT_ACTIVE);
   const apiUrl = "/users/trial/is-account-active";
@@ -336,12 +310,6 @@ accountsActions.createGroupV2 = async (getAccessToken, cancelTokenSource, orgDom
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
-};
-
-
-accountsActions.deleteGroup = async (orgDomain, ldapGroupDataDto, getAccessToken) => {
-  const apiUrl = `/users/account/group/delete?domain=${orgDomain}&name=${ldapGroupDataDto.getData("name")}`;
-  return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
 };
 
 accountsActions.syncMembership = async (orgDomain, groupName, emailList, getAccessToken) => {
