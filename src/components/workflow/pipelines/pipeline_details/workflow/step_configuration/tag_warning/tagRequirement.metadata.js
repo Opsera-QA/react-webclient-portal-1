@@ -7,7 +7,7 @@ export const tagRequirementMetadata = {
       label: "Tag",
       id: "tag",
       isRequired: true,
-      inputMaskRegex: /^[A-Za-z0-9][A-Za-z0-9-.]*$/,
+      regexDefinitionName: "tagValueField",
       lowercase: true,
       maxLength: 255,
       type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
