@@ -122,6 +122,11 @@ function SalesforceCodeAnalyserChart({
         }
     };
 
+    let total = 0;
+    metrics[0]?.data.forEach((temp) => {
+        total = total + temp.y;
+    });
+
 
     const onRowSelect1 = () => {
         toastContext.showOverlayPanel(
@@ -146,6 +151,7 @@ function SalesforceCodeAnalyserChart({
             <SalesforceCodeAnalyserPipelineActionableOverlay
                 kpiConfiguration={kpiConfiguration}
                 dashboardData={dashboardData}
+                total={total}
             />
         );
     };
@@ -274,9 +280,6 @@ function SalesforceCodeAnalyserChart({
                 isLoading={isLoading}
                 showSettingsToggle={showSettingsToggle}
                 launchActionableInsightsFunction={onNodeSelect}
-                chartHelpComponent={(closeHelpPanel) => (
-                    <BoomiChartHelpDocumentation closeHelpPanel={closeHelpPanel} />
-                )}
             />
             <ModalLogs
                 header="Mean Time to Resolution"
