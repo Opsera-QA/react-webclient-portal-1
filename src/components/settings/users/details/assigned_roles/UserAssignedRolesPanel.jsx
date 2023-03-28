@@ -11,6 +11,8 @@ import UserAssignedRolesTabContainer
   from "components/settings/users/details/assigned_roles/UserAssignedRolesTabContainer";
 import UserAssignedRolesTableBase
   from "components/settings/users/details/assigned_roles/tables/UserAssignedRolesTableBase";
+import LaunchRevokeUserAccessRulesOverlayButton
+  from "components/settings/users/details/assigned_roles/revoke/LaunchRevokeUserAccessRulesOverlayButton";
 
 const height = `calc(${DEFAULT_TAB_AND_VIEW_CONTAINER_HEIGHT} - 110px)`;
 
@@ -35,6 +37,12 @@ export default function UserAssignedRolesPanel(
       loadDataFunction={loadData}
       maximumHeight={height}
       tabColumnSize={3}
+      titleRightSideButton={
+        <LaunchRevokeUserAccessRulesOverlayButton
+          userEmailAddress={userEmailAddress}
+          loadData={loadData}
+        />
+      }
       verticalTabContainer={
         <UserAssignedRolesTabContainer
           isLoading={isLoading}
