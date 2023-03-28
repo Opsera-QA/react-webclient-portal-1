@@ -145,7 +145,7 @@ export const PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
 
   // Git
   { text: TASK_TYPE_LABELS.GIT_TO_GIT_MERGE_SYNC, value: TASK_TYPES.GIT_TO_GIT_MERGE_SYNC, category: "Git" },
-  { text: TASK_TYPE_LABELS.SYNC_GIT_BRANCHES, value: TASK_TYPES.SYNC_GIT_BRANCHES, category: "Git" },
+  // { text: TASK_TYPE_LABELS.SYNC_GIT_BRANCHES, value: TASK_TYPES.SYNC_GIT_BRANCHES, category: "Git" },
   { text: TASK_TYPE_LABELS.GITSCRAPER, value: TASK_TYPES.GITSCRAPER, category: "Compliance" },
 
   // Salesforce
@@ -182,7 +182,7 @@ export const NON_PRODUCTION_TASK_TYPE_SELECT_OPTIONS = [
 
   // Git
   { text: TASK_TYPE_LABELS.GIT_TO_GIT_MERGE_SYNC, value: TASK_TYPES.GIT_TO_GIT_MERGE_SYNC, category: "Git" },
-  { text: TASK_TYPE_LABELS.SYNC_GIT_BRANCHES, value: TASK_TYPES.SYNC_GIT_BRANCHES, category: "Git" },
+  // { text: TASK_TYPE_LABELS.SYNC_GIT_BRANCHES, value: TASK_TYPES.SYNC_GIT_BRANCHES, category: "Git" },
   { text: TASK_TYPE_LABELS.GITSCRAPER, value: TASK_TYPES.GITSCRAPER, category: "Compliance" },
 
   // Salesforce
