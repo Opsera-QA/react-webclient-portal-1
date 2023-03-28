@@ -22,12 +22,6 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData, isLoading }) {
         <Col lg={6}>
           <StandaloneTextFieldBase label={"Domain"} text={domain} />
         </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={ldapGroupData} fieldName={"groupType"}/>
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={ldapGroupData} fieldName={"ownerEmail"}/>
-        </Col>
         <Col lg={12}>
           <SiteRolePermissionsField model={ldapGroupData} />
         </Col>

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
@@ -10,6 +10,8 @@ import AccessRoleLevelField from "components/common/fields/access/AccessRoleLeve
 import ScreenContainerBodyLoadingDialog
   from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import RoleHelper from "@opsera/know-your-role/roles/role.helper";
 
 function DetailScreenContainer(
   {
@@ -19,10 +21,8 @@ function DetailScreenContainer(
     detailPanel,
     isLoading,
     accessDenied,
-    metadata,
     showBreadcrumbTrail,
     navigationTabContainer,
-    accessRoleData,
     roleRequirement,
     titleActionBar,
     objectRoles,
@@ -32,6 +32,10 @@ function DetailScreenContainer(
   const breadcrumb = getBreadcrumb(breadcrumbDestination);
   const parentBreadcrumb = getParentBreadcrumb(breadcrumbDestination);
   const activeField = dataObject?.getActiveField();
+  const {
+    accessRoleData,
+    userData,
+  } = useComponentStateReference();
 
   const getTopNavigation = () => {
     if (showBreadcrumbTrail) {
@@ -123,6 +127,14 @@ function DetailScreenContainer(
     );
   }
 
+  if (breadcrumb && Array.isArray(breadcrumb?.allowedRoles) && RoleHelper.doesUserMeetSiteRoleRequirements(userData, breadcrumb?.allowedRoles) !== true) {
+    return (
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
+    );
+  }
+
   if (!isLoading && accessRoleData && roleRequirement && !meetsRequirements(roleRequirement, accessRoleData)) {
     return (
       <AccessDeniedContainer
@@ -130,6 +142,7 @@ function DetailScreenContainer(
       />
     );
   }
+
 
   if (!isLoading && dataObject == null) {
     return (
@@ -182,8 +195,6 @@ DetailScreenContainer.propTypes = {
   actionBar: PropTypes.object,
   isLoading: PropTypes.bool,
   accessDenied: PropTypes.bool,
-  metadata: PropTypes.object,
-  accessRoleData: PropTypes.object,
   roleRequirement: PropTypes.string,
   titleActionBar: PropTypes.object,
   objectRoles: PropTypes.array,

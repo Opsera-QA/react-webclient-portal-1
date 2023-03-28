@@ -181,6 +181,12 @@ export class Model {
     return validateField(this, this.getFieldById(fieldName));
   };
 
+  // TODO: Replace the method above with this
+  isFieldValidV2 = (fieldName) => {
+    const errors = validateField(this, this.getFieldById(fieldName));
+    return !Array.isArray(errors) || errors.length === 0;
+  };
+
   // Returns first error if exists
   getFieldError = (fieldName) => {
     let errors = validateField(this, this.getFieldById(fieldName));

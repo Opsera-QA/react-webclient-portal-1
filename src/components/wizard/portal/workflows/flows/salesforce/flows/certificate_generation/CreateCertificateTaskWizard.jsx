@@ -117,6 +117,7 @@ export default function CreateCertificateTaskWizard({
             flow={flow}
             setButtonContainer={setButtonContainer}
             handleClose={handleClose}
+            connectionFailure={failureCount}
           />
         );
     }

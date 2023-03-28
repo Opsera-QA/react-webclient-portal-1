@@ -12,7 +12,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateLdapGroupOverlay from "components/settings/ldap_groups/CreateLdapGroupOverlay";
 import LdapUserGroupRoleHelper from "@opsera/know-your-role/roles/accounts/groups/user/ldapUserGroupRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
+import ldapGroupMetadata from "@opsera/definitions/constants/accounts/groups/user/ldapGroup.metadata";
 
 export default function LdapGroupsTable(
   {
@@ -26,7 +26,7 @@ export default function LdapGroupsTable(
   }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
-  const fields = ldapGroupMetaData.fields;
+  const fields = ldapGroupMetadata.fields;
   const {
     userData,
   } = useComponentStateReference();

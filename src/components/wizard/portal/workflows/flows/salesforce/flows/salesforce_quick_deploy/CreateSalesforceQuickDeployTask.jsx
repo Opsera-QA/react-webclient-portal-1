@@ -122,6 +122,7 @@ export default function CreateSalesforceQuickDeployTask({
             flow={flow}
             setButtonContainer={setButtonContainer}
             handleClose={handleClose}
+            connectionFailure={failureCount}
           />
         );
     }

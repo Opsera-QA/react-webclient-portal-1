@@ -61,14 +61,10 @@ const assignedGroupRoleFilterMetadata = {
   },
 };
 
-export default class AssignedGroupRoleFilterModel extends FilterModelBase {
+export default class AssignedRoleFilterModel extends FilterModelBase {
   constructor() {
     super(assignedGroupRoleFilterMetadata);
   }
-
-  getDetailViewLink = (toolId) => {
-    return toolHelper.getDetailViewLink(toolId);
-  };
 }
 
 

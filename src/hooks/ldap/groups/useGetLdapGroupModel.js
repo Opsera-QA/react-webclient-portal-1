@@ -1,12 +1,18 @@
-import Model from "core/data_model/model";
-import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import GroupModel from "components/settings/ldap_groups/group.model";
 
 export default function useGetLdapGroupModel() {
+  const { userData } = useComponentStateReference();
   const getLdapGroupModel = (
+    organizationDomain,
     group,
     isNew,
   ) => {
-    return new Model(group, ldapGroupMetaData, isNew);
+    const newModel = new GroupModel(group, isNew);
+    newModel.organizationDomain = organizationDomain;
+    newModel.userData = userData;
+
+    return newModel;
   };
 
   return ({

@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
 import {useHistory, useParams} from "react-router-dom";
-import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
 import LdapGroupDetailPanel from "components/settings/ldap_groups/details/LdapGroupDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
@@ -11,6 +10,7 @@ import {roleGroups} from "components/settings/ldap_site_roles/details/SiteRoleDe
 import LdapUserGroupRoleHelper from "@opsera/know-your-role/roles/accounts/groups/user/ldapUserGroupRole.helper";
 import DeleteGroupActionBarButton from "components/settings/ldap_groups/DeleteGroupActionBarButton";
 import useGetLdapGroupModelByNameForDomain from "hooks/ldap/groups/useGetLdapGroupModelByNameForDomain";
+import ldapGroupMetadata from "@opsera/definitions/constants/accounts/groups/user/ldapGroup.metadata";
 
 export default function LdapGroupDetailView() {
   const history = useHistory();
@@ -76,7 +76,7 @@ export default function LdapGroupDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"ldapGroupDetailView"}
-      metadata={ldapGroupMetaData}
+      metadata={ldapGroupMetadata}
       dataObject={groupModel}
       isLoading={isLoading}
       navigationTabContainer={<GroupManagementSubNavigationBar activeTab={"groupViewer"} />}

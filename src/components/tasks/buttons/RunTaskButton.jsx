@@ -45,7 +45,8 @@ function RunTaskButton(
     taskType,
     status,
     runCount,
-    style
+    style,
+      connectionFailure
   }) {
   const [isStarting, setIsStarting] = useState(false);
   const {
@@ -63,6 +64,16 @@ function RunTaskButton(
     toastContext.clearOverlayPanel();
     // TODO: This should be passed to modal
     setIsStarting(true);
+  };
+
+  const getToolTip = () => {
+    if (!actionAllowed) {
+      return "Your Access Role Level Prevents Running Tasks";
+    }
+    if (connectionFailure) {
+      return "Running of the Task is disabled until configuration and connection information is fixed.";
+    }
+    return null;
   };
 
   const getButton = () => {
@@ -86,7 +97,7 @@ function RunTaskButton(
           showTaskRunOverlay();
         }}
       >
-        <TooltipWrapper innerText={actionAllowed !== true ? "Your Access Role Level Prevents Running Tasks" : null}>
+        <TooltipWrapper innerText={getToolTip()}>
           {taskModel?.getData("status") === "running" ?
             (<span><IconBase isLoading={true} className={"mr-2"}/>Running Task</span>)
             : (<span><IconBase icon={faPlay} className={"mr-2"} fixedWidth/>Run Task</span>)}
@@ -187,7 +198,8 @@ RunTaskButton.propTypes = {
   taskType: PropTypes.string,
   status: PropTypes.string,
   runCount: PropTypes.number,
-  style: PropTypes.object
+  style: PropTypes.object,
+  connectionFailure: PropTypes.bool
 };
 
 export default RunTaskButton;

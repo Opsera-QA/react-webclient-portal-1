@@ -33,17 +33,18 @@ export default function CreateTasksWizard({ loadData, isMounted }) {
   const { toastContext } = useComponentStateReference();
 
   const REGISTRY_WIZARD_TITLES = {
-    MODE_SELECT: "Step 1: Select task creation method",
+    MODE_SELECT: "Step 1: Select Task Creation Method",
     TASK_SELECT: "Step 2: Select Task",
-    BASIC_TOOL_INFO: "Step 3: Enter Basic tool information",
+    BASIC_TOOL_INFO: "Step 3: Enter Basic Tool Information",
     CONNECTION_INFO: `Step 4: Configure ${capitalizeFirstLetter(
       taskModel?.getData("tool_identifier"),
     )} connection information`,
     CONNECTION_TEST: `Step 5: Validate ${capitalizeFirstLetter(
       taskModel?.getData("tool_identifier"),
     )} connection information`,
-    TASK_CONFIGURATION: `${setUpMode && setUpMode === "wizard" ? "Step 3:" : "Step 2:"
-      } Configure Task details`,
+    TASK_CONFIGURATION: `${
+      setUpMode && setUpMode === "wizard" ? "Step 3:" : "Step 2:"
+    } Configure Task Details`,
   };
   const [overlayTitle, setOverlayTitle] = useState(
     REGISTRY_WIZARD_TITLES.MODE_SELECT,
@@ -107,7 +108,13 @@ export default function CreateTasksWizard({ loadData, isMounted }) {
         />
       );
     }
-    return <WizardTaskConfigurationRouter flow={taskType} setButtonContainer={setButtonContainer} handleClose={closeOverlayFunction} />;
+    return (
+      <WizardTaskConfigurationRouter
+        flow={taskType}
+        setButtonContainer={setButtonContainer}
+        handleClose={closeOverlayFunction}
+      />
+    );
   };
 
   const getCurrentScreen = () => {

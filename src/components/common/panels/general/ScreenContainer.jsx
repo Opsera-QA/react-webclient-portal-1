@@ -12,6 +12,7 @@ import ScreenContainerBodyLoadingDialog
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import RoleHelper from "@opsera/know-your-role/roles/role.helper";
 
 function ScreenContainer(
   {
@@ -22,7 +23,6 @@ function ScreenContainer(
     accessDenied,
     showBreadcrumbTrail,
     navigationTabContainer,
-    accessRoleData,
     roleRequirement,
     titleActionBar,
     helpComponent,
@@ -34,7 +34,9 @@ function ScreenContainer(
   const toastContext = useContext(DialogToastContext);
   const {
     isOpseraAdministrator,
-    isFreeTrial
+    isFreeTrial,
+    userData,
+    accessRoleData,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -141,6 +143,14 @@ function ScreenContainer(
     );
   }
 
+  if (breadcrumb && Array.isArray(breadcrumb?.allowedRoles) && RoleHelper.doesUserMeetSiteRoleRequirements(userData, breadcrumb?.allowedRoles) !== true) {
+    return (
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
+    );
+  }
+
   if (!isLoading && accessRoleData && roleRequirement && !meetsRequirements(roleRequirement, accessRoleData)) {
     return (
       <AccessDeniedContainer
@@ -157,7 +167,7 @@ function ScreenContainer(
           className={"screen-container content-container content-card-1"}
           style={{
             minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT,
-        }}
+          }}
         >
           <div className={"p-2 content-block-header title-text-header-1"}>
             <ScreenContainerTitleBar

@@ -20,6 +20,7 @@ function BooleanToggleInput(
     inputHelpOverlay,
     customInfoText,
     helpTooltip,
+    visible,
   }) {
   const field = dataObject?.getFieldById(fieldName);
 
@@ -119,7 +120,7 @@ function BooleanToggleInput(
     }
   };
 
-  if (field == null) {
+  if (field == null || visible === false) {
     return null;
   }
 
@@ -169,6 +170,7 @@ BooleanToggleInput.propTypes = {
   inputHelpOverlay: PropTypes.any,
   customInfoText: PropTypes.any,
   helpTooltip: PropTypes.any,
+  visible: PropTypes.bool,
 };
 
 export default BooleanToggleInput;

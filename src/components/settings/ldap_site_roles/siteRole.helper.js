@@ -23,6 +23,20 @@ siteRoleHelper.getPowerUsersSiteRoleDetailViewLink = (userData) => {
   }
 };
 
+siteRoleHelper.getFormattedSiteRoleName = (groupName) => {
+  const name = DataParsingHelper.parseString(groupName, "");
+
+  if (name === "PowerUsers") {
+    return "Power Users";
+  }
+
+  if (name === "SecurityManagers") {
+    return "Security Managers";
+  }
+
+  return name;
+};
+
 siteRoleHelper.getUsersSiteRoleDetailViewLink = (userData) => {
   const ldapDomain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
 
@@ -46,6 +60,18 @@ siteRoleHelper.getAuditorsSiteRoleDetailViewLink = (userData) => {
     return `/settings/${ldapDomain}/site-roles/details/Auditors`;
   }
 };
+
+siteRoleHelper.getBaseDetailViewLink = (organizationDomain, groupName) => {
+  const parsedOrganizationDomain = DataParsingHelper.parseString(organizationDomain);
+  const parsedName = DataParsingHelper.parseString(groupName);
+
+  if (!parsedOrganizationDomain || !parsedName) {
+    return undefined;
+  }
+
+  return `/settings/${parsedOrganizationDomain}/groups/site-roles/${parsedName}`;
+};
+
 
 siteRoleHelper.getSiteRolePermissionText = (siteRole) => {
   const parsedSiteRole = DataParsingHelper.parseString(siteRole);

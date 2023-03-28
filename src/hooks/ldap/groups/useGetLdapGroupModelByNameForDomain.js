@@ -52,7 +52,7 @@ export default function useGetLdapGroupModelByNameForDomain(
     const group = DataParsingHelper.parseNestedObject(response, "data.data");
 
     if (group) {
-      setGroupModel({...getLdapGroupModel(group, false)});
+      setGroupModel({...getLdapGroupModel(domain, group, false)});
     }
   };
 

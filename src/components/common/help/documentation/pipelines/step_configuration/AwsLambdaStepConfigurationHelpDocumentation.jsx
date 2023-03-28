@@ -25,6 +25,7 @@ function AwsLambdaStepConfigurationHelpDocumentation() {
         <div className={"mb-1 ml-4"}>
           The prerequisites for AWS Lambda service pipeline also include task creation in <b>Tasks</b>.
           To view in depth documentation on task and pipeline setup, view the <a href="https://docs.opsera.io/aws-native-support/aws-ecs" target="_blank" rel="noreferrer"><b>AWS Lambda Functions Help Documentation</b>. </a>
+
           Once step is configured with AWS Lambda Deploy set as tool, set the following values:
         </div>
         <ul style={{listStyleType: "none"}}>
