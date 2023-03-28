@@ -190,6 +190,10 @@ function PipelineActionControls(
     }
   };
 
+  const resetAndRunPipeline = async (pipelineRunSettingsModel) => {
+    await resetPipelineState(true);
+    await runPipeline(undefined, pipelineRunSettingsModel);
+  };
   /***
    * Used primiarily to call run API again to register a queued start request.  Unlike normal runPipeline, it doesn't impact
    * refresh patterns on the page
@@ -340,7 +344,7 @@ function PipelineActionControls(
         toastContext.showOverlayPanel(
           <PipelineStartConfirmationOverlay
             pipeline={pipeline}
-            handlePipelineStartRequest={startNewPipelineRun}
+            handlePipelineStartRequest={resetAndRunPipeline}
             handlePipelineResumeRequest={handleResumeWorkflowClick}
             dynamicSettingsEnabled={enabledServices?.dynamicSettings === true}
           />
