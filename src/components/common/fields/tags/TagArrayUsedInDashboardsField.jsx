@@ -55,7 +55,6 @@ function TagArrayUsedInDashboardsField({ tags, showTable }) {
     if (Array.isArray(tags) && tags.length > 0) {
       const response = await dashboardsActions.getDashboardsByAppliedFilterTags(getAccessToken, cancelTokenSource, tags);
       const dashboards = DataParsingHelper.parseNestedArray(response, "data.data");
-      console.log("response: " + JSON.stringify(response));
 
       if (isMounted?.current === true && dashboards) {
         setDashboards([...dashboards]);
