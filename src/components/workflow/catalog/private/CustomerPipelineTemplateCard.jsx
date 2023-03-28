@@ -6,11 +6,11 @@ import React, {useEffect, useState} from "react";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CreateCustomerPipelineButton from "components/workflow/catalog/private/deploy/CreateCustomerPipelineButton";
-import pipelineTemplateMetadata from "components/admin/pipeline_templates/pipelineTemplate.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import {truncateString} from "components/common/helpers/string-helpers";
 import ViewCustomerPipelineTemplateDetailsButton
   from "components/workflow/catalog/private/ViewCustomerPipelineTemplateDetailsButton";
+import {createPipelineFromTemplateMetadata} from "components/workflow/catalog/createPipelineFromTemplate.metadata";
 
 // TODO: This needs to be rewritten, I just copied what existed for the catalog work
 export default function CustomerPipelineTemplateCard(
@@ -33,7 +33,7 @@ export default function CustomerPipelineTemplateCard(
     return (
       <Col xs={6} className={"d-flex"}>
         <CreateCustomerPipelineButton
-          customerPipelineTemplateModel={modelHelpers.parseObjectIntoModel(template, pipelineTemplateMetadata)}
+          customerPipelineTemplateModel={modelHelpers.parseObjectIntoModel(template, createPipelineFromTemplateMetadata)}
           className={"mr-2"}
         />
         <ViewCustomerPipelineTemplateDetailsButton
