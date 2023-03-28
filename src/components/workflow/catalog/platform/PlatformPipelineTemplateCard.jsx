@@ -5,13 +5,12 @@ import {format} from "date-fns";
 import React, {useEffect, useState} from "react";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import CreateCustomerPipelineButton from "components/workflow/catalog/private/deploy/CreateCustomerPipelineButton";
-import pipelineTemplateMetadata from "components/admin/pipeline_templates/pipelineTemplate.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import {truncateString} from "components/common/helpers/string-helpers";
 import ViewPlatformPipelineTemplateDetailsButton
   from "components/workflow/catalog/platform/ViewPlatformPipelineTemplateDetailsButton";
 import CreatePlatformPipelineButton from "components/workflow/catalog/platform/deploy/CreatePlatformPipelineButton";
+import {createPipelineFromTemplateMetadata} from "components/workflow/catalog/createPipelineFromTemplate.metadata";
 
 // TODO: This needs to be rewritten, I just copied what existed for the catalog work
 export default function PlatformPipelineTemplateCard(
@@ -34,7 +33,7 @@ export default function PlatformPipelineTemplateCard(
     return (
       <Col xs={6} className={"d-flex"}>
         <CreatePlatformPipelineButton
-          platformPipelineTemplateModel={modelHelpers.parseObjectIntoModel(template, pipelineTemplateMetadata)}
+          platformPipelineTemplateModel={modelHelpers.parseObjectIntoModel(template, createPipelineFromTemplateMetadata)}
           className={"mr-2"}
         />
         <ViewPlatformPipelineTemplateDetailsButton
