@@ -25,7 +25,7 @@ function PipelineSourceRepositoryGitExportEnabledInput({className, model, setMod
         subheaderText={"Pipeline Git Revisions"}
       />
       <div>
-        Using the configured Git Repository above, Opsera can publish
+        Using the configured Git Repository selected in the Repository tab, Opsera can publish
         a copy of the pipeline configuration for revision purposes when export to git is pressed.
         This feature is only available for GitHub and GitLab repositories.
       </div>

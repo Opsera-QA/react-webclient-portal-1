@@ -134,7 +134,7 @@ function PipelineSourceRepositoryWebhookInputPanel({
         subheaderText={"Webhook"}
       />
       <div>
-        Allow this pipeline to be started by a webhook event based on the repository settings above. Once enabled, copy the webhook URL supplied into your repository or use the Register Webhook button.
+        Allow this pipeline to be started by a webhook event based on the Repository settings selected in the Repository tab. Once enabled, copy the webhook URL supplied into your repository or use the Register Webhook button.
       </div>
       <BooleanToggleInput
         dataObject={model}
