@@ -29,10 +29,10 @@ function ProjectDataMappingManagement() {
     };
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (filterDto = projectDataMappingFilterModel) => {
     try {
       setIsLoading(true);
-      await getProjectDataMappings();
+      await getProjectDataMappings(filterDto);
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
