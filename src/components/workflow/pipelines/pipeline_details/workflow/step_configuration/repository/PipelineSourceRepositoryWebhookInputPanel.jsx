@@ -110,7 +110,7 @@ function PipelineSourceRepositoryWebhookInputPanel({
             model={model}
             savePipelineFunction={savePipelineFunction}
             pipeline={pipeline}
-            className={"ml-2"}
+            className={"mt-2"}
           />
         </>
       );
