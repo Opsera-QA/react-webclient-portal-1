@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import useGetFeatureFlags from "hooks/platform/useGetFeatureFlags";
+import useGetPlatformFeatureFlags from "hooks/platform/useGetPlatformFeatureFlags";
 import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import IconBase from "components/common/icons/IconBase";
 import {faTriangleExclamation} from "@fortawesome/pro-light-svg-icons";
@@ -17,7 +17,7 @@ export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInpu
   }) {
   const {
     enabledServices,
-  } = useGetFeatureFlags();
+  } = useGetPlatformFeatureFlags();
 
   const getDynamicText = () => {
     if (pipelineType == null) {
@@ -94,7 +94,7 @@ export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInpu
   return (
     <div className={className}>
       <H5FieldSubHeader
-        className={"text-muted mt-5"}
+        className={"text-muted"}
         subheaderText={"Dynamic Settings"}
       />
       <div>

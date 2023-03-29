@@ -17,6 +17,12 @@ import usePipelineSourceRepositoryActions from "components/workflow/plan/source/
 import PipelineSourceRepositoryRepositoryInputPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryRepositoryInputPanel";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
+import CustomTab from "components/common/tabs/CustomTab";
+import {faChartNetwork, faDraftingCompass, faWrench} from "@fortawesome/pro-light-svg-icons";
+import PipelineSourceRepositoryConfigurationTabPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryConfigurationTabPanel";
 
 export default function PipelineSourceRepositoryConfiguration(
   {
@@ -79,45 +85,52 @@ export default function PipelineSourceRepositoryConfiguration(
       isLoading={isLoading}
       disableSaveButton={sourceRepositoryModel?.getData("service")?.length === 0}
       customIncompleteDataMessage={getIncompleteDataMessage()}
+      buttonContainerClassName={"ml-auto mr-3"}
     >
       <div className={"mb-2"}>
         {`Although individual pipeline steps can be configured with different Git repositories for individual operations,
         the top level Pipeline Git Repository settings are used to define webhook activity, dynamic settings controls and other pipeline level operations.
         It's advised that you always configure this for optimal access to pipeline settings.`}
       </div>
-      <PipelineSourceRepositoryRepositoryInputPanel
+      <PipelineSourceRepositoryConfigurationTabPanel
         sourceRepositoryModel={sourceRepositoryModel}
         setSourceRepositoryModel={setSourceRepositoryModel}
-        className={"mt-5"}
-      />
-      <PipelineSourceRepositoryWebhookInputPanel
-        model={sourceRepositoryModel}
-        setModel={setSourceRepositoryModel}
         pipeline={pipeline}
-        savePipelineFunction={callbackFunction}
-        className={"mt-5"}
+        callbackFunction={callbackFunction}
       />
-      {/*<hr />
-      <div className="text-muted h5 mt-3">Dynamic Controls</div>
-      <div className={"text-muted  mb-3"}>Enable YAML based pipeline settings to control variable
-        branches for pipeline runs.</div>
+      {/*<PipelineSourceRepositoryRepositoryInputPanel*/}
+      {/*  sourceRepositoryModel={sourceRepositoryModel}*/}
+      {/*  setSourceRepositoryModel={setSourceRepositoryModel}*/}
+      {/*  className={"mt-5"}*/}
+      {/*/>*/}
+      {/*<PipelineSourceRepositoryWebhookInputPanel*/}
+      {/*  model={sourceRepositoryModel}*/}
+      {/*  setModel={setSourceRepositoryModel}*/}
+      {/*  pipeline={pipeline}*/}
+      {/*  savePipelineFunction={callbackFunction}*/}
+      {/*  className={"mt-5"}*/}
+      {/*/>*/}
+      {/*/!*<hr />*/}
+      {/*<div className="text-muted h5 mt-3">Dynamic Controls</div>*/}
+      {/*<div className={"text-muted  mb-3"}>Enable YAML based pipeline settings to control variable*/}
+      {/*  branches for pipeline runs.</div>*/}
 
-      <div className={"p-3"} >COMING SOON</div>
+      {/*<div className={"p-3"} >COMING SOON</div>*/}
       
-        <hr />*/}
-      <PipelineSourceRepositoryGitExportEnabledInput
-        fieldName={"gitExportEnabled"}
-        model={sourceRepositoryModel}
-        setModel={setSourceRepositoryModel}
-        disabled={["gitlab", "github"].includes(sourceRepositoryModel.getData("service")) !== true}
-        className={"mt-5"}
-      />
-      <PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
-        model={sourceRepositoryModel}
-        setModel={setSourceRepositoryModel}
-        pipelineType={pipelineTypeConstants.getTypeForTypesArray(pipeline?.type, false)}
-        className={"mt-5"}
-      />
+      {/*  <hr />*!/*/}
+      {/*<PipelineSourceRepositoryGitExportEnabledInput*/}
+      {/*  fieldName={"gitExportEnabled"}*/}
+      {/*  model={sourceRepositoryModel}*/}
+      {/*  setModel={setSourceRepositoryModel}*/}
+      {/*  disabled={["gitlab", "github"].includes(sourceRepositoryModel.getData("service")) !== true}*/}
+      {/*  className={"mt-5"}*/}
+      {/*/>*/}
+      {/*<PipelineSourceRepositoryDynamicSettingsBooleanToggleInput*/}
+      {/*  model={sourceRepositoryModel}*/}
+      {/*  setModel={setSourceRepositoryModel}*/}
+      {/*  pipelineType={pipelineTypeConstants.getTypeForTypesArray(pipeline?.type, false)}*/}
+      {/*  className={"mt-5"}*/}
+      {/*/>*/}
     </PipelineStepEditorPanelContainer>
   );
 }
