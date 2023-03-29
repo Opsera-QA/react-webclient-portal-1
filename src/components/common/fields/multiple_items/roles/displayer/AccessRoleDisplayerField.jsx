@@ -1,9 +1,7 @@
 import React from "react";
-import PropTypes, {object} from "prop-types";
+import PropTypes from "prop-types";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import AccessRoleDisplayer from "components/common/fields/multiple_items/roles/displayer/AccessRoleDisplayer";
-import IconBase from "components/common/icons/IconBase";
-import {faLock} from "@fortawesome/pro-light-svg-icons";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
 import ObjectAccessRoleHelper from "@opsera/know-your-role/roles/helper/object/objectAccessRole.helper";
@@ -81,7 +79,7 @@ export default function AccessRoleDisplayerField(
     >
       <span className={className}>
         <span>
-          {`${roles.length} Access Rule${roles.length !== 1 ? "s" : ""} Applied. ${getAccessInformation()}`}
+          {`${roles.length} Access Rule${roles.length !== 1 ? "s" : ""} Applied. `}{getAccessInformation()}
         </span>
       </span>
     </TooltipWrapper>

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import VanitySetCardView from "components/common/card/VanitySetCardView";
 import VerticalCardViewBase from "components/common/card_view/VerticalCardViewBase";
 import WorkspaceTaskCard from "components/workspace/cards/WorkspaceTaskCard";
+import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 
 export default function FreeTrialWorkspaceTaskCardView(
   {
@@ -10,20 +11,19 @@ export default function FreeTrialWorkspaceTaskCardView(
     taskFilterModel,
     loadData,
     isLoading,
-    taskMetadata,
   }) {
   const getTaskCard = (task) => {
     return (
       <WorkspaceTaskCard
         task={task}
-        taskMetadata={taskMetadata}
+        taskMetadata={tasksMetadata}
       />
     );
   };
 
   return (
     <VanitySetCardView
-      isLoading={isLoading || taskMetadata == null}
+      isLoading={isLoading}
       loadData={loadData}
       paginationModel={taskFilterModel}
       className={"makeup-container-table m-2"}
@@ -40,7 +40,6 @@ export default function FreeTrialWorkspaceTaskCardView(
 FreeTrialWorkspaceTaskCardView.propTypes = {
   tasks: PropTypes.array,
   taskFilterModel: PropTypes.object,
-  taskMetadata: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool
 };

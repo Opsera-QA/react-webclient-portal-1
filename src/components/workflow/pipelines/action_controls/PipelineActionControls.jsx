@@ -27,7 +27,7 @@ import PipelineActionControlsRefreshButton
 import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import PipelineActionControlsStartPipelineButton
   from "components/workflow/pipelines/action_controls/start/PipelineActionControlsStartPipelineButton";
-import useGetFeatureFlags from "hooks/platform/useGetFeatureFlags";
+import useGetPlatformFeatureFlags from "hooks/platform/useGetPlatformFeatureFlags";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import {buttonLabelHelper} from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import PipelineActionControlButtonBase
@@ -67,7 +67,7 @@ function PipelineActionControls(
   const {
     orchestrationFeatureFlags,
     enabledServices,
-  } = useGetFeatureFlags();
+  } = useGetPlatformFeatureFlags();
   const pipelineActionsHook = usePipelineActions();
 
   const delayedRefresh = async () => {

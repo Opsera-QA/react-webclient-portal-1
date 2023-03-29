@@ -12,8 +12,6 @@ export default function FreeTrialWorkspace() {
   const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new FreeTrialWorkspaceFilterModel());
   const [workspaceItems, setWorkspaceItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [toolMetadata, setToolMetadata] = useState(undefined);
-  const [taskMetadata, setTaskMetadata] = useState(undefined);
   const {
     isMounted,
     getAccessToken,
@@ -56,8 +54,6 @@ export default function FreeTrialWorkspace() {
     const items = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(items)) {
-      setToolMetadata(response?.data?.toolMetadata);
-      setTaskMetadata(response?.data?.taskMetadata);
       setWorkspaceItems([...items]);
       newWorkspaceFilterModel.updateActiveFilters();
       setWorkspaceFilterModel({...newWorkspaceFilterModel});
@@ -66,15 +62,12 @@ export default function FreeTrialWorkspace() {
 
   return (
     <ScreenContainer
-      className={"mt-3"}
       breadcrumbDestination={"workspace"}
     >
       <FreeTrialWorkspaceViewContainer
         workspaceFilterModel={workspaceFilterModel}
         setWorkspaceFilterModel={setWorkspaceFilterModel}
         loadData={loadData}
-        taskMetadata={taskMetadata}
-        toolMetadata={toolMetadata}
         isLoading={isLoading}
         workspaceItems={workspaceItems}
       />
