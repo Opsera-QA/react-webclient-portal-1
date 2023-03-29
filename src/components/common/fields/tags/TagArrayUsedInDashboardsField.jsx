@@ -5,7 +5,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
-import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import Model from "core/data_model/model";
 import DashboardSummaryCard from "components/common/fields/dashboards/DashboardSummaryCard";
 import axios from "axios";
@@ -13,39 +12,32 @@ import dashboardMetadata from "../../../insights/dashboards/dashboard-metadata";
 import TagsUsedInDashboardTable from 'components/reports/tags/dashboards/TagsUsedInDashboardTable';
 import {getSingularOrPluralString} from "components/common/helpers/string-helpers";
 import IconBase from "components/common/icons/IconBase";
+import dashboardsActions from "components/insights/dashboards/dashboards-actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 function TagArrayUsedInDashboardsField({ tags, showTable }) {
-  const { getAccessToken } = useContext(AuthContext);
   const [dashboards, setDashboards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    cancelTokenSource,
+    getAccessToken,
+  } = useComponentStateReference();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [tags]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
+      setDashboards([]);
       setIsLoading(true);
-      await loadDashboards(cancelSource);
+      await loadDashboards();
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -59,13 +51,13 @@ function TagArrayUsedInDashboardsField({ tags, showTable }) {
     }
   };
 
-  const loadDashboards = async (cancelSource = cancelTokenSource) => {
+  const loadDashboards = async () => {
     if (Array.isArray(tags) && tags.length > 0) {
-      const response = await adminTagsActions.getRelevantDashboardsV2(getAccessToken, cancelSource, tags);
+      const response = await dashboardsActions.getDashboardsByAppliedFilterTags(getAccessToken, cancelTokenSource, tags);
+      const dashboards = DataParsingHelper.parseNestedArray(response, "data.data");
 
-      if (isMounted?.current === true && response?.data != null) {
-        console.log(response);
-        setDashboards(response?.data?.data);
+      if (isMounted?.current === true && dashboards) {
+        setDashboards([...dashboards]);
       }
     }
   };
@@ -110,7 +102,7 @@ function TagArrayUsedInDashboardsField({ tags, showTable }) {
       <div className="form-text text-muted ml-3">
         <div>
           <span><IconBase icon={faExclamationCircle} className={"text-muted mr-1"}/>
-          This tag combination is not currently applied on any dashboard</span>
+          This tag combination is not currently applied for filters on any dashboard</span>
         </div>
       </div>
     );
@@ -119,7 +111,7 @@ function TagArrayUsedInDashboardsField({ tags, showTable }) {
   return (
     <div>
       <div className="form-text text-muted mb-2 ml-2">
-        <span>This tag combination is used on {dashboards.length} {getSingularOrPluralString(dashboards?.length, "dashboard","dashboards")}</span>
+        <span>This tag combination is used for filters on {dashboards.length} {getSingularOrPluralString(dashboards?.length, "dashboard","dashboards")}</span>
       </div>
       {getDisplay()}
     </div>

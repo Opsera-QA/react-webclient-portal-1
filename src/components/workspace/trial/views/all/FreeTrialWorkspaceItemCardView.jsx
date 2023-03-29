@@ -13,8 +13,6 @@ export default function FreeTrialWorkspaceItemCardView(
     workspaceFilterModel,
     loadData,
     isLoading,
-    toolMetadata,
-    taskMetadata,
   }) {
   const getWorkspaceItemCard = (workspaceItem) => {
     switch (workspaceItem?.workspaceType) {
@@ -28,14 +26,12 @@ export default function FreeTrialWorkspaceItemCardView(
         return (
           <WorkspaceTaskCard
             task={workspaceItem}
-            taskMetadata={taskMetadata}
           />
         );
       case workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL:
         return (
           <WorkspaceToolCard
             tool={workspaceItem}
-            toolMetadata={toolMetadata}
           />
         );
     }
@@ -61,6 +57,4 @@ FreeTrialWorkspaceItemCardView.propTypes = {
   workspaceFilterModel: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  taskMetadata: PropTypes.object,
-  toolMetadata: PropTypes.object,
 };

@@ -20,8 +20,6 @@ export default function FreeTrialWorkspaceViewContainer(
     workspaceFilterModel,
     setWorkspaceFilterModel,
     workspaceItems,
-    toolMetadata,
-    taskMetadata,
     loadData,
     isLoading,
   }) {
@@ -45,7 +43,6 @@ export default function FreeTrialWorkspaceViewContainer(
             isLoading={isLoading}
             loadData={loadData}
             tools={workspaceItems}
-            toolMetadata={toolMetadata}
             workspaceFilterModel={workspaceFilterModel}
             setWorkspaceFilterModel={setWorkspaceFilterModel}
           />
@@ -56,7 +53,6 @@ export default function FreeTrialWorkspaceViewContainer(
             tasks={workspaceItems}
             loadData={loadData}
             isLoading={isLoading}
-            taskMetadata={taskMetadata}
             workspaceFilterModel={workspaceFilterModel}
             setWorkspaceFilterModel={setWorkspaceFilterModel}
           />
@@ -70,8 +66,6 @@ export default function FreeTrialWorkspaceViewContainer(
             workspaceFilterModel={workspaceFilterModel}
             setWorkspaceFilterModel={setWorkspaceFilterModel}
             loadData={loadData}
-            taskMetadata={taskMetadata}
-            toolMetadata={toolMetadata}
           />
         );
     }
@@ -145,8 +139,6 @@ FreeTrialWorkspaceViewContainer.propTypes = {
   workspaceFilterModel: PropTypes.object,
   setWorkspaceFilterModel: PropTypes.func,
   workspaceItems: PropTypes.array,
-  toolMetadata: PropTypes.object,
-  taskMetadata: PropTypes.object,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
 };
