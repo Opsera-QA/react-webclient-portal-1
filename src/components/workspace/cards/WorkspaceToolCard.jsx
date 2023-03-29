@@ -26,5 +26,4 @@ export default function WorkspaceToolCard(
 
 WorkspaceToolCard.propTypes = {
   tool: PropTypes.object,
-  toolMetadata: PropTypes.object,
 };
