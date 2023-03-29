@@ -6,7 +6,6 @@ import PipelineStepEditorPanelContainer
 import PipelineSourceRepositoryWebhookInputPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryWebhookInputPanel";
 import LoadingDialog from "components/common/status_notifications/loading";
-import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
 import PipelineSourceRepositoryGitExportEnabledInput from "./PipelineSourceRepositoryGitExportEnabledInput";
 import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
@@ -15,11 +14,11 @@ import {
   sourceRepositoryConfigurationMetadata
 } from "components/workflow/plan/source/sourceRepositoryConfiguration.metadata";
 import usePipelineSourceRepositoryActions from "components/workflow/plan/source/usePipelineSourceRepositoryActions";
-import useComponentStateReference from "hooks/useComponentStateReference";
 import PipelineSourceRepositoryRepositoryInputPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryRepositoryInputPanel";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function PipelineSourceRepositoryConfiguration(
+export default function PipelineSourceRepositoryConfiguration(
   {
     pipeline,
     reloadParentPipeline,
@@ -27,10 +26,8 @@ function PipelineSourceRepositoryConfiguration(
   }) {
   const [isLoading, setIsLoading] = useState(false);
   const [sourceRepositoryModel, setSourceRepositoryModel] = useState(undefined);
-  const {
-    toastContext,
-  } = useComponentStateReference();
   const pipelineSourceRepositoryActions = usePipelineSourceRepositoryActions();
+  const isPipelineWebhookActive = pipeline?.workflow?.source?.trigger_active === true;
 
   useEffect(() => {
     setSourceRepositoryModel(undefined);
@@ -41,103 +38,33 @@ function PipelineSourceRepositoryConfiguration(
     }
   }, []);
 
-  // TODO: Make Node route that just accepts the source object and updates it
   const callbackFunction = async () => {
-    if (sourceRepositoryModel && validateRequiredFields()) {
-      const persistData = dataParsingHelper.parseObject(sourceRepositoryModel?.getPersistData());
+    const validatedData = sourceRepositoryModel?.getValidatedData();
+    await pipelineSourceRepositoryActions.updatePipelineSourceRepository(
+      pipeline?._id,
+      validatedData,
+    );
 
-      if (persistData == null) {
-        return;
-      }
-
-      // TODO: Don't deconstruct like this.
-      let {
-        name,
-        dynamicSettings,
-        service,
-        accountId,
-        repository,
-        branch,
-        key,
-        trigger_active,
-        repoId,
-        projectId,
-        sshUrl,
-        gitUrl,
-        workspace,
-        workspaceName,
-        secondary_branches,
-        gitExportEnabled,
-        gitExportPath,
-        isPushEvent,
-        isPrEvent,
-        prCreatedEvent,
-        prApprovedEvent,
-        allowDynamicSettingsInUi,
-        enableBranchSwitch,
-      } = persistData;
-
-      const item = {
-        name: name,
-        service: service,
-        accountId: accountId,
-        workspace: workspace,
-        workspaceName: workspaceName,
-        repository: repository,
-        repoId: repoId,
-        projectId: projectId,
-        gitUrl: gitUrl,
-        sshUrl: sshUrl,
-        branch: branch,
-        secondary_branches: secondary_branches,
-        key: key,
-        trigger_active: trigger_active,
-        isPushEvent: isPushEvent,
-        isPrEvent: isPrEvent,
-        prCreatedEvent: prCreatedEvent,
-        prApprovedEvent: prApprovedEvent,
-        gitExportEnabled: gitExportEnabled, 
-        gitExportPath: gitExportPath,
-        dynamicSettings: dynamicSettings,
-        allowDynamicSettingsInUi: allowDynamicSettingsInUi,
-        enableBranchSwitch: enableBranchSwitch,
-      };
-      // console.log("saving config: " + JSON.stringify(item));
-      //console.log("saving getPersistData: " + JSON.stringify(sourceRepositoryModel?.getPersistData()));
-      await pipelineSourceRepositoryActions.updatePipelineSourceRepository(
-        pipeline?._id,
-        item,
-      );
-
-      await reloadParentPipeline();
-      handleCloseClick();
-    }
+    await reloadParentPipeline();
+    handleCloseClick();
   };
 
-  //TODO: we will allow impartial settings to be saved, BUT we want to show a warning to users.
-  const validateRequiredFields = () => {
-    let { service, accountId, branch, trigger_active } = sourceRepositoryModel?.getPersistData();
+  const getIncompleteDataMessage = () => {
+    const webhookIsEnabled = sourceRepositoryModel?.getData("trigger_active");
+    const accountId = DataParsingHelper.parseString(sourceRepositoryModel?.getData("accountId"), "");
+    const branch = DataParsingHelper.parseString(sourceRepositoryModel?.getData("branch"), "");
 
-    if (service.length === 0) {
-      return false;
+    if (accountId.length === 0 && webhookIsEnabled) {
+      return;
     }
 
-    if (accountId.length === 0 && trigger_active) { //allows user to save just the webhook without a warning
-      return true;
-    }
-
-    if (pipeline?.workflow?.source?.trigger_active && !trigger_active) { //allows user to disable trigger
-      toastContext.showSystemWarningBanner("WARNING! You are disabling the event triggering for this pipeline.  This pipeline will no longer start on Git Webhook Events.");
-      return true;
+    if (isPipelineWebhookActive === true && webhookIsEnabled === false) {
+      return "WARNING! You are disabling the event triggering for this pipeline.  This pipeline will no longer start on Git Webhook Events.";
     }
 
     if (branch?.length === 0 || accountId?.length === 0) {
-      toastContext.showSystemWarningBanner("WARNING! An incomplete configuration is being saved.  This step must be fully configured in order to use this feature.");
-      return true;
+      return "WARNING! An incomplete configuration is being saved.  This step must be fully configured in order to use this feature.";
     }
-
-    return true; //all requests are allowed to save at this time.
-
   };
 
   if (sourceRepositoryModel == null) {
@@ -151,6 +78,7 @@ function PipelineSourceRepositoryConfiguration(
       persistRecord={callbackFunction}
       isLoading={isLoading}
       disableSaveButton={sourceRepositoryModel?.getData("service")?.length === 0}
+      customIncompleteDataMessage={getIncompleteDataMessage()}
     >
       <div className={"mb-2"}>
         {`Although individual pipeline steps can be configured with different Git repositories for individual operations,
@@ -199,5 +127,3 @@ PipelineSourceRepositoryConfiguration.propTypes = {
   reloadParentPipeline: PropTypes.func,
   handleCloseClick: PropTypes.func,
 };
-
-export default PipelineSourceRepositoryConfiguration;

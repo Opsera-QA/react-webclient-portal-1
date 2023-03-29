@@ -2,6 +2,7 @@ import { modelValidation, validateData, validateField, validatePotentialValue } 
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
+import DataValidationService from "@opsera/definitions/services/validation/dataValidation.service";
 
 export const DataState = {
   LOADED: 0,
@@ -67,6 +68,13 @@ export default class ModelBase {
         });
       }
     }
+  };
+
+  getValidatedData = () => {
+    return DataValidationService.validateAndEncodeFields(
+      this.data,
+      this.metaData,
+    );
   };
 
   getData = (fieldName) => {

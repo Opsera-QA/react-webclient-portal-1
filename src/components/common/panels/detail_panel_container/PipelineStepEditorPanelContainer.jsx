@@ -19,6 +19,8 @@ function PipelineStepEditorPanelContainer(
     showIncompleteDataMessage,
     showSuccessToasts,
     clearChangeMapAfterSave,
+    customIncompleteDataMessage,
+    customSuccessMessage,
   }) {
   const getRequiredFieldsMessage = () => {
     if (showRequiredFieldsMessage !== false) {
@@ -46,6 +48,8 @@ function PipelineStepEditorPanelContainer(
         disableSaveButton={disableSaveButton}
         showSuccessToasts={showSuccessToasts}
         clearChangeMapAfterSave={clearChangeMapAfterSave}
+        customIncompleteDataMessage={customIncompleteDataMessage}
+        customSuccessMessage={customSuccessMessage}
       />
       {getRequiredFieldsMessage()}
     </div>
@@ -65,6 +69,8 @@ PipelineStepEditorPanelContainer.propTypes = {
   showIncompleteDataMessage: PropTypes.bool,
   showSuccessToasts: PropTypes.bool,
   clearChangeMapAfterSave: PropTypes.bool,
+  customIncompleteDataMessage: PropTypes.string,
+  customSuccessMessage: PropTypes.string,
 };
 
 export default PipelineStepEditorPanelContainer;

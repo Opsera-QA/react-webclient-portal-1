@@ -16,6 +16,8 @@ function PipelineStepConfigurationButtonContainer(
     showIncompleteDataMessage,
     showSuccessToasts,
     clearChangeMapAfterSave,
+    customIncompleteDataMessage,
+    customSuccessMessage,
   }) {
 
   const getSaveButton = () => {
@@ -27,6 +29,7 @@ function PipelineStepConfigurationButtonContainer(
           updateRecord={persistRecord}
           showSuccessToasts={showSuccessToasts}
           clearChangeMapAfterSave={clearChangeMapAfterSave}
+          customSuccessMessage={customSuccessMessage}
         />
       );
     }
@@ -38,6 +41,8 @@ function PipelineStepConfigurationButtonContainer(
         updateRecord={persistRecord}
         showIncompleteDataMessage={showIncompleteDataMessage}
         showSuccessToasts={showSuccessToasts}
+        customIncompleteDataMessage={customIncompleteDataMessage}
+        customSuccessMessage={customSuccessMessage}
       />
     );
   };
@@ -59,6 +64,8 @@ PipelineStepConfigurationButtonContainer.propTypes = {
   showIncompleteDataMessage: PropTypes.bool,
   showSuccessToasts: PropTypes.bool,
   clearChangeMapAfterSave: PropTypes.bool,
+  customIncompleteDataMessage: PropTypes.string,
+  customSuccessMessage: PropTypes.string,
 };
 
 export default PipelineStepConfigurationButtonContainer;
