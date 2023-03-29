@@ -24,6 +24,11 @@ function UserDetailView() {
     isMounted,
     userData,
     getAccessToken,
+    isOpseraAdministrator,
+    isSiteAdministrator,
+    isPowerUser,
+    isAuditor,
+    isSecurityManager,
   } = useComponentStateReference();
   const domain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
 
@@ -74,9 +79,12 @@ function UserDetailView() {
     return null;
   }
 
+  // TODO: Instead of doing it this way, instead make a separate component for user profile view
+  const accessAllowed = isOpseraAdministrator === true || isSiteAdministrator === true || isPowerUser === true || isAuditor === true || isSecurityManager === true;
+
   return (
     <DetailScreenContainer
-      breadcrumbDestination={(accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator) ? "activeUserDetailView" : "ldapUserDetailViewLimited"}
+      breadcrumbDestination={accessAllowed === true ? "activeUserDetailView" : "ldapUserDetailViewLimited"}
       metadata={ldapUserMetadata}
       dataObject={ldapUserData}
       isLoading={isLoading}
