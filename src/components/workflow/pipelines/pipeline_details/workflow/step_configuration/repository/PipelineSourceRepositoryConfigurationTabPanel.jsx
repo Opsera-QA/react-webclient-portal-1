@@ -12,6 +12,7 @@ import PipelineSourceRepositoryDynamicSettingsBooleanToggleInput
   from "components/workflow/plan/source/PipelineSourceRepositoryDynamicSettingsBooleanToggleInput";
 import PipelineSourceRepositoryGitExportEnabledInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryGitExportEnabledInput";
+import VanityTabPanelContainer from "components/common/panels/general/VanityTabPanelContainer";
 
 export default function PipelineSourceRepositoryConfigurationTabPanel(
   {
@@ -107,9 +108,11 @@ export default function PipelineSourceRepositoryConfigurationTabPanel(
   };
 
   return (
-    <DetailTabPanelContainer
+    <VanityTabPanelContainer
       detailView={getCurrentView()}
       tabContainer={getTabContainer()}
+      tabContainerClassName={"mx-2"}
+      detailViewClassName={"mx-2 detail-panel-body"}
     />
   );
 }

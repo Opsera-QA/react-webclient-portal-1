@@ -88,11 +88,6 @@ export const sourceRepositoryConfigurationMetadata = {
     {
       label: "Enabled",
       id: "gitExportEnabled",
-      formText: `
-      Using the configured Git Repository above, Opsera can publish
-      a copy of the pipeline configuration for revision purposes when export to git is pressed. 
-      This feature is only available for GitHub and GitLab repositories.
-      `,
       type: metadataConstants.SUPPORTED_VALUE_TYPES.BOOLEAN,
     },
     {
