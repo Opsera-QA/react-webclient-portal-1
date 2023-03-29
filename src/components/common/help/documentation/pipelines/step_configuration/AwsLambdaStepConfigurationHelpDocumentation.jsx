@@ -13,7 +13,7 @@ function AwsLambdaStepConfigurationHelpDocumentation() {
     return (
       <div>
         <div className={"mb-1 ml-4"}>
-          The AWS Lambda Service workflow requires the setup in both Tasks and Pipeline. Once the user enters a certain static information for the task, the task must be linked to the respective step in the Pipeline. To set up an AWS Lambda Service pipeline, there are 3 steps required in the workflow including this <b>AWS Lambda Deploy</b> step:
+          The AWS Lambda Service workflow requires the setup in both Tasks and Pipeline. Once the user enters a certain static information for the task, the task must be linked to the respective step in the Pipeline. To set up an AWS Lambda Service pipeline, there are 3 steps required in the workflow including this <b>Publish AWS Lambda</b> step:
         </div>
         <div>
           <ul style={{listStyleType: "none"}}>
@@ -24,16 +24,18 @@ function AwsLambdaStepConfigurationHelpDocumentation() {
         </div>
         <div className={"mb-1 ml-4"}>
           The prerequisites for AWS Lambda service pipeline also include task creation in <b>Tasks</b>.
-          To view in depth documentation on task and pipeline setup, view the <a href="https://docs.opsera.io/aws-native-support/aws-ecs" target="_blank" rel="noreferrer"><b>AWS Lambda Functions Help Documentation</b>. </a>
+          To view in depth documentation on task and pipeline setup, view the <a href="https://docs.opsera.io/aws-native-support/aws-lambda-functions" target="_blank" rel="noreferrer"><b>AWS Lambda Functions Help Documentation</b>. </a>
 
-          Once step is configured with AWS Lambda Deploy set as tool, set the following values:
+          Once step is configured with Publish AWS Lambda set as tool, set the following values:
         </div>
         <ul style={{listStyleType: "none"}}>
-          <li><div className={"mt-3"}><b>AWS Tool</b> - Select a configured AWS tool.</div></li>
-          <li><b>Function Name</b> - Create a unique name for the function. Click <b>Validate</b> to confirm that the name is unique and does not exist in AWS yet. If the name already exists, an error will be displayed.</li>
-          <li><b>Handler</b> - Enter a syntax. (Example for Java8: example.Hello::handleRequest).</li>
-          <li><b>IAM Role</b> - Select a role fetched from AWS.</li>
-          <li><b>Runtime</b> - Select the language to write the function. Java 8 is supported.</li>
+          <li><div className={"mt-3"}><b>Action</b> - Select Create from the drop-down to trigger function creation.</div></li>
+          <li><b>AWS Tool</b> - Select the AWS Tool that matches the tool used in template creation in Tasks.</li>
+          <li><b>Lambda Function - S3 Push Mapping</b> - Select the Lambda function templates and map it to the respective s3 step(s):
+            <ul>
+              <li><b>Select Lambda Function</b> - Select the Lambda function templates created in Tasks.</li>
+              <li><b>Select S3 Push Step</b> - Select the S3 Push Step to map the function to. If the user has multiple s3 steps in the pipeline the user can map individual functions to different s3 steps thereby giving them the ability to create multiple functions as part of one pipeline step.</li>
+            </ul></li>
         </ul>
         <div className={"ml-4"}>Click <b>Save</b>.</div>
       </div>
