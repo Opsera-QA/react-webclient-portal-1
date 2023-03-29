@@ -105,15 +105,13 @@ function PipelineSourceRepositoryWebhookInputPanel({
                 />
               </div>
             </div>
-            <div className={"mt-auto"}>
-              <RegisterSourceRepositoryHookButton
-                model={model}
-                savePipelineFunction={savePipelineFunction}
-                pipeline={pipeline}
-                className={"ml-2"}
-              />
-            </div>
           </div>
+          <RegisterSourceRepositoryHookButton
+            model={model}
+            savePipelineFunction={savePipelineFunction}
+            pipeline={pipeline}
+            className={"ml-2"}
+          />
         </>
       );
     }
