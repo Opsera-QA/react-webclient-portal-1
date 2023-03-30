@@ -2,15 +2,11 @@ import React, { useState, useContext, useEffect } from "react";
 import { subDays } from "date-fns";
 import { AuthContext } from "contexts/AuthContext";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
-import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import SalesforceLookUpHelpDocumentation from "../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation";
-import FilterContainer from "components/common/table/FilterContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import AnalyticsSalesforceComponentNameMultiSelectInput from "components/common/list_of_values_input/tools/salesforce/component_names/analytics/AnalyticsSalesforceComponentNameMultiSelectInput";
 import { insightsLookupActions } from "components/insights/lookup/insightsLookup.actions";
 import LookupResults from "components/insights/lookup/LookupResults";
 import DateRangeInputBase from "components/common/inputs/date/range/DateRangeInputBase";
-import { faSearch, faCalendarAlt } from "@fortawesome/pro-light-svg-icons";
 import { formatDate } from "components/common/helpers/date/date.helpers";
 import LookupMultiSelectInput from "components/insights/lookup/LookupMultiSelectInput";
 import LookupContainer from "./LookupContainer";
@@ -176,13 +172,8 @@ function Lookup() {
           isLoading={isLoading}
           breadcrumbDestination={"lookup"}
           helpComponent={<SalesforceLookUpHelpDocumentation />}
-      //     pageDescription={`
-      // Currently applicable only for Salesforce Pipelines.
-      // This Component based search provides details on when selected components have been deployed along with pipeline details and also provides summary on validations and unit tests.
-      // `}
           filterDto={filterModel}
           loadData={loadData}
-          // inlineFilters={getDropdownFilters()}
           dropdownFilters={getDropdownFilters()}
           body={getBody()}
           className={"mx-2"}
