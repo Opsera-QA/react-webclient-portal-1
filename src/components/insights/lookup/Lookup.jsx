@@ -112,11 +112,13 @@ function Lookup() {
   };
 
   const getDropdownFilters = () => (
-    <div>
-      <DateRangeInputBase
-        model={filterModel}
-        setModel={setFilterModel}
-      />
+    <div className={"d-flex"}>
+      <div className={"mx-auto"}>
+        <DateRangeInputBase
+          model={filterModel}
+          setModel={setFilterModel}
+        />
+      </div>
       {/* <AnalyticsSalesforceComponentNameMultiSelectInput
         fieldName={"selectedComponentNames"}
         model={filterModel}
