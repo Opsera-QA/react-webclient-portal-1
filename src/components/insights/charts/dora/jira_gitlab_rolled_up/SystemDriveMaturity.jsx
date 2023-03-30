@@ -1,7 +1,5 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import { MATURITY_SCORE_TEXT, MATURITY_SCORE_VALUE } from "../../charts-helpers";
 
@@ -50,21 +48,21 @@ const OrgTagRow = ({ orgTag }) => {
   };
 
   return (
-    <Row className="p-2 text-center">
-      <Col>{name}</Col>
-      <Col>
+    <tr>
+      <td style={{borderBottom: '1px solid grey'}} className="py-2">{name}</td>
+      <td style={{border: '1px solid grey'}} className="py-2">
         <Icon color={icons[MATURITY_SCORE_TEXT.LOW]} />
-      </Col>
-      <Col>
+      </td>
+      <td style={{border: '1px solid grey'}} className="py-2">
         <Icon color={icons[MATURITY_SCORE_TEXT.MEDIUM]} />
-      </Col>
-      <Col>
+      </td>
+      <td style={{border: '1px solid grey'}} className="py-2">
         <Icon color={icons[MATURITY_SCORE_TEXT.HIGH]} />
-      </Col>
-      <Col>
+      </td>
+      <td style={{border: '1px solid grey'}} className="py-2">
         <Icon color={icons[MATURITY_SCORE_TEXT.ELITE]} />
-      </Col>
-    </Row>
+      </td>
+    </tr>
   );
 };
 
@@ -101,14 +99,18 @@ function SystemDrivenMaturity () {
   ];
   return (
     <Container className="p-3" style={{fontSize: '2rem'}}>
-      <Row className="text-center">
-        <Col></Col>
-        <Col>Low</Col>
-        <Col>Medium</Col>
-        <Col>High</Col>
-        <Col>Elite</Col>
-      </Row>
-      {orgTags.map((orgTag, index) => <OrgTagRow key={index} orgTag={orgTag} />)}
+      <table className="text-center">
+        <thead>
+          <th></th>
+          <th>Low</th>
+          <th>Medium</th>
+          <th>High</th>
+          <th>Elite</th>
+        </thead>
+        <tbody>
+          {orgTags.map((orgTag, index) => <OrgTagRow key={index} orgTag={orgTag} />)}
+        </tbody>
+      </table>
     </Container>
   );
 }
