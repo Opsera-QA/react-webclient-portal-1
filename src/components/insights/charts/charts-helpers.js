@@ -458,6 +458,13 @@ export const MATURITY_SCORE_TEXT = Object.freeze({
   LOW: 'low'
 });
 
+export const MATURITY_SCORE_VALUE = Object.freeze({
+  [MATURITY_SCORE_TEXT.ELITE]: 4,
+  [MATURITY_SCORE_TEXT.HIGH]: 3,
+  [MATURITY_SCORE_TEXT.MEDIUM]: 2,
+  [MATURITY_SCORE_TEXT.LOW]: 1
+});
+
 /**
  * Get score text for given value
  * @param maturityScore string
