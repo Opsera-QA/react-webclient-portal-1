@@ -24,6 +24,8 @@ function InsightsLookupDetailsTable({
   const [showExportPanel, setShowExportPanel] = useState(false);
   const fields = insightsLookupDetailsMetadata.fields;
 
+  console.log("lookup", lookupDetails);
+
   const columns = useMemo(
     () => [
       getTableTextColumn(
@@ -38,6 +40,12 @@ function InsightsLookupDetailsTable({
         undefined,
         undefined,
       ),
+        getTableTextColumn(
+            getField(fields, "stepId"),
+            "no-wrap-inline",
+            undefined,
+            undefined,
+        ),
       getTableTextColumn(
         getField(fields, "jobType"),
         "no-wrap-inline",
@@ -65,18 +73,12 @@ function InsightsLookupDetailsTable({
         undefined,
         undefined,
       ),
-      getTableDateTimeColumn(
-        getField(fields, "startTimestamp"),
-        "no-wrap-inline",
-        undefined,
-        undefined,
-      ),
-      getTableDateTimeColumn(
-        getField(fields, "endTimestamp"),
-        "no-wrap-inline",
-        undefined,
-        undefined,
-      ),
+        getTableTextColumn(
+            getField(fields, "difference"),
+            "no-wrap-inline",
+            undefined,
+            undefined,
+        ),
     ],
     [],
   );

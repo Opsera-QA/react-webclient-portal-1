@@ -64,6 +64,7 @@ const InsightsLookupPipelineOverlay = ({ componentName }) => {
   };
 
   lookupDetails.forEach((temp) => {
+    temp.difference = ((new Date(temp.endTimestamp) - new Date(temp.startTimestamp))/60000).toFixed(2).toString();
     if(temp.checkOnly == false){
       temp.deployed = true;
     } else{
