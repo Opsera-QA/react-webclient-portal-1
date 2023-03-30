@@ -102,7 +102,6 @@ export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInpu
           dataObject={model}
           setDataObject={setModel}
           fieldName={"dynamicSettings"}
-          customInfoText={getInfoText()}
           helpTooltip={helpText()}
           disabled={
             pipelineType !== pipelineTypeConstants.PIPELINE_TYPES.SOFTWARE_DEVELOPMENT
@@ -112,6 +111,7 @@ export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInpu
           className={"ml-3"}
         />
       </div>
+      {getInfoText()}
       <div>
         {getDynamicText()}
         Dynamic Settings allow the user running a pipeline to change supported values in the pipeline at runtime.
