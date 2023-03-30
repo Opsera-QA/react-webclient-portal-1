@@ -106,7 +106,19 @@ export async function persistNewRecord(model, toastContext, showSuccessToasts, c
   }
 }
 
-export async function persistUpdatedRecord(model, toastContext, showSuccessToasts, updateRecord, lenient, showIncompleteDataMessage, setModel, isIncomplete, clearChangeMap = true) {
+export async function persistUpdatedRecord(
+  model,
+  toastContext,
+  showSuccessToasts,
+  updateRecord,
+  lenient,
+  showIncompleteDataMessage,
+  setModel,
+  isIncomplete,
+  clearChangeMap = true,
+  customSuccessMessage,
+  customIncompleteDataMessage,
+  ) {
   try {
     if (model == null) {
       return false;
@@ -124,9 +136,17 @@ export async function persistUpdatedRecord(model, toastContext, showSuccessToast
 
     if (showSuccessToasts) {
       if ((isIncomplete === true || (lenient && !isModelValid)) && showIncompleteDataMessage !== false) {
-        toastContext.showSavingIncompleteObjectSuccessResultToast(model.getType());
+        if (hasStringValue(customIncompleteDataMessage) === true) {
+          toastContext.showFormInformationToast(customIncompleteDataMessage);
+        } else {
+          toastContext.showSavingIncompleteObjectSuccessResultToast(model.getType());
+        }
       } else {
-        toastContext.showUpdateSuccessResultDialog(model.getType());
+        if (hasStringValue(customSuccessMessage) === true) {
+          toastContext.showFormSuccessToast(customSuccessMessage);
+        } else {
+          toastContext.showUpdateSuccessResultDialog(model.getType());
+        }
       }
     }
 

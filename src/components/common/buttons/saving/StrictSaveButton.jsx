@@ -13,6 +13,7 @@ function StrictSaveButton(
     showTypeOnLabel,
     isIncomplete,
     clearChangeMapAfterSave,
+    customSuccessMessage,
   }) {
   return (
     <SaveButtonBase
@@ -26,6 +27,7 @@ function StrictSaveButton(
       showTypeOnLabel={showTypeOnLabel}
       isIncomplete={isIncomplete}
       clearChangeMapAfterSave={clearChangeMapAfterSave}
+      customSuccessMessage={customSuccessMessage}
     />
   );
 }
@@ -40,6 +42,7 @@ StrictSaveButton.propTypes = {
   setModel: PropTypes.func,
   isIncomplete: PropTypes.bool,
   clearChangeMapAfterSave: PropTypes.bool,
+  customSuccessMessage: PropTypes.string,
 };
 
 StrictSaveButton.defaultProps = {

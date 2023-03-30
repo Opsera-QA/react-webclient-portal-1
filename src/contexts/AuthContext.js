@@ -14,6 +14,7 @@ import {platformSettingsActions} from "components/admin/platform_settings/platfo
 import useAxiosCancelToken from "hooks/useAxiosCancelToken";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import organizationActions from "components/settings/organizations/organization-actions";
+import commonActions from "components/common/common.actions";
 
 const websocketClient = new ClientWebsocket();
 
@@ -33,6 +34,7 @@ const AuthContextProvider = (
   const [headerNavigationBar, setHeaderNavigationBar] = useState(undefined);
   const [platformSettingsRecord, setPlatformSettingsRecord] = useState(undefined);
   const [organizationSettingsRecord, setOrganizationSettingsRecord] = useState(undefined);
+  const [featureFlags, setFeatureFlags] = useState(undefined);
   const { cancelTokenSource } = useAxiosCancelToken();
 
   useEffect(() => {
@@ -77,6 +79,14 @@ const AuthContextProvider = (
         setOrganizationSettingsRecord({...organizationSettings});
       }
     }).catch(() => console.error("Could not pull organization settings record"));
+
+    commonActions.getFeatureFlagsV2(
+      getAccessToken,
+      cancelTokenSource,
+    ).then((response) => {
+      const flags = DataParsingHelper.parseNestedObject(response, "data", {});
+      setFeatureFlags({...flags});
+    }).catch(() => console.error("Could not pull flags"));
   };
 
   const logoutUserContext = async () => {
@@ -256,6 +266,7 @@ const AuthContextProvider = (
       setBackgroundColor: setBackgroundColor,
       platformSettingsRecord: platformSettingsRecord,
       organizationSettingsRecord: organizationSettingsRecord,
+      featureFlags: featureFlags,
     }}>
       <MainViewContainer
         isAuthenticated={isAuthenticated}

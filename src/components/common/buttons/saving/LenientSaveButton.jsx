@@ -13,7 +13,9 @@ function LenientSaveButton(
     showTypeOnLabel,
     showIncompleteDataMessage,
     isIncomplete,
-    className
+    className,
+    customIncompleteDataMessage,
+    customSuccessMessage,
   }) {
   return (
     <SaveButtonBase
@@ -28,6 +30,8 @@ function LenientSaveButton(
       showIncompleteDataMessage={showIncompleteDataMessage}
       isIncomplete={isIncomplete}
       className={className}
+      customIncompleteDataMessage={customIncompleteDataMessage}
+      customSuccessMessage={customSuccessMessage}
     />
   );
 }
@@ -43,6 +47,8 @@ LenientSaveButton.propTypes = {
   showIncompleteDataMessage: PropTypes.bool,
   isIncomplete: PropTypes.bool,
   className: PropTypes.string,
+  customIncompleteDataMessage: PropTypes.string,
+  customSuccessMessage: PropTypes.string,
 };
 
 LenientSaveButton.defaultProps = {

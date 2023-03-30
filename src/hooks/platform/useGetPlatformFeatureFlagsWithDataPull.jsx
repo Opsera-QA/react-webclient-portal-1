@@ -4,7 +4,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import useLoadData from "temp-library-components/useLoadData/useLoadData";
 import commonActions from "components/common/common.actions";
 
-export default function useGetFeatureFlags(
+export default function useGetPlatformFeatureFlagsWithDataPull(
   handleErrorFunction,
 ) {
   const [featureFlags, setFeatureFlags] = useState(undefined);
