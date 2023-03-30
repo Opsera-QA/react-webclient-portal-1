@@ -24,8 +24,6 @@ function InsightsLookupDetailsTable({
   const [showExportPanel, setShowExportPanel] = useState(false);
   const fields = insightsLookupDetailsMetadata.fields;
 
-  console.log("lookup", lookupDetails);
-
   const columns = useMemo(
     () => [
       getTableTextColumn(
