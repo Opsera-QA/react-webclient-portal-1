@@ -9,6 +9,8 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import TaskMigrationTypeField from "../../../../../../../common/fields/tasks/TaskMigrationTypeField";
+import { getMigrationTypeLabel } from "../../../inputs/SalesforceCustomSettingTaskTypeSelectInput";
 
 const CustomSettingTaskWizardInitializationScreen = ({
   wizardModel,
@@ -39,10 +41,14 @@ const CustomSettingTaskWizardInitializationScreen = ({
             <CenteredContentWrapper>
               <div className={"mx-auto mt-3"}>
                 <H5FieldSubHeader
-                  subheaderText={`${taskType} Custom Setting Migration: Initialization`}
+                  subheaderText={`${getMigrationTypeLabel(
+                    taskType,
+                  )} : Initialization`}
                 />
                 <div className={"focusText"}>
-                  {`Would you like to start a new ${taskType} Custom Setting Migration Task Wizard Instance?`}
+                  {`Would you like to start a new ${getMigrationTypeLabel(
+                    taskType,
+                  )} Task Wizard Instance?`}
                 </div>
               </div>
             </CenteredContentWrapper>

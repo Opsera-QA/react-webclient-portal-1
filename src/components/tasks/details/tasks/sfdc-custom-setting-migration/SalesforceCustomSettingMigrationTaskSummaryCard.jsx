@@ -4,6 +4,7 @@ import TaskSummaryCardContainer from "components/tasks/details/tasks/TaskSummary
 import {Row, Col} from "react-bootstrap";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
 import TextFieldBase from "../../../../common/fields/text/TextFieldBase";
+import TaskMigrationTypeField from "../../../../common/fields/tasks/TaskMigrationTypeField";
 
 function SalesforceCustomSettingMigrationTaskSummaryCard(
   {
@@ -24,8 +25,8 @@ function SalesforceCustomSettingMigrationTaskSummaryCard(
     <TaskSummaryCardContainer isLoading={isLoading}>
       <Row>
         <Col xs={6}>
-          <TextFieldBase
-            dataObject={taskConfigDataModel}
+          <TaskMigrationTypeField
+            model={taskConfigDataModel}
             fieldName={"taskType"}
           />
         </Col>
