@@ -15,7 +15,7 @@ export const insightsLookupDetailsMetadata = {
       id: "jobType",
     },
     {
-      label: "Created By",
+      label: "Deployed By",
       id: "createdByName",
     },
     {
@@ -25,6 +25,17 @@ export const insightsLookupDetailsMetadata = {
     {
       label: "Deployment End",
       id: "endTimestamp",
+    },
+    {
+      label: "Validated",
+      id: "validated",
+    },
+    {
+      label: "Deployed",
+      id: "deployed",
+    },{
+      label: "Unit Tested",
+      id: "unitTests",
     },
   ],
   newObjectFields: {

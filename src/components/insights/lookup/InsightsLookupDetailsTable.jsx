@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import {
   getTableTextColumn,
-  getTableDateTimeColumn,
+  getTableDateTimeColumn,getTableBooleanIconColumn
 } from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -44,6 +44,21 @@ function InsightsLookupDetailsTable({
         undefined,
         undefined,
       ),
+        getTableBooleanIconColumn(
+            getField(fields, "validated"),
+            "no-wrap-inline",
+            undefined,
+        ),
+        getTableBooleanIconColumn(
+            getField(fields, "deployed"),
+            "no-wrap-inline",
+            undefined,
+        ),
+        getTableBooleanIconColumn(
+            getField(fields, "unitTests"),
+            "no-wrap-inline",
+            undefined,
+        ),
       getTableTextColumn(
         getField(fields, "createdByName"),
         "no-wrap-inline",
@@ -108,7 +123,7 @@ function InsightsLookupDetailsTable({
         />
       }
     />
-  );
+);
 }
 
 InsightsLookupDetailsTable.propTypes = {
