@@ -16,14 +16,6 @@ export const sourceRepositoryConfigurationMetadata = {
       id: "accountId",
     },
     {
-      label: "Username",
-      id: "username",
-    },
-    {
-      label: "Password",
-      id: "password",
-    },
-    {
       label: "Repository",
       id: "repoId",
       isRequired: true,
