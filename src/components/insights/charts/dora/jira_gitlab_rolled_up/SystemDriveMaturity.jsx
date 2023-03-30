@@ -5,7 +5,13 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import { MATURITY_SCORE_TEXT } from "../../charts-helpers";
 
-const Icon = ({ color }) => <i style={{color}} className="fa-solid fa-circle"></i>;
+const Icon = ({ color }) => {
+  if (!color) {
+    return null;
+  }
+
+  return <i style={{color}} className="fa-solid fa-circle"></i>;
+};
 
 Icon.propTypes = {
   color: PropTypes.oneOf(['grey', 'green', 'red', 'orange'])
