@@ -93,27 +93,31 @@ export default function PipelineSourceRepositoryDynamicSettingsBooleanToggleInpu
 
   return (
     <div className={className}>
-      <H5FieldSubHeader
-        className={"text-muted"}
-        subheaderText={"Dynamic Settings"}
-      />
+      <div className={"d-flex"}>
+        <H5FieldSubHeader
+          className={"text-muted"}
+          subheaderText={"Dynamic Settings"}
+        />
+        <BooleanToggleInput
+          dataObject={model}
+          setDataObject={setModel}
+          fieldName={"dynamicSettings"}
+          customInfoText={getInfoText()}
+          helpTooltip={helpText()}
+          disabled={
+            pipelineType !== pipelineTypeConstants.PIPELINE_TYPES.SOFTWARE_DEVELOPMENT
+            || hasStringValue(model?.getData("repoId")) !== true
+          }
+          showLabel={false}
+          className={"ml-3"}
+        />
+      </div>
       <div>
         {getDynamicText()}
         Dynamic Settings allow the user running a pipeline to change supported values in the pipeline at runtime.
         When this is enabled, a user will get a prompt to change the Git Branch for this pipeline before it starts,
         allowing them to target different branches without having to edit the pipeline.
       </div>
-      <BooleanToggleInput
-        dataObject={model}
-        setDataObject={setModel}
-        fieldName={"dynamicSettings"}
-        customInfoText={getInfoText()}
-        helpTooltip={helpText()}
-        disabled={
-          pipelineType !== pipelineTypeConstants.PIPELINE_TYPES.SOFTWARE_DEVELOPMENT
-          || hasStringValue(model?.getData("repoId")) !== true
-        }
-      />
       {getDynamicInputs()}
     </div>
   );

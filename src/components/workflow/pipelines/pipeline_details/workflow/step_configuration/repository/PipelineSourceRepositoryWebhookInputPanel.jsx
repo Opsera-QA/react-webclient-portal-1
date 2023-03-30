@@ -53,8 +53,9 @@ function PipelineSourceRepositoryWebhookInputPanel({
           <PipelineSourceWebhookTriggerDetailsPanel
             model={model}
             setModel={setModel}
+            className={"mt-4"}
           />
-          <div className={"d-flex mt-3"}>
+          <div className={"d-flex mt-4"}>
             <div className={"text-muted"}>
               Dynamic Branch Switching
             </div>
@@ -73,7 +74,7 @@ function PipelineSourceRepositoryWebhookInputPanel({
             setModel={setModel}
             visible={model.getData("service") !== "bitbucket"}
           />
-          <div className={"text-muted"}>
+          <div className={"text-muted mt-4"}>
             Settings
           </div>
           <div className={"d-flex"}>
@@ -127,20 +128,24 @@ function PipelineSourceRepositoryWebhookInputPanel({
 
   return (
     <div className={className}>
-      <H5FieldSubHeader
-        className={"text-muted"}
-        subheaderText={"Webhook"}
-      />
+      <div className={"d-flex"}>
+        <H5FieldSubHeader
+          className={"text-muted"}
+          subheaderText={"Webhook"}
+        />
+        <BooleanToggleInput
+          dataObject={model}
+          setDataFunction={enableWebhookTrigger}
+          setDataObject={setModel}
+          fieldName={"trigger_active"}
+          disabled={disabled}
+          className={"ml-3"}
+          showLabel={false}
+        />
+      </div>
       <div>
         Allow this pipeline to be started by a webhook event based on the Repository settings selected in the Repository tab. Once enabled, copy the webhook URL supplied into your repository or use the Register Webhook button.
       </div>
-      <BooleanToggleInput
-        dataObject={model}
-        setDataFunction={enableWebhookTrigger}
-        setDataObject={setModel}
-        fieldName={"trigger_active"}
-        disabled={disabled}
-      />
       {getDynamicFields()}
     </div>
   );

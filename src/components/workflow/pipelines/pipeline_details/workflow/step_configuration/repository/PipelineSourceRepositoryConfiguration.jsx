@@ -98,39 +98,6 @@ export default function PipelineSourceRepositoryConfiguration(
         pipeline={pipeline}
         callbackFunction={callbackFunction}
       />
-      {/*<PipelineSourceRepositoryRepositoryInputPanel*/}
-      {/*  sourceRepositoryModel={sourceRepositoryModel}*/}
-      {/*  setSourceRepositoryModel={setSourceRepositoryModel}*/}
-      {/*  className={"mt-5"}*/}
-      {/*/>*/}
-      {/*<PipelineSourceRepositoryWebhookInputPanel*/}
-      {/*  model={sourceRepositoryModel}*/}
-      {/*  setModel={setSourceRepositoryModel}*/}
-      {/*  pipeline={pipeline}*/}
-      {/*  savePipelineFunction={callbackFunction}*/}
-      {/*  className={"mt-5"}*/}
-      {/*/>*/}
-      {/*/!*<hr />*/}
-      {/*<div className="text-muted h5 mt-3">Dynamic Controls</div>*/}
-      {/*<div className={"text-muted  mb-3"}>Enable YAML based pipeline settings to control variable*/}
-      {/*  branches for pipeline runs.</div>*/}
-
-      {/*<div className={"p-3"} >COMING SOON</div>*/}
-      
-      {/*  <hr />*!/*/}
-      {/*<PipelineSourceRepositoryGitExportEnabledInput*/}
-      {/*  fieldName={"gitExportEnabled"}*/}
-      {/*  model={sourceRepositoryModel}*/}
-      {/*  setModel={setSourceRepositoryModel}*/}
-      {/*  disabled={["gitlab", "github"].includes(sourceRepositoryModel.getData("service")) !== true}*/}
-      {/*  className={"mt-5"}*/}
-      {/*/>*/}
-      {/*<PipelineSourceRepositoryDynamicSettingsBooleanToggleInput*/}
-      {/*  model={sourceRepositoryModel}*/}
-      {/*  setModel={setSourceRepositoryModel}*/}
-      {/*  pipelineType={pipelineTypeConstants.getTypeForTypesArray(pipeline?.type, false)}*/}
-      {/*  className={"mt-5"}*/}
-      {/*/>*/}
     </PipelineStepEditorPanelContainer>
   );
 }

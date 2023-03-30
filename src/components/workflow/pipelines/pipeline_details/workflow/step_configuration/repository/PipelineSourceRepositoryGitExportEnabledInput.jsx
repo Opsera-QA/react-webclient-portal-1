@@ -20,21 +20,25 @@ function PipelineSourceRepositoryGitExportEnabledInput({className, model, setMod
 
   return (
     <div className={className}>
-      <H5FieldSubHeader
-        className={"text-muted"}
-        subheaderText={"Pipeline Git Revisions"}
-      />
+      <div className={"d-flex"}>
+        <H5FieldSubHeader
+          className={"text-muted"}
+          subheaderText={"Pipeline Git Revisions"}
+        />
+        <BooleanToggleInput
+          dataObject={model}
+          setDataObject={setModel}
+          fieldName={"gitExportEnabled"}
+          disabled={disabled}
+          showLabel={false}
+          className={"ml-3"}
+        />
+      </div>
       <div>
         Using the configured Git Repository selected in the Repository tab, Opsera can publish
         a copy of the pipeline configuration for revision purposes when export to git is pressed.
         This feature is only available for GitHub and GitLab repositories.
       </div>
-      <BooleanToggleInput
-        dataObject={model}
-        setDataObject={setModel}
-        fieldName={"gitExportEnabled"}
-        disabled={disabled}
-      />
       {getDynamicFields()}
     </div>
   );
