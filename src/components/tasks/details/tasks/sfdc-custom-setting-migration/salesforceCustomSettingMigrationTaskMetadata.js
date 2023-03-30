@@ -26,7 +26,7 @@ const salesforceCustomSettingMigrationTaskMetadata = {
   fields: [
     {
       label: "Migration Type",
-      id: "taskType",
+      id: "taskType", // can we change this to migrationType?
       isRequired: true,
     },
     {
