@@ -96,7 +96,6 @@ function LookupMultiSelectInput(
       selectOptions={salesforceComponentNames}
       formatDataFunction={formatDataFunction}
       clearDataFunction={clearDataFunction}
-      showLabel={false}
       groupBy={(filterOption) =>
         capitalizeFirstLetter(filterOption?.type, " ", "Undefined Type")
       }
