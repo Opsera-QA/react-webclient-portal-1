@@ -19,7 +19,7 @@ export default function RefreshIcon(
       <TooltipWrapper innerText={"Reload Data"}>
         <div>
           <IconBase
-            onClickFunction={isLoading === true ? undefined : loadDataFunction}
+            onClickFunction={isLoading === true ? undefined : () => loadDataFunction()}
             icon={faSync}
             isLoading={isLoading}
           />
