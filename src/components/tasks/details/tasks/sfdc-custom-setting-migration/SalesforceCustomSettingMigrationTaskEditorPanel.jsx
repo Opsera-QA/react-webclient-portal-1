@@ -78,13 +78,15 @@ function SalesforceCustomSettingMigrationTaskEditorPanel({
           fieldName={"targetToolId"}
         />
       </Col>
-      <Col lg={12}>
-        <SalesforceCustomSettingTaskActionSelectInput
-          model={taskConfigurationModel}
-          setModel={setTaskConfigurationModel}
-          fieldName={"action"}
-        />
-      </Col>
+      {taskConfigurationModel.getData("taskType") !== "ORG_TO_FILE" &&
+        <Col lg={12}>
+          <SalesforceCustomSettingTaskActionSelectInput
+            model={taskConfigurationModel}
+            setModel={setTaskConfigurationModel}
+            fieldName={"action"}
+          />
+        </Col>
+      }
     </Row>
   );
 }
