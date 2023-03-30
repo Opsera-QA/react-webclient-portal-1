@@ -20,13 +20,26 @@ Icon.propTypes = {
 const OrgTagRow = ({ orgTag }) => {
   const { name, score, previousScore } = orgTag;
 
+  const icons = {
+    [MATURITY_SCORE_TEXT.LOW]: 'grey',
+    [MATURITY_SCORE_TEXT.MEDIUM]: 'green',
+  };
+
   return (
-    <Row className="p-2">
+    <Row className="p-2 text-center">
       <Col>{name}</Col>
-      <Col></Col>
-      <Col><Icon color="grey" /></Col>
-      <Col><Icon color="green" /></Col>
-      <Col></Col>
+      <Col>
+        <Icon color={icons[MATURITY_SCORE_TEXT.LOW]} />
+      </Col>
+      <Col>
+        <Icon color={icons[MATURITY_SCORE_TEXT.MEDIUM]} />
+      </Col>
+      <Col>
+        <Icon color={icons[MATURITY_SCORE_TEXT.HIGH]} />
+      </Col>
+      <Col>
+        <Icon color={icons[MATURITY_SCORE_TEXT.ELITE]} />
+      </Col>
     </Row>
   );
 };
