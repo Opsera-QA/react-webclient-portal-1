@@ -1,25 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import { insightsLookupActions } from "components/insights/lookup/insightsLookup.actions";
-import { capitalizeFirstLetter } from "../../common/helpers/string-helpers";
+import {insightsLookupActions} from "components/insights/lookup/insightsLookup.actions";
+import {capitalizeFirstLetter} from "../../common/helpers/string-helpers";
 
-function LookupMultiSelectInput({
-  fieldName,
-  model,
-  setModel,
-  disabled,
-  formatDataFunction,
-  textField,
-  valueField,
-  setDataFunction,
-  clearDataFunction,
-}) {
+function LookupMultiSelectInput(
+  {
+    fieldName,
+    model,
+    setModel,
+    disabled,
+    formatDataFunction,
+    textField,
+    valueField,
+    setDataFunction,
+    clearDataFunction,
+    className,
+  }) {
   const [salesforceComponentNames, setSalesforceComponentNames] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
-  const { isMounted, cancelTokenSource, getAccessToken } =
+  const {isMounted, cancelTokenSource, getAccessToken} =
     useComponentStateReference();
 
   useEffect(() => {
@@ -86,7 +88,7 @@ function LookupMultiSelectInput({
 
   return (
     <MultiSelectInputBase
-      className={"px-2"}
+      className={className}
       setDataFunction={setDataFunction}
       fieldName={fieldName}
       dataObject={model}
@@ -94,6 +96,7 @@ function LookupMultiSelectInput({
       selectOptions={salesforceComponentNames}
       formatDataFunction={formatDataFunction}
       clearDataFunction={clearDataFunction}
+      showLabel={false}
       groupBy={(filterOption) =>
         capitalizeFirstLetter(filterOption?.type, " ", "Undefined Type")
       }
@@ -106,11 +109,13 @@ function LookupMultiSelectInput({
       valueField={valueField}
       disabled={disabled}
       error={error}
+      pluralTopic={"Filters"}
     />
   );
 }
 
 LookupMultiSelectInput.propTypes = {
+  className: PropTypes.string,
   fieldName: PropTypes.string,
   model: PropTypes.object,
   setModel: PropTypes.func,

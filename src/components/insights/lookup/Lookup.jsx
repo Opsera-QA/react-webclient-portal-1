@@ -10,8 +10,8 @@ import LookupResults from "components/insights/lookup/LookupResults";
 import DateRangeInputBase from "components/common/inputs/date/range/DateRangeInputBase";
 import {formatDate} from "components/common/helpers/date/date.helpers";
 import LookupMultiSelectInput from "components/insights/lookup/LookupMultiSelectInput";
-import LookupContainer from "./LookupContainer";
 import LookupFilterModel from "./lookup.filter.model";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function Lookup() {
   const [isLoading, setIsLoading] = useState(false);
@@ -144,11 +144,6 @@ function Lookup() {
   const getBody = () => {
     return (
       <>
-        <LookupMultiSelectInput
-          fieldName={"selectedComponentFilterData"}
-          model={filterModel}
-          setModel={setFilterModel}
-        />
         <LookupResults
           isLoading={isLoading}
           filterModel={filterModel}
@@ -168,19 +163,24 @@ function Lookup() {
   }
 
   return (
-    <LookupContainer
+    <ScreenContainer
       navigationTabContainer={
         <InsightsSubNavigationBar currentTab={"lookup"}/>
       }
-      isLoading={isLoading}
       breadcrumbDestination={"lookup"}
       helpComponent={<SalesforceLookUpHelpDocumentation/>}
-      filterDto={filterModel}
-      loadData={loadData}
-      dropdownFilters={getDropdownFilters()}
-      body={getBody()}
-      className={"mx-2"}
-    />
+      filterModel={filterModel}
+      loadDataFunction={loadData}
+      filters={getDropdownFilters()}
+    >
+      <LookupMultiSelectInput
+        fieldName={"selectedComponentFilterData"}
+        model={filterModel}
+        setModel={setFilterModel}
+        className={"mx-2"}
+      />
+      {getBody()}
+    </ScreenContainer>
   );
 }
 
