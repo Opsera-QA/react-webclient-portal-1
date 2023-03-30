@@ -4,9 +4,6 @@ import ErrorDialog from "components/common/status_notifications/error";
 import axios from "axios";
 import LoadingDialog from "components/common/status_notifications/loading";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
-import {
-  mergeSyncTaskWizardMetadata
-} from "components/tasks/details/tasks/merge_sync_task/wizard/mergeSyncTaskWizard.metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 import { dataParsingHelper } from "components/common/helpers/data/dataParsing.helper";
@@ -15,6 +12,7 @@ import { TASK_TYPES } from "components/tasks/task.types";
 import { CUSTOM_SETTING_MIGRATION_WIZARD_SCREENS } from "./customSettingMigrationTaskWizard.constants";
 import CustomSettingTaskWizardInitializationScreen
   from "./screens/initialization_screen/CustomSettingTaskWizardInitializationScreen";
+import { customSettingMigrationTaskWizardMetadata } from "./customSettingMigrationWizard.metadata";
 
 const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) => {
   const toastContext = useContext(DialogToastContext);
@@ -45,7 +43,7 @@ const SalesforceCustomSettingMigrationTaskWizard = ({ handleClose, taskModel }) 
   }, [taskModel]);
 
   const initializeWizardRecord = () => {
-    const newWizardModel = modelHelpers.parseObjectIntoModel({}, mergeSyncTaskWizardMetadata);
+    const newWizardModel = modelHelpers.parseObjectIntoModel({}, customSettingMigrationTaskWizardMetadata);
     newWizardModel.setDefaultValue("errorMessage");
     newWizardModel.setData("type", TASK_TYPES.SALESFORCE_CUSTOM_SETTING_MIGRATION);
     newWizardModel.setData("taskId", taskModel?.getMongoDbId());
