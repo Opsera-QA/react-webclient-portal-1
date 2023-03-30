@@ -12,20 +12,21 @@ import LookupResults from "components/insights/lookup/LookupResults";
 import DateRangeInputBase from "components/common/inputs/date/range/DateRangeInputBase";
 import { faSearch, faCalendarAlt } from "@fortawesome/pro-light-svg-icons";
 import { formatDate } from "components/common/helpers/date/date.helpers";
-import LookupFilterModel from "components/insights/lookup/lookup.filter.model";
 import LookupMultiSelectInput from "components/insights/lookup/LookupMultiSelectInput";
+import LookupContainer from "./LookupContainer";
+import LookupFilterModel from "./lookup.filter.model";
 
 function Lookup() {
   const [isLoading, setIsLoading] = useState(false);
   const [salesforceComponentNames, setSalesforceComponentNames] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [selectedComponentName, setSelectedComponentName] = useState(
-    salesforceComponentNames?.[0],
+      salesforceComponentNames?.[0],
   );
   const [filterModel, setFilterModel] = useState(undefined);
   const { getAccessToken } = useContext(AuthContext);
   const { isMounted, cancelTokenSource, toastContext } =
-    useComponentStateReference();
+      useComponentStateReference();
 
   useEffect(() => {
     const newFilterModel = new LookupFilterModel();
@@ -52,12 +53,12 @@ function Lookup() {
     const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
     const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
     const response = await insightsLookupActions.getComponentNames(
-      getAccessToken,
-      cancelTokenSource,
-      formattedStartDate,
-      formattedEndDate,
-      newFilterModel.getData("selectedComponentNames"),
-      newFilterModel.getData("selectedComponentFilterData"),
+        getAccessToken,
+        cancelTokenSource,
+        formattedStartDate,
+        formattedEndDate,
+        newFilterModel.getData("selectedComponentNames"),
+        newFilterModel.getData("selectedComponentFilterData"),
     );
     const names = response?.data?.data?.componentNames;
 
@@ -76,7 +77,7 @@ function Lookup() {
 
       if (!startDate || !endDate) {
         toastContext.showInlineErrorMessage(
-          "Please select start and end dates.",
+            "Please select start and end dates.",
         );
         return;
       }
@@ -86,15 +87,15 @@ function Lookup() {
       const formattedStartDate = formatDate(startDate, DATE_STRING_FORMAT);
       const formattedEndDate = formatDate(endDate, DATE_STRING_FORMAT);
       const response = await insightsLookupActions.searchComponents(
-        getAccessToken,
-        cancelTokenSource,
-        formattedStartDate,
-        formattedEndDate,
-        [componentName],
-        newFilterModel.getData("selectedComponentFilterData"),
+          getAccessToken,
+          cancelTokenSource,
+          formattedStartDate,
+          formattedEndDate,
+          [componentName],
+          newFilterModel.getData("selectedComponentFilterData"),
       );
       const searchResults = insightsLookupActions.generateTransformedResults(
-        response?.data?.data?.data,
+          response?.data?.data?.data,
       );
 
       if (isMounted?.current === true && Array.isArray(searchResults)) {
@@ -114,17 +115,17 @@ function Lookup() {
   };
 
   const getDropdownFilters = () => (
-    <div>
-      <DateRangeInputBase
-        model={filterModel}
-        setModel={setFilterModel}
-      />
-      {/* <AnalyticsSalesforceComponentNameMultiSelectInput
+      <div>
+        <DateRangeInputBase
+            model={filterModel}
+            setModel={setFilterModel}
+        />
+        {/* <AnalyticsSalesforceComponentNameMultiSelectInput
         fieldName={"selectedComponentNames"}
         model={filterModel}
         setModel={setFilterModel}
       /> */}
-    </div>
+      </div>
   );
 
   const getNoDataMessage = () => {
@@ -143,23 +144,23 @@ function Lookup() {
 
   const getBody = () => {
     return (
-      <>
-        <LookupMultiSelectInput
-          fieldName={"selectedComponentFilterData"}
-          model={filterModel}
-          setModel={setFilterModel}
-        />
-        <LookupResults
-          isLoading={isLoading}
-          filterModel={filterModel}
-          loadData={loadData}
-          searchResults={searchResults}
-          salesforceComponentNames={salesforceComponentNames}
-          selectedComponentName={selectedComponentName}
-          setSelectedComponentName={setSelectedComponentName}
-          noDataMessage={getNoDataMessage()}
-        />
-      </>
+        <>
+          <LookupMultiSelectInput
+              fieldName={"selectedComponentFilterData"}
+              model={filterModel}
+              setModel={setFilterModel}
+          />
+          <LookupResults
+              isLoading={isLoading}
+              filterModel={filterModel}
+              loadData={loadData}
+              searchResults={searchResults}
+              salesforceComponentNames={salesforceComponentNames}
+              selectedComponentName={selectedComponentName}
+              setSelectedComponentName={setSelectedComponentName}
+              noDataMessage={getNoDataMessage()}
+          />
+        </>
     );
   };
 
@@ -168,30 +169,24 @@ function Lookup() {
   }
 
   return (
-    <ScreenContainer
-      navigationTabContainer={
-        <InsightsSubNavigationBar currentTab={"lookup"} />
-      }
-      isLoading={isLoading}
-      breadcrumbDestination={"lookup"}
-      helpComponent={<SalesforceLookUpHelpDocumentation />}
-      pageDescription={`
+      <LookupContainer
+          navigationTabContainer={
+            <InsightsSubNavigationBar currentTab={"lookup"} />
+          }
+          isLoading={isLoading}
+          breadcrumbDestination={"lookup"}
+          helpComponent={<SalesforceLookUpHelpDocumentation />}
+          pageDescription={`
       Currently applicable only for Salesforce Pipelines. 
       This Component based search provides details on when selected components have been deployed along with pipeline details and also provides summary on validations and unit tests.
       `}
-    >
-      <FilterContainer
-        title={"Salesforce Lookup"}
-        titleIcon={faSearch}
-        isLoading={isLoading}
-        filterDto={filterModel}
-        loadData={loadData}
-        // inlineFilters={getDropdownFilters()}
-        dropdownFilters={getDropdownFilters()}
-        body={getBody()}
-        className={"mx-2"}
+          filterDto={filterModel}
+          loadData={loadData}
+          // inlineFilters={getDropdownFilters()}
+          dropdownFilters={getDropdownFilters()}
+          body={getBody()}
+          className={"mx-2"}
       />
-    </ScreenContainer>
   );
 }
 
