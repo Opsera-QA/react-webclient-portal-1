@@ -61,25 +61,33 @@ export default function DateRangeInputBase(
 
   return (
     <InputContainer>
-      <InfoContainer
-        titleText={titleText}
-        titleIcon={faCalendar}
+      <div
+        style={{
+          width: "524px",
+          maxWidth: "524px",
+        }}
       >
-        <div className={"d-flex"}>
-          <DateRangePicker
-            startDatePlaceholder={"Start Date"}
-            endDatePlaceholder={"End Date"}
-            onChange={(newValue) => updateValue(newValue?.[key]?.startDate, newValue?.[key]?.endDate)}
-            showSelectionPreview={true}
-            moveRangeOnFirstSelection={false}
-            months={1}
-            ranges={[internalDate]}
-            staticRanges={STATIC_DATE_RANGES}
-            direction={"horizontal"}
-            className={"mx-auto"}
-          />
-        </div>
-      </InfoContainer>
+        <InfoContainer
+          titleText={titleText}
+          titleIcon={faCalendar}
+          bodyClassName={"content-container-hide-overflow"}
+        >
+          <div className={"d-flex"}>
+            <DateRangePicker
+              startDatePlaceholder={"Start Date"}
+              endDatePlaceholder={"End Date"}
+              onChange={(newValue) => updateValue(newValue?.[key]?.startDate, newValue?.[key]?.endDate)}
+              showSelectionPreview={true}
+              moveRangeOnFirstSelection={false}
+              months={1}
+              ranges={[internalDate]}
+              staticRanges={STATIC_DATE_RANGES}
+              direction={"horizontal"}
+              className={"mx-auto"}
+            />
+          </div>
+        </InfoContainer>
+      </div>
     </InputContainer>
   );
 }
