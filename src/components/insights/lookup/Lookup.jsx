@@ -176,10 +176,10 @@ function Lookup() {
           isLoading={isLoading}
           breadcrumbDestination={"lookup"}
           helpComponent={<SalesforceLookUpHelpDocumentation />}
-          pageDescription={`
-      Currently applicable only for Salesforce Pipelines. 
-      This Component based search provides details on when selected components have been deployed along with pipeline details and also provides summary on validations and unit tests.
-      `}
+      //     pageDescription={`
+      // Currently applicable only for Salesforce Pipelines.
+      // This Component based search provides details on when selected components have been deployed along with pipeline details and also provides summary on validations and unit tests.
+      // `}
           filterDto={filterModel}
           loadData={loadData}
           // inlineFilters={getDropdownFilters()}

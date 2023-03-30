@@ -25,8 +25,6 @@ import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 function LookupContainer(
     {
         breadcrumbDestination,
-        pageDescription,
-        children,
         isLoading,
         accessDenied,
         showBreadcrumbTrail,
@@ -302,30 +300,6 @@ function LookupContainer(
         }
     };
 
-    const getPageDescription = () => {
-        const breadcrumbPageDescription = breadcrumb?.pageDescription;
-
-        if (hasStringValue(pageDescription) === true) {
-            return (
-                <div className={"page-description px-3 mt-1 d-flex"}>
-                    <div className={"mt-auto"}>
-                        {pageDescription}
-                    </div>
-                </div>
-            );
-        }
-
-        if (hasStringValue(breadcrumbPageDescription) === true) {
-            return (
-                <div className={"page-description px-3 mt-1 d-flex"}>
-                    <div className={"mt-auto"}>
-                        {breadcrumbPageDescription}
-                    </div>
-                </div>
-            );
-        }
-    };
-
     const getRoleRequirementField = () => {
         if (roleRequirement) {
             return (
@@ -400,7 +374,6 @@ function LookupContainer(
                         className={bodyClassName}
                         style={getBodyStylingObject()}
                     >
-                        {getPageDescription()}
                         {body}
                     </div>
                     {getRoleRequirementField()}
@@ -412,9 +385,7 @@ function LookupContainer(
 
 LookupContainer.propTypes = {
     breadcrumbDestination: PropTypes.string,
-    pageDescription: PropTypes.string,
     isLoading: PropTypes.bool,
-    children: PropTypes.any,
     accessDenied: PropTypes.bool,
     showBreadcrumbTrail: PropTypes.bool,
     navigationTabContainer: PropTypes.object,
