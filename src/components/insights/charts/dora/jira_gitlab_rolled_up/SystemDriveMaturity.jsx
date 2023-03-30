@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import { MATURITY_SCORE_TEXT } from "../../charts-helpers";
+import { MATURITY_SCORE_TEXT, MATURITY_SCORE_VALUE } from "../../charts-helpers";
 
 const Icon = ({ color }) => {
   if (!color) {
@@ -20,9 +20,33 @@ Icon.propTypes = {
 const OrgTagRow = ({ orgTag }) => {
   const { name, score, previousScore } = orgTag;
 
+  const determineColor = (maturity, score, previous) => {
+    const color = {
+      [maturity]: ''
+    };
+
+    if (score === previous && score === maturity) {
+      color[maturity] = 'orange';
+      return color;
+    }
+
+    if (score === maturity) {
+      // determine if new score is greater or lower than previous
+      color[maturity] = MATURITY_SCORE_VALUE[score] > MATURITY_SCORE_VALUE[previous] ? 'green' : 'red';
+      return color;
+    }
+
+    if (previous === maturity) {
+      color[maturity] = 'grey';
+      return color;
+    }
+  };
+
   const icons = {
-    [MATURITY_SCORE_TEXT.LOW]: 'grey',
-    [MATURITY_SCORE_TEXT.MEDIUM]: 'green',
+    ...determineColor(MATURITY_SCORE_TEXT.LOW, score, previousScore),
+    ...determineColor(MATURITY_SCORE_TEXT.MEDIUM, score, previousScore),
+    ...determineColor(MATURITY_SCORE_TEXT.HIGH, score, previousScore),
+    ...determineColor(MATURITY_SCORE_TEXT.ELITE, score, previousScore),
   };
 
   return (
@@ -56,23 +80,23 @@ function SystemDrivenMaturity () {
   const orgTags = [
     {
       name: "Org Tag One",
-      maturityScore: MATURITY_SCORE_TEXT.HIGH,
-      previousMaturityScore: MATURITY_SCORE_TEXT.MEDIUM
+      score: MATURITY_SCORE_TEXT.HIGH,
+      previousScore: MATURITY_SCORE_TEXT.MEDIUM
     },
     {
       name: "Org Tag Two",
-      maturityScore: MATURITY_SCORE_TEXT.MEDIUM,
-      previousMaturityScore: MATURITY_SCORE_TEXT.MEDIUM
+      score: MATURITY_SCORE_TEXT.MEDIUM,
+      previousScore: MATURITY_SCORE_TEXT.MEDIUM
     },
     {
       name: "Org Tag Three",
-      maturityScore: MATURITY_SCORE_TEXT.LOW,
-      previousMaturityScore: MATURITY_SCORE_TEXT.MEDIUM
+      score: MATURITY_SCORE_TEXT.LOW,
+      previousScore: MATURITY_SCORE_TEXT.MEDIUM
     },
     {
       name: "Org Tag Four",
-      maturityScore: MATURITY_SCORE_TEXT.ELITE,
-      previousMaturityScore: MATURITY_SCORE_TEXT.LOW
+      score: MATURITY_SCORE_TEXT.ELITE,
+      previousScore: MATURITY_SCORE_TEXT.LOW
     }
   ];
   return (
@@ -83,27 +107,6 @@ function SystemDrivenMaturity () {
         <Col>Medium</Col>
         <Col>High</Col>
         <Col>Elite</Col>
-      </Row>
-      <Row>
-        <Col>Org Tag 1</Col>
-        <Col></Col>
-        <Col><Icon color="grey" /></Col>
-        <Col><Icon color="green"/></Col>
-        <Col></Col>
-      </Row>
-      <Row>
-        <Col>Org Tag 2</Col>
-        <Col></Col>
-        <Col></Col>
-        <Col></Col>
-        <Col><Icon color="orange" /></Col>
-      </Row>
-      <Row>
-        <Col>Org Tag 3</Col>
-        <Col><Icon color="red" /></Col>
-        <Col><Icon color="grey" /></Col>
-        <Col></Col>
-        <Col></Col>
       </Row>
       {orgTags.map((orgTag, index) => <OrgTagRow key={index} orgTag={orgTag} />)}
     </Container>
