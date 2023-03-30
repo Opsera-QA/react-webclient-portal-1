@@ -16,7 +16,6 @@ function ScreenContainerTitleBar(
     titleActionBar,
     helpComponent,
     isBeta,
-    auditLogType,
   }) {
   const {
     currentUrl,
@@ -34,16 +33,16 @@ function ScreenContainerTitleBar(
         {getInactiveText()}
         {titleActionBar}
         <CopyToClipboardIconBase
-          className={"ml-2"}
+          className={"ml-3"}
           copyString={currentUrl}
           copyIcon={faLink}
           copyText={"Copy direct link to this page."}
           copiedText={"Copied direct link to clipboard!"}
         />
-        <LaunchHelpIcon helpComponent={helpComponent} className={"ml-2"} />
+        <LaunchHelpIcon helpComponent={helpComponent} className={"ml-3"} />
         <BetaBadge
           isBeta={isBeta}
-          className={"mr-1 ml-2 my-auto"}
+          className={"mr-1 ml-3 my-auto"}
         />
       </div>
     );
@@ -70,7 +69,6 @@ ScreenContainerTitleBar.propTypes = {
   isLoading: PropTypes.bool,
   helpComponent: PropTypes.object,
   isBeta: PropTypes.bool,
-  auditLogType: PropTypes.string,
 };
 
 export default ScreenContainerTitleBar;

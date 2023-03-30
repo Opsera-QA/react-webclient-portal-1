@@ -4,10 +4,10 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import {faCheckCircle} from "@fortawesome/pro-light-svg-icons";
 import VanityButtonBase from "temp-library-components/button/VanityButtonBase";
 import useButtonState from "hooks/general/buttons/useButtonState";
-import {pipelineHelper} from "components/workflow/pipeline.helper";
 import Model from "core/data_model/model";
 import tagMetadata from "components/settings/tags/tag.metadata";
 import useTagActions from "hooks/settings/tags/useTagActions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 export default function PipelineStepTagWarningApplyTagButton(
   {
@@ -17,6 +17,7 @@ export default function PipelineStepTagWarningApplyTagButton(
     className,
     disabled,
     setBusy,
+    tagRequirementModel,
   }) {
   const {
     buttonState,
@@ -31,12 +32,11 @@ export default function PipelineStepTagWarningApplyTagButton(
     toastContext.clearOverlayPanel();
   };
 
-
   const applyTagAndSave = async () => {
     try {
       buttonStateFunctions.setBusyState();
       setBusy(true);
-      const tagValue = pipelineHelper.getTagValueForStep(stepConfigurationModel?.getCurrentData());
+      const tagValue = DataParsingHelper.parseString(tagRequirementModel?.getData("tag"), "");
       const response = await tagActions.doesTagExistWithTypeAndValue("pipeline", tagValue);
       const doesTagExist = response?.data?.data === true;
 
@@ -74,7 +74,7 @@ export default function PipelineStepTagWarningApplyTagButton(
       errorText={"Error Saving Step Configuration"}
       successText={"Successfully Saved Step Configuration"}
       className={className}
-      disabled={disabled}
+      disabled={disabled || tagRequirementModel?.isFieldValidV2("tag") !== true}
       buttonState={buttonState}
       onClickFunction={applyTagAndSave}
       variant={"outline-success"}
@@ -90,4 +90,5 @@ PipelineStepTagWarningApplyTagButton.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   setBusy: PropTypes.func,
+  tagRequirementModel: PropTypes.object,
 };
