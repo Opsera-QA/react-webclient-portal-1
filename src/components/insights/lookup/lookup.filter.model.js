@@ -22,7 +22,7 @@ const insightsLookupMetadata = {
       id: "selectedComponentNames",
     },
     {
-      label: "",
+      label: "Selected Component Filters",
       id: "selectedComponentFilterData",
     },
   ],
