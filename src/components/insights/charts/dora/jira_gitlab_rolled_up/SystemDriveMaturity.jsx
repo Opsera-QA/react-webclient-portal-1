@@ -58,7 +58,7 @@ function SystemDrivenMaturity () {
   ];
   return (
     <Container className="p-3" style={{fontSize: '2rem'}}>
-      <Row>
+      <Row className="text-center">
         <Col></Col>
         <Col>Low</Col>
         <Col>Medium</Col>
