@@ -12,6 +12,7 @@ import ScreenContainerBodyLoadingDialog
 import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import RoleHelper from "@opsera/know-your-role/roles/role.helper";
+import ActiveFilterDisplayer from "components/common/filters/ActiveFilterDisplayer";
 
 function DetailScreenContainer(
   {
@@ -28,6 +29,10 @@ function DetailScreenContainer(
     objectRoles,
     helpComponent,
     isBeta,
+    showActiveFilters,
+    filterModel,
+    filters,
+    loadDataFunction,
   }) {
   const breadcrumb = getBreadcrumb(breadcrumbDestination);
   const parentBreadcrumb = getParentBreadcrumb(breadcrumbDestination);
@@ -119,6 +124,17 @@ function DetailScreenContainer(
     return bodyHeightString;
   };
 
+  const getActiveFilterDisplayer = () => {
+    if (showActiveFilters === true) {
+      return (
+        <ActiveFilterDisplayer
+          filterModel={filterModel}
+          loadData={loadDataFunction}
+        />
+      );
+    }
+  };
+
   if (!isLoading && accessDenied) {
     return (
       <AccessDeniedContainer
@@ -172,9 +188,13 @@ function DetailScreenContainer(
               titleActionBar={titleActionBar}
               helpComponent={helpComponent}
               isBeta={isBeta}
+              filterModel={filterModel}
+              filters={filters}
+              loadDataFunction={loadDataFunction}
             />
           </div>
         </div>
+        {getActiveFilterDisplayer()}
         <div
           style={{minHeight: getBodyHeight()}}
         >
@@ -200,6 +220,10 @@ DetailScreenContainer.propTypes = {
   objectRoles: PropTypes.array,
   helpComponent: PropTypes.object,
   isBeta: PropTypes.bool,
+  showActiveFilters: PropTypes.bool,
+  filterModel: PropTypes.object,
+  filters: PropTypes.any,
+  loadDataFunction: PropTypes.func,
 };
 
 export default DetailScreenContainer;
