@@ -15,6 +15,8 @@ function InfoContainer(
     className,
     minimumHeight,
     maximumHeight,
+    minimumWidth,
+    maximumWidth,
     loadDataFunction,
     backgroundColor,
     field,
@@ -30,6 +32,8 @@ function InfoContainer(
 
     styling.minHeight = minimumHeight;
     styling.maxHeight = maximumHeight;
+    styling.minWidth = minimumWidth;
+    styling.maxWidth = maximumWidth;
 
     if (hasStringValue(minimumHeight) === true && hasStringValue(maximumHeight) === true) {
       styling.overflowY = overflowY;
@@ -71,6 +75,8 @@ InfoContainer.propTypes = {
   titleRightSideButton: PropTypes.object,
   minimumHeight: PropTypes.string,
   maximumHeight: PropTypes.string,
+  minimumWidth: PropTypes.string,
+  maximumWidth: PropTypes.string,
   loadDataFunction: PropTypes.func,
   backgroundColor: PropTypes.string,
   field: PropTypes.object,
