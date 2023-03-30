@@ -40,6 +40,8 @@ export default function ExportInsightsLookupDetailsPanel({
           "Deployed",
           "Unit Tested",
           "Deployed By",
+          "Deployment Start",
+          "Deployment End",
           "Duration (mins)",
         ],
       ],
@@ -52,6 +54,8 @@ export default function ExportInsightsLookupDetailsPanel({
         item.deployed,
         item.unitTests,
         item.createdByName,
+        DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(item.startTimestamp)),
+        DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(item.endTimestamp)),
         item.difference,
       ]),
     });
@@ -70,6 +74,8 @@ export default function ExportInsightsLookupDetailsPanel({
         "Deployed",
         "Unit Tested",
         "Deployed By",
+        "Deployment Start",
+        "Deployment End",
         "Duration (mins)",
       ],
       ...LookupDetailsData.map((item) => [
@@ -81,6 +87,8 @@ export default function ExportInsightsLookupDetailsPanel({
         item.deployed,
         item.unitTests,
         item.createdByName,
+        DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(item.startTimestamp)),
+        DateFormatHelper.formatDateAsTimestampWithoutSeconds(new Date(item.endTimestamp)),
         item.difference,
       ]),
     ];

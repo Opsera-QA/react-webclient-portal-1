@@ -73,6 +73,18 @@ function InsightsLookupDetailsTable({
         undefined,
         undefined,
       ),
+        getTableDateTimeColumn(
+            getField(fields, "startTimestamp"),
+            "no-wrap-inline",
+            undefined,
+            undefined,
+        ),
+        getTableDateTimeColumn(
+            getField(fields, "endTimestamp"),
+            "no-wrap-inline",
+            undefined,
+            undefined,
+        ),
         getTableTextColumn(
             getField(fields, "difference"),
             "no-wrap-inline",
