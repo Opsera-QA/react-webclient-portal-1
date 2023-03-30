@@ -2,7 +2,7 @@ import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import {faCheckCircle, faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import {
-  getColumnHeader, getColumnId,
+  getTableBooleanIconColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -22,7 +22,7 @@ function SfdxScanLogSummaryTable({ summaryQGObject }) {
       getTableTextColumn(getField(fields, "category")),
       getTableTextColumn(getField(fields, "count")),
       getTableTextColumn(getField(fields, "threshold")),
-      getTableTextColumn(getField(fields, "passStatus")),
+      getTableBooleanIconColumn(getField(fields, "passStatus")),
       getTableTextColumn(getField(fields, "engine")),
       getTableTextColumn(getField(fields, "description")),
     ],
