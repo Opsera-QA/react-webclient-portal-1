@@ -29,6 +29,7 @@ function ScreenContainer(
     bodyClassName,
     auditLogType,
     className,
+    hideSubNavigationBlock,
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const toastContext = useContext(DialogToastContext);
@@ -59,7 +60,7 @@ function ScreenContainer(
       );
     }
 
-    if (isFreeTrial !== true || isOpseraAdministrator === true) {
+    if (isFreeTrial !== true || isOpseraAdministrator === true || hideSubNavigationBlock === true) {
       return (
         <div className="mb-2">
           <div className="sub-navigation-block" />
@@ -207,6 +208,7 @@ ScreenContainer.propTypes = {
   bodyClassName: PropTypes.string,
   auditLogType: PropTypes.string,
   className: PropTypes.string,
+  hideSubNavigationBlock: PropTypes.bool,
 };
 
 ScreenContainer.defaultProps = {
