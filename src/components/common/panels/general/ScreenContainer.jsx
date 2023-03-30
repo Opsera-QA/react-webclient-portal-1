@@ -13,6 +13,7 @@ import {hasStringValue} from "components/common/helpers/string-helpers";
 import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import RoleHelper from "@opsera/know-your-role/roles/role.helper";
+import ActiveFilterDisplayer from "components/common/filters/ActiveFilterDisplayer";
 
 function ScreenContainer(
   {
@@ -29,6 +30,11 @@ function ScreenContainer(
     bodyClassName,
     auditLogType,
     className,
+    hideSubNavigationBlock,
+    showActiveFilters,
+    filters,
+    filterModel,
+    loadDataFunction,
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const toastContext = useContext(DialogToastContext);
@@ -59,7 +65,7 @@ function ScreenContainer(
       );
     }
 
-    if (isFreeTrial !== true || isOpseraAdministrator === true) {
+    if (isFreeTrial !== true || isOpseraAdministrator === true || hideSubNavigationBlock === true) {
       return (
         <div className="mb-2">
           <div className="sub-navigation-block" />
@@ -135,6 +141,17 @@ function ScreenContainer(
     return bodyHeightString;
   };
 
+  const getActiveFilterDisplayer = () => {
+    if (showActiveFilters !== false && filters != null && filterModel != null) {
+      return (
+        <ActiveFilterDisplayer
+          filterModel={filterModel}
+          loadData={loadDataFunction}
+        />
+      );
+    }
+  };
+
   if (!isLoading && accessDenied) {
     return (
       <AccessDeniedContainer
@@ -178,8 +195,12 @@ function ScreenContainer(
               titleActionBar={titleActionBar}
               helpComponent={helpComponent}
               auditLogType={auditLogType}
+              filterModel={filterModel}
+              filters={filters}
+              loadDataFunction={loadDataFunction}
             />
           </div>
+          {getActiveFilterDisplayer()}
           <div
             style={{ minHeight: getBodyHeight()}}
           >
@@ -207,6 +228,11 @@ ScreenContainer.propTypes = {
   bodyClassName: PropTypes.string,
   auditLogType: PropTypes.string,
   className: PropTypes.string,
+  hideSubNavigationBlock: PropTypes.bool,
+  showActiveFilters: PropTypes.bool,
+  filterModel: PropTypes.object,
+  loadDataFunction: PropTypes.func,
+  filters: PropTypes.any,
 };
 
 ScreenContainer.defaultProps = {

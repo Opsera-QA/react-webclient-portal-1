@@ -6,6 +6,8 @@ import BetaBadge from "components/common/badges/BetaBadge";
 import useLocationReference from "hooks/useLocationReference";
 import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboardIconBase";
 import {faLink} from "@fortawesome/pro-light-svg-icons";
+import EditFiltersIcon from "temp-library-components/icon/filters/EditFiltersIcon";
+import RefreshIcon from "temp-library-components/icon/refresh/RefreshIcon";
 
 function ScreenContainerTitleBar(
   {
@@ -16,6 +18,9 @@ function ScreenContainerTitleBar(
     titleActionBar,
     helpComponent,
     isBeta,
+    filters,
+    filterModel,
+    loadDataFunction,
   }) {
   const {
     currentUrl,
@@ -32,17 +37,31 @@ function ScreenContainerTitleBar(
       <div className="ml-auto d-flex">
         {getInactiveText()}
         {titleActionBar}
+        <EditFiltersIcon
+          filterModel={filterModel}
+          filters={filters}
+          loadDataFunction={loadDataFunction}
+          className={"ml-3"}
+        />
         <CopyToClipboardIconBase
-          className={"ml-2"}
+          className={"ml-3"}
           copyString={currentUrl}
           copyIcon={faLink}
           copyText={"Copy direct link to this page."}
           copiedText={"Copied direct link to clipboard!"}
         />
-        <LaunchHelpIcon helpComponent={helpComponent} className={"ml-2"} />
+        <LaunchHelpIcon
+          helpComponent={helpComponent}
+          className={"ml-3"}
+        />
+        <RefreshIcon
+          className={"ml-3"}
+          isLoading={isLoading}
+          loadDataFunction={loadDataFunction}
+        />
         <BetaBadge
           isBeta={isBeta}
-          className={"mr-1 ml-2 my-auto"}
+          className={"mr-1 ml-3 my-auto"}
         />
       </div>
     );
@@ -69,6 +88,9 @@ ScreenContainerTitleBar.propTypes = {
   isLoading: PropTypes.bool,
   helpComponent: PropTypes.object,
   isBeta: PropTypes.bool,
+  filterModel: PropTypes.object,
+  loadDataFunction: PropTypes.func,
+  filters: PropTypes.any,
 };
 
 export default ScreenContainerTitleBar;
