@@ -21,6 +21,7 @@ function SalesforceLogSummarySuccessfulComponentsTable({ hasFailureComponents, s
       getTableTextColumn(getField(fields, "componentType")),
       getTableTextColumn(getField(fields, "fullName")),
       getTableTextColumn(getField(fields, "fileName")),
+      getTableTextColumn(getField(fields, "problem")),
       getTableBooleanIconColumn(getField(fields, "success"), undefined, 75),
       getSalesforceSumamryTableBooleanIconColumn(getField(fields, "warning"), undefined, 75),
       getSalesforceSumamryTableBooleanIconColumn(getField(fields, "created"), undefined, 75),
