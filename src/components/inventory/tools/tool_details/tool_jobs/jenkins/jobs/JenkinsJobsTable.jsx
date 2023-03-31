@@ -4,6 +4,7 @@ import CustomTable from "components/common/table/CustomTable";
 import NewJenkinsJobOverlay from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/NewJenkinsJobOverlay";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {
+  getLimitedTableTextColumn,
   getTableBooleanIconColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
@@ -64,7 +65,7 @@ function JenkinsJobsTable({ toolData, loadData, onRowSelect, isLoading, jenkinsJ
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "description")),
+      getLimitedTableTextColumn(getField(fields, "description"), 100),
       getJobTypeColumn(getField(fields, "type")),
       getTableBooleanIconColumn(getField(fields, "active"))
     ],
