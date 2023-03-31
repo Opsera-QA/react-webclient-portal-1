@@ -35,7 +35,6 @@ export default function FreeTrialUserActivityReportWorkflowsTable(
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "_id")),
       getFormattedLabelWithFunctionColumnDefinition(
         getField(fields, "workspaceType"),
         workspaceConstants.getLabelForWorkspaceType,

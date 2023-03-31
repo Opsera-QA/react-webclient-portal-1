@@ -41,7 +41,6 @@ export default function PlatformSettingFeatureTable(
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "_id")),
       getTableTextColumn(getField(fields, "name")),
       getTableBooleanIconColumn(getField(fields, "active")),
     ],

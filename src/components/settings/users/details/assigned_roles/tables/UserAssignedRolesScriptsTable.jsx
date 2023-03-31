@@ -18,7 +18,6 @@ export default function UserAssignedRolesScriptsTable(
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
-      getTableTextColumn(getField(fields, "_id")),
       getUserObjectRoleLevelColumnDefinition(userEmailAddress),
     ],
     [fields],

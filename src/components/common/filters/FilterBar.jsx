@@ -31,6 +31,7 @@ function FilterBar(
     showRefreshButton,
     disableNewRecordButton,
     filterSelectionOverlayPanel,
+    addRecordButtonCustomText,
   }) {
   const getType = () => {
     if (hasStringValue(type) === true) {
@@ -97,6 +98,7 @@ function FilterBar(
             isLoading={isLoading}
             variant={"success"}
             disabled={disableNewRecordButton}
+            customButtonText={addRecordButtonCustomText}
           />
           <ImportDataButton
             className={"ml-2"}
@@ -161,6 +163,7 @@ FilterBar.propTypes = {
   showRefreshButton: PropTypes.bool,
   disableNewRecordButton: PropTypes.bool,
   filterSelectionOverlayPanel: PropTypes.object,
+  addRecordButtonCustomText: PropTypes.string,
 };
 
 FilterBar.defaultProps = {

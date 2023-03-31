@@ -20,7 +20,6 @@ export default function LdapGroupAssignedRolesParametersTable(
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
-      getTableTextColumn(getField(fields, "_id")),
       getGroupRoleLevelColumnDefinition(group),
     ],
     [fields],
