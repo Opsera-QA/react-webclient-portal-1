@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 
 function DoraJiraGitlabHelpDocumentation({ closeHelpPanel }) {
   return (
-    <HelpDocumentationContainer closeHelpPanel={closeHelpPanel} helpTopic={"Dora Jira Gitlab Rolled Up"}>
-      <div>The Dora Jira Gitlab Rolled Up KPI calculates the maturity levels for each DORA metric in a unified way. For more information view the <a href="https://docs.opsera.io/insights/kpi/dora-metrics/system-driven-maturity-kpi" target="_blank" rel="noreferrer"><b>System Driven Maturity KPI Help Documentation</b>.</a>
+    <HelpDocumentationContainer closeHelpPanel={closeHelpPanel} helpTopic={"System Driven Maturity"}>
+      <div>The System Driven Maturity KPI calculates the maturity levels for each DORA metric in a unified way. For more information view the <a href="https://docs.opsera.io/insights/kpi/dora-metrics/system-driven-maturity-kpi" target="_blank" rel="noreferrer"><b>System Driven Maturity KPI Help Documentation</b>.</a>
           <ul style={{listStyleType: "none"}}>
             <li><b>Deployment Stage</b> - Choose a deployment stage (Example: Prod).</li>
             <li><b>Gitlab Project</b> - Choose one or multiple Gitlab projects from the drop-down.</li>
