@@ -29,7 +29,6 @@ function PipelinesTableBase(
     () => {
       const columnsArray = [
         getPipelineTypeColumn(getField(fields, "type")),
-        getTableTextColumn(getField(fields, "_id")),
         getLimitedTableTextColumn(getField(fields, "name"), 50),
         getOwnerNameField(),
         getCustomTablePipelineStateColumnDefinition(getField(fields, "state")),

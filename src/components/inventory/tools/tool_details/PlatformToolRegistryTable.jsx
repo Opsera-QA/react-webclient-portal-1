@@ -64,7 +64,6 @@ function PlatformToolRegistryTable({ data, isLoading, reLoadData, setIsLoading, 
 
   const columns = useMemo(
     () => [
-      // getTableTextColumn(fields.find(field => { return field.id === "_id";})),
       getTableTextColumn(fields.find(field => { return field.id === "name";})),
       getTableTextColumn(fields.find(field => { return field.id === "tool_identifier";})),
       getTableDateColumn(fields.find(field => { return field.id === "createdAt";})),

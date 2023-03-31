@@ -7,7 +7,7 @@ import {faBrowser} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CreateArgoProjectOverlay
   from "components/inventory/tools/tool_details/tool_jobs/argo/projects/CreateArgoProjectOverlay";
-import {getTableTextColumn} from "components/common/table/table-column-helpers-v2";
+import {getTableTextColumn, getLimitedTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 
 function ArgoToolProjectsTable({ toolId, argoProjects, loadData, onRowSelect, isLoading, filterData, filterModel, setFilterModel }) {
@@ -26,7 +26,7 @@ function ArgoToolProjectsTable({ toolId, argoProjects, loadData, onRowSelect, is
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "description")),
+      getLimitedTableTextColumn(getField(fields, "description"), 100),
     ],
     []
   );

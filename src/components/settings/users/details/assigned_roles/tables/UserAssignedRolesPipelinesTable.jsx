@@ -21,7 +21,6 @@ export default function UserAssignedRolesPipelinesTable(
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
-      getTableTextColumn(getField(fields, "_id")),
       getUserObjectRoleLevelColumnDefinition(userEmailAddress),
     ],
     [fields],
