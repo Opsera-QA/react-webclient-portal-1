@@ -38,7 +38,7 @@ function PositiveIntegerNumberPickerInput(
       setDataObject({...newDataObject});
       return;
     }
-    
+
     let parsedValue = Math.trunc(newValue);
     const numericalFieldRegex = regexDefinitions.numericalField.regex;
 
