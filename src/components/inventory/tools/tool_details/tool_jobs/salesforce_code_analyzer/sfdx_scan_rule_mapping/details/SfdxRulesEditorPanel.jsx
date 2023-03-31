@@ -53,6 +53,8 @@ function SfdxRulesEditorPanel({ pmdRuleData, toolData, ruleId, handleClose }) {
     }
   };
 
+  console.log(pmdRuleModel?.getPersistData());
+
   const createQualityGate = async () => {
     return await sfdxScanActions.createRule(getAccessToken, cancelTokenSource, toolData?.getData("_id"), pmdRuleModel);
   };
