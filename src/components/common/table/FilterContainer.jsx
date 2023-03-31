@@ -40,6 +40,7 @@ function FilterContainer({
   hideActiveFilterDisplayer,
   bodyStyling,
   hideXOverflow,
+  addRecordButtonCustomText,
   // TODO: Remove after filters are used everywhere
   type,
 }) {
@@ -64,6 +65,7 @@ function FilterContainer({
         showRefreshButton={showRefreshButton}
         disableNewRecordButton={disableNewRecordButton}
         filterSelectionOverlayPanel={filterSelectionOverlayPanel}
+        addRecordButtonCustomText={addRecordButtonCustomText}
       />
     );
   };
@@ -116,14 +118,11 @@ function FilterContainer({
               : "px-2 py-1 d-flex content-block-header"
           }>
             <FilterTitleBar
+              title={title}
+              inlineFilters={getFilterBar()}
+              titleIcon={titleIcon}
               isLoading={isLoading}
               isPolling={isPolling}
-              title={title}
-              type={type}
-              filterDto={filterDto}
-              titleIcon={titleIcon}
-              inlineFilters={getFilterBar()}
-              addRecordFunction={addRecordFunction}
             />
           </div>
           {getActiveFilterDisplayer()}
@@ -170,6 +169,7 @@ FilterContainer.propTypes = {
   filterSelectionOverlayPanel: PropTypes.any,
   isPolling: PropTypes.bool,
   hideActiveFilterDisplayer: PropTypes.bool,
+  addRecordButtonCustomText: PropTypes.string,
 };
 
 FilterContainer.defaultProps = {
