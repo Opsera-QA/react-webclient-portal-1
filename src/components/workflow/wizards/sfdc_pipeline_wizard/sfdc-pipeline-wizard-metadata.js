@@ -64,7 +64,7 @@ const sfdcPipelineWizardMetadata = {
       id: "stepId",
     },
     {
-      label: "Salesforce Tool ID",
+      label: "Salesforce Org",
       id: "sfdcToolId",
     },
     {
@@ -136,7 +136,7 @@ const sfdcPipelineWizardMetadata = {
       id: "run_count",
     },
     {
-      label: "Git Branch",
+      label: "Branch",
       id: "gitBranch",
     },
     {
@@ -146,7 +146,27 @@ const sfdcPipelineWizardMetadata = {
     {
       label: "Ignore Warning",
       id: "ignoreWarning"
-    }
+    },
+    {
+      label: "Repository",
+      id: "repository",
+    },
+    {
+      label: "Service",
+      id: "service",
+    },
+    {
+      label: "Workspace",
+      id: "workspace",
+    },
+    {
+      label: "Git Account",
+      id: "gitToolId",
+    },
+    {
+      label: "Salesforce Destination Org",
+      id: "sfdcDestToolId",
+    },
   ],
   newObjectFields: {
     includedComponentTypes: "all",
@@ -181,6 +201,10 @@ const sfdcPipelineWizardMetadata = {
     accountUsername: "",
     isSfdx: false,
     ignoreWarning: false,
+    workspace: "",
+    service: "",
+    repository: "",
+    sfdcDestToolId: "",
   }
 };
 
