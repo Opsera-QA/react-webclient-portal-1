@@ -44,7 +44,6 @@ function GithubActionsBottomTable(
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "_id")),
       getTableTextColumn(getField(fields, "runs")),
       getTableTextColumn(getField(fields, "repos")),
       getTableTextColumn(getField(fields, "success")),

@@ -22,7 +22,6 @@ function TagsUsedInPipelineTable({ data, loadData, isLoading}) {
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "_id")),
       getTableTextColumn(getField(fields, "description")),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableBooleanIconColumn(getField(fields, "active")),
