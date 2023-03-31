@@ -64,8 +64,19 @@ function AnalyticsDataEntryTable({
         onRowSelect={onRowSelect}
         data={analyticsDataEntries}
         columns={columns}
+        loadData={loadData}
+        paginationDto={analyticsDataEntryFilterModel}
+        setPaginationDto={setAnalyticsDataEntryFilterModel}
       />
     );
+  };
+
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newDataObject = analyticsDataEntryFilterModel;
+    newDataObject.setData(fieldName, selectedOption?.identifier);
+    newDataObject.setData("identifierName", selectedOption?.name);
+    newDataObject.setData("currentPage", 1);
+    setAnalyticsDataEntryFilterModel({...newDataObject});
   };
 
   const getInlineFilters = () => {
@@ -88,6 +99,7 @@ function AnalyticsDataEntryTable({
           setFilterModel={setAnalyticsDataEntryFilterModel}
           manualDataEntry={true}
           className={"mb-2"}
+          setDataFunction={setDataFunction}
         />
         <ActiveFilter filterDto={analyticsDataEntryFilterModel} setFilterDto={setAnalyticsDataEntryFilterModel} />
       </>

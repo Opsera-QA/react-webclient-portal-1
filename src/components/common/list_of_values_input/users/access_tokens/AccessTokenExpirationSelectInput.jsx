@@ -12,18 +12,16 @@ const expirationLengths = [
 
 function AccessTokenExpirationSelectInput({ fieldName, dataObject, setDataObject, disabled}) {
   return (
-    <div>
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        selectOptions={expirationLengths}
-        valueField={"value"}
-        showClearValueButton={false}
-        textField={"text"}
-        disabled={disabled}
-      />
-    </div>
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      selectOptions={expirationLengths}
+      valueField={"value"}
+      showClearValueButton={false}
+      textField={"text"}
+      disabled={disabled}
+    />
   );
 }
 

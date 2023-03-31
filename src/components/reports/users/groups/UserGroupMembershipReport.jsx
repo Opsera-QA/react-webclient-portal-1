@@ -4,60 +4,28 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Model from "core/data_model/model";
 import userReportsMetadata from "components/reports/users/user-reports-metadata";
-import accountsActions from "components/admin/accounts/accounts-actions";
 import UserGroupMembershipReportTable from "components/reports/users/groups/UserGroupMembershipReportTable";
 import LdapUserByDomainSelectInput from "components/common/list_of_values_input/users/LdapUserByDomainSelectInput";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import useGetLdapGroups from "hooks/ldap/groups/useGetLdapGroups";
 
 function UserGroupMembershipReport() {
-  const [isLoading, setIsLoading] = useState(true);
   const [groupMembershipModel, setGroupMembershipModel] = useState(new Model({...userReportsMetadata}, userReportsMetadata, false));
-  const [groupList, setGroupList] = useState([]);
   const {
     isSiteAdministrator,
     isOpseraAdministrator,
     isAuditor,
     isSecurityManager,
-    cancelTokenSource,
-    getAccessToken,
-    isMounted,
-    toastContext,
     userData,
     isSaasUser,
   } = useComponentStateReference();
-
-  useEffect(() => {
-    if (isSaasUser === false) {
-      loadData().catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
-  }, [isSaasUser]);
-
-  const loadData = async () => {
-    try {
-      if (isMounted?.current === true) {
-        setIsLoading(true);
-        const groupResponse = await accountsActions.getLdapGroupsWithDomainV2(getAccessToken, cancelTokenSource, userData?.ldap?.domain);
-
-        if (Array.isArray(groupResponse?.data)) {
-          setGroupList(groupResponse?.data);
-        }
-      }
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.error(error);
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
+  const {
+    groups,
+    isLoading,
+    loadData,
+    error,
+  } = useGetLdapGroups();
 
   const setDataFunction = (fieldName, value) => {
     let newDataObject = groupMembershipModel;
@@ -78,10 +46,11 @@ function UserGroupMembershipReport() {
   };
 
   if (
-    isSiteAdministrator !== true
-    && isOpseraAdministrator !== true
-    && isAuditor !== true
-    && isSecurityManager !== true
+    isSaasUser === true || (
+      isSiteAdministrator !== true
+      && isOpseraAdministrator !== true
+      && isAuditor !== true
+      && isSecurityManager !== true)
   ) {
     return null;
   }
@@ -91,6 +60,7 @@ function UserGroupMembershipReport() {
       breadcrumbDestination={"groupMembershipReport"}
       navigationTabContainer={<ReportsSubNavigationBar currentTab={"userReportViewer"}/>}
       pageDescription={"View the Group Membership of a selected User"}
+      error={error}
     >
       <Row className={"mb-3 mx-0"}>
         <Col className={"mx-0"}>
@@ -103,7 +73,7 @@ function UserGroupMembershipReport() {
         </Col>
       </Row>
       <UserGroupMembershipReportTable
-        groups={groupList}
+        groups={groups}
         isLoading={isLoading}
         loadData={loadData}
         domain={userData?.ldap?.domain}

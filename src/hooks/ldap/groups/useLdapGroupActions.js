@@ -20,11 +20,40 @@ export default function useLdapGroupActions() {
     );
   };
 
-  ldapGroupActions.getLdapUserGroupsWithDomainV2 = async (
+  ldapGroupActions.getLdapUserGroups = async () => {
+    const apiUrl = `/account/groups`;
+    return await apiService.handleApiGetRequest( apiUrl);
+  };
+
+  ldapGroupActions.getLdapUserGroupsWithDomain = async (
     domain,
   ) => {
-    const apiUrl = `/users/account/${domain}/user-groups`;
+    const apiUrl = `/account/groups/${domain}`;
     return await apiService.handleApiGetRequest( apiUrl);
+  };
+
+  ldapGroupActions.getLdapUserGroupByNameWithDomain = async (
+    domain,
+    groupName,
+  ) => {
+    const apiUrl = `/account/groups/${domain}/name/${groupName}`;
+    return await apiService.handleApiGetRequest( apiUrl);
+  };
+
+  ldapGroupActions.deleteLdapGroup = async (
+    domain,
+    groupName,
+  ) => {
+    const apiUrl = `/account/groups/${domain}/name/${groupName}`;
+    return await apiService.handleApiDeleteRequest( apiUrl);
+  };
+
+  ldapGroupActions.revokeAssignedGroupAccessRules = async (
+    domain,
+    groupName,
+  ) => {
+    const apiUrl = `/account/groups/${domain}/name/${groupName}/assigned-roles`;
+    return await apiService.handleApiDeleteRequest( apiUrl);
   };
 
   return ldapGroupActions;

@@ -14,8 +14,6 @@ export default function FreeTrialWorkspaceItemViews(
     workspaceFilterModel,
     setWorkspaceFilterModel,
     loadData,
-    taskMetadata,
-    toolMetadata,
   }) {
   const getCardView = () => {
     return (
@@ -24,8 +22,6 @@ export default function FreeTrialWorkspaceItemViews(
         loadData={loadData}
         workspaceItems={workspaceItems}
         workspaceFilterModel={workspaceFilterModel}
-        taskMetadata={taskMetadata}
-        toolMetadata={toolMetadata}
       />
     );
   };
@@ -60,6 +56,4 @@ FreeTrialWorkspaceItemViews.propTypes = {
   loadData: PropTypes.func,
   workspaceFilterModel: PropTypes.object,
   setWorkspaceFilterModel: PropTypes.func,
-  taskMetadata: PropTypes.object,
-  toolMetadata: PropTypes.object,
 };

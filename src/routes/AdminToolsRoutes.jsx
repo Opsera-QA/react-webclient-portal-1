@@ -44,11 +44,14 @@ import PlatformSystemParameterDetailView
 import useComponentStateReference from "hooks/useComponentStateReference";
 import PlatformSettingsManagement from "components/admin/platform_settings/PlatformSettingsManagement";
 import PlatformSettingsDetailView from "components/admin/platform_settings/details/PlatformSettingsDetailView";
+import RemoteApplicationManagement from "../components/admin/remote_applications/RemoteApplicationManagement";
+import RemoteApplicationDetailView from "../components/admin/remote_applications/details/RemoteApplicationDetailView";
 import OrganizationSettingsManagement from "components/admin/organization_settings/OrganizationSettingsManagement";
 import OrganizationSettingsDetailView
   from "components/admin/organization_settings/details/OrganizationSettingsDetailView";
 import RoleRestrictedRoute from "temp-library-components/routes/RoleRestrictedRoute";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import LdapUserDetailView from "components/admin/accounts/ldap/users/details/LdapUserDetailView";
 
 export default function AdminToolsRoutes() {
   const {
@@ -96,6 +99,11 @@ export default function AdminToolsRoutes() {
       <SecureRoute path="/admin/organization-accounts/:organizationDomain/details" exact
                    component={LdapOrganizationAccountDetailView} />
       <SecureRoute path="/admin/accounts/create" exact component={LdapCustomerOnboardView} />
+      <SecureRoute
+        path={"/admin/organization-accounts/:organizationDomain/users/:emailAddress/details"}
+        exact
+        component={LdapUserDetailView}
+      />
 
 
       <SecureRoute path="/admin/templates/tasks" exact component={TaskTemplateManagement} />
@@ -121,6 +129,8 @@ export default function AdminToolsRoutes() {
       <SecureRoute path="/admin/platform/system-parameters/details/:systemParameterId" exact
                    component={PlatformSystemParameterDetailView} />
       <SecureRoute path="/admin/demo/api" component={ApiConnectionTest} />
+      <SecureRoute path="/admin/remote-applications" exact component={RemoteApplicationManagement} />
+      <SecureRoute path="/admin/remote-applications/details/:id" exact component={RemoteApplicationDetailView} />
     </>
   );
 }

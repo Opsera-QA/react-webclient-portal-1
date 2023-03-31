@@ -63,7 +63,7 @@ function GitCustodian() {
         gitCustodianFilterModel={gitCustodianFilterModel}
         setGitCustodianFilterModel={setGitCustodianFilterModel}
         loadData={loadData}
-        className={"mr-2"}
+        className={"ml-3"}
       />
     );
   };

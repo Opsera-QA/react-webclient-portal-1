@@ -37,7 +37,7 @@ export default function useGetLdapGroupsForDomain(domain, handleErrorFunction) {
   }, []);
 
   const getLdapGroupsForDomain = async () => {
-    const response = await ldapGroupActions.getLdapUserGroupsWithDomainV2(
+    const response = await ldapGroupActions.getLdapUserGroupsWithDomain(
       domain,
     );
 

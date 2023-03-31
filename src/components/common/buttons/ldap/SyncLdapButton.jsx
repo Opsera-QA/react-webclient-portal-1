@@ -84,14 +84,12 @@ function SyncLdapButton({ disable, userData, loadData }) {
   };
 
   return (
-    <div className="mt-3">
-      <Button
-        variant={getVariant()}
-        disabled={syncing || disable || isLoading || !buttonSupported()}
-        onClick={() => syncLdap()}>
-        {getLabel()}
-      </Button>
-    </div>
+    <Button
+      variant={getVariant()}
+      disabled={syncing || disable || isLoading || !buttonSupported()}
+      onClick={() => syncLdap()}>
+      {getLabel()}
+    </Button>
   );
 }
 

@@ -112,6 +112,28 @@ const jenkinsPipelineStepConfigurationMetadata = {
       lowercase: true,
     },
     {
+      label: "Specify limit on Commit SHA Characters for Docker Dynamic Tag",
+      id: "specifyCommitIdChar",
+    },
+    {
+      label: "Commit SHA Trim Direction",
+      id: "commitIdCharDirection",
+      formText: "Please specify the direction for the trim",
+      isRequiredFunction: (model) => {
+        return model?.getData("specifyCommitIdChar") === true;
+      },
+    },
+    {
+      label: "Commit SHA Character Limit",
+      id: "commitIdCharLimit",
+      formText: "The Commit SHA will be trimmed to the number of characters specified",      
+      minNumber: 1,
+      maxNumber: 40,
+      isRequiredFunction: (model) => {
+        return model?.getData("specifyCommitIdChar") === true;
+      },
+    },
+    {
       label: "Docker File Path",
       id: "dockerPath",
       maxLength:256,
@@ -267,6 +289,10 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Enable Quick Deploy",
       id: "enableQuickDeploy",
+    },
+    {
+      label: "Ignore Warning",
+      id: "ignoreWarning"
     }
   ],
   newObjectFields: {
@@ -320,6 +346,9 @@ const jenkinsPipelineStepConfigurationMetadata = {
     dynamicTag: false,
     dockerTagType:[],
     dockerDynamicTagName:"",
+    specifyCommitIdChar: false,
+    commitIdCharDirection: "prefix",
+    commitIdCharLimit: null,
     runtimeArguments: "",
     dependencies: {},
     dependencyType:"",
@@ -328,7 +357,8 @@ const jenkinsPipelineStepConfigurationMetadata = {
     buildStepId: "",
     commands: "",
     environmentVariables: [],
-    enableQuickDeploy: false
+    enableQuickDeploy: false,
+    ignoreWarning: false,
   }
 };
 

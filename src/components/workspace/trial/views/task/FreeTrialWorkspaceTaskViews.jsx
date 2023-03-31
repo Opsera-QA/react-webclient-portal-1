@@ -14,12 +14,10 @@ export default function FreeTrialWorkspaceTaskViews(
     isLoading,
     loadData,
     tasks,
-    taskMetadata,
   }) {
   const getCardView = () => {
     return (
       <FreeTrialWorkspaceTaskCardView
-        taskMetadata={taskMetadata}
         isLoading={isLoading}
         loadData={loadData}
         tasks={tasks}
@@ -33,7 +31,6 @@ export default function FreeTrialWorkspaceTaskViews(
         isLoading={isLoading}
         loadData={loadData}
         tasks={tasks}
-        taskMetadata={taskMetadata}
       />
     );
   };

@@ -4,11 +4,11 @@ import modelHelpers from "components/common/model/modelHelpers";
 import { useHistory } from "react-router-dom";
 import TaskCardBase from "temp-library-components/cards/tasks/TaskCardBase";
 import { taskHelper } from "components/tasks/task.helper";
+import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 
 export default function WorkspaceTaskCard(
   {
     task,
-    taskMetadata,
   }) {
   const history = useHistory();
 
@@ -18,7 +18,7 @@ export default function WorkspaceTaskCard(
 
   return (
     <TaskCardBase
-      taskModel={modelHelpers.parseObjectIntoModel(task, taskMetadata)}
+      taskModel={modelHelpers.parseObjectIntoModel(task, tasksMetadata)}
       onClickFunction={onClickFunction}
       tooltip={"Click to view Task"}
     />
@@ -27,5 +27,4 @@ export default function WorkspaceTaskCard(
 
 WorkspaceTaskCard.propTypes = {
   task: PropTypes.object,
-  taskMetadata: PropTypes.object,
 };

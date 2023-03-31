@@ -1,82 +1,40 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import LdapGroupsTable from "components/settings/ldap_groups/LdapGroupsTable";
-import axios from "axios";
-import accountsActions from "components/admin/accounts/accounts-actions";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
-import {hasStringValue} from "components/common/helpers/string-helpers";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import useGetLdapGroupsForDomain from "hooks/ldap/groups/useGetLdapGroupsForDomain";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function LdapOrganizationAccountGroupsPanel({ ldapOrganizationAccountData, currentUser, organizationDomain }) {
-  const toastContext = useContext(DialogToastContext);
-  const {getAccessToken} = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(true);
-  const [groupList, setGroupList] = useState([]);
-  const [ldapGroupMetadata, setLdapGroupMetadata] = useState(undefined);
   const [existingGroupNames, setExistingGroupNames] = useState([]);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const {
+    isMounted,
+    userData,
+    isOpseraAdministrator,
+  } = useComponentStateReference();
+  const {
+    loadData,
+    groups,
+    isLoading,
+  } = useGetLdapGroupsForDomain(organizationDomain);
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+    const domain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
+
+    if (organizationDomain == null || (domain !== organizationDomain && isOpseraAdministrator !== true)) {
+      history.push(`/settings/${domain}/groups`);
     }
 
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    isMounted.current = true;
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
   }, [organizationDomain]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
+  useEffect(() => {
+    const existingGroupNames = groups.map((group) => {
+      return group.name.toLowerCase();
+    });
 
-      if (hasStringValue(organizationDomain)) {
-        await getGroupsByDomain(cancelSource);
-      }
-    }
-    catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
-      }
-    }
-    finally {
-      if (isMounted?.current === true && hasStringValue(organizationDomain)) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getGroupsByDomain = async (cancelSource = cancelTokenSource) => {
-      try {
-        const response = await accountsActions.getLdapUserGroupsWithDomainV2(getAccessToken, cancelSource, organizationDomain);
-        const groups = response?.data?.data;
-
-        if (Array.isArray(groups)) {
-          const metadata = response?.data?.metadata;
-          setLdapGroupMetadata({...metadata});
-          const existingGroupNames = groups.map((group) => {return group.name.toLowerCase();});
-          setExistingGroupNames(existingGroupNames);
-          setGroupList(groups);
-        }
-      } catch (error) {
-        toastContext.showLoadingErrorDialog(error);
-        console.error(error);
-      }
-  };
+    setExistingGroupNames(existingGroupNames);
+  }, [groups]);
 
   if (ldapOrganizationAccountData == null) {
     return (<LoadingDialog size="sm"/>);
@@ -85,10 +43,9 @@ function LdapOrganizationAccountGroupsPanel({ ldapOrganizationAccountData, curre
   return (
     <div className={"mt-2"}>
       <LdapGroupsTable
-        orgDomain={organizationDomain}
-        groupData={groupList}
+        organizationDomain={organizationDomain}
+        groupData={groups}
         existingGroupNames={existingGroupNames}
-        ldapGroupMetadata={ldapGroupMetadata}
         loadData={loadData}
         isLoading={isLoading}
         isMounted={isMounted}

@@ -143,6 +143,10 @@ const sfdcPipelineWizardMetadata = {
       label: "Salesforce Account Name",
       id: "accountUsername",
     },
+    {
+      label: "Ignore Warning",
+      id: "ignoreWarning"
+    }
   ],
   newObjectFields: {
     includedComponentTypes: "all",
@@ -176,6 +180,7 @@ const sfdcPipelineWizardMetadata = {
     gitBranch: "",
     accountUsername: "",
     isSfdx: false,
+    ignoreWarning: false,
   }
 };
 

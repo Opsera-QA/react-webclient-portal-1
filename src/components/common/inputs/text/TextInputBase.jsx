@@ -31,26 +31,17 @@ function TextInputBase(
     visible,
     helpTooltipText,
   }) {
-  const [field, setField] = useState(dataObject?.getFieldById(fieldName));
+  const field = dataObject?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
-
-  useEffect(() => {
-    const newField = DataParsingHelper.parseObject(dataObject?.getFieldById(fieldName));
-
-    if (newField) {
-      setField({...newField});
-    }
-  }, [fieldName]);
 
   useEffect(() => {
     setErrorMessage(error ? parseError(error) : "");
   }, [error]);
 
   const validateAndSetData = (value) => {
-    let newDataObject = dataObject;
-    newDataObject.setTextData(fieldName, value);
-    setErrorMessage(newDataObject.getFieldError(fieldName));
-    setDataObject({...newDataObject});
+    dataObject.setTextData(fieldName, value);
+    setErrorMessage(dataObject.getFieldError(fieldName));
+    setDataObject({...dataObject});
   };
 
   const updateValue = (newValue) => {
