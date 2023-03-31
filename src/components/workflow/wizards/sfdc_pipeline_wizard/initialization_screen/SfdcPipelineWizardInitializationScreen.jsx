@@ -131,6 +131,9 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     const jobType = sfdcStep?.tool?.job_type;
     const isProfiles = jobType === "sfdc-ant-profile" || jobType?.toUpperCase() === "SFDC PROFILE DEPLOY";
     const isTranslations = false;
+    const workspace = sfdcStep?.tool?.configuration?.workspace;
+    const service = sfdcStep?.tool?.configuration?.service;
+    const repository = sfdcStep?.tool?.configuration?.repository;
 
     if (pipelineId == null) {
       setError("Could not find Pipeline");
@@ -159,6 +162,9 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     newPipelineWizardModel.setData("isProfiles", isProfiles);
     newPipelineWizardModel.setData("isTranslations", isTranslations);
     newPipelineWizardModel.setData("unitTestSteps", getCustomUnitTestSteps(steps));
+    newPipelineWizardModel.setData("workspace", workspace);
+    newPipelineWizardModel.setData("service", service);
+    newPipelineWizardModel.setData("repository", repository);
     const isSfdx = await checkIfSfdx(cancelSource, sfdcToolId);
     newPipelineWizardModel.setData("isSfdx", isSfdx);
     setPipelineWizardModel({...newPipelineWizardModel});

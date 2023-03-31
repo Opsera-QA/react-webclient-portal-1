@@ -143,6 +143,18 @@ const sfdcPipelineWizardMetadata = {
       label: "Salesforce Account Name",
       id: "accountUsername",
     },
+    // {
+    //   label: "Repository",
+    //   id: "repository",
+    // },
+    // {
+    //   label: "Service",
+    //   id: "service",
+    // },
+    // {
+    //   label: "Workspace",
+    //   id: "workspace",
+    // },
   ],
   newObjectFields: {
     includedComponentTypes: "all",
@@ -176,6 +188,9 @@ const sfdcPipelineWizardMetadata = {
     gitBranch: "",
     accountUsername: "",
     isSfdx: false,
+    workspace: "",
+    service: "",
+    repository: "",
   }
 };
 
