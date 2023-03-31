@@ -22,6 +22,8 @@ import SfdcPipelineWizardSfdcRulesInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSfdcRulesInput";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 import IconBase from "components/common/icons/IconBase";
+import SfdcPipelineWizardBasicSummary
+  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardBasicSummary";
 
 const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -113,6 +115,7 @@ const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipeli
   return (
     <div>
       <div className="h5">Salesforce Pipeline Run: File Selection for {pipelineWizardModel?.getArrayData("selectedComponentTypes")?.length} Components</div>
+      <SfdcPipelineWizardBasicSummary pipelineWizardModel={pipelineWizardModel} />
       <div className="text-muted mb-2">
         Select which files will have changes impacted in this pipeline run by using filter rules.
       </div>
