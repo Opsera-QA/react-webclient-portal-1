@@ -45,7 +45,6 @@ function UserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, hideSetting
         return (
           <UserSummaryPanel
             ldapUserData={ldapUserData}
-            setActiveTab={!hideSettings ? setActiveTab : null}
           />
         );
       case "settings":
