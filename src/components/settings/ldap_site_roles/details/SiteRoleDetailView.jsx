@@ -1,9 +1,5 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect} from "react";
 import {useHistory, useParams} from "react-router-dom";
-import Model from "core/data_model/model";
-import {ldapGroupMetaData} from "components/settings/ldap_groups/ldapGroup.metadata";
-import accountsActions from "components/admin/accounts/accounts-actions";
-import LoadingDialog from "components/common/status_notifications/loading";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
@@ -13,6 +9,8 @@ import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.he
 import LdapSiteRoleGroupRoleHelper
   from "@opsera/know-your-role/roles/accounts/groups/role/ldapSiteRoleGroupRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import useGetLdapSiteRoleModelByNameForDomain from "hooks/ldap/site_roles/useGetLdapSiteRoleModelByNameForDomain";
+import ldapSiteRoleMetadata from "@opsera/definitions/constants/accounts/groups/role/ldapSiteRoles.metadata";
 
 // TODO: Move to know-your-role
 export const roleGroups = [
@@ -26,26 +24,20 @@ export const roleGroups = [
 export default function SiteRoleDetailView() {
   const history = useHistory();
   const {groupName, orgDomain} = useParams();
-  const [ldapGroupData, setLdapGroupData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
   const {
-    accessRoleData,
-    cancelTokenSource,
-    toastContext,
-    isMounted,
     userData,
-    getAccessToken,
     isOpseraAdministrator,
   } = useComponentStateReference();
+  const {
+    isLoading,
+    error,
+    siteRoleModel,
+    loadData,
+  } = useGetLdapSiteRoleModelByNameForDomain(orgDomain, groupName);
 
   useEffect(() => {
     if (LdapSiteRoleGroupRoleHelper.canGetSiteRoleGroup(userData) === true) {
       const userDomain = userData?.ldap?.domain;
-
-      if (isOpseraAdministrator !== true && orgDomain !== userDomain) {
-        history.push(`/settings/${userDomain}/site-roles/details/${groupName}`);
-        return;
-      }
 
       if (groupName.startsWith("_dept")) {
         history.push(`/settings/${orgDomain}/departments/details/${groupName}`);
@@ -57,55 +49,22 @@ export default function SiteRoleDetailView() {
         return;
       }
 
-      loadData().catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
+      if (isOpseraAdministrator !== true && orgDomain !== userDomain) {
+        history.push(`/settings/${userDomain}/site-roles/details/${groupName}`);
+        return;
+      }
     }
   }, [groupName]);
 
-  const loadData = async () => {
-    try {
-      setIsLoading(true);
-      await getSiteRole();
-      setIsLoading(false);
-    }
-    catch (error) {
-      if (isMounted.current === true && !error?.error?.message?.includes(404)) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    }
-    finally {
-      if (isMounted.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getSiteRole = async () => {
-    const response = await accountsActions.getGroupV2(getAccessToken, cancelTokenSource, orgDomain, groupName);
-
-    if (isMounted.current === true && response?.data) {
-      setLdapGroupData(new Model(response.data, ldapGroupMetaData, false));
-    }
-  };
-
   const getActionBar = () => {
-    if (ldapGroupData != null) {
-      return (
-        <ActionBarContainer>
-          <div>
-            <ActionBarBackButton path={`/settings/${orgDomain}/site-roles`} />
-          </div>
-        </ActionBarContainer>
-      );
-    }
+    return (
+      <ActionBarContainer>
+        <div>
+          <ActionBarBackButton path={`/settings/${orgDomain}/site-roles`}/>
+        </div>
+      </ActionBarContainer>
+    );
   };
-
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
 
   if (LdapSiteRoleGroupRoleHelper.canGetSiteRoleGroup(userData) !== true) {
     return null;
@@ -114,15 +73,15 @@ export default function SiteRoleDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"ldapSiteRoleDetailView"}
-      metadata={ldapGroupMetaData}
-      dataObject={ldapGroupData}
-      isLoading={isLoading && ldapGroupData == null}
+      metadata={ldapSiteRoleMetadata}
+      dataObject={siteRoleModel}
+      isLoading={isLoading}
       navigationTabContainer={<SiteRoleManagementSubNavigationBar activeTab={"siteRoleViewer"}/>}
       actionBar={getActionBar()}
       detailPanel={
         <SiteRoleDetailPanel
           orgDomain={orgDomain}
-          ldapGroupData={ldapGroupData}
+          ldapGroupData={siteRoleModel}
           loadData={loadData}
           isLoading={isLoading}
         />

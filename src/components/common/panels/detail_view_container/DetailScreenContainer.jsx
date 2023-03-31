@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
@@ -10,6 +10,9 @@ import AccessRoleLevelField from "components/common/fields/access/AccessRoleLeve
 import ScreenContainerBodyLoadingDialog
   from "components/common/status_notifications/loading/ScreenContainerBodyLoadingDialog";
 import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import RoleHelper from "@opsera/know-your-role/roles/role.helper";
+import ActiveFilterDisplayer from "components/common/filters/ActiveFilterDisplayer";
 
 function DetailScreenContainer(
   {
@@ -19,19 +22,25 @@ function DetailScreenContainer(
     detailPanel,
     isLoading,
     accessDenied,
-    metadata,
     showBreadcrumbTrail,
     navigationTabContainer,
-    accessRoleData,
     roleRequirement,
     titleActionBar,
     objectRoles,
     helpComponent,
     isBeta,
+    showActiveFilters,
+    filterModel,
+    filters,
+    loadDataFunction,
   }) {
   const breadcrumb = getBreadcrumb(breadcrumbDestination);
   const parentBreadcrumb = getParentBreadcrumb(breadcrumbDestination);
   const activeField = dataObject?.getActiveField();
+  const {
+    accessRoleData,
+    userData,
+  } = useComponentStateReference();
 
   const getTopNavigation = () => {
     if (showBreadcrumbTrail) {
@@ -115,7 +124,26 @@ function DetailScreenContainer(
     return bodyHeightString;
   };
 
+  const getActiveFilterDisplayer = () => {
+    if (showActiveFilters === true) {
+      return (
+        <ActiveFilterDisplayer
+          filterModel={filterModel}
+          loadData={loadDataFunction}
+        />
+      );
+    }
+  };
+
   if (!isLoading && accessDenied) {
+    return (
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
+    );
+  }
+
+  if (breadcrumb && Array.isArray(breadcrumb?.allowedRoles) && RoleHelper.doesUserMeetSiteRoleRequirements(userData, breadcrumb?.allowedRoles) !== true) {
     return (
       <AccessDeniedContainer
         navigationTabContainer={navigationTabContainer}
@@ -130,6 +158,7 @@ function DetailScreenContainer(
       />
     );
   }
+
 
   if (!isLoading && dataObject == null) {
     return (
@@ -159,9 +188,13 @@ function DetailScreenContainer(
               titleActionBar={titleActionBar}
               helpComponent={helpComponent}
               isBeta={isBeta}
+              filterModel={filterModel}
+              filters={filters}
+              loadDataFunction={loadDataFunction}
             />
           </div>
         </div>
+        {getActiveFilterDisplayer()}
         <div
           style={{minHeight: getBodyHeight()}}
         >
@@ -182,13 +215,15 @@ DetailScreenContainer.propTypes = {
   actionBar: PropTypes.object,
   isLoading: PropTypes.bool,
   accessDenied: PropTypes.bool,
-  metadata: PropTypes.object,
-  accessRoleData: PropTypes.object,
   roleRequirement: PropTypes.string,
   titleActionBar: PropTypes.object,
   objectRoles: PropTypes.array,
   helpComponent: PropTypes.object,
   isBeta: PropTypes.bool,
+  showActiveFilters: PropTypes.bool,
+  filterModel: PropTypes.object,
+  filters: PropTypes.any,
+  loadDataFunction: PropTypes.func,
 };
 
 export default DetailScreenContainer;

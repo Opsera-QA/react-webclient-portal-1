@@ -7,61 +7,6 @@ paths.blueprint = "blueprint";
 paths.frequentlyAskedQuestions = "faq";
 paths.helpDocumentation = "help-documentation";
 
-// Admin Paths
-paths.admin = "admin";
-
-paths.systemStatus = paths.admin + "/system-status";
-paths.systemHealthCheck = paths.admin + "/health";
-
-paths.deprecatedReports = paths.admin + "/reports";
-paths.reportsRegistration = paths.admin + "/analytics/reports-registration";
-paths.systemManagement = paths.admin + "/manage-systems";
-
-paths.templateManagement = paths.admin + "/templates";
-paths.templateDetailView = paths.templateManagement + "/details/";
-
-paths.taskTemplateManagement = paths.admin + "/templates/tasks";
-paths.taskTemplateDetailView = paths.taskTemplateManagement + "/details/";
-
-paths.platformSystemParameterManagement = paths.admin + "/platform/system-parameters";
-paths.platformSystemParameterDetailView = paths.platformSystemParameterManagement + "/details";
-
-paths.platformSettingsManagement = paths.admin + "/platform/settings";
-paths.platformSettingsDetailView = paths.platformSettingsManagement + "/details";
-
-paths.freeTrialCustomerWorkspaceManagement = paths.admin + "/customer/workspaces";
-paths.freeTrialCustomerWorkspaceDetailView = paths.freeTrialCustomerWorkspaceManagement + "/user/";
-
-paths.pipelineStorageManagement = paths.admin + "/pipeline-storage";
-paths.pipelineStorageDetailView = paths.pipelineStorageManagement + "/details/";
-
-paths.siteNotificationManagement = paths.admin + "/site-notifications/table";
-paths.siteNotificationManager = paths.admin + "/site-notifications";
-paths.siteNotificationDetailView = paths.siteNotificationManagement + "/details/";
-
-paths.toolManagement = paths.admin + "/tools/categories";
-paths.toolCategoryDetailView = paths.toolManagement + "/types/details/";
-paths.toolIdentifierDetailView = paths.toolManagement + "/identifiers/details/";
-
-paths.ldapOrganizationManagement = paths.admin + "/organizations";
-paths.ldapOrganizationDetailView = paths.admin + "/organizations";
-
-paths.ldapOrganizationAccountManagement = paths.admin + "/organization-accounts";
-paths.ldapOrganizationDetailView = paths.admin + "/organization-accounts";
-
-paths.customerOnboarding = "admin/accounts/create";
-
-paths.customEnviromentVariableManagement = paths.admin + "/custom-environment-variables";
-paths.registeredUsersManagement = paths.admin + "/registered-users";
-
-paths.apiConnectionTest = paths.admin + "/demo/api";
-
-paths.kpiManagement = paths.admin + "/kpis";
-paths.kpiDetailView = paths.kpiManagement;
-
-paths.remoteApplications = paths.admin + "/remote-applications";
-paths.remoteApplicationDetailView = paths.remoteApplications + "/details/";
-
 // Insights Paths
 paths.insights = "insights/dashboards";
 paths.dashboardDetails = paths.insights;

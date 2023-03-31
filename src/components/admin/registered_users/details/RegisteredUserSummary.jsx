@@ -8,6 +8,7 @@ import GroupField from "components/common/fields/multiple_items/GroupField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import SiteRoleField from "components/common/fields/access/SiteRoleField";
 import EmailAddressField from "components/common/fields/text/email/EmailAddressField";
+import BooleanField from "components/common/fields/boolean/BooleanField";
 
 function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString }) {
 
@@ -39,6 +40,9 @@ function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString 
         </Col>
         <Col lg={6}>
           <TextFieldBase fieldName={"organizationName"} dataObject={userData}/>
+        </Col>
+        <Col lg={6}>
+          <BooleanField fieldName={"active"} dataObject={userData}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase fieldName={"title"} dataObject={userData}/>

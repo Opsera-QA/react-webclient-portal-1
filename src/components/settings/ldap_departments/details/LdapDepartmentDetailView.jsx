@@ -16,9 +16,7 @@ import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import axios from "axios";
 import LdapDepartmentManagementSubNavigationBar
   from "components/settings/ldap_departments/LdapDepartmentManagementSubNavigationBar";
-
-// TODO: Can we get an API Call to get role group names associated with an organization?
-const roleGroups = ["Administrators", "PowerUsers", "Users"];
+import {roleGroups} from "components/settings/ldap_site_roles/details/SiteRoleDetailView";
 
 function LdapDepartmentDetailView() {
   const {departmentName, orgDomain} = useParams();
@@ -77,13 +75,13 @@ function LdapDepartmentDetailView() {
       setAccessRoleData(userRoleAccess);
       let {ldap} = user;
 
-      if (userRoleAccess?.OpseraAdministrator !== true && (ldap.domain !== orgDomain)) {
-        history.push(`/admin/${ldap.domain}/departments/details/${departmentName}`);
+      if (roleGroups.includes(departmentName)) {
+        history.push(`/settings/${orgDomain}/site-roles/details/${departmentName}`);
         return;
       }
 
-      if (roleGroups.includes(departmentName)) {
-        history.push(`/settings/${orgDomain}/site-roles/details/${departmentName}`);
+      if (userRoleAccess?.OpseraAdministrator !== true && (ldap.domain !== orgDomain)) {
+        history.push(`/admin/${ldap.domain}/departments/details/${departmentName}`);
         return;
       }
 

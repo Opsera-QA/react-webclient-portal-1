@@ -20,6 +20,8 @@ function BooleanToggleInput(
     inputHelpOverlay,
     customInfoText,
     helpTooltip,
+    visible,
+    showLabel,
   }) {
   const field = dataObject?.getFieldById(fieldName);
 
@@ -119,7 +121,23 @@ function BooleanToggleInput(
     }
   };
 
-  if (field == null) {
+  const getLabel = () => {
+    if (showLabel !== false) {
+      return (
+        <div className={"d-flex my-auto"}>
+            <span
+              className={getLabelClassNames()}
+              onClick={() => {updateValue(!dataObject.getData(fieldName));}}
+            >
+              {field?.label}
+            </span>
+          {getInputHelpIcon()}
+        </div>
+      );
+    }
+  };
+
+  if (field == null || visible === false) {
     return null;
   }
 
@@ -137,15 +155,7 @@ function BooleanToggleInput(
               updateValue(!dataObject.getData(fieldName));
             }}
           />
-          <div className={"d-flex my-auto"}>
-            <span
-              className={getLabelClassNames()}
-              onClick={() => {updateValue(!dataObject.getData(fieldName));}}
-            >
-              {field?.label}
-            </span>
-            {getInputHelpIcon()}
-          </div>
+          {getLabel()}
         </div>
         <InfoText
           field={field}
@@ -169,6 +179,8 @@ BooleanToggleInput.propTypes = {
   inputHelpOverlay: PropTypes.any,
   customInfoText: PropTypes.any,
   helpTooltip: PropTypes.any,
+  visible: PropTypes.bool,
+  showLabel: PropTypes.bool,
 };
 
 export default BooleanToggleInput;

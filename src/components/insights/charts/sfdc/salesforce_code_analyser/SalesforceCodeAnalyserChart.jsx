@@ -41,13 +41,13 @@ import aquasecActions from "../../aquasec_security_insights/aquasec.action";
 import codeAnalyserActions from "./codeanalyser.action";
 
 function SalesforceCodeAnalyserChart({
-                           kpiConfiguration,
-                           setKpiConfiguration,
-                           dashboardData,
-                           index,
-                           setKpis,
-                           showSettingsToggle,
-                       }) {
+                                         kpiConfiguration,
+                                         setKpiConfiguration,
+                                         dashboardData,
+                                         index,
+                                         setKpis,
+                                         showSettingsToggle,
+                                     }) {
     const { getAccessToken } = useContext(AuthContext);
     const [error, setError] = useState(undefined);
     const [metrics, setMetrics] = useState([]);
@@ -89,9 +89,9 @@ function SalesforceCodeAnalyserChart({
                     )
                     ]?.value;
             const dashboardTags =
-                    dashboardData?.data?.filters[
-                        dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
-                        ]?.value;
+                dashboardData?.data?.filters[
+                    dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+                    ]?.value;
             const response = await codeAnalyserActions.salesforceCodeAnalyserBaseKPI(
                 getAccessToken,
                 cancelSource,
@@ -122,6 +122,11 @@ function SalesforceCodeAnalyserChart({
         }
     };
 
+    let total = 0;
+    metrics[0]?.data.forEach((temp) => {
+        total = total + temp.y;
+    });
+
 
     const onRowSelect1 = () => {
         toastContext.showOverlayPanel(
@@ -146,6 +151,7 @@ function SalesforceCodeAnalyserChart({
             <SalesforceCodeAnalyserPipelineActionableOverlay
                 kpiConfiguration={kpiConfiguration}
                 dashboardData={dashboardData}
+                total={total}
             />
         );
     };
@@ -199,23 +205,23 @@ function SalesforceCodeAnalyserChart({
         const getDataBlocks = () =>{
             return (<><Row className={'pb-1'}>
                 <Col>
-                        <SalesforceCodeAnalyserCategoryDataBlock
-                            data={dataBlockValues?.categories}
-                            lastScore={ dataBlockValues?.prevCategories}
-                            icon={getIcon(dataBlockValues?.categories, dataBlockValues?.prevCategories)}
-                            className={getIconColor(dataBlockValues?.categories, dataBlockValues?.prevCategories)}
-                            onSelect={onRowSelect1}
-                        />
+                    <SalesforceCodeAnalyserCategoryDataBlock
+                        data={dataBlockValues?.categories}
+                        lastScore={ dataBlockValues?.prevCategories}
+                        icon={getIcon(dataBlockValues?.categories, dataBlockValues?.prevCategories)}
+                        className={getIconColor(dataBlockValues?.categories, dataBlockValues?.prevCategories)}
+                        onSelect={onRowSelect1}
+                    />
                 </Col>
             </Row><Row className={'pb-1 pt-1'}>
                 <Col>
-                        <SalesforceCodeAnalyserRuleDataBlock
-                            data={dataBlockValues?.rules}
-                            lastScore={ dataBlockValues?.prevRules}
-                            icon={getIcon(dataBlockValues?.rules, dataBlockValues?.prevRules)}
-                            className={getIconColor(dataBlockValues?.rules, dataBlockValues?.prevRules)}
-                            onSelect={onRowSelect2}
-                        />
+                    <SalesforceCodeAnalyserRuleDataBlock
+                        data={dataBlockValues?.rules}
+                        lastScore={ dataBlockValues?.prevRules}
+                        icon={getIcon(dataBlockValues?.rules, dataBlockValues?.prevRules)}
+                        className={getIconColor(dataBlockValues?.rules, dataBlockValues?.prevRules)}
+                        onSelect={onRowSelect2}
+                    />
                 </Col>
             </Row></>);
         };
@@ -274,9 +280,6 @@ function SalesforceCodeAnalyserChart({
                 isLoading={isLoading}
                 showSettingsToggle={showSettingsToggle}
                 launchActionableInsightsFunction={onNodeSelect}
-                chartHelpComponent={(closeHelpPanel) => (
-                    <BoomiChartHelpDocumentation closeHelpPanel={closeHelpPanel} />
-                )}
             />
             <ModalLogs
                 header="Mean Time to Resolution"

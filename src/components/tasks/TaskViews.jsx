@@ -16,6 +16,7 @@ import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer
 import TaskRoleHelper from "@opsera/know-your-role/roles/tasks/taskRole.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
+import CreateTasksWizard from "./portal_tasks_wizard/CreateTasksWizard";
 
 function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, taskData, isMounted}) {
   const {
@@ -25,10 +26,11 @@ function TaskViews({taskFilterModel, setTaskFilterModel, isLoading, loadData, ta
 
   const createNewTask = () => {
     toastContext.showOverlayPanel(
-      <NewTaskOverlay
-        loadData={loadData}
-        isMounted={isMounted}
-      />
+      // <NewTaskOverlay
+      //   loadData={loadData}
+      //   isMounted={isMounted}
+      // />
+      <CreateTasksWizard loadData={loadData} isMounted={isMounted}/>
     );
   };
 

@@ -27,7 +27,7 @@ import PipelineActionControlsRefreshButton
 import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import PipelineActionControlsStartPipelineButton
   from "components/workflow/pipelines/action_controls/start/PipelineActionControlsStartPipelineButton";
-import useGetFeatureFlags from "hooks/platform/useGetFeatureFlags";
+import useGetPlatformFeatureFlags from "hooks/platform/useGetPlatformFeatureFlags";
 import {pipelineHelper} from "components/workflow/pipeline.helper";
 import {buttonLabelHelper} from "temp-library-components/helpers/label/button/buttonLabel.helper";
 import PipelineActionControlButtonBase
@@ -67,7 +67,7 @@ function PipelineActionControls(
   const {
     orchestrationFeatureFlags,
     enabledServices,
-  } = useGetFeatureFlags();
+  } = useGetPlatformFeatureFlags();
   const pipelineActionsHook = usePipelineActions();
 
   const delayedRefresh = async () => {
@@ -190,6 +190,10 @@ function PipelineActionControls(
     }
   };
 
+  const resetAndRunPipeline = async (pipelineRunSettingsModel) => {
+    await resetPipelineState(true);
+    await runPipeline(undefined, pipelineRunSettingsModel);
+  };
   /***
    * Used primiarily to call run API again to register a queued start request.  Unlike normal runPipeline, it doesn't impact
    * refresh patterns on the page
@@ -324,23 +328,7 @@ function PipelineActionControls(
     //check type of pipeline to determine if pre-flight wizard is required
     //for now type is just the first entry
     const pipelineType = pipelineTypeConstants.getTypeForTypesArray(pipeline?.type);
-    const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
-    const pipelineStepCount = plan.length;
-
-    let pipelineOrientation = "start";
-    const stoppedStepId = DataParsingHelper.parseNestedMongoDbId(pipeline, "workflow.last_step.step_id");
-
-    // is pipeline at the beginning or stopped midway or end of prior?
-    //what step are we currently on in the pipeline: first, last or middle?
-    if (DataParsingHelper.isValidMongoDbId(stoppedStepId) === true) {
-      const stepIndex = PipelineHelpers.getStepIndex(pipeline, stoppedStepId);
-      console.log(`current resting step index: ${stepIndex} of ${pipelineStepCount}`);
-      if (stepIndex + 1 === pipelineStepCount) {
-        pipelineOrientation = "end";
-      } else {
-        pipelineOrientation = "middle";
-      }
-    }
+    const pipelineOrientation = pipelineHelper.getPipelineOrientation(pipeline);
 
     if (pipelineType === "sfdc") {
       launchPipelineStartWizard(pipelineOrientation, pipelineType, pipelineId);
@@ -356,7 +344,7 @@ function PipelineActionControls(
         toastContext.showOverlayPanel(
           <PipelineStartConfirmationOverlay
             pipeline={pipeline}
-            handlePipelineStartRequest={startNewPipelineRun}
+            handlePipelineStartRequest={resetAndRunPipeline}
             handlePipelineResumeRequest={handleResumeWorkflowClick}
             dynamicSettingsEnabled={enabledServices?.dynamicSettings === true}
           />

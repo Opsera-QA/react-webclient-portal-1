@@ -1,19 +1,17 @@
-import React, { useState, useContext, useEffect } from "react";
-import { subDays } from "date-fns";
-import { AuthContext } from "contexts/AuthContext";
+import React, {useState, useContext, useEffect} from "react";
+import {subDays} from "date-fns";
+import {AuthContext} from "contexts/AuthContext";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
-import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import SalesforceLookUpHelpDocumentation from "../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation";
-import FilterContainer from "components/common/table/FilterContainer";
+import SalesforceLookUpHelpDocumentation
+  from "../../common/help/documentation/insights/SalesforceLookUpHelpDocumentation";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import AnalyticsSalesforceComponentNameMultiSelectInput from "components/common/list_of_values_input/tools/salesforce/component_names/analytics/AnalyticsSalesforceComponentNameMultiSelectInput";
-import { insightsLookupActions } from "components/insights/lookup/insightsLookup.actions";
+import {insightsLookupActions} from "components/insights/lookup/insightsLookup.actions";
 import LookupResults from "components/insights/lookup/LookupResults";
 import DateRangeInputBase from "components/common/inputs/date/range/DateRangeInputBase";
-import { faSearch, faCalendarAlt } from "@fortawesome/pro-light-svg-icons";
-import { formatDate } from "components/common/helpers/date/date.helpers";
-import LookupFilterModel from "components/insights/lookup/lookup.filter.model";
+import {formatDate} from "components/common/helpers/date/date.helpers";
 import LookupMultiSelectInput from "components/insights/lookup/LookupMultiSelectInput";
+import LookupFilterModel from "./lookup.filter.model";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function Lookup() {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,15 +21,15 @@ function Lookup() {
     salesforceComponentNames?.[0],
   );
   const [filterModel, setFilterModel] = useState(undefined);
-  const { getAccessToken } = useContext(AuthContext);
-  const { isMounted, cancelTokenSource, toastContext } =
+  const {getAccessToken} = useContext(AuthContext);
+  const {isMounted, cancelTokenSource, toastContext} =
     useComponentStateReference();
 
   useEffect(() => {
     const newFilterModel = new LookupFilterModel();
     newFilterModel.setData("startDate", subDays(new Date(), 7));
     newFilterModel.setData("endDate", new Date());
-    setFilterModel({ ...newFilterModel });
+    setFilterModel({...newFilterModel});
   }, []);
 
   useEffect(() => {
@@ -100,7 +98,7 @@ function Lookup() {
       if (isMounted?.current === true && Array.isArray(searchResults)) {
         setSearchResults(searchResults);
         newFilterModel.setData("activeFilters", filterModel.getActiveFilters());
-        setFilterModel({ ...newFilterModel });
+        setFilterModel({...newFilterModel});
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -114,11 +112,13 @@ function Lookup() {
   };
 
   const getDropdownFilters = () => (
-    <div>
-      <DateRangeInputBase
-        model={filterModel}
-        setModel={setFilterModel}
-      />
+    <div className={"d-flex"}>
+      <div className={"mx-auto"}>
+        <DateRangeInputBase
+          model={filterModel}
+          setModel={setFilterModel}
+        />
+      </div>
       {/* <AnalyticsSalesforceComponentNameMultiSelectInput
         fieldName={"selectedComponentNames"}
         model={filterModel}
@@ -144,11 +144,6 @@ function Lookup() {
   const getBody = () => {
     return (
       <>
-        <LookupMultiSelectInput
-          fieldName={"selectedComponentFilterData"}
-          model={filterModel}
-          setModel={setFilterModel}
-        />
         <LookupResults
           isLoading={isLoading}
           filterModel={filterModel}
@@ -170,27 +165,21 @@ function Lookup() {
   return (
     <ScreenContainer
       navigationTabContainer={
-        <InsightsSubNavigationBar currentTab={"lookup"} />
+        <InsightsSubNavigationBar currentTab={"lookup"}/>
       }
-      isLoading={isLoading}
       breadcrumbDestination={"lookup"}
-      helpComponent={<SalesforceLookUpHelpDocumentation />}
-      pageDescription={`
-      Currently applicable only for Salesforce Pipelines. 
-      This Component based search provides details on when selected components have been deployed along with pipeline details and also provides summary on validations and unit tests.
-      `}
+      helpComponent={<SalesforceLookUpHelpDocumentation/>}
+      filterModel={filterModel}
+      loadDataFunction={loadData}
+      filters={getDropdownFilters()}
     >
-      <FilterContainer
-        title={"Salesforce Lookup"}
-        titleIcon={faSearch}
-        isLoading={isLoading}
-        filterDto={filterModel}
-        loadData={loadData}
-        // inlineFilters={getDropdownFilters()}
-        dropdownFilters={getDropdownFilters()}
-        body={getBody()}
+      <LookupMultiSelectInput
+        fieldName={"selectedComponentFilterData"}
+        model={filterModel}
+        setModel={setFilterModel}
         className={"mx-2"}
       />
+      {getBody()}
     </ScreenContainer>
   );
 }

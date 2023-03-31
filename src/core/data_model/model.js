@@ -2,6 +2,7 @@ import { modelValidation, validateData, validateField, validatePotentialValue } 
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import ObjectHelper from "@opsera/persephone/helpers/object/object.helper";
+import DataValidationService from "@opsera/definitions/services/validation/dataValidation.service";
 
 export const DataState = {
   LOADED: 0,
@@ -20,6 +21,13 @@ export class Model {
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
     this.changeMap = new Map();
   }
+
+  getValidatedData = () => {
+    return DataValidationService.validateAndEncodeFields(
+      this.data,
+      this.metaData,
+    );
+  };
 
   getData = (fieldName) => {
     if (hasStringValue(fieldName) !== true) {
@@ -179,6 +187,12 @@ export class Model {
 
   isFieldValid = (fieldName) => {
     return validateField(this, this.getFieldById(fieldName));
+  };
+
+  // TODO: Replace the method above with this
+  isFieldValidV2 = (fieldName) => {
+    const errors = validateField(this, this.getFieldById(fieldName));
+    return !Array.isArray(errors) || errors.length === 0;
   };
 
   // Returns first error if exists

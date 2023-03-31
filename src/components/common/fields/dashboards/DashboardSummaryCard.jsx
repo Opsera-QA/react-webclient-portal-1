@@ -29,9 +29,9 @@ function DashboardSummaryCard({ dashboardModel, isLoading, loadDashboardInNewWin
         <div className="mb-2">
           <DescriptionField dataObject={dashboardModel} fieldName={"description"}/>
         </div>
-        <div className="mb-2">
-          <TagField dataObject={dashboardModel} fieldName={"tags"} showLabel={false}/>
-        </div>
+        {/*<div className="mb-2">*/}
+        {/*  <TagField dataObject={dashboardModel} fieldName={"tags"} showLabel={false}/>*/}
+        {/*</div>*/}
         <div className="d-flex justify-content-between">
           <DateFieldBase dataObject={dashboardModel} fieldName={"createdAt"}/>
           <DateFieldBase dataObject={dashboardModel} fieldName={"updatedAt"}/>

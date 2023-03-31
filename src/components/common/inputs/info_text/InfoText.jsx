@@ -18,7 +18,7 @@ function InfoText(
   }) {
   if (hasStringValue(errorMessage) === true) {
     return (
-      <small className={"danger-red form-text mx-1"}>
+      <small className={"danger-red form-text"}>
         <div>{errorMessage}</div>
       </small>
     );
@@ -26,7 +26,7 @@ function InfoText(
 
   if (hasStringValue(successMessage) === true) {
     return (
-      <small className={"green form-text mx-1"}>
+      <small className={"green form-text"}>
         <div>{successMessage}</div>
       </small>
     );
@@ -37,7 +37,7 @@ function InfoText(
 
     if (hasStringValue(warning) === true) {
       return (
-        <small className={"warning-text-alt form-text mx-1"}>
+        <small className={"warning-text-alt form-text"}>
           <div>
             <IconBase
               icon={faTriangleExclamation}
@@ -51,7 +51,7 @@ function InfoText(
 
   if (hasStringValue(warningMessage) === true) {
     return (
-      <span className={"warning-text-alt form-text mx-1"}>
+      <span className={"warning-text-alt form-text"}>
         <div>
           <IconBase
             icon={faTriangleExclamation}
@@ -69,7 +69,7 @@ function InfoText(
 
     if (hideRegexDefinitionText !== true && regexDefinition != null && (isRequiredFunction == null || isRequiredFunction(model) === true)) {
       return (
-        <small className={"text-muted form-text mx-1"}>
+        <small className={"text-muted form-text"}>
           <div>{regexDefinition?.formText}</div>
         </small>
       );
@@ -78,7 +78,7 @@ function InfoText(
 
   if (hasStringValue(field?.formText) === true) {
     return (
-      <small className={"text-muted form-text mx-1"}>
+      <small className={"text-muted form-text"}>
         <div>{field?.formText}</div>
       </small>
     );
@@ -89,7 +89,7 @@ function InfoText(
   }
 
   return (
-    <small className={"text-muted form-text mx-1"}>
+    <small className={"text-muted form-text"}>
       <div>{customMessage}</div>
     </small>
   );

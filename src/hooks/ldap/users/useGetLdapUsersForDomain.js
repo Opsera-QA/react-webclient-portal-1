@@ -40,7 +40,7 @@ export default function useGetLdapUsersForDomain(domain, handleErrorFunction) {
     const response = await ldapUserActions.getLdapUsersWithDomain(
       domain,
     );
-    setUsers([...DataParsingHelper.parseNestedArray(response, "data", [])]);
+    setUsers([...DataParsingHelper.parseNestedArray(response, "data.data", [])]);
   };
 
   return ({

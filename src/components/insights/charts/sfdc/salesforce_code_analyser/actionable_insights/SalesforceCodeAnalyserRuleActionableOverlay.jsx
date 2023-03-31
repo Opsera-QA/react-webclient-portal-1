@@ -17,9 +17,9 @@ import SalesforceCodeAnalyserPipelineActionableTable from "./SalesforceCodeAnaly
 import codeAnalyserActions from "../codeanalyser.action";
 
 function SalesforceCodeAnalyserRuleActionableOverlay({
-                                                     kpiConfiguration,
-                                                     dashboardData
-                                                 }) {
+                                                         kpiConfiguration,
+                                                         dashboardData
+                                                     }) {
     const { getAccessToken } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
     const [error, setError] = useState(undefined);
@@ -76,14 +76,14 @@ function SalesforceCodeAnalyserRuleActionableOverlay({
             );
 
             let dataObject = response?.data ? response?.data?.data[0]?.tableData : [];
-            let totalCount = response?.data ? response?.data?.data[0]?.tableData?.length : [];
+            let totalCount = response?.data ? response?.data?.data[0]?.count[0]?.count : [];
 
             if (isMounted?.current === true && dataObject) {
                 setMetrics(dataObject);
                 setTotalCount(totalCount);
 
                 let newFilterDto = filterDto;
-                newFilterDto.setData("totalCount", response?.data?.data[0]?.tableData?.length);
+                newFilterDto.setData("totalCount", response?.data?.data[0]?.count[0]?.count);
                 setFilterModel({ ...newFilterDto });
             }
         } catch (error) {

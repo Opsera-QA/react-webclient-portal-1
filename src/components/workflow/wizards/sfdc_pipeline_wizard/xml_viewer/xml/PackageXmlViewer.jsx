@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PackageXmlFieldBase from "components/common/fields/code/PackageXmlFieldBase";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-const PackageXmlViewer = ({isSaving, isLoading, pipelineWizardModel}) => {
+const PackageXmlViewer = ({isSaving, isLoading, pipelineWizardModel, setPipelineWizardModel}) => {
   const getFormattedPackageXml = () => {
     const xml = pipelineWizardModel?.getData("xml");
 
@@ -49,6 +50,14 @@ const PackageXmlViewer = ({isSaving, isLoading, pipelineWizardModel}) => {
     <div className="flex-container-content mt-4">
       <div className="h5">Salesforce Pipeline Run: XML Viewer</div>
       <div className="text-muted mb-2">Please confirm that you want to proceed with this operation.</div>
+      {pipelineWizardModel.getData("fromGitTasks") === false &&
+        <BooleanToggleInput
+          dataObject={pipelineWizardModel}
+          setDataObject={setPipelineWizardModel}
+          fieldName={"ignoreWarning"}
+          disabled={isSaving}
+        />
+      }
       {getBody()}
     </div>
   );
@@ -56,6 +65,7 @@ const PackageXmlViewer = ({isSaving, isLoading, pipelineWizardModel}) => {
 
 PackageXmlViewer.propTypes = {
   pipelineWizardModel: PropTypes.object,
+  setPipelineWizardModel: PropTypes.func,
   isSaving: PropTypes.bool,
   isLoading: PropTypes.bool,
 };

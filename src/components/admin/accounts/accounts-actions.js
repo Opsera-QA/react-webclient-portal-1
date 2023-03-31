@@ -4,40 +4,6 @@ import routeTokenConstants from "@opsera/definitions/constants/routes/tokens/rou
 
 const accountsActions = {};
 
-// TODO: Wire up Role Definitions instead
-accountsActions.getAllowedUserActions = async (customerAccessRules, organizationName, selected_user_email, getUserRecord) => {
-  const user = await getUserRecord();
-  const {ldap} = user;
-  const userOrganization = ldap["organization"];
-  if (customerAccessRules.OpseraAdministrator) {
-    return ["get_users", "get_user_details", "create_user", "update_user"];
-  }
-  else if (userOrganization !== organizationName) {
-    // User from another organization not allowed to do anything with another org, unless they are an Opsera administrator
-    return [];
-  }
-
-  // TODO: How to determine group owner?
-  let groupOwner = false;
-
-  if (customerAccessRules.OrganizationOwner || customerAccessRules.OrganizationAccountOwner || customerAccessRules.Administrator) {
-    return ["get_users", "get_user_details", "create_user", "update_user"];
-  }
-  else if (customerAccessRules.PowerUser || customerAccessRules.User || groupOwner) {
-    let permissions = ["get_users", "get_user_details"];
-
-    // Users can update their own records
-    if (selected_user_email && selected_user_email === user.email) {
-      permissions.push("update_user");
-    }
-
-    return permissions;
-  }
-  else {
-    return [];
-  }
-};
-
 accountsActions.updateUserV2 = async (getAccessToken, cancelTokenSource, orgDomain, ldapUserModel) => {
   const apiUrl = "/users/account/user/update";
   const postBody = {
@@ -89,32 +55,6 @@ accountsActions.getUserDetailViewLink = async (getUserRecord) => {
 
 accountsActions.getLdapUsersWithDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
   const apiUrl = `/account/users/${domain}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-accountsActions.getLdapGroupsWithEmail = async (emailAddress, getAccessToken) => {
-  const postBody = {
-    email: emailAddress
-  };
-  const apiUrl = "/users/account/groups";
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
-accountsActions.getLdapGroupsWithDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
-  const postBody = {
-    domain: domain
-  };
-  const apiUrl = "/users/account/groups";
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
-accountsActions.getLdapUserGroupsWithDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
-  const apiUrl = `/users/account/${domain}/user-groups`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-accountsActions.getLdapRoleGroupsWithDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
-  const apiUrl = `/account/site-roles/${domain}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
@@ -370,12 +310,6 @@ accountsActions.createGroupV2 = async (getAccessToken, cancelTokenSource, orgDom
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
-};
-
-
-accountsActions.deleteGroup = async (orgDomain, ldapGroupDataDto, getAccessToken) => {
-  const apiUrl = `/users/account/group/delete?domain=${orgDomain}&name=${ldapGroupDataDto.getData("name")}`;
-  return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
 };
 
 accountsActions.syncMembership = async (orgDomain, groupName, emailList, getAccessToken) => {

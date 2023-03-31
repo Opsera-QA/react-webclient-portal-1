@@ -12,16 +12,12 @@ import {DialogToastContext} from "../../../../../../contexts/DialogToastContext"
 import SalesforceCodeAnalyserRuleActionableTwoOverlay
     from "./actionable_insights2/SalesforceCodeAnalyserRuleActionableTwoOverlay";
 
-function SalesforceCodeAnalyserPipelineActionableTable({ data, isLoading, loadData, filterModel, setFilterModel, tableTitleIcon,kpiConfiguration,dashboardData }) {
+function SalesforceCodeAnalyserPipelineActionableTable({ data, isLoading, loadData, filterModel, setFilterModel, tableTitleIcon, total }) {
     const fields = SalesforceCodeAnalyserActionableMetadata.fields;
     const tableTitle = "Pipeline Report";
     const noDataMessage = "No data available";
     const toastContext = useContext(DialogToastContext);
 
-    let total = "";
-    data.forEach((x) => {
-        total = total + x.totalCount;
-    });
 
     const columns = useMemo(
         () => [
@@ -79,6 +75,7 @@ SalesforceCodeAnalyserPipelineActionableTable.propTypes = {
     tableTitleIcon: PropTypes.object,
     kpiConfiguration: PropTypes.object,
     dashboardData: PropTypes.object,
+    total: PropTypes.number,
 };
 
 export default SalesforceCodeAnalyserPipelineActionableTable;

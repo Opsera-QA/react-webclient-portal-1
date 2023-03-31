@@ -839,26 +839,21 @@ export const getGitCustodianExternalLinkIconColumnDefinition = (field, className
   };
 };
 
-export const getUserObjectRoleLevelColumnDefinition = (userObject, className) => {
+export const getUserObjectRoleLevelColumnDefinition = (emailAddress, className) => {
   return {
     Header: "Assigned Role",
     accessor: "row",
     Cell: function getPageLink(row){
-      const parsedUserObject = DataParsingHelper.parseObject(userObject);
+      const parsedEmail = DataParsingHelper.parseEmailAddress(emailAddress);
 
-      if (!parsedUserObject) {
+      if (!parsedEmail) {
         return "";
       }
 
-      const parsedEmail = DataParsingHelper.parseEmailAddress(parsedUserObject.email);
-      const parsedUserGroups = DataParsingHelper.parseArray(parsedUserObject.groups);
-
       const object = getDataObjectFromTableRow(row);
-      const objectRoles = DataParsingHelper.parseArray(object?.roles, []);
-      const parsedRole = ObjectAccessRoleHelper.calculateUserObjectRole(
+      const parsedRole = ObjectAccessRoleHelper.getUserRoleLevel(
         parsedEmail,
-        parsedUserGroups,
-        objectRoles
+        object
       );
 
       return (DataParsingHelper.parseString(ObjectAccessRoleHelper.getLabelForAccessRole(parsedRole), ""));
@@ -921,6 +916,24 @@ export const getPathDefinition = (field, className, maxLength = 50, overlayWidth
         >
           <span>{truncateString(path, maxLength, true)}</span>
         </TooltipWrapper>
+      );
+    },
+    class: className ? className : undefined
+  };
+};
+
+export const getExternalLinkIconWithTextColumnDefinition = (field, className, maxLength = 50, overlayWidth=200) => {
+  return {
+    Header: getCustomTableHeader(field),
+    accessor: getCustomTableAccessor(field),
+    width: 150,
+    Cell: function getPageLink(row){
+      return (
+        <PageLinkIcon
+          pageLink={row?.value?.url}
+          externalLink={true}            
+          pageLinkText={row?.value?.key}
+        />
       );
     },
     class: className ? className : undefined

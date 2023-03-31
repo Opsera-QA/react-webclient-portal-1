@@ -3,15 +3,15 @@ import { useParams } from "react-router-dom";
 import Model from "core/data_model/model";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
-import {ldapUserMetadata} from "components/settings/ldap_users/ldapUser.metadata";
+import {ldapUserMetadata} from "components/admin/accounts/ldap/users/ldapUser.metadata";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import LdapUserDetailPanel from "components/settings/ldap_users/users_detail_view/LdapUserDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import UserManagementSubNavigationBar from "components/settings/users/UserManagementSubNavigationBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import LdapUserRoleHelper from "@opsera/know-your-role/roles/accounts/users/ldapUserRole.helper";
+import UserDetailPanel from "components/settings/users/details/UserDetailPanel";
 
 function UserDetailView() {
   const {userEmail, orgDomain} = useParams();
@@ -24,6 +24,11 @@ function UserDetailView() {
     isMounted,
     userData,
     getAccessToken,
+    isOpseraAdministrator,
+    isSiteAdministrator,
+    isPowerUser,
+    isAuditor,
+    isSecurityManager,
   } = useComponentStateReference();
   const domain = DataParsingHelper.parseNestedString(userData, "ldap.domain");
 
@@ -74,17 +79,19 @@ function UserDetailView() {
     return null;
   }
 
+  // TODO: Instead of doing it this way, instead make a separate component for user profile view
+  const accessAllowed = isOpseraAdministrator === true || isSiteAdministrator === true || isPowerUser === true || isAuditor === true || isSecurityManager === true;
+
   return (
     <DetailScreenContainer
-      breadcrumbDestination={(accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator) ? "ldapUserDetailView" : "ldapUserDetailViewLimited"}
+      breadcrumbDestination={accessAllowed === true ? "activeUserDetailView" : "ldapUserDetailViewLimited"}
       metadata={ldapUserMetadata}
       dataObject={ldapUserData}
       isLoading={isLoading}
       actionBar={getActionBar()}
       navigationTabContainer={<UserManagementSubNavigationBar activeTab={"userViewer"} />}
       detailPanel={
-        <LdapUserDetailPanel
-          hideSettings={true}
+        <UserDetailPanel
           setLdapUserData={setLdapUserData}
           orgDomain={orgDomain}
           ldapUserData={ldapUserData}

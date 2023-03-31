@@ -26,29 +26,33 @@ export default function NewUserOverlay({ loadData } ) {
   }, []);
 
   const initializeData = async () => {
-    const user = await getUserRecord();
-    const orgDomain = user?.ldap?.domain;
-    setOrganization(user?.ldap?.organization);
-    setDomain(orgDomain);
-    const token = apiTokenHelper.generateApiCallToken("orgRegistrationForm");
-    const accountResponse = await userActions.getAccountInformationV2(cancelTokenSource, orgDomain, token);
-    const newUserModel = (new Model(usersMetadata.newObjectFields, usersMetadata, true));
+    try {
+      const user = await getUserRecord();
+      const orgDomain = user?.ldap?.domain;
+      setOrganization(user?.ldap?.organization);
+      setDomain(orgDomain);
+      const token = apiTokenHelper.generateApiCallToken("orgRegistrationForm");
+      const accountResponse = await userActions.getAccountInformationV2(cancelTokenSource, orgDomain, token);
+      const newUserModel = new Model(usersMetadata.newObjectFields, usersMetadata, true);
 
-    if (accountResponse?.data) {
-      if (accountResponse.data.idpBaseUrl && window.location.hostname.toLowerCase() !== accountResponse.data.idpBaseUrl.toLowerCase()) {
-        setInvalidHost(true);
-        toastContext.showSystemErrorBanner("Warning!  You are attempting to create an account on the wrong Opsera Portal tenant.  Please check with your account owner or contact Opsera to get the proper to URL register accounts.");
+      if (accountResponse?.data) {
+        if (accountResponse.data.idpBaseUrl && window.location.hostname.toLowerCase() !== accountResponse.data.idpBaseUrl.toLowerCase()) {
+          setInvalidHost(true);
+          toastContext.showSystemErrorBanner("Warning!  You are attempting to create an account on the wrong Opsera Portal tenant.  Please check with your account owner or contact Opsera to get the proper to URL register accounts.");
+        }
+
+        newUserModel.setData("company", accountResponse.data?.orgName);
+        newUserModel.setData("ldapOrgAccount", accountResponse.data?.name);
+        newUserModel.setData("ldapOrgDomain", accountResponse.data?.orgDomain);
+        newUserModel.setData("organizationName", accountResponse?.data?.accountName);
+        newUserModel.setData("orgAccount", accountResponse?.data?.name);
+        newUserModel.setData("localAuth", accountResponse?.data?.localAuth === "TRUE");
       }
 
-      newUserModel.setData("company", accountResponse.data?.orgName);
-      newUserModel.setData("ldapOrgAccount", accountResponse.data?.name);
-      newUserModel.setData("ldapOrgDomain", accountResponse.data?.orgDomain);
-      newUserModel.setData("organizationName", accountResponse?.data?.accountName);
-      newUserModel.setData("orgAccount", accountResponse?.data?.name);
-      newUserModel.setData("localAuth", accountResponse?.data?.localAuth === "TRUE");
+      setUserData({...newUserModel});
+    } catch (error) {
+      toastContext.showInlineErrorMessage(error, "Error getting account information:");
     }
-
-    setUserData({...newUserModel});
   };
 
   const handleClose = () => {

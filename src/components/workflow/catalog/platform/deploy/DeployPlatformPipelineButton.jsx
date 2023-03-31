@@ -15,7 +15,7 @@ export default function DeployPlatformPipelineButton(
     className,
     buttonSize,
     templateId,
-    roles,
+    pipelineTemplateModel,
   }) {
   const history = useHistory();
   const [buttonState, setButtonState] = useState(buttonLabelHelper.BUTTON_STATES.READY);
@@ -33,7 +33,9 @@ export default function DeployPlatformPipelineButton(
         getAccessToken,
         cancelTokenSource,
         templateId,
-        roles,
+        pipelineTemplateModel?.getData("roles"),
+        pipelineTemplateModel?.getData("name"),
+        pipelineTemplateModel?.getData("description"),
       );
       const newPipelineId = result?.data?._id;
       setButtonState(buttonLabelHelper.BUTTON_STATES.SUCCESS);
@@ -72,5 +74,5 @@ DeployPlatformPipelineButton.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   buttonSize: PropTypes.string,
-  roles: PropTypes.array,
+  pipelineTemplateModel: PropTypes.object,
 };

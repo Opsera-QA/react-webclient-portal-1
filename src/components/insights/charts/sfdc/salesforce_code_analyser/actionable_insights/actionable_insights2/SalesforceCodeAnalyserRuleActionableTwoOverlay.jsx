@@ -16,9 +16,9 @@ import SalesforceCodeAnalyserRuleActionableTwoTable from "./SalesforceCodeAnalys
 import codeAnalyserActions from "../../codeanalyser.action";
 
 function SalesforceCodeAnalyserRuleActionableTwoOverlay({
-                                                             kpiConfiguration,
-                                                             dashboardData, rule
-                                                         }) {
+                                                            kpiConfiguration,
+                                                            dashboardData, rule
+                                                        }) {
     const { getAccessToken } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
     const [error, setError] = useState(undefined);

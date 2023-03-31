@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import {
   getTableTextColumn,
-  getTableDateTimeColumn,
+  getTableDateTimeColumn,getTableBooleanIconColumn
 } from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -38,30 +38,57 @@ function InsightsLookupDetailsTable({
         undefined,
         undefined,
       ),
+        getTableTextColumn(
+            getField(fields, "stepId"),
+            "no-wrap-inline",
+            undefined,
+            undefined,
+        ),
       getTableTextColumn(
         getField(fields, "jobType"),
         "no-wrap-inline",
         undefined,
         undefined,
       ),
+        getTableBooleanIconColumn(
+            getField(fields, "validated"),
+            "no-wrap-inline",
+            undefined,
+        ),
+        getTableBooleanIconColumn(
+            getField(fields, "deployed"),
+            "no-wrap-inline",
+            undefined,
+        ),
+        getTableBooleanIconColumn(
+            getField(fields, "unitTests"),
+            "no-wrap-inline",
+            undefined,
+        ),
       getTableTextColumn(
         getField(fields, "createdByName"),
         "no-wrap-inline",
         undefined,
         undefined,
       ),
-      getTableDateTimeColumn(
-        getField(fields, "startTimestamp"),
-        "no-wrap-inline",
-        undefined,
-        undefined,
-      ),
-      getTableDateTimeColumn(
-        getField(fields, "endTimestamp"),
-        "no-wrap-inline",
-        undefined,
-        undefined,
-      ),
+        getTableDateTimeColumn(
+            getField(fields, "startTimestamp"),
+            "no-wrap-inline",
+            undefined,
+            undefined,
+        ),
+        getTableDateTimeColumn(
+            getField(fields, "endTimestamp"),
+            "no-wrap-inline",
+            undefined,
+            undefined,
+        ),
+        getTableTextColumn(
+            getField(fields, "difference"),
+            "no-wrap-inline",
+            undefined,
+            undefined,
+        ),
     ],
     [],
   );
@@ -108,7 +135,7 @@ function InsightsLookupDetailsTable({
         />
       }
     />
-  );
+);
 }
 
 InsightsLookupDetailsTable.propTypes = {

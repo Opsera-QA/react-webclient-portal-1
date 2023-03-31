@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
@@ -11,6 +11,7 @@ import {useHistory} from "react-router-dom";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {getTaskTypeLabel} from "components/tasks/task.types";
 import { taskHelper } from "components/tasks/task.helper";
+import tasksMetadata from "@opsera/definitions/constants/tasks/tasks.metadata";
 
 export default function FreeTrialWorkspaceTaskTable(
   {
@@ -19,42 +20,27 @@ export default function FreeTrialWorkspaceTaskTable(
     setTaskFilterModel,
     loadData,
     isLoading,
-    taskMetadata,
   }) {
   const history = useHistory();
-  const [columns, setColumns] = useState([]);
+  const fields = tasksMetadata?.fields;
+  const columns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "name"), "force-text-wrap"),
+      getTableTextColumn(getField(fields, "description"), "force-text-wrap"),
+      getTableTextColumn(getField(fields, "run_count"), "mx-auto"),
+      getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), getTaskTypeLabel),
+      getTagColumn(getField(fields, "tags")),
+      getTableDateColumn(getField(fields, "createdAt")),
+      getTableBooleanIconColumn(getField(fields, "active")),
+      getTaskStatusColumn(getField(fields, "status")),
+    ],
+    [fields]
+  );
 
-  useEffect(() => {
-    setColumns([]);
-    loadColumnMetadata(taskMetadata);
-  }, [JSON.stringify(taskMetadata)]);
-
-  const loadColumnMetadata = (newActivityMetadata) => {
-    if (newActivityMetadata?.fields) {
-      const fields = newActivityMetadata?.fields;
-
-      setColumns(
-        [
-          getTableTextColumn(getField(fields, "name"), "force-text-wrap"),
-          getTableTextColumn(getField(fields, "description"), "force-text-wrap"),
-          getTableTextColumn(getField(fields, "run_count"), "mx-auto"),
-          getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), getTaskTypeLabel),
-          getTagColumn(getField(fields, "tags")),
-          getTableDateColumn(getField(fields, "createdAt")),
-          getTableBooleanIconColumn(getField(fields, "active")),
-          getTaskStatusColumn(getField(fields, "status")),
-        ]
-      );
-    }
-  };
 
   const onRowSelect = (row) => {
     history.push(taskHelper.getDetailViewLink(row?.original?._id));
   };
-
-  if (taskMetadata == null) {
-    return null;
-  }
 
   return (
     <CustomTable
@@ -77,5 +63,4 @@ FreeTrialWorkspaceTaskTable.propTypes = {
   isLoading: PropTypes.bool,
   taskFilterModel: PropTypes.object,
   setTaskFilterModel: PropTypes.func,
-  taskMetadata: PropTypes.object,
 };

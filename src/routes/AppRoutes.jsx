@@ -21,6 +21,7 @@ import UserProfileRoutes from "routes/UserProfileRoutes";
 import BlueprintsRoutes from "routes/BlueprintsRoutes";
 import FreeTrialSettingsRoutes from "routes/FreeTrialSettingsRoutes";
 import FreeTrialAdminToolsRoutes from "routes/FreeTrialAdminToolsRoutes";
+import WorkspaceRoutes from "routes/WorkspaceRoutes";
 
 export default function AppRoutes(
   {
@@ -53,6 +54,7 @@ export default function AppRoutes(
           <FreeTrialSettingsRoutes />
           <AdminToolsRoutes />
           <FreeTrialAdminToolsRoutes />
+          <WorkspaceRoutes />
 
           {/*TODO: These are legacy routes that should probably be removed*/}
           <SecureRoute path="/dashboard" component={Dashboard} />

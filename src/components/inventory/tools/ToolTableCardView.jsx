@@ -30,7 +30,6 @@ function ToolTableCardView(
     userData,
     toastContext,
   } = useComponentStateReference();
-  // TODO: Implement when we want to turn on
   const getPlatformSettingsFeatureFlagByName = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_WIZARDS_TOGGLE);
 
   const createNewTool = () => {
@@ -48,7 +47,7 @@ function ToolTableCardView(
   const getCreateNewToolFunction = () => {
     const canCreate = RegistryToolRoleHelper.canCreateRegistryTool(userData);
     if (canCreate === true) {
-     return createNewTool;
+      return createNewTool;
     }
   };
 
@@ -122,22 +121,22 @@ function ToolTableCardView(
   };
 
   return (
-      <FilterContainer
-        loadData={loadData}
-        filterDto={toolFilterDto}
-        setFilterDto={setToolFilterDto}
-        addRecordFunction={getCreateNewToolFunction()}
-        supportSearch={true}
-        supportViewToggle={true}
-        isLoading={isLoading}
-        metadata={registryToolMetadata}
-        body={getTableCardView()}
-        dropdownFilters={getDropdownFilters()}
-        inlineFilters={getInlineFilters()}
-        titleIcon={faTools}
-        title={"Tools"}
-        className={"px-2 pb-2"}
-      />
+    <FilterContainer
+      loadData={loadData}
+      filterDto={toolFilterDto}
+      setFilterDto={setToolFilterDto}
+      addRecordFunction={getCreateNewToolFunction()}
+      supportSearch={true}
+      supportViewToggle={true}
+      isLoading={isLoading}
+      metadata={registryToolMetadata}
+      body={getTableCardView()}
+      dropdownFilters={getDropdownFilters()}
+      inlineFilters={getInlineFilters()}
+      titleIcon={faTools}
+      title={"Tools"}
+      className={"px-2 pb-2"}
+    />
   );
 }
 

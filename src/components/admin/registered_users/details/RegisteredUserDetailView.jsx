@@ -14,6 +14,7 @@ import Model from "core/data_model/model";
 import RegisteredUsersManagementSubNavigationBar
   from "components/admin/registered_users/RegisteredUsersManagementSubNavigationBar";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function RegisteredUserDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -48,8 +49,13 @@ function RegisteredUserDetailView() {
 
   const getUser = async () => {
     const response = await RegisteredUserActions.getUserRecord(id, getAccessToken);
+    const user = DataParsingHelper.parseNestedObject(response, "data");
 
-    if (response?.data != null) {
+    if (user) {
+      if (user.active !== false) {
+        user.active = true;
+      }
+
       setUserData(new Model(response.data, registeredUsersMetadata, false));
     }
   };

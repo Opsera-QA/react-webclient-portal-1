@@ -12,6 +12,8 @@ import ScreenContainerBodyLoadingDialog
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import RoleHelper from "@opsera/know-your-role/roles/role.helper";
+import ActiveFilterDisplayer from "components/common/filters/ActiveFilterDisplayer";
 
 function ScreenContainer(
   {
@@ -22,19 +24,25 @@ function ScreenContainer(
     accessDenied,
     showBreadcrumbTrail,
     navigationTabContainer,
-    accessRoleData,
     roleRequirement,
     titleActionBar,
     helpComponent,
     bodyClassName,
     auditLogType,
     className,
+    hideSubNavigationBlock,
+    showActiveFilters,
+    filters,
+    filterModel,
+    loadDataFunction,
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const toastContext = useContext(DialogToastContext);
   const {
     isOpseraAdministrator,
-    isFreeTrial
+    isFreeTrial,
+    userData,
+    accessRoleData,
   } = useComponentStateReference();
 
   useEffect(() => {
@@ -57,7 +65,7 @@ function ScreenContainer(
       );
     }
 
-    if (isFreeTrial !== true || isOpseraAdministrator === true) {
+    if (isFreeTrial !== true || isOpseraAdministrator === true || hideSubNavigationBlock === true) {
       return (
         <div className="mb-2">
           <div className="sub-navigation-block" />
@@ -133,7 +141,26 @@ function ScreenContainer(
     return bodyHeightString;
   };
 
+  const getActiveFilterDisplayer = () => {
+    if (showActiveFilters !== false && filters != null && filterModel != null) {
+      return (
+        <ActiveFilterDisplayer
+          filterModel={filterModel}
+          loadData={loadDataFunction}
+        />
+      );
+    }
+  };
+
   if (!isLoading && accessDenied) {
+    return (
+      <AccessDeniedContainer
+        navigationTabContainer={navigationTabContainer}
+      />
+    );
+  }
+
+  if (breadcrumb && Array.isArray(breadcrumb?.allowedRoles) && RoleHelper.doesUserMeetSiteRoleRequirements(userData, breadcrumb?.allowedRoles) !== true) {
     return (
       <AccessDeniedContainer
         navigationTabContainer={navigationTabContainer}
@@ -157,7 +184,7 @@ function ScreenContainer(
           className={"screen-container content-container content-card-1"}
           style={{
             minHeight: screenContainerHeights.SCREEN_CONTAINER_HEIGHT,
-        }}
+          }}
         >
           <div className={"p-2 content-block-header title-text-header-1"}>
             <ScreenContainerTitleBar
@@ -168,8 +195,12 @@ function ScreenContainer(
               titleActionBar={titleActionBar}
               helpComponent={helpComponent}
               auditLogType={auditLogType}
+              filterModel={filterModel}
+              filters={filters}
+              loadDataFunction={loadDataFunction}
             />
           </div>
+          {getActiveFilterDisplayer()}
           <div
             style={{ minHeight: getBodyHeight()}}
           >
@@ -197,6 +228,11 @@ ScreenContainer.propTypes = {
   bodyClassName: PropTypes.string,
   auditLogType: PropTypes.string,
   className: PropTypes.string,
+  hideSubNavigationBlock: PropTypes.bool,
+  showActiveFilters: PropTypes.bool,
+  filterModel: PropTypes.object,
+  loadDataFunction: PropTypes.func,
+  filters: PropTypes.any,
 };
 
 ScreenContainer.defaultProps = {

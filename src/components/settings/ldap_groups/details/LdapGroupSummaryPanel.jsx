@@ -22,13 +22,10 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData, isLoading }) {
           />
         </Col>
         <Col lg={6}>
-          <StandaloneTextFieldBase label={"Domain"} text={domain} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={ldapGroupData} fieldName={"groupType"}/>
-        </Col>
-        <Col lg={6}>
           <EmailAddressField model={ldapGroupData} fieldName={"ownerEmail"}/>
+        </Col>
+        <Col lg={6}>
+          <StandaloneTextFieldBase label={"Domain"} text={domain} />
         </Col>
       </Row>
       <LdapGroupMembersTable

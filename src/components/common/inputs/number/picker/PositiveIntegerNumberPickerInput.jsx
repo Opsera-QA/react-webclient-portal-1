@@ -30,6 +30,15 @@ function PositiveIntegerNumberPickerInput(
   }, [dataObject]);
 
   const validateAndSetData = (newValue) => {
+
+    if(!newValue) {
+      let newDataObject = dataObject;
+      newDataObject.setTextData(fieldName, null); // setting default value
+      setErrorMessage(newDataObject.getFieldError(fieldName));
+      setDataObject({...newDataObject});
+      return;
+    }
+    
     let parsedValue = Math.trunc(newValue);
     const numericalFieldRegex = regexDefinitions.numericalField.regex;
 

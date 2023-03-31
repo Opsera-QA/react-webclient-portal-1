@@ -63,6 +63,27 @@ const InsightsLookupPipelineOverlay = ({ componentName }) => {
     toastContext.clearOverlayPanel();
   };
 
+  lookupDetails.forEach((temp) => {
+    temp.difference = ((new Date(temp.endTimestamp) - new Date(temp.startTimestamp))/60000).toFixed(2).toString();
+    if(temp.checkOnly == false){
+      temp.deployed = true;
+    } else{
+      temp.deployed = false;
+    }
+
+    if(temp.checkOnly == true){
+      temp.validated = true;
+    } else{
+      temp.validated = false;
+    }
+
+    if(temp.checkOnly == true && (temp.successUnitTests != "Unknown" || temp.failedUnitTests != "Unknown")){
+      temp.unitTests = true;
+    } else{
+      temp.unitTests = false;
+    }
+  });
+
   return (
     <CenterOverlayContainer
       closePanel={closePanel}

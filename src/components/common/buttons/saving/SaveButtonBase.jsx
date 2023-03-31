@@ -21,6 +21,8 @@ function SaveButtonBase(
     showIncompleteDataMessage,
     isIncomplete,
     clearChangeMapAfterSave,
+    customSuccessMessage,
+    customIncompleteDataMessage,
   }) {
   let toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
@@ -47,6 +49,8 @@ function SaveButtonBase(
       setModel,
       isIncomplete,
       clearChangeMapAfterSave,
+      customSuccessMessage,
+      customIncompleteDataMessage,
       );
 
     if (isMounted.current === true) {
@@ -93,6 +97,8 @@ SaveButtonBase.propTypes = {
   setModel: PropTypes.func,
   isIncomplete: PropTypes.bool,
   clearChangeMapAfterSave: PropTypes.bool,
+  customSuccessMessage: PropTypes.string,
+  customIncompleteDataMessage: PropTypes.string,
 };
 
 SaveButtonBase.defaultProps = {

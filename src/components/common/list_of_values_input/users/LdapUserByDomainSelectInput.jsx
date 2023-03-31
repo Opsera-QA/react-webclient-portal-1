@@ -75,7 +75,7 @@ function LdapUserByDomainSelectInput(
 
   const getUsers = async (cancelSource = cancelTokenSource, ldapDomain) => {
     const response = await accountsActions.getLdapUsersWithDomainV2(getAccessToken, cancelSource, ldapDomain);
-    const users = response?.data;
+    const users = response?.data?.data;
 
     if (Array.isArray(users)) {
       let formattedUsers = [];

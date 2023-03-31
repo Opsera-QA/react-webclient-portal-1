@@ -176,7 +176,7 @@ function SfdxScanThresholdInputBase({ fieldName, model, setModel, helpComponent,
 
   const updateThresholdCountRow = (index, innerField, newValue) => {
     let newPropertyList = thresholdRows;
-    console.log(newPropertyList[index][innerField] );
+    // console.log(newPropertyList[index][innerField] );
     if (newPropertyList[index][innerField] !== newValue) {
       newPropertyList[index][innerField] = newValue;
       validateAndSetData(newPropertyList);

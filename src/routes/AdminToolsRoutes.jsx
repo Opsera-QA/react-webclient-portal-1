@@ -51,6 +51,7 @@ import OrganizationSettingsDetailView
   from "components/admin/organization_settings/details/OrganizationSettingsDetailView";
 import RoleRestrictedRoute from "temp-library-components/routes/RoleRestrictedRoute";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import LdapUserDetailView from "components/admin/accounts/ldap/users/details/LdapUserDetailView";
 
 export default function AdminToolsRoutes() {
   const {
@@ -98,6 +99,11 @@ export default function AdminToolsRoutes() {
       <SecureRoute path="/admin/organization-accounts/:organizationDomain/details" exact
                    component={LdapOrganizationAccountDetailView} />
       <SecureRoute path="/admin/accounts/create" exact component={LdapCustomerOnboardView} />
+      <SecureRoute
+        path={"/admin/organization-accounts/:organizationDomain/users/:emailAddress/details"}
+        exact
+        component={LdapUserDetailView}
+      />
 
 
       <SecureRoute path="/admin/templates/tasks" exact component={TaskTemplateManagement} />

@@ -15,7 +15,11 @@ export const insightsLookupDetailsMetadata = {
       id: "jobType",
     },
     {
-      label: "Created By",
+      label: "Step Id",
+      id: "stepId",
+    },
+    {
+      label: "Deployed By",
       id: "createdByName",
     },
     {
@@ -25,6 +29,21 @@ export const insightsLookupDetailsMetadata = {
     {
       label: "Deployment End",
       id: "endTimestamp",
+    },
+    {
+      label: "Durations (mins)",
+      id: "difference",
+    },
+    {
+      label: "Validated",
+      id: "validated",
+    },
+    {
+      label: "Deployed",
+      id: "deployed",
+    },{
+      label: "Unit Tested",
+      id: "unitTests",
     },
   ],
   newObjectFields: {

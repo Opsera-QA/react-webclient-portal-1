@@ -20,5 +20,48 @@ export default function useLdapUserActions() {
     );
   };
 
+  ldapUserActions.getResourcesWithUserAssigned = async (
+    userEmail,
+    type,
+  ) => {
+    const apiUrl = `/account/users/assigned-roles/resources/`;
+    const queryParameters = {
+      userEmail: userEmail,
+      type: type,
+    };
+
+    return await apiService.handleApiGetRequest(
+      apiUrl,
+      queryParameters,
+    );
+  };
+
+  ldapUserActions.removeUserFromAssignedRules = async (
+    userEmail,
+  ) => {
+    const apiUrl = `/account/users/${userEmail}/assigned-roles`;
+    return await apiService.handleApiDeleteRequest(
+      apiUrl,
+    );
+  };
+
+  ldapUserActions.revokeUserGroupMembership = async (
+    userEmail,
+  ) => {
+    const apiUrl = `/account/users/${userEmail}/group-membership`;
+    return await apiService.handleApiDeleteRequest(
+      apiUrl,
+    );
+  };
+
+  ldapUserActions.revokeSiteRoleMembership = async (
+    userEmail,
+  ) => {
+    const apiUrl = `/account/users/${userEmail}/site-role-membership`;
+    return await apiService.handleApiDeleteRequest(
+      apiUrl,
+    );
+  };
+
   return ldapUserActions;
 }

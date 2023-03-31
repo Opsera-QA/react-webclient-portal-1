@@ -99,6 +99,7 @@ function LdapGroupDetailPanel(
         return (
           <LdapGroupAssignedRolesPanel
             groupModel={ldapGroupData}
+            domain={orgDomain}
           />
         );
       default:

@@ -46,7 +46,7 @@ CopyToClipboardIconBase.propTypes = {
 };
 
 CopyToClipboardIconBase.defaultProps = {
-  copyText: "Copy to clipboard",
+  copyText: "Copy to Clipboard",
   copiedText: "Copied to Clipboard!",
   copyIcon: faClipboardList,
   copiedIcon: faClipboardCheck
