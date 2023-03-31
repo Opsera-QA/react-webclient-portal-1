@@ -27,7 +27,6 @@ export default function FreeTrialWorkspacePipelinesTable(
     () => [
       getPipelineTypeColumn(getField(fields, "type")),
       getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "_id")),
       getCustomTablePipelineStateColumnDefinition(getField(fields, "state")),
       getTableTextColumn(getField(fields, "workflow.run_count")),
       getTableDateTimeColumn(getField(fields, "workflow.last_run.completed")),
