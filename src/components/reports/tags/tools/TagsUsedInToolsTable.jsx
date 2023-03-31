@@ -23,7 +23,6 @@ function TagsUsedInToolsTable({ data, loadData, isLoading}) {
     () => [
       getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
       getLimitedTableTextColumn(getField(fields, "description"), 100),
-      getTableTextColumn(getField(fields, "_id")),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableDateColumn(getField(fields, "updatedAt")),
       getTableBooleanIconColumn(getField(fields, "active")),

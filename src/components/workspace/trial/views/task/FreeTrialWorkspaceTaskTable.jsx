@@ -26,7 +26,6 @@ export default function FreeTrialWorkspaceTaskTable(
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name"), "force-text-wrap"),
-      getTableTextColumn(getField(fields, "description"), "force-text-wrap"),
       getTableTextColumn(getField(fields, "run_count"), "mx-auto"),
       getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), getTaskTypeLabel),
       getTagColumn(getField(fields, "tags")),

@@ -13,7 +13,6 @@ function ToolPipelinesTable({ pipelineData, isLoading, loadData, toolModel }) {
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "_id";})),
       getTableTextColumn(fields.find(field => { return field.id === "name";})),
       getTableDateColumn(fields.find(field => { return field.id === "createdAt";})),
     ],

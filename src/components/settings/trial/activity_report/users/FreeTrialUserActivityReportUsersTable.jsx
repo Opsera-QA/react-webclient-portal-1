@@ -63,7 +63,6 @@ export default function FreeTrialUserActivityReportUsersTable(
       getTableTextColumn(getField(fields, "workflowCount")),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableDateTimeColumn(getField(fields, "updatedAt")),
-      getTableTextColumn(getField(fields, "_id")),
     ],
     [fields]
   );

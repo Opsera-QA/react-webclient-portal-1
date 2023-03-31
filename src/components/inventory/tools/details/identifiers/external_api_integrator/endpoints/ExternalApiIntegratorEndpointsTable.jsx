@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import {
-  getFormattedLabelWithFunctionColumnDefinition,
+  getFormattedLabelWithFunctionColumnDefinition, getLimitedTableTextColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -54,7 +54,7 @@ function ExternalApiIntegratorEndpointsTable(
       getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), getEndpointTypeLabel),
       getFormattedLabelWithFunctionColumnDefinition(getField(fields, "requestType"), getEndpointRequestTypeLabel),
       getTableTextColumn(getField(fields, "url")),
-      getTableTextColumn(getField(fields, "description")),
+      getLimitedTableTextColumn(getField(fields, "description"), 100),
     ],
     []
   );

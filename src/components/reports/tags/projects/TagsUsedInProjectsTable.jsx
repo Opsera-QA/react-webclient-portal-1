@@ -17,7 +17,6 @@ function TagsUsedInProjectsTable({ data, loadData, isLoading}) {
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "_id")),
       getTableTextColumn(getField(fields, "key")),
       getTableTextColumn(getField(fields, "owner_name")),
       getTableTextColumn(getField(fields, "tool_identifier")),

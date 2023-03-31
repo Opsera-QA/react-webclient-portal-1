@@ -2,7 +2,7 @@ import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
-import {getTableBooleanIconColumn, getTableDateColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
+import {getTableBooleanIconColumn, getTableDateColumn, getTableTextColumn, getLimitedTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import { useHistory } from "react-router-dom";
 import VanityTable from "components/common/table/VanityTable";
@@ -15,7 +15,7 @@ function UserToolOwnershipReportTable({ toolList, isLoading, paginationModel, se
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name"),"force-text-wrap"),
-      getTableTextColumn(getField(fields, "description"),"force-text-wrap"),
+      getLimitedTableTextColumn(getField(fields, "description"), 100),
       getTableTextColumn(getField(fields, "tool_type_identifier")),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableBooleanIconColumn(getField(fields, "active")),
