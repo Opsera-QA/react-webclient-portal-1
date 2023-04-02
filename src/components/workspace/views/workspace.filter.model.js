@@ -32,6 +32,10 @@ const workspaceFilterMetadata = {
       label: "Tag",
       id: "tag",
     },
+    {
+      label: "Owner",
+      id: "owner",
+    },
   ],
   newObjectFields: {
     pageSize: 100,
