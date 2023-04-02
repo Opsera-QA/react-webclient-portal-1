@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import { workspaceActions } from "components/workspace/workspace.actions";
+import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
 import FreeTrialUserActivityReportSubNavigationBar
   from "components/settings/trial/activity_report/FreeTrialUserActivityReportSubNavigationBar";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
@@ -77,7 +77,7 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
   };
 
   const getFreeTrialActivityReportWorkflows = async (newFilterModel = activityReportFilterModel) => {
-    const pipelineResponse = await workspaceActions.getFreeTrialUserActivityReportPipelines(
+    const pipelineResponse = await freeTrialWorkspaceActions.getFreeTrialUserActivityReportPipelines(
       getAccessToken,
       cancelTokenSource,
       newFilterModel?.getFilterValue("userId"),
@@ -87,7 +87,7 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
     const pipelines = DataParsingHelper.parseArray(pipelineResponse?.data?.data, []);
     workflows.push(...pipelines);
 
-    const taskResponse = await workspaceActions.getFreeTrialUserActivityReportTasks(
+    const taskResponse = await freeTrialWorkspaceActions.getFreeTrialUserActivityReportTasks(
       getAccessToken,
       cancelTokenSource,
       newFilterModel?.getFilterValue("userId"),
@@ -101,7 +101,7 @@ export default function FreeTrialUserActivityReportUserActivityViewer() {
       setActivityReportFilterModel({...newFilterModel});
     }
 
-    const toolResponse = await workspaceActions.getFreeTrialCustomerWorkspaceItems(
+    const toolResponse = await freeTrialWorkspaceActions.getFreeTrialCustomerWorkspaceItems(
       getAccessToken,
       cancelTokenSource,
       newFilterModel?.getFilterValue("userId"),
