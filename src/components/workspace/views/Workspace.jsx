@@ -7,7 +7,7 @@ import FreeTrialWorkspaceFilterModel from "components/workspace/trial/views/free
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
 
-export default function FreeTrialWorkspace() {
+export default function Workspace() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"workspace"} />);
   const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new FreeTrialWorkspaceFilterModel());
   const [workspaceItems, setWorkspaceItems] = useState([]);
