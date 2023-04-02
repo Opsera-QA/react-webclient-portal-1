@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getFormattedLabelWithFunctionColumnDefinition,
+  getFormattedLabelWithFunctionColumnDefinition, getOwnerNameField,
   getTableDateTimeColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
@@ -12,6 +12,7 @@ import { workspaceHelper } from "components/workspace/workspace.helper";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { useHistory } from "react-router-dom";
 import { workspaceConstants } from "components/workspace/workspace.constants";
+import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function WorkspaceItemTable(
   {
@@ -23,19 +24,33 @@ export default function WorkspaceItemTable(
   }) {
   const history = useHistory();
   const fields = workspaceItemMetadata.fields;
-
+  const {isFreeTrial, isSaasUser} = useComponentStateReference();
   const columns = useMemo(
-    () => [
-      getFormattedLabelWithFunctionColumnDefinition(getField(fields, "workspaceType"), workspaceConstants.getLabelForWorkspaceType),
-      getFormattedLabelWithFunctionColumnDefinition(
-        getField(fields, "templateIdentifier"),
-        workspaceConstants.getIdentifierLabelForWorkspaceItem,
-        undefined,
-        true
-      ),
-      getTableTextColumn(getField(fields, "name")),
-      getTableDateTimeColumn(getField(fields, "createdAt")),
-    ],
+    () => {
+      const columns = [
+        getFormattedLabelWithFunctionColumnDefinition(getField(fields, "workspaceType"), workspaceConstants.getLabelForWorkspaceType),
+        getTableTextColumn(getField(fields, "name")),
+        getTableDateTimeColumn(getField(fields, "createdAt")),
+      ];
+
+      if (isFreeTrial === true) {
+        columns.push(
+          getFormattedLabelWithFunctionColumnDefinition(
+            getField(fields, "templateIdentifier"),
+            workspaceConstants.getIdentifierLabelForWorkspaceItem,
+            undefined,
+            true
+          ),
+        );
+      }
+
+      if (isSaasUser === false) {
+        columns.push(getOwnerNameField());
+      }
+
+      return columns;
+
+    },
     [],
   );
 

@@ -19,7 +19,6 @@ export default function Workspace() {
   return (
     <ScreenContainer
       breadcrumbDestination={"workspace"}
-      isLoading={isLoading}
       error={error}
     >
       <WorkspaceViewContainer
