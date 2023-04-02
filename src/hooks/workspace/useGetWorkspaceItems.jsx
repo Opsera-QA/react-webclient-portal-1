@@ -35,6 +35,7 @@ export default function useGetWorkspaceItems(
   const getWorkspaceItems = async (
     newFilterModel = workspaceFilterModel,
   ) => {
+    setWorkspaceItems([]);
     const response = await workspaceActions.getWorkspaceItems(
       newFilterModel,
       fields,

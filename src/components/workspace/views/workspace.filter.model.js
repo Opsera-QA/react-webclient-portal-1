@@ -55,6 +55,10 @@ export default class WorkspaceFilterModel extends FilterModelBase {
     return true;
   };
 
+  showPagination = () => {
+    return true;
+  };
+
   unpackUrlParameters = () => {
     let hasUrlParams = this.unpackCommonUrlParameters();
 
