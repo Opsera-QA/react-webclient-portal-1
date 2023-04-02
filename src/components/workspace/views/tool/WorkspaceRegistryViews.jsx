@@ -1,11 +1,11 @@
 import React from "react";
 import TableCardView from "components/common/table/TableCardView";
 import PropTypes from "prop-types";
-import FreeTrialWorkspaceRegistryTable from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistryTable";
-import FreeTrialWorkspaceRegistryCardView from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistryCardView";
 import {
   FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
 } from "components/common/table/FilterContainer";
+import WorkspaceRegistryCardView from "components/workspace/views/tool/WorkspaceRegistryCardView";
+import WorkspaceRegistryTable from "components/workspace/views/tool/WorkspaceRegistryTable";
 
 export default function WorkspaceRegistryViews(
   {
@@ -17,7 +17,7 @@ export default function WorkspaceRegistryViews(
   }) {
   const getCardView = () => {
     return (
-      <FreeTrialWorkspaceRegistryCardView
+      <WorkspaceRegistryCardView
         isLoading={isLoading}
         loadData={loadData}
         tools={tools}
@@ -27,7 +27,7 @@ export default function WorkspaceRegistryViews(
 
   const getTableView = () => {
     return (
-      <FreeTrialWorkspaceRegistryTable
+      <WorkspaceRegistryTable
         isLoading={isLoading}
         loadData={loadData}
         tools={tools}

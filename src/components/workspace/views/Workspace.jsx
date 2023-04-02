@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import FreeTrialWorkspaceViewContainer from "components/workspace/trial/views/FreeTrialWorkspaceViewContainer";
 import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
 import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
-import FreeTrialWorkspaceFilterModel from "components/workspace/trial/views/freeTrialWorkspace.filter.model";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
+import WorkspaceFilterModel from "components/workspace/views/workspace.filter.model";
+import WorkspaceViewContainer from "components/workspace/views/WorkspaceViewContainer";
 
 export default function Workspace() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"workspace"} />);
-  const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new FreeTrialWorkspaceFilterModel());
+  const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new WorkspaceFilterModel());
   const [workspaceItems, setWorkspaceItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const {
@@ -64,7 +64,7 @@ export default function Workspace() {
     <ScreenContainer
       breadcrumbDestination={"workspace"}
     >
-      <FreeTrialWorkspaceViewContainer
+      <WorkspaceViewContainer
         workspaceFilterModel={workspaceFilterModel}
         setWorkspaceFilterModel={setWorkspaceFilterModel}
         loadData={loadData}

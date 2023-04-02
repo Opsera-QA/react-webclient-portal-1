@@ -13,6 +13,7 @@ import WorkspaceVerticalTabContainer from "components/workspace/views/WorkspaceV
 import WorkspaceItemViews from "components/workspace/views/all/WorkspaceItemViews";
 import WorkspaceTaskViews from "components/workspace/views/task/WorkspaceTaskViews";
 import WorkspaceRegistryViews from "components/workspace/views/tool/WorkspaceRegistryViews";
+import WorkspacePipelineViews from "components/workspace/views/pipeline/WorkspacePipelineViews";
 
 export default function WorkspaceViewContainer(
   {

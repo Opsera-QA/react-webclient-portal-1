@@ -1,11 +1,11 @@
 import React from "react";
 import TableCardView from "components/common/table/TableCardView";
 import PropTypes from "prop-types";
-import FreeTrialWorkspaceTaskCardView from "components/workspace/trial/views/task/FreeTrialWorkspaceTaskCardView";
-import FreeTrialWorkspaceTaskTable from "components/workspace/trial/views/task/FreeTrialWorkspaceTaskTable";
 import {
   FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
 } from "components/common/table/FilterContainer";
+import WorkspaceTaskCardView from "components/workspace/views/task/WorkspaceTaskCardView";
+import WorkspaceTaskTable from "components/workspace/views/task/WorkspaceTaskTable";
 
 export default function WorkspaceTaskViews(
   {
@@ -17,7 +17,7 @@ export default function WorkspaceTaskViews(
   }) {
   const getCardView = () => {
     return (
-      <FreeTrialWorkspaceTaskCardView
+      <WorkspaceTaskCardView
         isLoading={isLoading}
         loadData={loadData}
         tasks={tasks}
@@ -27,7 +27,7 @@ export default function WorkspaceTaskViews(
 
   const getTableView = () => {
     return (
-      <FreeTrialWorkspaceTaskTable
+      <WorkspaceTaskTable
         isLoading={isLoading}
         loadData={loadData}
         tasks={tasks}

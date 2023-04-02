@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TableCardView from "components/common/table/TableCardView";
-import FreeTrialWorkspacePipelinesTable from "components/workspace/trial/views/pipeline/FreeTrialWorkspacePipelinesTable";
-import FreeTrialWorkspacePipelineCardView from "components/workspace/trial/views/pipeline/FreeTrialWorkspacePipelineCardView";
 import {
   FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
 } from "components/common/table/FilterContainer";
+import WorkspacePipelineCardView from "components/workspace/views/pipeline/WorkspacePipelineCardView";
+import WorkspacePipelinesTable from "components/workspace/views/pipeline/WorkspacePipelinesTable";
 
 export default function WorkspacePipelineViews(
   {
@@ -17,7 +17,7 @@ export default function WorkspacePipelineViews(
   }) {
   const getCardView = () => {
     return (
-      <FreeTrialWorkspacePipelineCardView
+      <WorkspacePipelineCardView
         isLoading={isLoading}
         loadData={loadData}
         pipelines={pipelines}
@@ -28,7 +28,7 @@ export default function WorkspacePipelineViews(
 
   const getTableView = () => {
     return (
-      <FreeTrialWorkspacePipelinesTable
+      <WorkspacePipelinesTable
         isLoading={isLoading}
         paginationModel={workspaceFilterModel}
         setPaginationModel={setWorkspaceFilterModel}
