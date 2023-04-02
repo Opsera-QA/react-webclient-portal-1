@@ -14,6 +14,7 @@ import WorkspaceItemViews from "components/workspace/views/all/WorkspaceItemView
 import WorkspaceTaskViews from "components/workspace/views/task/WorkspaceTaskViews";
 import WorkspaceRegistryViews from "components/workspace/views/tool/WorkspaceRegistryViews";
 import WorkspacePipelineViews from "components/workspace/views/pipeline/WorkspacePipelineViews";
+import TagFilter from "components/common/filters/tags/tag/TagFilter";
 
 export default function WorkspaceViewContainer(
   {
@@ -110,6 +111,18 @@ export default function WorkspaceViewContainer(
     );
   };
 
+  const getDropdownFilters = () => {
+    return (
+      <>
+        <TagFilter
+          filterDto={workspaceFilterModel}
+          setFilterDto={setWorkspaceFilterModel}
+          valueField={"value2"}
+        />
+      </>
+    );
+  };
+
   const createWorkspaceItem = () => {
     toastContext.showOverlayPanel(
       <CreateWorkflowWizard />
@@ -128,6 +141,7 @@ export default function WorkspaceViewContainer(
       isLoading={isLoading}
       loadData={loadData}
       inlineFilters={getInlineFilters()}
+      dropdownFilters={getDropdownFilters()}
       title={"Workspace"}
       type={"Workspace Item"}
       addRecordButtonCustomText={"Create New"}

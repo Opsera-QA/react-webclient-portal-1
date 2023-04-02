@@ -28,6 +28,10 @@ const workspaceFilterMetadata = {
       label: "View Type",
       id: "viewType",
     },
+    {
+      label: "Tag",
+      id: "tag",
+    },
   ],
   newObjectFields: {
     pageSize: 100,
@@ -36,6 +40,7 @@ const workspaceFilterMetadata = {
     activeFilters: [],
     viewType: "list",
     type: "all",
+    tag: undefined,
   },
 };
 
