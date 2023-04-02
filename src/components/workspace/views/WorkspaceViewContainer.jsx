@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import FreeTrialWorkspaceVerticalTabContainer from "components/workspace/trial/views/FreeTrialWorkspaceVerticalTabContainer";
 import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
 import { faRectangleList } from "@fortawesome/pro-light-svg-icons";
 import FilterContainer, {
@@ -8,12 +7,12 @@ import FilterContainer, {
 import CreateWorkflowWizard from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import PropTypes from "prop-types";
-import FreeTrialWorkspacePipelineViews from "components/workspace/trial/views/pipeline/FreeTrialWorkspacePipelineViews";
-import FreeTrialWorkspaceRegistryViews from "components/workspace/trial/views/tool/FreeTrialWorkspaceRegistryViews";
-import FreeTrialWorkspaceTaskViews from "components/workspace/trial/views/task/FreeTrialWorkspaceTaskViews";
-import FreeTrialWorkspaceItemViews from "components/workspace/trial/views/all/FreeTrialWorkspaceItemViews";
 import InlineWorkspaceItemTypeFilter from "components/common/filters/workspace/type/InlineWorkspaceItemTypeFilter";
 import { workspaceConstants } from "components/workspace/workspace.constants";
+import WorkspaceVerticalTabContainer from "components/workspace/views/WorkspaceVerticalTabContainer";
+import WorkspaceItemViews from "components/workspace/views/all/WorkspaceItemViews";
+import WorkspaceTaskViews from "components/workspace/views/task/WorkspaceTaskViews";
+import WorkspaceRegistryViews from "components/workspace/views/tool/WorkspaceRegistryViews";
 
 export default function WorkspaceViewContainer(
   {
@@ -29,7 +28,7 @@ export default function WorkspaceViewContainer(
     switch (workspaceFilterModel?.getData("type")) {
       case workspaceConstants.WORKSPACE_ITEM_TYPES.PIPELINE:
         return (
-          <FreeTrialWorkspacePipelineViews
+          <WorkspacePipelineViews
             pipelines={workspaceItems}
             isLoading={isLoading}
             workspaceFilterModel={workspaceFilterModel}
@@ -39,7 +38,7 @@ export default function WorkspaceViewContainer(
         );
       case workspaceConstants.WORKSPACE_ITEM_TYPES.TOOL:
         return (
-          <FreeTrialWorkspaceRegistryViews
+          <WorkspaceRegistryViews
             isLoading={isLoading}
             loadData={loadData}
             tools={workspaceItems}
@@ -49,7 +48,7 @@ export default function WorkspaceViewContainer(
         );
       case workspaceConstants.WORKSPACE_ITEM_TYPES.TASK:
         return (
-          <FreeTrialWorkspaceTaskViews
+          <WorkspaceTaskViews
             tasks={workspaceItems}
             loadData={loadData}
             isLoading={isLoading}
@@ -60,7 +59,7 @@ export default function WorkspaceViewContainer(
       case workspaceConstants.WORKSPACE_ITEM_TYPES.ALL:
       default:
         return (
-          <FreeTrialWorkspaceItemViews
+          <WorkspaceItemViews
             workspaceItems={workspaceItems}
             isLoading={isLoading}
             workspaceFilterModel={workspaceFilterModel}
@@ -73,7 +72,7 @@ export default function WorkspaceViewContainer(
 
   const getVerticalTabContainer = () => {
     return (
-      <FreeTrialWorkspaceVerticalTabContainer
+      <WorkspaceVerticalTabContainer
         workspaceFilterModel={workspaceFilterModel}
         loadData={loadData}
         isLoading={isLoading}
@@ -130,6 +129,7 @@ export default function WorkspaceViewContainer(
       inlineFilters={getInlineFilters()}
       title={"Workspace"}
       type={"Workspace Item"}
+      addRecordButtonCustomText={"Create New"}
       className={"px-2 pb-2"}
     />
   );
