@@ -8,11 +8,10 @@ export default function useGetWorkspaceItems(
   fields,
   active,
   pageSize,
-  setUrlParameters = false,
   handleErrorFunction,
 ) {
   const [workspaceItems, setWorkspaceItems] = useState([]);
-  const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new WorkspaceFilterModel(setUrlParameters));
+  const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new WorkspaceFilterModel());
   const {
     isLoading,
     error,
@@ -41,8 +40,8 @@ export default function useGetWorkspaceItems(
       fields,
       active,
     );
-    const newTools = DataParsingHelper.parseNestedArray(response, "data.data", []);
-    setWorkspaceItems([...newTools]);
+    const items = DataParsingHelper.parseNestedArray(response, "data.data", []);
+    setWorkspaceItems([...items]);
     newFilterModel.updateTotalCount(DataParsingHelper.parseNestedInteger(response, "data.count", 0));
     newFilterModel.updateActiveFilters();
     setWorkspaceFilterModel({...newFilterModel});

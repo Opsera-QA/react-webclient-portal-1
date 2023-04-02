@@ -12,12 +12,15 @@ export default function Workspace() {
     isLoading,
     workspaceFilterModel,
     setWorkspaceFilterModel,
+    error,
     loadData,
   } = useGetWorkspaceItems();
 
   return (
     <ScreenContainer
       breadcrumbDestination={"workspace"}
+      isLoading={isLoading}
+      error={error}
     >
       <WorkspaceViewContainer
         workspaceFilterModel={workspaceFilterModel}
