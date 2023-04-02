@@ -1,64 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
 import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
-import useComponentStateReference from "hooks/useComponentStateReference";
-import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
-import WorkspaceFilterModel from "components/workspace/views/workspace.filter.model";
 import WorkspaceViewContainer from "components/workspace/views/WorkspaceViewContainer";
+import useGetWorkspaceItems from "hooks/workspace/useGetWorkspaceItems";
 
 export default function Workspace() {
-  useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"workspace"} />);
-  const [workspaceFilterModel, setWorkspaceFilterModel] = useState(new WorkspaceFilterModel());
-  const [workspaceItems, setWorkspaceItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"workspace"} />);
   const {
-    isMounted,
-    getAccessToken,
-    cancelTokenSource,
-    toastContext,
-  } = useComponentStateReference();
-
-  useEffect(() => {
-    setWorkspaceItems([]);
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-  }, []);
-
-  const loadData = async (newWorkspaceFilterModel = workspaceFilterModel) => {
-    try {
-      setWorkspaceItems([]);
-      setIsLoading(true);
-      await getWorkspaceItems(newWorkspaceFilterModel);
-    } catch (error) {
-      if (isMounted?.current === true) {
-        toastContext.showLoadingErrorDialog(error);
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getWorkspaceItems = async (newWorkspaceFilterModel = workspaceFilterModel) => {
-    const response = await freeTrialWorkspaceActions.getFreeTrialWorkspaceItems(
-      getAccessToken,
-      cancelTokenSource,
-      newWorkspaceFilterModel?.getFilterValue("type"),
-      newWorkspaceFilterModel?.getFilterValue("search"),
-    );
-    const items = response?.data?.data;
-
-    if (isMounted?.current === true && Array.isArray(items)) {
-      setWorkspaceItems([...items]);
-      newWorkspaceFilterModel.updateActiveFilters();
-      setWorkspaceFilterModel({...newWorkspaceFilterModel});
-    }
-  };
+    workspaceItems,
+    isLoading,
+    workspaceFilterModel,
+    setWorkspaceFilterModel,
+    loadData,
+  } = useGetWorkspaceItems();
 
   return (
     <ScreenContainer

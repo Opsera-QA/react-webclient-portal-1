@@ -39,6 +39,7 @@ export default function useGetWorkspaceItems(
     const response = await workspaceActions.getWorkspaceItems(
       newFilterModel,
       fields,
+      active,
     );
     const newTools = DataParsingHelper.parseNestedArray(response, "data.data", []);
     setWorkspaceItems([...newTools]);

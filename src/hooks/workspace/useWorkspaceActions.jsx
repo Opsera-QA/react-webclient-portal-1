@@ -8,6 +8,7 @@ export default function useWorkspaceActions() {
   workspaceActions.getWorkspaceItems = async (
     workspaceFilterModel,
     fields,
+    active,
  ) => {
     const apiUrl = `/workspace/items`;
 
@@ -17,7 +18,7 @@ export default function useWorkspaceActions() {
       pageSize: workspaceFilterModel?.getData("pageSize"),
       toolIdentifier: workspaceFilterModel?.getData("toolIdentifier"),
       tag: workspaceFilterModel?.getData("tag"),
-      active: workspaceFilterModel?.getFilterValue("status"),
+      active: active,
       search: workspaceFilterModel?.getFilterValue("search"),
       owner: workspaceFilterModel?.getFilterValue("owner"),
       fields: fields,
