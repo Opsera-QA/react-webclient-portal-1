@@ -180,13 +180,13 @@ export class FilterModelBase {
     }
 
     if (this.showPagination() === true) {
-      const pageSize = sessionHelper.getStoredUrlParameter("pageSize");
+      const pageSize = DataParsingHelper.parseInteger(sessionHelper.getStoredUrlParameter("pageSize"));
 
       if (numberHelpers.isNumberGreaterThan(0, pageSize)) {
         this.setData("pageSize", pageSize);
       }
 
-      const currentPage = sessionHelper.getStoredUrlParameter("currentPage");
+      const currentPage = DataParsingHelper.parseInteger(sessionHelper.getStoredUrlParameter("currentPage"));
 
       if (numberHelpers.isNumberGreaterThan(0, currentPage)) {
         hasUrlParams = true;
