@@ -99,7 +99,7 @@ function SystemDrivenMaturity () {
   ];
   return (
     <Container className="p-3" style={{fontSize: '2rem'}}>
-      <table className="text-center">
+      <table className="text-center w-100">
         <thead>
           <th></th>
           <th>Low</th>
