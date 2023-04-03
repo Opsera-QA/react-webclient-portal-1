@@ -13,6 +13,7 @@ export default function OpseraHeaderSettingsLink() {
   const {
     isOpseraAdministrator,
     themeConstants,
+    isFreeTrial,
   } = useComponentStateReference();
   const currentPath = useLocation()?.pathname;
   const history = useHistory();
@@ -63,7 +64,7 @@ export default function OpseraHeaderSettingsLink() {
     );
   };
 
-  if (isOpseraAdministrator !== true) {
+  if (isFreeTrial !== true || isOpseraAdministrator !== true) {
     return null;
   }
 
