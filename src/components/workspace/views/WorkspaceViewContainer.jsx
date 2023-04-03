@@ -14,9 +14,9 @@ import WorkspaceItemViews from "components/workspace/views/all/WorkspaceItemView
 import WorkspaceTaskViews from "components/workspace/views/task/WorkspaceTaskViews";
 import WorkspaceRegistryViews from "components/workspace/views/tool/WorkspaceRegistryViews";
 import WorkspacePipelineViews from "components/workspace/views/pipeline/WorkspacePipelineViews";
-import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilter";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
+import CustomerTagFilter from "components/common/filters/tags/tag/CustomerTagFilter";
 
 export default function WorkspaceViewContainer(
   {
@@ -116,9 +116,9 @@ export default function WorkspaceViewContainer(
   const getDropdownFilters = () => {
     return (
       <>
-        <TagFilter
-          filterDto={workspaceFilterModel}
-          setFilterDto={setWorkspaceFilterModel}
+        <CustomerTagFilter
+          filterModel={workspaceFilterModel}
+          setFilterModel={setWorkspaceFilterModel}
         />
         <ActiveFilter
           filterDto={workspaceFilterModel}

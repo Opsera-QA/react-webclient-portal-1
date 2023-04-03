@@ -2,6 +2,7 @@ import FilterModelBase from "core/data_model/filterModel.base";
 import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/string-helpers";
 import sessionHelper from "utils/session.helper";
 import TagParsingHelper from "@opsera/persephone/helpers/data/tags/tagParsing.helper";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const workspaceFilterMetadata = {
   fields: [
@@ -113,6 +114,13 @@ export default class WorkspaceFilterModel extends FilterModelBase {
     if (hasStringValue(type) === true) {
       hasUrlParams = true;
       this.setData("type", type);
+    }
+
+    const tag = TagParsingHelper.parseTagFilter(sessionHelper.getStoredUrlParameter("tag"));
+
+    if (tag) {
+      hasUrlParams = true;
+      this.setData("tag", tag);
     }
 
     if (hasUrlParams !== true) {
