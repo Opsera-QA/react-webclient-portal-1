@@ -1,6 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar } from "react-bootstrap";
 import HeaderNavigationBarItem from "components/header/navigation_bar/HeaderNavigationBarItem";
 import { useHistory } from "react-router-dom";
 import useComponentStateReference from "hooks/useComponentStateReference";
@@ -70,7 +69,7 @@ export default function LandingHeaderNavigationBar() {
       />
       <HeaderNavigationBarItem
         className={"d-inline d-lg-none"}
-        currentScreen={currentScreen}
+        currentScreen={currentPath === "/unified-insights"}
         setCurrentScreen={handleScreenClick}
         screenLabel={"Insights"}
         screenName={"insights"}
