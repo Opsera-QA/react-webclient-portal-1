@@ -74,29 +74,7 @@ OrgTagRow.propTypes = {
   })
 };
 
-function SystemDrivenMaturity () {
-  const orgTags = [
-    {
-      name: "Org Tag One",
-      score: MATURITY_SCORE_TEXT.HIGH,
-      previousScore: MATURITY_SCORE_TEXT.MEDIUM
-    },
-    {
-      name: "Org Tag Two",
-      score: MATURITY_SCORE_TEXT.MEDIUM,
-      previousScore: MATURITY_SCORE_TEXT.MEDIUM
-    },
-    {
-      name: "Org Tag Three",
-      score: MATURITY_SCORE_TEXT.LOW,
-      previousScore: MATURITY_SCORE_TEXT.MEDIUM
-    },
-    {
-      name: "Org Tag Four",
-      score: MATURITY_SCORE_TEXT.ELITE,
-      previousScore: MATURITY_SCORE_TEXT.LOW
-    }
-  ];
+function SystemDrivenMaturity ({ orgTags }) {
   return (
     <Container className="p-3" style={{fontSize: '2rem'}}>
       <table className="text-center w-100">
@@ -114,5 +92,13 @@ function SystemDrivenMaturity () {
     </Container>
   );
 }
+
+SystemDrivenMaturity.propTypes = {
+  orgTags: PropTypes.array
+};
+
+SystemDrivenMaturity.defaultProps = {
+  orgTags: []
+};
 
 export default SystemDrivenMaturity;
