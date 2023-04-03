@@ -6,7 +6,6 @@ import WorkspaceFilterModel from "components/workspace/views/workspace.filter.mo
 
 export default function useGetWorkspaceItems(
   fields,
-  active,
   pageSize,
   handleErrorFunction,
 ) {
@@ -39,7 +38,7 @@ export default function useGetWorkspaceItems(
     const response = await workspaceActions.getWorkspaceItems(
       newFilterModel,
       fields,
-      active,
+      newFilterModel?.getData("active"),
     );
     const items = DataParsingHelper.parseNestedArray(response, "data.data", []);
     setWorkspaceItems([...items]);
