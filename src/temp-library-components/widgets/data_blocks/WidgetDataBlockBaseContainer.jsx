@@ -63,7 +63,7 @@ function WidgetDataBlockBaseContainer(
     if (title) {
       return (
         <>
-          <div className={"w-100 d-flex content-block-header-inverse"}>
+          <div className={"w-100 d-flex p-2"}>
             <FilterTitleBar
               isLoading={isLoading}
               title={title}
