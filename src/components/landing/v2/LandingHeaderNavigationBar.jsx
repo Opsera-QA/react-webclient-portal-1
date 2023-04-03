@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Navbar } from "react-bootstrap";
 import HeaderNavigationBarItem from "components/header/navigation_bar/HeaderNavigationBarItem";
 import { useHistory } from "react-router-dom";
@@ -19,6 +19,8 @@ export default function LandingHeaderNavigationBar() {
   const {
     themeConstants,
   } = useComponentStateReference();
+
+  useEffect(() => {}, [currentPath]);
 
   const handleScreenClick = (newScreen) => {
     switch (newScreen) {
