@@ -4,7 +4,6 @@ import PipelineSourceRepositoryRepositoryInputPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryRepositoryInputPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
-import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import PipelineSourceRepositoryWebhookInputPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/repository/PipelineSourceRepositoryWebhookInputPanel";
 import {pipelineTypeConstants} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
@@ -34,28 +33,24 @@ export default function PipelineSourceRepositoryConfigurationTabPanel(
         <CustomTab
           tabText={"Repository"}
           handleTabClick={handleTabClick}
-          // icon={faWrench}
           activeTab={activeTab}
           tabName={"repository"}
         />
         <CustomTab
           tabText={"Webhook"}
           handleTabClick={handleTabClick}
-          // icon={faDraftingCompass}
           activeTab={activeTab}
           tabName={"webhook"}
         />
         <CustomTab
           tabText={"Pipeline Git Revisions"}
           handleTabClick={handleTabClick}
-          // icon={faChartNetwork}
           activeTab={activeTab}
           tabName={"gitExportOptions"}
         />
         <CustomTab
           tabText={"Dynamic Settings"}
           handleTabClick={handleTabClick}
-          // icon={faChartNetwork}
           activeTab={activeTab}
           tabName={"dynamicSettings"}
         />

@@ -90,7 +90,9 @@ const commandLineStepFormMetadata = {
     {
       label: "Workspace",
       id: "workspace",
-      // isRequired: true
+      isRequiredFunction: (model) => {
+        return model && model.getData("service") === "bitbucket";
+      },
     },
     {
       label: "Workspace/Project",

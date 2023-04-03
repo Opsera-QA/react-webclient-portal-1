@@ -9,7 +9,6 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 import IconBase from "components/common/icons/IconBase";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import LoadingDialog from "components/common/status_notifications/loading";
 
 const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPlan }) => {
   const contextType = useContext(AuthContext);
@@ -77,7 +76,12 @@ const PipelineWorkflowEditor = ({ editItem, pipeline, closeEditorPanel, fetchPla
   };
 
   if (loading) {
-    return (<LoadingDialog size="sm"/>);
+    return (<>
+      {getTitleBar("Pipeline Settings")}
+      <div className="p-3 bg-white step-settings-container">
+        <CenterLoadingIndicator />
+      </div>
+    </>);
   }
 
   if (editItem.type === "step") {
