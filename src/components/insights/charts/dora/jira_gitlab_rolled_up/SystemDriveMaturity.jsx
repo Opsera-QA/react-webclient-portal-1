@@ -8,13 +8,20 @@ const Icon = ({ color, onSelect }) => {
     return null;
   }
 
+  const isClickable = color !== 'grey';
+
   const onClickHandler = () => {
-    if (['green', 'red', 'orange'].includes(color)) {
+    if (isClickable) {
       onSelect();
     }
   };
 
-  return <i style={{color}} className="fa-solid fa-circle" onClick={onClickHandler} ></i>;
+  const style = {
+    color,
+    ...(isClickable && { cursor: 'pointer' })
+  };
+
+  return <i style={style} className="fa-solid fa-circle" onClick={onClickHandler} ></i>;
 };
 
 Icon.propTypes = {
