@@ -3,9 +3,9 @@ import { workspaceConstants } from "components/workspace/workspace.constants";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import { isMongoDbId } from "components/common/helpers/mongo/mongoDb.helpers";
 
-export const workspaceActions = {};
+export const freeTrialWorkspaceActions = {};
 
-workspaceActions.getFreeTrialWorkspaceItems = async (
+freeTrialWorkspaceActions.getFreeTrialWorkspaceItems = async (
   getAccessToken,
   cancelTokenSource,
   type = "all",
@@ -34,7 +34,7 @@ workspaceActions.getFreeTrialWorkspaceItems = async (
   );
 };
 
-workspaceActions.getFreeTrialCustomerWorkspaceItems = async (
+freeTrialWorkspaceActions.getFreeTrialCustomerWorkspaceItems = async (
   getAccessToken,
   cancelTokenSource,
   userId,
@@ -59,7 +59,7 @@ workspaceActions.getFreeTrialCustomerWorkspaceItems = async (
   );
 };
 
-workspaceActions.getFreeTrialUserActivityReportPipelines = async (
+freeTrialWorkspaceActions.getFreeTrialUserActivityReportPipelines = async (
   getAccessToken,
   cancelTokenSource,
   userId,
@@ -88,7 +88,7 @@ workspaceActions.getFreeTrialUserActivityReportPipelines = async (
   );
 };
 
-workspaceActions.getFreeTrialUserActivityReportTasks = async (
+freeTrialWorkspaceActions.getFreeTrialUserActivityReportTasks = async (
   getAccessToken,
   cancelTokenSource,
   userId,
@@ -118,12 +118,12 @@ workspaceActions.getFreeTrialUserActivityReportTasks = async (
 };
 
 
-workspaceActions.getFreeTrialWorkspaceTasksByIdentifier = async (getAccessToken, cancelTokenSource, identifier) => {
+freeTrialWorkspaceActions.getFreeTrialWorkspaceTasksByIdentifier = async (getAccessToken, cancelTokenSource, identifier) => {
   const apiUrl = `trial/workspace/tasks/${identifier}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-workspaceActions.getFreeTrialWorkspacePipelinesByIdentifier = async (getAccessToken, cancelTokenSource, identifier) => {
+freeTrialWorkspaceActions.getFreeTrialWorkspacePipelinesByIdentifier = async (getAccessToken, cancelTokenSource, identifier) => {
   const apiUrl = `trial/workspace/pipelines/${identifier}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
