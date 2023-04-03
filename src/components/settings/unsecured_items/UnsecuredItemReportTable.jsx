@@ -50,13 +50,6 @@ function UnsecuredItemReportTable({
   const columns = useMemo(
     () => [
       getTableTextColumn(
-        getField(fields, "_id"),
-        "no-wrap-inline",
-        undefined,
-        undefined,
-        getTooltipTemplate,
-      ),
-      getTableTextColumn(
         getField(fields, "name"),
         "no-wrap-inline",
         undefined,
