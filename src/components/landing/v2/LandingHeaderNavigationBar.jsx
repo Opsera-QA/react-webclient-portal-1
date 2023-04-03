@@ -45,15 +45,15 @@ export default function LandingHeaderNavigationBar() {
   return (
     <Navbar.Collapse className={"h-100 justify-content-between d-flex mx-5"}>
       <HeaderNavigationBarItem
-        currentScreen={currentPath === "/"}
+        currentScreen={currentPath === "/" ? HEADER_NAVIGATION_SCREENS.HOME : undefined}
         setCurrentScreen={handleScreenClick}
         screenLabel={"Home"}
-        screenName={"home"}
+        screenName={HEADER_NAVIGATION_SCREENS.HOME}
         fontColor={themeConstants.COLOR_PALETTE.WHITE}
         disableMousePointer={currentPath === "/"}
       />
       <HeaderNavigationBarItem
-        currentScreen={currentPath?.startsWith("/workspace") === true}
+        currentScreen={currentPath?.startsWith("/workspace") ? HEADER_NAVIGATION_SCREENS.WORKSPACE : undefined}
         setCurrentScreen={handleScreenClick}
         screenLabel={"Workspace"}
         screenName={"workspace"}
@@ -62,7 +62,7 @@ export default function LandingHeaderNavigationBar() {
       />
       <HeaderNavigationBarItem
         className={"no-wrap d-none d-lg-inline"}
-        currentScreen={currentPath?.startsWith("/unified-insights") === true}
+        currentScreen={currentPath?.startsWith("/unified-insights") ? HEADER_NAVIGATION_SCREENS.UNIFIED_INSIGHTS : undefined}
         setCurrentScreen={handleScreenClick}
         screenLabel={"Unified Insights"}
         screenName={"insights"}
@@ -71,7 +71,7 @@ export default function LandingHeaderNavigationBar() {
       />
       <HeaderNavigationBarItem
         className={"d-inline d-lg-none"}
-        currentScreen={currentPath?.startsWith("/unified-insights") === true}
+        currentScreen={currentPath?.startsWith("/unified-insights") ? HEADER_NAVIGATION_SCREENS.UNIFIED_INSIGHTS : undefined}
         setCurrentScreen={handleScreenClick}
         screenLabel={"Insights"}
         screenName={"insights"}
