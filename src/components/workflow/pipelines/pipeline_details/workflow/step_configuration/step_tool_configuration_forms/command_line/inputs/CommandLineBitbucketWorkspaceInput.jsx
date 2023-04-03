@@ -17,7 +17,7 @@ function CommandLineBitbucketWorkspaceInput({dataObject, setDataObject, disabled
 
   return (
      <BitbucketWorkspaceInput
-       fieldName={"workspaceName"}
+       fieldName={"workspace"}
        gitToolId={dataObject.getData("gitToolId")}
        dataObject={dataObject}
        setDataObject={setDataObject}
