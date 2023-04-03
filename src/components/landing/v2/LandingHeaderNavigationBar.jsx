@@ -40,8 +40,6 @@ export default function LandingHeaderNavigationBar() {
     }
   };
 
-  console.log("currentPath: " + JSON.stringify(currentPath));
-
   return (
     <Navbar.Collapse className={"h-100 justify-content-between d-flex mx-5"}>
       <HeaderNavigationBarItem
