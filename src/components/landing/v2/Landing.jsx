@@ -2,14 +2,10 @@ import React from "react";
 import WelcomeWidget from "components/trial/landing/widgets/WelcomeWidget";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReference";
 import FreeTrialLandingWorkflowWidget from "components/trial/landing/widgets/workflow/FreeTrialLandingWorkflowWidget";
 import FreeTrialLandingAccountStatsWidget from "components/trial/landing/widgets/FreeTrialLandingAccountStatsWidget";
-import LandingHeaderNavigationBar from "components/landing/v2/LandingHeaderNavigationBar";
 
 export default function Landing() {
-  useHeaderNavigationBarReference(<LandingHeaderNavigationBar currentScreen={"home"} />);
-
   return (
     <div className={"max-content-width"}
     >
