@@ -79,11 +79,13 @@ function SystemDrivenMaturity ({ orgTags }) {
     <Container className="p-3" style={{fontSize: '2rem'}}>
       <table className="text-center w-100">
         <thead>
-          <th></th>
-          <th>Low</th>
-          <th>Medium</th>
-          <th>High</th>
-          <th>Elite</th>
+          <tr>
+            <th></th>
+            <th>Low</th>
+            <th>Medium</th>
+            <th>High</th>
+            <th>Elite</th>
+          </tr>
         </thead>
         <tbody>
           {orgTags.map((orgTag, index) => <OrgTagRow key={index} orgTag={orgTag} />)}
