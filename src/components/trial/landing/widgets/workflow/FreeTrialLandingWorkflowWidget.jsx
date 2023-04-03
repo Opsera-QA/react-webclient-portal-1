@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import FreeTrialWidgetDataBlockBase from "components/trial/FreeTrialWidgetDataBlockBase";
-import { workspaceActions } from "components/workspace/workspace.actions";
+import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
 import FreeTrialWorkflowItemSelectionCardView
   from "components/wizard/free_trial/workflows/flows/selection/card/FreeTrialWorkflowItemSelectionCardView";
 import FreeTrialLandingPipelineWorkflowWidget
@@ -57,7 +57,7 @@ export default function FreeTrialLandingWorkflowWidget({ className }) {
 
   // TODO: Write separate request for this.
   const getWorkspaceItems = async () => {
-    const response = await workspaceActions.getFreeTrialWorkspaceItems(
+    const response = await freeTrialWorkspaceActions.getFreeTrialWorkspaceItems(
       getAccessToken,
       cancelTokenSource,
     );

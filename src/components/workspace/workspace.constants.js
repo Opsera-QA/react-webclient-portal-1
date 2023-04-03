@@ -15,7 +15,7 @@ workspaceConstants.WORKSPACE_ITEM_TYPES = {
 
 workspaceConstants.WORKSPACE_ITEM_TYPE_LABELS = {
   ALL: "All",
-  PIPELINE: "Pipeline",
+  PIPELINE: "Pipelines",
   TASK: "Tasks",
   TOOL: "Tools",
 };

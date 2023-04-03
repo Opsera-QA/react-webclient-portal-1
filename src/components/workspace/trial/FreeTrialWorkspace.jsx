@@ -5,7 +5,7 @@ import useHeaderNavigationBarReference from "hooks/useHeaderNavigationBarReferen
 import FreeTrialLandingHeaderNavigationBar from "components/trial/landing/FreeTrialLandingHeaderNavigationBar";
 import FreeTrialWorkspaceFilterModel from "components/workspace/trial/views/freeTrialWorkspace.filter.model";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import { workspaceActions } from "components/workspace/workspace.actions";
+import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
 
 export default function FreeTrialWorkspace() {
   useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"workspace"} />);
@@ -45,7 +45,7 @@ export default function FreeTrialWorkspace() {
   };
 
   const getWorkspaceItems = async (newWorkspaceFilterModel = workspaceFilterModel) => {
-    const response = await workspaceActions.getFreeTrialWorkspaceItems(
+    const response = await freeTrialWorkspaceActions.getFreeTrialWorkspaceItems(
       getAccessToken,
       cancelTokenSource,
       newWorkspaceFilterModel?.getFilterValue("type"),

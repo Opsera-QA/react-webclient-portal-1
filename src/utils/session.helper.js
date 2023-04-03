@@ -1,4 +1,5 @@
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const sessionHelper = {};
 
@@ -43,7 +44,12 @@ sessionHelper.replaceStoredUrlParameter = (queryParameter, value) => {
   const url = new URL(window.location.href);
   url.searchParams.delete(queryParameter);
 
-  if (value != null) {
+  const parsedObjectValue = DataParsingHelper.parseObject(value);
+  const parsedStringValue = DataParsingHelper.parseString(value);
+
+  if (parsedObjectValue) {
+    url.searchParams.set(queryParameter, JSON.stringify(parsedObjectValue));
+  } else if (parsedStringValue != null) {
     url.searchParams.set(queryParameter, value);
   }
 
@@ -56,11 +62,14 @@ sessionHelper.addStoredUrlParameter = (queryParameter, value) => {
   }
 
   const url = new URL(window.location.href);
+  const parsedObjectValue = DataParsingHelper.parseObject(value);
+  const parsedStringValue = DataParsingHelper.parseString(value);
 
-  if (value != null) {
+  if (parsedObjectValue) {
+    url.searchParams.set(queryParameter, JSON.stringify(parsedObjectValue));
+  } else if (parsedStringValue != null) {
     url.searchParams.set(queryParameter, value);
-  }
-  else {
+  } else {
     url.searchParams.delete(queryParameter);
   }
 
