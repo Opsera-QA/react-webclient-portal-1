@@ -39,7 +39,7 @@ function TextInputBase(
   }, [error]);
 
   useEffect(() => {
-    if (hasStringValue(fieldError) === true && dataObject?.isNew() !== true) {
+    if (hasStringValue(fieldError) === true && dataObject?.isNew() !== true && error == null) {
       setErrorMessage(fieldError);
     }
   }, [fieldError]);
