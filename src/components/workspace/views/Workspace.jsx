@@ -6,7 +6,7 @@ import WorkspaceViewContainer from "components/workspace/views/WorkspaceViewCont
 import useGetWorkspaceItems from "hooks/workspace/useGetWorkspaceItems";
 
 export default function Workspace() {
-  // useHeaderNavigationBarReference(<FreeTrialLandingHeaderNavigationBar currentScreen={"workspace"} />);
+  // useHeaderNavigationBarReference(<LandingHeaderNavigationBar currentScreen={"workspace"} />);
   const {
     workspaceItems,
     isLoading,
