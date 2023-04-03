@@ -40,7 +40,7 @@ export default function PipelineSourceRepositoryRepositoryInputPanel(
           Please note, individual pipeline steps still have their own Git repository settings based
           on the function of that step.  This value does NOT override those.
         `}
-          className={"mt-3"}
+          className={"mt-2"}
         />
       );
     }
@@ -52,6 +52,7 @@ export default function PipelineSourceRepositoryRepositoryInputPanel(
         className={"text-muted"}
         subheaderText={"Repository"}
       />
+      {getRepositoryInfoMessage()}
       <PipelineSourceRepositoryToolIdentifierSelectInput
         model={sourceRepositoryModel}
         setModel={setSourceRepositoryModel}
@@ -87,7 +88,6 @@ export default function PipelineSourceRepositoryRepositoryInputPanel(
         setModel={setSourceRepositoryModel}
         primaryBranch={sourceRepositoryModel?.getData("branch")}
       />
-      {getRepositoryInfoMessage()}
     </div>
   );
 }

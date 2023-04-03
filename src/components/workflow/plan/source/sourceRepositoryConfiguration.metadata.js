@@ -1,3 +1,5 @@
+import metadataConstants from "@opsera/definitions/constants/metadata/metadata.constants";
+
 export const sourceRepositoryConfigurationMetadata = {
   idProperty: "_id",
   type: "Source Repository Configuration",
@@ -5,11 +7,13 @@ export const sourceRepositoryConfigurationMetadata = {
     {
       label: "Name",
       id: "name",
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
       label: "Platform",
       id: "service",
       isRequired: true,
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
       label: "Account",
@@ -19,106 +23,114 @@ export const sourceRepositoryConfigurationMetadata = {
       label: "Repository",
       id: "repoId",
       isRequired: true,
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
       label: "Git URL",
       id: "gitUrl",
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
       label: "SSH URL",
       id: "sshUrl",
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
       label: "Repository",
       id: "repository",
       isRequired: true,
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
       label: "Project Id",
       id: "projectId",
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
       label: "Primary Branch",
       id: "branch",
       isRequired: true,
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
       label: "Secondary Branches",
       id: "secondary_branches",
       formText: "Primary Branch must be set before setting Secondary Branches.",
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.ARRAY,
     },
     {
       label: "Workspace",
       id: "workspace",
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
       label: "Workspace Name",
       id: "workspaceName",
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
       label: "Secret",
       id: "key",
       maxLength: "75",
       formText: "Optional secret for manual registration in Git Repository if supported",
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
       label: "Enabled",
       id: "trigger_active",
-      formText: `
-        Allow this pipeline to be started by a webhook event based on above settings. Once enabled, copy the webhook URL supplied into your repository.
-      `,
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.BOOLEAN,
     },
     {
       label: "Enabled",
       id: "gitExportEnabled",
-      formText: `
-      Using the configured Git Repository above, Opsera can publish
-      a copy of the pipeline configuration for revision purposes when export to git is pressed. 
-      This feature is only available for GitHub and GitLab repositories.
-      `,
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.BOOLEAN,
     },
     {
       label: "Path",
       id: "gitExportPath",
-      formText: "Do not include ending /"
+      formText: "Do not include ending /",
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
-      label: "Push Events",
+      label: "Trigger This Pipeline On Push Events",
       id: "isPushEvent",
-      formText: "Enabling this will trigger this pipeline for push events only"
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.BOOLEAN,
     },
     {
-      label: "PR Events",
+      label: "Trigger This Pipeline On Pull Request Events",
       id: "isPrEvent",
-      formText: "Enabling this will trigger this pipeline for PR events"
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.BOOLEAN,
     },
     {
-      label: "PR Created",
+      label: "Trigger This Pipeline When A Pull Request Is Created",
       id: "prCreatedEvent",
-      formText: "Enable this if you want to trigger only once PR is created"
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.BOOLEAN,
     },
     {
-      label: "PR Approved",
+      label: "Trigger This Pipeline When A Pull Request Is Approved",
       id: "prApprovedEvent",
-      formText: "Enable this if you want to trigger only if PR is approved"
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.BOOLEAN,
     },
     {
       label: "Enabled",
       id: "dynamicSettings",
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.BOOLEAN,
     },
     {
       label: "Show Advanced Start Options Screen",
       id: "allowDynamicSettingsInUi",
       formText: `
         If this setting is enabled, users of this Pipeline will be able to set its Dynamic Settings in the UI at runtime. 
-      `
+      `,
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.BOOLEAN,
     },
     {
-      label: "Enable Branch Switching",
+      label: "Allow Dynamic Branch Switching",
       id: "enableBranchSwitch",
       formText: `
-        If this setting is enabled, users of this Pipeline will be able to set Dynamic Branch at runtime. 
-      `
+        If this setting is enabled, the Webhook can trigger runs for branches other than the one selected in the Repository settings above. 
+      `,
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.BOOLEAN,
     },
   ],
   dbSupportedFieldNames: [

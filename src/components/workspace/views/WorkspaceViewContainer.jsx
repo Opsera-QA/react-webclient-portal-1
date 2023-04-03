@@ -14,9 +14,9 @@ import WorkspaceItemViews from "components/workspace/views/all/WorkspaceItemView
 import WorkspaceTaskViews from "components/workspace/views/task/WorkspaceTaskViews";
 import WorkspaceRegistryViews from "components/workspace/views/tool/WorkspaceRegistryViews";
 import WorkspacePipelineViews from "components/workspace/views/pipeline/WorkspacePipelineViews";
-import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilter";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import CustomerTagFilter from "components/common/filters/tags/tag/CustomerTagFilter";
+import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 
 export default function WorkspaceViewContainer(
   {
@@ -127,7 +127,7 @@ export default function WorkspaceViewContainer(
           fieldName={"active"}
           className={"mb-2"}
         />
-        <LdapOwnerFilter
+        <OwnerFilter
           filterModel={workspaceFilterModel}
           setFilterModel={setWorkspaceFilterModel}
           className={"mb-3"}
