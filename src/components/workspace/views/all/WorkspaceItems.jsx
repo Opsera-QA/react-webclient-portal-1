@@ -4,7 +4,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
 import FreeTrialWorkspaceItemViews from "components/workspace/trial/views/all/FreeTrialWorkspaceItemViews";
 
-export default function FreeTrialWorkspaceItems(
+export default function WorkspaceItems(
   {
     workspaceFilterModel,
     setWorkspaceFilterModel,
@@ -73,7 +73,7 @@ export default function FreeTrialWorkspaceItems(
   );
 }
 
-FreeTrialWorkspaceItems.propTypes = {
+WorkspaceItems.propTypes = {
   workspaceFilterModel: PropTypes.object,
   setWorkspaceFilterModel: PropTypes.func,
 };

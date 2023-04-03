@@ -4,7 +4,7 @@ import {
   CREATE_SALESFORCE_WORKFLOW_WIZARD_SCREENS,
 } from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import { workspaceActions } from "components/workspace/workspace.actions";
+import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import { faWarning } from "@fortawesome/pro-light-svg-icons";
@@ -94,7 +94,7 @@ export default function FreeTrialAccountTaskLimitReachedSalesforceWorkflowScreen
   };
 
   const getWorkspaceItems = async () => {
-    const response = await workspaceActions.getFreeTrialWorkspaceTasksByIdentifier(
+    const response = await freeTrialWorkspaceActions.getFreeTrialWorkspaceTasksByIdentifier(
       getAccessToken,
       cancelTokenSource,
       selectedFlow,

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import { workspaceActions } from "components/workspace/workspace.actions";
+import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
 
 export default function useGetFreeTrialActivityReportWorkflows(handleErrorFunction) {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +31,7 @@ export default function useGetFreeTrialActivityReportWorkflows(handleErrorFuncti
   };
 
   const getActiveSsoUsers = async () => {
-    const response = await workspaceActions.getFreeTrialUserActivityReport(
+    const response = await freeTrialWorkspaceActions.getFreeTrialUserActivityReport(
       getAccessToken,
       cancelTokenSource,
     );

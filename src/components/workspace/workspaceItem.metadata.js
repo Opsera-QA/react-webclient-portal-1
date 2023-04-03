@@ -24,5 +24,9 @@ export const workspaceItemMetadata = {
       label: "Updated",
       id: "updatedAt",
     },
+    {
+      label: "Active",
+      id: "active",
+    },
   ],
 };
