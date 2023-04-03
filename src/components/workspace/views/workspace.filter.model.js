@@ -1,6 +1,7 @@
 import FilterModelBase from "core/data_model/filterModel.base";
-import { hasStringValue } from "components/common/helpers/string-helpers";
+import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/string-helpers";
 import sessionHelper from "utils/session.helper";
+import TagParsingHelper from "@opsera/persephone/helpers/data/tags/tagParsing.helper";
 
 const workspaceFilterMetadata = {
   fields: [
@@ -36,6 +37,10 @@ const workspaceFilterMetadata = {
       label: "Owner",
       id: "owner",
     },
+    {
+      label: "Active",
+      id: "active",
+    },
   ],
   newObjectFields: {
     pageSize: 100,
@@ -45,6 +50,7 @@ const workspaceFilterMetadata = {
     viewType: "list",
     type: "all",
     tag: undefined,
+    active: "",
   },
 };
 
@@ -66,6 +72,37 @@ export default class WorkspaceFilterModel extends FilterModelBase {
 
   showPagination = () => {
     return true;
+  };
+
+  getActiveFilters = () => {
+    const activeFilters = [];
+
+    const active = this.getData("active");
+
+    if (hasStringValue(status) === true) {
+      activeFilters.push({filterId: "active", text: `Active: ${capitalizeFirstLetter(active)}`});
+    }
+
+    const tag = TagParsingHelper.parseTagFilter(this.getData("tag"));
+
+    if (tag) {
+      activeFilters.push({ filterId: "tag", text: `Tag: ${capitalizeFirstLetter(tag.type)}: ${tag.value}` });
+    }
+
+    const ownerName = this.getData("ownerName");
+    const owner = this.getData("owner");
+
+    if (hasStringValue(owner) === true && hasStringValue(ownerName) === true) {
+      activeFilters.push({filterId: "owner", text: `Owner: ${ownerName}`});
+    }
+
+    const searchKeyword = this.getData("search");
+
+    if (hasStringValue(searchKeyword) === true) {
+      activeFilters.push({filterId: "search", text: `Keywords: ${searchKeyword}`});
+    }
+
+    return activeFilters;
   };
 
   unpackUrlParameters = () => {

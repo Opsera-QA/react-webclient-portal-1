@@ -7,6 +7,7 @@ import FilterSelectInputBase from "components/common/filters/input/FilterSelectI
 import axios from "axios";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import TagParsingHelper from "@opsera/persephone/helpers/data/tags/tagParsing.helper";
 
 // TODO: Use CustomerTagFilter instead. This is left in for legacy support
 function TagFilter(
@@ -70,10 +71,11 @@ function TagFilter(
     if (Array.isArray(tags) && tags.length > 0) {
       tags.map((tag, index) => {
         tagOptions.push({
-          text: `${tag["value"]}`,
-          value: `${tag["type"]}:${tag["value"]}`,
+          text: `${tag?.value}`,
+          value: `${tag?.type}:${tag?.value}`,
+          // value: `${tag?.value}`,
           value2: {type: tag.type, value: tag.value},
-          type: `${capitalizeFirstLetter(tag["type"])}`
+          type: `${capitalizeFirstLetter(tag?.type)}`
         });
       });
     }
@@ -88,8 +90,10 @@ function TagFilter(
       return "Select Tag";
     }
 
-    if (valueField === "value2") {
-      return `${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`;
+    const parsedTag = TagParsingHelper.parseTagFilter(tag);
+
+    if (parsedTag) {
+      return `${capitalizeFirstLetter(parsedTag?.type)}: ${parsedTag?.value}`;
     }
 
     return tag?.text;

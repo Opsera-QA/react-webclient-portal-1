@@ -16,6 +16,7 @@ import WorkspaceRegistryViews from "components/workspace/views/tool/WorkspaceReg
 import WorkspacePipelineViews from "components/workspace/views/pipeline/WorkspacePipelineViews";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilter";
+import ActiveFilter from "components/common/filters/status/ActiveFilter";
 
 export default function WorkspaceViewContainer(
   {
@@ -116,6 +117,10 @@ export default function WorkspaceViewContainer(
     return (
       <>
         <TagFilter
+          filterDto={workspaceFilterModel}
+          setFilterDto={setWorkspaceFilterModel}
+        />
+        <ActiveFilter
           filterDto={workspaceFilterModel}
           setFilterDto={setWorkspaceFilterModel}
         />
