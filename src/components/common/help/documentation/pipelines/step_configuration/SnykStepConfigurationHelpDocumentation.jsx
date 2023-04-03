@@ -26,6 +26,7 @@ function SnykStepConfigurationHelpDocumentation() {
                 <li><b>Git Branch</b> - Choose a branch from the drop-down.</li>
                 <li><b>Language</b> - Choose the Git tool type.</li>
                 <li><b>Language Version</b> - Choose the required Git tool from the drop-down.</li>
+                <li><b>Multi Module Project</b> - Enable to support multi module project. </li>
                 <li><b>Enable Client Side Thresholds</b>: <b>Vulnerability threshold</b> - Provide values for Level and Count and click <b>+Add Threshold</b>.</li>
               </ul>
             </li>
