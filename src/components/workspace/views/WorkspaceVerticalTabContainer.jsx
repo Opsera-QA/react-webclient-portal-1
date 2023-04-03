@@ -21,6 +21,7 @@ export default function WorkspaceVerticalTabContainer(
     const currentOption = workspaceFilterModel?.getData("type");
 
     if (currentOption !== selectedOption) {
+      workspaceFilterModel?.setData("currentPage", 1);
       workspaceFilterModel?.setData("type", selectedOption);
       loadData({...workspaceFilterModel});
     }
