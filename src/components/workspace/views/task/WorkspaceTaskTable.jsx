@@ -30,8 +30,8 @@ export default function WorkspaceTaskTable(
       getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), getTaskTypeLabel),
       getTagColumn(getField(fields, "tags")),
       getTableDateColumn(getField(fields, "createdAt")),
-      getTableBooleanIconColumn(getField(fields, "active")),
       getTaskStatusColumn(getField(fields, "status")),
+      getTableBooleanIconColumn(getField(fields, "active")),
     ],
     [fields]
   );

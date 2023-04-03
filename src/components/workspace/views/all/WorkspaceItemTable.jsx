@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getFormattedLabelWithFunctionColumnDefinition, getOwnerNameField,
+  getFormattedLabelWithFunctionColumnDefinition, getOwnerNameField, getTableBooleanIconColumn,
   getTableDateTimeColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
@@ -46,6 +46,7 @@ export default function WorkspaceItemTable(
 
       if (isSaasUser === false) {
         columns.push(getOwnerNameField());
+        columns.push(getTableBooleanIconColumn(getField(fields, "active")));
       }
 
       return columns;

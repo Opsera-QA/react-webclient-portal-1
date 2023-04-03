@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
   getCustomTablePipelineStateColumnDefinition, getOwnerNameField,
-  getPipelineTypeColumn,
+  getPipelineTypeColumn, getTableBooleanIconColumn,
   getTableDateTimeColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
@@ -43,14 +43,13 @@ export default function WorkspacePipelinesTable(
         getTableTextColumn(getField(fields, "workflow.run_count")),
         getTableDateTimeColumn(getField(fields, "workflow.last_run.completed")),
         getTableDateTimeColumn(getField(fields, "createdAt")),
+        getTableBooleanIconColumn(getField(fields, "active")),
       );
 
       return columnsArray;
     },
     [fields, isSaasUser],
   );
-
-  console.log("pipelines: " + JSON.stringify(pipelines));
 
   const onRowClickFunction = (row) => {
     history.push(pipelineHelper.getDetailViewLink(row?.original?._id));

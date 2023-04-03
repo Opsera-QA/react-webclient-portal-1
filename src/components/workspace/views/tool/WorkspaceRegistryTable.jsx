@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
+  getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
@@ -23,6 +24,7 @@ export default function WorkspaceRegistryTable(
       getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "tool_identifier"), "no-wrap-inline"),
       getTableDateColumn(getField(fields, "createdAt")),
+      getTableBooleanIconColumn(getField(fields, "active")),
     ],
     [fields]
   );
