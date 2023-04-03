@@ -3,19 +3,26 @@ import PropTypes from 'prop-types';
 import Container from "react-bootstrap/Container";
 import { MATURITY_SCORE_TEXT, MATURITY_SCORE_VALUE } from "../../charts-helpers";
 
-const Icon = ({ color }) => {
+const Icon = ({ color, onSelect }) => {
   if (!color) {
     return null;
   }
 
-  return <i style={{color}} className="fa-solid fa-circle"></i>;
+  const onClickHandler = () => {
+    if (['green', 'red', 'orange'].includes(color)) {
+      onSelect();
+    }
+  };
+
+  return <i style={{color}} className="fa-solid fa-circle" onClick={onClickHandler} ></i>;
 };
 
 Icon.propTypes = {
-  color: PropTypes.oneOf(['grey', 'green', 'red', 'orange'])
+  color: PropTypes.oneOf(['grey', 'green', 'red', 'orange']),
+  onSelect: PropTypes.func
 };
 
-const OrgTagRow = ({ orgTag }) => {
+const OrgTagRow = ({ orgTag, onRowSelect }) => {
   const { name, score, previousScore } = orgTag;
 
   const determineColor = (maturity, score, previous) => {
@@ -47,20 +54,28 @@ const OrgTagRow = ({ orgTag }) => {
     ...determineColor(MATURITY_SCORE_TEXT.ELITE, score, previousScore),
   };
 
+  const cellStyle = {
+    border: '1px solid grey'
+  };
+
+  const onClickHandler = () => {
+    onRowSelect(orgTag);
+  };
+
   return (
     <tr>
       <td style={{borderBottom: '1px solid grey'}} className="py-2">{name}</td>
-      <td style={{border: '1px solid grey'}} className="py-2">
-        <Icon color={icons[MATURITY_SCORE_TEXT.LOW]} />
+      <td style={cellStyle} className="py-2">
+        <Icon color={icons[MATURITY_SCORE_TEXT.LOW]} onSelect={onClickHandler} />
       </td>
-      <td style={{border: '1px solid grey'}} className="py-2">
-        <Icon color={icons[MATURITY_SCORE_TEXT.MEDIUM]} />
+      <td style={cellStyle} className="py-2">
+        <Icon color={icons[MATURITY_SCORE_TEXT.MEDIUM]} onSelect={onClickHandler} />
       </td>
-      <td style={{border: '1px solid grey'}} className="py-2">
-        <Icon color={icons[MATURITY_SCORE_TEXT.HIGH]} />
+      <td style={cellStyle} className="py-2">
+        <Icon color={icons[MATURITY_SCORE_TEXT.HIGH]} onSelect={onClickHandler} />
       </td>
-      <td style={{border: '1px solid grey'}} className="py-2">
-        <Icon color={icons[MATURITY_SCORE_TEXT.ELITE]} />
+      <td style={cellStyle} className="py-2">
+        <Icon color={icons[MATURITY_SCORE_TEXT.ELITE]} onSelect={onClickHandler} />
       </td>
     </tr>
   );
@@ -71,10 +86,15 @@ OrgTagRow.propTypes = {
     name: PropTypes.string,
     score: PropTypes.string,
     previousScore: PropTypes.string
-  })
+  }),
+  onRowSelect: PropTypes.func
 };
 
 function SystemDrivenMaturity ({ orgTags }) {
+  const onRowSelect = orgTag => {
+    console.log('SDM open overlay for orgTag:', orgTag);
+  };
+
   return (
     <Container className="p-3" style={{fontSize: '2rem'}}>
       <table className="text-center w-100">
@@ -88,7 +108,7 @@ function SystemDrivenMaturity ({ orgTags }) {
           </tr>
         </thead>
         <tbody>
-          {orgTags.map((orgTag, index) => <OrgTagRow key={index} orgTag={orgTag} />)}
+          {orgTags.map((orgTag, index) => <OrgTagRow key={index} orgTag={orgTag} onRowSelect={onRowSelect} />)}
         </tbody>
       </table>
     </Container>
