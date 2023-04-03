@@ -123,6 +123,7 @@ export default function WorkspaceViewContainer(
         <ActiveFilter
           filterDto={workspaceFilterModel}
           setFilterDto={setWorkspaceFilterModel}
+          fieldName={"active"}
         />
         <LdapOwnerFilter
           filterModel={workspaceFilterModel}

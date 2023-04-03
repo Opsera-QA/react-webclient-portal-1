@@ -3,6 +3,7 @@ import sessionHelper from "utils/session.helper";
 import { numberHelpers } from "components/common/helpers/number/number.helpers";
 import { modelValidation, validateField } from "core/data_model/modelValidation";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import TagParsingHelper from "@opsera/persephone/helpers/data/tags/tagParsing.helper";
 
 export class FilterModelBase {
   constructor(metaData) {
@@ -295,9 +296,9 @@ export class FilterModelBase {
         this.setData("active", active);
       }
 
-      const tag = parsedBrowserStorage?.tag;
+      const tag = TagParsingHelper.parseTagFilter(parsedBrowserStorage?.tag);
 
-      if (hasStringValue(tag) === true) {
+      if (tag) {
         this.setData("tag", tag);
       }
     }

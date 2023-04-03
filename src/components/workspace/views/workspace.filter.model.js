@@ -80,7 +80,7 @@ export default class WorkspaceFilterModel extends FilterModelBase {
 
     const active = this.getData("active");
 
-    if (hasStringValue(status) === true) {
+    if (hasStringValue(active) === true) {
       activeFilters.push({filterId: "active", text: `Active: ${capitalizeFirstLetter(active)}`});
     }
 
