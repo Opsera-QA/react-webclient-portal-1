@@ -119,15 +119,18 @@ export default function WorkspaceViewContainer(
         <CustomerTagFilter
           filterModel={workspaceFilterModel}
           setFilterModel={setWorkspaceFilterModel}
+          className={"mb-2"}
         />
         <ActiveFilter
           filterDto={workspaceFilterModel}
           setFilterDto={setWorkspaceFilterModel}
           fieldName={"active"}
+          className={"mb-2"}
         />
         <LdapOwnerFilter
           filterModel={workspaceFilterModel}
           setFilterModel={setWorkspaceFilterModel}
+          className={"mb-3"}
         />
       </>
     );
