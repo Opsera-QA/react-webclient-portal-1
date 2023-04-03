@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import useLocationReference from "hooks/useLocationReference";
 
-const FREE_TRIAL_LANDING_SCREENS = {
+const HEADER_NAVIGATION_SCREENS = {
   HOME: "home",
   WORKSPACE: "workspace",
   UNIFIED_INSIGHTS: "insights",
@@ -22,23 +22,25 @@ export default function LandingHeaderNavigationBar() {
 
   const handleScreenClick = (newScreen) => {
     switch (newScreen) {
-      case FREE_TRIAL_LANDING_SCREENS.HOME:
+      case HEADER_NAVIGATION_SCREENS.HOME:
         if (currentPath !== "/") {
           history.push("/");
         }
         break;
-      case FREE_TRIAL_LANDING_SCREENS.WORKSPACE:
+      case HEADER_NAVIGATION_SCREENS.WORKSPACE:
         if (currentPath !== "/workspace") {
           history.push("/workspace");
         }
         break;
-      case FREE_TRIAL_LANDING_SCREENS.UNIFIED_INSIGHTS:
+      case HEADER_NAVIGATION_SCREENS.UNIFIED_INSIGHTS:
         if (currentPath !== "/unified-insights") {
           history.push("/unified-insights");
         }
         break;
     }
   };
+
+  console.log("currentPath: " + JSON.stringify(currentPath));
 
   return (
     <Navbar.Collapse className={"h-100 justify-content-between d-flex mx-5"}>
@@ -51,30 +53,30 @@ export default function LandingHeaderNavigationBar() {
         disableMousePointer={currentPath === "/"}
       />
       <HeaderNavigationBarItem
-        currentScreen={currentPath?.startsWith("/workspace")}
+        currentScreen={currentPath?.startsWith("/workspace") === true}
         setCurrentScreen={handleScreenClick}
         screenLabel={"Workspace"}
         screenName={"workspace"}
         fontColor={themeConstants.COLOR_PALETTE.WHITE}
-        disableMousePointer={currentPath?.startsWith("/workspace")}
+        disableMousePointer={currentPath?.startsWith("/workspace") === true}
       />
       <HeaderNavigationBarItem
         className={"no-wrap d-none d-lg-inline"}
-        currentScreen={currentPath?.startsWith("/unified-insights")}
+        currentScreen={currentPath?.startsWith("/unified-insights") === true}
         setCurrentScreen={handleScreenClick}
         screenLabel={"Unified Insights"}
         screenName={"insights"}
         fontColor={themeConstants.COLOR_PALETTE.WHITE}
-        disableMousePointer={currentPath?.startsWith("/unified-insights")}
+        disableMousePointer={currentPath?.startsWith("/unified-insights") === true}
       />
       <HeaderNavigationBarItem
         className={"d-inline d-lg-none"}
-        currentScreen={currentPath?.startsWith("/unified-insights")}
+        currentScreen={currentPath?.startsWith("/unified-insights") === true}
         setCurrentScreen={handleScreenClick}
         screenLabel={"Insights"}
         screenName={"insights"}
         fontColor={themeConstants.COLOR_PALETTE.WHITE}
-        disableMousePointer={currentPath?.startsWith("/unified-insights")}
+        disableMousePointer={currentPath?.startsWith("/unified-insights") === true}
       />
     </Navbar.Collapse>
   );
