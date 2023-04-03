@@ -269,13 +269,13 @@ export class FilterModelBase {
       }
 
       if (this.showPagination() === true) {
-        const pageSize = parsedBrowserStorage?.pageSize;
+        const pageSize = DataParsingHelper.parseInteger(parsedBrowserStorage?.pageSize);
 
         if (numberHelpers.isNumberGreaterThan(0, pageSize)) {
           this.setData("pageSize", pageSize);
         }
 
-        const currentPage = parsedBrowserStorage?.currentPage;
+        const currentPage = DataParsingHelper.parseInteger(parsedBrowserStorage?.currentPage);
 
         if (numberHelpers.isNumberGreaterThan(0, currentPage)) {
           this.setData("currentPage", currentPage);
