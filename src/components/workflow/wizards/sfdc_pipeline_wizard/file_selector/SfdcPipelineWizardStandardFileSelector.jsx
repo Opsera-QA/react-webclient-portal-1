@@ -86,7 +86,7 @@ const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipeli
   };
 
   const getView = () => {
-    if (pipelineWizardModel.getData("modifiedFilesOrigin") === "sfdc") {
+    if (pipelineWizardModel.getData("isOrgToOrg")) {
       return (
         <SfdcPipelineWizardSfdcFileSelector
           pipelineWizardModel={pipelineWizardModel}
@@ -97,7 +97,7 @@ const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipeli
       );
     }
 
-    if (pipelineWizardModel.getData("modifiedFilesOrigin") === "git") {
+    if (!pipelineWizardModel.getData("isOrgToOrg")) {
       return (
         <SfdcPipelineWizardGitFileSelector
           pipelineWizardModel={pipelineWizardModel}
@@ -112,22 +112,22 @@ const SfdcPipelineWizardStandardFileSelector = ({ pipelineWizardModel, setPipeli
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <CustomTab
-          activeTab={pipelineWizardModel.getData("modifiedFilesOrigin")}
-          tabText={"Salesforce Files"}
-          handleTabClick={handleTabClick}
-          tabName={"sfdc"}
-          toolTipText={"Salesforce Files"}
-          icon={faSalesforce}
-        />
-        <CustomTab
-          activeTab={pipelineWizardModel.getData("modifiedFilesOrigin")}
-          tabText={"Git Files"}
-          handleTabClick={handleTabClick}
-          tabName={"git"}
-          toolTipText={"Git Files"}
-          icon={faCode}
-        />
+        {pipelineWizardModel.getData("isOrgToOrg") && <CustomTab
+            activeTab={"sfdc"}
+            tabText={"Salesforce Files"}
+            handleTabClick={handleTabClick}
+            tabName={"sfdc"}
+            toolTipText={"Salesforce Files"}
+            icon={faSalesforce}
+          />}
+         {!pipelineWizardModel.getData("isOrgToOrg") && <CustomTab
+            activeTab={"git"}
+            tabText={"Git Files"}
+            handleTabClick={handleTabClick}
+            tabName={"git"}
+            toolTipText={"Git Files"}
+            icon={faCode}
+          />}
       </CustomTabContainer>
     );
   };
