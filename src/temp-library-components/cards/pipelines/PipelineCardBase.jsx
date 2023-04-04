@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {
   PIPELINE_TYPES,
@@ -8,10 +7,11 @@ import {
 } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 import { Col, Row } from "react-bootstrap";
 import PipelineCardFooter from "temp-library-components/cards/pipelines/PipelineCardFooter";
-import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import PipelineCardHeader from "temp-library-components/cards/pipelines/PipelineCardHeader";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
+import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
+import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 
 const getLastRunDetails = (pipelineModel) => {
   const runCount = DataParsingHelper.parseInteger(pipelineModel?.getData("workflow.run_count"), 0);
@@ -84,7 +84,7 @@ export default function PipelineCardBase(
     const icon = pipelineTypeConstants.getIconForPipelineType(pipelineType);
 
     return (
-      <IconTitleBar
+      <CardIconTitleBar
         icon={icon}
         iconSize={"4x"}
         iconColor={pipelineType === PIPELINE_TYPES.SALESFORCE ? themeConstants.COLOR_PALETTE.SALESFORCE_BLUE : undefined}
@@ -110,7 +110,7 @@ export default function PipelineCardBase(
   }
 
   return (
-    <SelectionIconCardBase
+    <SelectionIconCard
       titleBar={getTitleBar()}
       contentBody={getContentBody()}
       onClickFunction={onClickFunction}
