@@ -63,7 +63,7 @@ export default function SelectionIconCard(
       style={getStyle()}
     >
       {children}
-    </IconCardContainerBase>
+    </IconCardContainerBaseV2>
   );
 }
 
