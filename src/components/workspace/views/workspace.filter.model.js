@@ -42,6 +42,10 @@ const workspaceFilterMetadata = {
       label: "Active",
       id: "active",
     },
+    {
+      label: "Sort Option",
+      id: "sortOption",
+    },
   ],
   newObjectFields: {
     pageSize: 100,
@@ -52,6 +56,7 @@ const workspaceFilterMetadata = {
     type: "all",
     tag: undefined,
     active: "",
+    sortOption: "name",
   },
 };
 
@@ -73,6 +78,23 @@ export default class WorkspaceFilterModel extends FilterModelBase {
 
   showPagination = () => {
     return true;
+  };
+
+  canSort = () => {
+    return true;
+  };
+
+  getSortOptions = () => {
+    return (
+      [
+        {text: "Oldest Items", value: "oldest"},
+        {text: "Newest Items", value: "newest"},
+        {text: "Name (A-Z a-z)", value: "name"},
+        {text: "Name (z-a Z-A)", value: "name-descending"},
+        {text: "Updated (Latest)", value: "last-updated"},
+        {text: "Updated (Earliest)", value: "earliest-updated"},
+      ]
+    );
   };
 
   getActiveFilters = () => {
