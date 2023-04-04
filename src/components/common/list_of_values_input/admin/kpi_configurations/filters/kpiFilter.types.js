@@ -28,12 +28,14 @@ export const KPI_FILTER_TYPES = {
   SERVICE_NOW_BUSINESS_SERVICES: "servicenow-business-services",
   HIERARCHY_FILTERS: "hierarchyFilters",
   DEPLOYMENT_STAGE: "deployment-stage",
+  GITHUB_REPOSITORY: "github-repository",
+  GITHUB_BRANCH: "github-branch",
   GITLAB_PROJECT: "gitlab-project",
   GITLAB_BRANCH: "gitlab-branch",
   GITLAB_EXCLUDED_USERS: "gitlab-excluded-users",
-  GITLOG_AUTHORS:"gitLog-authors",
-  GITLOG_REPOSITORIES:"gitLog-repositories",
-  GITLOG_BRANCHES:"gitLog-branches",
+  GITLOG_AUTHORS: "gitLog-authors",
+  GITLOG_REPOSITORIES: "gitLog-repositories",
+  GITLOG_BRANCHES: "gitLog-branches",
   JIRA_PRIORITIES: "jira-priorities",
   JIRA_PROJECTS: "jira-projects",
   JIRA_CHANGE_TYPES: "jira-change-types",
@@ -73,18 +75,21 @@ export const KPI_FILTER_TYPE_LABELS = {
   SERVICE_NOW_BUSINESS_SERVICES: "Service Now Business Services",
   HIERARCHY_FILTERS: "Hierarchy Filters",
   DEPLOYMENT_STAGE: "Deployment Stage",
+  GITHUB_REPOSITORY: "Github Repository",
+  GITHUB_BRANCH: "Github Branch",
   GITLAB_PROJECT: "Gitlab Repository",
   GITLAB_BRANCH: "Gitlab Branch",
   GITLAB_EXCLUDED_USERS: "Gitlab Excluded Users",
-  GITLOG_AUTHORS:"Authors",
-  GITLOG_REPOSITORIES:"Repositories",
-  GITLOG_BRANCHES:"Branches",
+  GITLOG_AUTHORS: "Authors",
+  GITLOG_REPOSITORIES: "Repositories",
+  GITLOG_BRANCHES: "Branches",
   JIRA_PRIORITIES: "Jira Priorities",
   JIRA_PROJECTS: "Jira Projects",
   JIRA_CHANGE_TYPES: "Jira Change Types",
   JIRA_SERVICE_COMPONENTS: "Jira Service Components",
   JIRA_RESOLUTION_NAMES: "Jira Resolution Names",
-  JIRA_EXCLUDED_RESOLUTION_NAMES: "Exclude Jira Resolution Names (Values will be excluded from results)",
+  JIRA_EXCLUDED_RESOLUTION_NAMES:
+    "Exclude Jira Resolution Names (Values will be excluded from results)",
   JIRA_TEAM_NAMES: "Jira Team Names",
 };
 
@@ -148,6 +153,10 @@ export const getKpiFilterTypeLabel = (kpiFilterType) => {
       return KPI_FILTER_TYPE_LABELS.HIERARCHY_FILTERS;
     case KPI_FILTER_TYPES.DEPLOYMENT_STAGE:
       return KPI_FILTER_TYPE_LABELS.DEPLOYMENT_STAGE;
+    case KPI_FILTER_TYPES.GITHUB_REPOSITORY:
+      return KPI_FILTER_TYPE_LABELS.GITHUB_REPOSITORY;
+    case KPI_FILTER_TYPES.GITHUB_BRANCH:
+      return KPI_FILTER_TYPE_LABELS.GITHUB_BRANCH;
     case KPI_FILTER_TYPES.GITLAB_PROJECT:
       return KPI_FILTER_TYPE_LABELS.GITLAB_PROJECT;
     case KPI_FILTER_TYPES.GITLAB_BRANCH:
@@ -328,6 +337,16 @@ export const KPI_FILTER_SELECT_OPTIONS = [
     value: [],
   },
   {
+    type: KPI_FILTER_TYPES.GITHUB_REPOSITORY,
+    text: KPI_FILTER_TYPE_LABELS.GITHUB_REPOSITORY,
+    value: [],
+  },
+  {
+    type: KPI_FILTER_TYPES.GITHUB_BRANCH,
+    text: KPI_FILTER_TYPE_LABELS.GITHUB_BRANCH,
+    value: [],
+  },
+  {
     type: KPI_FILTER_TYPES.GITLAB_PROJECT,
     text: KPI_FILTER_TYPE_LABELS.GITLAB_PROJECT,
     value: [],
@@ -345,7 +364,7 @@ export const KPI_FILTER_SELECT_OPTIONS = [
   {
     type: KPI_FILTER_TYPES.GITLAB_EXCLUDED_USERS,
     text: KPI_FILTER_TYPE_LABELS.GITLAB_EXCLUDED_USERS,
-    value: []
+    value: [],
   },
   {
     type: KPI_FILTER_TYPES.GITLOG_AUTHORS,
