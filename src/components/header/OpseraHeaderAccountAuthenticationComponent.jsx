@@ -11,11 +11,13 @@ import { faUserCircle } from "@fortawesome/pro-light-svg-icons";
 import SiteViewModeNavigationSelectInput from "components/header/view_modes/SiteViewModeNavigationSelectInput";
 import OpseraHeaderSettingsLink from "components/header/OpseraHeaderSettingsLink";
 import {EXTERNAL_LINKS} from "components/header/legacy/HeaderNavBar";
+import useLocationReference from "hooks/useLocationReference";
 
 export default function OpseraHeaderAccountAuthenticationComponent(
   {
     hideAuthComponents,
   }) {
+  const { isPublicPathState } = useLocationReference();
   const {
     loginUserContext,
     logoutUserContext,
@@ -26,6 +28,7 @@ export default function OpseraHeaderAccountAuthenticationComponent(
     getAccessToken,
     userData,
     themeConstants,
+    isFreeTrial,
   } = useComponentStateReference();
   // const fullUserName = `${userData?.firstName} ${userData?.lastName} (${userData?.email})`;
   const fullUserName = `${userData?.firstName} ${userData?.lastName}`;
@@ -76,6 +79,73 @@ export default function OpseraHeaderAccountAuthenticationComponent(
   };
 
   const getUserIconDropdown = () => {
+    if (isPublicPathState === true || hideAuthComponents === true) {
+      return null;
+    }
+
+    if (!userData) {
+      if (isFreeTrial === true) {
+        return null;
+      }
+
+      return (
+        <Navbar.Collapse id={"basic-navbar-nav"}>
+          <Nav className={"ml-auto"}>
+            <Button
+              variant={"warning"}
+              className="mr-2"
+              onClick={gotoSignUp}
+            >
+              Sign Up
+            </Button>
+            <Button
+              variant={"outline-success"}
+              onClick={login}
+            >
+              Login
+            </Button>
+          </Nav>
+        </Navbar.Collapse>
+      );
+    }
+
+    if (isFreeTrial === true) {
+      return (
+        <NavDropdown
+          alignRight
+          title={getTitle()}
+          id={"basic-nav-dropdown"}
+          className={"top-nav-dropdown"}
+        >
+          <NavDropdown.Item
+            href={EXTERNAL_LINKS.FREE_TRIAL_KNOWLEDGE_BASE}
+            target={"_blank"}
+            className={"nav-drop-down-item"}
+            id={"kb-button"}
+          >
+            KnowledgeBase
+          </NavDropdown.Item>
+          <NavDropdown.Divider/>
+          <NavDropdown.Item
+            href={"https://opsera.io/"}
+            target={"_blank"}
+            className={"nav-drop-down-item"}
+            id={"about-opsera"}
+          >
+            Opsera.io
+          </NavDropdown.Item>
+          <NavDropdown.Item
+            href={""}
+            onClick={logout}
+            className={"nav-drop-down-item"}
+            id={"logout-button"}
+          >
+            Logout
+          </NavDropdown.Item>
+        </NavDropdown>
+      );
+    }
+
     return (
       <NavDropdown alignRight
         title={getTitle()}
@@ -105,29 +175,6 @@ export default function OpseraHeaderAccountAuthenticationComponent(
       );
     }
   };
-
-  if (!userData) {
-    return null;
-    // return (
-    //   <Navbar.Collapse id={"basic-navbar-nav"}>
-    //     <Nav className={"ml-auto"}>
-    //       <Button
-    //         variant={"warning"}
-    //         className="mr-2"
-    //         onClick={gotoSignUp}
-    //       >
-    //         Sign Up
-    //       </Button>
-    //       <Button
-    //         variant={"outline-success"}
-    //         onClick={login}
-    //       >
-    //         Login
-    //       </Button>
-    //     </Nav>
-    //   </Navbar.Collapse>
-    // );
-  }
 
   return (
     <Navbar.Collapse id={"basic-navbar-nav"}>
