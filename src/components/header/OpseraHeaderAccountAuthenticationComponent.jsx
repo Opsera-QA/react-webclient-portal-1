@@ -77,14 +77,14 @@ export default function OpseraHeaderAccountAuthenticationComponent(
 
   const getTitle = () => {
     return (
-      <span
+      <div className={"d-flex"}
         style={{
           color: `${themeConstants.COLOR_PALETTE.WHITE}`,
         }}
       >
         {getUserIconTitle()}
         <span className={"d-none d-lg-inline ml-2 mr-1"}>{fullUserName}</span>
-      </span>
+      </div>
     );
   };
 
