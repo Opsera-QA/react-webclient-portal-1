@@ -15,7 +15,6 @@ import useAxiosCancelToken from "hooks/useAxiosCancelToken";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import organizationActions from "components/settings/organizations/organization-actions";
 import commonActions from "components/common/common.actions";
-import LandingHeaderNavigationBar from "components/landing/v2/LandingHeaderNavigationBar";
 
 const websocketClient = new ClientWebsocket();
 
