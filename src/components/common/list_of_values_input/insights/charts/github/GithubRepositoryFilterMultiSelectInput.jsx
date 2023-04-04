@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
-import gitlabAction from "../../../../../insights/charts/gitlab/gitlab.action";
+import githubAction from "../../../../../insights/charts/github/github.action";
 
-function GitlabUsersFilterSelectInput({
+// This is used for gitlab kpis
+function GithubRepositoryFilterMultiSelectInput({
   placeholderText,
   valueField,
   textField,
@@ -14,14 +15,14 @@ function GitlabUsersFilterSelectInput({
   setModel,
 }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [users, setUsers] = useState([]);
+  const [repositories, setRepositories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    setUsers([]);
+    setRepositories([]);
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
@@ -45,7 +46,7 @@ function GitlabUsersFilterSelectInput({
     try {
       setError(undefined);
       setIsLoading(true);
-      await loadUsers(cancelSource);
+      await loadRepositories(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         setError(error);
@@ -57,22 +58,21 @@ function GitlabUsersFilterSelectInput({
     }
   };
 
-  const loadUsers = async (cancelSource = cancelTokenSource) => {
-    const response = await gitlabAction.getGitlabUsers(
+  const loadRepositories = async (cancelSource = cancelTokenSource) => {
+    const response = await githubAction.githubRepositoryList(
       getAccessToken,
       cancelSource,
     );
     if (response.data != null) {
-      setUsers(response?.data?.data);
+      setRepositories(response?.data?.data);
     }
   };
-
   return (
     <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={model}
       setDataObject={setModel}
-      selectOptions={users}
+      selectOptions={repositories}
       busy={isLoading}
       valueField={valueField}
       error={error}
@@ -82,7 +82,7 @@ function GitlabUsersFilterSelectInput({
   );
 }
 
-GitlabUsersFilterSelectInput.propTypes = {
+GithubRepositoryFilterMultiSelectInput.propTypes = {
   placeholderText: PropTypes.string,
   fieldName: PropTypes.string,
   textField: PropTypes.string,
@@ -94,9 +94,9 @@ GitlabUsersFilterSelectInput.propTypes = {
   project: PropTypes.array,
 };
 
-GitlabUsersFilterSelectInput.defaultProps = {
+GithubRepositoryFilterMultiSelectInput.defaultProps = {
   textField: "text",
   valueField: "value",
 };
 
-export default GitlabUsersFilterSelectInput;
+export default GithubRepositoryFilterMultiSelectInput;
