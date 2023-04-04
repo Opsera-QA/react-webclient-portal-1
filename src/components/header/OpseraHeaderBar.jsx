@@ -1,15 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Navbar } from "react-bootstrap";
-import {AuthContext} from "contexts/AuthContext";
 import OpseraHeaderIcon from "components/header/OpseraHeaderIcon";
 import OpseraHeaderAccountAuthenticationComponent from "components/header/OpseraHeaderAccountAuthenticationComponent";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import LandingHeaderNavigationBar from "components/landing/v2/LandingHeaderNavigationBar";
 
 export default function OpseraHeaderBar({ hideAuthComponents }) {
-  const {
-    headerNavigationBar,
-  } = useContext(AuthContext);
   const {
     themeConstants,
   } = useComponentStateReference();
@@ -22,7 +19,7 @@ export default function OpseraHeaderBar({ hideAuthComponents }) {
       }}
     >
       <OpseraHeaderIcon />
-      {headerNavigationBar}
+      <LandingHeaderNavigationBar />
       <OpseraHeaderAccountAuthenticationComponent
         hideAuthComponents={hideAuthComponents}
       />
