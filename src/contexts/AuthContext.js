@@ -15,6 +15,7 @@ import useAxiosCancelToken from "hooks/useAxiosCancelToken";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import organizationActions from "components/settings/organizations/organization-actions";
 import commonActions from "components/common/common.actions";
+import LandingHeaderNavigationBar from "components/landing/v2/LandingHeaderNavigationBar";
 
 const websocketClient = new ClientWebsocket();
 
@@ -31,7 +32,6 @@ const AuthContextProvider = (
   const [viewMode, setViewMode] = useState(SITE_VIEW_MODES.BUSINESS);
   const [theme, setTheme] = useState(THEMES.LIGHT);
   const [backgroundColor, setBackgroundColor] = useState(lightThemeConstants.COLOR_PALETTE.WHITE);
-  const [headerNavigationBar, setHeaderNavigationBar] = useState(undefined);
   const [platformSettingsRecord, setPlatformSettingsRecord] = useState(undefined);
   const [organizationSettingsRecord, setOrganizationSettingsRecord] = useState(undefined);
   const [featureFlags, setFeatureFlags] = useState(undefined);
@@ -260,8 +260,6 @@ const AuthContextProvider = (
       unsubscribeFromTopic: unsubscribeFromTopic,
       userData: userData,
       userExpiration: getFreeTrialUserExpirationDate(),
-      headerNavigationBar: headerNavigationBar,
-      setHeaderNavigationBar: setHeaderNavigationBar,
       backgroundColor: backgroundColor,
       setBackgroundColor: setBackgroundColor,
       platformSettingsRecord: platformSettingsRecord,
