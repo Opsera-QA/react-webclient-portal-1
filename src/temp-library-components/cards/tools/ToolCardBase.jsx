@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
-import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
 import { getLargeVendorIconFromToolIdentifier } from "components/common/helpers/icon-helpers";
 import { hasStringValue } from "components/common/helpers/string-helpers";
 import ToolCardFooter from "temp-library-components/cards/tools/ToolCardFooter";
 import ToolCardBody from "temp-library-components/cards/tools/ToolCardBody";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
+import IconCardContainerBaseV2 from "components/common/card_containers/IconCardContainerBaseV2";
 
 export default function ToolCardBase(
   {
@@ -46,7 +46,7 @@ export default function ToolCardBase(
   }
 
   return (
-    <IconCardContainerBase
+    <IconCardContainerBaseV2
       cardFooter={<ToolCardFooter />}
       titleBar={getTitleBar()}
       contentBody={getToolCardBody()}
