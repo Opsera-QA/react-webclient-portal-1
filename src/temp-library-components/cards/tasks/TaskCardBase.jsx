@@ -1,15 +1,15 @@
 import PropTypes from "prop-types";
 import React from "react";
-import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { Col, Row } from "react-bootstrap";
 import { TASK_TYPE_CATEGORIES, taskTypeConstants } from "components/tasks/task.types";
 import TaskCardFooter from "temp-library-components/cards/tasks/TaskCardFooter";
-import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import OrchestrationStateFieldBase
   from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import TaskCardHeader from "temp-library-components/cards/tasks/TaskCardHeader";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
+import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 const getLastRunDetails = (taskModel) => {
@@ -30,7 +30,7 @@ const getLastRunDetails = (taskModel) => {
   if (lastRunCompletionDate != null) {
     return (
       <div className={"d-flex justify-content-between"}>
-        {DateFormatHelper.formatDateAsTimestamp(lastRunCompletionDate)}
+        {DateFormatHelper.formatDateAsTimestampWithoutSeconds(lastRunCompletionDate)}
         <div>
           <OrchestrationStateFieldBase
             orchestrationState={lastRun?.status}
@@ -80,7 +80,7 @@ export default function TaskCardBase(
     const category = taskTypeConstants.getTaskCategoryForType(type);
 
     return (
-      <IconTitleBar
+      <CardIconTitleBar
         icon={icon}
         iconColor={category === TASK_TYPE_CATEGORIES.SALESFORCE ? themeConstants.COLOR_PALETTE.SALESFORCE_BLUE : undefined}
         title={`${taskModel?.getData("name")}`}
@@ -95,7 +95,7 @@ export default function TaskCardBase(
   }
 
   return (
-    <SelectionIconCardBase
+    <SelectionIconCard
       cardHeader={<TaskCardHeader taskModel={taskModel} />}
       cardFooter={<TaskCardFooter />}
       titleBar={getTitleBar()}
