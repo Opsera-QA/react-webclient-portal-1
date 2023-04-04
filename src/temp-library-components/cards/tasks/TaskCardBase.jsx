@@ -30,7 +30,7 @@ const getLastRunDetails = (taskModel) => {
   if (lastRunCompletionDate != null) {
     return (
       <div className={"d-flex justify-content-between"}>
-        {DateFormatHelper.formatDateAsTimestampWithoutSeconds((lastRunCompletionDate)}
+        {DateFormatHelper.formatDateAsTimestampWithoutSeconds(lastRunCompletionDate)}
         <div>
           <OrchestrationStateFieldBase
             orchestrationState={lastRun?.status}
