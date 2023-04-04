@@ -15,6 +15,8 @@ import useLocationReference from "hooks/useLocationReference";
 import {USER_SETTINGS_PAGES} from "components/user/user_settings/userSettings.paths";
 import {hasStringValue} from "components/common/helpers/string-helpers";
 import SiteRoleHelper from "@opsera/know-your-role/roles/helper/site/siteRole.helper";
+import OverlayIconBase from "components/common/icons/OverlayIconBase";
+import {getAccessRolePermissionMessage} from "components/common/helpers/role-helpers";
 
 export default function OpseraHeaderAccountAuthenticationComponent(
   {
@@ -60,13 +62,15 @@ export default function OpseraHeaderAccountAuthenticationComponent(
 
   const getUserIconTitle = () => {
     return (
-      <IconBase
+      <OverlayIconBase
         icon={faUserCircle}
         iconSize={"lg"}
         iconStyling={{
           // borderRadius: "38px",
           color: themeConstants.COLOR_PALETTE.WHITE,
         }}
+        overlayBody={isFreeTrial === false ? getAccessRolePermissionMessage(accessRoleData) : undefined}
+        overlayPlacement={"bottom"}
       />
     );
   };
