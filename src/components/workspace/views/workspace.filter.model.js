@@ -89,8 +89,8 @@ export default class WorkspaceFilterModel extends FilterModelBase {
       [
         {text: "Oldest Items", value: "oldest"},
         {text: "Newest Items", value: "newest"},
-        {text: "Name (A-Z a-z)", value: "name"},
-        {text: "Name (z-a Z-A)", value: "name-descending"},
+        {text: "Name (A-Z)", value: "name"},
+        {text: "Name (Z-A)", value: "name-descending"},
         {text: "Updated (Latest)", value: "last-updated"},
         {text: "Updated (Earliest)", value: "earliest-updated"},
       ]
