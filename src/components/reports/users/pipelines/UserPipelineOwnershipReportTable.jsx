@@ -6,8 +6,7 @@ import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pip
 import {
   getPipelineRunCountColumn,
   getPipelineTypeColumn,
-  getTableDateColumn, getTableIdColumn,
-  getTablePipelineStatusColumn,
+  getTableDateColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -21,7 +20,6 @@ function UserPipelineOwnershipReport({ pipelineList, isLoading, paginationModel,
   const columns = useMemo(
     () => [
       getPipelineTypeColumn(getField(fields, "type")),
-      getTableIdColumn(),
       getTableTextColumn(getField(fields, "name")),
       // getTablePipelineStatusColumn(getField(fields, "workflow")),
       getPipelineRunCountColumn(getField(fields, "workflow.run_count")),
