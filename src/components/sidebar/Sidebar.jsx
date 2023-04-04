@@ -45,7 +45,7 @@ export default function Sidebar({ hideSideBar }) {
 
   const getClassNames = () => {
     if (isSidebarCollapsed === true) {
-      return "d-block sidebar-container";
+      return "d-block sidebar-container mx-2";
     }
 
     if (featureFlagModel?.getData("active") === true) {
