@@ -8,9 +8,9 @@ import OrchestrationStateFieldBase
   from "temp-library-components/fields/orchestration/state/OrchestrationStateFieldBase";
 import TaskCardHeader from "temp-library-components/cards/tasks/TaskCardHeader";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
+import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 
 const getLastRunDetails = (taskModel) => {
   const runCount = DataParsingHelper.parseInteger(taskModel?.getData("run_count"), 0);
@@ -30,7 +30,7 @@ const getLastRunDetails = (taskModel) => {
   if (lastRunCompletionDate != null) {
     return (
       <div className={"d-flex justify-content-between"}>
-        {DateFormatHelper.formatDateAsTimestamp(lastRunCompletionDate)}
+        {DateFormatHelper.formatDateAsTimestampWithoutSeconds((lastRunCompletionDate)}
         <div>
           <OrchestrationStateFieldBase
             orchestrationState={lastRun?.status}
