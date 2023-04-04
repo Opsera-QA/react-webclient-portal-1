@@ -61,30 +61,32 @@ export default function OpseraHeaderAccountAuthenticationComponent(
   };
 
   const getUserIconTitle = () => {
-    return (
-      <OverlayIconBase
-        icon={faUserCircle}
-        iconSize={"lg"}
-        iconStyling={{
-          // borderRadius: "38px",
-          color: themeConstants.COLOR_PALETTE.WHITE,
-        }}
-        overlayBody={isFreeTrial === false ? getAccessRolePermissionMessage(accessRoleData) : undefined}
-        overlayPlacement={"bottom"}
-      />
-    );
+    if (userData) {
+      return (
+        <OverlayIconBase
+          icon={faUserCircle}
+          iconSize={"lg"}
+          iconStyling={{
+            // borderRadius: "38px",
+            color: themeConstants.COLOR_PALETTE.WHITE,
+          }}
+          overlayBody={isFreeTrial === false ? getAccessRolePermissionMessage(accessRoleData) : undefined}
+          overlayPlacement={"bottom"}
+          iconClassName={"my-auto"}
+        />
+      );
+    }
   };
 
   const getTitle = () => {
     return (
-      <div className={"d-flex"}
+      <span
         style={{
           color: `${themeConstants.COLOR_PALETTE.WHITE}`,
         }}
       >
-        {getUserIconTitle()}
-        <span className={"d-none d-lg-inline ml-2 mr-1"}>{fullUserName}</span>
-      </div>
+        <span className={"d-none d-lg-inline mr-1"}>{fullUserName}</span>
+      </span>
     );
   };
 
@@ -140,7 +142,7 @@ export default function OpseraHeaderAccountAuthenticationComponent(
           <Nav className={"ml-auto"}>
             <Button
               variant={"warning"}
-              className="mr-2"
+              className={"mr-2"}
               onClick={gotoSignUp}
             >
               Sign Up
@@ -276,7 +278,10 @@ export default function OpseraHeaderAccountAuthenticationComponent(
       <Nav className={"ml-auto"}>
         {/*{getViewTypeDropdown()}*/}
         <OpseraHeaderSettingsLink />
-        {getUserIconDropdown()}
+        <div className={"d-flex ml-2"}>
+          {getUserIconTitle()}
+          {getUserIconDropdown()}
+        </div>
       </Nav>
     </Navbar.Collapse>
   );
