@@ -63,17 +63,18 @@ export default function OpseraHeaderAccountAuthenticationComponent(
   const getUserIconTitle = () => {
     if (userData) {
       return (
-        <OverlayIconBase
-          icon={faUserCircle}
-          iconSize={"lg"}
-          iconStyling={{
-            // borderRadius: "38px",
-            color: themeConstants.COLOR_PALETTE.WHITE,
-          }}
-          overlayBody={isFreeTrial === false ? getAccessRolePermissionMessage(accessRoleData) : undefined}
-          overlayPlacement={"bottom"}
-          iconClassName={"my-auto"}
-        />
+        <div className={"my-auto"}>
+          <OverlayIconBase
+            icon={faUserCircle}
+            iconSize={"lg"}
+            iconStyling={{
+              // borderRadius: "38px",
+              color: themeConstants.COLOR_PALETTE.WHITE,
+            }}
+            overlayBody={isFreeTrial === false ? getAccessRolePermissionMessage(accessRoleData) : undefined}
+            overlayPlacement={"bottom"}
+          />
+        </div>
       );
     }
   };
