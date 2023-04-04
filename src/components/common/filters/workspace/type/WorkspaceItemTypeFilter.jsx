@@ -24,7 +24,7 @@ export default function WorkspaceItemTypeFilter(
       inline={inline}
       setDataObject={setFilterModel}
       setDataFunction={setDataFunction}
-      placeholderText={"Select Task Type"}
+      placeholderText={"Select Type"}
       dataObject={filterModel}
       selectOptions={workspaceConstants.WORKSPACE_TYPE_SELECT_OPTIONS}
       disabled={disabled}
