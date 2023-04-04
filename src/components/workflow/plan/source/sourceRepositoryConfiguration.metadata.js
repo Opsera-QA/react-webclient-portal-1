@@ -112,6 +112,11 @@ export const sourceRepositoryConfigurationMetadata = {
       type: metadataConstants.SUPPORTED_VALUE_TYPES.BOOLEAN,
     },
     {
+      label: "Add Comment With Pipeline Status To PR When Pipeline Is Completed",
+      id: "isMonitored",
+      type: metadataConstants.SUPPORTED_VALUE_TYPES.BOOLEAN,
+    },
+    {
       label: "Enabled",
       id: "dynamicSettings",
       type: metadataConstants.SUPPORTED_VALUE_TYPES.BOOLEAN,
