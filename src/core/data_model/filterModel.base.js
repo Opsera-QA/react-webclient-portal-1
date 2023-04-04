@@ -3,6 +3,7 @@ import sessionHelper from "utils/session.helper";
 import { numberHelpers } from "components/common/helpers/number/number.helpers";
 import { modelValidation, validateField } from "core/data_model/modelValidation";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import TagParsingHelper from "@opsera/persephone/helpers/data/tags/tagParsing.helper";
 
 export class FilterModelBase {
   constructor(metaData) {
@@ -179,13 +180,13 @@ export class FilterModelBase {
     }
 
     if (this.showPagination() === true) {
-      const pageSize = sessionHelper.getStoredUrlParameter("pageSize");
+      const pageSize = DataParsingHelper.parseInteger(sessionHelper.getStoredUrlParameter("pageSize"));
 
       if (numberHelpers.isNumberGreaterThan(0, pageSize)) {
         this.setData("pageSize", pageSize);
       }
 
-      const currentPage = sessionHelper.getStoredUrlParameter("currentPage");
+      const currentPage = DataParsingHelper.parseInteger(sessionHelper.getStoredUrlParameter("currentPage"));
 
       if (numberHelpers.isNumberGreaterThan(0, currentPage)) {
         hasUrlParams = true;
@@ -268,13 +269,13 @@ export class FilterModelBase {
       }
 
       if (this.showPagination() === true) {
-        const pageSize = parsedBrowserStorage?.pageSize;
+        const pageSize = DataParsingHelper.parseInteger(parsedBrowserStorage?.pageSize);
 
         if (numberHelpers.isNumberGreaterThan(0, pageSize)) {
           this.setData("pageSize", pageSize);
         }
 
-        const currentPage = parsedBrowserStorage?.currentPage;
+        const currentPage = DataParsingHelper.parseInteger(parsedBrowserStorage?.currentPage);
 
         if (numberHelpers.isNumberGreaterThan(0, currentPage)) {
           this.setData("currentPage", currentPage);
@@ -295,9 +296,9 @@ export class FilterModelBase {
         this.setData("active", active);
       }
 
-      const tag = parsedBrowserStorage?.tag;
+      const tag = TagParsingHelper.parseTagFilter(parsedBrowserStorage?.tag);
 
-      if (hasStringValue(tag) === true) {
+      if (tag) {
         this.setData("tag", tag);
       }
     }

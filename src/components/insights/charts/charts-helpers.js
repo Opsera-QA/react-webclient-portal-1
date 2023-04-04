@@ -193,6 +193,14 @@ export function getDeploymentStageFromKpiConfiguration(kpiConfiguration) {
   return getResultFromKpiConfiguration(kpiConfiguration, "deployment-stage");
 }
 
+export function getGithubRepositoryFromKpiConfiguration(kpiConfiguration) {
+  return getResultFromKpiConfiguration(kpiConfiguration, "github-repository");
+}
+
+export function getGithubBranchFromKpiConfiguration(kpiConfiguration) {
+  return getResultFromKpiConfiguration(kpiConfiguration, "github-branch");
+}
+
 export function getGitlabProjectFromKpiConfiguration(kpiConfiguration) {
   return getResultFromKpiConfiguration(kpiConfiguration, "gitlab-project");
 }
@@ -452,10 +460,10 @@ export const getTimeDisplay = (mins) => {
 };
 
 export const MATURITY_SCORE_TEXT = Object.freeze({
-  ELITE: 'elite',
-  HIGH: 'high',
-  MEDIUM: 'medium',
-  LOW: 'low'
+  ELITE: "elite",
+  HIGH: "high",
+  MEDIUM: "medium",
+  LOW: "low",
 });
 
 /**

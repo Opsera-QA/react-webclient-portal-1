@@ -39,8 +39,8 @@ import GitlabTimeTakenToCompleteMergeRequestReviewEditorPanel from "../../charts
 import GitlabMergeRequestsByUserEditorPanel from "../../charts/gitlab/bar_chart/merge_requests_by_user/GitlabMergeRequestsByUserEditorPanel";
 import GitlabCommitsByAuthorEditorPanel from "../../charts/gitlab/calendar_chart/commits_by_author/GitlabCommitsByAuthorEditorPanel";
 import GitLogDeveloper360EditorPanel from "../../charts/gitlog/commit_activities/GitLogDeveloper360EditorPanel";
-import SalesforceCodeAnalyserChartEditorPanel
-  from "../../charts/sfdc/salesforce_code_analyser/SalesforceCodeAnalyserChartEditorPanel";
+import SalesforceCodeAnalyserChartEditorPanel from "../../charts/sfdc/salesforce_code_analyser/SalesforceCodeAnalyserChartEditorPanel";
+import GithubMergeRequestsPushesAndCommentsChartEditorPanel from "../../charts/github/calendar_chart/merge_requests_pushes_and_comments/GithubMergeRequestsPushesAndCommentsEditorPanel";
 
 // TODO: combine with chart settings overlay?
 function DashboardMetricOverlayContainer({
@@ -199,13 +199,13 @@ function DashboardMetricOverlayContainer({
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GIT_LOG_DEVELOPER_360:
         return (
-            <GitLogDeveloper360EditorPanel
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-                unpackedFilterData={unpackedFilterData}
-                kpiConfiguration={kpiConfiguration}
-            />
+          <GitLogDeveloper360EditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.GITLAB_PIPELINE_STATISTICS:
         return (
@@ -392,13 +392,24 @@ function DashboardMetricOverlayContainer({
         );
       case kpiIdentifierConstants.KPI_IDENTIFIERS.SALESFORCE_CODE_ANALYSER:
         return (
-            <SalesforceCodeAnalyserChartEditorPanel
-                metricModel={metricModel}
-                metricFilterModel={metricFilterModel}
-                setMetricFilterModel={setMetricFilterModel}
-                unpackedFilterData={unpackedFilterData}
-                kpiConfiguration={kpiConfiguration}
-            />
+          <SalesforceCodeAnalyserChartEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
+        );
+      case kpiIdentifierConstants.KPI_IDENTIFIERS
+        .GITHUB_MERGE_REQUESTS_PUSHES_AND_COMMENTS:
+        return (
+          <GithubMergeRequestsPushesAndCommentsChartEditorPanel
+            metricModel={metricModel}
+            metricFilterModel={metricFilterModel}
+            setMetricFilterModel={setMetricFilterModel}
+            unpackedFilterData={unpackedFilterData}
+            kpiConfiguration={kpiConfiguration}
+          />
         );
     }
   };

@@ -16,8 +16,8 @@ workspaceConstants.WORKSPACE_ITEM_TYPES = {
 workspaceConstants.WORKSPACE_ITEM_TYPE_LABELS = {
   ALL: "All",
   PIPELINE: "Pipeline",
-  TASK: "Tasks",
-  TOOL: "Tools",
+  TASK: "Task",
+  TOOL: "Tool",
 };
 
 workspaceConstants.isWorkspaceTypeValid = (potentialValue) => {

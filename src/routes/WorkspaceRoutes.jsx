@@ -1,6 +1,6 @@
 import React from "react";
 import { SecureRoute } from "@okta/okta-react";
-import FreeTrialWorkspace from "components/workspace/trial/FreeTrialWorkspace";
+import Workspace from "components/workspace/views/Workspace";
 
 export default function WorkspaceRoutes() {
   return (
@@ -8,7 +8,7 @@ export default function WorkspaceRoutes() {
       <SecureRoute
         path={"/workspace"}
         exact
-        component={FreeTrialWorkspace}
+        component={Workspace}
       />
     </>
   );
