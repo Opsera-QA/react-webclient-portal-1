@@ -30,6 +30,8 @@ import {
   getDeploymentStageFromKpiConfiguration,
   getGitlabProjectFromKpiConfiguration,
   getGitlabExcludedUsersFromKpiConfiguration,
+  getGithubRepositoryFromKpiConfiguration,
+  getGithubBranchFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 import { addDays } from "date-fns";
 
@@ -802,7 +804,10 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     deploymentStages = getDeploymentStageFromKpiConfiguration(kpiConfiguration),
     gitlabProjects = getGitlabProjectFromKpiConfiguration(kpiConfiguration),
     gitlabExcludedUsers =
-      getGitlabExcludedUsersFromKpiConfiguration(kpiConfiguration);
+      getGitlabExcludedUsersFromKpiConfiguration(kpiConfiguration),
+    githubRepository =
+      getGithubRepositoryFromKpiConfiguration(kpiConfiguration),
+    githubBranch = getGithubBranchFromKpiConfiguration(kpiConfiguration);
   let tags = getTagsFromKpiConfiguration(kpiConfiguration);
   let hierarchyFilters =
     getHierarchyFiltersFromKpiConfiguration(kpiConfiguration);
@@ -870,6 +875,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     deploymentStages: deploymentStages,
     gitlabProjects: gitlabProjects,
     gitlabExcludedUsers: gitlabExcludedUsers,
+    githubRepository: githubRepository,
+    githubBranch: githubBranch,
   };
 
   return await baseActions.handleNodeAnalyticsApiPostRequest(
