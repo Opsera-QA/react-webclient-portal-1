@@ -15,9 +15,11 @@ export default function LandingHeaderNavigationBar() {
   const history = useHistory();
   const {
     currentPath,
+    isPublicPathState
   } = useLocationReference();
   const {
     themeConstants,
+    userData,
   } = useComponentStateReference();
 
   useEffect(() => {}, [currentPath]);
@@ -41,6 +43,10 @@ export default function LandingHeaderNavigationBar() {
         break;
     }
   };
+
+  if (!userData || isPublicPathState === true) {
+    return null;
+  }
 
   return (
     <Navbar.Collapse className={"h-100 justify-content-between d-flex mx-5"}>
