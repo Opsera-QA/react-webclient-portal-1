@@ -31,7 +31,7 @@ const getLastRunDetails = (pipelineModel) => {
     return (
       <div className={"d-flex text-muted"}>
         <div className={"mx-auto"}>
-          {DateFormatHelper.formatDateAsTimestamp(lastRunCompletionDate)}
+          {DateFormatHelper.formatDateAsTimestampWithoutSeconds(lastRunCompletionDate)}
         </div>
       </div>
     );
