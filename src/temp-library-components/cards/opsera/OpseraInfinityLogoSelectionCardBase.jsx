@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
-import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
+import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 
 export default function OpseraInfinityLogoSelectionCardBase(
   {
@@ -35,7 +35,7 @@ export default function OpseraInfinityLogoSelectionCardBase(
   };
 
   return (
-    <SelectionIconCardBase
+    <SelectionIconCard
       selectedOption={selectedOption}
       option={option}
       titleBar={getTitleBar()}
