@@ -13,7 +13,7 @@ export default function SubMenuItem(
     disabled,
   }) {
   const getClassNames = () => {
-    const classNames = DataParsingHelper.parseString(className, "");
+    const classNames = `my-auto ${DataParsingHelper.parseString(className, "")}`;
 
     if (activeKey === itemKey) {
       return `${classNames} active`;
@@ -45,7 +45,7 @@ SubMenuItem.propTypes = {
   activeKey: PropTypes.string,
   setActiveKey: PropTypes.func,
   itemKey: PropTypes.string,
-  label: PropTypes.string,
+  label: PropTypes.any,
   visible: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
