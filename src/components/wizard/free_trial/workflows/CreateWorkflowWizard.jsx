@@ -15,7 +15,7 @@ export const CREATE_WORKFLOW_WIZARD_SCREENS = {
 };
 
 export default function CreateWorkflowWizard() {
-  const [currentScreen, setCurrentScreen] = useState(CREATE_WORKFLOW_WIZARD_SCREENS.SALESFORCE_FLOW);
+  const [currentScreen, setCurrentScreen] = useState(CREATE_WORKFLOW_WIZARD_SCREENS.FLOW_SELECTION_SCREEN);
   const [buttonContainer, setButtonContainer] = useState(undefined);
   const history = useHistory();
   const {

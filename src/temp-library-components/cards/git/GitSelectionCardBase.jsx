@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
-import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
+import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 
 export default function GitSelectionCardBase(
   {
@@ -32,7 +32,7 @@ export default function GitSelectionCardBase(
   };
 
   return (
-    <SelectionIconCardBase
+    <SelectionIconCard
       selectedOption={selectedOption}
       option={option}
       titleBar={getTitleBar()}
