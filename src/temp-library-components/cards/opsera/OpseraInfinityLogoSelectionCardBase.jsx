@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
-import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
+import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 
 export default function OpseraInfinityLogoSelectionCardBase(
   {
@@ -19,7 +19,7 @@ export default function OpseraInfinityLogoSelectionCardBase(
   }) {
   const getTitleBar = () => {
     return (
-      <IconTitleBar
+      <CardIconTitleBar
         className={"m-3 mb-4"}
         formattedIcon={
           <OpseraInfinityLogo scale={.75} />

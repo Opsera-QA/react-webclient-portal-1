@@ -64,7 +64,7 @@ export default function CreateWorkflowWizard() {
   return (
     <CenterOverlayContainer
       closePanel={closeOverlayFunction}
-      titleText={"Create a new Workflow"}
+      titleText={"Create a New Workflow"}
       buttonContainer={buttonContainer}
       showCloseButton={false}
     >

@@ -4,6 +4,7 @@ import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
+import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 
 export default function SalesforceSelectionCardBase(
   {
@@ -24,7 +25,7 @@ export default function SalesforceSelectionCardBase(
 
   const getTitleBar = () => {
     return (
-      <IconTitleBar
+      <CardIconTitleBar
         className={"m-3 mb-4"}
         icon={faSalesforce}
         iconColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
