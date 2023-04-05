@@ -275,8 +275,8 @@ export default function OpseraHeaderAccountAuthenticationComponent(
   };
 
   return (
-    <Navbar.Collapse id={"basic-navbar-nav"}>
-      <Nav className={"ml-auto"}>
+    <Navbar id={"basic-navbar-nav"}>
+      <Nav>
         {/*{getViewTypeDropdown()}*/}
         <OpseraHeaderSettingsLink />
         <div className={"d-flex ml-2"}>
@@ -284,7 +284,7 @@ export default function OpseraHeaderAccountAuthenticationComponent(
           {getUserIconDropdown()}
         </div>
       </Nav>
-    </Navbar.Collapse>
+    </Navbar>
   );
 }
 
