@@ -211,7 +211,7 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
   };
 
   return (
-    <div className="ml-5 mr-5">
+    <div className="mr-5">
       <div className="flex-container">
         <div className="flex-container-content">
           <div className="h5">Salesforce Pipeline Run: Unit Test Selection View</div>
