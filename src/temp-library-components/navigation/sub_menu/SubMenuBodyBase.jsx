@@ -10,9 +10,9 @@ export default function SubMenuBodyBase(
   }
 
   return (
-    <ui className={"d-flex"}>
+    <ul className={"d-flex"}>
       {children}
-    </ui>
+    </ul>
   );
 }
 
