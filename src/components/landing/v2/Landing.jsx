@@ -25,8 +25,8 @@ export default function Landing() {
           </Col>
         </Row>
         <div className={"py-3"}>
-          {/*<FreeTrialLandingWorkflowWidget*/}
-          {/*/>*/}
+          <FreeTrialLandingWorkflowWidget
+          />
         </div>
         <div className={"py-3"}>
           &nbsp;
