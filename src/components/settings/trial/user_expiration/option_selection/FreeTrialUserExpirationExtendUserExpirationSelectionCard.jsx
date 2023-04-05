@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faHourglassClock } from "@fortawesome/pro-light-svg-icons";
 import {
@@ -8,6 +7,7 @@ import {
 } from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationOptionSelectionScreen";
 import { useHistory } from "react-router-dom";
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
+import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 
 export default function FreeTrialUserExpirationExtendUserExpirationSelectionCard(
   {
@@ -25,7 +25,7 @@ export default function FreeTrialUserExpirationExtendUserExpirationSelectionCard
 
   const getTitleBar = () => {
     return (
-      <IconTitleBar
+      <CardIconTitleBar
         className={"m-3 mb-4"}
         icon={faHourglassClock}
         iconColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
