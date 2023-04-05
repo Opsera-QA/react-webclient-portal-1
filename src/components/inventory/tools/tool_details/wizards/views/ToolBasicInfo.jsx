@@ -1,14 +1,8 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
-import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
-import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
-import IconBase from "../../../../../common/icons/IconBase";
-import { faGear, faWandMagicSparkles } from "@fortawesome/pro-light-svg-icons";
 import RoleAccessInput from "../../../../../common/inputs/roles/RoleAccessInput";
 import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
 import VanityEditorPanelContainer from "../../../../../common/panels/detail_panel_container/VanityEditorPanelContainer";
