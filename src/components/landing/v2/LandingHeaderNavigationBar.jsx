@@ -5,6 +5,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import useLocationReference from "hooks/useLocationReference";
 import SubMenuContainer from "temp-library-components/navigation/sub_menu/SubMenuContainer";
 import SubMenuItem from "temp-library-components/navigation/sub_menu/SubMenuItem";
+import GitCustodianRoleHelper from "@opsera/know-your-role/roles/compliance/git_custodian/gitCustodianRole.helper";
 
 const HEADER_NAVIGATION_SCREENS = {
   HOME: "home",
@@ -79,6 +80,7 @@ export default function LandingHeaderNavigationBar() {
     <Navbar.Collapse className={"h-100 d-flex mx-2"}>
       <SubMenuContainer className={"mx-auto"}>
         <SubMenuItem
+          className={"px-3"}
           itemKey={HEADER_NAVIGATION_SCREENS.HOME}
           activeKey={getActiveScreen(currentPath)}
           setActiveKey={handleScreenClick}
@@ -86,6 +88,7 @@ export default function LandingHeaderNavigationBar() {
           disabled={currentPath === "/"}
         />
         <SubMenuItem
+          className={"px-3"}
           activeKey={getActiveScreen(currentPath)}
           setActiveKey={handleScreenClick}
           label={"Workspace"}
@@ -93,6 +96,7 @@ export default function LandingHeaderNavigationBar() {
           disabled={currentPath?.startsWith("/workspace") === true}
         />
         <SubMenuItem
+          className={"px-3"}
           activeKey={getActiveScreen(currentPath)}
           setActiveKey={handleScreenClick}
           label={<div className={"no-wrap-inline"}><span className={"no-wrap d-none d-lg-inline-block mr-1"}>{`Unified`}</span>Insights</div>}
@@ -100,47 +104,15 @@ export default function LandingHeaderNavigationBar() {
           disabled={currentPath?.startsWith("/unified-insights") === true}
         />
         <SubMenuItem
+          className={"px-3"}
           activeKey={getActiveScreen(currentPath)}
           setActiveKey={handleScreenClick}
           label={<div>Git Custodian</div>}
           itemKey={HEADER_NAVIGATION_SCREENS.GIT_CUSTODIAN}
           disabled={currentPath?.startsWith("/git-custodian") === true}
+          visible={GitCustodianRoleHelper.canViewGitCustodian(userData) === true}
         />
       </SubMenuContainer>
-      {/*<HeaderNavigationBarItem*/}
-      {/*  currentScreen={currentPath === "/" ? HEADER_NAVIGATION_SCREENS.HOME : undefined}*/}
-      {/*  setCurrentScreen={handleScreenClick}*/}
-      {/*  screenLabel={"Home"}*/}
-      {/*  screenName={HEADER_NAVIGATION_SCREENS.HOME}*/}
-      {/*  fontColor={themeConstants.COLOR_PALETTE.WHITE}*/}
-      {/*  disableMousePointer={currentPath === "/"}*/}
-      {/*/>*/}
-      {/*<HeaderNavigationBarItem*/}
-      {/*  currentScreen={currentPath?.startsWith("/workspace") ? HEADER_NAVIGATION_SCREENS.WORKSPACE : undefined}*/}
-      {/*  setCurrentScreen={handleScreenClick}*/}
-      {/*  screenLabel={"Workspace"}*/}
-      {/*  screenName={"workspace"}*/}
-      {/*  fontColor={themeConstants.COLOR_PALETTE.WHITE}*/}
-      {/*  disableMousePointer={currentPath?.startsWith("/workspace") === true}*/}
-      {/*/>*/}
-      {/*<HeaderNavigationBarItem*/}
-      {/*  className={"no-wrap d-none d-lg-inline"}*/}
-      {/*  currentScreen={currentPath?.startsWith("/unified-insights") ? HEADER_NAVIGATION_SCREENS.UNIFIED_INSIGHTS : undefined}*/}
-      {/*  setCurrentScreen={handleScreenClick}*/}
-      {/*  screenLabel={"Unified Insights"}*/}
-      {/*  screenName={"insights"}*/}
-      {/*  fontColor={themeConstants.COLOR_PALETTE.WHITE}*/}
-      {/*  disableMousePointer={currentPath?.startsWith("/unified-insights") === true}*/}
-      {/*/>*/}
-      {/*<HeaderNavigationBarItem*/}
-      {/*  className={"d-inline d-lg-none"}*/}
-      {/*  currentScreen={currentPath?.startsWith("/unified-insights") ? HEADER_NAVIGATION_SCREENS.UNIFIED_INSIGHTS : undefined}*/}
-      {/*  setCurrentScreen={handleScreenClick}*/}
-      {/*  screenLabel={"Insights"}*/}
-      {/*  screenName={"insights"}*/}
-      {/*  fontColor={themeConstants.COLOR_PALETTE.WHITE}*/}
-      {/*  disableMousePointer={currentPath?.startsWith("/unified-insights") === true}*/}
-      {/*/>*/}
     </Navbar.Collapse>
   );
 }
