@@ -13,9 +13,7 @@ import ToolBasicInfo from "./views/ToolBasicInfo";
 import ToolConnectionPanel from "../ToolConnectionPanel";
 import ToolConnectionCheck from "./views/ToolConnectionCheck";
 import ToolEditorPanel from "../ToolEditorPanel";
-import {capitalizeFirstLetter} from "../../../../common/helpers/string-helpers";
-import OverlayWizardButtonContainerBase
-  from "../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 export const REGISTRY_WIZARD_SCREENS = {
   MODE_SELECT: "mode_select",
@@ -37,11 +35,11 @@ export default function CreateToolRegistryWizard({ loadData }) {
   const { isMounted, toastContext } = useComponentStateReference();
 
   const REGISTRY_WIZARD_TITLES = {
-    MODE_SELECT: "Step 1: Select tool creation method",
+    MODE_SELECT: "Step 1: Select Tool Creation Method",
     TOOL_IDENTIFIER_SELECT: "Step 2: Select Tool",
-    BASIC_TOOL_INFO: "Step 3: Enter Basic tool information",
-    CONNECTION_INFO: `Step 4: Configure ${capitalizeFirstLetter(toolModel?.getData("tool_identifier"))} connection information`,
-    CONNECTION_TEST: `Step 5: Validate ${capitalizeFirstLetter(toolModel?.getData("tool_identifier"))} connection information`,
+    BASIC_TOOL_INFO: "Step 3: Enter Basic Tool Information",
+    CONNECTION_INFO: `Step 4: Configure ${capitalizeFirstLetter(toolModel?.getData("tool_identifier"))} Connection Information`,
+    CONNECTION_TEST: `Step 5: Validate ${capitalizeFirstLetter(toolModel?.getData("tool_identifier"))} Connection Information`,
   };
   const [overlayTitle, setOverlayTitle] = useState(REGISTRY_WIZARD_TITLES.MODE_SELECT);
 
