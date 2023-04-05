@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
-import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 import TaskCardFooter from "temp-library-components/cards/tasks/TaskCardFooter";
 import PipelineCardFooter from "temp-library-components/cards/pipelines/PipelineCardFooter";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 
 export const WORKFLOW_OPTION_TYPES = {
   PIPELINE: "pipeline",
@@ -31,7 +31,7 @@ export default function WorkflowOptionCardBase(
 
   const getTitleBar = () => {
     return (
-      <IconTitleBar
+      <CardIconTitleBar
         icon={icon}
         iconColor={iconColor}
         title={title}
