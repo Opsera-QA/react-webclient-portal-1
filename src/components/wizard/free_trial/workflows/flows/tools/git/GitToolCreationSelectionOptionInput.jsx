@@ -13,6 +13,7 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
+import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 
 export const GIT_TOOL_CREATION_OPTIONS = {
   GITHUB: toolIdentifierConstants.TOOL_IDENTIFIERS.GITHUB,
