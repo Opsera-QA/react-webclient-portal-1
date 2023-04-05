@@ -63,17 +63,18 @@ export default function OpseraHeaderAccountAuthenticationComponent(
   const getUserIconTitle = () => {
     if (userData) {
       return (
-        <OverlayIconBase
-          icon={faUserCircle}
-          iconSize={"lg"}
-          iconStyling={{
-            // borderRadius: "38px",
-            color: themeConstants.COLOR_PALETTE.WHITE,
-          }}
-          overlayBody={isFreeTrial === false ? getAccessRolePermissionMessage(accessRoleData) : undefined}
-          overlayPlacement={"bottom"}
-          iconClassName={"my-auto"}
-        />
+        <div className={"my-auto"}>
+          <OverlayIconBase
+            icon={faUserCircle}
+            iconSize={"lg"}
+            iconStyling={{
+              // borderRadius: "38px",
+              color: themeConstants.COLOR_PALETTE.WHITE,
+            }}
+            overlayBody={isFreeTrial === false ? getAccessRolePermissionMessage(accessRoleData) : undefined}
+            overlayPlacement={"bottom"}
+          />
+        </div>
       );
     }
   };
@@ -274,8 +275,8 @@ export default function OpseraHeaderAccountAuthenticationComponent(
   };
 
   return (
-    <Navbar.Collapse id={"basic-navbar-nav"}>
-      <Nav className={"ml-auto"}>
+    <Navbar id={"basic-navbar-nav"}>
+      <Nav>
         {/*{getViewTypeDropdown()}*/}
         <OpseraHeaderSettingsLink />
         <div className={"d-flex ml-2"}>
@@ -283,7 +284,7 @@ export default function OpseraHeaderAccountAuthenticationComponent(
           {getUserIconDropdown()}
         </div>
       </Nav>
-    </Navbar.Collapse>
+    </Navbar>
   );
 }
 
