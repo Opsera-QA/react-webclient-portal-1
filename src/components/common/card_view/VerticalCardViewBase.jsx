@@ -5,7 +5,7 @@ import SelectionCardColumn from "temp-library-components/cards/SelectionCardColu
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 
-export default function  VerticalCardViewBase(
+export default function VerticalCardViewBase(
   {
     data,
     getCardFunction,
