@@ -11,6 +11,7 @@ const SfdcPipelineWizardBasicSummary = ({pipelineWizardModel}) => (
       <ToolNameField
         model={pipelineWizardModel}
         fieldName={"sfdcToolId"}
+        loadToolInNewWindow={true}
       />
     </Col>
     {pipelineWizardModel.getData('isOrgToOrg') 
@@ -19,6 +20,7 @@ const SfdcPipelineWizardBasicSummary = ({pipelineWizardModel}) => (
           <ToolNameField
             model={pipelineWizardModel}
             fieldName={"sfdcDestToolId"}
+            loadToolInNewWindow={true}
           />
         </Col>
       : 
@@ -27,6 +29,7 @@ const SfdcPipelineWizardBasicSummary = ({pipelineWizardModel}) => (
           <ToolNameField
             model={pipelineWizardModel}
             fieldName={"gitToolId"}
+            loadToolInNewWindow={true}
           />
         </Col>
         {pipelineWizardModel.getData('service') === 'bitbucket' && (
