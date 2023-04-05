@@ -6,7 +6,6 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import {parseError} from "components/common/helpers/error-helpers";
 import {InputGroup} from "react-bootstrap";
 import { hasStringValue } from "components/common/helpers/string-helpers";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 function TextInputBase(
   {
@@ -33,10 +32,17 @@ function TextInputBase(
   }) {
   const field = dataObject?.getFieldById(fieldName);
   const [errorMessage, setErrorMessage] = useState("");
+  const fieldError = dataObject?.getFieldError(fieldName);
 
   useEffect(() => {
     setErrorMessage(error ? parseError(error) : "");
   }, [error]);
+
+  useEffect(() => {
+    if (hasStringValue(fieldError) === true && dataObject?.isNew() !== true && error == null) {
+      setErrorMessage(fieldError);
+    }
+  }, [fieldError]);
 
   const validateAndSetData = (value) => {
     dataObject.setTextData(fieldName, value);

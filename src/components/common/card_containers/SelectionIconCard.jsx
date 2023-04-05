@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import { mouseHelper } from "temp-library-components/helpers/mouse/mouse.helper";
 import useComponentStateReference from "hooks/useComponentStateReference";
@@ -22,6 +22,7 @@ export default function SelectionIconCard(
     disabled,
   }) {
   const { themeConstants } = useComponentStateReference();
+  const [isHovering, setIsHovering] = useState(false);
 
   const getStyle = () => {
     if (style) {
@@ -29,7 +30,7 @@ export default function SelectionIconCard(
     }
 
     return ({
-      boxShadow: selectedOption != null && selectedOption === option ? "0 0 20px rgba(46, 25, 86, .3)" : undefined,
+      boxShadow: isHovering === true || (selectedOption != null && selectedOption === option) ? "0 0 20px rgba(46, 25, 86, .3)" : undefined,
       borderRadius: "1rem",
       cursor: mouseHelper.getLinkMousePointer(
         onClickFunction,
@@ -51,19 +52,24 @@ export default function SelectionIconCard(
   };
 
   return (
-    <IconCardContainerBaseV2
-      cardHeader={cardHeader}
-      isLoading={isLoading}
-      cardFooter={cardFooter}
-      titleBar={titleBar}
-      contentBody={contentBody}
-      onClickFunction={handleOnClickFunction}
-      className={className}
-      tooltip={tooltip}
-      style={getStyle()}
+    <div
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
     >
-      {children}
-    </IconCardContainerBaseV2>
+      <IconCardContainerBaseV2
+        cardHeader={cardHeader}
+        isLoading={isLoading}
+        cardFooter={cardFooter}
+        titleBar={titleBar}
+        contentBody={contentBody}
+        onClickFunction={handleOnClickFunction}
+        className={className}
+        tooltip={tooltip}
+        style={getStyle()}
+      >
+        {children}
+      </IconCardContainerBaseV2>
+    </div>
   );
 }
 
