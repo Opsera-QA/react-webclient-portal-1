@@ -19,8 +19,10 @@ export default function OpseraHeaderBar({ hideAuthComponents }) {
       }}
     >
       <div className={"w-100 d-flex justify-content-between"}>
-        <OpseraHeaderIcon/>
-        <LandingHeaderNavigationBar/>
+        <div className={"my-auto"}>
+          <OpseraHeaderIcon />
+        </div>
+        {/*<LandingHeaderNavigationBar />*/}
         <OpseraHeaderAccountAuthenticationComponent
           hideAuthComponents={hideAuthComponents}
         />
