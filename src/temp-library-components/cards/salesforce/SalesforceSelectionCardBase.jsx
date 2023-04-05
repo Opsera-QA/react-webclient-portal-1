@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
-import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
+import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 
 export default function SalesforceSelectionCardBase(
   {
@@ -38,7 +38,7 @@ export default function SalesforceSelectionCardBase(
   };
 
   return (
-    <SelectionIconCardBase
+    <SelectionIconCard
       selectedOption={selectedOption}
       option={option}
       titleBar={getTitleBar()}

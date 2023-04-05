@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import WizardSelectionRadioOption from "temp-library-components/wizard/option/WizardSelectionRadioOption";
 import { toolIdentifierConstants } from "components/admin/tools/identifiers/toolIdentifier.constants";
 import modelHelpers from "components/common/model/modelHelpers";
 import githubConnectionMetadata

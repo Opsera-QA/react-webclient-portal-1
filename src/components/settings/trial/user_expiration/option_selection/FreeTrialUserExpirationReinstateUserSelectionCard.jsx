@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
-import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
+import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faUserCheck } from "@fortawesome/pro-light-svg-icons";
 import {
@@ -39,7 +39,7 @@ export default function FreeTrialUserExpirationReinstateUserSelectionCard(
   };
 
   return (
-    <SelectionIconCardBase
+    <SelectionIconCard
       option={FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREEN_LINKS.REINSTATE_USER_ACCESS_SCREEN}
       titleBar={getTitleBar()}
       onClickFunction={onClickFunction}
