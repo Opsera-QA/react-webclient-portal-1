@@ -6,7 +6,7 @@ import ToolNameField from "components/common/fields/inventory/ToolNameField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 
 const SfdcPipelineWizardBasicSummary = ({pipelineWizardModel}) => (
-  <Row className="my-3 p-3 message-field info-message-field mx-1">
+  <Row className="my-3 p-3 message-field info-message-field mx-1 justify-content-between">
     <Col md="auto">
       <ToolNameField
         model={pipelineWizardModel}
