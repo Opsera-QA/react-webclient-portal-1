@@ -2,6 +2,7 @@ import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
+  getFormattedLabelWithFunctionColumnDefinition,
   getTableBooleanIconColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers";
@@ -14,6 +15,8 @@ import {
 import NewPlatformSettingFeatureOverlay
   from "components/admin/platform_settings/details/features/NewPlatformSettingFeatureOverlay";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import platformSettingFeatureConstants
+  from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 
 export default function PlatformSettingFeatureTable(
   {
@@ -41,7 +44,7 @@ export default function PlatformSettingFeatureTable(
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "name")),
+      getFormattedLabelWithFunctionColumnDefinition(getField(fields, "name"), platformSettingFeatureConstants.getLabelForInUsePlatformSettingFeatureName),
       getTableBooleanIconColumn(getField(fields, "active")),
     ],
     []
