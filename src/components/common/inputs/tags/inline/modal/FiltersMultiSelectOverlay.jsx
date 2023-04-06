@@ -123,71 +123,54 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
   
   const getFiltersInput = () => {
     return (
-      <div>
-      <OrganizationMultiSelectInput
-        dataObject={dashboardFiltersDto}
-        setDataObject={setDashboardFiltersDto}
-        fieldName={"organizations"}
-      />
-      <TagMultiSelectInput
-        dataObject={dashboardFiltersDto}
-        setDataObject={setDashboardFiltersDto}
-        fieldName={"tags"}
-      />
-     {featureFlaggedOrgs.includes(userData?.ldap?.organization) && <MultiSelectInputBase
-        dataObject={hierarchyFiltersDto}
-        setDataObject={setHierarchyFiltersDto}
-        fieldName={"filter1"}
-        selectOptions={filter1Options}
-      />}
-      {featureFlaggedOrgs.includes(userData?.ldap?.organization) && <MultiSelectInputBase
-        dataObject={hierarchyFiltersDto}
-        setDataObject={setHierarchyFiltersDto}
-        fieldName={"filter2"}
-        selectOptions={filter2Options}
-      />}
-      {featureFlaggedOrgs.includes(userData?.ldap?.organization) && <MultiSelectInputBase
-        dataObject={hierarchyFiltersDto}
-        setDataObject={setHierarchyFiltersDto}
-        fieldName={"filter3"}
-        selectOptions={filter3Options}
-      />}
-      {featureFlaggedOrgs.includes(userData?.ldap?.organization) && <MultiSelectInputBase
-        dataObject={hierarchyFiltersDto}
-        setDataObject={setHierarchyFiltersDto}
-        fieldName={"filter4"}
-        selectOptions={filter4Options}
-      />}
-      {featureFlaggedOrgs.includes(userData?.ldap?.organization) && <MultiSelectInputBase
-        dataObject={hierarchyFiltersDto}
-        setDataObject={setHierarchyFiltersDto}
-        fieldName={"filter5"}
-        selectOptions={filter5Options}
-      />}
-     {featureFlaggedOrgs.includes(userData?.ldap?.organization) &&  <MultiSelectInputBase
-        dataObject={hierarchyFiltersDto}
-        setDataObject={setHierarchyFiltersDto}
-        fieldName={"filter6"}
-        selectOptions={filter6Options}
-      />}
-      </div>
-    );
-  };
-
-  const getButtonContainer = () => {
-    return (
-      <div className={"p-3 bg-white"}>
-        <SaveButtonContainer>
-          <LenientSaveButton
-            recordDto={temporaryDataObject}
-            updateRecord={handleSave}
-            className={"mr-2"}
-          />
-          <CancelButton
-            cancelFunction={closePanel}
-            size={"md"}
-          />
-        </SaveButtonContainer>
+      <div className={"pb-5"}>
+        <OrganizationMultiSelectInput
+          dataObject={dashboardFiltersDto}
+          setDataObject={setDashboardFiltersDto}
+          fieldName={"organizations"}
+        />
+        <TagMultiSelectInput
+          dataObject={dashboardFiltersDto}
+          setDataObject={setDashboardFiltersDto}
+          fieldName={"tags"}
+          className={"pb-3"}
+        />
+        {featureFlaggedOrgs.includes(userData?.ldap?.organization) && <MultiSelectInputBase
+          dataObject={hierarchyFiltersDto}
+          setDataObject={setHierarchyFiltersDto}
+          fieldName={"filter1"}
+          selectOptions={filter1Options}
+        />}
+        {featureFlaggedOrgs.includes(userData?.ldap?.organization) && <MultiSelectInputBase
+          dataObject={hierarchyFiltersDto}
+          setDataObject={setHierarchyFiltersDto}
+          fieldName={"filter2"}
+          selectOptions={filter2Options}
+        />}
+        {featureFlaggedOrgs.includes(userData?.ldap?.organization) && <MultiSelectInputBase
+          dataObject={hierarchyFiltersDto}
+          setDataObject={setHierarchyFiltersDto}
+          fieldName={"filter3"}
+          selectOptions={filter3Options}
+        />}
+        {featureFlaggedOrgs.includes(userData?.ldap?.organization) && <MultiSelectInputBase
+          dataObject={hierarchyFiltersDto}
+          setDataObject={setHierarchyFiltersDto}
+          fieldName={"filter4"}
+          selectOptions={filter4Options}
+        />}
+        {featureFlaggedOrgs.includes(userData?.ldap?.organization) && <MultiSelectInputBase
+          dataObject={hierarchyFiltersDto}
+          setDataObject={setHierarchyFiltersDto}
+          fieldName={"filter5"}
+          selectOptions={filter5Options}
+        />}
+        {featureFlaggedOrgs.includes(userData?.ldap?.organization) && <MultiSelectInputBase
+          dataObject={hierarchyFiltersDto}
+          setDataObject={setHierarchyFiltersDto}
+          fieldName={"filter6"}
+          selectOptions={filter6Options}
+        />}
       </div>
     );
   };
@@ -208,13 +191,23 @@ function FiltersMultiSelectOverlay({showModal, dataObject, fieldName, saveDataFu
       titleText={`Edit Filters`}
       showCloseButton={false}
       showPanel={true}
-      buttonContainer={getButtonContainer()}
     >
-      <div className="m-3">
+      <div className={"m-3"}>
         {toastContext.getInlineBanner()}
         <DashboardFiltersHelpDocumentation/>
-        <div className="p-3">
+        <div className={"p-3"}>
           {getFiltersInput()}
+          <SaveButtonContainer>
+            <LenientSaveButton
+              recordDto={temporaryDataObject}
+              updateRecord={handleSave}
+              className={"mr-2"}
+            />
+            <CancelButton
+              cancelFunction={closePanel}
+              size={"md"}
+            />
+          </SaveButtonContainer>
         </div>
       </div>
     </CenterOverlayContainer>

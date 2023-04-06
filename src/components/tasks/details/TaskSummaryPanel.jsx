@@ -7,7 +7,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TaskTypeField from "components/common/fields/tasks/TaskTypeField";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
-import TagsInlineInputBase from "components/common/inputs/tags/inline/TagsInlineInputBase";
+import TagsInlineOverlayInputBase from "components/common/inputs/tags/inline/TagsInlineOverlayInputBase";
 import TaskRoleAccessInput from "components/tasks/details/TaskRoleAccessInput";
 import TasksEcsActionButtons from "components/tasks/buttons/ecs/TasksEcsActionButtons";
 import TaskAksActionButtons from "components/tasks/buttons/aks/TaskAksActionButtons";
@@ -182,7 +182,7 @@ function TaskSummaryPanel(
         {getSchedulerField()}
         {getDynamicField()}
         <Col md={12} className={"pt-1"}>
-          <TagsInlineInputBase
+          <TagsInlineOverlayInputBase
             type={"task"}
             model={gitTasksData}
             fieldName={"tags"}

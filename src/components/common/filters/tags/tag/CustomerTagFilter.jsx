@@ -36,7 +36,7 @@ export default function CustomerTagFilter(
         fieldName={fieldName}
         busy={isLoading}
         placeholderText={"Filter by Tag"}
-        groupBy={"type"}
+        groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
         setDataObject={setFilterModel}
         setDataFunction={setDataFunction}
         dataObject={filterModel}
