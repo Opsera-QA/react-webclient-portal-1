@@ -29,7 +29,7 @@ const InformaticaIdqStepFormMetadata = {
       formText:" "
     },    
     {
-      label: "SCM Type",
+      label: "Source Code Management Type",
       id: "service",
       isRequiredFunction: (model) => {
         return model?.getData("jobType") === "export";
@@ -38,7 +38,7 @@ const InformaticaIdqStepFormMetadata = {
       lowercase: true,
     },    
     {
-      label: "SCM Account",
+      label: "Account",
       id: "gitToolId",
       isRequiredFunction: (model) => {
         return model?.getData("jobType") === "export";
