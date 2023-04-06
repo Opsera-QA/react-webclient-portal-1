@@ -22,7 +22,7 @@ export default function OpseraHeaderBar({ hideAuthComponents }) {
         <div className={"my-auto"}>
           <OpseraHeaderIcon />
         </div>
-        {/*<LandingHeaderNavigationBar />*/}
+        <LandingHeaderNavigationBar />
         <OpseraHeaderAccountAuthenticationComponent
           hideAuthComponents={hideAuthComponents}
         />

@@ -6,6 +6,9 @@ import useLocationReference from "hooks/useLocationReference";
 import SubMenuContainer from "temp-library-components/navigation/sub_menu/SubMenuContainer";
 import SubMenuItem from "temp-library-components/navigation/sub_menu/SubMenuItem";
 import GitCustodianRoleHelper from "@opsera/know-your-role/roles/compliance/git_custodian/gitCustodianRole.helper";
+import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
+import platformSettingFeatureConstants
+  from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
 
 const HEADER_NAVIGATION_SCREENS = {
   HOME: "home",
@@ -23,7 +26,8 @@ const getActiveScreen = (currentPath) => {
     return HEADER_NAVIGATION_SCREENS.WORKSPACE;
   }
 
-  if (currentPath?.startsWith("/unified-insights")) {
+  // if (currentPath?.startsWith("/unified-insights")) {
+  if (currentPath?.startsWith("/insights")) {
     return HEADER_NAVIGATION_SCREENS.UNIFIED_INSIGHTS;
   }
 
@@ -44,6 +48,8 @@ export default function LandingHeaderNavigationBar() {
     themeConstants,
     userData,
   } = useComponentStateReference();
+  const {isActive} = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_TOP_NAVIGATION_BAR);
+  const nextGenerationWorkspace = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_WORKSPACE);
 
   useEffect(() => {}, [currentPath]);
 
@@ -60,8 +66,11 @@ export default function LandingHeaderNavigationBar() {
         }
         break;
       case HEADER_NAVIGATION_SCREENS.UNIFIED_INSIGHTS:
-        if (currentPath !== "/unified-insights") {
-          history.push("/unified-insights");
+        // if (currentPath !== "/unified-insights") {
+        //   history.push("/unified-insights");
+        // }
+        if (currentPath !== "/insights") {
+          history.push("/insights");
         }
         break;
       case HEADER_NAVIGATION_SCREENS.GIT_CUSTODIAN:
@@ -72,7 +81,7 @@ export default function LandingHeaderNavigationBar() {
     }
   };
 
-  if (!userData || isPublicPathState === true) {
+  if (!userData || isPublicPathState === true || isActive !== true) {
     return null;
   }
 
@@ -94,6 +103,7 @@ export default function LandingHeaderNavigationBar() {
           label={"Workspace"}
           itemKey={HEADER_NAVIGATION_SCREENS.WORKSPACE}
           disabled={currentPath?.startsWith("/workspace") === true}
+          visible={nextGenerationWorkspace?.active === true}
         />
         <SubMenuItem
           className={"px-3"}
