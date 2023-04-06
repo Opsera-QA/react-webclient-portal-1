@@ -25,5 +25,6 @@ export default function useGetPlatformSettingsFeatureFlagByName(
   return ({
     platformSettingsFeatureFlag: platformSettingsFeatureFlag,
     setPlatformSettingsFeatureFlag: setPlatformSettingsFeatureFlag,
+    isActive: platformSettingsFeatureFlag?.active === true,
   });
 }
