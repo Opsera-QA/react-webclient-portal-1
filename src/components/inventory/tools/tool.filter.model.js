@@ -74,7 +74,7 @@ export class ToolFilterModel extends FilterModelBase {
     super(toolFilterMetadata);
 
     if (useUrlParameters !== false) {
-      this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.TOOL_FILTER_MODEL_DATA;
+      this.sessionDataKey = sessionHelper.SUPPORTED_SESSION_STORAGE_KEYS.TOOL_FILTER_MODEL_DATA;
       this.enableUrlUpdatesWithQueryParameters();
       this.unpackUrlParameters();
     }
