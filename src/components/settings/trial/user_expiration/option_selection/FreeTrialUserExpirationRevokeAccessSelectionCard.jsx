@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 import React from "react";
-import IconTitleBar from "components/common/fields/title/IconTitleBar";
-import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
+import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faUserAltSlash } from "@fortawesome/pro-light-svg-icons";
 import { useHistory } from "react-router-dom";
 import {
   FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREEN_LINKS
 } from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationOptionSelectionScreen";
+import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 
 export default function FreeTrialUserExpirationRevokeAccessSelectionCard(
   {
@@ -25,7 +25,7 @@ export default function FreeTrialUserExpirationRevokeAccessSelectionCard(
 
   const getTitleBar = () => {
     return (
-      <IconTitleBar
+      <CardIconTitleBar
         className={"m-3 mb-4"}
         icon={faUserAltSlash}
         iconColor={themeConstants.COLOR_PALETTE.DANGER_SECONDARY}
@@ -39,7 +39,7 @@ export default function FreeTrialUserExpirationRevokeAccessSelectionCard(
   };
 
   return (
-    <SelectionIconCardBase
+    <SelectionIconCard
       option={FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREEN_LINKS.REVOKE_USER_ACCESS_SCREEN}
       titleBar={getTitleBar()}
       onClickFunction={onClickFunction}

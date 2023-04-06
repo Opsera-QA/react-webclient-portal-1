@@ -10,6 +10,7 @@ function ToolNameField(
     fieldName,
     className,
     handleClose,
+    loadToolInNewWindow,
   }) {
   const field = model?.getFieldById(fieldName);
 
@@ -23,6 +24,7 @@ function ToolNameField(
       <ToolNameFieldDisplayer
         toolId={model?.getData(fieldName)}
         handleClose={handleClose}
+        loadToolInNewWindow={loadToolInNewWindow}
       />
     </FieldContainer>
   );
@@ -33,6 +35,11 @@ ToolNameField.propTypes = {
   fieldName: PropTypes.string,
   className: PropTypes.string,
   handleClose: PropTypes.func,
+  loadToolInNewWindow: PropTypes.boolean,
+};
+
+ToolNameField.defaultProps = {
+  loadToolInNewWindow: false,
 };
 
 export default ToolNameField;

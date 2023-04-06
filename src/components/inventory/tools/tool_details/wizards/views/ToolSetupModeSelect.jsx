@@ -9,7 +9,6 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import IconBase from "../../../../../common/icons/IconBase";
 import { faGear, faWandMagicSparkles } from "@fortawesome/pro-light-svg-icons";
-import SelectionCardColumn from "../../../../../../temp-library-components/cards/SelectionCardColumn";
 import OpseraInfinityLogo from "../../../../../logo/OpseraInfinityLogo";
 import OverlayWizardButtonContainerBase
   from "../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";

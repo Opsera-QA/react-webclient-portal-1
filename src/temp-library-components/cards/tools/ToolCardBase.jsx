@@ -5,14 +5,20 @@ import { hasStringValue } from "components/common/helpers/string-helpers";
 import ToolCardFooter from "temp-library-components/cards/tools/ToolCardFooter";
 import ToolCardBody from "temp-library-components/cards/tools/ToolCardBody";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
-import IconCardContainerBaseV2 from "components/common/card_containers/IconCardContainerBaseV2";
+import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
+import useComponentStateReference from "hooks/useComponentStateReference";
+import ToolCardHeader from "temp-library-components/cards/tools/ToolCardHeader";
 
 export default function ToolCardBase(
   {
     toolModel,
     onClickFunction,
     tooltip,
+    selectedOption,
+    option,
   }) {
+  const { themeConstants } = useComponentStateReference();
+
   const getTitleBar = () => {
     const icon = getLargeVendorIconFromToolIdentifier(toolModel?.getData("tool_identifier"));
 
@@ -46,12 +52,17 @@ export default function ToolCardBase(
   }
 
   return (
-    <IconCardContainerBaseV2
-      cardFooter={<ToolCardFooter />}
+    <SelectionIconCard
+      className={"h-100"}
+      cardHeader={<ToolCardHeader toolModel={toolModel} />}
       titleBar={getTitleBar()}
       contentBody={getToolCardBody()}
       onClickFunction={onClickFunction}
       tooltip={tooltip}
+      cardFooter={<ToolCardFooter />}
+      selectedOption={selectedOption}
+      option={option}
+      highlightedBorderColor={themeConstants.COLOR_PALETTE.GREEN}
     />
   );
 }
@@ -60,4 +71,6 @@ ToolCardBase.propTypes = {
   toolModel: PropTypes.object,
   onClickFunction: PropTypes.func,
   tooltip: PropTypes.any,
+  selectedOption: PropTypes.string,
+  option: PropTypes.string,
 };

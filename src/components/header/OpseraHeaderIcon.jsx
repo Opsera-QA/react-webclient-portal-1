@@ -1,7 +1,9 @@
 import React from "react";
 import {useHistory} from "react-router-dom";
+import useLocationReference from "hooks/useLocationReference";
 
 export default function OpseraHeaderIcon() {
+  const { currentPath } = useLocationReference();
   const history = useHistory();
   const getOpseraIcon = () => {
     return (
@@ -20,7 +22,10 @@ export default function OpseraHeaderIcon() {
   };
 
   return (
-    <div onClick={handleLogoClick} className={"pointer"}>
+    <div
+      onClick={currentPath !== "/" ? handleLogoClick : undefined}
+      className={currentPath !== "/" ? "pointer" : undefined}
+    >
       {getOpseraIcon()}
     </div>
   );

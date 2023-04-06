@@ -62,6 +62,7 @@ function GitlabUsersFilterSelectInput({
       getAccessToken,
       cancelSource,
     );
+
     if (response.data != null) {
       setUsers(response?.data?.data);
     }

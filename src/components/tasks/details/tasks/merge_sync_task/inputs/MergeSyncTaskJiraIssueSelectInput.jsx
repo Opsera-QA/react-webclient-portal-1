@@ -6,9 +6,9 @@ import {isMongoDbId} from "components/common/helpers/mongo/mongoDb.helpers";
 import {jiraActions} from "components/common/list_of_values_input/tools/jira/jira.actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {faExternalLink} from "@fortawesome/pro-light-svg-icons";
-import SalesforceMergeSyncTaskJiraTicketInfoOverlay from "../details/SalesforceMergeSyncTaskJiraTicketInfoOverlay";
+import MergeSyncTaskJiraTicketInfoOverlay from "../details/MergeSyncTaskJiraTicketInfoOverlay";
 
-function SalesforceMergeSyncTaskJiraIssueSelectInput(
+function MergeSyncTaskJiraIssueSelectInput(
   {
     model,
     setModel,
@@ -79,6 +79,9 @@ function SalesforceMergeSyncTaskJiraIssueSelectInput(
   const setDataFunction = (fieldName, selectedOption) => {
     setSelectedIssue(selectedOption);
     const newModel = { ...model };
+    newModel?.setDefaultValue("targetBranch");
+    newModel?.setDefaultValue("isNewBranch");
+    newModel?.setDefaultValue("upstreamBranch");
     newModel?.setData(fieldName, selectedOption?.key);
     setModel({ ...newModel });
   };
@@ -86,6 +89,9 @@ function SalesforceMergeSyncTaskJiraIssueSelectInput(
   const clearDataFunction = (fieldName) => {
     setSelectedIssue(undefined);
     const newModel = { ...model };
+    newModel?.setDefaultValue("targetBranch");
+    newModel?.setDefaultValue("isNewBranch");
+    newModel?.setDefaultValue("upstreamBranch");
     newModel.setDefaultValue("jiraIssueId");
     setModel({ ...newModel });
   };
@@ -101,7 +107,7 @@ function SalesforceMergeSyncTaskJiraIssueSelectInput(
   const getInfoOverlay = () => {
     if (selectedIssue) {
       return (
-        <SalesforceMergeSyncTaskJiraTicketInfoOverlay
+        <MergeSyncTaskJiraTicketInfoOverlay
           selectedTicket={selectedIssue}          
         />
       );
@@ -130,7 +136,7 @@ function SalesforceMergeSyncTaskJiraIssueSelectInput(
   );
 }
 
-SalesforceMergeSyncTaskJiraIssueSelectInput.propTypes = {
+MergeSyncTaskJiraIssueSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
@@ -138,4 +144,4 @@ SalesforceMergeSyncTaskJiraIssueSelectInput.propTypes = {
   jiraProjectKey: PropTypes.string,
 };
 
-export default SalesforceMergeSyncTaskJiraIssueSelectInput;
+export default MergeSyncTaskJiraIssueSelectInput;

@@ -17,6 +17,9 @@ import "css/pipelines/workflows.css";
 import "css/general/sidebar.css";
 import "css/table/table.css";
 import "css/inputs/rich-text-input.css";
+import "temp-library-components/scss/opsera-theme.scss";
+import "temp-library-components/scss/sub-menu.scss";
+import "assets/scss/fonts.scss";
 import * as serviceWorker from "./serviceWorker";
 
 if (typeof window["TextEncoder"] !== "function") {

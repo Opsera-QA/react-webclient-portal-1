@@ -45,7 +45,7 @@ export const mergeSyncTaskGitConfigurationMetadata = {
       label: "Source Branch",
       id: "sourceBranch",
       isRequiredFunction: (model) => {
-        return model?.getData("jobType") === TASK_TYPES.GIT_TO_GIT_MERGE_SYNC;
+        return model?.getData("jobType") === TASK_TYPES.GIT_TO_GIT_MERGE_SYNC && (model?.getData("jiraIssueIds") === undefined || model?.getData("jiraIssueIds")?.length === 0);
       },
       maxLength: 255,
       regexDefinitionName: "generalTextWithSpacesSlash",
@@ -73,6 +73,33 @@ export const mergeSyncTaskGitConfigurationMetadata = {
         return model?.getData("isNewBranch") === true;
       },
     },
+    {
+      label: "Jira Tool",
+      id: "jiraToolId",
+    },
+    {
+      label: "Jira Project",
+      id: "jiraProjectKey",
+    },
+    {
+      label: "Jira Ticket",
+      id: "jiraIssueId",
+    },
+    {
+      label: "Jira Tickets",
+      id: "jiraIssueIds",
+    },
+    {
+      label: "Salesforce Task",
+      id: "isSalesforce",
+    },
+    {
+      label: "Build Type",
+      id: "buildType",
+      isRequiredFunction: (model) => {
+        return model?.getData("isSalesforce") === true;
+      },
+    },    
   ],
   newObjectFields: {
     toolId: "",
@@ -86,5 +113,11 @@ export const mergeSyncTaskGitConfigurationMetadata = {
     upstreamBranch: "",
     isNewBranch: false,
     jobType: "",
+    jiraToolId: "",
+    jiraProjectKey: "",
+    jiraIssueId: "",
+    jiraIssueIds: undefined,
+    buildType: "",
+    isSalesforce: false,
   }
 };

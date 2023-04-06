@@ -31,7 +31,7 @@ export default function Sidebar({ hideSideBar }) {
   const {
     featureFlagModel,
   } = useGetOrganizationSettingsFeatureFlagModelByName(featureFlagConstants.FEATURE_FLAG_NAMES.SHOW_INSIGHTS_VNEXT_SIDEBAR_LINK);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(DataParsingHelper.parseBooleanV2(sessionHelper.getStoredSessionValueByKey("SIDEBAR_COLLAPSED"), true));
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(DataParsingHelper.parseBooleanV2(sessionHelper.getStoredSessionValueByKey(sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.SIDEBAR_COLLAPSED), true));
 
   const getVnextSidebarLink = () => {
     if (featureFlagModel?.getData("active") === true) {
@@ -45,7 +45,7 @@ export default function Sidebar({ hideSideBar }) {
 
   const getClassNames = () => {
     if (isSidebarCollapsed === true) {
-      return "d-block sidebar-container";
+      return "d-block sidebar-container mx-2";
     }
 
     if (featureFlagModel?.getData("active") === true) {

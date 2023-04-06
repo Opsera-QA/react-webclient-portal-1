@@ -13,16 +13,20 @@ export default function OpseraHeaderBar({ hideAuthComponents }) {
 
   return (
     <Navbar
-      className={"py-2 px-3"}
+      className={"py-2 px-3 w-100"}
       style={{
         backgroundColor: themeConstants.COLOR_PALETTE.OPSERA_HEADER_PURPLE,
       }}
     >
-      <OpseraHeaderIcon />
-      <LandingHeaderNavigationBar />
-      <OpseraHeaderAccountAuthenticationComponent
-        hideAuthComponents={hideAuthComponents}
-      />
+      <div className={"w-100 d-flex justify-content-between"}>
+        <div className={"my-auto"}>
+          <OpseraHeaderIcon />
+        </div>
+        <LandingHeaderNavigationBar />
+        <OpseraHeaderAccountAuthenticationComponent
+          hideAuthComponents={hideAuthComponents}
+        />
+      </div>
     </Navbar>
   );
 }

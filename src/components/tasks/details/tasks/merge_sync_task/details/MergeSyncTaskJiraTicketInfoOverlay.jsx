@@ -5,7 +5,7 @@ import CenterOverlayContainer, { CENTER_OVERLAY_SIZES } from "components/common/
 import {Row, Col} from "react-bootstrap";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 
-function SalesforceMergeSyncTaskJiraTicketInfoOverlay({ selectedTicket }) {
+function MergeSyncTaskJiraTicketInfoOverlay({ selectedTicket }) {
   const toastContext = useContext(DialogToastContext);
 
   const getBody = () => {
@@ -60,8 +60,8 @@ function SalesforceMergeSyncTaskJiraTicketInfoOverlay({ selectedTicket }) {
   );
 }
 
-SalesforceMergeSyncTaskJiraTicketInfoOverlay.propTypes = {  
+MergeSyncTaskJiraTicketInfoOverlay.propTypes = {  
   selectedTicket: PropTypes.object,
 };
 
-export default SalesforceMergeSyncTaskJiraTicketInfoOverlay;
+export default MergeSyncTaskJiraTicketInfoOverlay;

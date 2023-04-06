@@ -167,7 +167,7 @@ function SfdcUnitTestManagementPanel({unitTestRecordId, reload, members, setMemb
       <Row className="mx-2">
         <div><h5>Add or remove unit test classes from the selected unit test step</h5></div>
       </Row>
-      <Row>
+      <Row className="mx-2">
         <MessageFieldBase
           message={` 
             Select Unit Test classes below by adding items from the left column into the right or removing from the right column.  

@@ -11,6 +11,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
+import TaskCardBody from "temp-library-components/cards/tasks/TaskCardBody";
 
 const getLastRunDetails = (taskModel) => {
   const runCount = DataParsingHelper.parseInteger(taskModel?.getData("run_count"), 0);
@@ -99,7 +100,7 @@ export default function TaskCardBase(
       cardHeader={<TaskCardHeader taskModel={taskModel} />}
       cardFooter={<TaskCardFooter />}
       titleBar={getTitleBar()}
-      contentBody={<div />}
+      contentBody={<TaskCardBody taskModel={taskModel} />}
       onClickFunction={onClickFunction}
       tooltip={tooltip}
       selectedOption={selectedOption}

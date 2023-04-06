@@ -23,7 +23,7 @@ export default function PlatformSettingsFeatureNameComboBoxInput(
       fieldName={fieldName}
       model={model}
       setModel={setModel}
-      selectOptions={platformSettingFeatureConstants.IN_USE_PLATFORM_SYSTEM_PARAMETER_SELECT_OPTIONS}
+      selectOptions={platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAME_SELECT_OPTIONS}
       valueField={valueField}
       textField={textField}
       disabled={disabled}
