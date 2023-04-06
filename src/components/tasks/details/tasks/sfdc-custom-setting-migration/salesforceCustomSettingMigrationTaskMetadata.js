@@ -1,5 +1,6 @@
 import { dataParsingHelper } from "../../../../common/helpers/data/dataParsing.helper";
 import modelHelpers from "../../../../common/model/modelHelpers";
+import { MIGRATION_TYPES } from "./inputs/SalesforceCustomSettingTaskTypeSelectInput";
 
 export const customSettingTaskSalesforceConfigurationMetadata = {
   type: "Custom Settings Task Salesforce Configuration",
@@ -7,18 +8,33 @@ export const customSettingTaskSalesforceConfigurationMetadata = {
     {
       label: "Salesforce Source Org",
       id: "sourceToolId",
-      isRequired: true,
+      isRequiredFunction: (model) => {
+        console.log(model.getPersistData());
+        return (
+          model != null &&
+          model.getData("taskType") !==
+            MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG
+        );
+      },
     },
     {
       label: "Salesforce Target Org",
       id: "targetToolId",
-      isRequired: true,
+      isRequiredFunction: (model) => {
+        console.log(model.getPersistData());
+        return (
+          model != null &&
+          model.getData("taskType") !==
+            MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV
+        );
+      },
     },
   ],
   newObjectFields: {
     sourceToolId: "",
     targetToolId: "",
-  }
+    taskType: "",
+  },
 };
 
 const salesforceCustomSettingMigrationTaskMetadata = {
@@ -38,7 +54,11 @@ const salesforceCustomSettingMigrationTaskMetadata = {
         }
 
         const sfdc = dataParsingHelper.parseObject(model?.getData("sfdc"));
-        const customSettingTaskSalesforceConfigurationModel = modelHelpers.parseObjectIntoModel(sfdc, customSettingTaskSalesforceConfigurationMetadata);
+        const customSettingTaskSalesforceConfigurationModel =
+          modelHelpers.parseObjectIntoModel(
+            sfdc,
+            customSettingTaskSalesforceConfigurationMetadata,
+          );
         return customSettingTaskSalesforceConfigurationModel?.getErrors();
       },
     },
@@ -46,7 +66,11 @@ const salesforceCustomSettingMigrationTaskMetadata = {
       label: "Action",
       id: "action",
       isRequiredFunction: (model) => {
-        return (model != null && model.getData("taskType") !== "ORG_TO_FILE");
+        return (
+          model != null &&
+          model.getData("taskType") !==
+            MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV
+        );
       },
     },
   ],
@@ -55,7 +79,7 @@ const salesforceCustomSettingMigrationTaskMetadata = {
     taskType: "",
     sfdc: {},
     action: "",
-  }
+  },
 };
 
 export default salesforceCustomSettingMigrationTaskMetadata;

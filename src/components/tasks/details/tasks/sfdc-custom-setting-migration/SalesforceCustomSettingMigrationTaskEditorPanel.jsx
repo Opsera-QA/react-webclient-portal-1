@@ -9,7 +9,9 @@ import salesforceCustomSettingMigrationTaskMetadata, {
   customSettingTaskSalesforceConfigurationMetadata,
 } from "./salesforceCustomSettingMigrationTaskMetadata";
 import SalesforceCustomSettingTaskActionSelectInput from "./inputs/SalesforceCustomSettingTaskActionSelectInput";
-import SalesforceCustomSettingTaskTypeSelectInput from "./inputs/SalesforceCustomSettingTaskTypeSelectInput";
+import SalesforceCustomSettingTaskTypeSelectInput, {
+  MIGRATION_TYPES,
+} from "./inputs/SalesforceCustomSettingTaskTypeSelectInput";
 
 function SalesforceCustomSettingMigrationTaskEditorPanel({
   taskModel,
@@ -47,6 +49,17 @@ function SalesforceCustomSettingMigrationTaskEditorPanel({
     setTaskConfigurationModel({ ...taskConfigurationModel });
   };
 
+  const setTaskTypeFunction = (fieldName, selectedOption) => {
+    let newModel = taskConfigurationModel;
+    newModel.setData("taskType", selectedOption?.value);
+
+    let newSalesforceConfigModel = { ...salesforceConfigurationModel };
+    newSalesforceConfigModel.setData("taskType", selectedOption?.value);
+    setSalesforceConfigurationModel({ ...newSalesforceConfigModel });
+    newModel?.setData("sfdc", salesforceConfigurationModel?.getPersistData());
+    setTaskConfigurationModel({ ...newModel });
+  };
+
   if (
     taskModel == null ||
     taskConfigurationModel == null ||
@@ -61,24 +74,32 @@ function SalesforceCustomSettingMigrationTaskEditorPanel({
         <SalesforceCustomSettingTaskTypeSelectInput
           model={taskConfigurationModel}
           setModel={setTaskConfigurationModel}
+          setDataFunction={setTaskTypeFunction}
           fieldName={"taskType"}
         />
       </Col>
-      <Col lg={12}>
-        <SalesforceMergeSyncTaskSalesforceToolSelectInput
-          model={salesforceConfigurationModel}
-          setModel={setSalesforceModelFunction}
-          fieldName={"sourceToolId"}
-        />
-      </Col>
-      <Col lg={12}>
-        <SalesforceMergeSyncTaskSalesforceToolSelectInput
-          model={salesforceConfigurationModel}
-          setModel={setSalesforceModelFunction}
-          fieldName={"targetToolId"}
-        />
-      </Col>
-      {taskConfigurationModel.getData("taskType") !== "ORG_TO_FILE" &&
+      {taskConfigurationModel.getData("taskType") !==
+        MIGRATION_TYPES.MIGRATION_FROM_CSV_TO_ORG && (
+        <Col lg={12}>
+          <SalesforceMergeSyncTaskSalesforceToolSelectInput
+            model={salesforceConfigurationModel}
+            setModel={setSalesforceModelFunction}
+            fieldName={"sourceToolId"}
+          />
+        </Col>
+      )}
+      {taskConfigurationModel.getData("taskType") !==
+        MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV && (
+        <Col lg={12}>
+          <SalesforceMergeSyncTaskSalesforceToolSelectInput
+            model={salesforceConfigurationModel}
+            setModel={setSalesforceModelFunction}
+            fieldName={"targetToolId"}
+          />
+        </Col>
+      )}
+      {taskConfigurationModel.getData("taskType") !==
+        MIGRATION_TYPES.MIGRATION_FROM_ORG_TO_CSV && (
         <Col lg={12}>
           <SalesforceCustomSettingTaskActionSelectInput
             model={taskConfigurationModel}
@@ -86,7 +107,7 @@ function SalesforceCustomSettingMigrationTaskEditorPanel({
             fieldName={"action"}
           />
         </Col>
-      }
+      )}
     </Row>
   );
 }
