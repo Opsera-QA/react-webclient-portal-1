@@ -39,12 +39,18 @@ export default function ToolCardBody(
   }
 
   return (
-    <Row className={"small"}>
-      {getCardBodyByIdentifier()}
-      {/*<Col xs={12}>*/}
+    <div
+      style={{
+        minHeight: "51px",
+      }}
+    >
+      <Row className={"small"}>
+        {getCardBodyByIdentifier()}
+        {/*<Col xs={12}>*/}
         {/*<DescriptionField dataObject={toolModel} className={"description-height"} />*/}
-      {/*</Col>*/}
-    </Row>
+        {/*</Col>*/}
+      </Row>
+    </div>
   );
 }
 
