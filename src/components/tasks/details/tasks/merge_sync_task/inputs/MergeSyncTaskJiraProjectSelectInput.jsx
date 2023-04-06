@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import JiraProjectSelectInput from "components/common/list_of_values_input/tools/jira/projects/JiraProjectSelectInput";
 
-function SalesforceMergeSyncTaskJiraProjectSelectInput(
+function MergeSyncTaskJiraProjectSelectInput(
   {
     model,
     setModel,
@@ -36,11 +36,11 @@ function SalesforceMergeSyncTaskJiraProjectSelectInput(
   );
 }
 
-SalesforceMergeSyncTaskJiraProjectSelectInput.propTypes = {
+MergeSyncTaskJiraProjectSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
   jiraToolId: PropTypes.string,
 };
 
-export default SalesforceMergeSyncTaskJiraProjectSelectInput;
+export default MergeSyncTaskJiraProjectSelectInput;
