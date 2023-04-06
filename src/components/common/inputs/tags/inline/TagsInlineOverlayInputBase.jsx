@@ -5,7 +5,7 @@ import TagMultiSelectOverlay from "components/common/inputs/tags/inline/modal/Ta
 import AppliedTagBadge from "components/common/badges/tag/AppliedTagBadge";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function TagsInlineInputBase(
+function TagsInlineOverlayInputBase(
   {
     model,
     fieldName,
@@ -59,7 +59,7 @@ function TagsInlineInputBase(
   );
 }
 
-TagsInlineInputBase.propTypes = {
+TagsInlineOverlayInputBase.propTypes = {
   fieldName: PropTypes.string,
   model: PropTypes.object,
   disabled: PropTypes.bool,
@@ -71,7 +71,7 @@ TagsInlineInputBase.propTypes = {
   loadData: PropTypes.func,
 };
 
-TagsInlineInputBase.defaultProps = {
+TagsInlineOverlayInputBase.defaultProps = {
   fieldName: "tags",
 };
 

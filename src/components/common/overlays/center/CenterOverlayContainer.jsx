@@ -51,16 +51,22 @@ function CenterOverlayContainer(
     }
   }, []);
 
-  const getButtons = () => {
+  const getButtonContainer = () => {
     if (buttonContainer) {
-      return buttonContainer;
+      return (
+        <div className={"mt-auto bg-white"}>
+          {buttonContainer}
+        </div>
+      );
     }
 
     if (showCloseButton !== false) {
       return (
-        <SaveButtonContainer>
-          <CloseButton className={"p-3"} size={"sm"} closeEditorCallback={closePanel} showUnsavedChangesMessage={false} />
-        </SaveButtonContainer>
+        <div className={"mt-auto bg-white"}>
+          <SaveButtonContainer>
+            <CloseButton className={"p-3"} size={"sm"} closeEditorCallback={closePanel} showUnsavedChangesMessage={false} />
+          </SaveButtonContainer>
+        </div>
       );
     }
   };
@@ -105,9 +111,7 @@ function CenterOverlayContainer(
               {showToasts && toastContext?.getInlineBanner()}
               {getBody()}
             </div>
-            <div className={"mt-auto bg-white"}>
-              {getButtons()}
-            </div>
+            {getButtonContainer()}
           </div>
         </CenterOverlayContainerWrapper>
       </Row>

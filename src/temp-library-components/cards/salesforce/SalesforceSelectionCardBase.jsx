@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
-import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
+import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
+import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 
 export default function SalesforceSelectionCardBase(
   {
@@ -24,7 +25,7 @@ export default function SalesforceSelectionCardBase(
 
   const getTitleBar = () => {
     return (
-      <IconTitleBar
+      <CardIconTitleBar
         className={"m-3 mb-4"}
         icon={faSalesforce}
         iconColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
@@ -38,7 +39,7 @@ export default function SalesforceSelectionCardBase(
   };
 
   return (
-    <SelectionIconCardBase
+    <SelectionIconCard
       selectedOption={selectedOption}
       option={option}
       titleBar={getTitleBar()}

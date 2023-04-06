@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import TagsInlineInputBase from "components/common/inputs/tags/inline/TagsInlineInputBase";
+import TagsInlineOverlayInputBase from "components/common/inputs/tags/inline/TagsInlineOverlayInputBase";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
@@ -56,7 +56,7 @@ function DashboardTagsInlineInput(
   }
 
   return (
-    <TagsInlineInputBase
+    <TagsInlineOverlayInputBase
       tagLocation={"Dashboard"}
       disabled={disabled || model?.canUpdateDashboardFilters() !== true}
       visible={visible}

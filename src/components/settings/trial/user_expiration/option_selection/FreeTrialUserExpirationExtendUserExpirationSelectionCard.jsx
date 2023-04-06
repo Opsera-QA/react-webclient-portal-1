@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 import React from "react";
-import IconTitleBar from "components/common/fields/title/IconTitleBar";
-import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { faHourglassClock } from "@fortawesome/pro-light-svg-icons";
 import {
   FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREEN_LINKS
 } from "components/settings/trial/user_expiration/option_selection/FreeTrialUserExpirationOptionSelectionScreen";
 import { useHistory } from "react-router-dom";
+import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
+import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 
 export default function FreeTrialUserExpirationExtendUserExpirationSelectionCard(
   {
@@ -25,7 +25,7 @@ export default function FreeTrialUserExpirationExtendUserExpirationSelectionCard
 
   const getTitleBar = () => {
     return (
-      <IconTitleBar
+      <CardIconTitleBar
         className={"m-3 mb-4"}
         icon={faHourglassClock}
         iconColor={themeConstants.COLOR_PALETTE.DEEP_PURPLE}
@@ -39,7 +39,7 @@ export default function FreeTrialUserExpirationExtendUserExpirationSelectionCard
   };
 
   return (
-    <SelectionIconCardBase
+    <SelectionIconCard
       option={FREE_TRIAL_USER_EXPIRATION_MANAGEMENT_SCREEN_LINKS.EXTEND_USER_EXPIRATION_SCREEN}
       titleBar={getTitleBar()}
       onClickFunction={onClickFunction}

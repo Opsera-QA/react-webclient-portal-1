@@ -19,6 +19,8 @@ import { getLargeVendorIconFromToolIdentifier } from "components/common/helpers/
 import useComponentStateReference from "hooks/useComponentStateReference";
 import CreateWorkflowWizardRegisterAccountContainer
   from "components/wizard/free_trial/workflows/flows/tools/CreateWorkflowWizardRegisterAccountContainer";
+import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
+import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
 
 export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
   {
@@ -66,12 +68,12 @@ export default function CreateWorkflowWizardCreateSalesforceToolEditorPanel(
     <div className={className}>
       <CreateWorkflowWizardRegisterAccountContainer>
         <div>
-          <SelectionIconCardBase
+          <SelectionIconCard
             selectedOption={"salesforce"}
             option={"salesforce"}
             highlightedBorderColor={themeConstants.COLOR_PALETTE.SALESFORCE_BLUE}
             titleBar={
-              <IconTitleBar
+              <CardIconTitleBar
                 formattedIcon={
                   getLargeVendorIconFromToolIdentifier(toolIdentifierConstants.TOOL_IDENTIFIERS.SFDC_CONFIGURATOR)
                 }
