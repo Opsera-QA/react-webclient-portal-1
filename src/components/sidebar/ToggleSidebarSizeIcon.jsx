@@ -12,7 +12,7 @@ export default function ToggleSidebarSizeIcon(
   }) {
   const handleSidebarToggle = () => {
     setIsSidebarCollapsed(!isSidebarCollapsed);
-    sessionHelper.setStoredSessionValue("SIDEBAR_COLLAPSED", !isSidebarCollapsed);
+    sessionHelper.setStoredSessionValue(sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.SIDEBAR_COLLAPSED, !isSidebarCollapsed);
   };
 
   return (
