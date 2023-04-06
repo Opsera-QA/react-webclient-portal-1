@@ -17,8 +17,8 @@ function DashboardFilterTagInput({ dataObject, setDataObject, dashboardData, loa
       className={className}
       showLabel={false}
       fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      model={dataObject}
+      setModel={setDataObject}
       setDataFunction={validateAndSetData}
     />
   );

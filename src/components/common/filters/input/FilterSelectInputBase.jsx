@@ -111,7 +111,7 @@ FilterSelectInputBase.propTypes = {
   setDataObject: PropTypes.func,
   loadDataFunction: PropTypes.func,
   selectOptions: PropTypes.array.isRequired,
-  groupBy: PropTypes.string,
+  groupBy: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   valueField: PropTypes.string,
   textField: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   filter: PropTypes.string,
