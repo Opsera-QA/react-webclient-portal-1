@@ -45,7 +45,7 @@ export default function TagMultiSelectInputBase(
       <div className={"custom-multiselect-input"}>
         <StandaloneMultiSelectInput
           selectOptions={[...customerTags]}
-          textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + data["value"]}
+          textField={(tag) => `${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}
           filter={"contains"}
           groupBy={"type"}
           busy={isLoading}
