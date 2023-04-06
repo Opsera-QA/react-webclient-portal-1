@@ -107,10 +107,23 @@ sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS = {
   TOOL_FILTER_MODEL_DATA: "tool-filter-model-data",
   PIPELINE_FILTER_MODEL_DATA: "pipeline-filter-model-data",
   DASHBOARD_FILTER_MODEL_DATA: "dashboard-filter-model-data",
+  SIDEBAR_COLLAPSED: "SIDEBAR_COLLAPSED",
 };
 
+sessionHelper.SAVED_STORAGE_SESSION_KEYS = [
+  sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.SIDEBAR_COLLAPSED,
+];
+
 sessionHelper.clearOutSessionStorage = () => {
-  return sessionStorage.clear();
+  const sessionKeyIdentifiers = Object.values(sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS);
+
+  sessionKeyIdentifiers.forEach((sessionKey) => {
+    if (sessionHelper.SAVED_STORAGE_SESSION_KEYS.includes(sessionKey) === true) {
+      return;
+    }
+
+    sessionHelper.deleteStoredSessionValue(sessionKey);
+  });
 };
 
 // TODO: Make get/set/delete cookie functions
