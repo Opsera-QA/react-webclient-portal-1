@@ -4,7 +4,7 @@ const helmStepFormMetadata = {
   type: "Helm Step Configuration",
   fields: [
     {
-      label: "Source Code Management Tool Type",
+      label: "Source Code Management Type",
       id: "type",
       isRequired: true
     },
@@ -52,7 +52,7 @@ const helmStepFormMetadata = {
       id: "bitbucketWorkspace",
     },
     {
-      label: "BitBucket Workspace/Project",
+      label: "Workspace/Project",
       id: "bitbucketWorkspaceName",
     },
     {
@@ -93,7 +93,7 @@ const helmStepFormMetadata = {
       id: "organizationName",
     },
     {
-      label: "Workspace Name",
+      label: "Workspace",
       id: "workspaceName",
     },
     {

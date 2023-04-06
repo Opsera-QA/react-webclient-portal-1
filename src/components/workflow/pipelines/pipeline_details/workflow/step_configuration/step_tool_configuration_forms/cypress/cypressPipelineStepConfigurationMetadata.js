@@ -49,7 +49,7 @@ const cypressPipelineStepConfigurationMetadata = {
       id: "gitToolId",
     },
     {
-      label: "Account",
+      label: "Source Code Management Tool",
       id: "gitCredential",
     },
     {

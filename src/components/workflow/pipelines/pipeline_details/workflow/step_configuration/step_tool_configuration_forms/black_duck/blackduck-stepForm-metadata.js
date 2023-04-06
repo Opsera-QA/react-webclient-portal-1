@@ -9,12 +9,12 @@ const BlackDuckStepFormMetadata = {
       isRequired: true,
     },
     {
-      label: "Select Account",
+      label: "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true
     },
     {
-      label: "SCM Service",
+      label: "Source Code Management Type",
       id: "type",
       isRequired: true
     },

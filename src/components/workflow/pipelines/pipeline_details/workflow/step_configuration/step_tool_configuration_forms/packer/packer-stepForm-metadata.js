@@ -4,12 +4,12 @@ const PackerStepFormMetadata = {
   type: "Packer Step Configuration",
   fields: [
     {
-      label: "SCM Tool Type",
+      label: "Source Code Management Type",
       id: "type",
       isRequired: true
     },
     {
-      label: "SCM Tool",
+      label: "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true
     },
@@ -50,7 +50,7 @@ const PackerStepFormMetadata = {
       id: "bitbucketWorkspace",
     },
     {
-      label: "BitBucket Workspace/Project",
+      label: "Workspace/Project",
       id: "bitbucketWorkspaceName",
     },
     {

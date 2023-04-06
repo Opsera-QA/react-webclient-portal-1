@@ -18,14 +18,14 @@ const flywayDatabaseStepFormMetadata = {
       regexDefinitionName: "mongoId",
     },    
     {
-      label: "SCM Type",
+      label: "Source Code Management Type",
       id: "service",
       isRequired: true,
       maxLength: 10,
       lowercase: true,
     },    
     {
-      label: "SCM Account",
+      label: "Account",
       id: "gitToolId",
       isRequired: true,
       maxLength: 24,
