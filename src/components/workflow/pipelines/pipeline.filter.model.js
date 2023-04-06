@@ -74,7 +74,7 @@ export class PipelineFilterModel extends FilterModelBase {
     super(pipelineFilterMetadata);
 
     if (useUrlParameters === true) {
-      this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.PIPELINE_FILTER_MODEL_DATA;
+      this.sessionDataKey = sessionHelper.SUPPORTED_SESSION_STORAGE_KEYS.PIPELINE_FILTER_MODEL_DATA;
       this.enableUrlUpdatesWithQueryParameters();
       this.unpackUrlParameters();
     }
