@@ -176,6 +176,14 @@ pre {
     overflow: hidden;
 }
 
+.vertical-selection-card-v2 {
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+}
+
+.vertical-selection-card-v2:hover {
+    opacity: 1 !important;
+}
+
 .vertical-selection-card-temp {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 1rem;
@@ -191,7 +199,7 @@ pre {
     opacity: 1 !important;
 }
 
-.vertical-selection-card .title-icon {
+.vertical-selection-card .title-icon, .vertical-selection-card-v2 .title-icon {
     height: 92px;
     max-width: 100%;
 }
@@ -208,75 +216,91 @@ pre {
     padding-right: .5rem;
 }
 
-.vertical-selection-card .small-title-icon {
+.vertical-selection-card .small-title-icon, .vertical-selection-card-v2 .small-title-icon {
     margin-top: 30px;
 }
 
-.vertical-selection-card .jira-icon {
+.vertical-selection-card .jira-icon, .vertical-selection-card-v2 .jira-icon {
     margin-top: 15%;
     margin-left: 10%;
     max-width: 75%;
 }
 
-.vertical-selection-card .sonarqube-icon {
+.vertical-selection-card .sonarqube-icon, .vertical-selection-card-v2 .sonarqube-icon {
     margin-top: 30px;
     max-width: 98%;
 }
 
-.vertical-selection-card .junit-icon {
+.vertical-selection-card .junit-icon, .vertical-selection-card-v2 .junit-icon {
     margin-top: 10px;
     margin-left: 15px;
     max-width: 75%;
 }
 
-.vertical-selection-card .xunit-icon {
+.vertical-selection-card .xunit-icon, .vertical-selection-card-v2 .xunit-icon {
     margin-top: 25px;
     margin-left: 15px;
     max-width: 80%;
 }
 
-.vertical-selection-card .teamcity-icon {
+.vertical-selection-card .teamcity-icon, .vertical-selection-card-v2 .teamcity-icon {
     margin-top: 10px;
     margin-left: 25px;
     max-width: 65%;
 }
 
-.vertical-selection-card .twistlock-icon {
+.vertical-selection-card .twistlock-icon, .vertical-selection-card-v2 .twistlock-icon {
     margin-top: 20px;
     max-width: 98%;
 }
 
-.vertical-selection-card .slack-icon {
+.vertical-selection-card .slack-icon, .vertical-selection-card-v2 .slack-icon {
     margin-top: 30px;
     max-width: 98%;
 }
 
-.vertical-selection-card .selenium-icon {
+.vertical-selection-card .selenium-icon, .vertical-selection-card-v2 .selenium-icon {
     margin-top: 20px;
     max-width: 98%;
 }
 
-.vertical-selection-card .jenkins-icon {
+.vertical-selection-card .jenkins-icon, .vertical-selection-card-v2 .jenkins-icon {
     margin-top: 10px;
 }
 
-.vertical-selection-card .bitbucket-icon {
+.vertical-selection-card .bitbucket-icon, .vertical-selection-card-v2 .bitbucket-icon {
     margin-top: 10px;
 }
 
-.vertical-selection-card .wrench {
+.vertical-selection-card .wrench, .vertical-selection-card-v2 .wrench {
     opacity: .8;
 }
 
-.vertical-selection-card .icon-card-title {
+.vertical-selection-card .icon-card-title, .vertical-selection-card-v2 .icon-card-title {
     font-size: 13px;
     color: #3D3B36;
     font-weight: bold;
 }
 
+.vertical-selection-card-v2 .icon-card-title {
+    font-size: 13px;
+    color: #3D3B36;
+    font-weight: bold;
+    min-height: 32px;
+    height: 32px;
+    max-height: 32px;
+}
+
 .vertical-selection-card .description-height {
     min-height: 50px;
     height: 100%;
+    /*max-height: 90px;*/
+}
+
+.vertical-selection-card-v2 .description-height {
+    min-height: 70px;
+    height: 70px;
+    max-height: 70px;
     /*max-height: 90px;*/
 }
 
@@ -292,6 +316,7 @@ pre {
 }
 
 /* End Summary Card Styling */
+
 
 
 /* Toggle Styling */
