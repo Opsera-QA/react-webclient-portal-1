@@ -169,11 +169,11 @@ pre {
 
 /* Summary Card Styling */
 .vertical-selection-card {
-    /*min-width: 200px;*/
-    /*width: 240px;*/
+    min-width: 200px;
+    width: 240px;
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
-    /*border-radius: 1rem;*/
-    /*overflow: hidden;*/
+    border-radius: 1rem;
+    overflow: hidden;
 }
 
 .vertical-selection-card-v2 {
@@ -190,9 +190,10 @@ pre {
 }
 
 .vertical-selection-card:hover {
-    box-shadow: 0 0 40px rgba(46, 25, 86, .25);
+    /*box-shadow: 0 0 40px rgba(46, 25, 86, .25);*/
 }
 
+/*TODO: Combine with the above when fully leaning into free trial styling*/
 .vertical-selection-card-temp:hover {
     box-shadow: 5px 5px 2px rgba(46, 25, 86, .15);
     opacity: 1 !important;
@@ -279,9 +280,6 @@ pre {
     font-size: 13px;
     color: #3D3B36;
     font-weight: bold;
-    min-height: 32px;
-    height: 32px;
-    max-height: 32px;
 }
 
 .vertical-selection-card-v2 .icon-card-title {
@@ -294,9 +292,8 @@ pre {
 }
 
 .vertical-selection-card .description-height {
-    min-height: 70px;
-    height: 70px;
-    max-height: 70px;
+    min-height: 50px;
+    height: 100%;
     /*max-height: 90px;*/
 }
 
