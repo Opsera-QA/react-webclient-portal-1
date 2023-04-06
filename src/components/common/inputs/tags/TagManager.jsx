@@ -4,7 +4,6 @@ import tagMetadata from "components/settings/tags/tag.metadata";
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import axios from "axios";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
@@ -12,6 +11,10 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import {capitalizeFirstLetter, hasStringValue} from "components/common/helpers/string-helpers";
 import StandaloneMultiSelectInput from "components/common/inputs/multi_select/StandaloneMultiSelectInput";
 import {fieldValidation} from "core/data_model/modelValidation";
+import useGetCustomerTags from "hooks/settings/tags/useGetCustomerTags";
+import TagParsingHelper from "@opsera/persephone/helpers/data/tags/tagParsing.helper";
+import {errorHelpers} from "components/common/helpers/error-helpers";
+import useAxiosCancelToken from "hooks/useAxiosCancelToken";
 
 function TagManager(
   {
@@ -32,58 +35,30 @@ function TagManager(
   const toastContext = useContext(DialogToastContext);
   const field = dataObject?.getFieldById(fieldName);
   const [tagOptions, setTagOptions] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
+  const [internalErrorMessage, setInternalErrorMessage] = useState("");
+  const [internalPlaceholderText, setInternalPlaceholderText] = useState("");
+  const {
+    customerTags,
+    error,
+    isLoading,
+    loadData,
+  } = useGetCustomerTags();
+  const { cancelTokenSource } = useAxiosCancelToken();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+      loadTagOptions(customerTags);
+  }, [customerTags]);
+
+  useEffect(() => {
+    setInternalErrorMessage("");
+    setInternalPlaceholderText("");
+
+    if (error) {
+      setInternalPlaceholderText(errorHelpers.constructApiResponseErrorPlaceholderText("Tags"));
+      setInternalErrorMessage(errorHelpers.parseApiErrorForInfoText("Tags", error));
     }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
-    try {
-      setIsLoading(true);
-      await getTags(cancelSource);
-    }
-    catch (error) {
-      if (isMounted?.current === true) {
-        setErrorMessage("Could not load tags.");
-        console.error(error);
-      }
-    }
-    finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const getTags = async (cancelSource = cancelTokenSource) => {
-    const response = await adminTagsActions.getAllTagsV2(getAccessToken, cancelSource);
-    let tags = response?.data?.data;
-
-    if (isMounted?.current === true && Array.isArray(tags) && tags.length > 0) {
-      loadTagOptions(tags);
-    }
-  };
+  }, [error]);
 
   const saveNewTag = async (newTagDto) => {
     try {
@@ -98,7 +73,7 @@ function TagManager(
     let currentOptions = [];
 
     tags.map((tag) => {
-      let tagOption = {type: tag["type"], value: tag["value"]};
+      const tagOption = TagParsingHelper.parseTag(tag);
 
       if (Array.isArray(allowedTypes) && allowedTypes.length > 0) {
         if (allowedTypes.includes(tagOption.type)) {
@@ -116,9 +91,7 @@ function TagManager(
       }
     });
 
-    if (isMounted?.current === true) {
-      setTagOptions(currentOptions);
-    }
+    setTagOptions(currentOptions);
   };
 
   const validateAndSetData = (fieldName, value) => {
@@ -130,12 +103,8 @@ function TagManager(
     }
 
     setErrorMessage("");
-    let newDataObject = dataObject;
-    newDataObject.setData(fieldName, value);
-
-    if (isMounted?.current === true) {
-      setDataObject({...newDataObject});
-    }
+    dataObject.setData(fieldName, value);
+    setDataObject({...dataObject});
   };
 
   const getExistingTag = (newTag) => {
@@ -154,8 +123,7 @@ function TagManager(
     if (existingTag != null)
     {
       let tagSelected = tagAlreadySelected(newValue);
-      if (!tagSelected)
-      {
+      if (!tagSelected) {
         currentValues.push(existingTag);
         validateAndSetData(fieldName, currentValues);
       }
@@ -174,10 +142,17 @@ function TagManager(
     await saveNewTag(newTagDto);
     currentValues.push(newTagOption);
     currentOptions.push(newTagOption);
+    setTagOptions(currentOptions);
+    validateAndSetData(fieldName, currentValues);
+  };
 
-    if (isMounted?.current === true) {
-      setTagOptions(currentOptions);
-      validateAndSetData(fieldName, currentValues);
+  const getErrorMessage = () => {
+    if (hasStringValue(internalErrorMessage) === true) {
+      return internalErrorMessage;
+    }
+
+    if (hasStringValue(errorMessage) === true) {
+      return errorMessage;
     }
   };
 
@@ -209,24 +184,24 @@ function TagManager(
           hasErrorState={hasStringValue(errorMessage)}
           hasWarningState={hasWarningState()}
           selectOptions={[...tagOptions]}
-          textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + capitalizeFirstLetter(data["value"])}
-          allowCreate={allowCreate === true && hasStringValue(type)}
+          textField={(tag) => `${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}
+          allowCreate={hasStringValue(type) === true ? allowCreate : undefined}
           groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
           className={inline ? `inline-filter-input inline-select-filter` : undefined}
           busy={isLoading}
           manualEntry={true}
           createOptionFunction={(value) => handleCreate(value)}
           value={[...dataObject?.getArrayData(fieldName)]}
-          placeholderText={errorMessage ? errorMessage : placeholderText}
+          placeholderText={internalPlaceholderText ? internalPlaceholderText : placeholderText}
           disabled={disabled || isLoading || (getDisabledTags && getDisabledTags(tagOptions))}
-          setDataFunction={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
+          setDataFunction={(tagArray) => setDataFunction ? setDataFunction(field.id, TagParsingHelper.parseTagArray(tagArray)) : validateAndSetData(field.id, TagParsingHelper.parseTagArray(tagArray))}
         />
       </div>
       <InfoText
         fieldName={fieldName}
         model={dataObject}
         field={field}
-        errorMessage={errorMessage}
+        errorMessage={getErrorMessage()}
       />
     </InputContainer>
   );
