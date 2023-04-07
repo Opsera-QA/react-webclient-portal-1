@@ -15,7 +15,7 @@ export const s3PipelineStepConfigurationMetadata = {
     {
       label: "S3 Url",
       id: "s3Url",
-      maxLength: 150,
+      isUrl: true,
     },
     {
       label: "Job Type",

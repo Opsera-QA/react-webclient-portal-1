@@ -9,6 +9,7 @@ export default function NewTaskOverlay(
   {
     loadData,
     isMounted,
+    backButtonFunction,
   }) {
   const toastContext = useContext(DialogToastContext);
   const { taskModel, setTaskModel } = useGetNewTaskModel();
@@ -35,6 +36,7 @@ export default function NewTaskOverlay(
       <TaskEditorPanel
         taskData={taskModel}
         handleClose={closePanel}
+        backButtonFunction={backButtonFunction}
       />
     </CreateCenterPanel>
   );
@@ -43,4 +45,5 @@ export default function NewTaskOverlay(
 NewTaskOverlay.propTypes = {
   loadData: PropTypes.func,
   isMounted: PropTypes.object,
+  backButtonFunction: PropTypes.func,
 };
