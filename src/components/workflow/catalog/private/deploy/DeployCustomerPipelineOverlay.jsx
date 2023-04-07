@@ -8,15 +8,17 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import CenterOverlayContainer, {CENTER_OVERLAY_SIZES} from "components/common/overlays/center/CenterOverlayContainer";
+import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import DeployCustomerPipelineButton from "components/workflow/catalog/private/deploy/DeployCustomerPipelineButton";
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 
 export default function DeployCustomerPipelineOverlay(
   {
     customerPipelineTemplateModel,
+    backButtonFunction,
   }) {
   const [pipelineTemplateModelCopy, setPipelineTemplateModelCopy] = useState(undefined);
   const {
@@ -36,8 +38,15 @@ export default function DeployCustomerPipelineOverlay(
 
   const getButtonContainer = () => {
     return (
-      <ButtonContainerBase className={"bg-white"}>
-        <div className={"m-3 d-flex"}>
+      <ButtonContainerBase
+        className={"bg-white p-3"}
+        leftSideButtons={
+          <BackButtonBase
+            backButtonFunction={backButtonFunction}
+          />
+        }
+      >
+        <div className={"d-flex"}>
           <CancelButton
             cancelFunction={closePanelFunction}
             size={"md"}
@@ -110,4 +119,5 @@ export default function DeployCustomerPipelineOverlay(
 
 DeployCustomerPipelineOverlay.propTypes = {
   customerPipelineTemplateModel: PropTypes.object,
+  backButtonFunction: PropTypes.func,
 };

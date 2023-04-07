@@ -23,20 +23,22 @@ export const TOOL_CREATION_OPTION_LABELS = {
   ADVANCED: "Advanced Settings",
 };
 
-function ToolSetupModeSelect({
-  className,
-  setupMode,
-  setSetupMode,
-  setCurrentScreen,
-  setButtonContainer,
-  REGISTRY_WIZARD_SCREENS,
-}) {
+function ToolSetupModeSelect(
+  {
+    className,
+    setupMode,
+    setSetupMode,
+    setCurrentScreen,
+    setButtonContainer,
+    backButtonFunction,
+  }) {
   const { themeConstants } = useComponentStateReference();
 
   useEffect(() => {
     if (setButtonContainer && setCurrentScreen) {
       setButtonContainer(
           <OverlayWizardButtonContainerBase
+            backButtonFunction={backButtonFunction}
           />
       );
     }
@@ -143,7 +145,7 @@ ToolSetupModeSelect.propTypes = {
   setSetupMode: PropTypes.func,
   setCurrentScreen: PropTypes.func,
   setButtonContainer: PropTypes.func,
-  REGISTRY_WIZARD_SCREENS: PropTypes.object,
+  backButtonFunction: PropTypes.func,
 };
 
 export default ToolSetupModeSelect;

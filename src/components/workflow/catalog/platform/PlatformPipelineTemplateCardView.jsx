@@ -15,6 +15,7 @@ export default function PlatformPipelineTemplateCardView(
     isLoading,
     activeTemplates,
     error,
+    selectTemplateFunction,
   }) {
   const getCards = () => {
     if (isLoading) {
@@ -40,6 +41,7 @@ export default function PlatformPipelineTemplateCardView(
               <PlatformPipelineTemplateCard
                 template={template}
                 activeTemplates={activeTemplates}
+                selectTemplateFunction={selectTemplateFunction}
               />
             </Col>
           );
@@ -67,4 +69,5 @@ PlatformPipelineTemplateCardView.propTypes = {
   isLoading: PropTypes.bool,
   activeTemplates: PropTypes.array,
   error: PropTypes.any,
+  selectTemplateFunction: PropTypes.func,
 };
