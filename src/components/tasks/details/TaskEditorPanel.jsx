@@ -36,7 +36,7 @@ import SfdxQuickDeployTaskHelpDocumentation
 import GitCustodianTaskHelpDocumentation from "../../common/help/documentation/tasks/GitCustodianTaskHelpDocumentation";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-function TaskEditorPanel({ taskData, handleClose }) {
+function TaskEditorPanel({ taskData, handleClose, backButtonFunction }) {
   const [taskModel, setTaskModel] = useState(undefined);
   const [taskConfigurationModel, setTaskConfigurationModel] = useState(undefined);
   const {
@@ -191,15 +191,16 @@ function TaskEditorPanel({ taskData, handleClose }) {
   return (
       <div>
         <EditorPanelContainer
-            handleClose={handleClose}
-            recordDto={taskModel}
-            createRecord={createGitTask}
-            updateRecord={updateGitTask}
-            setRecordDto={setTaskModel}
-            getHelpComponent={getHelpDocumentation}
-            isIncomplete={taskModel.checkCurrentValidity() !== true || taskConfigurationModel == null || taskConfigurationModel.checkCurrentValidity() !== true}
-            lenient={true}
-            disable={taskModel.checkCurrentValidity() !== true || taskModel?.getData("status") === "running"}
+          handleClose={handleClose}
+          recordDto={taskModel}
+          createRecord={createGitTask}
+          updateRecord={updateGitTask}
+          setRecordDto={setTaskModel}
+          getHelpComponent={getHelpDocumentation}
+          isIncomplete={taskModel.checkCurrentValidity() !== true || taskConfigurationModel == null || taskConfigurationModel.checkCurrentValidity() !== true}
+          lenient={true}
+          disable={taskModel.checkCurrentValidity() !== true || taskModel?.getData("status") === "running"}
+          backButtonFunction={backButtonFunction}
         >
           {getBody()}
         </EditorPanelContainer>
@@ -210,6 +211,7 @@ function TaskEditorPanel({ taskData, handleClose }) {
 TaskEditorPanel.propTypes = {
   taskData: PropTypes.object,
   handleClose: PropTypes.func,
+  backButtonFunction: PropTypes.func,
 };
 
 export default TaskEditorPanel;

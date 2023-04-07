@@ -17,6 +17,7 @@ import WorkspacePipelineViews from "components/workspace/views/pipeline/Workspac
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import CustomerTagFilter from "components/common/filters/tags/tag/CustomerTagFilter";
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
+import CreateWorkspaceResourceWizard from "components/wizard/workspace/CreateWorkspaceResourceWizard";
 
 export default function WorkspaceViewContainer(
   {
@@ -138,7 +139,9 @@ export default function WorkspaceViewContainer(
 
   const createWorkspaceItem = () => {
     toastContext.showOverlayPanel(
-      <CreateWorkflowWizard />
+      <CreateWorkspaceResourceWizard
+        loadDataFunction={loadData}
+      />
     );
   };
 

@@ -5,6 +5,7 @@ import StrictSaveButton from "../StrictSaveButton";
 import CreateButton from "../CreateButton";
 import LenientSaveButton from "components/common/buttons/saving/LenientSaveButton";
 import CloseEditorButton from "components/common/buttons/cancel/CloseEditorButton";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 
 function PersistAndCloseButtonContainer(
   {
@@ -18,6 +19,7 @@ function PersistAndCloseButtonContainer(
     lenient,
     extraButtons,
     isIncomplete,
+    backButtonFunction,
   }) {
   const getSaveButton = () => {
     if (recordDto.isNew()){
@@ -70,8 +72,22 @@ function PersistAndCloseButtonContainer(
     }
   };
 
+  const getExtraButtons = () => {
+    if (backButtonFunction) {
+      return (
+        <>
+          <BackButtonBase
+            backButtonFunction={backButtonFunction}
+            className={"mr-2"}
+          />
+          {extraButtons}
+        </>
+      );
+    }
+  };
+
   return (
-    <SaveButtonContainer extraButtons={extraButtons}>
+    <SaveButtonContainer extraButtons={getExtraButtons()}>
       {getSaveButton()}
       {getCloseButton()}
     </SaveButtonContainer>
@@ -89,6 +105,7 @@ PersistAndCloseButtonContainer.propTypes = {
   lenient: PropTypes.bool,
   extraButtons: PropTypes.any,
   isIncomplete: PropTypes.bool,
+  backButtonFunction: PropTypes.func,
 };
 
 PersistAndCloseButtonContainer.defaultProps = {

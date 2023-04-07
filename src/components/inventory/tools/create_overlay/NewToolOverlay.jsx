@@ -3,30 +3,39 @@ import PropTypes from "prop-types";
 import ToolEditorPanel from "components/inventory/tools/tool_details/ToolEditorPanel";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import ToolIdentifierSelectionScreen from "components/inventory/tools/create_overlay/ToolIdentifierSelectionScreen";
-import Row from "react-bootstrap/Row";
 import CancelButton from "components/common/buttons/CancelButton";
 import LoadingDialog from "components/common/status_notifications/loading";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import registryToolMetadata from "@opsera/definitions/constants/registry/tools/registryTool.metadata";
 import useGetNewRegistryToolModel from "components/inventory/tools/hooks/useGetNewRegistryToolModel";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
+import ButtonContainerBase from "components/common/buttons/saving/containers/ButtonContainerBase";
 
-function NewToolOverlay({ loadData }) {
+function NewToolOverlay(
+  {
+    loadData,
+    backButtonFunction,
+  }) {
   const {
     toolModel,
     setToolModel,
   } = useGetNewRegistryToolModel();
   const {
-    isMounted,
     toastContext,
   } = useComponentStateReference();
 
-  const closePanel = () => {
-    if (isMounted?.current === true) {
+  const closePanel = (manualClose) => {
+    if (manualClose !== false && loadData) {
       loadData();
     }
 
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
+  };
+
+  const removeToolIdentifier = () => {
+    toolModel?.setData("tool_identifier", "");
+    setToolModel({...toolModel});
   };
 
   const getView = () => {
@@ -46,11 +55,20 @@ function NewToolOverlay({ loadData }) {
               closePanel={closePanel}
             />
           </div>
-          <Row className={"mx-0"}>
-            <div className={"ml-auto"}>
-              <CancelButton size={"md"} className={"mx-2 mb-2"} cancelFunction={closePanel} />
-            </div>
-          </Row>
+          <ButtonContainerBase
+            className={"pt-2 px-2"}
+            leftSideButtons={
+              <BackButtonBase
+                backButtonFunction={backButtonFunction}
+              />
+            }
+          >
+            <CancelButton
+              size={"md"}
+              className={"mb-2"}
+              cancelFunction={closePanel}
+            />
+          </ButtonContainerBase>
         </div>
       );
     }
@@ -60,6 +78,7 @@ function NewToolOverlay({ loadData }) {
         setToolData={setToolModel}
         handleClose={closePanel}
         toolData={toolModel}
+        backButtonFunction={removeToolIdentifier}
       />
     );
   };
@@ -78,6 +97,7 @@ function NewToolOverlay({ loadData }) {
 
 NewToolOverlay.propTypes = {
   loadData: PropTypes.func,
+  backButtonFunction: PropTypes.func,
 };
 
 export default NewToolOverlay;
