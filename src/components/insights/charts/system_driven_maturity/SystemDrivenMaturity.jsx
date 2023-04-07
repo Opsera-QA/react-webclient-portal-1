@@ -341,7 +341,6 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
   ];
 
   const onRowSelect = orgTag => {
-    console.log('SDM open overlay for orgTag:', orgTag);
     toastContext.showOverlayPanel(
       <Overlay
           kpiConfiguration={{}}
