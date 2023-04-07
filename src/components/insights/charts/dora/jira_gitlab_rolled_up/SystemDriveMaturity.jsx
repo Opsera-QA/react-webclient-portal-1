@@ -111,33 +111,189 @@ OrgTagRow.propTypes = {
   onRowSelect: PropTypes.func
 };
 
+function GroupsTab ({ kpiConfiguration, dashboardData, orgTag, onSelectGroup }) {
+  const [groups, setGroups] = useState(null);
+  useEffect(() => {
+    // obtain groups from orgTag
+    setGroups([
+      {
+        name: 'A',
+        score: MATURITY_SCORE_TEXT.ELITE,
+        previousScore: MATURITY_SCORE_TEXT.MEDIUM
+      },
+      {
+        name: 'B',
+        score: MATURITY_SCORE_TEXT.MEDIUM,
+        previousScore: MATURITY_SCORE_TEXT.MEDIUM
+      },
+      {
+        name: 'C',
+        score: MATURITY_SCORE_TEXT.LOW,
+        previousScore: MATURITY_SCORE_TEXT.HIGH
+      }
+    ]);
+  }, []);
+
+  return (
+    <Container className="p-3" style={{fontSize: '2rem', maxWidth: '75%'}}>
+      <SystemDrivenMaturityChart items={groups} onRowSelect={onSelectGroup} />
+    </Container>
+  );
+}
+
+GroupsTab.propTypes = {
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  orgTag: OrgTagType,
+  onSelectGroup: PropTypes.func
+};
+
+function ProjectsTab ({ kpiConfiguration, dashboardData, orgTag }) {
+  return (
+    <h3>TODO: Projects...</h3>
+  );
+}
+
+ProjectsTab.propTypes = {
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  orgTag: OrgTagType,
+};
+
+const OVERLAY_TABS = {
+  GROUPS: 'groups',
+  PROJECTS: 'projects'
+};
+
+function Overlay ({ kpiConfiguration, dashboardData, orgTag }) {
+  const toastContext = useContext(DialogToastContext);
+  const [activeTab, setActiveTab] = useState(OVERLAY_TABS.GROUPS);
+  const [selectedGroup, setSelectedGroup] = useState(null);
+
+  const onSelectGroup = (group) => {
+    setActiveTab(OVERLAY_TABS.PROJECTS);
+    setSelectedGroup(group);
+  };
+
+  const onGoToGroupsTab = () => {
+    setActiveTab(OVERLAY_TABS.GROUPS);
+    setSelectedGroup(null);
+  };
+
+  const closePanel = () => {
+    console.log('closePanel');
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
+
+  const breadcrumbBar = (
+    <>
+      <button type="button" onClick={onGoToGroupsTab}>GROUPS</button>
+      {selectedGroup && <h5>TODO: GROUP NAME</h5>}
+    </>
+  );
+
+  const getBody = () => {
+    if (!orgTag) {
+      return 'No organization tag';
+    }
+
+    if (activeTab === "groups") {
+      return (
+        <GroupsTab
+            kpiConfiguration={kpiConfiguration}
+            dashboardData={dashboardData}
+            orgTag={orgTag}
+            onSelectGroup={onSelectGroup}
+        />
+      );
+    }
+
+    if (activeTab === "projects") {
+      return (
+        <ProjectsTab
+          kpiConfiguration={kpiConfiguration}
+          dashboardData={dashboardData}
+          group={selectedGroup}
+        />
+      );
+    }
+  };
+
+  return (
+    <FullScreenCenterOverlayContainer
+      closePanel={closePanel}
+      showPanel={true}
+      titleText={"Dora Organization Tags Actionable Insights"}
+      showToasts={true}
+    >
+      {breadcrumbBar}
+      <div className={"p-3"}>
+        <TabPanelContainer currentView={getBody()} />
+      </div>
+    </FullScreenCenterOverlayContainer>
+  );
+}
+
+Overlay.propTypes = {
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  orgTag: OrgTagType
+};
+
+function SystemDrivenMaturityChart ({ items, onRowSelect }) {
+  if (!items) {
+    return (
+      <h4 className="text-center">No data to display</h4>
+    );
+  }
+
+  return (
+    <table className="text-center w-100">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Low</th>
+          <th>Medium</th>
+          <th>High</th>
+          <th>Elite</th>
+        </tr>
+      </thead>
+      <tbody>
+        {items.map((item, index) => <OrgTagRow key={index} orgTag={item} onRowSelect={onRowSelect} />)}
+      </tbody>
+    </table>
+  );
+}
+
+SystemDrivenMaturityChart.propTypes = {
+  items: PropTypes.arrayOf(MaturityScoreItemType),
+  onRowSelect: PropTypes.func
+};
+
 function SystemDrivenMaturity ({ orgTags }) {
+  const toastContext = useContext(DialogToastContext);
+
   const onRowSelect = orgTag => {
     console.log('SDM open overlay for orgTag:', orgTag);
+    toastContext.showOverlayPanel(
+      <Overlay
+          kpiConfiguration={{}}
+          dashboardData={{}}
+          orgTag={orgTag}
+      />
+    );
   };
 
   return (
     <Container className="p-3" style={{fontSize: '2rem'}}>
-      <table className="text-center w-100">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Low</th>
-            <th>Medium</th>
-            <th>High</th>
-            <th>Elite</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orgTags.map((orgTag, index) => <OrgTagRow key={index} orgTag={orgTag} onRowSelect={onRowSelect} />)}
-        </tbody>
-      </table>
+      <SystemDrivenMaturityChart items={orgTags} onRowSelect={onRowSelect} />
     </Container>
   );
 }
 
 SystemDrivenMaturity.propTypes = {
-  orgTags: PropTypes.array
+  orgTags: PropTypes.arrayOf(OrgTagType)
 };
 
 SystemDrivenMaturity.defaultProps = {
