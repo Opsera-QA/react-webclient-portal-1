@@ -11,14 +11,9 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
-import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
-import pipelineMetadata from "@opsera/definitions/constants/pipelines/pipeline.metadata";
-import DeployPlatformPipelineOverlay from "components/workflow/catalog/platform/deploy/DeployPlatformPipelineOverlay";
-import DeployCustomerPipelineOverlay from "components/workflow/catalog/private/deploy/DeployCustomerPipelineOverlay";
 
-function PipelineTemplateSelectionScreen(
+export default function PipelineTemplateSelectionScreen(
   {
-    closePanel,
     setSelectedPlatformTemplate,
     setSelectedCustomerTemplate,
   }) {
@@ -87,11 +82,6 @@ function PipelineTemplateSelectionScreen(
     }
   };
 
-  const handleBackButton = () => {
-    setSelectedPlatformTemplate(undefined);
-    setSelectedCustomerTemplate(undefined);
-  };
-
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
@@ -112,36 +102,22 @@ function PipelineTemplateSelectionScreen(
     );
   };
 
-  const getBody = () => {
-    if (isLoading === true) {
-      return (
-        <CenterLoadingIndicator
-          type={"Catalog"}
-        />
-      );
-    }
-
+  if (isLoading === true) {
     return (
-      <div className={"px-3"}>
-        <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
-      </div>
+      <CenterLoadingIndicator
+        type={"Catalog"}
+      />
     );
-  };
+  }
 
   return (
-    <CreateCenterPanel
-      closePanel={closePanel}
-      objectType={pipelineMetadata?.type}
-      loadData={loadData}
-      showCloseButton={true}
-    >
-      {getBody()}
-    </CreateCenterPanel>
+    <div className={"px-3"}>
+      <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
+    </div>
   );
 }
 
 PipelineTemplateSelectionScreen.propTypes = {
-  closePanel: PropTypes.func,
+  setSelectedPlatformTemplate: PropTypes.func,
+  setSelectedCustomerTemplate: PropTypes.func,
 };
-
-export default PipelineTemplateSelectionScreen;

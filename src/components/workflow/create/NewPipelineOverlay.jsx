@@ -10,11 +10,11 @@ import CustomerPipelineTemplateCatalog from "components/workflow/catalog/private
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
-import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import pipelineMetadata from "@opsera/definitions/constants/pipelines/pipeline.metadata";
 import DeployPlatformPipelineOverlay from "components/workflow/catalog/platform/deploy/DeployPlatformPipelineOverlay";
 import DeployCustomerPipelineOverlay from "components/workflow/catalog/private/deploy/DeployCustomerPipelineOverlay";
+import PipelineTemplateSelectionScreen from "components/workflow/create/PipelineTemplateSelectionScreen";
 
 export default function NewPipelineOverlay(
   {
@@ -119,9 +119,10 @@ export default function NewPipelineOverlay(
     }
 
     return (
-      <div className={"px-3"}>
-        <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
-      </div>
+      <PipelineTemplateSelectionScreen
+        setSelectedPlatformTemplate={setSelectedPlatformTemplate}
+        setSelectedCustomerTemplate={setSelectedPlatformTemplate}
+      />
     );
   };
 
@@ -149,7 +150,7 @@ export default function NewPipelineOverlay(
       objectType={pipelineMetadata?.type}
       loadData={loadData}
       showCloseButton={true}
-      back
+      backButtonFunction={backButtonFunction}
     >
       {getBody()}
     </CreateCenterPanel>
