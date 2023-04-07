@@ -15,8 +15,6 @@ import SystemDrivenMaturityTimelineChart from './SystemDrivenMaturityTimelineCha
 import SystemDrivenMaturityChart from './SystemDrivenMaturityChart';
 
 function SystemDrivenMaturityGroupsTab ({ kpiConfiguration, dashboardData, orgTag, onSelectGroup }) {
-  const [groups, setGroups] = useState(null);
-
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metricData, setMetricData] = useState(null);
@@ -50,62 +48,57 @@ function SystemDrivenMaturityGroupsTab ({ kpiConfiguration, dashboardData, orgTa
       setIsLoading(true);
       const dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
-      const selectedDeploymentStages = getDeploymentStageFromKpiConfiguration(kpiConfiguration)?.length || 0;
       const jiraResolutionNames = getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names');
-      const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
-      console.log({ selectedDeploymentStages, jiraResolutionNames, useDashboardTags, dashboardOrgs, dashboardTags });
+      const response = await doraActions.systemDrivenMaturityGroups({
+        getAccessToken,
+        cancelSource,
+        kpiConfiguration,
+        dashboardTags,
+        dashboardOrgs,
+        jiraResolutionNames,
+        orgTag: orgTag?.name
+      });
 
-      if (selectedDeploymentStages && jiraResolutionNames?.length && useDashboardTags && dashboardOrgs?.length) {
-        const response = await doraActions.systemDrivenMaturityGroups({
-          getAccessToken,
-          cancelSource,
-          kpiConfiguration,
-          dashboardTags,
-          dashboardOrgs,
-          jiraResolutionNames
-        });
+      // const response = {
+      //   data: {
+      //     data: [
+      //       {
+      //         name: "Org Tag One",
+      //         score: MATURITY_SCORE_TEXT.HIGH,
+      //         previousScore: MATURITY_SCORE_TEXT.MEDIUM
+      //       },
+      //       {
+      //         name: "Org Tag Two",
+      //         score: MATURITY_SCORE_TEXT.MEDIUM,
+      //         previousScore: MATURITY_SCORE_TEXT.MEDIUM
+      //       },
+      //       {
+      //         name: "Org Tag Three",
+      //         score: MATURITY_SCORE_TEXT.LOW,
+      //         previousScore: MATURITY_SCORE_TEXT.MEDIUM
+      //       },
+      //       {
+      //         name: "Org Tag Four",
+      //         score: MATURITY_SCORE_TEXT.ELITE,
+      //         previousScore: MATURITY_SCORE_TEXT.LOW
+      //       }
+      //     ]
+      //   }
+      // };
 
-        // const response = {
-        //   data: {
-        //     data: [
-        //       {
-        //         name: "Org Tag One",
-        //         score: MATURITY_SCORE_TEXT.HIGH,
-        //         previousScore: MATURITY_SCORE_TEXT.MEDIUM
-        //       },
-        //       {
-        //         name: "Org Tag Two",
-        //         score: MATURITY_SCORE_TEXT.MEDIUM,
-        //         previousScore: MATURITY_SCORE_TEXT.MEDIUM
-        //       },
-        //       {
-        //         name: "Org Tag Three",
-        //         score: MATURITY_SCORE_TEXT.LOW,
-        //         previousScore: MATURITY_SCORE_TEXT.MEDIUM
-        //       },
-        //       {
-        //         name: "Org Tag Four",
-        //         score: MATURITY_SCORE_TEXT.ELITE,
-        //         previousScore: MATURITY_SCORE_TEXT.LOW
-        //       }
-        //     ]
-        //   }
-        // };
+      const groups = response?.data?.groups;
 
-        const groups = response?.data?.groups;
-
-        if (isMounted?.current === true && groups?.length) {
-          setMetricData(
-            groups.map(({ name, overallMaturityScoreText }) => ({
-              name,
-              score: overallMaturityScoreText,
-              previousScore: MATURITY_SCORE_TEXT.LOW
-            }))
-          );
-        } else {
-          setMetricData([]);
-        }
+      if (isMounted?.current === true && groups?.length) {
+        setMetricData(
+          groups.map(({ name, overallMaturityScoreText }) => ({
+            name,
+            score: overallMaturityScoreText,
+            previousScore: MATURITY_SCORE_TEXT.LOW
+          }))
+        );
+      } else {
+        setMetricData([]);
       }
     } catch (error) {
       if (isMounted?.current === true) {
