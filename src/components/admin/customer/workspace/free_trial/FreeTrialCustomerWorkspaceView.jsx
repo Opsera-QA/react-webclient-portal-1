@@ -4,7 +4,7 @@ import FreeTrialWorkspaceViewContainer from "components/workspace/trial/views/Fr
 import FreeTrialWorkspaceFilterModel from "components/workspace/trial/views/freeTrialWorkspace.filter.model";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import { useParams } from "react-router-dom";
-import { workspaceActions } from "components/workspace/workspace.actions";
+import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
 
 export default function FreeTrialCustomerWorkspaceView() {
   const { userId } = useParams();
@@ -46,7 +46,7 @@ export default function FreeTrialCustomerWorkspaceView() {
   };
 
   const getWorkspaceItems = async (newWorkspaceFilterModel = workspaceFilterModel) => {
-    const response = await workspaceActions.getFreeTrialCustomerWorkspaceItems(
+    const response = await freeTrialWorkspaceActions.getFreeTrialCustomerWorkspaceItems(
       getAccessToken,
       cancelTokenSource,
       userId,

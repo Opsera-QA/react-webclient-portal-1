@@ -40,7 +40,7 @@ function TasksSubNavigationBar({currentTab}) {
 
   return (
     <NavigationTabContainer>
-      <NavigationTab tabName={"tasks"} icon={faTasks} tabText={"Opsera Tasks"} handleTabClick={handleTabClick} activeTab={currentTab} />
+      <NavigationTab tabName={"tasks"} icon={faTasks} tabText={"Tasks"} handleTabClick={handleTabClick} activeTab={currentTab} />
       <NavigationTab tabName={"activity"} icon={faClipboardList} tabText={"Activity Logs"} handleTabClick={handleTabClick} activeTab={currentTab} />
       {getActiveViewerTab()}
     </NavigationTabContainer>

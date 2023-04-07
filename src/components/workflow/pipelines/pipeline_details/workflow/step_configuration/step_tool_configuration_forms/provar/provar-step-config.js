@@ -13,14 +13,14 @@ const provarStepFormMetadata = {
             id: "useSfdcOrg",
         },
         {
-            label: "Salesforce Tool",
+            label: "Salesforce Configurator Tool",
             id: "sfdcToolId",
             isRequiredFunction: (model) => {
                 return model?.getData("useSfdcOrg") === true;
             },
         },
         {
-            label: "SCM Tool",
+            label: "Source Code Management Tool",
             id: "gitToolId",
             isRequired: true
         },
@@ -35,7 +35,7 @@ const provarStepFormMetadata = {
             dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
         },
         {
-            label: "SCM Service Type",
+            label: "Source Code Management Type",
             id: "service",
             isRequired: true
         },

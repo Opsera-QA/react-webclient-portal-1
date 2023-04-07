@@ -1,4 +1,5 @@
 import { hasStringValue } from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
 const sessionHelper = {};
 
@@ -43,7 +44,12 @@ sessionHelper.replaceStoredUrlParameter = (queryParameter, value) => {
   const url = new URL(window.location.href);
   url.searchParams.delete(queryParameter);
 
-  if (value != null) {
+  const parsedObjectValue = DataParsingHelper.parseObject(value);
+  const parsedStringValue = DataParsingHelper.parseString(value);
+
+  if (parsedObjectValue) {
+    url.searchParams.set(queryParameter, JSON.stringify(parsedObjectValue));
+  } else if (parsedStringValue != null) {
     url.searchParams.set(queryParameter, value);
   }
 
@@ -56,11 +62,14 @@ sessionHelper.addStoredUrlParameter = (queryParameter, value) => {
   }
 
   const url = new URL(window.location.href);
+  const parsedObjectValue = DataParsingHelper.parseObject(value);
+  const parsedStringValue = DataParsingHelper.parseString(value);
 
-  if (value != null) {
+  if (parsedObjectValue) {
+    url.searchParams.set(queryParameter, JSON.stringify(parsedObjectValue));
+  } else if (parsedStringValue != null) {
     url.searchParams.set(queryParameter, value);
-  }
-  else {
+  } else {
     url.searchParams.delete(queryParameter);
   }
 
@@ -92,7 +101,7 @@ sessionHelper.deleteStoredSessionValue = (sessionKey) => {
   return sessionStorage.removeItem(sessionKey);
 };
 
-sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS = {
+sessionHelper.SUPPORTED_SESSION_STORAGE_KEYS = {
   WORKSPACE_FILTER_MODEL_DATA: "workspace-filter-model-data",
   TASK_FILTER_MODEL_DATA: "task-filter-model-data",
   TOOL_FILTER_MODEL_DATA: "tool-filter-model-data",
@@ -101,26 +110,23 @@ sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS = {
 };
 
 sessionHelper.clearOutSessionStorage = () => {
-  return sessionStorage.clear();
+  sessionStorage.clear();
 };
 
-// TODO: Make get/set/delete cookie functions
-// const getCookie = async (cancelSource = cancelTokenSource) => {
-//   setLoading(true);
-//   let newToolFilterModel = new ToolFilterModel();
-//   try {
-//     let storedViewType = cookieHelpers.getCookie("registry", "viewType");
-//
-//     if (storedViewType != null) {
-//       newToolFilterModel.setData("viewType", JSON.parse(storedViewType));
-//     }
-//   } catch (error) {
-//     cookieHelpers.setCookie("registry", "viewType", JSON.stringify(newToolFilterModel?.getData("viewType")));
-//     console.error("Error loading cookie. Setting to default");
-//     console.error(error);
-//   } finally {
-//     await loadData(newToolFilterModel, cancelSource);
-//   }
-// };
+sessionHelper.SUPPORTED_COOKIE_STORAGE_KEYS = {
+  COLLAPSE_SIDEBAR: "collapse_sidebar",
+};
+
+sessionHelper.getCookie = (cookieStorageKey) => {
+  return localStorage.getItem(cookieStorageKey);
+};
+
+sessionHelper.setCookie = (cookieName, value) => {
+  localStorage.setItem(cookieName, value);
+};
+
+sessionHelper.deleteCookie = (cookieName) => {
+  localStorage.removeItem(cookieName);
+};
 
 export default sessionHelper;

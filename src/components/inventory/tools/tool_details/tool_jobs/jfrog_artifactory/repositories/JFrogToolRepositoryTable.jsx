@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import CreateJFrogRepositoryOverlay from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/CreateJFrogRepositoryOverlay";
 import jfrogMavenRepositoryMetadata from "components/inventory/tools/tool_details/tool_jobs/jfrog_artifactory/repositories/jfrogMavenRepository.metadata";
-import {getTableTextColumn} from "components/common/table/table-column-helpers";
+import {getLimitedTableTextColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {faAbacus} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -35,7 +35,7 @@ function JFrogToolRepositoryTable(
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "key")),
-      getTableTextColumn(getField(fields, "description")),
+      getLimitedTableTextColumn(getField(fields, "description"), 100),
       getTableTextColumn(getField(fields, "packageType")),
       getTableTextColumn(getField(fields, "url"))
     ],

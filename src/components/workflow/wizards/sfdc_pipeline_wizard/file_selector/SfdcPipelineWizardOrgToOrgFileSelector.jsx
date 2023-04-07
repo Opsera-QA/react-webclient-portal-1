@@ -22,6 +22,8 @@ import SfdcPipelineWizardSfdcRulesInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSfdcRulesInput";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 import IconBase from "components/common/icons/IconBase";
+import SfdcPipelineWizardBasicSummary
+  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardBasicSummary";
 
 const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -93,7 +95,7 @@ const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipeli
           warningMessage={"Warning: Use of the component or keyword search filter in the tables below will not alter the final filtered file list."}
         />
         <Row className="mt-2 d-flex" style={{minWidth: "1400px"}}>
-          <Col xs={6} className={"pr-1"} style={{minWidth: "675px"}}>
+          <Col xs={12} className={"pr-1"} style={{minWidth: "675px"}}>
             <SfdcPipelineWizardOriginOrganizationFilesTable
               pipelineWizardModel={pipelineWizardModel}
               setFilteredFileCount={setFilteredFileCount}
@@ -102,9 +104,9 @@ const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipeli
               filePullCompleted={filePullCompleted}
             />
           </Col>
-          <Col xs={6} className={"pl-1"} style={{minWidth: "675px"}}>
+          {/* <Col xs={6} className={"pl-1"} style={{minWidth: "675px"}}>
             <SfdcPipelineWizardDestinationOrganizationFilesTable pipelineWizardModel={pipelineWizardModel} />
-          </Col>
+          </Col> */}
         </Row>
       </>
     );
@@ -113,6 +115,7 @@ const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipeli
   return (
     <div>
       <div className="h5">Salesforce Pipeline Run: File Selection for {pipelineWizardModel?.getArrayData("selectedComponentTypes")?.length} Components</div>
+      <SfdcPipelineWizardBasicSummary pipelineWizardModel={pipelineWizardModel} />
       <div className="text-muted mb-2">
         Select which files will have changes impacted in this pipeline run by using filter rules.
       </div>

@@ -26,6 +26,8 @@ import GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput
   from "components/tasks/details/tasks/merge_sync_task/git_to_git/inputs/GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput";
 import TaskWizardConfirmRepositorySettingsButton
   from "components/tasks/wizard/TaskWizardConfirmRepositorySettingsButton";
+import MergeSyncTaskJiraIssueMultiSelectInput 
+  from "components/tasks/details/tasks/merge_sync_task/inputs/MergeSyncTaskJiraIssueMultiSelectInput";
 
 export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
   {
@@ -34,6 +36,7 @@ export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
     setCurrentScreen,
     className,
   }) {
+
   const [gitConfigurationModel, setGitConfigurationModel] = useState(undefined);
   const { toastContext } = useComponentStateReference();
 
@@ -116,7 +119,15 @@ export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
       />
       <div>Please select the repository and branch you wish to use for this Salesforce workflow</div>
       <Row>
-        <Col lg={12}>
+      <Col lg={12}>
+        <MergeSyncTaskJiraIssueMultiSelectInput
+          model={gitConfigurationModel}
+          setModel={setModelFunction}
+          jiraToolId={gitConfigurationModel?.getData("jiraToolId")}
+          jiraProjectKey={gitConfigurationModel?.getData("jiraProjectKey")}
+        />
+      </Col>      
+      <Col lg={12}>
         <GitToGitMergeSyncTaskBitbucketWorkspaceSelectInput
           model={gitConfigurationModel}
           setModel={setModelFunction}
@@ -128,13 +139,14 @@ export default function GitToGitMergeSyncTaskWizardPreRunTaskScreen(
             setModel={setModelFunction}
           />
         </Col>
+        {(gitConfigurationModel?.getData("jiraIssueIds") === undefined || gitConfigurationModel?.getData("jiraIssueIds")?.length === 0) && 
         <Col lg={12}>
           <GitToGitMergeSyncTaskSourceBranchSelectInput
             model={gitConfigurationModel}
             setModel={setModelFunction}
             targetBranch={gitConfigurationModel?.getData("targetBranch")}
           />
-        </Col>
+        </Col>}
         <Col lg={12}>
           <GitToGitMergeSyncTaskCreateNewTargetBranchToggleInput
             model={gitConfigurationModel}

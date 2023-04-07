@@ -17,7 +17,7 @@ const anchoreIntegratorStepConfigurationMetadata = {
       isRequired: true,
     },
     {
-      label: "ECR Step Push ID",
+      label: "ECR Push Step",
       id: "ecrPushStepId",
       isRequired: true,
       formText: `

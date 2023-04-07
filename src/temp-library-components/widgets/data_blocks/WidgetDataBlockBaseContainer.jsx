@@ -63,7 +63,7 @@ function WidgetDataBlockBaseContainer(
     if (title) {
       return (
         <>
-          <div className={"w-100 d-flex content-block-header-inverse"}>
+          <div className={"w-100 d-flex px-3 py-2"}>
             <FilterTitleBar
               isLoading={isLoading}
               title={title}
@@ -104,7 +104,7 @@ function WidgetDataBlockBaseContainer(
       className={getClassNames()}
       onClick={handleOnClickFunction}
       style={{
-        boxShadow: "0 0 40px rgba(0, 0, 0, 0.075)",
+        boxShadow: "0 0 40px rgba(0, 0, 0, 0.175)",
         minHeight: getHeight(),
         // maxHeight: getHeight(),
         minWidth: getWidth(),

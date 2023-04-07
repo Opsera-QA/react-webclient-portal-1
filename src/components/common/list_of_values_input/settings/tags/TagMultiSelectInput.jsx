@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
@@ -17,7 +17,7 @@ function TagMultiSelectInput(
     inputHelpOverlay,
     helpTooltipText,
   }) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const field = dataObject.getFieldById(fieldName);
 
   if (field == null) {
     return null;
@@ -36,8 +36,8 @@ function TagMultiSelectInput(
       />
       <TagMultiSelectInputBase
         fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
+        model={dataObject}
+        setModel={setDataObject}
         setDataFunction={setDataFunction}
         disabled={disabled}
       />

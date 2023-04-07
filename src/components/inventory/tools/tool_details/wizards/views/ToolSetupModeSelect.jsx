@@ -9,7 +9,6 @@ import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeade
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import IconBase from "../../../../../common/icons/IconBase";
 import { faGear, faWandMagicSparkles } from "@fortawesome/pro-light-svg-icons";
-import SelectionCardColumn from "../../../../../../temp-library-components/cards/SelectionCardColumn";
 import OpseraInfinityLogo from "../../../../../logo/OpseraInfinityLogo";
 import OverlayWizardButtonContainerBase
   from "../../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
@@ -24,20 +23,22 @@ export const TOOL_CREATION_OPTION_LABELS = {
   ADVANCED: "Advanced Settings",
 };
 
-function ToolSetupModeSelect({
-  className,
-  setupMode,
-  setSetupMode,
-  setCurrentScreen,
-  setButtonContainer,
-  REGISTRY_WIZARD_SCREENS,
-}) {
+function ToolSetupModeSelect(
+  {
+    className,
+    setupMode,
+    setSetupMode,
+    setCurrentScreen,
+    setButtonContainer,
+    backButtonFunction,
+  }) {
   const { themeConstants } = useComponentStateReference();
 
   useEffect(() => {
     if (setButtonContainer && setCurrentScreen) {
       setButtonContainer(
           <OverlayWizardButtonContainerBase
+            backButtonFunction={backButtonFunction}
           />
       );
     }
@@ -144,7 +145,7 @@ ToolSetupModeSelect.propTypes = {
   setSetupMode: PropTypes.func,
   setCurrentScreen: PropTypes.func,
   setButtonContainer: PropTypes.func,
-  REGISTRY_WIZARD_SCREENS: PropTypes.object,
+  backButtonFunction: PropTypes.func,
 };
 
 export default ToolSetupModeSelect;

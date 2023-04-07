@@ -22,7 +22,6 @@ function TagsUsedInDashboardTable({ data, loadData, isLoading}) {
     () => [
       getTableTextColumn(getField(fields, "name")),
       getLimitedTableTextColumn(getField(fields, "description"),100),
-      getTableTextColumn(getField(fields, "_id")),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableBooleanIconColumn(getField(fields, "active")),
     ],

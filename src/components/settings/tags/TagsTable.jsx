@@ -32,7 +32,6 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, i
     () => [
       getFormattedLabelWithFunctionColumnDefinition(getField(fields, "type"), tagTypeConstants.getTagTypeLabel),
       getTableTextColumn(getField(fields, "value")),
-      getTableTextColumn(getField(fields, "_id")),
       getTableBooleanIconColumn(getField(fields, "active")),
       getTableDateColumn(getField(fields, "createdAt")),
     ],

@@ -12,7 +12,15 @@ import useComponentStateReference from "hooks/useComponentStateReference";
 import OverlayWizardButtonContainerBase
   from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 
-function ToolEditorPanel({ toolData, handleClose, setButtonContainer, setCurrentScreen, setToolData }) {
+function ToolEditorPanel(
+  {
+    toolData,
+    handleClose,
+    setButtonContainer,
+    setCurrentScreen,
+    setToolData,
+    backButtonFunction,
+  }) {
   const [toolDataDto, setToolDataDto] = useState(undefined);
   const {
     isSaasUser,
@@ -68,8 +76,9 @@ function ToolEditorPanel({ toolData, handleClose, setButtonContainer, setCurrent
       model={toolDataDto}
       setModel={setToolDataDto}
       showBooleanToggle={true}
-      // handleClose={handleClose}
+      handleClose={setButtonContainer && setCurrentScreen ? undefined : handleClose}
       className={"mx-3 mb-2"}
+      backButtonFunction={setButtonContainer && setCurrentScreen ? undefined : backButtonFunction}
     >
       <Row>
         <Col lg={6}>
@@ -102,7 +111,8 @@ ToolEditorPanel.propTypes = {
   setToolData: PropTypes.func,
   handleClose: PropTypes.func,
   setButtonContainer: PropTypes.func,
-  setCurrentScreen: PropTypes.func
+  setCurrentScreen: PropTypes.func,
+  backButtonFunction: PropTypes.func,
 };
 
 export default ToolEditorPanel;

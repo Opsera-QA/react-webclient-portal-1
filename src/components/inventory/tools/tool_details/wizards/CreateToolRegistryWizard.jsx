@@ -13,9 +13,7 @@ import ToolBasicInfo from "./views/ToolBasicInfo";
 import ToolConnectionPanel from "../ToolConnectionPanel";
 import ToolConnectionCheck from "./views/ToolConnectionCheck";
 import ToolEditorPanel from "../ToolEditorPanel";
-import {capitalizeFirstLetter} from "../../../../common/helpers/string-helpers";
-import OverlayWizardButtonContainerBase
-  from "../../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 export const REGISTRY_WIZARD_SCREENS = {
   MODE_SELECT: "mode_select",
@@ -26,7 +24,7 @@ export const REGISTRY_WIZARD_SCREENS = {
   TOOL_DETAIL: "tool_detail"
 };
 
-export default function CreateToolRegistryWizard({ loadData }) {
+export default function CreateToolRegistryWizard({ loadData, backButtonFunction, }) {
   const [currentScreen, setCurrentScreen] = useState(
     REGISTRY_WIZARD_SCREENS.MODE_SELECT,
   );
@@ -37,11 +35,11 @@ export default function CreateToolRegistryWizard({ loadData }) {
   const { isMounted, toastContext } = useComponentStateReference();
 
   const REGISTRY_WIZARD_TITLES = {
-    MODE_SELECT: "Step 1: Select tool creation method",
+    MODE_SELECT: "Step 1: Select Tool Creation Method",
     TOOL_IDENTIFIER_SELECT: "Step 2: Select Tool",
-    BASIC_TOOL_INFO: "Step 3: Enter Basic tool information",
-    CONNECTION_INFO: `Step 4: Configure ${capitalizeFirstLetter(toolModel?.getData("tool_identifier"))} connection information`,
-    CONNECTION_TEST: `Step 5: Validate ${capitalizeFirstLetter(toolModel?.getData("tool_identifier"))} connection information`,
+    BASIC_TOOL_INFO: "Step 3: Enter Basic Tool Information",
+    CONNECTION_INFO: `Step 4: Configure ${capitalizeFirstLetter(toolModel?.getData("tool_identifier"))} Connection Information`,
+    CONNECTION_TEST: `Step 5: Validate ${capitalizeFirstLetter(toolModel?.getData("tool_identifier"))} Connection Information`,
   };
   const [overlayTitle, setOverlayTitle] = useState(REGISTRY_WIZARD_TITLES.MODE_SELECT);
 
@@ -79,7 +77,7 @@ export default function CreateToolRegistryWizard({ loadData }) {
     history.push(history.location);
   };
 
-  const backButtonFunction = () => {
+  const handleBackButtonFunction = () => {
     if (currentScreen === "tool_identifier_select") {
       setCurrentScreen(REGISTRY_WIZARD_SCREENS.MODE_SELECT);
     }
@@ -155,6 +153,7 @@ export default function CreateToolRegistryWizard({ loadData }) {
             setSetupMode={setSetupMode}
             setupMode={setUpMode}
             className={"py-5"}
+            backButtonFunction={backButtonFunction}
           />
         );
       case REGISTRY_WIZARD_SCREENS.TOOL_IDENTIFIER_SELECT:
@@ -176,7 +175,7 @@ export default function CreateToolRegistryWizard({ loadData }) {
             toolData={toolModel}
             setButtonContainer={setButtonContainer}
             setCurrentScreen={setCurrentScreen}
-            backButtonFunction={backButtonFunction}
+            backButtonFunction={handleBackButtonFunction}
             handleClose={closeOverlayFunction}
           />
         );
@@ -199,4 +198,5 @@ export default function CreateToolRegistryWizard({ loadData }) {
 
 CreateToolRegistryWizard.propTypes = {
   loadData: PropTypes.func,
+  backButtonFunction: PropTypes.func,
 };

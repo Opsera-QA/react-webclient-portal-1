@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import {
+  getLimitedTableTextColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -28,7 +29,7 @@ export default function OrganizationSettingsTable(
       getTableTextColumn(getField(fields, "orgOwner")),
       getTableTextColumn(getField(fields, "orgOwnerEmail")),
       getTableTextColumn(getField(fields, "accountName")),
-      getTableTextColumn(getField(fields, "description")),
+      getLimitedTableTextColumn(getField(fields, "description"), 100),
       getTableTextColumn(getField(fields, "orgDomain")),
     ],
     []

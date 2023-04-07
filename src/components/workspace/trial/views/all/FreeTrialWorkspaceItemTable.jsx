@@ -35,7 +35,6 @@ export default function FreeTrialWorkspaceItemTable(
       ),
       getTableTextColumn(getField(fields, "name")),
       getTableDateTimeColumn(getField(fields, "createdAt")),
-      getTableTextColumn(getField(fields, "_id")),
     ],
     [],
   );

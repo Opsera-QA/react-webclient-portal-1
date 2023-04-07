@@ -22,7 +22,6 @@ export default function FreeTrialWorkspaceRegistryTable(
     () => [
       getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "tool_identifier"), "no-wrap-inline"),
-      getTableTextColumn(getField(fields, "_id")),
       getTableDateColumn(getField(fields, "createdAt")),
     ],
     [fields]

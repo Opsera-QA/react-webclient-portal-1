@@ -18,7 +18,7 @@ function TwistlockStepConfigurationHelpDocumentation() {
           <ol>
             <li>Once the initial Step Setup is configured with the Twistlock tool, set the following values:
               <ul style={{listStyleType: "none"}}>
-                <li><b>Jenkins Tool Selection</b> - Select a configured Jenkins tool.</li>
+                <li><b>Jenkins Tool</b> - Select a configured Jenkins tool.</li>
                 <li><b>Twistlock Tool</b> - Select the properly configured Twistlock tool.</li>
                 <li><b>Docker Build Step</b> - Select the Docker Build pipeline step.</li>
                 <li><b>Compliance Threshold</b> - Select a compliance threshold Level from the following actions: <b>Critical</b>, <b>High</b>, <b>Medium</b>, <b>Low</b> or <b>Total</b>. Provide a <b>Count</b> for the threshold and click <b>+Add Threshold</b>.</li>

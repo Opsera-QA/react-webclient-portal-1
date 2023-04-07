@@ -14,7 +14,7 @@ const buildkiteMetadata = {
       isRequired: true
     },
     {
-      label: "SCM Tool",
+      label: "Source Code Management Tool",
       id: "gitToolId",
       formText: "Selected SCM info must match the data configured in the buildkite pipeline"
     },
@@ -31,7 +31,7 @@ const buildkiteMetadata = {
       formText: "Selected SCM info must match the data configured in the buildkite pipeline"
     },
     {
-      label: "SCM Service Type",
+      label: "Source Code Management Type",
       id: "service",
       formText: "Selected SCM info must match the data configured in the buildkite pipeline"
     },

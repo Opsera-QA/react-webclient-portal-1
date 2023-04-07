@@ -44,12 +44,12 @@ const terrascanStepFormMetadata = {
     },
     
     {
-      label: "Select Account",
+      label: "Source Code Management Tool",
       id: "gitCredential",
       isRequired: true
     },
     {
-      label: "Select Account",
+      label: "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true
     },
@@ -60,7 +60,7 @@ const terrascanStepFormMetadata = {
     },
     
     {
-      label: "Type of GIT Service",
+      label: "Source Code Management Type",
       id: "service",
       isRequired: true
     },

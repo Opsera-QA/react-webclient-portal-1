@@ -15,7 +15,14 @@ import OverlayWizardButtonContainerBase
   from "../../../../temp-library-components/button/overlay/OverlayWizardButtonContainerBase";
 import VanityButtonBase from "../../../../temp-library-components/button/VanityButtonBase";
 
-function ToolIdentifierSelectionScreen({toolModel, setToolModel, closePanel, setButtonContainer, setCurrentScreen}) {
+function ToolIdentifierSelectionScreen(
+  {
+    toolModel,
+    setToolModel,
+    closePanel,
+    setButtonContainer,
+    setCurrentScreen,
+  }) {
   const [isLoading, setLoading] = useState(false);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
   const [toolIdentifierFilterModel, setToolIdentifierFilterModel] = useState(new CreateToolFilterModel());
@@ -165,7 +172,7 @@ ToolIdentifierSelectionScreen.propTypes = {
   setToolModel: PropTypes.func,
   closePanel: PropTypes.func,
   setButtonContainer: PropTypes.func,
-  setCurrentScreen: PropTypes.func
+  setCurrentScreen: PropTypes.func,
 };
 
 export default ToolIdentifierSelectionScreen;

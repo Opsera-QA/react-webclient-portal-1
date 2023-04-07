@@ -31,7 +31,7 @@ export default function Sidebar({ hideSideBar }) {
   const {
     featureFlagModel,
   } = useGetOrganizationSettingsFeatureFlagModelByName(featureFlagConstants.FEATURE_FLAG_NAMES.SHOW_INSIGHTS_VNEXT_SIDEBAR_LINK);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(DataParsingHelper.parseBooleanV2(sessionHelper.getStoredSessionValueByKey("SIDEBAR_COLLAPSED"), false));
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(DataParsingHelper.parseBooleanV2(sessionHelper.getCookie(sessionHelper.SUPPORTED_COOKIE_STORAGE_KEYS.COLLAPSE_SIDEBAR), true));
 
   const getVnextSidebarLink = () => {
     if (featureFlagModel?.getData("active") === true) {
@@ -45,7 +45,7 @@ export default function Sidebar({ hideSideBar }) {
 
   const getClassNames = () => {
     if (isSidebarCollapsed === true) {
-      return "d-block sidebar-container";
+      return "d-block sidebar-container mx-2";
     }
 
     if (featureFlagModel?.getData("active") === true) {
@@ -63,7 +63,7 @@ export default function Sidebar({ hideSideBar }) {
     <div
       className={getClassNames()}
     >
-      <div className={"sticky-top py-5 sidebar-menu"}>
+      <div className={"sticky-top py-3 sidebar-menu"}>
         <HomeSidebarNavigationLink
           isSidebarCollapsed={isSidebarCollapsed}
         />

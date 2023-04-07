@@ -7,6 +7,7 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import Row from "react-bootstrap/Row";
 import CenterOverlayContainerWrapper from "components/common/overlays/center/CenterOverlayContainerWrapper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 
 export const CENTER_OVERLAY_SIZES = {
   FULL_WIDTH: "full_width", // TODO: Remove?
@@ -42,6 +43,7 @@ function CenterOverlayContainer(
     customLoadingMessage,
     size,
     externalHelpPageLink,
+    backButtonFunction,
   }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -51,16 +53,39 @@ function CenterOverlayContainer(
     }
   }, []);
 
-  const getButtons = () => {
+  const closePanelFunction = () => {
+    if (closePanel) {
+      closePanel();
+    } else {
+      toastContext.clearOverlayPanel();
+    }
+  };
+
+  const getButtonContainer = () => {
     if (buttonContainer) {
-      return buttonContainer;
+      return (
+        <div className={"mt-auto bg-white"}>
+          {buttonContainer}
+        </div>
+      );
     }
 
     if (showCloseButton !== false) {
       return (
-        <SaveButtonContainer>
-          <CloseButton className={"p-3"} size={"sm"} closeEditorCallback={closePanel} showUnsavedChangesMessage={false} />
-        </SaveButtonContainer>
+        <div className={"mt-auto bg-white p-3"}>
+          <SaveButtonContainer
+            extraButtons={
+              <BackButtonBase
+                backButtonFunction={backButtonFunction}
+              />
+            }
+          >
+            <CloseButton
+              closeEditorCallback={closePanelFunction}
+              showUnsavedChangesMessage={false}
+            />
+          </SaveButtonContainer>
+        </div>
       );
     }
   };
@@ -92,7 +117,7 @@ function CenterOverlayContainer(
             className={`content-card-1 bg-white`}
           >
             <OverlayTitleBar
-              handleClose={closePanel}
+              handleClose={closePanelFunction}
               isLoading={isLoading}
               titleText={titleText}
               titleIcon={titleIcon}
@@ -105,9 +130,7 @@ function CenterOverlayContainer(
               {showToasts && toastContext?.getInlineBanner()}
               {getBody()}
             </div>
-            <div className={"mt-auto bg-white"}>
-              {getButtons()}
-            </div>
+            {getButtonContainer()}
           </div>
         </CenterOverlayContainerWrapper>
       </Row>
@@ -131,6 +154,7 @@ CenterOverlayContainer.propTypes = {
   size: PropTypes.string,
   customLoadingMessage: PropTypes.string,
   externalHelpPageLink: PropTypes.string,
+  backButtonFunction: PropTypes.func,
 };
 
 CenterOverlayContainer.defaultProps = {

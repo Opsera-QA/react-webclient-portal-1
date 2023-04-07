@@ -3,7 +3,6 @@ import React from "react";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import SelectionIconCardBase from "components/common/card_containers/SelectionIconCardBase";
 import { faExclamationTriangle } from "@fortawesome/pro-light-svg-icons";
-import CreateWorkflowWizard from "components/wizard/free_trial/workflows/CreateWorkflowWizard";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
 export default function WarningCard(

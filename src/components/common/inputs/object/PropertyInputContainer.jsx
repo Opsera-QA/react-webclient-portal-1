@@ -56,7 +56,7 @@ function PropertyInputContainer(
 
   return (
     <div className="object-properties-input">
-      <div className="content-container">
+      <div className="content-container content-container-curved-top">
         <InputTitleBar
           icon={titleIcon}
           isLoading={isLoading}

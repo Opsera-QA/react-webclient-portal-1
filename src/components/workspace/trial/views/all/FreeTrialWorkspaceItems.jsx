@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import { workspaceActions } from "components/workspace/workspace.actions";
+import { freeTrialWorkspaceActions } from "components/workspace/trial/freeTrialWorkspace.actions";
 import FreeTrialWorkspaceItemViews from "components/workspace/trial/views/all/FreeTrialWorkspaceItemViews";
 
 export default function FreeTrialWorkspaceItems(
@@ -45,7 +45,7 @@ export default function FreeTrialWorkspaceItems(
   };
 
   const getWorkspaceItems = async () => {
-    const response = await workspaceActions.getFreeTrialWorkspaceItems(
+    const response = await freeTrialWorkspaceActions.getFreeTrialWorkspaceItems(
       getAccessToken,
       cancelTokenSource,
       workspaceFilterModel?.getFilterValue("type"),

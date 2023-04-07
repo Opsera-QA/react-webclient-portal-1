@@ -29,7 +29,7 @@ const jfrogStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Repository Name",
+      label: "Repository",
       id: "repositoryName",
     },
     {
@@ -96,7 +96,7 @@ const jfrogStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Repository Name",
+      label: "Repository",
       id: "repositoryName",
     },
     {

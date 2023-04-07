@@ -423,7 +423,6 @@ a.text-primary:hover, a.text-primary:focus {
 
 /* Table Style Changes */
 .filter-title-bar {
-    border: 1px solid #e4e4e4;
     border-collapse: collapse;
 }
 

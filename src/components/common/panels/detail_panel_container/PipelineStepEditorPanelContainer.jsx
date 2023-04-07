@@ -19,6 +19,9 @@ function PipelineStepEditorPanelContainer(
     showIncompleteDataMessage,
     showSuccessToasts,
     clearChangeMapAfterSave,
+    customIncompleteDataMessage,
+    customSuccessMessage,
+    buttonContainerClassName,
   }) {
   const getRequiredFieldsMessage = () => {
     if (showRequiredFieldsMessage !== false) {
@@ -37,16 +40,22 @@ function PipelineStepEditorPanelContainer(
   return (
     <div>
       <div>{children}</div>
-      <PipelineStepConfigurationButtonContainer
-        showIncompleteDataMessage={showIncompleteDataMessage}
-        persistRecord={persistRecord}
-        recordDto={recordDto}
-        handleClose={handleClose}
-        isStrict={isStrict}
-        disableSaveButton={disableSaveButton}
-        showSuccessToasts={showSuccessToasts}
-        clearChangeMapAfterSave={clearChangeMapAfterSave}
-      />
+      <div className={"d-flex"}>
+        <div className={buttonContainerClassName}>
+          <PipelineStepConfigurationButtonContainer
+            showIncompleteDataMessage={showIncompleteDataMessage}
+            persistRecord={persistRecord}
+            recordDto={recordDto}
+            handleClose={handleClose}
+            isStrict={isStrict}
+            disableSaveButton={disableSaveButton}
+            showSuccessToasts={showSuccessToasts}
+            clearChangeMapAfterSave={clearChangeMapAfterSave}
+            customIncompleteDataMessage={customIncompleteDataMessage}
+            customSuccessMessage={customSuccessMessage}
+          />
+        </div>
+      </div>
       {getRequiredFieldsMessage()}
     </div>
   );
@@ -65,6 +74,9 @@ PipelineStepEditorPanelContainer.propTypes = {
   showIncompleteDataMessage: PropTypes.bool,
   showSuccessToasts: PropTypes.bool,
   clearChangeMapAfterSave: PropTypes.bool,
+  customIncompleteDataMessage: PropTypes.string,
+  customSuccessMessage: PropTypes.string,
+  buttonContainerClassName: PropTypes.string,
 };
 
 export default PipelineStepEditorPanelContainer;

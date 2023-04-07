@@ -9,7 +9,7 @@ const ansibleStepMetadata = {
       isRequired: true
     },
     {
-      label: "SCM Tool",
+      label: "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true
     },
@@ -25,7 +25,7 @@ const ansibleStepMetadata = {
       dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
     {
-      label: "Source Control Management Service Type",
+      label: "Source Code Management Type",
       id: "service",
     },
     {

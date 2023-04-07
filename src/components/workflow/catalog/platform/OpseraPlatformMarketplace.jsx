@@ -7,7 +7,7 @@ import PlatformPipelineTemplateCardView from "components/workflow/catalog/platfo
 import useGetPlatformPipelineTemplates from "hooks/workflow/catalog/platform/useGetPlatformPipelineTemplates";
 import PlatformTagFilter from "components/common/filters/tags/tag/PlatformTagFilter";
 
-export default function OpseraPipelineMarketplace({activeTemplates}) {
+export default function OpseraPipelineMarketplace({activeTemplates, selectTemplateFunction, }) {
   const {
     pipelineTemplates,
     pipelineTemplateFilterModel,
@@ -27,6 +27,7 @@ export default function OpseraPipelineMarketplace({activeTemplates}) {
         setPipelineTemplateFilterModel={setPipelineTemplateFilterModel}
         activeTemplates={activeTemplates}
         error={error}
+        selectTemplateFunction={selectTemplateFunction}
       />
     );
   };
@@ -77,5 +78,6 @@ export default function OpseraPipelineMarketplace({activeTemplates}) {
 }
 
 OpseraPipelineMarketplace.propTypes = {
-  activeTemplates: PropTypes.array
+  activeTemplates: PropTypes.array,
+  selectTemplateFunction: PropTypes.func,
 };

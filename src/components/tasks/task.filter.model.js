@@ -70,7 +70,7 @@ export class TaskFilterModel extends FilterModelBase {
     this.loadData = loadData;
 
     if (useUrlParameters !== false) {
-      this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.TASK_FILTER_MODEL_DATA;
+      this.sessionDataKey = sessionHelper.SUPPORTED_SESSION_STORAGE_KEYS.TASK_FILTER_MODEL_DATA;
       this.enableUrlUpdatesWithQueryParameters();
       this.unpackUrlParameters();
     }
