@@ -82,7 +82,9 @@ const OrgTagRow = ({ orgTag, onRowSelect }) => {
   };
 
   const onClickHandler = () => {
-    onRowSelect(orgTag);
+    if (onRowSelect) {
+      onRowSelect(orgTag);
+    }
   };
 
   return (
