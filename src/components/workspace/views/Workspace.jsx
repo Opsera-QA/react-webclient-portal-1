@@ -12,6 +12,7 @@ export default function Workspace() {
     error,
     loadData,
   } = useGetWorkspaceItems();
+  
   return (
     <ScreenContainer
       breadcrumbDestination={"workspace"}
