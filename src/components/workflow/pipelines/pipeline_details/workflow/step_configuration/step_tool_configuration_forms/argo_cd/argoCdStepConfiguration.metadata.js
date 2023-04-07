@@ -4,7 +4,7 @@ export const ArgoCdStepConfigurationMetadata = {
   type: "Argo CD Step Configuration",
   fields: [
     {
-      label: "Source Code Management Tool Type",
+      label: "Source Code Management Type",
       id: "type",
       isRequired: true,
     },
@@ -75,7 +75,7 @@ export const ArgoCdStepConfigurationMetadata = {
       id: "bitbucketWorkspace",
     },
     {
-      label: "BitBucket Workspace/Project",
+      label: "Workspace/Project",
       id: "bitbucketWorkspaceName",
     },
     {

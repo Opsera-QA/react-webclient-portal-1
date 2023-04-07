@@ -12,12 +12,12 @@ const sfdcPipelineStepConfigurationMetadata = {
       isRequired: true
     },
     {
-      label: "Platform",
+      label: "Source Code Management Type",
       id: "service",
       isRequired: true
     },
     {
-      label: "Account ID",
+      label: "Source Code Management Tool",
       id: "accountId",
       isRequired: true
     },
