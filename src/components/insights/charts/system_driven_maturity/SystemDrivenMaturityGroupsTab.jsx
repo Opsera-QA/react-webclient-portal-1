@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 import Container from "react-bootstrap/Container";
 import { AuthContext } from "contexts/AuthContext";
 import {
-  getDeploymentStageFromKpiConfiguration,
   getResultFromKpiConfiguration,
-  getUseDashboardTagsFromKpiConfiguration,
   MATURITY_SCORE_TEXT
 } from "../charts-helpers";
 import doraActions from "../dora/dora.action";
@@ -59,33 +57,6 @@ function SystemDrivenMaturityGroupsTab ({ kpiConfiguration, dashboardData, orgTa
         jiraResolutionNames,
         orgTag: orgTag?.name
       });
-
-      // const response = {
-      //   data: {
-      //     data: [
-      //       {
-      //         name: "Org Tag One",
-      //         score: MATURITY_SCORE_TEXT.HIGH,
-      //         previousScore: MATURITY_SCORE_TEXT.MEDIUM
-      //       },
-      //       {
-      //         name: "Org Tag Two",
-      //         score: MATURITY_SCORE_TEXT.MEDIUM,
-      //         previousScore: MATURITY_SCORE_TEXT.MEDIUM
-      //       },
-      //       {
-      //         name: "Org Tag Three",
-      //         score: MATURITY_SCORE_TEXT.LOW,
-      //         previousScore: MATURITY_SCORE_TEXT.MEDIUM
-      //       },
-      //       {
-      //         name: "Org Tag Four",
-      //         score: MATURITY_SCORE_TEXT.ELITE,
-      //         previousScore: MATURITY_SCORE_TEXT.LOW
-      //       }
-      //     ]
-      //   }
-      // };
 
       const groups = response?.data?.groups;
 
