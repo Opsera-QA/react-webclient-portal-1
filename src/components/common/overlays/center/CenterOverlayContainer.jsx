@@ -72,7 +72,7 @@ function CenterOverlayContainer(
 
     if (showCloseButton !== false) {
       return (
-        <div className={"mt-auto bg-white"}>
+        <div className={"mt-auto bg-white p-3"}>
           <SaveButtonContainer
             extraButtons={
               <BackButtonBase
@@ -80,7 +80,10 @@ function CenterOverlayContainer(
               />
             }
           >
-            <CloseButton className={"p-3"} size={"sm"} closeEditorCallback={closePanel} showUnsavedChangesMessage={false} />
+            <CloseButton
+              closeEditorCallback={closePanel}
+              showUnsavedChangesMessage={false}
+            />
           </SaveButtonContainer>
         </div>
       );
