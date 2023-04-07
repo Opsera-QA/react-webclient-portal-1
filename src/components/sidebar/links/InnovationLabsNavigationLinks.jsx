@@ -1,11 +1,7 @@
 import React from "react";
 import SidebarNavigationLinkBase from "components/common/links/sidebar/SidebarNavigationLinkBase";
-import {faChartNetwork} from "@fortawesome/pro-light-svg-icons";
+import {faChartArea} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
-import useGetOrganizationSettingsFeatureFlagModelByName
-  from "hooks/settings/organization_settings/feature_flags/useGetOrganizationSettingsFeatureFlagModelByName";
-import featureFlagConstants
-  from "@opsera/definitions/constants/settings/organization-settings/feature_flags/featureFlag.constants";
 import SidebarSubheaderText from "components/sidebar/SidebarSubheaderText";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
@@ -25,7 +21,7 @@ export default function InnovationLabsNavigationLinks({ isSidebarCollapsed, }) {
       <SidebarNavigationLinkBase
         link={getVnextLink()}
         label={"Insights 2.0 (Beta)"}
-        icon={faChartNetwork}
+        icon={faChartArea}
         isSidebarCollapsed={isSidebarCollapsed}
         isExternalLink={true}
       />
