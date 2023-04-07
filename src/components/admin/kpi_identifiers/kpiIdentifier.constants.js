@@ -181,6 +181,9 @@ kpiIdentifierConstants.KPI_IDENTIFIERS = {
   //DORA
   DORA_JIRA_GITLAB_ROLLED_UP: "dora-jira-gitlab-rolled-up",
 
+  // SDM
+  SYSTEM_DRIVEN_MATURITY: "system-driven-maturity",
+
   // Coverity
   COVERITY_ISSUES_BY_CATEGORY_TREND: "coverity-issues-by-category-trend",
 
