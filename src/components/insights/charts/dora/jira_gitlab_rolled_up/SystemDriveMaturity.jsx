@@ -189,7 +189,7 @@ function Overlay ({ kpiConfiguration, dashboardData, orgTag }) {
   const breadcrumbBar = (
     <>
       <button type="button" onClick={onGoToGroupsTab}>GROUPS</button>
-      {selectedGroup && <h5>TODO: GROUP NAME</h5>}
+      {selectedGroup && <h5>{selectedGroup.name}</h5>}
     </>
   );
 
@@ -198,7 +198,7 @@ function Overlay ({ kpiConfiguration, dashboardData, orgTag }) {
       return 'No organization tag';
     }
 
-    if (activeTab === "groups") {
+    if (activeTab === OVERLAY_TABS.GROUPS) {
       return (
         <GroupsTab
             kpiConfiguration={kpiConfiguration}
@@ -209,7 +209,7 @@ function Overlay ({ kpiConfiguration, dashboardData, orgTag }) {
       );
     }
 
-    if (activeTab === "projects") {
+    if (activeTab === OVERLAY_TABS.PROJECTS) {
       return (
         <ProjectsTab
           kpiConfiguration={kpiConfiguration}
