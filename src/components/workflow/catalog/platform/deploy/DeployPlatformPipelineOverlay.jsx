@@ -13,10 +13,12 @@ import DeployPlatformPipelineButton from "components/workflow/catalog/platform/d
 import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInputBase from "components/common/inputs/text/text_area/TextAreaInputBase";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 
 export default function DeployPlatformPipelineOverlay(
   {
     platformPipelineTemplateModel,
+    backButtonFunction,
   }) {
   const [pipelineTemplateModelCopy, setPipelineTemplateModelCopy] = useState(undefined);
   const {
@@ -36,7 +38,14 @@ export default function DeployPlatformPipelineOverlay(
 
   const getButtonContainer = () => {
     return (
-      <ButtonContainerBase className={"bg-white"}>
+      <ButtonContainerBase
+        className={"bg-white"}
+        leftSideButtons={
+          <BackButtonBase
+            backButtonFunction={backButtonFunction}
+          />
+        }
+      >
         <div className={"m-3 d-flex"}>
           <CancelButton
             cancelFunction={closePanelFunction}
@@ -110,4 +119,5 @@ export default function DeployPlatformPipelineOverlay(
 
 DeployPlatformPipelineOverlay.propTypes = {
   platformPipelineTemplateModel: PropTypes.object,
+  backButtonFunction: PropTypes.func,
 };

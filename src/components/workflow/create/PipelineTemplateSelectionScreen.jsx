@@ -1,20 +1,27 @@
-import React, {useState, useEffect} from "react";
-import pipelineActions from "components/workflow/pipeline-actions";
-import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
-import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import CatalogHelpDocumentation from "components/common/help/documentation/pipelines/catalog/CatalogHelpDocumentation";
-import WorkflowSubNavigationBar from "components/workflow/WorkflowSubNavigationBar";
+import React, {useEffect, useState} from "react";
+import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
-import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
-import CustomTab from "components/common/tabs/CustomTab";
-import CustomerPipelineTemplateCatalog from "components/workflow/catalog/private/CustomerPipelineTemplateCatalog";
-import OpseraPipelineMarketplace from "components/workflow/catalog/platform/OpseraPlatformMarketplace";
 import useGetPolicyModelByName from "hooks/settings/organization_settings/policies/useGetPolicyModelByName";
 import policyConstants from "@opsera/definitions/constants/settings/organization-settings/policies/policy.constants";
+import pipelineActions from "components/workflow/pipeline-actions";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import OpseraPipelineMarketplace from "components/workflow/catalog/platform/OpseraPlatformMarketplace";
+import CustomerPipelineTemplateCatalog from "components/workflow/catalog/private/CustomerPipelineTemplateCatalog";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import CustomTab from "components/common/tabs/CustomTab";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
+import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
+import pipelineMetadata from "@opsera/definitions/constants/pipelines/pipeline.metadata";
+import DeployPlatformPipelineOverlay from "components/workflow/catalog/platform/deploy/DeployPlatformPipelineOverlay";
+import DeployCustomerPipelineOverlay from "components/workflow/catalog/private/deploy/DeployCustomerPipelineOverlay";
 
-function PipelineCatalogLibrary() {
+function PipelineTemplateSelectionScreen(
+  {
+    closePanel,
+    setSelectedPlatformTemplate,
+    setSelectedCustomerTemplate,
+  }) {
   const [activeTemplates, setActiveTemplates] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
   const {
@@ -63,6 +70,7 @@ function PipelineCatalogLibrary() {
       return (
         <OpseraPipelineMarketplace
           activeTemplates={activeTemplates}
+          selectTemplateFunction={setSelectedPlatformTemplate}
         />
       );
     }
@@ -73,9 +81,15 @@ function PipelineCatalogLibrary() {
         return (
           <CustomerPipelineTemplateCatalog
             activeTemplates={activeTemplates}
+            selectTemplateFunction={setSelectedCustomerTemplate}
           />
         );
     }
+  };
+
+  const handleBackButton = () => {
+    setSelectedPlatformTemplate(undefined);
+    setSelectedCustomerTemplate(undefined);
   };
 
   const getTabContainer = () => {
@@ -115,16 +129,19 @@ function PipelineCatalogLibrary() {
   };
 
   return (
-    <ScreenContainer
-      breadcrumbDestination={"catalog"}
-      navigationTabContainer={<WorkflowSubNavigationBar currentTab={"catalog"} />}
-      helpComponent={<CatalogHelpDocumentation/>}
+    <CreateCenterPanel
+      closePanel={closePanel}
+      objectType={pipelineMetadata?.type}
+      loadData={loadData}
+      showCloseButton={true}
     >
       {getBody()}
-    </ScreenContainer>
+    </CreateCenterPanel>
   );
 }
 
-PipelineCatalogLibrary.propTypes = {};
+PipelineTemplateSelectionScreen.propTypes = {
+  closePanel: PropTypes.func,
+};
 
-export default PipelineCatalogLibrary;
+export default PipelineTemplateSelectionScreen;

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import {Card, Col, Row} from "react-bootstrap";
-import {faHexagon} from "@fortawesome/pro-light-svg-icons";
+import {faDraftingCompass, faHexagon, faTools} from "@fortawesome/pro-light-svg-icons";
 import {format} from "date-fns";
 import React, {useEffect, useState} from "react";
 import IconBase from "components/common/icons/IconBase";
@@ -11,12 +11,14 @@ import {truncateString} from "components/common/helpers/string-helpers";
 import ViewCustomerPipelineTemplateDetailsButton
   from "components/workflow/catalog/private/ViewCustomerPipelineTemplateDetailsButton";
 import {createPipelineFromTemplateMetadata} from "components/workflow/catalog/createPipelineFromTemplate.metadata";
+import SelectButtonBase from "components/common/buttons/select/base/SelectButtonBase";
 
 // TODO: This needs to be rewritten, I just copied what existed for the catalog work
 export default function CustomerPipelineTemplateCard(
   {
     template,
     activeTemplates,
+    selectTemplateFunction,
   }) {
   const [disabled, setDisabled] = useState(false);
   const {
@@ -30,6 +32,23 @@ export default function CustomerPipelineTemplateCard(
   }, [template, activeTemplates]);
 
   const getBody = () => {
+    if (disabled === true) {
+      return;
+    }
+
+    if (selectTemplateFunction) {
+      return (
+        <SelectButtonBase
+          className={"w-100 mt-1"}
+          setDataFunction={selectTemplateFunction}
+          selectOption={template}
+          icon={faDraftingCompass}
+          selectText={"Select Pipeline"}
+          variant={"primary"}
+        />
+      );
+    }
+
     return (
       <Col xs={6} className={"d-flex"}>
         <CreateCustomerPipelineButton
@@ -105,4 +124,5 @@ export default function CustomerPipelineTemplateCard(
 CustomerPipelineTemplateCard.propTypes = {
   template: PropTypes.object,
   activeTemplates: PropTypes.array,
+  selectTemplateFunction: PropTypes.func,
 };
