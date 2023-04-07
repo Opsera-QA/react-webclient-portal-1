@@ -38,14 +38,15 @@ export default function CustomerPipelineTemplateCard(
 
     if (selectTemplateFunction) {
       return (
-        <SelectButtonBase
-          className={"w-100 mt-1"}
-          setDataFunction={selectTemplateFunction}
-          selectOption={template}
-          icon={faDraftingCompass}
-          selectText={"Select Pipeline"}
-          variant={"primary"}
-        />
+        <Col xs={6} className={"d-flex"}>
+          <SelectButtonBase
+            setDataFunction={() => selectTemplateFunction(modelHelpers.parseObjectIntoModel(template, createPipelineFromTemplateMetadata))}
+            selectOption={template}
+            icon={faDraftingCompass}
+            selectText={"Select Pipeline"}
+            variant={"primary"}
+          />
+        </Col>
       );
     }
 

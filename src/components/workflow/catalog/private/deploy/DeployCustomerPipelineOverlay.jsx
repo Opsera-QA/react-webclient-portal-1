@@ -39,14 +39,14 @@ export default function DeployCustomerPipelineOverlay(
   const getButtonContainer = () => {
     return (
       <ButtonContainerBase
-        className={"bg-white"}
+        className={"bg-white p-3"}
         leftSideButtons={
           <BackButtonBase
             backButtonFunction={backButtonFunction}
           />
         }
       >
-        <div className={"m-3 d-flex"}>
+        <div className={"d-flex"}>
           <CancelButton
             cancelFunction={closePanelFunction}
             size={"md"}
