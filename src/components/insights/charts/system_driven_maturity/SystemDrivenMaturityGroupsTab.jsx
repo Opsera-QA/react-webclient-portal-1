@@ -125,6 +125,12 @@ function SystemDrivenMaturityGroupsTab ({ kpiConfiguration, dashboardData, orgTa
     );
   }
 
+  if (error) {
+    return (
+      <h3>Error occured: {error?.message}</h3>
+    );
+  }
+
   return (
     <Container>
       <SystemDrivenMaturityTimelineChart />
