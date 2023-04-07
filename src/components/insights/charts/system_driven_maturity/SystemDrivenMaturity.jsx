@@ -122,9 +122,9 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
   const onRowSelect = orgTag => {
     toastContext.showOverlayPanel(
       <SystemDrivenMaturityOverlay
-          kpiConfiguration={{}}
-          dashboardData={{}}
-          orgTag={orgTag}
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+        orgTag={orgTag}
       />
     );
   };
