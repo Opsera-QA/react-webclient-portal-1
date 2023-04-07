@@ -5,7 +5,7 @@ import {getTaskTypeLabel, TASK_TYPES} from "../../../../tasks/task.types";
 
 function SfdcBulkMigrationPrerunHelpDocumentation({closeHelpPanel}) {
   return (
-    <HelpDocumentationContainer closeHelpPanel={closeHelpPanel} helpTopic={"Opsera Task Confirmation"}>
+    <HelpDocumentationContainer closeHelpPanel={closeHelpPanel} helpTopic={"Task Confirmation"}>
       <div className={"mb-1"}> To execute the <b>{getTaskTypeLabel(TASK_TYPES.SALESFORCE_BULK_MIGRATION)} Task</b> make the following selections: </div>
         <ul style={{listStyleType: "none"}}>
           <li><b>Branch</b> - Select an existing branch from the drop down list fetched from the repository configured within Task setup. The selected files are pulled and added to this branch upon execution.</li>

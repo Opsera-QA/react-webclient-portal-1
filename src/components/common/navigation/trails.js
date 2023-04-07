@@ -403,8 +403,8 @@ export const breadcrumbs = {
     parent: undefined,
     name: "taskManagement",
     path: paths.taskManagement,
-    title: "Opsera Task Management",
-    linkText: "Opsera Task Management",
+    title: "Task Management",
+    linkText: "Task Management",
     icon: faTasks,
     pageDescription: "Create and Manage Opsera Related Tasks.",
   },
@@ -412,16 +412,16 @@ export const breadcrumbs = {
     parent: undefined,
     name: "taskManagement",
     path: paths.taskActivityLogs,
-    title: "Opsera Task Activity Logs",
-    linkText: "Opsera Task Activity Logs",
+    title: "Task Activity Logs",
+    linkText: "Task Activity Logs",
     icon: faClipboardList
   },
   taskManagementDetailView: {
     parent: "taskManagement",
     name: "taskManagementDetailView",
     path: paths.taskManagementDetailView,
-    title: "Opsera Task Details",
-    linkText: "Opsera Task Details",
+    title: "Task Details",
+    linkText: "Task Details",
     icon: faTasks,
     dynamicIconFunction: (model) => {
       return taskTypeConstants.getIconForTaskType(model?.getData("type"));

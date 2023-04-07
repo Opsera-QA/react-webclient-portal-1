@@ -203,7 +203,7 @@ function RunTaskOverlay({ handleClose, taskModel, setTaskModel, loadData }) {
     <FullScreenCenterOverlayContainer
       closePanel={handleClose}
       showPanel={true}
-      titleText={`Opsera Task Confirmation`}
+      titleText={`Task Confirmation`}
       titleIcon={faQuestionCircle}
       showToasts={true}
       showCloseButton={false}

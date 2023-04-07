@@ -15,7 +15,7 @@ function TasksHelpDocumentation() {
 
   const getHelpDocumentation = () => {
     return (
-      <div>Create and manage the following Opsera Tasks. To view in depth documentation on Opsera Tasks Management view the <b><a href="https://opsera.atlassian.net/l/c/cd5ujPjA" target="_blank" rel="noreferrer">Opsera Task Management Help Documentation</a></b> or click a task below for a link to individual task help documentation.
+      <div>Create and manage the following Tasks. To view in depth documentation on Tasks Management view the <b><a href="https://opsera.atlassian.net/l/c/cd5ujPjA" target="_blank" rel="noreferrer">Task Management Help Documentation</a></b> or click a task below for a link to individual task help documentation.
           <div className={"mt-2 ml-4"}>
               <div><b><a href="https://docs.opsera.io/aws-native-support/aws-ecs#setup-aws-ecs-service-creation-task" target="_blank" rel="noreferrer">{getTaskTypeLabel(TASK_TYPES.AWS_CREATE_ECS_CLUSTER)}</a></b> - Create an AWS ECS Cluster template and run the task to create a cluster.</div>
               <div><b><a href="https://docs.opsera.io/aws-native-support/aws-ecs#setup-aws-ecs-service-creation-task" target="_blank" rel="noreferrer">{getTaskTypeLabel(TASK_TYPES.AWS_CREATE_ECS_SERVICE)}</a></b> - Create Amazon Elastic Container Service to integrate tasks and management, then publish the containers through Opsera pipelines. </div>
@@ -39,7 +39,7 @@ function TasksHelpDocumentation() {
     <HelpOverlayBase
       closePanel={closePanel}
       showPanel={true}
-      helpTopic={"Opsera Tasks"}
+      helpTopic={"Tasks"}
       helpDocumentation={getHelpDocumentation()}
     >
       <div className={"my-2"}>

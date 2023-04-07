@@ -16,7 +16,7 @@ function SfdxQuickDeployTaskHelpDocumentation({closeHelpPanel}) {
           </ul></li>
         <li>Select <b>Create</b> to save. </li>
       </ol>
-      <div className={"mt-2"}>To run the task, click <b>Run Task</b> then provide the <b>Salesforce Deploy Key</b> in the <b>Opsera Task Confirmation</b> form.</div>
+      <div className={"mt-2"}>To run the task, click <b>Run Task</b> then provide the <b>Salesforce Deploy Key</b> in the <b>Task Confirmation</b> form.</div>
     </HelpDocumentationContainer>
   );
 }

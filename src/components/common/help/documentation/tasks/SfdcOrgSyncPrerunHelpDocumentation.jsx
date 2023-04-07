@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 function SfdcOrgSyncPrerunHelpDocumentation({closeHelpPanel}) {
   return (
-    <HelpDocumentationContainer closeHelpPanel={closeHelpPanel} helpTopic={"Opsera Task Confirmation"}>
+    <HelpDocumentationContainer closeHelpPanel={closeHelpPanel} helpTopic={"Task Confirmation"}>
       <div className={"mb-1"}> To execute the <b>Salesforce Organization Sync Task</b> make the following selections: </div>
         <ul style={{listStyleType: "none"}}>
           <li><b>Branch</b> - Select an existing branch from the drop down list fetched from the repository configured within Task setup. The selected files are pulled and added to this branch upon execution.</li>
