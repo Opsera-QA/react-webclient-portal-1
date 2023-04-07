@@ -4,12 +4,7 @@ import {
   MATURITY_SCORE_TEXT,
   MATURITY_SCORE_VALUE
 } from "../charts-helpers";
-
-const MaturityScoreItemType = PropTypes.shape({
-  name: PropTypes.string,
-  score: PropTypes.string,
-  previousScore: PropTypes.string
-});
+import { MaturityScoreItemType } from './maturityScoreItemType';
 
 function SystemDrivenMaturityChart ({ items, onRowSelect }) {
   if (!items) {
