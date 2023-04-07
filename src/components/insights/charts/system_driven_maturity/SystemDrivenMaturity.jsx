@@ -6,6 +6,7 @@ import TabPanelContainer from "components/common/panels/general/TabPanelContaine
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { MATURITY_SCORE_TEXT, MATURITY_SCORE_VALUE } from "../charts-helpers";
+import SystemDrivenMaturityHelpDocumentation from "components/common/help/documentation/insights/charts/SystemDrivenMaturityHelpDocumentation";
 
 
 const MaturityScoreItemType = PropTypes.shape({
@@ -370,9 +371,7 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
       setKpis={setKpis}
       // isLoading={isLoading}
       chartHelpComponent={(closeHelpPanel) => (
-        <DoraJiraGitlabHelpDocumentation
-          closeHelpPanel={closeHelpPanel}
-          />
+        <SystemDrivenMaturityHelpDocumentation onClose={closeHelpPanel} />
       )}
     />
   );
