@@ -43,24 +43,6 @@ function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, orgTag 
     toastContext.clearOverlayPanel();
   };
 
-  const breadcrumbBar = (
-    <NavigationTabContainer>
-      <NavigationTab
-        tabName={OVERLAY_TABS.GROUPS}
-        handleTabClick={handleTabClick}
-        activeTab={activeTab}
-        tabText={orgTag.name}
-      />
-      <NavigationTab
-        tabName={OVERLAY_TABS.PROJECTS}
-        handleTabClick={handleTabClick}
-        activeTab={activeTab}
-        tabText={selectedGroup?.name ?? ''}
-        visible={selectedGroup ?? false}
-      />
-    </NavigationTabContainer>
-  );
-
   const getBody = () => {
     if (!orgTag) {
       return 'No organization tag';
@@ -95,7 +77,21 @@ function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, orgTag 
       titleText={"Dora Organization Tags Actionable Insights"}
       showToasts={true}
     >
-      {breadcrumbBar}
+      <NavigationTabContainer>
+        <NavigationTab
+          tabName={OVERLAY_TABS.GROUPS}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={orgTag.name}
+        />
+        <NavigationTab
+          tabName={OVERLAY_TABS.PROJECTS}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={selectedGroup?.name ?? ''}
+          visible={selectedGroup ?? false}
+        />
+      </NavigationTabContainer>
       <div className={"p-3"}>
         <TabPanelContainer currentView={getBody()} />
       </div>
