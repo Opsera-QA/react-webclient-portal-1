@@ -145,7 +145,6 @@ export default function NewPipelineOverlay(
     );
   }
 
-
   return (
     <CreateCenterPanel
       objectType={pipelineMetadata?.type}

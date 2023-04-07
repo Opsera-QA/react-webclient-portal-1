@@ -32,7 +32,7 @@ function CreateCenterPanel({ children, titleIcon, objectType, closePanel, size, 
       titleText={`Create New ${objectType}`}
       titleIcon={titleIcon}
       showToasts={true}
-      showCloseButton={false}
+      showCloseButton={backButtonFunction != null}
       size={size}
       backButtonFunction={backButtonFunction}
     >

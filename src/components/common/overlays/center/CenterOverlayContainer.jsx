@@ -74,7 +74,7 @@ function CenterOverlayContainer(
       return (
         <div className={"mt-auto bg-white"}>
           <SaveButtonContainer
-            leftSideButtons={
+            extraButtons={
               <BackButtonBase
                 backButtonFunction={backButtonFunction}
               />
