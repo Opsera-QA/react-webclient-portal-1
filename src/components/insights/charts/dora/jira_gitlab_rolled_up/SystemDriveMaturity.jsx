@@ -107,11 +107,7 @@ const OrgTagRow = ({ orgTag, onRowSelect }) => {
 };
 
 OrgTagRow.propTypes = {
-  orgTag: PropTypes.shape({
-    name: PropTypes.string,
-    score: PropTypes.string,
-    previousScore: PropTypes.string
-  }),
+  orgTag: OrgTagType,
   onRowSelect: PropTypes.func
 };
 
