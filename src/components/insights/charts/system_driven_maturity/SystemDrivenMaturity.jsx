@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import PropTypes from 'prop-types';
 import Container from "react-bootstrap/Container";
-import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
-import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
@@ -16,154 +14,7 @@ import {
 } from "../charts-helpers";
 import doraActions from "../dora/dora.action";
 import SystemDrivenMaturityChart from './SystemDrivenMaturityChart';
-
-const OrgTagType = PropTypes.shape({
-  name: PropTypes.string,
-  score: PropTypes.string,
-  previousScore: PropTypes.string
-});
-
-function TimelineChart () {
-  return (
-    <h4>TODO: Timeline Chart...</h4>
-  );
-}
-
-function GroupsTab ({ kpiConfiguration, dashboardData, orgTag, onSelectGroup }) {
-  const [groups, setGroups] = useState(null);
-
-  useEffect(() => {
-    // obtain groups from orgTag
-    setGroups([
-      {
-        name: 'A',
-        score: MATURITY_SCORE_TEXT.ELITE,
-        previousScore: MATURITY_SCORE_TEXT.MEDIUM
-      },
-      {
-        name: 'B',
-        score: MATURITY_SCORE_TEXT.MEDIUM,
-        previousScore: MATURITY_SCORE_TEXT.MEDIUM
-      },
-      {
-        name: 'C',
-        score: MATURITY_SCORE_TEXT.LOW,
-        previousScore: MATURITY_SCORE_TEXT.HIGH
-      }
-    ]);
-  }, []);
-
-  return (
-    <Container>
-      <TimelineChart />
-      <div style={{ fontSize: '2rem' }}>
-        <SystemDrivenMaturityChart items={groups} onRowSelect={onSelectGroup} />
-      </div>
-    </Container>
-  );
-}
-
-GroupsTab.propTypes = {
-  kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
-  orgTag: OrgTagType,
-  onSelectGroup: PropTypes.func
-};
-
-function ProjectsTab ({ kpiConfiguration, dashboardData, group }) {
-  // TODO: obtain projects from group
-
-  return (
-    <Container>
-      <TimelineChart />
-    </Container>
-  );
-}
-
-ProjectsTab.propTypes = {
-  kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
-  group: OrgTagType,
-};
-
-const OVERLAY_TABS = {
-  GROUPS: 'groups',
-  PROJECTS: 'projects'
-};
-
-function Overlay ({ kpiConfiguration, dashboardData, orgTag }) {
-  const toastContext = useContext(DialogToastContext);
-  const [activeTab, setActiveTab] = useState(OVERLAY_TABS.GROUPS);
-  const [selectedGroup, setSelectedGroup] = useState(null);
-
-  const onSelectGroup = (group) => {
-    setActiveTab(OVERLAY_TABS.PROJECTS);
-    setSelectedGroup(group);
-  };
-
-  const onGoToGroupsTab = () => {
-    setActiveTab(OVERLAY_TABS.GROUPS);
-    setSelectedGroup(null);
-  };
-
-  const closePanel = () => {
-    toastContext.clearOverlayPanel();
-  };
-
-  const breadcrumbBar = (
-    <>
-      <button type="button" onClick={onGoToGroupsTab}>GROUPS</button>
-      {selectedGroup && <h5>{selectedGroup.name}</h5>}
-    </>
-  );
-
-  const getBody = () => {
-    if (!orgTag) {
-      return 'No organization tag';
-    }
-
-    if (activeTab === OVERLAY_TABS.GROUPS) {
-      return (
-        <GroupsTab
-            kpiConfiguration={kpiConfiguration}
-            dashboardData={dashboardData}
-            orgTag={orgTag}
-            onSelectGroup={onSelectGroup}
-        />
-      );
-    }
-
-    if (activeTab === OVERLAY_TABS.PROJECTS) {
-      return (
-        <ProjectsTab
-          kpiConfiguration={kpiConfiguration}
-          dashboardData={dashboardData}
-          group={selectedGroup}
-        />
-      );
-    }
-  };
-
-  return (
-    <FullScreenCenterOverlayContainer
-      closePanel={closePanel}
-      showPanel={true}
-      titleText={"Dora Organization Tags Actionable Insights"}
-      showToasts={true}
-    >
-      {breadcrumbBar}
-      <div className={"p-3"}>
-        <TabPanelContainer currentView={getBody()} />
-      </div>
-    </FullScreenCenterOverlayContainer>
-  );
-}
-
-Overlay.propTypes = {
-  kpiConfiguration: PropTypes.object,
-  dashboardData: PropTypes.object,
-  orgTag: OrgTagType
-};
+import SystemDrivenMaturityOverlay from "./SystemDrivenMaturityOverlay";
 
 function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiConfiguration, setKpis }) {
   const toastContext = useContext(DialogToastContext);
@@ -266,7 +117,7 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
 
   const onRowSelect = orgTag => {
     toastContext.showOverlayPanel(
-      <Overlay
+      <SystemDrivenMaturityOverlay
           kpiConfiguration={{}}
           dashboardData={{}}
           orgTag={orgTag}
