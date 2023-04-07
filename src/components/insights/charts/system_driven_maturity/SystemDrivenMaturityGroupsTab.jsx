@@ -65,7 +65,7 @@ function SystemDrivenMaturityGroupsTab ({ kpiConfiguration, dashboardData, orgTa
           groups.map(({ name, overallMaturityScoreText }) => ({
             name,
             score: overallMaturityScoreText,
-            previousScore: MATURITY_SCORE_TEXT.LOW
+            previousScore: MATURITY_SCORE_TEXT.LOW // TODO: set from api
           }))
         );
       } else {
