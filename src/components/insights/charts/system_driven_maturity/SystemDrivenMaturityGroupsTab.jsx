@@ -97,7 +97,7 @@ function SystemDrivenMaturityGroupsTab ({ kpiConfiguration, dashboardData, orgTa
 
   return (
     <Container>
-      <SystemDrivenMaturityTimelineChart />
+      <SystemDrivenMaturityTimelineChart data={metricData} />
       <div style={{ fontSize: '2rem' }}>
         <SystemDrivenMaturityChart items={metricData} onRowSelect={onSelectGroup} />
       </div>
