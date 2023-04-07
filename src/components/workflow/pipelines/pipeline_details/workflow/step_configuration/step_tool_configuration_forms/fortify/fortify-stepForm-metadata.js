@@ -61,12 +61,12 @@ const FortifyStepFormMetadata = {
       isRequired: true,
     },
     {
-      label: "Source Code Management Type",
+      label: "SCM Type",
       id: "service",
       isRequired: true
     },
     {
-      label: "Account",
+      label: "Select Account",
       id: "gitToolId",
       isRequired: true
     },
