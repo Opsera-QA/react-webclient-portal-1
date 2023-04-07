@@ -7,7 +7,11 @@ import {
 import { MaturityScoreItemType } from './maturityScoreItemType';
 
 function SystemDrivenMaturityChart ({ items, onRowSelect }) {
-  if (!items) {
+  if (!items) { 
+    return null;
+  }
+  
+  if (!items.length) {
     return (
       <h4 className="text-center">No data to display</h4>
     );

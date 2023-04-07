@@ -21,7 +21,7 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
 
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
-  const [metricData, setMetricData] = useState([]);
+  const [metricData, setMetricData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
