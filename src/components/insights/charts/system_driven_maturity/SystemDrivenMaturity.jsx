@@ -66,33 +66,6 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
           jiraResolutionNames
         );
 
-        // const response = {
-        //   data: {
-        //     data: [
-        //       {
-        //         name: "Org Tag One",
-        //         score: MATURITY_SCORE_TEXT.HIGH,
-        //         previousScore: MATURITY_SCORE_TEXT.MEDIUM
-        //       },
-        //       {
-        //         name: "Org Tag Two",
-        //         score: MATURITY_SCORE_TEXT.MEDIUM,
-        //         previousScore: MATURITY_SCORE_TEXT.MEDIUM
-        //       },
-        //       {
-        //         name: "Org Tag Three",
-        //         score: MATURITY_SCORE_TEXT.LOW,
-        //         previousScore: MATURITY_SCORE_TEXT.MEDIUM
-        //       },
-        //       {
-        //         name: "Org Tag Four",
-        //         score: MATURITY_SCORE_TEXT.ELITE,
-        //         previousScore: MATURITY_SCORE_TEXT.LOW
-        //       }
-        //     ]
-        //   }
-        // };
-
         const metrics = response?.data?.data;
 
         if (isMounted?.current === true && metrics?.length) {
@@ -100,7 +73,7 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
             metrics.map(({ name, overallMaturityScoreText }) => ({
               name,
               score: overallMaturityScoreText,
-              previousScore: MATURITY_SCORE_TEXT.LOW
+              previousScore: MATURITY_SCORE_TEXT.LOW // TODO: set from api
             }))
           );
         } else {
