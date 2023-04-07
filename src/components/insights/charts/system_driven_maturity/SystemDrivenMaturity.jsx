@@ -169,40 +169,11 @@ GroupsTab.propTypes = {
 };
 
 function ProjectsTab ({ kpiConfiguration, dashboardData, group }) {
-  const [projects, setProjects] = useState(null);
-
-  useEffect(() => {
-    // obtain projects from group
-    setProjects([
-      {
-        name: 'Project A',
-        score: MATURITY_SCORE_TEXT.HIGH,
-        previousScore: MATURITY_SCORE_TEXT.LOW
-      },
-      {
-        name: 'Project B',
-        score: MATURITY_SCORE_TEXT.LOW,
-        previousScore: MATURITY_SCORE_TEXT.MEDIUM
-      },
-      {
-        name: 'Project C',
-        score: MATURITY_SCORE_TEXT.MEDIUM,
-        previousScore: MATURITY_SCORE_TEXT.LOW
-      },
-      {
-        name: 'Project D',
-        score: MATURITY_SCORE_TEXT.ELITE,
-        previousScore: MATURITY_SCORE_TEXT.ELITE
-      }
-    ]);
-  }, []);
+  // TODO: obtain projects from group
 
   return (
     <Container>
       <TimelineChart />
-      <div style={{ fontSize: '2rem' }}>
-        <SystemDrivenMaturityChart items={projects} />
-      </div>
     </Container>
   );
 }
