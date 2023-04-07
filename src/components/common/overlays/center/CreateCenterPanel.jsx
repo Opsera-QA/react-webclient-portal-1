@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function CreateCenterPanel({ children, titleIcon, objectType, closePanel, size, isMounted, loadData}) {
+function CreateCenterPanel({ children, titleIcon, objectType, closePanel, size, isMounted, loadData, backButtonFunction}) {
   const toastContext = useContext(DialogToastContext);
 
   // TODO: Remove this and wire up handleClose directly,
@@ -32,8 +32,9 @@ function CreateCenterPanel({ children, titleIcon, objectType, closePanel, size, 
       titleText={`Create New ${objectType}`}
       titleIcon={titleIcon}
       showToasts={true}
-      showCloseButton={false}
+      showCloseButton={backButtonFunction != null}
       size={size}
+      backButtonFunction={backButtonFunction}
     >
       <div className={"bg-white h-100 w-100"}>
         {children}
@@ -50,6 +51,7 @@ CreateCenterPanel.propTypes = {
   size: PropTypes.string,
   loadData: PropTypes.func,
   isMounted: PropTypes.object,
+  backButtonFunction: PropTypes.func,
 };
 
 export default CreateCenterPanel;

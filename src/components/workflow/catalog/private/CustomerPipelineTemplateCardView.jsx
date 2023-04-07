@@ -14,6 +14,7 @@ export default function CustomerPipelineTemplateCardView(
     loadData,
     isLoading,
     activeTemplates,
+    selectTemplateFunction,
   }) {
   const getCards = () => {
     if (isLoading) {
@@ -37,9 +38,9 @@ export default function CustomerPipelineTemplateCardView(
           return (
             <Col xs={12} xl={6} key={template._id} className={"pb-2"}>
               <CustomerPipelineTemplateCard
-                key={template._id}
                 template={template}
                 activeTemplates={activeTemplates}
+                selectTemplateFunction={selectTemplateFunction}
               />
             </Col>
           );
@@ -66,4 +67,5 @@ CustomerPipelineTemplateCardView.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   activeTemplates: PropTypes.array,
+  selectTemplateFunction: PropTypes.func,
 };

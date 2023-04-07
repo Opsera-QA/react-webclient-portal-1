@@ -4,6 +4,11 @@ import CreateWorkspaceResourceWizardResourceSelectionScreen
 import NewTaskOverlay from "components/tasks/NewTaskOverlay";
 import PropTypes from "prop-types";
 import NewToolOverlay from "components/inventory/tools/create_overlay/NewToolOverlay";
+import NewPipelineOverlay from "components/workflow/create/NewPipelineOverlay";
+import useGetPlatformSettingsFeatureFlagByName from "hooks/platform/settings/useGetPlatformSettingsFeatureFlagByName";
+import platformSettingFeatureConstants
+  from "@opsera/definitions/constants/platform/settings/features/platformSettingFeature.constants";
+import CreateToolRegistryWizard from "components/inventory/tools/tool_details/wizards/CreateToolRegistryWizard";
 
 export const CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS = {
   RESOURCE_SELECTION_SCREEN: "resource_selection_screen",
@@ -14,6 +19,8 @@ export const CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS = {
 
 export default function CreateWorkspaceResourceWizard({ loadDataFunction }) {
   const [currentScreen, setCurrentScreen] = useState(CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.RESOURCE_SELECTION_SCREEN);
+  const {isActive} = useGetPlatformSettingsFeatureFlagByName(platformSettingFeatureConstants.IN_USE_PLATFORM_SETTING_FEATURE_NAMES.NEXT_GENERATION_WIZARDS_TOGGLE);
+
   const backButtonFunction = () => {
     setCurrentScreen(CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.RESOURCE_SELECTION_SCREEN);
   };
@@ -28,7 +35,10 @@ export default function CreateWorkspaceResourceWizard({ loadDataFunction }) {
         );
       case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_PIPELINE_SCREEN:
         return (
-          <div>Coming Soon</div>
+          <NewPipelineOverlay
+            backButtonFunction={backButtonFunction}
+            loadData={loadDataFunction}
+          />
         );
       case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TASK_SCREEN:
         return (
@@ -38,6 +48,15 @@ export default function CreateWorkspaceResourceWizard({ loadDataFunction }) {
           />
         );
       case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TOOL_SCREEN:
+        if (isActive) {
+          return (
+            <CreateToolRegistryWizard
+              loadData={loadDataFunction}
+              backButtonFunction={backButtonFunction}
+            />
+          );
+        }
+        
         return (
           <NewToolOverlay
             loadData={loadDataFunction}
