@@ -59,46 +59,52 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
       console.log({ selectedDeploymentStages, jiraResolutionNames, useDashboardTags, dashboardOrgs, dashboardTags });
 
       if (selectedDeploymentStages && jiraResolutionNames?.length && useDashboardTags && dashboardOrgs?.length) {
-        // const response = await doraActions.jiraGitlabRolledUp(
-        //   getAccessToken,
-        //   cancelSource,
-        //   kpiConfiguration,
-        //   dashboardTags,
-        //   dashboardOrgs,
-        //   jiraResolutionNames
-        // );
+        const response = await doraActions.jiraGitlabRolledUp(
+          getAccessToken,
+          cancelSource,
+          kpiConfiguration,
+          dashboardTags,
+          dashboardOrgs,
+          jiraResolutionNames
+        );
 
-        const response = {
-          data: {
-            data: [
-              {
-                name: "Org Tag One",
-                score: MATURITY_SCORE_TEXT.HIGH,
-                previousScore: MATURITY_SCORE_TEXT.MEDIUM
-              },
-              {
-                name: "Org Tag Two",
-                score: MATURITY_SCORE_TEXT.MEDIUM,
-                previousScore: MATURITY_SCORE_TEXT.MEDIUM
-              },
-              {
-                name: "Org Tag Three",
-                score: MATURITY_SCORE_TEXT.LOW,
-                previousScore: MATURITY_SCORE_TEXT.MEDIUM
-              },
-              {
-                name: "Org Tag Four",
-                score: MATURITY_SCORE_TEXT.ELITE,
-                previousScore: MATURITY_SCORE_TEXT.LOW
-              }
-            ]
-          }
-        };
+        // const response = {
+        //   data: {
+        //     data: [
+        //       {
+        //         name: "Org Tag One",
+        //         score: MATURITY_SCORE_TEXT.HIGH,
+        //         previousScore: MATURITY_SCORE_TEXT.MEDIUM
+        //       },
+        //       {
+        //         name: "Org Tag Two",
+        //         score: MATURITY_SCORE_TEXT.MEDIUM,
+        //         previousScore: MATURITY_SCORE_TEXT.MEDIUM
+        //       },
+        //       {
+        //         name: "Org Tag Three",
+        //         score: MATURITY_SCORE_TEXT.LOW,
+        //         previousScore: MATURITY_SCORE_TEXT.MEDIUM
+        //       },
+        //       {
+        //         name: "Org Tag Four",
+        //         score: MATURITY_SCORE_TEXT.ELITE,
+        //         previousScore: MATURITY_SCORE_TEXT.LOW
+        //       }
+        //     ]
+        //   }
+        // };
 
         const metrics = response?.data?.data;
 
         if (isMounted?.current === true && metrics?.length) {
-          setMetricData(metrics);
+          setMetricData(
+            metrics.map(({ name, overallMaturityScoreText }) => ({
+              name,
+              score: overallMaturityScoreText,
+              previousScore: MATURITY_SCORE_TEXT.LOW
+            }))
+          );
         } else {
           setMetricData([]);
         }
