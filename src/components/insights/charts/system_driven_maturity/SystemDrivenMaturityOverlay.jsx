@@ -6,6 +6,8 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import SystemDrivenMaturityGroupsTab from './SystemDrivenMaturityGroupsTab';
 import SystemDrivenMaturityProjectsTab from './SystemDrivenMaturityProjectsTab';
 import { MaturityScoreItemType } from './maturityScoreItemType';
+import NavigationTabContainer from 'components/common/tabs/navigation/NavigationTabContainer';
+import NavigationTab from 'components/common/tabs/navigation/NavigationTab';
 
 const OVERLAY_TABS = {
   GROUPS: 'groups',
@@ -22,9 +24,19 @@ function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, orgTag 
     setSelectedGroup(group);
   };
 
-  const onGoToGroupsTab = () => {
-    setActiveTab(OVERLAY_TABS.GROUPS);
-    setSelectedGroup(null);
+  const handleTabClick = (tabSelection) => e => {
+    e.preventDefault();
+
+    if (tabSelection === activeTab) {
+      return;
+    }
+
+    switch (tabSelection) {
+      case OVERLAY_TABS.GROUPS:
+        setActiveTab(OVERLAY_TABS.GROUPS);
+        setSelectedGroup(null);
+        return;
+    }
   };
 
   const closePanel = () => {
@@ -32,10 +44,21 @@ function SystemDrivenMaturityOverlay ({ kpiConfiguration, dashboardData, orgTag 
   };
 
   const breadcrumbBar = (
-    <>
-      <button type="button" onClick={onGoToGroupsTab}>GROUPS</button>
-      {selectedGroup && <h5>{selectedGroup.name}</h5>}
-    </>
+    <NavigationTabContainer>
+      <NavigationTab
+        tabName={OVERLAY_TABS.GROUPS}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+        tabText={orgTag.name}
+      />
+      <NavigationTab
+        tabName={OVERLAY_TABS.PROJECTS}
+        handleTabClick={handleTabClick}
+        activeTab={activeTab}
+        tabText={selectedGroup?.name ?? ''}
+        visible={selectedGroup ?? false}
+      />
+    </NavigationTabContainer>
   );
 
   const getBody = () => {
