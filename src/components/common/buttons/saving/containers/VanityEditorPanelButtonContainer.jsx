@@ -5,6 +5,7 @@ import VanityCreateButton from "components/common/buttons/saving/VanityCreateBut
 import VanitySaveButtonBase from "components/common/buttons/saving/VanitySaveButtonBase";
 import DeleteModelButtonWithConfirmationOverlay from "components/common/buttons/delete/DeleteModelButtonWithConfirmationOverlay";
 import Row from "react-bootstrap/Row";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 
 function VanityEditorPanelButtonContainer(
   {
@@ -15,6 +16,7 @@ function VanityEditorPanelButtonContainer(
     disable,
     extraButtons,
     viewDetailsUponCreate,
+    backButtonFunction,
   }) {
   const getDeleteButton = () => {
     if (showDeleteButton !== false) {
@@ -64,6 +66,10 @@ function VanityEditorPanelButtonContainer(
   return (
     <Row className="mx-0 mt-3 d-flex">
       <div className={"d-flex"}>
+        <BackButtonBase
+          backButtonFunction={backButtonFunction}
+          className={"mr-2"}
+        />
         {getDeleteButton()}
         {extraButtons}
       </div>
@@ -83,6 +89,7 @@ VanityEditorPanelButtonContainer.propTypes = {
   extraButtons: PropTypes.any,
   showDeleteButton: PropTypes.bool,
   viewDetailsUponCreate: PropTypes.bool,
+  backButtonFunction: PropTypes.func,
 };
 
 export default VanityEditorPanelButtonContainer;

@@ -24,6 +24,7 @@ function VanityEditorPanelContainer(
     disabledText,
     className,
     viewDetailsUponCreate,
+    backButtonFunction,
   }) {
   const [helpIsShown, setHelpIsShown] = useState(false);
 
@@ -70,6 +71,7 @@ function VanityEditorPanelContainer(
         setModel={setModel}
         showDeleteButton={showDeleteButton}
         viewDetailsUponCreate={viewDetailsUponCreate}
+        backButtonFunction={backButtonFunction}
       />
     );
   };
@@ -137,6 +139,7 @@ VanityEditorPanelContainer.propTypes = {
   className: PropTypes.string,
   showDeleteButton: PropTypes.bool,
   viewDetailsUponCreate: PropTypes.bool,
+  backButtonFunction: PropTypes.func,
 };
 
 export default VanityEditorPanelContainer;

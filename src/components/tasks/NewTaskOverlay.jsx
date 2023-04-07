@@ -8,14 +8,13 @@ import useGetNewTaskModel from "components/tasks/hooks/useGetNewTaskModel";
 export default function NewTaskOverlay(
   {
     loadData,
-    isMounted,
     backButtonFunction,
   }) {
   const toastContext = useContext(DialogToastContext);
   const { taskModel, setTaskModel } = useGetNewTaskModel();
 
-  const closePanel = () => {
-    if (isMounted?.current === true) {
+  const closePanel = (manualClose) => {
+    if (manualClose !== false && loadData) {
       loadData();
     }
 
@@ -44,6 +43,5 @@ export default function NewTaskOverlay(
 
 NewTaskOverlay.propTypes = {
   loadData: PropTypes.func,
-  isMounted: PropTypes.object,
   backButtonFunction: PropTypes.func,
 };

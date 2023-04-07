@@ -87,7 +87,7 @@ function PersistAndCloseButtonContainer(
   };
 
   return (
-    <SaveButtonContainer extraButtons={extraButtons}>
+    <SaveButtonContainer extraButtons={getExtraButtons()}>
       {getSaveButton()}
       {getCloseButton()}
     </SaveButtonContainer>

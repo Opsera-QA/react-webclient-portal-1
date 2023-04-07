@@ -1,34 +1,19 @@
 import React, { useState } from "react";
-import CreateSalesforceWorkflowWizard
-  from "components/wizard/free_trial/workflows/flows/salesforce/CreateSalesforceWorkflowWizard";
-import CreateWorkflowWizardFlowSelectionScreen
-  from "components/wizard/free_trial/workflows/flows/selection/CreateWorkflowWizardFlowSelectionScreen";
-import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import useComponentStateReference from "hooks/useComponentStateReference";
-import { useHistory } from "react-router-dom";
-import useGetNewTaskModel from "components/tasks/hooks/useGetNewTaskModel";
+import CreateWorkspaceResourceWizardResourceSelectionScreen
+  from "components/wizard/workspace/CreateWorkspaceResourceWizardResourceSelectionScreen";
+import NewTaskOverlay from "components/tasks/NewTaskOverlay";
+import PropTypes from "prop-types";
+import NewToolOverlay from "components/inventory/tools/create_overlay/NewToolOverlay";
 
 export const CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS = {
   RESOURCE_SELECTION_SCREEN: "resource_selection_screen",
-  SALESFORCE_FLOW: "salesforce_flow",
-  GIT_CUSTODIAN_FLOW: "git_custodian_flow",
-  SDLC_FLOW: "sdlc_flow",
+  CREATE_TOOL_SCREEN: "create_tool_screen",
+  CREATE_TASK_SCREEN: "create_task_screen",
+  CREATE_PIPELINE_SCREEN: "create_pipeline_screen",
 };
 
-export default function CreateWorkspaceResourceWizard() {
+export default function CreateWorkspaceResourceWizard({ loadDataFunction }) {
   const [currentScreen, setCurrentScreen] = useState(CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.RESOURCE_SELECTION_SCREEN);
-  const [buttonContainer, setButtonContainer] = useState(undefined);
-  const history = useHistory();
-  const {
-    toastContext,
-  } = useComponentStateReference();
-
-  const closeOverlayFunction = () => {
-    toastContext.removeInlineMessage();
-    toastContext.clearOverlayPanel();
-    history.push(history.location);
-  };
-
   const backButtonFunction = () => {
     setCurrentScreen(CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.RESOURCE_SELECTION_SCREEN);
   };
@@ -37,43 +22,36 @@ export default function CreateWorkspaceResourceWizard() {
     switch (currentScreen) {
       case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.RESOURCE_SELECTION_SCREEN:
         return (
-          <CreateWorkflowWizardFlowSelectionScreen
+          <CreateWorkspaceResourceWizardResourceSelectionScreen
             setCurrentScreen={setCurrentScreen}
-            closeOverlayFunction={closeOverlayFunction}
-            setButtonContainer={setButtonContainer}
-            className={"m-4"}
           />
         );
-      case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.SALESFORCE_FLOW:
+      case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_PIPELINE_SCREEN:
         return (
-          <CreateSalesforceWorkflowWizard
+          <div>Coming Soon</div>
+        );
+      case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TASK_SCREEN:
+        return (
+          <NewTaskOverlay
             backButtonFunction={backButtonFunction}
-            setButtonContainer={setButtonContainer}
+            loadData={loadDataFunction}
           />
         );
-      case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.SDLC_FLOW:
+      case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TOOL_SCREEN:
         return (
-          <div>Coming Soon</div>
+          <NewToolOverlay
+            loadData={loadDataFunction}
+            backButtonFunction={backButtonFunction}
+          />
         );
-      case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.GIT_CUSTODIAN_FLOW:
-        return (
-          <div>Coming Soon</div>
-        );
+      default:
+        return null;
     }
   };
 
-  return (
-    <CenterOverlayContainer
-      closePanel={closeOverlayFunction}
-      titleText={"Create a New Workspace Resource"}
-      buttonContainer={buttonContainer}
-      showCloseButton={false}
-    >
-      {getCurrentScreen()}
-    </CenterOverlayContainer>
-  );
+  return (getCurrentScreen());
 }
 
-CreateWorkspaceResourceWizard.propTypes = {};
-
-
+CreateWorkspaceResourceWizard.propTypes = {
+  loadDataFunction: PropTypes.func,
+};
