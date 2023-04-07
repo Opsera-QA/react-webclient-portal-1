@@ -4,6 +4,7 @@ import CreateWorkspaceResourceWizardResourceSelectionScreen
 import NewTaskOverlay from "components/tasks/NewTaskOverlay";
 import PropTypes from "prop-types";
 import NewToolOverlay from "components/inventory/tools/create_overlay/NewToolOverlay";
+import NewPipelineOverlay from "components/workflow/create/NewPipelineOverlay";
 
 export const CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS = {
   RESOURCE_SELECTION_SCREEN: "resource_selection_screen",
@@ -28,7 +29,10 @@ export default function CreateWorkspaceResourceWizard({ loadDataFunction }) {
         );
       case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_PIPELINE_SCREEN:
         return (
-          <div>Coming Soon</div>
+          <NewPipelineOverlay
+            backButtonFunction={backButtonFunction}
+            loadData={loadDataFunction}
+          />
         );
       case CREATE_WORkSPACE_RESOURCE_WIZARD_SCREENS.CREATE_TASK_SCREEN:
         return (
