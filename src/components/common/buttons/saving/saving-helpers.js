@@ -43,7 +43,7 @@ export async function persistNewRecordAndClose(model, toastContext, showSuccessT
   if (response != null && response !== false && handleClose) {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
-    handleClose();
+    handleClose(false);
   }
 
   return response;
@@ -190,7 +190,7 @@ export async function modalPersistUpdatedRecord(model, toastContext, showSuccess
       }
     }
     model.clearChangeMap();
-    handleClose();
+    handleClose(false);
     return response;
   }
   catch (error) {

@@ -27,6 +27,7 @@ function EditorPanelContainer(
     booleanToggleDisabled,
     className,
     isIncomplete,
+    backButtonFunction,
   }) {
   const [helpIsShown, setHelpIsShown] = useState(false);
 
@@ -41,6 +42,7 @@ function EditorPanelContainer(
       return (
         <PersistAndCloseButtonContainer
           extraButtons={extraButtons}
+          backButtonFunction={backButtonFunction}
           createRecord={createRecord}
           updateRecord={updateRecord}
           setRecordDto={setRecordDto}
@@ -159,6 +161,7 @@ EditorPanelContainer.propTypes = {
   booleanToggleDisabled: PropTypes.bool,
   className: PropTypes.string,
   isIncomplete: PropTypes.bool,
+  backButtonFunction: PropTypes.func,
 };
 
 EditorPanelContainer.defaultProps = {

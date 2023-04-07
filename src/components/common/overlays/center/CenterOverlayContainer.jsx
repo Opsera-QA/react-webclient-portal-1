@@ -7,6 +7,7 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import Row from "react-bootstrap/Row";
 import CenterOverlayContainerWrapper from "components/common/overlays/center/CenterOverlayContainerWrapper";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import BackButtonBase from "components/common/buttons/back/BackButtonBase";
 
 export const CENTER_OVERLAY_SIZES = {
   FULL_WIDTH: "full_width", // TODO: Remove?
@@ -42,6 +43,7 @@ function CenterOverlayContainer(
     customLoadingMessage,
     size,
     externalHelpPageLink,
+    backButtonFunction,
   }) {
   const toastContext = useContext(DialogToastContext);
 
@@ -50,6 +52,14 @@ function CenterOverlayContainer(
       toastContext.removeInlineMessage();
     }
   }, []);
+
+  const closePanelFunction = () => {
+    if (closePanel) {
+      closePanel();
+    } else {
+      toastContext.clearOverlayPanel();
+    }
+  };
 
   const getButtonContainer = () => {
     if (buttonContainer) {
@@ -63,7 +73,13 @@ function CenterOverlayContainer(
     if (showCloseButton !== false) {
       return (
         <div className={"mt-auto bg-white"}>
-          <SaveButtonContainer>
+          <SaveButtonContainer
+            leftSideButtons={
+              <BackButtonBase
+                backButtonFunction={backButtonFunction}
+              />
+            }
+          >
             <CloseButton className={"p-3"} size={"sm"} closeEditorCallback={closePanel} showUnsavedChangesMessage={false} />
           </SaveButtonContainer>
         </div>
@@ -98,7 +114,7 @@ function CenterOverlayContainer(
             className={`content-card-1 bg-white`}
           >
             <OverlayTitleBar
-              handleClose={closePanel}
+              handleClose={closePanelFunction}
               isLoading={isLoading}
               titleText={titleText}
               titleIcon={titleIcon}
@@ -135,6 +151,7 @@ CenterOverlayContainer.propTypes = {
   size: PropTypes.string,
   customLoadingMessage: PropTypes.string,
   externalHelpPageLink: PropTypes.string,
+  backButtonFunction: PropTypes.func,
 };
 
 CenterOverlayContainer.defaultProps = {
