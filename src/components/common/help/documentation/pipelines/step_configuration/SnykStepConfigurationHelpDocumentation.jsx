@@ -20,8 +20,7 @@ function SnykStepConfigurationHelpDocumentation() {
               <ul style={{listStyleType: "none"}}>
                 <li><b>Snyk Tool</b> - Select the created Snyk tool from the drop-down.</li>
                 <li><b>Snyk Products</b> - Choose the scan type.</li>
-                <li><b>Git Service</b> - Choose the Git tool type.</li>
-                <li><b>Git Tool ID</b> - Choose the required Git tool from the drop-down.</li>
+                <li><b>Source Code Management Tool</b> - Choose the required Source Code Management tool from the drop-down.</li>
                 <li><b>Repository</b> - Choose a repository from the selected account.</li>
                 <li><b>Git Branch</b> - Choose a branch from the drop-down.</li>
                 <li><b>Language</b> - Choose the Git tool type.</li>

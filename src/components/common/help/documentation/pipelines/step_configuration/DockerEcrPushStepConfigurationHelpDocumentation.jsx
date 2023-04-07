@@ -29,7 +29,7 @@ function DockerEcrPushStepConfigurationHelpDocumentation() {
               <li><b>Jenkins Tool</b> - Select a configured tool from the Tool Registry.</li>
               <li><b>Jenkins Job</b> - Select Docker Push. This must be created in Jobs section of the selected Jenkins tool. </li>
               <li><b>AWS Credentials</b> - Select a configured tool from the Tool Registry. </li>
-              <li><b>Build Step Info</b> - The drop down displays the step name given to the build step in the pipeline.</li>
+              <li><b>Build Step</b> - The drop down displays the step name given to the build step in the pipeline.</li>
               <li><b>Want to use an existing repository?</b> - To use an existing repository, turn the toggle on. A list of existing repositories will be fetched to select from. </li>
               <li><b>ECR Repository</b> - To use a new repository, provide a value for the repository name. </li>
             </ul>
