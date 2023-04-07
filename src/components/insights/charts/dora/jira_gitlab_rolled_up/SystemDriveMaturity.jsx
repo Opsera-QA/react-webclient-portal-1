@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import Container from "react-bootstrap/Container";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
+import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import { MATURITY_SCORE_TEXT, MATURITY_SCORE_VALUE } from "../../charts-helpers";
+
+
+const MaturityScoreItemType = PropTypes.shape({
+  name: PropTypes.string,
+  score: PropTypes.string,
+  previousScore: PropTypes.string
+});
+
+const OrgTagType = PropTypes.shape({
+  name: PropTypes.string,
+  score: PropTypes.string,
+  previousScore: PropTypes.string
+});
 
 const Icon = ({ color, onSelect }) => {
   if (!color) {
