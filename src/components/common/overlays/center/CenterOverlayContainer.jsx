@@ -81,7 +81,7 @@ function CenterOverlayContainer(
             }
           >
             <CloseButton
-              closeEditorCallback={closePanel}
+              closeEditorCallback={closePanelFunction}
               showUnsavedChangesMessage={false}
             />
           </SaveButtonContainer>
