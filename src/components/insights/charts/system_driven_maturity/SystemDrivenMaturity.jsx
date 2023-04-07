@@ -56,8 +56,6 @@ function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiC
       const jiraResolutionNames = getResultFromKpiConfiguration(kpiConfiguration, 'jira-resolution-names');
       const useDashboardTags = getUseDashboardTagsFromKpiConfiguration(kpiConfiguration);
 
-      console.log({ selectedDeploymentStages, jiraResolutionNames, useDashboardTags, dashboardOrgs, dashboardTags });
-
       if (selectedDeploymentStages && jiraResolutionNames?.length && useDashboardTags && dashboardOrgs?.length) {
         const response = await doraActions.jiraGitlabRolledUp(
           getAccessToken,
