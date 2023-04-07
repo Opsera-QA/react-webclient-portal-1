@@ -2,7 +2,7 @@ const AquasecStepFormMetadata = {
   type: "Aquasec Step Configuration",
   fields: [
     {
-      label: "Jenkins Tool Selection",
+      label: "Jenkins Tool",
       id: "toolConfigId",
       isRequired: true
     },
@@ -17,7 +17,7 @@ const AquasecStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Docker Registry Tool Id",
+      label: "Docker Tool",
       id: "dockerRegistryToolConfigId", 
       isRequired: true
     },

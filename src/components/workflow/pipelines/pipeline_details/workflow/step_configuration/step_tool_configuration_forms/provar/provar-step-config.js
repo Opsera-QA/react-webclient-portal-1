@@ -13,7 +13,7 @@ const provarStepFormMetadata = {
             id: "useSfdcOrg",
         },
         {
-            label: "Salesforce Tool",
+            label: "Salesforce Configurator Tool",
             id: "sfdcToolId",
             isRequiredFunction: (model) => {
                 return model?.getData("useSfdcOrg") === true;
