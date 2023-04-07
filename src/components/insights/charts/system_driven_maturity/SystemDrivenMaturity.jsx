@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import Container from "react-bootstrap/Container";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
+import VanityMetricContainer from "components/common/panels/insights/charts/VanityMetricContainer";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { MATURITY_SCORE_TEXT, MATURITY_SCORE_VALUE } from "../../charts-helpers";
+import { MATURITY_SCORE_TEXT, MATURITY_SCORE_VALUE } from "../charts-helpers";
 
 
 const MaturityScoreItemType = PropTypes.shape({
@@ -312,8 +313,31 @@ SystemDrivenMaturityChart.propTypes = {
   onRowSelect: PropTypes.func
 };
 
-function SystemDrivenMaturity ({ orgTags }) {
+function SystemDrivenMaturity ({ kpiConfiguration, dashboardData, index, setKpiConfiguration, setKpis }) {
   const toastContext = useContext(DialogToastContext);
+
+  const orgTags = [
+    {
+      name: "Org Tag One",
+      score: MATURITY_SCORE_TEXT.HIGH,
+      previousScore: MATURITY_SCORE_TEXT.MEDIUM
+    },
+    {
+      name: "Org Tag Two",
+      score: MATURITY_SCORE_TEXT.MEDIUM,
+      previousScore: MATURITY_SCORE_TEXT.MEDIUM
+    },
+    {
+      name: "Org Tag Three",
+      score: MATURITY_SCORE_TEXT.LOW,
+      previousScore: MATURITY_SCORE_TEXT.MEDIUM
+    },
+    {
+      name: "Org Tag Four",
+      score: MATURITY_SCORE_TEXT.ELITE,
+      previousScore: MATURITY_SCORE_TEXT.LOW
+    }
+  ];
 
   const onRowSelect = orgTag => {
     console.log('SDM open overlay for orgTag:', orgTag);
@@ -326,19 +350,40 @@ function SystemDrivenMaturity ({ orgTags }) {
     );
   };
 
+  const getChartBody = () => {
+    return (
+      <Container className="p-3" style={{fontSize: '2rem'}}>
+        <SystemDrivenMaturityChart items={orgTags} onRowSelect={onRowSelect} />
+      </Container>
+    );
+  };
+
   return (
-    <Container className="p-3" style={{fontSize: '2rem'}}>
-      <SystemDrivenMaturityChart items={orgTags} onRowSelect={onRowSelect} />
-    </Container>
+    <VanityMetricContainer
+      title={"System Driven Maturity"}
+      kpiConfiguration={kpiConfiguration}
+      setKpiConfiguration={setKpiConfiguration}
+      chart={getChartBody()}
+      dashboardData={dashboardData}
+      index={index}
+      // error={error}
+      setKpis={setKpis}
+      // isLoading={isLoading}
+      chartHelpComponent={(closeHelpPanel) => (
+        <DoraJiraGitlabHelpDocumentation
+          closeHelpPanel={closeHelpPanel}
+          />
+      )}
+    />
   );
 }
 
 SystemDrivenMaturity.propTypes = {
-  orgTags: PropTypes.arrayOf(OrgTagType)
-};
-
-SystemDrivenMaturity.defaultProps = {
-  orgTags: []
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  index: PropTypes.number,
+  setKpiConfiguration: PropTypes.func,
+  setKpis: PropTypes.func,
 };
 
 export default SystemDrivenMaturity;
