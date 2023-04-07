@@ -60,13 +60,7 @@ function SystemDrivenMaturityProjectsTab ({ kpiConfiguration, dashboardData, gro
       const projects = response?.data?.projects;
 
       if (isMounted?.current === true && projects?.length) {
-        setMetricData(
-          projects.map(({ name, overallMaturityScoreText }) => ({
-            name,
-            score: overallMaturityScoreText,
-            previousScore: MATURITY_SCORE_TEXT.LOW // TODO: set from api
-          }))
-        );
+        setMetricData(projects);
       } else {
         setMetricData([]);
       }
@@ -98,7 +92,7 @@ function SystemDrivenMaturityProjectsTab ({ kpiConfiguration, dashboardData, gro
 
   return (
     <Container>
-      <SystemDrivenMaturityTimelineChart />
+      <SystemDrivenMaturityTimelineChart data={metricData} />
     </Container>
   );
 }
