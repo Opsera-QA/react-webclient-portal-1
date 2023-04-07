@@ -111,6 +111,12 @@ OrgTagRow.propTypes = {
   onRowSelect: PropTypes.func
 };
 
+function TimelineChart () {
+  return (
+    <h4>TODO: Timeline Chart...</h4>
+  );
+}
+
 function GroupsTab ({ kpiConfiguration, dashboardData, orgTag, onSelectGroup }) {
   const [groups, setGroups] = useState(null);
 
@@ -136,8 +142,11 @@ function GroupsTab ({ kpiConfiguration, dashboardData, orgTag, onSelectGroup }) 
   }, []);
 
   return (
-    <Container className="p-3" style={{fontSize: '2rem', maxWidth: '75%'}}>
-      <SystemDrivenMaturityChart items={groups} onRowSelect={onSelectGroup} />
+    <Container>
+      <TimelineChart />
+      <div style={{ fontSize: '2rem' }}>
+        <SystemDrivenMaturityChart items={groups} onRowSelect={onSelectGroup} />
+      </div>
     </Container>
   );
 }
@@ -179,8 +188,11 @@ function ProjectsTab ({ kpiConfiguration, dashboardData, group }) {
   }, []);
 
   return (
-    <Container className="p-3" style={{fontSize: '2rem', maxWidth: '75%'}}>
-      <SystemDrivenMaturityChart items={projects} />
+    <Container>
+      <TimelineChart />
+      <div style={{ fontSize: '2rem' }}>
+        <SystemDrivenMaturityChart items={projects} />
+      </div>
     </Container>
   );
 }
