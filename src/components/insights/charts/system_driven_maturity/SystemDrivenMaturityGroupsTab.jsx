@@ -91,7 +91,7 @@ function SystemDrivenMaturityGroupsTab ({ kpiConfiguration, dashboardData, orgTa
 
   if (error) {
     return (
-      <h3>Error occured: {error?.message}</h3>
+      <h3 className='text-center'>Error occured: {error?.message}</h3>
     );
   }
 
