@@ -56,6 +56,7 @@ export default function CreateWorkspaceResourceWizard({ loadDataFunction }) {
             />
           );
         }
+        
         return (
           <NewToolOverlay
             loadData={loadDataFunction}
