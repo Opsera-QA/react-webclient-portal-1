@@ -10,7 +10,7 @@ function SystemDrivenMaturityChart ({ items, onRowSelect }) {
   if (!items) { 
     return null;
   }
-  
+
   if (!items.length) {
     return (
       <h4 className="text-center">No data to display</h4>
@@ -66,30 +66,30 @@ Icon.propTypes = {
   onSelect: PropTypes.func
 };
 
+const determineColor = (maturity, score, previous) => {
+  const color = {
+    [maturity]: ''
+  };
+
+  if (score === previous && score === maturity) {
+    color[maturity] = 'orange';
+    return color;
+  }
+
+  if (score === maturity) {
+    // determine if new score is greater or lower than previous
+    color[maturity] = MATURITY_SCORE_VALUE[score] > MATURITY_SCORE_VALUE[previous] ? 'green' : 'red';
+    return color;
+  }
+
+  if (previous === maturity) {
+    color[maturity] = 'grey';
+    return color;
+  }
+};
+
 const MaturityScoreRow = ({ item, onRowSelect }) => {
   const { name, score, previousScore } = item;
-
-  const determineColor = (maturity, score, previous) => {
-    const color = {
-      [maturity]: ''
-    };
-
-    if (score === previous && score === maturity) {
-      color[maturity] = 'orange';
-      return color;
-    }
-
-    if (score === maturity) {
-      // determine if new score is greater or lower than previous
-      color[maturity] = MATURITY_SCORE_VALUE[score] > MATURITY_SCORE_VALUE[previous] ? 'green' : 'red';
-      return color;
-    }
-
-    if (previous === maturity) {
-      color[maturity] = 'grey';
-      return color;
-    }
-  };
 
   const icons = {
     ...determineColor(MATURITY_SCORE_TEXT.LOW, score, previousScore),
