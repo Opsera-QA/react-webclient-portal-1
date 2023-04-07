@@ -113,6 +113,7 @@ OrgTagRow.propTypes = {
 
 function GroupsTab ({ kpiConfiguration, dashboardData, orgTag, onSelectGroup }) {
   const [groups, setGroups] = useState(null);
+
   useEffect(() => {
     // obtain groups from orgTag
     setGroups([
@@ -148,16 +149,46 @@ GroupsTab.propTypes = {
   onSelectGroup: PropTypes.func
 };
 
-function ProjectsTab ({ kpiConfiguration, dashboardData, orgTag }) {
+function ProjectsTab ({ kpiConfiguration, dashboardData, group }) {
+  const [projects, setProjects] = useState(null);
+
+  useEffect(() => {
+    // obtain projects from group
+    setProjects([
+      {
+        name: 'Project A',
+        score: MATURITY_SCORE_TEXT.HIGH,
+        previousScore: MATURITY_SCORE_TEXT.LOW
+      },
+      {
+        name: 'Project B',
+        score: MATURITY_SCORE_TEXT.LOW,
+        previousScore: MATURITY_SCORE_TEXT.MEDIUM
+      },
+      {
+        name: 'Project C',
+        score: MATURITY_SCORE_TEXT.MEDIUM,
+        previousScore: MATURITY_SCORE_TEXT.LOW
+      },
+      {
+        name: 'Project D',
+        score: MATURITY_SCORE_TEXT.ELITE,
+        previousScore: MATURITY_SCORE_TEXT.ELITE
+      }
+    ]);
+  }, []);
+
   return (
-    <h3>TODO: Projects...</h3>
+    <Container className="p-3" style={{fontSize: '2rem', maxWidth: '75%'}}>
+      <SystemDrivenMaturityChart items={projects} />
+    </Container>
   );
 }
 
 ProjectsTab.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  orgTag: OrgTagType,
+  group: OrgTagType,
 };
 
 const OVERLAY_TABS = {
@@ -181,8 +212,6 @@ function Overlay ({ kpiConfiguration, dashboardData, orgTag }) {
   };
 
   const closePanel = () => {
-    console.log('closePanel');
-    toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
   };
 
