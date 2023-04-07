@@ -16,6 +16,7 @@ export default function PipelineTemplateSelectionScreen(
   {
     setSelectedPlatformTemplate,
     setSelectedCustomerTemplate,
+    className,
   }) {
   const [activeTemplates, setActiveTemplates] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
@@ -111,8 +112,8 @@ export default function PipelineTemplateSelectionScreen(
   }
 
   return (
-    <div className={"px-3"}>
-      <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
+    <div className={className}>
+      <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()}/>
     </div>
   );
 }
@@ -120,4 +121,5 @@ export default function PipelineTemplateSelectionScreen(
 PipelineTemplateSelectionScreen.propTypes = {
   setSelectedPlatformTemplate: PropTypes.func,
   setSelectedCustomerTemplate: PropTypes.func,
+  className: PropTypes.string,
 };

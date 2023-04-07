@@ -122,6 +122,7 @@ export default function NewPipelineOverlay(
       <PipelineTemplateSelectionScreen
         setSelectedPlatformTemplate={setSelectedPlatformTemplate}
         setSelectedCustomerTemplate={setSelectedPlatformTemplate}
+        className={"p-3"}
       />
     );
   };
