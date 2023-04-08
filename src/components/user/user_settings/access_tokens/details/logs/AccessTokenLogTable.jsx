@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
+  getFormattedLabelWithFunctionColumnDefinition,
   getTableDateTimeColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
@@ -9,6 +10,7 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import {accessTokenLogMetadata} from "components/user/user_settings/access_tokens/details/logs/access-token-log-metadata";
+import accessTokenScopeConstants from "@opsera/definitions/constants/access_tokens/accessTokenScope.constants";
 
 function AccessTokenLogTable({isLoading, loadData, activityLogs, filterModel, setFilterModel}) {
   const fields = accessTokenLogMetadata.fields;
@@ -17,7 +19,7 @@ function AccessTokenLogTable({isLoading, loadData, activityLogs, filterModel, se
     () => [
       getTableTextColumn(getField(fields, "token_id")),
       getTableTextColumn(getField(fields, "target")),
-      getTableTextColumn(getField(fields, "scope")),
+      getFormattedLabelWithFunctionColumnDefinition(getField(fields, "scope"), accessTokenScopeConstants.getScopeLabel),
       getTableDateTimeColumn(getField(fields, "createdAt")),
     ],
     []
