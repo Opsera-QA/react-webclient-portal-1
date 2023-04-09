@@ -24,7 +24,6 @@ export default function InlineAccessTokenUsageUserSelectInput(
       model={model}
       fieldName={fieldName}
       setDataFunction={setDataFunction}
-      loadDataFunction={loadDataFunction}
       clearDataFunction={clearDataFunction}
     />
   );

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import useComponentStateReference from "hooks/useComponentStateReference";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import useGetUsersByAccessTokenUsage from "hooks/access_tokens/logs/useGetUsersByAccessTokenUsage";
 
 export default function AccessTokenUsageUserSelectInput(
   {
@@ -10,9 +11,14 @@ export default function AccessTokenUsageUserSelectInput(
     fieldName,
     setDataFunction,
     clearDataFunction,
-    loadDataFunction,
   }) {
   const { isSaasUser } = useComponentStateReference();
+  const {
+    error,
+    users,
+    isLoading,
+    loadData,
+  } = useGetUsersByAccessTokenUsage();
 
   if (isSaasUser === true) {
     return null;
@@ -25,7 +31,12 @@ export default function AccessTokenUsageUserSelectInput(
       fieldName={fieldName}
       setDataFunction={setDataFunction}
       clearDataFunction={clearDataFunction}
-      loadDataFunction={loadDataFunction}
+      loadDataFunction={loadData}
+      error={error}
+      selectOptions={users}
+      textField={"owner_name"}
+      isLoading={isLoading}
+      valueField={"_id"}
     />
   );
 }
@@ -35,6 +46,5 @@ AccessTokenUsageUserSelectInput.propTypes = {
   setModel: PropTypes.func,
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
-  loadDataFunction: PropTypes.func,
   fieldName: PropTypes.string,
 };
