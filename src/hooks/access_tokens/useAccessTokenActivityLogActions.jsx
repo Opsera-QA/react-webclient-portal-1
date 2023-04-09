@@ -8,7 +8,7 @@ export default function useAccessTokenActivityLogActions() {
     userId,
     filterModel,
   ) => {
-    const apiUrl = `/account/access-tokens/${userId}`;
+    const apiUrl = `/account/access-tokens/logs/${userId}`;
     const queryParameters = {
       search: filterModel?.getFilterValue("search"),
       scope: filterModel?.getFilterValue("scope"),
@@ -26,7 +26,7 @@ export default function useAccessTokenActivityLogActions() {
   accessTokenActivityLogActions.getAccessTokenActivityLogs = async (
     filterModel,
   ) => {
-    const apiUrl = `/account/access-tokens/`;
+    const apiUrl = `/account/access-tokens/logs/`;
     const queryParameters = {
       search: filterModel?.getFilterValue("search"),
       userId: filterModel?.getFilterValue("userId"),
@@ -39,6 +39,13 @@ export default function useAccessTokenActivityLogActions() {
     return await apiService.handleApiGetRequest(
       apiUrl,
       queryParameters,
+    );
+  };
+
+  accessTokenActivityLogActions.getUsersByAccessTokenUsage = async () => {
+    const apiUrl = `/account/access-tokens/logs/usage/users`;
+    return await apiService.handleApiGetRequest(
+      apiUrl,
     );
   };
 
