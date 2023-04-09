@@ -3,11 +3,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
-import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilter";
-import useGetAccessTokenActivityLogs from "hooks/access_tokens/useGetAccessTokenActivityLogs";
+import useGetAccessTokenActivityLogs from "hooks/access_tokens/logs/useGetAccessTokenActivityLogs";
 import AccessTokenLogTable from "components/user/user_settings/access_tokens/details/logs/AccessTokenLogTable";
-import OwnershipReportLdapUserSelectInput
-  from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
+import InlineAccessTokenUsageUserSelectInput
+  from "components/common/list_of_values_input/access_tokens/InlineAccessTokenUsageUserSelectInput";
 
 export default function UserAccessTokenUsageReport() {
   const {
@@ -26,10 +25,10 @@ export default function UserAccessTokenUsageReport() {
     >
       <Row className={"mx-0 mb-2"}>
         <Col className={"px-2"}>
-          <OwnershipReportLdapUserSelectInput
+          <InlineAccessTokenUsageUserSelectInput
             model={accessTokenLogFilterModel}
-            loadData={loadData}
-            placeholderText={"Filter by User"}
+            fieldName={"userId"}
+            loadDataFunction={loadData}
           />
         </Col>
       </Row>

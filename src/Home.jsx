@@ -5,6 +5,7 @@ import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndic
 import { screenContainerHeights } from "components/common/panels/general/screenContainer.heights";
 import OverviewLanding from "components/landing/OverviewLanding";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import Landing from "components/landing/v2/Landing";
 
 export default function Home() {
   const { authState } = useOktaAuth();
@@ -23,5 +24,6 @@ export default function Home() {
     return (<FreeTrialLanding />);
   }
 
-  return (<OverviewLanding />);
+  return (<Landing />);
+  // return (<OverviewLanding />);
 }
