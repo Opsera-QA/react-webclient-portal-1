@@ -16,6 +16,7 @@ import UserSettingsSubNavigationBar from "components/user/user_settings/UserSett
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {USER_SETTINGS_PAGES} from "components/user/user_settings/userSettings.paths";
+import UserAccessTokenActivityLogPanel from "components/settings/users/details/UserAccessTokenActivityLogPanel";
 
 function MyAccessTokens() {
   const [accessTokenFilterModel, setAccessTokenFilterModel] = useState(new Model({...accessTokenFilterMetadata.newObjectFields}, accessTokenFilterMetadata, false));
@@ -113,7 +114,11 @@ function MyAccessTokens() {
           </>
         );
       case "logs":
-        return <AccessTokenLogPanel />;
+        return (
+          <UserAccessTokenActivityLogPanel
+            userId={userData?._id}
+          />
+        );
       default:
         return null;
     }

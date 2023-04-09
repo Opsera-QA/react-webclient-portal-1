@@ -5,6 +5,9 @@ import ActiveFilterDisplayer from "components/common/filters/ActiveFilterDisplay
 import FilterBar from "components/common/filters/FilterBar";
 import {screenContainerHeights} from "components/common/panels/general/screenContainer.heights";
 import useComponentStateReference from "hooks/useComponentStateReference";
+import CenteredContentWrapper from "components/common/wrapper/CenteredContentWrapper";
+import ErrorMessageFieldBase from "components/common/fields/text/message/ErrorMessageFieldBase";
+import ErrorLoadingDataField from "components/common/fields/text/message/ErrorLoadingDataField";
 
 const TITLE_BAR_HEIGHT = "46px";
 const screenContainerMargin = "30px";
@@ -41,6 +44,7 @@ function FilterContainer({
   bodyStyling,
   hideXOverflow,
   addRecordButtonCustomText,
+  error,
   // TODO: Remove after filters are used everywhere
   type,
 }) {
@@ -106,6 +110,23 @@ function FilterContainer({
     }
   };
 
+  const getBody = () => {
+    if (error) {
+      return (
+        <CenteredContentWrapper
+          minHeight={minimumHeight}
+        >
+          <ErrorLoadingDataField
+            error={error}
+            pluralTopic={title}
+          />
+        </CenteredContentWrapper>
+      );
+    }
+
+    return body;
+  };
+
   return (
     <div className={className}>
       <div
@@ -131,7 +152,7 @@ function FilterContainer({
           className={bodyClassName}
           style={getBodyStylingObject()}
         >
-          {body}
+          {getBody()}
         </div>
       </div>
     </div>
@@ -170,6 +191,7 @@ FilterContainer.propTypes = {
   isPolling: PropTypes.bool,
   hideActiveFilterDisplayer: PropTypes.bool,
   addRecordButtonCustomText: PropTypes.string,
+  error: PropTypes.any,
 };
 
 FilterContainer.defaultProps = {

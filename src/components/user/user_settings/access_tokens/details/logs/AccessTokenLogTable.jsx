@@ -12,7 +12,15 @@ import {faTable} from "@fortawesome/pro-light-svg-icons";
 import {accessTokenLogMetadata} from "components/user/user_settings/access_tokens/details/logs/access-token-log-metadata";
 import accessTokenScopeConstants from "@opsera/definitions/constants/access_tokens/accessTokenScope.constants";
 
-function AccessTokenLogTable({isLoading, loadData, activityLogs, filterModel, setFilterModel}) {
+function AccessTokenLogTable(
+  {
+    isLoading,
+    loadData,
+    activityLogs,
+    filterModel,
+    setFilterModel,
+    error,
+  }) {
   const fields = accessTokenLogMetadata.fields;
 
   const columns = useMemo(
@@ -37,6 +45,7 @@ function AccessTokenLogTable({isLoading, loadData, activityLogs, filterModel, se
         columns={columns}
         paginationDto={filterModel}
         setPaginationDto={setFilterModel}
+        error={error}
       />
     );
   };
@@ -51,6 +60,7 @@ function AccessTokenLogTable({isLoading, loadData, activityLogs, filterModel, se
       supportSearch={true}
       titleIcon={faTable}
       title={"Token Activity Log"}
+      error={error}
     />
   );
 }
@@ -60,7 +70,8 @@ AccessTokenLogTable.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   filterModel: PropTypes.object,
-  setFilterModel: PropTypes.func
+  setFilterModel: PropTypes.func,
+  error: PropTypes.any,
 };
 
 export default AccessTokenLogTable;
