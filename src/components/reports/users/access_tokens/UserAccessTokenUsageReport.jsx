@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilter";
-import useGetAccessTokenActivityLogs from "hooks/access_tokens/useGetAccessTokenActivityLogs";
+import useGetAccessTokenActivityLogs from "hooks/access_tokens/logs/useGetAccessTokenActivityLogs";
 import AccessTokenLogTable from "components/user/user_settings/access_tokens/details/logs/AccessTokenLogTable";
 import OwnershipReportLdapUserSelectInput
   from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
