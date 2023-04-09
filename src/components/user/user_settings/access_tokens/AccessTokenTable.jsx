@@ -7,7 +7,6 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
-import {accessTokenMetadata} from "components/user/user_settings/access_tokens/access-token-metadata";
 import tokenActions from "components/user/user_settings/access_tokens/token-actions";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -16,6 +15,7 @@ import ExpireTokenModal from "components/user/user_settings/access_tokens/Expire
 import FilterContainer from "components/common/table/FilterContainer";
 import {faKey} from "@fortawesome/pro-light-svg-icons";
 import {getDaysUntilDate} from "components/common/helpers/date/date.helpers";
+import accessTokenMetadata from "@opsera/definitions/constants/access_tokens/accessToken.metadata";
 
 function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, cancelTokenSource, setFilterModel, filterModel}) {
   const fields = accessTokenMetadata.fields;
