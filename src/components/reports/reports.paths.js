@@ -17,4 +17,5 @@ reportsPaths.pipelineOwnershipReport = reportsPaths.userReports + "/pipeline-own
 reportsPaths.toolOwnershipReport = reportsPaths.userReports + "/tool-ownership";
 reportsPaths.taskOwnershipReport = reportsPaths.userReports + "/task-ownership";
 reportsPaths.consolidatedUserReport = reportsPaths.userReports + "/user-report";
+reportsPaths.accessTokenUsageReport = reportsPaths.userReports + "/access-token-usage";
 reportsPaths.pipelineReports = reportsPaths.reports + "/pipelines";

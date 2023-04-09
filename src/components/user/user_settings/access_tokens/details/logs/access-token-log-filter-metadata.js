@@ -21,6 +21,10 @@ const accessTokenLogFilterMetadata = {
       id: "sortOption",
     },
     {
+      label: "User",
+      id: "owner",
+    },
+    {
       label: "Search",
       id: "search",
     },
@@ -51,6 +55,7 @@ const accessTokenLogFilterMetadata = {
     currentPage: 1,
     sortOption: {text: "Newest", option: "newest"},
     search: "",
+    user: "",
     activeFilters: []
   },
   sortOptions: [

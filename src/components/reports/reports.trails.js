@@ -197,6 +197,14 @@ reportsTrails.consolidatedUserReport = {
   icon: faUser,
   pageDescription: "View the consolidated report for selected user."
 };
+reportsTrails.accessTokenUsageReport = {
+  parent: "userReports",
+  name: "accessTokenUsageReport",
+  path: reportsPaths.accessTokenUsageReport,
+  title: "Access Token Usage Report",
+  linkText: "Access Token Usage Report",
+  icon: faUser,
+};
 
 reportsTrails.pipelineReports = {
   parent: "reports",
