@@ -30,7 +30,6 @@ reportsTrails.reports = {
     SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
     SiteRoleHelper.SITE_ROLES.AUDITOR,
   ],
-
 };
 reportsTrails.toolReports = {
   parent: "reports",
@@ -195,7 +194,14 @@ reportsTrails.consolidatedUserReport = {
   title: "User Report",
   linkText: "User Report",
   icon: faUser,
-  pageDescription: "View the consolidated report for selected user."
+  pageDescription: "View the consolidated report for selected user.",
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 reportsTrails.accessTokenUsageReport = {
   parent: "userReports",
@@ -203,7 +209,15 @@ reportsTrails.accessTokenUsageReport = {
   path: reportsPaths.accessTokenUsageReport,
   title: "Access Token Usage Report",
   linkText: "Access Token Usage Report",
+  pageDescription: "View Access Token usage",
   icon: faUser,
+  allowedRoles: [
+    SiteRoleHelper.SITE_ROLES.OPSERA_ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.ADMINISTRATOR,
+    SiteRoleHelper.SITE_ROLES.POWER_USER,
+    SiteRoleHelper.SITE_ROLES.SECURITY_MANAGER,
+    SiteRoleHelper.SITE_ROLES.AUDITOR,
+  ],
 };
 
 reportsTrails.pipelineReports = {
