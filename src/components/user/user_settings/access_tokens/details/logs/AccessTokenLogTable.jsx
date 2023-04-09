@@ -20,6 +20,7 @@ function AccessTokenLogTable(
     filterModel,
     setFilterModel,
     error,
+    className,
   }) {
   const fields = accessTokenLogMetadata.fields;
 
@@ -52,6 +53,7 @@ function AccessTokenLogTable(
 
   return (
     <FilterContainer
+      className={className}
       loadData={loadData}
       isLoading={isLoading}
       body={getActivityLogsTable()}
@@ -72,6 +74,7 @@ AccessTokenLogTable.propTypes = {
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
   error: PropTypes.any,
+  className: PropTypes.string,
 };
 
 export default AccessTokenLogTable;
