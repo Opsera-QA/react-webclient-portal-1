@@ -35,7 +35,7 @@ export default function AccessTokenUsageUserSelectInput(
       error={error}
       selectOptions={users}
       textField={"owner_name"}
-      isLoading={isLoading}
+      busy={isLoading}
       valueField={"_id"}
     />
   );
