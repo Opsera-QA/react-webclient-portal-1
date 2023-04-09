@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import useAccessTokenActivityLogActions from "hooks/access_tokens/useAccessTokenActivityLogActions";
+import useAccessTokenActivityLogActions from "hooks/access_tokens/logs/useAccessTokenActivityLogActions";
 import Model from "core/data_model/model";
 import accessTokenLogFilterMetadata
   from "components/user/user_settings/access_tokens/details/logs/access-token-log-filter-metadata";

@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import AccessTokenLogTable from "components/user/user_settings/access_tokens/details/logs/AccessTokenLogTable";
-import useGetUserAccessTokenActivityLogs from "hooks/access_tokens/useGetUserAccessTokenActivityLogs";
+import useGetUserAccessTokenActivityLogs from "hooks/access_tokens/logs/useGetUserAccessTokenActivityLogs";
 
 export default function UserAccessTokenActivityLogPanel({ userId, className }) {
   const {
