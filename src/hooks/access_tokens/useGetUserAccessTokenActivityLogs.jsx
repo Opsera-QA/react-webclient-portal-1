@@ -40,7 +40,7 @@ export default function useGetUserAccessTokenActivityLogs(
     }
 
     const response = await accessTokenActivityLogActions.getUserAccessTokenActivityLogs(userId, newFilterModel);
-    const activityLogs = DataParsingHelper.parseNestedObject(response, "data.data", []);
+    const activityLogs = DataParsingHelper.parseNestedArray(response, "data.data", []);
     setUserAccessTokenActivityLogs([...activityLogs]);
     newFilterModel.setData("totalCount", response?.data?.count);
     newFilterModel.setData("activeFilters", newFilterModel.getActiveFilters());
