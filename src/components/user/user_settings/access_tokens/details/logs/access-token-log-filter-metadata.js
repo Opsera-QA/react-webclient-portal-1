@@ -23,6 +23,7 @@ const accessTokenLogFilterMetadata = {
     {
       label: "User",
       id: "owner",
+      formText: "Please Note: This only shows Users that have used an Access Token",
     },
     {
       label: "Search",
