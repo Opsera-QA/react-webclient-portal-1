@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import AnalyticsProfileEditorPanel from "./analytics_profile/AnalyticsProfileEditorPanel";
-import {faClipboardList, faDatabase, faCogs, faUser, faIdCard} from "@fortawesome/pro-light-svg-icons";
+import {faClipboardList, faDatabase, faCogs, faUser, faIdCard, faTable} from "@fortawesome/pro-light-svg-icons";
 import CustomerDatabaseEditorPanel from "./customer_database/CustomerDatabaseEditorPanel";
 import RegisteredUserToolsPanel from "./tools/RegisteredUserToolsPanel";
 import RegisteredUserSummary from "./RegisteredUserSummary";
@@ -12,6 +12,7 @@ import DetailTabPanelContainer from "components/common/panels/detail_view/Detail
 import LdapSettingsPanel
   from "components/admin/registered_users/details/ldap_settings/LdapSettingsPanel";
 import UserAssignedRolesPanel from "components/settings/users/details/assigned_roles/UserAssignedRolesPanel";
+import UserAccessTokenActivityLogPanel from "components/settings/users/details/UserAccessTokenActivityLogPanel";
 
 function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData, setAnalyticsProfileData, loadData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -37,6 +38,13 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
           activeTab={activeTab}
           tabText={"Assigned Role Access"}
         />
+        <CustomTab
+          icon={faTable}
+          tabName={"access-token-activity-logs"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Access Token Activity Logs"}
+        />
         {/*<SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />*/}
       </CustomTabContainer>
     );
@@ -58,6 +66,13 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
         return (
           <UserAssignedRolesPanel
             userEmailAddress={userData?.getData("email")}
+          />
+        );
+      case "access-token-activity-logs":
+        return (
+          <UserAccessTokenActivityLogPanel
+            userId={userData?.getData("_id")}
+            className={"mt-2"}
           />
         );
       // case "settings":

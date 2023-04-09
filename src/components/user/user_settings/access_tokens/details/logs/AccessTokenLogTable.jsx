@@ -43,7 +43,7 @@ function AccessTokenLogTable(
     [fields, showUserField]
   );
 
-  const noDataMessage = "No logs have been generated for this token.";
+  const noDataMessage = "No logs have been generated.";
 
   const getActivityLogsTable = () => {
     return (
