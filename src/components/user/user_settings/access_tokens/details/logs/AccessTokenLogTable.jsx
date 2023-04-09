@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getFormattedLabelWithFunctionColumnDefinition,
+  getFormattedLabelWithFunctionColumnDefinition, getOwnerNameField,
   getTableDateTimeColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
@@ -21,17 +21,26 @@ function AccessTokenLogTable(
     setFilterModel,
     error,
     className,
+    showUserField,
   }) {
   const fields = accessTokenLogMetadata.fields;
 
   const columns = useMemo(
-    () => [
-      getTableTextColumn(getField(fields, "token_id")),
-      getTableTextColumn(getField(fields, "target")),
-      getFormattedLabelWithFunctionColumnDefinition(getField(fields, "scope"), accessTokenScopeConstants.getScopeLabel),
-      getTableDateTimeColumn(getField(fields, "createdAt")),
-    ],
-    []
+    () => {
+      const columnDefinitions = [
+        getTableTextColumn(getField(fields, "token_id")),
+        getTableTextColumn(getField(fields, "target")),
+        getFormattedLabelWithFunctionColumnDefinition(getField(fields, "scope"), accessTokenScopeConstants.getScopeLabel),
+        getTableDateTimeColumn(getField(fields, "createdAt")),
+      ];
+
+      if (showUserField === true) {
+        columnDefinitions.push(getOwnerNameField("User"));
+      }
+
+      return columnDefinitions;
+    },
+    [fields, showUserField]
   );
 
   const noDataMessage = "No logs have been generated for this token.";
@@ -75,6 +84,7 @@ AccessTokenLogTable.propTypes = {
   setFilterModel: PropTypes.func,
   error: PropTypes.any,
   className: PropTypes.string,
+  showUserField: PropTypes.bool,
 };
 
 export default AccessTokenLogTable;

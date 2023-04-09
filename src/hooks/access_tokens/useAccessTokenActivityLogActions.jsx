@@ -23,5 +23,24 @@ export default function useAccessTokenActivityLogActions() {
     );
   };
 
+  accessTokenActivityLogActions.getAccessTokenActivityLogs = async (
+    filterModel,
+  ) => {
+    const apiUrl = `/account/access-tokens/`;
+    const queryParameters = {
+      search: filterModel?.getFilterValue("search"),
+      userId: filterModel?.getFilterValue("userId"),
+      scope: filterModel?.getFilterValue("scope"),
+      sortOption: filterModel?.getFilterValue("sortOption"),
+      currentPage: filterModel?.getFilterValue("currentPage"),
+      pageSize: filterModel?.getFilterValue("pageSize"),
+    };
+
+    return await apiService.handleApiGetRequest(
+      apiUrl,
+      queryParameters,
+    );
+  };
+
   return accessTokenActivityLogActions;
 }
