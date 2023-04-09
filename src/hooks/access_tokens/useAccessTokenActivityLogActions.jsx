@@ -6,13 +6,15 @@ export default function useAccessTokenActivityLogActions() {
 
   accessTokenActivityLogActions.getUserAccessTokenActivityLogs = async (
     userId,
-    toolIdentifier,
-    uniqueId,
+    filterModel,
   ) => {
     const apiUrl = `/account/access-tokens/${userId}`;
     const queryParameters = {
-      tool_identifier: toolIdentifier,
-      unique_id: uniqueId,
+      search: filterModel?.getFilterValue("search"),
+      scope: filterModel?.getFilterValue("scope"),
+      sortOption: filterModel?.getFilterValue("sortOption"),
+      currentPage: filterModel?.getFilterValue("currentPage"),
+      pageSize: filterModel?.getFilterValue("pageSize"),
     };
 
     return await apiService.handleApiGetRequest(
