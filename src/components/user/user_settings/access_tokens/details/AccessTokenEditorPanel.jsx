@@ -6,7 +6,6 @@ import Col from "react-bootstrap/Col";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import tokenActions from "components/user/user_settings/access_tokens/token-actions";
 import Model from "core/data_model/model";
-import {accessTokenMetadata} from "components/user/user_settings/access_tokens/access-token-metadata";
 import CreateButton from "components/common/buttons/saving/CreateButton";
 import TextAreaClipboardField from "components/common/fields/clipboard/TextAreaClipboardField";
 import {faKey} from "@fortawesome/pro-light-svg-icons";
@@ -14,8 +13,8 @@ import AccessTokenExpirationSelectInput
   from "components/common/list_of_values_input/users/access_tokens/AccessTokenExpirationSelectInput";
 import AccessTokenScopeRadioInput
   from "components/common/list_of_values_input/users/access_tokens/AccessTokenScopeRadioInput";
-import IconBase from "components/common/icons/IconBase";
 import InfoContainer from "components/common/containers/InfoContainer";
+import accessTokenMetadata from "@opsera/definitions/constants/access_tokens/accessToken.metadata";
 
 function AccessTokenEditorPanel({ cancelTokenSource, loadData }) {
   const { getAccessToken } = useContext(AuthContext);
