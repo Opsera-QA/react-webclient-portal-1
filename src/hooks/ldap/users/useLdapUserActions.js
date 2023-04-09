@@ -63,5 +63,14 @@ export default function useLdapUserActions() {
     );
   };
 
+  ldapUserActions.revokeUserAccessTokens = async (
+    userId,
+  ) => {
+    const apiUrl = `/account/users/${userId}/access-tokens`;
+    return await apiService.handleApiDeleteRequest(
+      apiUrl,
+    );
+  };
+
   return ldapUserActions;
 }
