@@ -5,11 +5,6 @@
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
-.html {
-    overflow: auto;
-    scrollbar-gutter: stable;
-}
-
 .loader-container {
     z-index: 9999;
     display: flex;
