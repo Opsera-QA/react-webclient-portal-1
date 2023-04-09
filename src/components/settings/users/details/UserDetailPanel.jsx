@@ -39,14 +39,14 @@ function UserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, hideSetting
           activeTab={activeTab}
           tabText={"Assigned Role Access"}
         />
-        {/*<CustomTab*/}
-        {/*  icon={faTable}*/}
-        {/*  tabName={"access-token-activity-logs"}*/}
-        {/*  handleTabClick={handleTabClick}*/}
-        {/*  activeTab={activeTab}*/}
-        {/*  tabText={"Access Token Activity Logs"}*/}
-        {/*  visible={isSiteAdministrator === true || userData?._id === ldapUserData?.getData("_id")}*/}
-        {/*/>*/}
+        <CustomTab
+          icon={faTable}
+          tabName={"access-token-activity-logs"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          tabText={"Access Token Activity Logs"}
+          visible={isSiteAdministrator === true || userData?._id === ldapUserData?.getData("_id")}
+        />
       </CustomTabContainer>
     );
   };
