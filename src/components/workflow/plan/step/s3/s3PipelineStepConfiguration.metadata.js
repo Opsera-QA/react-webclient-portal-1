@@ -17,8 +17,9 @@ export const s3PipelineStepConfigurationMetadata = {
     {
       label: "S3 Url",
       id: "s3Url",
-      isUrl: true,
-      type: metadataConstants.SUPPORTED_VALUE_TYPES.URL,
+      maxLength: 150,
+      // isUrl: true,
+      // type: metadataConstants.SUPPORTED_VALUE_TYPES.URL,
     },
     {
       label: "Job Type",
