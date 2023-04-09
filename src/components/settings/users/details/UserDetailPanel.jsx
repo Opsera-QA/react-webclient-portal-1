@@ -15,6 +15,8 @@ function UserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, hideSetting
   const [activeTab, setActiveTab] = useState("summary");
   const {
     isSiteAdministrator,
+    isAuditor,
+    isSecurityManager,
     userData,
   } = useComponentStateReference();
 
@@ -45,7 +47,7 @@ function UserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, hideSetting
           handleTabClick={handleTabClick}
           activeTab={activeTab}
           tabText={"Access Token Activity Logs"}
-          visible={isSiteAdministrator === true || userData?._id === ldapUserData?.getData("_id")}
+          visible={isSiteAdministrator === true || isAuditor === true || isSecurityManager === true || userData?._id === ldapUserData?.getData("_id")}
         />
       </CustomTabContainer>
     );
