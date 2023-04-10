@@ -2,7 +2,6 @@ import React, {useCallback} from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import useGetCustomerTags from "hooks/settings/tags/useGetCustomerTags";
 import useGetWorkspaceTags from "hooks/workspace/tags/useGetWorkspaceTags";
 import {workspaceConstants} from "components/workspace/workspace.constants";
 
@@ -56,7 +55,6 @@ export default function WorkspaceTagFilter(
       <FilterSelectInputBase
         fieldName={fieldName}
         busy={isLoading}
-        placeholderText={"Filter by Tag"}
         groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
         setDataObject={setFilterModel}
         setDataFunction={setDataFunction}
@@ -65,6 +63,8 @@ export default function WorkspaceTagFilter(
         selectOptions={getTagsForType()}
         error={error}
         loadDataFunction={loadDataFunction}
+        pluralTopic={"Tags"}
+        singularTopic={"Tag"}
       />
     </div>
   );
