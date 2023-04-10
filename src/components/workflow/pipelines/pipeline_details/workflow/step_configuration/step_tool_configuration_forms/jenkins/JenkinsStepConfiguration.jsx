@@ -28,6 +28,9 @@ import JenkinsSfdcDataTransformerRulesSelectInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsSfdcDataTransformerRulesSelectInput";
 import JenkinsNodeBuildTypePanel from "./inputs/JenkinsNodeBuildTypePanel";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import {
+  salesforceJenkinsJobConstants
+} from "components/common/list_of_values_input/tools/jenkins/jobs/sfdc/salesforceJenkinsJob.constants";
 
 // TODO: This should probably be moved to some helper function so we only need to update it in one spot
 //  and also use ENUMs to make it easier to ensure spelling it is correct and consistent everywhere.
@@ -296,11 +299,13 @@ function JenkinsStepConfiguration({
         setModel={setJenkinsStepConfigurationDto}
       />
       {getJobForm()}
-      <JenkinsStepDependencyTypeInput
-        model={jenkinsStepConfigurationDto}
-        setModel={setJenkinsStepConfigurationDto}
-        buildType={jenkinsStepConfigurationDto?.getData("buildType")}
-      />
+      {!salesforceJenkinsJobConstants.isSalesforceJobTypeValid(jenkinsStepConfigurationDto.getData('jobType')) && 
+        <JenkinsStepDependencyTypeInput
+          model={jenkinsStepConfigurationDto}
+          setModel={setJenkinsStepConfigurationDto}
+          buildType={jenkinsStepConfigurationDto?.getData("buildType")}
+        />
+      }
       {jenkinsStepConfigurationDto?.getData("jobType") === "SFDC CREATE PACKAGE XML" &&
         <BooleanToggleInput
           setDataObject={setJenkinsStepConfigurationDto}
