@@ -39,7 +39,6 @@ const AuthContextProvider = (
   {
     userData,
     children,
-    isAuthenticated,
   }) => {
   const history = useHistory();
   const [viewMode, setViewMode] = useState(SITE_VIEW_MODES.BUSINESS);
@@ -153,7 +152,6 @@ const AuthContextProvider = (
       setAccessRoles: () => userAccessRoles,
     }}>
       <MainViewContainer
-        isAuthenticated={isAuthenticated}
         backgroundColor={backgroundColor}
         userData={userData}
       >
@@ -166,7 +164,6 @@ const AuthContextProvider = (
 AuthContextProvider.propTypes = {
   userData: PropTypes.object,
   children: PropTypes.any,
-  isAuthenticated: PropTypes.bool,
 };
 
 export const AuthContext = createContext();

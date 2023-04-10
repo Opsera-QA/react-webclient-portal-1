@@ -50,5 +50,6 @@ export default function useAuthenticationToken() {
     authState: authState,
     getAccessToken: getAccessToken,
     getIsAuthenticated: getIsAuthenticated,
+    isAuthenticated: authState?.isAuthenticated,
   });
 }

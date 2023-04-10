@@ -192,7 +192,6 @@ const AppWithRouterAccess = () => {
       {getError()}
       <AuthContextProvider
         userData={userData}
-        isAuthenticated={authenticatedState}
       >
         {getRoutes()}
       </AuthContextProvider>
