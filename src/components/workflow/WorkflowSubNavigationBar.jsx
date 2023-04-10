@@ -10,9 +10,9 @@ import {pipelineCatalogHelper} from "components/workflow/catalog/pipelineCatalog
 import {workspaceHelper} from "components/workspace/workspace.helper";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import sessionHelper from "utils/session.helper";
+import BackToWorkspaceSubNavigationBarItem from "components/workspace/BackToWorkspaceSubNavigationBarItem";
 
 function WorkflowSubNavigationBar({currentTab}) {
-  const fromWorkspace = DataParsingHelper.parseBooleanV2(sessionHelper.getStoredUrlParameter("fromWorkspace"));
   const history = useHistory();
 
   const handleTabClick = (tabSelection) => e => {
@@ -21,9 +21,6 @@ function WorkflowSubNavigationBar({currentTab}) {
     switch (tabSelection) {
       case "catalog":
         history.push(pipelineCatalogHelper.getManagementScreenLink());
-        return;
-      case "workspace":
-        history.push(workspaceHelper.getManagementScreenLink());
         return;
       case "pipelines":
         history.push(pipelineHelper.getManagementScreenLink());
@@ -36,15 +33,7 @@ function WorkflowSubNavigationBar({currentTab}) {
 
   return (
     <NavigationTabContainer>
-      <NavigationTab
-        activeTab={currentTab}
-        tabText={"Back to Workspace"}
-        handleTabClick={handleTabClick}
-        tabName={"workspace"}
-        toolTipText={"Back to Workspace"}
-        icon={faArrowLeft}
-        visible={fromWorkspace === true}
-      />
+      <BackToWorkspaceSubNavigationBarItem />
       <NavigationTab
         activeTab={currentTab}
         tabText={"Catalog"}
