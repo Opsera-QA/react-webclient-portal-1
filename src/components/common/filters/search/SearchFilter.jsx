@@ -69,6 +69,8 @@ function SearchFilter(
     }
   };
 
+  const buttonClassName = variant === "outline-primary" ? "inline-filter-input filter-bg-white" : "inline-filter-input";
+
   if (visible === false || paginationModel == null || paginationModel.canSearch() === false) {
     return null;
   }
@@ -85,7 +87,7 @@ function SearchFilter(
           onChange={e => setCurrentSearchTerm(e.target.value)}
         />
         <InputGroup.Append>
-          <Button className="inline-filter-input filter-bg-white" disabled={isLoading || disabled} variant={variant} onClick={handleSearch}>
+          <Button className={buttonClassName} disabled={isLoading || disabled} variant={variant} onClick={handleSearch}>
             <IconBase isLoading={isSearching} icon={faSearch} />
           </Button>
         </InputGroup.Append>
