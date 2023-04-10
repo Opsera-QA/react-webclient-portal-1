@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import WorkspaceViewContainer from "components/workspace/views/WorkspaceViewContainer";
+import WorkspaceSubNavigationBar from "components/workspace/views/WorkspaceSubNavigationBar";
 import useGetWorkspaceItems from "hooks/workspace/useGetWorkspaceItems";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {workspaceConstants} from "components/workspace/workspace.constants";
@@ -164,6 +164,8 @@ export default function Workspace() {
       filters={getDropdownFilters()}
       loadDataFunction={loadData}
       addRecordFunction={createWorkspaceItem}
+      bodyClassName={""}
+      navigationTabContainer={<WorkspaceSubNavigationBar />}
     >
       {getTabAndViewContainer()}
     </ScreenContainer>

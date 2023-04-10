@@ -20,7 +20,6 @@ import {
   faBook,
   faMagnifyingGlass,
   faShieldKeyhole,
-  faRectangleList,
   faHouseUser,
   faDiamondExclamation,
   faUserShield,
@@ -36,6 +35,7 @@ import {pipelinesTrails} from "components/workflow/pipelines.trails";
 import {accountSettingsTrails} from "components/settings/accountSettings.trails";
 import {adminToolsTrails} from "components/admin/adminTools.trails";
 import {reportsTrails} from "components/reports/reports.trails";
+import {workspaceTrails} from "components/workspace/workspace.trails";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
 export const breadcrumbs = {
@@ -274,16 +274,6 @@ export const breadcrumbs = {
     icon: faEnvelope
   },
 
-  workspace: {
-    parent: undefined,
-    name: "workspace",
-    path: paths.workspace,
-    title: "Workspace",
-    linkText: "Workspace",
-    icon: faRectangleList,
-    pageDescription: "The Opsera workspace allows you to configure and track all workflows in one central location.",
-  },
-
   freeTrialLanding: {
     parent: undefined,
     name: "freeTrialLanding",
@@ -355,6 +345,7 @@ export const breadcrumbs = {
   ...accountSettingsTrails,
   ...adminToolsTrails,
   ...reportsTrails,
+  ...workspaceTrails,
 };
 
 export const getTrail = (breadcrumb) => {
