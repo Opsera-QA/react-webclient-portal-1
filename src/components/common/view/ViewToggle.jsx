@@ -5,13 +5,14 @@ import Button from "react-bootstrap/Button";
 import IconBase from "components/common/icons/IconBase";
 import useComponentStateReference from "hooks/useComponentStateReference";
 
-function ViewToggle(
+export default function ViewToggle(
   {
     filterModel, 
     setFilterModel, 
     supportViewToggle,
     className, 
     isLoading,
+    variant,
   }) {
   const {
     isFreeTrial,
@@ -22,7 +23,7 @@ function ViewToggle(
     return (
       <div className={"d-flex"}>
         <Button
-          variant={view === "list" ? "success" : isFreeTrial === true ? "secondary" : "outline-secondary"}
+          variant={view === "list" ? "success" : isFreeTrial === true ? "secondary" : variant}
           className={"mr-2"}
           size={"sm"}
           onClick={() => switchView()}
@@ -32,7 +33,7 @@ function ViewToggle(
           <IconBase icon={faList} />
         </Button>
         <Button
-          variant={view === "card" ? "success" : isFreeTrial === true ? "secondary" : "outline-secondary"}
+          variant={view === "card" ? "success" : isFreeTrial === true ? "secondary" : variant}
           size={"sm"}
           onClick={() => switchView()}
           disabled={isLoading}
@@ -45,13 +46,12 @@ function ViewToggle(
   };
 
   const switchView = () => {
-    let newFilterDto = filterModel;
     const newViewType = filterModel.getData("viewType") === "list" ? "card" : "list";
-    newFilterDto.setData("viewType", newViewType);
-    setFilterModel({ ...newFilterDto });
+    filterModel.setData("viewType", newViewType);
+    setFilterModel({ ...filterModel });
   };
 
-  if (supportViewToggle !== true) {
+  if (supportViewToggle !== true || setFilterModel == null) {
     return null;
   }
 
@@ -67,7 +67,10 @@ ViewToggle.propTypes = {
   setFilterModel: PropTypes.func,
   supportViewToggle: PropTypes.bool,
   className: PropTypes.string,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  variant: PropTypes.string,
 };
 
-export default ViewToggle;
+ViewToggle.defaultProps = {
+  variant: "outline-secondary",
+};

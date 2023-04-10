@@ -41,7 +41,6 @@ export default function WorkspaceItemCardView(
     <VanitySetCardView
       isLoading={isLoading}
       loadData={loadData}
-      paginationModel={workspaceFilterModel}
       cards={
         <VerticalCardViewBase
           getCardFunction={getWorkspaceItemCard}
