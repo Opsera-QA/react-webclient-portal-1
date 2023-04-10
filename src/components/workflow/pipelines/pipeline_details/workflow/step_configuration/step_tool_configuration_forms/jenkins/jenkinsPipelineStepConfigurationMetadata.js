@@ -23,12 +23,12 @@ const jenkinsPipelineStepConfigurationMetadata = {
       type: metadataConstants.SUPPORTED_VALUE_TYPES.STRING,
     },
     {
-      label: "Tool Job",
+      label: "Job",
       id: "toolJobId",
       // isRequired: true
     },
     {
-      label: "Account",
+      label: "Source Code Management Tool",
       id: "gitCredential",
       // isRequired: true
     },
@@ -181,7 +181,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "inputDetails",
     },
     {
-      label:"Specify Salesforce Credentials",
+      label:"Salesforce Org",
       id:"sfdcToolId",
       // isRequired: true,
     },
@@ -191,7 +191,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       formText:"Note: TestLevel of NoTestRun cannot be used in production organizations"
     },
     {
-      label:"Destination Salesforce Credentials",
+      label:"Destination Salesforce Org",
       id:"sfdcDestToolId",
       // isRequired: true
     },
@@ -267,7 +267,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "useBuildStepResource"
     },
     {
-      label: "Build Step Info",
+      label: "Build Step",
       id: "buildStepId",
       isRequiredFunction: (model) => {
         return model?.getData("useBuildStepResource") === true;

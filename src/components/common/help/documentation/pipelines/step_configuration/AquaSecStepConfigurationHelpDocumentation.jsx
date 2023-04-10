@@ -18,10 +18,10 @@ function AquaSecStepConfigurationHelpDocumentation() {
           <ol>
             <li>Once the initial Step Setup is configured with the Aquasec tool, set the following values:
               <ul style={{listStyleType: "none"}}>
-                <li><b>Jenkins Tool Selection</b> - Select a Jenkins tool from the drop-down.</li>
+                <li><b>Jenkins Tool</b> - Select a Jenkins tool from the drop-down.</li>
                 <li><b>Aquasec Tool</b> - Select the Aquasec tool created in the tool registry.</li>
                 <li><b>Build Step</b> - Choose the build step added to this pipeline. The build step added in the pipeline must be enabled in order to scan the docker image.</li>
-                <li><b>Docker Registry Tool ID</b> - Choose the required Tool ID from the drop-down.</li>
+                <li><b>Docker Tool</b> - Choose the required Tool ID from the drop-down.</li>
                 <li><b>Docker Image</b> - Enter an image name.</li>
               </ul>
             </li>
