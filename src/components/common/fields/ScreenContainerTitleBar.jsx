@@ -8,6 +8,7 @@ import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboar
 import {faLink} from "@fortawesome/pro-light-svg-icons";
 import EditFiltersIcon from "temp-library-components/icon/filters/EditFiltersIcon";
 import RefreshIcon from "temp-library-components/icon/refresh/RefreshIcon";
+import SearchFilter from "components/common/filters/search/SearchFilter";
 
 function ScreenContainerTitleBar(
   {
@@ -37,6 +38,16 @@ function ScreenContainerTitleBar(
       <div className="ml-auto d-flex">
         {getInactiveText()}
         {titleActionBar}
+        <SearchFilter
+          isLoading={isLoading}
+          paginationModel={filterModel}
+          searchText={filterModel?.getData("search")}
+          loadData={loadDataFunction}
+          className={"ml-3"}
+          metadata={filterModel?.getMetaData()}
+          visible={typeof filterModel?.canSearch === "function" && filterModel?.canSearch() === true}
+          variant={"secondary"}
+        />
         <EditFiltersIcon
           filterModel={filterModel}
           filters={filters}

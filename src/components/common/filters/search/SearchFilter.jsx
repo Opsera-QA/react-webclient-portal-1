@@ -19,6 +19,8 @@ function SearchFilter(
     isLoading,
     metadata,
     searchText,
+    visible,
+    variant,
   }) {
   const history = useHistory();
   const [currentSearchTerm, setCurrentSearchTerm] = useState("");
@@ -67,7 +69,7 @@ function SearchFilter(
     }
   };
 
-  if (paginationModel == null || paginationModel.canSearch() === false) {
+  if (visible === false || paginationModel == null || paginationModel.canSearch() === false) {
     return null;
   }
 
@@ -83,7 +85,7 @@ function SearchFilter(
           onChange={e => setCurrentSearchTerm(e.target.value)}
         />
         <InputGroup.Append>
-          <Button className="inline-filter-input filter-bg-white" disabled={isLoading || disabled} variant="outline-primary" onClick={handleSearch}>
+          <Button className="inline-filter-input filter-bg-white" disabled={isLoading || disabled} variant={variant} onClick={handleSearch}>
             <IconBase isLoading={isSearching} icon={faSearch} />
           </Button>
         </InputGroup.Append>
@@ -101,10 +103,13 @@ SearchFilter.propTypes = {
   className: PropTypes.string,
   metadata: PropTypes.object,
   searchText: PropTypes.string,
+  visible: PropTypes.bool,
+  variant: PropTypes.string,
 };
 
 SearchFilter.defaultProps = {
   fieldName: "search",
+  variant: "outline-primary",
 };
 
 export default SearchFilter;
