@@ -56,7 +56,7 @@ function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, canc
       if (isMounted?.current === true) {
         toastContext.showDeleteSuccessResultDialog("Access Token");
         setShowExpireModal(false);
-        loadData(cancelTokenSource);
+        loadData();
       }
     }
     catch (error) {
