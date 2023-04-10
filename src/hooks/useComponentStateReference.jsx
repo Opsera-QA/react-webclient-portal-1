@@ -7,6 +7,9 @@ import useAccessRoleData from "hooks/roles/useAccessRoleData";
 import useTheme from "hooks/theme/useTheme";
 import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
 
+const isProductionEnvironment = String(process.env.REACT_APP_ENVIRONMENT) !== "development" && String(process.env.REACT_APP_ENVIRONMENT) !== "test";
+const isTestEnvironment = String(process.env.REACT_APP_ENVIRONMENT) === "test";
+
 export default function useComponentStateReference() {
   const isMounted = useIsMountedStateReference();
   const {
@@ -18,8 +21,6 @@ export default function useComponentStateReference() {
     isAuthenticated,
   } = useAuthenticationToken();
   const {
-    featureFlagHideItemInProd,
-    featureFlagHideItemInTest,
     userData,
     backgroundColor,
     renewUserToken,
@@ -53,8 +54,8 @@ export default function useComponentStateReference() {
     isSiteAdministrator: isSiteAdministrator,
     isSecurityManager: isSecurityManager,
     isAuditor: isAuditor,
-    isProductionEnvironment: featureFlagHideItemInProd(),
-    isTestEnvironment: featureFlagHideItemInTest(),
+    isProductionEnvironment: isProductionEnvironment,
+    isTestEnvironment: isTestEnvironment,
     isSassUser: isSaasUser, // TODO: Remove and replace with the proper spelling
     isSaasUser: isSaasUser,
     userData: userData,
