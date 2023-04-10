@@ -9,16 +9,13 @@ import WorkspaceRegistryViews from "components/workspace/views/tool/WorkspaceReg
 import WorkspaceTaskViews from "components/workspace/views/task/WorkspaceTaskViews";
 import WorkspaceItemViews from "components/workspace/views/all/WorkspaceItemViews";
 import WorkspaceVerticalTabContainer from "components/workspace/views/WorkspaceVerticalTabContainer";
-import TabAndViewContainer from "components/common/tabs/tree/TabAndViewContainer";
-import FilterContainer, {
+import {
   FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
 } from "components/common/table/FilterContainer";
 import InlineWorkspaceItemTypeFilter from "components/common/filters/workspace/type/InlineWorkspaceItemTypeFilter";
-import CustomerTagFilter from "components/common/filters/tags/tag/CustomerTagFilter";
 import ActiveFilter from "components/common/filters/status/ActiveFilter";
 import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 import CreateWorkspaceResourceWizard from "components/wizard/workspace/CreateWorkspaceResourceWizard";
-import {faRectangleList} from "@fortawesome/pro-light-svg-icons";
 import WorkspaceTagFilter from "components/workspace/views/filters/WorkspaceTagFilter";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 import SideBySideViewBase from "components/common/tabs/SideBySideViewBase";
