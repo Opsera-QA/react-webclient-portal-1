@@ -128,11 +128,6 @@ const AppWithRouterAccess = () => {
     }
   };
 
-  const refreshToken = async () => {
-    const tokens = await authClient.tokenManager.getTokens();
-    await loadUsersData(tokens?.accessToken?.accessToken);
-  };
-
   const getError = () => {
     if (
       error &&
@@ -189,20 +184,18 @@ const AppWithRouterAccess = () => {
   };
 
   if (!userData && loading && !error) {
-    return (<LoadingDialog />);
+    return (<LoadingDialog/>);
   }
 
   return (
     <Security oktaAuth={authClient} restoreOriginalUri={restoreOriginalUri}>
       {getError()}
-        <AuthContextProvider
-          userData={userData}
-          refreshToken={refreshToken}
-          authClient={authClient}
-          isAuthenticated={authenticatedState}
-        >
-          {getRoutes()}
-        </AuthContextProvider>
+      <AuthContextProvider
+        userData={userData}
+        isAuthenticated={authenticatedState}
+      >
+        {getRoutes()}
+      </AuthContextProvider>
     </Security>
   );
 

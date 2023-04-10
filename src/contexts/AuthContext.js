@@ -38,7 +38,6 @@ const featureFlagHideItemInTest = () => {
 const AuthContextProvider = (
   {
     userData,
-    refreshToken,
     children,
     isAuthenticated,
   }) => {
@@ -122,15 +121,10 @@ const AuthContextProvider = (
     history.push("/login");
   };
 
-  const renewUserToken = () => {
-    refreshToken();
-  };
-
   return (
     <AuthContext.Provider value={{
       logoutUserContext: logoutUserContext,
       loginUserContext: loginUserContext,
-      renewUserToken: renewUserToken,
       getAccessToken: getAccessToken,
       featureFlagHideItemInProd: featureFlagHideItemInProd,
       featureFlagHideItemInTest: featureFlagHideItemInTest,
@@ -171,7 +165,6 @@ const AuthContextProvider = (
 
 AuthContextProvider.propTypes = {
   userData: PropTypes.object,
-  refreshToken: PropTypes.func,
   children: PropTypes.any,
   isAuthenticated: PropTypes.bool,
 };
