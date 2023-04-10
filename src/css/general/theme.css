@@ -1557,6 +1557,11 @@ div.data-blocks-ellipses {
     resize: none;
 }
 
+.inline-search-filter {
+    border-top-left-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+}
+
 /*Media Queries*/
 @media (max-width: 1024px) {
     .inline-search-filter {

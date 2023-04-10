@@ -20,6 +20,8 @@ import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 import CreateWorkspaceResourceWizard from "components/wizard/workspace/CreateWorkspaceResourceWizard";
 import {faRectangleList} from "@fortawesome/pro-light-svg-icons";
 import WorkspaceTagFilter from "components/workspace/views/filters/WorkspaceTagFilter";
+import PaginationContainer from "components/common/pagination/PaginationContainer";
+import SideBySideViewBase from "components/common/tabs/SideBySideViewBase";
 
 export default function Workspace() {
   const {
@@ -90,17 +92,22 @@ export default function Workspace() {
 
   const getTabAndViewContainer = () => {
     return (
-      <TabAndViewContainer
-        verticalTabContainer={getVerticalTabContainer()}
-        currentView={getCurrentView()}
-        tabColumnSize={2}
-        // bodyClassName={bodyClassName}
-        minimumHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
-        // maximumHeight={maximumHeight}
-        // overflowXBodyStyle={overflowXBodyStyle}
-        // overflowYContainerStyle={overflowYContainerStyle}
-        // overflowYBodyStyle={overflowYBodyStyle}
-      />
+      <PaginationContainer
+        loadData={loadData}
+        isLoading={isLoading}
+        filterDto={workspaceFilterModel}
+        setFilterDto={setWorkspaceFilterModel}
+        data={workspaceItems}
+        nextGeneration={true}
+      >
+        <SideBySideViewBase
+          leftSideView={getVerticalTabContainer()}
+          rightSideView={getCurrentView()}
+          leftSideMinimumWidth={"150px"}
+          leftSideMaximumWidth={"150px"}
+          minimumHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
+        />
+      </PaginationContainer>
     );
   };
 
@@ -153,26 +160,12 @@ export default function Workspace() {
       breadcrumbDestination={"workspace"}
       error={error}
       filterModel={workspaceFilterModel}
+      setFilterModel={setWorkspaceFilterModel}
       filters={getDropdownFilters()}
       loadDataFunction={loadData}
+      addRecordFunction={createWorkspaceItem}
     >
-      <FilterContainer
-        addRecordFunction={createWorkspaceItem}
-        minimumHeight={FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION}
-        body={getTabAndViewContainer()}
-        titleIcon={faRectangleList}
-        filterDto={workspaceFilterModel}
-        setFilterDto={setWorkspaceFilterModel}
-        supportViewToggle={true}
-        isLoading={isLoading}
-        loadData={loadData}
-        inlineFilters={getInlineFilters()}
-        dropdownFilters={getDropdownFilters()}
-        title={"Workspace"}
-        type={"Workspace Item"}
-        addRecordButtonCustomText={"Create New"}
-        className={"px-2 pb-2"}
-      />
+      {getTabAndViewContainer()}
     </ScreenContainer>
   );
 }

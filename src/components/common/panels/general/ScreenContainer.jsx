@@ -34,7 +34,10 @@ function ScreenContainer(
     showActiveFilters,
     filters,
     filterModel,
+    setFilterModel,
     loadDataFunction,
+    addRecordFunction,
+    addRecordButtonCustomText,
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const toastContext = useContext(DialogToastContext);
@@ -198,6 +201,8 @@ function ScreenContainer(
               filterModel={filterModel}
               filters={filters}
               loadDataFunction={loadDataFunction}
+              addRecordButtonCustomText={addRecordButtonCustomText}
+              addRecordFunction={addRecordFunction}
             />
           </div>
           {getActiveFilterDisplayer()}
@@ -231,8 +236,11 @@ ScreenContainer.propTypes = {
   hideSubNavigationBlock: PropTypes.bool,
   showActiveFilters: PropTypes.bool,
   filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
   loadDataFunction: PropTypes.func,
   filters: PropTypes.any,
+  addRecordFunction: PropTypes.func,
+  addRecordButtonCustomText: PropTypes.string,
 };
 
 ScreenContainer.defaultProps = {
