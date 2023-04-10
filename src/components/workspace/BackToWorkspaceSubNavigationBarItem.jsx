@@ -7,7 +7,8 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import sessionHelper from "utils/session.helper";
 
 export default function BackToWorkspaceSubNavigationBarItem() {
-  const fromWorkspace = DataParsingHelper.parseBooleanV2(sessionHelper.getStoredUrlParameter("fromWorkspace"));
+  const fromWorkspaceUrlParameter = sessionHelper.getStoredUrlParameter("fromWorkspace");
+  const fromWorkspace = DataParsingHelper.parseBooleanV2(fromWorkspaceUrlParameter);
   const history = useHistory();
 
   const handleTabClick = (tabSelection) => e => {

@@ -13,7 +13,7 @@ workspaceHelper.getManagementScreenLink = () => {
 };
 
 workspaceHelper.getWorkspaceItemDetailLink = (workspaceItem) => {
-  return `${workspaceHelper.getWorkspaceItemDetailLinkBase(workspaceItem?.workspaceType, workspaceItem?._id)}&fromWorkspace="true"`;
+  return `${workspaceHelper.getWorkspaceItemDetailLinkBase(workspaceItem?.workspaceType, workspaceItem?._id)}?fromWorkspace="true"`;
 };
 
 workspaceHelper.getWorkspaceItemDetailLinkBase = (type, mongoId) => {
