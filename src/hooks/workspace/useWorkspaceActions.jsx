@@ -36,5 +36,10 @@ export default function useWorkspaceActions() {
     );
   };
 
+  workspaceActions.getTagsByWorkspaceUsage = async () => {
+    const apiUrl = `/workspace/usage/tags`;
+    return await apiService.handleApiGetRequest(apiUrl);
+  };
+
   return workspaceActions;
 }
