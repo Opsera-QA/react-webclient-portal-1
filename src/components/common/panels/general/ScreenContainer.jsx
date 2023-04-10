@@ -199,6 +199,7 @@ function ScreenContainer(
               helpComponent={helpComponent}
               auditLogType={auditLogType}
               filterModel={filterModel}
+              setFilterModel={setFilterModel}
               filters={filters}
               loadDataFunction={loadDataFunction}
               addRecordButtonCustomText={addRecordButtonCustomText}
