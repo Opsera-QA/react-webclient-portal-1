@@ -1,11 +1,9 @@
 import React, {createContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import moment from "moment";
 import {useHistory} from "react-router-dom";
 import {SITE_VIEW_MODES} from "components/header/view_modes/siteViewMode.constants";
 import { THEMES } from "temp-library-components/theme/theme.constants";
 import { lightThemeConstants } from "temp-library-components/theme/light.theme.constants";
-import { darkThemeConstants } from "temp-library-components/theme/dark.theme.constants";
 import ClientWebsocket from "core/websocket/client.websocket";
 import { DATE_FN_TIME_SCALES, handleDateAdditionForTimeScale } from "components/common/helpers/date/date.helpers";
 import MainViewContainer from "components/common/containers/MainViewContainer";
@@ -15,19 +13,36 @@ import useAxiosCancelToken from "hooks/useAxiosCancelToken";
 import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 import organizationActions from "components/settings/organizations/organization-actions";
 import commonActions from "components/common/common.actions";
+import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
 
 const websocketClient = new ClientWebsocket();
+
+// TODO: Move
+export const getFreeTrialUserExpirationDate = (userData) => {
+  if (!userData) {
+    return null;
+  }
+
+  const userCreatedAt = userData?.createdAt;
+  return handleDateAdditionForTimeScale(userCreatedAt, DATE_FN_TIME_SCALES.DAYS, 15);
+};
+
+const featureFlagHideItemInProd = () => {
+  return String(process.env.REACT_APP_ENVIRONMENT) !== "development" && String(process.env.REACT_APP_ENVIRONMENT) !== "test";
+};
+
+const featureFlagHideItemInTest = () => {
+  return String(process.env.REACT_APP_ENVIRONMENT) === "test";
+};
 
 const AuthContextProvider = (
   {
     userData,
     refreshToken,
-    authClient,
     children,
     isAuthenticated,
   }) => {
   const history = useHistory();
-  const [userAccessRoles, setUserAccessRoles] = useState(undefined);
   const [viewMode, setViewMode] = useState(SITE_VIEW_MODES.BUSINESS);
   const [theme, setTheme] = useState(THEMES.LIGHT);
   const [backgroundColor, setBackgroundColor] = useState(lightThemeConstants.COLOR_PALETTE.WHITE);
@@ -35,9 +50,14 @@ const AuthContextProvider = (
   const [organizationSettingsRecord, setOrganizationSettingsRecord] = useState(undefined);
   const [featureFlags, setFeatureFlags] = useState(undefined);
   const { cancelTokenSource } = useAxiosCancelToken();
+  const {
+    authClient,
+    getAccessToken,
+    getIsAuthenticated,
+  } = useAuthenticationToken();
+  const userAccessRoles = SiteRoleHelper.getAccessRoles(userData);
 
   useEffect(() => {
-    setUserAccessRoles(undefined);
     setPlatformSettingsRecord(undefined);
     setOrganizationSettingsRecord(undefined);
 
@@ -51,12 +71,6 @@ const AuthContextProvider = (
   }, [userData]);
 
   const initializeUserData = () => {
-    const newAccessRoles = SiteRoleHelper.getAccessRoles(userData);
-
-    if (newAccessRoles) {
-      setUserAccessRoles({...newAccessRoles});
-    }
-
     platformSettingsActions.getActivePlatformSettings(
       getAccessToken,
       cancelTokenSource,
@@ -112,125 +126,6 @@ const AuthContextProvider = (
     refreshToken();
   };
 
-  const getAccessToken = async () => {
-    const isAuthenticated = await getIsAuthenticated();
-
-    if (!isAuthenticated) {
-      //console.log("!getAccessToken: refreshing UI to trigger login");
-      //window.location = "/login"; //if not authenticated, may just need to take user to login page
-      //window.location.reload(false);
-      return false;
-    }
-
-    const tokenObject = await authClient.tokenManager.get("accessToken");
-
-    if (tokenObject.accessToken) {
-      let now = moment();
-      let tokenExp = moment.unix(tokenObject.expiresAt);
-
-      if (now.isBefore(tokenExp)) { //maybe check if 30min has passed and then force refresh?  Be proactive?
-        console.info("TOKEN NOT EXPIRED: ", tokenExp.format("MMMM Do YYYY, h:mm:ss a"));
-        //console.log("Existing token: ", tokenObject.accessToken);
-        return tokenObject.accessToken;
-      } else {
-        console.info("EXPIRED TOKEN FOUND ON:", tokenExp.format("MMMM Do YYYY, h:mm:ss a"));
-        const newToken = await authClient.tokenManager.renew("accessToken");
-        console.info("REFRESHED TOKEN FOR:", moment.unix(newToken.expiresAt).format("MMMM Do YYYY, h:mm:ss a"));
-        //console.log("token being returned from getAccessToken:", newToken.accessToken);
-        return newToken.accessToken;
-      }
-
-    } else {
-      console.info("no access token available");
-      return false;
-    }
-  };
-
-  const getIsAuthenticated = async () => {
-    const idToken = await authClient.tokenManager.get("idToken");
-    const accessToken = await authClient.tokenManager.get("accessToken");
-    return !!(idToken && accessToken);
-  };
-
-  const getUserRecord = async () => {
-    return userData;
-  };
-
-  const getFreeTrialUserExpirationDate = () => {
-    if (!userData) {
-      return null;
-    }
-
-    const userCreatedAt = userData?.createdAt;
-    return handleDateAdditionForTimeScale(userCreatedAt, DATE_FN_TIME_SCALES.DAYS, 15);
-  };
-
-  const featureFlagHideItemInProd = () => {
-    return String(process.env.REACT_APP_ENVIRONMENT) !== "development" && String(process.env.REACT_APP_ENVIRONMENT) !== "test";
-  };
-
-  const featureFlagHideItemInTest = () => {
-    return String(process.env.REACT_APP_ENVIRONMENT) === "test";
-  };
-
-  // TODO: Remove and just use the helper function
-  const setAccessRoles = async (user) => {
-    return SiteRoleHelper.getAccessRoles(user);
-  };
-
-  const getAccessRoleData = () => {
-    return userAccessRoles;
-  };
-
-  const subscribeToTopic = (topic, model) => {
-    websocketClient?.subscribeToTopic(topic, model);
-  };
-
-  const unsubscribeFromTopic = (topic, model) => {
-    websocketClient?.unsubscribeFromTopic(topic, model);
-  };
-
-  // TODO: Don't return as function, just return true/false when pulling from auth context
-  const isSassUser = () => {
-    if (userData == null) {
-      return false;
-    }
-
-    const ldap = userData?.ldap;
-    const groups = userData?.groups;
-    return ldap?.type === "sass-user" || (Array.isArray(groups) && groups?.includes("NonLDAPEndUser"));
-  };
-
-  const isPowerUser = () => {
-    return userAccessRoles?.PowerUser === true;
-  };
-
-  const isSiteAdministrator = () => {
-    return userAccessRoles?.Administrator === true;
-  };
-
-  // TODO: Don't return as function, just return true/false when pulling from auth context
-  const isOpseraAdministrator = () => {
-    if (userData == null) {
-      return false;
-    }
-
-    const ldap = userData?.ldap;
-    const groups = userData?.groups;
-    return ldap?.domain === "opsera.io" && Array.isArray(groups) && groups?.includes("Administrators");
-  };
-
-  const getThemeConstants = () => {
-    switch (theme) {
-      case THEMES.LIGHT:
-        return lightThemeConstants;
-      case THEMES.NIGHT:
-        return darkThemeConstants;
-      default:
-        return lightThemeConstants;
-    }
-  };
-
   return (
     <AuthContext.Provider value={{
       logoutUserContext: logoutUserContext,
@@ -239,24 +134,12 @@ const AuthContextProvider = (
       getAccessToken: getAccessToken,
       featureFlagHideItemInProd: featureFlagHideItemInProd,
       featureFlagHideItemInTest: featureFlagHideItemInTest,
-      getUserRecord: getUserRecord,
-      setAccessRoles: setAccessRoles,
       getIsAuthenticated: getIsAuthenticated,
-      getAccessRoleData: getAccessRoleData,
-      userAccessRoles: userAccessRoles,
-      isPowerUser: isPowerUser(),
-      isSiteAdministrator: isSiteAdministrator(),
-      isSassUser: isSassUser,
-      isOpseraAdministrator: isOpseraAdministrator,
       viewMode: viewMode,
       setViewMode: setViewMode,
       theme: theme,
       setTheme: setTheme,
-      themeConstants: getThemeConstants(),
-      // getWebsocketClient: getWebSocketClient,
       websocketClient: websocketClient,
-      subscribeToTopic: subscribeToTopic,
-      unsubscribeFromTopic: unsubscribeFromTopic,
       userData: userData,
       userExpiration: getFreeTrialUserExpirationDate(),
       backgroundColor: backgroundColor,
@@ -264,6 +147,16 @@ const AuthContextProvider = (
       platformSettingsRecord: platformSettingsRecord,
       organizationSettingsRecord: organizationSettingsRecord,
       featureFlags: featureFlags,
+
+      // TODO: Remove after updating uses to use newer hooks instead
+      getAccessRoleData: () => userAccessRoles,
+      userAccessRoles: userAccessRoles,
+      isPowerUser: userAccessRoles?.PowerUser === true,
+      isSiteAdministrator: userAccessRoles?.Administrator === true,
+      isSassUser: () => userAccessRoles?.SassPowerUser === true,
+      isOpseraAdministrator:() => userAccessRoles?.OpseraAdministrator === true,
+      getUserRecord: () => userData,
+      setAccessRoles: () => userAccessRoles,
     }}>
       <MainViewContainer
         isAuthenticated={isAuthenticated}
@@ -279,7 +172,6 @@ const AuthContextProvider = (
 AuthContextProvider.propTypes = {
   userData: PropTypes.object,
   refreshToken: PropTypes.func,
-  authClient: PropTypes.object,
   children: PropTypes.any,
   isAuthenticated: PropTypes.bool,
 };

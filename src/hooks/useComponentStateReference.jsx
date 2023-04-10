@@ -4,6 +4,8 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import useIsMountedStateReference from "hooks/useIsMountedStateReference";
 import useAxiosCancelToken from "hooks/useAxiosCancelToken";
 import useAccessRoleData from "hooks/roles/useAccessRoleData";
+import useTheme from "hooks/theme/useTheme";
+import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
 
 export default function useComponentStateReference() {
   const isMounted = useIsMountedStateReference();
@@ -13,7 +15,8 @@ export default function useComponentStateReference() {
   } = useAxiosCancelToken();
   const {
     getAccessToken,
-    themeConstants,
+  } = useAuthenticationToken();
+  const {
     featureFlagHideItemInProd,
     featureFlagHideItemInTest,
     userData,
@@ -32,6 +35,9 @@ export default function useComponentStateReference() {
     isAuditor,
     domain,
   } = useAccessRoleData();
+  const {
+    themeConstants,
+  } = useTheme();
 
   useEffect(() => {}, []);
 
