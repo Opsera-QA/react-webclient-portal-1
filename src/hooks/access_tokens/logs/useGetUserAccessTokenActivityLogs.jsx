@@ -23,19 +23,21 @@ export default function useGetUserAccessTokenActivityLogs(
   const {
     userData,
     isSiteAdministrator,
+    isAuditor,
+    isSecurityManager,
   } = useComponentStateReference();
 
   useEffect(() => {
-    const currentUserId = DataParsingHelper.parseNestedMongoDbId(userData, "_id");
-    if (loadData && userId && (currentUserId === userId || isSiteAdministrator === true)) {
+    if (loadData && userId) {
       loadData(getUserAccessTokenActivityLogs, handleErrorFunction);
     }
   }, [userId]);
 
   const getUserAccessTokenActivityLogs = async (newFilterModel = accessTokenLogFilterModel) => {
     setUserAccessTokenActivityLogs([]);
+    const currentUserId = DataParsingHelper.parseNestedMongoDbId(userData, "_id");
 
-    if (userData == null) {
+    if (userData == null || (currentUserId !== userId && isSiteAdministrator !== true && isAuditor !== true &&  isSecurityManager !== true)) {
       return null;
     }
 
