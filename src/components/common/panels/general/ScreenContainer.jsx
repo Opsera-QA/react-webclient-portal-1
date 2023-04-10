@@ -82,7 +82,7 @@ function ScreenContainer(
 
     if (hasStringValue(pageDescription) === true) {
       return (
-        <div className={"page-description px-3 mt-1 d-flex"}>
+        <div className={"page-description px-3 my-auto d-flex"}>
           <div className={"mt-auto"}>
             {pageDescription}
           </div>
@@ -92,7 +92,7 @@ function ScreenContainer(
 
     if (hasStringValue(breadcrumbPageDescription) === true) {
       return (
-        <div className={"page-description px-3 mt-1 d-flex"}>
+        <div className={"page-description px-3 my-auto d-flex"}>
           <div className={"mt-auto"}>
             {breadcrumbPageDescription}
           </div>
