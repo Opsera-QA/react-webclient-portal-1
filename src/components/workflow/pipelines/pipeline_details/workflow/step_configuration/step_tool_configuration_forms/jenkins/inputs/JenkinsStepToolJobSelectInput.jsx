@@ -34,8 +34,8 @@ function JenkinsStepToolJobSelectInput({ fieldName, model, setModel, disabled, j
     const configuration = selectedOption?.configuration;
     const gradleTask = configuration?.gradleTask || "";
     const mavenTask = configuration?.mavenTask || "";
-    const customMavenSettings = configuration?.customMavenSettings || "";
-    const scriptId = configuration?.scriptId || "";
+    const customMavenSettings = configuration?.customMavenSettings || false;
+    const scriptId = customMavenSettings === true ? (configuration?.scriptId || "") : "";
     const buildTool = configuration?.buildTool || "";
     const agentLabels = configuration?.agentLabels || "";
     const buildType = configuration?.buildType || "";
