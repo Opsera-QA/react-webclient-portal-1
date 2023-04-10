@@ -15,13 +15,13 @@ export default function useComponentStateReference() {
   } = useAxiosCancelToken();
   const {
     getAccessToken,
+    isAuthenticated,
   } = useAuthenticationToken();
   const {
     featureFlagHideItemInProd,
     featureFlagHideItemInTest,
     userData,
     backgroundColor,
-    isAuthenticated,
     renewUserToken,
   } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
