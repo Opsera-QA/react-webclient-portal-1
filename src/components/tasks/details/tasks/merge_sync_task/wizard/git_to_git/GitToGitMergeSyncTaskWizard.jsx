@@ -112,6 +112,7 @@ const GitToGitMergeSyncTaskWizard = ({ handleClose, taskModel }) => {
             setCurrentScreen={setCurrentScreen}
             setWizardModel={setWizardModel}
             wizardModel={wizardModel}
+            skipConfig={taskModel?.getData("configuration.git.jiraIssueIds") && taskModel?.getData("configuration.git.jiraIssueIds").length > 0 ? true : false}
           />
         );
       case MERGE_SYNC_WIZARD_SCREENS.CONFIRMATION_SCREEN:

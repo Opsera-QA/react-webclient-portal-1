@@ -5,6 +5,7 @@ import TaskSummaryCardContainer from "components/tasks/details/tasks/TaskSummary
 import {Row, Col} from "react-bootstrap";
 import ToolNameField from "components/common/fields/inventory/ToolNameField";
 import BooleanField from "components/common/fields/boolean/BooleanField";
+import ArrayToTextField from "components/common/fields/text/ArrayToTextField";
 
 function GitToGitMergeSyncTaskSummaryCard({ taskConfigurationModel, isLoading }) {
   if (isLoading || taskConfigurationModel == null) {
@@ -92,6 +93,24 @@ function GitToGitMergeSyncTaskSummaryCard({ taskConfigurationModel, isLoading })
           />
         </Col>
         {getDestinationBranchFields()}
+        <Col xs={6}>
+          <ToolNameField
+            model={taskConfigurationModel}
+            fieldName={"jiraToolId"}
+          />
+        </Col>
+        <Col xs={6}>
+          <TextFieldBase
+            dataObject={taskConfigurationModel}
+            fieldName={"jiraProjectKey"}            
+          />
+        </Col>
+        <Col xs={6}>
+          <ArrayToTextField
+            model={taskConfigurationModel}
+            fieldName={"jiraIssueIds"}
+          />
+        </Col>
       </Row>
     </TaskSummaryCardContainer>
   );
