@@ -50,6 +50,7 @@ import GChatToolConfiguration from "./tool_jobs/gchat/GChatToolConfiguration";
 import FortifyToolConfiguration from "./tool_jobs/fortify/FortifyToolConfiguration";
 import SnykToolConfiguration from "./tool_jobs/snyk/SnykToolConfiguration";
 import AquasecToolConfiguration from "./tool_jobs/aquasec/AquasecToolConfiguration";
+import OracleFusionToolConfiguration from "./tool_jobs/oracle_fusion/OracleFusionToolConfiguration";
 
 //TODO: Use constants, alphabetize
 export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
@@ -100,6 +101,7 @@ export const CONNECTION_SUPPORTED_TOOL_IDENTIFIERS = [
   toolIdentifierConstants.TOOL_IDENTIFIERS.FORTIFY,
   toolIdentifierConstants.TOOL_IDENTIFIERS.SNYK,
   toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC,
+  toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION,
 ];
 
 function ToolConnectionPanel({ toolData, setToolData, setUpMode, setCurrentScreen, setButtonContainer, handleClose }) {
@@ -209,6 +211,8 @@ function ToolConnectionPanel({ toolData, setToolData, setUpMode, setCurrentScree
         return <SnykToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       case toolIdentifierConstants.TOOL_IDENTIFIERS.AQUASEC:
         return <AquasecToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
+      case toolIdentifierConstants.TOOL_IDENTIFIERS.ORACLE_FUSION:
+        return <OracleFusionToolConfiguration toolData={toolData} setUpMode={setUpMode} setCurrentScreen={setCurrentScreen}/>;
       default:
         return <div className="text-center p-5 text-muted mt-5">Connection configuration is not currently available for this tool.</div>;
     }
