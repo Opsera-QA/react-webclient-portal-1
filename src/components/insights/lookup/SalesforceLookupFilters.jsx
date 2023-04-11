@@ -30,62 +30,67 @@ export default function SalesforceLookupFilters(
   }
 
   return (
-    <Row>
-      <Col xs={12}>
-        <DateRangeInputBase
-          model={filterModel}
-          setModel={setFilterModel}
-        />
-      </Col>
-      <Col xs={12}>
-        <SalesforceComponentTypeMultiSelectInput
-          fieldName={"selectedComponentFilterData"}
-          model={filterModel}
-          setModel={setFilterModel}
-          className={"mx-2"}
-        />
-      </Col>
-      <Col xs={12}>
-        <SalesforceComponentNameMultiSelectInput
-          fieldName={"selectedComponentNames"}
-          model={filterModel}
-          setModel={setFilterModel}
-          className={"mx-2"}
-          data={salesforceComponentNames}
-        />
-      </Col>
-      <Col xs={12}>
-        <PipelineSelectInput
-          fieldName={"pipelineComponentFilterData"}
-          model={filterModel}
-          setModel={setFilterModel}
-          className={"mx-2"}
-        />
-      </Col>
-      <Col xs={12}>
-        <TasksSelectInput
-          fieldName={"tasksComponentFilterData"}
-          model={filterModel}
-          setModel={setFilterModel}
-          className={"mx-2"}
-        />
-      </Col>
-      <Col xs={12}>
-        <OrgsSelectInput
-          fieldName={"orgsComponentFilterData"}
-          model={filterModel}
-          setModel={setFilterModel}
-          className={"mx-2"}
-        />
-      </Col>
-      {/*<Col xs={12}>*/}
-      {/*  <AnalyticsSalesforceComponentNameMultiSelectInput*/}
-      {/*    fieldName={"selectedComponentNames"}*/}
-      {/*    model={filterModel}*/}
-      {/*    setModel={setFilterModel}*/}
-      {/*  />*/}
-      {/*</Col>*/}
-    </Row>
+    <FilterSelectionOverlayContainer
+      filterModel={filterModel}
+      loadDataFunction={loadDataFunction}
+    >
+      <Row>
+        <Col xs={12}>
+          <DateRangeInputBase
+            model={filterModel}
+            setModel={setFilterModel}
+          />
+        </Col>
+        <Col xs={12}>
+          <SalesforceComponentTypeMultiSelectInput
+            fieldName={"selectedComponentFilterData"}
+            model={filterModel}
+            setModel={setFilterModel}
+            className={"mx-2"}
+          />
+        </Col>
+        <Col xs={12}>
+          <SalesforceComponentNameMultiSelectInput
+            fieldName={"selectedComponentNames"}
+            model={filterModel}
+            setModel={setFilterModel}
+            className={"mx-2"}
+            data={salesforceComponentNames}
+          />
+        </Col>
+        <Col xs={12}>
+          <PipelineSelectInput
+            fieldName={"pipelineComponentFilterData"}
+            model={filterModel}
+            setModel={setFilterModel}
+            className={"mx-2"}
+          />
+        </Col>
+        <Col xs={12}>
+          <TasksSelectInput
+            fieldName={"tasksComponentFilterData"}
+            model={filterModel}
+            setModel={setFilterModel}
+            className={"mx-2"}
+          />
+        </Col>
+        <Col xs={12}>
+          <OrgsSelectInput
+            fieldName={"orgsComponentFilterData"}
+            model={filterModel}
+            setModel={setFilterModel}
+            className={"mx-2"}
+          />
+        </Col>
+        {/*<Col xs={12}>*/}
+        {/*  <AnalyticsSalesforceComponentNameMultiSelectInput*/}
+        {/*    fieldName={"selectedComponentNames"}*/}
+        {/*    model={filterModel}*/}
+        {/*    setModel={setFilterModel}*/}
+        {/*  />*/}
+        {/*</Col>*/}
+      </Row>
+    </FilterSelectionOverlayContainer>
   );
 }
 
