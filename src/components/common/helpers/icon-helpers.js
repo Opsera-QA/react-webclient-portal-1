@@ -31,6 +31,19 @@ export function getLargeVendorIconFromToolIdentifier(
     return <></>;
   }
 
+  const keys = Object.keys(vendorImageConstants.TOOL_IDENTIFIER_LOGOS);
+  const noImage = [];
+
+  keys.forEach((key) => {
+    const logo = vendorImageConstants.TOOL_IDENTIFIER_LOGOS[key];
+
+    if (logo == null) {
+      noImage.push(toolIdentifierConstants.TOOL_IDENTIFIERS[key]);
+    }
+  });
+
+  console.log("noImage: " + JSON.stringify(noImage));
+
   switch (toolIdentifier) {
     case toolIdentifierConstants.TOOL_IDENTIFIERS.JIRA:
       return <Image height={height} width={width} src={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.JIRA} className={"jira-icon"} />;
