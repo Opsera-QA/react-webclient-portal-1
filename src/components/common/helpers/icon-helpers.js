@@ -1,14 +1,27 @@
 import {Image} from "react-bootstrap";
 import {faAws, faGitAlt, faMicrosoft, faOctopusDeploy, faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import {faClipboardListCheck, faShieldKeyhole, faTasks, faWrench} from "@fortawesome/pro-light-svg-icons";
+import {
+  faClipboardListCheck,
+  faDraftingCompass,
+  faShieldKeyhole,
+  faTasks,
+  faWrench
+} from "@fortawesome/pro-light-svg-icons";
 import React from "react";
 import {TASK_TYPE_CATEGORIES, TASK_TYPES, taskTypeConstants} from "components/tasks/task.types";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import IconBase from "components/common/icons/IconBase";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import {
+  PIPELINE_TYPES,
+  pipelineTypeConstants
+} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
 
 export function getLargeVendorIconFromToolIdentifier(
   toolIdentifier,
   s3Bucket = process.env.REACT_APP_OPSERA_S3_STORAGE_URL,
+  defaultIcon = faWrench,
   height,
   width,
 ) {
@@ -86,7 +99,7 @@ export function getLargeVendorIconFromToolIdentifier(
     case "mongodb_realm":
       return <Image height={height} width={width} src={`${vendorIconPrefix}/icons8-mongodb-96.png`} />;
     default:
-      return <IconBase icon={faWrench} iconClassName={"title-fa-icon wrench"} />;
+      return <IconBase icon={defaultIcon} iconClassName={"title-fa-icon wrench"} />;
   }
 }
 
@@ -182,6 +195,37 @@ export function getLargeVendorIconFromTaskType (taskType) {
     default:
       return faTasks;
   }
+}
+
+export function getLargeVendorIconComponentFromPipeline (pipeline) {
+  const type = pipelineTypeConstants.getTypeForTypesArray(pipeline);
+
+  if (hasStringValue(type) !== true) {
+    return (
+      <IconBase
+        icon={faDraftingCompass}
+        iconClassName={"title-fa-icon"}
+      />
+    );
+  }
+
+  const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
+  const toolIdentifier = DataParsingHelper.parseNestedString(plan[0], "tool.tool_identifier");
+
+  if (type !== PIPELINE_TYPES.SOFTWARE_DEVELOPMENT || !toolIdentifier) {
+    return (
+      <IconBase
+        icon={pipelineTypeConstants.getIconForPipelineType(type)}
+        iconClassName={"title-fa-icon"}
+      />
+    );
+  }
+
+  return getLargeVendorIconFromToolIdentifier(
+    toolIdentifier,
+    undefined,
+    faDraftingCompass,
+  );
 }
 
 export function getVendorTitle (toolIdentifier) {

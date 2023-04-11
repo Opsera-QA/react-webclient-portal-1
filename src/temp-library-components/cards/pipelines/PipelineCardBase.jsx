@@ -12,6 +12,7 @@ import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helpe
 import DateFormatHelper from "@opsera/persephone/helpers/date/dateFormat.helper";
 import SelectionIconCard from "components/common/card_containers/SelectionIconCard";
 import CardIconTitleBar from "components/common/fields/title/CardIconTitleBar";
+import {getLargeVendorIconComponentFromPipeline} from "components/common/helpers/icon-helpers";
 
 const getLastRunDetails = (pipelineModel) => {
   const runCount = DataParsingHelper.parseInteger(pipelineModel?.getData("workflow.run_count"), 0);
@@ -80,12 +81,14 @@ export default function PipelineCardBase(
   const { themeConstants } = useComponentStateReference();
 
   const getTitleBar = () => {
+    // const icon = getLargeVendorIconComponentFromPipeline(pipelineModel?.getCurrentData());
     const pipelineType = pipelineModel?.getArrayData("type", 0);
     const icon = pipelineTypeConstants.getIconForPipelineType(pipelineType);
 
     return (
       <CardIconTitleBar
         icon={icon}
+        // formattedIcon={icon}
         iconSize={"4x"}
         iconColor={pipelineType === PIPELINE_TYPES.SALESFORCE ? themeConstants.COLOR_PALETTE.SALESFORCE_BLUE : undefined}
         title={`${pipelineModel?.getData("name")}`}
