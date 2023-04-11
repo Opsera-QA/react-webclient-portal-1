@@ -112,6 +112,9 @@ export function getLargeVendorIconFromToolIdentifier(
     case toolIdentifierConstants.TOOL_IDENTIFIERS.USER_ACTION:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.CHILD_PIPELINE:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.PARALLEL_PROCESSOR:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_API_INTEGRATOR:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.EXTERNAL_REST_API_INTEGRATION:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.GITSCRAPER:
       return <OpseraInfinityLogo scale={.75} />;
     default:
       return (
