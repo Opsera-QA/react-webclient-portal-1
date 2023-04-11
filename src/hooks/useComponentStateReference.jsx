@@ -4,6 +4,11 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import useIsMountedStateReference from "hooks/useIsMountedStateReference";
 import useAxiosCancelToken from "hooks/useAxiosCancelToken";
 import useAccessRoleData from "hooks/roles/useAccessRoleData";
+import useTheme from "hooks/theme/useTheme";
+import useAuthenticationToken from "hooks/general/api/useAuthenticationToken";
+
+const isProductionEnvironment = String(process.env.REACT_APP_ENVIRONMENT) !== "development" && String(process.env.REACT_APP_ENVIRONMENT) !== "test";
+const isTestEnvironment = String(process.env.REACT_APP_ENVIRONMENT) === "test";
 
 export default function useComponentStateReference() {
   const isMounted = useIsMountedStateReference();
@@ -13,12 +18,11 @@ export default function useComponentStateReference() {
   } = useAxiosCancelToken();
   const {
     getAccessToken,
-    themeConstants,
-    featureFlagHideItemInProd,
-    featureFlagHideItemInTest,
+    isAuthenticated,
+  } = useAuthenticationToken();
+  const {
     userData,
     backgroundColor,
-    isAuthenticated,
     renewUserToken,
   } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -32,6 +36,9 @@ export default function useComponentStateReference() {
     isAuditor,
     domain,
   } = useAccessRoleData();
+  const {
+    themeConstants,
+  } = useTheme();
 
   useEffect(() => {}, []);
 
@@ -47,8 +54,8 @@ export default function useComponentStateReference() {
     isSiteAdministrator: isSiteAdministrator,
     isSecurityManager: isSecurityManager,
     isAuditor: isAuditor,
-    isProductionEnvironment: featureFlagHideItemInProd(),
-    isTestEnvironment: featureFlagHideItemInTest(),
+    isProductionEnvironment: isProductionEnvironment,
+    isTestEnvironment: isTestEnvironment,
     isSassUser: isSaasUser, // TODO: Remove and replace with the proper spelling
     isSaasUser: isSaasUser,
     userData: userData,
