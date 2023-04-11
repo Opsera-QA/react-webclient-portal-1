@@ -32,7 +32,7 @@ export default function CardIconTitleBar(
         <div
           className={"d-flex"}
           style={{
-            height: "100px",
+            height: "80px",
           }}
         >
           <div className={"my-auto"}>
@@ -47,7 +47,7 @@ export default function CardIconTitleBar(
         <div
           className={"d-flex"}
           style={{
-            height: "100px",
+            height: "80px",
           }}
         >
           <div>

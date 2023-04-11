@@ -135,7 +135,7 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
       return (
         <IconBase
           icon={faClipboardListCheck}
-          iconClassName={"title-fa-icon wrench"}
+          iconClassName={"title-fa-icon"}
         />
       );
     case TASK_TYPE_CATEGORIES.AZURE:
@@ -162,18 +162,22 @@ export function getLargeVendorIconFromTaskType (taskType) {
 
   const vendorIconPrefix = `${process.env.REACT_APP_OPSERA_S3_STORAGE_URL}/vendor-logos`;
 
-  switch (taskType) {
-    case TASK_TYPES.SYNC_SALESFORCE_REPO:
-    case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+  if (taskType === TASK_TYPES.GITSCRAPER) {
+    return faShieldKeyhole;
+  }
+
+  const category = taskTypeConstants.getTaskCategoryForType(taskType);
+
+  switch (category) {
+    case TASK_TYPE_CATEGORIES.SALESFORCE:
       return faSalesforce;
-    case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
-    case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
-    case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
-      return `${vendorIconPrefix}/icons8-amazon-web-services-96.png`;
-    case TASK_TYPES.SYNC_GIT_BRANCHES:
+    case TASK_TYPE_CATEGORIES.GIT:
       return `${vendorIconPrefix}/icons8-git-96.png`;
-    case TASK_TYPES.AZURE_CLUSTER_CREATION:
+    case TASK_TYPE_CATEGORIES.AWS:
+      return `${vendorIconPrefix}/icons8-amazon-web-services-96.png`;
+    case TASK_TYPE_CATEGORIES.COMPLIANCE:
+      return faClipboardListCheck;
+    case TASK_TYPE_CATEGORIES.AZURE:
       return `${vendorIconPrefix}/icons8-azure-96.png`;
     default:
       return faTasks;
