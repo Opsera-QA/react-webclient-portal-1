@@ -34,7 +34,10 @@ function ScreenContainer(
     showActiveFilters,
     filters,
     filterModel,
+    setFilterModel,
     loadDataFunction,
+    addRecordFunction,
+    addRecordButtonCustomText,
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const toastContext = useContext(DialogToastContext);
@@ -79,8 +82,8 @@ function ScreenContainer(
 
     if (hasStringValue(pageDescription) === true) {
       return (
-        <div className={"page-description px-3 mt-1 d-flex"}>
-          <div className={"mt-auto"}>
+        <div className={"px-3 my-2 d-flex"}>
+          <div className={"my-auto"}>
             {pageDescription}
           </div>
         </div>
@@ -89,8 +92,8 @@ function ScreenContainer(
 
     if (hasStringValue(breadcrumbPageDescription) === true) {
       return (
-        <div className={"page-description px-3 mt-1 d-flex"}>
-          <div className={"mt-auto"}>
+        <div className={"px-3 my-2 d-flex"}>
+          <div className={"my-auto"}>
             {breadcrumbPageDescription}
           </div>
         </div>
@@ -196,8 +199,11 @@ function ScreenContainer(
               helpComponent={helpComponent}
               auditLogType={auditLogType}
               filterModel={filterModel}
+              setFilterModel={setFilterModel}
               filters={filters}
               loadDataFunction={loadDataFunction}
+              addRecordButtonCustomText={addRecordButtonCustomText}
+              addRecordFunction={addRecordFunction}
             />
           </div>
           {getActiveFilterDisplayer()}
@@ -231,8 +237,11 @@ ScreenContainer.propTypes = {
   hideSubNavigationBlock: PropTypes.bool,
   showActiveFilters: PropTypes.bool,
   filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
   loadDataFunction: PropTypes.func,
   filters: PropTypes.any,
+  addRecordFunction: PropTypes.func,
+  addRecordButtonCustomText: PropTypes.string,
 };
 
 ScreenContainer.defaultProps = {

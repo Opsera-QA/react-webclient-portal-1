@@ -135,6 +135,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     const workspace = sfdcStep?.tool?.configuration?.workspace;
     const service = sfdcStep?.tool?.configuration?.service;
     const repository = sfdcStep?.tool?.configuration?.repository;
+    const jobTypeId = sfdcStep?.tool?.configuration?.job_type;
 
     if (pipelineId == null) {
       setError("Could not find Pipeline");
@@ -166,6 +167,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     newPipelineWizardModel.setData("workspace", workspace);
     newPipelineWizardModel.setData("service", service);
     newPipelineWizardModel.setData("repository", repository);
+    newPipelineWizardModel.setData("jobTypeId", jobTypeId);
     const isSfdx = await checkIfSfdx(cancelSource, sfdcToolId);
     newPipelineWizardModel.setData("isSfdx", isSfdx);
     newPipelineWizardModel.setData("ignoreWarning", ignoreWarning);

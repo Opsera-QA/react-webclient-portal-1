@@ -12,7 +12,6 @@ export default function WorkspacePipelineViews(
     pipelines,
     isLoading,
     workspaceFilterModel,
-    setWorkspaceFilterModel,
     loadData,
   }) {
   const getCardView = () => {
@@ -30,8 +29,6 @@ export default function WorkspacePipelineViews(
     return (
       <WorkspacePipelinesTable
         isLoading={isLoading}
-        paginationModel={workspaceFilterModel}
-        setPaginationModel={setWorkspaceFilterModel}
         pipelines={pipelines}
         loadData={loadData}
       />

@@ -143,7 +143,7 @@ CenterOverlayContainer.propTypes = {
   titleText: PropTypes.string,
   bodyClassName: PropTypes.string,
   titleIcon: PropTypes.object,
-  closePanel: PropTypes.func.isRequired,
+  closePanel: PropTypes.func,
   isLoading: PropTypes.bool,
   showToasts: PropTypes.bool,
   actionBar: PropTypes.object,

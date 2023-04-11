@@ -6,6 +6,7 @@ export default function SideBySideViewBase(
     leftSideView,
     rightSideView,
     leftSideMinimumWidth,
+    leftSideMaximumWidth,
     rightSideMinimumWidth,
     minimumHeight,
     maximumHeight,
@@ -22,6 +23,7 @@ export default function SideBySideViewBase(
 
   const getLeftSideStylingObject = {
     minWidth: leftSideMinimumWidth,
+    maxWidth: leftSideMaximumWidth,
     minHeight: minimumHeight,
     maxHeight: maximumHeight,
     overflowY: overflowYBodyStyle,
@@ -50,6 +52,7 @@ SideBySideViewBase.propTypes = {
   leftSideView: PropTypes.object,
   rightSideView: PropTypes.object,
   leftSideMinimumWidth: PropTypes.string,
+  leftSideMaximumWidth: PropTypes.string,
   rightSideMinimumWidth: PropTypes.string,
   bodyClassName: PropTypes.string,
   minimumHeight: PropTypes.string,
