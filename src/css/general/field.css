@@ -204,9 +204,13 @@ pre {
     max-width: 100%;
 }
 
-.vertical-selection-card .title-fa-icon, .title-fa-icon {
+.vertical-selection-card .title-fa-icon {
     font-size: 75px;
     margin-top: 15px;
+}
+
+.title-fa-icon {
+    font-size: 75px;
 }
 
 .icon-image {

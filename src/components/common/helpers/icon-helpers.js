@@ -101,7 +101,7 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
     return (
       <IconBase
         icon={faShieldKeyhole}
-        iconClassName={"title-fa-icon wrench"}
+        iconClassName={"title-fa-icon"}
       />
     );
   }
@@ -114,7 +114,7 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
         <IconBase
           icon={faSalesforce}
           iconStyling={{color: "#0D80D8"}}
-          iconClassName={"title-fa-icon icon-image"}
+          iconClassName={"title-fa-icon"}
         />
       );
     case TASK_TYPE_CATEGORIES.GIT:
@@ -149,7 +149,7 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
       return (
         <IconBase
           icon={faTasks}
-          iconClassName={"title-fa-icon wrench"}
+          iconClassName={"title-fa-icon"}
         />
       );
   }
