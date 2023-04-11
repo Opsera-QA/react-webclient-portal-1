@@ -1,27 +1,19 @@
 import React from "react";
 import * as PropType from "prop-types";
-import {Image} from "react-bootstrap";
 
 export default function ImageBase(
   {
     altText,
     imageSource,
     className,
+    imageClassName,
     width,
     height,
-    maxWidth,
-    maxHeight,
   }) {
   return (
-    <div
-      className={className}
-      style={{
-        maxHeight: maxHeight,
-        maxWidth: maxWidth,
-      }}
-    >
-      <Image
-        className={"img-fluid"}
+    <div className={className}>
+      <img
+        className={imageClassName}
         alt={altText}
         src={imageSource}
         width={width}
@@ -35,8 +27,7 @@ ImageBase.propTypes = {
   altText: PropType.string,
   imageSource: PropType.string,
   className: PropType.string,
+  imageClassName: PropType.string,
   width: PropType.number,
   height: PropType.number,
-  maxWidth: PropType.number,
-  maxHeight: PropType.number,
 };
