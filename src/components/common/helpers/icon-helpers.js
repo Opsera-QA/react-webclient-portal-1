@@ -17,6 +17,7 @@ import {
   PIPELINE_TYPES,
   pipelineTypeConstants
 } from "components/common/list_of_values_input/pipelines/types/pipeline.types";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
 
 export function getLargeVendorIconFromToolIdentifier(
   toolIdentifier,
@@ -209,8 +210,7 @@ export function getLargeVendorIconComponentFromPipeline (pipeline) {
     );
   }
 
-  const plan = DataParsingHelper.parseNestedArray(pipeline, "workflow.plan", []);
-  const toolIdentifier = DataParsingHelper.parseNestedString(plan[0], "tool.tool_identifier");
+  const toolIdentifier = pipelineHelper.getFirstPipelineStepIdentifier(pipeline);
 
   if (type !== PIPELINE_TYPES.SOFTWARE_DEVELOPMENT || !toolIdentifier) {
     return (
