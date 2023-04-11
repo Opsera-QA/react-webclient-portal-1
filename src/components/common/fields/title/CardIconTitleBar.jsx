@@ -32,7 +32,7 @@ export default function CardIconTitleBar(
         <div
           className={"d-flex"}
           style={{
-            height: "80px",
+            height: "100px",
           }}
         >
           <div className={"my-auto"}>
@@ -47,10 +47,10 @@ export default function CardIconTitleBar(
         <div
           className={"d-flex"}
           style={{
-            height: "80px",
+            height: "100px",
           }}
         >
-          <div>
+          <div className={"my-auto"}>
             {formattedIcon}
           </div>
         </div>
@@ -58,11 +58,20 @@ export default function CardIconTitleBar(
     }
 
     return (
-      <IconBase
-        icon={icon}
-        iconSize={iconSize}
-        iconColor={iconColor}
-      />
+      <div
+        className={"d-flex"}
+        style={{
+          height: "100px",
+        }}
+      >
+        <div className={"my-auto"}>
+          <IconBase
+            icon={icon}
+            iconSize={iconSize}
+            iconColor={iconColor}
+          />
+        </div>
+      </div>
     );
   };
 

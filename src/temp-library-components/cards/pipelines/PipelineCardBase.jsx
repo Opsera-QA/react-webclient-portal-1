@@ -81,14 +81,14 @@ export default function PipelineCardBase(
   const { themeConstants } = useComponentStateReference();
 
   const getTitleBar = () => {
-    // const icon = getLargeVendorIconComponentFromPipeline(pipelineModel?.getCurrentData());
+    const icon = getLargeVendorIconComponentFromPipeline(pipelineModel?.getCurrentData());
     const pipelineType = pipelineModel?.getArrayData("type", 0);
-    const icon = pipelineTypeConstants.getIconForPipelineType(pipelineType);
+    // const icon = pipelineTypeConstants.getIconForPipelineType(pipelineType);
 
     return (
       <CardIconTitleBar
-        icon={icon}
-        // formattedIcon={icon}
+        // icon={icon}
+        formattedIcon={icon}
         iconSize={"4x"}
         iconColor={pipelineType === PIPELINE_TYPES.SALESFORCE ? themeConstants.COLOR_PALETTE.SALESFORCE_BLUE : undefined}
         title={`${pipelineModel?.getData("name")}`}
