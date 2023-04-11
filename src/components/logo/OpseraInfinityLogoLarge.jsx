@@ -4,15 +4,15 @@ import ImageBase from "temp-library-components/image/ImageBase";
 
 export default function OpseraInfinityLogoLarge(
   {
-    scale,
+    desiredHeight,
+    desiredWidth,
     className,
   }) {
   return (
     <ImageBase
       className={className}
-      scale={scale}
-      defaultWidth={958}
-      defaultHeight={547}
+      height={desiredHeight}
+      width={desiredWidth}
       altText={"Opsera Inc."}
       imageSource={"/img/logos/opsera_bird_infinity_958_547.png"}
     />
@@ -20,6 +20,7 @@ export default function OpseraInfinityLogoLarge(
 }
 
 OpseraInfinityLogoLarge.propTypes = {
-  scale: PropType.number,
+  desiredHeight: PropType.number,
+  desiredWidth: PropType.number,
   className: PropType.string,
 };
