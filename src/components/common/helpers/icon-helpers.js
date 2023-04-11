@@ -23,8 +23,6 @@ import ImageBase from "temp-library-components/image/ImageBase";
 export function getLargeVendorIconFromToolIdentifier(
   toolIdentifier,
   defaultIcon = faWrench,
-  maxHeight = 100,
-  maxWidth = 220,
 ) {
   if (toolIdentifier == null) {
     return <></>;
@@ -175,8 +173,6 @@ export function getLargeVendorIconFromToolIdentifier(
         <ImageBase
           className={"d-flex h-100"}
           imageClassName={"my-auto"}
-          maxHeight={maxHeight}
-          maxWidth={maxWidth}
           imageSource={vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS.JENKINS}
         />
       );
