@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PackageXmlFieldBase from "components/common/fields/code/PackageXmlFieldBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import SalesforcePackageVersionSelectionInput from "./SalesforcePackageVersionSelectionInput";
 
 const PackageXmlViewer = ({isSaving, isLoading, pipelineWizardModel, setPipelineWizardModel}) => {
   const getFormattedPackageXml = () => {
@@ -58,6 +59,12 @@ const PackageXmlViewer = ({isSaving, isLoading, pipelineWizardModel, setPipeline
           disabled={isSaving}
         />
       }
+      <SalesforcePackageVersionSelectionInput
+        pipelineWizardModel={pipelineWizardModel}
+        setPipelineWizardModel={setPipelineWizardModel}
+        fieldName={"apiVersion"}
+        disabled={isSaving}
+      />
       {getBody()}
     </div>
   );
