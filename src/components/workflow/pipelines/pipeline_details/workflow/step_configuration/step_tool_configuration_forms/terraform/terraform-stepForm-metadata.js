@@ -4,7 +4,7 @@ const TerraformStepFormMetadata = {
   type: "Terraform Step Configuration",
   fields: [
     {
-      label: "Source Code Management Tool Type",
+      label: "Source Code Management Type",
       id: "type",
       isRequired: true
     },
@@ -65,7 +65,7 @@ const TerraformStepFormMetadata = {
       id: "bitbucketWorkspace",
     },
     {
-      label: "BitBucket Workspace/Project",
+      label: "Workspace/Project",
       id: "bitbucketWorkspaceName",
     },
     {

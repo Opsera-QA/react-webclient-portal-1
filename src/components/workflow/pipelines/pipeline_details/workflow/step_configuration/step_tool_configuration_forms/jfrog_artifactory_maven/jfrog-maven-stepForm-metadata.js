@@ -7,7 +7,7 @@ const jfrogMavenStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Repository Name",
+      label: "Repository",
       id: "repositoryName",
       isRequired: true
     },

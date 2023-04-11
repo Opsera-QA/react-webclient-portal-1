@@ -4,7 +4,7 @@ const SentenialStepFormMetadata = {
   type: "Sentenial Step Configuration",
   fields: [
     {
-      label: "Source Code Management Tool Type",
+      label: "Source Code Management Type",
       id: "service",
       isRequired: true
     },
@@ -35,7 +35,7 @@ const SentenialStepFormMetadata = {
       id: "bitbucketWorkspace",
     },
     {
-      label: "BitBucket Workspace/Project",
+      label: "Workspace/Project",
       id: "bitbucketWorkspaceName",
     },
     {

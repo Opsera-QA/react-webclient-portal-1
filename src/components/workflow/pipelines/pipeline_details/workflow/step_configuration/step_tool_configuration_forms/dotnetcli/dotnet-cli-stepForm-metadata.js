@@ -44,18 +44,18 @@ const dotnetCliStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Select SCM Type",
+      label: "Source Code Management Type",
       id: "type",
       isRequired: true
     },
     
     {
-      label: "SCM Account",
+      label: "Account",
       id: "gitCredential",
       isRequired: true
     },
     {
-      label : "SCM Tool",
+      label : "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true
     },
@@ -66,7 +66,7 @@ const dotnetCliStepFormMetadata = {
     },
     
     {
-      label: "SCM Type",
+      label: "Source Code Management Type",
       id: "service",
       isRequired: true
     },

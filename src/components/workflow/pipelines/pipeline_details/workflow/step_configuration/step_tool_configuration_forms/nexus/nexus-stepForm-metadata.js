@@ -24,7 +24,7 @@ const nexusStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Repository Name",
+      label: "Repository",
       id: "repositoryName",
       isRequired: true
     },

@@ -28,7 +28,7 @@ const coverityStepFormMetadata = {
       maxLength: 95,
     },
     {
-      label: "Select Account",
+      label: "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true
     },
@@ -40,13 +40,13 @@ const coverityStepFormMetadata = {
     },
 
     {
-      label: "Type of GIT Service",
+      label: "Source Code Management Type",
       id: "service",
       isRequired: true
     },
 
     {
-      label: "Project ID",
+      label: "Project",
       id: "projectId",
       dynamicSettingType: metadataConstants.SUPPORTED_DYNAMIC_SETTING_TYPES.REPOSITORY_ID,
     },
@@ -88,7 +88,7 @@ const coverityStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Select SCM Account",
+      label: "Source Code Management Type",
       id: "gitCredential",
       isRequired: true
     },
@@ -97,7 +97,7 @@ const coverityStepFormMetadata = {
       id: "workspaceDeleteFlag",
     },
     {
-      label: "Jenkins Job",
+      label: "Job",
       id: "toolJobId",
       isRequired: true
     },
