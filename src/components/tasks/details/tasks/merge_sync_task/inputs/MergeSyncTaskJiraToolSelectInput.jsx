@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import RoleRestrictedJiraToolSelectInput
   from "components/common/list_of_values_input/tools/jira/RoleRestrictedJiraToolSelectInput";
 
-function SalesforceMergeSyncTaskJiraToolSelectInput(
+function MergeSyncTaskJiraToolSelectInput(
   {    
     model,
     setModel,
@@ -37,10 +37,10 @@ function SalesforceMergeSyncTaskJiraToolSelectInput(
   );
 }
 
-SalesforceMergeSyncTaskJiraToolSelectInput.propTypes = {
+MergeSyncTaskJiraToolSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SalesforceMergeSyncTaskJiraToolSelectInput;
+export default MergeSyncTaskJiraToolSelectInput;

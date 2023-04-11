@@ -103,7 +103,7 @@ export default function LandingHeaderNavigationBar() {
           label={"Workspace"}
           itemKey={HEADER_NAVIGATION_SCREENS.WORKSPACE}
           disabled={currentPath?.startsWith("/workspace") === true}
-          visible={nextGenerationWorkspace?.active === true}
+          visible={nextGenerationWorkspace?.platformSettingsFeatureFlag?.active === true}
         />
         <SubMenuItem
           className={"px-3"}

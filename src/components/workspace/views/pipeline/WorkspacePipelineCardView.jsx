@@ -23,7 +23,6 @@ export default function WorkspacePipelineCardView(
     <VanitySetCardView
       isLoading={isLoading}
       loadData={loadData}
-      paginationModel={pipelineFilterModel}
       cards={
         <VerticalCardViewBase
           getCardFunction={getPipelineCard}

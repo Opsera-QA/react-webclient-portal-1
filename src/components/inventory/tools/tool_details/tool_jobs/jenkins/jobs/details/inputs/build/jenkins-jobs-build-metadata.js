@@ -27,6 +27,17 @@ const JenkinsBuildJobMetadata = {
       label: "Build Step",
       id: "jobType",
     },
+    {
+      label: "Use Custom Maven Settings",
+      id: "customMavenSettings"
+    },
+    {
+      label: "Custom Settings",
+      id: "scriptId",
+      isRequiredFunction: (model) => {
+        return model?.getData("customMavenSettings") === true;
+      },
+    }
   ],
   newObjectFields: {
     commandLineArgs: "",
@@ -34,6 +45,8 @@ const JenkinsBuildJobMetadata = {
     buildType: "",
     gradleTask: "",
     agentLabels: "",
+    customMavenSettings: false,
+    scriptId: "",
   },
 };
 

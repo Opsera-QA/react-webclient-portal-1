@@ -4,14 +4,14 @@ const gitOperationStepFormMetadata = {
   type: "PMD Tool Configuration",
   fields: [
     {
-      label: "SCM Type",
+      label: "Source Code Management Type",
       id: "service",
       isRequired: true,
       maxLength: 150,
       lowercase: true,
     },
     {
-      label: "SCM Account",
+      label: "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true,
       maxLength: 24,

@@ -101,7 +101,7 @@ sessionHelper.deleteStoredSessionValue = (sessionKey) => {
   return sessionStorage.removeItem(sessionKey);
 };
 
-sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS = {
+sessionHelper.SUPPORTED_SESSION_STORAGE_KEYS = {
   WORKSPACE_FILTER_MODEL_DATA: "workspace-filter-model-data",
   TASK_FILTER_MODEL_DATA: "task-filter-model-data",
   TOOL_FILTER_MODEL_DATA: "tool-filter-model-data",
@@ -110,26 +110,23 @@ sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS = {
 };
 
 sessionHelper.clearOutSessionStorage = () => {
-  return sessionStorage.clear();
+  sessionStorage.clear();
 };
 
-// TODO: Make get/set/delete cookie functions
-// const getCookie = async (cancelSource = cancelTokenSource) => {
-//   setLoading(true);
-//   let newToolFilterModel = new ToolFilterModel();
-//   try {
-//     let storedViewType = cookieHelpers.getCookie("registry", "viewType");
-//
-//     if (storedViewType != null) {
-//       newToolFilterModel.setData("viewType", JSON.parse(storedViewType));
-//     }
-//   } catch (error) {
-//     cookieHelpers.setCookie("registry", "viewType", JSON.stringify(newToolFilterModel?.getData("viewType")));
-//     console.error("Error loading cookie. Setting to default");
-//     console.error(error);
-//   } finally {
-//     await loadData(newToolFilterModel, cancelSource);
-//   }
-// };
+sessionHelper.SUPPORTED_COOKIE_STORAGE_KEYS = {
+  COLLAPSE_SIDEBAR: "collapse_sidebar",
+};
+
+sessionHelper.getCookie = (cookieStorageKey) => {
+  return localStorage.getItem(cookieStorageKey);
+};
+
+sessionHelper.setCookie = (cookieName, value) => {
+  localStorage.setItem(cookieName, value);
+};
+
+sessionHelper.deleteCookie = (cookieName) => {
+  localStorage.removeItem(cookieName);
+};
 
 export default sessionHelper;

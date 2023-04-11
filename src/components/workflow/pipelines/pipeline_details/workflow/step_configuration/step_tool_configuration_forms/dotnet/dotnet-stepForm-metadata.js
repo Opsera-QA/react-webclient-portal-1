@@ -9,17 +9,17 @@ const dotnetStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Jenkins Tool Name",
+      label: "Jenkins Tool",
       id: "toolName",
       isRequired: true
     },
     {
-      label: "Jenkins Job",
+      label: "Job",
       id: "toolJobName",
       isRequired: true
     },
     {
-      label: "Jenkins Job",
+      label: "Job",
       id: "toolJobId",
       isRequired: true
     },
@@ -34,18 +34,18 @@ const dotnetStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Select SCM Type",
+      label: "Source Code Management Type",
       id: "type",
       isRequired: true
     },
     
     {
-      label: "SCM Account",
+      label: "Source Code Management Tool",
       id: "gitCredential",
       isRequired: true
     },
     {
-      label : "SCM Tool",
+      label : "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true
     },
@@ -56,7 +56,7 @@ const dotnetStepFormMetadata = {
     },
     
     {
-      label: "SCM Type",
+      label: "Source Code Management Type",
       id: "service",
       isRequired: true
     },

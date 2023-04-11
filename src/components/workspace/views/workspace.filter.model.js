@@ -33,6 +33,7 @@ const workspaceFilterMetadata = {
     {
       label: "Tag",
       id: "tag",
+      formText: "Please Note: This only contains Tags applied to the Workspace resources"
     },
     {
       label: "Owner",
@@ -63,7 +64,7 @@ const workspaceFilterMetadata = {
 export default class WorkspaceFilterModel extends FilterModelBase {
   constructor() {
     super(workspaceFilterMetadata);
-    this.sessionDataKey = sessionHelper.SUPPORTED_STORAGE_SESSION_KEYS.WORKSPACE_FILTER_MODEL_DATA;
+    this.sessionDataKey = sessionHelper.SUPPORTED_SESSION_STORAGE_KEYS.WORKSPACE_FILTER_MODEL_DATA;
     this.enableUrlUpdatesWithQueryParameters();
     this.unpackUrlParameters();
   }

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import {Card, Col, Row} from "react-bootstrap";
-import {faHexagon} from "@fortawesome/pro-light-svg-icons";
+import {faDraftingCompass, faHexagon} from "@fortawesome/pro-light-svg-icons";
 import {format} from "date-fns";
 import React, {useEffect, useState} from "react";
 import IconBase from "components/common/icons/IconBase";
@@ -11,12 +11,14 @@ import ViewPlatformPipelineTemplateDetailsButton
   from "components/workflow/catalog/platform/ViewPlatformPipelineTemplateDetailsButton";
 import CreatePlatformPipelineButton from "components/workflow/catalog/platform/deploy/CreatePlatformPipelineButton";
 import {createPipelineFromTemplateMetadata} from "components/workflow/catalog/createPipelineFromTemplate.metadata";
+import SelectButtonBase from "components/common/buttons/select/base/SelectButtonBase";
 
 // TODO: This needs to be rewritten, I just copied what existed for the catalog work
 export default function PlatformPipelineTemplateCard(
   {
     template,
     activeTemplates,
+    selectTemplateFunction,
   }) {
   const [disabled, setDisabled] = useState(false);
   const {
@@ -30,6 +32,24 @@ export default function PlatformPipelineTemplateCard(
   }, [template, activeTemplates]);
 
   const getBody = () => {
+    if (disabled === true) {
+      return;
+    }
+
+    if (selectTemplateFunction) {
+      return (
+        <Col xs={6} className={"d-flex"}>
+          <SelectButtonBase
+            setDataFunction={() => selectTemplateFunction(modelHelpers.parseObjectIntoModel(template, createPipelineFromTemplateMetadata))}
+            selectOption={template}
+            icon={faDraftingCompass}
+            selectText={"Select Pipeline"}
+            variant={"primary"}
+          />
+        </Col>
+      );
+    }
+
     return (
       <Col xs={6} className={"d-flex"}>
         <CreatePlatformPipelineButton
@@ -105,4 +125,5 @@ export default function PlatformPipelineTemplateCard(
 PlatformPipelineTemplateCard.propTypes = {
   template: PropTypes.object,
   activeTemplates: PropTypes.array,
+  selectTemplateFunction: PropTypes.func,
 };

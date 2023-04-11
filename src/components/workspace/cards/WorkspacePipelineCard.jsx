@@ -4,7 +4,7 @@ import PipelineCardBase from "temp-library-components/cards/pipelines/PipelineCa
 import modelHelpers from "components/common/model/modelHelpers";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import { useHistory } from "react-router-dom";
-import { pipelineHelper } from "components/workflow/pipeline.helper";
+import {workspaceHelper} from "components/workspace/workspace.helper";
 
 export default function WorkspacePipelineCard(
   {
@@ -13,7 +13,7 @@ export default function WorkspacePipelineCard(
   const history = useHistory();
 
   const onClickFunction = () => {
-    history.push(pipelineHelper.getDetailViewLink(pipeline?._id));
+    history.push(workspaceHelper.getWorkspaceItemDetailLink(pipeline));
   };
 
   return (

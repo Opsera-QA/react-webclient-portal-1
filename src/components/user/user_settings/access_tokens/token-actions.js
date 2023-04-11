@@ -14,14 +14,14 @@ tokenActions.createToken = async (getAccessToken, cancelTokenSource, tokenModel)
 
 tokenActions.getTokens = async (getAccessToken, cancelTokenSource, tokenFilterModel) => {
   const apiUrl = "/users/tokens";
-  const sortOption = tokenFilterModel.getData("sortOption");
+  const sortOption = tokenFilterModel?.getData("sortOption");
 
   const urlParams = {
     params: {
       sort: sortOption ? sortOption.value : undefined,
-      page: tokenFilterModel.getData("currentPage"),
-      size: tokenFilterModel.getData("pageSize"),
-      search: tokenFilterModel.getFilterValue("search"),
+      page: tokenFilterModel?.getData("currentPage"),
+      size: tokenFilterModel?.getData("pageSize"),
+      search: tokenFilterModel?.getFilterValue("search"),
     }
   };
 

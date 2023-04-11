@@ -12,7 +12,7 @@ function GitCustodianStepConfigurationHelpDocumentation() {
   const getHelpDocumentation = () => {
     return (
       <div>
-        <div className={"ml-2 mb-2"}>Opsera offers Git Custodian support in a pipeline step that allows users to choose from Custodian libraries then run a scan against the configured SCM repos. You can define a maximum threshold and pipeline will use the values to determine the final status of the step. For more detailed information on the Git Custodian workflow, view the <a href="https://docs.opsera.io/quality-and-security-scan/git-custodian-pipeline" target="_blank" rel="noreferrer"><b>Git Custodian Pipeline Help Documentation</b>. </a>
+        <div className={"ml-2 mb-2"}>Opsera offers Git Custodian support in a pipeline step that allows users to choose from Custodian libraries then run a scan against the configured Source Code Management repository. You can define a maximum threshold and pipeline will use the values to determine the final status of the step. For more detailed information on the Git Custodian workflow, view the <a href="https://docs.opsera.io/quality-and-security-scan/git-custodian-pipeline" target="_blank" rel="noreferrer"><b>Git Custodian Pipeline Help Documentation</b>. </a>
         </div>
         <div className={"ml-4"}>
           <ol>

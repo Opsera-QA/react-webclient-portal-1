@@ -6,7 +6,6 @@ import './fileupload.css';
 import {Button} from 'react-bootstrap';
 import { getTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import { getField } from "components/common/metadata/metadata-helpers";
-import SfdcPipelineWizardUploadComponentTypesRadioInput from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardUploadComponentTypesRadioInput";
 import PipelineWizardFileUploadMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/pipeline-wizard-file-upload-metadata.js";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import SfdcPipelineWizardSubmitFileTypeButton
@@ -18,12 +17,12 @@ import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
 import _ from "lodash";
 import PackageXmlFieldBase from "components/common/fields/code/PackageXmlFieldBase";
-import SfdcComponentListInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcComponentListInput";
 import SfdcPipelineWizardIncludeDependenciesToggle
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardIncludeDependenciesToggle";
 import SfdcPipelineWizardTranslationToggleInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardTranslationToggleInput";
+import SfdcPipelineWizardUploadComponentSummary
+  from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardUploadComponentSummary";
 
 function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) {
   const fields = PipelineWizardFileUploadMetadata.fields;
@@ -350,7 +349,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
   };
   // TODO: Check if validating against git branch
   const getDependenciesToggle = () => {
-    if (pipelineWizardModel?.getData("modifiedFilesOrigin") === "git") {
+    if (pipelineWizardModel?.getData("isOrgToOrg") === false) {
       return (
         <SfdcPipelineWizardIncludeDependenciesToggle
           pipelineWizardModel={pipelineWizardModel}
@@ -373,9 +372,8 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
       return (
         <div>
           <div className="my-4 w-100">
-            <SfdcPipelineWizardUploadComponentTypesRadioInput
+            <SfdcPipelineWizardUploadComponentSummary
               pipelineWizardModel={pipelineWizardModel}
-              setPipelineWizardModel={setPipelineWizardModel}
             />
             {getFileUploadBody()}
             {getFilesBody()}

@@ -21,8 +21,12 @@ function NavigationTab(
   const getTab = () => {
     return (
       <li className="mr-1">
-        <a className={"nav-link " + (activeTab === tabName ? "active" : "")} onClick={handleTabClick(tabName)} href="#">
-          {getIcon()}<span className="ml-2 d-none d-lg-inline">{tabText}</span>
+        <a
+          className={`nav-link ${activeTab === tabName ? "active default-cursor" : "pointer"}`}
+          onClick={activeTab !== tabName ? handleTabClick(tabName) : undefined}
+        >
+          {getIcon()}
+          <span className={"ml-2 d-none d-lg-inline"}>{tabText}</span>
           <BetaBadge
             isBeta={isBeta}
             className={"mr-1 ml-2 my-auto"}
