@@ -9,14 +9,16 @@ import {insightsLookupActions} from "components/insights/lookup/insightsLookup.a
 import LookupResults from "components/insights/lookup/LookupResults";
 import DateRangeInputBase from "components/common/inputs/date/range/DateRangeInputBase";
 import {formatDate} from "components/common/helpers/date/date.helpers";
-import ComponentTypeSelectInput from "components/insights/lookup/filters/ComponentTypeSelectInput";
+import SalesforceComponentTypeMultiSelectInput from "components/insights/lookup/filters/SalesforceComponentTypeMultiSelectInput";
 import LookupFilterModel from "./lookup.filter.model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TasksSelectInput from "./filters/TasksSelectInput";
 import OrgsSelectInput from "./filters/OrgsSelectInput";
 import PipelineSelectInput from "./filters/PipelineSelectInput";
 import DateRangeInput from "../../common/inputs/date/DateRangeInput";
-import ComponentNamesSelectInput from "./filters/ComponentNamesSelectInput";
+import SalesforceComponentNameMultiSelectInput from "components/insights/lookup/filters/SalesforceComponentNameMultiSelectInput";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function Lookup() {
   const [isLoading, setIsLoading] = useState(false);
@@ -124,55 +126,62 @@ function Lookup() {
   };
 
   const getDropdownFilters = () => (
-    <div className={"d-flex"}>
-      <div className={"mr-auto"}>
+    <Row>
+      <Col xs={12}>
         <DateRangeInputBase
           model={filterModel}
           setModel={setFilterModel}
         />
-        {/*<DateRangeInput*/}
-        {/*    dataObject={filterModel}*/}
-        {/*    setDataObject={setFilterModel}*/}
-        {/*    fieldName={"dateRange"}*/}
-        {/*/>*/}
-        <ComponentTypeSelectInput
-            fieldName={"selectedComponentFilterData"}
-            model={filterModel}
-            setModel={setFilterModel}
-            className={"mx-2"}
+      </Col>
+      <Col xs={12}>
+        <SalesforceComponentTypeMultiSelectInput
+          fieldName={"selectedComponentFilterData"}
+          model={filterModel}
+          setModel={setFilterModel}
+          className={"mx-2"}
         />
-        <ComponentNamesSelectInput
-            fieldName={"selectedComponentNames"}
-            model={filterModel}
-            setModel={setFilterModel}
-            className={"mx-2"}
-            data={salesforceComponentNames}
+      </Col>
+      <Col xs={12}>
+        <SalesforceComponentNameMultiSelectInput
+          fieldName={"selectedComponentNames"}
+          model={filterModel}
+          setModel={setFilterModel}
+          className={"mx-2"}
+          data={salesforceComponentNames}
         />
+      </Col>
+      <Col xs={12}>
         <PipelineSelectInput
-            fieldName={"pipelineComponentFilterData"}
-            model={filterModel}
-            setModel={setFilterModel}
-            className={"mx-2"}
+          fieldName={"pipelineComponentFilterData"}
+          model={filterModel}
+          setModel={setFilterModel}
+          className={"mx-2"}
         />
+      </Col>
+      <Col xs={12}>
         <TasksSelectInput
-            fieldName={"tasksComponentFilterData"}
-            model={filterModel}
-            setModel={setFilterModel}
-            className={"mx-2"}
+          fieldName={"tasksComponentFilterData"}
+          model={filterModel}
+          setModel={setFilterModel}
+          className={"mx-2"}
         />
+      </Col>
+      <Col xs={12}>
         <OrgsSelectInput
-            fieldName={"orgsComponentFilterData"}
-            model={filterModel}
-            setModel={setFilterModel}
-            className={"mx-2"}
+          fieldName={"orgsComponentFilterData"}
+          model={filterModel}
+          setModel={setFilterModel}
+          className={"mx-2"}
         />
-      </div>
-      {/* <AnalyticsSalesforceComponentNameMultiSelectInput
-        fieldName={"selectedComponentNames"}
-        model={filterModel}
-        setModel={setFilterModel}
-      /> */}
-    </div>
+      </Col>
+      {/*<Col xs={12}>*/}
+      {/*  <AnalyticsSalesforceComponentNameMultiSelectInput*/}
+      {/*    fieldName={"selectedComponentNames"}*/}
+      {/*    model={filterModel}*/}
+      {/*    setModel={setFilterModel}*/}
+      {/*  />*/}
+      {/*</Col>*/}
+    </Row>
   );
 
   const getNoDataMessage = () => {
@@ -222,7 +231,7 @@ function Lookup() {
       loadDataFunction={loadData}
       filters={getDropdownFilters()}
     >
-      {/*<ComponentTypeSelectInput*/}
+      {/*<SalesforceComponentTypeMultiSelectInput*/}
       {/*  fieldName={"selectedComponentFilterData"}*/}
       {/*  model={filterModel}*/}
       {/*  setModel={setFilterModel}*/}

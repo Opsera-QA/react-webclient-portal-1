@@ -4,8 +4,9 @@ import MultiSelectInputBase from "components/common/inputs/multi_select/MultiSel
 import useComponentStateReference from "hooks/useComponentStateReference";
 import {insightsLookupActions} from "components/insights/lookup/insightsLookup.actions";
 import {capitalizeFirstLetter} from "../../../common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
 
-function ComponentTypeSelectInput(
+function SalesforceComponentTypeMultiSelectInput(
   {
     fieldName,
     model,
@@ -21,8 +22,7 @@ function ComponentTypeSelectInput(
   const [salesforceComponentNames, setSalesforceComponentNames] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
-  const {isMounted, cancelTokenSource, getAccessToken} =
-    useComponentStateReference();
+  const {isMounted, cancelTokenSource, getAccessToken} = useComponentStateReference();
 
   useEffect(() => {
     setSalesforceComponentNames([]);
@@ -56,15 +56,8 @@ function ComponentTypeSelectInput(
           cancelTokenSource,
       );
 
-      const types = componentTypeResponse?.data?.data;
-      console.log("types", types);
-
-      if (
-          isMounted?.current === true &&
-          Array.isArray(types)
-      ) {
-        setSalesforceComponentNames(types);
-      }
+      const types = DataParsingHelper.parseNestedArray(componentTypeResponse, "data.data", []);
+      setSalesforceComponentNames([...types]);
     };
 
   return (
@@ -94,7 +87,7 @@ function ComponentTypeSelectInput(
   );
 }
 
-ComponentTypeSelectInput.propTypes = {
+SalesforceComponentTypeMultiSelectInput.propTypes = {
   className: PropTypes.string,
   fieldName: PropTypes.string,
   model: PropTypes.object,
@@ -107,8 +100,9 @@ ComponentTypeSelectInput.propTypes = {
   clearDataFunction: PropTypes.func,
 };
 
-ComponentTypeSelectInput.defaultProps = {
+SalesforceComponentTypeMultiSelectInput.defaultProps = {
   textField: "name",
+  valueField: "id",
 };
 
-export default ComponentTypeSelectInput;
+export default SalesforceComponentTypeMultiSelectInput;
