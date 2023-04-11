@@ -32,7 +32,7 @@ function ScreenContainer(
     className,
     hideSubNavigationBlock,
     showActiveFilters,
-    filters,
+    filterOverlay,
     filterModel,
     setFilterModel,
     loadDataFunction,
@@ -145,7 +145,7 @@ function ScreenContainer(
   };
 
   const getActiveFilterDisplayer = () => {
-    if (showActiveFilters !== false && filters != null && filterModel != null) {
+    if (showActiveFilters !== false && filterOverlay != null && filterModel != null) {
       return (
         <ActiveFilterDisplayer
           filterModel={filterModel}
@@ -200,7 +200,7 @@ function ScreenContainer(
               auditLogType={auditLogType}
               filterModel={filterModel}
               setFilterModel={setFilterModel}
-              filters={filters}
+              filterOverlay={filterOverlay}
               loadDataFunction={loadDataFunction}
               addRecordButtonCustomText={addRecordButtonCustomText}
               addRecordFunction={addRecordFunction}
@@ -239,7 +239,7 @@ ScreenContainer.propTypes = {
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
   loadDataFunction: PropTypes.func,
-  filters: PropTypes.any,
+  filterOverlay: PropTypes.any,
   addRecordFunction: PropTypes.func,
   addRecordButtonCustomText: PropTypes.string,
 };

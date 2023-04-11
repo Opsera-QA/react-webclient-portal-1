@@ -13,12 +13,10 @@ import {
   FILTER_CONTAINER_FULL_HEIGHT_IN_SCREEN_CONTAINER_MINUS_DESCRIPTION
 } from "components/common/table/FilterContainer";
 import InlineWorkspaceItemTypeFilter from "components/common/filters/workspace/type/InlineWorkspaceItemTypeFilter";
-import ActiveFilter from "components/common/filters/status/ActiveFilter";
-import OwnerFilter from "components/common/filters/ldap/owner/OwnerFilter";
 import CreateWorkspaceResourceWizard from "components/wizard/workspace/CreateWorkspaceResourceWizard";
-import WorkspaceTagFilter from "components/workspace/views/filters/WorkspaceTagFilter";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 import SideBySideViewBase from "components/common/tabs/SideBySideViewBase";
+import WorkspaceFilterOverlay from "components/workspace/WorkspaceFilterOverlay";
 
 export default function Workspace() {
   const {
@@ -121,29 +119,6 @@ export default function Workspace() {
     );
   };
 
-  const getDropdownFilters = () => {
-    return (
-      <>
-        <WorkspaceTagFilter
-          filterModel={workspaceFilterModel}
-          setFilterModel={setWorkspaceFilterModel}
-          className={"mb-2"}
-        />
-        <ActiveFilter
-          filterDto={workspaceFilterModel}
-          setFilterDto={setWorkspaceFilterModel}
-          fieldName={"active"}
-          className={"mb-2"}
-        />
-        <OwnerFilter
-          filterModel={workspaceFilterModel}
-          setFilterModel={setWorkspaceFilterModel}
-          className={"mb-3"}
-        />
-      </>
-    );
-  };
-
   const createWorkspaceItem = () => {
     toastContext.showOverlayPanel(
       <CreateWorkspaceResourceWizard
@@ -158,7 +133,7 @@ export default function Workspace() {
       error={error}
       filterModel={workspaceFilterModel}
       setFilterModel={setWorkspaceFilterModel}
-      filters={getDropdownFilters()}
+      filterOverlay={<WorkspaceFilterOverlay loadDataFunction={loadData} workspaceFilterModel={workspaceFilterModel} />}
       loadDataFunction={loadData}
       addRecordFunction={createWorkspaceItem}
       bodyClassName={""}
