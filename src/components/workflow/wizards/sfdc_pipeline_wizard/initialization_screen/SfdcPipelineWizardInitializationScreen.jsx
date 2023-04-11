@@ -77,10 +77,26 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   };
 
   const getLatestApiVersion = async (sfdcToolId) => {
-    const response = await sfdcPipelineActions.getApiVersions(getAccessToken, cancelTokenSource, sfdcToolId);
-    let apiVersions = DataParsingHelper.parseNestedArray(response, "data.message", []);
-    if(apiVersions && apiVersions.length > 0) return apiVersions[0];
-    return "";
+    try {
+      const response = await sfdcPipelineActions.getApiVersions(
+        getAccessToken,
+        cancelTokenSource,
+        sfdcToolId,
+      );
+      let apiVersions = DataParsingHelper.parseNestedArray(
+        response,
+        "data.message",
+        [],
+      );
+      if (apiVersions && apiVersions.length > 0) return apiVersions[0];
+      return "";
+    } catch (error) {
+      console.error(error);
+      setError(
+        "Could not get default API version for Salesforce Pipeline",
+      );
+      return "";
+    }
   };
 
   const loadGitTaskInformation = (newPipelineWizardModel, gitTaskData) => {
