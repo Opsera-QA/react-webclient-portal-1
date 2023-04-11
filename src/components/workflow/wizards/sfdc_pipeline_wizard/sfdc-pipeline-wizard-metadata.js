@@ -148,7 +148,7 @@ const sfdcPipelineWizardMetadata = {
       id: "ignoreWarning"
     },
     {
-      label: "API Version",
+      label: "Salesforce API Version",
       id: "apiVersion"
     }
   ],

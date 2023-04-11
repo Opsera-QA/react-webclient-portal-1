@@ -73,7 +73,7 @@ function SalesforcePackageVersionSelectionInput({ fieldName, pipelineWizardModel
           defaultValue={apiVersions[0]}
           busy={isLoading}
           placeholderText={"Select API Version"}
-          disabled={false}
+          disabled={disabled}
         />
       );
     }

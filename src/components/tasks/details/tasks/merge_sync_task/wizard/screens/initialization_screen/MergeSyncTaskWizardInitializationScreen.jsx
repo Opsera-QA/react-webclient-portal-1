@@ -10,6 +10,8 @@ import CenteredContentWrapper from "components/common/wrapper/CenteredContentWra
 import OpseraInfinityLogo from "components/logo/OpseraInfinityLogo";
 import H5FieldSubHeader from "components/common/fields/subheader/H5FieldSubHeader";
 import CenterLoadingIndicator from "components/common/loading/CenterLoadingIndicator";
+import SalesforcePackageVersionSelectionInput
+  from "../../../../../../../workflow/wizards/sfdc_pipeline_wizard/xml_viewer/xml/SalesforcePackageVersionSelectionInput";
 
 const MergeSyncTaskWizardInitializationScreen = ({
   wizardModel,
@@ -28,6 +30,8 @@ const MergeSyncTaskWizardInitializationScreen = ({
       );
     }
 
+    console.log(wizardModel.getPersistData());
+    console.log(wizardModel?.getData("sfdcToolId"));
     return (
       <div>
         <div className={"m-3"}>
@@ -50,17 +54,27 @@ const MergeSyncTaskWizardInitializationScreen = ({
           </div>
         </div>
         {wizardModel?.getData("taskType") === "SFDC_GIT_COMPARE_SYNC" &&
-          <Row className="mx-0 mt-3 d-flex">
-            <div className="ml-auto d-flex">
-              <Col>
-                <BooleanToggleInput
-                  fieldName={"isProfiles"}
-                  dataObject={wizardModel}
-                  setDataObject={setWizardModel}
-                />
-              </Col>
-            </div>
-          </Row>
+          <>
+            {wizardModel.getData("sfdcToolId") &&
+              <SalesforcePackageVersionSelectionInput
+                pipelineWizardModel={wizardModel}
+                setPipelineWizardModel={setWizardModel}
+                fieldName={"apiVersion"}
+              />
+            }
+            <Row className="mx-0 mt-3 d-flex">
+              <div className="ml-auto d-flex">
+                <Col>
+                  <BooleanToggleInput
+                    fieldName={"isProfiles"}
+                    dataObject={wizardModel}
+                    setDataObject={setWizardModel}
+                  />
+                </Col>
+
+              </div>
+            </Row>
+          </>
         }
         <SaveButtonContainer>
           <MergeSyncTaskWizardCreateNewRecordButton
