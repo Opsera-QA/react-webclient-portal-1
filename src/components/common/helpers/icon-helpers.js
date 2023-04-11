@@ -1,14 +1,28 @@
 import {Image} from "react-bootstrap";
-import {faOctopusDeploy, faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import {faTasks, faWrench} from "@fortawesome/pro-light-svg-icons";
+import {faAws, faGitAlt, faMicrosoft, faOctopusDeploy, faSalesforce} from "@fortawesome/free-brands-svg-icons";
+import {
+  faClipboardListCheck,
+  faDraftingCompass,
+  faShieldKeyhole,
+  faTasks,
+  faWrench
+} from "@fortawesome/pro-light-svg-icons";
 import React from "react";
-import {TASK_TYPES} from "components/tasks/task.types";
+import {TASK_TYPE_CATEGORIES, TASK_TYPES, taskTypeConstants} from "components/tasks/task.types";
 import {toolIdentifierConstants} from "components/admin/tools/identifiers/toolIdentifier.constants";
 import IconBase from "components/common/icons/IconBase";
+import {hasStringValue} from "components/common/helpers/string-helpers";
+import DataParsingHelper from "@opsera/persephone/helpers/data/dataParsing.helper";
+import {
+  PIPELINE_TYPES,
+  pipelineTypeConstants
+} from "components/common/list_of_values_input/pipelines/types/pipeline.types";
+import {pipelineHelper} from "components/workflow/pipeline.helper";
 
 export function getLargeVendorIconFromToolIdentifier(
   toolIdentifier,
   s3Bucket = process.env.REACT_APP_OPSERA_S3_STORAGE_URL,
+  defaultIcon = faWrench,
   height,
   width,
 ) {
@@ -86,7 +100,7 @@ export function getLargeVendorIconFromToolIdentifier(
     case "mongodb_realm":
       return <Image height={height} width={width} src={`${vendorIconPrefix}/icons8-mongodb-96.png`} />;
     default:
-      return <IconBase icon={faWrench} iconClassName={"title-fa-icon wrench"} />;
+      return <IconBase icon={defaultIcon} iconClassName={"title-fa-icon wrench"} />;
   }
 }
 
@@ -97,21 +111,61 @@ export function getLargeVendorIconComponentFromTaskType (taskType) {
 
   const vendorIconPrefix = `${process.env.REACT_APP_OPSERA_S3_STORAGE_URL}/vendor-logos`;
 
-  switch (taskType) {
-    case TASK_TYPES.SYNC_SALESFORCE_REPO:
-    case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
-      return <IconBase icon={faSalesforce} iconStyling={{color: "#0D80D8"}} iconClassName={"title-fa-icon icon-image"} />;
-    case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
-    case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
-    case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
-      return <Image className={"icon-image"} src={`${vendorIconPrefix}/icons8-amazon-web-services-96.png`} />;
-    case TASK_TYPES.SYNC_GIT_BRANCHES:
-      return <Image className={"icon-image"} src={`${vendorIconPrefix}/icons8-git-96.png`} />;
-    case TASK_TYPES.AZURE_CLUSTER_CREATION:
-      return <Image className={"icon-image"} src={`${vendorIconPrefix}/icons8-azure-96.png`} />;
+  if (taskType === TASK_TYPES.GITSCRAPER) {
+    return (
+      <IconBase
+        icon={faShieldKeyhole}
+        iconClassName={"title-fa-icon"}
+      />
+    );
+  }
+
+  const category = taskTypeConstants.getTaskCategoryForType(taskType);
+
+  switch (category) {
+    case TASK_TYPE_CATEGORIES.SALESFORCE:
+      return (
+        <IconBase
+          icon={faSalesforce}
+          iconStyling={{color: "#0D80D8"}}
+          iconClassName={"title-fa-icon"}
+        />
+      );
+    case TASK_TYPE_CATEGORIES.GIT:
+      return (
+        <Image
+          className={"icon-image"}
+          src={`${vendorIconPrefix}/icons8-git-96.png`}
+        />
+      );
+    case TASK_TYPE_CATEGORIES.AWS:
+      return (
+        <Image
+          className={"icon-image"}
+          src={`${vendorIconPrefix}/icons8-amazon-web-services-96.png`}
+        />
+      );
+    case TASK_TYPE_CATEGORIES.COMPLIANCE:
+      return (
+        <IconBase
+          icon={faClipboardListCheck}
+          iconClassName={"title-fa-icon"}
+        />
+      );
+    case TASK_TYPE_CATEGORIES.AZURE:
+      return (
+        <Image
+          className={"icon-image"}
+          src={`${vendorIconPrefix}/icons8-azure-96.png`}
+        />
+      );
     default:
-      return <IconBase icon={faTasks} iconClassName={"title-fa-icon wrench"} />;
+      return (
+        <IconBase
+          icon={faTasks}
+          iconClassName={"title-fa-icon"}
+        />
+      );
   }
 }
 
@@ -122,22 +176,56 @@ export function getLargeVendorIconFromTaskType (taskType) {
 
   const vendorIconPrefix = `${process.env.REACT_APP_OPSERA_S3_STORAGE_URL}/vendor-logos`;
 
-  switch (taskType) {
-    case TASK_TYPES.SYNC_SALESFORCE_REPO:
-    case TASK_TYPES.SALESFORCE_CERTIFICATE_GENERATION:
-    case TASK_TYPES.SYNC_SALESFORCE_BRANCH_STRUCTURE:
+  if (taskType === TASK_TYPES.GITSCRAPER) {
+    return faShieldKeyhole;
+  }
+
+  const category = taskTypeConstants.getTaskCategoryForType(taskType);
+
+  switch (category) {
+    case TASK_TYPE_CATEGORIES.SALESFORCE:
       return faSalesforce;
-    case TASK_TYPES.AWS_CREATE_ECS_CLUSTER:
-    case TASK_TYPES.AWS_CREATE_ECS_SERVICE:
-    case TASK_TYPES.AWS_CREATE_LAMBDA_FUNCTION:
-      return `${vendorIconPrefix}/icons8-amazon-web-services-96.png`;
-    case TASK_TYPES.SYNC_GIT_BRANCHES:
+    case TASK_TYPE_CATEGORIES.GIT:
       return `${vendorIconPrefix}/icons8-git-96.png`;
-    case TASK_TYPES.AZURE_CLUSTER_CREATION:
+    case TASK_TYPE_CATEGORIES.AWS:
+      return `${vendorIconPrefix}/icons8-amazon-web-services-96.png`;
+    case TASK_TYPE_CATEGORIES.COMPLIANCE:
+      return faClipboardListCheck;
+    case TASK_TYPE_CATEGORIES.AZURE:
       return `${vendorIconPrefix}/icons8-azure-96.png`;
     default:
       return faTasks;
   }
+}
+
+export function getLargeVendorIconComponentFromPipeline (pipeline) {
+  const type = pipelineTypeConstants.getTypeForTypesArray(pipeline);
+
+  if (hasStringValue(type) !== true) {
+    return (
+      <IconBase
+        icon={faDraftingCompass}
+        iconClassName={"title-fa-icon"}
+      />
+    );
+  }
+
+  const toolIdentifier = pipelineHelper.getFirstPipelineStepIdentifier(pipeline);
+
+  if (type !== PIPELINE_TYPES.SOFTWARE_DEVELOPMENT || !toolIdentifier) {
+    return (
+      <IconBase
+        icon={pipelineTypeConstants.getIconForPipelineType(type)}
+        iconClassName={"title-fa-icon"}
+      />
+    );
+  }
+
+  return getLargeVendorIconFromToolIdentifier(
+    toolIdentifier,
+    undefined,
+    faDraftingCompass,
+  );
 }
 
 export function getVendorTitle (toolIdentifier) {

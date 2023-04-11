@@ -10,15 +10,7 @@ import TaskTypeField from "components/common/fields/tasks/TaskTypeField";
 
 function TaskCard({ taskModel, isLoading, loadTaskInNewWindow }) {
   const getTitleBar = () => {
-    let icon = getLargeVendorIconComponentFromTaskType(taskModel?.getData("type"));
-
-    if (typeof icon === "string") {
-      icon = (
-        <div className="d-flex w-100 h-100 mt-2 mb-4">
-          <div className="my-auto tool-title-text">{icon}</div>
-        </div>
-      );
-    }
+    const icon = getLargeVendorIconComponentFromTaskType(taskModel?.getData("type"));
 
     return (
       <IconTitleBar
