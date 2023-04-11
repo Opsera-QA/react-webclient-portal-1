@@ -199,7 +199,7 @@ pre {
     opacity: 1 !important;
 }
 
-.vertical-selection-card .title-icon, .vertical-selection-card-v2 .title-icon {
+.vertical-selection-card .title-icon {
     height: 92px;
     max-width: 100%;
 }

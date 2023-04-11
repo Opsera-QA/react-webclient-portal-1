@@ -74,7 +74,7 @@ export default function CreateWorkflowWizardTaskCompletionScreen(
             minHeight={HEIGHT}
           >
             <OpseraInfinityLogoLarge
-              scale={.4}
+              desiredHeight={219}
             />
             <div>
               <H5FieldSubHeader

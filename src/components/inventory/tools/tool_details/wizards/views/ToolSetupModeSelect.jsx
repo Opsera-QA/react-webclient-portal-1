@@ -92,7 +92,7 @@ function ToolSetupModeSelect(
                     className={""}
                     title={TOOL_CREATION_OPTION_LABELS.WIZARD}
                     titleClassName={"mx-auto"}
-                    icon={<OpseraInfinityLogo scale={0.73} />}
+                    icon={<OpseraInfinityLogo desiredHeight={92} />}
                   />
                 </div>
               }

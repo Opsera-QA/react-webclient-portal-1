@@ -115,7 +115,6 @@ pipelineTypeConstants.getIconForPipeline = (pipeline) => {
 
   return getLargeVendorIconFromToolIdentifier(
     toolIdentifier,
-    undefined,
     faDraftingCompass,
   );
 };
