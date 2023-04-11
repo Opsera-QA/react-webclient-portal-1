@@ -14,7 +14,7 @@ vendorImageConstants.VENDOR_LOGO_IMAGE_LINKS = {
   GIT: `${baseBucketUrl}/icons8-git-96.png`,
   GITHUB: `${baseBucketUrl}/icons8-github-96.png`,
   GITLAB: `${baseBucketUrl}/icons8-gitlab-96.png`,
-  GOOGLE_CLOUD_PLATFORM: `${baseBucketUrl}/hashicorp-terraform-48.png`,
+  GOOGLE_CLOUD_PLATFORM: `${baseBucketUrl}/icons8-google-cloud-platform-64.png`,
   JENKINS: `${baseBucketUrl}/jenkins-98-113.png`,
   JIRA: `${baseBucketUrl}/jira-74-220.png`,
   JUNIT: `${baseBucketUrl}/junit-97-172.png`,
