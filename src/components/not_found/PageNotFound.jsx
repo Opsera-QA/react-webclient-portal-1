@@ -23,7 +23,7 @@ export default function PageNotFound() {
             minHeight={screenContainerHeights.TABLE_MINIMUM_HEIGHT_WITH_DESCRIPTION}
           >
             <OpseraInfinityLogoLarge
-              scale={.5}
+              desiredHeight={274}
             />
             <div className={"ml-5"}>
               <div

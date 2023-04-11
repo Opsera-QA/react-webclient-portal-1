@@ -22,7 +22,7 @@ export default function OpseraInfinityLogoSelectionCardBase(
       <CardIconTitleBar
         className={"m-3 mb-4"}
         formattedIcon={
-          <OpseraInfinityLogo scale={.75} />
+          <OpseraInfinityLogo desiredHeight={95} />
         }
         title={title}
         subTitle={subTitle}
