@@ -70,6 +70,7 @@ toolIdentifierConstants.TOOL_IDENTIFIERS = {
   NPM: "npm",
   NUNIT: "nunit",
   OCTOPUS: "octopus",
+  ORACLE_FUSION: "oracle_fusion",
   PACKER: "packer",
   PARALLEL_PROCESSOR: "parallel-processor",
   PMD: "pmd",
