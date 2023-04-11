@@ -60,6 +60,7 @@ export function getLargeVendorIconFromToolIdentifier(
     case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_FUNCTIONS:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_ACR_PUSH:
     case toolIdentifierConstants.TOOL_IDENTIFIERS.AZURE_AKS_DEPLOY:
+    case toolIdentifierConstants.TOOL_IDENTIFIERS.S3:
       return <Image height={height} width={width} src={vendorImageConstants.IMAGE_LINKS.AZURE} />;
     case toolIdentifierConstants.TOOL_IDENTIFIERS.OCTOPUS:
       return <IconBase icon={faOctopusDeploy} iconStyling={{color: "#0D80D8"}} iconClassName={"title-fa-icon"} />;
