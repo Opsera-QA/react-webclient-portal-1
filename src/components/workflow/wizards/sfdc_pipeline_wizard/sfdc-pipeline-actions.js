@@ -322,6 +322,7 @@ sfdcPipelineActions.createNewRecordV2 = async (getAccessToken, cancelTokenSource
     fromGitTasks: pipelineWizardModel.getData("fromGitTasks") === true,
     runCount: pipelineWizardModel.getData("run_count"),
     ignoreWarning: pipelineWizardModel.getData("ignoreWarning") === true,
+    apiVersion: pipelineWizardModel.getData("apiVersion"),
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/create_new_record`;
@@ -477,10 +478,22 @@ sfdcPipelineActions.checkTestClassesCount = async (getAccessToken, cancelTokenSo
 sfdcPipelineActions.updateIgnoreWarning = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const postBody = {
     ignoreWarning: pipelineWizardModel.getData("ignoreWarning") === true,
+    apiVersion: pipelineWizardModel.getData("apiVersion"),
   };
 
-  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/update_ignore_warning`;
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/update_ignore_warning_api_version`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+sfdcPipelineActions.getApiVersions = async (getAccessToken, cancelTokenSource, sfdcToolId) => {
+  const apiUrl = `/pipelines/sfdc/wizard/get_api_versions`;
+  const urlParams = {
+  params: {
+    sfdcToolId: sfdcToolId,
+  }
+};
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 export default sfdcPipelineActions;

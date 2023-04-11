@@ -146,6 +146,10 @@ const sfdcPipelineWizardMetadata = {
     {
       label: "Ignore Warning",
       id: "ignoreWarning"
+    },
+    {
+      label: "API Version",
+      id: "apiVersion"
     }
   ],
   newObjectFields: {
@@ -181,6 +185,7 @@ const sfdcPipelineWizardMetadata = {
     accountUsername: "",
     isSfdx: false,
     ignoreWarning: false,
+    apiVersion: "",
   }
 };
 
