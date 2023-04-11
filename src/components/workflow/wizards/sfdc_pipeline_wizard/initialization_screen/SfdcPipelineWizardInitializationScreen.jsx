@@ -83,7 +83,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     const sfdcDestToolId = gitTaskData.getData("configuration")?.sfdcDestToolId;
     const accountUsername = gitTaskData.getData("configuration")?.accountUsername;
     const gitBranch = gitTaskData.getData("configuration")?.gitBranch;
-
+    const repository = gitTaskData.getData("configuration")?.repository;
 
     if (gitTaskId == null || gitTaskId === "") {
       setError("Could not find Git Task");
@@ -102,6 +102,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     newPipelineWizardModel.setData("gitToolId", gitToolId);
     newPipelineWizardModel.setData("pipelineId", "N/A");
     newPipelineWizardModel.setData("stepId", "N/A");
+    newPipelineWizardModel.setData("repository", repository);
     setPipelineWizardModel({...newPipelineWizardModel});
     return newPipelineWizardModel;
   };

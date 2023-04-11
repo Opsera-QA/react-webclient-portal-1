@@ -66,7 +66,7 @@ const FortifyStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Account",
+      label: "Source Code Management Tool",
       id: "gitToolId",
       isRequired: true
     },
