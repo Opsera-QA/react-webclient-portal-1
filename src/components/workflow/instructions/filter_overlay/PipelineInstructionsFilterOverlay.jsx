@@ -27,7 +27,7 @@ export default function PipelineInstructionsFilterOverlay(
 
   return (
     <FilterSelectionOverlayContainer
-      filterModel={pipelineInstructionsFilterModel}
+      filterModel={filterModel}
       loadDataFunction={loadDataFunction}
     >
       <div className={"d-flex"}>

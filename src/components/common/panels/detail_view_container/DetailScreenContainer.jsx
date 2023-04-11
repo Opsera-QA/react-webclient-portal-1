@@ -31,7 +31,7 @@ function DetailScreenContainer(
     isBeta,
     showActiveFilters,
     filterModel,
-    filters,
+    filterOverlay,
     loadDataFunction,
   }) {
   const breadcrumb = getBreadcrumb(breadcrumbDestination);
@@ -189,7 +189,7 @@ function DetailScreenContainer(
               helpComponent={helpComponent}
               isBeta={isBeta}
               filterModel={filterModel}
-              filters={filters}
+              filterOverlay={filterOverlay}
               loadDataFunction={loadDataFunction}
             />
           </div>
@@ -222,7 +222,7 @@ DetailScreenContainer.propTypes = {
   isBeta: PropTypes.bool,
   showActiveFilters: PropTypes.bool,
   filterModel: PropTypes.object,
-  filters: PropTypes.any,
+  filterOverlay: PropTypes.any,
   loadDataFunction: PropTypes.func,
 };
 
