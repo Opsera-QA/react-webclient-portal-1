@@ -19,7 +19,6 @@ import SfdcPipelineWizardFileUploadComponent
   from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardFileUploadComponent";
 import SfdcPipelineWizardPastRunComponent
   from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/past_run_xml/SfdcPipelineWizardPastRunComponent";
-import SalesforcePackageVersionSelectionInput from "../xml_viewer/xml/SalesforcePackageVersionSelectionInput";
 const DataParsingHelper = require("@opsera/persephone/helpers/data/dataParsing.helper");
 
 const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, pipeline, gitTaskData, setError }) => {
@@ -348,13 +347,6 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
           <div className={"mt-2"}>
             {`Please note, using the Salesforce Pipeline Run Wizard at the same time as someone else for the same use case will lead to unintended side effects.`}
           </div>
-          {pipelineWizardModel.getData("sfdcToolId") &&
-            <SalesforcePackageVersionSelectionInput
-              pipelineWizardModel={pipelineWizardModel}
-              setPipelineWizardModel={setPipelineWizardModel}
-              fieldName={"apiVersion"}
-            />
-          }
           {pipelineWizardModel.getData("isProfiles") === true ? 
             <SaveButtonContainer>
               <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading}
@@ -394,14 +386,6 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
         <div className={"mt-2"}>
           {`Would you like to start a new SFDC Pipeline Run Wizard Instance?`}
         </div>
-        {pipelineWizardModel.getData("sfdcToolId") &&
-          <SalesforcePackageVersionSelectionInput
-            pipelineWizardModel={pipelineWizardModel}
-            setPipelineWizardModel={setPipelineWizardModel}
-            fieldName={"apiVersion"}
-          />
-        }
-
         {pipelineWizardModel.getData("isProfiles") === true ? 
           <SaveButtonContainer>
             <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading} onClick={() => createNewPipelineWizardRecord(undefined, true, false)}>

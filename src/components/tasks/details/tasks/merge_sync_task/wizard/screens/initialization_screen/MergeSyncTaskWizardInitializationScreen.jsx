@@ -30,8 +30,6 @@ const MergeSyncTaskWizardInitializationScreen = ({
       );
     }
 
-    console.log(wizardModel.getPersistData());
-    console.log(wizardModel?.getData("sfdcToolId"));
     return (
       <div>
         <div className={"m-3"}>
@@ -71,7 +69,6 @@ const MergeSyncTaskWizardInitializationScreen = ({
                     setDataObject={setWizardModel}
                   />
                 </Col>
-
               </div>
             </Row>
           </>
