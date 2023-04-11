@@ -88,7 +88,6 @@ function MultiSelectInputBase(
       setErrorMessage("You have reached the maximum allowed number of values. Please remove one to add another.");
       return;
     }
-    console.log("" + JSON.stringify(parsedValues));
 
     newDataObject.setData(fieldName, [...parsedValues]);
     const errors = newDataObject.isFieldValid(field.id);

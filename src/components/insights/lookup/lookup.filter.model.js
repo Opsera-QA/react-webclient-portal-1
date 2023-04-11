@@ -1,5 +1,6 @@
 import FilterModelBase from "core/data_model/filterModel.base";
 import { formatDate, hasDateValue } from "components/common/helpers/date/date.helpers";
+import {subDays} from "date-fns";
 
 const insightsLookupMetadata = {
   idProperty: "_id",
@@ -66,6 +67,8 @@ const insightsLookupMetadata = {
 export class LookupFilterModel extends FilterModelBase {
   constructor() {
     super(insightsLookupMetadata);
+    this.setData("startDate", subDays(new Date(), 7));
+    this.setData("endDate", new Date());
   }
 
   getActiveFilters = () => {
